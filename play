@@ -1,0 +1,8 @@
+#!/bin/bash
+
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+. $APP_DIR/dev/environment/setup.sh
+
+$PLAY_HOME/play "$@"
+
