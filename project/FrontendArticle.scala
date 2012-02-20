@@ -4,8 +4,8 @@ import PlayProject._
 
 object FrontendArticle extends Build {
 
-    val appName         = "frontend-article"
-    val appVersion      = "1-SNAPSHOT"
+    val appName = "frontend-article"
+    val appVersion = "1-SNAPSHOT"
 
     val appDependencies = Seq(
       "org.scalatest" %% "scalatest" % "1.6.1" % "test"

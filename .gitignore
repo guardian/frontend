@@ -11,4 +11,3 @@ tmp
 .project
 .settings
 *.iml
-dev/environment/play-*

@@ -6,18 +6,13 @@ The article rendering components for the Guardian website.
 
 Getting started for new developers
 ----------------------------------
-Frontend Article is a Play Scala application.
+Frontend Article is a Play Framework 2 Scala application.
 
-To start the play development environment, run the provided `play` script
+To start the play development environment, run the provided `sbt011` script
 in the sourcetree root. This performs a number of additional configuration
-tasks, downloading and configuring the Play Framework in the `dev` directory,
-and setting environment variables.
-
-This script will download the Play Framework(first time only) so be patient.
-
-The `play` script will start a standard Play Framework console. Use the
-`compile` command to compile the software, `run` to run the development
-application, and `test` to execute test suites.
+tasks, and starts the Play Framework console. Use the `compile` command
+to compile the software, `run` to run the development application, and
+`test` to execute test suites.
 
 To use in Eclipse, use the already configured `eclipse` command from the 
 [SBT Eclipse plugin][sbteclipse] project. This will create Eclipse project
