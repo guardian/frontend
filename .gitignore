@@ -1,0 +1,13 @@
+logs
+old
+project/project
+target
+tmp
+.cache
+.classpath
+.history
+.idea
+.idea_modules
+.project
+.settings
+*.iml
