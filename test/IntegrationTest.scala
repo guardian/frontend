@@ -16,8 +16,7 @@ class IntegrationTest extends FlatSpec with ShouldMatchers {
   //
   //      goTo("http://localhost:3333/")
   //
-  //      // No point testing the standard Play Welcome page, the macro doesn't display in Test mode.
-  //      $("h1").first.getText should be("Your new application is ready.")
+  //      $("h1").first.getText should be("Your article goes here")
   //    }
   //  }
 
