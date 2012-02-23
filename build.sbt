@@ -1,12 +1,10 @@
 organization := "com.gu"
 
-
+resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases"
 
 // Development Settings
 
 seq(scalariformSettings: _*)
-
-
 
 // Compilation Settings
 
