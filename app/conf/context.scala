@@ -9,7 +9,7 @@ import java.util.logging.Logger
 
 object Configuration {
 
-  private val configuration = ConfigurationFactory getConfiguration "article-server"
+  private val configuration = ConfigurationFactory getConfiguration "frontend-article"
 
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
