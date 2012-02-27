@@ -5,7 +5,7 @@ import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
 import com.gu.openplatform.contentapi.model.Content
 import com.gu.openplatform.contentapi.{ ApiError, Api }
 import content.Article
-import java.util.logging.Logger
+import org.slf4j.LoggerFactory
 
 object Configuration {
 
@@ -35,14 +35,8 @@ object ContentApi extends Api with MultiThreadedApacheHttpClient {
   }
 }
 
-//TODO we need to put a proper logging framework in
 trait Logging {
-
-  private val _log = Logger.getLogger(getClass.getName)
-
-  object log {
-    def info(msg: String) = _log.info(msg)
-  }
+  val log = LoggerFactory getLogger getClass
 }
 
 object `package` extends Logging {

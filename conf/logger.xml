@@ -1,0 +1,34 @@
+<configuration>
+
+    <contextName>frontend-article</contextName>
+
+    <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/frontend-article.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/frontend-article.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{36} - %msg%n%xException{3}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{20} - %msg%n%xException{3}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- this is a workaround to prevent:
+     "WARN  org.apache.commons.httpclient.HttpMethodBase - Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended."
+     review whether this is needed when we upgrade to httpclient 4.0 -->
+    <logger name="org.apache.commons.httpclient.HttpMethodBase" level="ERROR"/>
+
+    <root level="INFO">
+        <appender-ref ref="LOGFILE"/>
+        <!--<appender-ref ref="CONSOLE"/>-->
+    </root>
+
+</configuration>

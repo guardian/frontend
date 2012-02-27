@@ -20,7 +20,6 @@ object Article extends Logging {
 
   def byId(path: String): Option[Article] = suppressApi404 {
     log.info("Fetching article: " + path)
-    log.info("Fetching article: " + path)
     ContentApi.item
       .showTags("all")
       .showFields("all")
