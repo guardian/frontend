@@ -1,3 +1,4 @@
+log
 logs
 old
 project/project
@@ -11,4 +12,3 @@ tmp
 .project
 .settings
 *.iml
-log/frontend-article.log
