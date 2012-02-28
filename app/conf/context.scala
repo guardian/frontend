@@ -5,7 +5,7 @@ import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
 import com.gu.openplatform.contentapi.model.Content
 import com.gu.openplatform.contentapi.{ ApiError, Api }
 import content.Article
-import org.slf4j.LoggerFactory
+import play.api.Logger
 
 object Configuration {
 
@@ -36,7 +36,7 @@ object ContentApi extends Api with MultiThreadedApacheHttpClient {
 }
 
 trait Logging {
-  val log = LoggerFactory getLogger getClass
+  val log = Logger(getClass)
 }
 
 object `package` extends Logging {
