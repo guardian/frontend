@@ -21,11 +21,6 @@
         </encoder>
     </appender>
 
-    <!-- this is a workaround to prevent:
-     "WARN  org.apache.commons.httpclient.HttpMethodBase - Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended."
-     review whether this is needed when we upgrade to httpclient 4.0 -->
-    <logger name="org.apache.commons.httpclient.HttpMethodBase" level="ERROR"/>
-
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
         <!--<appender-ref ref="CONSOLE"/>-->
