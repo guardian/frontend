@@ -7,7 +7,7 @@ resolvers ++= Seq(
     "sbt-idea-repo" at "http://mpeltonen.github.com/maven/"
 )
 
-addSbtPlugin("play" % "sbt-plugin" % "2.0-RC3")
+addSbtPlugin("play" % "sbt-plugin" % "2.0-RC4")
 
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.0.0-M3")
 
