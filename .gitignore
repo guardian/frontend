@@ -12,3 +12,6 @@ tmp
 .project
 .settings
 *.iml
+Vagrantfile
+.vagrant
+frontend-article.properties
