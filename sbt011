@@ -1,11 +1,18 @@
 #!/bin/bash
 
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# SBT configuration
+export SBT_BOOT_DIR=${HOME}/.sbt/boot/
 
-. $APP_DIR/dev/environment/setup.sh
+if [ ! -d "${SBT_BOOT_DIR}" ]; then
+  mkdir -p ${SBT_BOOT_DIR}
+fi
+
+if [ -f "~/.sbtconfig" ]; then
+  . ~/.sbtconfig
+fi
 
 java -Xmx768M -XX:MaxPermSize=384m \
         -Dhttp.proxyHost=devscreen.gudev.gnl -Dhttp.proxyPort=3128 \
         -Dsbt.boot.directory=$SBT_BOOT_DIR \
         $SBT_EXTRA_PARAMS \
-        -jar `dirname $0`/dev/environment/sbt-launch-0.11.2.jar "$@"
+        -jar `dirname $0`/dev/sbt-launch-0.11.2.jar "$@"
