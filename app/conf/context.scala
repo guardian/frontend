@@ -1,6 +1,7 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
+import com.gu.management.Healthcheck
 import play.api.Logger
 
 object `package` extends Logging {
@@ -43,6 +44,16 @@ object Configuration {
   }
 
   override def toString(): String = configuration.toString
+}
+
+object Switches {
+  //  val switch = new DefaultSwitch("name", "Description Text")
+  val all = List(Healthcheck.switch)
+}
+
+object Metrics {
+  //  val metric = new TimingMetric("frontend-article", "name", "title", "Description Text")
+  val all = List()
 }
 
 trait Logging {
