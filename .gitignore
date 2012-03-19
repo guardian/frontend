@@ -12,3 +12,4 @@ tmp
 .project
 .settings
 *.iml
+dist/front*
