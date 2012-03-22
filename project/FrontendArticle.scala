@@ -1,4 +1,5 @@
 import collection.Seq
+import com.typesafe.sbtscalariform.ScalariformPlugin
 import java.io.File
 import sbt._
 import Keys._
@@ -23,7 +24,7 @@ object FrontendArticle extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(assemblySettings:_*)
+    .settings(ScalariformPlugin.settings ++ assemblySettings :_*)
     .settings(
       // Disable Specs options to use ScalaTest
       testOptions in Test := Nil,
@@ -32,19 +33,17 @@ object FrontendArticle extends Build {
       maxErrors := 20,
       javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
       scalacOptions ++= Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
-      excludedFiles in assembly := { (base: Seq[File]) =>
-        (
-          (base / "logger.xml") +++
-            (base / "META-INF" / "MANIFEST.MF")
-          ).get
-      },
+
       mainClass in assembly := Some("play.core.server.NettyServer"),
       jarName in assembly := "frontend-article.jar",
       test in assembly := {},
+      excludedFiles in assembly := { (base: Seq[File]) =>
+        ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
+      },
+
       dist <<= myDistTask
     )
 
-  
   def myDistTask = (assembly, streams, baseDirectory, target) map { (jar, s, baseDir, outDir) =>
     val log = s.log
 
