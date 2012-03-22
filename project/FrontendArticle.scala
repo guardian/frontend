@@ -3,59 +3,66 @@ import java.io.File
 import sbt._
 import Keys._
 import PlayProject._
+import sbtassembly.Plugin._
+import AssemblyKeys._
 
 object FrontendArticle extends Build {
 
-  private implicit def file2relative(file: File) = new {
-    def relativePathFrom(parent: File): String = file.getAbsolutePath.replace(parent.getAbsolutePath, "")
-  }
-  
-  val appName = "frontend-article"
-  val appVersion = "1-SNAPSHOT"
+  resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases"
 
-  val appDependencies = Seq(
+  private val appName = "frontend-article"
+  private val appVersion = "1-SNAPSHOT"
+
+  private val appDependencies = Seq(
     //dependencies included in distribution
     "com.gu.openplatform" %% "content-api-client" % "1.13",
     "com.gu" %% "configuration" % "3.6",
 
     //dependencies in test only
-    "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+    "org.scalatest" %% "scalatest" % "1.7.1" % "test"
   )
 
-  val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
+  val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
+    .settings(assemblySettings:_*)
+    .settings(
       // Disable Specs options to use ScalaTest
-      testOptions in Test := Nil
-  )
+      testOptions in Test := Nil,
+      organization := "com.gu",
+      scalaVersion := "2.9.1",
+      maxErrors := 20,
+      javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
+      scalacOptions ++= Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
+      excludedFiles in assembly := { (base: Seq[File]) =>
+        (
+          (base / "logger.xml") +++
+            (base / "META-INF" / "MANIFEST.MF")
+          ).get
+      },
+      mainClass in assembly := Some("play.core.server.NettyServer"),
+      jarName in assembly := "frontend-article.jar",
+      test in assembly := {},
+      dist <<= myDistTask
+    )
 
-  def packageArtifact = { jar: File =>
-    
-    println("Uber jar file is: " + jar.getAbsolutePath)
+  
+  def myDistTask = (assembly, streams, baseDirectory, target) map { (jar, s, baseDir, outDir) =>
+    val log = s.log
 
-    val artifactsFile = file("artifacts.zip")
+    val distFile = outDir / "artifacts.zip"
+    log.info("Disting %s ..." format distFile)
 
-    println(artifactsFile.getAbsolutePath)
+    if (distFile.exists()) distFile.delete()
 
-    if (artifactsFile.exists()) {
-      println("Deleting old artifacts.zip")
-      artifactsFile.delete()
-    }
+    val filesToZip = Seq(
+      baseDir / "conf" / "deploy.json" -> "deploy.json",
+      jar                              -> jar.getName
+    )
 
-    val tmpDir = IO.createTemporaryDirectory
+    IO.zip(filesToZip, distFile)
 
-    IO.copyFile(file("conf") / "deploy.json", tmpDir / "deploy.json")
-    IO.copyFile(jar, tmpDir / jar.getName)
+    println("##teamcity[publishArtifacts '%s => .']" format distFile)
 
-    val filesToZip = (tmpDir ** "*").get map { file => (file -> file.relativePathFrom(tmpDir)) }
-
-    println("Packing tmp artifacts file")
-    val tmpArtifactsFile = new File(tmpDir, "artifacts.zip")
-    IO.zip(filesToZip, tmpArtifactsFile)
-    
-    println("Copying tmp artifacts file to artifacts.zip")
-    IO.copyFile(tmpArtifactsFile, artifactsFile)
-
-    println("Artifact packaged")
-
+    log.info("Done disting.")
     jar
   }
 }
