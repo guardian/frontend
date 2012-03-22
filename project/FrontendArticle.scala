@@ -1,6 +1,5 @@
 import collection.Seq
 import java.io.File
-import java.util.UUID
 import sbt._
 import Keys._
 import PlayProject._
@@ -24,33 +23,39 @@ object FrontendArticle extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-    // Disable Specs options to use ScalaTest
-    testOptions in Test := Nil,
-    dist ~= addMagentaConfig
+      // Disable Specs options to use ScalaTest
+      testOptions in Test := Nil
   )
 
-  def addMagentaConfig = { originalZipFile: File =>
-    import IO._
+  def packageArtifact = { jar: File =>
+    
+    println("Uber jar file is: " + jar.getAbsolutePath)
 
-    println("Adding deploy.json to artifact")
-    val tmpDir = createTemporaryDirectory
-    unzip(originalZipFile, tmpDir)
-    copyFile(file("conf") / "deploy.json", tmpDir / "deploy.json")
+    val artifactsFile = file("artifacts.zip")
 
-    val originalZipFileDirectory = originalZipFile.getParentFile
-    delete(originalZipFile)
+    println(artifactsFile.getAbsolutePath)
 
-    val buildNumber = Option(System.getenv("BUILD_NUMBER")).getOrElse("LOCAL")
-    val filesToZip = (tmpDir ** "*").get map {file =>
-      (file -> file.relativePathFrom(tmpDir).replaceFirst(appVersion, buildNumber))
+    if (artifactsFile.exists()) {
+      println("Deleting old artifacts.zip")
+      artifactsFile.delete()
     }
 
-    println("Renaming " + originalZipFile.getName +" -> " + "artifacts.zip")
-    val modifiedZipFile = new File(originalZipFileDirectory, "artifacts.zip")
-    zip(filesToZip, modifiedZipFile)
-    delete(tmpDir)
+    val tmpDir = IO.createTemporaryDirectory
 
-    modifiedZipFile
+    IO.copyFile(file("conf") / "deploy.json", tmpDir / "deploy.json")
+    IO.copyFile(jar, tmpDir / jar.getName)
+
+    val filesToZip = (tmpDir ** "*").get map { file => (file -> file.relativePathFrom(tmpDir)) }
+
+    println("Packing tmp artifacts file")
+    val tmpArtifactsFile = new File(tmpDir, "artifacts.zip")
+    IO.zip(filesToZip, tmpArtifactsFile)
+    
+    println("Copying tmp artifacts file to artifacts.zip")
+    IO.copyFile(tmpArtifactsFile, artifactsFile)
+
+    println("Artifact packaged")
+
+    jar
   }
 }
-

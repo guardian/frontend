@@ -12,4 +12,5 @@ tmp
 .project
 .settings
 *.iml
-dist/artifacts.zip
+dist
+artifacts.zip
