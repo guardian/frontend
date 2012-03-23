@@ -12,7 +12,7 @@
         }
     },
     "recipes":{
-        "deploy":{
+        "default":{
             "actions": ["frontend-article.deploy"]
         }
     }
