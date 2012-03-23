@@ -3,7 +3,8 @@ logLevel := Level.Warn
 
 resolvers ++= Seq(
     "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-    "sbt-idea-repo" at "http://mpeltonen.github.com/maven/"
+    "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
+    "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases"
 )
 
 resolvers += Resolver.url("sbt-plugin-releases",

@@ -9,8 +9,6 @@ import AssemblyKeys._
 
 object FrontendArticle extends Build {
 
-  resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases"
-
   private val appName = "frontend-article"
   private val appVersion = "1-SNAPSHOT"
 
