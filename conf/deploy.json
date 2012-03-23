@@ -10,5 +10,10 @@
                 ]
             }
         }
+    },
+    "recipes":{
+        "deploy":{
+            "actions": ["frontend-article.deploy"]
+        }
     }
 }
