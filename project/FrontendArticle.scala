@@ -54,7 +54,7 @@ object FrontendArticle extends Build {
 
     val filesToZip = Seq(
       baseDir / "conf" / "deploy.json" -> "deploy.json",
-      jar                              -> "packages/%s/%s" format (appName, jar.getName)
+      jar                              -> "packages/%s/%s".format(appName, jar.getName)
     )
 
     IO.zip(filesToZip, distFile)
