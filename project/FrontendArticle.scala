@@ -24,6 +24,7 @@ object FrontendArticle extends Build {
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
     .settings(ScalariformPlugin.settings ++ assemblySettings :_*)
     .settings(
+      resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       // Disable Specs options to use ScalaTest
       testOptions in Test := Nil,
       organization := "com.gu",
