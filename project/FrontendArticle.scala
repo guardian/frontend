@@ -35,7 +35,7 @@ object FrontendArticle extends Build {
       scalacOptions ++= Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
 
       mainClass in assembly := Some("play.core.server.NettyServer"),
-      jarName in assembly := "frontend-article.jar",
+      jarName in assembly := "%s.jar" format appName,
       test in assembly := {},
       excludedFiles in assembly := { (base: Seq[File]) =>
         ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
@@ -50,11 +50,11 @@ object FrontendArticle extends Build {
     val distFile = outDir / "artifacts.zip"
     log.info("Disting %s ..." format distFile)
 
-    if (distFile.exists()) distFile.delete()
+    if (distFile.exists) distFile.delete()
 
     val filesToZip = Seq(
       baseDir / "conf" / "deploy.json" -> "deploy.json",
-      jar                              -> jar.getName
+      jar                              -> "packages/%s/%s" format (appName, jar.getName)
     )
 
     IO.zip(filesToZip, distFile)
