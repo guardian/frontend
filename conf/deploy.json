@@ -13,7 +13,7 @@
     },
     "recipes":{
         "default":{
-            "actions": ["guardianfrontend.deploy"]
+            "actions": ["frontend-article.deploy"]
         }
     }
 }
