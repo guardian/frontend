@@ -1,0 +1,19 @@
+{
+    "packages":{
+        "frontend-article":{
+            "type":"executable-jar-webapp",
+            "apps":[ "guardianfrontend" ],
+            "data":{
+                "port":"9000",
+                "healthcheck_paths":[
+                    "/info/2011/oct/06/submitting-content-to-print-publications"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "actions": ["frontend-article.deploy"]
+        }
+    }
+}

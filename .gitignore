@@ -15,3 +15,5 @@ tmp
 Vagrantfile
 .vagrant
 frontend-article.properties
+dist
+artifacts.zip
