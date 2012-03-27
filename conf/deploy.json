@@ -2,7 +2,7 @@
     "packages":{
         "frontend-article":{
             "type":"executable-jar-webapp",
-            "apps":[ "frontend-article" ],
+            "apps":[ "guardianfrontend" ],
             "data":{
                 "port":"9000",
                 "healthcheck_paths":[
