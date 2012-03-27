@@ -20,7 +20,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 
     goTo("http://localhost:3333/environment/2012/feb/22/capitalise-low-carbon-future")
 
-    $("h1").first.getText should be("We must capitalise on a low-carbon future")
+    $("h4").first.getText should be("We must capitalise on a low-carbon future")
 
     $("#body").first.getText should include("Last year I launched a white paper on local transport")
 
