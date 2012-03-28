@@ -43,6 +43,54 @@ Deploying
 TBD
 
 
+Vagrant virtualisation (optional)
+---------------------------------
+[Vagrant][vagrant] is a tool to "create and configure lightweight, reproducible, and portable
+development environments." Vagrant itself is a virtual instance creation and startup
+tool on top of Oracle VirtualBox which takes care of the virtualisation.
+
+Install the Open Source Edition of VirtualBox and Vagrant itself:
+
+    sudo apt-get install virtualbox-ose
+    wget http://files.vagrantup.com/packages/aafa79fe66db687da265d790d5e67a2a7ec30d92/vagrant_1.0.0_x86_64.deb
+    sudo dpkg -i vagrant_1.0.0_x86_64.deb
+
+The vagrant instance to use is the one defined here:
+
+    https://github.com/daithiocrualaoich/vagrants/tree/master/frontend_article_lucid64
+
+Build this if the prebuilt version at the following location is unreachable:
+
+    http://devscreen.gudev.gnl/vagrants/frontend_article_lucid64.box
+
+It is convenient to start the instance in the root of the sourcetree:
+
+    /opt/vagrant/bin/vagrant init frontend_article64 http://devscreen.gudev.gnl/vagrants/frontend_article_lucid64.box
+    /opt/vagrant/bin/vagrant up
+
+As a temporary measure until API key distribution is organised, you will need to
+copy a useful `/etc/gu/frontend-article.properties`. Developers should be able to
+copy the necessary `frontend-article.properties` from their dev box proper to the
+sourceroot and then onto `/etc/gu` in the virtual instance.
+
+Do not check in `frontend-article.properties`.
+
+SSH onto the virtual instance, copy `frontend-article.properties` and start the app:
+
+    /opt/vagrant/bin/vagrant ssh
+    $ cd /vagrant
+    $ sudo cp frontend-article.properties /etc/gu
+    $ ./sbt011 run
+
+The instance forwards port 80 on the virtual box to port 8000 on the developer box proper so the application should be
+available at:
+
+    http://localhost:8000
+
+Since Play recompiles on refresh, you should be able to pretty much ignore the
+instance from this point.
+
+
 Additional Documentation
 ------------------------
 Further documentation notes and useful items can be found in `dev`.
@@ -53,3 +101,4 @@ Further documentation notes and useful items can be found in `dev`.
 [play2-wiki]: https://github.com/playframework/Play20/wiki
 [sbteclipse]: https://github.com/typesafehub/sbteclipse
 [sbt-idea]: https://github.com/mpeltonen/sbt-idea
+[vagrant]: http://vagrantup.com

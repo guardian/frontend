@@ -3,10 +3,10 @@
 # ~~~~
 
 #The ordering of these are important
-
-# Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-# Home page
-GET     /*path                      controllers.ArticleController.render(path)
+GET     /management$path<.*>        controllers.Management.apply(path)
+POST    /management$path<.*>        controllers.Management.apply(path)
+
+GET     /*path               controllers.ArticleController.render(path)
 
