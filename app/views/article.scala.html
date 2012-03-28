@@ -124,8 +124,8 @@
         <div class="unit size2of3">
             @fragments.headline(article.headline)
 
-            @article.images.filter(_.rel ==  "alt-size").filter( i => i.width < 250 && i.width > 140).headOption.map{ image =>
-                <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.filter(_.rel == "body").headOption.map { full => @full.url }' />
+            @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
+                <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' />
             }
 
             @Html(article.body)
