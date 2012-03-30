@@ -13,7 +13,13 @@
     },
     "recipes":{
         "default":{
-            "actions": ["frontend-article.deploy"]
+            "depends" : ["artifactUploadOnly", "deployOnly"]
+        },
+        "deployOnly":{
+            "actionsPerHost": ["frontend-article.deploy"]
+        },
+        "artifactUploadOnly":{
+            "actionsBeforeApp": ["frontend-article.uploadArtifacts"]
         }
     }
 }
