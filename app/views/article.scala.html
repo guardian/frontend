@@ -11,109 +11,14 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
     <link rel="stylesheet" media="screen" type="text/css" href="http://1.gu-pasteup.appspot.com/css/pasteup.css" />
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/grid.responsive.css")">
 
-    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    
-    <script>
-        var guardian = {};
+    <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
+    <link rel="stylesheet" media="screen and (min-width: 400px)" href="@routes.Assets.at("stylesheets/grid.responsive.css")">
+    <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/grid.responsive.css")">
+    <![endif]-->
 
-        /* utility functions for low-level dom manipulation */
-        guardian.util = {
-
-            /* native method to add a class */
-            add_class: function(elm, classname) {
-                var re = new RegExp(classname, 'g');
-                if(!elm.className.match(re)){
-                    elm.className += ' ' + classname;
-                }
-            },
-
-            /* native method to remove a class */
-            remove_class: function(elm, classname) {
-                var re = new RegExp(classname, 'g');
-                elm.className = elm.className.replace(re, '');
-            },
-
-            /* convenience method to swap one class for another */
-            swap_class: function(elm, class_to_remove, class_to_add) {
-                this.remove_class(elm, class_to_remove);
-                this.add_class(elm, class_to_add);
-            }
-
-        };
-
-        guardian.resize_count = 0;
-        guardian.resize_timer;
-
-        // needs work (and css is separate)
-        guardian.breakpoints = {
-            mobile: 400,
-            tablet: 650,
-            desktop: 900
-            
-            // bbc uses:
-                // phone = default
-                // tablet = 640
-                // desktop = 976
-        };
-
-        /* possibly needs john resig's optimisation to prevent a million events firing */
-
-        window.onload = function(){
-            guardian.window_was_resized();
-        };
-
-        window.onresize = function(){
-            clearTimeout(guardian.resize_timer);
-            guardian.resize_timer = setTimeout(guardian.window_was_resized, 0);
-        };
-
-        guardian.window_was_resized = function() {
-            var width = window.innerWidth || document.body.offsetWidth || 0;
-            if (width < guardian.breakpoints.tablet) {
-                guardian.downgrade_images();
-            } else {
-                guardian.upgrade_images();
-            }
-        };
-
-        guardian.show_screen_size = function(event) {
-            guardian.debug = {
-                screenHeight: screen.height,
-                screenWidth: screen.width,
-                windowWidth: window.innerWidth || document.body.offsetWidth || 0,
-                windowHeight: window.innerHeight || document.body.offsetHeight || 0
-            }
-            for (var key in guardian.debug) {
-                document.getElementById(key).innerText = guardian.debug[key];
-            }
-        };
-
-        guardian.upgrade_images = function(){
-            var images = document.querySelectorAll('img.upscalable');
-            var l = images.length;
-            for (i=0; i<l; i++) {
-                var img = images[i];
-                img.setAttribute("data-losrc", img.src);
-                var hi_res_src = img.dataset['hisrc']
-                img.src = hi_res_src;
-                guardian.util.swap_class(img, 'upscalable', 'downscalable');
-            }
-        };
-
-        guardian.downgrade_images = function(){
-            var images = document.querySelectorAll('img.downscalable');
-            var l = images.length;
-            for (i=0; i<l; i++) {
-                var img = images[i];
-                var low_res_src = img.dataset['losrc']
-                img.src = low_res_src;
-                guardian.util.swap_class(img, 'downscalable', 'upscalable');
-            }
-        };
-
-    </script>
+    <script data-main="@routes.Assets.at("javascripts/main")" src="@routes.Assets.at("javascripts/require.js")"></script>
 
 </head>
 
@@ -125,7 +30,7 @@
             @fragments.headline(article.headline)
 
             @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
-                <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' />
+                <img style="width: 100%;" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' data-width="@image.width" />
             }
 
             @Html(article.body)
@@ -147,6 +52,11 @@
             <li>Screen width: <span id="screenWidth"></span></li>
             <li>Window height: <span id="windowHeight"></span></li>
             <li>Window width: <span id="windowWidth"></span></li>
+            <li>Layout mode: <span id="layout"></span></li>
+            <li>Connection Speed: <span id="bandwidth"></span></li>
+            <li>Battery: <span id="battery"></span></li>
+            <li>Pixel Ratio: <span id="pixelratio"></span></li>
+            <li>Retina display: <span id="retina"></span></li>
         </ul>
         <button onclick="guardian.show_screen_size();">Update sizes</button>
     </div>
