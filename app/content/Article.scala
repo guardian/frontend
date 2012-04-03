@@ -4,10 +4,13 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia }
 import conf.Logging
+import org.joda.time.DateTime
 
 case class Tag(private val tag: ApiTag) {
   lazy val url: String = tag.webUrl
   lazy val name: String = tag.webTitle
+  lazy val tagType: String = tag.`type`
+  lazy val id: String = tag.id
 }
 
 case class Image(private val media: ApiMedia) {
@@ -21,10 +24,18 @@ case class Image(private val media: ApiMedia) {
 }
 
 case class Article(private val content: ApiContent) {
+  lazy val id: String = content.id
   lazy val headline: String = content.safeFields("headline")
   lazy val body: String = content.safeFields("body")
   lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
   lazy val images: Seq[Image] = content.mediaAssets.filter{ _.`type` == "picture" } map { Image(_) }
+  lazy val section: String = content.sectionName getOrElse ""
+  lazy val publication: String = content.safeFields("publication")
+  def tagsOfType(tagType: String): Seq[Tag] = tags filter { _.tagType == tagType }
+  lazy val webPublicationDate: DateTime = content.webPublicationDate
+  lazy val trailText: Option[String] = content.safeFields.get("trailText")
+  lazy val apiUrl: String = content.apiUrl
+  lazy val shortUrl: String = content.safeFields("shortUrl")
 }
 
 object Article extends Logging {

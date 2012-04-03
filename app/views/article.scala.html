@@ -7,19 +7,25 @@
 
 <head>
     <title>@article.headline</title>
-        
+
+    @fragments.metaData(article)
+
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
     <link rel="stylesheet" media="screen" type="text/css" href="http://1.gu-pasteup.appspot.com/css/pasteup.css" />
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/grid.responsive.css")">
 
-    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    
     <script>
         var guardian = {};
 
         /* utility functions for low-level dom manipulation */
         guardian.util = {
+
+            /* finds the value for a named meta tag (or null if it does not exist)*/
+            meta_data: function(name) {
+                var data = document.head.querySelector('meta[name="' + name + '"]');
+                return data ? data.getAttribute("content") : null
+            },
 
             /* native method to add a class */
             add_class: function(elm, classname) {
