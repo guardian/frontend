@@ -2,7 +2,7 @@
     "packages":{
         "frontend-article":{
             "type":"executable-jar-webapp",
-            "apps":[ "guardianfrontend" ],
+            "apps":[ "frontend-article" ],
             "data":{
                 "port":"9000",
                 "bucket":"artifacts-8356e7",
