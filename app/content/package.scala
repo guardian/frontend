@@ -1,7 +1,7 @@
 package content
 
 import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.Content
+import com.gu.openplatform.contentapi.model.{Content, Tag => ApiTag}
 import conf.Logging
 
 object `package` extends Logging {
@@ -19,4 +19,9 @@ object `package` extends Logging {
         None
     }
   }
+}
+
+object RelativeUrl {
+  def apply(c: Content): String = "/%s" format c.id
+  def apply(t: ApiTag): String = "/%s" format t.id
 }

@@ -138,6 +138,13 @@
             }
             </ul>
         </div>
+        <div class="unit size1of3 lastUnit">
+            <ul>
+            @article.relatedContent.map{ trail =>
+                <li>@fragments.formatTrail(trail)</li>
+            }
+            </ul>
+        </div>
     </div>
 
     <div id="debug">

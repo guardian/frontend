@@ -29,14 +29,23 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 
     $("p").first.getText should include("David Cameron this week strongly defended onshore wind power")
 
-    val tagNames = $("li").getTexts
-    tagNames.length should be > (3)
-    tagNames should contain("Environment")
+    val linkNames = $("li").getTexts
+    val linkUrls = $("a").getAttributes("href")
 
+    //trail in related content
+    //TODO a test against related content is going to be fragile - find another way
+    linkNames should contain ("The real green new deal | Tony Blair and Nicholas Stern")
+    linkUrls should contain ("http://localhost:3333/commentisfree/cif-green/2009/sep/22/tony-blair-nicholas-stern-climate")
+
+    //tag in navigation
+    linkNames should contain ("Environment")
+    linkUrls should contain ("http://localhost:3333/environment/climate-change")
   }
 
   it should "404 when content type is not article" in {
     val result = controllers.ArticleController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(FakeRequest())
     status(result) should be(404)
   }
+
+
 }

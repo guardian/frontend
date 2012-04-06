@@ -1,13 +1,16 @@
 package content
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
-import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia }
 import conf.Logging
+import com.gu.openplatform.contentapi.model.{ItemResponse, Content => ApiContent, Tag => ApiTag, MediaAsset => ApiMedia}
 
 case class Tag(private val tag: ApiTag) {
-  lazy val url: String = tag.webUrl
+  lazy val url: String = RelativeUrl(tag)
   lazy val name: String = tag.webTitle
+}
+
+case class ContentTrail(content: ApiContent) {
+  lazy val url: String = RelativeUrl(content)
+  lazy val linkText: String = content.webTitle
 }
 
 case class Image(private val media: ApiMedia) {
@@ -20,7 +23,7 @@ case class Image(private val media: ApiMedia) {
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
 }
 
-case class Article(private val content: ApiContent) {
+case class Article(private val content: ApiContent, relatedContent: Seq[ContentTrail] = Nil) {
   lazy val headline: String = content.safeFields("headline")
   lazy val body: String = content.safeFields("body")
   lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
@@ -32,12 +35,14 @@ object Article extends Logging {
 
   def byId(path: String): Option[Article] = suppressApi404 {
     log.info("Fetching article: " + path)
-    ContentApi.item
+    val response: ItemResponse = ContentApi.item
       .showTags("all")
       .showFields("all")
       .showMedia("all")
+      .showRelated(true)
       .itemId(path)
       .response
-      .content.filter { _.isArticle } map { Article(_) }
+    val related = response.relatedContent map  { ContentTrail(_) }
+    response.content.filter { _.isArticle } map { Article(_, related) }
   }
 }
