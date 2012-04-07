@@ -20,8 +20,3 @@ object `package` extends Logging {
     }
   }
 }
-
-object RelativeUrl {
-  def apply(c: Content): String = "/%s" format c.id
-  def apply(t: ApiTag): String = "/%s" format t.id
-}

@@ -19,6 +19,8 @@ object FrontendArticle extends Build {
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
 
+    "com.gu" %% "frontend-common" % "1.0",
+
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
   )
@@ -41,7 +43,10 @@ object FrontendArticle extends Build {
       excludedFiles in assembly := { (base: Seq[File]) =>
         ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
       },
-
+      templatesImport ++= Seq(
+        "content.Article",
+        "frontend.common._"
+      ),
       dist <<= myDistTask
     )
 
