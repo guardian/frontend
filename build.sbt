@@ -1,0 +1,27 @@
+name := "frontend-common"
+
+organization := "com.gu"
+
+version := "1.0-SNAPSHOT"
+
+
+libraryDependencies ++= Seq(
+    "com.gu.openplatform" %% "content-api-client" % "1.13" % "provided",
+    "play" %% "play" % "2.0" % "provided",
+   // "commons-lang" % "commons-lang" % "2.6",
+    "org.scalatest" %% "scalatest" % "1.7.1" % "test"
+)
+
+
+// no javadoc
+publishArtifact in (Compile, packageDoc) := false
+
+publishTo <<= (version) { version: String =>
+    val publishType = if (version.endsWith("SNAPSHOT")) "snapshots" else "releases"
+    Some(
+        Resolver.file(
+            "guardian github " + publishType,
+            file(System.getProperty("user.home") + "/guardian.github.com/maven/repo-" + publishType)
+        )
+    )
+}
