@@ -2,13 +2,12 @@ name := "frontend-common"
 
 organization := "com.gu"
 
-version := "1.0-SNAPSHOT"
+version := "1.1-SNAPSHOT"
 
 
 libraryDependencies ++= Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.13" % "provided",
     "play" %% "play" % "2.0" % "provided",
-   // "commons-lang" % "commons-lang" % "2.6",
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 )
 
