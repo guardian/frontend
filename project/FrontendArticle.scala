@@ -70,7 +70,7 @@ object FrontendArticle extends Build {
         val resourceFiles = lessFiles.get ++ coffeeFiles.get
 
 
-        val hashedResourceFiles = resourceFiles.flatMap(f => f.relativeTo(assetsDir).map((digestFor(f), _)))
+        val hashedResourceFiles = resourceFiles.par.flatMap(f => f.relativeTo(assetsDir).map((digestFor(f), _)))
 
         val generatedPaths = hashedResourceFiles flatMap {
           case (hash, file) =>
@@ -87,7 +87,7 @@ object FrontendArticle extends Build {
 
         val publicDir = (base / "public")
 
-        val publicPaths = (publicDir ** ("**")).get.filter(!_.isDirectory).flatMap {
+        val publicPaths = (publicDir ** ("**")).get.par.filter(!_.isDirectory).flatMap {
           file: File =>
             val hash = digestFor(file)
             file.relativeTo(publicDir).map(_.getPath).toList.map {
@@ -98,6 +98,9 @@ object FrontendArticle extends Build {
         }
 
         if (pathsFile.exists) pathsFile.delete
+
+        pathsFile.getParentFile.mkdirs()
+        pathsFile.createNewFile()
 
         val out = new FileOutputStream(pathsFile)
 
@@ -132,12 +135,12 @@ object FrontendArticle extends Build {
         val distFile = outDir / "artifacts.zip"
         log.info("Disting %s ..." format distFile)
 
-        if (distFile.exists) distFile.delete()
+        if (distFile exists) { distFile delete() }
 
         val staticFiles = {
           val props =loadPropertiesFile(staticPaths)
           val publicDir = resourcesDir / "public"
-          props.stringPropertyNames.map{ fileKey =>
+          props.stringPropertyNames.par.map{ fileKey =>
             val fileToBeCopied = publicDir / fileKey
             val locationInZip = "packages/%s/static-files/%s".format(appName, props.getProperty(fileKey))
             log.verbose("Static file %s -> %s" format (fileToBeCopied, locationInZip))
