@@ -6,15 +6,34 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+
     <title>@article.headline</title>
         
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
     <link rel="stylesheet" media="screen" type="text/css" href="http://1.gu-pasteup.appspot.com/css/pasteup.css" />
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/grid.responsive.css")">
-
-    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
     
+    <style>
+        /* mildly arbitrary breakpoints */
+        @@media screen and (min-width: 320px) {
+            #container {
+                width: 90%;
+            }
+        }
+        @@media screen and (min-width: 650px) {
+            #container {
+                width: 640px;
+            }
+        }
+        @@media screen and (min-width: 976px) {
+            #container {
+                width: 960px;
+            }
+        }
+    </style>
+
     <script>
         var guardian = {};
 
@@ -43,38 +62,39 @@
 
         };
 
-        guardian.resize_count = 0;
-        guardian.resize_timer;
-
         // needs work (and css is separate)
         guardian.breakpoints = {
-            mobile: 400,
-            tablet: 650,
-            desktop: 900
+            base: 400, // mobile
+            median: 650, // tablet
+            extended: 900 // desktop
             
             // bbc uses:
-                // phone = default
+                // mobile = default
                 // tablet = 640
                 // desktop = 976
         };
 
-        /* possibly needs john resig's optimisation to prevent a million events firing */
+        guardian.images_upgraded = false;
 
-        window.onload = function(){
-            guardian.window_was_resized();
-        };
-
-        window.onresize = function(){
-            clearTimeout(guardian.resize_timer);
-            guardian.resize_timer = setTimeout(guardian.window_was_resized, 0);
-        };
-
-        guardian.window_was_resized = function() {
+        guardian.test_for_hires_images = function() {
+            console.log("testing for width");
+            // load higher-res images if available
             var width = window.innerWidth || document.body.offsetWidth || 0;
-            if (width < guardian.breakpoints.tablet) {
-                guardian.downgrade_images();
-            } else {
+            if (width >= guardian.breakpoints.median && !guardian.images_upgraded) {
                 guardian.upgrade_images();
+            }
+        };
+
+        guardian.upgrade_images = function(){
+            var images = document.querySelectorAll('img.upscalable');
+            var l = images.length;
+            if (l > 0) {
+                console.log("scaled up");
+                for (i=0; i<l; i++) {
+                    var img = images[i];
+                    img.src = img.dataset['hisrc'];
+                }
+                guardian.images_upgraded = true;
             }
         };
 
@@ -90,28 +110,57 @@
             }
         };
 
-        guardian.upgrade_images = function(){
-            var images = document.querySelectorAll('img.upscalable');
-            var l = images.length;
-            for (i=0; i<l; i++) {
-                var img = images[i];
-                img.setAttribute("data-losrc", img.src);
-                var hi_res_src = img.dataset['hisrc']
-                img.src = hi_res_src;
-                guardian.util.swap_class(img, 'upscalable', 'downscalable');
-            }
+        // used to track window resize events so we don't fire a million of them
+        guardian.did_resize;
+
+        // see http://ejohn.org/blog/learning-from-twitter/
+        // seems to fire on page load in chrome, nowhere else
+        window.onresize = function(){
+            guardian.did_resize = true;
         };
 
-        guardian.downgrade_images = function(){
-            var images = document.querySelectorAll('img.downscalable');
-            var l = images.length;
-            for (i=0; i<l; i++) {
-                var img = images[i];
-                var low_res_src = img.dataset['losrc']
-                img.src = low_res_src;
-                guardian.util.swap_class(img, 'downscalable', 'upscalable');
+        setInterval(function(){
+            if (guardian.did_resize) {
+                guardian.did_resize = false;
+                guardian.test_for_hires_images();
             }
-        };
+        }, 250);
+
+        // ugly, but should work crossbrowser
+        /*
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                guardian.test_for_hires_images();
+            }
+        }
+        */
+
+        /* the following adapted from https://github.com/jquery/jquery/blob/master/src/core.js */
+        
+        // Mozilla, Opera and webkit nightlies currently support this event
+        if ( document.addEventListener ) {
+            document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+        // If IE event model is used
+        } else if ( document.attachEvent ) { 
+            document.attachEvent( "onreadystatechange", DOMContentLoaded );
+        }
+
+        if ( document.addEventListener ) {
+            DOMContentLoaded = function() {
+                document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+                //jQuery.ready(); // do something here
+            };
+
+        } else if ( document.attachEvent ) {
+            DOMContentLoaded = function() {
+                if ( document.readyState === "complete" ) {
+                    document.detachEvent( "onreadystatechange", DOMContentLoaded );
+                    //jQuery.ready(); // do something here
+                }
+            };
+        }
+
+
 
     </script>
 
@@ -119,25 +168,29 @@
 
 <body>
 
-    <div class="line">
+    <div id="container">
 
-        <div class="unit size2of3">
-            @fragments.headline(article.headline)
+        <div class="line">
 
-            @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
-                <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' />
-            }
+            <div class="unit size2of3">
+                @fragments.headline(article.headline)
 
-            @Html(article.body)
+                @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
+                    <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' />
+                }
+
+                @Html(article.body)
+            </div>
+
+            <div class="unit size1of3 lastUnit">
+                <ul>
+                @article.tags.map{ tag =>
+                    <li>@fragments.formatTags(tag)</li>
+                }
+                </ul>
+            </div>
         </div>
 
-        <div class="unit size1of3 lastUnit">
-            <ul>
-            @article.tags.map{ tag =>
-                <li>@fragments.formatTags(tag)</li>
-            }
-            </ul>
-        </div>
     </div>
 
     <div id="debug">
