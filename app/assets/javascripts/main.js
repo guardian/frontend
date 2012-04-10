@@ -1,4 +1,4 @@
-require(["detect/detect", "detect/images"], function(detect, images) {
+require(["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pasteup.appspot.com/js/detect/images.js"], function(detect, images) {
 
     var gu_debug = {
         screenHeight: screen.height,
@@ -18,4 +18,5 @@ require(["detect/detect", "detect/images"], function(detect, images) {
     // Find and upgrade images.
     images.upgrade();
 
+    console.log(images.upgrade);
 });
