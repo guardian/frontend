@@ -59,16 +59,16 @@ object FrontendArticle extends Build {
   val JavaScriptFile = """(.*)\.js$""".r
 
   private def staticFileUrlGenerator =
-    (baseDirectory , lessEntryPoints, coffeescriptEntryPoints, streams, staticPathsFile in Compile).map {
+    (baseDirectory , lessEntryPoints, coffeescriptEntryPoints, javascriptEntryPoints,
+      streams, staticPathsFile in Compile).map {
 
-      (base, lessFiles, coffeeFiles, s, pathsFile) => {
+      (base, lessFiles, coffeeFiles, javascriptFiles, s, pathsFile) => {
         val log = s.log
 
         log.info("Generating static file paths to %s" format pathsFile)
         val assetsDir = (base / "app" / "assets")
 
-        val resourceFiles = lessFiles.get ++ coffeeFiles.get
-
+        val resourceFiles = lessFiles.get ++ coffeeFiles.get ++ javascriptFiles.get
 
         val hashedResourceFiles = resourceFiles.par.flatMap(f => f.relativeTo(assetsDir).map((digestFor(f), _)))
 
@@ -90,6 +90,7 @@ object FrontendArticle extends Build {
         val publicPaths = (publicDir ** ("**")).get.par.filter(!_.isDirectory).flatMap {
           file: File =>
             val hash = digestFor(file)
+
             file.relativeTo(publicDir).map(_.getPath).toList.map {
               path =>
                 val pathParts = path.split("""\.""")
