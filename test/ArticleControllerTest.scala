@@ -23,7 +23,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     //this seems to be a common problem http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
     browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
 
-    goTo("http://localhost:3333/environment/2012/feb/22/capitalise-low-carbon-future")
+    goTo("http://localhost:3333/pages/environment/2012/feb/22/capitalise-low-carbon-future")
 
     $("h1").first.getText should be("We must capitalise on a low-carbon future")
 
