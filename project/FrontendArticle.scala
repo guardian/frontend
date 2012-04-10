@@ -137,15 +137,28 @@ object FrontendArticle extends Build {
 
         if (distFile exists) { distFile delete() }
 
-        val staticFiles = {
-          val props =loadPropertiesFile(staticPaths)
-          val publicDir = resourcesDir / "public"
-          props.stringPropertyNames.par.map{ fileKey =>
-            val fileToBeCopied = publicDir / fileKey
-            val locationInZip = "packages/%s/static-files/%s".format(appName, props.getProperty(fileKey))
-            log.verbose("Static file %s -> %s" format (fileToBeCopied, locationInZip))
-            (fileToBeCopied, locationInZip)
-          }
+
+        val props =loadPropertiesFile(staticPaths)
+
+        val cacheBustedResources = props.stringPropertyNames.map{ propName =>
+          (propName, props.getProperty(propName))
+        }
+
+        val resourceAssetsDir = resourcesDir / "public"
+        val resourceAssets = cacheBustedResources map { case (key, cachedKey) =>
+          (resourceAssetsDir / key, cachedKey)
+        } filter { fileExists }
+
+        val publicAssetsDir = baseDir / "public"
+        val publicAssets = cacheBustedResources map { case (key, cachedKey) =>
+          (publicAssetsDir / key, cachedKey)
+        } filter { fileExists }
+
+
+        val staticFiles = (resourceAssets ++ publicAssets) map { case (file, cachedKey) =>
+          val locationInZip = "packages/%s/static-files/%s".format(appName, cachedKey)
+          log.verbose("Static file %s -> %s" format (file, locationInZip))
+          (file, locationInZip)
         }
 
         val filesToZip = Seq(
@@ -153,12 +166,16 @@ object FrontendArticle extends Build {
           jar -> "packages/%s/%s".format(appName, jar.getName)
         ) ++ staticFiles
 
+
         IO.zip(filesToZip, distFile)
 
+        //tells TeamCity to publish the artifact => leav this println in here
         println("##teamcity[publishArtifacts '%s => .']" format distFile)
 
         log.info("Done disting.")
         jar
       }
     }
+
+  private def fileExists(f: (File, String)) = f._1.exists()
 }
