@@ -3,10 +3,9 @@
 # ~~~~
 
 #The ordering of these are important
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file               controllers.Static.at(path="/public", file)
 
 GET     /management$path<.*>        controllers.Management.apply(path)
 POST    /management$path<.*>        controllers.Management.apply(path)
 
-GET     /*path               controllers.ArticleController.render(path)
-
+GET     /pages/*path               controllers.ArticleController.render(path)

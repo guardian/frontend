@@ -1,4 +1,4 @@
-@(trail: frontend.common.Trail)
+@(trail: Trail)
 
 @trail.imageOfWidth(150, tolerance = 20).map {image =>
     <img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
