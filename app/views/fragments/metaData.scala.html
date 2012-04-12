@@ -1,20 +1,20 @@
 @(article: content.Article)
 
-@meta(name: String, value: String) = {<meta name='@name' content='@value' />}
+meta(name: String, value: String) = {<meta name='name' content='value' />}
 
-@meta("keywords", article.tagsOfType("keyword").map{_.name}.mkString(","))
-@article.trailText.map { trail => @meta("description", trail) }
+meta("keywords", article.tagsOfType("keyword").map{_.name}.mkString(","))
+article.trailText.map { trail => meta("description", trail) }
 
-@meta("gu:page-id", article.id)
-@meta("gu:section", article.section)
-@meta("gu:publication", article.publication)
-@meta("gu:tag-ids", article.tags.map{_.id}.mkString(","))
-@meta("gu:author", article.tagsOfType("contributor").map{_.name}.mkString(","))
-@meta("gu:tones", article.tagsOfType("tone").map{_.name}.mkString(","))
-@meta("gu:series", article.tagsOfType("series").map{_.name}.mkString(","))
-@meta("gu:blogs", article.tagsOfType("blog").map{_.name}.mkString(","))
-@meta("gu:web-publication-date", article.webPublicationDate.toString("yy-MM-dd"))
-@meta("gu:content-type", "Article")
-@meta("gu:short-url", article.shortUrl)
-@meta("gu:api-url", article.apiUrl)
+meta("gu:page-id", article.id)
+meta("gu:section", article.section)
+meta("gu:publication", article.publication)
+meta("gu:tag-ids", article.tags.map{_.id}.mkString(","))
+meta("gu:author", article.tagsOfType("contributor").map{_.name}.mkString(","))
+meta("gu:tones", article.tagsOfType("tone").map{_.name}.mkString(","))
+meta("gu:series", article.tagsOfType("series").map{_.name}.mkString(","))
+meta("gu:blogs", article.tagsOfType("blog").map{_.name}.mkString(","))
+meta("gu:web-publication-date", article.webPublicationDate.toString("yy-MM-dd"))
+meta("gu:content-type", "Article")
+meta("gu:short-url", article.shortUrl)
+meta("gu:api-url", article.apiUrl)
 

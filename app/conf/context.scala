@@ -1,8 +1,8 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-import com.gu.management.Healthcheck
 import play.api.Logger
+import com.gu.management.{Switchable, TimingMetric, Healthcheck}
 
 object `package` extends Logging {
   implicit def string2ToIntOption(s: String) = new {
@@ -48,12 +48,12 @@ object Configuration {
 
 object Switches {
   //  val switch = new DefaultSwitch("name", "Description Text")
-  val all = List(Healthcheck.switch)
+  val all: Seq[Switchable] = List(Healthcheck.switch)
 }
 
 object Metrics {
   //  val metric = new TimingMetric("frontend-article", "name", "title", "Description Text")
-  val all = List()
+  val all: Seq[TimingMetric] = Nil
 }
 
 trait Logging {

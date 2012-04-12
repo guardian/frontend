@@ -1,7 +1,7 @@
 package content
 
 import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.Content
+import com.gu.openplatform.contentapi.model.{Content, Tag => ApiTag}
 import conf.Logging
 
 object `package` extends Logging {

@@ -1,0 +1,6 @@
+@(trail: Trail)
+
+@trail.imageOfWidth(150, tolerance = 20).map {image =>
+    <img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
+}
+<a href="@trail.url">@Html(trail.linkText)</a>
