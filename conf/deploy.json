@@ -7,7 +7,7 @@
                 "port":"9000",
                 "bucket":"artifacts-8356e7",
                 "healthcheck_paths":[
-                    "/info/2011/oct/06/submitting-content-to-print-publications"
+                    "/pages/info/2011/oct/06/submitting-content-to-print-publications"
                 ]
             }
         }
