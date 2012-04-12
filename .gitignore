@@ -1,8 +1,7 @@
 log
 logs
 old
-
-target
+target/
 tmp
 .cache
 .classpath
