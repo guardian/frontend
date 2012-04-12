@@ -1,4 +1,4 @@
-@(article: content.Article)
+@(article: Article)
 @import fragments._
 
 <!DOCTYPE html>
@@ -48,6 +48,20 @@
             </div>
         </div>
 
+        <div class="unit size1of3 lastUnit">
+            <ul>
+            @article.tags.map{ tag =>
+                <li>@fragments.formatTags(tag)</li>
+            }
+            </ul>
+        </div>
+        <div class="unit size1of3 lastUnit">
+            <ul>
+            @article.relatedContent.map{ trail =>
+                <li>@fragments.formatTrail(trail)</li>
+            }
+            </ul>
+        </div>
     </div>
 
     <div id="debug">
