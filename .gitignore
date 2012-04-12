@@ -1,2 +1,5 @@
+.cache
+.classpath
+.project
 target
 .idea*
