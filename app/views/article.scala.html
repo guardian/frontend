@@ -12,7 +12,7 @@
         
     <link rel="shortcut icon" type="image/png" href="@controllers.Static.at("images/favicon.png")">
 
-    <link rel="stylesheet" media="screen" type="text/css" href="http://1.gu-pasteup.appspot.com/css/pasteup.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css" />
 
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
     <link rel="stylesheet" media="screen and (min-width: 400px)" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
@@ -20,7 +20,7 @@
         <link rel="stylesheet" type="text/css" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
     <![endif]-->
 
-    <script data-main="@controllers.Static.at("javascripts/main.min.js")" src="@controllers.Static.at("javascripts/require.js")"></script>
+    <script data-main="@controllers.Static.at("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
 
 </head>
 
@@ -33,7 +33,7 @@
             <div class="unit size2of3">
                 @fragments.headline(article.headline)
                 @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
-                    <img style="width: 100%;" class="upscalable" src="@image.url" data-hisrc='@article.images.find(_.rel == "body").map { full => @full.url }' />
+                    <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").map { full => @full.url }' data-width="@image.width" />
                 }
 
                 @Html(article.body)
@@ -77,7 +77,6 @@
             <li>Pixel Ratio: <span id="pixelratio"></span></li>
             <li>Retina display: <span id="retina"></span></li>
         </ul>
-        <button onclick="guardian.show_screen_size();">Update sizes</button>
     </div>
 
 </body>

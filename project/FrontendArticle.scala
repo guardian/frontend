@@ -34,24 +34,24 @@ object FrontendArticle extends Build {
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
     .settings(frontendSettings: _*)
     .settings(
-    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-    // Disable Specs options to use ScalaTest
-    testOptions in Test := Nil,
-    organization := "com.gu",
-    scalaVersion := "2.9.1",
-    maxErrors := 20,
-    javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
-    scalacOptions ++= Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
-    jarName in assembly := "%s.jar" format appName,
-    templatesImport ++= Seq(
-      "content.Article",
-      "frontend.common._"
-    ),
-    excludedFiles in assembly := {
-      (base: Seq[File]) =>
-      //todo
-        ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
-    },
-    staticPathsFile in Compile <<= (resourceManaged in Compile) / "static-paths.properties"
+	    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+	    // Disable Specs options to use ScalaTest
+	    testOptions in Test := Nil,
+	    organization := "com.gu",
+	    scalaVersion := "2.9.1",
+	    maxErrors := 20,
+	    javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
+	    scalacOptions ++= Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
+	    jarName in assembly := "%s.jar" format appName,
+	    templatesImport ++= Seq(
+	      "content.Article",
+	      "frontend.common._"
+	    ),
+	    excludedFiles in assembly := {
+	      (base: Seq[File]) =>
+	      //todo
+	        ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
+	    },
+	    staticPathsFile in Compile <<= (resourceManaged in Compile) / "static-paths.properties"
   )
 }
