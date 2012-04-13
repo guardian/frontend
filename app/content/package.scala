@@ -1,12 +1,12 @@
 package content
 
 import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.{Content, Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import conf.Logging
 
 object `package` extends Logging {
 
-  implicit def content2IsArticle(content: Content) = new {
+  implicit def content2IsArticle(content: ApiContent) = new {
     lazy val isArticle = content.tags.exists(_.id == "type/article")
   }
 

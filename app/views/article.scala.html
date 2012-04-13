@@ -1,5 +1,6 @@
 @(article: Article)
 @import fragments._
+@import conf._
 
 <!DOCTYPE html>
 
@@ -7,6 +8,11 @@
 
 <head>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+
+    <script>
+        var guardian = {};
+    </script>
+    @fragments.metaData(article)
 
     <title>@article.headline</title>
 
@@ -46,21 +52,13 @@
                 }
                 </ul>
             </div>
-        </div>
-
-        <div class="unit size1of3 lastUnit">
-            <ul>
-            @article.tags.map{ tag =>
-                <li>@fragments.formatTags(tag)</li>
-            }
-            </ul>
-        </div>
-        <div class="unit size1of3 lastUnit">
-            <ul>
-            @article.relatedContent.map{ trail =>
+            <div class="unit size1of3 lastUnit">
+                <ul>
+                @article.relatedContent.map{ trail =>
                 <li>@fragments.formatTrail(trail)</li>
-            }
-            </ul>
+                }
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -79,5 +77,8 @@
         </ul>
     </div>
 
+    <script>
+        require(['@Configuration.plugins.location'], function(){});
+    </script>
 </body>
 </html>

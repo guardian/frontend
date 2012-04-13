@@ -1,14 +1,15 @@
 package content
 
-import conf.Logging
 import com.gu.openplatform.contentapi.model.{ItemResponse, Content => ApiContent}
-import frontend.common.{Image, Trail, Tag}
+import frontend.common._
+import conf._
 
-case class Article(private val content: ApiContent, relatedContent: Seq[Trail] = Nil) {
-  lazy val headline: String = content.safeFields("headline")
+case class Article(private val content: ApiContent, private val related: Seq[Trail] = Nil)
+  extends Content(content, related)  {
+
   lazy val body: String = content.safeFields("body")
-  lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
-  lazy val images: Seq[Image] = content.mediaAssets.filter{ _.`type` == "picture" } map { Image(_) }
+
+  override lazy val metaData = super.metaData + ("content-type" -> "Article")
 }
 
 object Article extends Logging {
@@ -23,6 +24,7 @@ object Article extends Logging {
       .itemId(path)
       .response
     val related = response.relatedContent map  { Trail(_) }
+
     response.content.filter { _.isArticle } map { Article(_, related) }
   }
 }
