@@ -14,14 +14,13 @@ tasks, and starts the Play Framework console. Use the `compile` command
 to compile the software, `run` to run the development application, and
 `test` to execute test suites.
 
-To use in Eclipse, use the already configured `eclipse` command from the 
-[SBT Eclipse plugin][sbteclipse] project. This will create Eclipse project
-and settings files which can be imported using the Import Existing Project
-options in Eclipse.
+To use in Eclipse, use the `eclipsify` command. This will create Eclipse
+project and settings files which can be imported using the Import Existing
+Project options in Eclipse.
 
-To use in IntelliJ, use the already configured `gen-idea` command from the
-[SBT Idea plugin][sbt-idea]. This will create IntelliJ project directories.
-The source tree can be opened directly as a project in IntelliJ.
+To use in IntelliJ, use the `gen-idea` command from the. This will create
+IntelliJ project directories. The source tree can be opened directly as 
+a project in IntelliJ.
 
 Start the Play application locally using `run` at the console. You can
 inspect it at `http://localhost:9000`. Play supports recompilation on browser
@@ -41,6 +40,11 @@ The available endpoints are listed in `conf/routes` and include:
 Deploying
 ---------
 TBD
+
+
+No Proxy Build
+--------------
+Invoke `sbt011` with a `--no-proxy` parameter to directly download artifacts.
 
 
 Vagrant virtualisation (optional)
