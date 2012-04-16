@@ -1,6 +1,6 @@
 package frontend.common
 
-import com.gu.openplatform.contentapi.model.{MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag }
 import math.abs
 import org.joda.time.DateTime
 
@@ -17,9 +17,9 @@ object Trail {
     override lazy val images = c.mediaAssets.filter(_.`type` == "picture").map(Image(_))
   }
   def apply(t: ApiTag): Trail = new Trail {
-      override lazy val url = RelativeUrl(t)
-      override lazy val linkText = t.webTitle
-    }
+    override lazy val url = RelativeUrl(t)
+    override lazy val linkText = t.webTitle
+  }
 }
 
 case class Tag(private val tag: ApiTag) {
@@ -55,7 +55,7 @@ case class Image(private val media: ApiMedia) {
 trait Images {
   def images: Seq[Image]
 
-  def imageOfWidth(desiredWidth: Int, tolerance: Int = 0) : Option[Image] = {
+  def imageOfWidth(desiredWidth: Int, tolerance: Int = 0): Option[Image] = {
     val validWidths = (desiredWidth - tolerance) to (desiredWidth + tolerance)
     val imagesInWidthRange = images.filter(image => validWidths contains image.width)
     imagesInWidthRange.sortBy(image => abs(desiredWidth - image.width)).headOption
