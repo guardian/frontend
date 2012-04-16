@@ -4,6 +4,10 @@ organization := "com.gu"
 
 version := "1.4-SNAPSHOT"
 
+resolvers ++= Seq(
+    "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+    "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+)
 
 libraryDependencies ++= Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.13" % "provided",
