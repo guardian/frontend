@@ -2,7 +2,7 @@ name := "frontend-common"
 
 organization := "com.gu"
 
-version := "1.3-SNAPSHOT"
+version := "1.4-SNAPSHOT"
 
 
 libraryDependencies ++= Seq(
