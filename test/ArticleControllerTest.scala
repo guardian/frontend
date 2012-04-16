@@ -40,6 +40,9 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     //tag in navigation
     linkNames should contain ("Environment")
     linkUrls should contain ("http://localhost:3333/environment/climate-change")
+
+    $("meta[name=content-type]").getAttributes("value").head should be ("Article")
+    $("meta[name=api-url]").getAttributes("value").head should be ("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
   }
 
   it should "404 when content type is not article" in {
