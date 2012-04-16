@@ -62,10 +62,10 @@ trait Images {
   }
 }
 
-class Content(content: ApiContent, val relatedContent: Seq[Trail]) extends Tags with Images {
+class Content(content: ApiContent, val relatedContent: Seq[Trail] = Nil) extends Tags with Images {
 
   override lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
-  override lazy val images: Seq[Image] = content.mediaAssets.filter{ _.`type` == "picture" } map { Image(_) }
+  override lazy val images: Seq[Image] = content.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
 
   lazy val trailText: Option[String] = content.safeFields.get("trailText")
   lazy val id: String = content.id
@@ -75,9 +75,10 @@ class Content(content: ApiContent, val relatedContent: Seq[Trail]) extends Tags 
   lazy val shortUrl: String = content.safeFields("shortUrl")
   lazy val headline: String = content.safeFields("headline")
 
+  // Meta Data used by plugins on the page
+  // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   def metaData = Map[String, Any](
-    //people (including 3rd parties) rely on the names of these things, avoid changing them
-    "keywords" -> keywords.map{_.name}.mkString(","),
+    "keywords" -> keywords.map { _.name }.mkString(","),
     "description" -> trailText.getOrElse(""),
     "page-id" -> id,
     "section" -> section,
@@ -91,7 +92,7 @@ class Content(content: ApiContent, val relatedContent: Seq[Trail]) extends Tags 
     "short-url" -> shortUrl,
     "api-url" -> content.apiUrl,
     "web-title" -> content.webTitle,
-    "byline" -> content.safeFields.get("byline").getOrElse("") ,
+    "byline" -> content.safeFields.get("byline").getOrElse(""),
     "commentable" -> content.safeFields.get("commentable").getOrElse("false")
   )
 }
