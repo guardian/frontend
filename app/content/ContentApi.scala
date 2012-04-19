@@ -2,7 +2,8 @@ package content
 
 import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
-import conf.{ Configuration, Logging }
+import conf.Configuration
+import frontend.common.Logging
 
 object ContentApi extends Api with MultiThreadedApacheHttpClient with Logging {
 

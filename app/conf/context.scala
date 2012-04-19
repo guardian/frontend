@@ -1,10 +1,10 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-import play.api.Logger
 import com.gu.management.{Switchable, TimingMetric, Healthcheck}
+import play.api.Logger
 
-object `package` extends Logging {
+object `package` {
   implicit def string2ToIntOption(s: String) = new {
     lazy val toIntOption: Option[Int] = try {
       Some(s.toInt)
@@ -68,6 +68,3 @@ object Metrics {
   val all: Seq[TimingMetric] = Nil
 }
 
-trait Logging {
-  val log = Logger(getClass)
-}
