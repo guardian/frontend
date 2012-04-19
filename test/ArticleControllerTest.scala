@@ -27,9 +27,9 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 
     $("h1").first.getText should be("We must capitalise on a low-carbon future")
 
-    $("p").first.getText should include("David Cameron this week strongly defended onshore wind power")
+    $("article p").first.getText should include("David Cameron this week strongly defended onshore wind power")
 
-    val linkNames = $("li").getTexts
+    val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
     //trail in related content
