@@ -1,12 +1,12 @@
 @(article: Article)
 @import fragments._
-
 <!DOCTYPE html>
 
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta charset="utf-8" />
 
     <title>@article.headline</title>
         
@@ -16,11 +16,20 @@
 
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
     <link rel="stylesheet" media="screen and (min-width: 400px)" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
+
+    <link rel="stylesheet" type="text/css" href="@controllers.Static.at("stylesheets/main.css")">
+
     <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
         <link rel="stylesheet" type="text/css" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
     <![endif]-->
 
+    <script>              
+        // mmmm, hacktastic      
+        var discussion_comments_url = "http://coddisapi01.gudev.gnl:8900/discussion-api/discussion/@article.shortUrlPath";
+    </script>
+
     <script data-main="@controllers.Static.at("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
+
 
 </head>
 
@@ -30,38 +39,52 @@
 
         <div class="line">
 
-            <div class="unit size2of3">
-                @fragments.headline(article.headline)
-                @article.images.find( i => i.rel == "alt-size" && i.width < 250 && i.width > 140).map{ image =>
-                    <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").map { full => @full.url }' data-width="@image.width" />
-                }
+            <div class="unit size1of1">
 
-                @Html(article.body)
+                    @fragments.headline(article.headline)
+                    @fragments.standfirst(article.standfirst)
+
+                    @article.images.find( i => i.rel == "alt-size" && i.width > 140 && i.width < 250).map{ image =>
+                        <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").map { full => @full.url }' data-width="@image.width" />
+                        @fragments.caption(image.caption.getOrElse(""))
+                    }
+
+                    @fragments.byline(article.byline)
+                    @fragments.dateline(article.webPublicationDate)
+                
+                    <article>
+                        @Html(article.body)
+                    </article>
+
             </div>
 
-            <div class="unit size1of3 lastUnit">
-                <ul>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size1of1">
+
+                <div class="expandable">
+                    <h3 class="b1">More on this story</h3>
+                    <ul class="plain">
+                    @article.relatedContent.map{ trail =>
+                        <li>@fragments.formatTrail(trail)</li>
+                    }
+                    </ul>
+                    <h3 class="b1 b1b"><a href="#">More related content</a> <span>23</span></h3>
+                </div>
+
+                <h4>Related subjects</h4>
+                <ul class="plain tags">
                 @article.tags.map{ tag =>
-                    <li>@fragments.formatTags(tag)</li>
+                    @fragments.formatTags(tag)
                 }
                 </ul>
+
             </div>
+
         </div>
 
-        <div class="unit size1of3 lastUnit">
-            <ul>
-            @article.tags.map{ tag =>
-                <li>@fragments.formatTags(tag)</li>
-            }
-            </ul>
-        </div>
-        <div class="unit size1of3 lastUnit">
-            <ul>
-            @article.relatedContent.map{ trail =>
-                <li>@fragments.formatTrail(trail)</li>
-            }
-            </ul>
-        </div>
     </div>
 
     <div id="debug">
