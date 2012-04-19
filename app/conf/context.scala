@@ -16,7 +16,13 @@ object `package` extends Logging {
 
 object Configuration {
 
-  private val configuration = ConfigurationFactory getConfiguration "frontend-article"
+  private val configuration = ConfigurationFactory.getConfiguration("frontend-article", webappConfDirectory = "env")
+
+  object plugins {
+    lazy val location = configuration.getStringProperty("plugins.location").getOrElse {
+      throw new IllegalStateException("Plugins Location not configured")
+    }
+  }
 
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {

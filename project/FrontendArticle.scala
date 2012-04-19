@@ -21,7 +21,7 @@ object FrontendArticle extends Build {
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.0",
+    "com.gu" %% "frontend-common" % "1.3",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
@@ -30,18 +30,13 @@ object FrontendArticle extends Build {
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
     .settings(frontendSettings: _*)
     .settings(
-	    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-	    // Disable Specs options to use ScalaTest
-	    testOptions in Test := Nil,
-	    jarName in assembly := "%s.jar" format appName,
-	    templatesImport ++= Seq(
-	      "content.Article",
-	      "frontend.common._"
-	    ),
-	    excludedFiles in assembly := {
-	      (base: Seq[File]) =>
-	      //todo
-	        ((base / "logger.xml") +++ (base / "META-INF" / "MANIFEST.MF")).get
-	    }
+    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+    // Disable Specs options to use ScalaTest
+    testOptions in Test := Nil,
+    jarName in assembly := "%s.jar" format appName,
+    templatesImport ++= Seq(
+      "content.Article",
+      "frontend.common._"
+    )
   )
 }
