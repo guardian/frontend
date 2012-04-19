@@ -75,6 +75,10 @@ class Content(content: ApiContent, val relatedContent: Seq[Trail] = Nil) extends
   lazy val shortUrl: String = content.safeFields("shortUrl")
   lazy val headline: String = content.safeFields("headline")
 
+  lazy val standfirst: String = content.safeFields("standfirst")
+  lazy val byline: String = content.safeFields("byline")
+  lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   def metaData = Map[String, Any](
