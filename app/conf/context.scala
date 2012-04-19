@@ -2,17 +2,8 @@ package conf
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{Switchable, TimingMetric, Healthcheck}
+import frontend.common._
 import play.api.Logger
-
-object `package` {
-  implicit def string2ToIntOption(s: String) = new {
-    lazy val toIntOption: Option[Int] = try {
-      Some(s.toInt)
-    } catch {
-      case _ => None
-    }
-  }
-}
 
 object Configuration {
 
