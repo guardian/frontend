@@ -31,7 +31,6 @@ object FrontendArticle extends Build {
     .settings(frontendSettings: _*)
     .settings(
     resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-    resolvers += "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
     // Disable Specs options to use ScalaTest
     testOptions in Test := Nil,
     jarName in assembly := "%s.jar" format appName,
