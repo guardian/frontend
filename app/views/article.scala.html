@@ -1,4 +1,4 @@
-@(article: Article)
+@(article: Article, related: List[Trail])
 @import fragments._
 @import conf._
 
@@ -54,7 +54,7 @@
             </div>
             <div class="unit size1of3 lastUnit">
                 <ul>
-                @article.relatedContent.map{ trail =>
+                @related.map{ trail =>
                 <li>@fragments.formatTrail(trail)</li>
                 }
                 </ul>

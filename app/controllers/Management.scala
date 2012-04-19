@@ -16,4 +16,3 @@ object Management extends ManagementController {
     new LogbackLevelPage
   )
 }
-
