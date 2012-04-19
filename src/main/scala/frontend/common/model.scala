@@ -4,44 +4,6 @@ import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content =>
 import math.abs
 import org.joda.time.DateTime
 
-trait Trail extends Images {
-  def linkText: String
-  def url: String
-  def images: Seq[Image] = Nil
-}
-
-object Trail {
-  def apply(c: ApiContent): Trail = new Trail {
-    override lazy val url = RelativeUrl(c)
-    override lazy val linkText = c.webTitle
-    override lazy val images = c.mediaAssets.filter(_.`type` == "picture").map(Image(_))
-  }
-  def apply(t: ApiTag): Trail = new Trail {
-    override lazy val url = RelativeUrl(t)
-    override lazy val linkText = t.webTitle
-  }
-}
-
-case class Tag(private val tag: ApiTag) {
-  lazy val id: String = tag.id
-  lazy val url: String = RelativeUrl(tag)
-  lazy val name: String = tag.webTitle
-  lazy val tagType: String = tag.`type`
-}
-
-trait Tags {
-
-  def tags: Seq[Tag] = Nil
-
-  private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
-
-  lazy val keywords = tagsOfType("keyword")
-  lazy val contributors = tagsOfType("contributor")
-  lazy val series = tagsOfType("series")
-  lazy val blogs = tagsOfType("blog")
-  lazy val tones = tagsOfType("tone")
-}
-
 case class Image(private val media: ApiMedia) {
   private val fields = media.fields.getOrElse(Map.empty[String, String])
 
@@ -62,10 +24,44 @@ trait Images {
   }
 }
 
-class Content(content: ApiContent, val relatedContent: Seq[Trail] = Nil) extends Tags with Images {
+trait Trail extends Images {
+  def linkText: String
+  def url: String
+}
 
-  override lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
-  override lazy val images: Seq[Image] = content.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
+object Trail {
+  def apply(c: ApiContent): Trail = new Content(c)
+  def apply(t: ApiTag): Trail = Tag(t)
+}
+
+case class Tag(private val tag: ApiTag) extends Trail {
+  lazy val id: String = tag.id
+  lazy val url: String = RelativeUrl(tag)
+  lazy val name: String = tag.webTitle
+  lazy val tagType: String = tag.`type`
+  lazy val linkText = tag.webTitle
+
+  lazy val images: Seq[Image] = Nil
+}
+
+trait Tags {
+  def tags: Seq[Tag]
+
+  private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
+
+  lazy val keywords = tagsOfType("keyword")
+  lazy val contributors = tagsOfType("contributor")
+  lazy val series = tagsOfType("series")
+  lazy val blogs = tagsOfType("blog")
+  lazy val tones = tagsOfType("tone")
+}
+
+class Content(content: ApiContent) extends Trail with Tags {
+  lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
+
+  lazy val url = RelativeUrl(content)
+  lazy val linkText = webTitle
+  lazy val images: Seq[Image] = content.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
 
   lazy val trailText: Option[String] = content.safeFields.get("trailText")
   lazy val id: String = content.id
@@ -74,6 +70,7 @@ class Content(content: ApiContent, val relatedContent: Seq[Trail] = Nil) extends
   lazy val webPublicationDate: DateTime = content.webPublicationDate
   lazy val shortUrl: String = content.safeFields("shortUrl")
   lazy val headline: String = content.safeFields("headline")
+  lazy val webTitle = content.webTitle
 
   lazy val standfirst: String = content.safeFields("standfirst")
   lazy val byline: String = content.safeFields("byline")
@@ -95,8 +92,13 @@ class Content(content: ApiContent, val relatedContent: Seq[Trail] = Nil) extends
     "web-publication-date" -> webPublicationDate,
     "short-url" -> shortUrl,
     "api-url" -> content.apiUrl,
-    "web-title" -> content.webTitle,
+    "web-title" -> webTitle,
     "byline" -> content.safeFields.get("byline").getOrElse(""),
     "commentable" -> content.safeFields.get("commentable").getOrElse("false")
   )
+}
+
+class Article(private val content: ApiContent) extends Content(content) {
+  lazy val body: String = content.safeFields("body")
+  override lazy val metaData = super.metaData + ("content-type" -> "Article")
 }
