@@ -1,6 +1,13 @@
 @(trail: Trail)
 
+<div class="media b1">
 @trail.imageOfWidth(150, tolerance = 20).map {image =>
-    <img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
+	<a href="#" class="img">
+    	<img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
+	</a>
 }
-<a href="@trail.url">@Html(trail.linkText)</a>
+	<div class="bd">
+		<p>Content type</p>
+		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
+	</div>
+</div>
