@@ -10,7 +10,7 @@ trait MetaData {
   def apiUrl: String
   def webTitle: String
 
-  def metaData = Map[String, Any](
+  def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
     "api-url" -> apiUrl,
@@ -40,11 +40,11 @@ trait Tags {
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 
-  lazy val keywords = tagsOfType("keyword")
-  lazy val contributors = tagsOfType("contributor")
-  lazy val series = tagsOfType("series")
-  lazy val blogs = tagsOfType("blog")
-  lazy val tones = tagsOfType("tone")
+  lazy val keywords: Seq[Tag] = tagsOfType("keyword")
+  lazy val contributors: Seq[Tag] = tagsOfType("contributor")
+  lazy val series: Seq[Tag] = tagsOfType("series")
+  lazy val blogs: Seq[Tag] = tagsOfType("blog")
+  lazy val tones: Seq[Tag] = tagsOfType("tone")
 }
 
 case class Image(private val media: ApiMedia) {
@@ -64,17 +64,17 @@ case class Tag(private val tag: ApiTag) extends MetaData {
   lazy val id: String = tag.id
   lazy val section: String = tag.sectionId.getOrElse("")
   lazy val apiUrl: String = tag.apiUrl
-  lazy val webTitle = tag.webTitle
+  lazy val webTitle: String = tag.webTitle
 
   lazy val url: String = RelativeUrl(tag)
-  lazy val linkText = webTitle
+  lazy val linkText: String = webTitle
 }
 
 class Content(content: ApiContent) extends Trail with Tags with MetaData {
   lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
 
-  lazy val url = RelativeUrl(content)
-  lazy val linkText = webTitle
+  lazy val url: String = RelativeUrl(content)
+  lazy val linkText: String = webTitle
   lazy val trailText: Option[String] = content.safeFields.get("trailText")
 
   lazy val images: Seq[Image] = content.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
@@ -86,7 +86,7 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
   lazy val shortUrl: String = content.safeFields("shortUrl")
   lazy val apiUrl: String = content.apiUrl
   lazy val headline: String = content.safeFields("headline")
-  lazy val webTitle = content.webTitle
+  lazy val webTitle: String = content.webTitle
 
   lazy val standfirst: String = content.safeFields("standfirst")
   lazy val byline: String = content.safeFields("byline")
@@ -94,7 +94,7 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
-  override def metaData = super.metaData ++ Map[String, Any](
+  override def metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> keywords.map { _.name }.mkString(","),
     "description" -> trailText.getOrElse(""),
     "publication" -> publication,
@@ -112,5 +112,5 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
 
 class Article(private val content: ApiContent) extends Content(content) {
   lazy val body: String = content.safeFields("body")
-  override lazy val metaData = super.metaData + ("content-type" -> "Article")
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
 }
