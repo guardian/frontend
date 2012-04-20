@@ -21,7 +21,7 @@ object FrontendTag extends Build {
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.6",
+    "com.gu" %% "frontend-common" % "1.8.2",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
