@@ -88,7 +88,7 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
   lazy val headline: String = content.safeFields("headline")
   lazy val webTitle: String = content.webTitle
 
-  lazy val standfirst: String = content.safeFields("standfirst")
+  lazy val standfirst: Option[String] = content.safeFields.get("standfirst")
   lazy val byline: String = content.safeFields("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
