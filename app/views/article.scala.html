@@ -59,10 +59,27 @@
                     </article>
 
             </div>
-            <div class="unit size1of3 lastUnit">
-                <ul>
-                @related.map{ trail =>
-                <li>@fragments.formatTrail(trail)</li>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size1of1">
+
+                <div class="expandable">
+                    <h3 class="b1">More on this story</h3>
+                    <ul class="plain">
+                    @related.map{ trail =>
+                        <li>@fragments.formatTrail(trail)</li>
+                    }
+                    </ul>
+
+                    <h3 class="b1 b1b"><a href="#">More related content</a> <span>@(related.size - 4)</span></h3>
+                </div>
+
+                <h4>Related subjects</h4>
+                <ul class="plain tags">
+                @article.keywords.map{ tag =>
+                    @fragments.formatTags(tag)
                 }
                 </ul>
 
