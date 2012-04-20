@@ -41,5 +41,11 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
     }
   }
 
+  object static {
+    lazy val path = configuration.getStringProperty("static.path").getOrElse {
+      throw new IllegalStateException("Static path not configured")
+    }
+  }
+
   override def toString(): String = configuration.toString
 }
