@@ -80,9 +80,10 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     val theContributors = Seq(Tag(tag("/contributor", "contributor")))
     val theTones = Seq(Tag(tag("/tone", "tone")))
     val theBlogs = Seq(Tag(tag("/blog", "blog")))
+    val theTypes = Seq(Tag(tag("/type", "type")))
 
     val tags = new Tags {
-      override val tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords
+      override val tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes
     }
 
     tags.keywords should be(theKeywords)
@@ -94,6 +95,8 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     tags.tones should be(theTones)
 
     tags.series should be(theSeries)
+
+    tags.types should be(theTypes)
 
   }
 

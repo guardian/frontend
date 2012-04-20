@@ -45,6 +45,7 @@ trait Tags {
   lazy val series: Seq[Tag] = tagsOfType("series")
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
+  lazy val types: Seq[Tag] = tagsOfType("type")
 }
 
 case class Image(private val media: ApiMedia) {
