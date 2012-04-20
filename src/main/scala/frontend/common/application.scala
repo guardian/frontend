@@ -8,7 +8,7 @@ trait Logging {
 }
 
 class Configuration(application: String, webappConfDirectory: String = "env") {
-  private val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
+  protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object plugins {
     lazy val location = configuration.getStringProperty("plugins.location").getOrElse {
