@@ -9,5 +9,7 @@
 	<div class="bd">
 		<p>Content type</p>
 		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
+        @trail.trailText.map { text => <p>@Html(text)</p> }
+        @fragments.dateline(trail.webPublicationDate)
 	</div>
 </div>

@@ -1,7 +1,7 @@
-@(article: Article)
+@(item: MetaData)
 @import org.joda.time.DateTime
 
-@article.metaData.map{ case (key, value) =>
+@item.metaData.map{ case (key, value) =>
     <meta name="@key" value="@value"/> }
 
 @*
@@ -12,7 +12,7 @@ this is orders of magnitude faster than selector queries
 <script>
     guardian.pageData = {
         @Html(
-            article.metaData.map{
+            item.metaData.map{
                 case (key, value: DateTime) =>   "'%s' : new Date(%s)".format(key, value.getMillis) // todo how exactly do we want to use dates in Javascript
                 case (key, value: String) =>   "'%s' : '%s'".format(key, JavaScriptString(value))
             }.mkString(",\n\t")

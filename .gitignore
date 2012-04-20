@@ -14,6 +14,6 @@ tmp
 *.iml
 Vagrantfile
 .vagrant
-frontend-article.properties
+frontend-tag.properties
 dist
 artifacts.zip

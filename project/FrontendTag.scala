@@ -10,9 +10,9 @@ import sbtassembly.Plugin._
 import AssemblyKeys._
 import frontend.Frontend._
 
-object FrontendArticle extends Build {
+object FrontendTag extends Build {
 
-  private val appName = "frontend-article"
+  private val appName = "frontend-tag"
   private val appVersion = "1-SNAPSHOT"
 
   private val appDependencies = Seq(
@@ -21,7 +21,7 @@ object FrontendArticle extends Build {
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.5",
+    "com.gu" %% "frontend-common" % "1.6",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"

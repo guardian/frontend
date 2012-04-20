@@ -8,4 +8,4 @@ GET     /assets/*file               controllers.Static.at(path="/public", file)
 GET     /management$path<.*>        controllers.Management.apply(path)
 POST    /management$path<.*>        controllers.Management.apply(path)
 
-GET     /pages/*path               controllers.ArticleController.render(path)
+GET     /pages/*path               controllers.TagController.render(path)

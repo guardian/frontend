@@ -2,9 +2,8 @@ package conf
 
 import com.gu.management.{Switchable, TimingMetric, Healthcheck}
 import frontend.common._
-import play.api.Logger
 
-object Configuration extends Configuration("frontend-article", webappConfDirectory = "env")
+object Configuration extends Configuration("frontend-tag", webappConfDirectory = "env")
 
 object ContentApi extends ContentApi(Configuration)
 

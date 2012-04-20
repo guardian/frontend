@@ -1,12 +1,12 @@
-Frontend Article
-================
+Frontend Tag
+============
 
-The article rendering components for the Guardian website.
+The tag rendering components for the Guardian website.
 
 
 Getting started for new developers
 ----------------------------------
-Frontend Article is a Play Framework 2 Scala application.
+Frontend Tag is a Play Framework 2 Scala application.
 
 To start the play development environment, run the provided `sbt011` script
 in the sourcetree root. This performs a number of additional configuration
@@ -73,17 +73,17 @@ It is convenient to start the instance in the root of the sourcetree:
     /opt/vagrant/bin/vagrant up
 
 As a temporary measure until API key distribution is organised, you will need to
-copy a useful `/etc/gu/frontend-article.properties`. Developers should be able to
-copy the necessary `frontend-article.properties` from their dev box proper to the
+copy a useful `/etc/gu/frontend-tag.properties`. Developers should be able to
+copy the necessary `frontend-tag.properties` from their dev box proper to the
 sourceroot and then onto `/etc/gu` in the virtual instance.
 
-Do not check in `frontend-article.properties`.
+Do not check in `frontend-tag.properties`.
 
-SSH onto the virtual instance, copy `frontend-article.properties` and start the app:
+SSH onto the virtual instance, copy `frontend-tag.properties` and start the app:
 
     /opt/vagrant/bin/vagrant ssh
     $ cd /vagrant
-    $ sudo cp frontend-article.properties /etc/gu
+    $ sudo cp frontend-tag.properties /etc/gu
     $ ./sbt011 run
 
 The instance forwards port 80 on the virtual box to port 8000 on the developer box proper so the application should be
