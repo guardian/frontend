@@ -28,7 +28,7 @@ trait Images {
   }
 }
 
-trait Trail extends Images {
+trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def url: String
@@ -36,7 +36,7 @@ trait Trail extends Images {
 }
 
 trait Tags {
-  def tags: Seq[Tag]
+  def tags: Seq[Tag] = Nil
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 
@@ -72,7 +72,7 @@ case class Tag(private val tag: ApiTag) extends MetaData {
 }
 
 class Content(content: ApiContent) extends Trail with Tags with MetaData {
-  lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
+  override lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
 
   lazy val url: String = RelativeUrl(content)
   lazy val linkText: String = webTitle
