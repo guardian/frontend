@@ -18,6 +18,12 @@ object Configuration {
 
   private val configuration = ConfigurationFactory.getConfiguration("frontend-article", webappConfDirectory = "env")
 
+  object static {
+    lazy val path = configuration.getStringProperty("static.path").getOrElse{
+      throw new IllegalStateException("Static path not configured")
+    }
+  }
+
   object plugins {
     lazy val location = configuration.getStringProperty("plugins.location").getOrElse {
       throw new IllegalStateException("Plugins Location not configured")
