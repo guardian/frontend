@@ -21,7 +21,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       mediaAssets = media)
 
-    val trail = Trail(content)
+    val trail: Trail = new Content(content)
 
     trail.linkText should be("Some article")
     trail.url should be("/foo/2012/jan/07/bar")
