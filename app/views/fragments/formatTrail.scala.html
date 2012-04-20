@@ -7,7 +7,7 @@
 	</a>
 }
 	<div class="bd">
-		<p>Content type</p>
+		@trail.types.headOption.map { tag => <p>@tag.name</p> }
 		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
 	</div>
 </div>
