@@ -13,7 +13,7 @@ object `package` {
     }
   }
 
-  implicit def content2IsArticle(content: ApiContent) = new {
+  implicit def content2understandsContentType(content: ApiContent) = new {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
   }
 
