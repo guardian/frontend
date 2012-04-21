@@ -20,9 +20,9 @@ class UrlTest extends FlatSpec with ShouldMatchers {
       tags = List(tagWithId("type/article"))
     )
 
-    SupportedUrl(content) should be("/pages/foo/2012/jan/07/bar")
+    SupportedUrl(content) should be("/foo/2012/jan/07/bar")
 
-    new Content(content).url should be("/pages/foo/2012/jan/07/bar")
+    new Content(content).url should be("/foo/2012/jan/07/bar")
   }
 
   they should "be created absolute for unsupported content types" in {
@@ -39,7 +39,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
   }
 
   they should "be created relative for tags" in {
-    Tag(tagWithId("foo/bar")).url should be("/pages/foo/bar")
+    Tag(tagWithId("foo/bar")).url should be("/foo/bar")
   }
 
   private def tagWithId(id: String) = ApiTag(id = id, `type` = "type", webTitle = "", webUrl = "", apiUrl = "")
