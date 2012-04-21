@@ -19,12 +19,14 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      mediaAssets = media)
+      mediaAssets = media,
+      tags = List(tag("type/article"))
+    )
 
     val trail: Trail = new Content(content)
 
     trail.linkText should be("Some article")
-    trail.url should be("/foo/2012/jan/07/bar")
+    trail.url should be("/pages/foo/2012/jan/07/bar")
     trail.images should be(List(Image(media(0))))
   }
 

@@ -67,14 +67,14 @@ case class Tag(private val tag: ApiTag) extends MetaData {
   lazy val apiUrl: String = tag.apiUrl
   lazy val webTitle: String = tag.webTitle
 
-  lazy val url: String = RelativeUrl(tag)
+  lazy val url: String = SupportedUrl(tag)
   lazy val linkText: String = webTitle
 }
 
 class Content(content: ApiContent) extends Trail with Tags with MetaData {
   override lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
 
-  lazy val url: String = RelativeUrl(content)
+  lazy val url: String = SupportedUrl(content)
   lazy val linkText: String = webTitle
   lazy val trailText: Option[String] = content.safeFields.get("trailText")
 
