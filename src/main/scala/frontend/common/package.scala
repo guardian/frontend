@@ -15,7 +15,6 @@ object `package` {
 
   implicit def content2understandsContentType(content: ApiContent) = new {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
-    lazy val isSupportedInApp = isArticle
   }
 
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
