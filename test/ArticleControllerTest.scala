@@ -32,10 +32,9 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    //trail in related content
-    //TODO a test against related content is going to be fragile - find another way
-    linkNames should contain ("The real green new deal | Tony Blair and Nicholas Stern")
-    linkUrls should contain ("http://localhost:3333/commentisfree/cif-green/2009/sep/22/tony-blair-nicholas-stern-climate")
+    //trail in story package
+    linkNames should contain ("David Cameron defends windfarm plans to Tory MPs")
+    linkUrls should contain ("http://localhost:3333/environment/2012/feb/21/cameron-defends-wind-farm-mps")
 
     //tag in navigation
     linkNames should contain ("Environment")

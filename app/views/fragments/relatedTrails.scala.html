@@ -1,0 +1,17 @@
+@(trails: Seq[Trail], heading: String, visibleTrails: Int)
+
+@defining(trails.length){ numTrails =>
+    <div class="expandable">
+        <h3 class="b1">@heading</h3>
+        <ul class="plain">
+        @* extra trails are hidden by css *@
+        @trails.map{ trail =>
+            <li>@fragments.formatTrail(trail)</li>
+        }
+        </ul>
+
+        @if(numTrails > visibleTrails) {
+            <h3 class="b1 b1b"><a href="#">More related content</a> <span>@(numTrails - visibleTrails)</span></h3>
+        }
+    </div>
+}

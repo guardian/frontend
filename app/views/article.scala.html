@@ -1,4 +1,4 @@
-@(article: Article, related: List[Trail])
+@(article: Article, related: List[Trail], storyPackage: List[Trail])
 @import fragments._
 @import conf._
 
@@ -65,16 +65,11 @@
 
             <div class="unit size1of1">
 
-                <div class="expandable">
-                    <h3 class="b1">More on this story</h3>
-                    <ul class="plain">
-                    @related.map{ trail =>
-                        <li>@fragments.formatTrail(trail)</li>
-                    }
-                    </ul>
-
-                    <h3 class="b1 b1b"><a href="#">More related content</a> <span>@(related.size - 4)</span></h3>
-                </div>
+                @if(storyPackage nonEmpty) {
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 4)
+                } else {
+                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                }
 
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
