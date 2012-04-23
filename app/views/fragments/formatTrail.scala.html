@@ -7,10 +7,7 @@
     </a>
     }
     <div class="bd">
-
-        @defining(trail.types.find{ _.id != "type/article"}.orElse(trail.tones.headOption)){ interestingTag =>
-            @interestingTag.map{ tag => <p>@tag.name</p> }
-        }
+        @trail.typeOrTone.map{ tag => <p>@tag.singularName</p> }
         <p><a href="@trail.url">@RemoveOuterParaHtml(trail.linkText)</a></p>
         @trail.trailText.map { text => <p class="gt-base">@RemoveOuterParaHtml(text)</p> }
     </div>
