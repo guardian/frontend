@@ -1,19 +1,14 @@
 @(trail: Trail)
 
 <div class="media b1">
-@trail.imageOfWidth(150, tolerance = 20).map {image =>
-	<a href="#" class="img">
-    	<img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
-	</a>
-}
-	<div class="bd">
-
-        @defining(trail.types.find{ _.id != "type/article"}.orElse(trail.tones.headOption)){ interestingTag =>
-            @interestingTag.map{ tag => <p>@tag.name</p> }
-        }
-
-		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
-        @trail.trailText.map { text => <p>@Html(text)</p> }
-        @fragments.dateline(trail.webPublicationDate)
-	</div>
+    @trail.imageOfWidth(150, tolerance = 20).map {image =>
+    <a href="#" class="img">
+        <img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
+    </a>
+    }
+    <div class="bd">
+        @trail.typeOrTone.map{ tag => <p>@tag.singularName</p> }
+        <p><a href="@trail.url">@RemoveOuterParaHtml(trail.linkText)</a></p>
+        @trail.trailText.map { text => <p class="gt-base">@RemoveOuterParaHtml(text)</p> }
+    </div>
 </div>
