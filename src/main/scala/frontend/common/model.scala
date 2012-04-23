@@ -90,7 +90,7 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
   lazy val webTitle: String = content.webTitle
 
   lazy val standfirst: Option[String] = content.safeFields.get("standfirst")
-  lazy val byline: String = content.safeFields("byline")
+  lazy val byline: Option[String] = content.safeFields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
   // Meta Data used by plugins on the page
@@ -106,7 +106,7 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
     "blogs" -> blogs.map(_.name).mkString(","),
     "web-publication-date" -> webPublicationDate,
     "short-url" -> shortUrl,
-    "byline" -> content.safeFields.get("byline").getOrElse(""),
+    "byline" -> byline.getOrElse(""),
     "commentable" -> content.safeFields.get("commentable").getOrElse("false")
   )
 }
