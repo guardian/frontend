@@ -7,7 +7,11 @@
 	</a>
 }
 	<div class="bd">
-        @trail.types.headOption.map { tag => <p>@tag.name</p> }
+
+        @defining(trail.types.find{ _.id != "type/article"}.orElse(trail.tones.headOption)){ interestingTag =>
+            @interestingTag.map{ tag => <p>@tag.name</p> }
+        }
+
 		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
         @trail.trailText.map { text => <p>@Html(text)</p> }
         @fragments.dateline(trail.webPublicationDate)
