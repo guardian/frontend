@@ -2,7 +2,7 @@ name := "frontend-common"
 
 organization := "com.gu"
 
-version := "1.14-SNAPSHOT"
+version := "1.17-SNAPSHOT"
 
 resolvers ++= Seq(
     "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
@@ -14,7 +14,8 @@ libraryDependencies ++= Seq(
     "com.gu" %% "configuration" % "3.6" % "provided",
     "play" %% "play" % "2.0" % "provided",
     "org.scalatest" %% "scalatest" % "1.7.1" % "test",
-    "org.jsoup" % "jsoup" % "1.6.2"
+    "org.jsoup" % "jsoup" % "1.6.2",
+    "org.jboss.dna" % "dna-common" % "0.6"
 )
 
 seq(scalariformSettings: _*)
