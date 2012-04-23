@@ -11,9 +11,7 @@
         @defining(trail.types.find{ _.id != "type/article"}.orElse(trail.tones.headOption)){ interestingTag =>
             @interestingTag.map{ tag => <p>@tag.name</p> }
         }
-
         <p><a href="@trail.url">@Html(trail.linkText)</a></p>
-        @trail.trailText.map { text => <p>@Html(text)</p> }
-        @fragments.dateline(trail.webPublicationDate)
+        @trail.trailText.map { text => <div class="gt-base">@Html(text)</div> }
     </div>
 </div>
