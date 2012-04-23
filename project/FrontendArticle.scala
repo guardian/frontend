@@ -17,11 +17,11 @@ object FrontendArticle extends Build {
 
   private val appDependencies = Seq(
     //dependencies included in distribution
-    "com.gu.openplatform" %% "content-api-client" % "1.13",
+    "com.gu.openplatform" %% "content-api-client" % "1.14",
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.10",
+    "com.gu" %% "frontend-common" % "1.13",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
