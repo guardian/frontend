@@ -51,6 +51,12 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     Tag(tag("Article")).pluralName should be("Articles")
   }
 
+  "javaScriptVariableName" should "create a sensible Javascript name" in {
+
+    "web-publication-date".javaScriptVariableName should be("webPublicationDate")
+    "series".javaScriptVariableName should be("series")
+  }
+
   private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)

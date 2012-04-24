@@ -2,7 +2,7 @@ name := "frontend-common"
 
 organization := "com.gu"
 
-version := "1.17-SNAPSHOT"
+version := "1.18-SNAPSHOT"
 
 resolvers ++= Seq(
     "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",

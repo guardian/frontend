@@ -37,4 +37,13 @@ object `package` {
     lazy val singularName: String = inflector.singularize(t.name)
     lazy val pluralName: String = inflector.pluralize(t.name)
   }
+
+  implicit def hyphen2initCaps(s: String) = new {
+    lazy val javaScriptVariableName: String = {
+      val str = s.split("-").map { part =>
+        part.replaceFirst(part(0).toString, part(0).toUpper.toString)
+      }.mkString
+      str.replaceFirst(str(0).toString, str(0).toLower.toString)
+    }
+  }
 }
