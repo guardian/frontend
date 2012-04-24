@@ -1,4 +1,4 @@
-@(tag: Tag, trails: List[Trail])
+@(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 @import fragments._
 @import conf._
 
@@ -50,12 +50,22 @@
             </div>
         </div>
 
-        <div class="line">
-
-            @trails.map{ trail =>
-                @fragments.formatTrail(trail)
+        @defining(leadContent.take(2)){ importantStories =>
+            @if(importantStories nonEmpty) {
+                <div class="line">
+                    @importantStories.map{ trail =>
+                        @fragments.formatTrail(trail)
+                    }
+                </div>
             }
-        </div>
+
+            <div class="line">
+                @* TODO don't like this deduping would be easier as a case class or something *@
+                @trails.filterNot(s => importantStories.map(_.url).contains(s.url)).map{ trail =>
+                    @fragments.formatTrail(trail)
+                }
+            </div>
+        }
 
     </div>
 

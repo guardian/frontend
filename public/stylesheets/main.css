@@ -164,6 +164,10 @@ article p {
     width: 60px;
 }
 
+.gt-base {
+    display: none;
+}
+
 @media screen and (min-width: 400px) {
 
     h1 {
@@ -191,4 +195,9 @@ article p {
         font-size: 18px;
         line-height: 22px;
     }
+
+    .gt-base {
+        display: block;
+    }
 }
+
