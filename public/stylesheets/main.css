@@ -134,12 +134,13 @@ article p {
 .expandable h3 {
     text-align: center;
     color: #932B6C;
+    padding: 8px;
 }
 
-.expandable h3 span {
+.count {
     background-color: #a5bedc;
     float: right;
-    margin-right: 10px;
+    margin-top: -1px;
     padding: 2px 6px;
     color: #ffffff;
     font-size: 11px;
@@ -166,6 +167,30 @@ article p {
 
 .gt-base {
     display: none;
+}
+
+.comments p {
+    font-family: arial;
+    font-size: 15px;
+    line-height: 19px;
+}
+
+.comments blockquote {
+    margin: 10px;
+    padding-left: 10px;
+    border-left: 1px dotted #666;
+    font-family: arial;
+    font-size: 15px;
+    line-height: 19px;
+    color: #666;
+}
+
+.comments .datestamp {
+    color: #666;
+}
+
+img.badge {
+    vertical-align: text-top;
 }
 
 @media screen and (min-width: 600px) {
@@ -204,5 +229,9 @@ article p {
 
     .gt-base {
         display: block;
+    }
+
+    .comments .datestamp {
+        text-align: right;
     }
 }

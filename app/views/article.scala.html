@@ -7,19 +7,20 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1;" />
     <meta charset="utf-8" />
 
     <script>
         var guardian = {};
     </script>
+
     @fragments.metaData(article)
 
     <title>@article.headline</title>
 
     <link rel="shortcut icon" type="image/png" href="@controllers.Static.at("images/favicon.png")">
 
-    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
 
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
     <link rel="stylesheet" media="screen and (min-width: 400px)" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
@@ -46,8 +47,8 @@
                     @fragments.headline(article.headline)
                     @fragments.standfirst(article.standfirst)
 
-                    @article.images.find( i => i.rel == "alt-size" && i.width > 140 && i.width < 250).map{ image =>
-                        <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").map { full => @full.url }' data-width="@image.width" />
+                    @article.imageOfWidth(300, tolerance=160).map{ image =>
+                        <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").orElse(article.imageOfWidth(460, tolerance=20)).map {full=>@full.url}' data-width="@image.width" />
                         @fragments.caption(image.caption.getOrElse(""))
                     }
 
