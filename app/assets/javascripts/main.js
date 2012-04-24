@@ -42,7 +42,7 @@
 
             // get discussion URL
             var urlBase = 'http://coddisapi01.gudev.gnl:8900/discussion-api/discussion/';
-            var shortUrl = guardian.pageData['short-url'].replace("http://gu.com", "");
+            var shortUrl = guardian.pageData.shortUrl.replace("http://gu.com", "");
             var discussionAjaxUrl = urlBase + shortUrl;
 
             // fetch via ajax
