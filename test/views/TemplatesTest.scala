@@ -1,9 +1,9 @@
-package frontend.common.templates
+package views
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
-import frontend.common.{ Tags, Tag }
+import common.{ Tags, Tag }
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 

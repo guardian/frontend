@@ -1,4 +1,4 @@
-package frontend.common
+package common
 
 import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag }
 import math.abs

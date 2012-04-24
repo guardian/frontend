@@ -1,4 +1,4 @@
-package frontend.common
+package common
 
 import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient

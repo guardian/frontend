@@ -1,4 +1,4 @@
-package frontend.common
+package common
 
 import play.api.Logger
 import com.gu.conf.ConfigurationFactory

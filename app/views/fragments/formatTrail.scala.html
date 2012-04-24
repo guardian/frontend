@@ -1,0 +1,15 @@
+@(trail: Trail)
+
+<div class="media b1">
+@trail.imageOfWidth(150, tolerance = 20).map {image =>
+	<a href="#" class="img">
+    	<img src='@image.url' alt='@Html(image.caption.getOrElse(""))'/>
+	</a>
+}
+	<div class="bd">
+        @trail.types.headOption.map { tag => <p>@tag.name</p> }
+		<p><a href="@trail.url">@Html(trail.linkText)</a></p>
+        @trail.trailText.map { text => <p>@Html(text)</p> }
+        @fragments.dateline(trail.webPublicationDate)
+	</div>
+</div>

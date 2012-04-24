@@ -1,4 +1,4 @@
-package frontend.common
+package common
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers

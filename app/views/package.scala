@@ -1,10 +1,10 @@
-package frontend.common.templates
+package views
 
 import play.api.templates.Html
 import org.apache.commons.lang.StringEscapeUtils._
 import org.jsoup.Jsoup
 import org.jboss.dna.common.text.Inflector
-import frontend.common.{ Tag, Tags }
+import common.{ Tag, Tags }
 
 object JavaScriptString {
   //we wrap the result in an Html so that play does not escape it as html
