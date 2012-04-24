@@ -1,4 +1,4 @@
-package frontend.common
+package common
 
 import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }

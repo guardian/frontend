@@ -1,0 +1,23 @@
+@(item: MetaData)
+@import org.joda.time.DateTime
+
+@item.metaData.map{ case (key, value) =>
+    <meta name="@key" value="@value"/> }
+
+@*
+exposes all metadata tags as javascript variables
+this is orders of magnitude faster than selector queries
+*@
+
+<script>
+    guardian.pageData = {
+        @Html(
+            item.metaData.map{
+                case (key, value: DateTime) =>   "'%s' : new Date(%s)".format(key, value.getMillis) // todo how exactly do we want to use dates in Javascript
+                case (key, value: String) =>   "'%s' : '%s'".format(key, JavaScriptString(value))
+            }.mkString(",\n\t")
+        )
+    };
+</script>
+
+
