@@ -33,21 +33,20 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     val linkUrls = $("a").getAttributes("href")
 
     //trail in story package
-    linkNames should contain ("David Cameron defends windfarm plans to Tory MPs")
-    linkUrls should contain ("http://localhost:3333/environment/2012/feb/21/cameron-defends-wind-farm-mps")
+    linkNames should contain("David Cameron defends windfarm plans to Tory MPs")
+    linkUrls should contain("http://localhost:3333/environment/2012/feb/21/cameron-defends-wind-farm-mps")
 
     //tag in navigation
-    linkNames should contain ("Environment")
-    linkUrls should contain ("http://localhost:3333/environment/climate-change")
+    linkNames should contain("Environment")
+    linkUrls should contain("http://localhost:3333/environment/climate-change")
 
-    $("meta[name=content-type]").getAttributes("value").head should be ("Article")
-    $("meta[name=api-url]").getAttributes("value").head should be ("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
+    $("meta[name=content-type]").getAttributes("value").head should be("Article")
+    $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
   }
 
   it should "404 when content type is not article" in {
     val result = controllers.ArticleController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(FakeRequest())
     status(result) should be(404)
   }
-
 
 }
