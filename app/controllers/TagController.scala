@@ -23,17 +23,10 @@ object TagController extends Controller with Logging {
 
     val tag = response.tag map { new Tag(_) }
     val trails = response.results map { new Content(_) }
-<<<<<<< HEAD
 
-    tag map { TagAndTrails(_, trails) }
-  }
-
-  private def renderTag(model: TagAndTrails) = Ok(views.html.tag(model.tag, model.trails))
-=======
     val leadContent = response.leadContent map { new Content(_) }
     tag map { TagAndTrails(_, trails, leadContent) }
   }
-    
+
   private def renderTag(model: TagAndTrails) = Ok(views.html.tag(model.tag, model.trails, model.leadContent))
->>>>>>> master
 }
