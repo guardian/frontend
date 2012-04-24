@@ -27,10 +27,10 @@ class TagControllerTest extends FlatSpec with ShouldMatchers {
 
     $("h1").first.getText should be("Turkey")
 
-    $("meta[name=page-id]").getAttributes("value").head should be ("world/turkey")
-    $("meta[name=section]").getAttributes("value").head should be ("world")
-    $("meta[name=api-url]").getAttributes("value").head should be ("http://content.guardianapis.com/world/turkey")
-    $("meta[name=web-title]").getAttributes("value").head should be ("Turkey")
+    $("meta[name=page-id]").getAttributes("value").head should be("world/turkey")
+    $("meta[name=section]").getAttributes("value").head should be("world")
+    $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/world/turkey")
+    $("meta[name=web-title]").getAttributes("value").head should be("Turkey")
   }
 
 }
