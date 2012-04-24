@@ -44,7 +44,8 @@ object FrontendCommon extends Build {
 
     templatesImport ++= Seq(
       "common._",
-      "views._"
+      "views._",
+      "views.support._"
     )
   )
 }

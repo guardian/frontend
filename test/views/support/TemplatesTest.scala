@@ -1,4 +1,4 @@
-package views
+package views.support
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec

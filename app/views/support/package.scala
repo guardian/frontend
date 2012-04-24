@@ -1,4 +1,4 @@
-package views
+package views.support
 
 import play.api.templates.Html
 import org.apache.commons.lang.StringEscapeUtils._
