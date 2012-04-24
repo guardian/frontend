@@ -40,10 +40,9 @@ object `package` {
 
   implicit def hyphen2initCaps(s: String) = new {
     lazy val javaScriptVariableName: String = {
-      val str = s.split("-").map { part =>
-        part.replaceFirst(part(0).toString, part(0).toUpper.toString)
-      }.mkString
-      str.replaceFirst(str(0).toString, str(0).toLower.toString)
+      val parts = s.split("-").toList
+      (parts.headOption.toList ::: parts.tail.map { firstLetterUppercase }) mkString
     }
   }
+  private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
 }
