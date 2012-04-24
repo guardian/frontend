@@ -21,7 +21,7 @@ object FrontendTag extends Build {
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.20",
+    "com.gu" %% "frontend-common" % "1.21",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
@@ -36,7 +36,8 @@ object FrontendTag extends Build {
     jarName in assembly := "%s.jar" format appName,
     templatesImport ++= Seq(
       "common._",
-      "views._"
+      "views._",
+      "views.support._"
     )
   )
 }
