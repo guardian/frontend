@@ -26,8 +26,7 @@ object FrontendCommon extends Build {
 
     resolvers ++= Seq(
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-        "Sonatype" at "http://oss.sonatype.org/content/repositories/snapshots/"
+        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
     ),
     // no javadoc
     publishArtifact in (Compile, packageDoc) := false,
