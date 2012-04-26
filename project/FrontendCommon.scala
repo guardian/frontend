@@ -26,7 +26,8 @@ object FrontendCommon extends Build {
 
     resolvers ++= Seq(
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+        "Mvn Repository" at "http://mvnrepository.com/artifact/"
     ),
 
     //gets rid of scala-tools resolver as someone on the internet switched it off
