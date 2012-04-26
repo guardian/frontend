@@ -28,7 +28,7 @@ object RemoveOuterParaHtml {
 
 //inline elements in the ContentApi are really spartan and
 //need to be modified to work in our pages
-object InlinePicturesFormatterHtml {
+object PictureTransformerHtml {
   def apply(bodyText: String): Html = {
     val body = Jsoup.parseBodyFragment(bodyText)
     val images = body.getElementsByAttributeValue("class", "gu-image")
@@ -37,7 +37,7 @@ object InlinePicturesFormatterHtml {
       val imgWidth = img.attr("width").toInt
       val wrapper = body.createElement("div")
       wrapper.attr("class", imgWidth match {
-        case width if width < 220 => "img-base"
+        case width if width <= 220 => "img-base"
         case width if width < 460 => "img-median"
         case width => "img-extended"
       })

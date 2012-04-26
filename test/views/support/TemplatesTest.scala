@@ -59,7 +59,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   "InlinePicturesFormatter" should "correctly format inline pictures" in {
-    val body = XML.loadString(InlinePicturesFormatterHtml(bodyTextWithInlineElements).text.trim)
+    val body = XML.loadString(PictureTransformerHtml(bodyTextWithInlineElements).text.trim)
 
     val imgDivs = (body \\ "div").toList
 
