@@ -10,6 +10,6 @@ object Plugins extends Build {
   lazy val plugins = Project("frontend-views", file("."))
     .settings(
       resolvers += "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
-      resolvers += "http://mvnrepository.com/artifact/"
+      resolvers += "mvn repository" at "http://mvnrepository.com/artifact/"
     ).dependsOn(uri("git://github.com/guardian/sbt-frontend-build.git#" + frontendPluginVersion))
 }
