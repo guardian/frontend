@@ -19,13 +19,13 @@ p {
 
 h1 {
     font: 24px/26px georgia;
-    margin: 0 0 10px 0;
+    margin: 20px 0 22px 0;
 }
 
 h2 {
     font: 18px/20px georgia;
     color: #666;
-    margin: 0 0 20px 0;
+    margin: 0 0 24px 0;
 }
 
 h3 {
@@ -46,7 +46,7 @@ h4 {
 .caption {
     font: 12px/15px arial;
     color: #666;
-    margin: 5px 0 10px 0;
+    margin: 5px 0 14px 0;
 }
 
 .byline,

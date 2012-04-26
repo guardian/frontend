@@ -12,11 +12,13 @@
     var require_libs = {
         // for some reason require adds .js to these paths
         "paths" : {
-            "reqwest"   : "http://4.gu-pasteup.appspot.com/js/libs/reqwest.min"
+            "reqwest"   : "http://4.gu-pasteup.appspot.com/js/libs/reqwest.min",
+            "bean"      : "http://4.gu-pasteup.appspot.com/js/libs/bean.min"
         }
     };
 
-    require(require_libs, ["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pasteup.appspot.com/js/detect/images.js", "reqwest"], function(detect, images, reqwest) {
+    // these libs are full URLs rather than paths as above because they refer to other files inside them and this breaks the relative URLs... argh.
+    require(require_libs, ["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pasteup.appspot.com/js/detect/images.js", "reqwest", "bean"], function(detect, images, reqwest, bean) {
 
         var gu_debug = {
             screenHeight: screen.height,
@@ -30,13 +32,126 @@
             retina: (detect.getPixelRatio() === 2) ? 'true' : 'false'
         };
 
+
         for (var key in gu_debug) {
             document.getElementById(key).innerText = gu_debug[key];
         }
 
         // Find and upgrade images.
         images.upgrade();
-        
+
+        // psuedo markup of ads, experimental
+        guardian.ads = {
+            'base': {
+                '300': [
+                    {
+                        type: 'image',
+                        src: 'http://images.mpression.net/image/19982/soulmates_300.gif',
+                        width: 300,
+                        height: 50
+                    }
+                ]
+            },
+
+            /* copied from base, for now */
+            'median': {
+                '300': [
+                    {
+                        type: 'image',
+                        src: 'http://images.mpression.net/image/19982/soulmates_300.gif',
+                        width: 300,
+                        height: 50
+                    }
+                ]
+            },
+
+            'extended': {
+
+                '300': [
+                    {
+                        type: 'image',
+                        src: 'http://s0.2mdn.net/2061777/PID_2017879_EN_expandable_bus_300x250_Emirates.gif',
+                        width: 300,
+                        height: 250
+                    },
+                    {
+                        type: 'iframe',
+                        src: 'http://optimized-by.rubiconproject.com/a/7845/13015/25941-15.html?',
+                        width: 300,
+                        height: 250
+                    }
+                ],
+
+                '728': [
+                    {
+                        type: 'image',
+                        src: 'http://s0.2mdn.net/2061777/PID_2017864_EN_standard_728_90_ny_bus.gif',
+                        width: 728,
+                        height: 90
+                    },
+                    {
+                        type: 'image',
+                        src: 'http://imageceu1.247realmedia.com/RealMedia/ads/Creatives/Guardian/responsibletravel.com_BT_March_Leader_DR/guardianBanner-728x90.jpg/1332516092',
+                        width: 728,
+                        height: 90
+                    }
+                ]
+
+            }
+        };
+
+        // process ads
+        function findAvailableAd(layoutMode) {
+            var slotWidth = 300; // assume base
+            
+            // todo -- add median mode
+            switch(layoutMode) {
+                case "extended":
+                    slotWidth = 728;
+                    break;
+            }
+
+            var availableAds = guardian.ads[layoutMode][slotWidth];
+            var numAvailableAds = availableAds.length;
+            // pick a random one
+            var index = Math.floor(Math.random() * numAvailableAds);
+            var adToUse = availableAds[index];
+            return adToUse;
+        }
+
+        function renderAd(ad) {
+            var html = '';
+            switch(ad.type) {
+                case "image":
+                    html = '<img src="{0}" width="{1}" height="{2}" />'.format(ad.src, ad.width, ad.height);
+                    break;
+                case "iframe":
+                    html = '<iframe src="{0}" width="{1}" height="{2}" frameborder="0"></iframe>'.format(ad.src, ad.width, ad.height);
+                    break;
+            }
+
+            var adSpot = document.getElementById('top-ad-placeholder');
+            adSpot.innerHTML = html;
+        }
+
+        // experiment to show correctly-sized ads
+        var ad = findAvailableAd(detect.getLayoutMode());
+        var adHtml = renderAd(ad);
+
+        // show hidden related stories when clicked 
+        var relatedExpander = document.getElementById('js-more-related-content');
+        bean.add(relatedExpander, 'click', function(e){
+            console.log("clicked");
+            var lis = document.querySelectorAll(".expandable li");
+            for (i=0, l=lis.length; i<l; i++) {
+                console.log("iteration " + i);
+                lis[i].style.display = "block";
+            }
+            relatedExpander.style.display = "none";
+            console.log("done");
+            e.preventDefault();
+        });
+
         // fetch comments for article (if available)
         if (guardian.pageData.commentable) {
 
@@ -68,7 +183,6 @@
                                 hours = hours-12;
                                 meridian = 'PM';
                             }
-
 
                             switch(month) {
                                 case 1:
