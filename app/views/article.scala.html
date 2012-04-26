@@ -1,15 +1,10 @@
 @(article: Article, related: List[Trail], storyPackage: List[Trail])
-@import fragments._
-@import conf._
 
 <!DOCTYPE html>
 
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1;" />
-    <meta charset="utf-8" />
-
     <script>
         var guardian = {};
     </script>
@@ -59,7 +54,7 @@
                     @fragments.dateline(article.webPublicationDate)
                 
                     <article>
-                        @Html(article.body)
+                        @PictureTransformerHtml(article.body)
                     </article>
 
             </div>
@@ -103,7 +98,7 @@
     </div>
 
     <script>
-        require(['@Configuration.plugins.location'], function(){});
+        require(['@conf.Configuration.plugins.location'], function(){});
     </script>
 </body>
 </html>
