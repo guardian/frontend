@@ -14,7 +14,8 @@ object FrontendCommon extends Build {
     "com.gu" %% "configuration" % "3.6",
     "org.jsoup" % "jsoup" % "1.6.2",
     "org.jboss.dna" % "dna-common" % "0.6",
-
+    "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
+    "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
   )
 
