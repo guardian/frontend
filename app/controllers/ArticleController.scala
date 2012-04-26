@@ -16,6 +16,7 @@ object ArticleController extends Controller with Logging {
   private def lookup(path: String): Option[ArticleAndRelated] = suppressApi404 {
     log.info("Fetching article: " + path)
     val response: ItemResponse = ContentApi.item
+      .showInlineElements("picture")
       .showTags("all")
       .showFields("all")
       .showMedia("all")
