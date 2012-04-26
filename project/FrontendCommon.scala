@@ -31,7 +31,7 @@ object FrontendCommon extends Build {
 
     //gets rid of scala-tools resolver as someone on the internet switched it off
     externalResolvers <<= resolvers map { rs =>
-      Resolver.withDefaultResolvers(rs, scalaTools = false)
+      Resolver.withDefaultResolvers(rs, scalaTools = false, mavenCentral = true)
     },
 
     // no javadoc
