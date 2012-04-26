@@ -10,8 +10,8 @@ object FrontendCommon extends Build {
   private val appVersion = "1.22-SNAPSHOT"
 
   private val appDependencies = Seq(
-    "com.gu.openplatform" %% "content-api-client" % "1.14" % "provided",
-    "com.gu" %% "configuration" % "3.6" % "provided",
+    "com.gu.openplatform" %% "content-api-client" % "1.15",
+    "com.gu" %% "configuration" % "3.6",
     "org.jsoup" % "jsoup" % "1.6.2",
     "org.jboss.dna" % "dna-common" % "0.6",
 
