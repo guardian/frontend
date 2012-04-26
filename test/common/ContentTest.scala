@@ -162,9 +162,22 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
   }
 
-  private def tag(id: String = "/id", tagType: String = "keyword", name: String = "") = {
+  "Canonical urls" should "point back to guardian.co.uk" in {
+    val apiContent = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      "http://content.guardianapis.com/foo/2012/jan/07/bar"
+    )
+
+    val apiTag = tag(url = "http://www.guardian.co.uk/sport/cycling")
+
+    new Content(apiContent).canonicalUrl should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
+
+    Tag(apiTag).canonicalUrl should be("http://www.guardian.co.uk/sport/cycling")
+  }
+
+  private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
-      sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)
+      sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }
 
   private def image(caption: String, width: Int) = {

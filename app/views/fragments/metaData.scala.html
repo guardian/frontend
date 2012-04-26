@@ -1,14 +1,19 @@
 @(item: MetaData)
 @import org.joda.time.DateTime
 
+@*
+canonical url for this page - it should point back to www.guardian.co.uk to indicate that this is a
+copy of a page over there.
+see see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
+*@
+<link rel="canonical" href="@item.canonicalUrl"/>
+
 @item.metaData.map{ case (key, value) =>
     <meta name="@key" value="@value"/> }
-
 @*
 exposes all metadata tags as javascript variables
 this is orders of magnitude faster than selector queries
 *@
-
 <script>
     guardian.pageData = {
         @Html(

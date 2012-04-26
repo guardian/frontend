@@ -5,6 +5,11 @@ import math.abs
 import org.joda.time.DateTime
 
 trait MetaData {
+
+  // indicates the absolute url of this page (the one to be used for search engine indexing)
+  // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
+  def canonicalUrl: String
+
   def id: String
   def section: String
   def apiUrl: String
@@ -67,6 +72,8 @@ case class Tag(private val tag: ApiTag) extends MetaData {
   lazy val apiUrl: String = tag.apiUrl
   lazy val webTitle: String = tag.webTitle
 
+  lazy val canonicalUrl: String = tag.webUrl
+
   lazy val url: String = SupportedUrl(tag)
   lazy val linkText: String = webTitle
 }
@@ -92,6 +99,8 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
   lazy val standfirst: Option[String] = content.safeFields.get("standfirst")
   lazy val byline: Option[String] = content.safeFields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
+
+  lazy val canonicalUrl: String = content.webUrl
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
