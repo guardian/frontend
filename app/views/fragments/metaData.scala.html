@@ -1,12 +1,16 @@
 @(item: MetaData)
 @import org.joda.time.DateTime
 
-@*
-canonical url for this page - it should point back to www.guardian.co.uk to indicate that this is a
-copy of a page over there.
-see see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-*@
-<link rel="canonical" href="@item.canonicalUrl"/>
+    @*
+    canonical url for this page - it should point back to www.guardian.co.uk to indicate that this is a
+    copy of a page over there.
+    see see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
+    *@
+    <link rel="canonical" href="@item.canonicalUrl"/>
+
+
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1;" />
+    <meta charset="utf-8" />
 
 @item.metaData.map{ case (key, value) =>
     <meta name="@key" value="@value"/> }
