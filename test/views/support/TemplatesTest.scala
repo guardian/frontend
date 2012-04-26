@@ -4,6 +4,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import common.{ Tags, Tag }
+import xml.XML
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 
@@ -57,8 +58,44 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     "series".javaScriptVariableName should be("series")
   }
 
+  "InlinePicturesFormatter" should "correctly format inline pictures" in {
+    val body = XML.loadString(InlinePicturesFormatterHtml(bodyTextWithInlineElements).text.trim)
+
+    val imgDivs = (body \\ "div").toList
+
+    val baseImg = imgDivs(1)
+    (baseImg \ "@class").text should be("img-base")
+    (baseImg \ "img" \ "@class").text should be("gu-image")
+    (baseImg \ "img" \ "@width").text should be("140")
+
+    val medianImg = imgDivs(2)
+    (medianImg \ "@class").text should be("img-median")
+    (medianImg \ "img" \ "@class").text should be("gu-image")
+    (medianImg \ "img" \ "@width").text should be("250")
+
+    val extendedImg = imgDivs(0)
+    (extendedImg \ "@class").text should be("img-extended")
+    (extendedImg \ "img" \ "@class").text should be("gu-image")
+    (extendedImg \ "img" \ "@width").text should be("600")
+  }
+
   private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)
   }
+
+  val bodyTextWithInlineElements = """
+  <span>
+  <p>foo bar</p>
+
+  <img src="http://www.a.b.c/img3.jpg" class="gu-image" width="600" height="180"/>
+
+  <img src="http://www.a.b.c/img.jpg" class="gu-image" width="140" height="84"/>
+
+  <p>lorem ipsum
+    <img src="http://www.a.b.c/img2.jpg" class="gu-image" width="250" height="100"/>
+  </p>
+  </span>
+  """
+
 }

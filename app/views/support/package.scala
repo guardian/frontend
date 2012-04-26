@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringEscapeUtils._
 import org.jsoup.Jsoup
 import org.jboss.dna.common.text.Inflector
 import common.{ Tag, Tags }
+import scala.collection.JavaConversions._
 
 object JavaScriptString {
   //we wrap the result in an Html so that play does not escape it as html
@@ -22,6 +23,29 @@ object RemoveOuterParaHtml {
     } else {
       Html(fragment.html.drop(3).dropRight(4))
     }
+  }
+}
+
+//inline elements in the ContentApi are really spartan and
+//need to be modified to work in our pages
+object InlinePicturesFormatterHtml {
+  def apply(bodyText: String): Html = {
+    val body = Jsoup.parseBodyFragment(bodyText)
+    val images = body.getElementsByAttributeValue("class", "gu-image")
+
+    images.foreach { img =>
+      val imgWidth = img.attr("width").toInt
+      val wrapper = body.createElement("div")
+      wrapper.attr("class", imgWidth match {
+        case width if width < 220 => "img-base"
+        case width if width < 460 => "img-median"
+        case width => "img-extended"
+      })
+      img.replaceWith(wrapper)
+      wrapper.appendChild(img)
+    }
+
+    Html(body.body.html)
   }
 }
 
