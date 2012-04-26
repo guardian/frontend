@@ -16,12 +16,9 @@ object FrontendTag extends Build {
   private val appVersion = "1-SNAPSHOT"
 
   private val appDependencies = Seq(
-    //dependencies included in distribution
-    "com.gu.openplatform" %% "content-api-client" % "1.14",
-    "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.21",
+    "com.gu" %% "frontend-common" % "1.22",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
@@ -31,6 +28,12 @@ object FrontendTag extends Build {
     .settings(frontendSettings: _*)
     .settings(
     resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+
+    //gets rid of scala-tools resolver as someone on the internet switched it off
+    externalResolvers <<= resolvers map { rs =>
+      Resolver.withDefaultResolvers(rs, scalaTools = false, mavenCentral = true)
+    },
+
     // Disable Specs options to use ScalaTest
     testOptions in Test := Nil,
     jarName in assembly := "%s.jar" format appName,
