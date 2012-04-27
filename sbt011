@@ -11,7 +11,7 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
-PROXY_PARAMS="-Dhttp.proxyHost=devscreen.gudev.gnl -Dhttp.proxyPort=3128"
+PROXY_PARAMS="-Dhttp.proxyHost=devproxy.gul3.gnl -Dhttp.proxyPort=3128"
 if [ "$1" == "--no-proxy" ]; then
   PROXY_PARAMS=""
   shift
