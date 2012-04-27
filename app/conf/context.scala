@@ -7,6 +7,8 @@ object Configuration extends Configuration("frontend-tag", webappConfDirectory =
 
 object ContentApi extends ContentApi(Configuration)
 
+object Static extends Static(Configuration.static.path)
+
 object Switches {
   //  val switch = new DefaultSwitch("name", "Description Text")
   val all: Seq[Switchable] = List(Healthcheck.switch)
