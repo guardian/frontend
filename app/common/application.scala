@@ -1,51 +1,41 @@
 package common
 
 import play.api.Logger
-import com.gu.conf.ConfigurationFactory
+import java.net.URL
+import java.io.File
+import java.util.jar.JarFile
+import scala.collection.JavaConversions._
 
 trait Logging {
   implicit val log = Logger(getClass)
 }
 
-class Configuration(application: String, webappConfDirectory: String = "env") {
-  protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
+object Resources {
+  private val JarFilePattern = "jar:file:(.*)!/(.*)".r
+  private val FilePattern = "file:(.*)".r
 
-  object plugins {
-    lazy val location = configuration.getStringProperty("plugins.location").getOrElse {
-      throw new IllegalStateException("Plugins Location not configured")
-    }
+  private val classloader = getClass.getClassLoader
+
+  // Get resources with 'path' prefix from any local location or jar on classpath
+  def apply(path: String): List[URL] = classloader.getResources(path).toList flatMap { list }
+
+  private def list(url: URL): List[URL] = url.toString match {
+    case FilePattern(relativePath) =>
+      val directory = new File(relativePath)
+      val listing = directory.listFiles.toList
+
+      listing flatMap {
+        case subDirectory if subDirectory.isDirectory => list(new URL("file:" + subDirectory))
+        case file => List(new URL("file:" + file))
+      }
+
+    case JarFilePattern(path, relativePath) =>
+      val jarFile = new JarFile(path)
+      val entries = jarFile.entries.toList filter { !_.isDirectory }
+
+      entries filter { _.getName contains relativePath } map { entry => new URL("jar:file:%s!/%s".format(path, entry)) }
+
+    case _ => List()
   }
-
-  object contentApi {
-    lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
-      throw new IllegalStateException("Content Api Host not configured")
-    }
-
-    lazy val key = configuration.getStringProperty("content.api.key") getOrElse {
-      throw new IllegalStateException("Content Api Key not configured")
-    }
-  }
-
-  object proxy {
-    lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
-
-    private lazy val hostOption = Option(System.getProperty("http.proxyHost"))
-    private lazy val portOption = Option(System.getProperty("http.proxyPort")) flatMap { _.toIntOption }
-
-    lazy val host: String = hostOption getOrElse {
-      throw new IllegalStateException("HTTP proxy host not configured")
-    }
-
-    lazy val port: Int = portOption getOrElse {
-      throw new IllegalStateException("HTTP proxy port not configured")
-    }
-  }
-
-  object static {
-    lazy val path = configuration.getStringProperty("static.path").getOrElse {
-      throw new IllegalStateException("Static path not configured")
-    }
-  }
-
-  override def toString(): String = configuration.toString
 }
+
