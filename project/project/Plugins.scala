@@ -3,13 +3,20 @@ import sbt.Keys._
 
 object Plugins extends Build {
 
-  val frontendPluginVersion = "1.10"
+  val frontendPluginVersion = "1.11"
 
   //we automatically include some plugins (including the Play plugin) from frontend-build
 
   lazy val plugins = Project("frontend-views", file("."))
     .settings(
-      resolvers += "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
-      resolvers += "mvn repository" at "http://mvnrepository.com/artifact/"
-    ).dependsOn(uri("git://github.com/guardian/sbt-frontend-build.git#" + frontendPluginVersion))
+      resolvers ++= Seq(
+        "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
+        "mvn repository" at "http://mvnrepository.com/artifact/"
+      ),
+
+      externalResolvers <<= resolvers map { rs =>
+        Resolver.withDefaultResolvers(rs, scalaTools = false)
+      }
+    )
+    .dependsOn(uri("git://github.com/guardian/sbt-frontend-build.git#" + frontendPluginVersion))
 }

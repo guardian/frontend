@@ -20,39 +20,36 @@ object FrontendCommon extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(commonCompileSettings: _*)
+    .settings(compileSettings: _*)
     .settings(
-    organization := "com.gu",
-    testOptions in Test := Nil,
+      organization := "com.gu",
 
-    resolvers ++= Seq(
+      testOptions in Test := Nil,
+      unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
+
+      resolvers ++= Seq(
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
         "Mvn Repository" at "http://mvnrepository.com/artifact/"
-    ),
+      ),
 
-    //gets rid of scala-tools resolver as someone on the internet switched it off
-    externalResolvers <<= resolvers map { rs =>
-      Resolver.withDefaultResolvers(rs, scalaTools = false, mavenCentral = true)
-    },
+      // no javadoc
+      publishArtifact in (Compile, packageDoc) := false,
 
-    // no javadoc
-    publishArtifact in (Compile, packageDoc) := false,
+      publishTo <<= (version) { version: String =>
+          val publishType = if (version.endsWith("SNAPSHOT")) "snapshots" else "releases"
+          Some(
+              Resolver.file(
+                  "guardian github " + publishType,
+                  file(System.getProperty("user.home") + "/guardian.github.com/maven/repo-" + publishType)
+              )
+          )
+      },
 
-    publishTo <<= (version) { version: String =>
-        val publishType = if (version.endsWith("SNAPSHOT")) "snapshots" else "releases"
-        Some(
-            Resolver.file(
-                "guardian github " + publishType,
-                file(System.getProperty("user.home") + "/guardian.github.com/maven/repo-" + publishType)
-            )
-        )
-    },
-
-    templatesImport ++= Seq(
-      "common._",
-      "views._",
-      "views.support._"
-    )
+      templatesImport ++= Seq(
+        "common._",
+        "views._",
+        "views.support._"
+      )
   )
 }
