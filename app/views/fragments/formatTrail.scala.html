@@ -9,6 +9,6 @@
     <div class="bd">
         @trail.typeOrTone.map{ tag => <p>@tag.singularName</p> }
         <p><a href="@trail.url">@RemoveOuterParaHtml(trail.linkText)</a></p>
-        @trail.trailText.map { text => <p class="gt-base">@RemoveOuterParaHtml(text)</p> }
+        @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>
 </div>
