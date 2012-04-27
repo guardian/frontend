@@ -1,8 +1,3 @@
-import collection.Seq
-import com.google.common.io.Files
-
-import java.io.File
-import java.security.MessageDigest
 import sbt._
 import Keys._
 import PlayProject._
@@ -20,24 +15,24 @@ object FrontendArticle extends Build {
     "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.25",
+    "com.gu" %% "frontend-common" % "1.26",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(frontendSettings: _*)
+    .settings(distSettings: _*)
     .settings(
-    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-    // Disable Specs options to use ScalaTest
-    testOptions in Test := Nil,
-    jarName in assembly := "%s.jar" format appName,
-    templatesImport ++= Seq(
-      "common._",
-      "views._",
-      "views.support._",
-      "fragments._"
+      resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      // Disable Specs options to use ScalaTest
+      testOptions in Test := Nil,
+      jarName in assembly := "%s.jar" format appName,
+      templatesImport ++= Seq(
+        "common._",
+        "views._",
+        "views.support._",
+        "conf.Static"
+      )
     )
-  )
 }
