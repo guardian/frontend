@@ -169,6 +169,11 @@ article p {
     display: none;
 }
 
+.expandable .trailtext {
+    color: #333;
+    font-weight: normal;
+}
+
 .comments p {
     font-family: arial;
     font-size: 15px;
@@ -201,6 +206,12 @@ img.badge {
 .img-base {
     margin: 10px auto;
     text-align: center;
+}
+
+@media screen and (min-width: 850px) {
+    .expandable .img img {
+        width: auto;
+    }
 }
 
 @media screen and (min-width: 600px) {
