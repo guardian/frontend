@@ -17,6 +17,14 @@
         }
     };
 
+    /*
+        // fails on non-supporting browsers
+        var obj = document.getElementsByTagName('body')[0];
+        obj.addEventListener('touchmove', function(event) {
+            alert("touchmoved");
+        });
+    */
+
     // these libs are full URLs rather than paths as above because they refer to other files inside them and this breaks the relative URLs... argh.
     require(require_libs, ["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pasteup.appspot.com/js/detect/images.js", "reqwest", "bean"], function(detect, images, reqwest, bean) {
 
@@ -141,7 +149,6 @@
         // show hidden related stories when clicked 
         var relatedExpander = document.getElementById('js-more-related-content');
         bean.add(relatedExpander, 'click', function(e){
-            console.log("clicked");
             var lis = document.querySelectorAll(".expandable li");
             for (i=0, l=lis.length; i<l; i++) {
                 console.log("iteration " + i);

@@ -5,6 +5,9 @@
 <html>
 
 <head>
+
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1;" />
+
     <script>
         var guardian = {};
     </script>
@@ -18,7 +21,7 @@
     <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
 
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
-    <link rel="stylesheet" media="screen and (min-width: 400px)" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
+    <link rel="stylesheet" media="screen and (min-width: 640px)" href="@controllers.Static.at("stylesheets/grid.responsive.css")">
 
     <link rel="stylesheet" type="text/css" href="@controllers.Static.at("stylesheets/main.css")">
 
@@ -39,30 +42,31 @@
     <div id="container">
 
         <div class="line">
-
             <div class="unit size1of1">
-
-                    @fragments.headline(article.headline)
-                    @fragments.standfirst(article.standfirst)
-
-                    @article.imageOfWidth(300, tolerance=160).map{ image =>
-                        <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").orElse(article.imageOfWidth(460, tolerance=20)).map {full=>@full.url}' data-width="@image.width" />
-                        @fragments.caption(image.caption.getOrElse(""))
-                    }
-
-                    @fragments.byline(article.byline)
-                    @fragments.dateline(article.webPublicationDate)
-                
-                    <article>
-                        @PictureTransformerHtml(article.body)
-                    </article>
-
+                @fragments.headline(article.headline)
+                @fragments.standfirst(article.standfirst)
             </div>
         </div>
 
         <div class="line">
 
-            <div class="unit size1of1">
+            <div class="unit size3of5">
+
+                @article.imageOfWidth(300, tolerance=160).map{ image =>
+                    <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").orElse(article.imageOfWidth(460, tolerance=20)).map {full=>@full.url}' data-width="@image.width" />
+                    @fragments.caption(image.caption.getOrElse(""))
+                }
+
+                @fragments.byline(article.byline)
+                @fragments.dateline(article.webPublicationDate)
+            
+                <article>
+                    @PictureTransformerHtml(article.body)
+                </article>
+
+            </div>
+
+            <div class="unit lastUnit">
 
                 @if(storyPackage nonEmpty) {
                     @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 4)
@@ -78,7 +82,9 @@
                 </ul>
 
             </div>
+
         </div>
+
 
     </div>
 

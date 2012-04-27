@@ -193,6 +193,16 @@ img.badge {
     vertical-align: text-top;
 }
 
+.img-extended img {
+    width: 100%;
+    height: auto;
+}
+
+.img-base {
+    margin: 10px auto;
+    text-align: center;
+}
+
 @media screen and (min-width: 600px) {
     .lt-extended {
         display: none;
@@ -200,6 +210,12 @@ img.badge {
 }
 
 @media screen and (min-width: 400px) {
+
+    .img-base {
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
 
     h1 {
         font-size: 28px;
