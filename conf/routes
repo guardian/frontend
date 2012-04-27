@@ -2,13 +2,11 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-#The ordering of these are important
-GET     /assets/*file               controllers.Static.at(path="/public", file)
-
 GET     /management$path<.*>        controllers.Management.apply(path)
 POST    /management$path<.*>        controllers.Management.apply(path)
 
 GET     /pages/*path                controllers.TagController.render(path)
 
-#support local dev machines
-GET     /*path               controllers.TagController.render(path)
+# For dev machines
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /*path                      controllers.TagController.render(path)
