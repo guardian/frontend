@@ -7,7 +7,7 @@ import com.typesafe.sbtscalariform.ScalariformPlugin
 object FrontendCommon extends Build {
 
   private val appName = "frontend-common"
-  private val appVersion = "1.23-SNAPSHOT"
+  private val appVersion = "1.26-SNAPSHOT"
 
   private val appDependencies = Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.15",
