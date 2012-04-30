@@ -52,7 +52,7 @@ h4 {
 .byline,
 .dateline {
     font: bold 14px/16px arial;
-    margin: 0px;
+    margin: 0;
 }
 
 .dateline {
@@ -65,7 +65,7 @@ article {
 }
 
 article p {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 10px;
 }
 
