@@ -51,7 +51,7 @@
             <div class="unit size3of5">
 
                 @article.imageOfWidth(300, tolerance=160).map{ image =>
-                    <img style="width: 100%;" src="@image.url" data-fullsrc='@article.images.find(_.rel == "body").orElse(article.imageOfWidth(460, tolerance=20)).map {full=>@full.url}' data-width="@image.width" />
+                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
                     @fragments.caption(image.caption.getOrElse(""))
                 }
 
