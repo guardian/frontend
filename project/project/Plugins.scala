@@ -7,7 +7,7 @@ object Plugins extends Build {
 
   //we automatically include some plugins (including the Play plugin) from frontend-build
 
-  lazy val plugins = Project("frontend-views", file("."))
+  lazy val plugins = Project("frontend-common", file("."))
     .settings(
       resolvers ++= Seq(
         "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
