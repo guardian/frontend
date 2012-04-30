@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object Plugins extends Build {
 
-  val frontendPluginVersion = "1.11"
+  val frontendPluginVersion = "1.12"
 
   //we automatically include some plugins (including the Play plugin) from frontend-build
 
