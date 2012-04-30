@@ -29,7 +29,7 @@ h2 {
 }
 
 h3 {
-    margin: 7px 0;
+    margin: 0 0 7px 0;
     font-size: 14px;
     line-height: 16px;
 }
@@ -207,6 +207,11 @@ img.badge {
     margin: 10px auto;
     text-align: center;
 }
+
+.maxed {
+    max-width: 100%;
+}
+
 
 @media screen and (min-width: 850px) {
     .expandable .img img {
