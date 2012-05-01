@@ -1,8 +1,3 @@
-import collection.Seq
-import com.google.common.io.Files
-
-import java.io.File
-import java.security.MessageDigest
 import sbt._
 import Keys._
 import PlayProject._

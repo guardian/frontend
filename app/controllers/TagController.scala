@@ -5,7 +5,7 @@ import conf._
 import common._
 import play.api.mvc.{ Controller, Action }
 
-case class TagAndTrails(tag: Tag, trails: List[Trail])
+case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging {
   def render(path: String) = Action {
@@ -23,9 +23,10 @@ object TagController extends Controller with Logging {
 
     val tag = response.tag map { new Tag(_) }
     val trails = response.results map { new Content(_) }
+    val leadContent = response.leadContent map { new Content(_) }
 
-    tag map { TagAndTrails(_, trails) }
+    tag map { TagAndTrails(_, trails, leadContent) }
   }
 
-  private def renderTag(model: TagAndTrails) = Ok(views.html.tag(model.tag, model.trails))
+  private def renderTag(model: TagAndTrails) = Ok(views.html.tag(model.tag, model.trails, model.leadContent))
 }
