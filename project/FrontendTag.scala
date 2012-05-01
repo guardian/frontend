@@ -26,7 +26,7 @@ object FrontendTag extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(frontendSettings: _*)
+    .settings(distSettings: _*)
     .settings(
     resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
     // Disable Specs options to use ScalaTest

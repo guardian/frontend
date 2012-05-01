@@ -1,6 +1,6 @@
 package conf
 
-import com.gu.management.{Switchable, TimingMetric, Healthcheck}
+import com.gu.management.{ Switchable, TimingMetric, Healthcheck }
 import common._
 
 object Configuration extends Configuration("frontend-tag", webappConfDirectory = "env")
