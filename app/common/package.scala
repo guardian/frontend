@@ -37,8 +37,8 @@ object `package` {
     try {
       block
     } catch {
-      case ApiError(404, _) =>
-        log.info("Got a 404 while calling content api")
+      case ApiError(404, message) =>
+        log.info("Got a 404 while calling content api: " + message)
         None
     }
   }
