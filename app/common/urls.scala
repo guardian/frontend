@@ -15,6 +15,13 @@ object SupportedUrl {
 class Static(base: String) {
   private lazy val staticMappings: Map[String, String] = {
     val assetMaps = Resources("assetmaps") map { loadAssetMap }
+
+    // You try to determine a precedence order here if you like...
+    val keyCollisions = assetMaps.duplicateKeys
+    if (!keyCollisions.isEmpty) {
+      throw new RuntimeException("Assetmap collisions for: " + keyCollisions.toList.sorted.mkString(", "))
+    }
+
     assetMaps reduceLeft { _ ++ _ }
   }
 
