@@ -17,11 +17,9 @@ object FrontendTag extends Build {
 
   private val appDependencies = Seq(
     //dependencies included in distribution
-    "com.gu.openplatform" %% "content-api-client" % "1.13",
-    "com.gu" %% "configuration" % "3.6",
     "com.gu" %% "management-play" % "5.7",
     "com.gu" %% "management-logback" % "5.7",
-    "com.gu" %% "frontend-common" % "1.9",
+    "com.gu" %% "frontend-common" % "1.30",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
@@ -35,7 +33,10 @@ object FrontendTag extends Build {
     testOptions in Test := Nil,
     jarName in assembly := "%s.jar" format appName,
     templatesImport ++= Seq(
-      "frontend.common._"
+      "common._",
+      "views._",
+      "views.support._",
+      "conf.Static"
     )
   )
 }

@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf._
-import frontend.common._
+import common._
 import play.api.mvc.{Controller, Action}
 
 case class TagAndTrails(tag: Tag, trails: List[Trail])
