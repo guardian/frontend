@@ -17,7 +17,7 @@ object Resources {
   private val classloader = getClass.getClassLoader
 
   // Get resources with 'path' prefix from any local location or jar on classpath
-  def apply(path: String): List[URL] = classloader.getResources(path).toList flatMap { list }
+  def apply(path: String): List[URL] = (classloader.getResources(path).toList flatMap { list }).distinct
 
   private def list(url: URL): List[URL] = url.toString match {
     case FilePattern(relativePath) =>

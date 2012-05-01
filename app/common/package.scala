@@ -25,6 +25,14 @@ object `package` {
     } toMap
   }
 
+  implicit def listOfMaps2DuplicateKeys[K, V](maps: List[Map[K, V]]) = new {
+    def duplicateKeys: Set[K] = {
+      val keys = (maps flatMap { _.keySet })
+      val keyInstances = keys groupBy { k => k }
+      (keyInstances filter { case (key, instances) => instances.length > 1 }).keySet
+    }
+  }
+
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
     try {
       block
