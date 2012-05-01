@@ -2,12 +2,12 @@
     "packages":{
         "frontend-tag":{
             "type":"executable-jar-webapp",
-            "apps":[ "frontend::tag" ],
+            "apps":[ "frontend::front" ],
             "data":{
                 "port":"9000",
                 "bucket":"artifacts-83445s",
                 "healthcheck_paths":[
-                    "/pages/world/turkey"
+                    "/pages"
                 ]
             }
         }
@@ -17,10 +17,10 @@
             "depends" : ["artifactUploadOnly", "deployOnly"]
         },
         "deployOnly":{
-            "actionsPerHost": ["frontend-tag.deploy"]
+            "actionsPerHost": ["frontend-front.deploy"]
         },
         "artifactUploadOnly":{
-            "actionsBeforeApp": ["frontend-tag.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-front.uploadArtifacts"]
         }
     }
 }

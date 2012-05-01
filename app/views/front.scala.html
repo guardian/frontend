@@ -1,4 +1,4 @@
-@(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
+@(frontTitle: String, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
 @import fragments._
 @import conf._
 
@@ -11,9 +11,9 @@
     <script>
         var guardian = {};
     </script>
-    @fragments.metaData(tag)
+    @* @fragments.metaData(tag) *@
 
-    <title>@tag.webTitle</title>
+    <title>@frontTitle | beta.guardian.co.uk</title>
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
@@ -41,31 +41,36 @@
 
             <div class="unit size1of1">
 
-                    @fragments.headline(tag.webTitle)
+                    @fragments.headline( frontTitle )
 
-                    <h2>@tag.section</h2>
+                    <h2>Top stories</h2>
 
             </div>
         </div>
 
-        @defining(leadContent.take(2)){ importantStories =>
-            @if(importantStories nonEmpty) {
-                <div class="line">
-                    @importantStories.map{ trail =>
-                        <div class="unit size1of2">
-                            @fragments.formatTrail(trail)
-                        </div>
-                    }
-                </div>
-            }
-
+        @defining(editorsPicks.take(5)){ trails =>
             <div class="line">
-                    @* TODO don't like this deduping would be easier as a case class or something *@
-                    @trails.filterNot(s => importantStories.map(_.url).contains(s.url)).map{ trail =>
-                        <div class="unit size1of2">
-                            @fragments.formatTrail(trail)
-                        </div>
-                    }
+                @trails.map{ trail =>
+                    <div class="unit size1of2">
+                        @fragments.formatTrail(trail)
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="unit size1of1">
+
+            <h2>Most viewed</h2>
+
+        </div>
+
+        @defining(mostViewed.take(5)){ trails =>
+            <div class="line">
+                @trails.map{ trail =>
+                    <div class="unit size1of2">
+                        @fragments.formatTrail(trail)
+                    </div>
+                }
             </div>
         }
 

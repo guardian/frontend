@@ -1,12 +1,12 @@
-Frontend Tag
-============
+Frontend Front
+==============
 
-The tag rendering components for the Guardian website.
+The section front rendering components for the Guardian website.
 
 
 Getting started for new developers
 ----------------------------------
-Frontend Tag is a Play Framework 2 Scala application.
+Frontend Front is a Play Framework 2 Scala application.
 
 To start the play development environment, run the provided `sbt011` script
 in the sourcetree root. This performs a number of additional configuration
