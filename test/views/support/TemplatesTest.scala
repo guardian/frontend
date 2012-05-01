@@ -54,8 +54,8 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   "javaScriptVariableName" should "create a sensible Javascript name" in {
 
-    "web-publication-date".javaScriptVariableName should be("webPublicationDate")
-    "series".javaScriptVariableName should be("series")
+    JavaScriptVariableName("web-publication-date") should be("webPublicationDate")
+    JavaScriptVariableName("series") should be("series")
   }
 
   "InlinePicturesFormatter" should "correctly format inline pictures" in {

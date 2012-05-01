@@ -21,7 +21,7 @@ this is orders of magnitude faster than selector queries
 <script>
     guardian.pageData = {
         @Html(
-            item.metaData.map{
+            item.metaData.map{ case (key, value) => (JavaScriptVariableName(key), value) }.map{
                 case (key, value: DateTime) =>   "'%s' : new Date(%s)".format(key, value.getMillis) // todo how exactly do we want to use dates in Javascript
                 case (key, value: String) =>   "'%s' : '%s'".format(key, JavaScriptString(value))
             }.mkString(",\n\t")
