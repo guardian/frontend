@@ -8,6 +8,16 @@
 
     <script>
         var guardian = {};
+        guardian.js = {};
+        guardian.js.modules = {
+            reqwest           : 'http://4.gu-pasteup.appspot.com/js/libs/reqwest.min.js',
+            bean              : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min.js',
+            detect            : 'http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            images            : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            basicTemplate     : '@Static("javascripts/libs/basicTemplate.min.js")',
+            trailExpander     : '@Static("javascripts/libs/trailExpander.min.js")',
+            fetchDiscussion   : '@Static("javascripts/libs/fetchDiscussion.min.js")'
+        };
     </script>
 
     @fragments.metaData(article)
@@ -17,12 +27,9 @@
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
     <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
-
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
     <link rel="stylesheet" media="screen and (min-width: 640px)" href="@Static("stylesheets/grid.responsive.css")">
-
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
-
     <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
     <![endif]-->
@@ -33,7 +40,6 @@
 </head>
 
 <body>
-
 
     <div id="top-ad-placeholder" style="text-align: center; margin: 10px auto;"></div>
 
