@@ -1,4 +1,4 @@
-define([guardian.js.modules.reqwest, guardian.js.modules.basicTemplate], function(reqwest, basicTemplate) {
+define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTemplate) {
 
     // fetch comments for article (if available)
     if (guardian.pageData.commentable) {
@@ -88,10 +88,10 @@ define([guardian.js.modules.reqwest, guardian.js.modules.basicTemplate], functio
                         if (c.userProfile.badge) {
                             for (var j in c.userProfile.badge) {
                                 var b = c.userProfile.badge[j];
-                                username += avatarTemplate.basicTemplate.format('#', b.imageUrl, b.name);
+                                username += basicTemplate.format(avatarTemplate, '#', b.imageUrl, b.name);
                             }
                         }
-                        html += commentTemplate.basicTemplate.format('#', username, datestamp, c.body);
+                        html += basicTemplate.format(commentTemplate, '#', username, datestamp, c.body);
                     }
 
                     var commentsPlaceholder = document.createElement("div");
