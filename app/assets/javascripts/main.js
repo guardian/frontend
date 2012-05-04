@@ -1,9 +1,8 @@
-
 requirejs.config({
     paths: guardian.js.modules
 });
 
-require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.modules.fetchDiscussion, guardian.js.modules.trailExpander], function(detect, images, discussion, trailexpander) {
+require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.modules.fetchDiscussion, guardian.js.modules.trailExpander, guardian.js.modules.mostPopular], function(detect, images, discussion, trailExpander, mostPopular) {
 
     var gu_debug = {
         screenHeight: screen.height,
@@ -23,6 +22,9 @@ require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.mod
 
     // Find and upgrade images.
     images.upgrade();
+
+    trailExpander.bindExpanders();
+
 
     // todo - work out where to load discussion and trailexpander
     // and also if the URLs are wrong...

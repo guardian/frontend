@@ -8,28 +8,19 @@
 
     <script>
         var guardian = {};
+
+        // used for requireJS because we can't build dynamic paths inside main.js
         guardian.js = {};
         guardian.js.modules = {
-            reqwest           : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
-            bean              : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
-            detect            : 'http://4.gu-pasteup.appspot.com/js/detect/detect.js',
-            images            : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
-            basicTemplate     : '@Static("javascripts/libs/basicTemplate.min.js")',
-            trailExpander     : '@Static("javascripts/libs/trailExpander.min.js")',
-            fetchDiscussion   : '@Static("javascripts/libs/fetchDiscussion.min.js")'
+            reqwest             : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
+            bean                : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
+            detect              : 'http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            images              : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            basicTemplate       : '@Static("javascripts/libs/basicTemplate.min.js")',
+            trailExpander       : '@Static("javascripts/libs/trailExpander.min.js")',
+            fetchDiscussion     : '@Static("javascripts/libs/fetchDiscussion.min.js")',
+            mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")'
         };
-
-        // this is filthy but it's the only way to get requireJS to correctly build these dynamic URLs
-        // so we strip .js off the end because require duplicates it if not
-        // we can't strip it off the @Static ones above because the function call fails
-        /*
-        for (var scriptname in guardian.js.modules) {
-            var url = guardian.js.modules[scriptname];
-            url = url.replace('.js', '');
-            guardian.js.modules[scriptname] = url;
-        }
-        */
-
     </script>
 
     @fragments.metaData(article)
@@ -96,6 +87,8 @@
                     @fragments.formatTags(tag)
                 }
                 </ul>
+
+                <div id="js-popular-placeholder"></div>
 
             </div>
 
