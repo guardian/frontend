@@ -18,7 +18,7 @@ define(function () {
     function removeClass(elm, classname) {
         var re = new RegExp(classname, 'g');
         elm.className = elm.className.replace(re, '');
-    },
+    }
 
     /* convenience method to swap one class for another */
     function swapClass(elm, class_to_remove, class_to_add) {

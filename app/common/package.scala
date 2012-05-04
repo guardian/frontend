@@ -25,12 +25,20 @@ object `package` {
     } toMap
   }
 
+  implicit def listOfMaps2DuplicateKeys[K, V](maps: List[Map[K, V]]) = new {
+    def duplicateKeys: Set[K] = {
+      val keys = (maps flatMap { _.keySet })
+      val keyInstances = keys groupBy { k => k }
+      (keyInstances filter { case (key, instances) => instances.length > 1 }).keySet
+    }
+  }
+
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
     try {
       block
     } catch {
-      case ApiError(404, _) =>
-        log.info("Got a 404 while calling content api")
+      case ApiError(404, message) =>
+        log.info("Got a 404 while calling content api: " + message)
         None
     }
   }
