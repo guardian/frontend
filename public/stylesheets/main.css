@@ -98,7 +98,7 @@ article p {
 
 /* ====== /media ====== */
 
-.expandable {
+.trailblock {
     background-color: #ededed;
 }
 
@@ -123,15 +123,15 @@ article p {
     margin-top: 0;
 }
 
-.expandable li {
+.trailblock li {
     margin: 0 10px;
 }
 
-.expandable li:nth-child(n+5) {
+.trailblock li:nth-child(n+5) {
     display: none;
 }
 
-.expandable h3 {
+.trailblock h3 {
     text-align: center;
     color: #932B6C;
     padding: 8px;
@@ -150,18 +150,18 @@ article p {
     text-align: center;
 }
 
-.expandable p {
+.trailblock p {
     font-weight: bold;
     color: #932B6C;
 }
 
-.expandable p {
+.trailblock p {
     font-size: 14px;
     line-height: 16px;
     font-family: arial;
 }
 
-.expandable .img img {
+.trailblock .img img {
     width: 60px;
 }
 
@@ -169,7 +169,7 @@ article p {
     display: none;
 }
 
-.expandable .trailtext {
+.trailblock .trailtext {
     color: #333;
     font-weight: normal;
 }
@@ -213,7 +213,7 @@ img.badge {
 }
 
 @media screen and (min-width: 850px) {
-    .expandable .img img {
+    .trailblock .img img {
         width: auto;
     }
 }
