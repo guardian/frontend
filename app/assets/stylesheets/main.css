@@ -214,7 +214,7 @@ img.badge {
 
 @media screen and (min-width: 850px) {
     .trailblock .img img {
-        width: auto;
+        width: 160px;
     }
 }
 
@@ -222,6 +222,16 @@ img.badge {
     .lt-extended {
         display: none;
     }
+
+    /* sorry for this :( -- it's because nth-child above has higher specificity */
+    .trailblock li {
+        display: block !important;
+    }
+
+    .trailblock h3.expander {
+        display: none;
+    }
+
 }
 
 @media screen and (min-width: 400px) {
