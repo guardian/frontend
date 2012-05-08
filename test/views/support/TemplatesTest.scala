@@ -79,6 +79,39 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     (extendedImg \ "img" \ "@width").text should be("600")
   }
 
+  "RowInfo" should "add row info to a sequence" in {
+
+    val items = Seq("a", "b", "c", "d")
+
+    items.zipWithRowInfo should be(Seq(
+      ("a", RowInfo(1)), ("b", RowInfo(2)), ("c", RowInfo(3)), ("d", RowInfo(4, true))
+    ))
+
+  }
+
+  it should "correctly understand row position" in {
+    val first = RowInfo(1)
+    first.isFirst should be(true)
+    first.isLast should be(false)
+    first.isEven should be(false)
+    first.isOdd should be(true)
+    first.rowClass should be("first odd")
+
+    val second = RowInfo(2)
+    second.isFirst should be(false)
+    second.isLast should be(false)
+    second.isEven should be(true)
+    second.isOdd should be(false)
+    second.rowClass should be("even")
+
+    val last = RowInfo(7, true)
+    last.isFirst should be(false)
+    last.isLast should be(true)
+    last.isEven should be(false)
+    last.isOdd should be(true)
+    last.rowClass should be("last odd")
+  }
+
   private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)

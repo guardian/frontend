@@ -57,6 +57,18 @@ object JavaScriptVariableName {
   private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
 }
 
+case class RowInfo(rowNum: Int, isLast: Boolean = false) {
+  lazy val isFirst = rowNum == 1
+  lazy val isEven = rowNum % 2 == 0
+  lazy val isOdd = !isEven
+  lazy val rowClass = rowNum match {
+    case 1 => "first " + _rowClass
+    case _ if isLast => "last " + _rowClass
+    case _ => _rowClass
+  }
+  private lazy val _rowClass = if (isEven) "even" else "odd"
+}
+
 object `package` {
 
   private object inflector extends Inflector
@@ -68,5 +80,11 @@ object `package` {
   implicit def tags2inflector(t: Tag) = new {
     lazy val singularName: String = inflector.singularize(t.name)
     lazy val pluralName: String = inflector.pluralize(t.name)
+  }
+
+  implicit def seq2zipWithRowInfo[A](seq: Seq[A]) = new {
+    def zipWithRowInfo = seq.zipWithIndex.map {
+      case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
+    }
   }
 }
