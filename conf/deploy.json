@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-tag":{
+        "frontend-front":{
             "type":"executable-jar-webapp",
             "apps":[ "frontend::front" ],
             "data":{
