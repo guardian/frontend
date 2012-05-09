@@ -1,40 +1,35 @@
 package controllers
 
 import conf._
+import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import play.api.mvc.{ Controller, Action }
-import com.gu.openplatform.contentapi.model.{ Section, ItemResponse }
 
-case class SectionFrontTrails(sectionTitle: String, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
+case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
 
 object FrontController extends Controller with Logging {
   def render(path: String) = Action {
     lookup(path) map { renderFront(_) } getOrElse { NotFound }
   }
 
-  private def lookup(path: String): Option[SectionFrontTrails] = suppressApi404 {
-    log.info("Fetching front for " + path)
-    val query: ContentApi.ItemQuery = ContentApi.item
+  private def lookup(path: String): Option[SectionFrontPage] = suppressApi404 {
+    log.info("Fetching front: " + path)
+    val response: ItemResponse = ContentApi.item
       .showTags("all")
       .showFields("all")
       .showMedia("all")
       .showEditorsPicks(true)
       .showMostViewed(true)
       .itemId(path)
+      .response
 
-    log.info(query._apiUrl.get + (query.parameters.map { case (key, value) => key + "=" + value }).mkString("?", "&", ""))
+    val section = response.section map { Section(_) }
 
-    val response: ItemResponse = query response
-
-    val sectionTitle = response.section match {
-      case Some(section: Section) => section.webTitle
-      case None => "Front for " + path
-    }
     val editorsPicks = response.editorsPicks map { new Content(_) }
     val mostViewed = response.mostViewed map { new Content(_) }
 
-    Some(SectionFrontTrails(sectionTitle, editorsPicks, mostViewed))
+    section map { SectionFrontPage(_, editorsPicks, mostViewed) }
   }
 
-  private def renderFront(model: SectionFrontTrails) = Ok(views.html.front(model.sectionTitle, model.editorsPicks, model.mostViewed))
+  private def renderFront(model: SectionFrontPage) = Ok(views.html.front(model.section, model.editorsPicks, model.mostViewed))
 }
