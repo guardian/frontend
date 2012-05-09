@@ -5,7 +5,7 @@ import conf._
 import common._
 import play.api.mvc.{ Controller, Action }
 
-case class ArticleAndRelated(article: Article, related: List[Trail], storyPackage: List[Trail])
+case class ArticlePage(article: Article, related: List[Trail], storyPackage: List[Trail])
 
 object ArticleController extends Controller with Logging {
 
@@ -13,7 +13,7 @@ object ArticleController extends Controller with Logging {
     lookup(path) map { renderArticle } getOrElse { NotFound }
   }
 
-  private def lookup(path: String): Option[ArticleAndRelated] = suppressApi404 {
+  private def lookup(path: String): Option[ArticlePage] = suppressApi404 {
     log.info("Fetching article: " + path)
     val response: ItemResponse = ContentApi.item
       .showInlineElements("picture")
@@ -29,9 +29,9 @@ object ArticleController extends Controller with Logging {
     val related = response.relatedContent map { new Content(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    article map { ArticleAndRelated(_, related, storyPackage) }
+    article map { ArticlePage(_, related, storyPackage) }
   }
 
-  private def renderArticle(model: ArticleAndRelated) =
+  private def renderArticle(model: ArticlePage) =
     Ok(views.html.article(model.article, model.related, model.storyPackage))
 }
