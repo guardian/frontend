@@ -14,7 +14,7 @@ object FrontendArticle extends Build {
     //dependencies included in distribution
     "com.gu" %% "management-play" % "5.8",
     "com.gu" %% "management-logback" % "5.8",
-    "com.gu" %% "frontend-common" % "1.32",
+    "com.gu" %% "frontend-common" % "1.33",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
