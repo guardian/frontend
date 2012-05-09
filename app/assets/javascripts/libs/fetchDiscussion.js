@@ -1,11 +1,11 @@
 define([guardian.js.modules.reqwest, guardian.js.modules.basicTemplate], function(reqwest, basicTemplate) {
 
     // fetch comments for article (if available)
-    if (guardian.pageData.commentable) {
+    if (guardian.page.commentable) {
 
         // get discussion URL
         var urlBase = 'http://coddisapi01.gudev.gnl:8900/discussion-api/discussion/';
-        var shortUrl = guardian.pageData.shortUrl.replace("http://gu.com", "");
+        var shortUrl = guardian.page.shortUrl.replace("http://gu.com", "");
         var discussionAjaxUrl = urlBase + shortUrl;
 
         // fetch via ajax

@@ -1,12 +1,12 @@
-Frontend Article
+Frontend Gallery
 ================
 
-The article rendering components for the Guardian website.
+The gallery rendering components for the Guardian website.
 
 
 Getting started for new developers
 ----------------------------------
-Frontend Article is a Play Framework 2 Scala application.
+Frontend Gallery is a Play Framework 2 Scala application.
 
 To start the play development environment, run the provided `sbt011` script
 in the sourcetree root. This performs a number of additional configuration

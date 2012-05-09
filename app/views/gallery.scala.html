@@ -1,4 +1,4 @@
-@(article: Article, related: List[Trail], storyPackage: List[Trail])
+@(gallery: Gallery, related: List[Trail], storyPackage: List[Trail], index: Int, trail: Boolean)
 
 <!DOCTYPE html>
 
@@ -20,9 +20,9 @@
         };
     </script>
 
-    @fragments.metaData(article)
+    @fragments.metaData(gallery)
 
-    <title>@article.headline</title>
+    <title>@gallery.headline</title>
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
@@ -36,19 +36,20 @@
 
     <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
 
-
+    <script>
+        guardian.gallery = @JSON(gallery);
+    </script>
 </head>
 
 <body>
-
     <div id="top-ad-placeholder" style="text-align: center; margin: 10px auto;"></div>
 
     <div id="container">
 
         <div class="line">
             <div class="unit size1of1">
-                @fragments.headline(article.headline)
-                @fragments.standfirst(article.standfirst)
+                @fragments.headline(gallery.headline)
+                @fragments.standfirst(gallery.standfirst)
             </div>
         </div>
 
@@ -56,18 +57,36 @@
 
             <div class="unit size3of5">
 
-                @article.imageOfWidth(300, tolerance=160).map{ image =>
-                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
-                    @fragments.caption(image.caption.getOrElse(""))
+                @fragments.byline(gallery.byline)
+                @fragments.dateline(gallery.webPublicationDate)
+
+                @if(trail) {
+                    <p class="trail">Trail page here...</p>
+                } else {
+                    <p class="nav">
+                        Image @index of @gallery.size
+
+                        @*
+                          TODO: Standard CS navigation indexing functions in views.support.
+                        *@
+
+                        @if(index > 1) {
+                            <a href="?index=@(index - 1)">Previous</a>
+                        }
+
+                        @if(index < gallery.size) {
+                            <a href="?index=@(index + 1)">Next</a>
+                        } else {
+                            <a href="?trail=true">Next</a>
+                        }
+                    </p>
+
+                    @defining(gallery(index)) { image =>
+                        <img class="maxed" src="@image.url" data-fullsrc='@image.url' data-width="@image.width" />
+                        @fragments.caption(image.caption.getOrElse(""))
+                        <p class="credit">@image.credit</p>
+                    }
                 }
-
-                @fragments.byline(article.byline)
-                @fragments.dateline(article.webPublicationDate)
-            
-                <article>
-                    @PictureTransformerHtml(article.body)
-                </article>
-
             </div>
 
             <div class="unit lastUnit">
@@ -80,7 +99,7 @@
 
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
-                @article.keywords.map{ tag =>
+                @gallery.keywords.map{ tag =>
                     @fragments.formatTags(tag)
                 }
                 </ul>
