@@ -1,16 +1,17 @@
 package views.support
 
-import play.api.templates.Html
-import org.apache.commons.lang.StringEscapeUtils._
+import common.{ Formats, Tag, Tags }
 import org.jsoup.Jsoup
 import org.jboss.dna.common.text.Inflector
-import common.{ Tag, Tags }
+import play.api.libs.json.Writes
+import play.api.libs.json.Json._
+import play.api.templates.Html
 import scala.collection.JavaConversions._
 
-object JavaScriptString {
+object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
-  def apply(string: String): Html = Html(escapeJavaScript(string))
+  def apply[T](json: T)(implicit tjs: Writes[T]): Html = Html(stringify(toJson(json)))
 }
 
 //annoyingly content api will sometimes have things surrounded by <p> tags and sometimes not.
@@ -69,7 +70,7 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
   private lazy val _rowClass = if (isEven) "even" else "odd"
 }
 
-object `package` {
+object `package` extends Formats {
 
   private object inflector extends Inflector
 

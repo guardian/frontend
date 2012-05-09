@@ -1,8 +1,6 @@
 package common
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
-import java.util.Properties
-import java.net.URL
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {
@@ -14,7 +12,7 @@ object SupportedUrl {
 
 class Static(base: String) {
   private lazy val staticMappings: Map[String, String] = {
-    val assetMaps = Resources("assetmaps") map { loadAssetMap }
+    val assetMaps = Resources("assetmaps") map { loadProperties }
 
     // You try to determine a precedence order here if you like...
     val keyCollisions = assetMaps.duplicateKeys
@@ -22,14 +20,9 @@ class Static(base: String) {
       throw new RuntimeException("Assetmap collisions for: " + keyCollisions.toList.sorted.mkString(", "))
     }
 
-    assetMaps reduceLeft { _ ++ _ }
+    val unbased = assetMaps reduceLeft { _ ++ _ }
+    unbased mapValues { base + _ }
   }
 
-  def apply(path: String) = base + staticMappings(path)
-
-  private def loadAssetMap(url: URL): Map[String, String] = {
-    val properties = new Properties()
-    using(url.openStream) { properties.load }
-    properties.toMap
-  }
+  def apply(path: String) = staticMappings(path)
 }
