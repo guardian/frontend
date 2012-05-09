@@ -1,11 +1,12 @@
 package common
 
 import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag }
-import math.abs
 import org.joda.time.DateTime
+import play.api.libs.json._
+import play.api.libs.json.Json.toJson
+import views.support.JavaScriptVariableName
 
 trait MetaData {
-
   // indicates the absolute url of this page (the one to be used for search engine indexing)
   // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
   def canonicalUrl: String
@@ -18,6 +19,7 @@ trait MetaData {
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
+    "canonical-url" -> canonicalUrl,
     "api-url" -> apiUrl,
     "web-title" -> webTitle
   )
@@ -27,9 +29,11 @@ trait Images {
   def images: Seq[Image]
 
   def imageOfWidth(desiredWidth: Int, tolerance: Int = 0): Option[Image] = {
-    val validWidths = (desiredWidth - tolerance) to (desiredWidth + tolerance)
-    val imagesInWidthRange = images.filter(image => validWidths contains image.width)
-    imagesInWidthRange.sortBy(image => abs(desiredWidth - image.width)).headOption
+    val widthRange = (desiredWidth - tolerance) to (desiredWidth + tolerance)
+    val imagesInWidthRange = images filter { _.width in widthRange }
+    val imagesByDistance = imagesInWidthRange sortBy { _.width distanceFrom desiredWidth }
+
+    imagesByDistance.headOption
   }
 }
 
@@ -58,9 +62,18 @@ case class Image(private val media: ApiMedia) {
 
   lazy val mediaType: String = media.`type`
   lazy val rel: String = media.rel
+  lazy val index: Int = media.index
+
   lazy val url: Option[String] = media.file
-  lazy val caption: Option[String] = fields.get("caption")
+  lazy val thumbnail: Option[String] = fields.get("thumbnail")
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
+
+  lazy val caption: Option[String] = fields.get("caption")
+  lazy val altText: Option[String] = fields.get("altText")
+
+  lazy val source: Option[String] = fields.get("source")
+  lazy val photographer: Option[String] = fields.get("photographer")
+  lazy val credit: Option[String] = fields.get("credit")
 }
 
 case class Tag(private val tag: ApiTag) extends MetaData {
@@ -123,4 +136,55 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
 class Article(private val content: ApiContent) extends Content(content) {
   lazy val body: String = content.safeFields("body")
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
+}
+
+class Gallery(private val content: ApiContent) extends Content(content) {
+  private val lookup: Map[Int, Image] = (images map { image => (image.index, image) }).toMap
+
+  def apply(index: Int): Image = lookup(index)
+  lazy val size = images.size
+
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Gallery")
+}
+
+trait Formats {
+  implicit val imageFormat: Writes[Image] = new Writes[Image] {
+    def writes(image: Image): JsValue = toJson(
+      Map(
+        "index" -> toJson(image.index),
+        "url" -> toJson(image.url),
+        "thumbnail" -> toJson(image.thumbnail),
+        "width" -> toJson(image.width),
+        "caption" -> toJson(image.caption),
+        "altText" -> toJson(image.altText),
+        "source" -> toJson(image.source),
+        "photographer" -> toJson(image.photographer),
+        "credit" -> toJson(image.credit)
+      )
+    )
+  }
+
+  implicit val galleryFormat: Writes[Gallery] = new Writes[Gallery] {
+    def writes(gallery: Gallery): JsValue = toJson(
+      Map(
+        "pictures" -> (gallery.images.toList sortBy { _.index } map { image: Image => toJson(image) })
+      )
+    )
+  }
+
+  // Some advice at: http://markembling.info/2011/07/json-date-time
+  implicit val dateTimeFormat: Writes[DateTime] = new Writes[DateTime] {
+    def writes(datetime: DateTime) = toJson(datetime.toISODateTimeString)
+  }
+
+  implicit val metaDataFormat: Writes[MetaData] = new Writes[MetaData] {
+    def writes(item: MetaData): JsValue = toJson(
+      item.metaData map {
+        case (key, value) => JavaScriptVariableName(key) -> value
+      } mapValues {
+        case date: DateTime => toJson(date)
+        case string: String => toJson(string)
+      }
+    )
+  }
 }

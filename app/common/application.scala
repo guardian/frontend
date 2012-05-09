@@ -1,9 +1,9 @@
 package common
 
-import play.api.Logger
-import java.net.URL
 import java.io.File
+import java.net.URL
 import java.util.jar.JarFile
+import play.api.Logger
 import scala.collection.JavaConversions._
 
 trait Logging {

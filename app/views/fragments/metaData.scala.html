@@ -1,32 +1,23 @@
 @(item: MetaData)
-@import org.joda.time.DateTime
 
     @*
-    canonical url for this page - it should point back to www.guardian.co.uk to indicate that this is a
-    copy of a page over there.
-    see see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
+    canonical url for this page - it should point back to www.guardian.co.uk
+    to indicate that this is a copy of a page over there. See:
+        http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
     *@
     <link rel="canonical" href="@item.canonicalUrl"/>
-
 
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1;" />
     <meta charset="utf-8" />
 
-@item.metaData.map{ case (key, value) =>
-    <meta name="@key" value="@value"/> }
+@item.metaData.map { case (key, value) =>
+    <meta name="@key" value="@value"/>
+}
+
 @*
 exposes all metadata tags as javascript variables
 this is orders of magnitude faster than selector queries
 *@
 <script>
-    guardian.pageData = {
-        @Html(
-            item.metaData.map{ case (key, value) => (JavaScriptVariableName(key), value) }.map{
-                case (key, value: DateTime) =>   "'%s' : new Date(%s)".format(key, value.getMillis) // todo how exactly do we want to use dates in Javascript
-                case (key, value: String) =>   "'%s' : '%s'".format(key, JavaScriptString(value))
-            }.mkString(",\n\t")
-        )
-    };
+    guardian.page = @JSON(item);
 </script>
-
-

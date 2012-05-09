@@ -8,12 +8,6 @@ import xml.XML
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 
-  "JavaScriptString" should "escape javascript" in {
-
-    JavaScriptString("hello 'world'").body should be("""hello \'world\'""")
-
-  }
-
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").text should be(" foo <b>bar</b> ")
   }
