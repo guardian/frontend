@@ -1,6 +1,6 @@
 package common
 
-import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag }
+import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia, Content => ApiContent, Tag => ApiTag, Section => ApiSection }
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
@@ -57,14 +57,14 @@ trait Tags {
   lazy val types: Seq[Tag] = tagsOfType("type")
 }
 
-case class Image(private val media: ApiMedia) {
-  private val fields = media.fields.getOrElse(Map.empty[String, String])
+case class Image(private val delegate: ApiMedia) {
+  private lazy val fields = delegate.fields getOrElse Map.empty[String, String]
 
-  lazy val mediaType: String = media.`type`
-  lazy val rel: String = media.rel
-  lazy val index: Int = media.index
+  lazy val mediaType: String = delegate.`type`
+  lazy val rel: String = delegate.rel
+  lazy val index: Int = delegate.index
 
-  lazy val url: Option[String] = media.file
+  lazy val url: Option[String] = delegate.file
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
 
@@ -76,44 +76,62 @@ case class Image(private val media: ApiMedia) {
   lazy val credit: Option[String] = fields.get("credit")
 }
 
-case class Tag(private val tag: ApiTag) extends MetaData {
-  lazy val name: String = tag.webTitle
-  lazy val tagType: String = tag.`type`
+case class Tag(private val delegate: ApiTag) extends MetaData {
+  lazy val name: String = webTitle
+  lazy val tagType: String = delegate.`type`
 
-  lazy val id: String = tag.id
-  lazy val section: String = tag.sectionId.getOrElse("")
-  lazy val apiUrl: String = tag.apiUrl
-  lazy val webTitle: String = tag.webTitle
+  lazy val id: String = delegate.id
+  lazy val section: String = delegate.sectionId.getOrElse("")
+  lazy val apiUrl: String = delegate.apiUrl
+  lazy val webUrl: String = delegate.webUrl
+  lazy val webTitle: String = delegate.webTitle
 
-  lazy val canonicalUrl: String = tag.webUrl
+  lazy val canonicalUrl: String = webUrl
 
-  lazy val url: String = SupportedUrl(tag)
+  lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
 }
 
-class Content(content: ApiContent) extends Trail with Tags with MetaData {
-  override lazy val tags: Seq[Tag] = content.tags map { Tag(_) }
+case class Section(private val delegate: ApiSection) extends MetaData {
+  lazy val name: String = webTitle
+  lazy val section: String = id
 
-  lazy val url: String = SupportedUrl(content)
+  lazy val id: String = delegate.id
+  lazy val apiUrl: String = delegate.apiUrl
+  lazy val webUrl: String = delegate.webUrl
+  lazy val webTitle: String = delegate.webTitle
+
+  lazy val canonicalUrl: String = webUrl
+
+  lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
-  lazy val trailText: Option[String] = content.safeFields.get("trailText")
+}
 
-  lazy val images: Seq[Image] = content.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
+class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+  private lazy val fields = delegate.safeFields
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
-  lazy val id: String = content.id
-  lazy val section: String = content.sectionId.getOrElse("")
-  lazy val publication: String = content.safeFields.get("publication").getOrElse("")
-  lazy val webPublicationDate: DateTime = content.webPublicationDate
-  lazy val shortUrl: String = content.safeFields("shortUrl")
-  lazy val apiUrl: String = content.apiUrl
-  lazy val headline: String = content.safeFields("headline")
-  lazy val webTitle: String = content.webTitle
+  lazy val url: String = SupportedUrl(delegate)
+  lazy val linkText: String = webTitle
+  lazy val trailText: Option[String] = fields.get("trailText")
 
-  lazy val standfirst: Option[String] = content.safeFields.get("standfirst")
-  lazy val byline: Option[String] = content.safeFields.get("byline")
+  lazy val images: Seq[Image] = delegate.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
+
+  lazy val id: String = delegate.id
+  lazy val section: String = delegate.sectionId.getOrElse("")
+  lazy val publication: String = fields.get("publication").getOrElse("")
+  lazy val webPublicationDate: DateTime = delegate.webPublicationDate
+  lazy val shortUrl: String = delegate.safeFields("shortUrl")
+  lazy val apiUrl: String = delegate.apiUrl
+  lazy val webUrl: String = delegate.webUrl
+  lazy val headline: String = fields("headline")
+  lazy val webTitle: String = delegate.webTitle
+
+  lazy val standfirst: Option[String] = fields.get("standfirst")
+  lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
-  lazy val canonicalUrl: String = content.webUrl
+  lazy val canonicalUrl: String = webUrl
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
@@ -129,16 +147,16 @@ class Content(content: ApiContent) extends Trail with Tags with MetaData {
     "web-publication-date" -> webPublicationDate,
     "short-url" -> shortUrl,
     "byline" -> byline.getOrElse(""),
-    "commentable" -> content.safeFields.get("commentable").getOrElse("false")
+    "commentable" -> fields.get("commentable").getOrElse("false")
   )
 }
 
-class Article(private val content: ApiContent) extends Content(content) {
-  lazy val body: String = content.safeFields("body")
+class Article(private val delegate: ApiContent) extends Content(delegate) {
+  lazy val body: String = delegate.safeFields("body")
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
 }
 
-class Gallery(private val content: ApiContent) extends Content(content) {
+class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   private val lookup: Map[Int, Image] = (images map { image => (image.index, image) }).toMap
 
   def apply(index: Int): Image = lookup(index)
