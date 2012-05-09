@@ -1,6 +1,4 @@
-@(frontTitle: String, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
-@import fragments._
-@import conf._
+@(section: Section, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
 
 <!DOCTYPE html>
 
@@ -11,9 +9,10 @@
     <script>
         var guardian = {};
     </script>
-    @* @fragments.metaData(tag) *@
 
-    <title>@frontTitle | beta.guardian.co.uk</title>
+    @fragments.metaData(section)
+
+    <title>@section | beta.guardian.co.uk</title>
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
@@ -29,19 +28,16 @@
     <![endif]-->
 
     <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
-
-
 </head>
 
 <body>
-
     <div id="container">
 
         <div class="line">
 
             <div class="unit size1of1">
 
-                    @fragments.headline( frontTitle )
+                    @fragments.headline( section.name )
 
                     <h2>Top stories</h2>
 
@@ -92,7 +88,7 @@
     </div>
 
     <script>
-        require(['@Configuration.plugins.location'], function(){});
+        require(['@conf.Configuration.plugins.location'], function(){});
     </script>
 </body>
 </html>
