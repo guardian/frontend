@@ -16,7 +16,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
             jsonpCallbackName: 'showArticleComments',
             success: function(json) {
 
-                if (json.discussion.commentCount > 0) {
+                if (json.status !== 'error' && json.discussion.commentCount > 0) {
 
                     // util for comment datastamps
                     function formatDate(d) {
