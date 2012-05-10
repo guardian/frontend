@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object Plugins extends Build {
 
-  val frontendPluginVersion = "1.15"
+  val playAssetHashPluginVersion = "1.1"
 
   //we automatically include some plugins (including the Play plugin) from frontend-build
 
@@ -18,5 +18,5 @@ object Plugins extends Build {
         Resolver.withDefaultResolvers(rs, scalaTools = false)
       }
     )
-    .dependsOn(uri("git://github.com/guardian/sbt-frontend-build.git#" + frontendPluginVersion))
+    .dependsOn(uri("git://github.com/guardian/sbt-play-assethash.git#" + playAssetHashPluginVersion))
 }
