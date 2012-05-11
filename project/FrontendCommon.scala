@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 import PlayProject._
-import frontend.Frontend._
+import com.gu.PlayAssetHash._
 
 object FrontendCommon extends Build {
 
@@ -19,7 +19,7 @@ object FrontendCommon extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(compileSettings: _*)
+    .settings(playAssetHashCompileSettings: _*)
     .settings(
       organization := "com.gu",
 
