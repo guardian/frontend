@@ -6,7 +6,7 @@ import com.gu.PlayAssetHash._
 object FrontendCommon extends Build {
 
   private val appName = "frontend-common"
-  private val appVersion = "1.35-SNAPSHOT"
+  private val appVersion = "1.37-SNAPSHOT"
 
   private val appDependencies = Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.15",
