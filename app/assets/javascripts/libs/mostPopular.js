@@ -20,7 +20,7 @@ define(["reqwest", guardian.js.modules.basicTemplate, guardian.js.modules.trailE
         	}
         	html += '</ul><h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More popular content</a> <span class="count">' + (parseInt(json.length) - 4) + '</span></h3></div>';
 
-	       document.getElementById('js-popular-placeholder').innerHTML = html;
+	       document.getElementById('tier3-1').innerHTML = html;
                trailExpander.bindExpanders();
         }
     });
