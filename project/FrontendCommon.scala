@@ -1,12 +1,12 @@
 import sbt._
 import Keys._
 import PlayProject._
-import frontend.Frontend._
+import com.gu.PlayAssetHash._
 
 object FrontendCommon extends Build {
 
   private val appName = "frontend-common"
-  private val appVersion = "1.35-SNAPSHOT"
+  private val appVersion = "1.37-SNAPSHOT"
 
   private val appDependencies = Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.15",
@@ -19,7 +19,7 @@ object FrontendCommon extends Build {
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
-    .settings(compileSettings: _*)
+    .settings(playAssetHashCompileSettings: _*)
     .settings(
       organization := "com.gu",
 
