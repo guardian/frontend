@@ -7,7 +7,7 @@
 
 .unit {
     float: left;
-    padding: 0 10px;
+    margin-right: 20px;
 }
 
 .unitRight {
@@ -82,6 +82,7 @@
 .lastUnit {
     float: none;
     width: auto;
+    margin-right: 0px;
     _position: relative;
     _left: -3px;
     _margin-right: -3px;
