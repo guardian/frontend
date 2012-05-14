@@ -22,7 +22,6 @@ object FrontendCommon extends Build {
     .settings(playAssetHashCompileSettings: _*)
     .settings(
       organization := "com.gu",
-      scalaVersion := "2.9.1",
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
       testOptions in Test := Nil,
