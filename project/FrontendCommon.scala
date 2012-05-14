@@ -20,8 +20,6 @@ object FrontendCommon extends Build {
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
     .settings(playAssetHashCompileSettings: _*)
-    // Fixed in SBT 0.12: https://github.com/harrah/xsbt/issues/329
-    //.settings(ScalariformPlugin.scalariformSettings: _*)
     .settings(
       organization := "com.gu",
       scalaVersion := "2.9.1",
