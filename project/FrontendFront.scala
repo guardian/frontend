@@ -2,7 +2,6 @@ import com.gu.deploy.PlayAssetHash._
 import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
-import sbtassembly.Plugin._
 import sbtassembly.Plugin.AssemblyKeys._
 
 object FrontendFront extends Build {
