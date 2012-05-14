@@ -1,7 +1,7 @@
+import com.gu.deploy.PlayAssetHash._
 import sbt._
-import Keys._
-import PlayProject._
-import com.gu.PlayAssetHash._
+import sbt.Keys._
+import sbt.PlayProject._
 
 object FrontendCommon extends Build {
 
@@ -20,19 +20,21 @@ object FrontendCommon extends Build {
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
     .settings(playAssetHashCompileSettings: _*)
+    // Fixed in SBT 0.12: https://github.com/harrah/xsbt/issues/329
+    //.settings(ScalariformPlugin.scalariformSettings: _*)
     .settings(
       organization := "com.gu",
+      scalaVersion := "2.9.1",
 
+      // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
       testOptions in Test := Nil,
+
+      // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
-      resolvers ++= Seq(
-        "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-        "Mvn Repository" at "http://mvnrepository.com/artifact/"
-      ),
+      resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
 
-      // no javadoc
+      // Do not publish JavaDoc
       publishArtifact in (Compile, packageDoc) := false,
 
       publishTo <<= (version) { version: String =>

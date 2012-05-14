@@ -1,22 +1,11 @@
 import sbt._
-import sbt.Keys._
 
 object Plugins extends Build {
 
-  val playAssetHashPluginVersion = "1.1"
+  val playAssetHashPluginVersion = "1.3"
 
-  //we automatically include some plugins (including the Play plugin) from frontend-build
+  // We automatically include some plugins (including the Play plugin) from sbt-play-assethash.
 
-  lazy val plugins = Project("frontend-common", file("."))
-    .settings(
-      resolvers ++= Seq(
-        "sbt-idea-repo" at "http://mpeltonen.github.com/maven/",
-        "mvn repository" at "http://mvnrepository.com/artifact/"
-      ),
-
-      externalResolvers <<= resolvers map { rs =>
-        Resolver.withDefaultResolvers(rs, scalaTools = false)
-      }
-    )
-    .dependsOn(uri("git://github.com/guardian/sbt-play-assethash.git#" + playAssetHashPluginVersion))
+  lazy val plugins = Project("frontend-common", file(".")).
+    dependsOn(uri("git://github.com/guardian/sbt-play-assethash.git#" + playAssetHashPluginVersion))
 }

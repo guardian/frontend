@@ -11,7 +11,14 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
+PROXY_PARAMS="-Dhttp.proxyHost=devscreen.gudev.gnl -Dhttp.proxyPort=3128"
+if [ "$1" == "--no-proxy" ]; then
+  PROXY_PARAMS=""
+  shift
+fi
+
 java -Xmx768M -XX:MaxPermSize=384m \
-	-Dhttp.proxyHost=devscreen.gudev.gnl -Dhttp.proxyPort=3128 \
 	-Dsbt.boot.directory=$SBT_BOOT_DIR \
-	-jar `dirname $0`/dev/sbt-launch-0.11.2.jar "$@"
+	$PROXY_PARAMS \
+	$SBT_EXTRA_PARAMS \
+	-jar `dirname $0`/dev/sbt-launch-0.11.3.jar "$@"
