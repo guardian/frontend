@@ -9,18 +9,21 @@
     <script>
         var guardian = {};
 
-        // used for requireJS because we can't build dynamic paths inside main.js
+        //@* used for requireJS because we can't build dynamic paths inside main.js  *@
         guardian.js = {};
         guardian.js.modules = {
-            order               : '@Static("javascripts/order.min.js")',
-            reqwest             : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
-            bean                : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
-            detect              : 'order!http://4.gu-pasteup.appspot.com/js/detect/detect.js',
-            images              : 'order!http://4.gu-pasteup.appspot.com/js/detect/images.js',
-            basicTemplate       : '@Static("javascripts/libs/basicTemplate.min.js")',
-            trailExpander       : '@Static("javascripts/libs/trailExpander.min.js")',
-            fetchDiscussion     : '@Static("javascripts/libs/fetchDiscussion.min.js")',
-            mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")'
+            order                       : '@Static("javascripts/order.min.js")',
+            reqwest                     : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
+            bean                        : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
+            detect                      : 'order!http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            images                      : 'order!http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            basicTemplate               : '@Static("javascripts/libs/basicTemplate.min.js")',
+            trailExpander               : '@Static("javascripts/libs/trailExpander.min.js")',
+            fetchDiscussion             : '@Static("javascripts/libs/fetchDiscussion.min.js")',
+            mostPopular                 : '@Static("javascripts/libs/mostPopular.min.js")',
+            writeCapture                : 'order!@Static("javascripts/libs/writeCapture.js")',
+            writeCaptureNoLibSupport    : 'order!@Static("javascripts/libs/writeCaptureNoLibSupport.js")',
+            ads                         : '@Static("javascripts/libs/ads.js")'
         };
 
         // this is horrible. looking for a better way to do this.
@@ -47,13 +50,16 @@
 </head>
 
 <body>
-
-    <div id="top-ad-placeholder" style="text-align: center; margin: 10px auto;"></div>
-
     <div id="container">
 
         <div class="line">
             <div class="unit size1of1">
+                @defining((1 to 10)){ items =>
+                    @* placeholders for plugins *@
+                    @items.map{ i =>
+                        <div id='tier1-@i'></div>
+                    }
+                }
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
             </div>
@@ -85,6 +91,13 @@
                     @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
                 }
 
+                @defining((1 to 10)){ items =>
+                    @* placeholders for plugins *@
+                    @items.map{ i =>
+                        <div id='tier2-@i'></div>
+                    }
+                }
+
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
                 @article.keywords.map{ tag =>
@@ -92,8 +105,12 @@
                 }
                 </ul>
 
-                <div id="js-popular-placeholder"></div>
-
+                @defining((1 to 10)){ items =>
+                    @* placeholders for plugins *@
+                    @items.map{ i =>
+                        <div id='tier3-@i'></div>
+                    }
+                }
             </div>
 
         </div>
