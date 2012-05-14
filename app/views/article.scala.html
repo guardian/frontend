@@ -23,8 +23,9 @@
             mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")'
         };
 
+        // this is horrible. looking for a better way to do this.
         guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
-    </script>;
+    </script>
 
     @fragments.metaData(article)
 

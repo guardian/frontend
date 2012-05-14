@@ -21,17 +21,30 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
                     // util for comment datastamps
                     function formatDate(d) {
                         var day = d.getDate();
-                        var month = d.getMonth() + 1;
+                        var month = d.getMonth();
                         var year = d.getFullYear();
-                        var monthName = '';
                         var minutes = d.getMinutes();
                         var hours = d.getHours();
-                        var meridian = 'AM'
+                        var monthName = '';
+                        var meridian = 'AM';
+
+                        // javascript's date module is a horrible joke. observe:
+
+                        // it 0-bases months...
+                        month = month + 1;
+
+                        // ...but it doesn't 0-base minutes.
+                        if (minutes <= 9) {
+                            minutes = '0' + minutes;
+                        }
+
+                        // it can't do 12 hour clock.
                         if (hours > 12) {
                             hours = hours-12;
                             meridian = 'PM';
                         }
 
+                        // and of course, it doesn't know anything about month *names*
                         switch(month) {
                             case 1:
                                 monthName = 'Jan';
@@ -82,7 +95,13 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
                     for (var i in json.discussion.comments) {
                         var c = json.discussion.comments[i];
                         var username = c.userProfile.username;
-                        var datestamp = new Date(c.date);
+                        var date = c.date;
+
+                        // i hate you, javascript.
+                        date = date.replace(/-/g, '/');
+                        date = date.split('.');
+                        date = date[0];
+                        var datestamp = new Date(date);
                         datestamp = formatDate(datestamp);
 
                         if (c.userProfile.badge) {
