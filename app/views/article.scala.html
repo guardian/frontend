@@ -54,12 +54,7 @@
 
         <div class="line">
             <div class="unit size1of1">
-                @defining((1 to 10)){ items =>
-                    @* placeholders for plugins *@
-                    @items.map{ i =>
-                        <div id='tier1-@i'></div>
-                    }
-                }
+                @fragments.placeholders("tier1", 5)
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
             </div>
@@ -91,12 +86,7 @@
                     @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
                 }
 
-                @defining((1 to 10)){ items =>
-                    @* placeholders for plugins *@
-                    @items.map{ i =>
-                        <div id='tier2-@i'></div>
-                    }
-                }
+                @fragments.placeholders("tier2", 5)
 
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
@@ -105,12 +95,7 @@
                 }
                 </ul>
 
-                @defining((1 to 10)){ items =>
-                    @* placeholders for plugins *@
-                    @items.map{ i =>
-                        <div id='tier3-@i'></div>
-                    }
-                }
+                @fragments.placeholders("tier3", 5)
             </div>
 
         </div>
