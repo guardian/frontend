@@ -12,19 +12,26 @@
         // used for requireJS because we can't build dynamic paths inside main.js
         guardian.js = {};
         guardian.js.modules = {
-            order               : '@Static("javascripts/order.min.js")',
-            reqwest             : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
-            bean                : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
-            detect              : 'order!http://4.gu-pasteup.appspot.com/js/detect/detect.js',
-            images              : 'order!http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            order               : '@Static("javascripts/order.min.js")', // has to be first
             basicTemplate       : '@Static("javascripts/libs/basicTemplate.min.js")',
-            trailExpander       : '@Static("javascripts/libs/trailExpander.min.js")',
+            bean                : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
+            bonzo               : 'https://raw.github.com/ded/bonzo/master/bonzo.min',
+            detect              : 'order!http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            discussionBinder    : '@Static("javascripts/libs/discussionBinder.min.js")',
             fetchDiscussion     : '@Static("javascripts/libs/fetchDiscussion.min.js")',
-            mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")'
+            images              : 'order!http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")',
+            reqwest             : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
+            trailExpander       : '@Static("javascripts/libs/trailExpander.min.js")'
         };
 
         // this is horrible. looking for a better way to do this.
         guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
+
+        guardian.config = {};
+        guardian.config.discussion = {
+            numCommentsPerPage  : 20
+        };
     </script>
 
     @fragments.metaData(article)

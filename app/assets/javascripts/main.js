@@ -2,7 +2,7 @@ requirejs.config({
     paths: guardian.js.modules
 });
 
-require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.modules.fetchDiscussion, guardian.js.modules.trailExpander, guardian.js.modules.mostPopular], function(detect, images, discussion, trailExpander, mostPopular) {
+require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.modules.fetchDiscussion, guardian.js.modules.trailExpander, guardian.js.modules.mostPopular, guardian.js.modules.discussionBinder], function(detect, images, discussion, trailExpander, mostPopular, discussionBinder) {
 
     var gu_debug = {
         screenHeight: screen.height,
@@ -20,13 +20,13 @@ require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.mod
         document.getElementById(key).innerText = gu_debug[key];
     }
 
-    // Find and upgrade images.
+    // find and upgrade images (if supported)
     images.upgrade();
 
+    // bind expandable trailblocks
     trailExpander.bindExpanders();
 
-
-    // todo - work out where to load discussion and trailexpander
-    // and also if the URLs are wrong...
+    // fetch comments HTML. arguments: shortUrl, commentsPerPage, pageOffset, callback    
+    discussion.fetchCommentsForContent(guardian.page.shortUrl, 5, 1, discussionBinder.renderDiscussion);
 
 });
