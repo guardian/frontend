@@ -1,12 +1,12 @@
+import com.gu.deploy.PlayAssetHash._
 import sbt._
-import Keys._
-import PlayProject._
-import com.gu.PlayAssetHash._
+import sbt.Keys._
+import sbt.PlayProject._
 
 object FrontendCommon extends Build {
 
   private val appName = "frontend-common"
-  private val appVersion = "1.37-SNAPSHOT"
+  private val appVersion = "1.40-SNAPSHOT"
 
   private val appDependencies = Seq(
     "com.gu.openplatform" %% "content-api-client" % "1.15",
@@ -23,16 +23,15 @@ object FrontendCommon extends Build {
     .settings(
       organization := "com.gu",
 
+      // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
       testOptions in Test := Nil,
+
+      // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
-      resolvers ++= Seq(
-        "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-        "Mvn Repository" at "http://mvnrepository.com/artifact/"
-      ),
+      resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
 
-      // no javadoc
+      // Do not publish JavaDoc
       publishArtifact in (Compile, packageDoc) := false,
 
       publishTo <<= (version) { version: String =>
