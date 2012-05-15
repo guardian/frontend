@@ -9,20 +9,23 @@
     <script>
         var guardian = {};
 
-        // used for requireJS because we can't build dynamic paths inside main.js
+        //@* used for requireJS because we can't build dynamic paths inside main.js  *@
         guardian.js = {};
         guardian.js.modules = {
-            order               : '@Static("javascripts/order.min.js")', // has to be first
-            basicTemplate       : '@Static("javascripts/libs/basicTemplate.min.js")',
-            bean                : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
-            bonzo               : 'https://raw.github.com/ded/bonzo/master/bonzo.min',
-            detect              : 'order!http://4.gu-pasteup.appspot.com/js/detect/detect.js',
-            discussionBinder    : '@Static("javascripts/libs/discussionBinder.min.js")',
-            fetchDiscussion     : '@Static("javascripts/libs/fetchDiscussion.min.js")',
-            images              : 'order!http://4.gu-pasteup.appspot.com/js/detect/images.js',
-            mostPopular         : '@Static("javascripts/libs/mostPopular.min.js")',
-            reqwest             : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
-            trailExpander       : '@Static("javascripts/libs/trailExpander.min.js")'
+            order                       : '@Static("javascripts/order.min.js")', // has to be first
+            basicTemplate               : '@Static("javascripts/libs/basicTemplate.min.js")',
+            bean                        : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min',
+            bonzo                       : 'https://raw.github.com/ded/bonzo/master/bonzo.min',
+            detect                      : 'http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            discussionBinder            : '@Static("javascripts/libs/discussionBinder.min.js")',
+            fetchDiscussion             : '@Static("javascripts/libs/fetchDiscussion.min.js")',
+            images                      : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            mostPopular                 : '@Static("javascripts/libs/mostPopular.min.js")',
+            reqwest                     : 'http://5.gu-pasteup.appspot.com/js/libs/reqwest',
+            trailExpander               : '@Static("javascripts/libs/trailExpander.min.js")',
+            writeCapture                : 'order!@Static("javascripts/libs/writeCapture.js")',
+            writeCaptureNoLibSupport    : 'order!@Static("javascripts/libs/writeCaptureNoLibSupport.js")',
+            ads                         : '@Static("javascripts/libs/ads.js")'
         };
 
         // this is horrible. looking for a better way to do this.
@@ -54,13 +57,11 @@
 </head>
 
 <body>
-
-    <div id="top-ad-placeholder" style="text-align: center; margin: 10px auto;"></div>
-
     <div id="container">
 
         <div class="line">
             <div class="unit size1of1">
+                @fragments.placeholders("tier1", 5)
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
             </div>
@@ -92,6 +93,8 @@
                     @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
                 }
 
+                @fragments.placeholders("tier2", 5)
+
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
                 @article.keywords.map{ tag =>
@@ -99,8 +102,7 @@
                 }
                 </ul>
 
-                <div id="js-popular-placeholder"></div>
-
+                @fragments.placeholders("tier3", 5)
             </div>
 
         </div>
