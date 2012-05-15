@@ -25,11 +25,11 @@ object ArticleController extends Controller with Logging {
       .itemId(path)
       .response
 
-    val article = response.content.filter { _.isArticle } map { new Article(_) }
+    val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
     val related = response.relatedContent map { new Content(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    article map { ArticlePage(_, related, storyPackage) }
+    articleOption map { article => ArticlePage(article, related, storyPackage.filterNot(_.id == article.id)) }
   }
 
   private def renderArticle(model: ArticlePage) =
