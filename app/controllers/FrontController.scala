@@ -5,7 +5,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import play.api.mvc.{ Controller, Action }
 
-case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
+case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 object FrontController extends Controller with Logging {
   def render(path: String) = Action {
@@ -26,10 +26,13 @@ object FrontController extends Controller with Logging {
     val section = response.section map { Section(_) }
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
-    val mostViewed = response.mostViewed map { new Content(_) }
 
-    section map { SectionFrontPage(_, editorsPicks, mostViewed) }
+    val editorsPicksIds = editorsPicks map { _.id }
+
+    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+
+    section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
-  private def renderFront(model: SectionFrontPage) = Ok(views.html.front(model.section, model.editorsPicks, model.mostViewed))
+  private def renderFront(model: SectionFrontPage) = Ok(views.html.front(model.section, model.editorsPicks, model.latestContent))
 }

@@ -1,4 +1,4 @@
-@(section: Section, editorsPicks: Seq[Trail], mostViewed: Seq[Trail])
+@(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 <!DOCTYPE html>
 
@@ -44,32 +44,13 @@
             </div>
         </div>
 
-        @defining(editorsPicks.take(5)){ trails =>
-            <div class="line">
-                @trails.map{ trail =>
-                    <div class="unit size1of2">
-                        @fragments.formatTrail(trail)
-                    </div>
-                }
-            </div>
+        <div class="line">
+        @defining(math.max(editorsPicks.length, 15)){ numTrails =>
+            @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
+                @trails.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
+            }
         }
-
-        <div class="unit size1of1">
-
-            <h2>Most viewed</h2>
-
         </div>
-
-        @defining(mostViewed.take(5)){ trails =>
-            <div class="line">
-                @trails.map{ trail =>
-                    <div class="unit size1of2">
-                        @fragments.formatTrail(trail)
-                    </div>
-                }
-            </div>
-        }
-
     </div>
 
     <div id="debug">
