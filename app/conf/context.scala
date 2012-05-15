@@ -3,7 +3,7 @@ package conf
 import com.gu.management.{ Switchable, TimingMetric, Healthcheck }
 import common._
 
-object Configuration extends Configuration("frontend-front", webappConfDirectory = "env")
+object Configuration extends Configuration("frontend-section", webappConfDirectory = "env")
 
 object ContentApi extends ContentApi(Configuration)
 

@@ -1,8 +1,8 @@
 {
     "packages":{
-        "frontend-front":{
+        "frontend-section":{
             "type":"executable-jar-webapp",
-            "apps":[ "frontend::front" ],
+            "apps":[ "frontend::section" ],
             "data":{
                 "port":"9000",
                 "bucket":"artifacts-83445s",
@@ -17,10 +17,10 @@
             "depends" : ["artifactUploadOnly", "deployOnly"]
         },
         "deployOnly":{
-            "actionsPerHost": ["frontend-front.deploy"]
+            "actionsPerHost": ["frontend-section.deploy"]
         },
         "artifactUploadOnly":{
-            "actionsBeforeApp": ["frontend-front.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-section.uploadArtifacts"]
         }
     }
 }

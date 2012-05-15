@@ -6,6 +6,6 @@ object Plugins extends Build {
 
   // We automatically include some plugins (including the Play plugin) from sbt-play-assethash.
 
-  lazy val plugins = Project("frontend-front", file(".")).
+  lazy val plugins = Project("frontend-section", file(".")).
     dependsOn(uri("git://github.com/guardian/sbt-play-assethash.git#" + playAssetHashPluginVersion))
 }

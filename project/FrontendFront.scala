@@ -6,7 +6,7 @@ import sbtassembly.Plugin.AssemblyKeys._
 
 object FrontendFront extends Build {
 
-  private val appName = "frontend-front"
+  private val appName = "frontend-section"
   private val appVersion = "1-SNAPSHOT"
 
   private val appDependencies = Seq(

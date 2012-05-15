@@ -11,7 +11,7 @@ object Management extends ManagementController {
     new ManifestPage,
     new HealthcheckManagementPage,
     new Switchboard(Switches.all),
-    StatusPage("frontend-front", Metrics.all),
+    StatusPage("frontend-section", Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage
   )
