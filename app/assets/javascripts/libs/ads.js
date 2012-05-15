@@ -2,6 +2,8 @@ define([guardian.js.modules.writeCaptureNoLibSupport, guardian.js.modules.writeC
 
     function renderSlot(slot) {
         writeCapture.html(slot.position, '<script' + '>OAS_RICH("' + slot.name + '")</scr' + 'ipt>');
+        var node = document.querySelector(slot.position);
+        if (node) { node.className = '' };
     }
 
     var keywordsString='';
@@ -17,15 +19,22 @@ define([guardian.js.modules.writeCaptureNoLibSupport, guardian.js.modules.writeC
     var adSlots = [];
     switch (detect.getLayoutMode()) {
         case 'base':
-            adSlots = [{name: 'Middle', position: '#tier1-2'}];
+            adSlots = [
+                {name: 'x50', position: '#tier1-2'},
+                {name: 'x51', position: '#tier3-5'}
+            ];
             break;
         case 'median':
-            adSlots = [{name: 'Middle1', position: '#tier1-2'}];
+            adSlots = [
+                {name: 'x52', position: '#tier1-2'},
+                {name: 'x53', position: '#tier3-5'}
+            ];
             break;
         case 'extended':
             adSlots = [
-                {name: 'Top', position: '#tier1-2'},
-                {name: 'Middle', position: '#tier2-1'}
+                {name: 'x54', position: '#tier1-2'},
+                {name: 'x55', position: '#tier2-1'},
+                {name: 'x56', position: '#tier3-5'}
             ];
             break;
     }
