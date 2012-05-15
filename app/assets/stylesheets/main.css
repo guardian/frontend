@@ -212,6 +212,10 @@ img.badge {
     max-width: 100%;
 }
 
+.placeholder {
+    display: none;
+}
+
 @media screen and (min-width: 850px) {
     .trailblock .img img {
         width: 160px;
