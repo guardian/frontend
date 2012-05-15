@@ -1,0 +1,7 @@
+@(title: String, numPlaceholders: Int)
+
+@defining((1 to numPlaceholders)){ items =>
+    @items.map{ i =>
+        <div id='@{title}-@{i}'></div>
+    }
+}
