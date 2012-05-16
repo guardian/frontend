@@ -1,4 +1,4 @@
-@(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
+@(page: MetaData, editorsPicks: Seq[Trail])
 
 <!DOCTYPE html>
 
@@ -10,9 +10,10 @@
         var guardian = {};
     </script>
 
-    @fragments.metaData(section)
 
-    <title>@section | beta.guardian.co.uk</title>
+    <title>beta.guardian.co.uk</title>
+
+    @fragments.metaData(page)
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
@@ -37,7 +38,6 @@
 
             <div class="unit size1of1">
 
-                    @fragments.headline( section.name )
 
                     <h2>Top stories</h2>
 
@@ -45,11 +45,7 @@
         </div>
 
         <div class="line">
-        @defining(math.max(editorsPicks.length, 15)){ numTrails =>
-            @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
-                @trails.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
-            }
-        }
+            @editorsPicks.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
         </div>
     </div>
 

@@ -5,34 +5,38 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import play.api.mvc.{ Controller, Action }
 
-case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
+case class NetworkFrontPage(editorsPicks: Seq[Trail])
 
 object FrontController extends Controller with Logging {
-  def render(path: String) = Action {
-    lookup(path) map { renderFront(_) } getOrElse { NotFound }
+
+  object FrontMetaData extends MetaData {
+    override val canonicalUrl = "http://www.guardian.co.uk"
+    override val id = ""
+    override val section = ""
+    override val apiUrl = "http://content.guardianapis.com"
+    override val webTitle = "The Guardian"
   }
 
-  private def lookup(path: String): Option[SectionFrontPage] = suppressApi404 {
-    log.info("Fetching front: " + path)
+  def render() = Action {
+    lookup map { renderFront(_) } getOrElse { NotFound }
+  }
+
+  private def lookup: Option[NetworkFrontPage] = suppressApi404 {
+
+    log.info("Fetching network front")
     val response: ItemResponse = ContentApi.item
       .showTags("all")
       .showFields("all")
       .showMedia("all")
       .showEditorsPicks(true)
       .showMostViewed(true)
-      .itemId(path)
+      .itemId("")
       .response
-
-    val section = response.section map { Section(_) }
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
 
-    val editorsPicksIds = editorsPicks map { _.id }
-
-    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-
-    section map { SectionFrontPage(_, editorsPicks, latestContent) }
+    Some(NetworkFrontPage(editorsPicks))
   }
 
-  private def renderFront(model: SectionFrontPage) = Ok(views.html.front(model.section, model.editorsPicks, model.latestContent))
+  private def renderFront(model: NetworkFrontPage) = Ok(views.html.front(FrontMetaData, model.editorsPicks))
 }
