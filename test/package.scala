@@ -19,4 +19,9 @@ object `package` {
         block(browser)
     }
   }
+
+  /**
+   * Executes a block of code in a FakeApplication.
+   */
+  def Fake[T](block: => T): T = running(FakeApplication()) { block }
 }
