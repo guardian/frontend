@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 
 class FrontControllerTest extends FlatSpec with ShouldMatchers {
 
-  "Front Controller" should "200 called" in {
+  "Front Controller" should "200 called" in Fake {
     val result = controllers.FrontController.render()(FakeRequest())
     status(result) should be(200)
   }
