@@ -6,7 +6,7 @@ import scala.collection.JavaConversions._
 
 class FrontTemplateTest extends FlatSpec with ShouldMatchers {
 
-  "Front Template" should "render front metadata" in HtmlUnit("") { browser =>
+  "Front Template" should "render front metadata" in HtmlUnit("/pages/") { browser =>
     import browser._
 
     $("meta[name=page-id]").getAttributes("value").head should be("")
