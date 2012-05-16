@@ -5,6 +5,8 @@ import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
 import play.api.Play
+import play.api.mvc.Request
+import play.api.test.FakeHeaders
 
 class UrlTest extends FlatSpec with ShouldMatchers {
 
@@ -40,6 +42,25 @@ class UrlTest extends FlatSpec with ShouldMatchers {
 
   they should "be created relative for tags" in {
     Tag(tagWithId("foo/bar")).url should be("/foo/bar")
+  }
+
+  "OriginDomain" should "understand the header set by Nginx that contains the domain" in {
+    val request = FakeRequest(Map("X-GU-OriginalServer" -> Seq("servername.com")))
+    OriginDomain(request) should be(Some("servername.com"))
+  }
+
+  it should "return None if no header" in {
+    val request = FakeRequest(Map.empty)
+    OriginDomain(request) should be(None)
+  }
+
+  case class FakeRequest(private val _headers: Map[String, Seq[String]]) extends Request[String] {
+    def uri = ""
+    def path = ""
+    def method = ""
+    def queryString = Map.empty[String, Seq[String]]
+    def headers = FakeHeaders(_headers)
+    def body = ""
   }
 
   private def tagWithId(id: String) = ApiTag(id = id, `type` = "type", webTitle = "", webUrl = "", apiUrl = "")
