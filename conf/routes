@@ -6,6 +6,7 @@ GET     /management$path<.*>        controllers.Management.apply(path)
 POST    /management$path<.*>        controllers.Management.apply(path)
 
 GET     /pages                      controllers.FrontController.render()
+GET     /pages/                      controllers.FrontController.render()
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
