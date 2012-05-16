@@ -26,6 +26,7 @@ define(["bean", guardian.js.modules.fetchDiscussion, "bonzo"], function(bean, di
             if (discussionData.currentPage == 1) {
         	   var expanderElement = document.createElement('div');
         	   expanderElement.id = 'js-discussion-expander-container';
+               expanderElement.className = 'component';
         	   expanderElement.innerHTML = discussionData.expanderHtml;
         	   bonzo(expanderElement).insertAfter(document.querySelector('#commentsPlaceholder')); // make this at the end
             } else { // update the total count on the button
