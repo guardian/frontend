@@ -42,5 +42,17 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
     }
   }
 
+  object edition {
+    lazy val usHost = configuration.getStringProperty("edition.host.us").getOrElse {
+      throw new IllegalStateException("Static path not configured")
+    }
+    private lazy val editionsForHosts = Map(
+      usHost -> "US"
+    )
+
+    //TODO untested
+    def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
+  }
+
   override def toString(): String = configuration.toString
 }

@@ -1,6 +1,7 @@
 package common
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
+import play.api.mvc.Request
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {
@@ -26,4 +27,8 @@ class Static(base: String) {
   }
 
   def apply(path: String) = staticMappings(path)
+}
+
+object OriginDomain {
+  def apply[A](request: Request[A]): Option[String] = request.headers.get("X-GU-OriginalServer")
 }
