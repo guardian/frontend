@@ -49,8 +49,6 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
     private lazy val editionsForHosts = Map(
       usHost -> "US"
     )
-
-    //TODO untested
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
   }
 
