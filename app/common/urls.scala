@@ -12,23 +12,6 @@ object SupportedUrl {
   private def isSupportedInApp(c: ApiContent) = c.isArticle
 }
 
-class Static(base: String) {
-  private lazy val staticMappings: Map[String, String] = {
-    val assetMaps = Resources("assetmaps") map { loadProperties }
-
-    // You try to determine a precedence order here if you like...
-    val keyCollisions = assetMaps.duplicateKeys
-    if (!keyCollisions.isEmpty) {
-      throw new RuntimeException("Assetmap collisions for: " + keyCollisions.toList.sorted.mkString(", "))
-    }
-
-    val unbased = assetMaps reduceLeft { _ ++ _ }
-    unbased mapValues { base + _ }
-  }
-
-  def apply(path: String) = staticMappings(path)
-}
-
 object OriginDomain {
   def apply[A](request: Request[A]): Option[String] = request.headers.get("X-GU-OriginalServer")
 }
