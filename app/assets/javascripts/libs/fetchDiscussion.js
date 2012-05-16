@@ -71,7 +71,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
     }
 
     function formatJson(json) {
-        var html = '<h4>Comments <span class="count">' + json.discussion.commentCount + '</span></h4>';
+        var html = '';
         var commentTemplate = '<div class="line b1"><div class="unit size1of3"><p><strong><a href="{0}">{1}</a></strong></p></div><div class="unit lastUnit"><p class="datestamp">{2}</p></div></div><div class="line"><div class="unit size1of1">{3}</div></div>';
         var avatarTemplate = ' <a href="{0}"><img class="badge" src="{1}" alt="{2}" /></a>';
 
@@ -104,8 +104,8 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
         return urlBase + shortUrl;
     }
 
-    function buildExpander() {
-        var html = '<h3><a id="js-discussion-expander" href="javascript://">Load more comments...</a>';
+    function buildExpander(commentsPerPage, commentsLeft) {
+        var html = '<h4><a id="js-discussion-expander" href="javascript://">Load ' + commentsPerPage + ' more comments ... <span class="count">' + commentsLeft + ' more</span></h4>';
         return html;
     }
 
@@ -135,22 +135,25 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
                 jsonpCallbackName: 'showArticleComments',
                 success: function(json) {
                     if (json.status !== 'error' && json.discussion.commentCount > 0) {
-                        
+                      
                         status = 'success';
                         // build our HTML response
                         html = formatJson(json);
+                        var htmlHeader = '<h4>Comments <span class="count">' + json.discussion.commentCount + '</span></h4>';
 
                         var totalComments = json.discussion.commentCount;
                         var currentCommentsDisplayed = commentsPerPage * pageOffset;
                         if (totalComments > currentCommentsDisplayed) {
                             hasMoreCommentsToShow = true;
-                            expanderHtml = buildExpander();
+                            var numLeft = totalComments - currentCommentsDisplayed;
+                            expanderHtml = buildExpander(commentsPerPage, numLeft);
                         }
 
                         // now pass the html onto our callback
                         callback({ 
                             status: status, 
                             html: html,
+                            htmlHeader: htmlHeader,
                             expanderHtml: expanderHtml,
                             hasMoreCommentsToShow: hasMoreCommentsToShow,
                             currentPage: pageOffset,
