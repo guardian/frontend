@@ -19,12 +19,13 @@ object FrontController extends Controller with Logging {
 
   def render() = Action { implicit request =>
     val edition = Configuration.edition(OriginDomain(request))
+    log.info(OriginDomain(request))
     lookup(edition) map { renderFront(_) } getOrElse { NotFound }
   }
 
   private def lookup(edition: String): Option[NetworkFrontPage] = suppressApi404 {
 
-    log.info("Fetching network front")
+    log.info("Fetching network front for edition " + edition)
     val response: ItemResponse = ContentApi.item
       .edition(edition)
       .showTags("all")
