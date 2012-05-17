@@ -7,8 +7,10 @@ require([guardian.js.modules.detect,
     guardian.js.modules.images, 
     guardian.js.modules.fetchDiscussion, 
     guardian.js.modules.trailExpander, 
-    guardian.js.modules.discussionBinder],
-    function(detect, images, discussion, trailExpander, discussionBinder) {
+    guardian.js.modules.discussionBinder,
+    "bean",
+    "bonzo"],
+    function(detect, images, discussion, trailExpander, discussionBinder, bean, _bonzo_) {
 
         var gu_debug = {
             screenHeight: screen.height,
@@ -32,8 +34,21 @@ require([guardian.js.modules.detect,
         // bind expandable trailblocks
         trailExpander.bindExpanders();
 
-        // fetch comments HTML. arguments: shortUrl, commentsPerPage, pageOffset, callback    
-        discussion.fetchCommentsForContent(guardian.page.shortUrl, guardian.config.discussion.numCommentsPerPage, 1, discussionBinder.renderDiscussion);
+        // fetch comments html
+        discussion.fetchCommentsForContent(
+            guardian.page.shortUrl, 
+            guardian.config.discussion.numCommentsPerPage, 
+            1, // pageOffset
+            discussionBinder.renderDiscussion // callback to send HTML output to
+        );
+
+        // toggle the nav submenu state
+        var sectionExpander = document.getElementById('js-show-sections');
+        var submenu = document.getElementById('js-section-subnav');
+        bean.add(sectionExpander, 'click', function(){
+            bonzo(submenu).toggleClass('initially-off');
+        });
+
     });
 
 //lower priority modules
