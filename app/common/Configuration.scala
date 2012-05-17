@@ -57,5 +57,5 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
 }
 
 object ManifestData {
-  lazy val build = ManifestFile.asKeyValuePairs.get("Build").getOrElse("DEV") replace ("\"", "")
+  lazy val build = ManifestFile.asKeyValuePairs.get("Build").getOrElse("DEV") replace ("\"", "") trim
 }
