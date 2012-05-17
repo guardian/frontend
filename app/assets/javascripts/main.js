@@ -33,7 +33,7 @@ require([guardian.js.modules.detect,
         trailExpander.bindExpanders();
 
         // fetch comments HTML. arguments: shortUrl, commentsPerPage, pageOffset, callback    
-        discussion.fetchCommentsForContent(guardian.page.shortUrl, 5, 1, discussionBinder.renderDiscussion);
+        discussion.fetchCommentsForContent(guardian.page.shortUrl, guardian.config.discussion.numCommentsPerPage, 1, discussionBinder.renderDiscussion);
     });
 
 //lower priority modules
