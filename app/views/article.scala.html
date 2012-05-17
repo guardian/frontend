@@ -60,8 +60,9 @@
     <div id="container">
 
         <div class="line">
-            <div class="unit size1of1">
+            <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
+                <img src="@Static("images/logo-mobile.gif")" alt="The Guardian" class="component" />
                 @fragments.navigation()
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
