@@ -2,7 +2,7 @@ package controllers
 
 import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import common._
+import common.{ Configuration => NotWantedHere, _ }
 import play.api.mvc.{ Controller, Action }
 
 case class NetworkFrontPage(editorsPicks: Seq[Trail])
@@ -17,14 +17,16 @@ object FrontController extends Controller with Logging {
     override val webTitle = "The Guardian"
   }
 
-  def render() = Action {
-    lookup map { renderFront(_) } getOrElse { NotFound }
+  def render() = Action { implicit request =>
+    val edition = Configuration.edition(OriginDomain(request))
+    lookup(edition) map { renderFront(_) } getOrElse { NotFound }
   }
 
-  private def lookup: Option[NetworkFrontPage] = suppressApi404 {
+  private def lookup(edition: String): Option[NetworkFrontPage] = suppressApi404 {
 
     log.info("Fetching network front")
     val response: ItemResponse = ContentApi.item
+      .edition(edition)
       .showTags("all")
       .showFields("all")
       .showMedia("all")
