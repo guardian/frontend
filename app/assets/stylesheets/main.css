@@ -220,6 +220,72 @@ img.badge {
     margin-bottom: 20px;
 }
 
+
+.nav,
+.nav li,
+.nav-sub-nav,
+.nav-sub-nav li {
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+.nav {
+    margin: 10px auto;
+    width: 100%;
+    overflow: visible;
+    text-align: center;
+}
+
+.nav li {
+    display: inline-block;
+    width: 33%;
+    text-align: left;
+}
+
+.nav li a {
+    background: #ededed;
+    display: block;    
+    padding: 4px 5px 8px;
+    color: #005689;
+    font-size: 13px;
+    border-top: 3px solid #ccc;
+}
+
+.nav li a:hover {
+    background-color: #0061A6;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-sub-nav {
+    text-align: center;    
+}
+
+.nav-sub-nav li {
+    text-align: left;
+    width: 49%;
+    display: inline-block;
+    border-top: 2px solid #ccc;
+}
+
+.nav-sub-nav li a {
+    display: block;
+    padding: 4px 3px 10px;
+
+}
+
+.nav-sub-nav li:nth-child(odd) a {
+    margin-right: 20px;
+}
+
+
+
+
+
+
+
+
 @media screen and (min-width: 850px) {
     .trailblock .img img {
         width: 160px;
