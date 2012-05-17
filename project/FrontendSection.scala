@@ -4,7 +4,7 @@ import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
 
-object FrontendFront extends Build {
+object FrontendSection extends Build {
 
   private val appName = "frontend-section"
   private val appVersion = "1-SNAPSHOT"
@@ -13,7 +13,7 @@ object FrontendFront extends Build {
     //dependencies included in distribution
     "com.gu" %% "management-play" % "5.8",
     "com.gu" %% "management-logback" % "5.8",
-    "com.gu" %% "frontend-common" % "1.38",
+    "com.gu" %% "frontend-common" % "1.41",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
