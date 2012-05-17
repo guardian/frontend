@@ -2,8 +2,9 @@ package common
 
 import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
+import com.gu.management.TimingMetric
 
-class ContentApi(configuration: Configuration) extends Api
+class ContentApi(configuration: Configuration, httpTimer: TimingMetric) extends Api
     with MultiThreadedApacheHttpClient
     with Logging {
 
@@ -20,6 +21,8 @@ class ContentApi(configuration: Configuration) extends Api
   }
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
-    super.fetch(url, parameters + ("user-tier" -> "internal"))
+    httpTimer.measure {
+      super.fetch(url, parameters + ("user-tier" -> "internal"))
+    }
   }
 }

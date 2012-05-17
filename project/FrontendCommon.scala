@@ -15,7 +15,9 @@ object FrontendCommon extends Build {
     "org.jboss.dna" % "dna-common" % "0.6",
     "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
     "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
-    "org.scalatest" %% "scalatest" % "1.7.1" % "test"
+    "org.scalatest" %% "scalatest" % "1.7.1" % "test",
+    "com.gu" %% "management-play" % "5.8",
+    "com.gu" %% "management-logback" % "5.8"
   )
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
