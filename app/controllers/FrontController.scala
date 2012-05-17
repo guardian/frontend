@@ -19,7 +19,7 @@ object FrontController extends Controller with Logging {
 
   def render() = Action { implicit request =>
     val edition = Configuration.edition(OriginDomain(request))
-    log.info("origin domain = " + OriginDomain(request).getOrElse("unknown"))
+    log.debug("origin domain = " + OriginDomain(request).getOrElse("unknown"))
     lookup(edition) map { renderFront(_) } getOrElse { NotFound }
   }
 
