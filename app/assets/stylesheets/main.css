@@ -220,6 +220,9 @@ img.badge {
     margin-bottom: 20px;
 }
 
+.initially-off {
+    display: none;
+}
 
 .nav,
 .nav li,
@@ -239,7 +242,7 @@ img.badge {
 
 .nav li {
     display: inline-block;
-    width: 33%;
+    width: 32%;
     text-align: left;
 }
 
@@ -266,13 +269,12 @@ img.badge {
     text-align: left;
     width: 49%;
     display: inline-block;
-    border-top: 2px solid #ccc;
 }
 
 .nav-sub-nav li a {
     display: block;
     padding: 4px 3px 10px;
-
+    border-top: 2px solid #ccc;
 }
 
 .nav-sub-nav li:nth-child(odd) a {
