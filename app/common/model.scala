@@ -16,12 +16,18 @@ trait MetaData {
   def apiUrl: String
   def webTitle: String
 
+  // this is here so it can be included in analytics.
+  // Basically it helps us understand the impact of changes and needs
+  // to be an integral part of each page
+  def buildNumber: String = ManifestData.build
+
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
     "canonical-url" -> canonicalUrl,
     "api-url" -> apiUrl,
-    "web-title" -> webTitle
+    "web-title" -> webTitle,
+    "build-number" -> buildNumber
   )
 }
 

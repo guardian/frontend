@@ -1,8 +1,7 @@
 package common
 
 import com.gu.conf.ConfigurationFactory
-
-import com.gu.management.{Manifest => ManifestFile}
+import com.gu.management.{ Manifest => ManifestFile }
 
 class Configuration(application: String, webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -54,9 +53,9 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
   }
 
-  object manifest {
-    lazy val version = ManifestFile.asKeyValuePairs.get("Build").orElse("DEV")
-  }
-
   override def toString(): String = configuration.toString
+}
+
+object ManifestData {
+  lazy val build = ManifestFile.asKeyValuePairs.get("Build").getOrElse("DEV") replace ("\"", "")
 }
