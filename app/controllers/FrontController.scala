@@ -2,19 +2,21 @@ package controllers
 
 import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import common._
+import common.{ Configuration => Unwanted, _ }
 import play.api.mvc.{ Controller, Action }
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 object FrontController extends Controller with Logging {
-  def render(path: String) = Action {
-    lookup(path) map { renderFront(_) } getOrElse { NotFound }
+  def render(path: String) = Action { request =>
+    val edition = Configuration.edition(OriginDomain(request))
+    lookup(path, edition) map { renderFront(_) } getOrElse { NotFound }
   }
 
-  private def lookup(path: String): Option[SectionFrontPage] = suppressApi404 {
+  private def lookup(path: String, edition: String): Option[SectionFrontPage] = suppressApi404 {
     log.info("Fetching front: " + path)
     val response: ItemResponse = ContentApi.item
+      .edition(edition)
       .showTags("all")
       .showFields("all")
       .showMedia("all")
