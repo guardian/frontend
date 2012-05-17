@@ -9,7 +9,7 @@ object SupportedUrl {
   def apply(t: ApiTag): String = "/%s" format t.id
   def apply(s: ApiSection): String = "/%s" format s.id
 
-  private def isSupportedInApp(c: ApiContent) = c.isArticle
+  private def isSupportedInApp(c: ApiContent) = c.isArticle || c.isGallery
 }
 
 object OriginDomain {
