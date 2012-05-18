@@ -1,0 +1,15 @@
+@(trail: Trail)
+
+<div class="media b1">
+    @trail.imageOfWidth(150, tolerance=20).map{ image =>
+        <a href="#" class="img">
+            <img class="maxed" src="@image.url" data-fullsrc='@trail.imageOfWidth(200, tolerance=20).map {full=>@full.url}' data-width="@image.width" alt="@Html(image.caption.getOrElse(""))" />
+        </a>
+    }
+    <div class="bd">
+        @trail.typeOrTone.map{ tag => <p>@tag.singularName</p> }
+        <p><a href="@trail.url">@RemoveOuterParaHtml(trail.linkText)</a></p>
+        @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
+    </div>
+</div>
+
