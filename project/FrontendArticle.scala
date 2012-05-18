@@ -10,7 +10,7 @@ object FrontendArticle extends Build {
   private val appVersion = "1-SNAPSHOT"
 
   private val appDependencies = Seq(
-    "com.gu" %% "frontend-common" % "1.43",
+    "com.gu" %% "frontend-common" % "1.46",
 
     //dependencies in test only
     "org.scalatest" %% "scalatest" % "1.7.1" % "test"
