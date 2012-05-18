@@ -1,0 +1,135 @@
+@(article: Article, related: List[Trail], storyPackage: List[Trail])
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script>
+        var guardian = {};
+
+        //@* used for requireJS because we can't build dynamic paths inside main.js  *@
+        guardian.js = {};
+        guardian.js.modules = {
+            order                       : '@Static("javascripts/order.min.js")', // has to be first
+            basicTemplate               : '@Static("javascripts/libs/basicTemplate.min.js")',
+            bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
+            bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.min',
+            detect                      : 'http://6.gu-pasteup.appspot.com/js/detect/detect.js',
+            discussionBinder            : '@Static("javascripts/libs/discussionBinder.min.js")',
+            fetchDiscussion             : '@Static("javascripts/libs/fetchDiscussion.min.js")',
+            images                      : 'http://6.gu-pasteup.appspot.com/js/detect/images.js',
+            mostPopular                 : '@Static("javascripts/libs/mostPopular.min.js")',
+            reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
+            trailExpander               : '@Static("javascripts/libs/trailExpander.min.js")',
+            writeCapture                : 'order!@Static("javascripts/libs/writeCapture.js")',
+            writeCaptureNoLibSupport    : 'order!@Static("javascripts/libs/writeCaptureNoLibSupport.js")',
+            ads                         : '@Static("javascripts/libs/ads.js")'
+        };
+
+        // this is horrible. looking for a better way to do this.
+        guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
+
+        guardian.config = {};
+        guardian.config.discussion = {
+            numCommentsPerPage  : 20
+        };
+
+    </script>
+
+    @fragments.metaData(article)
+
+    <title>@article.headline</title>
+
+    <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
+
+    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
+    <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
+    <link rel="stylesheet" media="screen and (min-width: 640px)" href="@Static("stylesheets/grid.responsive.css")">
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
+    <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
+    <![endif]-->
+
+    <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
+
+
+</head>
+
+<body>
+    <div id="container">
+
+        <div class="line">
+            <div class="unit lastUnit">
+                @fragments.placeholders("tier1", 5)
+                <img src="@Static("images/logo-mobile.gif")" alt="The Guardian" class="component" />
+                @fragments.navigation()
+                @fragments.headline(article.headline)
+                @fragments.standfirst(article.standfirst)
+            </div>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size3of5">
+
+                @article.imageOfWidth(300, tolerance=160).map{ image =>
+                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
+                    @fragments.caption(image.caption.getOrElse(""))
+                }
+
+                @fragments.byline(article.byline)
+                @fragments.dateline(article.webPublicationDate)
+            
+                <article>
+                    @PictureTransformerHtml(article.body)
+                </article>
+
+            </div>
+
+            <div class="unit lastUnit">
+
+                @if(storyPackage nonEmpty) {
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 4)
+                } else {
+                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                }
+
+                @fragments.placeholders("tier2", 5)
+
+                <h4>Related subjects</h4>
+                <ul class="plain tags">
+                @article.keywords.map{ tag =>
+                    @fragments.formatTags(tag)
+                }
+                </ul>
+
+                @fragments.placeholders("tier3", 5)
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div id="debug">
+        <strong>debug info</strong>
+        <ul>
+            <li>Screen height: <span id="screenHeight"></span></li>
+            <li>Screen width: <span id="screenWidth"></span></li>
+            <li>Window height: <span id="windowHeight"></span></li>
+            <li>Window width: <span id="windowWidth"></span></li>
+            <li>Layout mode: <span id="layout"></span></li>
+            <li>Connection Speed: <span id="bandwidth"></span></li>
+            <li>Battery: <span id="battery"></span></li>
+            <li>Pixel Ratio: <span id="pixelratio"></span></li>
+            <li>Retina display: <span id="retina"></span></li>
+        </ul>
+    </div>
+
+    <script>
+        require(['@conf.Configuration.plugins.location'], function(){});
+    </script>
+</body>
+</html>

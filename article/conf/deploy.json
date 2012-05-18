@@ -1,0 +1,26 @@
+{
+    "packages":{
+        "frontend-article":{
+            "type":"executable-jar-webapp",
+            "apps":[ "frontend::article" ],
+            "data":{
+                "port":"9000",
+                "bucket":"artifacts-83445s",
+                "healthcheck_paths":[
+                    "/pages/info/2011/oct/06/submitting-content-to-print-publications"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUploadOnly", "deployOnly"]
+        },
+        "deployOnly":{
+            "actionsPerHost": ["frontend-article.deploy"]
+        },
+        "artifactUploadOnly":{
+            "actionsBeforeApp": ["frontend-article.uploadArtifacts"]
+        }
+    }
+}
