@@ -1,12 +1,16 @@
-Frontend Gallery
-================
+Frontend
+========
 
-The gallery rendering components for the Guardian website.
+The Guardian website frontend.
 
 
 Getting started for new developers
 ----------------------------------
-Frontend Gallery is a Play Framework 2 Scala application.
+Frontend is a set of Play Framework 2 Scala applications.
+
+
+
+...
 
 To start the play development environment, run the provided `sbt011` script
 in the sourcetree root. This performs a number of additional configuration
