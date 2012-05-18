@@ -6,11 +6,10 @@ requirejs.config({
 require([guardian.js.modules.detect, 
     guardian.js.modules.images, 
     guardian.js.modules.fetchDiscussion, 
-    guardian.js.modules.trailExpander, 
     guardian.js.modules.discussionBinder,
     "bean",
     "bonzo"],
-    function(detect, images, discussion, trailExpander, discussionBinder, bean, _bonzo_) {
+    function(detect, images, discussion, discussionBinder, bean, _bonzo_) {
 
         var gu_debug = {
             screenHeight: screen.height,
@@ -31,9 +30,6 @@ require([guardian.js.modules.detect,
         // find and upgrade images (if supported)
         images.upgrade();
 
-        // bind expandable trailblocks
-        trailExpander.bindExpanders();
-
         // fetch comments html
         discussion.fetchCommentsForContent(
             guardian.page.shortUrl, 
@@ -48,6 +44,13 @@ require([guardian.js.modules.detect,
         bean.add(sectionExpander, 'click', function(){
             bonzo(submenu).toggleClass('initially-off');
         });
+
+        // swap out the related items if mode is base
+        if (detect.getLayoutMode() == 'base') {
+            var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
+            var related = document.getElementById('js-expandable-related');
+            bonzo(related).insertAfter(paragraphToInsertAfter);
+        }
 
     });
 

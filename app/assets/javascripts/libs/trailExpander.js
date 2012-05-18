@@ -20,7 +20,6 @@ define(["bean"], function(bean) {
 
 	}
 
-
 	return { 
 		bindExpanders: bindExpanders
 	};
