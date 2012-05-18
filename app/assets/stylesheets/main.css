@@ -127,7 +127,8 @@ article p {
     margin: 0 10px;
 }
 
-.trailblock li:nth-child(n+5) {
+.trailblock li:nth-child(n+5),
+article .trailblock li:nth-child(n+2) {
     display: none;
 }
 
@@ -306,6 +307,13 @@ img.badge {
 
     .trailblock h3.expander {
         display: none;
+    }
+
+    article .trailblock {
+        width: 40%;
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 20px;
     }
 
 }
