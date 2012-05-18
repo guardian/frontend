@@ -5,7 +5,17 @@ import common._
 
 object Configuration extends Configuration("frontend-front", webappConfDirectory = "env")
 
-object ContentApi extends ContentApi(Configuration)
+object TimedAction extends TimingAction("total",
+  "total-time",
+  "Total time",
+  "Time spent serving requests")
+
+object ContentApiHttpMetric extends TimingMetric("http",
+  "content-api-calls",
+  "Content API calls",
+  "Time spent waiting for Content API")
+
+object ContentApi extends ContentApi(Configuration, ContentApiHttpMetric)
 
 object Static extends Static(Configuration.static.path)
 
@@ -15,6 +25,5 @@ object Switches {
 }
 
 object Metrics {
-  //  val metric = new TimingMetric("frontend-article", "name", "title", "Description Text")
-  val all: Seq[TimingMetric] = Nil
+  val all: Seq[TimingMetric] = Seq(ContentApiHttpMetric, TimedAction)
 }
