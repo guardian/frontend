@@ -1,0 +1,71 @@
+@(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script>
+        var guardian = {};
+    </script>
+
+    @fragments.metaData(section)
+
+    <title>@section.name | beta.guardian.co.uk</title>
+
+    <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
+
+    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css" />
+
+    <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
+    <link rel="stylesheet" media="screen and (min-width: 400px)" href="@Static("stylesheets/grid.responsive.css")">
+
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
+
+    <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
+    <![endif]-->
+
+    <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
+</head>
+
+<body>
+    <div id="container">
+
+        <div class="line">
+
+            <div class="unit size1of1">
+
+                    @fragments.headline( section.name )
+
+                    <h2>Top stories</h2>
+
+            </div>
+        </div>
+
+        <div class="line">
+        @defining(math.max(editorsPicks.length, 15)){ numTrails =>
+            @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
+                @trails.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
+            }
+        }
+        </div>
+    </div>
+
+    <div id="debug">
+        <strong>debug info</strong>
+        <ul>
+            <li>Screen height: <span id="screenHeight"></span></li>
+            <li>Screen width: <span id="screenWidth"></span></li>
+            <li>Window height: <span id="windowHeight"></span></li>
+            <li>Window width: <span id="windowWidth"></span></li>
+            <li>Layout mode: <span id="layout"></span></li>
+            <li>Connection Speed: <span id="bandwidth"></span></li>
+            <li>Battery: <span id="battery"></span></li>
+            <li>Pixel Ratio: <span id="pixelratio"></span></li>
+            <li>Retina display: <span id="retina"></span></li>
+        </ul>
+    </div>
+</body>
+</html>

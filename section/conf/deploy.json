@@ -1,0 +1,26 @@
+{
+    "packages":{
+        "frontend-section":{
+            "type":"executable-jar-webapp",
+            "apps":[ "frontend::section" ],
+            "data":{
+                "port":"9000",
+                "bucket":"artifacts-83445s",
+                "healthcheck_paths":[
+                    "/pages/sport"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUploadOnly", "deployOnly"]
+        },
+        "deployOnly":{
+            "actionsPerHost": ["frontend-section.deploy"]
+        },
+        "artifactUploadOnly":{
+            "actionsBeforeApp": ["frontend-section.uploadArtifacts"]
+        }
+    }
+}
