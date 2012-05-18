@@ -1,0 +1,133 @@
+@(gallery: Gallery, related: List[Trail], storyPackage: List[Trail], index: Int, trail: Boolean)
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script>
+        var guardian = {};
+        guardian.js = {};
+        guardian.js.modules = {
+            reqwest           : 'http://4.gu-pasteup.appspot.com/js/libs/reqwest.min.js',
+            bean              : 'http://4.gu-pasteup.appspot.com/js/libs/bean.min.js',
+            detect            : 'http://4.gu-pasteup.appspot.com/js/detect/detect.js',
+            images            : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
+            basicTemplate     : '@Static("javascripts/libs/basicTemplate.min.js")',
+            trailExpander     : '@Static("javascripts/libs/trailExpander.min.js")',
+            fetchDiscussion   : '@Static("javascripts/libs/fetchDiscussion.min.js")'
+        };
+    </script>
+
+    @fragments.metaData(gallery)
+
+    <title>@gallery.headline</title>
+
+    <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
+
+    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
+    <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
+    <link rel="stylesheet" media="screen and (min-width: 640px)" href="@Static("stylesheets/grid.responsive.css")">
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
+    <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
+    <![endif]-->
+
+    <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
+
+    <script>
+        guardian.gallery = @JSON(gallery);
+    </script>
+</head>
+
+<body>
+    <div id="top-ad-placeholder" style="text-align: center; margin: 10px auto;"></div>
+
+    <div id="container">
+
+        <div class="line">
+            <div class="unit size1of1">
+                @fragments.headline(gallery.headline)
+                @fragments.standfirst(gallery.standfirst)
+            </div>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size3of5">
+
+                @fragments.byline(gallery.byline)
+                @fragments.dateline(gallery.webPublicationDate)
+
+                @if(trail) {
+                    <p class="trail">Trail page here...</p>
+                } else {
+                    <p class="nav">
+                        Image @index of @gallery.size
+
+                        @*
+                          TODO: Standard CS navigation indexing functions in views.support.
+                        *@
+
+                        @if(index > 1) {
+                            <a href="?index=@(index - 1)">Previous</a>
+                        }
+
+                        @if(index < gallery.size) {
+                            <a href="?index=@(index + 1)">Next</a>
+                        } else {
+                            <a href="?trail=true">Next</a>
+                        }
+                    </p>
+
+                    @defining(gallery(index)) { image =>
+                        <img class="maxed" src="@image.url" data-fullsrc='@image.url' data-width="@image.width" />
+                        @fragments.caption(image.caption.getOrElse(""))
+                        <p class="credit">@image.credit</p>
+                    }
+                }
+            </div>
+
+            <div class="unit lastUnit">
+
+                @if(storyPackage nonEmpty) {
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 4)
+                } else {
+                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                }
+
+                <h4>Related subjects</h4>
+                <ul class="plain tags">
+                @gallery.keywords.map{ tag =>
+                    @fragments.formatTags(tag)
+                }
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div id="debug">
+        <strong>debug info</strong>
+        <ul>
+            <li>Screen height: <span id="screenHeight"></span></li>
+            <li>Screen width: <span id="screenWidth"></span></li>
+            <li>Window height: <span id="windowHeight"></span></li>
+            <li>Window width: <span id="windowWidth"></span></li>
+            <li>Layout mode: <span id="layout"></span></li>
+            <li>Connection Speed: <span id="bandwidth"></span></li>
+            <li>Battery: <span id="battery"></span></li>
+            <li>Pixel Ratio: <span id="pixelratio"></span></li>
+            <li>Retina display: <span id="retina"></span></li>
+        </ul>
+    </div>
+
+    <script>
+        require(['@conf.Configuration.plugins.location'], function(){});
+    </script>
+</body>
+</html>
