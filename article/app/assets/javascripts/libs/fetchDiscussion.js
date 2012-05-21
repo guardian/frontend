@@ -77,7 +77,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
 
         for (var i in json.discussion.comments) {
             var c = json.discussion.comments[i];
-            var username = c.userProfile.username;
+            var username = c.userProfile.displayName;
             var date = c.date;
 
             // i hate you, javascript.
