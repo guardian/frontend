@@ -3,6 +3,7 @@ import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
+import com.gu.deploy.PlayArtifact.executableName
 
 object Frontend extends Build with Prototypes {
   val version = "1-SNAPSHOT"
@@ -65,10 +66,11 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
+
     templatesImport ++= Seq(
       "conf.Static"
     ),
-
-    jarName in assembly := "%s.jar" format name
+    executableName := "frontend-%s" format  name,
+    jarName in assembly <<= (executableName) { n => "%s.jar" format n }
   )
 }
