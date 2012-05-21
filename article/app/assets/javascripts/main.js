@@ -58,7 +58,7 @@ require([guardian.js.modules.detect,
 require([guardian.js.modules.mostPopular, 
     guardian.js.modules.ads,
     guardian.js.modules.trailExpander],
-    function(mostPopular, ads, trailExpanders){
+    function(mostPopular, ads, trailExpander){
         trailExpander.bindExpanders();
     }
 );
