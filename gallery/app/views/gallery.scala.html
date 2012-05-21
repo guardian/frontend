@@ -16,7 +16,8 @@
             images            : 'http://4.gu-pasteup.appspot.com/js/detect/images.js',
             basicTemplate     : '@Static("javascripts/libs/basicTemplate.min.js")',
             trailExpander     : '@Static("javascripts/libs/trailExpander.min.js")',
-            fetchDiscussion   : '@Static("javascripts/libs/fetchDiscussion.min.js")'
+            fetchDiscussion   : '@Static("javascripts/libs/fetchDiscussion.min.js")',
+            swipe             : 'http://6.gu-pasteup.appspot.com/js/libs/swipe.amd.js?v=2'
         };
     </script>
 
@@ -33,6 +34,33 @@
     <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
     <![endif]-->
+
+    <style>
+
+        .gallery,
+        .gallery li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .gallery li img {
+            max-width: 100%;
+        }
+
+        .gallery-container {
+            width: 100%;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .gallery li {
+            float: left;
+            width: 300px;
+            min-height: 200px;
+        }
+    </style>
+    <script src="http://gnm41148.int.gnl:8081/target/target-script-min.js"></script>
 
     <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
 
@@ -64,28 +92,42 @@
                     <p class="trail">Trail page here...</p>
                 } else {
                     <p class="nav">
-                        Image @index of @gallery.size
 
                         @*
                           TODO: Standard CS navigation indexing functions in views.support.
                         *@
 
                         @if(index > 1) {
-                            <a href="?index=@(index - 1)">Previous</a>
+                            <a id="js-gallery-prev" href="?index=@(index - 1)">Previous</a>
                         }
 
+                        Image <span id="js-gallery-index">@index</span> of @gallery.size
+
                         @if(index < gallery.size) {
-                            <a href="?index=@(index + 1)">Next</a>
+                            <a id="js-gallery-next" href="?index=@(index + 1)">Next</a>
                         } else {
-                            <a href="?trail=true">Next</a>
+                            <a id="js-gallery-next" data-next="trail" href="?trail=true">Next</a>
                         }
                     </p>
 
-                    @defining(gallery(index)) { image =>
-                        <img class="maxed" src="@image.url" data-fullsrc='@image.url' data-width="@image.width" />
-                        @fragments.caption(image.caption.getOrElse(""))
-                        <p class="credit">@image.credit</p>
-                    }
+                    <div class="gallery-container" id="gallery">
+                        <ul class="gallery">
+                            @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+                            
+                                @if(row.indexIsInSameCarousel(carouselWidth=3, index)) {
+                                    <li>
+                                        <img class="maxed" src="@image.url" data-width="@image.width" />
+                                } else {
+                                    <li style="display: none;" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                                }
+                                        @fragments.caption(image.caption.getOrElse(""))
+                                        <p class="caption"><strong>@image.credit</strong></p>
+                                    </li>
+                                
+                            }
+                        </ul>
+                    </div>
+
                 }
             </div>
 
@@ -99,9 +141,9 @@
 
                 <h4>Related subjects</h4>
                 <ul class="plain tags">
-                @gallery.keywords.map{ tag =>
-                    @fragments.formatTags(tag)
-                }
+                    @gallery.keywords.map{ tag =>
+                        @fragments.formatTags(tag)
+                    }
                 </ul>
 
             </div>

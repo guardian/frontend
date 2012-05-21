@@ -68,6 +68,12 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
     case _ => _rowClass
   }
   private lazy val _rowClass = if (isEven) "even" else "odd"
+
+  def indexIsInSameCarousel(carouselWidth: Int, candidate: Int): Boolean = {
+    val tolerance = (carouselWidth - 1) / 2 // Your problem if carouselWidth % 2 == 0
+    val carousel = (rowNum - tolerance) to (rowNum + tolerance)
+    carousel contains candidate
+  }
 }
 
 object `package` extends Formats {
