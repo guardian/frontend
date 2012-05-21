@@ -37,6 +37,8 @@
 
     <style>
 
+        /* todo: move this somewhere sensible */
+
         .gallery,
         .gallery li {
             margin: 0;
@@ -64,7 +66,7 @@
     @if(play.Play.isDev()) { 
         <script src="http://gnm41148.int.gnl:8081/target/target-script-min.js"></script>
     }
-    
+
     <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
 
     <script>
@@ -121,7 +123,7 @@
                                     <li>
                                         <img class="maxed" src="@image.url" data-width="@image.width" />
                                 } else {
-                                    <li style="display: none;" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                                    <li class="initially-off" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
                                 }
                                         @fragments.caption(image.caption.getOrElse(""))
                                         <p class="caption"><strong>@image.credit</strong></p>
