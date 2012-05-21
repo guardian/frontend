@@ -53,7 +53,10 @@
     <![endif]-->
 
     <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
-
+    
+    @if(play.Play.isDev()) { 
+        <script src="http://gnm41148.int.gnl:8081/target/target-script-min.js"></script>
+    }
 
 </head>
 
