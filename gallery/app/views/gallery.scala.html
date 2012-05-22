@@ -39,24 +39,23 @@
 
         /* todo: move this somewhere sensible */
 
-        .gallery,
-        .gallery li {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .gallery li img {
-            max-width: 100%;
-        }
-
         .gallery-container {
             width: 100%;
             min-height: 600px;
             overflow: hidden;
         }
+        .gallery-swipe,
+        .gallery-swipe li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-        .gallery li {
+        .gallery-swipe li img {
+            max-width: 100%;
+        }
+
+        .gallery-swipe li {
             float: left;
             width: 300px;
             min-height: 200px;
@@ -104,6 +103,8 @@
 
                         @if(index > 1) {
                             <a id="js-gallery-prev" href="?index=@(index - 1)">Previous</a>
+                        } else {
+                            <a id="js-gallery-prev" class="initially-off" href="javascript://">Previous</a>
                         }
 
                         Image <span id="js-gallery-index">@index</span> of @gallery.size
@@ -115,14 +116,14 @@
                         }
                     </p>
 
-                    <div class="gallery-container" id="gallery">
+                    <div class="gallery-container" id="js-gallery">
                         <ul class="plain galleryx">
                             @gallery.images.zipWithRowInfo.map{ case(image, row) =>
                                 @if(row.rowNum == index) {
-                                    <li>
+                                    <li class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
                                         <img class="maxed" src="@image.url" data-width="@image.width" />
                                 } else {
-                                    <li class="initially-off" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                                    <li class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
                                 }
                                         @fragments.caption(image.caption.getOrElse(""))
                                         <p class="caption"><strong>@image.credit</strong></p>
