@@ -21,10 +21,6 @@
         // Find and upgrade images.
         images.upgrade();
 
-        // todo - work out where to load discussion and trailexpander
-        // and also if the URLs are wrong...
-
-
         function getUrlVars() {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -40,10 +36,11 @@
 
         var urlParams = getUrlVars();
         
-
-        // swipe magic
-        // todo: show prev link once we get past first item
-        
+        var galleryConfig = {
+            nextLink: document.getElementById('js-gallery-next'),
+            prevLink: document.getElementById('js-gallery-prev')
+        };
+          
         var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
         if(isTouch) { // only enable this for touch devices, duh.
@@ -68,6 +65,7 @@
                     var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
                     makePlaceholderIntoImage(nextElm); // convert to <img> tag
                     handlePrevNextLinks(nextIndex, totalSlides)
+                    updateURL('index=' + nextIndex);
                     elm.style.display = 'block';
                 }
             });
@@ -79,51 +77,38 @@
 
             // bind prev/next to just trigger swipes
             // might be nice if they updated the page URL too ...
-            bean.add(document.getElementById('js-gallery-next'), 'click', function(e) {
+            bean.add(galleryConfig.nextLink, 'click', function(e) {
                 gallerySwipe.next();
                 e.preventDefault();
             });
 
-            bean.add(document.getElementById('js-gallery-prev'), 'click', function(e) {
+            bean.add(galleryConfig.prevLink, 'click', function(e) {
                 gallerySwipe.prev();
                 e.preventDefault();
             });
 
         } else {
 
-            bean.add(document.getElementById('js-gallery-next'), 'click', function(e) {
+            bean.add(galleryConfig.nextLink, 'click', function(e) {
                 advanceGallery('next');
                 e.preventDefault();
-                return false;
             });
 
-            bean.add(document.getElementById('js-gallery-prev'), 'click', function(e) {
+            bean.add(galleryConfig.prevLink, 'click', function(e) {
                 advanceGallery('prev');
                 e.preventDefault();
-                return false;
+            });
+
+            bean.add(document, 'keydown', function(e){
+                if (e.keyCode == 37) { 
+                    advanceGallery('prev');
+                } else if (e.keyCode == 39) {
+                    advanceGallery('next');
+                }
             });
 
         }
 
-        /*
-            var supports_pushState = 'pushState' in history;
-            $('a.internal').live('click', function() {
-                var state = this.search.replace( /^\?/, '' );
-                
-                if ( supports_pushState ) {
-                    if ( state !== last_state ) {
-                        history.pushState( {}, this.title || '', '?' + state );
-                        handle( state, 'click' );
-                    }
-                } else {
-                    location.hash = '#' + state;
-                }
-                
-                return false;
-            });
-        */
-
-        // todo: update url?
         function advanceGallery(direction) {
             var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
             var nextSlide       = currentSlide.nextElementSibling;
@@ -151,6 +136,7 @@
             //slideCounter.innerText(newSlide); 
             slideCounter.innerText = newSlide; // update count of current position
 
+            updateURL('index=' + newSlide);
             makePlaceholderIntoImage(elmToWorkWith); // convert it if we need to
 
             elmToWorkWith.className = 'js-current-gallery-slide';
@@ -158,18 +144,42 @@
 
         }
 
+        function updateURL(querystring) {
+            var supportsPushState = 'pushState' in history;
+
+            var state = window.location.search.replace( /^\?/, '' );
+            
+            if (supportsPushState) {
+                if ( querystring !== state ) {
+                    history.pushState({}, window.title || '', '?' + querystring);
+                }
+            } else {
+                // do we want to do this? think carefully...
+                //location.hash = '#' + querystring;
+            }
+        }
+
         function handlePrevNextLinks(index, total) {
-            var nextLink = document.getElementById('js-gallery-next');
-            var prevLink = document.getElementById('js-gallery-prev');
+            var nextLink = galleryConfig.nextLink;
+            var prevLink = galleryConfig.prevLink;
 
             if (index == 1) { // we've gone back to the start, hide prev
                 prevLink.style.display = 'none';
+                nextLink.setAttribute('href', '?index=2');
             } else if (index == 2) { // we can now go back, show prev
                 prevLink.style.display = 'inline';
+                prevLink.setAttribute('href', '?index=1');
+                nextLink.setAttribute('href', '?index=3');
             } else if (index == total-1) { // show next again...?
                 nextLink.style.display = 'inline';
+                prevLink.setAttribute('href', '?index=' + (index - 1));
+                nextLink.setAttribute('href', '?index=' + total);
             } else if (index == total) { //we're at the end, hide next
                 nextLink.style.display = 'none';
+                prevLink.setAttribute('href', '?index=' + (total -1));
+            } else { // it's in the middle 
+                prevLink.setAttribute('href', '?index=' + (index - 1));
+                nextLink.setAttribute('href', '?index=' + (index + 1));
             }
         }
 
