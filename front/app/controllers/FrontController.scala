@@ -15,6 +15,11 @@ object FrontController extends Controller with Logging {
     override val section = ""
     override val apiUrl = "http://content.guardianapis.com"
     override val webTitle = "The Guardian"
+
+    override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+      "keywords" -> "",
+      "content-type" -> "Network Front"
+    )
   }
 
   def render() = Action { implicit request =>

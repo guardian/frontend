@@ -96,6 +96,12 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
+  lazy val pageId = delegate
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "keywords" -> name,
+    "content-type" -> "Tag"
+  )
 }
 
 case class Section(private val delegate: ApiSection) extends MetaData {
@@ -111,6 +117,11 @@ case class Section(private val delegate: ApiSection) extends MetaData {
 
   lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "keywords" -> name,
+    "content-type" -> "Section"
+  )
 }
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
@@ -139,6 +150,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val canonicalUrl: String = webUrl
 
+  lazy val pageId = fields("internal-page-code")
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -153,7 +166,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "web-publication-date" -> webPublicationDate,
     "short-url" -> shortUrl,
     "byline" -> byline.getOrElse(""),
-    "commentable" -> fields.get("commentable").getOrElse("false")
+    "commentable" -> fields.get("commentable").getOrElse("false"),
+    "page-id" -> fields("internalPageCode")
   )
 }
 

@@ -28,6 +28,7 @@ define(["reqwest", guardian.js.modules.basicTemplate, guardian.js.modules.trailE
 
 	        document.getElementById('tier3-1').innerHTML = html;
             document.getElementById('tier3-1').className = '';
+            document.getElementById('tier3-1').setAttribute("data-component-name", "most popular")
                trailExpander.bindExpanders();
         }
     });

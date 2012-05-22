@@ -29,3 +29,5 @@ require(["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pas
 
 
 });
+
+require([guardian.js.modules.commonPlugins], function(common){});

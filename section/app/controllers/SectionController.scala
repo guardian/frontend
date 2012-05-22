@@ -7,7 +7,7 @@ import play.api.mvc.{ Controller, Action }
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
-object FrontController extends Controller with Logging {
+object SectionController extends Controller with Logging {
   def render(path: String) = Action { request =>
     val edition = Configuration.edition(OriginDomain(request))
     lookup(path, edition) map { renderFront(_) } getOrElse { NotFound }
@@ -36,5 +36,5 @@ object FrontController extends Controller with Logging {
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
-  private def renderFront(model: SectionFrontPage) = Ok(views.html.front(model.section, model.editorsPicks, model.latestContent))
+  private def renderFront(model: SectionFrontPage) = Ok(views.html.section(model.section, model.editorsPicks, model.latestContent))
 }

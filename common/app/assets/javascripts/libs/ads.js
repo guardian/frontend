@@ -7,7 +7,8 @@ define([guardian.js.modules.writeCaptureNoLibSupport, guardian.js.modules.writeC
     }
 
     var keywordsString='';
-    var keywords = guardian.page.keywords.split(',');
+    var keywords = guardian.page.keywords || ''
+    keywords = keywords.split(',');
     for (i=0; i<keywords.length; i++) {
         keywordsString +=  'k=' + encodeURIComponent(keywords[i].toLowerCase()) + '&'
     }
@@ -20,21 +21,21 @@ define([guardian.js.modules.writeCaptureNoLibSupport, guardian.js.modules.writeC
     switch (detect.getLayoutMode()) {
         case 'base':
             adSlots = [
-                {name: 'x50', position: '#tier1-2'},
-                {name: 'x51', position: '#tier3-5'}
+                {name: 'x50', position: '#tier1-2'}//,
+                //{name: 'x51', position: '#tier3-5'}
             ];
             break;
         case 'median':
             adSlots = [
-                {name: 'x52', position: '#tier1-2'},
-                {name: 'x53', position: '#tier3-5'}
+                {name: 'x52', position: '#tier1-2'}//,
+                //{name: 'x53', position: '#tier3-5'}
             ];
             break;
         case 'extended':
             adSlots = [
-                {name: 'x54', position: '#tier1-2'},
-                {name: 'x55', position: '#tier2-1'},
-                {name: 'x56', position: '#tier3-5'}
+                {name: 'x54', position: '#tier1-2'}//,
+                //{name: 'x55', position: '#tier2-1'},
+                //{name: 'x56', position: '#tier3-5'}
             ];
             break;
     }

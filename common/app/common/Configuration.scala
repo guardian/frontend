@@ -6,12 +6,6 @@ import com.gu.management.{ Manifest => ManifestFile }
 class Configuration(application: String, webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
-  object plugins {
-    lazy val location = configuration.getStringProperty("plugins.location").getOrElse {
-      throw new IllegalStateException("Plugins Location not configured")
-    }
-  }
-
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
       throw new IllegalStateException("Content Api Host not configured")

@@ -8,9 +8,7 @@
 
 <head>
 
-    <script>
-        var guardian = {};
-    </script>
+    @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(tag)
 
     <title>@tag.webTitle</title>
@@ -40,7 +38,7 @@
         <div class="line">
 
             <div class="unit size1of1">
-
+                    @fragments.placeholders("tier1", 5)
                     @fragments.headline(tag.webTitle)
 
                     <h2>@tag.section</h2>
@@ -85,9 +83,5 @@
             <li>Retina display: <span id="retina"></span></li>
         </ul>
     </div>
-
-    <script>
-        require(['@Configuration.plugins.location'], function(){});
-    </script>
 </body>
 </html>

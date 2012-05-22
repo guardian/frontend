@@ -6,37 +6,8 @@
 
 <head>
 
-    <script>
-        var guardian = {};
 
-        //@* used for requireJS because we can't build dynamic paths inside main.js  *@
-        guardian.js = {};
-        guardian.js.modules = {
-            order                       : '@Static("javascripts/order.min.js")', // has to be first
-            basicTemplate               : '@Static("javascripts/libs/basicTemplate.min.js")',
-            bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
-            bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.min',
-            detect                      : 'http://6.gu-pasteup.appspot.com/js/detect/detect.js',
-            discussionBinder            : '@Static("javascripts/libs/discussionBinder.min.js")',
-            fetchDiscussion             : '@Static("javascripts/libs/fetchDiscussion.min.js")',
-            images                      : 'http://6.gu-pasteup.appspot.com/js/detect/images.js',
-            mostPopular                 : '@Static("javascripts/libs/mostPopular.min.js")',
-            reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
-            trailExpander               : '@Static("javascripts/libs/trailExpander.min.js")',
-            writeCapture                : 'order!@Static("javascripts/libs/writeCapture.js")',
-            writeCaptureNoLibSupport    : 'order!@Static("javascripts/libs/writeCaptureNoLibSupport.js")',
-            ads                         : '@Static("javascripts/libs/ads.js")'
-        };
-
-        // this is horrible. looking for a better way to do this.
-        guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
-
-        guardian.config = {};
-        guardian.config.discussion = {
-            numCommentsPerPage  : 20
-        };
-
-    </script>
+    @fragments.commonJavaScriptSetup(Static)
 
     @fragments.metaData(article)
 
@@ -52,9 +23,7 @@
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
     <![endif]-->
 
-    <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
-    
-    @if(play.Play.isDev()) { 
+    @if(play.Play.isDev()) {
         <script src="http://gnm41148.int.gnl:8081/target/target-script-min.js"></script>
     }
 
@@ -76,7 +45,6 @@
         <div class="line">
 
             <div class="unit size3of5">
-
                 @article.imageOfWidth(300, tolerance=160).map{ image =>
                     <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
                     @fragments.caption(image.caption.getOrElse(""))
@@ -130,9 +98,5 @@
             <li>Retina display: <span id="retina"></span></li>
         </ul>
     </div>
-
-    <script>
-        require(['@conf.Configuration.plugins.location'], function(){});
-    </script>
 </body>
 </html>

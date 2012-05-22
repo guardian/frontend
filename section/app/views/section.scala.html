@@ -6,10 +6,7 @@
 
 <head>
 
-    <script>
-        var guardian = {};
-    </script>
-
+    @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(section)
 
     <title>@section.name | beta.guardian.co.uk</title>
@@ -36,7 +33,7 @@
         <div class="line">
 
             <div class="unit size1of1">
-
+                    @fragments.placeholders("tier1", 5)
                     @fragments.headline( section.name )
 
                     <h2>Top stories</h2>

@@ -1,0 +1,40 @@
+@(static: common.Static)
+<script>
+    var guardian = {};
+
+    //@* used for requireJS because we can't build dynamic paths inside main.js  *@
+    guardian.js = {};
+    guardian.js.modules = {
+        order                       : '@static("javascripts/order.min.js")', // has to be first
+        basicTemplate               : '@static("javascripts/libs/basicTemplate.min.js")',
+        bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
+        bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.min',
+        detect                      : 'http://6.gu-pasteup.appspot.com/js/detect/detect.js',
+        discussionBinder            : '@static("javascripts/libs/discussionBinder.min.js")',
+        fetchDiscussion             : '@static("javascripts/libs/fetchDiscussion.min.js")',
+        images                      : 'http://6.gu-pasteup.appspot.com/js/detect/images.js',
+        mostPopular                 : '@static("javascripts/libs/mostPopular.min.js")',
+        reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
+        trailExpander               : '@static("javascripts/libs/trailExpander.min.js")',
+        writeCapture                : 'order!@static("javascripts/libs/writeCapture.min.js")',
+        writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")',
+        ads                         : '@static("javascripts/libs/ads.min.js")',
+        commonPlugins               : '@static("javascripts/commonPlugins.min.js")',
+        analytics                   : '@static("javascripts/libs/analytics.min.js")'
+    };
+
+    @*// this is horrible. looking for a better way to do this.*@
+    guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
+
+    guardian.config = {};
+    guardian.config.discussion = {
+        numCommentsPerPage  : 20
+    };
+
+    var require = {
+        paths: guardian.js.modules
+    };
+
+</script>
+
+<script data-main="@static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>

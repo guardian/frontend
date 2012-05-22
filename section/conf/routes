@@ -5,8 +5,8 @@
 GET     /management$path<.*>        controllers.Management.apply(path)
 POST    /management$path<.*>        controllers.Management.apply(path)
 
-GET     /pages/*path                controllers.FrontController.render(path)
+GET     /pages/*path                controllers.SectionController.render(path)
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /*path                      controllers.FrontController.render(path)
+GET     /*path                      controllers.SectionController.render(path)

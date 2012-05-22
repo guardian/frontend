@@ -113,3 +113,5 @@
     }); // end of require callback
 
 })();
+
+require([guardian.js.modules.commonPlugins], function(common){});

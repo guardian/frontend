@@ -5,14 +5,8 @@
 <html>
 
 <head>
-
-    <script>
-        var guardian = {};
-    </script>
-
-
     <title>beta.guardian.co.uk</title>
-
+    @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(page)
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
@@ -33,14 +27,10 @@
 
 <body>
     <div id="container">
-
         <div class="line">
-
             <div class="unit size1of1">
-
-
-                    <h2>Top stories</h2>
-
+                @fragments.placeholders("tier1", 5)
+                <h2>Top stories</h2>
             </div>
         </div>
 
@@ -63,9 +53,5 @@
             <li>Retina display: <span id="retina"></span></li>
         </ul>
     </div>
-
-    <script>
-        require(['@conf.Configuration.plugins.location'], function(){});
-    </script>
 </body>
 </html>
