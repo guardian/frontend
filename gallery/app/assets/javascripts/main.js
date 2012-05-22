@@ -85,6 +85,24 @@
                 e.preventDefault();
             });
 
+            /*
+                var supports_pushState = 'pushState' in history;
+                $('a.internal').live('click', function() {
+                    var state = this.search.replace( /^\?/, '' );
+                    
+                    if ( supports_pushState ) {
+                        if ( state !== last_state ) {
+                            history.pushState( {}, this.title || '', '?' + state );
+                            handle( state, 'click' );
+                        }
+                    } else {
+                        location.hash = '#' + state;
+                    }
+                    
+                    return false;
+                });
+            */
+
 
             // add css to gallery <ul> to style slides
         } else {

@@ -116,10 +116,9 @@
                     </p>
 
                     <div class="gallery-container" id="gallery">
-                        <ul class="gallery">
+                        <ul class="plain galleryx">
                             @gallery.images.zipWithRowInfo.map{ case(image, row) =>
-                            
-                                @if(row.indexIsInSameCarousel(carouselWidth=3, index)) {
+                                @if(row.rowNum == index) {
                                     <li>
                                         <img class="maxed" src="@image.url" data-width="@image.width" />
                                 } else {
