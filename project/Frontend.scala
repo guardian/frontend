@@ -1,9 +1,11 @@
+import com.gu.deploy.PlayArtifact._
 import com.gu.deploy.PlayAssetHash._
+import com.typesafe.sbtscalariform.ScalariformPlugin._
+import org.sbtidea.SbtIdeaPlugin._
 import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
-import com.gu.deploy.PlayArtifact.executableName
 
 object Frontend extends Build with Prototypes {
   val version = "1-SNAPSHOT"
@@ -25,11 +27,24 @@ object Frontend extends Build with Prototypes {
 trait Prototypes {
   val version: String
 
-  def root() = Project("root", base = file("."))
+  def root() = Project("root", base = file(".")).settings(ideaSettings: _*)
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
     .settings(playAssetHashDistSettings: _*)
+    .settings(scalariformSettings: _*)
     .settings(
+      scalaVersion := "2.9.1",
+
+      maxErrors := 20,
+      javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
+      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
+
+      ivyXML :=
+        <dependencies>
+          <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
+          <exclude org="org.springframework"><!-- Because I don't like it. --></exclude>
+        </dependencies>,
+
       organization := "com.gu",
 
       libraryDependencies ++= Seq(
@@ -66,11 +81,11 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
-
     templatesImport ++= Seq(
       "conf.Static"
     ),
+
     executableName := "frontend-%s" format  name,
-    jarName in assembly <<= (executableName) { n => "%s.jar" format n }
+    jarName in assembly <<= (executableName) { "%s.jar" format _ }
   )
 }
