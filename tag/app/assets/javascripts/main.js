@@ -18,16 +18,6 @@ require(["http://3.gu-pasteup.appspot.com/js/detect/detect.js", "http://3.gu-pas
 
     // Find and upgrade images.
     images.upgrade();
-
-    // fetch comments for article
-    $.ajaxJSONP({
-        url: discussion_comments_url,
-        success: function(data) {
-            console.log(data);
-        }
-    });
-
-
 });
 
 require([guardian.js.modules.commonPlugins], function(common){});

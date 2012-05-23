@@ -166,7 +166,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "web-publication-date" -> webPublicationDate,
     "short-url" -> shortUrl,
     "byline" -> byline.getOrElse(""),
-    "commentable" -> fields.get("commentable").getOrElse("false"),
+    "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "page-id" -> fields("internalPageCode")
   )
 }
@@ -222,6 +222,7 @@ trait Formats {
       } mapValues {
         case date: DateTime => toJson(date)
         case string: String => toJson(string)
+        case boolean: Boolean => toJson(boolean)
       }
     )
   }
