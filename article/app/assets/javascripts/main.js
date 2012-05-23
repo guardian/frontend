@@ -9,7 +9,7 @@ require([guardian.js.modules.detect,
     guardian.js.modules.discussionBinder,
     "bean",
     "bonzo"],
-    function(detect, images, discussion, discussionBinder, bean, _bonzo_) {
+    function(detect, images, discussion, discussionBinder, bean, bonzo) {
 
         var gu_debug = {
             screenHeight: screen.height,
