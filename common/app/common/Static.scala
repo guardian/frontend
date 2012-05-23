@@ -4,15 +4,12 @@ import assets.AssetsPlugin
 import play.api.Play
 
 class Static(val base: String = "") extends Logging {
-  private val staticMappings: Map[String, String] = {
-    val plugin = Play.current.plugin[AssetsPlugin]
-    if (!plugin.isDefined) {
-      log.error("Trying to use Static without including AssetPlugin. Is your play.plugins correct?")
-      throw new RuntimeException("Missing AssetPlugin.")
-    }
 
-    plugin.get assetMappings base
+  val plugin: AssetsPlugin = Play.current.plugin[AssetsPlugin] getOrElse {
+    log.error("Trying to use Static without including AssetPlugin. Is your play.plugins correct?")
+    throw new RuntimeException("Missing AssetPlugin.")
   }
 
-  def apply(path: String) = staticMappings(path)
+  val assetMappings: String => String = plugin.getAssetMappings(base)
+  def apply(path: String) = assetMappings(path)
 }
