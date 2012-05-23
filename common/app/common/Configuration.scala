@@ -48,6 +48,17 @@ class Configuration(application: String, webappConfDirectory: String = "env") {
   }
 
   override def toString(): String = configuration.toString
+
+  object javascript {
+    lazy val pageData: Map[String, String] = {
+      val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
+      keys.foldLeft(Map.empty[String, String]) {
+        case (map, key) => map + (key -> configuration.getStringProperty(key).getOrElse {
+          throw new IllegalStateException("no value for key " + key)
+        })
+      }
+    }
+  }
 }
 
 object ManifestData {

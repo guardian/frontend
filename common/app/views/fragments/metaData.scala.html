@@ -1,4 +1,4 @@
-@(item: MetaData)
+@(item: MetaData, config: common.Configuration)
 
     @*
     canonical url for this page - it should point back to www.guardian.co.uk
@@ -20,4 +20,8 @@ this is orders of magnitude faster than selector queries
 *@
 <script>
     guardian.page = @JSON(item);
+
+    @config.javascript.pageData.map{ case (key, value) =>
+        @key = "@value";
+    }
 </script>

@@ -150,8 +150,6 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val canonicalUrl: String = webUrl
 
-  lazy val pageId = fields("internal-page-code")
-
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -167,7 +165,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "short-url" -> shortUrl,
     "byline" -> byline.getOrElse(""),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "page-id" -> fields("internalPageCode")
+    "page-code" -> fields("internalPageCode")
   )
 }
 
