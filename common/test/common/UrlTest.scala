@@ -74,6 +74,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     def queryString = Map.empty[String, Seq[String]]
     def headers = FakeHeaders(_headers)
     def body = ""
+    def remoteAddress = ""
   }
 
   private def tagWithId(id: String) = ApiTag(id = id, `type` = "type", webTitle = "", webUrl = "", apiUrl = "")

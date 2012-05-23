@@ -1,9 +1,16 @@
-s_account = 'guardiangu-mobiledev';
+s_account = guardian.page.omnitureAccount;
 
-require(['http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd03/common/scripts/omniture-H.24.1.1.js']
-    , function(omniture){
-
-        s.pageName = document.title + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageId || ''); //TODO limit length
+require([
+    'http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd03/common/scripts/omniture-H.24.1.1.js',
+    guardian.page.ophanScript,
+    "bean"
+]
+    , function(omniture, ophan, bean){
+        var webTitle = (guardian.page.webTitle || '').trim();
+        if (webTitle.length > 72) {
+            webTitle = webTitle.substring(0, 72);
+        }
+        s.pageName = webTitle + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageId || '');
 
         s.pageType = guardian.page.contentType || '';  //pageType
         s.prop9 = guardian.page.contentType || '';     //contentType
@@ -18,6 +25,8 @@ require(['http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd
         s.prop13 = guardian.page.series || '';
         s.prop25 = guardian.page.blogs || '';
 
+        s.prop14 = guardian.page.buildNumber || '';
+
         //this fires off the omniture tracking
         s.t();
 
@@ -30,10 +39,12 @@ require(['http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd
             if (componentName) {
                 return componentName;
             }
+
+            //TODO parentNode is not cross browser compatible
             return findComponentName(element.parentNode)
         }
 
-        document.body.addEventListener("click", function(event){
+        bean.add(document.body, "click", function(event){
             var element = event.srcElement;
 
             if (element.tagName.toLowerCase() != "a") {
@@ -50,8 +61,8 @@ require(['http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd
                 s.events='event37';
 
                 var linkHref = element.getAttribute('href');
-                var delay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
-                s.tl(delay,'o',componentName);
+                var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
+                s.tl(shouldDelay,'o',componentName);
             }
         });
 });
