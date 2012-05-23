@@ -10,7 +10,7 @@ require([
         if (webTitle.length > 72) {
             webTitle = webTitle.substring(0, 72);
         }
-        s.pageName = webTitle + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageId || '');
+        s.pageName = webTitle + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageCode || '');
 
         s.pageType = guardian.page.contentType || '';  //pageType
         s.prop9 = guardian.page.contentType || '';     //contentType
@@ -18,7 +18,7 @@ require([
         s.channel = guardian.page.section || '';
         s.prop4 = guardian.page.keywords || '';
         s.prop6 = guardian.page.author || '';
-        s.prop8 = guardian.page.pageId || '';
+        s.prop8 = guardian.page.pageCode || '';
         s.prop10 = guardian.page.tones || '';
 
         s.prop11 = guardian.page.section || ''; //Third Level Mlc

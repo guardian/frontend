@@ -124,7 +124,8 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       "shortUrl" -> "http://gu.com/p/12345",
       "byline" -> "Jack and Jill",
       "commentable" -> "true",
-      "trailText" -> "The trail text"
+      "trailText" -> "The trail text",
+      "internalPageCode" -> "1234"
     )
 
     val metaData = new Content(ApiContent(
@@ -145,7 +146,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     metaData("short-url") should be("http://gu.com/p/12345")
     metaData("publication") should be("The Guardian")
     metaData("byline") should be("Jack and Jill")
-    metaData("commentable") should be("true")
+    metaData("commentable").toString should be("true")
     metaData("description") should be("The trail text")
     metaData("keywords") should be("Keyword_1,Keyword_2")
     metaData("section") should be("section")
