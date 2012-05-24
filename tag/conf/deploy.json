@@ -28,7 +28,7 @@
             "actionsPerHost": ["frontend-tag.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-section.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-tag.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
