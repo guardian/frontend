@@ -68,7 +68,7 @@ trait Prototypes {
       )
     )
 
-  val guardianManagementVersion = "5.12"
+  val guardianManagementVersion = "5.13"
 
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
