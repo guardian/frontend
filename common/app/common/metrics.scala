@@ -1,24 +1,32 @@
 package common
 
-import com.gu.management.{ TimingMetric, Metric }
-import play.api.mvc.{ Action, Result, AnyContent, Request }
+import play.api.mvc._
+import com.gu.management.{ CountMetric, TimingMetric }
 
-class TimingAction(group: String, name: String, title: String, description: String, master: Option[Metric] = None)
-    extends TimingMetric(group, name, title, description, master) {
+object RequestTimingMetric extends TimingMetric("performance", "requests", "Client requests",
+  "incoming requests to the application")
 
-  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = {
-    Action {
-      request =>
-        measure {
-          f(request)
-        }
-    }
-  }
-  def apply(f: => Result): Action[AnyContent] = {
-    Action {
-      measure {
-        f
-      }
-    }
-  }
+object ContentApiHttpTimingmetric extends TimingMetric("performance", "content-api-calls", "Content API calls",
+  "outgoing requests to content api", Some(RequestTimingMetric))
+
+object Request200s extends CountMetric("request-status", "200_ok", "200 Ok", "number of pages that responded 200")
+
+object Request50xs extends CountMetric("request-status", "50x_error", "50x Error", "number of pages that responded 50x")
+
+object Request404s extends CountMetric("request-status", "404_not_found", "404 Not found", "number of pages that responded 404")
+
+object Request30xs extends CountMetric("request-status", "30x_redirect", "30x Redirect", "number of pages that responded with a redirect")
+
+object RequestOther extends CountMetric("request-status", "other", "Other", "number of pages that responded with an unexpected status code")
+
+object CommonMetrics {
+  lazy val all = Seq(
+    ContentApiHttpTimingmetric,
+    RequestTimingMetric,
+    Request200s,
+    Request50xs,
+    Request404s,
+    RequestOther,
+    Request30xs)
 }
+
