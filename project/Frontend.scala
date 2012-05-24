@@ -65,8 +65,8 @@ trait Prototypes {
     )
 
   def library(name: String) = base(name).settings(
+    staticFilesPackage := "frontend-static",
     resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.8",
       "com.gu" %% "management-logback" % "5.8",
@@ -81,6 +81,7 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
+    staticFilesPackage := "frontend-static",
     templatesImport ++= Seq(
       "conf.Static"
     ),
