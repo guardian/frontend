@@ -8,7 +8,7 @@
         order                       : '@static("javascripts/order.min.js")', // has to be first
         basicTemplate               : '@static("javascripts/libs/basicTemplate.min.js")',
         bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
-        bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.min',
+        bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.test.min',
         detect                      : 'http://6.gu-pasteup.appspot.com/js/detect/detect.js',
         discussionBinder            : '@static("javascripts/libs/discussionBinder.min.js")',
         fetchDiscussion             : '@static("javascripts/libs/fetchDiscussion.min.js")',
@@ -31,10 +31,14 @@
         numCommentsPerPage  : 20
     };
 
+    // used for determining whether we need to load JS polyfills for DOM querying and events
+    guardian.config.isModernBrowser = ('querySelector' in document && 'addEventListener' in window);
+
     var require = {
         paths: guardian.js.modules
     };
 
+
 </script>
 
-<script data-main="@static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
+<script data-main="@static("javascripts/main.min.js")" src="http://6.gu-pasteup.appspot.com/js/require.js"></script>

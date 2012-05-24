@@ -110,10 +110,10 @@
                         <ul class="plain galleryx">
                             @gallery.images.zipWithRowInfo.map{ case(image, row) =>
                                 @if(row.rowNum == index) {
-                                    <li class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
+                                    <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
                                         <img class="maxed" src="@image.url" data-width="@image.width" />
                                 } else {
-                                    <li class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                                    <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
                                 }
                                         @fragments.caption(image.caption.getOrElse(""))
                                         <p class="caption-credit"><strong>@image.credit</strong></p>

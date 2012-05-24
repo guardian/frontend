@@ -27,7 +27,11 @@ object Frontend extends Build with Prototypes {
 trait Prototypes {
   val version: String
 
-  def root() = Project("root", base = file(".")).settings(ideaSettings: _*)
+  def root() = Project("root", base = file("."))
+    .settings(ideaSettings: _*)
+    .settings(
+      parallelExecution in Global := false
+    )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
     .settings(playAssetHashDistSettings: _*)
@@ -64,12 +68,17 @@ trait Prototypes {
       )
     )
 
+  val guardianManagementVersion = "5.12"
+
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
-    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+    resolvers ++= Seq(
+      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
+    ),
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.8",
-      "com.gu" %% "management-logback" % "5.8",
+      "com.gu" %% "management-play" % guardianManagementVersion,
+      "com.gu" %% "management-logback" % guardianManagementVersion,
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
 

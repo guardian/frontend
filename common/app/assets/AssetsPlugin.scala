@@ -5,7 +5,7 @@ import java.io.File
 import java.net.{ URLConnection, URL }
 import java.util.Properties
 import java.util.jar.JarFile
-import play.api.{ Play, Plugin, Application }
+import play.api.{ Mode, Play, Plugin, Application }
 import scala.collection.JavaConversions._
 
 object `package` {
@@ -45,7 +45,6 @@ object `package` {
 }
 
 class AssetsPlugin(val app: Application) extends Plugin with Logging {
-
   override def onStart() {
     // Trap: The following has global application and may interfere with caching on non-local fetching
     // http://stackoverflow.com/questions/1374438/disappearing-jar-entry-when-loading-using-spi
@@ -53,7 +52,18 @@ class AssetsPlugin(val app: Application) extends Plugin with Logging {
     URLConnections.setDefaultUseCaches(false)
   }
 
-  def assetMappings(base: String = ""): Map[String, String] = {
+  private val reloadAssetMapsOnAccess = app.mode == Mode.Dev
+
+  def getAssetMappings(base: String = ""): String => String = reloadAssetMapsOnAccess match {
+    case true =>
+      asset: String => loadAssetMappings(base)(asset)
+
+    case false =>
+      val cachedMappings = loadAssetMappings(base)
+      asset: String => cachedMappings(asset)
+  }
+
+  private def loadAssetMappings(base: String = ""): Map[String, String] = {
     val assetMaps = assetMapResources() map { loadProperties }
 
     // You determine a precedence order here if you like...
@@ -66,8 +76,8 @@ class AssetsPlugin(val app: Application) extends Plugin with Logging {
     assetMaps reduceLeft { _ ++ _ } mapValues { base + _ }
   }
 
-  private val JarFilePattern = "jar:file:(.*)!/(.*)".r
-  private val FilePattern = "file:(.*)".r
+  private val JarFilePattern = """jar:file:(.*)!/(.*)""".r
+  private val FilePattern = """file:(.*)""".r
 
   // Get files with '/assetmap/' prefix from any local location or jar on classpath
   private def assetMapResources(): List[URL] = {

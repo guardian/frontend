@@ -1,6 +1,6 @@
 (function(){
 
-    require([guardian.js.modules.detect, guardian.js.modules.images, guardian.js.modules.reqwest, guardian.js.modules.bean, guardian.js.modules.swipe], function(detect, images, reqwest, bean, swipe) {
+    require([guardian.js.modules.detect, guardian.js.modules.images, "reqwest", "bean", guardian.js.modules.swipe], function(detect, images, reqwest, bean, swipe) {
 
         var gu_debug = {
             screenHeight: screen.height,
@@ -38,7 +38,8 @@
         
         var galleryConfig = {
             nextLink: document.getElementById('js-gallery-next'),
-            prevLink: document.getElementById('js-gallery-prev')
+            prevLink: document.getElementById('js-gallery-prev'),
+            currentIndex: urlParams.index || 0
         };
           
         var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
@@ -65,7 +66,7 @@
                     var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
                     makePlaceholderIntoImage(nextElm); // convert to <img> tag
                     handlePrevNextLinks(nextIndex, totalSlides)
-                    updateURL('index=' + nextIndex);
+                    updateURL('index=' + nextIndex, nextIndex);
                     elm.style.display = 'block';
                 }
             });
@@ -109,7 +110,18 @@
 
         }
 
-        function advanceGallery(direction) {
+        // this fires on pageload... do we want to prevent this?
+        window.onpopstate = function(event) {  
+            var urlParams = getUrlVars();
+            if(urlParams.index) {
+                // this means the user used the back/forward buttons, we should change gallery state to match
+                //if(galleryConfig.currentIndex != urlParams.index) {
+                    advanceGallery(null, urlParams.index);
+                //}
+            }
+        }; 
+
+        function advanceGallery(direction, customItemIndexToShow) {
             var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
             var nextSlide       = currentSlide.nextElementSibling;
             var prevSlide       = currentSlide.previousElementSibling;
@@ -123,11 +135,21 @@
             currentSlide.className = '';
             currentSlide.style.display = 'none';
 
-            // choose the element to show
-            var elmToWorkWith = (direction == 'next') ? nextSlide : prevSlide;
 
-            // update counter
-            var newSlide = (direction == 'next') ? (parseInt(currentIndex) + 1) : (parseInt(currentIndex) - 1);
+            if(!customItemIndexToShow) {
+
+                // choose the element to show
+                var elmToWorkWith = (direction == 'next') ? nextSlide : prevSlide;
+
+                // update counter
+                var newSlide = (direction == 'next') ? (parseInt(currentIndex) + 1) : (parseInt(currentIndex) - 1);
+            
+            } else {
+
+                var elmToWorkWith = document.getElementById('js-gallery-item-' + customItemIndexToShow);
+                var newSlide = customItemIndexToShow;
+
+            }
 
             // show and hide next/prev links
             handlePrevNextLinks(newSlide, totalSlides);
@@ -136,7 +158,7 @@
             //slideCounter.innerText(newSlide); 
             slideCounter.innerText = newSlide; // update count of current position
 
-            updateURL('index=' + newSlide);
+            updateURL('index=' + newSlide, newSlide);
             makePlaceholderIntoImage(elmToWorkWith); // convert it if we need to
 
             elmToWorkWith.className = 'js-current-gallery-slide';
@@ -144,14 +166,14 @@
 
         }
 
-        function updateURL(querystring) {
+        function updateURL(querystring, index) {
             var supportsPushState = 'pushState' in history;
 
             var state = window.location.search.replace( /^\?/, '' );
             
             if (supportsPushState) {
                 if ( querystring !== state ) {
-                    history.pushState({}, window.title || '', '?' + querystring);
+                    history.pushState({}, (window.title || '') + ' (' + index + ')', '?' + querystring);
                 }
             } else {
                 // do we want to do this? think carefully...
