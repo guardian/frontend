@@ -64,12 +64,14 @@ trait Prototypes {
       )
     )
 
+  val guardianManagementVersion = "5.12"
+
   def library(name: String) = base(name).settings(
     resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
 
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.8",
-      "com.gu" %% "management-logback" % "5.8",
+      "com.gu" %% "management-play" % guardianManagementVersion,
+      "com.gu" %% "management-logback" % guardianManagementVersion,
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
 

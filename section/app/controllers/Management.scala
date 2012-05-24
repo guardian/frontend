@@ -7,12 +7,14 @@ import conf.{ Metrics, Switches, Configuration }
 
 object Management extends ManagementController {
 
+  override val applicationName = "Frontend Section"
+
   lazy val pages = List(
     new ManifestPage,
     new HealthcheckManagementPage,
-    new Switchboard(Switches.all),
+    new Switchboard(Switches.all, applicationName),
     StatusPage("frontend-section", Metrics.all),
     new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage
+    new LogbackLevelPage(applicationName)
   )
 }
