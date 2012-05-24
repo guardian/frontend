@@ -1,7 +1,9 @@
 package conf
 
 import common._
-import com.gu.management.{ Metric, Switchable, TimingMetric, Healthcheck }
+import com.gu.management._
+import com.gu.management.play._
+import logback.LogbackLevelPage
 
 object Configuration extends Configuration("frontend-front", webappConfDirectory = "env")
 
@@ -16,4 +18,17 @@ object Switches {
 
 object Metrics {
   val all: Seq[Metric] = CommonMetrics.all
+}
+
+object Management extends Management {
+  val applicationName = Configuration.application
+
+  lazy val pages = List(
+    new ManifestPage,
+    new HealthcheckManagementPage,
+    new Switchboard(Switches.all, applicationName),
+    StatusPage(applicationName, Metrics.all),
+    new PropertiesPage(Configuration.toString),
+    new LogbackLevelPage(applicationName)
+  )
 }
