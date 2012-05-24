@@ -8,7 +8,7 @@ import play.api.mvc.{ Content => Unwanted, _ }
 case class ArticlePage(article: Article, related: List[Trail], storyPackage: List[Trail])
 object ArticleController extends Controller with Logging {
 
-  def render(path: String) = TimedAction {
+  def render(path: String) = Action {
     lookup(path).map { renderArticle }.getOrElse { NotFound }
   }
 
