@@ -27,7 +27,11 @@ object Frontend extends Build with Prototypes {
 trait Prototypes {
   val version: String
 
-  def root() = Project("root", base = file(".")).settings(ideaSettings: _*)
+  def root() = Project("root", base = file("."))
+    .settings(ideaSettings: _*)
+    .settings(
+      parallelExecution in Global := false
+    )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
     .settings(playAssetHashDistSettings: _*)
