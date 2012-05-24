@@ -71,7 +71,10 @@ trait Prototypes {
   val guardianManagementVersion = "5.12"
 
   def library(name: String) = base(name).settings(
-    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+    resolvers ++= Seq(
+      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
+    ),
 
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % guardianManagementVersion,
