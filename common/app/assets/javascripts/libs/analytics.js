@@ -4,8 +4,8 @@ require([
     'http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd03/common/scripts/omniture-H.24.1.1.js',
     guardian.page.ophanScript,
     "bean"
-]
-    , function(omniture, ophan, bean){
+    ], 
+    function (omniture, ophan, bean) {
         var webTitle = (guardian.page.webTitle || '').trim();
         if (webTitle.length > 72) {
             webTitle = webTitle.substring(0, 72);

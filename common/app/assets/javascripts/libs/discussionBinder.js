@@ -1,4 +1,4 @@
-define(["bean", guardian.js.modules.fetchDiscussion, "bonzo"], function(bean, discussion, _bonzo_) {
+define(["bean", guardian.js.modules.fetchDiscussion, "bonzo"], function(bean, discussion, bonzo) {
 
 	function renderDiscussion(discussionData) {
 

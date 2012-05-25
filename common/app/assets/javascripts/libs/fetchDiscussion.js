@@ -8,7 +8,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
         var minutes = d.getMinutes();
         var hours = d.getHours();
         var monthName = '';
-        var meridian = 'AM';
+        var meridiem = 'AM';
 
         // javascript's date module is a horrible joke. observe:
 
@@ -23,7 +23,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
         // it can't do 12 hour clock.
         if (hours > 12) {
             hours = hours-12;
-            meridian = 'PM';
+            meridiem = 'PM';
         }
 
         // and of course, it doesn't know anything about month *names*
@@ -67,7 +67,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
             
         }
 
-        return day + ' ' + monthName + ' ' + year + ', ' + hours + ':' + minutes + ' ' + meridian;
+        return day + ' ' + monthName + ' ' + year + ', ' + hours + ':' + minutes + ' ' + meridiem;
     }
 
     function formatJson(json) {

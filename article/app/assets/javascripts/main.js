@@ -11,6 +11,7 @@ require([guardian.js.modules.detect,
     "bonzo"],
     function(detect, images, discussion, discussionBinder, bean, bonzo) {
 
+
         var gu_debug = {
             screenHeight: screen.height,
             screenWidth: screen.width,
