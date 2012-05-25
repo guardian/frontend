@@ -10,7 +10,7 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 object SectionController extends Controller with Logging {
   def render(path: String) = Action { request =>
     val edition = Configuration.edition(OriginDomain(request))
-    lookup(path, edition) map { renderFront(_) } getOrElse { NotFound }
+    lookup(path, edition) map { renderSectionFront(_) } getOrElse { NotFound }
   }
 
   private def lookup(path: String, edition: String): Option[SectionFrontPage] = suppressApi404 {
@@ -36,7 +36,7 @@ object SectionController extends Controller with Logging {
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
-  private def renderFront(model: SectionFrontPage) =
+  private def renderSectionFront(model: SectionFrontPage) =
     CachedOk(model.section) {
       views.html.section(model.section, model.editorsPicks, model.latestContent)
     }
