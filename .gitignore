@@ -25,3 +25,4 @@ Vagrantfile
 .project
 .settings
 .vagrant
+RUNNING_PID
