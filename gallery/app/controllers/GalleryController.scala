@@ -44,5 +44,7 @@ object GalleryController extends Controller with Logging {
   }
 
   private def renderGallery(model: GalleryPage) =
-    Ok(views.html.gallery(model.gallery, model.related, model.storyPackage, model.index, model.trail))
+    CachedOk(model.gallery) {
+      views.html.gallery(model.gallery, model.related, model.storyPackage, model.index, model.trail)
+    }
 }

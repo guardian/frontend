@@ -81,6 +81,7 @@ trait Prototypes {
       "com.gu" %% "management-logback" % guardianManagementVersion,
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
+      "org.scala-tools.time" % "time_2.9.1" % "0.5",
 
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",

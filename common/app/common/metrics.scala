@@ -1,6 +1,6 @@
 package common
 
-import play.api.mvc._
+import play.api.mvc.{ Content => UnWanted, _ }
 import com.gu.management.{ CountMetric, TimingMetric }
 
 object RequestTimingMetric extends TimingMetric("performance", "requests", "Client requests",

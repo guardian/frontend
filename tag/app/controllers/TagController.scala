@@ -28,5 +28,7 @@ object TagController extends Controller with Logging {
     tag map { TagAndTrails(_, trails, leadContent) }
   }
 
-  private def renderTag(model: TagAndTrails) = Ok(views.html.tag(model.tag, model.trails, model.leadContent))
+  private def renderTag(model: TagAndTrails) = CachedOk(model.tag) {
+    views.html.tag(model.tag, model.trails, model.leadContent)
+  }
 }
