@@ -138,6 +138,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val section: String = delegate.sectionId.getOrElse("")
   lazy val publication: String = fields.get("publication").getOrElse("")
   lazy val webPublicationDate: DateTime = delegate.webPublicationDate
+  lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val apiUrl: String = delegate.apiUrl
   lazy val webUrl: String = delegate.webUrl
@@ -149,6 +150,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
   lazy val canonicalUrl: String = webUrl
+
+  lazy val isLive: Boolean = fields("liveBloggingNow") toBoolean
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them

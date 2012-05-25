@@ -36,5 +36,8 @@ object SectionController extends Controller with Logging {
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
-  private def renderFront(model: SectionFrontPage) = Ok(views.html.section(model.section, model.editorsPicks, model.latestContent))
+  private def renderFront(model: SectionFrontPage) =
+    CachedOk(model.section) {
+      views.html.section(model.section, model.editorsPicks, model.latestContent)
+    }
 }
