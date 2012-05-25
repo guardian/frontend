@@ -2,7 +2,7 @@ import sbt._
 
 object Plugins extends Build {
 
-  val playAssetHashPluginVersion = "1.11"
+  val playAssetHashPluginVersion = "1.13"
 
   // We automatically include some plugins (including the Play plugin) from sbt-play-assethash.
 

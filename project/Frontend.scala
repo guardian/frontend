@@ -68,12 +68,17 @@ trait Prototypes {
       )
     )
 
-  def library(name: String) = base(name).settings(
-    resolvers += "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+  val guardianManagementVersion = "5.13"
 
+  def library(name: String) = base(name).settings(
+    staticFilesPackage := "frontend-static",
+    resolvers ++= Seq(
+      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
+    ),
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.8",
-      "com.gu" %% "management-logback" % "5.8",
+      "com.gu" %% "management-play" % guardianManagementVersion,
+      "com.gu" %% "management-logback" % guardianManagementVersion,
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
 
@@ -85,6 +90,7 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
+    staticFilesPackage := "frontend-static",
     templatesImport ++= Seq(
       "conf.Static"
     ),

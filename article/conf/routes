@@ -2,9 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /management$path<.*>        controllers.Management.apply(path)
-POST    /management$path<.*>        controllers.Management.apply(path)
-
 GET     /pages/*path                controllers.ArticleController.render(path)
 
 # For dev machines

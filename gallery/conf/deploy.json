@@ -10,17 +10,28 @@
                     "/pages/football/gallery/2012/may/16/england-euro-2012-squad-pictures"
                 ]
             }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"artifacts-83445s",
+                "cacheControl":"public, max-age=2592000"
+            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["artifactUploadOnly", "deployOnly"]
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
-        "deployOnly":{
+        "deploy":{
             "actionsPerHost": ["frontend-gallery.deploy"]
         },
-        "artifactUploadOnly":{
+        "artifactUpload":{
             "actionsBeforeApp": ["frontend-gallery.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }

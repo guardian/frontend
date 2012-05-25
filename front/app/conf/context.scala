@@ -1,21 +1,13 @@
 package conf
 
-import com.gu.management.{ Switchable, TimingMetric, Healthcheck }
 import common._
+import com.gu.management._
+import com.gu.management.play._
+import logback.LogbackLevelPage
 
 object Configuration extends Configuration("frontend-front", webappConfDirectory = "env")
 
-object TimedAction extends TimingAction("total",
-  "total-time",
-  "Total time",
-  "Time spent serving requests")
-
-object ContentApiHttpMetric extends TimingMetric("http",
-  "content-api-calls",
-  "Content API calls",
-  "Time spent waiting for Content API")
-
-object ContentApi extends ContentApi(Configuration, ContentApiHttpMetric)
+object ContentApi extends ContentApiClient(Configuration)
 
 object Static extends Static(Configuration.static.path)
 
@@ -25,5 +17,18 @@ object Switches {
 }
 
 object Metrics {
-  val all: Seq[TimingMetric] = Seq(ContentApiHttpMetric, TimedAction)
+  val all: Seq[Metric] = CommonMetrics.all
+}
+
+object Management extends Management {
+  val applicationName = Configuration.application
+
+  lazy val pages = List(
+    new ManifestPage,
+    new HealthcheckManagementPage,
+    new Switchboard(Switches.all, applicationName),
+    StatusPage(applicationName, Metrics.all),
+    new PropertiesPage(Configuration.toString),
+    new LogbackLevelPage(applicationName)
+  )
 }

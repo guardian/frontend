@@ -10,17 +10,28 @@
                     "/pages/sport"
                 ]
             }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"artifacts-83445s",
+                "cacheControl":"public, max-age=2592000"
+            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["artifactUploadOnly", "deployOnly"]
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
-        "deployOnly":{
+        "deploy":{
             "actionsPerHost": ["frontend-section.deploy"]
         },
-        "artifactUploadOnly":{
+        "artifactUpload":{
             "actionsBeforeApp": ["frontend-section.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }

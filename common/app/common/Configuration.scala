@@ -3,7 +3,7 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 
-class Configuration(application: String, webappConfDirectory: String = "env") {
+class Configuration(val application: String, val webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object contentApi {
