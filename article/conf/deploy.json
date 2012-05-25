@@ -10,17 +10,28 @@
                     "/pages/info/2011/oct/06/submitting-content-to-print-publications"
                 ]
             }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"artifacts-83445s",
+                "cacheControl":"public, max-age=2592000"
+            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["artifactUploadOnly", "deployOnly"]
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
-        "deployOnly":{
+        "deploy":{
             "actionsPerHost": ["frontend-article.deploy"]
         },
-        "artifactUploadOnly":{
+        "artifactUpload":{
             "actionsBeforeApp": ["frontend-article.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }
