@@ -5,7 +5,7 @@
     //@* used for requireJS because we can't build dynamic paths inside main.js  *@
     guardian.js = {};
     guardian.js.modules = {
-        order                       : '@static("javascripts/order.min.js")', // has to be first
+        order                       : '@static("javascripts/order.min.js")',
         basicTemplate               : '@static("javascripts/libs/basicTemplate.min.js")',
         bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
         bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.test.min',
@@ -20,7 +20,11 @@
         writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")',
         ads                         : '@static("javascripts/libs/ads.min.js")',
         commonPlugins               : '@static("javascripts/commonPlugins.min.js")',
-        analytics                   : '@static("javascripts/libs/analytics.min.js")'
+        analytics                   : '@static("javascripts/libs/analytics.min.js")',
+        $dom                        : 'http://6.gu-pasteup.appspot.com/js/libs/dollardom.amd.js',
+        qwery                       : 'http://6.gu-pasteup.appspot.com/js/libs/qwery.min',
+        $g                          : '@static("javascripts/libs/g.min.js")',
+        guardianUtils               : '@static("javascripts/libs/guardianUtils.min.js")'
     };
 
     @*// this is horrible. looking for a better way to do this.*@
@@ -28,7 +32,7 @@
 
     guardian.config = {};
     guardian.config.discussion = {
-        numCommentsPerPage  : 20
+        numCommentsPerPage: 20
     };
 
     // used for determining whether we need to load JS polyfills for DOM querying and events

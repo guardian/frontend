@@ -46,5 +46,8 @@ object FrontController extends Controller with Logging {
     Some(NetworkFrontPage(editorsPicks))
   }
 
-  private def renderFront(model: NetworkFrontPage) = Ok(views.html.front(FrontMetaData, model.editorsPicks))
+  private def renderFront(model: NetworkFrontPage) =
+    CachedOk(FrontMetaData) {
+      views.html.front(FrontMetaData, model.editorsPicks)
+    }
 }

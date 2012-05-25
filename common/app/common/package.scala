@@ -37,6 +37,14 @@ object `package` {
     lazy val toISODateTimeString: String = date.toString(ISODateTimeFormat.dateTime)
   }
 
+  implicit def dateTime2ToISODateTimeNoMillisString(date: DateTime) = new {
+    lazy val toISODateTimeNoMillisString: String = date.toString(ISODateTimeFormat.dateTimeNoMillis)
+  }
+
+  implicit def iSODateTimeStringNoMillis2DateTime(s: String) = new {
+    lazy val parseISODateTimeNoMillis = ISODateTimeFormat.dateTimeNoMillis.parseDateTime(s)
+  }
+
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
     try {
       block
