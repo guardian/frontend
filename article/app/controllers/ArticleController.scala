@@ -32,5 +32,7 @@ object ArticleController extends Controller with Logging {
   }
 
   private def renderArticle(model: ArticlePage): Result =
-    CachedOk(model.article)(views.html.article(model.article, model.related, model.storyPackage))
+    CachedOk(model.article) {
+      views.html.article(model.article, model.related, model.storyPackage)
+    }
 }
