@@ -1,3 +1,5 @@
+// todo: make methods chainable by returning the object
+
 define([], function(){
 
 	// qwery & $dom will be null if the browser is html5

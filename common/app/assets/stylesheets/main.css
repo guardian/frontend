@@ -5,11 +5,22 @@
 
 .b1 {
     border-top: 1px solid #ccc;
-    padding: 8px 0;
+    padding-top: 8px;
 }
 
 .b1b {
     border-bottom: 1px solid #ccc;
+    padding-bottom: 8px;
+}
+
+.b2 {
+    border-top: 1px solid #333;
+    padding-top: 8px;
+}
+
+.b2b {
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
 }
 
 p {
@@ -18,14 +29,14 @@ p {
 }
 
 h1 {
-    font: 24px/26px georgia;
-    margin: 20px 0 22px 0;
+    font: 24px/30px georgia;
+    margin: 10px 0px 30px 0px;
 }
 
 h2 {
-    font: 18px/20px georgia;
+    font: 17px/20px georgia;
     color: #666;
-    margin: 0 0 24px 0;
+    margin: 0 0 20px 0;
 }
 
 h3 {
@@ -51,8 +62,16 @@ h4 {
 
 .byline,
 .dateline {
-    font: bold 14px/16px arial;
+    font: 14px/16px arial;
     margin: 0px;
+}
+
+.byline {
+    margin-bottom: 5px;
+}
+
+.byline a {
+  font-weight: bold;
 }
 
 .dateline {
@@ -67,6 +86,13 @@ article {
 article p {
     margin: 0px;
     margin-bottom: 10px;
+}
+
+article aside {
+    font: 15px/20px helvetica, arial, sans-serif;
+    margin: 0px 0px 20px 0px;
+    padding: 9px 0px 9px 0px;
+    list-style: none;
 }
 
 /* nicole sullivan's media object */
@@ -98,9 +124,6 @@ article p {
 
 /* ====== /media ====== */
 
-.trailblock {
-    background-color: #ededed;
-}
 
 .plain,
 .plain li {
@@ -123,8 +146,37 @@ article p {
     margin-top: 0;
 }
 
+.trailblock {
+    margin: 0px 0px 10px 0px;
+    padding: 10px 2% 10px 2%;
+    background: #eeeeee;
+}
+
+.trailblock h3 {
+    font: bold 15px/20px helvetica, arial, sans-serif;
+    margin: 0px 0px 10px 0px;
+}
+
 .trailblock li {
-    margin: 0 10px;
+    margin: 10px 0px 0px 0px;
+    padding: 9px 0px 0px 0px;
+}
+
+/* todo: make this work in the HTML */
+.trailblock li:first-of-type {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* todo: make this briefer */
+.trailblock strong a {
+    font: normal 15px/20px georgia, serif;
+}
+
+.trailblock p {
+  margin: 0;
+  padding: 0;
 }
 
 .trailblock li:nth-child(n+5),
@@ -132,11 +184,6 @@ article .trailblock li:nth-child(n+2) {
     display: none;
 }
 
-.trailblock h3 {
-    text-align: center;
-    color: #932B6C;
-    padding: 8px;
-}
 
 .count {
     background-color: #a5bedc;
@@ -151,16 +198,6 @@ article .trailblock li:nth-child(n+2) {
     text-align: center;
 }
 
-.trailblock p {
-    font-weight: bold;
-    color: #932B6C;
-}
-
-.trailblock p {
-    font-size: 14px;
-    line-height: 16px;
-    font-family: arial;
-}
 
 .trailblock .img img {
     width: 60px;
@@ -282,6 +319,76 @@ img.badge {
     margin-right: 20px;
 }
 
+article figure {
+    margin: 0px 0px 20px 0px;
+}
+
+article figure img {
+    display: block;
+}
+
+article figure figcaption {
+    font: 12px/20px helvetica, arial, sans-serif;
+    text-indent: 0;
+    margin: 0px 0px 20px 0px;
+    color: #666666;
+}
+
+article figure figcaption cite {
+    font-size: 10px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+article figure figcaption cite a {
+    color: #666666;
+}
+
+article figure figcaption cite a:hover,
+article figure figcaption cite a:visited:hover {
+    color: #4d4d4d;
+    border-bottom: 1px dotted #4d4d4d;
+}
+
+article figure figcaption cite a:visited {
+    color: #808080;
+    border-bottom: 1px dotted #808080;
+}
+
+article h2 {
+    font: bold 17px/20px helvetica, arial;
+    color: #000;
+    margin: 0px 0px 10px 0px;
+    padding: 10px 0px 0px 0px;
+}
+
+article > p,
+article ul,
+article ol,
+article address,
+article blockquote {
+    font: normal 15px/20px georgia, serif;
+    margin: 0px 0px 20px 0px;
+}
+
+article blockquote {
+    border: 0;
+    padding: 0px 2% 0px 20px;
+}
+
+article blockquote p {
+    font: normal 17px/20px georgia, serif;
+    color: #666666;
+    margin: 0px 0px 20px 0px;
+}
+
+span.timestamp {
+    font-weight: bold;
+    font-family: helvetica, arial, sans-serif;
+}
+
+
+
 
 
 
@@ -326,6 +433,15 @@ img.badge {
         margin-bottom: 10px;
     }
 
+    .gt-base {
+        display: block;
+    }
+
+    .comments .datestamp {
+        text-align: right;
+    }
+
+    /*
     h1 {
         font-size: 28px;
         line-height: 30px;
@@ -351,12 +467,6 @@ img.badge {
         font-size: 18px;
         line-height: 22px;
     }
+    */
 
-    .gt-base {
-        display: block;
-    }
-
-    .comments .datestamp {
-        text-align: right;
-    }
 }

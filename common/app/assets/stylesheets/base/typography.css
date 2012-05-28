@@ -1,0 +1,201 @@
+html {
+  font-size: 62.5%;
+}
+
+h1,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+h1 {
+  font-family: "guardian-regular", georgia, serif;
+  font-weight: normal;
+  font-size: 24px;
+  font-size: 2.4000000000000004rem;
+  line-height: 30px;
+  line-height: 3rem;
+  margin: 10px 0px 30px 0px;
+  margin: 1rem 0px 3rem 0px;
+}
+
+h2,
+.standfirst {
+  font-family: "guardian-regular", georgia, serif;
+  font-weight: normal;
+  font-size: 17px;
+  font-size: 1.7000000000000002rem;
+  line-height: 20px;
+  line-height: 2rem;
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+  color: #666666;
+}
+
+.article-details {
+  font-family: helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+  font-size: 1.5rem;
+  line-height: 20px;
+  line-height: 2rem;
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+  padding: 9px 0px 9px 0px;
+  padding: 0.9rem 0px 0.9rem 0px;
+  list-style: none;
+  border-top: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+}
+
+.article-details li.author a {
+  font-weight: bold;
+}
+
+.article-details li.date-stamp {
+  color: #666666;
+}
+
+article figure {
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+}
+
+article figure img {
+  display: block;
+}
+
+article figure figcaption {
+  font-family: helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  font-size: 1.2000000000000002rem;
+  line-height: 20px;
+  line-height: 2rem;
+  text-indent: 0;
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+  color: #666666;
+}
+
+article figure figcaption cite {
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  font-size: 1rem;
+  line-height: 20px;
+  line-height: 2rem;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+article figure figcaption cite a {
+  color: #666666;
+}
+
+article figure figcaption cite a:hover,
+article figure figcaption cite a:visited:hover {
+  color: #4d4d4d;
+  border-bottom: 1px dotted #4d4d4d;
+}
+
+article figure figcaption cite a:visited {
+  color: #808080;
+  border-bottom: 1px dotted #808080;
+}
+
+article h2 {
+  font-family: "guardian-bold";
+  font-weight: normal;
+  font-size: 17px;
+  font-size: 1.7000000000000002rem;
+  line-height: 20px;
+  line-height: 2rem;
+  color: #000;
+  margin: 0px 0px 10px 0px;
+  margin: 0rem 0px 1rem 0px;
+  padding: 10px 0px 0px 0px;
+  padding: 1rem 0px 0rem 0px;
+}
+
+article > p,
+article ul,
+article ol,
+article address,
+article blockquote {
+  font-family: "guardian-regular", georgia, serif;
+  font-weight: normal;
+  font-size: 15px;
+  font-size: 1.5rem;
+  line-height: 20px;
+  line-height: 2rem;
+  font-style: normal;
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+}
+
+article blockquote {
+  padding: 0px 2% 0px 20px;
+  padding: 0rem 2% 0rem 20px;
+}
+
+article blockquote p {
+  font-family: "guardian-regular", georgia, serif;
+  font-weight: normal;
+  font-size: 17px;
+  font-size: 1.7000000000000002rem;
+  line-height: 20px;
+  line-height: 2rem;
+  color: #666666;
+  margin: 0px 0px 20px 0px;
+  margin: 0rem 0px 2rem 0px;
+}
+
+.related-content {
+  margin: 0px 0px 10px 0px;
+  margin: 0rem 0px 1rem 0px;
+  padding: 10px 2% 10px 2%;
+  padding: 1rem 2% 1rem 2%;
+  background: #eeeeee;
+}
+
+.related-content h2 {
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  font-size: 1.5rem;
+  line-height: 20px;
+  line-height: 2rem;
+  margin: 0px 0px 10px 0px;
+  margin: 0rem 0px 1rem 0px;
+}
+
+.related-content article {
+  margin: 10px 0px 0px 0px;
+  margin: 1rem 0px 0rem 0px;
+  padding: 9px 0px 0px 0px;
+  padding: 0.9rem 0px 0rem 0px;
+  border-top: 1px dotted #cccccc;
+}
+
+.related-content article h3 {
+  font-family: "guardian-regular", georgia, serif;
+  font-weight: normal;
+  font-size: 15px;
+  font-size: 1.5rem;
+  line-height: 20px;
+  line-height: 2rem;
+}
+
+.related-content article p {
+  margin: 0;
+  padding: 0;
+}
+
+.related-content article:first-of-type {
+  margin: 0;
+  padding: 0;
+  border: none;
+}

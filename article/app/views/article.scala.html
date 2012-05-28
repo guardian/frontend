@@ -6,7 +6,6 @@
 
 <head>
 
-
     @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(article, conf.Configuration)
 
@@ -14,10 +13,12 @@
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
 
-    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css">
+    <link rel="stylesheet" media="screen" type="text/css" href="http://pasteup.gu.com/0.0.1/css/pasteup.min.css" />
+
     <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
     <link rel="stylesheet" media="screen and (min-width: 640px)" href="@Static("stylesheets/grid.responsive.css")">
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
+
     <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
     <![endif]-->
@@ -44,15 +45,21 @@
         <div class="line">
 
             <div class="unit size3of5">
+                
+                <article>
+
                 @article.imageOfWidth(300, tolerance=160).map{ image =>
-                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
-                    @fragments.caption(image.caption.getOrElse(""))
+                    <figure>
+                        <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
+                        <figcaption>@image.caption.getOrElse("")</figcaption>
+                    </figure>
                 }
 
-                @fragments.byline(article.byline)
-                @fragments.dateline(article.webPublicationDate)
+                    <aside class="b2 b2b">
+                        @fragments.byline(article.byline)
+                        @fragments.dateline(article.webPublicationDate)
+                    </aside>
             
-                <article>
                     @PictureTransformerHtml(article.body)
                 </article>
 
