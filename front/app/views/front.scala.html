@@ -9,18 +9,8 @@
     @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(page, conf.Configuration)
 
-    <link rel="shortcut icon" type="image/png" href="@Static("images/favicon.png")">
-
-    <link rel="stylesheet" media="screen" type="text/css" href="http://2.gu-pasteup.appspot.com/css/pasteup.css" />
-
-    <!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
-    <link rel="stylesheet" media="screen and (min-width: 400px)" href="@Static("stylesheets/grid.responsive.css")">
-
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")">
-
-    <!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/grid.responsive.css")">
-    <![endif]-->
+    @fragments.commonCssSetup(Static)
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
 
 </head>
 

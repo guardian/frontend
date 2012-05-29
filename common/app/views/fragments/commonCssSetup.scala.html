@@ -1,0 +1,12 @@
+@(static: common.Static)
+
+<link rel="shortcut icon" type="image/png" href="@static("images/favicon.png")">
+
+<link rel="stylesheet" media="screen" type="text/css" href="http://pasteup.gu.com/0.0.1/css/pasteup.min.css" />
+
+<!-- Add layout styles for browsers over 400px or less than IE9, but not IE mobile or IE6. -->
+<link rel="stylesheet" media="screen and (min-width: 640px)" href="@static("stylesheets/grid.responsive.css")">
+
+<!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
+    <link rel="stylesheet" type="text/css" href="@static("stylesheets/grid.responsive.css")">
+<![endif]-->
