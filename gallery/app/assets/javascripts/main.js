@@ -1,4 +1,4 @@
-require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, swipe) {
+require(["reqwest", "bean", guardian.js.modules.swipe, guardian.js.modules.topNav], function(reqwest, bean, swipe) {
 
     // begin gallery-specific code
 

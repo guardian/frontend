@@ -3,7 +3,7 @@
 //});
 
 //High priority modules
-require([guardian.js.modules.detect, "bean", "bonzo"],
+require([guardian.js.modules.detect, guardian.js.modules.topNav, "bean", "bonzo"],
     function(detect, bean, bonzo) {
 
         // toggle the nav submenu state

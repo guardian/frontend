@@ -23,13 +23,11 @@
     <div id="container">
 
         <div class="line">
-
-            <div class="unit size1of1">
-                    @fragments.placeholders("tier1", 5)
-                    @fragments.headline(tag.webTitle)
-
-                    <h2>@tag.section</h2>
-
+            <div class="unit lastUnit">
+                @fragments.placeholders("tier1", 5)
+                <img src="@Static("images/logo-mobile.gif")" alt="The Guardian" class="component" />
+                @fragments.navigation()
+                @fragments.headline(tag.name)
             </div>
         </div>
 

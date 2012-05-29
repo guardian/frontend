@@ -1,27 +1,27 @@
 @()
-<ul class="nav component">
-	<li><a href="javascript://" id="js-show-sections">Sections</a></li>
-	<li><a href="#">Favourites</a></li>
-	<li><a href="#">Search</a></li>
+<ul class="nav component" data-component-name="top nav">
+    <li><a href="/">Home</a></li>
+    <li><a href="javascript://" id="js-show-sections">Sections</a></li>
+	<li><a href="/sport">Sport</a></li>
 </ul>
 
-<ul id="js-section-subnav" class="nav-sub-nav component initially-off">
-	<li><a href="#">World</a></li>
-	<li><a href="#">Culture</a></li>
-	<li><a href="#">UK</a></li>
-	<li><a href="#">Life and style</a></li>
-	<li><a href="#">US</a></li>
-	<li><a href="#">Technology</a></li>
-	<li><a href="#">Sport</a></li>
-	<li><a href="#">Environment</a></li>
-	<li><a href="#">Football</a></li>
-	<li><a href="#">Galleries</a></li>
-	<li><a href="#">Comment is free</a></li>
-	<li><a href="#">Blogs</a></li>
-	<li><a href="#">Politics</a></li>
-	<li><a href="#">Jobs</a></li>
-	<li><a href="#">Media</a></li>
-	<li><a href="#">Most read</a></li>
-	<li><a href="#">Business</a></li>
-	<li><strong><a href="#">All sections</a></strong></li>
+<ul id="js-section-subnav" class="nav-sub-nav component initially-off" data-component-name="section subnav">
+	<li><a href="/world">World</a></li>
+	<li><a href="/culture">Culture</a></li>
+	<li><a href="/uk">UK</a></li>
+	<li><a href="/lifeandstyle">Life and style</a></li>
+	<li><a href="/us">US</a></li>
+	<li><a href="/technology">Technology</a></li>
+	<li><a href="/sport">Sport</a></li>
+	<li><a href="/environment">Environment</a></li>
+	<li><a href="/football">Football</a></li>
+	<li><a href="/type/gallery">Galleries</a></li>
+	<li><a href="/commentisfree">Comment is free</a></li>
+	<li><a href="/tone/blog">Blogs</a></li>
+	<li><a href="/politics">Politics</a></li>
+	<li><a href="http://m.jobs.guardian.co.uk">Jobs</a></li>
+	<li><a href="/media">Media</a></li>
+	@*<li><a href="#">Most read</a></li>*@  @*<!-- TODO do we need a most read page -->*@
+	<li><a href="/business">Business</a></li>
+	@*<li><strong><a href="#">All sections</a></strong></li>*@ @* <!-- TODO do we need an all sections page -->*@
 </ul>

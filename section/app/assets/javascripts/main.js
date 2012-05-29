@@ -1,1 +1,1 @@
-require([guardian.js.modules.commonPlugins], function(common){});
+require([guardian.js.modules.commonPlugins, guardian.js.modules.topNav], function(common){});

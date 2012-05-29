@@ -17,9 +17,11 @@
 <body>
     <div id="container">
         <div class="line">
-            <div class="unit size1of1">
+            <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                <h2>Top stories</h2>
+                <img src="@Static("images/logo-mobile.gif")" alt="The Guardian" class="component" />
+                @fragments.navigation()
+                @fragments.headline("Top stories")
             </div>
         </div>
 
