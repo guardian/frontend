@@ -26,10 +26,23 @@
             </div>
         </div>
 
-        <div class="line trailblock js-expand-trailblock">
-            @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
-                <div class="trail unit @if(row.isOdd) { size1of2 } else { lastUnit }">@fragments.formatTrail(trail)</div>
+        <div class="line trailblock">
+            @defining(editorsPicks.length){ numEditorsPicks =>
+            
+                <ul class="plain">
+                    @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
+                        <li>
+                            <div class="trail unit @if(row.isOdd) { size1of2 } else { lastUnit }">@fragments.formatTrail(trail)</div>
+                        </li>
+                    }
+                </ul>
+
+                @if(numEditorsPicks > 4) {
+                    <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More top stories</a> <span class="count">@(numEditorsPicks - 4)</span></h3>
+                }
+
             }
+
         </div>
     </div>
 
