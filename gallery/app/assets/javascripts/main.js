@@ -4,8 +4,8 @@ require([
     "bean", 
     guardian.js.modules.swipe, 
     guardian.js.modules.topNav, 
-    [guardian.js.modules['$g']], 
-        function(reqwest, bean, swipe, $g) {
+    guardian.js.modules['$g']],
+        function(reqwest, bean, swipe, topnav, $g) {
 
             // begin gallery-specific code
 
@@ -59,7 +59,7 @@ require([
                             var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
 
                             count.innerText = nextIndexCount;
-                            updateURL('index=' + nextIndex, nextIndexCount);
+                            updateURL('index=' + nextIndexCount, nextIndexCount);
                             handlePrevNextLinks(nextIndexCount, totalSlides);
                             
                             if(nextElm) {
