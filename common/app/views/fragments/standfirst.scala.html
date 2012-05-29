@@ -1,3 +1,3 @@
 @(standfirst: Option[String])
 
-@standfirst.map { s => <h2>@Html(s)</h2> }
+@standfirst.map { s => <p class="standfirst">@Html(s)</p> }

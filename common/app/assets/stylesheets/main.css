@@ -38,7 +38,8 @@ h1 {
     margin: 10px 0px 30px 0px;
 }
 
-h2 {
+h2,
+.standfirst {
     font: 17px/20px georgia;
     color: #666;
     margin: 0 0 20px 0;
@@ -365,11 +366,11 @@ article h2 {
     padding: 10px 0px 0px 0px;
 }
 
-article > p,
-article ul,
-article ol,
-article address,
-article blockquote {
+article .article-body > p,
+article .article-body ul,
+article .article-body ol,
+article .article-body address,
+article .article-body blockquote {
     font: normal 15px/20px georgia, serif;
     margin: 0px 0px 20px 0px;
 }

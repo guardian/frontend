@@ -57,8 +57,6 @@
         <script src="http://gnm41148.int.gnl:8081/target/target-script-min.js"></script>
     }
 
-    <script data-main="@Static("javascripts/main.min.js")" src="http://3.gu-pasteup.appspot.com/js/require.js"></script>
-
     <script>
         guardian.gallery = @JSON(gallery);
     </script>
@@ -148,20 +146,7 @@
 
     </div>
 
-    <div id="debug">
-        <strong>debug info</strong>
-        <ul>
-            <li>Screen height: <span id="screenHeight"></span></li>
-            <li>Screen width: <span id="screenWidth"></span></li>
-            <li>Window height: <span id="windowHeight"></span></li>
-            <li>Window width: <span id="windowWidth"></span></li>
-            <li>Layout mode: <span id="layout"></span></li>
-            <li>Connection Speed: <span id="bandwidth"></span></li>
-            <li>Battery: <span id="battery"></span></li>
-            <li>Pixel Ratio: <span id="pixelratio"></span></li>
-            <li>Retina display: <span id="retina"></span></li>
-        </ul>
-    </div>
+    @fragments.debugInfo()
     @fragments.analytics(gallery, conf.Configuration)
 </body>
 </html>
