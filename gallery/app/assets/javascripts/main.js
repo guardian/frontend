@@ -1,4 +1,4 @@
-require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, swipe) {
+require([guardian.js.modules['$g'], "reqwest", "bean", guardian.js.modules.swipe], function($g, reqwest, bean, swipe) {
 
     // begin gallery-specific code
 
@@ -16,91 +16,114 @@ require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, 
     }
 
     var urlParams = getUrlVars();
-    
+
     var galleryConfig = {
         nextLink: document.getElementById('js-gallery-next'),
         prevLink: document.getElementById('js-gallery-prev'),
         currentIndex: urlParams.index || 0
     };
-      
-    var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-    if(isTouch) { // only enable this for touch devices, duh.
-        // add swipe styling
-        document.getElementById('js-gallery').className += ' gallery-swipe';
+    // run on domloaded
+    $g.onReady(function(){    
+          
+        var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-        // when we load, grab the prev/next and show them too
-        var currentSlide = document.getElementsByClassName('js-current-gallery-slide')[0];
-        var nextSlide = currentSlide.nextElementSibling;
-        var prevSlide = currentSlide.previousElementSibling;
-        var totalSlides = currentSlide.getAttribute('data-total');
+        if(isTouch) { // only enable this for touch devices, duh.
+            
+            // add swipe styling
+            document.getElementById('js-gallery').className += ' gallery-swipe';
 
-        makePlaceholderIntoImage(nextSlide);
-        makePlaceholderIntoImage(prevSlide);
+            // when we load, grab the prev/next and show them too
+            var currentSlide = document.getElementsByClassName('js-current-gallery-slide')[0];
+            var nextSlide = currentSlide.nextElementSibling;
+            var prevSlide = currentSlide.previousElementSibling;
+            var totalSlides = currentSlide.getAttribute('data-total');
 
-        // set up the swipe actions
-        var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
-            callback: function(event, index, elm) {
-                var count = document.getElementById('js-gallery-index');
-                var nextIndex = parseInt(index) + 1;
-                count.innerText = nextIndex;
-                var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
-                makePlaceholderIntoImage(nextElm); // convert to <img> tag
-                handlePrevNextLinks(nextIndex, totalSlides)
-                updateURL('index=' + nextIndex, nextIndex);
-                elm.style.display = 'block';
+            makePlaceholderIntoImage(nextSlide);
+            makePlaceholderIntoImage(prevSlide);
+
+            // set up the swipe actions
+            var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
+                callback: function(event, index, elm) {
+                    var count = document.getElementById('js-gallery-index');
+
+                    var nextIndex = parseInt(index);
+                    var nextIndexCount = nextIndex + 1;
+                    var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
+
+                    count.innerText = nextIndexCount;
+                    updateURL('index=' + nextIndex, nextIndexCount);
+                    handlePrevNextLinks(nextIndexCount, totalSlides);
+                    
+                    if(nextElm) {
+                        var nextElmForward = nextElm.nextElementSibling;
+                        var nextElmBackward = nextElm.previousElementSibling;
+                        
+                        // convert to <img> tag
+                        makePlaceholderIntoImage(nextElm); 
+                        makePlaceholderIntoImage(nextElmForward);
+                        makePlaceholderIntoImage(nextElmBackward);
+
+                        elm.style.display = 'block';
+                    }
+
+                }
+            });
+
+            // check if we need to jump to a specific gallery slide
+            if(urlParams.index) {
+                // todo: fix - this seems to result in two calls to the callback
+                gallerySwipe.slide(parseInt(urlParams.index)-1, 0);
             }
-        });
 
-        // check if we need to jump to a specific gallery slide
-        if(urlParams.index) {
-            gallerySwipe.slide(parseInt(urlParams.index)-1, 1000);
-        }
+            // bind prev/next to just trigger swipes
+            // might be nice if they updated the page URL too ...
+            bean.add(galleryConfig.nextLink, 'click', function(e) {
+                gallerySwipe.next();
+                e.preventDefault();
+            });
 
-        // bind prev/next to just trigger swipes
-        // might be nice if they updated the page URL too ...
-        bean.add(galleryConfig.nextLink, 'click', function(e) {
-            gallerySwipe.next();
-            e.preventDefault();
-        });
+            bean.add(galleryConfig.prevLink, 'click', function(e) {
+                gallerySwipe.prev();
+                e.preventDefault();
+            });
 
-        bean.add(galleryConfig.prevLink, 'click', function(e) {
-            gallerySwipe.prev();
-            e.preventDefault();
-        });
+        } else {
 
-    } else {
-
-        bean.add(galleryConfig.nextLink, 'click', function(e) {
-            advanceGallery('next');
-            e.preventDefault();
-        });
-
-        bean.add(galleryConfig.prevLink, 'click', function(e) {
-            advanceGallery('prev');
-            e.preventDefault();
-        });
-
-        bean.add(document, 'keydown', function(e){
-            if (e.keyCode == 37) { 
-                advanceGallery('prev');
-            } else if (e.keyCode == 39) {
+            bean.add(galleryConfig.nextLink, 'click', function(e) {
                 advanceGallery('next');
-            }
-        });
+                e.preventDefault();
+            });
 
-    }
+            bean.add(galleryConfig.prevLink, 'click', function(e) {
+                advanceGallery('prev');
+                e.preventDefault();
+            });
 
-    // this fires on pageload... do we want to prevent this?
-    window.onpopstate = function(event) {  
-        var urlParams = getUrlVars();
-        if(urlParams.index) {
-            // this means the user used the back/forward buttons, we should change gallery state to match
-            //if(galleryConfig.currentIndex != urlParams.index) {
+            bean.add(document, 'keydown', function(e){
+                if (e.keyCode == 37) { 
+                    advanceGallery('prev');
+                } else if (e.keyCode == 39) {
+                    advanceGallery('next');
+                }
+            });
+
+            if (urlParams.index) {
                 advanceGallery(null, urlParams.index);
-            //}
+            }
+
         }
-    }; 
+
+        // this means the user used the back/forward buttons
+        // so we should change gallery state to match
+        window.onpopstate = function(event) {  
+            var urlParams = getUrlVars();
+            if(urlParams.index) {
+                advanceGallery(null, urlParams.index);
+            }
+        }; 
+
+    }); // end of domready check
 
     function advanceGallery(direction, customItemIndexToShow) {
         var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
@@ -116,7 +139,6 @@ require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, 
         currentSlide.className = '';
         currentSlide.style.display = 'none';
 
-
         if(!customItemIndexToShow) {
 
             // choose the element to show
@@ -126,10 +148,8 @@ require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, 
             var newSlide = (direction == 'next') ? (parseInt(currentIndex) + 1) : (parseInt(currentIndex) - 1);
         
         } else {
-
             var elmToWorkWith = document.getElementById('js-gallery-item-' + customItemIndexToShow);
             var newSlide = customItemIndexToShow;
-
         }
 
         // show and hide next/prev links
@@ -187,6 +207,7 @@ require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, 
     }
 
     // used to to convert placeholder <li> into <img> tag
+    // todo: allow this to take an array of elements
     function makePlaceholderIntoImage(elm) {
 
         if (!elm || elm == null) { 
@@ -205,11 +226,6 @@ require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, 
         }
 
         return elm;
-    }
-
-    
-    if (urlParams.index) {
-        advanceGallery(null, urlParams.index);
     }
     
 
