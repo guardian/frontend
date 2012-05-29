@@ -20,12 +20,15 @@
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
                 @fragments.navigation(Static)
+                @fragments.navigation()
                 @fragments.headline("Top stories")
             </div>
         </div>
 
-        <div class="line">
-            @editorsPicks.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
+        <div class="line trailblock js-expand-trailblock">
+            @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
+                <div class="trail unit @if(row.isOdd) { size1of2 } else { lastUnit }">@fragments.formatTrail(trail)</div>
+            }
         </div>
     </div>
 
