@@ -16,7 +16,7 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
     import browser._
 
     $("h1").first.getText should be("We must capitalise on a low-carbon future")
-    $("article p").first.getText should include("David Cameron this week strongly defended onshore wind power")
+    $("article .article-body p").first.getText should include("David Cameron this week strongly defended onshore wind power")
   }
 
   it should "render article story package links" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>

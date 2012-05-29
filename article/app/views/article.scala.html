@@ -60,7 +60,10 @@
                         @fragments.dateline(article.webPublicationDate)
                     </aside>
             
-                    @PictureTransformerHtml(article.body)
+                    <div class="article-body">
+                        @PictureTransformerHtml(article.body)
+                    </div>
+
                 </article>
 
             </div>
