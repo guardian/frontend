@@ -152,10 +152,10 @@ article aside {
     margin-top: 0;
 }
 
-.trailblock {
+.trailblock-shaded {
     margin: 0px 0px 10px 0px;
     padding: 10px 2% 10px 2%;
-    background: #eeeeee;
+    background: #eeeeee;    
 }
 
 .trailblock h3 {
@@ -184,6 +184,7 @@ article aside {
 }
 
 .trailblock li:nth-child(n+5),
+.trailblock .trail:nth-child(n+5),
 article .trailblock li:nth-child(n+2) {
     display: none;
 }
@@ -412,7 +413,8 @@ span.timestamp {
     }
 
     /* sorry for this :( -- it's because nth-child above has higher specificity */
-    .trailblock li {
+    .trailblock li,
+    .trailblock .trail {
         display: block !important;
     }
 
