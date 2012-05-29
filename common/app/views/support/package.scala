@@ -1,12 +1,12 @@
 package views.support
 
-import common.{ Formats, Tag, Tags }
 import org.jsoup.Jsoup
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import common._
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -30,11 +30,18 @@ object RemoveOuterParaHtml {
 //inline elements in the ContentApi are really spartan and
 //need to be modified to work in our pages
 object PictureTransformerHtml {
-  def apply(bodyText: String): Html = {
+  def apply(bodyText: String, imageHolder: Images): Html = {
+
+    val apiImages = imageHolder.images
+
     val body = Jsoup.parseBodyFragment(bodyText)
     val images = body.getElementsByAttributeValue("class", "gu-image")
 
     images.foreach { img =>
+
+      val imgUrl = img.attr("src")
+      val imageFromApi: Option[Image] = apiImages.find(_.url == Some(imgUrl))
+
       val imgWidth = img.attr("width").toInt
       val wrapper = body.createElement("div")
       wrapper.attr("class", imgWidth match {
@@ -42,8 +49,18 @@ object PictureTransformerHtml {
         case width if width < 460 => "img-median"
         case width => "img-extended"
       })
+
       img.replaceWith(wrapper)
       wrapper.appendChild(img)
+
+      imageFromApi foreach { i: Image =>
+        i.caption foreach { c =>
+          val caption = body.createElement("p")
+          caption.attr("class", "caption")
+          caption.text(c)
+          wrapper.appendChild(caption)
+        }
+      }
     }
 
     Html(body.body.html)

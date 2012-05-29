@@ -2,9 +2,9 @@ package views.support
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
-import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
-import common.{ Tags, Tag }
 import xml.XML
+import common.{ Image, Images, Tags, Tag }
+import com.gu.openplatform.contentapi.model.{ MediaAsset, Tag => ApiTag }
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 
@@ -53,7 +53,17 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   "InlinePicturesFormatter" should "correctly format inline pictures" in {
-    val body = XML.loadString(PictureTransformerHtml(bodyTextWithInlineElements).text.trim)
+
+    val images = new Images {
+      override val images = Seq(
+        Image(
+          MediaAsset("picture", "body", 1, Some("http://www.a.b.c/img.jpg"),
+            Some(Map("caption" -> "the caption", "width" -> "55")))
+        )
+      )
+    }
+
+    val body = XML.loadString(PictureTransformerHtml(bodyTextWithInlineElements, images).text.trim)
 
     val imgDivs = (body \\ "div").toList
 
@@ -61,6 +71,8 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     (baseImg \ "@class").text should be("img-base")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
+    (baseImg \ "p" \ "@class").text should be("caption")
+    (baseImg \ "p").text should be("the caption")
 
     val medianImg = imgDivs(2)
     (medianImg \ "@class").text should be("img-median")
