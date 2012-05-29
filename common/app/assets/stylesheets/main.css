@@ -1,3 +1,8 @@
+/* fixing a pasteup bug, temporary workaround */
+p a {
+    font-weight: normal;
+}
+
 
 #container {
     margin: 10px;
@@ -33,7 +38,8 @@ h1 {
     margin: 10px 0px 30px 0px;
 }
 
-h2 {
+h2,
+.standfirst {
     font: 17px/20px georgia;
     color: #666;
     margin: 0 0 20px 0;
@@ -162,15 +168,13 @@ article aside {
     padding: 9px 0px 0px 0px;
 }
 
-/* todo: make this work in the HTML */
-.trailblock li:first-of-type {
+.trailblock li:first-of-type .media {
   margin: 0;
   padding: 0;
   border: none;
 }
 
-/* todo: make this briefer */
-.trailblock strong a {
+.trailblock a {
     font: normal 15px/20px georgia, serif;
 }
 
@@ -193,8 +197,8 @@ article .trailblock li:nth-child(n+2) {
     color: #ffffff;
     font-size: 11px;
     -webkit-border-radius: 8px;
-       -moz-border-radius: 8px;
-            border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -362,11 +366,11 @@ article h2 {
     padding: 10px 0px 0px 0px;
 }
 
-article > p,
-article ul,
-article ol,
-article address,
-article blockquote {
+article .article-body > p,
+article .article-body ul,
+article .article-body ol,
+article .article-body address,
+article .article-body blockquote {
     font: normal 15px/20px georgia, serif;
     margin: 0px 0px 20px 0px;
 }
@@ -440,33 +444,5 @@ span.timestamp {
     .comments .datestamp {
         text-align: right;
     }
-
-    /*
-    h1 {
-        font-size: 28px;
-        line-height: 30px;
-    }
-
-    h2 {
-        font-size: 20px;
-        line-height: 22px;
-    }
-
-    .caption {
-        font-size: 15px;
-        line-height: 18px;
-    }
-
-    .byline,
-    .dateline {
-        font-size: 15px;
-        line-height: 17px;
-    }
-
-    p {
-        font-size: 18px;
-        line-height: 22px;
-    }
-    */
 
 }

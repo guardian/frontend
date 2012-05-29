@@ -1,27 +1,4 @@
-require([guardian.js.modules.detect, guardian.js.modules.images, "reqwest", "bean", guardian.js.modules.swipe], function(detect, images, reqwest, bean, swipe) {
-
-    var gu_debug = {
-        screenHeight: screen.height,
-        screenWidth: screen.width,
-        windowWidth: window.innerWidth || document.body.offsetWidth || 0,
-        windowHeight: window.innerHeight || document.body.offsetHeight || 0,
-        layout: detect.getLayoutMode(),
-        bandwidth: detect.getConnectionSpeed(),
-        battery: detect.getBatteryLevel(),
-        pixelratio: detect.getPixelRatio(),
-        retina: (detect.getPixelRatio() === 2) ? 'true' : 'false'
-    };
-
-    for (var key in gu_debug) {
-        document.getElementById(key).innerText = gu_debug[key];
-    }
-
-    // Find and upgrade images.
-    images.upgrade();
-
-
-
-    // http://gnm41148.int.gnl:9001/artanddesign/gallery/2012/may/22/frederick-wilfred-london-photographs-pictures#/?picture=390516812&index=8
+require(["reqwest", "bean", guardian.js.modules.swipe], function(reqwest, bean, swipe) {
 
     // begin gallery-specific code
 

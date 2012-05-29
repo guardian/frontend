@@ -11,7 +11,7 @@ define(["reqwest", guardian.js.modules.basicTemplate, guardian.js.modules.trailE
         url: endPoint,
         type: 'jsonp',
         success: function(json) {
-        	var html = '<div class="trailblock"><h3 class="b1">' + header + '</h3><ul class="plain">';
+        	var html = '<div class="trailblock"><h3>' + header + '</h3><ul class="plain">';
         	var trail = '<li><div class="media b1">{0}<div class="bd"><p><strong><a href="{1}">{2}</a></strong></p><p class="gt-base trailtext">{3}</p></div></div></li>';
         	var trailPic = '<a href="#" class="img"><img class="maxed" src="{0}" alt="{1}" /></a>';
         	for(var i in json) {
