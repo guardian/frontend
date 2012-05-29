@@ -6,6 +6,7 @@ require([
     "bean"
     ], 
     function (omniture, ophan, bean) {
+
         var webTitle = (guardian.page.webTitle || '').trim();
         if (webTitle.length > 72) {
             webTitle = webTitle.substring(0, 72);
@@ -44,6 +45,7 @@ require([
             return findComponentName(element.parentNode)
         }
 
+        // todo: add no-track class or similar
         bean.add(document.body, "click", function(event){
             var element = event.srcElement;
 
