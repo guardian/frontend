@@ -1,3 +1,8 @@
+/* fixing a pasteup bug, temporary workaround */
+p a {
+    font-weight: normal;
+}
+
 
 #container {
     margin: 10px;
@@ -162,15 +167,13 @@ article aside {
     padding: 9px 0px 0px 0px;
 }
 
-/* todo: make this work in the HTML */
-.trailblock li:first-of-type {
+.trailblock li:first-of-type .media {
   margin: 0;
   padding: 0;
   border: none;
 }
 
-/* todo: make this briefer */
-.trailblock strong a {
+.trailblock a {
     font: normal 15px/20px georgia, serif;
 }
 
@@ -193,8 +196,8 @@ article .trailblock li:nth-child(n+2) {
     color: #ffffff;
     font-size: 11px;
     -webkit-border-radius: 8px;
-       -moz-border-radius: 8px;
-            border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -440,33 +443,5 @@ span.timestamp {
     .comments .datestamp {
         text-align: right;
     }
-
-    /*
-    h1 {
-        font-size: 28px;
-        line-height: 30px;
-    }
-
-    h2 {
-        font-size: 20px;
-        line-height: 22px;
-    }
-
-    .caption {
-        font-size: 15px;
-        line-height: 18px;
-    }
-
-    .byline,
-    .dateline {
-        font-size: 15px;
-        line-height: 17px;
-    }
-
-    p {
-        font-size: 18px;
-        line-height: 22px;
-    }
-    */
 
 }
