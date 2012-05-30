@@ -6,13 +6,6 @@
 require([guardian.js.modules.detect, guardian.js.modules.topNav, "bean", "bonzo"],
     function(detect, bean, bonzo) {
 
-        // toggle the nav submenu state
-        var sectionExpander = document.getElementById('js-show-sections');
-        var submenu = document.getElementById('js-section-subnav');
-        bean.add(sectionExpander, 'click', function(){
-            bonzo(submenu).toggleClass('initially-off');
-        });
-
         // swap out the related items if mode is base
         if (detect.getLayoutMode() == 'base') {
             var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
