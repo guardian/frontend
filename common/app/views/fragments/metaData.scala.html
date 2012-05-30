@@ -25,3 +25,12 @@ this is orders of magnitude faster than selector queries
         @key = "@value";
     }
 </script>
+
+
+@*
+This script allows you to hook up an external debugger for mobile devices
+see: http://people.apache.org/~pmuellr/weinre/docs/latest/
+*@
+@if(play.Play.isDev()) {
+    @config.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
+}
