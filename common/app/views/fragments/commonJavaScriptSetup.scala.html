@@ -4,28 +4,29 @@
 
     @*// used for requireJS because we can't build dynamic paths inside main.js  *@
     guardian.js = {};
+    
     guardian.js.modules = {
-        order                       : '@static("javascripts/order.min.js")',
+        order                       : '@static("javascripts/order.min.js")', // must be first
+        ads                         : '@static("javascripts/libs/ads.min.js")',
+        analytics                   : '@static("javascripts/libs/analytics.min.js")',
         basicTemplate               : '@static("javascripts/libs/basicTemplate.min.js")',
         bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
         bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.test.min',
+        commonPlugins               : '@static("javascripts/commonPlugins.min.js")',
         detect                      : 'http://6.gu-pasteup.appspot.com/js/detect/detect.js',
         discussionBinder            : '@static("javascripts/libs/discussionBinder.min.js")',
-        fetchDiscussion             : '@static("javascripts/libs/fetchDiscussion.min.js")',
-        images                      : 'http://6.gu-pasteup.appspot.com/js/detect/images.js',
-        mostPopular                 : '@static("javascripts/libs/mostPopular.min.js")',
-        reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
-        trailExpander               : '@static("javascripts/libs/trailExpander.min.js")',
-        writeCapture                : 'order!@static("javascripts/libs/writeCapture.min.js")',
-        writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")',
-        ads                         : '@static("javascripts/libs/ads.min.js")',
-        commonPlugins               : '@static("javascripts/commonPlugins.min.js")',
-        analytics                   : '@static("javascripts/libs/analytics.min.js")',
         $dom                        : 'http://6.gu-pasteup.appspot.com/js/libs/dollardom.amd.js',
-        qwery                       : 'http://6.gu-pasteup.appspot.com/js/libs/qwery.min',
+        fetchDiscussion             : '@static("javascripts/libs/fetchDiscussion.min.js")',
         $g                          : '@static("javascripts/libs/g.min.js")',
         guardianUtils               : '@static("javascripts/libs/guardianUtils.min.js")',
-        topNav                      : '@static("javascripts/libs/topNav.min.js")'
+        images                      : 'http://6.gu-pasteup.appspot.com/js/detect/images.js',
+        mostPopular                 : '@static("javascripts/libs/mostPopular.min.js")',
+        qwery                       : 'http://6.gu-pasteup.appspot.com/js/libs/qwery.min',
+        reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
+        topNav                      : '@static("javascripts/libs/topNav.min.js")',
+        trailExpander               : '@static("javascripts/libs/trailExpander.min.js")',
+        writeCapture                : 'order!@static("javascripts/libs/writeCapture.min.js")',
+        writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")'
     };
 
     @*// this is horrible. looking for a better way to do this.*@
@@ -43,7 +44,8 @@
         paths: guardian.js.modules
     };
 
-
 </script>
 
+<script type="text/javascript" src="http://6.gu-pasteup.appspot.com/js/libs/eventemitter.min.js"></script>
+<script>guardian.js.ee = new EventEmitter();</script>
 <script data-main="@static("javascripts/main.min.js")" src="http://6.gu-pasteup.appspot.com/js/require.js"></script>
