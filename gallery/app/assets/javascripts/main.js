@@ -79,7 +79,6 @@ require([
 
                     // check if we need to jump to a specific gallery slide
                     if(urlParams.index) {
-                        // todo: fix - this seems to result in two calls to the callback
                         gallerySwipe.slide(parseInt(urlParams.index)-1, 0);
                     }
 
