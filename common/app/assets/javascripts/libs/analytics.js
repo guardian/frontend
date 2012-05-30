@@ -36,7 +36,7 @@ require([
             if (tag === 'body') {
                 return null;
             }
-            var componentName = element.getAttribute("data-component-name");
+            var componentName = element.getAttribute("data-link-name");
             if (componentName) {
                 return componentName;
             }
@@ -56,12 +56,6 @@ require([
             var componentName = findComponentName(element);
 
             if(componentName) {
-                s.linkTrackVars = 'eVar7,eVar37,events';
-                s.linkTrackEvents = 'event37';
-                s.eVar37=componentName;
-                s.eVar7=s.pageName;
-                s.events='event37';
-
                 var linkHref = element.getAttribute('href');
                 var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
                 s.tl(shouldDelay,'o',componentName);
