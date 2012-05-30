@@ -29,9 +29,8 @@
             
                 <ul class="plain">
                     @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
-                        <li>
-                            <div class="trail unit @if(row.isOdd) { size1of2 } else { lastUnit }">@fragments.formatTrail(trail)</div>
-                        </li>
+                        <!--<li class="unit @if(row.isOdd) { size1of2 } else { lastUnit }">-->
+                        <li>@fragments.formatTrail(trail)</li>
                     }
                 </ul>
 
@@ -42,6 +41,8 @@
             }
 
         </div>
+
+        <div id="foo"></div>
     </div>
 
     @fragments.debugInfo()
