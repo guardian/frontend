@@ -29,7 +29,10 @@ require([guardian.js.modules.mostPopular,
             header = 'Popular right now on Facebook';
         }
 
-        mostPopular.fetchContent(false, true, endPoint, header);
+        mostPopular.fetchContent(endPoint, {
+            isShaded: true,
+            header: header
+        });
 
         trailExpander.bindExpanders();
     }
