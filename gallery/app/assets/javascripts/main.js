@@ -9,20 +9,7 @@ require([
 
             // begin gallery-specific code
 
-            function getUrlVars() {
-                var vars = [], hash;
-                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                var hash_length = hashes.length;
-                for(var i = 0; i < hash_length; i++)
-                {
-                    hash = hashes[i].split('=');
-                    vars.push(hash[0]);
-                    vars[hash[0]] = hash[1];
-                }
-                return vars;
-            }
-
-            var urlParams = getUrlVars();
+            var urlParams = $g.getUrlVars();
 
             var galleryConfig = {
                 nextLink: document.getElementById('js-gallery-next'),
