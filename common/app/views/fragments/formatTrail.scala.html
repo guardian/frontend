@@ -2,7 +2,7 @@
 
 <div class="media b1">
     @trail.imageOfWidth(150, tolerance=20).map{ image =>
-        <a href="#" class="img">
+        <a href="@trail.url" class="img">
             <img class="maxed" src="@image.url" data-fullsrc='@trail.imageOfWidth(200, tolerance=20).map {full=>@full.url}' data-width="@image.width" alt="@Html(image.caption.getOrElse(""))" />
         </a>
     }

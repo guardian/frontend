@@ -17,7 +17,7 @@ define([
             html += '"><h3>' + header + '</h3><ul class="plain">';
 
             var trail = '<li><div class="media b1">{0}<div class="bd"><p><strong><a href="{1}">{2}</a></strong></p><p class="gt-base trailtext">{3}</p></div></div></li>';
-            var trailPic = '<a href="#" class="img"><img class="maxed" src="{0}" alt="{1}" /></a>';
+            var trailPic = '<a href="{0}" class="img"><img class="maxed" src="{1}" alt="{2}" /></a>';
 
             for(var i in articles) {
                 var article = articles[i];
@@ -26,7 +26,7 @@ define([
                 if (article.images.length > 0) {
                     var imageToUse = getBestImage(article.images);
                     var altText = imageToUse.caption + ' (' + imageToUse.credit + ')';
-                    img = basicTemplate.format(trailPic, imageToUse.url, altText);
+                    img = basicTemplate.format(trailPic, article.url, imageToUse.url, altText);
                 }
 
                 html += basicTemplate.format(trail, img, article.url, article.linkText, stripParagraphs(article.trailText));
