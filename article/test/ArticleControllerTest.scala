@@ -4,7 +4,6 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
-import common.Static
 
 class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 

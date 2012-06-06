@@ -96,6 +96,7 @@ require([
 
                 } else {
 
+                    // todo: fix overlap
                     bean.add(galleryConfig.nextLink, 'click', function(e) {
                         advanceGallery('next');
                         e.preventDefault();

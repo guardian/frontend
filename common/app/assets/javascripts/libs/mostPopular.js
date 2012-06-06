@@ -92,31 +92,32 @@ define([
             return idealImage;
         }
 
-        function makeContentRequest(isNested, isShaded, url, header, elm) {
+        function makeContentRequest(url, options) {
 
-            var callbackStr = 'callback=?';
+            var defaults = {
+                isNested: false,
+                isShaded: false,
+                header: '',
+                elm: document.getElementById('tier3-1')
+            };
 
-            if (url.indexOf('?') > -1) {
-                url += '&' + callbackStr;
-            } else {
-                url += '?' + callbackStr;
+            // override defaults
+            for (var attrname in options) { 
+                defaults[attrname] = options[attrname]; 
             }
+
+            // this looks confusing. just renaming the var
+            // so it looks clearer
+            options = defaults;
 
             reqwest({
                 url: url,
                 type: 'jsonp',
                 success: function(json) {
-                    var html = buildHTML(json, header, isNested, isShaded);
-
-                    if (!elm) {
-                        var container = document.getElementById('tier3-1');
-                    } else {
-                        var container = elm;
-                    }
-
-                    container.innerHTML = html;
-                    container.className = '';
-                    container.setAttribute("data-component-name", "most popular")
+                    var html = buildHTML(json, options.header, options.isNested, options.isShaded);
+                    options.elm.innerHTML = html;
+                    options.elm.className = '';
+                    options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic name
                     trailExpander.bindExpanders();
                 }
             });
