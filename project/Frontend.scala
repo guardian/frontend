@@ -51,6 +51,13 @@ trait Prototypes {
 
       organization := "com.gu",
 
+      resolvers := Seq(
+        "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+        Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
+        "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
+        Resolver.url("Play 2.1-SNAPSHOT", url("http://guardian.github.com/ivy/repo-snapshots"))(Resolver.ivyStylePatterns)
+      ),
+
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.7.1" % "test"
       ),
@@ -72,11 +79,6 @@ trait Prototypes {
 
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
-    resolvers ++= Seq(
-      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-      "Guardian Github Snapshots" at "http://guardian.github.com/ivy/repo-snapshots",
-      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
-    ),
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % guardianManagementVersion,
       "com.gu" %% "management-logback" % guardianManagementVersion,

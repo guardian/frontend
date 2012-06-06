@@ -4,6 +4,87 @@ p a {
 }
 
 
+.more-on-story {
+    border-top: 2px solid #ccc;
+    padding: 3px 2% !important;
+}
+
+.more-on-story ul {
+    margin: 0 !important;
+}
+
+.more-on-story h3 {
+    font-size: 11px !important;    
+    margin-bottom: 3px !important;
+}
+
+.more-on-story li p,
+.more-on-story li a {
+    font: 11px arial !important;
+    line-height: 15px !important;
+}
+
+/* hacky, even by these standards */
+.more-on-story li:nth-child(1),
+.more-on-story li:nth-child(2),
+.more-on-story li:nth-child(3) {
+    display: block !important;  
+    padding: 0;  
+}
+
+.more-on-story li:nth-child(n+5) {
+    display: none !important;    
+}
+
+.more-on-story h3.expander,
+.more-on-story li p:first-child,
+.more-on-story img {
+    display: none !important;
+}
+
+.more-on-story li:first-child .media:first-child {
+    border-top: 1px solid #ccc;
+    padding-top: 3px;
+}
+
+.more-on-story li:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+
+
+
+.more-inline {
+    width: 40%;
+    float: left;
+    margin: 0 20px 20px 0 !important;
+}
+
+.more-single-block img {
+    display: block !important;
+}
+
+.more-single-block li:nth-child(n+2) {
+    display: none !important;    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.more-multiple-block {
+    background: green !important;
+}
+
+
 #container {
     margin: 10px;
 }
