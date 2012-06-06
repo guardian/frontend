@@ -26,3 +26,4 @@ Vagrantfile
 .settings
 .vagrant
 RUNNING_PID
+frontend.sublime-workspace
