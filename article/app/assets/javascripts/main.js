@@ -25,7 +25,7 @@ require([guardian.js.modules.detect, guardian.js.modules.topNav, "bean", "bonzo"
             }
 
             // swap out the related items if mode is base
-            if (detect.getLayoutMode() == 'base') {
+            if (detect.getLayoutMode() != 'extended') {
                 var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
                 var related = document.getElementById('js-expandable-related');
                 // todo: add different class based on URL

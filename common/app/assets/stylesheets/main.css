@@ -20,8 +20,8 @@ p a {
 
 .more-on-story li p,
 .more-on-story li a {
-    font: 11px arial !important;
-    line-height: 15px !important;
+    font: 13px arial !important;
+    line-height: 17px !important;
 }
 
 /* hacky, even by these standards */

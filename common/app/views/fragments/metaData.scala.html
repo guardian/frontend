@@ -1,9 +1,9 @@
 @(item: MetaData, config: common.Configuration)
 
     @*
-    canonical url for this page - it should point back to www.guardian.co.uk
-    to indicate that this is a copy of a page over there. See:
-        http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
+        canonical url for this page - it should point back to www.guardian.co.uk
+        to indicate that this is a copy of a page over there.
+        see: http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
     *@
     <link rel="canonical" href="@item.canonicalUrl"/>
 
@@ -15,8 +15,9 @@
 }
 
 @*
-exposes all metadata tags as javascript variables
-this is orders of magnitude faster than selector queries
+    exposes all metadata tags as javascript variables
+    this is orders of magnitude faster than selector queries:
+    see: http://jsperf.com/meta-tags-vs-json
 *@
 <script>
     guardian.page = @JSON(item);
@@ -28,8 +29,8 @@ this is orders of magnitude faster than selector queries
 
 
 @*
-This script allows you to hook up an external debugger for mobile devices
-see: http://people.apache.org/~pmuellr/weinre/docs/latest/
+    this script allows you to hook up an external debugger for mobile devices
+    see: http://people.apache.org/~pmuellr/weinre/docs/latest/
 *@
 @if(play.Play.isDev()) {
     @config.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
