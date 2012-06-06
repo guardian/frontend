@@ -37,7 +37,7 @@
                     @article.imageOfWidth(300, tolerance=160).map{ image =>
                         <figure>
                             <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
-                            <figcaption>@image.caption.getOrElse("")</figcaption>
+                            <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
                         </figure>
                     }
 
