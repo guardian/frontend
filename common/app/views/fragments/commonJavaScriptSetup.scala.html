@@ -39,6 +39,7 @@
 
     // used for determining whether we need to load JS polyfills for DOM querying and events
     guardian.config.isModernBrowser = ('querySelector' in document && 'addEventListener' in window);
+    guardian.config.isDev = @if(play.Play.isDev()) {true} else {false};
 
     var require = {
         paths: guardian.js.modules
