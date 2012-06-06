@@ -74,6 +74,7 @@ trait Prototypes {
     staticFilesPackage := "frontend-static",
     resolvers ++= Seq(
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      "Guardian Github Snapshots" at "http://guardian.github.com/ivy/repo-snapshots",
       Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
     ),
     libraryDependencies ++= Seq(
