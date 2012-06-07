@@ -6,7 +6,7 @@ define('detectAndImages', [guardian.js.modules.detect, guardian.js.modules.image
 
 
     // we hide debug panel for non-dev environments
-    if (guardian.config.isDev) {
+    //if (guardian.config.isDev) {
         var gu_debug = {
             screenHeight: screen.height,
             screenWidth: screen.width,
@@ -22,7 +22,7 @@ define('detectAndImages', [guardian.js.modules.detect, guardian.js.modules.image
         for (var key in gu_debug) {
             document.getElementById(key).innerText = gu_debug[key];
         }
-    }
+    //}
 
     // Find and upgrade images.
     images.upgrade();
