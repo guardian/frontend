@@ -7,26 +7,28 @@ require([
     ], 
     function (omniture, ophan, bean) {
 
+        s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com';
+
         var webTitle = (guardian.page.webTitle || '').trim();
         if (webTitle.length > 72) {
             webTitle = webTitle.substring(0, 72);
         }
-        s.pageName = webTitle + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageCode || '');
+        s.pageName  = webTitle + ':' + (guardian.page.contentType || '') + ':' + (guardian.page.pageCode || '');
 
-        s.pageType = guardian.page.contentType || '';  //pageType
-        s.prop9 = guardian.page.contentType || '';     //contentType
+        s.pageType  = guardian.page.contentType || '';  //pageType
+        s.prop9     = guardian.page.contentType || '';     //contentType
 
-        s.channel = guardian.page.section || '';
-        s.prop4 = guardian.page.keywords || '';
-        s.prop6 = guardian.page.author || '';
-        s.prop8 = guardian.page.pageCode || '';
-        s.prop10 = guardian.page.tones || '';
+        s.channel   = guardian.page.section || '';
+        s.prop4     = guardian.page.keywords || '';
+        s.prop6     = guardian.page.author || '';
+        s.prop8     = guardian.page.pageCode || '';
+        s.prop10    = guardian.page.tones || '';
 
-        s.prop11 = guardian.page.section || ''; //Third Level Mlc
-        s.prop13 = guardian.page.series || '';
-        s.prop25 = guardian.page.blogs || '';
+        s.prop11    = guardian.page.section || ''; //Third Level Mlc
+        s.prop13    = guardian.page.series || '';
+        s.prop25    = guardian.page.blogs || '';
 
-        s.prop14 = guardian.page.buildNumber || '';
+        s.prop14    = guardian.page.buildNumber || '';
 
         //this fires off the omniture tracking
         s.t();
@@ -47,20 +49,27 @@ require([
 
         // todo: add no-track class or similar
         bean.add(document.body, "click", function(event){
-            var element = event.srcElement;
 
+            var element = event.target;
             if (element.tagName.toLowerCase() != "a") {
                 return;
             }
 
             var componentName = findComponentName(element);
+            var isAjaxLink = element.getAttribute("data-is-ajax");
 
             if(componentName) {
                 var linkHref = element.getAttribute('href');
                 var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
+                if (isAjaxLink == "true") {
+                    shouldDelay = false;
+                }
                 s.tl(shouldDelay,'o',componentName);
             }
+            
         });
+
+
 });
 
 //TODO still need to figure out what to do with this data

@@ -83,7 +83,6 @@ require([
 
                 } else {
 
-                    // todo: fix overlap
                     bean.add(galleryConfig.nextLink, 'click', function(e) {
                         advanceGallery('next');
                         e.preventDefault();
@@ -94,6 +93,7 @@ require([
                         e.preventDefault();
                     });
 
+                    // todo: fix overlap
                     bean.add(document, 'keydown', function(e){
                         if (e.keyCode == 37) { 
                             advanceGallery('prev');
@@ -111,7 +111,7 @@ require([
                 // this means the user used the back/forward buttons
                 // so we should change gallery state to match
                 window.onpopstate = function(event) {  
-                    var urlParams = getUrlVars();
+                    var urlParams = $g.getUrlVars();
                     if(urlParams.index) {
                         advanceGallery(null, urlParams.index);
                     }
@@ -119,7 +119,9 @@ require([
 
             }); // end of domready check
 
+            // gets called twice on page load... todo: fix
             function advanceGallery(direction, customItemIndexToShow) {
+
                 var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
                 var nextSlide       = currentSlide.nextElementSibling;
                 var prevSlide       = currentSlide.previousElementSibling;
@@ -151,7 +153,7 @@ require([
 
                 // todo: test whether this error fails silently with curl.js
                 //slideCounter.innerText(newSlide); 
-                slideCounter.innerText = newSlide; // update count of current position
+                slideCounter.innerHTML = newSlide; // update count of current position
 
                 updateURL('index=' + newSlide, newSlide);
                 makePlaceholderIntoImage(elmToWorkWith); // convert it if we need to

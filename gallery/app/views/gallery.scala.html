@@ -80,22 +80,22 @@
                         *@
 
                         @if(index > 1) {
-                            <a id="js-gallery-prev" href="?index=@(index - 1)">Previous</a>
+                            <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)">Previous</a>
                         } else {
-                            <a id="js-gallery-prev" class="initially-off" href="javascript://">Previous</a>
+                            <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://">Previous</a>
                         }
 
                         Image <span id="js-gallery-index">@index</span> of @gallery.size
 
                         @if(index < gallery.size) {
-                            <a id="js-gallery-next" href="?index=@(index + 1)">Next</a>
+                            <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)">Next</a>
                         } else {
-                            <a id="js-gallery-next" data-next="trail" href="?trail=true">Next</a>
+                            <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true">Next</a>
                         }
                     </p>
 
                     <div class="gallery-container" id="js-gallery">
-                        <ul class="plain galleryx">
+                        <ul class="plain">
                             @gallery.images.zipWithRowInfo.map{ case(image, row) =>
                                 @if(row.rowNum == index) {
                                     <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
