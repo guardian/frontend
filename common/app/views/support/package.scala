@@ -53,7 +53,10 @@ object PictureTransformerHtml {
       img.replaceWith(wrapper)
       wrapper.appendChild(img)
 
-      imageFromApi foreach { i: Image =>
+      //The content API is not getting the captions correctly.
+      //this has been bought to their attention and will be fixed soon,
+      //but in the meantime we are only adding captions if the image is larger than 54
+      imageFromApi filter (_.width > 54) foreach { i: Image =>
         i.caption foreach { c =>
           val caption = body.createElement("p")
           caption.attr("class", "caption")
@@ -65,6 +68,22 @@ object PictureTransformerHtml {
 
     Html(body.body.html)
   }
+  def apply(html: Html, imageHolder: Images): Html = apply(html.text, imageHolder)
+}
+
+object InBodyLinksHtml {
+  def apply(bodyText: String): Html = {
+
+    val body = Jsoup.parseBodyFragment(bodyText)
+    val links = body.getElementsByTag("a")
+
+    links.foreach { link =>
+      link.attr("href", InBodyLink(link.attr("href")))
+      link.attr("data-link-name", "in body link")
+    }
+    Html(body.body.html)
+  }
+  def apply(html: Html): Html = apply(html.text)
 }
 
 object JavaScriptVariableName {

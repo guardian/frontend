@@ -7,6 +7,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiT
 import play.api.Play
 import play.api.mvc.Request
 import play.api.test.FakeHeaders
+import com.sun.corba.se.pept.transport.InboundConnectionCache
 
 class UrlTest extends FlatSpec with ShouldMatchers {
 
