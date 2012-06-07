@@ -63,7 +63,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
       )
     }
 
-    val body = XML.loadString(InBodyLinksHtml(bodyTextWithInlineElements, images).text.trim)
+    val body = XML.loadString(PictureTransformerHtml(bodyTextWithInlineElements, images).text.trim)
 
     val imgDivs = (body \\ "div").toList
 
