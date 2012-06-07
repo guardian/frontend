@@ -75,7 +75,7 @@ object InBodyLinksHtml {
     val links = body.getElementsByTag("a")
 
     links.foreach { link =>
-      link.attr("href", InBodyUrl(link.attr("href")))
+      link.attr("href", InBodyLink(link.attr("href")))
       link.attr("data-link-name", "in body link")
     }
     Html(body.body.html)

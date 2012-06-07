@@ -68,16 +68,6 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     OriginDomain(request) should be(None)
   }
 
-  "InBodyUrl" should "understand gallery urls" in {
-
-    InBodyUrl("http://www.guardian.co.uk/sport/gallery/2012/jun/05/olympic-torch-olympics-2012") should
-      be("/sport/gallery/2012/jun/05/olympic-torch-olympics-2012")
-
-    InBodyUrl("http://www.guardian.co.uk/artanddesign/the-northerner/gallery/2012/jun/04/photography-art") should
-      be("/artanddesign/the-northerner/gallery/2012/jun/04/photography-art")
-
-  }
-
   "TagLinks" should "link to tags" in {
     val tags = Seq(Tag(tag("profile/john-smith", "John Smith")), Tag(tag("profile/joesoap", "Joe Soap")))
 
