@@ -317,8 +317,9 @@ img.badge {
     text-align: center;
 }
 
+/* was max-width... still up for debate. */
 .maxed {
-    max-width: 100%;
+    width: 100%;
 }
 
 .placeholder {
