@@ -40,7 +40,7 @@ object GalleryController extends Controller with Logging {
     val related = response.relatedContent map { new Content(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    gallery map { GalleryPage(_, related, storyPackage) }
+    gallery map { g => GalleryPage(g, related, storyPackage.filterNot(_.id == g.id)) }
   }
 
   private def renderGallery(model: GalleryPage) =

@@ -43,3 +43,13 @@ object OmnitureAnalyticsData {
     Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
   }
 }
+
+object TagLinks {
+  def apply(text: String, tags: Seq[Tag]): Html = Html {
+    tags.foldLeft(text) {
+      case (t, tag) =>
+        t.replaceFirst(tag.name, <a data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a>.toString)
+    }
+  }
+  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
+}

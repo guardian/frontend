@@ -19,7 +19,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tagWithId("type/article"))
+      tags = List(tag("type/article"))
     )
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
@@ -32,7 +32,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/gallery/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
-      tags = List(tagWithId("type/gallery"))
+      tags = List(tag("type/gallery"))
     )
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
@@ -45,7 +45,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tagWithId("type/interactive"))
+      tags = List(tag("type/interactive"))
     )
 
     SupportedUrl(content) should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
@@ -54,7 +54,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
   }
 
   they should "be created relative for tags" in {
-    Tag(tagWithId("foo/bar")).url should be("/foo/bar")
+    Tag(tag("foo/bar")).url should be("/foo/bar")
   }
 
   "OriginDomain" should "understand the header set by Nginx that contains the domain" in {
@@ -67,6 +67,13 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     OriginDomain(request) should be(None)
   }
 
+  "TagLinks" should "link to tags" in {
+    val tags = Seq(Tag(tag("profile/john-smith", "John Smith")), Tag(tag("profile/joesoap", "Joe Soap")))
+
+    TagLinks("John Smith and Joe Soap and John Smith Again", tags).text should
+      equal("""<a href="/profile/john-smith" data-link-name="auto tag link">John Smith</a> and <a href="/profile/joesoap" data-link-name="auto tag link">Joe Soap</a> and John Smith Again""")
+  }
+
   case class FakeRequest(private val _headers: Map[String, Seq[String]]) extends Request[String] {
     def uri = ""
     def path = ""
@@ -77,5 +84,7 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     def remoteAddress = ""
   }
 
-  private def tagWithId(id: String) = ApiTag(id = id, `type` = "type", webTitle = "", webUrl = "", apiUrl = "")
+  private def tag(id: String, name: String = "") = ApiTag(
+    id = id, `type` = "type", webTitle = name, webUrl = "", apiUrl = ""
+  )
 }
