@@ -28,23 +28,35 @@ require([guardian.js.modules.mostPopular,
         $g.onReady(function(){
 
             var moreClass = 'more-on-story zone-border ';
+            var hasPref = false;
 
             // todo: remove show-n from div. HOW. regex i guess
 
             switch(urlParams.moreMode) {
                 case "inline":
-                    moreClass += 'more-inline show-3';
+                    var newClass = 'more-inline';
+                    moreClass += newClass + ' show-3';
                     break;
                 case "singleBlock":
-                    moreClass += 'more-single-block show-1';
+                    var newClass = 'more-single-block';
+                    moreClass += newClass + ' show-1';
                     break;
                 case "multipleBlock":
-                    moreClass += 'more-multiple-block show-1';
+                    var newClass = 'more-multiple-block';
+                    moreClass += newClass + ' show-1';
                     break;
             }
 
+            // save their pref
+            if(urlParams.moreMode) {
+                localStorage.setItem("moreMode", moreClass);
+            } else if (localStorage.getItem("moreMode")) {
+                hasPref = true;
+                moreClass += ' ' + localStorage.getItem("moreMode");
+            }
+
             // swap out the related items if mode is base
-            if (urlParams.moreMode && detect.getLayoutMode() != 'extended') {
+            if ( (urlParams.moreMode || hasPref) && detect.getLayoutMode() != 'extended') {
                 var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
                 var related = document.getElementById('js-expandable-related');
 
