@@ -24,7 +24,8 @@ require([guardian.js.modules.trailExpander, guardian.js.modules.mostPopular],
 
         mostPopular.fetchContent(url, {
             isNested: true,
-            elm: placeholder
+            elm: placeholder,
+            limit: 4
         });
 
     }

@@ -10,7 +10,7 @@ define([], function(){
 		// ##### private, low-level util functions #####
 
 		// convert string into element if necessary
-		function makeDomElement(elm) {
+		function makeDomElement (elm) {
 			if (typeof(elm) === 'string') {
 				return $g.qsa(elm);
 			} else if (typeof(elm) === 'object') {
@@ -19,50 +19,58 @@ define([], function(){
 		}
 
 		// used to allow calling from loops
-		function bindEvent(obj, eventName, listener) {
-			if(obj.addEventListener) {
+		function bindEvent (obj, eventName, listener) {
+			if (obj.addEventListener) {
 				obj.addEventListener(eventName, listener, false);
 			} else {
 				obj.attachEvent("on" + eventName, listener);
 			}
 		}
 
-		// ##### public functions #####
-
-		var $g = {};
-
-		// can be used for both querySelector and querySelectorAll
-		$g.genericQuerySelector = function (selector, selectAll) {
+		// wrapper for document.querySelector/All, or qwery for ancient browsers
+		function genericQuerySelector (selector, selectAll, context) {
 				
 			if (!selector) {
 				return false;
 			}
 
+			if (!context) {
+				context = document;
+			}
+
 			if (guardian.config.isModernBrowser) {
 				if (selectAll) {
-					return document.querySelectorAll(selector);
+					return context.querySelectorAll(selector);
 				} else {
-					return document.querySelector(selector);
+					return context.querySelector(selector);
 				}
 			} else {
-				return qwery(selector);
+				return qwery(selector, context);
 			}
+		}
+
+
+
+		// ##### public functions #####
+
+		var $g = {};
+
+
+		// c = context. optional. assumes document if no c
+		$g.qs = function (s, c) {
+			return genericQuerySelector(s, false, c);
 		};
 
-		$g.qs = function (s) {
-			return $g.genericQuerySelector(s, false);
-		};
-
-		$g.qsa = function (s) {
-			return $g.genericQuerySelector(s, true);
+		$g.qsa = function (s, c) {
+			return genericQuerySelector(s, true, c);
 		};
 
 		$g.addEventListener = function (obj, eventName, listener) {
 			
 			obj = makeDomElement(obj);
 
-			if(obj.length) { // it's an array of elements
-				for(var i = 0, l = obj.length; i<l; i++) {
+			if (obj.length) { // it's an array of elements
+				for (var i = 0, l = obj.length; i<l; i++) {
 				    bindEvent(obj[i], eventName, listener);
 				}
 			} else {
@@ -92,10 +100,29 @@ define([], function(){
 			}
 		};
 
+	    $g.addClass = function(elm, classname) {
+	    	elm = makeDomElement(elm);
+	        var re = new RegExp(classname, 'g');
+	        if(!elm.className.match(re)){
+	            elm.className += ' ' + classname;
+	        }
+	    };
+
+	    $g.removeClass = function(elm, classname) {
+	    	elm = makeDomElement(elm);
+	        var re = new RegExp(classname, 'g');
+	        elm.className = elm.className.replace(re, '');
+	    };
+
+	    // convenience method to swap one class for another */
+	    $g.swapClass = function(elm, classToRemove, classToAdd) {
+	    	elm = makeDomElement(elm);
+	        $g.removeClass(elm, classToRemove);
+	        $g.addClass(elm, classToAdd);
+	    };
+
 		$g.next = function (elm) {
-
 			elm = makeDomElement(elm);
-
 			if (guardian.config.isModernBrowser) {
 				return elm.nextElementSibling;
 			} else {
@@ -114,11 +141,21 @@ define([], function(){
 			}
 		};
 
+		$g.remove = function (elm) {
+			elm = makeDomElement(elm);
+    		elm.parentNode.removeChild(elm);
+		};
+
+		$g.hide = function (elm) {
+			elm = makeDomElement(elm);
+			elm.style.display = "none"; 
+		};
+
 		$g.getUrlVars = function () {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
             var hash_length = hashes.length;
-            for(var i = 0; i < hash_length; i++)
+            for (var i = 0; i < hash_length; i++)
             {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);

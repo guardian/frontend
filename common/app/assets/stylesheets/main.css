@@ -24,22 +24,10 @@ p a {
     line-height: 17px !important;
 }
 
-/* hacky, even by these standards */
-.more-on-story li:nth-child(1),
-.more-on-story li:nth-child(2),
-.more-on-story li:nth-child(3) {
-    display: block !important;  
-    padding: 0;  
-}
-
-.more-on-story li:nth-child(n+5) {
-    display: none !important;    
-}
-
-.more-on-story h3.expander,
-.more-on-story li p:first-child,
-.more-on-story img {
-    display: none !important;
+.more-on-story h3.expander, 
+.more-on-story li p.type-tone, 
+.more-on-story .media .img img {
+    display: none;
 }
 
 .more-on-story li:first-child .media:first-child {
@@ -52,37 +40,27 @@ p a {
     padding-top: 0;
 }
 
-
-
-
 .more-inline {
     width: 40%;
     float: left;
     margin: 0 20px 20px 0 !important;
 }
 
-.more-single-block img {
-    display: block !important;
+.more-single-block .media .img img {
+    display: block;
 }
 
-.more-single-block li:nth-child(n+2) {
-    display: none !important;    
+.more-multiple-block .media .img img {
+    display: block;
+}
+
+.more-multiple-block h3.expander {
+    display: block;
 }
 
 
 
 
-
-
-
-
-
-
-
-
-.more-multiple-block {
-    background: green !important;
-}
 
 
 #container {
@@ -264,12 +242,19 @@ article aside {
   padding: 0;
 }
 
-.trailblock li:nth-child(n+5),
-.trailblock .trail:nth-child(n+5),
-article .trailblock li:nth-child(n+2) {
-    display: none;
+/* utility classes for automatically hiding list items > n */
+.show-1 li:nth-child(n+2),
+.show-2 li:nth-child(n+3),
+.show-3 li:nth-child(n+4),
+.show-4 li:nth-child(n+5),
+.show-5 li:nth-child(n+6),
+.show-6 li:nth-child(n+7),
+.show-7 li:nth-child(n+8),
+.show-8 li:nth-child(n+9),
+.show-9 li:nth-child(n+10),
+.show-10 li:nth-child(n+11) { 
+    display: none; 
 }
-
 
 .count {
     background-color: #a5bedc;

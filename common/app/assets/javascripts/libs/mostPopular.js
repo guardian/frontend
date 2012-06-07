@@ -8,9 +8,9 @@ define([
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         };
 
-        function buildTrails(articles, header, isShaded) {
+        function buildTrails(articles, limit, header, isShaded) {
 
-            var html = '<div class="trailblock';
+            var html = '<div class="trailblock show-' + limit;
             if (isShaded) {
                 html += ' trailblock-shaded';
             }
@@ -34,8 +34,8 @@ define([
 
             html += '</ul>';
 
-            if(articles.length > 4) {
-                html += '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More popular content</a> <span class="count">' + (parseInt(articles.length) - 4) + '</span></h3>';
+            if(articles.length > limit) {
+                html += '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More popular content</a> <span class="count">' + (parseInt(articles.length) - limit) + '</span></h3>';
             }
             html += '</div>';
 
@@ -44,7 +44,7 @@ define([
 
 
         // construct our HTML
-        function buildHTML(json, header, isNested, isShaded) {
+        function buildHTML(json, header, isNested, isShaded, limit) {
 
             if (!json) {
                 return;
@@ -56,11 +56,11 @@ define([
 
                 for (var section in json) {
                     var articles = json[section];
-                    html += buildTrails(articles, section.toSentenceCase(), isShaded);
+                    html += buildTrails(articles, limit, section.toSentenceCase(), isShaded);
                 }
 
             } else { // it's just a flat list
-                html = buildTrails(json, header, isShaded);
+                html = buildTrails(json, limit, header, isShaded);
             }
 
             return html;
@@ -98,7 +98,8 @@ define([
                 isNested: false,
                 isShaded: false,
                 header: '',
-                elm: document.getElementById('tier3-1')
+                elm: document.getElementById('tier3-1'),
+                limit: 3 // number of items to show by default
             };
 
             // override defaults
@@ -114,11 +115,11 @@ define([
                 url: url,
                 type: 'jsonp',
                 success: function(json) {
-                    var html = buildHTML(json, options.header, options.isNested, options.isShaded);
+                    var html = buildHTML(json, options.header, options.isNested, options.isShaded, options.limit);
                     options.elm.innerHTML = html;
                     options.elm.className = '';
                     options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic name
-                    trailExpander.bindExpanders();
+                    guardian.js.ee.emit('addExpander', options.elm);
                 }
             });
         }

@@ -2,46 +2,64 @@
     //paths: guardian.js.modules
 //});
 
-//High priority modules
-require([guardian.js.modules.detect, guardian.js.modules.topNav, "bean", "bonzo", guardian.js.modules['$g']],
-    function(detect, topNav, bean, bonzo, $g) {
+// High priority modules
+require([guardian.js.modules.detect, guardian.js.modules.topNav],
+    function(detect, topNav) {
+
+    }
+);
+
+require([guardian.js.modules.commonPlugins], function(common){});
+
+// lower priority modules
+require([guardian.js.modules.mostPopular, 
+    guardian.js.modules.trailExpander,
+    guardian.js.modules["$g"],
+    "bonzo",
+    "bean",
+    guardian.js.modules.detect],
+    function(mostPopular, trailExpander, $g, bonzo, bean, detect){
+
+        trailExpander.init();
 
         var urlParams = $g.getUrlVars();
 
+        // begin more-on-story tests
         $g.onReady(function(){
 
             var moreClass = 'more-on-story zone-border ';
 
+            // todo: remove show-n from div. HOW. regex i guess
+
             switch(urlParams.moreMode) {
                 case "inline":
-                    moreClass += 'more-inline';
+                    moreClass += 'more-inline show-3';
                     break;
                 case "singleBlock":
-                    moreClass += 'more-single-block';
+                    moreClass += 'more-single-block show-1';
                     break;
                 case "multipleBlock":
-                    moreClass += 'more-multiple-block';
+                    moreClass += 'more-multiple-block show-1';
                     break;
             }
 
             // swap out the related items if mode is base
-            if (detect.getLayoutMode() != 'extended') {
+            if (urlParams.moreMode && detect.getLayoutMode() != 'extended') {
                 var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
                 var related = document.getElementById('js-expandable-related');
+
+                // this is somewhat ugly. we need to remove the show-4 or whatever
+                // class from most popular as it's a variable so we don't know what it is.
+                // we can't just add more classes (.show-3 .show-5 etc) as specificity fails.
+                var regex = /show-\d+/g;
+                var classnames = related.className;
+                related.className = classnames.replace(regex, '');
                 // todo: add different class based on URL
 
                 bonzo(related).addClass(moreClass).insertAfter(paragraphToInsertAfter);
+                
             }
         });
-
-    });
-
-require([guardian.js.modules.commonPlugins], function(common){});
-
-//lower priority modules
-require([guardian.js.modules.mostPopular, 
-    guardian.js.modules.trailExpander],
-    function(mostPopular, trailExpander){
 
         var endPoint = 'http://simple-navigation.appspot.com/most-popular/section/' + guardian.page.section;
         var header = 'Popular right now';
@@ -52,9 +70,11 @@ require([guardian.js.modules.mostPopular,
 
         mostPopular.fetchContent(endPoint, {
             isShaded: true,
-            header: header
+            header: header,
+            limit: 5
         });
 
-        trailExpander.bindExpanders();
+        // initialise event listener for trail expanders
+        guardian.js.ee.emit('addExpander', $g.qs('#js-expandable-related'));
     }
 );

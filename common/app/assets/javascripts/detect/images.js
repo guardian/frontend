@@ -4,17 +4,18 @@
 */
 /*jshint strict: false */
 
-define(['./detect'], function (detect) {
+define([guardian.js.modules.detect], function (detect) {
 
     function upgrade() {
         if (detect.getConnectionSpeed() !== 'low') {
-            var images = document.querySelectorAll('img[data-hisrc]'); // Leave old browsers.
+            var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
             for (var i = 0, j = images.length; i<j; ++i) {
                 var image = images[i];
                 var width = image.getAttribute('data-width');
-                if (width && width <= image.offsetWidth ) {
-                    images[i].src = images[i].getAttribute('data-hisrc');
-                    images[i].className += ' image-high';
+                var fullsrc = image.getAttribute('data-fullsrc');
+                if (width && width <= image.offsetWidth && fullsrc ) {
+                    image.src = fullsrc;
+                    image.className += ' image-high';
                 }
             }
         }

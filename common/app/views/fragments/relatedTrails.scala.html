@@ -1,10 +1,10 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int)
 
 @defining(trails.length){ numTrails =>
-    <div class="trailblock trailblock-shaded" id="js-expandable-related">
+    <div class="trailblock trailblock-shaded show-@{visibleTrails}" id="js-expandable-related">
         <h3>@heading</h3>
         <ul class="plain">
-        @* extra trails are hidden by css *@
+        @* extra trails are hidden by css, up to a maximum of 10 *@
         @trails.map{ trail =>
             <li>@formatTrail(trail)</li>
         }

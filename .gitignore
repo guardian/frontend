@@ -27,3 +27,4 @@ Vagrantfile
 .vagrant
 RUNNING_PID
 frontend.sublime-workspace
+frontend.sublime-project

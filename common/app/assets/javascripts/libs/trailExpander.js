@@ -1,27 +1,27 @@
-define(["bean"], function(bean) {
+define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
+
 	// show hidden related stories when clicked
 
-	function bindExpanders() {
-	
-		var expanders = document.getElementsByClassName('js-expand-trailblock');
+	function bindExpander(expander) {
+		var link = $g.qs('.expander', expander);
+		bean.add(link, 'click', function(e){
+			var lis = expander.querySelectorAll('li'); // todo: x-browser
+			for (i=0, l=lis.length; i<l; i++) {
+				lis[i].style.display = "block";
+			}
+			//$g.remove(link);
+			$g.hide(link);
+			e.preventDefault();
+		});
+	}
 
-		for (i=0, l=expanders.length; i<l; i++) {
-			// listen for clicks on each expander
-			bean.add(expanders[i], 'click', function(e){
-				var link = this;
-				var lis = link.parentNode.parentNode.querySelectorAll('li');
-				for (j=0, l2=lis.length; j<l2; j++) {
-					lis[j].style.display = "block";
-				}
-				link.parentNode.style.display = "none";
-				e.preventDefault();
-			});
-		}
-
+	// add listener
+	function init() {
+		guardian.js.ee.addListener('addExpander', bindExpander);
 	}
 
 	return { 
-		bindExpanders: bindExpanders
+		init: init
 	};
 
 });
