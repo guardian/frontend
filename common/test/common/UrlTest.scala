@@ -7,6 +7,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiT
 import play.api.Play
 import play.api.mvc.Request
 import play.api.test.FakeHeaders
+import com.sun.corba.se.pept.transport.InboundConnectionCache
 
 class UrlTest extends FlatSpec with ShouldMatchers {
 
@@ -65,6 +66,16 @@ class UrlTest extends FlatSpec with ShouldMatchers {
   it should "return None if no header" in {
     val request = FakeRequest(Map.empty)
     OriginDomain(request) should be(None)
+  }
+
+  "InBodyUrl" should "understand gallery urls" in {
+
+    InBodyUrl("http://www.guardian.co.uk/sport/gallery/2012/jun/05/olympic-torch-olympics-2012") should
+      be("/sport/gallery/2012/jun/05/olympic-torch-olympics-2012")
+
+    InBodyUrl("http://www.guardian.co.uk/artanddesign/the-northerner/gallery/2012/jun/04/photography-art") should
+      be("/artanddesign/the-northerner/gallery/2012/jun/04/photography-art")
+
   }
 
   "TagLinks" should "link to tags" in {

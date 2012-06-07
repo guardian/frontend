@@ -65,6 +65,22 @@ object PictureTransformerHtml {
 
     Html(body.body.html)
   }
+  def apply(html: Html, imageHolder: Images): Html = apply(html.text, imageHolder)
+}
+
+object InBodyLinksHtml {
+  def apply(bodyText: String): Html = {
+
+    val body = Jsoup.parseBodyFragment(bodyText)
+    val links = body.getElementsByTag("a")
+
+    links.foreach { link =>
+      link.attr("href", InBodyUrl(link.attr("href")))
+      link.attr("data-link-name", "in body link")
+    }
+    Html(body.body.html)
+  }
+  def apply(html: Html): Html = apply(html.text)
 }
 
 object JavaScriptVariableName {
