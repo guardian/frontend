@@ -3,7 +3,7 @@ package controllers
 import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common.{ Configuration => NotWantedHere, _ }
-import play.api.mvc.{ Controller, Action }
+import play.api.mvc.{ RequestHeader, Controller, Action }
 
 case class NetworkFrontPage(editorsPicks: Seq[Trail])
 
@@ -23,13 +23,11 @@ object FrontController extends Controller with Logging {
   }
 
   def render() = Action { implicit request =>
-    val edition = Configuration.edition(OriginDomain(request))
-    log.debug("origin domain = " + OriginDomain(request).getOrElse("unknown"))
-    lookup(edition) map { renderFront(_) } getOrElse { NotFound }
+    lookup map { renderFront(_) } getOrElse { NotFound }
   }
 
-  private def lookup(edition: String): Option[NetworkFrontPage] = suppressApi404 {
-
+  private def lookup(implicit request: RequestHeader): Option[NetworkFrontPage] = suppressApi404 {
+    val edition = Edition(request, Configuration)
     log.info("Fetching network front for edition " + edition)
     val response: ItemResponse = ContentApi.item
       .edition(edition)
@@ -46,7 +44,7 @@ object FrontController extends Controller with Logging {
     Some(NetworkFrontPage(editorsPicks))
   }
 
-  private def renderFront(model: NetworkFrontPage) =
+  private def renderFront(model: NetworkFrontPage)(implicit request: RequestHeader) =
     CachedOk(FrontMetaData) {
       views.html.front(FrontMetaData, model.editorsPicks)
     }

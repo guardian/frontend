@@ -9,6 +9,7 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
     import browser._
 
     $("meta[name=content-type]").getAttributes("value").head should be("Article")
+    $("meta[name=edition]").getAttributes("value").head should be("UK")
     $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
   }
 

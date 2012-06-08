@@ -4,7 +4,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
 
-class FrontTemplateTest extends FlatSpec with ShouldMatchers {
+class SectionTemplateTest extends FlatSpec with ShouldMatchers {
 
   "Front Template" should "render front metadata" in HtmlUnit("/uk") { browser =>
     import browser._

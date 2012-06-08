@@ -58,16 +58,6 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     Tag(tag("foo/bar")).url should be("/foo/bar")
   }
 
-  "OriginDomain" should "understand the header set by Nginx that contains the domain" in {
-    val request = FakeRequest(Map("X-GU-OriginalServer" -> Seq("servername.com")))
-    OriginDomain(request) should be(Some("servername.com"))
-  }
-
-  it should "return None if no header" in {
-    val request = FakeRequest(Map.empty)
-    OriginDomain(request) should be(None)
-  }
-
   "TagLinks" should "link to tags" in {
     val tags = Seq(Tag(tag("profile/john-smith", "John Smith")), Tag(tag("profile/joesoap", "Joe Soap")))
 

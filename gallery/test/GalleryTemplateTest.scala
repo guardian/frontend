@@ -11,6 +11,7 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
 
       $("meta[name=content-type]").getAttributes("value").head should be("Gallery")
       $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/news/gallery/2012/may/02/picture-desk-live-kabul-burma")
+      $("meta[name=edition]").getAttributes("value").head should be("UK")
   }
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
