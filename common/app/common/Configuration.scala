@@ -37,7 +37,7 @@ class Configuration(val application: String, val webappConfDirectory: String = "
     }
   }
 
-  val edition = new {
+  object edition {
     lazy val usHost = configuration.getStringProperty("edition.host.us").getOrElse {
       throw new IllegalStateException("US edition not configured")
     }
