@@ -3,9 +3,10 @@ s_account = guardian.page.omnitureAccount;
 require([
     'http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd03/common/scripts/omniture-H.24.1.1.js',
     guardian.page.ophanScript,
+    guardian.js.modules.detect,
     "bean"
     ], 
-    function (omniture, ophan, bean) {
+    function (omniture, ophan, detect, bean) {
 
         s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com';
 
@@ -29,6 +30,18 @@ require([
         s.prop25    = guardian.page.blogs || '';
 
         s.prop14    = guardian.page.buildNumber || '';
+
+        s.prop47    = guardian.page.edition || '';
+
+        s.prop48    = detect.getConnectionSpeed();
+
+        s.prop56    = detect.getLayoutMode();
+
+        if (guardian.page.webPublicationDate) {  //at the moment we have web pub date for content and nothing else
+            s.prop30 = 'content';
+        } else {
+            s.prop30 = 'non-content';
+        }
 
         //this fires off the omniture tracking
         s.t();
@@ -55,18 +68,19 @@ require([
                 return;
             }
 
-            var componentName = findComponentName(element);
+            //we never want to see 'unknown component' in our stats
+            //if you can click it, it needs to be tracked...
+            var componentName = findComponentName(element) || 'unknown component';
+
             var isAjaxLink = element.getAttribute("data-is-ajax");
 
-            if(componentName) {
-                var linkHref = element.getAttribute('href');
-                var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
-                if (isAjaxLink == "true") {
-                    shouldDelay = false;
-                }
-                s.tl(shouldDelay,'o',componentName);
+            var linkHref = element.getAttribute('href');
+            var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
+            if (isAjaxLink == "true") {
+                shouldDelay = false;
             }
-            
+            s.tl(shouldDelay,'o',componentName);
+
         });
 
 
