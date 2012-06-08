@@ -5,9 +5,9 @@ import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
-class FrontControllerTest extends FlatSpec with ShouldMatchers {
+class SectionControllerTest extends FlatSpec with ShouldMatchers {
 
-  "Front Controller" should "200 when content type is front" in Fake {
+  "Section Controller" should "200 when content type is front" in Fake {
     val result = controllers.SectionController.render("books")(FakeRequest())
     status(result) should be(200)
   }

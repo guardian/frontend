@@ -1,4 +1,4 @@
-@(article: Article, related: List[Trail], storyPackage: List[Trail])
+@(article: Article, related: List[Trail], storyPackage: List[Trail])(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -47,7 +47,10 @@
                     </aside>
             
                     <div class="article-body">
-                        @InBodyLinksHtml(PictureTransformerHtml(article.body, article))
+                        @withJsoup(article.body)(
+                            PictureCleaner(article),
+                            InBodyLinkCleaner
+                        )
                     </div>
 
                 </article>

@@ -39,7 +39,7 @@ class Configuration(val application: String, val webappConfDirectory: String = "
 
   object edition {
     lazy val usHost = configuration.getStringProperty("edition.host.us").getOrElse {
-      throw new IllegalStateException("Static path not configured")
+      throw new IllegalStateException("US edition not configured")
     }
     private lazy val editionsForHosts = Map(
       usHost -> "US"
