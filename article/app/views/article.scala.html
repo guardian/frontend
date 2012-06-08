@@ -47,7 +47,10 @@
                     </aside>
             
                     <div class="article-body">
-                        @InBodyLinksHtml(PictureTransformerHtml(article.body, article))
+                        @withJsoup(article.body)(
+                            PictureCleaner(article),
+                            InBodyLinkCleaner
+                        )
                     </div>
 
                 </article>

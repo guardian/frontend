@@ -7,6 +7,7 @@ import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
 import common._
+import org.jsoup.nodes.Document
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -27,14 +28,39 @@ object RemoveOuterParaHtml {
   }
 }
 
-//inline elements in the ContentApi are really spartan and
-//need to be modified to work in our pages
-object PictureTransformerHtml {
-  def apply(bodyText: String, imageHolder: Images): Html = {
+object JavaScriptVariableName {
+  def apply(s: String): String = {
+    val parts = s.split("-").toList
+    (parts.headOption.toList ::: parts.tail.map { firstLetterUppercase }) mkString
+  }
+  private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
+}
 
+case class RowInfo(rowNum: Int, isLast: Boolean = false) {
+  lazy val isFirst = rowNum == 1
+  lazy val isEven = rowNum % 2 == 0
+  lazy val isOdd = !isEven
+  lazy val rowClass = rowNum match {
+    case 1 => "first " + _rowClass
+    case _ if isLast => "last " + _rowClass
+    case _ => _rowClass
+  }
+  private lazy val _rowClass = if (isEven) "even" else "odd"
+
+  def indexIsInSameCarousel(carouselWidth: Int, candidate: Int): Boolean = {
+    val tolerance = (carouselWidth - 1) / 2 // Your problem if carouselWidth % 2 == 0
+    val carousel = (rowNum - tolerance) to (rowNum + tolerance)
+    carousel contains candidate
+  }
+}
+
+trait HtmlCleaner {
+  def clean(d: Document): Document
+}
+
+case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
+  def clean(body: Document): Document = {
     val apiImages = imageHolder.images
-
-    val body = Jsoup.parseBodyFragment(bodyText)
     val images = body.getElementsByAttributeValue("class", "gu-image")
 
     images.foreach { img =>
@@ -66,55 +92,32 @@ object PictureTransformerHtml {
       }
     }
 
-    Html(body.body.html)
+    body
   }
-  def apply(html: Html, imageHolder: Images): Html = apply(html.text, imageHolder)
 }
 
-object InBodyLinksHtml {
-  def apply(bodyText: String): Html = {
-
-    val body = Jsoup.parseBodyFragment(bodyText)
+object InBodyLinkCleaner extends HtmlCleaner {
+  def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
 
     links.foreach { link =>
       link.attr("href", InBodyLink(link.attr("href")))
       link.attr("data-link-name", "in body link")
     }
-    Html(body.body.html)
-  }
-  def apply(html: Html): Html = apply(html.text)
-}
-
-object JavaScriptVariableName {
-  def apply(s: String): String = {
-    val parts = s.split("-").toList
-    (parts.headOption.toList ::: parts.tail.map { firstLetterUppercase }) mkString
-  }
-  private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
-}
-
-case class RowInfo(rowNum: Int, isLast: Boolean = false) {
-  lazy val isFirst = rowNum == 1
-  lazy val isEven = rowNum % 2 == 0
-  lazy val isOdd = !isEven
-  lazy val rowClass = rowNum match {
-    case 1 => "first " + _rowClass
-    case _ if isLast => "last " + _rowClass
-    case _ => _rowClass
-  }
-  private lazy val _rowClass = if (isEven) "even" else "odd"
-
-  def indexIsInSameCarousel(carouselWidth: Int, candidate: Int): Boolean = {
-    val tolerance = (carouselWidth - 1) / 2 // Your problem if carouselWidth % 2 == 0
-    val carousel = (rowNum - tolerance) to (rowNum + tolerance)
-    carousel contains candidate
+    body
   }
 }
 
 object `package` extends Formats {
 
   private object inflector extends Inflector
+
+  def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
+    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
+    Html(cleanedHtml.body.html)
+  }
+
+  //def withJSoup(html: Html)(cleaners: HtmlCleaner*): Html = withJSoup(html.text)(cleaners)
 
   implicit def tags2tagUtils(t: Tags) = new {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
