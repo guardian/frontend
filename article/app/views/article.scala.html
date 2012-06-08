@@ -57,19 +57,21 @@
             <div class="unit lastUnit">
 
                 @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 2)
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 } else {
-                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 5)
                 }
 
                 @fragments.placeholders("tier2", 5)
 
-                <h4>Related subjects</h4>
-                <ul class="plain tags">
-                @article.keywords.map{ tag =>
-                    @fragments.formatTags(tag)
-                }
-                </ul>
+                <!--
+                    <h4>Related subjects</h4>
+                    <ul class="plain tags">
+                    @article.keywords.map{ tag =>
+                        @fragments.formatTags(tag)
+                    }
+                    </ul>
+                -->
 
                 @fragments.placeholders("tier3", 5)
             </div>

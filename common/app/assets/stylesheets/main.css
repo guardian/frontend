@@ -256,6 +256,19 @@ article aside {
     display: none; 
 }
 
+.tb-show-1 .trailblock:nth-child(n+2),
+.tb-show-2 .trailblock:nth-child(n+3),
+.tb-show-3 .trailblock:nth-child(n+4),
+.tb-show-4 .trailblock:nth-child(n+5),
+.tb-show-5 .trailblock:nth-child(n+6),
+.tb-show-6 .trailblock:nth-child(n+7),
+.tb-show-7 .trailblock:nth-child(n+8),
+.tb-show-8 .trailblock:nth-child(n+9),
+.tb-show-9 .trailblock:nth-child(n+10),
+.tb-show-10 .trailblock:nth-child(n+11) { 
+    display: none; 
+}
+
 .count {
     background-color: #a5bedc;
     float: right;
