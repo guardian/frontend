@@ -25,38 +25,14 @@ require([guardian.js.modules.mostPopular,
         var urlParams = $g.getUrlVars();
 
         // begin more-on-story tests
+        // todo: move some of this logic to front template
         $g.onReady(function(){
 
-            var moreClass = 'more-on-story zone-border ';
-            var hasPref = false;
-
-            // todo: remove show-n from div. HOW. regex i guess
-
-            switch(urlParams.moreMode) {
-                case "inline":
-                    var newClass = 'more-inline';
-                    moreClass += newClass + ' show-3';
-                    break;
-                case "singleBlock":
-                    var newClass = 'more-single-block';
-                    moreClass += newClass + ' show-1';
-                    break;
-                case "multipleBlock":
-                    var newClass = 'more-multiple-block';
-                    moreClass += newClass + ' show-1';
-                    break;
-            }
-
-            // save their pref
-            if(urlParams.moreMode) {
-                localStorage.setItem("moreMode", moreClass);
-            } else if (localStorage.getItem("moreMode")) {
-                hasPref = true;
-                moreClass += ' ' + localStorage.getItem("moreMode");
-            }
-
             // swap out the related items if mode is base
-            if ( (urlParams.moreMode || hasPref) && detect.getLayoutMode() != 'extended') {
+            if ( localStorage.getItem("moreMode") && detect.getLayoutMode() != 'extended') {
+
+                var newClass = localStorage.getItem("moreMode");
+
                 var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
                 var related = document.getElementById('js-expandable-related');
 
@@ -66,18 +42,16 @@ require([guardian.js.modules.mostPopular,
                 var regex = /show-\d+/g;
                 var classnames = related.className;
                 related.className = classnames.replace(regex, '');
-                // todo: add different class based on URL
 
-                bonzo(related).addClass(moreClass).insertAfter(paragraphToInsertAfter);
-                
+                bonzo(related).addClass(newClass).insertAfter(paragraphToInsertAfter);
             }
         });
 
         var endPoint = 'http://simple-navigation.appspot.com/most-popular/section/' + guardian.page.section;
-        var header = 'Popular right now';
+        var header =  guardian.page.section.toSentenceCase() + ' most read';
         if (document.referrer && document.referrer.toLowerCase().indexOf('facebook.com') > -1) {
             endPoint = 'http://simple-navigation.appspot.com/most-popular/facebook';
-            header = 'Popular right now on Facebook';
+            header = 'Most read on Facebook';
         }
 
         mostPopular.fetchContent(endPoint, {
@@ -88,5 +62,21 @@ require([guardian.js.modules.mostPopular,
 
         // initialise event listener for trail expanders
         guardian.js.ee.emit('addExpander', $g.qs('#js-expandable-related'));
+
+        // todo: limit to 10 tags max
+        var tags = '?tag=' + guardian.page.tagIds.replace(/,/g, '&tag=') + '&ignore=' + guardian.page.pageId;
+        var moreOnTagsUrl = 'http://simple-navigation.appspot.com/munge-latest.json';
+        var tagUrl = moreOnTagsUrl + tags;
+
+        var placeholder = document.getElementById('tier3-2');
+        placeholder.className += ' tb-show-5';
+
+        mostPopular.fetchContent(tagUrl, {
+            isShaded: false,
+            limit: 5,
+            isNested: true,
+            elm: placeholder
+        });
+
     }
 );

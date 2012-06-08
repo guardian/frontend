@@ -1,8 +1,9 @@
 define([
     "reqwest",
     guardian.js.modules.basicTemplate,
-    guardian.js.modules.trailExpander],
-    function(reqwest, basicTemplate, trailExpander) {
+    guardian.js.modules.trailExpander,
+    "bonzo"],
+    function(reqwest, basicTemplate, trailExpander, bonzo) {
 
         String.prototype.toSentenceCase = function () {
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -10,7 +11,11 @@ define([
 
         function buildTrails(articles, limit, header, isShaded) {
 
-            var html = '<div class="trailblock show-' + limit;
+            if (articles.length && articles[0].sectionName) {
+                header = articles[0].sectionName;
+            }
+
+            var html = '<div class="trailblock component show-' + limit;
             if (isShaded) {
                 html += ' trailblock-shaded';
             }
@@ -117,7 +122,7 @@ define([
                 success: function(json) {
                     var html = buildHTML(json, options.header, options.isNested, options.isShaded, options.limit);
                     options.elm.innerHTML = html;
-                    options.elm.className = '';
+                    bonzo(options.elm).removeClass('placeholder');
                     options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic name
                     guardian.js.ee.emit('addExpander', options.elm);
                 }

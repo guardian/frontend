@@ -4,15 +4,16 @@ define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
 
 	function bindExpander(expander) {
 		var link = $g.qs('.expander', expander);
-		bean.add(link, 'click', function(e){
-			var lis = expander.querySelectorAll('li'); // todo: x-browser
-			for (i=0, l=lis.length; i<l; i++) {
-				lis[i].style.display = "block";
-			}
-			//$g.remove(link);
-			$g.hide(link);
-			e.preventDefault();
-		});
+		if (link) {
+			bean.add(link, 'click', function(e){
+				var lis = expander.querySelectorAll('li'); // todo: x-browser
+				for (i=0, l=lis.length; i<l; i++) {
+					lis[i].style.display = "block";
+				}
+				$g.hide(link);
+				e.preventDefault();
+			});
+		}
 	}
 
 	// add listener

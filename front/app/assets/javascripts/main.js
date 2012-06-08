@@ -4,10 +4,14 @@ require([
 });
 
 //lower priority modules
-require([guardian.js.modules.trailExpander, guardian.js.modules.mostPopular],
-    function(trailExpander, mostPopular) {
+require([
+    guardian.js.modules.trailExpander, 
+    guardian.js.modules.mostPopular, 
+    guardian.js.modules["$g"]
+    ], 
+    function(trailExpander, mostPopular, $g) {
         
-        trailExpander.bindExpanders();
+        trailExpander.init();
 
         // todo: make items return in sequence
         var sectionsToShow = [
@@ -27,6 +31,33 @@ require([guardian.js.modules.trailExpander, guardian.js.modules.mostPopular],
             elm: placeholder,
             limit: 4
         });
+
+        // set up tests for placement of "more on story" packages
+        var urlParams = $g.getUrlVars();
+        if(urlParams.moreMode) {
+
+            var moreClass = 'more-on-story zone-border ';
+
+            switch(urlParams.moreMode) {
+                case "inline":
+                    var newClass = 'more-inline';
+                    moreClass += newClass + ' show-3';
+                    break;
+                case "singleBlock":
+                    var newClass = 'more-single-block';
+                    moreClass += newClass + ' show-1';
+                    break;
+                case "multipleBlock":
+                    var newClass = 'more-multiple-block';
+                    moreClass += newClass + ' show-1';
+                    break;
+                default:
+                    localStorage.removeItem("moreMode");
+                    break;
+            }
+
+            localStorage.setItem("moreMode", moreClass);
+        }
 
     }
 );
