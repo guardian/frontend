@@ -2,8 +2,8 @@ package controllers
 
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf._
-import common.{ Configuration => UnWanted, _ }
-import play.api.mvc.{ Content => Unwanted, _ }
+import common._
+import play.api.mvc.{ Content => _, _ }
 
 case class ArticlePage(article: Article, related: List[Trail], storyPackage: List[Trail])
 object ArticleController extends Controller with Logging {

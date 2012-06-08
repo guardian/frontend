@@ -1,8 +1,8 @@
 package controllers
 
 import com.gu.openplatform.contentapi.model.ItemResponse
+import common._
 import conf._
-import common.{ Configuration => UnWanted, _ }
 import play.api.mvc.{ RequestHeader, Controller, Action }
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
