@@ -13,6 +13,7 @@ class TagTemplateTest extends FlatSpec with ShouldMatchers {
     $("meta[name=section]").getAttributes("value").head should be("world")
     $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/world/turkey")
     $("meta[name=web-title]").getAttributes("value").head should be("Turkey")
+    $("meta[name=edition]").getAttributes("value").head should be("UK")
   }
 
   it should "render tag headline" in HtmlUnit("/world/turkey") { browser =>

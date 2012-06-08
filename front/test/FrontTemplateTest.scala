@@ -13,5 +13,6 @@ class FrontTemplateTest extends FlatSpec with ShouldMatchers {
     $("meta[name=section]").getAttributes("value").head should be("")
     $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com")
     $("meta[name=web-title]").getAttributes("value").head should be("The Guardian")
+    $("meta[name=edition]").getAttributes("value").head should be("UK")
   }
 }

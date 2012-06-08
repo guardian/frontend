@@ -1,9 +1,9 @@
 package common
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
-import play.api.mvc.Request
 import java.net.URLEncoder.encode
 import play.api.templates.Html
+import play.api.mvc.{ Headers, RequestHeader }
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {
@@ -14,8 +14,13 @@ object SupportedUrl {
   private def isSupportedInApp(c: ApiContent) = c.isArticle || c.isGallery
 }
 
-object OriginDomain {
-  def apply[A](request: Request[A]): Option[String] = request.headers.get("X-GU-OriginalServer")
+object Edition extends Logging {
+  def apply(request: RequestHeader, config: Configuration) = {
+    val host = request.headers.get("X-GU-OriginalServer").orElse(request.headers.get("host"))
+    val edition = config.edition(host)
+    log.trace("Edition resolved %s -> %s" format (host.getOrElse("UNKNOWN"), edition))
+    edition
+  }
 }
 
 object OmnitureAnalyticsData {
