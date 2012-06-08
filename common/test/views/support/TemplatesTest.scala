@@ -52,7 +52,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     JavaScriptVariableName("series") should be("series")
   }
 
-  "InlinePicturesFormatter" should "correctly format inline pictures" in {
+  "PictureCleaner" should "correctly format inline pictures" in {
 
     val images = new Images {
       override val images = Seq(
@@ -63,7 +63,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
       )
     }
 
-    val body = XML.loadString(PictureTransformerHtml(bodyTextWithInlineElements, images).text.trim)
+    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(images)).text.trim)
 
     val imgDivs = (body \\ "div").toList
 
@@ -83,6 +83,15 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     (extendedImg \ "@class").text should be("img-extended")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
     (extendedImg \ "img" \ "@width").text should be("600")
+  }
+
+  "InBodyLinkCleaner" should "clean links" in {
+    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner).text.trim)
+
+    val link = (body \\ "a").head
+
+    (link \ "@href").text should be("/section/2011/jan/01/words-for-url")
+
   }
 
   "RowInfo" should "add row info to a sequence" in {
@@ -135,6 +144,10 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     <img src="http://www.a.b.c/img2.jpg" class="gu-image" width="250" height="100"/>
   </p>
   </span>
+  """
+
+  val bodyTextWithLinks = """
+    <p>bar <a href="http://www.guardiannews.com/section/2011/jan/01/words-for-url">the link</a></p>
   """
 
 }
