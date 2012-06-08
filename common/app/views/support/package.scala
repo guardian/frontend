@@ -117,8 +117,6 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  //def withJSoup(html: Html)(cleaners: HtmlCleaner*): Html = withJSoup(html.text)(cleaners)
-
   implicit def tags2tagUtils(t: Tags) = new {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
