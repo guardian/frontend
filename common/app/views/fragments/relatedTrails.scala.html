@@ -1,7 +1,6 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int)
 
 @defining(trails.length){ numTrails =>
-    <!-- temporarily removing trailblock-shaded class from here -->
     <div class="trailblock show-@{visibleTrails}" id="js-expandable-related" data-link-name="related: @heading">
         <h3>@Html(heading)</h3>
         
