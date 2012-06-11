@@ -31,6 +31,6 @@ object TagController extends Controller with Logging {
   }
 
   private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = CachedOk(model.tag) {
-    Compressed(views.html.tag(model.tag, model.trails, model.leadContent))
+    views.html.tag(model.tag, model.trails, model.leadContent)
   }
 }

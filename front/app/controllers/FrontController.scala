@@ -31,7 +31,7 @@ object FrontController extends Controller with Logging {
 
   private def renderFront(model: NetworkFrontPage)(implicit request: RequestHeader) =
     CachedOk(FrontMetaData) {
-      Compressed(views.html.front(FrontMetaData, model.blocks))
+      views.html.front(FrontMetaData, model.blocks)
     }
 }
 
