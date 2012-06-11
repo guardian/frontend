@@ -64,13 +64,21 @@ require([
             return findComponentName(element.parentNode, trackingName)
         }
 
+        function isInsideLink(element) {
+            var tagName = element.tagName.toLowerCase();
+            if (tagName == 'body') return false;
+            if (tagName == 'a') return true;
+
+            //TODO parentNode is not cross browser compatible
+            return isInsideLink(element.parentNode);
+        }
+
         bean.add(document.body, "click", function(event){
 
             var element = event.target;
-            if (element.tagName.toLowerCase() != "a") {
+            if (!isInsideLink(element)) {
                 return;
             }
-
             var componentName = guardian.page.contentType + " | " + findComponentName(element, '');
 
             var isAjaxLink = element.getAttribute("data-is-ajax");
