@@ -13,24 +13,24 @@ require([
         
         trailExpander.init();
 
-        // todo: make items return in sequence
-        var sectionsToShow = [
-            'technology',
-            'sport',
-            'football'
-        ];
-
-        var sectionsToShow = 'item=' + sectionsToShow.join('&item=');
-
-        var url = 'http://simple-navigation.appspot.com/trailblocks.json?' + sectionsToShow + '&num-items=3';
-
-        var placeholder = document.getElementById('foo');
-
-        mostPopular.fetchContent(url, {
-            isNested: true,
-            elm: placeholder,
-            limit: 4
-        });
+//        // todo: make items return in sequence
+//        var sectionsToShow = [
+//            'technology',
+//            'sport',
+//            'football'
+//        ];
+//
+//        var sectionsToShow = 'item=' + sectionsToShow.join('&item=');
+//
+//        var url = 'http://simple-navigation.appspot.com/trailblocks.json?' + sectionsToShow + '&num-items=3';
+//
+//        var placeholder = document.getElementById('foo');
+//
+//        mostPopular.fetchContent(url, {
+//            isNested: true,
+//            elm: placeholder,
+//            limit: 4
+//        });
 
         // set up tests for placement of "more on story" packages
         var urlParams = $g.getUrlVars();

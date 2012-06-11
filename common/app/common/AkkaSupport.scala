@@ -3,7 +3,7 @@ package common
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
 
-trait Akka {
+trait AkkaSupport {
   object akka {
     val system = PlayAkka.system(Play.current)
     def uptime(): Long = system.uptime
