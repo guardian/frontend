@@ -46,21 +46,24 @@ require([
         //this fires off the omniture tracking
         s.t();
 
-        function findComponentName(element){
+        function findComponentName(element, trackingName){
             var tag = element.tagName.toLowerCase();
             if (tag === 'body') {
-                return null;
+                return trackingName;
             }
             var componentName = element.getAttribute("data-link-name");
             if (componentName) {
-                return componentName;
+                if (trackingName != '') {
+                    trackingName = componentName + ' | ' + trackingName;
+                } else {
+                    trackingName = componentName;
+                }
             }
 
             //TODO parentNode is not cross browser compatible
-            return findComponentName(element.parentNode)
+            return findComponentName(element.parentNode, trackingName)
         }
 
-        // todo: add no-track class or similar
         bean.add(document.body, "click", function(event){
 
             var element = event.target;
@@ -68,9 +71,13 @@ require([
                 return;
             }
 
-            //we never want to see 'unknown component' in our stats
+            //we never want to see 'unknown' in our stats
             //if you can click it, it needs to be tracked...
-            var componentName = findComponentName(element) || 'unknown component';
+            var componentName = findComponentName(element, '');
+
+            if (componentName == '') {
+                componentName = 'unknown';
+            }
 
             var isAjaxLink = element.getAttribute("data-is-ajax");
 

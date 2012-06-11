@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div id="container">
+    <div id="container" data-link-name="network front">
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
@@ -27,7 +27,7 @@
         <div class="line trailblock">
             @defining(editorsPicks.length){ numEditorsPicks =>
             
-                <ul class="plain">
+                <ul class="plain" data-link-name="editors picks">
                     @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
                         <!--<li class="unit @if(row.isOdd) { size1of2 } else { lastUnit }">-->
                         <li>@fragments.formatTrail(trail)</li>
@@ -35,7 +35,7 @@
                 </ul>
 
                 @if(numEditorsPicks > 4) {
-                    <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More top stories</a> <span class="count">@(numEditorsPicks - 4)</span></h3>
+                    <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More top stories</a> <span class="count">@(numEditorsPicks - 4)</span></h3>
                 }
 
             }
@@ -45,7 +45,7 @@
         <div id="foo"></div>
     </div>
 
-    @fragments.debugInfo()
+    @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(page, conf.Configuration)
 </body>
 </html>

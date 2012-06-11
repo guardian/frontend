@@ -1,9 +1,9 @@
 @(static: common.Static)
-<a href="/"><img src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
+<a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
 <ul class="nav component" data-link-name="top nav">
-    <li><a href="/">Home</a></li>
-    <li><a href="javascript://" id="js-show-sections">Sections</a></li>
-	<li><a href="/sport">Sport</a></li>
+    <li><a data-link-name="top nav: home" href="/">Home</a></li>
+    <li><a data-link-name="top nav: sections" href="javascript://" id="js-show-sections">Sections</a></li>
+	<li><a data-link-name="top nav: sport" href="/sport">Sport</a></li>
 </ul>
 
 <ul id="js-section-subnav" class="nav-sub-nav component initially-off" data-link-name="section subnav">
