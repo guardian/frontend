@@ -1,28 +1,28 @@
 @(static: common.Static)
 <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
 <ul class="nav component" data-link-name="top nav">
-    <li><a data-link-name="top nav: home" href="/">Home</a></li>
-    <li><a data-link-name="top nav: sections" href="javascript://" id="js-show-sections">Sections</a></li>
-	<li><a data-link-name="top nav: sport" href="/sport">Sport</a></li>
+    <li><a data-link-name="home" href="/">Home</a></li>
+    <li><a data-link-name="sections" href="javascript://" id="js-show-sections">Sections</a></li>
+	<li><a data-link-name="sport" href="/sport">Sport</a></li>
 </ul>
 
 <ul id="js-section-subnav" class="nav-sub-nav component initially-off" data-link-name="section subnav">
-	<li><a href="/world">World</a></li>
-	<li><a href="/culture">Culture</a></li>
-	<li><a href="/uk">UK</a></li>
-	<li><a href="/lifeandstyle">Life and style</a></li>
-	<li><a href="/us">US</a></li>
-	<li><a href="/technology">Technology</a></li>
+	<li><a data-link-name="world" href="/world">World</a></li>
+	<li><a data-link-name="culture" href="/culture">Culture</a></li>
+	<li><a data-link-name="uk" href="/uk">UK</a></li>
+	<li><a data-link-name="lifeandstyle" href="/lifeandstyle">Life and style</a></li>
+	<li><a data-link-name="us" href="/us">US</a></li>
+	<li><a data-link-name="technology" href="/technology">Technology</a></li>
 	@*<li><a href="/sport">Sport</a></li>*@ @*<!-- TODO uncomment when sport is gone from top nav -->*@
-	<li><a href="/environment">Environment</a></li>
-	<li><a href="/football">Football</a></li>
-	<li><a href="/type/gallery">Galleries</a></li>
-	<li><a href="/commentisfree">Comment is free</a></li>
-	<li><a href="/tone/blog">Blogs</a></li>
-	<li><a href="/politics">Politics</a></li>
-	<li><a href="http://m.jobs.guardian.co.uk">Jobs</a></li>
-	<li><a href="/media">Media</a></li>
+	<li><a data-link-name="environment" href="/environment">Environment</a></li>
+	<li><a data-link-name="football" href="/football">Football</a></li>
+	<li><a data-link-name="gallery" href="/type/gallery">Galleries</a></li>
+	<li><a data-link-name="cif" href="/commentisfree">Comment is free</a></li>
+	<li><a data-link-name="blogs" href="/tone/blog">Blogs</a></li>
+	<li><a data-link-name="politics" href="/politics">Politics</a></li>
+	<li><a data-link-name="m.jobs.guardian.co.uk" href="http://m.jobs.guardian.co.uk">Jobs</a></li>
+	<li><a data-link-name="media" href="/media">Media</a></li>
 	@*<li><a href="#">Most read</a></li>*@  @*<!-- TODO do we need a most read page -->*@
-	<li><a href="/business">Business</a></li>
+	<li><a data-link-name="business" href="/business">Business</a></li>
 	@*<li><strong><a href="#">All sections</a></strong></li>*@ @* <!-- TODO do we need an all sections page -->*@
 </ul>

@@ -32,7 +32,7 @@ object ContentApiMetrics {
   val all = Seq(ContentApiHttpTimingMetric)
 }
 
-object AkkaMetrics extends Akka {
+object AkkaMetrics extends AkkaSupport {
 
   class DispatcherInhabitantsMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
     "akka",

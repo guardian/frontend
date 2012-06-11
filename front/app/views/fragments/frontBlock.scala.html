@@ -1,0 +1,34 @@
+@(block: FrontBlock)
+
+
+<div data-link-name="front block @block.item.name">
+    <div class="line">
+        <div class="unit lastUnit">
+            @if(block.item.id == "/") {
+            @fragments.headline(block.item.name)
+            } else {
+                <a data-link-name="heading link" href="@block.item.id">@fragments.headline(block.item.name)</a>
+            }
+        </div>
+    </div>
+    <div class="line trailblock show-@block.item.numItemsVisible">
+        @defining(block.trails.length){ numTrails =>
+
+        <ul class="plain">
+            @block.trails.zipWithRowInfo.map{ case(trail, row) =>
+            <li>@if(block.item.id == "/"){
+                    @fragments.formatTrailWithSection(trail)
+                } else {
+                    @fragments.formatTrail(trail)
+                }
+            </li>
+            }
+        </ul>
+
+        @if(numTrails > block.item.numItemsVisible) {
+        <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More top stories</a> <span class="count">@(numTrails - block.item.numItemsVisible)</span></h3>
+        }
+
+        }
+    </div>
+</div>

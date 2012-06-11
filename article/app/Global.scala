@@ -1,8 +1,9 @@
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import common._
+import common.RequestMetrics
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
+
   import RequestMetrics._
 
   override val requestTimer = RequestTimingMetric

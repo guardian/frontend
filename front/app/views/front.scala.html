@@ -1,4 +1,4 @@
-@(page: MetaData, editorsPicks: Seq[Trail])(implicit request: RequestHeader)
+@(page: MetaData, blocks: Seq[FrontBlock])(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -15,34 +15,16 @@
 </head>
 
 <body>
-    <div id="container" data-link-name="network front">
+    <div id="container">
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
                 @fragments.navigation(Static)
-                @fragments.headline("Top stories")
             </div>
         </div>
-
-        <div class="line trailblock">
-            @defining(editorsPicks.length){ numEditorsPicks =>
-            
-                <ul class="plain" data-link-name="editors picks">
-                    @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
-                        <!--<li class="unit @if(row.isOdd) { size1of2 } else { lastUnit }">-->
-                        <li>@fragments.formatTrail(trail)</li>
-                    }
-                </ul>
-
-                @if(numEditorsPicks > 4) {
-                    <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More top stories</a> <span class="count">@(numEditorsPicks - 4)</span></h3>
-                }
-
-            }
-
-        </div>
-
-        <div id="foo"></div>
+        @blocks.map{ block =>
+            @fragments.frontBlock(block)
+        }
     </div>
 
     @fragments.debugInfo(conf.Configuration)

@@ -48,6 +48,8 @@ trait Trail extends Images with Tags {
   def linkText: String
   def url: String
   def trailText: Option[String]
+  def section: String //sectionId
+  def sectionName: String
 }
 
 trait Tags {
