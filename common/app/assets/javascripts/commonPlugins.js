@@ -1,5 +1,5 @@
 //these are plugins required by all pages
-define('adsAndTracking', [guardian.js.modules.analytics, guardian.js.modules.ads], function(analytics){});
+define('adsAndTracking', [guardian.js.modules.analytics, guardian.js.modules.ads], function(analytics, ads){}, function(error){alert(error)});
 
 // show some debug info and upgrade images if supported
 define('detectAndImages', [guardian.js.modules.detect, guardian.js.modules.images], function(detect, images){

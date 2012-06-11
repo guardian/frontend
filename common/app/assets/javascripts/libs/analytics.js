@@ -53,11 +53,7 @@ require([
             }
             var componentName = element.getAttribute("data-link-name");
             if (componentName) {
-                if (trackingName != '') {
-                    trackingName = componentName + ' | ' + trackingName;
-                } else {
-                    trackingName = componentName;
-                }
+                trackingName = componentName + ' | ' + trackingName;
             }
 
             //TODO parentNode is not cross browser compatible
@@ -71,9 +67,7 @@ require([
                 return;
             }
 
-            //we never want to see 'unknown' in our stats
-            //if you can click it, it needs to be tracked...
-            var componentName = findComponentName(element, '');
+            var componentName = findComponentName(element, guardian.page.contentType);
 
             if (componentName == '') {
                 componentName = 'unknown';
@@ -87,10 +81,7 @@ require([
                 shouldDelay = false;
             }
             s.tl(shouldDelay,'o',componentName);
-
         });
-
-
 });
 
 //TODO still need to figure out what to do with this data
