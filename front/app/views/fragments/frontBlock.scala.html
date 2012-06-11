@@ -15,7 +15,12 @@
 
     <ul class="plain" data-link-name="front block @block.item.name">
         @block.trails.zipWithRowInfo.map{ case(trail, row) =>
-        <li>@fragments.formatTrail(trail)</li>
+        <li>@if(block.item.id == "/"){
+                @fragments.formatTrailWithSection(trail)
+            } else {
+                @fragments.formatTrail(trail)
+            }
+        </li>
         }
     </ul>
 
