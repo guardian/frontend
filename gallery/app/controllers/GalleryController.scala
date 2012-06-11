@@ -47,6 +47,6 @@ object GalleryController extends Controller with Logging {
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =
     CachedOk(model.gallery) {
-      views.html.gallery(model.gallery, model.related, model.storyPackage, model.index, model.trail)
+      Compressed(views.html.gallery(model.gallery, model.related, model.storyPackage, model.index, model.trail))
     }
 }

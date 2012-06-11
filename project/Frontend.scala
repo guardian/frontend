@@ -85,6 +85,8 @@ trait Prototypes {
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
+      "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
+      "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
