@@ -80,7 +80,7 @@ object FrontTrails extends Logging {
     val response: ItemResponse = ContentApi.item
       .edition(edition)
       .showTags("all")
-      .showFields("all")
+      .showFields("trail-text")
       .showMedia("all")
       .showEditorsPicks(true)
       .showMostViewed(true)
