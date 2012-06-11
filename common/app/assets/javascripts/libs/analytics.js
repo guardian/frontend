@@ -53,7 +53,11 @@ require([
             }
             var componentName = element.getAttribute("data-link-name");
             if (componentName) {
-                trackingName = componentName + ' | ' + trackingName;
+                if (trackingName == '') {
+                    trackingName = componentName
+                } else {
+                    trackingName = componentName + ' | ' + trackingName;
+                }
             }
 
             //TODO parentNode is not cross browser compatible
@@ -67,11 +71,7 @@ require([
                 return;
             }
 
-            var componentName = findComponentName(element, guardian.page.contentType);
-
-            if (componentName == '') {
-                componentName = 'unknown';
-            }
+            var componentName = guardian.page.contentType + " | " + findComponentName(element, '');
 
             var isAjaxLink = element.getAttribute("data-is-ajax");
 
