@@ -22,18 +22,34 @@ require([guardian.js.modules.trailblockGenerator,
 
         expanderBinder.init();
 
-        var urlParams = $g.getUrlVars();
-
         // begin more-on-story tests
-        
-        /*
-        $g.onReady(function(){
+        var mode = localStorage.getItem("moreMode");
 
-            // swap out the related items if mode is base
-            if ( localStorage.getItem("moreMode") && detect.getLayoutMode() != 'extended') {
+        // begin tests for in-article related items
+        // swap out the related items if layout mode is base/extended
+        // and user mode pref is between 1-3 (used for in-article related info)
+        if (mode && mode < 4 && detect.getLayoutMode() != 'extended') {
 
-                var newClass = localStorage.getItem("moreMode");
+            var moreClass = 'more-on-story zone-border ';
 
+            mode = parseInt(mode); // localStorage makes everything a string
+
+            switch(mode) {
+                case 1:
+                    moreClass += 'more-inline';
+                    var listClass = 'show-3';
+                    break;
+                case 2:
+                    moreClass += 'more-single-block';
+                    var listClass = 'show-1';
+                    break;
+                case 3:
+                    moreClass += 'more-multiple-block';
+                    var listClass = 'show-1';
+                    break;
+            }
+
+            $g.onReady(function(){
                 var paragraphToInsertAfter = document.querySelectorAll('article p')[4];
                 var related = document.getElementById('js-expandable-related');
 
@@ -44,47 +60,93 @@ require([guardian.js.modules.trailblockGenerator,
                 var classnames = related.className;
                 related.className = classnames.replace(regex, '');
 
-                bonzo(related).addClass(newClass).insertAfter(paragraphToInsertAfter);
-            }
-        });
+                // add show-n to the list of trails
+                var ul = $g.qs('ul', related);
+                bonzo(ul).addClass(listClass);
 
-        */
+                // move the item to the right place
+                bonzo(related).addClass(moreClass).insertAfter(paragraphToInsertAfter);
 
-        // initialise event listener for trail expanders
-        guardian.js.ee.emit('addExpander', $g.qs('#js-expandable-related'));
-
-        /* ########### fetch most popular for section ########### */
-
-        var endPoint = 'http://simple-navigation.appspot.com/most-popular/section/' + guardian.page.section;
-        //var header =  guardian.page.section + ' most read';
-        var header = null;
-        if (document.referrer && document.referrer.toLowerCase().indexOf('facebook.com') > -1) {
-            endPoint = 'http://simple-navigation.appspot.com/most-popular/facebook';
-            header = 'Most read on Facebook';
+                if (mode == 3) {
+                    guardian.js.ee.emit('addExpander', related);
+                }
+            });
         }
 
-        trailblockGenerator.fetchContent(endPoint, {
-            isShaded: true,
-            header: header,
-            limit: 5
-        });
-        
-        /* ########### fetch related content by tags ########### */
-        
-        // todo: limit to 10 tags max
-        var tags = '?tag=' + guardian.page.tagIds.replace(/,/g, '&tag=') + '&ignore=' + guardian.page.pageId;
-        var moreOnTagsUrl = 'http://simple-navigation.appspot.com/munge-latest.json';
-        var tagUrl = moreOnTagsUrl + tags;
 
-        var placeholder = document.getElementById('tier3-2');
+        function fetchMostPopular(limit) {
 
-        trailblockGenerator.fetchContent(tagUrl, {
-            isShaded: false,
-            limit: 5,
-            mode: 'nestedSingle',
-            elm: placeholder,
-            header: 'Related content by tags'
-        });
+            var endPoint = 'http://simple-navigation.appspot.com/most-popular/section/' + guardian.page.section;
+            //var header =  guardian.page.section + ' most read';
+            var header = null;
+            if (document.referrer && document.referrer.toLowerCase().indexOf('facebook.com') > -1) {
+                endPoint = 'http://simple-navigation.appspot.com/most-popular/facebook';
+                header = 'Most read on Facebook';
+            }
+
+            var placeholder = document.getElementById('tier3-3');
+
+            trailblockGenerator.fetchContent(endPoint, {
+                isShaded: true,
+                header: header,
+                limit: limit,
+                elm: placeholder
+            });
+        
+        }
+        
+        // todo: maybe add option to trailblockGenerator not to expand?
+        function fetchRelatedByTags(limit, allowExpanding) {
+
+            // todo: limit to 10 tags max
+            var tags = '?tag=' + guardian.page.tagIds.replace(/,/g, '&tag=') + '&ignore=' + guardian.page.pageId;
+            var moreOnTagsUrl = 'http://simple-navigation.appspot.com/munge-latest.json';
+            var tagUrl = moreOnTagsUrl + tags;
+
+            var placeholder = document.getElementById('tier3-2');
+
+            trailblockGenerator.fetchContent(tagUrl, {
+                isShaded: false,
+                limit: limit,
+                mode: 'nestedSingle',
+                elm: placeholder,
+                header: 'Related content by tags',
+                allowExpanding: allowExpanding
+            });
+        }
+
+        // we're entering tests 4-6: related content tests
+
+        var relatedContent = $g.qs('#js-expandable-related');
+
+        if (mode && mode > 3) {
+
+            mode = parseInt(mode); 
+
+            switch (mode) {
+                case 4:
+                    // turn related items into an expander
+                    guardian.js.ee.emit('addExpander', relatedContent);
+                    fetchMostPopular(5);
+                    break;
+                case 5:
+                    // remove related items
+                    bonzo(relatedContent).remove();
+                    // show related items by tags
+                    fetchRelatedByTags(5, true);
+                    // then get most popular
+                    fetchMostPopular(5);
+                    break;
+                case 6:
+                    // turn related items into an expander
+                    guardian.js.ee.emit('addExpander', relatedContent);
+                    // show related items by tags
+                    fetchRelatedByTags(3, false);
+                    // then get most popular
+                    fetchMostPopular(5);
+                    break;
+            }
+        }
         
     }
 );

@@ -11,7 +11,8 @@ define([
 	            isShaded: false,
 	            header: '',
 	            elm: document.getElementById('tier3-1'),
-	            limit: 3 // number of items to show by default
+	            limit: 3, // number of items to show by default
+	            allowExpanding: true
 	        };
 
 	        // override defaults
@@ -22,7 +23,6 @@ define([
 	        // go and fetch content
 	        getTrails(url); 
 	    	
-
 	    	function getTrails(url) {
 	    		reqwest({
 	                url: url,
@@ -45,18 +45,21 @@ define([
 	            bonzo(options.elm).removeClass('placeholder');
 	            options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic
 	            
-	            // bind the expander(s)
-	            // have to look up elms here as they don't exist until now
-	            if (typeof(toBind) === "object") {
-	            	var elms = [];
-	            	for (var i=0, l=toBind.length; i<l; i++) {
-	            		elms[i] = document.getElementById(toBind[i]);
-	            	}
-	            } else {
-	            	var elms = document.getElementById(toBind);
-	           	}
-	        	
-	        	guardian.js.ee.emit('addExpander', elms);
+	            if (options.allowExpanding) {
+
+		            // bind the expander(s)
+		            // have to look up elms here as they don't exist until now
+		            if (typeof(toBind) === "object") {
+		            	var elms = [];
+		            	for (var i=0, l=toBind.length; i<l; i++) {
+		            		elms[i] = document.getElementById(toBind[i]);
+		            	}
+		            } else {
+		            	var elms = document.getElementById(toBind);
+		           	}
+		        	
+		        	guardian.js.ee.emit('addExpander', elms);
+		        }
 	    	}
 
 	    	function addExpanderLink(total, visible) {
@@ -64,6 +67,7 @@ define([
 	    		return '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">Show more</a> <span class="count">' + count + '</span></h3>';
 	    	}
 
+	    	// todo: come up with better IDs than foo2 etc
 	    	function processTrails(json) {
 
 	    		var html = '';
@@ -78,7 +82,7 @@ define([
 	                toBind = 'foo';
 	                
 	                // append expander if articles.length > limit
-                    if (json.length > options.limit) {
+                    if (json.length > options.limit && options.allowExpanding) {
                     	trails += addExpanderLink(json.length, options.limit)
                     }
 	                html += wrapTrails(trails, 'foo');
@@ -100,7 +104,7 @@ define([
 
 	        		// append expander if articles.length > limit
 	        		// todo: why doesn't list.length work (undefined) instead of i?
-                    if (i > options.limit) {
+                    if (i > options.limit && options.allowExpanding) {
                     	trails += addExpanderLink(i, options.limit)
                     }
 
@@ -119,7 +123,7 @@ define([
 	                    count++;
 
 	                    // append expander if articles.length > limit
-	                    if (articles.length > options.limit) {
+	                    if (articles.length > options.limit && options.allowExpanding) {
 	                    	trails += addExpanderLink(articles.length, options.limit)
 	                    }
 

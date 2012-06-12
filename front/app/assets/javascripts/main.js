@@ -13,7 +13,21 @@ require([
         
         expanderBinder.init();
 
-        /*
+        // set up tests for placement of "more on story" packages
+        var urlParams = $g.getUrlVars();
+
+        if(urlParams.mode) {
+            var mode = parseInt(urlParams.mode);
+            if (mode >= 1 && mode <= 6) { // limit to our 6 test cases for now
+                localStorage.setItem("moreMode", mode);
+            } else { // anything else resets it
+                localStorage.removeItem("moreMode");
+            }
+        }
+        
+        // currently unused
+        function fetchExtraSections() {
+        
             // todo: make items return in sequence
             var sectionsToShow = [
                 'technology',
@@ -32,35 +46,7 @@ require([
                 elm: placeholder,
                 limit: 2
             });
-        */
-
-
-        // set up tests for placement of "more on story" packages
-        var urlParams = $g.getUrlVars();
-        if(urlParams.moreMode) {
-
-            var moreClass = 'more-on-story zone-border ';
-
-            switch(urlParams.moreMode) {
-                case "inline":
-                    var newClass = 'more-inline';
-                    moreClass += newClass + ' show-3';
-                    break;
-                case "singleBlock":
-                    var newClass = 'more-single-block';
-                    moreClass += newClass + ' show-1';
-                    break;
-                case "multipleBlock":
-                    var newClass = 'more-multiple-block';
-                    moreClass += newClass + ' show-1';
-                    break;
-                default:
-                    localStorage.removeItem("moreMode");
-                    break;
-            }
-
-            localStorage.setItem("moreMode", moreClass);
         }
-
+        
     }
 );
