@@ -3,7 +3,7 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 
-class Configuration(val application: String, val webappConfDirectory: String = "env") {
+class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object contentApi {
@@ -66,5 +66,5 @@ class Configuration(val application: String, val webappConfDirectory: String = "
 }
 
 object ManifestData {
-  lazy val build = ManifestFile.asKeyValuePairs.get("Build").getOrElse("DEV") replace ("\"", "") trim
+  lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
 }

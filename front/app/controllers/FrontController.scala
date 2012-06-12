@@ -1,8 +1,8 @@
 package controllers
 
-import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import common.{ Configuration => NotWantedHere, _ }
+import common._
+import conf._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Akka
 import akka.actor.{ Actor, Props }
