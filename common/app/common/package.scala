@@ -28,6 +28,10 @@ object `package` {
     }
   }
 
+  implicit def string2Dequote(s: String) = new {
+    lazy val dequote = s.replace("\"", "")
+  }
+
   implicit def int2RichInt(i: Int) = new {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i

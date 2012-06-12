@@ -1,8 +1,8 @@
 package controllers
 
-import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import common.{ Configuration => unWanted, _ }
+import common._
+import conf._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 
 case class GalleryPage(

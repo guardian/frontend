@@ -5,7 +5,7 @@ import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
 
-object Configuration extends Configuration("frontend-tag", webappConfDirectory = "env")
+object Configuration extends GuardianConfiguration("frontend-tag", webappConfDirectory = "env")
 
 object ContentApi extends ContentApiClient(Configuration)
 

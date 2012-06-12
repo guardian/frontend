@@ -5,7 +5,7 @@ import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
 import com.gu.management.TimingMetric
 
-class ContentApiClient(configuration: Configuration, httpTimer: TimingMetric = ContentApiHttpTimingMetric) extends Api
+class ContentApiClient(configuration: GuardianConfiguration, httpTimer: TimingMetric = ContentApiHttpTimingMetric) extends Api
     with MultiThreadedApacheHttpClient
     with Logging {
 
