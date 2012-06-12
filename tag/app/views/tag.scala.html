@@ -32,7 +32,7 @@
 
         @defining(leadContent.take(2)){ importantStories =>
             @if(importantStories nonEmpty) {
-                <div class="line">
+                <div class="line" data-link-name="lead content">
                     @importantStories.map{ trail =>
                         <div class="unit size1of2">
                             @fragments.formatTrail(trail)
@@ -41,7 +41,7 @@
                 </div>
             }
 
-            <div class="line">
+            <div class="line" data-link-name="latest">
                     @* TODO don't like this deduping would be easier as a case class or something *@
                     @trails.filterNot(s => importantStories.map(_.url).contains(s.url)).map{ trail =>
                         <div class="unit size1of2">
