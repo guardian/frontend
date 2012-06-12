@@ -3,9 +3,10 @@ s_account = guardian.page.omnitureAccount;
 require([
     'http://static.guim.co.uk/static/ad0511f704894b072867e61615a7d577d265dd03/common/scripts/omniture-H.24.1.1.js',
     guardian.page.ophanScript,
+    guardian.js.modules.detect,
     "bean"
     ], 
-    function (omniture, ophan, bean) {
+    function (omniture, ophan, detect, bean) {
 
         s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com';
 
@@ -30,46 +31,65 @@ require([
 
         s.prop14    = guardian.page.buildNumber || '';
 
+        s.prop47    = guardian.page.edition || '';
+
+        s.prop48    = detect.getConnectionSpeed();
+
+        s.prop56    = detect.getLayoutMode();
+
+        if (guardian.page.webPublicationDate) {  //at the moment we have web pub date for content and nothing else
+            s.prop30 = 'content';
+        } else {
+            s.prop30 = 'non-content';
+        }
+
         //this fires off the omniture tracking
         s.t();
 
-        function findComponentName(element){
+        function findComponentName(element, trackingName){
             var tag = element.tagName.toLowerCase();
             if (tag === 'body') {
-                return null;
+                return trackingName;
             }
             var componentName = element.getAttribute("data-link-name");
             if (componentName) {
-                return componentName;
+                if (trackingName == '') {
+                    trackingName = componentName
+                } else {
+                    trackingName = componentName + ' | ' + trackingName;
+                }
             }
 
             //TODO parentNode is not cross browser compatible
-            return findComponentName(element.parentNode)
+            return findComponentName(element.parentNode, trackingName)
         }
 
-        // todo: add no-track class or similar
+        function isInsideLink(element) {
+            var tagName = element.tagName.toLowerCase();
+            if (tagName == 'body') return false;
+            if (tagName == 'a') return true;
+
+            //TODO parentNode is not cross browser compatible
+            return isInsideLink(element.parentNode);
+        }
+
         bean.add(document.body, "click", function(event){
 
             var element = event.target;
-            if (element.tagName.toLowerCase() != "a") {
+            if (!isInsideLink(element)) {
                 return;
             }
+            var componentName = guardian.page.contentType + " | " + findComponentName(element, '');
 
-            var componentName = findComponentName(element);
             var isAjaxLink = element.getAttribute("data-is-ajax");
 
-            if(componentName) {
-                var linkHref = element.getAttribute('href');
-                var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
-                if (isAjaxLink == "true") {
-                    shouldDelay = false;
-                }
-                s.tl(shouldDelay,'o',componentName);
+            var linkHref = element.getAttribute('href');
+            var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
+            if (isAjaxLink == "true") {
+                shouldDelay = false;
             }
-            
+            s.tl(shouldDelay,'o',componentName);
         });
-
-
 });
 
 //TODO still need to figure out what to do with this data

@@ -9,10 +9,10 @@
     @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(section, conf.Configuration)
 
-    <title>@section.name | beta.guardian.co.uk</title>
+    <title>@Html(section.name) | beta.guardian.co.uk</title>
 
     @fragments.commonCssSetup(Static)
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
 
 </head>
 
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    @fragments.debugInfo()
+    @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(section, conf.Configuration)
 </body>
 </html>

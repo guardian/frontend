@@ -1,3 +1,9 @@
 @(standfirst: Option[String])
 
-@standfirst.map { s => <p class="standfirst">@Html(s)</p> }
+@standfirst.map { s =>
+    <p class="standfirst">
+        @withJsoup(s)(
+            InBodyLinkCleaner
+        )
+    </p>
+}

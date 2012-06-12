@@ -30,13 +30,15 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
     linkUrls should contain("http://localhost:3333/environment/2012/feb/21/cameron-defends-wind-farm-mps")
   }
 
-  it should "render article tag links" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-    import browser._
+  //code to render these in template is currently hidden
 
-    val linkNames = $("a").getTexts
-    val linkUrls = $("a").getAttributes("href")
-
-    linkNames should contain("Environment")
-    linkUrls should contain("http://localhost:3333/environment/climate-change")
-  }
+  //  it should "render article tag links" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+  //    import browser._
+  //
+  //    val linkNames = $("a").getTexts
+  //    val linkUrls = $("a").getAttributes("href")
+  //
+  //    linkNames should contain("Environment")
+  //    linkUrls should contain("http://localhost:3333/environment/climate-change")
+  //  }
 }

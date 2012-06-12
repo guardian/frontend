@@ -9,10 +9,10 @@
     @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(article, conf.Configuration)
 
-    <title>@article.headline</title>
+    <title>@Html(article.headline)</title>
 
     @fragments.commonCssSetup(Static)
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
 
 </head>
 
@@ -59,20 +59,23 @@
 
             <div class="unit lastUnit">
 
+
                 @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 2)
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 } else {
-                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 5)
                 }
 
                 @fragments.placeholders("tier2", 5)
 
-                <h4>Related subjects</h4>
-                <ul class="plain tags">
-                @article.keywords.map{ tag =>
-                    @fragments.formatTags(tag)
-                }
-                </ul>
+                <!--
+                    <h4>Related subjects</h4>
+                    <ul class="plain tags">
+                    @article.keywords.map{ tag =>
+                        @fragments.formatTags(tag)
+                    }
+                    </ul>
+                -->
 
                 @fragments.placeholders("tier3", 5)
             </div>
@@ -82,7 +85,7 @@
 
     </div>
 
-    @fragments.debugInfo()
+    @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(article, conf.Configuration)
 </body>
 </html>

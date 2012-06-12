@@ -1,4 +1,4 @@
-@(page: MetaData, editorsPicks: Seq[Trail])(implicit request: RequestHeader)
+@(page: MetaData, blocks: Seq[FrontBlock])(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
     @fragments.metaData(page, conf.Configuration)
 
     @fragments.commonCssSetup(Static)
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
 
 </head>
 
@@ -20,32 +20,14 @@
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
                 @fragments.navigation(Static)
-                @fragments.headline("Top stories")
             </div>
         </div>
-
-        <div class="line trailblock">
-            @defining(editorsPicks.length){ numEditorsPicks =>
-            
-                <ul class="plain">
-                    @editorsPicks.zipWithRowInfo.map{ case(trail, row) =>
-                        <!--<li class="unit @if(row.isOdd) { size1of2 } else { lastUnit }">-->
-                        <li>@fragments.formatTrail(trail)</li>
-                    }
-                </ul>
-
-                @if(numEditorsPicks > 4) {
-                    <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More top stories</a> <span class="count">@(numEditorsPicks - 4)</span></h3>
-                }
-
-            }
-
-        </div>
-
-        <div id="foo"></div>
+        @blocks.map{ block =>
+            @fragments.frontBlock(block)
+        }
     </div>
 
-    @fragments.debugInfo()
+    @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(page, conf.Configuration)
 </body>
 </html>

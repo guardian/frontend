@@ -4,29 +4,42 @@ require([
 });
 
 //lower priority modules
-require([guardian.js.modules.trailExpander, guardian.js.modules.mostPopular],
-    function(trailExpander, mostPopular) {
+require([
+    guardian.js.modules.expanderBinder, 
+    guardian.js.modules.trailblockGenerator,
+    guardian.js.modules["$g"]
+    ],
+    function(expanderBinder, trailblockGenerator, $g) {
         
-        trailExpander.bindExpanders();
+        expanderBinder.init();
 
-        // todo: make items return in sequence
-        var sectionsToShow = [
-            'technology',
-            'sport',
-            'football'
-        ];
+        // bind the expanders
+        var expanders = $g.qsa('.trailblock');
+        guardian.js.ee.emit('addExpander', expanders);
 
-        var sectionsToShow = 'item=' + sectionsToShow.join('&item=');
+        // currently unused
+        function fetchExtraSections() {
+        
+            // todo: make items return in sequence
+            var sectionsToShow = [
+                'technology',
+                'sport',
+                'football'
+            ];
 
-        var url = 'http://simple-navigation.appspot.com/trailblocks.json?' + sectionsToShow + '&num-items=3';
+            var sectionsToShow = 'item=' + sectionsToShow.join('&item=');
 
-        var placeholder = document.getElementById('foo');
+            var url = 'http://simple-navigation.appspot.com/trailblocks.json?' + sectionsToShow + '&num-items=3';
 
-        mostPopular.fetchContent(url, {
-            isNested: true,
-            elm: placeholder,
-            limit: 4
-        });
+            var placeholder = document.getElementById('foo');
 
+            trailblockGenerator.fetchContent(url, {
+                mode: 'nestedMultiple',
+                elm: placeholder,
+                limit: 2,
+                componentAnalyticsName: 'front sections'
+            });
+        }
+        
     }
 );

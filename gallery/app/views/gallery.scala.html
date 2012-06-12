@@ -14,10 +14,10 @@
     </script>
 
 
-    <title>@gallery.headline</title>
+    <title>@Html(gallery.headline)</title>
 
     @fragments.commonCssSetup(Static)
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
 
     <style>
 
@@ -136,7 +136,7 @@
 
     </div>
 
-    @fragments.debugInfo()
+    @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(gallery, conf.Configuration)
 </body>
 </html>

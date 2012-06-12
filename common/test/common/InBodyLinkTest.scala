@@ -45,6 +45,14 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
     ("http://www.guardiannews.com/politics/2012/jun/07/politics-live-readers-edition-7-june",
       "/politics/2012/jun/07/politics-live-readers-edition-7-june"),
 
+    //dot in words for url
+    ("http://www.guardian.co.uk/football/blog/2012/jun/07/euro.2012.live.blog",
+      "/football/blog/2012/jun/07/euro.2012.live.blog"),
+
+    //query params
+    ("http://www.guardiannews.com/politics/2012/jun/07/politics-live-readers-edition-7-june?foo=bar",
+      "/politics/2012/jun/07/politics-live-readers-edition-7-june?foo=bar"),
+
     //----------  UnSupported types ----------//
 
     //external urls

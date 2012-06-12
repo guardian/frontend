@@ -59,6 +59,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       }
     }
   }
+
+  object debug {
+    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+  }
 }
 
 object ManifestData {
