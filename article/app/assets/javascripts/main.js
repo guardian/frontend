@@ -20,6 +20,8 @@ require([guardian.js.modules.trailblockGenerator,
     guardian.js.modules.detect],
     function(trailblockGenerator, expanderBinder, $g, bonzo, bean, detect){
 
+        expanderBinder.init();
+
         // hack-tastic
 
         function readCookie(name) {
