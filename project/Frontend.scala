@@ -6,6 +6,7 @@ import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
+import sbtassembly.Plugin.MergeStrategy
 
 object Frontend extends Build with Prototypes {
   val version = "1-SNAPSHOT"
@@ -85,6 +86,9 @@ trait Prototypes {
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
+      "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
+      "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
+
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
       "org.jsoup" % "jsoup" % "1.6.2",
@@ -97,8 +101,17 @@ trait Prototypes {
     templatesImport ++= Seq(
       "conf.Static"
     ),
-
     executableName := "frontend-%s" format  name,
-    jarName in assembly <<= (executableName) { "%s.jar" format _ }
+    jarName in assembly <<= (executableName) { "%s.jar" format _ },
+    //these merge strategies are for the htmlcompressor
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+      {
+        case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
+        case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
+        case "README" => MergeStrategy.first
+        case "CHANGELOG" => MergeStrategy.first
+        case x => old(x)
+      }
+    }
   )
 }

@@ -9,7 +9,7 @@ object InBodyLink extends Logging {
     "document")
 
   private val domain = """http://www.(guardian.co.uk|guardiannews.com)"""
-  private val section = """(/[\w\d-]+)"""
+  private val section = """(/[\w\d\.-]+)"""
   private val blog = section
   private val date = """(/\d\d\d\d/\w\w\w/\d\d)"""
   private val contentType = section
@@ -35,7 +35,15 @@ object InBodyLink extends Logging {
 
   // see http://www.scala-lang.org/node/7290
   // partial functions with Regex grow exponentially and the JVM has a max size for a method
-  def apply(url: String): String = pageTypes(url).orElse(contentTypes(url)).orElse(unknownUrl(url))(url)
+  def apply(url: String): String = {
+    val queryParams = url.dropWhile(_ != '?')
+    val urlWithoutParams: String = url.takeWhile(_ != '?')
+    val reslovedUrl = pageTypes(urlWithoutParams)
+      .orElse(contentTypes(urlWithoutParams))
+      .orElse(unknownUrl(urlWithoutParams))(urlWithoutParams)
+
+    reslovedUrl + queryParams
+  }
 
   private def unknownUrl(url: String): PartialFunction[String, String] = {
     case unknown =>
