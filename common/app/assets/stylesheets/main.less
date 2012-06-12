@@ -7,6 +7,8 @@ p a {
 .more-on-story {
     border-top: 2px solid #ccc;
     padding: 3px 2% !important;
+    background-color: #eeeeee;
+    margin-bottom: 10px;
 }
 
 .more-on-story ul {
@@ -56,6 +58,7 @@ p a {
 
 .more-multiple-block h3.expander {
     display: block;
+    margin-top: 10px;
 }
 
 
@@ -243,16 +246,17 @@ article aside {
 }
 
 /* utility classes for automatically hiding list items > n */
-.show-1 :nth-child(n+2),
-.show-2 :nth-child(n+3),
-.show-3 :nth-child(n+4),
-.show-4 :nth-child(n+5),
-.show-5 :nth-child(n+6),
-.show-6 :nth-child(n+7),
-.show-7 :nth-child(n+8),
-.show-8 :nth-child(n+9),
-.show-9 :nth-child(n+10),
-.show-10 :nth-child(n+11) { 
+/* possibly need to be li:nth-child */
+.show-1 li:nth-child(n+2),
+.show-2 li:nth-child(n+3),
+.show-3 li:nth-child(n+4),
+.show-4 li:nth-child(n+5),
+.show-5 li:nth-child(n+6),
+.show-6 li:nth-child(n+7),
+.show-7 li:nth-child(n+8),
+.show-8 li:nth-child(n+9),
+.show-9 li:nth-child(n+10),
+.show-10 li:nth-child(n+11) { 
     display: none; 
 }
 

@@ -11,7 +11,9 @@ define([
 	            isShaded: false,
 	            header: '',
 	            elm: document.getElementById('tier3-1'),
-	            limit: 3 // number of items to show by default
+	            limit: 3, // number of items to show by default
+	            allowExpanding: true,
+	            showSubHeadings: false
 	        };
 
 	        // override defaults
@@ -22,7 +24,6 @@ define([
 	        // go and fetch content
 	        getTrails(url); 
 	    	
-
 	    	function getTrails(url) {
 	    		reqwest({
 	                url: url,
@@ -45,18 +46,21 @@ define([
 	            bonzo(options.elm).removeClass('placeholder');
 	            options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic
 	            
-	            // bind the expander(s)
-	            // have to look up elms here as they don't exist until now
-	            if (typeof(toBind) === "object") {
-	            	var elms = [];
-	            	for (var i=0, l=toBind.length; i<l; i++) {
-	            		elms[i] = document.getElementById(toBind[i]);
-	            	}
-	            } else {
-	            	var elms = document.getElementById(toBind);
-	           	}
-	        	
-	        	guardian.js.ee.emit('addExpander', elms);
+	            if (options.allowExpanding) {
+
+		            // bind the expander(s)
+		            // have to look up elms here as they don't exist until now
+		            if (typeof(toBind) === "object") {
+		            	var elms = [];
+		            	for (var i=0, l=toBind.length; i<l; i++) {
+		            		elms[i] = document.getElementById(toBind[i]);
+		            	}
+		            } else {
+		            	var elms = document.getElementById(toBind);
+		           	}
+		        	
+		        	guardian.js.ee.emit('addExpander', elms);
+		        }
 	    	}
 
 	    	function addExpanderLink(total, visible) {
@@ -64,6 +68,7 @@ define([
 	    		return '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">Show more</a> <span class="count">' + count + '</span></h3>';
 	    	}
 
+	    	// todo: come up with better IDs than foo2 etc
 	    	function processTrails(json) {
 
 	    		var html = '';
@@ -78,7 +83,7 @@ define([
 	                toBind = 'foo';
 	                
 	                // append expander if articles.length > limit
-                    if (json.length > options.limit) {
+                    if (json.length > options.limit && options.allowExpanding) {
                     	trails += addExpanderLink(json.length, options.limit)
                     }
 	                html += wrapTrails(trails, 'foo');
@@ -100,7 +105,7 @@ define([
 
 	        		// append expander if articles.length > limit
 	        		// todo: why doesn't list.length work (undefined) instead of i?
-                    if (i > options.limit) {
+                    if (i > options.limit && options.allowExpanding) {
                     	trails += addExpanderLink(i, options.limit)
                     }
 
@@ -119,7 +124,7 @@ define([
 	                    count++;
 
 	                    // append expander if articles.length > limit
-	                    if (articles.length > options.limit) {
+	                    if (articles.length > options.limit && options.allowExpanding) {
 	                    	trails += addExpanderLink(articles.length, options.limit)
 	                    }
 
@@ -136,7 +141,8 @@ define([
 			function buildTrails(articles) {
 
 	            // set up templates
-	            var trail = '<li><div class="media b1">{0}<div class="bd"><p><strong><a href="{1}">{2}</a></strong></p><p class="gt-base trailtext">{3}</p></div></div></li>';
+	            var trail = '<li><div class="media b1">{0}<div class="bd">{1}<p><strong><a href="{2}">{3}</a></strong></p><p class="gt-base trailtext">{4}</p></div></div></li>';
+
 	            var trailPic = '<a href="{0}" class="img"><img class="maxed" src="{1}" alt="{2}" /></a>';
 
 	            var html = '';
@@ -154,13 +160,21 @@ define([
 	                var article = articles[i];
 	                var img = '';
 
+	                // todo: strip HTML from captions
 	                if (article.images && article.images.length > 0) {
 	                    var imageToUse = getBestImage(article.images);
 	                    var altText = imageToUse.caption + ' (' + imageToUse.credit + ')';
 	                    img = basicTemplate.format(trailPic, article.url, imageToUse.url, altText);
 	                }
 
-	                html += basicTemplate.format(trail, img, article.url, article.linkText, stripParagraphs(article.trailText));
+	                var subHeading = ''; 
+
+	                // takes first tag, fairly dumb
+	                if (options.showSubHeadings && article.tags) {
+	                	subHeading = '<h5>' + article.tags[0].name + '</h5>';
+	                }
+
+	                html += basicTemplate.format(trail, img, subHeading, article.url, article.linkText, stripParagraphs(article.trailText));
 	            }
 
 	            html += '</ul>';
