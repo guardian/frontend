@@ -9,7 +9,7 @@
     @fragments.commonJavaScriptSetup(Static)
     @fragments.metaData(article, conf.Configuration)
 
-    <title>@article.headline</title>
+    <title>@Html(article.headline)</title>
 
     @fragments.commonCssSetup(Static)
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.css")" />
