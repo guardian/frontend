@@ -22,6 +22,19 @@ require([guardian.js.modules.trailblockGenerator,
 
         expanderBinder.init();
 
+
+        // set up tests for placement of "more on story" packages
+        var urlParams = $g.getUrlVars();
+
+        if(urlParams.mode) {
+            var mode = parseInt(urlParams.mode);
+            if (mode >= 1 && mode <= 6) { // limit to our 6 test cases for now
+                localStorage.setItem("moreMode", mode);
+            } else { // anything else resets it
+                localStorage.removeItem("moreMode");
+            }
+        }
+
         // begin more-on-story tests
         var mode = localStorage.getItem("moreMode");
 
@@ -67,7 +80,10 @@ require([guardian.js.modules.trailblockGenerator,
                 // move the item to the right place
                 bonzo(related).addClass(moreClass).insertAfter(paragraphToInsertAfter);
 
+
                 if (mode == 3) {
+                    // todo: sometimes it doesn't have an expander, bah
+                    // check and add one
                     guardian.js.ee.emit('addExpander', related);
                 }
             });
