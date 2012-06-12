@@ -13,6 +13,10 @@ require([
         
         expanderBinder.init();
 
+        // bind the expanders
+        var expanders = $g.qsa('.trailblock');
+        guardian.js.ee.emit('addExpander', expanders);
+
         // set up tests for placement of "more on story" packages
         var urlParams = $g.getUrlVars();
 
@@ -24,7 +28,7 @@ require([
                 localStorage.removeItem("moreMode");
             }
         }
-        
+
         // currently unused
         function fetchExtraSections() {
         
