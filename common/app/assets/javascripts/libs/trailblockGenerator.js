@@ -13,7 +13,8 @@ define([
 	            elm: document.getElementById('tier3-1'),
 	            limit: 3, // number of items to show by default
 	            allowExpanding: true,
-	            showSubHeadings: false
+	            showSubHeadings: false,
+                componentAnalyticsName: 'name not set'
 	        };
 
 	        // override defaults
@@ -44,7 +45,7 @@ define([
 	    	function addToDom(html, toBind) {
 	    		options.elm.innerHTML = html;
 	            bonzo(options.elm).removeClass('placeholder');
-	            options.elm.setAttribute("data-link-name", "most popular"); // todo: make dynamic
+	            options.elm.setAttribute("data-link-name", options.componentAnalyticsName);
 	            
 	            if (options.allowExpanding) {
 
@@ -65,7 +66,7 @@ define([
 
 	    	function addExpanderLink(total, visible) {
 	    		var count = total - visible;
-	    		return '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">Show more</a> <span class="count">' + count + '</span></h3>';
+	    		return '<h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="expand trailblock" href="javascript://">Show more</a> <span class="count">' + count + '</span></h3>';
 	    	}
 
 	    	// todo: come up with better IDs than foo2 etc
@@ -141,9 +142,9 @@ define([
 			function buildTrails(articles) {
 
 	            // set up templates
-	            var trail = '<li><div class="media b1">{0}<div class="bd">{1}<p><strong><a href="{2}">{3}</a></strong></p><p class="gt-base trailtext">{4}</p></div></div></li>';
+	            var trail = '<li><div class="media b1">{0}<div class="bd">{1}<p><strong><a href="{2}" data-link-name="link text">{3}</a></strong></p><p class="gt-base trailtext">{4}</p></div></div></li>';
 
-	            var trailPic = '<a href="{0}" class="img"><img class="maxed" src="{1}" alt="{2}" /></a>';
+	            var trailPic = '<a href="{0}" data-link-name="trail image" class="img"><img class="maxed" src="{1}" alt="{2}" /></a>';
 
 	            var html = '';
 				

@@ -33,9 +33,24 @@ require([guardian.js.modules.trailblockGenerator,
             return null;
         }
 
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+
 
         // begin more-on-story tests        
         var mode = readCookie("moreMode")
+
+        if (!mode) {
+            mode = Math.floor(Math.random()*5) + 1;
+            createCookie("moreMode", mode, 100);
+        }
 
         // begin tests for in-article related items
         // swap out the related items if layout mode is base/extended
@@ -105,7 +120,8 @@ require([guardian.js.modules.trailblockGenerator,
                 isShaded: true,
                 header: header,
                 limit: limit,
-                elm: placeholder
+                elm: placeholder,
+                componentAnalyticsName: 'most popular'
             });
         
         }
@@ -127,7 +143,8 @@ require([guardian.js.modules.trailblockGenerator,
                 elm: placeholder,
                 header: 'Related content by tags',
                 allowExpanding: allowExpanding,
-                showSubHeadings: true
+                showSubHeadings: true,
+                componentAnalyticsName: 'related tags'
             });
         }
 
