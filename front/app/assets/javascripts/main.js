@@ -17,17 +17,35 @@ require([
         var expanders = $g.qsa('.trailblock');
         guardian.js.ee.emit('addExpander', expanders);
 
+        // hack-tastic
+
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }
+
+        expanderBinder.init();
+
         // set up tests for placement of "more on story" packages
         var urlParams = $g.getUrlVars();
 
         if(urlParams.mode) {
             var mode = parseInt(urlParams.mode);
             if (mode >= 1 && mode <= 6) { // limit to our 6 test cases for now
-                localStorage.setItem("moreMode", mode);
+                createCookie("moreMode", mode, 100);
             } else { // anything else resets it
-                localStorage.removeItem("moreMode");
+                eraseCookie("moreMode");
             }
-        }
+        }        
 
         // currently unused
         function fetchExtraSections() {

@@ -20,23 +20,22 @@ require([guardian.js.modules.trailblockGenerator,
     guardian.js.modules.detect],
     function(trailblockGenerator, expanderBinder, $g, bonzo, bean, detect){
 
-        expanderBinder.init();
+        // hack-tastic
 
-
-        // set up tests for placement of "more on story" packages
-        var urlParams = $g.getUrlVars();
-
-        if(urlParams.mode) {
-            var mode = parseInt(urlParams.mode);
-            if (mode >= 1 && mode <= 6) { // limit to our 6 test cases for now
-                localStorage.setItem("moreMode", mode);
-            } else { // anything else resets it
-                localStorage.removeItem("moreMode");
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
             }
+            return null;
         }
 
-        // begin more-on-story tests
-        var mode = localStorage.getItem("moreMode");
+
+        // begin more-on-story tests        
+        var mode = readCookie("moreMode")
 
         // begin tests for in-article related items
         // swap out the related items if layout mode is base/extended
