@@ -12,7 +12,8 @@ define([
 	            header: '',
 	            elm: document.getElementById('tier3-1'),
 	            limit: 3, // number of items to show by default
-	            allowExpanding: true
+	            allowExpanding: true,
+	            showSubHeadings: false
 	        };
 
 	        // override defaults
@@ -140,7 +141,8 @@ define([
 			function buildTrails(articles) {
 
 	            // set up templates
-	            var trail = '<li><div class="media b1">{0}<div class="bd"><p><strong><a href="{1}">{2}</a></strong></p><p class="gt-base trailtext">{3}</p></div></div></li>';
+	            var trail = '<li><div class="media b1">{0}<div class="bd">{1}<p><strong><a href="{2}">{3}</a></strong></p><p class="gt-base trailtext">{4}</p></div></div></li>';
+
 	            var trailPic = '<a href="{0}" class="img"><img class="maxed" src="{1}" alt="{2}" /></a>';
 
 	            var html = '';
@@ -158,13 +160,21 @@ define([
 	                var article = articles[i];
 	                var img = '';
 
+	                // todo: strip HTML from captions
 	                if (article.images && article.images.length > 0) {
 	                    var imageToUse = getBestImage(article.images);
 	                    var altText = imageToUse.caption + ' (' + imageToUse.credit + ')';
 	                    img = basicTemplate.format(trailPic, article.url, imageToUse.url, altText);
 	                }
 
-	                html += basicTemplate.format(trail, img, article.url, article.linkText, stripParagraphs(article.trailText));
+	                var subHeading = ''; 
+
+	                // takes first tag, fairly dumb
+	                if (options.showSubHeadings && article.tags) {
+	                	subHeading = '<h5>' + article.tags[0].name + '</h5>';
+	                }
+
+	                html += basicTemplate.format(trail, img, subHeading, article.url, article.linkText, stripParagraphs(article.trailText));
 	            }
 
 	            html += '</ul>';

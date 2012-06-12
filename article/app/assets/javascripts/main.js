@@ -111,7 +111,8 @@ require([guardian.js.modules.trailblockGenerator,
                 mode: 'nestedSingle',
                 elm: placeholder,
                 header: 'Related content by tags',
-                allowExpanding: allowExpanding
+                allowExpanding: allowExpanding,
+                showSubHeadings: true
             });
         }
 
