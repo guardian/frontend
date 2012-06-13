@@ -3,6 +3,30 @@ package common
 import akka.dispatch.{ MessageDispatcher, Dispatcher }
 import com.gu.management.{ TextMetric, GaugeMetric, CountMetric, TimingMetric }
 
+trait TimingMetricLogging extends Logging { self: TimingMetric =>
+  override def measure[T](block: => T): T = {
+    var result: Option[T] = None
+    var elapsed = 0L
+    val s = new com.gu.management.StopWatch
+
+    try {
+      result = Some(block)
+      elapsed = s.elapsed
+      log.debug("%s completed after %s ms" format (name, elapsed))
+    } catch {
+      case e: Throwable =>
+        elapsed = s.elapsed
+
+        log.debug("%s halted by exception after %s ms" format (name, elapsed))
+        throw e
+    } finally {
+      self.recordTimeSpent(elapsed)
+    }
+
+    result.get
+  }
+}
+
 object RequestMetrics {
   object RequestTimingMetric extends TimingMetric(
     "performance",
@@ -27,7 +51,7 @@ object ContentApiMetrics {
     "Content API calls",
     "outgoing requests to content api",
     Some(RequestMetrics.RequestTimingMetric)
-  )
+  ) with TimingMetricLogging
 
   val all = Seq(ContentApiHttpTimingMetric)
 }
