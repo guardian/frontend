@@ -12,12 +12,12 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
     try {
       result = Some(block)
       elapsed = s.elapsed
-      log.debug("%s completed after %s ms" format (name, elapsed))
+      log.info("%s completed after %s ms" format (name, elapsed))
     } catch {
       case e: Throwable =>
         elapsed = s.elapsed
 
-        log.debug("%s halted by exception after %s ms" format (name, elapsed))
+        log.info("%s halted by exception after %s ms" format (name, elapsed))
         throw e
     } finally {
       self.recordTimeSpent(elapsed)
