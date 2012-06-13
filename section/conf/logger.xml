@@ -3,10 +3,10 @@
     <contextName>frontend-section</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/frontend-section.log</file>
+        <file>logs/frontend-section.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/frontend-section.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-section.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
 
