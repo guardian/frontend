@@ -22,14 +22,13 @@ object ArticleController extends Controller with Logging {
       .showTags("all")
       .showFields("all")
       .showMedia("all")
-      //      .showRelated(true)
+      .showRelated(true)
       .showStoryPackage(true)
       .itemId(path)
       .response
 
     val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
-    //    val related = response.relatedContent map { new Content(_) }
-    val related = List[Content]()
+    val related = response.relatedContent map { new Content(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
     articleOption map { article => ArticlePage(article, related, storyPackage.filterNot(_.id == article.id)) }
