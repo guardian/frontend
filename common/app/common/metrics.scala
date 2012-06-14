@@ -44,18 +44,6 @@ object RequestMetrics {
   val all = Seq(RequestTimingMetric, Request200s, Request50xs, Request404s, RequestOther, Request30xs)
 }
 
-object ContentApiMetrics {
-  object ContentApiHttpTimingMetric extends TimingMetric(
-    "performance",
-    "content-api-calls",
-    "Content API calls",
-    "outgoing requests to content api",
-    Some(RequestMetrics.RequestTimingMetric)
-  ) with TimingMetricLogging
-
-  val all = Seq(ContentApiHttpTimingMetric)
-}
-
 object AkkaMetrics extends AkkaSupport {
 
   class DispatcherInhabitantsMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
@@ -116,5 +104,5 @@ object AkkaMetrics extends AkkaSupport {
 }
 
 object CommonMetrics {
-  lazy val all = ContentApiMetrics.all ++ RequestMetrics.all ++ AkkaMetrics.all
+  lazy val all = RequestMetrics.all ++ AkkaMetrics.all
 }
