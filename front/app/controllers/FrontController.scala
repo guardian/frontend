@@ -67,7 +67,7 @@ object FrontTrails extends Logging {
     frontBlocks.foldLeft(Seq.empty[FrontBlock]) {
       case (blocks, FrontBlock(item, trails)) =>
         val trailsAlreadyInList = blocks flatMap (_.trails) map (_.url)
-        val newBlocks = trails.filterNot(trailsAlreadyInList contains _.url)
+        val newBlocks = trails.filterNot(trailsAlreadyInList contains _.url) take 10
         (blocks :+ FrontBlock(item, newBlocks)) filterNot (_.trails isEmpty)
     }
   }
@@ -79,17 +79,19 @@ object FrontTrails extends Logging {
     val response: ItemResponse = ContentApi.item
       .edition(edition)
       .showTags("all")
-      .showFields("trail-text")
+      .showFields("trail-text,liveBloggingNow")
       .showMedia("all")
       .showEditorsPicks(true)
       .showMostViewed(true)
       .itemId(id)
+      .pageSize(15)
       .response
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
+    val editorsPicksIds = editorsPicks map (_.id)
+    val latest = response.results map { new Content(_) } filterNot (c => editorsPicksIds contains (c.id))
 
-    if (editorsPicks isEmpty) response.results map { new Content(_) }
-    else editorsPicks
+    (editorsPicks ++ latest)
   }
 
 }
