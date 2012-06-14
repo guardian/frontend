@@ -17,7 +17,7 @@ object Switches {
 }
 
 object Metrics {
-  val all: Seq[Metric] = CommonMetrics.all
+  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
 }
 
 object Management extends Management {
