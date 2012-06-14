@@ -34,7 +34,6 @@ require([guardian.js.modules["$g"]],
 );
 
 //todo only load for percentage of users
-optimizely = optimizely || [];
 require(['http://cdn.optimizely.com/js/' + guardian.page.optimizelyId + '.js'], function(optimizely){})
 
 //these are plugins required by all pages
