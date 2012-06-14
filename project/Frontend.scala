@@ -18,7 +18,9 @@ object Frontend extends Build with Prototypes {
 
   val tag = application("tag").dependsOn(common)
   val section = application("section").dependsOn(common)
-  val front = application("front").dependsOn(common)
+  val front = application("front").dependsOn(common).settings(
+    libraryDependencies += "com.typesafe.akka" % "akka-agent" % "2.0.2"
+  )
 
   val main = root().aggregate(
     common, article, gallery, tag, section, front
@@ -56,7 +58,8 @@ trait Prototypes {
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
         Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
         "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
-        Resolver.url("Play 2.1-SNAPSHOT", url("http://guardian.github.com/ivy/repo-snapshots"))(Resolver.ivyStylePatterns)
+        Resolver.url("Play 2.1-SNAPSHOT", url("http://guardian.github.com/ivy/repo-snapshots"))(Resolver.ivyStylePatterns),
+        "Akka" at "http://repo.akka.io/releases"
       ),
 
       libraryDependencies ++= Seq(

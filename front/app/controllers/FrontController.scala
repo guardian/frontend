@@ -5,7 +5,7 @@ import common._
 import conf._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Akka
-import akka.actor.{ Actor, Props }
+import akka.agent.Agent
 
 case class NetworkFrontPage(blocks: Seq[FrontBlock])
 
@@ -52,25 +52,24 @@ object FrontTrails extends Logging {
     FrontItem("/business", "Business", 3)
   )
 
-  private var ukBlocks: Seq[FrontBlock] = Nil
-  private var usBlocks: Seq[FrontBlock] = Nil
+  private val ukAgents = frontItems map { _ -> Agent[Seq[Trail]](Nil)(Akka.system) } toMap
+  private val usAgents = frontItems map { _ -> Agent[Seq[Trail]](Nil)(Akka.system) } toMap
 
-  private class RefreshActor extends Actor {
-    def receive = {
-      case item: FrontItem =>
-        ukBlocks = ukBlocks.filterNot(_.item.id == item.id) :+ FrontBlock(item, loadTrails(item.id, "UK"))
-        usBlocks = usBlocks.filterNot(_.item.id == item.id) :+ FrontBlock(item, loadTrails(item.id, "US"))
-    }
+  def refresh() {
+    ukAgents foreach { case (item, agent) => agent.sendOff { s => loadTrails(item.id, "UK") } }
+    usAgents foreach { case (item, agent) => agent.sendOff { s => loadTrails(item.id, "US") } }
   }
 
-  private val refresher = Akka.system.actorOf(Props[RefreshActor])
+  def blocksFor(edition: String): Seq[FrontBlock] = {
+    val blockAgents = if (edition == "US") usAgents else ukAgents
+    val frontBlocks = frontItems map { item => FrontBlock(item, blockAgents(item)()) }
 
-  def refresh() { frontItems.foreach(refresher ! _) }
-
-  def blocksFor(edition: String) = frontItems flatMap {
-    case FrontItem(id, _, _) =>
-      val blocks = if (edition == "US") usBlocks else ukBlocks
-      blocks.find(_.item.id == id)
+    frontBlocks.foldLeft(Seq.empty[FrontBlock]) {
+      case (blocks, FrontBlock(item, trails)) =>
+        val trailsAlreadyInList = blocks flatMap (_.trails) map (_.url)
+        val newBlocks = trails.filterNot(trailsAlreadyInList contains _.url)
+        (blocks :+ FrontBlock(item, newBlocks)) filterNot (_.trails isEmpty)
+    }
   }
 
   private def loadTrails(id: String, edition: String): Seq[Trail] = {

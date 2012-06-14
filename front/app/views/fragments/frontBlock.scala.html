@@ -26,7 +26,7 @@
         </ul>
 
         @if(numTrails > block.item.numItemsVisible) {
-        <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More top stories</a> <span class="count">@(numTrails - block.item.numItemsVisible)</span></h3>
+        <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More @block.item.name.toLowerCase</a> <span class="count">@(numTrails - block.item.numItemsVisible)</span></h3>
         }
 
         }
