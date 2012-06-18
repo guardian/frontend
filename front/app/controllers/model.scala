@@ -3,14 +3,11 @@ package controllers
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
-import play.api.libs.concurrent.Akka
-import akka.agent.Agent
-import common.Content
 
-case class FrontTrailBlock(description: FrontTrailBlockDescription, trails: Seq[Trail])
-case class FrontTrailBlockDescription(id: String, name: String, numItemsVisible: Int)
+case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
+case class TrailblockDescription(id: String, name: String, numItemsVisible: Int)
 
-class Front(val trailblocks: Seq[FrontTrailBlock]) extends MetaData {
+class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
   override val id = ""
   override val section = ""
@@ -21,57 +18,68 @@ class Front(val trailblocks: Seq[FrontTrailBlock]) extends MetaData {
     "keywords" -> "",
     "content-type" -> "Network Front"
   )
+
+  lazy val collapseEmptyBlocks: Front = new Front(trailblocks filterNot { _.trails.isEmpty })
 }
 
-object Front extends Logging {
-
-  import play.api.Play.current
-
-  private val frontItems = Seq(
-    FrontTrailBlockDescription("/", "Top stories", 5),
-    FrontTrailBlockDescription("/sport", "Sport", 3),
-    FrontTrailBlockDescription("/football/euro2012", "Euro 2012", 3),
-    FrontTrailBlockDescription("/commentisfree", "Comment", 3),
-    FrontTrailBlockDescription("/culture", "Culture", 3),
-    FrontTrailBlockDescription("/lifeandstyle", "Life & style", 3),
-    FrontTrailBlockDescription("/business", "Business", 3)
+trait FrontTrailblockConfiguration {
+  val ukTrailblocks = Seq(
+    TrailblockDescription("/", "Top stories", 5),
+    TrailblockDescription("/sport", "Sport", 3),
+    TrailblockDescription("/football/euro2012", "Euro 2012", 3),
+    TrailblockDescription("/commentisfree", "Comment", 3),
+    TrailblockDescription("/culture", "Culture", 3),
+    TrailblockDescription("/lifeandstyle", "Life & style", 3),
+    TrailblockDescription("/business", "Business", 3)
   )
 
-  private val ukAgents = frontItems map { _ -> Agent[Seq[Trail]](Nil)(Akka.system) } toMap
-  private val usAgents = frontItems map { _ -> Agent[Seq[Trail]](Nil)(Akka.system) } toMap
+  val usTrailblocks = Seq(
+    TrailblockDescription("/", "Top stories", 5),
+    TrailblockDescription("/sport", "Sport", 3),
+    TrailblockDescription("/sport/nfl", "NFL", 3),
+    TrailblockDescription("/commentisfree", "Comment", 3),
+    TrailblockDescription("/culture", "Culture", 3),
+    TrailblockDescription("/lifeandstyle", "Life & style", 3),
+    TrailblockDescription("/business", "Business", 3)
+  )
+}
 
-  def refresh() {
-    ukAgents foreach {
-      case (item, agent) => agent.sendOff {
-        s => loadTrails(item.id, "UK")
-      }
-    }
-    usAgents foreach {
-      case (item, agent) => agent.sendOff {
-        s => loadTrails(item.id, "US")
-      }
+object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging {
+
+  private val agents = Map(
+    "UK" -> (ukTrailblocks map { TrailblockAgent(_, "UK") }),
+    "US" -> (usTrailblocks map { TrailblockAgent(_, "US") })
+  )
+
+  case class TrailblockAgent(description: TrailblockDescription, edition: String) {
+    private val agent = play_akka.agent(Seq[Trail]())
+
+    def trailblock(): Trailblock = Trailblock(description, agent())
+    def refreshTrailblock() {
+      agent sendOff { s => loadTrails(description.id, edition) }
     }
   }
 
+  def refreshTrailblocks() { agents.values.flatten map { _.refreshTrailblock() } }
+
   def apply(edition: String): Front = {
-    val blockAgents = if (edition == "US") usAgents else ukAgents
-    val frontBlocks = frontItems map {
-      item => FrontTrailBlock(item, blockAgents(item)())
+    val trailblocks = agents(if (edition == "US") "US" else "UK") map { _.trailblock() }
+
+    var used = Set[String]()
+    var deduped = Seq[Trailblock]()
+
+    for (Trailblock(description, trails) <- trailblocks) {
+      val dedupedTrails: Seq[Trail] = trails filterNot { _.url in used } take 10
+
+      used ++= dedupedTrails map { _.url }
+      deduped :+= Trailblock(description, dedupedTrails)
     }
 
-    val blocks = frontBlocks.foldLeft(Seq.empty[FrontTrailBlock]) {
-      case (blocks, FrontTrailBlock(item, trails)) =>
-        val trailsAlreadyInList = blocks flatMap (_.trails) map (_.url)
-        val newBlocks = trails.filterNot(trailsAlreadyInList contains _.url) take 10
-        (blocks :+ FrontTrailBlock(item, newBlocks)) filterNot (_.trails isEmpty)
-    }
-
-    new Front(blocks)
+    new Front(deduped).collapseEmptyBlocks
   }
 
   private def loadTrails(id: String, edition: String): Seq[Trail] = {
     log.info("Refreshing trailblock " + id + " for edition " + edition)
-
     val response: ItemResponse = ContentApi.item
       .edition(edition)
       .showTags("all")
@@ -83,15 +91,11 @@ object Front extends Logging {
       .pageSize(15)
       .response
 
-    val editorsPicks = response.editorsPicks map {
-      new Content(_)
-    }
+    val editorsPicks = response.editorsPicks map { new Content(_) }
     val editorsPicksIds = editorsPicks map (_.id)
-    val latest = response.results map {
-      new Content(_)
-    } filterNot (c => editorsPicksIds contains (c.id))
+    val latest = response.results map { new Content(_) } filterNot (c => editorsPicksIds contains (c.id))
 
-    (editorsPicks ++ latest)
+    editorsPicks ++ latest
   }
 
 }

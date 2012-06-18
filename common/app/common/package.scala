@@ -32,6 +32,10 @@ object `package` {
     lazy val dequote = s.replace("\"", "")
   }
 
+  implicit def any2In[A](a: A) = new {
+    def in(as: Set[A]): Boolean = as contains a
+  }
+
   implicit def int2RichInt(i: Int) = new {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i

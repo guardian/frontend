@@ -1,6 +1,7 @@
 package common
 
 import akka.actor.{ ActorSystem, Cancellable }
+import akka.agent.Agent
 import akka.util.Duration
 import akka.util.duration._
 import play.api.libs.concurrent.{ Akka => PlayAkka }
@@ -23,5 +24,7 @@ trait AkkaSupport {
         system().scheduler.schedule(0 seconds, duration) { block }
       }
     }
+
+    def agent[T](value: T): Agent[T] = Agent(value)(play_akka.system())
   }
 }

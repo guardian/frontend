@@ -19,7 +19,7 @@ object Global extends GlobalSettings with AkkaSupport with RequestTimer with Sta
 
   override def onStart(app: play.api.Application) {
     refreshSchedule = Some(play_akka.scheduler.every(60 seconds) {
-      Front.refresh()
+      Front.refreshTrailblocks()
     })
   }
 
