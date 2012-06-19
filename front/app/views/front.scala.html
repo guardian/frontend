@@ -1,4 +1,4 @@
-@(page: MetaData, blocks: Seq[FrontBlock])(implicit request: RequestHeader)
+@(front: Front)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
 <head>
     <title>beta.guardian.co.uk</title>
     @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(page, conf.Configuration)
+    @fragments.metaData(front, conf.Configuration)
 
     @fragments.commonCssSetup(Static)
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
@@ -22,12 +22,12 @@
                 @fragments.navigation(Static)
             </div>
         </div>
-        @blocks.map{ block =>
+        @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
     </div>
 
     @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(page, conf.Configuration)
+    @fragments.analytics(front, conf.Configuration)
 </body>
 </html>
