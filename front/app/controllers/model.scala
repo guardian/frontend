@@ -79,6 +79,11 @@ object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging 
 
       }
     }
+    def close() = agent.close()
+  }
+
+  def shutdown() = agents foreach {
+    case (_, agents) => agents.foreach(_.close())
   }
 
   def refreshTrailblocks() { agents.values.flatten map { _.refreshTrailblock() } }
