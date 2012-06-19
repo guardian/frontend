@@ -99,7 +99,6 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
   lazy val pageId = delegate
-  lazy val contributorImageUrl: Option[String] = delegate.bylineImageUrl
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,

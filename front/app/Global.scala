@@ -25,6 +25,5 @@ object Global extends GlobalSettings with AkkaSupport with RequestTimer with Sta
 
   override def onStop(app: play.api.Application) {
     refreshSchedule foreach { _.cancel() }
-    Front.shutdown()
   }
 }
