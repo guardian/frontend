@@ -3,6 +3,7 @@ package controllers
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
+import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 
 case class GalleryPage(

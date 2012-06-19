@@ -1,10 +1,10 @@
 package views.support
 
+import com.gu.openplatform.contentapi.model.{ MediaAsset, Tag => ApiTag }
+import model.{ Image, Images, Tags, Tag }
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import xml.XML
-import common.{ Image, Images, Tags, Tag }
-import com.gu.openplatform.contentapi.model.{ MediaAsset, Tag => ApiTag }
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 

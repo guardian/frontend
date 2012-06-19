@@ -3,9 +3,7 @@ package controllers
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
-
-case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
-case class TrailblockDescription(id: String, name: String, numItemsVisible: Int)
+import model._
 
 class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
