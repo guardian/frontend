@@ -56,7 +56,7 @@ trait Prototypes {
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
         Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
         "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
-        Resolver.url("Play 2.1-SNAPSHOT", url("http://guardian.github.com/ivy/repo-snapshots"))(Resolver.ivyStylePatterns),
+        "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
         "Akka" at "http://repo.akka.io/releases"
       ),
 
