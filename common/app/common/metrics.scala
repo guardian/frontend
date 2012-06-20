@@ -76,23 +76,23 @@ object AkkaMetrics extends AkkaSupport {
     }
   )
 
-  object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => akka.uptime())
+  object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => play_akka.uptime())
 
-  object ActionsDispatcherInhabitants extends DispatcherInhabitantsMetric("actions_dispatcher", akka.dispatcher.actions)
-  object ActionsDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("actions_dispatcher", akka.dispatcher.actions)
-  object ActionsDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("actions_dispatcher", akka.dispatcher.actions)
+  object ActionsDispatcherInhabitants extends DispatcherInhabitantsMetric("actions_dispatcher", play_akka.dispatcher.actions)
+  object ActionsDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("actions_dispatcher", play_akka.dispatcher.actions)
+  object ActionsDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("actions_dispatcher", play_akka.dispatcher.actions)
 
-  object PromisesDispatcherInhabitants extends DispatcherInhabitantsMetric("promises_dispatcher", akka.dispatcher.promises)
-  object PromisesDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("promises_dispatcher", akka.dispatcher.promises)
-  object PromisesDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("promises_dispatcher", akka.dispatcher.promises)
+  object PromisesDispatcherInhabitants extends DispatcherInhabitantsMetric("promises_dispatcher", play_akka.dispatcher.promises)
+  object PromisesDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("promises_dispatcher", play_akka.dispatcher.promises)
+  object PromisesDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("promises_dispatcher", play_akka.dispatcher.promises)
 
-  object WebsocketsDispatcherInhabitants extends DispatcherInhabitantsMetric("websockets_dispatcher", akka.dispatcher.websockets)
-  object WebsocketsDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("websockets_dispatcher", akka.dispatcher.websockets)
-  object WebsocketsDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("websockets_dispatcher", akka.dispatcher.websockets)
+  object WebsocketsDispatcherInhabitants extends DispatcherInhabitantsMetric("websockets_dispatcher", play_akka.dispatcher.websockets)
+  object WebsocketsDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("websockets_dispatcher", play_akka.dispatcher.websockets)
+  object WebsocketsDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("websockets_dispatcher", play_akka.dispatcher.websockets)
 
-  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", akka.dispatcher.default)
-  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", akka.dispatcher.default)
-  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", akka.dispatcher.default)
+  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", play_akka.dispatcher.default)
+  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", play_akka.dispatcher.default)
+  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", play_akka.dispatcher.default)
 
   val all = Seq(
     Uptime,

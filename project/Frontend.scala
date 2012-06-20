@@ -18,9 +18,7 @@ object Frontend extends Build with Prototypes {
 
   val tag = application("tag").dependsOn(common)
   val section = application("section").dependsOn(common)
-  val front = application("front").dependsOn(common).settings(
-    libraryDependencies += "com.typesafe.akka" % "akka-agent" % "2.0.2"
-  )
+  val front = application("front").dependsOn(common)
 
   val main = root().aggregate(
     common, article, gallery, tag, section, front
@@ -58,7 +56,7 @@ trait Prototypes {
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
         Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
         "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
-        Resolver.url("Play 2.1-SNAPSHOT", url("http://guardian.github.com/ivy/repo-snapshots"))(Resolver.ivyStylePatterns),
+        "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
         "Akka" at "http://repo.akka.io/releases"
       ),
 
@@ -79,15 +77,15 @@ trait Prototypes {
       )
     )
 
-  val guardianManagementVersion = "5.13"
-
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % guardianManagementVersion,
-      "com.gu" %% "management-logback" % guardianManagementVersion,
+      "com.gu" %% "management-play" % "5.13",
+      "com.gu" %% "management-logback" % "5.13",
       "com.gu" %% "configuration" % "3.6",
       "com.gu.openplatform" %% "content-api-client" % "1.15",
+
+      "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
