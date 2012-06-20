@@ -1,0 +1,52 @@
+.impact {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.impact {
+
+    li {
+        font-weight: bold;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+    }
+
+    .minor {
+        float: left;
+        width: 50%;
+        display: block;
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+
+        &:last-child {
+            border: none;
+        }
+
+        a {
+            font-size: 16px !important;
+        }
+    }
+
+    .main {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+        a {
+            font-size: 24px !important;
+            line-height: 24px;
+        }
+    }
+
+    a {
+        display: block;
+        min-height: 85px;
+        color: #fff;
+        padding: 5px;
+        background: rgba(128, 128, 128, .7);
+
+        &:hover {
+            background: darken(rgba(128, 128, 128, .7), 10%);
+        }
+    }
+}

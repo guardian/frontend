@@ -16,11 +16,10 @@
 
         <ul class="plain">
             @block.trails.zipWithRowInfo.map{ case(trail, row) =>
-            <li>@if(block.description.id == "/"){
-                    @fragments.formatTrailWithSection(trail)
-                } else {
-                    @fragments.formatTrail(trail)
-                }
+            <li>@{trail.layout match{
+                case "impact" =>  fragments.formatImpactTrail(trail)
+                case _ => fragments.formatNormalTrail(trail)
+            }}
             </li>
             }
         </ul>
