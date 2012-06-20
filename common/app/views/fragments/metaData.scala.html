@@ -11,9 +11,10 @@
     <meta charset="utf-8" />
 
 @item.metaData.map { case (key, value) =>
-    <meta name="@key" value="@value"/>
+    <meta name="@key" content="@value"/>
 }
-    <meta name="edition" value="@Edition(request, config)"/>
+    <meta name="edition" content="@Edition(request, config)"/>
+    <meta name="rendered-at" content="@{(new org.joda.time.DateTime()).toISODateTimeNoMillisString}"/>
 
 @*
     exposes all metadata tags as javascript variables

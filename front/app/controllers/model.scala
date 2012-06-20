@@ -50,12 +50,29 @@ object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging 
   )
 
   case class TrailblockAgent(description: TrailblockDescription, edition: String) {
-    private val agent = play_akka.agent(Seq[Trail]())
+    private val agent = play_akka.agent(Seq[TrailWithPackage]())
 
     def trailblock(): Trailblock = Trailblock(description, agent())
     def refreshTrailblock() {
-      agent sendOff { s => loadTrails(description.id, edition) }
+      agent sendOff { s =>
+        val trails = loadTrails(description.id, edition)
+
+        //if we cannot load the story package we still want to display the trails
+        val storyPackageForFirstTrail = failQuietly(Seq[Trail]()) {
+          trails.head match {
+            case c: Content => loadStoryPackage(c.id, edition)
+            case _ => Nil
+          }
+        }
+        TrailWithPackage(trails.head, storyPackageForFirstTrail) :: trails.tail.map(TrailWithPackage(_, Nil)).toList
+
+      }
     }
+    def close() = agent.close()
+  }
+
+  def shutdown() = agents foreach {
+    case (_, agents) => agents.foreach(_.close())
   }
 
   def refreshTrailblocks() { agents.values.flatten map { _.refreshTrailblock() } }
@@ -67,13 +84,33 @@ object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging 
     var deduped = Seq[Trailblock]()
 
     for (Trailblock(description, trails) <- trailblocks) {
-      val dedupedTrails: Seq[Trail] = trails filterNot { _.url in used } take 10
+      val dedupedTrails: Seq[TrailWithPackage] = trails filterNot { _.trail.url in used } take 10
 
-      used ++= dedupedTrails map { _.url }
+      used ++= dedupedTrails map { _.trail.url }
       deduped :+= Trailblock(description, dedupedTrails)
     }
 
     new Front(deduped).collapseEmptyBlocks
+  }
+
+  private def failQuietly[A](default: A)(block: => A) = try {
+    block
+  } catch {
+    case e => log.error("failed quietly", e); default
+  }
+
+  private def loadStoryPackage(id: String, edition: String): Seq[Trail] = {
+    log.info("Refreshing trailblock " + id + " for edition " + edition)
+    val response: ItemResponse = ContentApi.item
+      .showStoryPackage(true)
+      .edition(edition)
+      .showTags("all")
+      .showFields("trail-text,liveBloggingNow")
+      .showMedia("all")
+      .itemId(id)
+      .response
+
+    response.storyPackage map { new Content(_) } filterNot (_.id == id)
   }
 
   private def loadTrails(id: String, edition: String): Seq[Trail] = {

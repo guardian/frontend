@@ -1,4 +1,6 @@
-@(trail: Trail)
+@(trailWithPackage: TrailWithPackage)
+
+@defining(trailWithPackage.trail){ trail =>
 <div class="media b1">
     @trail.imageOfWidth(150, tolerance=20).map{ image =>
     <a href="@trail.url" class="img" data-link-name="trail image">
@@ -6,8 +8,9 @@
     </a>
     }
     <div class="bd">
-        <a data-link-name="trail section" href="/@trail.section">@trail.sectionName</a>
         <p><a href="@trail.url" data-link-name="link text">@RemoveOuterParaHtml(trail.linkText)</a></p>
         @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>
 </div>
+
+}

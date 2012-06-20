@@ -1,0 +1,12 @@
+@(trailWithPackage: TrailWithPackage)
+
+@defining(trailWithPackage.trail){ trail =>
+<div class="impact" style="background-image: url('@trail.imageOfWidth(460).get.url')">
+<ol class="media b1">
+    <li class="main"><a href="@trail.url">@trail.linkText</a></li>
+@defining(trailWithPackage.storyPackage.take(2)){ storyPackage =>
+    @storyPackage.map{ t => <li class="minor"><a href="@t.url">@t.linkText</a></li> }
+}
+</ol>
+</div>
+}
