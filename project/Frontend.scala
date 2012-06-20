@@ -19,9 +19,10 @@ object Frontend extends Build with Prototypes {
   val tag = application("tag").dependsOn(common)
   val section = application("section").dependsOn(common)
   val front = application("front").dependsOn(common)
+  val coreNavigation = application("core-navigation").dependsOn(common)
 
   val main = root().aggregate(
-    common, article, gallery, tag, section, front
+    common, article, gallery, tag, section, front, coreNavigation
   )
 }
 
@@ -74,7 +75,8 @@ trait Prototypes {
         "common._",
         "model._",
         "views._",
-        "views.support._"
+        "views.support._",
+        "conf._"
       )
     )
 
@@ -100,9 +102,9 @@ trait Prototypes {
 
   def application(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
-    templatesImport ++= Seq(
-      "conf.Static"
-    ),
+//    templatesImport ++= Seq(
+//      "conf.Static"
+//    ),
     executableName := "frontend-%s" format  name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
     //these merge strategies are for the htmlcompressor
