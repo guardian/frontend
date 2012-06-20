@@ -49,5 +49,4 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api
 
     val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpClientCollectionPoolSize)
   }
-
 }

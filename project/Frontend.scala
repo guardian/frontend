@@ -72,6 +72,7 @@ trait Prototypes {
 
       templatesImport ++= Seq(
         "common._",
+        "model._",
         "views._",
         "views.support._"
       )

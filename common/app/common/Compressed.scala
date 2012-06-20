@@ -1,7 +1,7 @@
 package common
 
-import play.api.templates.Html
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor
+import play.api.templates.Html
 
 object Compressed extends Logging {
 

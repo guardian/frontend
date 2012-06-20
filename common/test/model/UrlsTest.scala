@@ -1,15 +1,14 @@
-package common
+package model
 
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
+import org.joda.time.DateTime
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
 import play.api.Play
 import play.api.mvc.Request
 import play.api.test.FakeHeaders
-import com.sun.corba.se.pept.transport.InboundConnectionCache
 
-class UrlTest extends FlatSpec with ShouldMatchers {
+class UrlsTest extends FlatSpec with ShouldMatchers {
 
   Play.unsafeApplication
 
@@ -58,20 +57,19 @@ class UrlTest extends FlatSpec with ShouldMatchers {
     Tag(tag("foo/bar")).url should be("/foo/bar")
   }
 
-  "TagLinks" should "link to tags" in {
-    val tags = Seq(Tag(tag("profile/john-smith", "John Smith")), Tag(tag("profile/joesoap", "Joe Soap")))
-
-    TagLinks("John Smith and Joe Soap and John Smith Again", tags).text should
-      equal("""<a href="/profile/john-smith" data-link-name="auto tag link">John Smith</a> and <a href="/profile/joesoap" data-link-name="auto tag link">Joe Soap</a> and John Smith Again""")
-  }
-
   case class FakeRequest(private val _headers: Map[String, Seq[String]]) extends Request[String] {
     def uri = ""
+
     def path = ""
+
     def method = ""
+
     def queryString = Map.empty[String, Seq[String]]
+
     def headers = FakeHeaders(_headers)
+
     def body = ""
+
     def remoteAddress = ""
   }
 
