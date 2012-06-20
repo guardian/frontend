@@ -3,18 +3,7 @@ package controllers
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
-
-case class TrailWithPackage(trail: Trail, storyPackage: Seq[Trail] = Nil) {
-
-  def layout = {
-    val hasCorrectSizeImage = trail.imageOfWidth(460).isDefined
-    if (hasCorrectSizeImage && storyPackage.size > 1) "impact"
-    else "normal"
-  }
-
-}
-case class Trailblock(description: TrailblockDescription, trails: Seq[TrailWithPackage])
-case class TrailblockDescription(id: String, name: String, numItemsVisible: Int)
+import model._
 
 class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"

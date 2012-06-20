@@ -1,13 +1,17 @@
 package views.support
 
+import common._
+import java.net.URLEncoder._
+import model._
+import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import common._
-import org.jsoup.nodes.Document
+
+import scala.Some
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -105,6 +109,42 @@ object InBodyLinkCleaner extends HtmlCleaner {
       link.attr("data-link-name", "in body link")
     }
     body
+  }
+}
+
+object TagLinks {
+  def apply(text: String, tags: Seq[Tag]): Html = Html {
+    tags.foldLeft(text) {
+      case (t, tag) =>
+        t.replaceFirst(tag.name, <a data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a>.toString)
+    }
+  }
+  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
+}
+
+object OmnitureAnalyticsData {
+  def apply(page: MetaData): Html = {
+
+    val data = page.metaData.map { case (key, value) => key -> value.toString }
+    val pageCode = data.get("page-code").getOrElse("")
+    val contentType = data.get("content-type").getOrElse("")
+    val section = data.get("section").getOrElse("")
+
+    val analyticsData = Map(
+      "pageName" -> (data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))),
+      "ch" -> section,
+      "c9" -> section,
+      "c4" -> data.get("keywords").getOrElse(""),
+      "c6" -> data.get("author").getOrElse(""),
+      "c8" -> pageCode,
+      "c10" -> data.get("tones").getOrElse(""),
+      "c11" -> section,
+      "c13" -> data.get("series").getOrElse(""),
+      "c25" -> data.get("blogs").getOrElse(""),
+      "c14" -> data("build-number")
+    )
+
+    Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
   }
 }
 

@@ -1,14 +1,14 @@
-package common
+package model
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import play.api.templates.Html
-import play.api.mvc.{ SimpleResult }
+import play.api.mvc.SimpleResult
 import org.scala_tools.time.Imports._
 
-class HttpTest extends FlatSpec with ShouldMatchers {
+class CachedOkTest extends FlatSpec with ShouldMatchers {
 
   "CachedOk" should "cache live content for 5 seconds" in {
 
@@ -44,9 +44,13 @@ class HttpTest extends FlatSpec with ShouldMatchers {
   it should "cache other things for 1 minute" in {
     val page = new MetaData {
       def canonicalUrl = ""
+
       def id = ""
+
       def section = ""
+
       def apiUrl = ""
+
       def webTitle = ""
     }
 

@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import conf._
+import model._
 import play.api.mvc.{ Result, RequestHeader, Controller, Action }
 
 case class FrontPage(front: Front)

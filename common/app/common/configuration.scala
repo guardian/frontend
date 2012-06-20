@@ -47,8 +47,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
   }
 
-  override def toString(): String = configuration.toString
-
   object javascript {
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
@@ -63,6 +61,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object debug {
     lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
   }
+
+  override def toString(): String = configuration.toString
 }
 
 object ManifestData {

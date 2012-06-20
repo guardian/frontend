@@ -3,6 +3,7 @@ package controllers
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf._
 import common._
+import model._
 import play.api.mvc.{ Content => _, _ }
 
 case class ArticlePage(article: Article, related: List[Trail], storyPackage: List[Trail])
