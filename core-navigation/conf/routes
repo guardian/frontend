@@ -1,0 +1,10 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /pages/most-popular/*edition/*path                controllers.MostPopularController.render(edition, path)
+
+# For dev machines
+#GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET     /most-popular/*edition/*path                controllers.MostPopularController.render(edition, path)

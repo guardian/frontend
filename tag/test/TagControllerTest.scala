@@ -8,12 +8,12 @@ import play.api.test.Helpers._
 class TagControllerTest extends FlatSpec with ShouldMatchers {
 
   "Tag Controller" should "200 when content type is tag" in Fake {
-    val result = controllers.TagController.render("world/turkey")(FakeRequest())
+    val result = controllers.MostPopularController.render("world/turkey")(FakeRequest())
     status(result) should be(200)
   }
 
   it should "404 when content type is not tag" in Fake {
-    val result = controllers.TagController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(FakeRequest())
+    val result = controllers.MostPopularController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(FakeRequest())
     status(result) should be(404)
   }
 }
