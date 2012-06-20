@@ -8,9 +8,9 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
   "Article Template" should "render article metadata" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
     import browser._
 
-    $("meta[name=content-type]").getAttributes("value").head should be("Article")
-    $("meta[name=edition]").getAttributes("value").head should be("UK")
-    $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
+    $("meta[name=content-type]").getAttributes("content").head should be("Article")
+    $("meta[name=edition]").getAttributes("content").head should be("UK")
+    $("meta[name=api-url]").getAttributes("content").head should be("http://content.guardianapis.com/environment/2012/feb/22/capitalise-low-carbon-future")
   }
 
   it should "render article headline and body" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>

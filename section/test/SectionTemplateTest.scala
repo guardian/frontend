@@ -9,10 +9,10 @@ class SectionTemplateTest extends FlatSpec with ShouldMatchers {
   "Front Template" should "render front metadata" in HtmlUnit("/uk") { browser =>
     import browser._
 
-    $("meta[name=page-id]").getAttributes("value").head should be("uk")
-    $("meta[name=section]").getAttributes("value").head should be("uk")
-    $("meta[name=api-url]").getAttributes("value").head should be("http://content.guardianapis.com/uk")
-    $("meta[name=web-title]").getAttributes("value").head should be("UK news")
+    $("meta[name=page-id]").getAttributes("content").head should be("uk")
+    $("meta[name=section]").getAttributes("content").head should be("uk")
+    $("meta[name=api-url]").getAttributes("content").head should be("http://content.guardianapis.com/uk")
+    $("meta[name=web-title]").getAttributes("content").head should be("UK news")
   }
 
   it should "render front title" in HtmlUnit("/uk") { browser =>
