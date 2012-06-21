@@ -1,6 +1,4 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
-@import fragments._
-@import conf._
 
 <!DOCTYPE html>
 
@@ -46,7 +44,7 @@
                     </div>
                 }
             </div>
-
+            <div id="most-popular"></div>
     </div>
 
     @fragments.debugInfo(conf.Configuration)

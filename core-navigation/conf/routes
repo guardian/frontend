@@ -2,9 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /pages/most-popular/*edition/*path                controllers.MostPopularController.render(edition, path)
+
+GET     /pages/most-popular/*edition/*path              controllers.MostPopularController.render(edition, path)
+GET     /pages/most-popular/*edition                    controllers.MostPopularController.renderGlobal(edition)
 
 # For dev machines
-#GET     /assets/*file               controllers.Assets.at(path="/public", file)
+#GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
 
-GET     /most-popular/*edition/*path                controllers.MostPopularController.render(edition, path)
+GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
+GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
