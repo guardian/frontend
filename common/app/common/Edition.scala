@@ -6,7 +6,7 @@ object Edition extends Logging {
   def apply(request: RequestHeader, config: GuardianConfiguration) = {
     val host = request.headers.get("X-GU-OriginalServer").orElse(request.headers.get("host"))
     val edition = config.edition(host)
-    log.trace("Edition resolved %s -> %s" format (host.getOrElse("UNKNOWN"), edition))
+    log.info("Edition resolved %s -> %s" format (host.getOrElse("UNKNOWN"), edition))
     edition
   }
 }
