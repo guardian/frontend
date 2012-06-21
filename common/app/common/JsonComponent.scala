@@ -1,4 +1,4 @@
-package controllers
+package common
 
 import com.codahale.jerkson.{ Json => JsonParser }
 import common.Compressed
@@ -14,9 +14,4 @@ object JsonComponent extends Results {
       Ok("%s(%s);" format (callback, json)).as("application/javascript")
     } getOrElse (Ok(json).as("application/json"))
   }
-}
-
-object Cached {
-  def apply(seconds: Int)(result: PlainResult) =
-    result.withHeaders("Cache-Control" -> "must-revalidate, max-age=%s".format(seconds))
 }
