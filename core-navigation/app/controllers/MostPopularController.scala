@@ -14,6 +14,8 @@ object MostPopularController extends Controller with Logging {
     lookup(edition, path) map { renderMostPopular } getOrElse { NotFound }
   }
 
+  def renderGlobal(edition: String) = render(edition, "/")
+
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
     log.info("Fetching most popular: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item

@@ -10,7 +10,7 @@
     @fragments.metaData(front, conf.Configuration)
 
     @fragments.commonCssSetup(conf.Static)
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@conf.Static("stylesheets/front.min.css")" />
 </head>
 
 <body>
@@ -24,6 +24,8 @@
         @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
+
+        <div id="most-popular"></div>
     </div>
 
     @fragments.debugInfo(conf.Configuration)

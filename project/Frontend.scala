@@ -75,8 +75,7 @@ trait Prototypes {
         "common._",
         "model._",
         "views._",
-        "views.support._",
-        "conf._"
+        "views.support._"
       )
     )
 
@@ -102,9 +101,6 @@ trait Prototypes {
 
   def application(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
-//    templatesImport ++= Seq(
-//      "conf.Static"
-//    ),
     executableName := "frontend-%s" format  name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
     //these merge strategies are for the htmlcompressor
