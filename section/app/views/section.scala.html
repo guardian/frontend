@@ -6,12 +6,12 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(Static)
+    @fragments.commonJavaScriptSetup(conf.Static)
     @fragments.metaData(section, conf.Configuration)
 
     <title>@Html(section.name) | beta.guardian.co.uk</title>
 
-    @fragments.commonCssSetup(Static)
+    @fragments.commonCssSetup(conf.Static)
 
 </head>
 
@@ -21,7 +21,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(conf.Static)
                 @fragments.headline(section.name)
             </div>
         </div>
@@ -33,6 +33,7 @@
             }
         }
         </div>
+        <div id="most-popular"></div>
     </div>
 
     @fragments.debugInfo(conf.Configuration)

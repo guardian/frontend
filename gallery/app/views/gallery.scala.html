@@ -6,7 +6,7 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(Static)
+    @fragments.commonJavaScriptSetup(conf.Static)
     @fragments.metaData(gallery, conf.Configuration)
 
     <script>
@@ -16,7 +16,7 @@
 
     <title>@Html(gallery.headline)</title>
 
-    @fragments.commonCssSetup(Static)
+    @fragments.commonCssSetup(conf.Static)
 
     <style>
 
@@ -56,7 +56,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(conf.Static)
                 @fragments.headline(gallery.headline)
                 @fragments.standfirst(gallery.standfirst)
             </div>
@@ -132,7 +132,7 @@
 
         </div>
 
-
+        <div id="most-popular"></div>
     </div>
 
     @fragments.debugInfo(conf.Configuration)

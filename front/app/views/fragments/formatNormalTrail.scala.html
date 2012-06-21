@@ -2,7 +2,7 @@
 
 @defining(trailWithPackage.trail){ trail =>
 <div class="media b1">
-    @trail.imageOfWidth(150, tolerance=20).map{ image =>
+    @trail.imageOfWidth(54).map{ image =>
     <a href="@trail.url" class="img" data-link-name="trail image">
         <img class="maxed" src="@image.url" @trail.imageOfWidth(200, tolerance=20).map {full=>data-fullsrc="@full.url"} data-width="@image.width" alt='@Html(image.caption.getOrElse(""))' />
     </a>

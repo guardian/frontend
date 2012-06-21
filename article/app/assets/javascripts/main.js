@@ -1,6 +1,3 @@
-//requirejs.config({
-    //paths: guardian.js.modules
-//});
 
 // High priority modules
 require([guardian.js.modules.detect, guardian.js.modules.topNav],
@@ -104,84 +101,5 @@ require([guardian.js.modules.trailblockGenerator,
                 }
             });
         }
-
-
-        function fetchMostPopular(limit) {
-
-            var endPoint = 'http://simple-navigation.appspot.com/most-popular/section/' + guardian.page.section;
-            //var header =  guardian.page.section + ' most read';
-            var header = null;
-            if (document.referrer && document.referrer.toLowerCase().indexOf('facebook.com') > -1) {
-                endPoint = 'http://simple-navigation.appspot.com/most-popular/facebook';
-                header = 'Most read on Facebook';
-            }
-
-            var placeholder = document.getElementById('tier3-3');
-
-            trailblockGenerator.fetchContent(endPoint, {
-                isShaded: true,
-                header: header,
-                limit: limit,
-                elm: placeholder,
-                componentAnalyticsName: 'most popular'
-            });
-        
-        }
-        
-        // todo: maybe add option to trailblockGenerator not to expand?
-        function fetchRelatedByTags(limit, allowExpanding) {
-
-            // todo: limit to 10 tags max
-            var tags = '?tag=' + guardian.page.tagIds.replace(/,/g, '&tag=') + '&ignore=' + guardian.page.pageId;
-            var moreOnTagsUrl = 'http://simple-navigation.appspot.com/munge-latest.json';
-            var tagUrl = moreOnTagsUrl + tags;
-
-            var placeholder = document.getElementById('tier3-2');
-
-            trailblockGenerator.fetchContent(tagUrl, {
-                isShaded: false,
-                limit: limit,
-                mode: 'nestedSingle',
-                elm: placeholder,
-                header: 'Related content by tags',
-                allowExpanding: allowExpanding,
-                showSubHeadings: true,
-                componentAnalyticsName: 'related tags'
-            });
-        }
-
-        // we're entering tests 4-6: related content tests
-
-        var relatedContent = $g.qs('#js-expandable-related');
-
-        if (mode && mode > 3) {
-
-            mode = parseInt(mode); 
-
-            switch (mode) {
-                case 4:
-                    // turn related items into an expander
-                    guardian.js.ee.emit('addExpander', relatedContent);
-                    fetchMostPopular(5);
-                    break;
-                case 5:
-                    // remove related items
-                    bonzo(relatedContent).remove();
-                    // show related items by tags
-                    fetchRelatedByTags(5, true);
-                    // then get most popular
-                    fetchMostPopular(5);
-                    break;
-                case 6:
-                    // turn related items into an expander
-                    guardian.js.ee.emit('addExpander', relatedContent);
-                    // show related items by tags
-                    fetchRelatedByTags(3, false);
-                    // then get most popular
-                    fetchMostPopular(5);
-                    break;
-            }
-        }
-        
     }
 );
