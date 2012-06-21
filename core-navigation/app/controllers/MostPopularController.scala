@@ -31,6 +31,6 @@ object MostPopularController extends Controller with Logging {
   }
 
   private def renderMostPopular(model: MostPopular)(implicit request: RequestHeader) =
-    Cached(900)(Json(views.html.fragments.relatedTrails(model.trails, model.heading, 5)))
+    Cached(900)(JsonComponent(views.html.fragments.relatedTrails(model.trails, model.heading, 5)))
 
 }

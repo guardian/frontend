@@ -5,7 +5,7 @@ import common.Compressed
 import play.api.mvc.{ PlainResult, Result, RequestHeader, Results }
 import play.api.templates.Html
 
-object Json extends Results {
+object JsonComponent extends Results {
   def apply(html: Html)(implicit request: RequestHeader) = {
 
     val json = JsonParser.generate(Map("html" -> Compressed(html).body))
