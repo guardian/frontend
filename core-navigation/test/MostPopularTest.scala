@@ -17,7 +17,7 @@ class MostPopularTest extends FlatSpec with ShouldMatchers {
     html.foreach(_ should startWith("<div"))
   }
 
-  it should "render tag headline" in HtmlUnit("/pages/most-popular/UK/world?callback=result") { browser =>
+  it should "render a jsonp callback" in HtmlUnit("/pages/most-popular/UK/world?callback=result") { browser =>
     import browser._
 
     pageSource should startWith("result({")
