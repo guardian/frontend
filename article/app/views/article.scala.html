@@ -6,12 +6,12 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(Static)
+    @fragments.commonJavaScriptSetup(conf.Static)
     @fragments.metaData(article, conf.Configuration)
 
     <title>@Html(article.headline)</title>
 
-    @fragments.commonCssSetup(Static)
+    @fragments.commonCssSetup(conf.Static)
 </head>
 
 <body class="zone-@article.section">
@@ -20,7 +20,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(conf.Static)
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
             </div>
@@ -66,24 +66,14 @@
 
                 @fragments.placeholders("tier2", 5)
 
-                <!--
-                    <h4>Related subjects</h4>
-                    <ul class="plain tags">
-                    @article.keywords.map{ tag =>
-                        @fragments.formatTags(tag)
-                    }
-                    </ul>
-                -->
 
-                @fragments.placeholders("tier3", 5)
+                <div id="most-popular"></div>
             </div>
 
         </div>
 
 
     </div>
-
-    @fragments.modeTest()
 
     @fragments.debugInfo(conf.Configuration)
     @fragments.analytics(article, conf.Configuration)

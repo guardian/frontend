@@ -1,0 +1,26 @@
+{
+    "packages":{
+        "frontend-core-navigation":{
+            "type":"executable-jar-webapp",
+            "apps":[ "frontend::core-navigation" ],
+            "data":{
+                "port":"9000",
+                "bucket":"artifacts-83445s",
+                "healthcheck_paths":[
+                    "/pages/world/turkey"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUpload", "deploy"]
+        },
+        "deploy":{
+            "actionsPerHost": ["frontend-core-navigation.deploy"]
+        },
+        "artifactUpload":{
+            "actionsBeforeApp": ["frontend-core-navigation.uploadArtifacts"]
+        }
+    }
+}
