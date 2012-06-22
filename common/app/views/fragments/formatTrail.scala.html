@@ -2,12 +2,11 @@
 
 <div class="media b1">
     @trail.imageOfWidth(54).map{ image =>
-        <a href="@trail.url" class="img" data-link-name="trail image">
-            <img class="maxed" src="@image.url" @trail.imageOfWidth(200, tolerance=20).map {full=>data-fullsrc="@full.url"} data-width="@image.width" alt='@Html(image.caption.getOrElse(""))' />
-        </a>
+    <a href="@trail.url" class="img" data-link-name="trail image">
+        <img class="maxed" src="@image.url" @trail.imageOfWidth(200, tolerance=20).map {full=>data-fullsrc="@full.url"} data-width="@image.width" alt='@Html(image.caption.getOrElse(""))' />
+    </a>
     }
     <div class="bd">
-        @trail.typeOrTone.map{ tag => <p class="type-tone">@tag.singularName</p> }
         <p><a href="@trail.url" data-link-name="link text">@RemoveOuterParaHtml(trail.linkText)</a></p>
         @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>

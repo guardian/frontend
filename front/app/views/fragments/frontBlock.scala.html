@@ -15,10 +15,10 @@
         @defining(block.trails.length){ numTrails =>
 
         <ul class="plain">
-            @block.trails.zipWithRowInfo.map{ case(trail, row) =>
-            <li>@{trail.layout match{
-                case "impact" =>  fragments.formatImpactTrail(trail)
-                case _ => fragments.formatNormalTrail(trail)
+            @block.trails.map{ trailWithPackage =>
+            <li>@{trailWithPackage.layout match{
+                case "impact" =>  fragments.formatImpactTrail(trailWithPackage)
+                case _ => fragments.formatTrail(trailWithPackage.trail)
             }}
             </li>
             }
