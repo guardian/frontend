@@ -1,8 +1,7 @@
 package common
 
 import com.codahale.jerkson.{ Json => JsonParser }
-import common.Compressed
-import play.api.mvc.{ PlainResult, Result, RequestHeader, Results }
+import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
 
 object JsonComponent extends Results {
