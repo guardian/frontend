@@ -8,7 +8,6 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 
 case class GalleryPage(
   gallery: Gallery,
-  related: List[Trail],
   storyPackage: List[Trail],
   index: Int = 1,
   trail: Boolean = false)
@@ -29,25 +28,18 @@ object GalleryController extends Controller with Logging {
   private def lookup(path: String)(implicit request: RequestHeader): Option[GalleryPage] = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching gallery: " + path + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item
-      .edition(edition)
-      .showTags("all")
+    val response: ItemResponse = ContentApi.item(path, edition)
       .showFields("all")
-      .showMedia("all")
-      .showRelated(true)
-      .showStoryPackage(true)
-      .itemId(path)
       .response
 
     val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
-    val related = response.relatedContent map { new Content(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    gallery map { g => GalleryPage(g, related, storyPackage.filterNot(_.id == g.id)) }
+    gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id)) }
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =
     CachedOk(model.gallery) {
-      Compressed(views.html.gallery(model.gallery, model.related, model.storyPackage, model.index, model.trail))
+      Compressed(views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail))
     }
 }

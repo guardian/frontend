@@ -27,11 +27,13 @@ object CachedOk extends Results {
       case _ => 60
     }
 
-    val expiresTime = DateTime.now + secondsToCacheFor.seconds
+    val now = DateTime.now
+    val expiresTime = now + secondsToCacheFor.seconds
 
     Ok(block).withHeaders(
       "Cache-Control" -> "must-revalidate, max-age=%s".format(secondsToCacheFor),
-      "Expires" -> expiresTime.toHttpDateTimeString
+      "Expires" -> expiresTime.toHttpDateTimeString,
+      "Date" -> now.toHttpDateTimeString
     )
   }
 }

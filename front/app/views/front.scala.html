@@ -6,11 +6,11 @@
 
 <head>
     <title>beta.guardian.co.uk</title>
-    @fragments.commonJavaScriptSetup(conf.Static)
-    @fragments.metaData(front, conf.Configuration)
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(front, Configuration)
 
-    @fragments.commonCssSetup(conf.Static)
-    <link rel="stylesheet" type="text/css" href="@conf.Static("stylesheets/front.min.css")" />
+    @fragments.commonCssSetup(Static)
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
 </head>
 
 <body>
@@ -18,17 +18,16 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(conf.Static)
+                @fragments.navigation(Static)
             </div>
         </div>
         @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
-
         <div id="most-popular"></div>
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(front, conf.Configuration)
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(front, Configuration)
 </body>
 </html>

@@ -3,7 +3,7 @@ package common
 import assets.AssetsPlugin
 import play.api.Play
 
-class Static(val base: String = "") extends Logging {
+class StaticAssets(val base: String = "") extends Logging {
 
   val plugin: AssetsPlugin = Play.current.plugin[AssetsPlugin] getOrElse {
     log.error("Trying to use Static without including AssetPlugin. Is your play.plugins correct?")

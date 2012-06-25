@@ -101,13 +101,8 @@ object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging 
 
   private def loadStoryPackage(id: String, edition: String): Seq[Trail] = {
     log.info("Refreshing trailblock " + id + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item
+    val response: ItemResponse = ContentApi.item(id, edition)
       .showStoryPackage(true)
-      .edition(edition)
-      .showTags("all")
-      .showFields("trail-text,liveBloggingNow")
-      .showMedia("all")
-      .itemId(id)
       .response
 
     response.storyPackage map { new Content(_) } filterNot (_.id == id)
@@ -115,14 +110,9 @@ object Front extends FrontTrailblockConfiguration with AkkaSupport with Logging 
 
   private def loadTrails(id: String, edition: String): Seq[Trail] = {
     log.info("Refreshing trailblock " + id + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item
-      .edition(edition)
-      .showTags("all")
-      .showFields("trail-text,liveBloggingNow")
-      .showMedia("all")
+    val response: ItemResponse = ContentApi.item(id, edition)
       .showEditorsPicks(true)
       .showMostViewed(true)
-      .itemId(id)
       .pageSize(15)
       .response
 

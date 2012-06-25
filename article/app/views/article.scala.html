@@ -1,4 +1,4 @@
-@(article: Article, related: List[Trail], storyPackage: List[Trail])(implicit request: RequestHeader)
+@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -6,12 +6,14 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(conf.Static)
-    @fragments.metaData(article, conf.Configuration)
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(article, Configuration)
 
     <title>@Html(article.headline)</title>
 
-    @fragments.commonCssSetup(conf.Static)
+    @fragments.commonCssSetup(Static)
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
+</head>
 </head>
 
 <body class="zone-@article.section">
@@ -20,7 +22,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(conf.Static)
+                @fragments.navigation(Static)
                 @fragments.headline(article.headline)
                 @fragments.standfirst(article.standfirst)
             </div>
@@ -45,9 +47,11 @@
                     </aside>
             
                     <div class="article-body">
+                        @* <!-- ordering of cleaners is important --> *@
                         @withJsoup(article.body)(
                             PictureCleaner(article),
-                            InBodyLinkCleaner
+                            InBodyLinkCleaner,
+                            InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
                         )
                     </div>
 
@@ -56,18 +60,13 @@
             </div>
 
             <div class="unit lastUnit">
-
-
                 @if(storyPackage nonEmpty) {
                     @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 } else {
-                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 5)
+                    <div id="related"></div>
                 }
-
-                @fragments.placeholders("tier2", 5)
-
-
                 <div id="most-popular"></div>
+                @fragments.placeholders("tier2", 5)
             </div>
 
         </div>
@@ -75,7 +74,7 @@
 
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(article, conf.Configuration)
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(article, Configuration)
 </body>
 </html>
