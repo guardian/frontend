@@ -1,5 +1,7 @@
-require('mostPopular');
-require('related');
+
+//Disable as I cannot deploy the service
+//require('mostPopular');
+//require('related');
 
 //todo only load for percentage of users
 require(['http://cdn.optimizely.com/js/' + guardian.page.optimizelyId + '.js'], function(optimizely){})
