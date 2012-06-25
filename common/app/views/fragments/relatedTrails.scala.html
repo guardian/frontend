@@ -1,7 +1,7 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int)
 
 @defining(trails.length){ numTrails =>
-    <div class="trailblock show-@{visibleTrails}" id="js-expandable-related" data-link-name="related: @heading">
+    <div class="trailblock-shaded show-@{visibleTrails}" id="separate-more-on" data-link-name="related : separate : @heading">
         <h3>@Html(heading)</h3>
         
         <ul class="plain">
@@ -12,7 +12,7 @@
         </ul>
 
         @if(numTrails > visibleTrails) {
-            <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More related content</a> <span class="count">@(numTrails - visibleTrails)</span></h3>
+            <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More</a> <span class="count">@(numTrails - visibleTrails)</span></h3>
         }
     </div>
 }

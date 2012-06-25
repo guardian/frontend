@@ -4,7 +4,25 @@ import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
 import com.gu.management.{ Metric, GaugeMetric, TimingMetric }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends Api
+trait ApiQueryDefaults { self: Api =>
+
+  val supportedTypes = "type/gallery|type/article"
+
+  //NOTE - do NOT add body to this list
+  val trailFields = "trail-text,liveBloggingNow"
+
+  //common fileds that we use across most queries.
+  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+    .edition(edition)
+    .showTags("all")
+    .showFields(trailFields)
+    .showInlineElements("picture")
+    .showMedia("all")
+    .showStoryPackage(true)
+    .tag(supportedTypes)
+}
+
+class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults
     with MultiThreadedApacheHttpClient
     with Logging {
 
@@ -50,3 +68,4 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api
     val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpClientCollectionPoolSize)
   }
 }
+

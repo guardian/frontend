@@ -6,8 +6,13 @@
 GET     /pages/most-popular/*edition/*path              controllers.MostPopularController.render(edition, path)
 GET     /pages/most-popular/*edition                    controllers.MostPopularController.renderGlobal(edition)
 
+GET     /pages/related/:edition/*path                         controllers.RelatedController.render(edition, path)
+
+
 # For dev machines
 #GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
 
 GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
 GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+
+GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)

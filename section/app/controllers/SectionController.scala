@@ -16,14 +16,9 @@ object SectionController extends Controller with Logging {
   private def lookup(path: String)(implicit request: RequestHeader): Option[SectionFrontPage] = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching front: " + path + "for edition " + edition)
-    val response: ItemResponse = ContentApi.item
-      .edition(edition)
-      .showTags("all")
-      .showFields("all")
-      .showMedia("all")
+    val response: ItemResponse = ContentApi.item(path, edition)
       .showEditorsPicks(true)
       .showMostViewed(true)
-      .itemId(path)
       .response
 
     val section = response.section map { Section(_) }

@@ -8,7 +8,7 @@ import play.api.test.Helpers._
 class StaticTest extends FlatSpec with ShouldMatchers {
   "Static" should "collect asset maps" in {
     running(FakeApplication()) {
-      val static = new Static("simon says")
+      val static = new StaticAssets("simon says")
 
       static("zen1") should be("simon says" + "no snowflake ever falls in the wrong place.")
       static("zen2") should be("simon says" + "water which is too pure has no fish.")

@@ -21,24 +21,14 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
       $("h1").first.getText should be("Picture desk live: the day's best news images")
   }
 
-  it should "render gallery story package links" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
+  it should "render gallery story package links" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
 
     val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    linkNames should contain("Madeleine McCann timeline")
-    linkUrls should contain("http://localhost:3333/uk/2009/may/22/madeleine-mccann-timeline")
-  }
-
-  it should "render gallery tag links" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
-    import browser._
-
-    val linkNames = $("a").getTexts
-    val linkUrls = $("a").getAttributes("href")
-
-    linkNames should contain("World news")
-    linkUrls should contain("http://localhost:3333/world/world")
+    linkNames should contain("Big Noise orchestra's classical music proves instrumental in social change")
+    linkUrls should contain("http://localhost:3333/music/2012/jun/24/simon-bolivar-dudamel-review")
   }
 
   it should "render caption and navigation on first image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
