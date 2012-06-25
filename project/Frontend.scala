@@ -112,6 +112,9 @@ trait Prototypes {
         case "CHANGELOG" => MergeStrategy.first
         case x => old(x)
       }
-    }
+    },
+    templatesImport ++= Seq(
+      "conf._"
+    )
   )
 }

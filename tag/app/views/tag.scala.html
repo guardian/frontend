@@ -6,12 +6,12 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(conf.Static)
-    @fragments.metaData(tag, conf.Configuration)
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(tag, Configuration)
 
     <title>@Html(tag.webTitle)</title>
 
-    @fragments.commonCssSetup(conf.Static)
+    @fragments.commonCssSetup(Static)
 
 </head>
 
@@ -22,7 +22,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(conf.Static)
+                @fragments.navigation(Static)
                 @fragments.headline(tag.name)
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div id="most-popular"></div>
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(tag, conf.Configuration)
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(tag, Configuration)
 </body>
 </html>

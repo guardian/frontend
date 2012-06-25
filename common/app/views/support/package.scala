@@ -83,10 +83,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
       img.replaceWith(wrapper)
       wrapper.appendChild(img)
 
-      //The content API is not getting the captions correctly.
-      //this has been bought to their attention and will be fixed soon,
-      //but in the meantime we are only adding captions if the image is larger than 54
-      imageFromApi filter (_.width > 54) foreach { i: Image =>
+      imageFromApi foreach { i: Image =>
         i.caption foreach { c =>
           val caption = body.createElement("p")
           caption.attr("class", "caption")
@@ -145,6 +142,19 @@ object OmnitureAnalyticsData {
     )
 
     Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
+  }
+}
+
+object InsertAfterParagraph {
+
+  //paragraph index is 1 based, not 0 based
+  def apply(paragraphIndex: Int)(html: Html): HtmlCleaner = new HtmlCleaner {
+    def clean(body: Document) = {
+      val paras = body.getElementsByTag("p")
+      val targetPara = if (paras.length > paragraphIndex) Some(paras(paragraphIndex - 1)) else None
+      targetPara foreach (_.after(html.body))
+      body
+    }
   }
 }
 

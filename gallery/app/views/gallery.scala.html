@@ -1,4 +1,4 @@
-@(gallery: Gallery, related: List[Trail], storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -6,8 +6,8 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(conf.Static)
-    @fragments.metaData(gallery, conf.Configuration)
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(gallery, Configuration)
 
     <script>
         guardian.js.modules.swipe = 'http://6.gu-pasteup.appspot.com/js/libs/swipe.amd.js?v=2';
@@ -16,7 +16,7 @@
 
     <title>@Html(gallery.headline)</title>
 
-    @fragments.commonCssSetup(conf.Static)
+    @fragments.commonCssSetup(Static)
 
     <style>
 
@@ -56,7 +56,7 @@
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(conf.Static)
+                @fragments.navigation(Static)
                 @fragments.headline(gallery.headline)
                 @fragments.standfirst(gallery.standfirst)
             </div>
@@ -114,20 +114,11 @@
             </div>
 
             <div class="unit lastUnit">
-
                 @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 4)
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 } else {
-                    @fragments.relatedTrails(related, heading = "Related content", visibleTrails = 4)
+                    <div id="related"></div>
                 }
-
-                <h4>Related subjects</h4>
-                <ul class="plain tags">
-                    @gallery.keywords.map{ tag =>
-                        @fragments.formatTags(tag)
-                    }
-                </ul>
-
             </div>
 
         </div>
@@ -135,7 +126,7 @@
         <div id="most-popular"></div>
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(gallery, conf.Configuration)
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(gallery, Configuration)
 </body>
 </html>
