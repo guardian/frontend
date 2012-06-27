@@ -1,9 +1,6 @@
-
 require('mostPopular');
 require('related');
-
-//todo only load for percentage of users
-//require(['http://cdn.optimizely.com/js/' + guardian.page.optimizelyId + '.js'], function(optimizely){})
+require('optimizely');
 
 //these are plugins required by all pages
 define('adsAndTracking', [guardian.js.modules.analytics, guardian.js.modules.ads], function(analytics, ads){});
