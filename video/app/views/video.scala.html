@@ -1,0 +1,58 @@
+@(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(video, Configuration)
+
+    <title>@Html(video.headline)</title>
+
+    @fragments.commonCssSetup(Static)
+
+</head>
+</head>
+
+<body class="zone-@video.section">
+    <div id="container">
+
+        <div class="line">
+            <div class="unit lastUnit">
+                @fragments.placeholders("tier1", 5)
+                @fragments.navigation(Static)
+                @fragments.headline(video.headline)
+                @fragments.standfirst(video.standfirst)
+            </div>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size3of5">
+
+                <video controls="controls">
+                    @video.encodings.map{ encoding =>
+                        <source src="@encoding.url" type="@encoding.format"/>
+                    }
+                </video>
+
+            </div>
+
+            <div class="unit lastUnit">
+                @if(storyPackage nonEmpty) {
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                } else {
+                    <div id="related"></div>
+                }
+                <div id="most-popular"></div>
+                @fragments.placeholders("tier2", 5)
+            </div>
+
+        </div>
+    </div>
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(video, Configuration)
+</body>
+</html>

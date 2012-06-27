@@ -14,6 +14,7 @@ object `package` {
   implicit def content2Is(content: ApiContent) = new {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
+    lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
   }
 
   implicit def any2In[A](a: A) = new {

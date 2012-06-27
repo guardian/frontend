@@ -6,7 +6,7 @@ import com.gu.management.{ Metric, GaugeMetric, TimingMetric }
 
 trait ApiQueryDefaults { self: Api =>
 
-  val supportedTypes = "type/gallery|type/article"
+  val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
   val trailFields = "trail-text,liveBloggingNow"
