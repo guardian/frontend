@@ -32,4 +32,11 @@ object `package` {
         None
     }
   }
+
+  def quietly(block: => Unit)(implicit log: Logger) = try {
+    block
+  } catch {
+    case e => log.error("Failing quietly on: " + e.getMessage, e)
+    case e => log.error("Failing quietly on: " + e.getMessage, e)
+  }
 }
