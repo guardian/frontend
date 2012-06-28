@@ -1,22 +1,6 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(tag, Configuration, Static)
-
-    <title>@Html(tag.webTitle)</title>
-
-    @fragments.commonCssSetup(Static)
-
-</head>
-
-<body>
-
+@main(tag, Static, Configuration){ "" }{
     <div id="container">
 
         <div class="line">
@@ -49,5 +33,4 @@
 
     @fragments.debugInfo(Configuration)
     @fragments.analytics(tag, Configuration)
-</body>
-</html>
+}

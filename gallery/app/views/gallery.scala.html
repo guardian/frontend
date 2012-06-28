@@ -1,27 +1,10 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(gallery, Configuration, Static)
-
+@main(gallery, Static, Configuration){
     <script>
         guardian.js.modules.swipe = 'http://6.gu-pasteup.appspot.com/js/libs/swipe.amd.js?v=2';
     </script>
-
-
-    <title>@Html(gallery.headline)</title>
-
-    @fragments.commonCssSetup(Static)
-
     <style>
-
-        /* todo: move this somewhere sensible */
-
         .gallery-container {
             width: 100%;
             min-height: 600px;
@@ -48,9 +31,7 @@
     <script>
         guardian.gallery = @JSON(gallery);
     </script>
-</head>
-
-<body>
+}{
     <div id="container">
 
         <div class="line">
@@ -128,5 +109,4 @@
 
     @fragments.debugInfo(Configuration)
     @fragments.analytics(gallery, Configuration)
-</body>
-</html>
+}
