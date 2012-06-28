@@ -16,10 +16,15 @@
 
         <ul class="plain">
             @block.trails.map{ trailWithPackage =>
-            <li>@{trailWithPackage.layout match{
-                case "impact" =>  fragments.formatImpactTrail(trailWithPackage)
-                case _ => fragments.formatTrail(trailWithPackage.trail)
-            }}
+            <li>
+
+                @* top of if statement is for AB test* @
+                @if(trailWithPackage.layout == "impact"){
+                    <div id="impact-trail" data-link-name="front trail test" class="initially-off">@fragments.formatImpactTrail(trailWithPackage)</div>
+                    <div id="normal-trail" data-link-name="front trail test">@fragments.formatTrail(trailWithPackage.trail)</div>
+                } else {
+                    @fragments.formatTrail(trailWithPackage.trail)
+                }
             </li>
             }
         </ul>
