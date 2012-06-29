@@ -7,8 +7,8 @@
                 "port":"9000",
                 "bucket":"artifacts-83445s",
                 "healthcheck_paths":[
-                    "/pages/most-popular/UK/science",
-                    "/pages/related/UK/world/2012/jun/26/taliban-bans-polio-vaccinations"
+                    "/most-popular/UK/science",
+                    "/related/UK/world/2012/jun/26/taliban-bans-polio-vaccinations"
                 ]
             }
         }
