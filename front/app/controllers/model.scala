@@ -33,7 +33,8 @@ object FrontTrailblockConfiguration extends AkkaSupport with Logging {
     def refresh = {
       agent.sendOff { s =>
         val response = ContentApi.tags.folder(folderId).response
-        response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
+        val description = response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
+        log.info("Resolved trailblock " + description)
       }
     }
     def await(millisToWait: Long) = agent.await(Timeout(millisToWait))
@@ -169,7 +170,8 @@ object Front extends AkkaSupport with Logging {
     val editorsPicksIds = editorsPicks map (_.id)
     val latest = response.results map { new Content(_) } filterNot (c => editorsPicksIds contains (c.id))
 
-    editorsPicks ++ latest
+    val allResults = editorsPicks ++ latest
+    log.info("Trailblock " + id + " for edition " + edition + " returned " + allResults.size + " results.")
+    allResults
   }
-
 }
