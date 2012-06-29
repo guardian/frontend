@@ -1,103 +1,28 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.{ TagsResponse, ItemResponse }
+import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import akka.util.Timeout
 
-class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
-  override val canonicalUrl = "http://www.guardian.co.uk"
-  override val id = ""
-  override val section = ""
-  override val apiUrl = "http://content.guardianapis.com"
-  override val webTitle = "The Guardian"
+trait TrailblockAgent extends AkkaSupport with Logging {
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "",
-    "content-type" -> "Network Front"
-  )
+  val waitTime = 3000
 
-  lazy val collapseEmptyBlocks: Front = new Front(trailblocks filterNot { _.trails.isEmpty })
-}
+  private val trailblockAgent = play_akka.agent[Option[Trailblock]](None)
 
-case class FolderTrailblock(folderId: Option[String], default: TrailblockDescription)
+  def trailblockDescription: Option[TrailblockDescription]
 
-object FrontTrailblockConfiguration extends AkkaSupport with Logging {
+  def trailblock: Option[Trailblock] = trailblockAgent()
 
-  val topStories = TrailblockDescription("/", "Top stories", 5)
+  def edition: String
 
-  case class FolderBasedTrailblockAgent(folderId: String) {
-    private val agent = play_akka.agent(None: Option[TrailblockDescription])
-    def trailBlockDescription = agent()
-    def refresh = {
-      agent.sendOff { s =>
-        val response = ContentApi.tags.folder(folderId).response
-        response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
-      }
-    }
-    def await(millisToWait: Long) = agent.await(Timeout(millisToWait))
+  def shutdown() { trailblockAgent.close() }
 
-    private def toTrailblockDescription(tag: Tag) = {
-      val id = if (tag.isSectionTag) tag.section else tag.id
-      TrailblockDescription(id, tag.name, 3)
-    }
-
-    def close() = agent.close()
-
-  }
-
-  private val ukAgents = List(
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-1"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-2"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-3"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-4"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-5"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-6")
-  )
-
-  private val usAgents = List(
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-1"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-2"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-3"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-4"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-5"),
-    FolderBasedTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-6")
-  )
-
-  private lazy val allAgents = ukAgents ++ usAgents
-
-  def ukTrailblocks = topStories :: ukAgents.flatMap(_.trailBlockDescription)
-  def usTrailblocks = topStories :: usAgents.flatMap(_.trailBlockDescription)
-
-  def refresh() = {
-    log.info("Refreshing trailblock configurations")
-    allAgents.foreach(_.refresh)
-  }
-
-  def refreshAndWait() = {
-    refresh()
-    allAgents.foreach { a => quietly(a.await(1000)) }
-  }
-
-  def shutdown() = allAgents.foreach(_.close())
-}
-
-object Front extends AkkaSupport with Logging {
-
-  import FrontTrailblockConfiguration._
-
-  private val agents = Map(
-    "UK" -> (ukTrailblocks map { TrailblockAgent(_, "UK") }),
-    "US" -> (usTrailblocks map { TrailblockAgent(_, "US") })
-  )
-
-  case class TrailblockAgent(description: TrailblockDescription, edition: String) {
-    private val agent = play_akka.agent(Seq[TrailWithPackage]())
-
-    def trailblock(): Trailblock = Trailblock(description, agent())
-    def refreshTrailblock() {
-      agent sendOff { s =>
+  def refresh() {
+    trailblockAgent.sendOff { s =>
+      trailblockDescription.map { description =>
         val trails = loadTrails(description.id, edition)
 
         //if we cannot load the story package we still want to display the trails
@@ -107,39 +32,17 @@ object Front extends AkkaSupport with Logging {
             case _ => Nil
           }
         }
-        TrailWithPackage(trails.head, storyPackageForFirstTrail) :: trails.tail.map(TrailWithPackage(_, Nil)).toList
-
+        Trailblock(
+          description,
+          TrailWithPackage(trails.head, storyPackageForFirstTrail) :: trails.tail.map(TrailWithPackage(_, Nil)).toList
+        )
       }
     }
-    def await(timeout: Long) = quietly(agent.await(1000))
-    def close() = agent.close()
   }
 
-  def shutdown() = agents foreach {
-    case (_, agents) => agents.foreach(_.close())
-  }
-
-  def refreshTrailblocks() { agents.values.flatten map { _.refreshTrailblock() } }
-
-  def refreshTrailblocksAndWait() {
-    refreshTrailblocks()
-    agents.values.flatten foreach (a => quietly(a.await(1000)))
-  }
-
-  def apply(edition: String): Front = {
-    val trailblocks = agents(if (edition == "US") "US" else "UK") map { _.trailblock() }
-
-    var used = Set[String]()
-    var deduped = Seq[Trailblock]()
-
-    for (Trailblock(description, trails) <- trailblocks) {
-      val dedupedTrails: Seq[TrailWithPackage] = trails filterNot { _.trail.url in used } take 10
-
-      used ++= dedupedTrails map { _.trail.url }
-      deduped :+= Trailblock(description, dedupedTrails)
-    }
-
-    new Front(deduped).collapseEmptyBlocks
+  def refreshAndWait() {
+    refresh()
+    quietly(trailblockAgent.await(Timeout(waitTime)))
   }
 
   private def failQuietly[A](default: A)(block: => A) = try {
@@ -171,5 +74,107 @@ object Front extends AkkaSupport with Logging {
 
     editorsPicks ++ latest
   }
+}
 
+case class ManualTrailblockAgent(description: TrailblockDescription, edition: String) extends TrailblockAgent {
+  override def trailblockDescription = Some(description)
+}
+
+case class FolderTrailblockAgent(folderId: String, edition: String) extends TrailblockAgent {
+
+  private val descriptionAgent = play_akka.agent[Option[TrailblockDescription]](None)
+
+  override def trailblockDescription = descriptionAgent()
+
+  override def shutdown() {
+    descriptionAgent.close()
+    super.shutdown()
+  }
+
+  override def refresh() {
+    refreshInternal()
+    super.refresh()
+  }
+
+  override def refreshAndWait() {
+    refreshInternal()
+    quietly(descriptionAgent.await(Timeout(waitTime)))
+    super.refresh()
+  }
+
+  private def refreshInternal() {
+    descriptionAgent.sendOff { s =>
+      val response = ContentApi.tags.folder(folderId).response
+      response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
+    }
+  }
+
+  private def toTrailblockDescription(tag: Tag) = {
+    val id = if (tag.isSectionTag) tag.section else tag.id
+    TrailblockDescription(id, tag.name, 3)
+  }
+}
+
+class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
+  override val canonicalUrl = "http://www.guardian.co.uk"
+  override val id = ""
+  override val section = ""
+  override val apiUrl = "http://content.guardianapis.com"
+  override val webTitle = "The Guardian"
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "keywords" -> "",
+    "content-type" -> "Network Front"
+  )
+
+  lazy val collapseEmptyBlocks: Front = new Front(trailblocks filterNot { _.trails.isEmpty })
+}
+
+case class FolderTrailblock(folderId: Option[String], default: TrailblockDescription)
+
+object Front extends Logging {
+
+  private val ukAgents = Seq(
+    ManualTrailblockAgent(TrailblockDescription("/", "Top stories", 5), "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-1", "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-2", "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-3", "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-4", "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-5", "UK"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-6", "UK")
+  )
+
+  private val usAgents = Seq(
+    ManualTrailblockAgent(TrailblockDescription("/", "Top stories", 5), "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-1", "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-2", "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-3", "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-4", "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-5", "US"),
+    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-6", "US")
+  )
+
+  private val allAgents = ukAgents ++ usAgents
+
+  def shutdown() { allAgents.foreach(_.shutdown()) }
+
+  def refresh() { allAgents.foreach(_.refresh()) }
+
+  def refreshAndWait() { allAgents.foreach(_.refreshAndWait()) }
+
+  def apply(edition: String): Front = {
+    val trailblocks = (if (edition == "US") usAgents else ukAgents) flatMap { _.trailblock }
+
+    var used = Set[String]()
+    var deduped = Seq[Trailblock]()
+
+    for (Trailblock(description, trails) <- trailblocks) {
+      val dedupedTrails: Seq[TrailWithPackage] = trails filterNot { _.trail.url in used } take 10
+
+      used ++= dedupedTrails map { _.trail.url }
+      deduped :+= Trailblock(description, dedupedTrails)
+    }
+
+    new Front(deduped).collapseEmptyBlocks
+  }
 }
