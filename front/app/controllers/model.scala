@@ -34,7 +34,8 @@ object FrontTrailblockConfiguration extends AkkaSupport with Logging {
       agent.sendOff { s =>
         val response = ContentApi.tags.folder(folderId).response
         val description = response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
-        log.info("Resolved trailblock " + description)
+        log.info("Resolved trailblock " + description + " for " + folderId)
+        description
       }
     }
     def await(millisToWait: Long) = agent.await(Timeout(millisToWait))
