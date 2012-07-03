@@ -7,27 +7,31 @@
             @if(block.description.id == "/") {
                 @fragments.headline(block.description.name)
             } else {
-                <a data-link-name="heading link" href="@block.description.id">@fragments.headline(block.description.name)</a>
+                <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
             }
         </div>
     </div>
     <div class="line trailblock show-@block.description.numItemsVisible">
         @defining(block.trails.length){ numTrails =>
 
-        <ul class="plain">
-            @block.trails.map{ trailWithPackage =>
-            <li>@{trailWithPackage.layout match{
-                case "impact" =>  fragments.formatImpactTrail(trailWithPackage)
-                case _ => fragments.formatTrail(trailWithPackage.trail)
-            }}
-            </li>
+            <ul class="plain">
+                @block.trails.map{ trailWithPackage =>
+                    <li>
+                        @* top of if statement is for AB test *@
+                        @if(trailWithPackage.layout == "impact"){
+                            <div id="impact-trail" data-link-name="front trail test" class="initially-off">@fragments.formatImpactTrail(trailWithPackage)</div>
+                            <div id="normal-trail" data-link-name="front trail test">@fragments.formatTrail(trailWithPackage.trail)</div>
+                        } else {
+                            @fragments.formatTrail(trailWithPackage.trail)
+                        }
+
+                    </li>
+                }
+            </ul>
+
+            @if(numTrails > block.description.numItemsVisible) {
+            <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More @block.description.name.toLowerCase</a> <span class="count">@(numTrails - block.description.numItemsVisible)</span></h3>
             }
-        </ul>
-
-        @if(numTrails > block.description.numItemsVisible) {
-        <h3 class="b1 b1b expander"><a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">More @block.description.name.toLowerCase</a> <span class="count">@(numTrails - block.description.numItemsVisible)</span></h3>
-        }
-
         }
     </div>
 </div>

@@ -1,80 +1,65 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(article, Configuration)
-
-    <title>@Html(article.headline)</title>
-
-    @fragments.commonCssSetup(Static)
+@main(article, Static, Configuration){
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
-</head>
-</head>
+}{
+<div id="container">
 
-<body class="zone-@article.section">
-    <div id="container">
-
-        <div class="line">
-            <div class="unit lastUnit">
-                @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
-                @fragments.headline(article.headline)
-                @fragments.standfirst(article.standfirst)
-            </div>
+    <div class="line">
+        <div class="unit lastUnit">
+            @fragments.placeholders("tier1", 5)
+            @fragments.navigation(Static, Configuration, article)
+            @fragments.headline(article.headline)
+            @fragments.standfirst(article.standfirst)
         </div>
+    </div>
 
-        <div class="line">
+    <div class="line">
 
-            <div class="unit size3of5">
-                
-                <article>
+        <div class="unit size3of5">
 
-                    @article.imageOfWidth(300, tolerance=160).map{ image =>
-                        <figure>
-                            <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
-                            <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
-                        </figure>
-                    }
+            <article>
 
-                    <aside class="b2 b2b">
-                        @fragments.byline(article.byline, article)
-                        @fragments.dateline(article.webPublicationDate)
-                    </aside>
-            
-                    <div class="article-body">
-                        @* <!-- ordering of cleaners is important --> *@
-                        @withJsoup(article.body)(
-                            PictureCleaner(article),
-                            InBodyLinkCleaner,
-                            InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
-                        )
-                    </div>
-
-                </article>
-
-            </div>
-
-            <div class="unit lastUnit">
-                @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                } else {
-                    <div id="related"></div>
+                @article.imageOfWidth(300, tolerance=160).map{ image =>
+                <figure>
+                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
+                    <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
+                </figure>
                 }
-                <div id="most-popular"></div>
-                @fragments.placeholders("tier2", 5)
-            </div>
+
+                <aside class="b2 b2b">
+                    @fragments.byline(article.byline, article)
+                    @fragments.dateline(article.webPublicationDate)
+                </aside>
+
+                <div class="article-body">
+                    @* <!-- ordering of cleaners is important --> *@
+                    @withJsoup(article.body)(
+                    PictureCleaner(article),
+                    InBodyLinkCleaner,
+                    InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
+                    )
+                </div>
+
+            </article>
 
         </div>
 
+        <div class="unit lastUnit">
+            @if(storyPackage nonEmpty) {
+            @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+            } else {
+            <div id="related"></div>
+            }
+            <div id="most-popular"></div>
+            @fragments.placeholders("tier2", 5)
+        </div>
 
     </div>
 
-    @fragments.debugInfo(Configuration)
-    @fragments.analytics(article, Configuration)
-</body>
-</html>
+
+</div>
+
+@fragments.debugInfo(Configuration)
+@fragments.analytics(article, Configuration)
+}

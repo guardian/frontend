@@ -39,9 +39,8 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
   }
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
-    if (!parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      "You should never, Never, NEVER create a query that does not include the edition. EVER"
-    )
+
+    checkQueryIsEditionalized(url, parameters)
 
     metrics.ContentApiHttpTimingMetric.measure {
       super.fetch(url, parameters + ("user-tier" -> "internal"))
@@ -67,5 +66,14 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
 
     val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpClientCollectionPoolSize)
   }
+
+  private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
+    //you cannot editionalize tag queries
+    if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
+      "You should never, Never, NEVER create a query that does not include the edition. EVER: " + url
+    )
+  }
+
+  private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 

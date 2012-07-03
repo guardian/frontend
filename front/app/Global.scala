@@ -18,8 +18,10 @@ object Global extends GlobalSettings with AkkaSupport with RequestTimer with Sta
   private var refreshSchedule: Option[Cancellable] = None
 
   override def onStart(app: play.api.Application) {
+    //we want data on the front when it starts up
+    Front.refreshAndWait()
     refreshSchedule = Some(play_akka.scheduler.every(60 seconds) {
-      Front.refreshTrailblocks()
+      Front.refresh()
     })
   }
 

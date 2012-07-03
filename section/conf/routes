@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /pages/*path                controllers.SectionController.render(path)
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
 GET     /*path                      controllers.SectionController.render(path)

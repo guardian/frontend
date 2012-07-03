@@ -1,24 +1,13 @@
 @(front: Front)(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-    <title>beta.guardian.co.uk</title>
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(front, Configuration)
-
-    @fragments.commonCssSetup(Static)
+@main(front, Static, Configuration){
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
-</head>
-
-<body>
+}{
     <div id="container">
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(Static, Configuration, front)
             </div>
         </div>
         @front.trailblocks.map{ block =>
@@ -29,5 +18,4 @@
 
     @fragments.debugInfo(Configuration)
     @fragments.analytics(front, Configuration)
-</body>
-</html>
+}
