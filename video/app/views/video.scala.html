@@ -13,10 +13,28 @@
 
     @fragments.commonCssSetup(Static)
 
-</head>
-</head>
+    <script type="text/javascript">
+    
+          require(['gu', 'video'], function(gu, Video) {
+                
+                var encodings = [
+                     
+                    @video.encodings.map{ encoding =>
+                        { '@encoding.url',  '@encoding.format' },
+                    ]
+                
+                };
+                
+                video = new Video({
+                    encodings: encodings  
+                    });
+                }
 
+    </script>
+
+</head>
 <body class="zone-@video.section">
+    
     <div id="container">
 
         <div class="line">
@@ -33,9 +51,6 @@
             <div class="unit size3of5">
 
                 <video controls="controls">
-                    @video.encodings.map{ encoding =>
-                        <source src="@encoding.url" type="@encoding.format"/>
-                    }
                 </video>
 
             </div>
