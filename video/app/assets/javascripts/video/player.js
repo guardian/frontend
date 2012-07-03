@@ -1,4 +1,4 @@
-define(['gu', 'vendor/bonzo', 'vendor/qwery'], function(gu, bonzo, qwery){
+define([guardian.js.modules.gu, guardian.js.modules.bonzo, guardian.js.modules.qwery], function(gu, bonzo, qwery){
 
     var Player = function(opts){
 
@@ -8,6 +8,7 @@ define(['gu', 'vendor/bonzo', 'vendor/qwery'], function(gu, bonzo, qwery){
 
         this.player = null;
         this.src = opts.source || null;
+        this.type = opts.type;
 
         var that = this;
        
@@ -40,7 +41,7 @@ define(['gu', 'vendor/bonzo', 'vendor/qwery'], function(gu, bonzo, qwery){
         embed: function() {
             
             this.player = document.createElement('video');
-            
+
             if (this.type && !this.canPlayType(this.type)) {
                 gu.events.emit('video:unsupportedType');
                 return false;

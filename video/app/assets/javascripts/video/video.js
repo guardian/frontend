@@ -1,4 +1,4 @@
-define(['gu', 'player', 'detect'], function(gu, Player, detect) {
+define([guardian.js.modules.gu, guardian.js.modules.player, guardian.js.modules.detectOs], function(gu, Player, detect) {
 
     var Video = function(opts) {
     
@@ -8,12 +8,12 @@ define(['gu', 'player', 'detect'], function(gu, Player, detect) {
             'video/3gpp:small'  : 'video/3gpp', // Android slow
             'video/m3u8'        : '',           // HLS
             'video/mp4:720'     : 'video/mp4',  // Plain h264/mp4 @ ~4100bps (for tv)
-            'mp4'               : 'video/mp4'   // Plain h264/mp4 @ ~1000kbps 
+            'video/mp4'         : 'video/mp4'   // Plain h264/mp4 @ ~1000kbps 
         };
-        
+
         // LATER a video source should always fallback to mp4  
         var encoding = this.getPlayableEncodings(opts.encodings);
-    
+
         // 
         if (!encoding) {
             gu.events.emit('video:unsupported'); // no encodings found that match your device
@@ -39,7 +39,7 @@ define(['gu', 'player', 'detect'], function(gu, Player, detect) {
                     var os = 'video/3gpp:small';
                     break;
                 default:
-                     var os = 'mp4'; // fallback
+                     var os = 'video/mp4'; // fallback
             }
             return os;
         },
@@ -53,7 +53,7 @@ define(['gu', 'player', 'detect'], function(gu, Player, detect) {
                 }).map(function(encoding){
                     return {
                         'type': this.mediaTypes[encoding.format],
-                        'source': encoding.file
+                        'source': encoding.url
                     }
                 }, this);
         
