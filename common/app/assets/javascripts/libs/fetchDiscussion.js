@@ -99,7 +99,7 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
     }
 
     function buildUrl(shortUrl) {
-        var urlBase = 'http://coddisapi01.gudev.gnl:8900/discussion-api/discussion/';
+        var urlBase = 'http://discussionapi.guardian.co.uk/discussion-api/discussion/';
         shortUrl = shortUrl.replace("http://gu.com", "");
         return urlBase + shortUrl;
     }
