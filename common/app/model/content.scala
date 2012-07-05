@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
 import org.joda.time.DateTime
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
@@ -55,6 +55,15 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
+}
+
+class Video(private val delegate: ApiContent) extends Content(delegate) {
+
+  private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
+
+  lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
+
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Video")
 }
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
