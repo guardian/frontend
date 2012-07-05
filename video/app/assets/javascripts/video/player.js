@@ -50,7 +50,11 @@ define([guardian.js.modules.gu, guardian.js.modules.bonzo, guardian.js.modules.q
             // <source src="..."/> 
             var source = document.createElement('source')
             source.setAttribute('src', this.src)
-            source.setAttribute('type', this.type)
+            
+            if (this.type.length > 0) {
+                source.setAttribute('type', this.type)
+                }
+
             this.player.appendChild(source);
 
             document.getElementById('player').appendChild(this.player);
