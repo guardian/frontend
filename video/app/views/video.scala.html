@@ -1,0 +1,91 @@
+@(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    @fragments.commonJavaScriptSetup(Static)
+    @fragments.metaData(video, Configuration, Static)
+
+    <title>@Html(video.headline)</title>
+
+    @fragments.commonCssSetup(Static)
+
+    <script type="text/javascript">
+
+                guardian.js.modules.gu = '@Static("javascripts/video/gu.js")'; 
+                guardian.js.modules.player = '@Static("javascripts/video/player.js")'; 
+                guardian.js.modules.eventemitter = '@Static("javascripts/video/vendor/eventEmitter.js")'; 
+                guardian.js.modules.detectOs = '@Static("javascripts/video/detect.js")'; 
+                guardian.js.modules.bonzo = '@Static("javascripts/video/vendor/bonzo.js")'; 
+                guardian.js.modules.qwery = '@Static("javascripts/video/vendor/qwery.js")'; 
+
+                require(['@Static("javascripts/video/gu.js")', '@Static("javascripts/video/video.js")'], function(gu, Video) {
+
+                    // 
+                    var encodings = [
+                    @{video.encodings.map{ encoding =>
+                            "{ 'url':  '%s', 'format': '%s'  }".format(encoding.url, encoding.format)
+                        }.mkString(",")}
+                    ];
+
+                    //
+                    var video = new Video({
+                            encodings: encodings  
+                            });
+
+                    // 
+                    video.embed(function(){
+                        var playCta = document.createElement('button');
+                        playCta.innerText = 'play';
+                        playCta.addEventListener('click', function(){
+                            gu.events.emit('video:play');
+                            });
+                        document.getElementById('player').appendChild(playCta); 
+                       })
+
+                    });
+    </script>
+
+</head>
+<body class="zone-@video.section">
+    
+    <div id="container">
+
+        <div class="line">
+            <div class="unit lastUnit">
+                @fragments.placeholders("tier1", 5)
+                @fragments.navigation(Static, Configuration, video)
+                @fragments.headline(video.headline)
+                @fragments.standfirst(video.standfirst)
+            </div>
+        </div>
+
+        <div class="line">
+
+            <div class="unit size3of5">
+
+                <div id="player">
+                    html5 video player
+                </div>
+
+            </div>
+
+            <div class="unit lastUnit">
+                @if(storyPackage nonEmpty) {
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                } else {
+                    <div id="related"></div>
+                }
+                <div id="most-popular"></div>
+                @fragments.placeholders("tier2", 5)
+            </div>
+
+        </div>
+    </div>
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(video, Configuration)
+</body>
+</html>
