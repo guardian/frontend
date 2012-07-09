@@ -1,51 +1,51 @@
-@(static: StaticAssets)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
 
-<script>
+<script id="gu">
+
     var guardian = {};
 
-    @*// used for requireJS because we can't build dynamic paths inside main.js  *@
-    guardian.js = {};
-    
-    guardian.js.modules = {
-        order                       : '@static("javascripts/order.min.js")', // must be first
-        ads                         : '@static("javascripts/libs/ads.min.js")',
-        analytics                   : '@static("javascripts/libs/analytics.min.js")',
-        basicTemplate               : '@static("javascripts/libs/basicTemplate.min.js")',
-        bean                        : 'http://6.gu-pasteup.appspot.com/js/libs/bean.min',
-        bonzo                       : 'http://6.gu-pasteup.appspot.com/js/libs/bonzo.test.min',
-        commonPlugins               : '@static("javascripts/commonPlugins.min.js")',
-        detect                      : '@static("javascripts/detect/detect.min.js")',
-        discussionBinder            : '@static("javascripts/libs/discussionBinder.min.js")',
-        $dom                        : 'http://6.gu-pasteup.appspot.com/js/libs/dollardom.amd.js',
-        expanderBinder              : '@static("javascripts/libs/expanderBinder.min.js")',
-        fetchDiscussion             : '@static("javascripts/libs/fetchDiscussion.min.js")',
-        $g                          : '@static("javascripts/libs/g.min.js")',
-        guardianUtils               : '@static("javascripts/libs/guardianUtils.min.js")',
-        images                      : '@static("javascripts/detect/images.min.js")',
-        qwery                       : 'http://6.gu-pasteup.appspot.com/js/libs/qwery.min',
-        reqwest                     : 'http://6.gu-pasteup.appspot.com/js/libs/reqwest',
-        topNav                      : '@static("javascripts/libs/topNav.min.js")',
-        writeCapture                : 'order!@static("javascripts/libs/writeCapture.min.js")',
-        writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")'
-    };
-
-    @*// this is horrible. looking for a better way to do this.*@
-    guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
-
-    guardian.config = {};
-    guardian.config.discussion = {
-        numCommentsPerPage: 20
-    };
-
-    // used for determining whether we need to load JS polyfills for DOM querying and events
-    guardian.config.isModernBrowser = ('querySelector' in document && 'addEventListener' in window);
-
     var require = {
-        paths: guardian.js.modules
+        baseUrl: '@{config.static.path}javascripts',
+        paths: {
+            'common': '@static("javascripts/common.js")',
+            'bootstraps/article': '@static("javascripts/bootstraps/article.js")'
+        }
     };
+
+
+    // FIXME
+    require.paths.common  = require.paths.common.replace('.js', '');
+    require.paths['bootstraps/article'] = require.paths['bootstraps/article'].replace('.js', '');
+
+    var script = document.createElement('script');
+    script.async = 'async';
+    script.src = '@static("javascripts/vendor/require-2.0.4.js")';
+    script.onload = function() {
+
+        define('config', function(){
+            return {
+                isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
+                page: {
+
+                    @item.metaData.map{ case(key, value) =>
+                        '@{JavaScriptVariableName(key)}': '@{JavaScriptValue(value.toString)}'
+                    }.mkString(","),
+
+                    @config.javascript.pageData.map{ case (key, value) =>
+                        '@{JavaScriptVariableName(key.split('.').last)}': '@value'
+                    }.mkString(","),
+
+                    'edition': '@Edition(request, config)'
+                }
+            };
+        })
+
+        require(['config', 'bootstraps/article'], function(config, article) {
+            article.init(config);
+        });
+
+    };
+
+    document.getElementById('gu').parentNode.insertBefore(script);
 
 </script>
-
-<script type="text/javascript" src="http://6.gu-pasteup.appspot.com/js/libs/eventemitter.min.js"></script>
-<script>guardian.js.ee = new EventEmitter();</script>
-<script data-main="@static("javascripts/main.min.js")" src="http://pasteup.guim.co.uk/0.0.2/js/require.js"></script>

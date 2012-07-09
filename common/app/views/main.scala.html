@@ -3,7 +3,7 @@
 <head>
     <title>@metaData.webTitle</title>
     @fragments.commonCssSetup(static)
-    @fragments.commonJavaScriptSetup(static)
+    @fragments.commonJavaScriptSetup(metaData, config, static)
     @fragments.metaData(metaData, config, static)
 
     @head
