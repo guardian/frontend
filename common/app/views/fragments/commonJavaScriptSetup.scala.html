@@ -1,11 +1,15 @@
 @(static: StaticAssets)
-
 <script>
     var guardian = {};
 
     @*// used for requireJS because we can't build dynamic paths inside main.js  *@
     guardian.js = {};
-    
+
+    guardian.js.modules = {
+        async                       : '@static("javascripts/async.js")'
+    };
+
+    @*
     guardian.js.modules = {
         order                       : '@static("javascripts/order.min.js")', // must be first
         ads                         : '@static("javascripts/libs/ads.min.js")',
@@ -28,9 +32,10 @@
         writeCapture                : 'order!@static("javascripts/libs/writeCapture.min.js")',
         writeCaptureNoLibSupport    : 'order!@static("javascripts/libs/writeCaptureNoLibSupport.min.js")'
     };
+    *@
 
     @*// this is horrible. looking for a better way to do this.*@
-    guardian.js.modules.order = guardian.js.modules.order.replace('.js', '');
+   @* guardian.js.modules.order = guardian.js.modules.order.replace('.js', ''); *@
 
     guardian.config = {};
     guardian.config.discussion = {
@@ -46,6 +51,5 @@
 
 </script>
 
-<script type="text/javascript" src="http://6.gu-pasteup.appspot.com/js/libs/eventemitter.min.js"></script>
-<script>guardian.js.ee = new EventEmitter();</script>
-<script data-main="@static("javascripts/main.min.js")" src="http://6.gu-pasteup.appspot.com/js/require.js"></script>
+
+<script data-main='@static("javascripts/common.js")' src='@static("javascripts/require.js")'></script>
