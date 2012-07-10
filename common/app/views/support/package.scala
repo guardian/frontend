@@ -113,15 +113,10 @@ object InBodyLinkCleaner extends HtmlCleaner {
 // beta.guardian.co.uk goes in A group
 // test.guardian.co.uk goes in B group
 object ABTest {
-  def apply(implicit request: RequestHeader) = //HostAB(request.getQueryString("host").getOrElse(request.host))
-
-    {
-      new {
-        val isB = request.getQueryString("host").getOrElse(request.host).contains("test")
-        val isA = !isB
-      }
-
-    }
+  def apply(implicit request: RequestHeader) = new {
+    val isB = request.getQueryString("host").getOrElse(request.host).contains("test")
+    val isA = !isB
+  }
 }
 
 object TagLinks {
