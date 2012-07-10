@@ -1,17 +1,17 @@
 @(static: StaticAssets, config: GuardianConfiguration, metaData: MetaData)(implicit request: RequestHeader)
 <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
 
-
-<div class="edition-switch" data-link-name="edition switch">
-    @defining(Edition(request, config)){ edition =>
-        @if(edition == "US") {
-            <a href="http://@{config.edition.ukHost}/@metaData.id" data-link-name="UK">UK Edition</a>
-        } else {
-            <a href="http://@{config.edition.usHost}/@metaData.id" data-link-name="US">US Edition</a>
+@if(ABTest(request).isA){
+    <div class="edition-switch" data-link-name="edition switch">
+        @defining(Edition(request, config)){ edition =>
+            @if(edition == "US") {
+                <a href="http://@{config.edition.ukHost}/@metaData.id" data-link-name="UK">UK Edition</a>
+            } else {
+                <a href="http://@{config.edition.usHost}/@metaData.id" data-link-name="US">US Edition</a>
+            }
         }
-    }
-</div>
-
+    </div>
+}
 
 <ul class="nav component" data-link-name="top nav">
     <li><a data-link-name="home" href="/">Home</a></li>
