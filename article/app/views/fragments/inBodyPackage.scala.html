@@ -1,6 +1,6 @@
-@(storyPackage: Seq[Trail])
+@(storyPackage: Seq[Trail])(implicit request: RequestHeader)
 
-@if(storyPackage.nonEmpty){
+@if(storyPackage.nonEmpty && ABTest(request).isB){
     <div class="trailblock more-on-story zone-border more-inline" id="inline-more-on" data-link-name="related : inline : More on this story">
         <h3>More on this story</h3>
         <ul class="plain show-3">

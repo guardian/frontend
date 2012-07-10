@@ -12,6 +12,7 @@ import play.api.templates.Html
 import scala.collection.JavaConversions._
 
 import scala.Some
+import play.api.mvc.RequestHeader
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -107,6 +108,20 @@ object InBodyLinkCleaner extends HtmlCleaner {
     }
     body
   }
+}
+
+// beta.guardian.co.uk goes in A group
+// test.guardian.co.uk goes in B group
+object ABTest {
+  def apply(implicit request: RequestHeader) = //HostAB(request.getQueryString("host").getOrElse(request.host))
+
+    {
+      new {
+        val isB = request.getQueryString("host").getOrElse(request.host).contains("test")
+        val isA = !isB
+      }
+
+    }
 }
 
 object TagLinks {
