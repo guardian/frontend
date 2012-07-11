@@ -1,5 +1,6 @@
 define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
     function toggle(item) {
+
         var trails = $g.qsa("li", item)
 
         var opening = false;
@@ -36,7 +37,9 @@ define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
         for (i = 0; i < items.length; i++) {
             var item = items[i];
             bean.add(item, 'click', function(e) {
-                toggle(e.srcElement.parentNode)
+                toggle($g.findParent(e.srcElement, function(item){
+                    return item.getAttribute('class').split(' ').indexOf("trailblock") > -1})
+                );
             });
         }
     }
