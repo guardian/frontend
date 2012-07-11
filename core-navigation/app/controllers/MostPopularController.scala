@@ -23,7 +23,7 @@ object MostPopularController extends Controller with Logging {
       .response
 
     val heading = response.section.map(s => "Popular on " + s.webTitle).getOrElse("Popular right now")
-    val popular = response.mostViewed map { new Content(_) }
+    val popular = response.mostViewed map { new Content(_) } take (10)
 
     Some(MostPopular(heading, popular))
   }
