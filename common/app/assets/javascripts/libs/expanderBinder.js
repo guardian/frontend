@@ -18,7 +18,7 @@ define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
     }
 
     function init(items) {
-        if (typeof itmes == "undefined") {
+        if (typeof items == "undefined") {
             items = $g.qsa(".expander");
         }
         for (i = 0; i < items.length; i++) {
