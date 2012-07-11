@@ -15,7 +15,7 @@ define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
                 trail.setAttribute("was-hidden", "true");
                 opening = true;
             } else if (trail.getAttribute("was-hidden") == "true") {
-                trail.style.display = "none"
+                trail.style.display = "none";
                 opening = false;
             }
         }
