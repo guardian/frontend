@@ -1,0 +1,36 @@
+# portrait
+
+       Modernizr.fontface true
+          Modernizr.audio true
+          Modernizr.video true
+        Modernizr.history true
+            Modernizr.svg false
+         Modernizr.canvas true
+    Modernizr.geolocation true
+   Modernizr.localstorage true
+      Modernizr.indexeddb false
+          Modernizr.touch true
+          Modernizr.webgl false
+  Modernizr.cssanimations true
+        window.innerWidth 400
+       window.innerHeight 333
+             screen.width 400
+            screen.height 333
+  window.devicePixelRatio 1.5
+        navigator.battery 
+        screen.colorDepth 32
+       navigator.language en
+       window.performance 
+     window.msPerformance 
+ window.webkitPerformance 
+    window.mozPerformance 
+       window.orientation 0
+      navigator.userAgent Mozilla/5.0 (Linux; U; Android 2.3.3; en-gb; GT-P1000 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+
+# landscape
+
+        window.innerWidth 683
+       window.innerHeight 334
+             screen.width 683
+            screen.height 334
+       window.orientation 90
