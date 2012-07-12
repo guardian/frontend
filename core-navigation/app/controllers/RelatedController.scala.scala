@@ -26,7 +26,7 @@ object RelatedController extends Controller with Logging {
       .response
 
     val heading = "Related content"
-    val related = response.relatedContent map { new Content(_) }
+    val related = response.relatedContent map { new Content(_) } take (10)
 
     Some(Related(heading, related))
   }

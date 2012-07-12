@@ -1,38 +1,50 @@
 define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
+    function toggle(item) {
 
-	// show hidden related stories when clicked
+        var trails = $g.qsa("li", item)
 
-	function bindSingleExpander(expander) {
-		var link = $g.qs('.expander', expander);
-		if (link) {
-			bean.add(link, 'click', function(e){
-				var lis = expander.querySelectorAll('li'); // todo: x-browser
-				for (i=0, l=lis.length; i<l; i++) {
-					lis[i].style.display = "block";
-				}
-				$g.hide(link);
-				e.preventDefault();
-			});
-		}
-	}
+        var opening = false;
 
-	function bind(expanders) {
-		if (expanders.length > 1) { // bind multiple
-			for (var i=0, l=expanders.length; i<l; i++) {
-				bindSingleExpander(expanders[i]);
-			}
-		} else {
-			bindSingleExpander(expanders); // bind only 1
-		}
-	}
+        for (i = 0; i < trails.length; i++) {
+            var trail = trails[i];
 
-	// add listener
-	function init() {
-		guardian.js.ee.addListener('addExpander', bind);
-	}
+            //interestingly, style.display does not work in this case...
+            var isVisible = trail.getClientRects().length > 0;
 
-	return { 
-		init: init
-	};
+            if (!isVisible) {
+                trail.style.display = "block";
+                trail.setAttribute("was-hidden", "true");
+                opening = true;
+            } else if (trail.getAttribute("was-hidden") == "true") {
+                trail.style.display = "none";
+                opening = false;
+            }
+        }
 
+        var count = $g.qs('.count', item);
+        if (count && opening) {
+            count.style.display = "none";
+        } else if (count) {
+            count.style.display = "block";
+        }
+
+    }
+
+    function init(items) {
+        if (typeof items == "undefined") {
+            items = $g.qsa(".expander");
+        }
+        for (i = 0; i < items.length; i++) {
+            var item = items[i];
+            bean.add(item, 'click', function(e) {
+                toggle($g.findParent(e.srcElement, function(item){
+                    return item.getAttribute('class').split(' ').indexOf("trailblock") > -1})
+                );
+            });
+        }
+    }
+
+    return {
+        init: init
+    };
 });

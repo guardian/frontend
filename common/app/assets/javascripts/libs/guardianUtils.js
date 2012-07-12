@@ -49,6 +49,17 @@ define([], function(){
 			}
 		}
 
+        function findParent(item, f) {
+            if (item.tagName.toLowerCase() == 'body') {
+                return null;
+            }
+            if (f(item) == true) {
+                return item;
+            } else {
+                return findParent(item.parentNode, f);
+            }
+        }
+
 
 
 		// ##### public functions #####
@@ -64,6 +75,10 @@ define([], function(){
 		$g.qsa = function (s, c) {
 			return genericQuerySelector(s, true, c);
 		};
+
+        $g.findParent = function(item, f) {
+            return findParent(item, f);
+        };
 
 		$g.addEventListener = function (obj, eventName, listener) {
 			
