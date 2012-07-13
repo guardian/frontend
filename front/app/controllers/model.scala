@@ -10,7 +10,10 @@ case class TrailblockAgent(description: TrailblockDescription, edition: String) 
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.sendOff { old =>
+  def refresh() = agent.send { old =>
+
+    log.info("refreshing trailblock " + description)
+
     val trails = loadTrails(description.id)
 
     val firstItemStoryPackage: Seq[Trail] = trails.headOption.map {
@@ -22,6 +25,9 @@ case class TrailblockAgent(description: TrailblockDescription, edition: String) 
       case head :: tail => TrailWithPackage(head, firstItemStoryPackage) :: tail.map(TrailWithPackage(_, Nil))
       case _ => trails.map(TrailWithPackage(_, Nil))
     }
+
+    log.info("trailblock " + description + " refreshed with " + trailsWithPackages.size + " items")
+
     Some(Trailblock(description, trailsWithPackages))
   }
 
