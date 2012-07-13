@@ -23,6 +23,10 @@ trait AkkaSupport {
       def every(duration: Duration)(block: => Unit): Cancellable = {
         system().scheduler.schedule(0 seconds, duration) { block }
       }
+
+      def once(block: => Unit): Cancellable = {
+        system().scheduler.scheduleOnce(0 seconds) { block }
+      }
     }
 
     def agent[T](value: T): Agent[T] = Agent(value)(play_akka.system())
