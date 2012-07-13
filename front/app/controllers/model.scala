@@ -6,66 +6,34 @@ import conf._
 import model._
 import akka.util.Timeout
 
-trait TrailblockAgent extends AkkaSupport with Logging {
+case class TrailblockAgent(description: TrailblockDescription, edition: String) extends AkkaSupport with Logging {
 
-  val waitTime = 3000
+  private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  private val trailblockAgent = play_akka.agent[Option[Trailblock]](None)
+  def refresh() = agent.sendOff { old =>
+    val trails = loadTrails(description.id)
 
-  def trailblockDescription: Option[TrailblockDescription]
+    val firstItemStoryPackage: Seq[Trail] = trails.headOption.map {
+      case c: Content => loadStoryPackage(c.id)
+      case _ => Nil
+    } getOrElse (Nil)
 
-  def trailblock: Option[Trailblock] = trailblockAgent()
-
-  def edition: String
-
-  def shutdown() { trailblockAgent.close() }
-
-  def refresh() {
-    trailblockAgent.sendOff { s =>
-      trailblockDescription.map { description =>
-        val trails = loadTrails(description.id, edition)
-
-        //if we cannot load the story package we still want to display the trails
-        val storyPackageForFirstTrail = failQuietly(Seq[Trail]()) {
-          trails.head match {
-            case c: Content => loadStoryPackage(c.id, edition)
-            case _ => Nil
-          }
-        }
-        Trailblock(
-          description,
-          TrailWithPackage(trails.head, storyPackageForFirstTrail) :: trails.tail.map(TrailWithPackage(_, Nil)).toList
-        )
-      }
+    val trailsWithPackages = trails match {
+      case head :: tail => TrailWithPackage(head, firstItemStoryPackage) :: tail.map(TrailWithPackage(_, Nil))
+      case _ => trails.map(TrailWithPackage(_, Nil))
     }
+    Some(Trailblock(description, trailsWithPackages))
   }
 
-  def refreshAndWait() {
-    refresh()
-    quietly(trailblockAgent.await(Timeout(waitTime)))
-  }
+  def close() = agent.close()
 
-  private def failQuietly[A](default: A)(block: => A) = try {
-    block
-  } catch {
-    case e => log.error("failed quietly", e); default
-  }
+  def trailblock: Option[Trailblock] = agent()
 
-  private def loadStoryPackage(id: String, edition: String): Seq[Trail] = {
-    log.info("Refreshing trailblock " + id + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(id, edition)
-      .showStoryPackage(true)
-      .response
-
-    response.storyPackage map { new Content(_) } filterNot (_.id == id)
-  }
-
-  private def loadTrails(id: String, edition: String): Seq[Trail] = {
+  private def loadTrails(id: String): Seq[Trail] = {
     log.info("Refreshing trailblock " + id + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(id, edition)
       .showEditorsPicks(true)
-      .showMostViewed(true)
-      .pageSize(15)
+      .pageSize(20)
       .response
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
@@ -74,48 +42,18 @@ trait TrailblockAgent extends AkkaSupport with Logging {
 
     editorsPicks ++ latest
   }
-}
 
-case class ManualTrailblockAgent(description: TrailblockDescription, edition: String) extends TrailblockAgent {
-  override def trailblockDescription = Some(description)
-}
+  private def loadStoryPackage(id: String): Seq[Trail] = {
+    log.info("Refreshing story package for " + id + " for edition " + edition)
+    val response: ItemResponse = ContentApi.item(id, edition)
+      .showStoryPackage(true)
+      .response
 
-case class FolderTrailblockAgent(folderId: String, edition: String) extends TrailblockAgent {
-
-  private val descriptionAgent = play_akka.agent[Option[TrailblockDescription]](None)
-
-  override def trailblockDescription = descriptionAgent()
-
-  override def shutdown() {
-    descriptionAgent.close()
-    super.shutdown()
-  }
-
-  override def refresh() {
-    refreshInternal()
-    super.refresh()
-  }
-
-  override def refreshAndWait() {
-    refreshInternal()
-    quietly(descriptionAgent.await(Timeout(waitTime)))
-    super.refresh()
-  }
-
-  private def refreshInternal() {
-    descriptionAgent.sendOff { s =>
-      val response = ContentApi.tags.folder(folderId).response
-      response.results.headOption.map(Tag(_)).map(toTrailblockDescription)
-    }
-  }
-
-  private def toTrailblockDescription(tag: Tag) = {
-    val id = if (tag.isSectionTag) tag.section else tag.id
-    TrailblockDescription(id, tag.name, 3)
+    response.storyPackage map { new Content(_) } filterNot (_.id == id)
   }
 }
 
-class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
+case class Front(trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
   override val id = ""
   override val section = ""
@@ -130,51 +68,53 @@ class Front(val trailblocks: Seq[Trailblock]) extends MetaData {
   lazy val collapseEmptyBlocks: Front = new Front(trailblocks filterNot { _.trails.isEmpty })
 }
 
-case class FolderTrailblock(folderId: Option[String], default: TrailblockDescription)
+object Front {
 
-object Front extends Logging {
-
-  private val ukAgents = Seq(
-    ManualTrailblockAgent(TrailblockDescription("/", "Top stories", 5), "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-1", "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-2", "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-3", "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-4", "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-5", "UK"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks/zone-6", "UK")
+  private lazy val ukTrailblockAgents = Seq(
+    TrailblockAgent(TrailblockDescription("/", "Top stories", 5), "UK"),
+    TrailblockAgent(TrailblockDescription("/sport", "Sport", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("/commentisfree", "Comment is free", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("/culture", "Culture", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("/lifeandstyle", "Life and style", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("/business", "Business", 3), "UK")
   )
 
-  private val usAgents = Seq(
-    ManualTrailblockAgent(TrailblockDescription("/", "Top stories", 5), "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-1", "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-2", "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-3", "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-4", "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-5", "US"),
-    FolderTrailblockAgent("folder/guardianmobileeditorsindex/mobile-front-trailblocks-us/us-zone-6", "US")
-  )
+  private lazy val usTrailblockAgents = ukTrailblockAgents map { agent => TrailblockAgent(agent.description, "US") }
 
-  private val allAgents = ukAgents ++ usAgents
+  private lazy val agents = ukTrailblockAgents ++ usTrailblockAgents
 
-  def shutdown() { allAgents.foreach(_.shutdown()) }
+  def start() = agents foreach (_.refresh())
 
-  def refresh() { allAgents.foreach(_.refresh()) }
+  def shutdown() = agents foreach (_.close())
 
-  def refreshAndWait() { allAgents.foreach(_.refreshAndWait()) }
+  def refresh() = agents foreach (_.refresh())
 
   def apply(edition: String): Front = {
-    val trailblocks = (if (edition == "US") usAgents else ukAgents) flatMap { _.trailblock }
 
-    var used = Set[String]()
-    var deduped = Seq[Trailblock]()
-
-    for (Trailblock(description, trails) <- trailblocks) {
-      val dedupedTrails: Seq[TrailWithPackage] = trails filterNot { _.trail.url in used } take 10
-
-      used ++= dedupedTrails map { _.trail.url }
-      deduped :+= Trailblock(description, dedupedTrails)
+    val trailBlocks = edition match {
+      case "US" => usTrailblockAgents flatMap (_.trailblock)
+      case _ => ukTrailblockAgents flatMap (_.trailblock)
     }
 
-    new Front(deduped).collapseEmptyBlocks
+    var usedTrails = List.empty[String]
+
+    val deDupedTrailblocks = trailBlocks.map { trailblock =>
+
+      val deDupedTrails = trailblock.trails.flatMap { trail =>
+        if (usedTrails.contains(trail.trail.url)) {
+          None
+        } else {
+          Some(trail)
+        }
+      }
+
+      //only dedupe on visible trails
+      usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.trail.url)
+
+      Trailblock(trailblock.description, deDupedTrails take (10))
+    }
+
+    Front(deDupedTrailblocks)
   }
+
 }

@@ -9,6 +9,7 @@ case class FrontPage(front: Front)
 
 object FrontController extends Controller with Logging {
   def render() = Action { implicit request =>
+    FrontRefresher monitorStatus ()
     lookup() map { renderFront } getOrElse { NotFound }
   }
 
