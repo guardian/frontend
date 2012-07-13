@@ -9,7 +9,7 @@ import org.scala_tools.time.Imports._
 
 object FrontRefresher extends AkkaSupport with Logging {
 
-  private val refreshDuration = akka.util.Duration(10, SECONDS)
+  private val refreshDuration = akka.util.Duration(60, SECONDS)
 
   private var refreshSchedule: Option[Cancellable] = None
 
