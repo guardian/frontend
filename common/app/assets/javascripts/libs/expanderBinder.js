@@ -38,9 +38,17 @@ define(["bean", guardian.js.modules["$g"]], function(bean, $g) {
             var item = items[i];
             bean.add(item, 'click', function(e) {
                 toggle($g.findParent(e.srcElement, function(item){
-                    return item.getAttribute('class').split(' ').indexOf("trailblock") > -1})
+                        var clazz = item.getAttribute('class');
+                        if (clazz) {
+                            var classes = clazz.split(' ')
+                            return classes.indexOf("trailblock") > -1 || classes.indexOf("trailblock-shaded") > -1;
+                        } else {
+                            return false;
+                        }
+                    })
                 );
-            });
+                e.preventDefault();
+            })
         }
     }
 
