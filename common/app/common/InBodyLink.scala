@@ -3,8 +3,8 @@ package common
 object InBodyLink extends Logging {
 
   //all content types except article (they do not have the word "article" in the url)
-  val supportedContentTypes = Seq("gallery")
-  val unSupportedContentTypes = Seq("video", "audio", "interactive", "poll", "quiz", "picture", "sudoku",
+  val supportedContentTypes = Seq("gallery", "video")
+  val unSupportedContentTypes = Seq("audio", "interactive", "poll", "quiz", "picture", "sudoku",
     "crossword", "competition", "podcast", "signup", "cartoon", "table", "graphic", "audioslideshow", "data",
     "document")
 
@@ -38,11 +38,13 @@ object InBodyLink extends Logging {
   def apply(url: String): String = {
     val queryParams = url.dropWhile(_ != '?')
     val urlWithoutParams: String = url.takeWhile(_ != '?')
-    val reslovedUrl = pageTypes(urlWithoutParams)
-      .orElse(contentTypes(urlWithoutParams))
-      .orElse(unknownUrl(urlWithoutParams))(urlWithoutParams)
+    val hash = urlWithoutParams.dropWhile(_ != '#')
+    val urlWithoutHash: String = urlWithoutParams.takeWhile(_ != '#')
+    val reslovedUrl = pageTypes(urlWithoutHash)
+      .orElse(contentTypes(urlWithoutHash))
+      .orElse(unknownUrl(urlWithoutHash))(urlWithoutHash)
 
-    reslovedUrl + queryParams
+    reslovedUrl + queryParams + hash
   }
 
   private def unknownUrl(url: String): PartialFunction[String, String] = {

@@ -10,5 +10,5 @@ object SupportedUrl {
 
   def apply(s: ApiSection): String = "/%s" format s.id
 
-  private def isSupportedInApp(c: ApiContent) = c.isArticle || c.isGallery
+  private def isSupportedInApp(c: ApiContent) = c.isArticle || c.isGallery || c.isVideo
 }
