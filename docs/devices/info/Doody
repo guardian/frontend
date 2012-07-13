@@ -1,0 +1,39 @@
+# portrait
+
+                        ---
+          Modernizr.audio false
+         Modernizr.canvas false
+  Modernizr.cssanimations false
+       Modernizr.fontface true
+    Modernizr.geolocation false
+        Modernizr.history false
+      Modernizr.indexeddb false
+   Modernizr.localstorage true
+            Modernizr.svg false
+          Modernizr.touch false
+          Modernizr.video false
+          Modernizr.webgl false
+        navigator.battery 
+       navigator.language 
+      navigator.userAgent Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; HTC; 7 Trophy)
+        screen.colorDepth 16
+            screen.height 800
+             screen.width 480
+  window.devicePixelRatio 
+       window.innerHeight 
+        window.innerWidth 
+    window.mozPerformance 
+     window.msPerformance 
+       window.orientation 
+       window.performance [object]
+ window.webkitPerformance 
+                        ---
+
+# landscape
+
+            screen.height 800
+             screen.width 480
+  window.devicePixelRatio 
+       window.innerHeight 
+        window.innerWidth 
+

@@ -1,0 +1,38 @@
+# portrait
+
+                        ---
+          Modernizr.audio true
+         Modernizr.canvas true
+  Modernizr.cssanimations true
+       Modernizr.fontface true
+    Modernizr.geolocation true
+        Modernizr.history true
+      Modernizr.indexeddb false
+   Modernizr.localstorage true
+            Modernizr.svg false
+          Modernizr.touch true
+          Modernizr.video true
+          Modernizr.webgl false
+        navigator.battery 
+       navigator.language en
+      navigator.userAgent Mozilla/5.0 (Linux; U; Android 2.2.1; en-gb; HTC Wildfire 2.24.161.2 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+        screen.colorDepth 16
+            screen.height 356
+             screen.width 267
+  window.devicePixelRatio 0.75
+       window.innerHeight 356
+        window.innerWidth 267
+    window.mozPerformance 
+     window.msPerformance 
+       window.orientation 0
+       window.performance 
+ window.webkitPerformance 
+
+# landscape
+
+            screen.height 309
+             screen.width 267
+       window.innerHeight 309
+        window.innerWidth 267
+       window.orientation -90
+

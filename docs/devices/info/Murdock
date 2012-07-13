@@ -1,0 +1,39 @@
+# portrait
+
+                        ---
+          Modernizr.audio true
+         Modernizr.canvas true
+  Modernizr.cssanimations true
+       Modernizr.fontface true
+    Modernizr.geolocation true
+        Modernizr.history true
+      Modernizr.indexeddb false
+   Modernizr.localstorage true
+            Modernizr.svg true
+          Modernizr.touch true
+          Modernizr.video true
+          Modernizr.webgl false
+        navigator.battery 
+       navigator.language en-GB
+      navigator.userAgent Mozilla/5.0 (Linux; U; Android 4.0.4; en-gb; Galaxy Nexus Build/IMM76I) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+        screen.colorDepth 32
+            screen.height 1280
+             screen.width 720
+  window.devicePixelRatio 2
+       window.innerHeight 515
+        window.innerWidth 360
+    window.mozPerformance 
+     window.msPerformance 
+       window.orientation 0
+       window.performance [object Performance]
+ window.webkitPerformance 
+                        ---
+
+# landscape
+
+            screen.height 720
+             screen.width 1280
+       window.innerHeight 515
+        window.innerWidth 360
+       window.orientation -90
+
