@@ -77,12 +77,12 @@ case class Front(trailblocks: Seq[Trailblock]) extends MetaData {
 object Front {
 
   private lazy val ukTrailblockAgents = Seq(
-    TrailblockAgent(TrailblockDescription("/", "Top stories", 5), "UK"),
-    TrailblockAgent(TrailblockDescription("/sport", "Sport", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("/commentisfree", "Comment is free", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("/culture", "Culture", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("/lifeandstyle", "Life and style", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("/business", "Business", 3), "UK")
+    TrailblockAgent(TrailblockDescription("", "Top stories", 5), "UK"),
+    TrailblockAgent(TrailblockDescription("sport", "Sport", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("commentisfree", "Comment is free", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("culture", "Culture", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("lifeandstyle", "Life and style", 3), "UK"),
+    TrailblockAgent(TrailblockDescription("business", "Business", 3), "UK")
   )
 
   private lazy val usTrailblockAgents = ukTrailblockAgents map { agent => TrailblockAgent(agent.description, "US") }
