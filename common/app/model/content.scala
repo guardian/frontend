@@ -61,7 +61,12 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
 
-  lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
+  //you want the m3u8 encoding first or iPhone barfs
+  lazy val encodings: Seq[Encoding] = videoAsset.map { asset =>
+    val encodings: Seq[Encoding] = asset.encodings.map(Encoding(_))
+    //encodings.filter(_.url.endsWith("mp4")).sortBy(!_.url.endsWith("m3u8"))
+    encodings
+  }.getOrElse(Nil)
 
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Video")
 }

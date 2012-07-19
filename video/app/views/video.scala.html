@@ -14,41 +14,15 @@
     @fragments.commonCssSetup(Static)
 
     <script type="text/javascript">
-
-                guardian.js.modules.gu = '@Static("javascripts/video/gu.js")'; 
+                guardian.js.modules.gu = '@Static("javascripts/video/gu.js")';
                 guardian.js.modules.player = '@Static("javascripts/video/player.js")'; 
                 guardian.js.modules.eventemitter = '@Static("javascripts/video/vendor/eventEmitter.js")'; 
                 guardian.js.modules.detectOs = '@Static("javascripts/video/detect.js")'; 
                 guardian.js.modules.bonzo = '@Static("javascripts/video/vendor/bonzo.js")'; 
                 guardian.js.modules.qwery = '@Static("javascripts/video/vendor/qwery.js")'; 
-
-                require(['@Static("javascripts/video/gu.js")', '@Static("javascripts/video/video.js")'], function(gu, Video) {
-
-                    // 
-                    var encodings = [
-                    @{video.encodings.map{ encoding =>
-                            "{ 'url':  '%s', 'format': '%s'  }".format(encoding.url, encoding.format)
-                        }.mkString(",")}
-                    ];
-
-                    //
-                    var video = new Video({
-                            encodings: encodings  
-                            });
-
-                    // 
-                    video.embed(function(){
-                        var playCta = document.createElement('button');
-                        playCta.innerText = 'play';
-                        playCta.addEventListener('click', function(){
-                            gu.events.emit('video:play');
-                            });
-                        document.getElementById('player').appendChild(playCta); 
-                       })
-
-                    });
     </script>
 
+    <script type="text/javascript" src='@Static("javascripts/video/vendor/jwplayer-5-10.js")'></script>
 </head>
 <body class="zone-@video.section">
     
@@ -59,18 +33,66 @@
                 @fragments.placeholders("tier1", 5)
                 @fragments.navigation(Static, Configuration, video)
                 @fragments.headline(video.headline)
-                @fragments.standfirst(video.standfirst)
             </div>
         </div>
 
         <div class="line">
-
             <div class="unit size3of5">
 
-                <div id="player">
-                    html5 video player
-                </div>
+                <div id="video-container">Video loading...</div>
+                <script type="text/javascript">
 
+                        function getWidth() {
+                            var x = 0;
+                            if (self.innerHeight)
+                            {
+                                x = self.innerWidth;
+                            }
+                            else if (document.documentElement && document.documentElement.clientHeight)
+                            {
+                                x = document.documentElement.clientWidth;
+                            }
+                            else if (document.body)
+                            {
+                                x = document.body.clientWidth;
+                            }
+                            return x;
+                        }
+
+                        function userAgentContains(s) {
+                            return navigator && navigator.userAgent && navigator.userAgent.indexOf(s) > -1
+                        }
+
+                        var encodings = [@Video.encodings(video.encodings)];
+
+                        if (userAgentContains('iPhone') || userAgentContains('iPad')) {
+                            encodings = [@Video.encodings(video.encodings, "m3u8")];
+                        }
+
+                        if (userAgentContains('Android')) {
+                            encodings = [@Video.encodings(video.encodings, "mp4")];
+                        }
+
+                        var width = 650;
+
+                        if (getWidth() < 650) {
+                            width = getWidth();
+                        }
+
+                        @*
+                            http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/15995/jw-embedder-reference-guide
+                        *@
+                        jwplayer("video-container").setup({
+                            // height: 270,
+                            width: width,
+                            image: "",
+                            levels: encodings,
+                            // this disables flash mode
+                            modes: [{type: "html5"}]
+                        });
+                </script>
+
+                @fragments.standfirst(video.standfirst)
             </div>
 
             <div class="unit lastUnit">
