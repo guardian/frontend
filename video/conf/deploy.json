@@ -7,7 +7,7 @@
                 "port":"9000",
                 "bucket":"artifacts-83445s",
                 "healthcheck_paths":[
-                    "/pages/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+                    "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
                 ]
             }
         },
