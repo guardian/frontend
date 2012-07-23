@@ -29,26 +29,29 @@
 
     var spec = location.hash.replace('#', '');
 
-    (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
+    if (spec) {
 
-      var htmlReporter = new jasmine.HtmlReporter();
+        (function() {
+          var jasmineEnv = jasmine.getEnv();
+          jasmineEnv.updateInterval = 1000;
 
-      jasmineEnv.addReporter(htmlReporter);
+          var htmlReporter = new jasmine.HtmlReporter();
 
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
+          jasmineEnv.addReporter(htmlReporter);
 
-      var currentWindowOnload = window.onload;
-      
-      require(['tests/spec/' + spec + '.spec'], function() {
-          jasmineEnv.execute();
-          console.log(1);
-        });
+          jasmineEnv.specFilter = function(spec) {
+            return htmlReporter.specFilter(spec);
+          };
 
-    })();
+          var currentWindowOnload = window.onload;
+          
+          require(['tests/spec/' + spec + '.spec'], function() {
+              jasmineEnv.execute();
+            });
+
+          })();
+    }
+
   </script>
 
 </head>
