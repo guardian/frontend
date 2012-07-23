@@ -30,6 +30,6 @@ object ArticleController extends Controller with Logging {
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
     CachedOk(model.article) {
-      Compressed(views.html.article(model.article, model.storyPackage))
+      views.html.article(model.article, model.storyPackage)
     }
 }
