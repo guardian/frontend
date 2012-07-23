@@ -92,7 +92,7 @@ trait Prototypes {
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
     requireJsModules := Seq("common"),
-    requireJsOptimize := true,
+    requireJsOptimize := false,
 
     resourceGenerators in Compile <+=  requireJsCompiler
   )
