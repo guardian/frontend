@@ -1,3 +1,7 @@
-require(["sync", "sync2"], function(s){});
+define(["vendor/EventEmitter-3.1.5"], function(placeholder){
+   
+    return {
+        pubsub: new EventEmitter()
+    }
 
-require([guardian.js.modules.async], function(s){});
+});
