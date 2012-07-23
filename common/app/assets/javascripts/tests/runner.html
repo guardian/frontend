@@ -18,10 +18,16 @@
       };
   </script>
   <script type="text/javascript" src="../vendor/require-2.0.4.js"></script>
-  <!-- sinon + jasmin-sinon -->
+  <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
+  <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
 
   <script type="text/javascript">
-      
+
+    window.onhashchange = function(){
+      window.location.reload();
+    }
+
+    var spec = location.hash.replace('#', '');
 
     (function() {
       var jasmineEnv = jasmine.getEnv();
@@ -37,7 +43,7 @@
 
       var currentWindowOnload = window.onload;
       
-      require(["tests/spec/Detect.spec"], function() {
+      require(['tests/spec/' + spec + '.spec'], function() {
           jasmineEnv.execute();
           console.log(1);
         });
@@ -48,5 +54,14 @@
 </head>
 
 <body>
+    <ul>
+        <li><a href="#Common">Common</a>
+        <li><a href="#Detect">Detect</a>
+        <li><a href="#UpgradeImages">UpgradeImages</a>
+    </ul>
+
+<!-- UpgradeImages.spec -->
+<img data-fullsrc="full-resolution.jpg" data-width="5" width="10" id="upgradeImages" />
+
 </body>
 </html>

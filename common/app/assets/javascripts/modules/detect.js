@@ -70,30 +70,11 @@ define(function () {
         return speed;
 
     }
-
-    function getBatteryLevel() {
-        var battery = navigator.battery;
-
-        // If we don't know then assume we're good.
-        var level = "high";
-
-        if (battery && !battery.charging) {
-            if (battery.level < 0.6) {
-                level = "medium";
-            }
-            if (battery.level < 0.3) {
-                level = "low";
-            }
-        }
-
-        return level;
-    }
-
+    
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
-        getBatteryLevel: getBatteryLevel
     };
 
 });
