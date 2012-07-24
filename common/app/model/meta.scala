@@ -37,6 +37,32 @@ trait Images {
 
     imagesByDistance.headOption
   }
+
+  //the rules below represent the best image data we can infer from the content api.
+  lazy val mainPicture = if (hasMainPicture) {
+    images.filter(i => i.rel == "body" && i.index == 1).headOption
+  } else {
+    None
+  }
+
+  lazy val mainPictureBase = mainPicture.flatMap { image =>
+    altImagesWithSameAspectRatio(image).filter(_.width == 140).headOption.orElse(mainPictureMedian)
+  }
+
+  lazy val mainPictureMedian = mainPicture.flatMap { image =>
+    altImagesWithSameAspectRatio(image).filter(_.width == 220).headOption.orElse(mainPicture)
+  }
+
+  private def altImagesWithSameAspectRatio(image: Image) = images.filter(_.rel == "alt-size")
+    .filter(_.aspectRatio == image.aspectRatio)
+
+  lazy val hasMainPicture: Boolean = {
+    val bodyPictureCount = images.filter(_.rel == "body").size
+    bodyPictureCount > inBodyPictureCount
+  }
+
+  lazy val inBodyPictureCount = 0
+
 }
 
 trait Tags {
