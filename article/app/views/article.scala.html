@@ -20,11 +20,12 @@
 
             <article>
 
-                @article.mainPictureBase.map{ image =>
+                @article.mainPicture(width=220).map{ image =>
                 <figure>
                     <img class="maxed" src="@image.url"
-                         data-fullsrc='@article.mainPicture.map{full => @full.url}'
-                         data-mediansrc="@article.mainPictureMedian.map{median => @median.url}" />
+                         data-fullsrc="@article.mainPicture.map{full => @full.url}"
+                         data-width="@article.mainPicture.map{full => @full.width}"
+                    />
                     <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
                 </figure>
                 }
