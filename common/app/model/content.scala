@@ -33,6 +33,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
+  override lazy val thumbnail: Option[String] = fields.get("thumbnail")
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(

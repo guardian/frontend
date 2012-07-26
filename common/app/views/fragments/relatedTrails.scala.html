@@ -1,7 +1,7 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int)
 
 @defining(trails.length){ numTrails =>
-    <div class="trailblock-shaded show-@{visibleTrails}" id="separate-more-on" data-link-name="related : separate : @heading">
+    <div class="trailblock-shaded show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
         <h3>@Html(heading)</h3>
         
         <ul class="plain">
