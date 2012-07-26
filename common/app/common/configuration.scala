@@ -41,7 +41,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val usHost = configuration.getStringProperty("edition.host.us").getOrElse {
       throw new IllegalStateException("US edition not configured")
     }
+    lazy val ukHost = configuration.getStringProperty("edition.host.uk").getOrElse {
+      throw new IllegalStateException("UK edition not configured")
+    }
     private lazy val editionsForHosts = Map(
+      ukHost -> "UK",
       usHost -> "US"
     )
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"

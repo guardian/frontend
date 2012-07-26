@@ -2,10 +2,10 @@ import akka.actor.Cancellable
 import akka.util.duration._
 import common.{ AkkaSupport, RequestMetrics }
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.Front
+import controllers.{ FrontRefresher, Front }
 import play.api.GlobalSettings
 
-object Global extends GlobalSettings with AkkaSupport with RequestTimer with StatusCounters {
+object Global extends GlobalSettings with RequestTimer with StatusCounters {
 
   import RequestMetrics._
 
@@ -15,16 +15,11 @@ object Global extends GlobalSettings with AkkaSupport with RequestTimer with Sta
   override val notFoundCounter = Request404s
   override val redirectCounter = Request30xs
 
-  private var refreshSchedule: Option[Cancellable] = None
-
   override def onStart(app: play.api.Application) {
-    refreshSchedule = Some(play_akka.scheduler.every(60 seconds) {
-      Front.refreshTrailblocks()
-    })
+    FrontRefresher.start()
   }
 
   override def onStop(app: play.api.Application) {
-    refreshSchedule foreach { _.cancel() }
-    Front.shutdown()
+    FrontRefresher.stop()
   }
 }

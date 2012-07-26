@@ -20,6 +20,12 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   lazy val contributorImageUrl: Option[String] = delegate.bylineImageUrl
 
+  lazy val isSectionTag: Boolean = {
+    val idParts = id.split("/")
+    // a section tag id looks like     science/science
+    !idParts.exists(_ != section)
+  }
+
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
     "content-type" -> "Tag"

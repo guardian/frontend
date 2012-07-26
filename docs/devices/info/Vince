@@ -1,0 +1,38 @@
+# portrait
+
+                        ---
+          Modernizr.audio true
+         Modernizr.canvas true
+  Modernizr.cssanimations true
+       Modernizr.fontface true
+    Modernizr.geolocation true
+        Modernizr.history true
+      Modernizr.indexeddb false
+   Modernizr.localstorage true
+            Modernizr.svg true
+          Modernizr.touch true
+          Modernizr.video true
+          Modernizr.webgl false
+        navigator.battery 
+       navigator.language en-gb
+      navigator.userAgent Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5
+        screen.colorDepth 32
+            screen.height 480
+             screen.width 320
+  window.devicePixelRatio 1
+       window.innerHeight 356
+        window.innerWidth 320
+    window.mozPerformance 
+     window.msPerformance 
+       window.orientation 0
+       window.performance 
+ window.webkitPerformance 
+                        ---
+
+# landscape
+
+            screen.height 480
+             screen.width 320
+       window.innerHeight 268
+        window.innerWidth 480
+       window.orientation -90

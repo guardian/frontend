@@ -4,7 +4,25 @@ import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
 import com.gu.management.{ Metric, GaugeMetric, TimingMetric }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends Api
+trait ApiQueryDefaults { self: Api =>
+
+  val supportedTypes = "type/gallery|type/article|type/video"
+
+  //NOTE - do NOT add body to this list
+  val trailFields = "trail-text,liveBloggingNow"
+
+  //common fileds that we use across most queries.
+  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+    .edition(edition)
+    .showTags("all")
+    .showFields(trailFields)
+    .showInlineElements("picture")
+    .showMedia("all")
+    .showStoryPackage(true)
+    .tag(supportedTypes)
+}
+
+class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults
     with MultiThreadedApacheHttpClient
     with Logging {
 
@@ -21,9 +39,8 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api
   }
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
-    if (!parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      "You should never, Never, NEVER create a query that does not include the edition. EVER"
-    )
+
+    checkQueryIsEditionalized(url, parameters)
 
     metrics.ContentApiHttpTimingMetric.measure {
       super.fetch(url, parameters + ("user-tier" -> "internal"))
@@ -49,4 +66,14 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api
 
     val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpClientCollectionPoolSize)
   }
+
+  private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
+    //you cannot editionalize tag queries
+    if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
+      "You should never, Never, NEVER create a query that does not include the edition. EVER: " + url
+    )
+  }
+
+  private def isTagQuery(url: String) = url.endsWith("/tags")
 }
+

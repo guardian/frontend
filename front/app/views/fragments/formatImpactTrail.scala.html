@@ -1,11 +1,11 @@
 @(trailWithPackage: TrailWithPackage)
 
 @defining(trailWithPackage.trail){ trail =>
-<div class="impact" style="background-image: url('@trail.imageOfWidth(460).get.url')">
+<div class="impact" data-link-name="impact trail" style="background-image: url('@trail.imageOfWidth(460).get.url')">
 <ol class="media b1">
-    <li class="main"><a href="@trail.url">@trail.linkText</a></li>
+    <li class="main"><a data-link-name="main trail" href="@trail.url">@trail.linkText</a></li>
 @defining(trailWithPackage.storyPackage.take(2)){ storyPackage =>
-    @storyPackage.map{ t => <li class="minor"><a href="@t.url">@t.linkText</a></li> }
+    @storyPackage.map{ t => <li data-link-name="sub trail" class="minor"><a href="@t.url">@t.linkText</a></li> }
 }
 </ol>
 </div>

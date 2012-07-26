@@ -1,40 +1,6 @@
-//lower priority modules
-require([guardian.js.modules["$g"]],
-    function($g) {
-
-        // hack-tastic
-
-        function createCookie(name,value,days) {
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime()+(days*24*60*60*1000));
-                var expires = "; expires="+date.toGMTString();
-            }
-            else var expires = "";
-            document.cookie = name+"="+value+expires+"; path=/";
-        }
-
-        function eraseCookie(name) {
-            createCookie(name,"",-1);
-        }
-
-        // set up tests for placement of "more on story" packages
-        var urlParams = $g.getUrlVars();
-
-        if(urlParams.mode) {
-            var mode = parseInt(urlParams.mode);
-            if (mode >= 1 && mode <= 6) { // limit to our 6 test cases for now
-                createCookie("moreMode", mode, 100);
-            } else { // anything else resets it
-                eraseCookie("moreMode");
-            }
-        }
-
-    }
-);
-
-//todo only load for percentage of users
-require(['http://cdn.optimizely.com/js/' + guardian.page.optimizelyId + '.js'], function(optimizely){})
+require('mostPopular');
+require('related');
+require('optimizely');
 
 //these are plugins required by all pages
 define('adsAndTracking', [guardian.js.modules.analytics, guardian.js.modules.ads], function(analytics, ads){});

@@ -7,7 +7,7 @@
                 "port":"9000",
                 "bucket":"artifacts-83445s",
                 "healthcheck_paths":[
-                    "/pages/sport"
+                    "/sport"
                 ]
             }
         },

@@ -53,6 +53,10 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
     ("http://www.guardiannews.com/politics/2012/jun/07/politics-live-readers-edition-7-june?foo=bar",
       "/politics/2012/jun/07/politics-live-readers-edition-7-june?foo=bar"),
 
+    //# in url
+    ("http://www.guardiannews.com/politics/2012/jun/07/politics-live-readers-edition-7-june#1234",
+      "/politics/2012/jun/07/politics-live-readers-edition-7-june#1234"),
+
     //----------  UnSupported types ----------//
 
     //external urls

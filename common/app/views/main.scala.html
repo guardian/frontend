@@ -1,0 +1,15 @@
+@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration)(head: Html)(body: Html)(implicit request: RequestHeader)
+<html>
+<head>
+    <title>@metaData.webTitle</title>
+    @fragments.commonCssSetup(static)
+    @fragments.commonJavaScriptSetup(static)
+    @fragments.metaData(metaData, config, static)
+
+    @head
+
+</head>
+<body class="zone-@metaData.section">
+    @body
+</body>
+</html>

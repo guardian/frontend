@@ -1,30 +1,12 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
-@import fragments._
-@import conf._
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(tag, conf.Configuration)
-
-    <title>@Html(tag.webTitle)</title>
-
-    @fragments.commonCssSetup(Static)
-
-</head>
-
-<body>
-
+@main(tag, Static, Configuration){  }{
     <div id="container">
 
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(Static, Configuration, tag)
                 @fragments.headline(tag.name)
             </div>
         </div>
@@ -46,10 +28,9 @@
                     </div>
                 }
             </div>
-
+            <div id="most-popular"></div>
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(tag, conf.Configuration)
-</body>
-</html>
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(tag, Configuration)
+}

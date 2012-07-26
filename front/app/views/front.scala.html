@@ -1,32 +1,27 @@
 @(front: Front)(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-    <title>beta.guardian.co.uk</title>
-    @fragments.commonJavaScriptSetup(Static)
-    @fragments.metaData(front, conf.Configuration)
-
-    @fragments.commonCssSetup(Static)
+@main(front, Static, Configuration){
+    @if(Edition(request, Configuration) == "UK"){
+        <meta name="google-site-verification" content="W1mbAtOtyQWbkB1xyLqj_oE6gkorVHc63aolsCmeJKM" />
+    }
+    @if(Edition(request, Configuration) == "US"){
+        <meta name="google-site-verification" content="oV0bsb2xop5v-Q8rFDlLdGza5uFgSwT_x783bMxh4S8" />
+    }
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
-</head>
-
-<body>
+}{
     <div id="container">
         <div class="line">
             <div class="unit lastUnit">
                 @fragments.placeholders("tier1", 5)
-                @fragments.navigation(Static)
+                @fragments.navigation(Static, Configuration, front)
             </div>
         </div>
         @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
+        <div id="most-popular"></div>
     </div>
 
-    @fragments.debugInfo(conf.Configuration)
-    @fragments.analytics(front, conf.Configuration)
-</body>
-</html>
+    @fragments.debugInfo(Configuration)
+    @fragments.analytics(front, Configuration)
+}

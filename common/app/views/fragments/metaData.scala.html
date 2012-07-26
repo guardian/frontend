@@ -1,4 +1,4 @@
-@(item: MetaData, config: common.GuardianConfiguration)(implicit request: RequestHeader)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
 
     @*
         canonical url for this page - it should point back to www.guardian.co.uk
@@ -6,6 +6,8 @@
         see: http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
     *@
     <link rel="canonical" href="@item.canonicalUrl"/>
+
+    <link rel="apple-touch-icon" href='@static("images/shortcut.png")' />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />

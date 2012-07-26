@@ -72,8 +72,8 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
 
     function formatJson(json) {
         var html = '';
-        var commentTemplate = '<div class="line b1"><div class="unit size1of3"><p><strong><a href="{0}">{1}</a></strong></p></div><div class="unit lastUnit"><p class="datestamp">{2}</p></div></div><div class="line"><div class="unit size1of1">{3}</div></div>';
-        var avatarTemplate = ' <a href="{0}"><img class="badge" src="{1}" alt="{2}" /></a>';
+        var commentTemplate = '<div class="line b1"><div class="unit size1of3"><p><strong>{0}</strong></p></div><div class="unit lastUnit"><p class="datestamp">{1}</p></div></div><div class="line"><div class="unit size1of1">{2}</div></div>';
+        var avatarTemplate = ' <img class="discussion-badge" src="{0}" alt="{2}"/>';
 
         for (var i in json.discussion.comments) {
             var c = json.discussion.comments[i];
@@ -87,19 +87,15 @@ define(["reqwest", guardian.js.modules.basicTemplate], function(reqwest, basicTe
             var datestamp = new Date(date);
             datestamp = formatDate(datestamp);
 
-            if (c.userProfile.badge) {
-                for (var j in c.userProfile.badge) {
-                    var b = c.userProfile.badge[j];
-                    username += basicTemplate.format(avatarTemplate, '#', b.imageUrl, b.name);
-                }
-            }
-            html += basicTemplate.format(commentTemplate, '#', username, datestamp, c.body);
+            username += basicTemplate.format(avatarTemplate, c.userProfile.avatar, username);
+
+            html += basicTemplate.format(commentTemplate, username, datestamp, c.body);
         }
         return html;
     }
 
     function buildUrl(shortUrl) {
-        var urlBase = 'http://coddisapi01.gudev.gnl:8900/discussion-api/discussion/';
+        var urlBase = 'http://discussionapi.guardian.co.uk/discussion-api/discussion/';
         shortUrl = shortUrl.replace("http://gu.com", "");
         return urlBase + shortUrl;
     }

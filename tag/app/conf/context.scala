@@ -9,7 +9,7 @@ object Configuration extends GuardianConfiguration("frontend-tag", webappConfDir
 
 object ContentApi extends ContentApiClient(Configuration)
 
-object Static extends Static(Configuration.static.path)
+object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
   //  val switch = new DefaultSwitch("name", "Description Text")
