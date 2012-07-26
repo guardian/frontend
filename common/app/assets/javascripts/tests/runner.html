@@ -8,19 +8,22 @@
   <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
   <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
   <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine-html.js"></script>
-  
+  <script type="text/javascript" src="../vendor/require-2.0.4.js"></script>
   <script>
-      var require = {
-        baseUrl: '../',
+      require.config({
+        baseUrl: "../",
         paths: {
-            common: 'common'
-        }
-      };
+                common: 'common',
+                bonzo: 'vendor/bonzo',
+                qwery: 'vendor/qwery',
+                bean: 'vendor/bean-0.4.11-1',
+                reqwest: 'vendor/reqwest'
+            }
+      });
   </script>
   <script type="text/javascript" src="../vendor/require-2.0.4.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
-
   <script type="text/javascript">
 
     window.onhashchange = function(){
@@ -45,7 +48,7 @@
 
           var currentWindowOnload = window.onload;
           
-          require(['tests/spec/' + spec + '.spec'], function() {
+          require(['tests/spec/' + spec + '.spec'], function(spec) {
               jasmineEnv.execute();
             });
 
@@ -61,10 +64,14 @@
         <li><a href="#Common">Common</a>
         <li><a href="#Detect">Detect</a>
         <li><a href="#UpgradeImages">UpgradeImages</a>
+        <li><a href="#Related">Related</a>
     </ul>
 
 <!-- UpgradeImages.spec -->
-<img data-fullsrc="full-resolution.jpg" data-width="5" width="10" id="upgradeImages" />
+<img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" />
+
+<!-- Related.spec -->
+<div id="related"></div>
 
 </body>
 </html>

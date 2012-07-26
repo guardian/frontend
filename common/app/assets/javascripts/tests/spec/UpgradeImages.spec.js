@@ -6,7 +6,7 @@ define(['modules/upgradeImages'], function(images) {
             window.innerWidth = 1024; 
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
             images.upgrade();
-            expect(document.getElementById('upgradeImages').src).toContain('full-resolution.jpg');
+            expect(document.getElementById('upgradeImages').src).toContain('http://placekitten.com/1/1');
         });
 
     })
