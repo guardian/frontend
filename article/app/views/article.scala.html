@@ -20,14 +20,16 @@
 
             <article>
 
-                @article.mainPicture(width=220).map{ image =>
-                <figure>
-                    <img class="maxed" src="@image.url"
-                         data-fullsrc="@article.mainPicture.map{full => @full.url}"
-                         data-width="@article.mainPicture.map{full => @full.width}"
-                    />
-                    <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
-                </figure>
+                @article.mainPicture.map{ mainPicture =>
+                    @article.mainPicture(width=220).map{ smallCrop =>
+                    <figure>
+                        <img class="maxed" src="@smallCrop.url"
+                             data-fullsrc="@mainPicture.url"
+                             data-width="@mainPicture.width"
+                        />
+                        <figcaption>@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                    </figure>
+                    }
                 }
 
                 <aside class="b2 b2b">
