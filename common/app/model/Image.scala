@@ -12,6 +12,7 @@ case class Image(private val delegate: ApiMedia) {
   lazy val url: Option[String] = delegate.file
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
+  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
 
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
@@ -19,4 +20,6 @@ case class Image(private val delegate: ApiMedia) {
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
+
+  lazy val aspectRatio: Double = width.toDouble / height.toDouble
 }

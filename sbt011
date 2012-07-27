@@ -26,7 +26,10 @@ if [ "$1" == "--no-proxy" ]; then
   shift
 fi
 
-java -Xmx768M -XX:MaxPermSize=384m \
+#MaxPermSize specifies the the maximum size for the permanent generation heap, a heap that holds objects such as classes and methods.
+# Xmx is the heap size
+
+java -Xmx1024M -XX:MaxPermSize=512m \
 	-Dsbt.boot.directory=$SBT_BOOT_DIR \
 	$PROXY_PARAMS \
 	$BUILD_PARAMS \

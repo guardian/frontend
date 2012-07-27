@@ -9,6 +9,7 @@ trait Trail extends Images with Tags {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
+  def thumbnail: Option[String] = None
 }
 
 case class TrailWithPackage(trail: Trail, storyPackage: Seq[Trail] = Nil) {

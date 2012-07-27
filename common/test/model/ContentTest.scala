@@ -30,51 +30,6 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     trail.images should be(List(Image(media(0))))
   }
 
-  "Images" should "find exact size image" in {
-    val imageMedia = List(image("too small", 50), image("exact size", 70), image("too big", 100))
-
-    val images = new Images {
-      def images = imageMedia.map(Image(_))
-    }
-
-    images.imageOfWidth(70).get.caption should be(Some("exact size"))
-  }
-
-  it should "not find any images if there are none in range" in {
-
-    val imageMedia = List(image("too small", 50), image("too big", 100))
-
-    val images = new Images {
-      def images = imageMedia.map(Image(_))
-    }
-
-    images.imageOfWidth(70, tolerance = 10) should be(None)
-  }
-
-  it should "find exact size image even if there are others in the size range" in {
-
-    val imageMedia = List(image("too small", 50), image("nearly right", 69),
-      image("exact size", 70), image("too big", 100))
-
-    val images = new Images {
-      def images = imageMedia.map(Image(_))
-    }
-
-    images.imageOfWidth(70, tolerance = 10).get.caption should be(Some("exact size"))
-  }
-
-  it should "find image with closest size in range" in {
-
-    val imageMedia = List(image("too small", 50), image("find me", 69),
-      image("i will lose out", 75), image("too big", 100))
-
-    val images = new Images {
-      def images = imageMedia.map(Image(_))
-    }
-
-    images.imageOfWidth(70, tolerance = 10).get.caption should be(Some("find me"))
-  }
-
   "Tags" should "understand tag types" in {
 
     val theKeywords = Seq(Tag(tag("/keyword1", "keyword")), Tag(tag("/keyword2", "keyword")))
@@ -180,10 +135,4 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }
-
-  private def image(caption: String, width: Int) = {
-    MediaAsset("picture", "body", 1, Some("http://www.foo.com/bar"),
-      Some(Map("caption" -> caption, "width" -> width.toString)))
-  }
-
 }
