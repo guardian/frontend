@@ -15,13 +15,13 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
 
   }
 
-  it should "render main picture correctly" in HtmlUnit("/sport/2012/jul/26/london-2012-north-korea-flag") { browser =>
+  it should "gu.comrender main picture correctly" in HtmlUnit("/money/2012/jul/27/natwest-bank-debit-card") { browser =>
     import browser._
 
     val mainPicture = $("article figure img")
     mainPicture.getAttributes("data-width").head should be("460")
-    mainPicture.getAttributes("data-fullsrc").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/26/1343289713632/North-Korea-womens-footba-010.jpg")
-    mainPicture.getAttributes("src").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/26/1343289709306/North-Korea-womens-footba-006.jpg")
+    mainPicture.getAttributes("data-fullsrc").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2012/7/27/1343382483210/NatWest-notice-apologisin-008.jpg")
+    mainPicture.getAttributes("src").head should be("http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2012/7/27/1343382478399/NatWest-notice-apologisin-004.jpg")
   }
 
   it should "render a story package" in HtmlUnit("/politics/2012/jul/25/george-osborne-under-pressure-economy") { browser =>
