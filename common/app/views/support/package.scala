@@ -33,6 +33,12 @@ object RemoveOuterParaHtml {
   }
 }
 
+object JavaScriptValue {
+  def apply(s: String): String = {
+    s.replace("'", "\\'")
+  }
+}
+
 object JavaScriptVariableName {
   def apply(s: String): String = {
     val parts = s.split("-").toList

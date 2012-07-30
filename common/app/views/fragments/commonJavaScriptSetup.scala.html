@@ -1,4 +1,4 @@
-@(config: common.GuardianConfiguration, static: StaticAssets)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
 
 <script id="gu">
 
@@ -7,10 +7,11 @@
     var require = {
         baseUrl: '@{config.static.path}javascripts',
         paths: {
-            'common': '@static("javascripts/common.js")'
+            'common': '@static("javascripts/common.js")',
         }
     };
 
+    
     // FIXME
     require.paths.common = require.paths.common.replace('.js', '');
 
@@ -21,13 +22,21 @@
 
         define('config', function(app){
             return { 
-                isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
+                isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
+                page: { 
+
+                    @item.metaData.map{ case(key, value) =>
+                        '@{JavaScriptVariableName(key)}': '@{JavaScriptValue(value.toString)}'
+                    }.mkString(","),  
+                
+                    @config.javascript.pageData.map{ case (key, value) =>
+                        '@{JavaScriptVariableName(key.split('.').last)}': '@value'
+                    }.mkString(","),
+
+                    'edition': '@Edition(request, config)'
+                }
             };
         })
-
-        require(['config', 'common'], function(config, common){
-            console.log(common);
-        });
     
     };
     
