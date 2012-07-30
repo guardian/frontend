@@ -8,20 +8,27 @@ define(['common', 'reqwest'], function(common, reqwest){
         
             attachTo: attachTo,
 
-            render: function(json)  {
-                attachTo.innerHTML = json;;
-            }    
+            render: function(html) {
+                attachTo.innerHTML = html;
+            }
+        
         }
 
+        // Bindings
+        
         common.pubsub.on('modules:related:loaded', this.view.render);
+        common.pubsub.on('modules:related:error', this.view.logError);
         
         // Model
         
         this.load = function(url){
             return reqwest({
                     url: url,
+                    type: 'jsonp',
+                    jsonpCallback: 'foo',
+                    jsonpCallbackName: 'foo',
                     success: function(json) {
-                        common.pubsub.emit('modules:related:loaded', [json])
+                        common.pubsub.emit('modules:related:loaded', [json.html])
                     }
             })
         }  
