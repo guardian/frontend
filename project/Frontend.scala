@@ -87,11 +87,11 @@ trait Prototypes {
     //effectively disables built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
 
-
     requireJsAppDir <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
     requireJsModules := Seq("common"),
+    requireJsPaths := Map("bonzo" -> "vendor/bonzo", "reqwest" -> "vendor/reqwest", "qwery" -> "vendor/qwery"),
     requireJsOptimize := false,
 
     resourceGenerators in Compile <+=  requireJsCompiler
