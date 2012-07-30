@@ -17,7 +17,6 @@ define(['common', 'reqwest'], function(common, reqwest){
         // Bindings
         
         common.pubsub.on('modules:related:loaded', this.view.render);
-        common.pubsub.on('modules:related:error', this.view.logError);
         
         // Model
         
