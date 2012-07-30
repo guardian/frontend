@@ -27,19 +27,17 @@ define(['modules/detect'], function(detect) {
             expect(detect.getConnectionSpeed()).toBe('high');
         });
         
-        it("should calculate the speed of a slow client request", function(){
+        it("should calculate the speed of a slow, medium & fast client request", function(){
+            
             window.performance = { timing: { requestStart: 1, responseStart: 8000 } };
             expect(detect.getConnectionSpeed()).toBe('low');
-        }); 
-        
-        it("should calculate the speed of a medium client request", function(){
+            
             window.performance = { timing: { requestStart: 1, responseStart: 3000 } };
             expect(detect.getConnectionSpeed()).toBe('medium');
-        }); 
-
-        it("should calculate the speed of a fast client request", function(){
+            
             window.performance = { timing: { requestStart: 1, responseStart: 1000 } };
             expect(detect.getConnectionSpeed()).toBe('high');
+        
         }); 
 
    })
