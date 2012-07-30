@@ -19,23 +19,6 @@
     <meta name="rendered-at" content="@{(new org.joda.time.DateTime()).toISODateTimeNoMillisString}"/>
 
 @*
-    exposes all metadata tags as javascript variables
-    this is orders of magnitude faster than selector queries:
-    see: http://jsperf.com/meta-tags-vs-json
-*@
-<script>
-    guardian.page = @JSON(item);
-
-    @config.javascript.pageData.map{ case (key, value) =>
-        @key = "@value";
-    }
-
-    guardian.page.edition = "@Edition(request, config)";
-
-</script>
-
-
-@*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/
 *@
