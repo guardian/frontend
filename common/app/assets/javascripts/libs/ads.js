@@ -5,56 +5,37 @@ var loadAds = function(){
         guardian.js.modules.detect],
             function(wcs, wc, detect) {
 
+                var dataName = "data-" + detect.getLayoutMode();
+
                 function renderSlot(slot) {
-                    writeCapture.html(slot.position, '<script' + '>OAS_RICH("' + slot.name + '")</scr' + 'ipt>');
-                    var node = document.querySelector(slot.position);
-                    if (node) { node.className = '' };
+                    var placeholderId = '#' + slot.getAttribute("id");
+                    var slotName = slot.getAttribute(dataName);
+                    writeCapture.html(placeholderId, '<script' + '>OAS_RICH("' + slotName + '")</scr' + 'ipt>');
                 }
 
                 var keywordsString='';
                 var keywords = guardian.page.keywords || ''
                 keywords = keywords.split(',');
                 for (i=0; i<keywords.length; i++) {
-                    keywordsString +=  'k=' + encodeURIComponent(keywords[i].toLowerCase()) + '&'
+                    keywordsString +=  'k=' + encodeURIComponent(keywords[i].toLowerCase().replace(/ /g,"-")) + '&'
                 }
 
                 var pageUrl = guardian.page.canonicalUrl.replace('http://', '') + '/oas.html';
-                var random = (new String (Math.random())).substring (2, 11);
+                var random = (new String (Math.random())).substring(2, 11);
                 var pageType = guardian.page.contentType.toLowerCase();
 
-                var adSlots = [];
-                switch (detect.getLayoutMode()) {
-                    case 'base':
-                        adSlots = [
-                            {name: 'x50', position: '#tier1-2'}//,
-                            //{name: 'x51', position: '#tier3-5'}
-                        ];
-                        break;
-                    case 'median':
-                        adSlots = [
-                            {name: 'x52', position: '#tier1-2'}//,
-                            //{name: 'x53', position: '#tier3-5'}
-                        ];
-                        break;
-                    case 'extended':
-                        adSlots = [
-                            {name: 'x54', position: '#tier1-2'}//,
-                            //{name: 'x55', position: '#tier2-1'},
-                            //{name: 'x56', position: '#tier3-5'}
-                        ];
-                        break;
-                }
+                var slots = document.querySelectorAll(".ad-slot");
 
-                var slotsOnPage = ''
-                for (i=0; i< adSlots.length; i++) {
-                    slotsOnPage += adSlots[i].name + ',';
+                var slotsOnPage = '';
+                for (i=0; i< slots.length; i++) {
+                    slotsOnPage += slots[i].getAttribute(dataName) + ',';
                 }
 
                 writeCapture.support.ajax({
                     url: 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/' + pageUrl + '/' + random + '@' + slotsOnPage + '?' + keywordsString + '&pt=' + pageType + '&ct=' + pageType,
                     success: function(){
-                        for (i=0; i< adSlots.length; i++) {
-                            renderSlot(adSlots[i]);
+                        for (i=0; i< slots.length; i++) {
+                            renderSlot(slots[i])
                         }
                     },
                     dataType : "script"
@@ -62,7 +43,7 @@ var loadAds = function(){
                 )
             }
     );
-}
+};
 
 require([guardian.js.modules["$g"]], function($g){
     $g.onReady(loadAds);
