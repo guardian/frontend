@@ -1,0 +1,91 @@
+/* todo: replace with .unstyled */
+.plain,
+.plain li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* utility classes for automatically hiding list items > n */
+.show-1 li:nth-child(n+2),
+.show-2 li:nth-child(n+3),
+.show-3 li:nth-child(n+4),
+.show-4 li:nth-child(n+5),
+.show-5 li:nth-child(n+6),
+.show-6 li:nth-child(n+7),
+.show-7 li:nth-child(n+8),
+.show-8 li:nth-child(n+9),
+.show-9 li:nth-child(n+10),
+.show-10 li:nth-child(n+11) { 
+    display: none; 
+}
+
+.gt-base {
+    display: none;
+}
+
+.img-extended img {
+    width: 100%;
+    height: auto;
+}
+
+/* was max-width... still up for debate. */
+.maxed {
+    width: 100%;
+}
+
+.placeholder {
+    display: none;
+}
+
+.initially-off {
+    display: none;
+}
+
+@media screen and (min-width: 850px) {
+    .trailblock .img img {
+        width: 160px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .lt-extended {
+        display: none;
+    }
+
+    /* sorry for this :( -- it's because nth-child above has higher specificity */
+    .trailblock li,
+    .trailblock .trail {
+        display: block !important;
+    }
+
+    .trailblock h3.expander {
+        display: none;
+    }
+
+    article .trailblock {
+        width: 40%;
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+}
+
+@media screen and (min-width: 400px) {
+
+    .img-base {
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .gt-base {
+        display: block;
+    }
+
+    .comments .datestamp {
+        text-align: right;
+    }
+
+}

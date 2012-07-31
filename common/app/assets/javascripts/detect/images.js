@@ -7,13 +7,14 @@
 define([guardian.js.modules.detect], function (detect) {
 
     function upgrade() {
-        if (detect.getConnectionSpeed() !== 'low' && detect.getLayoutMode() !== "base") {
+        if (detect.getConnectionSpeed() !== 'low') {
             var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
             for (var i = 0, j = images.length; i<j; ++i) {
                 var image = images[i];
                 var width = image.getAttribute('data-width');
                 var fullsrc = image.getAttribute('data-fullsrc');
-                if (width && width <= image.offsetWidth && fullsrc ) {
+
+                if (width && width > image.naturalWidth && fullsrc ) {
                     image.src = fullsrc;
                     image.className += ' image-high';
                 }
@@ -24,5 +25,4 @@ define([guardian.js.modules.detect], function (detect) {
     return {
         'upgrade': upgrade
     };
-
 });

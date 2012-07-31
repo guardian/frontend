@@ -7,7 +7,7 @@
 
     <div class="line">
         <div class="unit lastUnit">
-            @fragments.placeholders("tier1", 5)
+            @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
             @fragments.navigation(Static, Configuration, article)
             @fragments.headline(article.headline)
             @fragments.standfirst(article.standfirst)
@@ -20,11 +20,16 @@
 
             <article>
 
-                @article.imageOfWidth(300, tolerance=160).map{ image =>
-                <figure>
-                    <img class="maxed" src="@image.url" data-fullsrc='@article.imageOfWidth(460, tolerance=20).map {full=>@full.url}' data-width="@image.width" />
-                    <figcaption>@Html(image.caption.getOrElse(""))</figcaption>
-                </figure>
+                @article.mainPicture.map{ mainPicture =>
+                    @article.mainPicture(width=220).map{ smallCrop =>
+                    <figure>
+                        <img class="maxed" src="@smallCrop.url"
+                             data-fullsrc="@mainPicture.url"
+                             data-width="@mainPicture.width"
+                        />
+                        <figcaption>@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                    </figure>
+                    }
                 }
 
                 <aside class="b2 b2b">
@@ -52,7 +57,6 @@
                 <div id="related"></div>
             }
             <div id="most-popular"></div>
-            @fragments.placeholders("tier2", 5)
         </div>
 
     </div>
