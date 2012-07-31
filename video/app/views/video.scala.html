@@ -33,7 +33,7 @@
                 <div id="player">
                     <video controls="controls">
                         @video.encodings.map{ encoding =>
-                            <source src="@encoding.url" type="@encoding.format"/>
+                            <source src="@encoding.url"/>
                         }
                         Your browser does not support the video tag.
                     </video>
