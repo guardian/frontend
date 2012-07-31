@@ -6,48 +6,13 @@
 
 <head>
 
-    @fragments.commonJavaScriptSetup(metaData, config, Static)
+    @fragments.commonJavaScriptSetup(video, Configuration, Static)
     @fragments.metaData(video, Configuration, Static)
 
     <title>@Html(video.headline)</title>
 
     @fragments.commonCssSetup(Static)
-
-    <script type="text/javascript">
-
-                guardian.js.modules.gu = '@Static("javascripts/video/gu.js")'; 
-                guardian.js.modules.player = '@Static("javascripts/video/player.js")'; 
-                guardian.js.modules.eventemitter = '@Static("javascripts/video/vendor/eventEmitter.js")'; 
-                guardian.js.modules.detectOs = '@Static("javascripts/video/detect.js")'; 
-                guardian.js.modules.bonzo = '@Static("javascripts/video/vendor/bonzo.js")'; 
-                guardian.js.modules.qwery = '@Static("javascripts/video/vendor/qwery.js")'; 
-
-                require(['@Static("javascripts/video/gu.js")', '@Static("javascripts/video/video.js")'], function(gu, Video) {
-
-                    // 
-                    var encodings = [
-                    @{video.encodings.map{ encoding =>
-                            "{ 'url':  '%s', 'format': '%s'  }".format(encoding.url, encoding.format)
-                        }.mkString(",")}
-                    ];
-
-                    //
-                    var video = new Video({
-                            encodings: encodings  
-                            });
-
-                    // 
-                    video.embed(function(){
-                        var playCta = document.createElement('button');
-                        playCta.innerText = 'play';
-                        playCta.addEventListener('click', function(){
-                            gu.events.emit('video:play');
-                            });
-                        document.getElementById('player').appendChild(playCta); 
-                       })
-
-                    });
-    </script>
+    <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
 
 </head>
 <body class="zone-@video.section">
@@ -59,18 +24,21 @@
                 @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
                 @fragments.navigation(Static, Configuration, video)
                 @fragments.headline(video.headline)
-                @fragments.standfirst(video.standfirst)
             </div>
         </div>
 
         <div class="line">
 
             <div class="unit size3of5">
-
                 <div id="player">
-                    html5 video player
+                    <video controls="controls">
+                        @video.encodings.map{ encoding =>
+                            <source src="@encoding.url" type="@encoding.format"/>
+                        }
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
-
+                @fragments.standfirst(video.standfirst)
             </div>
 
             <div class="unit lastUnit">
