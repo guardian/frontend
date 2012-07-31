@@ -1,0 +1,40 @@
+                       
+# Portrait
+ 
+          Modernizr.audio true
+         Modernizr.canvas true
+  Modernizr.cssanimations true
+       Modernizr.fontface true
+    Modernizr.geolocation true
+        Modernizr.history true
+      Modernizr.indexeddb false
+   Modernizr.localstorage true
+            Modernizr.svg true
+          Modernizr.touch true
+          Modernizr.video true
+          Modernizr.webgl false
+        navigator.battery 
+       navigator.language en_GB
+      navigator.userAgent Mozilla/5.0 (BlackBerry; U; BlackBerry 9810;
+en-GB) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0.296 Mobile
+Safari/534.11+
+        screen.colorDepth 24
+            screen.height 640
+             screen.width 480
+  window.devicePixelRatio 1
+       window.innerHeight 360
+        window.innerWidth 320
+    window.mozPerformance 
+     window.msPerformance 
+       window.orientation 0
+       window.performance 
+ window.webkitPerformance 
+        
+# Landscape
+  
+        screen.colorDepth 24
+            screen.height 480
+             screen.width 640
+  window.devicePixelRatio 1
+       window.innerHeight 254
+        window.innerWidth 426

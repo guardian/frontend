@@ -33,6 +33,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
+  override lazy val thumbnail: Option[String] = fields.get("thumbnail")
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -55,6 +57,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
+
+  override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {
