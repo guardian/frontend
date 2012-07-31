@@ -24,8 +24,8 @@ define(['common', 'reqwest'], function(common, reqwest){
             return reqwest({
                     url: url,
                     type: 'jsonp',
-                    jsonpCallback: 'foo',
-                    jsonpCallbackName: 'foo',
+                    jsonpCallback: 'callback',
+                    jsonpCallbackName: 'showRelated',
                     success: function(json) {
                         common.pubsub.emit('modules:related:loaded', [json.html])
                     }
