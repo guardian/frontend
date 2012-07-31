@@ -7,20 +7,22 @@
     var require = {
         baseUrl: '@{config.static.path}javascripts',
         paths: {
-            'common': '@static("javascripts/common.js")'
+            'common': '@static("javascripts/common.js")',
+            'bootstraps/article': '@static("javascripts/bootstraps/article.js")'
         }
     };
 
     
     // FIXME
-    require.paths.common = require.paths.common.replace('.js', '');
+    require.paths.common  = require.paths.common.replace('.js', '');
+    require.paths['bootstraps/article'] = require.paths['bootstraps/article'].replace('.js', '');
 
     var script = document.createElement('script');
     script.async = 'async';
     script.src = '@static("javascripts/vendor/require-2.0.4.js")';
     script.onload = function() {
 
-        define('config', function(app){
+        define('config', function(){
             return { 
                 isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
                 page: { 
@@ -37,7 +39,11 @@
                 }
             };
         })
-    
+
+        require(['config', 'bootstraps/article'], function(config, article) {
+            article.init(config);
+        });
+
     };
     
     document.getElementById('gu').parentNode.insertBefore(script);
