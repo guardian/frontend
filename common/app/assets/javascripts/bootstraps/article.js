@@ -1,10 +1,10 @@
-define(['modules/related', 'modules/upgradeImages', 'modules/popular'], function(Related, Images, Popular){
+define(['modules/related', 'modules/image', 'modules/popular'], function(Related, Image, Popular){
 
     return {
         init: function(config) {
             
             // upgrade images
-            new Images().upgrade();
+            new Image().upgrade();
 
             // most popular
             var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.pageId;
