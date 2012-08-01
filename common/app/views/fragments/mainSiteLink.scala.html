@@ -1,0 +1,11 @@
+@(item: MetaData, config: common.GuardianConfiguration)(implicit request: RequestHeader)
+
+<div>
+@defining(Edition(request, config)){ edition =>
+    @if(edition == "US") {
+        <a id="main-site" href="http://www.guardiannews.com/@item.id?mobile-redirect=false" data-link-name="US">Desktop site</a>
+    } else {
+        <a id="main-site" href="http://www.guardian.co.uk/@item.id?mobile-redirect=false" data-link-name="UK">Desktop site</a>
+    }
+}
+</div>
