@@ -13,8 +13,6 @@ define(['modules/related', 'modules/image', 'modules/popular'], function(Related
             // load related
             var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
             new Related(document.getElementById('related')).load(relatedUrl);
-
-            return true;
         }
     }
 

@@ -29,7 +29,7 @@ fi
 #MaxPermSize specifies the the maximum size for the permanent generation heap, a heap that holds objects such as classes and methods.
 # Xmx is the heap size
 
-java -Xmx1024M -XX:MaxPermSize=512m \
+java -Xmx2048M -XX:MaxPermSize=1024m \
 	-Dsbt.boot.directory=$SBT_BOOT_DIR \
 	$PROXY_PARAMS \
 	$BUILD_PARAMS \

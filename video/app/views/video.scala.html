@@ -2,21 +2,9 @@
 
 <!DOCTYPE html>
 
-<html>
-
-<head>
-
-    @fragments.commonJavaScriptSetup(video, Configuration, Static)
-    @fragments.metaData(video, Configuration, Static)
-
-    <title>@Html(video.headline)</title>
-
-    @fragments.commonCssSetup(Static)
+@main(video, Static, Configuration){
     <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
-
-</head>
-<body class="zone-@video.section">
-    
+}{
     <div id="container">
 
         <div class="line">
@@ -52,7 +40,4 @@
 
         </div>
     </div>
-    @fragments.debugInfo(Configuration)
-    @fragments.analytics(video, Configuration)
-</body>
-</html>
+}

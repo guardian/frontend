@@ -8,8 +8,7 @@
         var require = {
             baseUrl: '@{config.static.path}javascripts',
             paths: {
-                'common': '@static("javascripts/common.js").asModulePath',
-                'bootstraps': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
+                'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
             }
         };
 
@@ -36,8 +35,8 @@
                 };
             })
 
-            require(['config', 'bootstraps/article'], function(config, article) {
-                article.init(config);
+            require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
+                bootstrap.init(config);
             });
 
         };
