@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Jasmine Spec Runner</title>
+  <title id="foo">Jasmine Spec Runner</title>
     
   <link rel="shortcut icon" type="image/png" href="vendor/jasmine-1.2.0/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
@@ -33,6 +33,9 @@
 
     if (spec) {
 
+        document.getElementById("foo").innerHTML = 'Jasmine Spec Runner - ' + spec; 
+
+        // jasmine boilerplate
         (function() {
           var jasmineEnv = jasmine.getEnv();
           jasmineEnv.updateInterval = 1000;
@@ -46,7 +49,8 @@
           };
 
           var currentWindowOnload = window.onload;
-          
+
+          // require the spec's
           require(['../../../test/assets/javascripts/spec/' + spec + '.spec'], function(spec) {
               jasmineEnv.execute();
             });
