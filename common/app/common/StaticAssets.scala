@@ -11,5 +11,10 @@ class StaticAssets(val base: String = "") extends Logging {
   }
 
   val assetMappings: String => String = plugin.getAssetMappings(base)
-  def apply(path: String) = assetMappings(path)
+  def apply(path: String) = new StaticPath(assetMappings(path))
+}
+
+class StaticPath(path: String) {
+  val asModulePath = path.replace(".js", "")
+  override def toString = path
 }
