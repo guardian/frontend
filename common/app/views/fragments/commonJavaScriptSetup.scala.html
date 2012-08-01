@@ -1,4 +1,4 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 <script id="gu">
 
@@ -7,13 +7,10 @@
     var require = {
         baseUrl: '@{config.static.path}javascripts',
         paths: {
-            'common': '@static("javascripts/common.js")',
-            'bootstraps/article': '@static("javascripts/bootstraps/article.js")'
+            'common': '@static("javascripts/common.js").asModulePath',
+            'bootstraps': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
         }
     };
-    // FIXME
-    require.paths.common  = require.paths.common.replace('.js', '');
-    require.paths['bootstraps/article'] = require.paths['bootstraps/article'].replace('.js', '');
 
     var script = document.createElement('script');
     script.async = 'async';
@@ -38,8 +35,8 @@
             };
         })
 
-        require(['config', 'bootstraps/article'], function(config, article) {
-            article.init(config);
+        require(['config', 'bootstraps'], function(config, app) {
+            app.init(config);
         });
 
     };
