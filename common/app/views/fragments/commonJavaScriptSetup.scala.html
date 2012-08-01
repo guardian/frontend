@@ -1,46 +1,48 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 <script id="gu">
+    if ('querySelector' in document && 'addEventListener' in window) {
 
-    var guardian = {};
+        var guardian = {};
 
-    var require = {
-        baseUrl: '@{config.static.path}javascripts',
-        paths: {
-            'common': '@static("javascripts/common.js").asModulePath',
-            'bootstraps': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
-        }
-    };
+        var require = {
+            baseUrl: '@{config.static.path}javascripts',
+            paths: {
+                'common': '@static("javascripts/common.js").asModulePath',
+                'bootstraps': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
+            }
+        };
 
-    var script = document.createElement('script');
-    script.async = 'async';
-    script.src = '@static("javascripts/vendor/require-2.0.4.js")';
-    script.onload = function() {
+        var script = document.createElement('script');
+        script.async = 'async';
+        script.src = '@static("javascripts/vendor/require-2.0.4.js")';
+        script.onload = function() {
 
-        define('config', function(){
-            return {
-                isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
-                page: {
+            define('config', function(){
+                return {
+                    isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
+                    page: {
 
-                    @item.metaData.map{ case(key, value) =>
-                        '@{JavaScriptVariableName(key)}': '@{JavaScriptValue(value.toString)}'
-                    }.mkString(","),
+                        @item.metaData.map{ case(key, value) =>
+                            '@{JavaScriptVariableName(key)}': '@{JavaScriptValue(value.toString)}'
+                        }.mkString(","),
 
-                    @config.javascript.pageData.map{ case (key, value) =>
-                        '@{JavaScriptVariableName(key.split('.').last)}': '@value'
-                    }.mkString(","),
+                        @config.javascript.pageData.map{ case (key, value) =>
+                            '@{JavaScriptVariableName(key.split('.').last)}': '@value'
+                        }.mkString(","),
 
-                    'edition': '@Edition(request, config)'
-                }
-            };
-        })
+                        'edition': '@Edition(request, config)'
+                    }
+                };
+            })
 
-        require(['config', 'bootstraps'], function(config, app) {
-            app.init(config);
-        });
+            require(['config', 'bootstraps/article'], function(config, article) {
+                article.init(config);
+            });
 
-    };
+        };
 
-    document.getElementById('gu').parentNode.insertBefore(script);
-
+        document.getElementById('gu').parentNode.insertBefore(script);
+   
+    }
 </script>
