@@ -3,7 +3,7 @@
 <head>
     <title>@metaData.webTitle</title>
     @fragments.commonCssSetup(static)
-    @fragments.commonJavaScriptSetup(static)
+    @fragments.commonJavaScriptSetup(metaData, config, static, "article")
     @fragments.metaData(metaData, config, static)
 
     @head
@@ -11,5 +11,8 @@
 </head>
 <body class="zone-@metaData.section">
     @body
+
+    @fragments.debugInfo(config)
+    @fragments.analytics(metaData, config)
 </body>
 </html>

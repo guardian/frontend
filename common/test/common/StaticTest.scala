@@ -10,9 +10,17 @@ class StaticTest extends FlatSpec with ShouldMatchers {
     running(FakeApplication()) {
       val static = new StaticAssets("simon says")
 
-      static("zen1") should be("simon says" + "no snowflake ever falls in the wrong place.")
-      static("zen2") should be("simon says" + "water which is too pure has no fish.")
-      static("zen3") should be("simon says" + "the quieter you become the more you are able to hear.")
+      static("zen1").toString should be("simon says" + "no snowflake ever falls in the wrong place.")
+      static("zen2").toString should be("simon says" + "water which is too pure has no fish.")
+      static("zen3").toString should be("simon says" + "the quieter you become the more you are able to hear.")
+    }
+  }
+
+  it should "render as a JS Module" in {
+    running(FakeApplication()) {
+      val static = new StaticAssets("simon says")
+
+      static("jsmodule").asModulePath should be("simon says" + "http://www.foo.bar.com/name")
     }
   }
 }
