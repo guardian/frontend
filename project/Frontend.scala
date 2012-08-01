@@ -90,9 +90,9 @@ trait Prototypes {
     requireJsAppDir <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
-    requireJsModules := Seq("common", "bootstraps/article"),
+    requireJsModules := Seq("bootstraps/article"),
     requireJsPaths := Map("bonzo" -> "vendor/bonzo", "reqwest" -> "vendor/reqwest", "qwery" -> "vendor/qwery"),
-    requireJsOptimize := false,
+    requireJsOptimize := true,
 
     resourceGenerators in Compile <+=  requireJsCompiler
   )
