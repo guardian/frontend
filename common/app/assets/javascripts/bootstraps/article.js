@@ -7,7 +7,7 @@ define(['modules/related', 'modules/image', 'modules/popular'], function(Related
             new Image().upgrade();
 
             // most popular
-            var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.pageId;
+            var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.section;
             new Popular(document.getElementById('popular')).load(popularUrl);
             
             // load related
