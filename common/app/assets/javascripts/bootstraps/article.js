@@ -1,15 +1,18 @@
-define(['modules/related', 'modules/upgradeImages'], function(related, images){
+define(['modules/related', 'modules/upgradeImages', 'modules/popular'], function(Related, Images, Popular){
 
     return {
         init: function(config) {
             
-            var url = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
-            
             // upgrade images
-            new images().upgrade();
+            new Images().upgrade();
 
+            // most popular
+            var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.pageId;
+            new Popular(document.getElementById('popular')).load(popularUrl);
+            
             // load related
-            new related(document.getElementById('related')).load(url);
+            var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
+            new Related(document.getElementById('related')).load(relatedUrl);
 
             return true;
         }

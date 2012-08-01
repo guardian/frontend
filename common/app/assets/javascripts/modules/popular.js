@@ -1,6 +1,6 @@
 define(['common', 'reqwest'], function(common, reqwest){ 
 
-    function Related(attachTo) {
+    function Popular(attachTo) {
         
         // View 
         
@@ -16,7 +16,7 @@ define(['common', 'reqwest'], function(common, reqwest){
 
         // Bindings
         
-        common.pubsub.on('modules:related:loaded', this.view.render);
+        common.pubsub.on('modules:popular:loaded', this.view.render);
         
         // Model
         
@@ -25,15 +25,15 @@ define(['common', 'reqwest'], function(common, reqwest){
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
-                    jsonpCallbackName: 'showRelated',
+                    jsonpCallbackName: 'showMostPopular',
                     success: function(json) {
-                        common.pubsub.emit('modules:related:loaded', [json.html])
+                        common.pubsub.emit('modules:popular:loaded', [json.html])
                     }
             })
         }  
 
     }
     
-    return Related;
+    return Popular;
 
 });
