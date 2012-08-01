@@ -29,5 +29,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
       }
     }
+
+    scenario("navigate to guardian.co.uk") {
+      given("the user is viewing an article")
+      HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+        import browser._
+
+        when("the user clicks the 'main site' link")
+        $("#main-site").click()
+
+        then("the user navigates to the same article on guardian.co.uk")
+        browser.url should be("http://www.guardian.co.uk/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
+      }
+    }
   }
 }

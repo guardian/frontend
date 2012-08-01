@@ -37,6 +37,7 @@
             )
         </div>
     </article>
+    @fragments.mainSiteLink(article, Configuration)
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
