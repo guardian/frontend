@@ -3,21 +3,15 @@
 @main(section, Static, Configuration){  }{
     <div id="container">
 
-        <div class="line">
-            <div class="unit lastUnit">
-                @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-                @fragments.navigation(Static, Configuration, section)
-                @fragments.headline(section.name)
-            </div>
-        </div>
+        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+        @fragments.navigation(Static, Configuration, section)
+        @fragments.headline(section.name)
 
-        <div class="line">
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
             @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
                 @trails.map{trail => <div class="unit size1of2">@fragments.formatTrail(trail)</div>}
             }
         }
-        </div>
         <div id="most-popular"></div>
     </div>
 
