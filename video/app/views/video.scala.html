@@ -1,43 +1,34 @@
 @(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-<!DOCTYPE html>
-
 @main(video, Static, Configuration){
     <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
 }{
-    <div id="container">
+<div id="container">
+    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+    @fragments.navigation(Static, Configuration, video)
+    @fragments.headline(video.headline)
+    @fragments.standfirst(video.standfirst)
 
-        <div class="line">
-            <div class="unit lastUnit">
-                @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-                @fragments.navigation(Static, Configuration, video)
-                @fragments.headline(video.headline)
-            </div>
-        </div>
+    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+    @fragments.navigation(Static, Configuration, video)
+    @fragments.headline(video.headline)
 
-        <div class="line">
-
-            <div class="unit size3of5">
-                <div id="player">
-                    <video controls="controls">
-                        @video.encodings.map{ encoding =>
-                            <source src="@encoding.url"/>
-                        }
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                @fragments.standfirst(video.standfirst)
-            </div>
-
-            <div class="unit lastUnit">
-                @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                } else {
-                    <div id="related"></div>
-                }
-                <div id="most-popular"></div>
-            </div>
-
-        </div>
+    <div id="player">
+        <video controls="controls">
+            @video.encodings.map{ encoding =>
+                <source src="@encoding.url"/>
+            }
+            Your browser does not support the video tag.
+        </video>
     </div>
+
+    @fragments.standfirst(video.standfirst)
+
+    @if(storyPackage nonEmpty) {
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    } else {
+        <div id="related"></div>
+    }
+    <div id="most-popular"></div>
+</div>
 }

@@ -34,76 +34,65 @@
 }{
     <div id="container">
 
-        <div class="line">
-            <div class="unit lastUnit">
-                @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-                @fragments.navigation(Static, Configuration, gallery)
-                @fragments.headline(gallery.headline)
-                @fragments.standfirst(gallery.standfirst)
-            </div>
-        </div>
+        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+        @fragments.navigation(Static, Configuration, gallery)
+        @fragments.headline(gallery.headline)
+        @fragments.standfirst(gallery.standfirst)
+       
+        @fragments.byline(gallery.byline, gallery)
+        @fragments.dateline(gallery.webPublicationDate)
 
-        <div class="line">
+        @if(trail) {
+            <p class="trail">Trail page here...</p>
+        } else {
+            <p class="nav">
 
-            <div class="unit size3of5">
+                @*
+                  TODO: Standard CS navigation indexing functions in views.support.
+                *@
 
-                @fragments.byline(gallery.byline, gallery)
-                @fragments.dateline(gallery.webPublicationDate)
-
-                @if(trail) {
-                    <p class="trail">Trail page here...</p>
+                @if(index > 1) {
+                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)">Previous</a>
                 } else {
-                    <p class="nav">
-
-                        @*
-                          TODO: Standard CS navigation indexing functions in views.support.
-                        *@
-
-                        @if(index > 1) {
-                            <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)">Previous</a>
-                        } else {
-                            <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://">Previous</a>
-                        }
-
-                        Image <span id="js-gallery-index">@index</span> of @gallery.size
-
-                        @if(index < gallery.size) {
-                            <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)">Next</a>
-                        } else {
-                            <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true">Next</a>
-                        }
-                    </p>
-
-                    <div class="gallery-container" id="js-gallery">
-                        <ul class="plain">
-                            @gallery.images.zipWithRowInfo.map{ case(image, row) =>
-                                @if(row.rowNum == index) {
-                                    <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
-                                        <img class="maxed" src="@image.url" data-width="@image.width" />
-                                } else {
-                                    <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
-                                }
-                                        @fragments.caption(image.caption.getOrElse(""))
-                                        <p class="caption-credit"><strong>@image.credit</strong></p>
-                                    </li>
-                                
-                            }
-                        </ul>
-                    </div>
-
+                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://">Previous</a>
                 }
-            </div>
 
-            <div class="unit lastUnit">
-                @if(storyPackage nonEmpty) {
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                Image <span id="js-gallery-index">@index</span> of @gallery.size
+
+                @if(index < gallery.size) {
+                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)">Next</a>
                 } else {
-                    <div id="related"></div>
+                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true">Next</a>
                 }
+            </p>
+
+            <div class="gallery-container" id="js-gallery">
+                <ul class="plain">
+                    @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+                        @if(row.rowNum == index) {
+                            <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
+                                <img class="maxed" src="@image.url" data-width="@image.width" />
+                        } else {
+                            <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                        }
+                                @fragments.caption(image.caption.getOrElse(""))
+                                <p class="caption-credit"><strong>@image.credit</strong></p>
+                            </li>
+                        
+                    }
+                </ul>
             </div>
 
-        </div>
+        }
+   
+        @if(storyPackage nonEmpty) {
+            @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        } else {
+            <div id="related"></div>
+        }
+
 
         <div id="most-popular"></div>
+
     </div>
 }
