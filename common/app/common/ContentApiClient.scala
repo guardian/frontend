@@ -1,8 +1,8 @@
 package common
 
 import com.gu.openplatform.contentapi.Api
-import com.gu.openplatform.contentapi.connection.MultiThreadedApacheHttpClient
-import com.gu.management.{ Metric, GaugeMetric, TimingMetric }
+import com.gu.openplatform.contentapi.connection.{ DispatchHttp, Proxy }
+import com.gu.management.{ Metric, TimingMetric }
 
 trait ApiQueryDefaults { self: Api =>
 
@@ -22,21 +22,23 @@ trait ApiQueryDefaults { self: Api =>
     .tag(supportedTypes)
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults
-    with MultiThreadedApacheHttpClient
+class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults with DispatchHttp
     with Logging {
 
-  import configuration._
+  import configuration.{ proxy => proxyConfig, _ }
 
   override val targetUrl = contentApi.host
   apiKey = Some(contentApi.key)
 
-  maxConnections(1000)
+  override lazy val maxConnections = 100
+  override lazy val connectionTimeoutInMs = 200
+  override lazy val requestTimeoutInMs = 2000
+  override lazy val compressionEnabled = true
 
-  if (proxy.isDefined) {
-    log.info("Setting HTTP proxy to: %s:%s".format(proxy.host, proxy.port))
-    setProxy(proxy.host, proxy.port)
-  }
+  override lazy val proxy: Option[Proxy] = if (proxyConfig.isDefined) {
+    log.info("Setting HTTP proxy to: %s:%s".format(proxyConfig.host, proxyConfig.port))
+    Some(Proxy(proxyConfig.host, proxyConfig.port))
+  } else None
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
 
@@ -56,15 +58,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
       Some(RequestMetrics.RequestTimingMetric)
     ) with TimingMetricLogging
 
-    object ContentApiHttpClientCollectionPoolSize extends GaugeMetric(
-      "performance",
-      "contentapi_httpclient_connection_pool",
-      "Content API HttpClient connection pool",
-      "HttpClient connection pool size",
-      () => connectionManager.getConnectionsInPool()
-    )
-
-    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpClientCollectionPoolSize)
+    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric)
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
