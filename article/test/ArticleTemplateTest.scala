@@ -6,6 +6,9 @@ import org.scalatest.FlatSpec
 import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
 
 class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
+
+  implicit val config = conf.Configuration
+
   "Article Template" should "render article metadata" in HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
     import browser._
 
@@ -49,7 +52,6 @@ class ArticleTemplateTest extends FlatSpec with ShouldMatchers {
     val linkUrls = $("a").getAttributes("href")
 
     linkNames should contain("David Cameron defends windfarm plans to Tory MPs")
-    linkUrls should contain("http://localhost:3333/environment/2012/feb/21/cameron-defends-wind-farm-mps")
+    linkUrls should contain(WithHost("/environment/2012/feb/21/cameron-defends-wind-farm-mps"))
   }
-
 }

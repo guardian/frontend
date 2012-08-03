@@ -14,15 +14,17 @@ object Frontend extends Build with Prototypes {
 
   val common = library("common")
 
-  val article = application("article").dependsOn(common)
-  val gallery = application("gallery").dependsOn(common)
+  val commonWithTests = common % "test->test;compile->compile"
 
-  val tag = application("tag").dependsOn(common)
-  val section = application("section").dependsOn(common)
-  val front = application("front").dependsOn(common)
-  val coreNavigation = application("core-navigation").dependsOn(common)
+  val article = application("article").dependsOn(commonWithTests)
+  val gallery = application("gallery").dependsOn(commonWithTests)
 
-  val video = application("video").dependsOn(common)
+  val tag = application("tag").dependsOn(commonWithTests)
+  val section = application("section").dependsOn(commonWithTests)
+  val front = application("front").dependsOn(commonWithTests)
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+
+  val video = application("video").dependsOn(commonWithTests)
 
   val main = root().aggregate(
     common, article, gallery, tag, section, front, video, coreNavigation
