@@ -3,31 +3,26 @@
 @main(tag, Static, Configuration){  }{
     <div id="container">
 
-        <div class="line">
-            <div class="unit lastUnit">
-                @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-                @fragments.navigation(Static, Configuration, tag)
-                @fragments.headline(tag.name)
-            </div>
-        </div>
+        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+        @fragments.navigation(Static, Configuration, tag)
+        @fragments.headline(tag.name)
+    
 
-            @if(leadContent nonEmpty) {
-                <div class="line" data-link-name="lead content">
-                    @leadContent.map{ trail =>
-                        <div class="unit size1of2">
-                            @fragments.formatTrail(trail)
-                        </div>
-                    }
-                </div>
-            }
-
-            <div class="line" data-link-name="latest">
-                @trails.map{ trail =>
-                    <div class="unit size1of2">
-                        @fragments.formatTrail(trail)
-                    </div>
+        @if(leadContent nonEmpty) {
+            <div data-link-name="lead content">
+                @leadContent.map{ trail =>
+                    @fragments.formatTrail(trail)
                 }
             </div>
-            <div id="most-popular"></div>
+        }
+
+        <div data-link-name="latest">
+            @trails.map{ trail =>
+                @fragments.formatTrail(trail)
+            }
+        </div>
+
+        <div id="most-popular"></div>
+        
     </div>
 }

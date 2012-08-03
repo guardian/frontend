@@ -105,7 +105,7 @@ trait Prototypes {
       "com.gu" %% "management-play" % "5.13",
       "com.gu" %% "management-logback" % "5.13",
       "com.gu" %% "configuration" % "3.6",
-      "com.gu.openplatform" %% "content-api-client" % "1.15",
+      "com.gu.openplatform" %% "content-api-client" % "1.16.2",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",

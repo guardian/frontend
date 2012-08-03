@@ -1,12 +1,13 @@
 .b1 {
-    border-top: 1px solid #ccc;
-    padding-top: 8px;
+    border-top: 1px solid #bebebe;
+    padding-top: 3px;
 }
 
 .b1b {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 8px;
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 3px;
 }
+/*
 
 .b2 {
     border-top: 1px solid #333;
@@ -17,6 +18,7 @@
     border-bottom: 1px solid #333;
     padding-bottom: 8px;
 }
+*/
 
 .count {
     background-color: #a5bedc;
@@ -43,3 +45,41 @@ img.badge {
 #debug-timestamp {
     color: #d3d3d3;
 }
+
+
+
+
+/*  credit for this microsprite:
+    @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/ 
+*/
+.stars {
+    display: block;
+    width: 65px;
+    background-position: 0 0;
+    position: relative;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.stars,
+.stars:after {
+    height:13px;
+    background-image: url(http://i.imgur.com/Mgu8o.png);
+}  
+
+.stars:after{
+    content: "";
+    background-position: 0 -13px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.s-0:after { width: 0; }
+.s-1:after { width:13px; }
+.s-2:after { width:26px; }
+.s-3:after { width:39px; }
+.s-4:after { width:52px; }
+.s-5:after { width:65px; }

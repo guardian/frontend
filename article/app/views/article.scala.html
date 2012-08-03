@@ -5,62 +5,45 @@
 }{
 <div id="container">
 
-    <div class="line">
-        <div class="unit lastUnit">
-            @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-            @fragments.navigation(Static, Configuration, article)
-            @fragments.headline(article.headline)
-            @fragments.standfirst(article.standfirst)
-        </div>
-    </div>
-
-    <div class="line">
-
-        <div class="unit size3of5">
-
-            <article>
-
-                @article.mainPicture.map{ mainPicture =>
-                    @article.mainPicture(width=220).map{ smallCrop =>
-                    <figure>
-                        <img class="maxed" src="@smallCrop.url"
-                             data-fullsrc="@mainPicture.url"
-                             data-width="@mainPicture.width"
-                        />
-                        <figcaption>@Html(smallCrop.caption.getOrElse(""))</figcaption>
-                    </figure>
-                    }
-                }
-
-                <aside class="b2 b2b">
-                    @fragments.byline(article.byline, article)
-                    @fragments.dateline(article.webPublicationDate)
-                </aside>
-
-                <div class="article-body">
-                    @* <!-- ordering of cleaners is important --> *@
-                    @withJsoup(article.body)(
-                    PictureCleaner(article),
-                    InBodyLinkCleaner,
-                    InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
-                    )
-                </div>
-
-            </article>
-            @fragments.mainSiteLink(article, Configuration)
-        </div>
-
-        <div class="unit lastUnit">
-            @if(storyPackage.nonEmpty && ABTest(request).isA) {
-                @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-            } else {
-                <div id="related"></div>
+    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+    @fragments.navigation(Static, Configuration, article)
+    @fragments.headline(article.headline)
+    @fragments.standfirst(article)
+    
+    <article>
+        @article.mainPicture.map{ mainPicture =>
+            @article.mainPicture(width=220).map{ smallCrop =>
+            <figure>
+                <img class="maxed" src="@smallCrop.url"
+                     data-fullsrc="@mainPicture.url"
+                     data-width="@mainPicture.width"
+                />
+                <figcaption>@Html(smallCrop.caption.getOrElse(""))</figcaption>
+            </figure>
             }
-            <div id="most-popular"></div>
+        }
+
+        <aside class="b1 b1b">
+            @fragments.byline(article.byline, article)
+            @fragments.dateline(article.webPublicationDate)
+        </aside>
+
+        <div class="article-body">
+            @* <!-- ordering of cleaners is important --> *@
+            @withJsoup(article.body)(
+            PictureCleaner(article),
+            InBodyLinkCleaner,
+            InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
+            )
         </div>
+    </article>
 
-    </div>
-
+    @if(storyPackage.nonEmpty && ABTest(request).isA) {
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    } else {
+        <div id="related"></div>
+    }
+    <div id="most-popular"></div>
 
 </div>
 }
