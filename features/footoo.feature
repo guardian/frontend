@@ -1,3 +1,3 @@
 Hello
 
-Fooey tooey.
+Fooey.
