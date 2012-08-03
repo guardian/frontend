@@ -10,5 +10,6 @@
 
 <link rel="stylesheet" type="text/css" href="@static("stylesheets/main.min.css")" />
 
-<!-- todo: only load for dev mode -->
-<link rel="stylesheet" type="text/css" href="@static("stylesheets/theme/fonts.min.css")" />
+@if(config.debug.enabled) {
+    <link rel="stylesheet" type="text/css" href="@static("stylesheets/theme/fonts.min.css")" />
+}
