@@ -229,13 +229,6 @@
     margin-right: 20px;
 }
 
-
-
-article p {
-    margin: 0px;
-    margin-bottom: 10px;
-}
-
 article aside {
     font: 15px/20px helvetica, arial, sans-serif;
     margin: 0px 0px 20px 0px;
@@ -252,9 +245,9 @@ article figure img {
 }
 
 article figure figcaption {
-    font: 12px/20px helvetica, arial, sans-serif;
+    font: 12px/15px arial, sans-serif;
     text-indent: 0;
-    margin: 0px 0px 20px 0px;
+    margin: 7px 0px 20px 0px;
     color: #666666;
 }
 
@@ -279,11 +272,31 @@ article figure figcaption cite a:visited {
     border-bottom: 1px dotted #808080;
 }
 
-article h2 {
-    font: bold 17px/20px helvetica, arial;
-    color: #000;
-    margin: 0px 0px 10px 0px;
-    padding: 10px 0px 0px 0px;
+article .article-body p {
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+article .article-body h2 {
+    font-size: 15px;
+    line-height: 20px;
+    color: #333;
+    border-top: 1px dotted #999;
+    border-bottom: 1px dotted #999;
+    padding-top: 3px;
+    padding-bottom: 16px;
+    margin-bottom: 3px;
+}
+
+article .article-body h2:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+article .article-body h3 {
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0;
 }
 
 article .article-body > p,
@@ -291,19 +304,32 @@ article .article-body ul,
 article .article-body ol,
 article .article-body address,
 article .article-body blockquote {
-    font: normal 15px/20px georgia, serif;
-    margin: 0px 0px 20px 0px;
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0px 0px 10px 0px;
+    color: #333;
 }
 
-article blockquote {
+article .article-body blockquote {
     border: 0;
-    padding: 0px 2% 0px 20px;
+    padding: 0;
+    margin-left: 31px;
 }
 
-article blockquote p {
-    font: normal 17px/20px georgia, serif;
+article .article-body blockquote:before {
+    content: url(http://i.imgur.com/ObVaZ.png);
+    margin-left: -31px;
+}
+
+article .article-body blockquote:after {
+    content: url(http://i.imgur.com/19GTh.png);
+}
+
+article .article-body blockquote p {
+    font-size: 15px;
+    line-height: 20px;
     color: #666666;
-    margin: 0px 0px 20px 0px;
+    display: inline; /* this makes the quote images work */
 }
 
 
