@@ -1,11 +1,11 @@
-@(standfirst: Option[String], starRating: Option[String])
+@(content: model.Content)
 
-@standfirst.map { s =>
+@content.standfirst.map { s =>
     <p class="standfirst">
         @withJsoup(s)(
             InBodyLinkCleaner
         )
-        @starRating.map { s =>
+        @content.starRating.map { s =>
 		    <span class="stars s-@s">@s / 5 stars</span>
 		}
     </p>

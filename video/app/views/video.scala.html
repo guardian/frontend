@@ -7,7 +7,6 @@
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     @fragments.navigation(Static, Configuration, video)
     @fragments.headline(video.headline)
-    @fragments.standfirst(video.standfirst)
 
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     @fragments.navigation(Static, Configuration, video)
@@ -22,7 +21,7 @@
         </video>
     </div>
 
-    @fragments.standfirst(video.standfirst)
+    @fragments.standfirst(video)
 
     @if(storyPackage nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

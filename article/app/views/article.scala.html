@@ -8,7 +8,7 @@
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     @fragments.navigation(Static, Configuration, article)
     @fragments.headline(article.headline)
-    @fragments.standfirst(article.standfirst, article.starRating)
+    @fragments.standfirst(article)
     <article>
 
         @article.mainPicture.map{ mainPicture =>
@@ -45,8 +45,6 @@
         <div id="related"></div>
     }
     <div id="most-popular"></div>
-
-
 
 </div>
 }
