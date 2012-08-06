@@ -9,8 +9,8 @@
     @fragments.navigation(Static, Configuration, article)
     @fragments.headline(article.headline)
     @fragments.standfirst(article)
+    
     <article>
-
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
             <figure>
@@ -37,6 +37,7 @@
             )
         </div>
     </article>
+    @fragments.mainSiteLink(article, Configuration)
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

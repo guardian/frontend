@@ -4,7 +4,7 @@ import test.`package`._
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
-  feature("rendering an article") {
+  feature("Article") {
 
     scenario("correct placeholder for ad is rendered") {
 
@@ -27,6 +27,28 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         and("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
+      }
+    }
+
+    scenario("Navigate to www.guardian.co.uk (desktop site)") {
+      given("I'm on article entitled 'We must capitalise on a low-carbon future'")
+      and("I am using the UK edition")
+      HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+        import browser._
+
+        then("I should see a link to the corresponding desktop article")
+        findFirst("#main-site").getAttribute("href") should be("http://www.guardian.co.uk/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
+      }
+    }
+
+    scenario("Navigate to www.guardiannews.com (desktop site)") {
+      given("I'm on article entitled 'We must capitalise on a low-carbon future'")
+      and("I am using the US edition")
+      HtmlUnit.US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+        import browser._
+
+        then("I should see a link to the corresponding desktop article")
+        findFirst("#main-site").getAttribute("href") should be("http://www.guardiannews.com/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
       }
     }
   }
