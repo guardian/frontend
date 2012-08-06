@@ -82,8 +82,8 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
       val imgWidth = img.attr("width").toInt
       val wrapper = body.createElement("div")
       wrapper.attr("class", imgWidth match {
-        case width if width <= 220 => "img-base"
-        case width if width < 460 => "img-median"
+        case width if width <= 220 => "img-base inline-image"
+        case width if width < 460 => "img-median inline-image"
         case width => "img-extended"
       })
 
