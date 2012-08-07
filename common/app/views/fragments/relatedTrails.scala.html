@@ -5,14 +5,10 @@
         <h3>@Html(heading)</h3>
         
         <ul class="plain">
-        @* extra trails are hidden by css, up to a maximum of 10 *@
+        @* extra trails are hidden by css, up to a maximum of n *@
         @trails.map{ trail =>
             <li>@formatTrail(trail)</li>
         }
         </ul>
-
-        @if(numTrails > visibleTrails) {
-            <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More</a> <span class="count">@(numTrails - visibleTrails)</span></h3>
-        }
     </div>
 }
