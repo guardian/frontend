@@ -17,6 +17,9 @@ trait MetaData {
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
 
+  //must be one of... http://schema.org/docs/schemas.html
+  def schemaType: Option[String] = None
+
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
