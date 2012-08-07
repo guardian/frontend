@@ -1,3 +1,7 @@
 @(webPublicationDate: org.joda.time.DateTime)
 
-<p class="dateline">@webPublicationDate.toString("E d MMM y HH.mm z")</p>
+<p class="dateline">
+    <meta itemprop="datePublished" content='@webPublicationDate.toString("yyyy-MM-dd")'>
+        @Format(webPublicationDate, "EEEE d MMMM y HH.mm 'GMT'")
+    </meta>
+</p>

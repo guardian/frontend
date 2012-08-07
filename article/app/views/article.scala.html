@@ -7,18 +7,20 @@
 
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     @fragments.navigation(Static, Configuration, article)
-    @fragments.headline(article.headline)
-    @fragments.standfirst(article)
-    
-    <article>
+
+    <article itemscope itemtype="@article.schemaType">
+        @fragments.headline(article.headline)
+        @fragments.standfirst(article)
+
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
-            <figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                 <img class="maxed" src="@smallCrop.url"
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
+                     itemprop="contentURL"
                 />
-                <figcaption>@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
             </figure>
             }
         }
@@ -28,7 +30,7 @@
             @fragments.dateline(article.webPublicationDate)
         </aside>
 
-        <div class="article-body">
+        <div class="article-body" @if(article.isReview){itemprop="reviewBody"} else {itemprop="articleBody"}">
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(article.body)(
             PictureCleaner(article),
