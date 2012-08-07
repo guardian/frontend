@@ -1,13 +1,13 @@
 @(trail: Trail)
 
-<div class="media b1">
+<div class="media b2">
     @trail.thumbnail.map{ imageUrl =>
     <a href="@trail.url" class="img" data-link-name="trail image">
         <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
     </a>
     }
     <div class="bd">
-        <p><a href="@trail.url" data-link-name="link text">@RemoveOuterParaHtml(trail.linkText)</a></p>
+        <p><a href="@trail.url" class="trail-headline" data-link-name="link text">@RemoveOuterParaHtml(trail.linkText)</a></p>
         @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>
 </div>
