@@ -42,6 +42,20 @@
         };
 
         document.getElementById('gu').parentNode.insertBefore(script);
+
+        (function loadFontsFromStorage(fonts) {
+            console.time('Get fonts from storage');
+            var styleNodes = document.querySelectorAll('[data-cache-name]');
+            for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                var style = styleNodes[i];
+                var cachedCss = localStorage.getItem(style.getAttribute('data-cache-name'));
+                if (cachedCss) {
+                    style.innerHTML = cachedCss;
+                    style.setAttribute('data-cache-full', 'true');
+                }
+            }
+            console.timeEnd('Get fonts from storage');
+        })();
    
     }
 </script>
