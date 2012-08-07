@@ -27,6 +27,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
+
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
@@ -60,6 +61,10 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
 
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
+
+  lazy val isReview = tones.exists(_.id == "tone/reviews")
+
+  override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {

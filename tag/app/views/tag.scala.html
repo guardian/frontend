@@ -10,16 +10,14 @@
 
         @if(leadContent nonEmpty) {
             <div data-link-name="lead content">
-                @leadContent.map{ trail =>
-                    @fragments.formatTrail(trail)
+                @leadContent.zipWithRowInfo.map{ case (trail, info) =>
+                    @fragments.formatTrail(trail, info)
                 }
             </div>
         }
 
         <div data-link-name="latest">
-            @trails.map{ trail =>
-                @fragments.formatTrail(trail)
-            }
+            @trails.zipWithRowInfo.map{ case(trail, info) => @fragments.formatTrail(trail, info) }
         </div>
 
         <div id="most-popular"></div>
