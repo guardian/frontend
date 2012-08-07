@@ -68,14 +68,14 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     val imgDivs = (body \\ "div").toList
 
     val baseImg = imgDivs(1)
-    (baseImg \ "@class").text should be("img-base")
+    (baseImg \ "@class").text should be("img-base inline-image")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
     (baseImg \ "p" \ "@class").text should be("caption")
     (baseImg \ "p").text should be("the caption")
 
     val medianImg = imgDivs(2)
-    (medianImg \ "@class").text should be("img-median")
+    (medianImg \ "@class").text should be("img-median inline-image")
     (medianImg \ "img" \ "@class").text should be("gu-image")
     (medianImg \ "img" \ "@width").text should be("250")
 
