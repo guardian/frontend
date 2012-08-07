@@ -6,8 +6,8 @@
         
         <ul class="plain">
         @* extra trails are hidden by css, up to a maximum of 10 *@
-        @trails.map{ trail =>
-            <li>@formatTrail(trail)</li>
+        @trails.zipWithRowInfo.map{ case (trail, info) =>
+            <li>@formatTrail(trail, info)</li>
         }
         </ul>
 
