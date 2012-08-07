@@ -11,6 +11,6 @@ object JsonComponent extends Results {
 
     request.getQueryString("callback").map { callback =>
       Ok("%s(%s);" format (callback, json)).as("application/javascript")
-    } getOrElse (Ok(json).as("application/json"))
+    } getOrElse (Ok(html))
   }
 }
