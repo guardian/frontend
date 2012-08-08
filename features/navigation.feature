@@ -28,16 +28,3 @@ Measurements
 		Given I visit any guardian page,
 		Then I can keyword search across all guardian articles
 		
-
-	
-	
-		
-		
-
-
-
-    Scenario: A link to a page 
-    Scenario: Fonts should be efficiently served (Eg, localstorage, loaded async) 
-    Scenario: Fonts should be securely stored & deployed (to the agreement of legal) 
-    Scenario: Fonts should default to 'Georgia, serif'
-    Scenario: Fonts should be served in WOFF and OTF formats

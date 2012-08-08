@@ -20,16 +20,3 @@ Measurements
 		Given I have visited some stories within the top stories list,
 		Then I can clearly see which stories I have visited
 		
-
-	
-	
-		
-		
-
-
-
-    Scenario: A link to a page 
-    Scenario: Fonts should be efficiently served (Eg, localstorage, loaded async) 
-    Scenario: Fonts should be securely stored & deployed (to the agreement of legal) 
-    Scenario: Fonts should default to 'Georgia, serif'
-    Scenario: Fonts should be served in WOFF and OTF formats
