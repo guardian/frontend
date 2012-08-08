@@ -20,10 +20,10 @@ Measurements
 	Scenario: Click on next-prev / Swipe to scroll through all images in page
 	Scenario: Captions per image should be displayed 
 	Scenario: Click on image to go into full page view
-	Scenario: Full screen should allow to swipe & click for next/prev and have a close buttno
+	Scenario: Full screen should allow to swipe & click for next/prev and have a close button
 	Scenario: Landscape & portrait views in full screen should be implemented
 	Scenario: User can choose to display captions or not
-	Scenario: From full screen view, back button should return you to article
+	Scenario: From full screen view, back button should return you to the article
 	
 	
 
