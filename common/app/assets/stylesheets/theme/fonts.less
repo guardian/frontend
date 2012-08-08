@@ -1,0 +1,126 @@
+/* 
+    six faces in here:
+        - d3 regular
+        - d3 italic
+        - WT1 regular
+        - WT1 italic
+        - WT1 bold
+        - WT1 bold italic
+*/
+
+// @font-face {
+//     font-family: 'de3-regular';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3reg-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3reg-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3reg-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+// @font-face {
+//     font-family: 'de3-italic';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3iregita-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3iregita-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdnegyde3iregita-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: italic;
+// }
+
+// @font-face {
+//     font-family: 'wt1-regular';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1reg-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1reg-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1reg-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+// @font-face {
+//     font-family: 'wt1-italic';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1regita-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1regita-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1regita-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: italic;
+// }
+
+// @font-face {
+//     font-family: 'wt1-bold';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bol-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bol-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bol-webfont.woff') format('woff');
+//     font-weight: bold;
+//     font-style: normal;
+// }
+
+// @font-face {
+//     font-family: 'wt1-bolditalic';
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bolita-webfont.eot');
+//     src: url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bolita-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('http://gu-private-frontend-assets.appspot.com/static/fonts8986/gdntexegywt1bolita-webfont.woff') format('woff');
+//     font-weight: bold;
+//     font-style: italic;
+// }
+
+
+/* possible todo: ul, ol, address, blockquote */
+p {
+    font-family: "guardian-wt1-regular", georgia;
+}
+
+h1 {
+    font-family: "guardian-de3-regular", georgia;
+}
+
+h1 em,
+h1 i {
+    font-family: "guardian-de3-regular-italic", georgia;
+}
+
+h2,
+.standfirst {
+    font-family: "guardian-wt1-regular", georgia;
+}
+
+p b,
+p strong,
+h2 strong,
+h2 b,
+.standfirst strong,
+.standfirst b {
+    font-family: "guardian-wt1-bold", "guardian-wt1-regular", georgia;
+}
+
+p i,
+p em,
+h2 em,
+h2 i,
+.standfirst em,
+.standfirst i {
+    font-family: "guardian-wt1-regular-italic", georgia;
+}
+
+article .article-body h2,
+article .article-body h3, {
+    font-family: "guardian-wt1-bold", georgia;
+}
+
+/* every possible variant of bold/italic */
+h2 strong em,
+h2 strong i,
+h2 b em,
+h2 b i,
+h2 em strong,
+h2 i strong,
+h2 em b,
+h2 i b,
+.standfirst strong em,
+.standfirst strong i,
+.standfirst b em,
+.standfirst b i,
+.standfirst em strong,
+.standfirst i strong,
+.standfirst em b,
+.standfirst i b {
+    font-family: "guardian-wt1-bold-italic", georgia;
+}
