@@ -14,13 +14,9 @@ define(['modules/related', 'modules/image', 'modules/popular', 'modules/fonts'],
             var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
             new Related(document.getElementById('related')).load(relatedUrl);
 
-            // load fonts
-            var fonts = new Fonts();
-
-            // TODO: Put fontServer in config object.
-            var fontServer = 'http://guardian-fonts.s3-external-3.amazonaws.com/';
+            // load fonts later on in the page.
             window.addEventListener('load', function() {
-                fonts.loadFromServer(fontServer);
+                new Fonts().loadFromServer(config.page.fontServerUrl);
             }, true);
         }
     }
