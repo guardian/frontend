@@ -14,8 +14,8 @@ define(['modules/related', 'modules/image', 'modules/popular', 'modules/fonts'],
             var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
             new Related(document.getElementById('related')).load(relatedUrl);
 
-            // Load fonts, cache, and apply
-            new Fonts().loadFromServerAndApply('http://guardian-fonts.s3-external-3.amazonaws.com/');
+            // Load fonts, cache, and apply them.
+            new Fonts().loadFromServerAndApply();
 
             /*
             // Wait till other downloads finished (load?), and then cache

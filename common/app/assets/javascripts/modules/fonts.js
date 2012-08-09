@@ -19,6 +19,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         }
 
         this.loadFromServer = function(url, callback) {
+        	var url = url || ''; // If no URL, then load from standard static assets path.
         	var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
             	var style = styleNodes[i];
