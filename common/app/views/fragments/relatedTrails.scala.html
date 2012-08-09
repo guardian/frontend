@@ -1,18 +1,14 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int)
 
 @defining(trails.length){ numTrails =>
-    <div class="trailblock-shaded show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
-        <h3>@Html(heading)</h3>
+    <div class="zone-border trailblock trailblock-shaded show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
+        <h3 class="zone-color">@Html(heading)</h3>
         
-        <ul class="plain">
+        <ul class="unstyled">
         @* extra trails are hidden by css, up to a maximum of 10 *@
         @trails.zipWithRowInfo.map{ case (trail, info) =>
             <li>@formatTrail(trail, info, related=true)</li>
         }
         </ul>
-
-        @if(numTrails > visibleTrails) {
-            <h3 class="b1 b1b expander"><a class="js-expand-trailblock" href="javascript://">More</a> <span class="count">@(numTrails - visibleTrails)</span></h3>
-        }
     </div>
 }
