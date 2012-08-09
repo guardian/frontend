@@ -9,6 +9,8 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	// A final check for localStorage.
         	// Because it would be horrible if people downloaded fonts and then couldn't cache them.
         	try {
+        		localStorage.setItem('test', 'test1');
+        		localStorage.removeItem('test');
         		return (localStorage.getItem(style.getAttribute('data-cache-name')) === null);
         	}
         	catch(e) {
@@ -16,22 +18,40 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	}
         }
 
-        this.loadFromServer = function(fontServer) {
+        this.loadFromServer = function(url, callback) {
         	var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
             	var style = styleNodes[i];
             	if (fontIsRequired(style)) {
             		reqwest({
-	                    url: fontServer + '/' + style.getAttribute('data-cache-file'),
+	                    url: url + style.getAttribute('data-cache-file'),
 	                    type: 'jsonp',
 	                    jsonpCallbackName: 'guFont',
-	                    success: function(json) {
-	                    	localStorage.setItem(json.name, json.css);
-	                        common.pubsub.emit('modules:fonts:loaded', [json.name]);
-	                    }
+	                    success: (function(style) {
+	                    	return function(json) {
+	                    		if (typeof callback === 'function') {
+	                        		callback(style, json);
+	                        	}
+	                    		localStorage.setItem(json.name, json.css);
+	                        	common.pubsub.emit('modules:fonts:loaded', [json.name]);
+	                    	}
+	                    })(style)
             		});
+            	} else {
+            		common.pubsub.emit('modules:fonts:notloaded', []);
             	}
             }
+        }
+
+        this.loadFromServerAndApply = function(url) {
+        	var html = document.querySelector('html');
+        	this.loadFromServer(url, function(style, json) {
+        		style.innerHTML = json.css;
+        		if (html.className.indexOf('font-' + json.name + '-loaded') < 0) {
+        			html.className += ' font-' + json.name + '-loaded';
+        		}
+        		
+        	});
         }
     }
     

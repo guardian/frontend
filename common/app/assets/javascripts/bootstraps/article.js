@@ -14,10 +14,16 @@ define(['modules/related', 'modules/image', 'modules/popular', 'modules/fonts'],
             var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
             new Related(document.getElementById('related')).load(relatedUrl);
 
-            // load fonts later on in the page.
+            // Load fonts, cache, and apply
+            new Fonts().loadFromServerAndApply('http://guardian-fonts.s3-external-3.amazonaws.com/');
+
+            /*
+            // Wait till other downloads finished (load?), and then cache
+            // the fonts for the next page view.
             window.addEventListener('load', function() {
-                new Fonts().loadFromServer(config.page.fontServerUrl);
+                new Fonts().loadFromServer('http://guardian-fonts.s3-external-3.amazonaws.com/');
             }, true);
+            */
         }
     }
 

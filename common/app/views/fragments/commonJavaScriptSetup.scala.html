@@ -8,10 +8,12 @@
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 var style = styleNodes[i];
-                var cachedCss = localStorage.getItem(style.getAttribute('data-cache-name'));
+                var name = style.getAttribute('data-cache-name');
+                var cachedCss = localStorage.getItem(name);
                 if (cachedCss) {
                     style.innerHTML = cachedCss;
                     style.setAttribute('data-cache-full', 'true');
+                    document.querySelector('html').className += ' font-' + name + '-loaded';
                 }
             }
         })();
@@ -54,7 +56,7 @@
 
         };
 
-        document.getElementById('gu').parentNode.insertBefore(script);
+        document.querySelector('head').appendChild(script);
    
     }
 </script>
