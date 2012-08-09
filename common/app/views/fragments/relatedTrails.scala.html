@@ -5,9 +5,9 @@
         <h3 class="zone-color">@Html(heading)</h3>
         
         <ul class="unstyled">
-        @* extra trails are hidden by css, up to a maximum of n *@
-        @trails.map{ trail =>
-            <li>@formatTrail(trail)</li>
+        @* extra trails are hidden by css, up to a maximum of 10 *@
+        @trails.zipWithRowInfo.map{ case (trail, info) =>
+            <li>@formatTrail(trail, info)</li>
         }
         </ul>
     </div>
