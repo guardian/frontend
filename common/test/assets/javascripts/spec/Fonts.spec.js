@@ -72,27 +72,8 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
                 }
             })
         		
-        })
+        });
 
-        // it("should request css and cache it in localStorage", function(){
-            
-        // 	var styleNodes = document.querySelector('[data-cache-name]');
+    });
 
-        //     runs(function() {
-        //         var r = new Fonts().loadFromServer('fixtures/');
-        //     });
-
-        //     waits(1);
-
-        //     runs(function(){
-        //         expect(callback).toHaveBeenCalledOnce();
-        //         for (var i = 0, j = styleNodes.length; i<j; ++i) {
-        //         	expect(styleNodes[i].innerHTML).toBe('@font-face{');
-        //         }
-        //     });
-        // });
-    
-
-    })
-
-})
+});
