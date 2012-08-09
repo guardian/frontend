@@ -30,7 +30,7 @@
             @fragments.dateline(article.webPublicationDate)
         </aside>
 
-        <div class="article-body" @if(article.isReview){itemprop="reviewBody"} else {itemprop="articleBody"}">
+        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(article.body)(
             PictureCleaner(article),
@@ -44,9 +44,9 @@
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     } else {
-        <div id="related"></div>
+        <div id="js-related"></div>
     }
-    <div id="most-popular"></div>
+    <div id="js-popular"></div>
 
 </div>
 }
