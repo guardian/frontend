@@ -1,7 +1,6 @@
-@(trail: Trail)
+@(trail: Trail, info: RowInfo)
 
 <div class="media b2">
-    @(trail: Trail, info: RowInfo)
     @*
         index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
     *@
@@ -15,4 +14,3 @@
         @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>
 </div>
-
