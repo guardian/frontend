@@ -135,11 +135,16 @@ object ABTest {
   }
 }
 
-object TagLinks {
+object ContributorLinks {
   def apply(text: String, tags: Seq[Tag]): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
-        t.replaceFirst(tag.name, <a data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a>.toString)
+        t.replaceFirst(tag.name,
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+            <a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>
+              { tag.name }
+            </a>
+          </span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
