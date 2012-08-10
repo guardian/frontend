@@ -11,7 +11,7 @@
     
     <div class="trailblock show-@block.description.numItemsVisible">
         @defining(block.trails.length){ numTrails =>
-            <ul class="plain">
+            <ul class="unstyled">
                 @block.trails.zipWithRowInfo.map{ case (trailWithPackage, info) =>
                     <li>
                         @* top of if statement is for AB test *@

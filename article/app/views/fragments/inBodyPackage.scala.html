@@ -3,7 +3,7 @@
 @if(storyPackage.nonEmpty && ABTest(request).isB){
     <div class="trailblock more-on-story zone-border more-inline" id="inline-more-on" data-link-name="related : inline : More on this story">
         <h3>More on this story</h3>
-        <ul class="plain show-3">
+        <ul class="unstyled show-3">
             @storyPackage.take(3).map{ trail =>
                 <li>
                     <div class="media b1">
