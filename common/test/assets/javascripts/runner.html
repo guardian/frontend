@@ -91,10 +91,36 @@
         -o-transition: background-color 0.5s linear;
         -webkit-transition: background-color 0.5s linear; 
     }
-    div#trail-1.shut ul.flex { background-color: #999; } /* illustrative */
-    div#trail-1.open ul.flex { background-color: #ccc; }
+    .shut ul.flex { background-color: #999; } /* illustrative */
+    .open ul.flex { background-color: #ccc; }
 </style>
-<div id="trail-1" data-count="3" class="open">
+
+<!-- trail -->
+<div id="trail-a" data-count="5" class="open">
+    <ul>
+        <li class="t1">one</li>
+        <li class="t2">two</li>
+    </ul>
+    <ul class="flex">
+        <li class="t3">three</li>
+        <li class="t4">four</li>
+        <li class="t5">five</li>
+    </ul>
+</div>
+
+<div id="trail-b" data-count="2" class="open">
+    <ul>
+        <li class="t1">one</li>
+    </ul>
+    <ul class="flex">
+        <li class="t2">two</li>
+    </ul>
+</div>
+
+<div id="trail-c" data-count="1" class="shut">
+</div>
+
+<div id="trail-d" data-count="3" class="open">
     <ul>
         <li class="t1">one</li>
         <li class="t2">two</li>

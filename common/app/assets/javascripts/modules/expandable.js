@@ -1,9 +1,10 @@
-define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){ 
+define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) { 
 
-    function Expandable(root) {
+    var Expandable = function(root) {
 
         var dom      = root, // root element of the trailblock
-            state    = true, // true = open, false = closed
+            id       = root.id,
+            state, // true = open, false = closed
             cta      = document.createElement('div'),
             domCount = document.createElement('div'),
             count,
@@ -11,15 +12,16 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){
 
         // View 
         
-        this.view = {
+        var view = {
            
             updateCallToAction: function() {
-                cta.innerHTML = (state) ? 'more' : 'less';
+                cta.innerHTML = (state) ? 'less' : 'more';
             },
-
+            
             renderCount: function(count) {
                 dom.appendChild(domCount);
-                domCount.innerHTML = 'hidden items : ' + count; 
+                domCount.className = 'count';
+                domCount.innerHTML = count; 
             },
 
             renderState: function(state) {
@@ -28,22 +30,21 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){
             
             renderCallToAction: function() {
                 bean.add(cta, 'click', function(e) {
-                    common.mediator.emit('modules:expandable:cta:toggle');
+                    common.mediator.emit('modules:expandable:cta:toggle:'+id);
                 });
                 dom.appendChild(cta);
+                cta.className = 'cta';
+                view.updateCallToAction();
             },
-
-        
         }
-
         
         // Model
 
-        this.model = {
+        var model = {
         
-            toggleState: function() {
+            toggleState: function(eventId) {
                 state = (state) ? false : true;
-                common.mediator.emit('modules:expandable:stateChange', state)
+                common.mediator.emit('modules:expandable:stateChange:'+id, state)
             },
 
             getCount: function() {
@@ -52,28 +53,36 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){
 
         }
 
-        // FIXME listen for dom:onload event instead
+        // FIXME listen for 'modules:related:loaded' event instead
         this.load = function(){
-            common.mediator.emit('modules:expandable:init', this.model.getCount()) 
-        }  
+            common.mediator.emit('modules:expandable:init:'+id) 
+        } 
 
+        var isOpen = function(){ 
+            return (dom.className == 'open') ? true : false;
+        }
+
+        var initalise = function() {
+            state = isOpen();
+            view.renderCount(model.getCount()); 
+            view.renderCallToAction(); 
+        }
+        
         // Bindings
         
-        // init 
-        common.mediator.on('modules:expandable:init', this.view.renderCount);
-        common.mediator.on('modules:expandable:init', this.view.renderCallToAction);
-        common.mediator.on('modules:expandable:init', this.view.updateCallToAction); // or maybe just fire 'statechange'
+        // init
+        common.mediator.on('modules:expandable:init:'+id, initalise);
 
         // view listeners
-        common.mediator.on('modules:expandable:stateChange', this.view.renderState);
-        common.mediator.on('modules:expandable:stateChange', this.view.updateCallToAction);
+        common.mediator.on('modules:expandable:stateChange:'+id, view.renderState);
+        common.mediator.on('modules:expandable:stateChange:'+id, view.updateCallToAction);
 
         // model listeners
-        common.mediator.on('modules:expandable:cta:toggle', this.model.toggleState);
-        
+        common.mediator.on('modules:expandable:cta:toggle:'+id, model.toggleState);
+
     }
 
-    return Expandable;
-
+    return Expandable 
+   
 });
 
