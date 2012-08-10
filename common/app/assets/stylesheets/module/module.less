@@ -110,8 +110,8 @@
 }
 
 .trailblock h3 {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
     padding-top: 3px; 
     margin-bottom: 12px;
 }
@@ -122,8 +122,8 @@
 }
 
 .trail-headline {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
 }
 
 .trailtext {
@@ -222,14 +222,14 @@
 
 article aside {
     font: 15px/20px helvetica, arial, sans-serif;
-    margin: 0px 0px 15px 0px;
-    padding: 9px 0px 9px 0px;
+    margin: 0px;
+    padding: 0px 0px 15px 0px;
     list-style: none;
 }
 
 /* this duplicates article figure figcaption */
 article .article-body .caption {
-    font: 12px/15px arial;
+    font: 12px/15px helvetica, arial, sans-serif;
     color: #666;
     margin-top: 7px;
     margin-bottom: 0;
@@ -283,8 +283,9 @@ article .article-body h2 {
     border-top: 1px dotted #999;
     border-bottom: 1px dotted #999;
     padding-top: 3px;
-    padding-bottom: 16px;
+    padding-bottom: 12px;
     margin-bottom: 3px;
+    margin-top: 15px; /* feel like this should be 5px (10px margin-bottom on preceding <p>) but this has no effect till it's > 10px */
     font-family: georgia;
 }
 
@@ -304,8 +305,8 @@ article .article-body h2.block-title {
 }
 
 article .article-body h3 {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
     margin: 0;
     font-family: georgia;
 }
@@ -317,7 +318,7 @@ article .article-body address,
 article .article-body blockquote {
     font-size: 17px;
     line-height: 22px;
-    margin: 0px 0px 12px 0px;
+    margin: 0px 0px 10px 0px;
     color: #333;
     font-family: georgia;
 }
@@ -327,22 +328,24 @@ article .article-body blockquote {
     padding: 0;
     margin-left: 31px;
 }
+article .article-body blockquote, 
+article .article-body blockquote p {
+    font-size: 15px;
+    line-height: 20px;
+    color: #666666;
+}
 
 article .article-body blockquote:before {
     content: url(http://i.imgur.com/ObVaZ.png);
     margin-left: -31px;
+    margin-top: 5px;
+    float: left;
 }
 
 article .article-body blockquote:after {
     content: url(http://i.imgur.com/19GTh.png);
 }
 
-article .article-body blockquote p {
-    font-size: 15px;
-    line-height: 20px;
-    color: #666666;
-    display: inline; /* this makes the quote images work */
-}
 
 
 
@@ -392,5 +395,8 @@ img.discussion-badge {
 
 .expander {
     display: block;
-    padding-top: 3px;
+    padding-top: 5px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #666;
 }
