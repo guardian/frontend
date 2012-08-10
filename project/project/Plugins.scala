@@ -1,5 +1,4 @@
 import sbt._
-import sbt.Keys._
 
 object Plugins extends Build {
 
