@@ -17,9 +17,9 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){
                 cta.innerHTML = (state) ? 'more' : 'less';
             },
 
-            renderCount: function(c) {
+            renderCount: function(count) {
                 dom.appendChild(domCount);
-                domCount.innerHTML = 'hidden items : ' + c; 
+                domCount.innerHTML = 'hidden items : ' + count; 
             },
 
             renderState: function(state) {
@@ -62,7 +62,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean){
         // init 
         common.pubsub.on('modules:expandable:init', this.view.renderCount);
         common.pubsub.on('modules:expandable:init', this.view.renderCallToAction);
-        common.pubsub.on('modules:expandable:init', this.view.updateCallToAction);
+        common.pubsub.on('modules:expandable:init', this.view.updateCallToAction); // or maybe just fire 'statechange'
 
         // view listeners
         common.pubsub.on('modules:expandable:stateChange', this.view.renderState);

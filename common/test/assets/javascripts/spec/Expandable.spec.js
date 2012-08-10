@@ -2,24 +2,28 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
 
     describe("Expandable", function() {
 
-        beforeEach(function() {
-        });
+        it("should expand and contract a panel", function(){
+            var t = document.getElementById('trail-1');
+            var x = new Expandable(t);
+            x.load();
 
-        xit("should expand a panel", function(){
-        });
+            // shut
+            common.pubsub.emit('modules:expandable:stateChange', false);
+            expect(document.getElementById('trail-1').className).toBe('shut');
+           
+            // open 
+            common.pubsub.emit('modules:expandable:stateChange', true);
+            expect(document.getElementById('trail-1').className).toBe('open');
         
-        xit("should shrink a panel", function(){});
+        });
         
         it("should visually represent the number of items in the panel", function(){
             var t = document.getElementById('trail-1');
-            var x = new Expandable(t).load();;
+            var x = new Expandable(t);
+            expect(x.model.getCount()).toBe('3');
         });
 
     
     });
 
 });
-    /*
-        -   Scenario: If has no Story Package, then show Related Links // article bootstap
-    -*/
-
