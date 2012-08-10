@@ -6,7 +6,7 @@ define(['common', 'modules/popular'], function(common, Popular) {
 
         beforeEach(function() {
             callback = sinon.spy(function(){});
-            common.pubsub.on('modules:popular:loaded', callback);
+            common.mediator.on('modules:popular:loaded', callback);
         });
 
         // json test needs to be run asynchronously 

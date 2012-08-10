@@ -16,7 +16,7 @@ define(['common', 'reqwest'], function(common, reqwest){
 
         // Bindings
         
-        common.pubsub.on('modules:popular:loaded', this.view.render);
+        common.mediator.on('modules:popular:loaded', this.view.render);
         
         // Model
         
@@ -27,7 +27,7 @@ define(['common', 'reqwest'], function(common, reqwest){
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'showMostPopular',
                     success: function(json) {
-                        common.pubsub.emit('modules:popular:loaded', [json.html])
+                        common.mediator.emit('modules:popular:loaded', [json.html])
                     }
             })
         }  

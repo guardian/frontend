@@ -27,14 +27,14 @@ define(['common', 'modules/detect'], function (common, detect) {
 
         // Bindings
         
-        common.pubsub.on('modules:images:upgrade', this.view.upgrade);
+        common.mediator.on('modules:images:upgrade', this.view.upgrade);
    
         // Model
         
         this.upgrade = function() {
 
             if (connectionSpeed !== 'low' && layoutMode !== 'base') {
-                common.pubsub.emit('modules:images:upgrade');
+                common.mediator.emit('modules:images:upgrade');
             }
         
         }  
