@@ -24,7 +24,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         info("The article is marked up with the correct schema")
         val article = findFirst("article[itemtype='http://schema.org/Article']")
 
-        article.findFirst("[itemprop=headline]").getText should be("Liu Xiang pulls up in opening race at second consecutive Olympics")
+        article.findFirst("[itemprop=headline]").getText should
+          be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
 
@@ -35,21 +36,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see a short description of the article")
-        findFirst("[itemprop=description]").getText should be("Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
+        findFirst("[itemprop=description]").getText should
+          be("Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
       }
     }
 
     scenario("Display the article author", ArticleComponents) {
 
-      given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
-      HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
+      given("I am on an article entitled 'TV highlights 09/08/2012'")
+      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
         import browser._
 
-        then("I should see the name of the author")
-        findFirst("[itemprop=author]").getText should be("George Monbiot")
+        then("I should see the names of the authors")
+        $("[itemprop=author]")(0).getText should be("Ben Arnold")
+        $("[itemprop=author]")(4).getText should be("Phelim O'Neill")
 
         and("I should see a link to the author's page")
-        findFirst("[itemprop=author] a").getAttribute("href") should be(WithHost("/profile/georgemonbiot"))
+        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='url name']")(4).getAttribute("href") should be(WithHost("/profile/phelimoneill"))
       }
     }
 
@@ -60,10 +64,12 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the article's image")
-        findFirst("[itemprop=associatedMedia] img[itemprop=contentURL]").getAttribute("src") should be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
+        findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
+          be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
 
         and("I should see the image caption")
-        findFirst("[itemprop=associatedMedia] [itemprop=description]").getText should be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
+        findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
+          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
       }
     }
 
@@ -99,10 +105,12 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see pictures in the body of the article")
         val inBodyImage = $("[itemprop=associatedMedia]")(2)
-        inBodyImage.findFirst("img[itemprop=contentURL]").getAttribute("src") should be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/6/1344259075423/lindisfarne_castle.jpg")
+        inBodyImage.findFirst("img[itemprop=contentURL]").getAttribute("src") should
+          be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/7/1344330044209/Lindisfarne_longboat.jpg")
 
         and("I should see the image caption")
-        inBodyImage.findFirst("[itemprop=description]").getText should be("""Lindisfarne Castle "with its battled walls". Etching by Henry Rushbury""")
+        inBodyImage.findFirst("[itemprop=description]").getText should
+          be("""A longboat among the ruins. Pic by English Heritage""")
       }
     }
 
@@ -175,7 +183,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see a link to the corresponding desktop article")
-        findFirst("#main-site").getAttribute("href") should be("http://www.guardiannews.com/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
+        findFirst("#main-site").getAttribute("href") should
+          be("http://www.guardiannews.com/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
       }
     }
 
@@ -188,16 +197,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see navigation to related content")
         val related = $("#related-trails")
-        val textualLink = related.find("a").filter(hasLinkName(_, "link text | 1")).head
-        textualLink.getText should be("Danny Alexander downplays UK's AAA credit rating")
-        textualLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
-
-        $(".foo")
+        $("[itemprop=relatedLink]").size() should be(5)
+        val relatedLink = findFirst("[itemprop=relatedLink]")
+        relatedLink.getText should be("Danny Alexander downplays UK's AAA credit rating")
+        relatedLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
 
         and("I should see an image link to the related content")
         val imageLink = related.find("a").filter(hasLinkName(_, "trail image | 1")).head
         imageLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
-        imageLink.find("img").head.getAttribute("src") should be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")
+        imageLink.find("img").head.getAttribute("src") should
+          be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")
       }
     }
   }

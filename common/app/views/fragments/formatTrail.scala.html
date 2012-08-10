@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo)
+@(trail: Trail, info: RowInfo, related: Boolean = false)
 
 <div class="media b2">
     @*
@@ -10,7 +10,7 @@
         </a>
     }
     <div class="bd">
-        <p><a href="@trail.url" class="trail-headline" data-link-name="link text | @info.rowNum">@RemoveOuterParaHtml(trail.linkText)</a></p>
+        <p><a href="@trail.url" @if(related){itemprop="relatedLink"} class="trail-headline" data-link-name="link text | @info.rowNum">@RemoveOuterParaHtml(trail.linkText)</a></p>
         @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
     </div>
 </div>
