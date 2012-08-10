@@ -4,10 +4,12 @@
     @*
         index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
     *@
-    @trail.thumbnail.map{ imageUrl =>
-        <a href="@trail.url" class="img" data-link-name="trail image | @info.rowNum">
-            <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
-        </a>
+    @if(info.rowNum <= 3) {
+        @trail.thumbnail.map{ imageUrl =>
+            <a href="@trail.url" class="img" data-link-name="trail image | @info.rowNum">
+                <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+            </a>
+        }
     }
     <div class="bd">
         <p><a href="@trail.url" @if(related){itemprop="relatedLink"} class="trail-headline" data-link-name="link text | @info.rowNum">@RemoveOuterParaHtml(trail.linkText)</a></p>

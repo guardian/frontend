@@ -1,4 +1,4 @@
-define(['modules/image'], function(Images) {
+define(['modules/images'], function(Images) {
     
     describe("Upgrade Images", function() {
         
