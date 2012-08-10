@@ -8,11 +8,11 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             x.load();
 
             // shut
-            common.pubsub.emit('modules:expandable:stateChange', false);
+            common.mediator.emit('modules:expandable:stateChange', false);
             expect(document.getElementById('trail-1').className).toBe('shut');
            
             // open 
-            common.pubsub.emit('modules:expandable:stateChange', true);
+            common.mediator.emit('modules:expandable:stateChange', true);
             expect(document.getElementById('trail-1').className).toBe('open');
         
         });
