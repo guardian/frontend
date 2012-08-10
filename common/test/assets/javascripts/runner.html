@@ -16,6 +16,7 @@
                 common:  'common',
                 bonzo:   'vendor/bonzo',
                 qwery:   'vendor/qwery',
+                bean:    'vendor/bean-0.4.11-1',
                 reqwest: 'vendor/reqwest',
             }
       });
@@ -69,17 +70,39 @@
         <li><a href="#Popular">Popular</a>
         <li><a href="#Image">Image</a>
         <li><a href="#Related">Related</a>
+        <li><a href="#Expandable">Expandable</a>
     </ul>
 
 <!-- UpgradeImages.spec -->
 <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" />
-
+ 
 <!-- Related.spec -->
 <div id="related-1"></div>
 <div id="related-2"></div>
 
 <!-- Popular.spec -->
 <div id="popular-1"></div>
+
+<!-- Expandables -->
+<style>
+    ul.flex {
+        transition: background-color 0.5s linear;
+        -moz-transition: background-color 0.5s linear;
+        -o-transition: background-color 0.5s linear;
+        -webkit-transition: background-color 0.5s linear; 
+    }
+    div#trail-1.shut ul.flex { background-color: #999; } /* illustrative */
+    div#trail-1.open ul.flex { background-color: #ccc; }
+</style>
+<div id="trail-1" data-count="3" class="open">
+    <ul>
+        <li class="t1">one</li>
+        <li class="t2">two</li>
+    </ul>
+    <ul class="flex">
+        <li class="t3">three</li>
+    </ul>
+</div>
 
 </body>
 </html>
