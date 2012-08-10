@@ -11,7 +11,7 @@ define(['common', 'reqwest'], function(common, reqwest){
         }
 
         // Bindings
-        common.pubsub.on('modules:related:loaded', this.view.render);
+        common.mediator.on('modules:related:loaded', this.view.render);
         
         // Model
         this.load = function(url){
@@ -21,7 +21,7 @@ define(['common', 'reqwest'], function(common, reqwest){
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showRelated',
                 success: function(json) {
-                    common.pubsub.emit('modules:related:loaded', [json.html])
+                    common.mediator.emit('modules:related:loaded', [json.html])
                 }
             });
         }  
