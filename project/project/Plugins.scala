@@ -12,5 +12,4 @@ object Plugins extends Build {
     dependsOn(uri("git://github.com/guardian/sbt-play-assethash.git#" + playAssetHashPluginVersion)).
     dependsOn(uri("git://github.com/guardian/sbt-requirejs.git#" + sbtRequireJsVersion)).
     dependsOn(uri("git://github.com/guardian/sbt-teamcity-test-reporting-plugin.git#" + teamcityReportingPluginVersion))
-
 }

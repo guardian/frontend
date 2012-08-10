@@ -8,13 +8,13 @@
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     @fragments.navigation(Static, Configuration, article)
 
-    <article itemscope itemtype="@article.schemaType">
+    <article itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
         @fragments.headline(article.headline)
         @fragments.standfirst(article)
 
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
-            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+            <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
                 <img class="maxed" src="@smallCrop.url"
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
