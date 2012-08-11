@@ -1,39 +1,38 @@
 define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) { 
 
-    var Expandable = function(root) {
+    var Expandable = function(id) { // FIXME pass id, not dom reference
 
-        var dom      = root, // root element of the trailblock
-            id       = root.id,
-            state, // true = open, false = closed
-            cta      = document.createElement('div'),
-            domCount = document.createElement('div'),
-            count,
-            that     = this;
+        var dom, // root element of the trailblock
+            id = id,
+            expanded, // true = open, false = closed
+            cta = document.createElement('div'),
+            domCount,
+            count;
 
         // View 
         
         var view = {
            
             updateCallToAction: function() {
-                cta.innerHTML = (state) ? 'less' : 'more';
+                cta.innerHTML = (expanded) ? 'less' : 'more';
             },
             
             renderCount: function(count) {
-                dom.appendChild(domCount);
-                domCount.className = 'count';
-                domCount.innerHTML = count; 
+                dom.append('<div class="count">' + 
+                                count +
+                           '</div>');
             },
 
-            renderState: function(state) {
-                dom.className = (state) ? 'open' : 'shut'; 
+            renderState: function(expanded) {
+                (expanded) ? dom.removeClass('shut') : dom.addClass('shut'); 
             },
             
             renderCallToAction: function() {
                 bean.add(cta, 'click', function(e) {
-                    common.mediator.emit('modules:expandable:cta:toggle:'+id);
+                    common.mediator.emit('modules:expandable:cta:toggle:' + id);
                 });
-                dom.appendChild(cta);
                 cta.className = 'cta';
+                dom[0].appendChild(cta);
                 view.updateCallToAction();
             },
         }
@@ -42,28 +41,23 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
 
         var model = {
         
-            toggleState: function(eventId) {
-                state = (state) ? false : true;
-                common.mediator.emit('modules:expandable:stateChange:'+id, state)
+            toggleExpanded: function(eventId) {
+                expanded = (expanded) ? false : true;
+                common.mediator.emit('modules:expandable:expandedChange:' + id, expanded)
             },
 
             getCount: function() {
-                return dom.getAttribute('data-count')
+                return dom.attr('data-count')
+            },
+
+            isOpen: function() { 
+                return (dom.hasClass('shut')) ? false : true;
             }
-
         }
 
-        // FIXME listen for 'modules:related:loaded' event instead
-        this.load = function(){
-            common.mediator.emit('modules:expandable:init:'+id) 
-        } 
-
-        var isOpen = function(){ 
-            return (dom.className == 'open') ? true : false;
-        }
-
-        var initalise = function() {
-            state = isOpen();
+        this.initalise = function() {
+            dom = common.$('#' + id);
+            expanded = model.isOpen();
             view.renderCount(model.getCount()); 
             view.renderCallToAction(); 
         }
@@ -71,14 +65,14 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         // Bindings
         
         // init
-        common.mediator.on('modules:expandable:init:'+id, initalise);
+        common.mediator.on('modules:related:render', this.initalise);
 
         // view listeners
-        common.mediator.on('modules:expandable:stateChange:'+id, view.renderState);
-        common.mediator.on('modules:expandable:stateChange:'+id, view.updateCallToAction);
+        common.mediator.on('modules:expandable:expandedChange:' + id, view.renderState);
+        common.mediator.on('modules:expandable:expandedChange:' + id, view.updateCallToAction);
 
         // model listeners
-        common.mediator.on('modules:expandable:cta:toggle:'+id, model.toggleState);
+        common.mediator.on('modules:expandable:cta:toggle:' + id, model.toggleExpanded);
 
     }
 

@@ -99,7 +99,6 @@
     margin-top: 0;
 }
 
-
 .trailblock {
     margin-top: 26px;
 }
@@ -137,7 +136,23 @@
     width: 145px; /** less variable */
 }
 
-
+.trailblock .panel {
+     height: auto;
+     max-height: 9999px;
+     overflow: hidden;
+     -webkit-transition: max-height 1s ease-in-out;
+}
+          
+.trailblock.shut .panel {
+    -webkit-transition: max-height .5s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    max-height: 0;
+    }
+          
+.trailblock.shut .count {
+    display: block;
+    }
 
 .comments p {
     font-family: arial;

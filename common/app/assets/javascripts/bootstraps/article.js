@@ -1,8 +1,11 @@
-define(['modules/related', 'modules/images', 'modules/popular'], function(Related, Images, Popular){
+define(['modules/related', 'modules/images', 'modules/popular', 'modules/expandable'], function(Related, Images, Popular, Expandable){
 
     return {
         init: function(config) {
-            
+
+            // expandable
+            new Expandable('related-trails');
+
             // upgrade images
             new Images().upgrade();
 
