@@ -4,7 +4,7 @@ define(['modules/related', 'modules/images', 'modules/popular', 'modules/expanda
         init: function(config) {
 
             // expandable
-            new Expandable('related-trails');
+            new Expandable({ id: 'related-trails', expanded: false });
 
             // upgrade images
             new Images().upgrade();
