@@ -2,18 +2,25 @@
 
 @defining(trails.length){ numTrails =>
 	<!-- todo: make the id dynamic as this tool generates both the related and popular trailblocks -->
-    <div class="zone-border trailblock trailblock-shaded show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
-        <h3 class="zone-color">@Html(heading)</h3>
+    <div class="zone-border trailblock trailblock-shaded shut"
+        id="related-trails" 
+        data-count="@{trails.length - visibleTrails}"
+        data-link-name="related : separate : @heading">
         
+        <h3 class="zone-color">@Html(heading)</h3>
+
         <ul class="unstyled">
-        @* extra trails are hidden by css, up to a maximum of 10 *@
-        @trails.zipWithRowInfo.map{ case (trail, info) =>
-            <li>@formatTrail(trail, info, related=true)</li>
-        }
+            @trails.zipWithRowInfo.map{ case (trail, info) =>
+                <li>@formatTrail(trail, info, related=true)</li>
+            }.slice( 0, visibleTrails )
         </ul>
 
         @if( trails.length > visibleTrails) {
-            <a href="#" class="expander b2">Show <span class="count">@{trails.length - visibleTrails}</span> more</a>
-    	}
+            <ul class="unstyled panel">
+                @trails.zipWithRowInfo.map{ case (trail, info) =>
+                    <li>@formatTrail(trail, info, related=true)</li>
+                }.slice( visibleTrails, trails.length )
+            </ul>
+        }
     </div>
 }
