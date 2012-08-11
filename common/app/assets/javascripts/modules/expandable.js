@@ -14,7 +14,6 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var view = {
            
             updateCallToAction: function() {
-                console.log(id, expanded);
                 cta.innerHTML = (expanded) ? 'less' : 'more';
             },
             
