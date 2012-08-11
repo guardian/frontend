@@ -1,10 +1,10 @@
 define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) { 
 
-    var Expandable = function(id) { // FIXME pass id, not dom reference
+    var Expandable = function(opts) {
 
         var dom, // root element of the trailblock
-            id = id,
-            expanded, // true = open, false = closed
+            id = opts.id,
+            expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
             cta = document.createElement('div'),
             domCount,
             count;
@@ -14,6 +14,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var view = {
            
             updateCallToAction: function() {
+                console.log(id, expanded);
                 cta.innerHTML = (expanded) ? 'less' : 'more';
             },
             
@@ -57,9 +58,9 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
 
         this.initalise = function() {
             dom = common.$('#' + id);
-            expanded = model.isOpen();
             view.renderCount(model.getCount()); 
-            view.renderCallToAction(); 
+            view.renderCallToAction();
+            view.renderState(expanded); 
         }
         
         // Bindings
