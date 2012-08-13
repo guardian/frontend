@@ -30,7 +30,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
             	var style = styleNodes[i];
             	if (fontIsRequired(style)) {
             		reqwest({
-	                    url: url + style.getAttribute('data-cache-file').replace('.woff.', '.' + this.fileFormat + '.'),
+	                    url: url + style.getAttribute('data-cache-file-' + this.fileFormat),
 	                    type: 'jsonp',
 	                    jsonpCallbackName: 'guFont',
 	                    success: (function(style) {
@@ -39,12 +39,12 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 	                        		callback(style, json);
 	                        	}
 	                    		localStorage.setItem(json.name, json.css);
-	                        	common.pubsub.emit('modules:fonts:loaded', [json.name]);
+	                        	common.mediator.emit('modules:fonts:loaded', [json.name]);
 	                    	}
 	                    })(style)
             		});
             	} else {
-            		common.pubsub.emit('modules:fonts:notloaded', []);
+            		common.mediator.emit('modules:fonts:notloaded', []);
             	}
             }
         }
