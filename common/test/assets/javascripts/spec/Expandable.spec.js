@@ -8,7 +8,7 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             var b = new Expandable({ id: 'trail-b' }).initalise();
              
             expect(common.$('#trail-a .count')[0].innerHTML).toBe('5');
-            expect(common.$('#trail-b .count')[0].innerHTML).toBe('2');
+            expect(common.$('#trail-b .count')[0].innerHTML).toBe('3');
 
             common.mediator.emit('modules:expandable:expandedChange:trail-a', false);
             common.mediator.emit('modules:expandable:expandedChange:trail-b', true);
@@ -21,7 +21,7 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             var a = new Expandable({ id: 'trail-c', expanded: false }).initalise();
             
             expect(common.$('#trail-c')[0].className).toBe('shut');
-            expect(common.$('#trail-c .cta')[0].innerText).toBe('Show 1 more');
+            expect(common.$('#trail-c .cta')[0].innerText).toBe('Show 3 more');
         });
 
         it("should expand and contract a panel", function(){
@@ -42,9 +42,9 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             expect(common.$('#trail-e .count')[0].innerHTML).toBe('3');
         });
         
-        it("should not enable expandables on panels contain fewer than the default visible number of items", function(){
-            var x = new Expandable({ id: 'trail-f' }).initalise();
-            expect(common.$('#trail-f .cta').length).toBe(0);
+        it("should not enable expandables where there are less than three hidden trails", function(){
+            var x = new Expandable({ id: 'trail-g' }).initalise();
+            expect(common.$('#trail-g .cta').length).toBe(0);
         });
        
     });
