@@ -24,7 +24,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/related/UK/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
 
-        then("I should see the headline, trail text for each of the first five related link")
+        then("I should see the headline, trail text for each of the first five related links")
 
         //We cannot guarantee what exactly gets returned from the content api as related is an algorithm
         //so just checking that items exist and not their values
@@ -34,6 +34,8 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         article.findFirst("p").getText.length should be > 0
         article.findFirst(".trailtext").getText.length should be > 0
 
+        find("li .trailtext") should have length 5
+
         and("I should see the pictures for the first three trails, where they exist")
         article.findFirst("img").getAttribute("src").length should be > 0
 
@@ -41,10 +43,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         val trailWithImage = find("li", 7)
         trailWithImage.find("img") should have length 0
-
-        and("I should see no trailtext beyond the first five trails")
-
-        find("li .trailtext") should have length 5
 
       }
     }
