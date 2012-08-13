@@ -33,9 +33,10 @@
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(article.body)(
-            PictureCleaner(article),
-            InBodyLinkCleaner,
-            InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
+                PictureCleaner(article),
+                InBodyLinkCleaner,
+                BlockCleaner,
+                InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
             )
         </div>
     </article>
