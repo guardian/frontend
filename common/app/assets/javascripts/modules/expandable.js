@@ -52,7 +52,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         this.initalise = function() {
             dom = common.$('#' + id);
             
-            if ( model.getCount() < 0 ) {
+            if (model.getCount() < 3) {
                 return false;
             } 
             
