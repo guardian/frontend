@@ -35,7 +35,7 @@
             @withJsoup(article.body)(
                 PictureCleaner(article),
                 InBodyLinkCleaner,
-                BlockCleaner,
+                BlockNumberCleaner,
                 InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
             )
         </div>

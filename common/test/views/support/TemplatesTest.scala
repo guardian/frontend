@@ -96,7 +96,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   "BlockCleaner" should "insert ids in block minute by minnute blocks" in {
 
-    val body = withJsoup(bodyWithBLocks)(BlockCleaner).text.trim
+    val body = withJsoup(bodyWithBLocks)(BlockNumberCleaner).text.trim
 
     body should include("""<span id="block-14">some heading</span>""")
     body should include("""<p id="block-1">some more text</p>""")

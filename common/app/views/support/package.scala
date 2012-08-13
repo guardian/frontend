@@ -71,7 +71,7 @@ trait HtmlCleaner {
   def clean(d: Document): Document
 }
 
-object BlockCleaner extends HtmlCleaner {
+object BlockNumberCleaner extends HtmlCleaner {
 
   private val Block = """<!-- Block (\d*) -->""".r
 
