@@ -89,7 +89,6 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-                console.log(styleNodes.length);
                 return (callbackCount === styleNodes.length);
             }, "notloaded callback never ran", 1000);
 
