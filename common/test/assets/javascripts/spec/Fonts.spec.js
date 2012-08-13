@@ -3,10 +3,12 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
     describe("Web Font Loader", function() {
         
         var styleNodes;
+        var fileFormat;
 
         beforeEach(function() {
             localStorage.clear();
             styleNodes = document.querySelectorAll('[data-cache-name]');
+            fileFormat = 'woff';
         });
 
         it("should request css files and cache in localStorage", function() {
@@ -14,7 +16,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	common.pubsub.on('modules:fonts:loaded', function() { callbackCount++; });
 
             runs(function() {
-                new Fonts().loadFromServer('fixtures/');
+                new Fonts(fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
@@ -34,7 +36,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	common.pubsub.on('modules:fonts:loaded', function() { callbackCount++; });
 
             runs(function() {
-                new Fonts().loadFromServerAndApply('fixtures/');
+                new Fonts(fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
@@ -50,6 +52,29 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
         });
 
+        it("should request the TTF version of css files for Android devices", function() {
+        	var callbackCount = 0;
+        	common.pubsub.on('modules:fonts:loaded', function() { callbackCount++; });
+
+        	fileFormat = 'ttf';
+
+            runs(function() {
+                new Fonts(fileFormat).loadFromServerAndApply('fixtures/');
+            });
+
+            waitsFor(function() {
+            	return (callbackCount === styleNodes.length);
+            }, "loaded callback never ran", 1000);
+
+            runs(function() {
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                	var name = styleNodes[i].getAttribute('data-cache-name');
+                	expect(localStorage.getItem(name)).toBe('@font-face{android');
+                	expect(styleNodes[i].innerHTML).toBe('@font-face{android');
+                }
+            });
+        });
+
         it("should not request css files if localStorage is full or disabled", function() {
         	var callbackCount = 0;
         	common.pubsub.on('modules:fonts:notloaded', function() { callbackCount++; });
@@ -58,7 +83,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	window.localStorage.setItem = null;
 
         	runs(function() {
-                new Fonts().loadFromServer('fixtures/');
+                new Fonts(fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {

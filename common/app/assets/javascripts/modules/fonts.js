@@ -1,6 +1,8 @@
 define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwest) {
 
-    function Fonts() {
+    function Fonts(fileFormat) {
+
+    	this.fileFormat = fileFormat;
     
         var connectionSpeed = detect.getConnectionSpeed(),
             layoutMode = detect.getLayoutMode();
@@ -19,13 +21,16 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         }
 
         this.loadFromServer = function(url, callback) {
-        	var url = url || ''; // If no URL, then load from standard static assets path.
+
+        	// If no URL, then load from standard static assets path.
+        	var url = url || '';
+
         	var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
             	var style = styleNodes[i];
             	if (fontIsRequired(style)) {
             		reqwest({
-	                    url: url + style.getAttribute('data-cache-file'),
+	                    url: url + style.getAttribute('data-cache-file').replace('.woff.', '.' + this.fileFormat + '.'),
 	                    type: 'jsonp',
 	                    jsonpCallbackName: 'guFont',
 	                    success: (function(style) {
