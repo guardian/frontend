@@ -1,12 +1,12 @@
 @(content: model.Content)
 
 @content.standfirst.map { s =>
-    <p class="standfirst">
+    <p class="standfirst" itemprop="description">
         @withJsoup(s)(
             InBodyLinkCleaner
         )
         @content.starRating.map { s =>
-		    <span class="stars s-@s">@s / 5 stars</span>
+		    <span class="stars s-@s"><meta itemprop="reviewRating" content="@s">@s</meta> / 5 stars</span>
 		}
     </p>
 }

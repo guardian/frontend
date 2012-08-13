@@ -13,6 +13,8 @@ import scala.collection.JavaConversions._
 
 import scala.Some
 import play.api.mvc.RequestHeader
+import org.joda.time.{ DateTimeZone, DateTime }
+import org.joda.time.format.{ DateTimeFormat }
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -81,6 +83,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
 
       val imgWidth = img.attr("width").toInt
       val wrapper = body.createElement("div")
+
+      wrapper.attr("itemprop", "associatedMedia")
+      wrapper.attr("itemscope", "")
+      wrapper.attr("itemtype", "http://schema.org/ImageObject")
+
+      img.attr("itemprop", "contentURL")
+
       wrapper.attr("class", imgWidth match {
         case width if width <= 220 => "img-base inline-image"
         case width if width < 460 => "img-median inline-image"
@@ -95,6 +104,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
           val caption = body.createElement("p")
           caption.attr("class", "caption")
           caption.text(c)
+          caption.attr("itemprop", "description")
           wrapper.appendChild(caption)
         }
       }
@@ -125,11 +135,16 @@ object ABTest {
   }
 }
 
-object TagLinks {
+object ContributorLinks {
   def apply(text: String, tags: Seq[Tag]): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
-        t.replaceFirst(tag.name, <a data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a>.toString)
+        t.replaceFirst(tag.name,
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+            <a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>
+              { tag.name }
+            </a>
+          </span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
@@ -196,5 +211,11 @@ object `package` extends Formats {
     def zipWithRowInfo = seq.zipWithIndex.map {
       case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
     }
+  }
+}
+
+object Format {
+  def apply(date: DateTime, pattern: String): String = {
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("GMT")))
   }
 }

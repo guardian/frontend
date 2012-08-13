@@ -60,9 +60,6 @@
 /* nicole sullivan's media object */
 
 /* ====== media ====== */
-.media { 
-    margin: 10px 0;
-}
 
 .media, .bd {
     overflow: hidden; 
@@ -103,47 +100,41 @@
 }
 
 
-
-.trailblock-shaded {
-    margin: 0px 0px 10px 0px;
-    padding: 10px 2% 10px 2%;
-    background: #eeeeee;    
+.trailblock {
+    margin-top: 26px;
 }
 
+.trailblock ul > li {
+    margin-bottom: 9px;
 
+}
 
 .trailblock h3 {
-    font: bold 15px/20px helvetica, arial, sans-serif;
-    margin: 0px 0px 10px 0px;
+    font-size: 17px;
+    line-height: 22px;
+    padding-top: 3px; 
+    margin-bottom: 12px;
 }
 
-.trailblock li {
-    margin: 10px 0px 0px 0px;
-    padding: 0;
+.trailblock-shaded {
+    padding: 0 5px 12px 5px; 
+    background-color: #ededed;
 }
 
-.trailblock li:first-of-type .media {
-  margin: 0;
-  padding: 0;
-  border: none;
+.trail-headline {
+    font-size: 17px;
+    line-height: 22px;
 }
 
-.trailblock a {
-    font: normal 15px/20px georgia, serif;
-}
-
-.trailblock p {
-  margin: 0;
-  padding: 0;
+.trailtext {
+    font-family: helvetica, arial, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    color: #262626; 
 }
 
 .trailblock .img img {
-    width: 60px;
-}
-
-.trailblock .trailtext {
-    color: #333;
-    font-weight: normal;
+    width: 114px; /** less variable */
 }
 
 
@@ -231,21 +222,21 @@
 
 article aside {
     font: 15px/20px helvetica, arial, sans-serif;
-    margin: 0px 0px 20px 0px;
-    padding: 9px 0px 9px 0px;
+    margin: 0px;
+    padding: 0px 0px 15px 0px;
     list-style: none;
 }
 
 /* this duplicates article figure figcaption */
 article .article-body .caption {
-    font: 12px/15px arial;
+    font: 12px/15px helvetica, arial, sans-serif;
     color: #666;
     margin-top: 7px;
     margin-bottom: 0;
 }
 
 article figure {
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 15px 0px;
 }
 
 article figure img {
@@ -255,7 +246,7 @@ article figure img {
 article figure figcaption {
     font: 12px/15px arial, sans-serif;
     text-indent: 0;
-    margin: 7px 0px 20px 0px;
+    margin-top: 7px;
     color: #666666;
 }
 
@@ -286,20 +277,23 @@ article .article-body p {
 }
 
 article .article-body h2 {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
     color: #333;
     border-top: 1px dotted #999;
     border-bottom: 1px dotted #999;
     padding-top: 3px;
-    padding-bottom: 16px;
+    padding-bottom: 12px;
     margin-bottom: 3px;
+    margin-top: 15px; /* feel like this should be 5px (10px margin-bottom on preceding <p>) but this has no effect till it's > 10px */
+    font-family: georgia;
 }
 
 article .article-body h2:first-child,
 article .article-body span.timestamp:first-child {
     border-top: none;
     padding-top: 0;
+    margin-top: 0;
 }
 
 article .article-body h2.block-title {
@@ -311,9 +305,10 @@ article .article-body h2.block-title {
 }
 
 article .article-body h3 {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
     margin: 0;
+    font-family: georgia;
 }
 
 article .article-body > p,
@@ -321,10 +316,11 @@ article .article-body ul,
 article .article-body ol,
 article .article-body address,
 article .article-body blockquote {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
     margin: 0px 0px 10px 0px;
     color: #333;
+    font-family: georgia;
 }
 
 .font-guardian-all-loaded article .article-body > p,
@@ -340,22 +336,24 @@ article .article-body blockquote {
     padding: 0;
     margin-left: 31px;
 }
+article .article-body blockquote, 
+article .article-body blockquote p {
+    font-size: 15px;
+    line-height: 20px;
+    color: #666666;
+}
 
 article .article-body blockquote:before {
     content: url(http://i.imgur.com/ObVaZ.png);
     margin-left: -31px;
+    margin-top: 5px;
+    float: left;
 }
 
 article .article-body blockquote:after {
     content: url(http://i.imgur.com/19GTh.png);
 }
 
-article .article-body blockquote p {
-    font-size: 15px;
-    line-height: 20px;
-    color: #666666;
-    display: inline; /* this makes the quote images work */
-}
 
 
 
@@ -400,4 +398,13 @@ img.discussion-badge {
     float: right;
     width: 30px;
     height: 30px;
+}
+
+
+.expander {
+    display: block;
+    padding-top: 5px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #666;
 }

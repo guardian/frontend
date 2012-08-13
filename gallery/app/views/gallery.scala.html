@@ -67,7 +67,7 @@
             </p>
 
             <div class="gallery-container" id="js-gallery">
-                <ul class="plain">
+                <ul class="unstyled">
                     @gallery.images.zipWithRowInfo.map{ case(image, row) =>
                         @if(row.rowNum == index) {
                             <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">

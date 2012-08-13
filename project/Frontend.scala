@@ -8,6 +8,7 @@ import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 import com.gu.RequireJS._
+import com.gu.RequireJS
 
 object Frontend extends Build with Prototypes {
   val version = "1-SNAPSHOT"
@@ -85,7 +86,6 @@ trait Prototypes {
     )
 
   val requireJsConfiguration = Seq(
-
     //effectively disables built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
 
@@ -99,7 +99,9 @@ trait Prototypes {
     resourceGenerators in Compile <+=  requireJsCompiler
   )
 
-  def library(name: String) = base(name).settings(requireJsConfiguration: _*).settings(
+  def library(name: String) = base(name)
+    .settings(RequireJS.settings:_*)
+    .settings(requireJsConfiguration: _*).settings(
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.13",

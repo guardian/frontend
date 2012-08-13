@@ -7,17 +7,7 @@ import com.codahale.jerkson.Json
 
 class MostPopularTest extends FlatSpec with ShouldMatchers {
 
-  "Most Popular" should "render json" in HtmlUnit("/most-popular/UK/world") { browser =>
-    import browser._
-
-    val html = Json.parse[Map[String, String]](pageSource).get("html")
-
-    html should not be (None)
-
-    html.foreach(_ should startWith("<div"))
-  }
-
-  it should "render a jsonp callback" in HtmlUnit("/most-popular/UK/world?callback=result") { browser =>
+  "Most Popular" should "render a jsonp callback" in HtmlUnit("/most-popular/UK/world?callback=result") { browser =>
     import browser._
 
     pageSource should startWith("result({")
