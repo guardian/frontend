@@ -39,8 +39,12 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
         
         it("should visually represent the number of items in the panel", function(){
             var x = new Expandable({ id: 'trail-e' }).initalise();
-            common.mediator.emit('modules:related:render');
             expect(common.$('#trail-e .count')[0].innerHTML).toBe('3');
+        });
+        
+        it("should not enable expandables on panels contain fewer than the default visible number of items", function(){
+            var x = new Expandable({ id: 'trail-f' }).initalise();
+            expect(common.$('#trail-f .cta').length).toBe(0);
         });
        
     });
