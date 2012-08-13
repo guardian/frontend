@@ -5,7 +5,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var dom, // root element of the trailblock
             id = opts.id,
             expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
-            cta = document.createElement('div'),
+            cta = document.createElement('span'),
             domCount,
             count;
 
@@ -14,15 +14,9 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var view = {
            
             updateCallToAction: function() {
-                cta.innerHTML = (expanded) ? 'less' : 'more';
+                cta.innerHTML = 'Show <span class="count">' + model.getCount() + '</span> ' + ((expanded) ? 'less' : 'more' );
             },
             
-            renderCount: function(count) {
-                dom.append('<div class="count">' + 
-                                count +
-                           '</div>');
-            },
-
             renderState: function(expanded) {
                 (expanded) ? dom.removeClass('shut') : dom.addClass('shut'); 
             },
@@ -31,7 +25,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
                 bean.add(cta, 'click', function(e) {
                     common.mediator.emit('modules:expandable:cta:toggle:' + id);
                 });
-                cta.className = 'cta';
+                cta.className = 'cta expander';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
             },
@@ -57,15 +51,12 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
 
         this.initalise = function() {
             dom = common.$('#' + id);
-            view.renderCount(model.getCount()); 
             view.renderCallToAction();
             view.renderState(expanded); 
         }
         
         // Bindings
         
-        // init
-        common.mediator.on('modules:related:render', this.initalise);
 
         // view listeners
         common.mediator.on('modules:expandable:expandedChange:' + id, view.renderState);
