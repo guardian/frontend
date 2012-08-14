@@ -7,20 +7,22 @@ define(['common'], function (common) {
 	// but also work with "standard" (lolz) javascript Date() objects too.
 	// API renders timestamps as 2012-04-13T18:43:36.000+01:00, which also work.
 
-	function getRelativeDate (time_value) {
+	function makeRelativeDate (timeValue) {
 
-		var parsed_date = Date.parse(time_value);
-		var relative_to = new Date();
+		var parsedDate = Date.parse(timeValue);
+		var relativeTo = new Date();
+		// unused... for now.
+		var nowUTC = new Date(relativeTo.getUTCFullYear(), relativeTo.getUTCMonth(), relativeTo.getUTCDate(),  relativeTo.getUTCHours(), relativeTo.getUTCMinutes(), relativeTo.getUTCSeconds());
 
 		// check our dates are valid
-		if (!parsed_date) {
+		if (!parsedDate) {
 			return false;
 		}
 
-		var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
+		var delta = parseInt((relativeTo.getTime() - parsedDate) / 1000);
 
 		if (delta < 0) {
-			return time_value;
+			return timeValue;
 		} else if (delta < 10) { // less than 10 seconds
 			return 'just now';
 		} else if (delta < 60) { // less than 1 min
@@ -60,7 +62,7 @@ define(['common'], function (common) {
 				var e = elms[i];
 				$g(e).removeClass('js-timestamp'); // don't check this again
 				var timestamp = e.getAttribute('data-timestamp');
-		        var relativeDate = getRelativeDate(timestamp);
+		        var relativeDate = makeRelativeDate(timestamp);
 				var prettyDate = e.innerText || e.textContent; // fix for old FF
 				if (relativeDate) {
 					e.innerHTML = '<span title="' + prettyDate + '">' + relativeDate + '</span>';
@@ -79,7 +81,7 @@ define(['common'], function (common) {
 	}
 
 	return {
-		makeRelativeDate: getRelativeDate,
+		makeRelativeDate: makeRelativeDate,
 		init: init
 	}
 

@@ -1,8 +1,8 @@
-@(trails: Seq[Trail], heading: String, visibleTrails: Int)
+@(trails: Seq[Trail], heading: String, visibleTrails: Int, isShaded: Boolean = false)
 
 @defining(trails.length){ numTrails =>
 	<!-- todo: make the id dynamic as this tool generates both the related and popular trailblocks -->
-    <div class="zone-border trailblock trailblock-shaded show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
+    <div class="zone-border trailblock @if(isShaded){trailblock-shaded} show-@{visibleTrails}" id="related-trails" data-link-name="related : separate : @heading">
         <h3 class="zone-color">@Html(heading)</h3>
         
         <ul class="unstyled">
