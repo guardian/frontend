@@ -2,100 +2,157 @@
 	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title id="foo">Jasmine Spec Runner</title>
-		
-	<link rel="shortcut icon" type="image/png" href="vendor/jasmine-1.2.0/jasmine_favicon.png">
-	<link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
-	<script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
-	<script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine-html.js"></script>
-	<script type="text/javascript" src="../../../app/assets/javascripts/vendor/require-2.0.4.js"></script>
-	<script>
-			require.config({
-				baseUrl: "../../../app/assets/javascripts/",
-				paths: {
-								common:  'common',
-								bonzo:   'vendor/bonzo',
-								qwery:   'vendor/qwery',
-								reqwest: 'vendor/reqwest',
-						}
-			});
-	</script>
-	
-	<script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
-	<script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
-	<script type="text/javascript">
 
-		window.onhashchange = function(){
-			window.location.reload();
-		}
+  <title id="foo">Jasmine Spec Runner</title>
+    
+  <link rel="shortcut icon" type="image/png" href="vendor/jasmine-1.2.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
+  <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="../../../app/assets/javascripts/vendor/require-2.0.4.js"></script>
+  <script>
+      require.config({
+        baseUrl: "../../../app/assets/javascripts/",
+        paths: {
+                common:  'common',
+                bonzo:   'vendor/bonzo',
+                qwery:   'vendor/qwery',
+                bean:    'vendor/bean-0.4.11-1',
+                reqwest: 'vendor/reqwest',
+            }
+      });
+  </script>
+  
+  <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
+  <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
+  <script type="text/javascript">
 
-		var spec = location.hash.replace('#', '');
+    window.onhashchange = function(){
+      window.location.reload();
+    }
 
-		if (spec) {
+    var spec = location.hash.replace('#', '');
 
-				document.getElementById("foo").innerHTML = 'Jasmine Spec Runner - ' + spec; 
+    if (spec) {
 
-				// jasmine boilerplate
-				(function() {
-					var jasmineEnv = jasmine.getEnv();
-					jasmineEnv.updateInterval = 1000;
+        document.getElementById("foo").innerHTML = 'Jasmine Spec Runner - ' + spec; 
 
-					var htmlReporter = new jasmine.HtmlReporter();
+        // jasmine boilerplate
+        (function() {
+          var jasmineEnv = jasmine.getEnv();
+          jasmineEnv.updateInterval = 1000;
 
-					jasmineEnv.addReporter(htmlReporter);
+          var htmlReporter = new jasmine.HtmlReporter();
 
-					jasmineEnv.specFilter = function(spec) {
-						return htmlReporter.specFilter(spec);
-					};
+          jasmineEnv.addReporter(htmlReporter);
 
-					var currentWindowOnload = window.onload;
+          jasmineEnv.specFilter = function(spec) {
+            return htmlReporter.specFilter(spec);
+          };
 
-					// require the specs
-					require(['../../../test/assets/javascripts/spec/' + spec + '.spec'], function(spec) {
-							jasmineEnv.execute();
-						});
+          var currentWindowOnload = window.onload;
 
-					})();
-		}
+          // require the spec's
+          require(['../../../test/assets/javascripts/spec/' + spec + '.spec'], function(spec) {
+              jasmineEnv.execute();
+            });
 
-	</script>
+          })();
+    }
+
+  </script>
 
 </head>
 
 <body>
 
-		<ul>
-				<li><a href="#Common">Common</a></li>
-				<li><a href="#Detect">Detect</a></li>
-				<li><a href="#Popular">Popular</a></li>
-				<li><a href="#Image">Image</a></li>
-				<li><a href="#Related">Related</a></li>
-				<li><a href="#RelativeDates">Relative Dates</a></li>
-		</ul>
+    <ul>
+        <li><a href="#Common">Common</a>
+        <li><a href="#Detect">Detect</a>
+        <li><a href="#Popular">Popular</a>
+        <li><a href="#Image">Image</a>
+        <li><a href="#Related">Related</a>
+        <li><a href="#Expandable">Expandable</a>
+        <li><a href="#RelativeDates">Relative Dates</a></li>
+    </ul>
 
-		<!-- UpgradeImages.spec -->
-		<img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" />
-
-		<!-- Related.spec -->
-		<div id="related-1"></div>
-		<div id="related-2"></div>
+    <!-- UpgradeImages.spec -->
+    <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" />
+     
+    <!-- Related.spec -->
+    <div id="related-1"></div>
+    <div id="related-2"></div>
 
 		<!-- Popular.spec -->
 		<div id="popular-1"></div>
 
-		<!-- RelativeDates.spec -->
-		<div id="relative-dates">
-			<p><strong>Test dates</strong> (should be replaced with timestamps)</p>
-			<ul>
-				
-				<li id="relative-date-test-item" class="js-timestamp" data-timestamp="2012-04-13T18:43:36.000+01:00" data-relativeto="2012-04-13T18:46:36.000+01:00">Friday 13th Apr. 2012, 6.43pm</li>
+    <!-- Expandables -->
+    <style>
+        ul.flex {
+            transition: background-color 0.5s linear;
+            -moz-transition: background-color 0.5s linear;
+            -o-transition: background-color 0.5s linear;
+            -webkit-transition: background-color 0.5s linear; 
+        }
+        .shut ul.flex { background-color: #999; } /* illustrative */
+        ul.flex { background-color: #ccc; }
+    </style>
 
-				<li class="js-timestamp" data-timestamp="2012-08-13 12:00:00 UTC">Monday 13th Aug. 2012, 12pm</li>
+    <!-- trail -->
+    <div id="trail-a" data-count="5">
+        <ul>
+            <li class="t1">one</li>
+            <li class="t2">two</li>
+        </ul>
+        <ul class="flex">
+            <li class="t3">three</li>
+            <li class="t4">four</li>
+            <li class="t5">five</li>
+        </ul>
+    </div>
 
-				<li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
-				
-			</ul>
-		</div>
+    <div id="trail-b" data-count="3">
+        <ul>
+            <li class="t1">one</li>
+            <li class="t1">two</li>
+        </ul>
+        <ul class="flex">
+            <li class="t2">three</li>
+        </ul>
+    </div>
+
+    <div id="trail-c" data-count="3" class="shut">
+    </div>
+
+    <div id="trail-d" data-count="1" class="shut">
+    </div>
+
+    <div id="trail-e" data-count="3">
+        <ul>
+            <li class="t1">one</li>
+            <li class="t2">two</li>
+        </ul>
+        <ul class="flex">
+            <li class="t3">three</li>
+        </ul>
+    </div>
+
+    <!-- -->
+    <div id="trail-f" data-count="-1">
+    </div>
+
+    <div id="trail-g" data-count="2">
+    </div>
+
+    <!-- RelativeDates.spec -->
+    <div id="relative-dates">
+      <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
+      <ul>
+        <li id="relative-date-test-item" class="js-timestamp" data-timestamp="2012-04-13T18:43:36.000+01:00" data-relativeto="2012-04-13T18:46:36.000+01:00">Friday 13th Apr. 2012, 6.43pm</li>
+        <li class="js-timestamp" data-timestamp="2012-08-13 12:00:00 UTC">Monday 13th Aug. 2012, 12pm</li>
+        <li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
+      </ul>
+    </div>
 
 </body>
 </html>

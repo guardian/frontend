@@ -14,7 +14,7 @@ import scala.collection.JavaConversions._
 import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
-import org.joda.time.format.{ DateTimeFormat }
+import org.joda.time.format.DateTimeFormat
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -69,6 +69,26 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
 
 trait HtmlCleaner {
   def clean(d: Document): Document
+}
+
+object BlockNumberCleaner extends HtmlCleaner {
+
+  private val Block = """<!-- Block (\d*) -->""".r
+
+  override def clean(document: Document): Document = {
+    document.getAllElements.foreach { element =>
+      val blockComments = element.childNodes.flatMap { node =>
+        node.toString.trim match {
+          case Block(num) =>
+            Option(node.nextSibling).foreach(_.attr("id", "block-" + num))
+            Some(node)
+          case _ => None
+        }
+      }
+      blockComments.foreach(_.remove())
+    }
+    document
+  }
 }
 
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {

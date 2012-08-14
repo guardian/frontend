@@ -49,11 +49,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see the names of the authors")
         $("[itemprop=author]")(0).getText should be("Ben Arnold")
-        $("[itemprop=author]")(4).getText should be("Phelim O'Neill")
+        $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         and("I should see a link to the author's page")
         $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']")(4).getAttribute("href") should be(WithHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(WithHost("/profile/phelimoneill"))
       }
     }
 
@@ -207,6 +207,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         imageLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
         imageLink.find("img").head.getAttribute("src") should
           be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")
+      }
+    }
+
+    scenario("Direct link to paragraph") {
+
+      given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
+
+      HtmlUnit("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
+        import browser._
+
+        then("I should see paragraph 16")
+        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
   }
