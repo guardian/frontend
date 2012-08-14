@@ -1,5 +1,5 @@
-define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix'],
-    function(common, Related, Images, Popular, Expandable, Orientation){
+define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix', 'modules/relativedates'],
+    function(common, Related, Images, Popular, Expandable, Orientation), RelativeDates{
 
     return {
         init: function(config) {
@@ -23,7 +23,9 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
                 var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
                 new Related(document.getElementById('js-related')).load(relatedUrl);
             }
-        
+
+            // show relative dates
+            RelativeDates.init();
         }
     }
 });

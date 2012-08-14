@@ -8,8 +8,11 @@
         @trail.thumbnail.map{ imageUrl =>
             <a href="@trail.url" class="img" data-link-name="trail image | @info.rowNum">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+                @fragments.relativeDate(trail.webPublicationDate)
             </a>
         }
+    } else {
+        @fragments.relativeDate(trail.webPublicationDate, noImage=true)
     }
     <div class="bd">
         <p>
