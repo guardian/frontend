@@ -1,5 +1,5 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix', 'modules/relativedates'],
-    function(common, Related, Images, Popular, Expandable, Orientation), RelativeDates{
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates) {
 
     return {
         init: function(config) {
