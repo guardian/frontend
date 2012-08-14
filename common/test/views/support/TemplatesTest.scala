@@ -94,6 +94,14 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   }
 
+  "BlockCleaner" should "insert block ids in minute by minute content" in {
+
+    val body = withJsoup(bodyWithBLocks)(BlockNumberCleaner).text.trim
+
+    body should include("""<span id="block-14">some heading</span>""")
+    body should include("""<p id="block-1">some more text</p>""")
+  }
+
   "RowInfo" should "add row info to a sequence" in {
 
     val items = Seq("a", "b", "c", "d")
@@ -149,5 +157,10 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.guardiannews.com/section/2011/jan/01/words-for-url">the link</a></p>
   """
+
+  val bodyWithBLocks = """<body>
+      <!-- Block 14 --><span>some heading</span><p>some text</p>
+      <!-- Block 1 --><p>some more text</p>
+    </body>"""
 
 }

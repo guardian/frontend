@@ -209,6 +209,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
           be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")
       }
     }
+
+    scenario("Direct link to paragraph") {
+
+      given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
+
+      HtmlUnit("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
+        import browser._
+
+        then("I should see paragraph 16")
+        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
+      }
+    }
   }
 
   private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name
