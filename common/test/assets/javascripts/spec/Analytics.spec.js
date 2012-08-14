@@ -2,8 +2,6 @@ define(['analytics'], function(Analytics) {
     
     describe("Analytics", function() {
 
-
-
         it("should correctly set the omniture account", function(){
 
             //given
