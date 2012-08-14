@@ -4,9 +4,7 @@ Testing externally on your localhost
 Install _proxylocal_,
 
 **Ubuntu**
-
-    sudo apt-get install rubygems1.8 (on Ubuntu)
-    gem install proxylocal
+Doesn't seem to work for me :(
     
 **Mac OSX**
 
