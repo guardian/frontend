@@ -17,7 +17,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	common.mediator.on('modules:fonts:loaded', function() { callbackCount++; });
 
             runs(function() {
-                new Fonts(fileFormat).loadFromServer('fixtures/');
+                new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
@@ -37,7 +37,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	common.mediator.on('modules:fonts:loaded', function() { callbackCount++; });
 
             runs(function() {
-                new Fonts(fileFormat).loadFromServerAndApply('fixtures/');
+                new Fonts(styleNodes, fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
@@ -60,7 +60,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	fileFormat = 'ttf';
 
             runs(function() {
-                new Fonts(fileFormat).loadFromServerAndApply('fixtures/');
+                new Fonts(styleNodes, fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
@@ -86,7 +86,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             }
 
             runs(function() {
-                new Fonts(fileFormat).loadFromServer('fixtures/');
+                new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
@@ -110,7 +110,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             }
             expect(localStorage.length).toEqual(styleNodes.length);
 
-            new Fonts(fileFormat).clearFontsFromStorage();
+            Fonts.clearFontsFromStorage();
 
             // localStorage should be empty.
             expect(localStorage.length).toEqual(0);
@@ -128,7 +128,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	localStorage.setItem = null;
 
         	runs(function() {
-                new Fonts().loadFromServer('fixtures/');
+                new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {

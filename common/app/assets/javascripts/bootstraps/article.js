@@ -20,13 +20,14 @@ define(['modules/related', 'modules/images', 'modules/popular', 'modules/fonts']
             if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
                 fileFormat = 'ttf';
             }
-            new Fonts(fileFormat).loadFromServerAndApply();
+            var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+            new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
 
             /*
             // Wait till other downloads finished (load?), and then cache
             // the fonts for the next page view.
             window.addEventListener('load', function() {
-                new Fonts(fileFormat).loadFromServer('http://guardian-fonts.s3-external-3.amazonaws.com/');
+                new Fonts(fontStyleNodes, fileFormat).loadFromServer('http://guardian-fonts.s3-external-3.amazonaws.com/');
             }, true);
             */
 
