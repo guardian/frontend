@@ -49,11 +49,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see the names of the authors")
         $("[itemprop=author]")(0).getText should be("Ben Arnold")
-        $("[itemprop=author]")(4).getText should be("Phelim O'Neill")
+        $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         and("I should see a link to the author's page")
         $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']")(4).getAttribute("href") should be(WithHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(WithHost("/profile/phelimoneill"))
       }
     }
 
