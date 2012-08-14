@@ -10,10 +10,10 @@ define(['common'], function (common) {
 	function getRelativeDate (time_value) {
 
 		var parsed_date = Date.parse(time_value);
-		var relative_to = (arguments.length > 1) ? new Date(Date.parse(arguments[1])) : new Date();
+		var relative_to = new Date();
 
 		// check our dates are valid
-		if (!parsed_date || (arguments.length > 1 && !Date.parse(arguments[1]))) {
+		if (!parsed_date) {
 			return false;
 		}
 
@@ -60,12 +60,7 @@ define(['common'], function (common) {
 				var e = elms[i];
 				$g(e).removeClass('js-timestamp'); // don't check this again
 				var timestamp = e.getAttribute('data-timestamp');
-				var relativeTo = e.getAttribute('data-relativeto');
-				if (relativeTo) {
-					var relativeDate = getRelativeDate(timestamp, relativeTo);
-				} else {
-					var relativeDate = getRelativeDate(timestamp);
-				}
+		        var relativeDate = getRelativeDate(timestamp);
 				var prettyDate = e.innerText || e.textContent; // fix for old FF
 				if (relativeDate) {
 					e.innerHTML = '<span title="' + prettyDate + '">' + relativeDate + '</span>';

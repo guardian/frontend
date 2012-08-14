@@ -1,10 +1,12 @@
 define(['modules/relativedates'], function(RelativeDates) {
 
     describe("Relative Dates", function() {
-       
-    	var fakeNow = '2012-08-13 12:00:00';
-    	var epochBug = '2038-01-19 03:14:07';
-    	var actualDate = new Date();
+      
+        // make the date static so tests are stable
+    	var fakeNow = Date.parse('2012-08-13 12:00:00');
+        sinon.useFakeTimers(fakeNow, "Date");
+
+        var epochBug = '2038-01-19 03:14:07';
 
         it('should show relative dates for timestamps formatted YYYY-MM-DD HH:MM:SS', function(){
 	   	
@@ -61,7 +63,7 @@ define(['modules/relativedates'], function(RelativeDates) {
 
 	    	for (var category in datesToTest) {
 		  		var d = datesToTest[category];
-		  		expect(RelativeDates.makeRelativeDate(d.date, fakeNow)).toBe(d.expectedOutput);
+		  		expect(RelativeDates.makeRelativeDate(d.date)).toBe(d.expectedOutput);
 			}
 		});
 
@@ -71,15 +73,13 @@ define(['modules/relativedates'], function(RelativeDates) {
 
 		it("should fail politely (eg return false) if given non-date / invalid input for either argument", function(){
 			expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
-			expect(RelativeDates.makeRelativeDate(fakeNow, 'foo')).toBeFalsy();
-			expect(RelativeDates.makeRelativeDate('foo', 'bar')).toBeFalsy();
 		});
 
 		it("should convert valid timestamps into their expected output", function(){
 
 			// this item has a custom relativeTo value to ensure expected output is consistent
 			var testTimestamp = document.getElementById('relative-date-test-item');
-			var expectedTestOutput = "3 minutes ago";
+			var expectedTestOutput = RelativeDates.makeRelativeDate(testTimestamp.getAttribute('data-timestamp')); 
 			var invalidItem = document.getElementById('relative-date-invalid-item')
 			var invalidItemTextBefore = invalidItem.innerText;
 
