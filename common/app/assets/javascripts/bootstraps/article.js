@@ -1,4 +1,4 @@
-define(['modules/related', 'modules/images', 'modules/popular'], function(Related, Images, Popular){
+define(['modules/related', 'modules/images', 'modules/popular', 'vendor/ios-orientationchange-fix'], function(Related, Images, Popular){
 
     return {
         init: function(config) {
