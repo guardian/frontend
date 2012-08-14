@@ -2,9 +2,10 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 
     function Fonts(fileFormat) {
 
-    	this.fileFormat = fileFormat;
-    
-        var connectionSpeed = detect.getConnectionSpeed(),
+    	this.fileFormat = fileFormat || null;
+
+        var storagePrefix = "gufont-",
+            connectionSpeed = detect.getConnectionSpeed(),
             layoutMode = detect.getLayoutMode();
 
         function fontIsRequired(style) {
@@ -13,7 +14,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	try {
         		localStorage.setItem('test', 'test1');
         		localStorage.removeItem('test');
-        		return (localStorage.getItem(style.getAttribute('data-cache-name')) === null);
+        		return (localStorage.getItem(storagePrefix + style.getAttribute('data-cache-name')) === null);
         	}
         	catch(e) {
         		return false;
@@ -38,7 +39,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 	                    		if (typeof callback === 'function') {
 	                        		callback(style, json);
 	                        	}
-	                    		localStorage.setItem(json.name, json.css);
+	                    		localStorage.setItem(storagePrefix + json.name, json.css);
 	                        	common.mediator.emit('modules:fonts:loaded', [json.name]);
 	                    	}
 	                    })(style)
@@ -56,8 +57,16 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         		if (html.className.indexOf('font-' + json.name + '-loaded') < 0) {
         			html.className += ' font-' + json.name + '-loaded';
         		}
-        		
         	});
+        }
+
+        this.clearFontsFromStorage = function() {
+            while(localStorage.length > 0) {
+                var name = localStorage.key(0);
+                if (name.indexOf(storagePrefix) === 0) {
+                    localStorage.removeItem(name);
+                }
+            }
         }
     }
     

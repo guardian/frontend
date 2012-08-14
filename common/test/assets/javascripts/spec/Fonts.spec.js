@@ -4,6 +4,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         
         var styleNodes;
         var fileFormat;
+        var storagePrefix = 'gufont-';
 
         beforeEach(function() {
             localStorage.clear();
@@ -26,7 +27,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
-                	expect(localStorage.getItem(name)).toBe('@font-face{');
+                	expect(localStorage.getItem(storagePrefix + name)).toBe('@font-face{');
                 }
             });
         });
@@ -46,7 +47,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
-                	expect(localStorage.getItem(name)).toBe('@font-face{');
+                	expect(localStorage.getItem(storagePrefix + name)).toBe('@font-face{');
                 	expect(styleNodes[i].innerHTML).toBe('@font-face{');
                 }
             });
@@ -69,7 +70,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
-                	expect(localStorage.getItem(name)).toBe('@font-face{android');
+                	expect(localStorage.getItem(storagePrefix + name)).toBe('@font-face{android');
                 	expect(styleNodes[i].innerHTML).toBe('@font-face{android');
                 }
             });
@@ -81,7 +82,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
             // Pretend data was already in localStorage
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                localStorage.setItem(styleNodes[i].getAttribute('data-cache-name'), '@font-face{');
+                localStorage.setItem(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
             }
 
             runs(function() {
@@ -95,10 +96,28 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     var name = styleNodes[i].getAttribute('data-cache-name');
-                    expect(localStorage.getItem(name)).toBe('@font-face{');
+                    expect(localStorage.getItem(storagePrefix + name)).toBe('@font-face{notfromnetwork');
                 }
             })
                 
+        });
+
+        it("should be able to remove all fonts from storage in bulk", function() {
+            
+            // Pretend data was already in localStorage
+            for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                localStorage.setItem(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
+            }
+            expect(localStorage.length).toEqual(styleNodes.length);
+
+            new Fonts(fileFormat).clearFontsFromStorage();
+
+            // localStorage should be empty.
+            expect(localStorage.length).toEqual(0);
+
+
+            runs
+
         });
 
         it("should not request css files if localStorage is full or disabled", function() {
@@ -109,18 +128,17 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	localStorage.setItem = null;
 
         	runs(function() {
-                new Fonts(fileFormat).loadFromServer('fixtures/');
+                new Fonts().loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
-                console.log(styleNodes.length);
             	return (callbackCount === styleNodes.length);
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
             	for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
-                	expect(localStorage.getItem(name)).toBe(null);
+                	expect(localStorage.getItem(storagePrefix + name)).toBe(null);
                 }
             })
         		
