@@ -3,8 +3,8 @@ Testing externally on your localhost
 
 Install _proxylocal_,
 
-    gem install proxylocal
     sudo apt-get install rubygems1.8 (on Ubuntu)
+    gem install proxylocal
 
 In one terminal run the _core-navigation_ server on a given port,
 
