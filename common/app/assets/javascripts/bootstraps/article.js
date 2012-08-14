@@ -1,4 +1,4 @@
-define(['modules/related', 'modules/images', 'modules/popular'], function(Related, Images, Popular){
+define(['modules/related', 'modules/images', 'modules/popular', 'modules/relativedates'], function(Related, Images, Popular, RelativeDates) {
 
     return {
         init: function(config) {
@@ -18,6 +18,9 @@ define(['modules/related', 'modules/images', 'modules/popular'], function(Relate
                 var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
                 new Related(document.getElementById('js-related')).load(relatedUrl);
             }
+
+            // show relative dates
+            RelativeDates.init();
         }
     }
 
