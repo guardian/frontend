@@ -18,6 +18,9 @@
                 qwery:   'vendor/qwery',
                 bean:    'vendor/bean-0.4.11-1',
                 reqwest: 'vendor/reqwest',
+                analytics: 'modules/analytics',
+                omniture: '../../public/javascripts/vendor/omniture'
+                //omniture: '../../../test/assets/javascripts/fixtures/stubOmniture'
             }
       });
   </script>
@@ -70,6 +73,7 @@
         <li><a href="#Popular">Popular</a>
         <li><a href="#Image">Image</a>
         <li><a href="#Related">Related</a>
+        <li><a href="#Analytics">Analytics</a>
         <li><a href="#Expandable">Expandable</a>
     </ul>
 
@@ -139,6 +143,14 @@
 </div>
 
 <div id="trail-g" data-count="2">
+</div>
+
+<!-- just some test markup for click events -->
+<div data-link-name="outer div" style="display: none">
+    <p id="not-inside-a-link">
+        <a href="/foo" id="click-me" data-link-name="the link">The link</a>
+        <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="the link">The link</a>
+    </p>
 </div>
 
 </body>

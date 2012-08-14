@@ -8,7 +8,8 @@
         var require = {
             baseUrl: '@{config.static.path}javascripts',
             paths: {
-                'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
+                'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath',
+                omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
             }
         };
 
@@ -42,6 +43,9 @@
         };
 
         document.getElementById('gu').parentNode.insertBefore(script);
-   
+
+
     }
 </script>
+
+<h1>@static("javascripts/vendor/omniture.js")</h1>
