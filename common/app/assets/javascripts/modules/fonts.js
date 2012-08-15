@@ -4,10 +4,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 
         this.styleNodes = styleNodes;
     	this.fileFormat = fileFormat;
-        this.reqwest = reqwest; // expose publically so we can inspect it in unit tests
-
-        var connectionSpeed = detect.getConnectionSpeed(),
-            layoutMode = detect.getLayoutMode();
+        this.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
 
         function fontIsRequired(style) {
         	// A final check for localStorage.
