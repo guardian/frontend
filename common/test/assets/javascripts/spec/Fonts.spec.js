@@ -10,38 +10,40 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             localStorage.clear();
             styleNodes = document.querySelectorAll('[data-cache-name]');
             fileFormat = 'woff';
+            callbackSpy = sinon.spy(function(){});
         });
 
         it("should request css files and cache in localStorage", function() {
-        	var callbackCount = 0;
-        	common.mediator.on('modules:fonts:loaded', function() { callbackCount++; });
+        	
+            common.mediator.on('modules:fonts:loaded', callbackSpy);
 
             runs(function() {
                 new Fonts(fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
-            	return (callbackCount === styleNodes.length);
+            	return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
+                expect(callbackSpy.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
                 	expect(localStorage.getItem(storagePrefix + name)).toBe('@font-face{');
-                }
+                 }
             });
         });
 
         it("should request css files, cache in localStorage and apply the styles", function() {
-        	var callbackCount = 0;
-        	common.mediator.on('modules:fonts:loaded', function() { callbackCount++; });
+        	
+            common.mediator.on('modules:fonts:loaded', callbackSpy);
 
             runs(function() {
                 new Fonts(fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
-            	return (callbackCount === styleNodes.length);
+            	return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
@@ -54,8 +56,8 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         });
 
         it("should request the TTF version of css files for Android devices", function() {
-        	var callbackCount = 0;
-        	common.mediator.on('modules:fonts:loaded', function() { callbackCount++; });
+        	
+            common.mediator.on('modules:fonts:loaded', callbackSpy);
 
         	fileFormat = 'ttf';
 
@@ -64,7 +66,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-            	return (callbackCount === styleNodes.length);
+            	return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
@@ -77,8 +79,8 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         });
 
         it("should not request css files if localStorage already has them", function() {
-            var callbackCount = 0;
-            common.mediator.on('modules:fonts:notloaded', function() { callbackCount++; });
+            
+            common.mediator.on('modules:fonts:notloaded', callbackSpy);
 
             // Pretend data was already in localStorage
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
@@ -90,7 +92,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-                return (callbackCount === styleNodes.length);
+                return (callbackSpy.calledTwice);
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
@@ -121,8 +123,8 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         });
 
         it("should not request css files if localStorage is full or disabled", function() {
-        	var callbackCount = 0;
-        	common.mediator.on('modules:fonts:notloaded', function() { callbackCount++; });
+        	
+            common.mediator.on('modules:fonts:notloaded', callbackSpy);
 
         	// Force localStorage to throw error.
         	localStorage.setItem = null;
@@ -132,7 +134,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-            	return (callbackCount === styleNodes.length);
+            	return (callbackSpy.calledTwice);
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
