@@ -1,9 +1,6 @@
-define([
-    'common', 'modules/related', 'modules/images',
-    'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix',
-    'modules/analytics'
-    ],
-    function(common, Related, Images, Popular, Expandable, Orientation, Analytics){
+define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
+    'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics'],
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Analytics) {
 
     return {
         init: function(config) {
@@ -28,8 +25,11 @@ define([
                 new Related(document.getElementById('js-related')).load(relatedUrl);
             }
 
+            // show relative dates
+            RelativeDates.init();
+
+            //record page view and setup click tracking
             new Analytics().submit(config);
-        
         }
     }
 });
