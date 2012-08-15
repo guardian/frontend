@@ -14,21 +14,9 @@ define(['modules/related', 'modules/images', 'modules/popular', 'modules/fonts']
             var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
             new Related(document.getElementById('related')).load(relatedUrl);
 
-
-            // Load fonts, cache, and apply them.
-            var fileFormat = 'woff';
-            if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
-                fileFormat = 'ttf';
-            }
+            // load fonts
+            var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
             new Fonts(fileFormat).loadFromServerAndApply();
-
-            /*
-            // Wait till other downloads finished (load?), and then cache
-            // the fonts for the next page view.
-            window.addEventListener('load', function() {
-                new Fonts(fileFormat).loadFromServer('http://guardian-fonts.s3-external-3.amazonaws.com/');
-            }, true);
-            */
 
             // todo: make this a proper test around page metadata not the existence of divs
             var hasStoryPackage = !document.getElementById('js-related');
