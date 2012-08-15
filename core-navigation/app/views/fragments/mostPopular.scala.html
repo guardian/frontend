@@ -1,0 +1,17 @@
+@(popular: Seq[model.MostPopular], visibleTrails: Int)
+
+@popular.zipWithRowInfo.map{ case (section, info) =>
+    @section.heading
+}
+
+@popular.zipWithRowInfo.map{ case (section, info) =>
+    <div id="most-popular-@info.rowNum">
+
+        @section.trails.map{ trail =>
+            @trail.linkText
+        }
+
+    </div>
+}
+
+
