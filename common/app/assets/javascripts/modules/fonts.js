@@ -4,6 +4,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 
         this.styleNodes = styleNodes;
     	this.fileFormat = fileFormat;
+        this.reqwest = reqwest; // expose publically so we can inspect it in unit tests
 
         var connectionSpeed = detect.getConnectionSpeed(),
             layoutMode = detect.getLayoutMode();
@@ -29,7 +30,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
             for (var i = 0, j = this.styleNodes.length; i<j; ++i) {
             	var style = this.styleNodes[i];
             	if (fontIsRequired(style)) {
-            		reqwest({
+            		this.reqwest({
 	                    url: url + style.getAttribute('data-cache-file-' + this.fileFormat),
 	                    type: 'jsonp',
 	                    jsonpCallbackName: 'guFont',

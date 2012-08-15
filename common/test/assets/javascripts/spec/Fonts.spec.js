@@ -130,7 +130,9 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	localStorage.setItem = null;
 
         	runs(function() {
-                new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
+                f = new Fonts(styleNodes, fileFormat)
+                f.loadFromServer('fixtures/');
+                fontSpy = sinon.spy(f.reqwest);
             });
 
             waitsFor(function() {
@@ -138,7 +140,10 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
-            	for (var i = 0, j = styleNodes.length; i<j; ++i) {
+
+                expect(fontSpy.callCount).toBe(0);
+
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
                 	expect(localStorage.getItem(storagePrefix + name)).toBe(null);
                 }
