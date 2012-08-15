@@ -383,3 +383,65 @@ img.discussion-badge {
     line-height: 15px;
     color: #666;
 }
+
+
+.tabs,
+.tabs li {
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+.tabs {
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 10px;
+    text-align: right;  
+    font-size: 0; /* this lets us use inline-block without gaps */
+}
+
+.tabs li {
+    font-size: 12px; /* overrides the hack above */
+    display: inline-block;
+    text-align: center;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.tabs li a {
+    display: inline-block;
+    border: 1px solid #bebebe;
+    border-bottom: 1px solid #bebebe; /* gradient end colour */
+    border-right: 0;
+    padding: 10px 10px 0 10px;
+    height: 25px;
+    background: #d9d9d9; /* Old browsers */
+    background: -moz-linear-gradient(top, #d9d9d9 0%, #bebebe 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9d9d9), color-stop(100%,#bebebe)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #d9d9d9 0%,#bebebe 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9d9d9', endColorstr='#bebebe',GradientType=0 ); /* IE6-9 */
+    position: relative;
+    bottom: -1px;
+    color: #333333;
+}
+
+.tabs li.tabs-selected a {
+    border-bottom: 1px solid #ededed; /* gradient end colour */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#ededed 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+}
+
+.tabs li:last-child a {
+    border-right: 1px solid #bebebe;    
+}
+.tabs li a:hover {
+    text-decoration: none;
+    background: #ededed;    
+}
