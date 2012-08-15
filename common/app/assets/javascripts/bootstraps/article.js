@@ -16,7 +16,8 @@ define(['modules/related', 'modules/images', 'modules/popular', 'modules/fonts']
 
             // load fonts
             var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
-            new Fonts(fileFormat).loadFromServerAndApply();
+            var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+            new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
 
             // todo: make this a proper test around page metadata not the existence of divs
             var hasStoryPackage = !document.getElementById('js-related');

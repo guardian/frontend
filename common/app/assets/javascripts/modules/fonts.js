@@ -1,11 +1,11 @@
 define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwest) {
 
-    function Fonts(fileFormat) {
+    function Fonts(styleNodes, fileFormat) {
 
-    	this.fileFormat = fileFormat || null;
+        this.styleNodes = styleNodes;
+    	this.fileFormat = fileFormat;
 
-        var storagePrefix = "gufont-",
-            connectionSpeed = detect.getConnectionSpeed(),
+        var connectionSpeed = detect.getConnectionSpeed(),
             layoutMode = detect.getLayoutMode();
 
         function fontIsRequired(style) {
@@ -14,7 +14,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	try {
         		localStorage.setItem('test', 'test1');
         		localStorage.removeItem('test');
-        		return (localStorage.getItem(storagePrefix + style.getAttribute('data-cache-name')) === null);
+        		return (localStorage.getItem(Fonts.storagePrefix + style.getAttribute('data-cache-name')) === null);
         	}
         	catch(e) {
         		return false;
@@ -26,9 +26,8 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	// If no URL, then load from standard static assets path.
         	var url = url || '';
 
-        	var styleNodes = document.querySelectorAll('[data-cache-name]');
-            for (var i = 0, j = styleNodes.length; i<j; ++i) {
-            	var style = styleNodes[i];
+            for (var i = 0, j = this.styleNodes.length; i<j; ++i) {
+            	var style = this.styleNodes[i];
             	if (fontIsRequired(style)) {
             		reqwest({
 	                    url: url + style.getAttribute('data-cache-file-' + this.fileFormat),
@@ -39,7 +38,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 	                    		if (typeof callback === 'function') {
 	                        		callback(style, json);
 	                        	}
-	                    		localStorage.setItem(storagePrefix + json.name, json.css);
+	                    		localStorage.setItem(Fonts.storagePrefix + json.name, json.css);
 	                        	common.mediator.emit('modules:fonts:loaded', [json.name]);
 	                    	}
 	                    })(style)
@@ -60,12 +59,15 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         	});
         }
 
-        this.clearFontsFromStorage = function() {
-            while(localStorage.length > 0) {
-                var name = localStorage.key(0);
-                if (name.indexOf(storagePrefix) === 0) {
-                    localStorage.removeItem(name);
-                }
+    }
+
+    Fonts.storagePrefix = "gufont-";
+
+    Fonts.clearFontsFromStorage = function() {
+        while(localStorage.length > 0) {
+            var name = localStorage.key(0);
+            if (name.indexOf(Fonts.storagePrefix) === 0) {
+                localStorage.removeItem(name);
             }
         }
     }
