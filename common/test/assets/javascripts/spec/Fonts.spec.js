@@ -132,7 +132,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         	runs(function() {
                 f = new Fonts(styleNodes, fileFormat)
                 f.loadFromServer('fixtures/');
-                fontSpy = sinon.spy(f.reqwest);
+                reqwestSpy = sinon.spy(f.reqwest);
             });
 
             waitsFor(function() {
@@ -141,7 +141,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
             runs(function() {
 
-                expect(fontSpy.callCount).toBe(0);
+                expect(reqwestSpy.callCount).toBe(0);
 
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 	var name = styleNodes[i].getAttribute('data-cache-name');
