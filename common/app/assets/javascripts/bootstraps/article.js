@@ -1,12 +1,13 @@
-define(['modules/related', 'modules/images', 'modules/popular', 'modules/fonts'], function(Related, Images, Popular, Fonts){
+define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/fonts'],
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Fonts) {
 
     return {
         init: function(config) {
-            
+
             // upgrade images
             new Images().upgrade();
 
-            // most popular
+            // load most popular
             var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.section;
             new Popular(document.getElementById('js-popular')).load(popularUrl);
             
@@ -18,15 +19,22 @@ define(['modules/related', 'modules/images', 'modules/popular', 'modules/fonts']
             var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
             var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
             new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-
-            // todo: make this a proper test around page metadata not the existence of divs
+            
+            // load related or story package
             var hasStoryPackage = !document.getElementById('js-related');
+            
+            var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
 
-            if (!hasStoryPackage) {
+            if (hasStoryPackage) {
+                relatedExpandable.initalise();
+            } else { 
+                common.mediator.on('modules:related:render', relatedExpandable.initalise);
                 var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
                 new Related(document.getElementById('js-related')).load(relatedUrl);
             }
+
+            // show relative dates
+            RelativeDates.init();
         }
     }
-
 });

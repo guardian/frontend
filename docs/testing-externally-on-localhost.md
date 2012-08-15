@@ -1,8 +1,12 @@
-
 Testing externally on your localhost 
 ====================================
 
 Install _proxylocal_,
+
+**Ubuntu**
+Doesn't seem to work for me :(
+    
+**Mac OSX**
 
     gem install proxylocal
 
