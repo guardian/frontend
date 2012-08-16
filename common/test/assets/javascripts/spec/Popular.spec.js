@@ -18,7 +18,7 @@ define(['common', 'modules/popular'], function(common, Popular) {
                 var r = new Popular(appendTo).load('fixtures/popular');
             });
 
-            waits(1);
+            waits(500);
 
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
