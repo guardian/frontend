@@ -7,6 +7,7 @@ define(['common', 'reqwest'], function(common, reqwest){
             attachTo: attachTo,
             render: function(html) {
                 attachTo.innerHTML = html;
+                common.mediator.emit('modules:related:render');
             }
         }
 

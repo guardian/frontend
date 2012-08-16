@@ -1,10 +1,19 @@
-
 Testing externally on your localhost 
 ====================================
 
-Install _proxylocal_,
+Prequisites 
+-----------
 
+ruby & http://rubygems.org/
+ 
+Install _proxylocal_,
+    
     gem install proxylocal
+
+Ubuntu people might need to add the rubygem bin path to their PATH environment variable, 
+
+    -- in .bashrc --
+    export PATH=$PATH:/var/lib/gems/1.8/bin
 
 In one terminal run the _core-navigation_ server on a given port,
 
