@@ -1,0 +1,2 @@
+deb http://nginx.org/packages/ubuntu/ precise nginx
+deb-src http://nginx.org/packages/ubuntu/ precise nginx

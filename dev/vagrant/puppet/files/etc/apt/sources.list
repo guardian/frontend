@@ -1,0 +1,3 @@
+deb http://gb.archive.ubuntu.com/ubuntu/ precise main
+deb http://gb.archive.ubuntu.com/ubuntu/ precise-security main
+deb http://gb.archive.ubuntu.com/ubuntu/ precise-updates main

@@ -30,3 +30,4 @@ frontend.sublime-workspace
 frontend.sublime-project
 common/app/assets/stylesheets/theme/fonts.less
 tags
+*.box
