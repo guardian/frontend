@@ -1,5 +1,46 @@
 define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
 
+    function Analytics(){
+
+        //loads the analytics modules
+        this.submit = function(config){
+            Omniture(config);
+            Ophan();
+        };
+
+        //just here to be called from tests
+        this.setup = function(config, detect, s){
+            setupData(config, detect, s);
+        };
+
+        //just here to be called from tests
+        this.clickEvent = function(event, config, s){
+            recordClick(event, config, s);
+        };
+    }
+
+    function Omniture(config){
+        //s_account is the name of a page scope variable that must
+        //be set before the Omniture file is parsed
+        s_account = config.page.omnitureAccount;
+
+        require(['omniture'], function(placeholder){
+
+            //s is available to us after the Omniture script has run
+            setupData(config, detect, s);
+
+            //this is the bit that does the actual call to Omniture
+            s.t();
+
+            //setup click tracking
+            bean.add(document.body, "click", function(event){ recordClick(event, config, s); })
+        });
+    }
+
+    function Ophan(){
+        require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){});
+    }
+
     function findComponentName(element, trackingName){
         var tag = element.tagName.toLowerCase();
         if (tag === 'body') {
@@ -54,7 +95,7 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
         s.pageName  = webTitle + ':' + (config.page.contentType || '') + ':' + (config.page.pageCode || '');
 
         s.pageType  = config.page.contentType || '';  //pageType
-        s.prop9     = config.page.contentType || '';     //contentType
+        s.prop9     = config.page.contentType || '';  //contentType
 
         s.channel   = config.page.section || '';
         s.prop4     = config.page.keywords || '';
@@ -85,39 +126,6 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
         }
 
         return s;
-    }
-
-
-    function Analytics(){
-
-        this.submit = function(config){
-
-            //s_account is the name of a page scope variable that must
-            //be set before the Omniture file is parsed
-            s_account = config.page.omnitureAccount;
-
-            require(['omniture'], function(placeholder){
-
-                //s is available to us after the Omniture script has run
-                setupData(config, detect, s);
-
-                //this is the bit that does the actual call to Omniture
-                s.t();
-
-                //setup click tracking
-                bean.add(document.body, "click", function(event){ recordClick(event, config, s); })
-            });
-        }
-
-        //just here to be called from tests
-        this.setup = function(config, detect, s){
-            setupData(config, detect, s);
-        };
-
-        //just here to be called from tests
-        this.clickEvent = function(event, config, s){
-            recordClick(event, config, s);
-        };
     }
 
     return Analytics;
