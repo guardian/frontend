@@ -40,7 +40,6 @@
             )
         </div>
     </article>
-    @fragments.mainSiteLink(article, Configuration)
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
@@ -48,6 +47,11 @@
         <div id="js-related"></div>
     }
     <div id="js-popular"></div>
+
+    <footer class="b1">
+        @fragments.mainSiteLink(article, Configuration)
+        @fragments.editionSwitch(Static, Configuration, article)
+    </footer>
 
 </div>
 }
