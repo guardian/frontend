@@ -36,7 +36,7 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
 	                    		if (typeof callback === 'function') {
 	                        		callback(style, json);
 	                        	}
-	                    		localStorage.setItem(Fonts.storagePrefix + json.name, json.css);
+	                    		localStorage.setItem(Fonts.storagePrefix + style.getAttribute('data-cache-name'), json.css);
 	                        	common.mediator.emit('modules:fonts:loaded', [json.name]);
 	                    	}
 	                    })(style)
