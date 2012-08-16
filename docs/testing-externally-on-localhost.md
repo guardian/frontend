@@ -1,10 +1,7 @@
 Testing externally on your localhost 
 ====================================
 
-Prequisites 
------------
-
-ruby & http://rubygems.org/
+Prequisites: ruby & http://rubygems.org/
  
 Install _proxylocal_,
     
