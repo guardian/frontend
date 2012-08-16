@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	"http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
@@ -64,7 +64,9 @@
     }
 
   </script>
-
+  <style>
+      #test-cases div { display: none;}}
+  </style>
 </head>
 
 <body>
@@ -73,89 +75,92 @@
         <li><a href="#Common">Common</a>
         <li><a href="#Detect">Detect</a>
         <li><a href="#Popular">Popular</a>
-        <li><a href="#Image">Image</a>
+        <li><a href="#Images">Image</a>
         <li><a href="#Related">Related</a>
         <li><a href="#Analytics">Analytics</a>
         <li><a href="#Expandable">Expandable</a>
         <li><a href="#RelativeDates">Relative Dates</a></li>
     </ul>
 
-    <!-- UpgradeImages.spec -->
-    <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" />
-     
-    <!-- Related.spec -->
-    <div id="related-1"></div>
-    <div id="related-2"></div>
+    <div id="test-cases">
+        
+        <!-- UpgradeImages.spec -->
+        <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" class="visible" />
 
-		<!-- Popular.spec -->
-		<div id="popular-1"></div>
+        <!-- Related.spec -->
+        <div id="related-1"></div>
+        <div id="related-2"></div>
 
-    <!-- Expandables -->
-    <style>
-        ul.flex {
-            transition: background-color 0.5s linear;
-            -moz-transition: background-color 0.5s linear;
-            -o-transition: background-color 0.5s linear;
-            -webkit-transition: background-color 0.5s linear; 
-        }
-        .shut ul.flex { background-color: #999; } /* illustrative */
-        ul.flex { background-color: #ccc; }
-    </style>
+        <!-- Popular.spec -->
+        <div id="popular-1"></div>
 
-    <!-- trail -->
-    <div id="trail-a" data-count="5">
-        <ul>
-            <li class="t1">one</li>
-            <li class="t2">two</li>
-        </ul>
-        <ul class="flex">
-            <li class="t3">three</li>
-            <li class="t4">four</li>
-            <li class="t5">five</li>
-        </ul>
-    </div>
+        <!-- Expandables -->
+        <style>
+            ul.flex {
+                transition: background-color 0.5s linear;
+                -moz-transition: background-color 0.5s linear;
+                -o-transition: background-color 0.5s linear;
+                -webkit-transition: background-color 0.5s linear; 
+            }
+            .shut ul.flex { background-color: #999; } /* illustrative */
+            ul.flex { background-color: #ccc; }
+        </style>
 
-    <div id="trail-b" data-count="3">
-        <ul>
-            <li class="t1">one</li>
-            <li class="t1">two</li>
-        </ul>
-        <ul class="flex">
-            <li class="t2">three</li>
-        </ul>
-    </div>
+        <!-- trail -->
+        <div id="trail-a" data-count="5">
+            <ul>
+                <li class="t1">one</li>
+                <li class="t2">two</li>
+            </ul>
+            <ul class="flex">
+                <li class="t3">three</li>
+                <li class="t4">four</li>
+                <li class="t5">five</li>
+            </ul>
+        </div>
 
-    <div id="trail-c" data-count="3" class="shut">
-    </div>
+        <div id="trail-b" data-count="3">
+            <ul>
+                <li class="t1">one</li>
+                <li class="t1">two</li>
+            </ul>
+            <ul class="flex">
+                <li class="t2">three</li>
+            </ul>
+        </div>
 
-    <div id="trail-d" data-count="1" class="shut">
-    </div>
+        <div id="trail-c" data-count="3" class="shut">
+        </div>
 
-    <div id="trail-e" data-count="3">
-        <ul>
-            <li class="t1">one</li>
-            <li class="t2">two</li>
-        </ul>
-        <ul class="flex">
-            <li class="t3">three</li>
-        </ul>
-    </div>
+        <div id="trail-d" data-count="1" class="shut">
+        </div>
 
-    <!-- -->
-    <div id="trail-f" data-count="-1">
-    </div>
+        <div id="trail-e" data-count="3">
+            <ul>
+                <li class="t1">one</li>
+                <li class="t2">two</li>
+            </ul>
+            <ul class="flex">
+                <li class="t3">three</li>
+            </ul>
+        </div>
 
-    <div id="trail-g" data-count="2">
-    </div>
+        <!-- -->
+        <div id="trail-f" data-count="-1">
+        </div>
 
-    <!-- RelativeDates.spec -->
-    <div id="relative-dates">
-      <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
-      <ul>
-        <li id="relative-date-test-item" class="js-timestamp" data-timestamp="2012-04-13T18:43:36.000+01:00" data-relativeto="2012-04-13T18:46:36.000+01:00">Friday 13th Apr. 2012, 6.43pm</li>
-        <li class="js-timestamp" data-timestamp="2012-08-13 12:00:00 UTC">Monday 13th Aug. 2012, 12pm</li>
-        <li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
-      </ul>
+        <div id="trail-g" data-count="2">
+        </div>
+
+        <!-- RelativeDates.spec -->
+        <div id="relative-dates">
+          <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
+          <ul>
+            <li id="relative-date-test-item" class="js-timestamp" data-timestamp="2012-04-13T18:43:36.000+01:00" data-relativeto="2012-04-13T18:46:36.000+01:00">Friday 13th Apr. 2012, 6.43pm</li>
+            <li class="js-timestamp" data-timestamp="2012-08-13 12:00:00 UTC">Monday 13th Aug. 2012, 12pm</li>
+            <li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
+          </ul>
+        </div>
     </div>
 
 <!-- just some test markup for click events -->
