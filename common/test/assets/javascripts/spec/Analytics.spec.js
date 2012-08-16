@@ -84,6 +84,8 @@ define(['analytics'], function(Analytics) {
 
             expect(s.prop30).toBe("content");
 
+            expect(s.prop19).toBe("frontend");
+            expect(s.eVar19).toBe("frontend");
         });
 
         it("should record clicks with correct analytics name", function(){

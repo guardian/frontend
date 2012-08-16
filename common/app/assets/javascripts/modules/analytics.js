@@ -68,6 +68,10 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
 
         s.prop14    = config.page.buildNumber || '';
 
+        var platform = "frontend";
+        s.prop19     = platform;
+        s.eVar19     = platform;
+
         s.prop47    = config.page.edition || '';
 
         s.prop48    = detect.getConnectionSpeed();
