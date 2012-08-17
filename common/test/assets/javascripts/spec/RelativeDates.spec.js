@@ -1,6 +1,6 @@
 define(['modules/relativedates'], function(RelativeDates) {
 
-    describe("Relative Dates", function() {
+    describe("Relative dates", function() {
       
         // make the date static so tests are stable
     	var fakeNow = Date.parse('2012-08-13 12:00:00');
@@ -11,53 +11,41 @@ define(['modules/relativedates'], function(RelativeDates) {
         it('should show relative dates for timestamps formatted YYYY-MM-DD HH:MM:SS', function(){
 	   	
 	    	var datesToTest = {
-	    		'justNow': {
-	        		'date'			 : '2012-08-13 11:59:52',
-	        		'expectedOutput' : 'just now'
-	    		},
 	        	'lessThanAMinuteAgo': {
 	        		'date'			 : '2012-08-13 11:59:50',
 	        		'expectedOutput' : 'less than a minute ago'
 	    		},
-	    		'aboutAMinuteAgo': {
-	        		'date'			 : '2012-08-13 11:58:20',
+	    		'oneMinuteAgo': {  // singular
+	        		'date'			 : '2012-08-13 11:58:40',
 	        		'expectedOutput' : 'about a minute ago'
 	    		},
-	    		'severalMinutesAgo': {
-	        		'date' 			 : '2012-08-13 11:57:00',
-	        		'expectedOutput' : '3 minutes ago'
+	    		'upToEightMinutesAgo': { // plural
+	        		'date' 			 : '2012-08-13 11:52:30',
+	        		'expectedOutput' : 'about 7 minutes ago'
 	    		},
-	    		'aboutAnHourAgo': {
+	    		'oneHourAgo': { // singular
 	        		'date' 			 : '2012-08-13 11:00:00',
 	        		'expectedOutput' : 'about an hour ago'
 	    		},
-	    		'severalHoursAgo': {
-	        		'date' 			 : '2012-08-13 06:00:00',
-	        		'expectedOutput' : '6 hours ago'
+	    		'lessThanFiveHoursAgo': { // plural
+	        		'date' 			 : '2012-08-13 07:01:00',
+	        		'expectedOutput' : 'about 4 hours ago'
 	    		},
-	    		'aboutADayAgo': {
-	        		'date' 			 : '2012-08-12 12:00:00',
-	        		'expectedOutput' : 'about a day ago'
+	    		'moreThanFiveHoursAgo': { // ... but still today
+	        		'date' 			 : '2012-08-13 02:03:00',
+	        		'expectedOutput' : 'Today, 2:03am'
 	    		},
-	    		'severalDaysAgo': {
-	        		'date' 			 : '2012-08-01 12:00:00',
-	        		'expectedOutput' : '12 days ago'
+	    		'yesterday': {
+	        		'date' 			 : '2012-08-12 23:45:00',
+	        		'expectedOutput' : 'Yesterday, 11:45pm'
 	    		},
-	    		'aboutAMonthAgo': {
-	        		'date' 			 : '2012-07-13 12:00:00',
-	        		'expectedOutput' : 'about a month ago'
+	    		'moreThanTwoDaysAgo': {
+	        		'date' 			 : '2012-08-09 08:34:00',
+	        		'expectedOutput' : 'Thursday 9 Aug 2012'
 	    		},
-	    		'severalMonthsAgo': {
-	        		'date' 			 : '2012-05-13 12:00:00',
-	        		'expectedOutput' : 'about 3 months ago'
-	    		},
-	    		'aboutAYearAgo': {
-	        		'date' 			 : '2011-08-13 12:00:00',
-	        		'expectedOutput' : 'about a year ago'
-	    		},
-	    		'severalYearsAgo': {
-	        		'date' 			 : '2006-08-13 12:00:00',
-	        		'expectedOutput' : 'about 6 years ago'
+	    		'moreThanFiveDaysAgo': {
+	        		'date' 			 : '2012-08-05 21:30:00',
+	        		'expectedOutput' : '5 Aug 2012'
 	    		},
 	    	};
 
@@ -71,7 +59,7 @@ define(['modules/relativedates'], function(RelativeDates) {
 			expect(RelativeDates.makeRelativeDate(epochBug)).toBe(epochBug);
 		});
 
-		it("should fail politely (eg return false) if given non-date / invalid input for either argument", function(){
+		it("should fail politely if given non-date / invalid input for either argument", function(){
 			expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
 		});
 

@@ -2,17 +2,37 @@ define(['common'], function (common) {
 
 	var $g = common.$;
 
-	// takes optional 2nd argument for custom 'now' value.
-	// both arguments should be strings, eg. '2012-08-13 12:00:00'
-	// but also work with "standard" (lolz) javascript Date() objects too.
-	// API renders timestamps as 2012-04-13T18:43:36.000+01:00, which also work.
+    // date helpers
 
-	function makeRelativeDate (timeValue) {
+    function dayOfWeek(day) {
+        return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
+    }
+    
+    function monthAbbr(month) {
+       return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month];
+    }
+	
+    function pad(n){ return n < 10 ? '0' + n : n }
+    
+    function ampm(n){ return n < 12 ? 'am' : 'pm' }
 
+    function twelveHourClock(hours) { return  hours > 12 ? hours -12 : hours; }
+
+    function isToday(date) {
+        var today = new Date();
+        return (date.toDateString() == today.toDateString());
+    }
+
+    function isYesterday(date) {
+        var yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+        return (date.toDateString() == yesterday.toDateString());
+    }
+ 
+    function makeRelativeDate (timeValue) {
+
+		var then = Date(timeValue);
 		var parsedDate = Date.parse(timeValue);
 		var relativeTo = new Date();
-		// unused... for now.
-		var nowUTC = new Date(relativeTo.getUTCFullYear(), relativeTo.getUTCMonth(), relativeTo.getUTCDate(),  relativeTo.getUTCHours(), relativeTo.getUTCMinutes(), relativeTo.getUTCSeconds());
 
 		// check our dates are valid
 		if (!parsedDate) {
@@ -20,33 +40,29 @@ define(['common'], function (common) {
 		}
 
 		var delta = parseInt((relativeTo.getTime() - parsedDate) / 1000);
-
-		if (delta < 0) {
+		
+        if (delta < 0) {
 			return timeValue;
-		} else if (delta < 10) { // less than 10 seconds
-			return 'just now';
-		} else if (delta < 60) { // less than 1 min
+		} else if (delta < 55) {
 			return 'less than a minute ago';
-		} else if (delta < 120) { // less than 2 mins
+		} else if (delta < 90) {
 			return 'about a minute ago';
-		} else if (delta < (45*60)) { // less than 45 mins
+		} else if (delta < (8*60)) {
+			return 'about ' + (parseInt(delta / 60)).toString() + ' minutes ago';
+		} else if (delta < (55*60)) {
 			return (parseInt(delta / 60)).toString() + ' minutes ago';
-		} else if (delta < (90*60)) { // less than 1:30
+		} else if (delta < (90*60)) { 
 			return 'about an hour ago';
-		} else if (delta < (24*60*60)) { // less than 24 hrs ago
-			return (parseInt(delta / 3600)).toString() + ' hours ago';
-		} else if (delta < (48*60*60)) { // less than 48 hours ago
-			return 'about a day ago';
-		} else if (delta < 30*24*60*60) { // less than 30 days ago
-			return (parseInt(delta / 86400)).toString() + ' days ago';
-		} else if (delta < 60*24*60*60) { // less than 60 days ago
-			return 'about a month ago';
-		} else if (delta < 365*24*60*60) { // less than 1 year ago
-			return 'about ' + (parseInt(delta / 2628000)).toString() + ' months ago';
-		} else if (delta < 2*365*24*60*60) { // less than 2 years ago
-			return 'about a year ago';
+		} else if (delta < (5*60*60)) { 
+			return 'about ' + (parseInt(delta / 3600)).toString() + ' hours ago';
+		} else if (isToday(then)) { 
+			return 'Today, ' + twelveHourClock(then.getHours()) + ':' + pad(then.getMinutes()) + ampm(then.getHours());
+		} else if (isYesterday(then)) { // yesterday 
+			return 'Yesterday, ' + twelveHourClock(then.getHours()) + ':' + pad(then.getMinutes()) + ampm(then.getHours())
+		} else if (delta < 5*24*60*60) { // less than 5 days 
+            return dayOfWeek(then.getDay()) + ' ' + then.getDate() + ' ' + monthAbbr(then.getMonth()) + ' ' + then.getFullYear(); 
 		} else {
-			return 'about ' + (parseInt(delta / 31557600)).toString() + ' years ago';
+            return then.getDate() + ' ' + monthAbbr(then.getMonth()) + ' ' + then.getFullYear(); 
 		}
 	}
 
