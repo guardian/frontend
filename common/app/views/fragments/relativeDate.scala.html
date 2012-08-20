@@ -1,7 +1,7 @@
 @(webPublicationDate: org.joda.time.DateTime, noImage: Boolean = false)
 
-<p class="js-timestamp relative-timestamp @if(noImage) { fixed-width-timestamp }" data-timestamp="@webPublicationDate">
+<p class="js-timestamp relative-timestamp @if(noImage) { fixed-width-timestamp }" data-timestamp="@webPublicationDate.getMillis">
 	<meta itemprop="datePublished" content='@webPublicationDate.toString("yyyy-MM-dd")'>
-        @Format(webPublicationDate, "EEEE d MMMM y HH.mm 'GMT'")
+        @Format(webPublicationDate, "EE d MMM y")
     </meta>
 </p>
