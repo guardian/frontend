@@ -1,0 +1,19 @@
+Vagrant::Config.run do |config|
+
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  # config.vm.boot_mode = :gui
+  config.ssh.forward_x11 = true
+  config.vm.share_folder "puppet-files", "/etc/puppet/site", "puppet"
+
+  config.vm.forward_port 80, 8000
+  config.vm.forward_port 9000, 9000
+  config.vm.forward_port 18080, 18080
+
+  config.vm.provision :puppet, :options => ["--fileserverconfig=/vagrant/puppet/fileserver.conf", "--debug"] do |puppet|
+    puppet.manifests_path = "puppet"
+    puppet.manifest_file = "site.pp"
+  end
+
+end

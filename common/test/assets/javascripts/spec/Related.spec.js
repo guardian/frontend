@@ -18,7 +18,7 @@ define(['common', 'modules/related'], function(common, Related) {
                 var r = new Related(appendTo).load('fixtures/json');
             });
 
-            waits(1);
+            waits(500);
 
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
