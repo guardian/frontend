@@ -25,6 +25,12 @@ object Frontend extends Build with Prototypes {
   val front = application("front").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
 
+  val football = application("football")
+    .settings(
+      //TODO do not merge with a SNAPSHOT dependency
+      libraryDependencies += "com.gu" %% "pa-client" % "1.0-SNAPSHOT"
+    ).dependsOn(commonWithTests)
+
   val video = application("video").dependsOn(commonWithTests)
 
   val main = root().aggregate(
@@ -61,6 +67,7 @@ trait Prototypes {
 
       resolvers := Seq(
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+        "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
         Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
         "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
         "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",

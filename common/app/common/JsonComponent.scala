@@ -13,4 +13,13 @@ object JsonComponent extends Results {
       Ok("%s(%s);" format (callback, json)).as("application/javascript")
     } getOrElse (Ok(html))
   }
+
+  def apply(items: (String, Html)*)(implicit request: RequestHeader) = {
+    val json = JsonParser.generate(
+      items.toMap.map { case (name, html) => (name -> Compressed(html).body) }
+    )
+    request.getQueryString("callback").map { callback =>
+      Ok("%s(%s);" format (callback, json)).as("application/javascript")
+    } getOrElse (BadRequest("parameter 'callback' is required"))
+  }
 }

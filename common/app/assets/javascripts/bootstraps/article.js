@@ -1,5 +1,5 @@
-define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix', 'modules/relativedates'],
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates) {
+define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable', 'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/football'],
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Football) {
 
     return {
         init: function(config) {
@@ -26,6 +26,13 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
             // show relative dates
             RelativeDates.init();
+
+            //TODO requires PA scores in R2 tools
+            //if(config.page.footballMatch){
+            //    new Football.init(config.page.footballMatch);
+            //}
+
+            new Football.init("3507403");
         }
     }
 });
