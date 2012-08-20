@@ -31,8 +31,8 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             //if(config.page.footballMatch){
             //    new Football.init(config.page.footballMatch);
             //}
-
-            new Football.init("3507403");
+                              //3507403
+            new Football.init("3517708");
         }
     }
 });

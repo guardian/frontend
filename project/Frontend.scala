@@ -28,7 +28,7 @@ object Frontend extends Build with Prototypes {
   val football = application("football")
     .settings(
       //TODO do not merge with a SNAPSHOT dependency
-      libraryDependencies += "com.gu" %% "pa-client" % "1.0-SNAPSHOT"
+      libraryDependencies += "com.gu" %% "pa-client" % "1.2-SNAPSHOT"
     ).dependsOn(commonWithTests)
 
   val video = application("video").dependsOn(commonWithTests)

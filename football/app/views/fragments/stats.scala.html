@@ -1,0 +1,64 @@
+@(events: pa.MatchEvents, stats: pa.MatchStats)
+
+@renderGoal(goal: pa.Event) = {
+    <li>@goal.players.map{p => @p.name}.mkString(", ") @goal.matchTime</li>
+}
+
+@renderStat(name: String, home: Int, away: Int) = {
+    <thead>
+        <th colspan="2">@Html(name)</th>
+    </thead>
+    <tbody>
+    <tr>
+
+        <td>
+            @home
+        </td>
+        <td>
+            @away
+        </td>
+    </tr>
+    </tbody>
+}
+
+<div>
+    <ul>
+        <li><a id="football-tab-matchreport" href="javascript://">Match report</a></li>
+        <li><a id="football-tab-stats" href="javascript://">Stats</a></li>
+    </ul>
+</div>
+<div id="football-stats" class="initially-off">
+<table>
+    <thead>
+    <tr>
+        <th>@events.homeTeam.name</th><th>@events.awayTeam.name</th>
+    </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th colspan="2">goals</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+
+        <td>
+            <ol>
+            @{events.homeTeamGoals.map{ renderGoal }}
+            </ol>
+        </td>
+        <td>
+            <ol>
+            @{events.awayTeamGoals.map{ renderGoal }}
+            </ol>
+        </td>
+    </tr>
+    </tbody>
+    @renderStat("possession", stats.homePossession, stats.awayPossession)
+    @renderStat("corners", stats.homeTeam.corners, stats.awayTeam.corners)
+    @renderStat("on target", stats.homeTeam.shotsOnTarget, stats.awayTeam.shotsOnTarget)
+    @renderStat("off target", stats.homeTeam.shotsOffTarget, stats.awayTeam.shotsOffTarget)
+    @renderStat("fouls", stats.homeTeam.fouls, stats.awayTeam.fouls)
+    @renderStat("offsides", stats.homeTeam.offsides, stats.awayTeam.offsides)
+</table>
+</div>
