@@ -5,7 +5,6 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
         //loads the analytics modules
         this.submit = function(config){
             Omniture(config);
-            Ophan();
         };
 
         //just here to be called from tests
@@ -19,6 +18,7 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
         };
     }
 
+    //https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
     function Omniture(config){
         //s_account is the name of a page scope variable that must
         //be set before the Omniture file is parsed
@@ -35,10 +35,6 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
             //setup click tracking
             bean.add(document.body, "click", function(event){ recordClick(event, config, s); })
         });
-    }
-
-    function Ophan(){
-        require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){});
     }
 
     function findComponentName(element, trackingName){
@@ -119,7 +115,7 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
 
         s.prop56    = detect.getLayoutMode();
 
-        if (config.page.webPublicationDate) {  //at the moment we have web pub date for content and nothing else
+        if (config.page.webPublicationDate) {
             s.prop30 = 'content';
         } else {
             s.prop30 = 'non-content';

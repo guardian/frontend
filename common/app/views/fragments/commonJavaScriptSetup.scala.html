@@ -1,9 +1,10 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 <script id="gu">
-    if ('querySelector' in document && 'addEventListener' in window) {
+    var guardian = {};
+    guardian.isModernBrowser = 'querySelector' in document && 'addEventListener' in window;
 
-        var guardian = {};
+    if (guardian.isModernBrowser) {
 
         var require = {
             baseUrl: '@{config.static.path}javascripts',
@@ -20,7 +21,6 @@
 
             define('config', function(){
                 return {
-                    isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
                     page: {
 
                         @item.metaData.map{ case(key, value) =>
