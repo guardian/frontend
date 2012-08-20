@@ -125,8 +125,9 @@ define(['common'], function (common) {
 	// bind to pubsub
 	common.mediator.on('modules:relativedates:relativise', replaceValidTimestamps);
 	common.mediator.on('modules:popular:render', replaceValidTimestamps);
-
-	function init () {
+    common.mediator.on('modules:related:render', replaceValidTimestamps);
+	
+    function init () {
 		common.mediator.emit('modules:relativedates:relativise');
 	}
 
