@@ -1,11 +1,29 @@
 @(page: MetaData, config: common.GuardianConfiguration)
-<noscript id="omnitureNoScript">
-    <div>
-        <img alt=""
-             src='http://hits.guardian.co.uk/b/ss/@{config.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.1.1/?ns=guardian&@{OmnitureAnalyticsData(page)}' width="1" height="1" />
-    </div>
-</noscript>
 
+@defining(
+"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+    config.javascript.pageData("guardian.page.omnitureAccount"),
+    OmnitureAnalyticsData(page))
+){ omnitureCall =>
+        <noscript id="omnitureNoScript">
+            <div>
+                <img id="omnitureNoScriptImage" alt=""
+                     src='@omnitureCall' width="1" height="1" />
+            </div>
+        </noscript>
+        <script>
+            @*
+            //    we do not run our javascript on some browsers, hence analytics will not run.
+            //    this does a minimal tracking for those devices
+             *@
+            if (!guardian.isModernBrowser) {
+                var analyticsImage = document.createElement("img");
+                analyticsImage.src = "@omnitureCall";
+                analyticsImage.width = "1px";
+                analyticsImage.height = "1px";
+                document.body.appendChild(analyticsImage);
+            }
+        </script>
+}
 
-
-
+<script src="http://s.ophan.co.uk/js/t6.min.js" type="text/javascript" defer="defer" async="async"></script>
