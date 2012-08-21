@@ -5,18 +5,26 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.libs.concurrent.Akka
 
 object MostPopularController extends Controller with Logging {
 
+  import play.api.Play.current
+
   def render(edition: String, path: String) = Action { implicit request =>
 
-    val globalPopular = lookup(edition, "/").toList
+    val promiseOfGlobalPopular = Akka.future(lookup(edition, "/").toList)
+    val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
 
-    val sectionPopular = if (path != "/") lookup(edition, path).toList else Nil
-
-    (sectionPopular ++ globalPopular) match {
-      case Nil => NotFound
-      case popular => renderMostPopular(popular)
+    Async {
+      promiseOfSectionPopular.flatMap { sectionPopular =>
+        promiseOfGlobalPopular.map { globalPopular =>
+          (sectionPopular ++ globalPopular) match {
+            case Nil => NotFound
+            case popular => renderMostPopular(popular)
+          }
+        }
+      }
     }
   }
 
@@ -32,7 +40,7 @@ object MostPopularController extends Controller with Logging {
     val heading = response.section.map(s => s.webTitle).getOrElse("guardian.co.uk")
     val popular = response.mostViewed map { new Content(_) } take (10)
 
-    if (popular.size == 0) None else Some(MostPopular(heading, popular))
+    if (popular.isEmpty) None else Some(MostPopular(heading, popular))
   }
 
   private def renderMostPopular(popular: Seq[MostPopular])(implicit request: RequestHeader) =
