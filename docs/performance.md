@@ -2,19 +2,13 @@
 Average
 -------
 
-- In July we frequently served over 10k request p/min, which is around 166 request p/sec.
-- UK lunch time is the busiest period of the day.
-- During a busy lunchtime hour we average about 600k p/hour, approx 10k p/min.
+- In July we frequently served over 10k request p/min, which is around 166 request p/sec on average.
+- UK lunch time on weekdays is the busiest period of the day.
+- During a busy lunchtime hour we average about 600k p/hour, approx 10k p/min, peaking at around 225 p/sec.
 
-The top 10 requests p/min 
+The top five requests p/min from July,
 
 ```
-2012-07-31T12:12, 10523
-2012-07-31T12:13, 10537
-2012-07-30T15:01, 10541
-2012-07-31T12:07, 10569
-2012-07-31T12:11, 10612
-2012-07-31T12:05, 10646
 2012-07-31T12:09, 10713
 2012-07-31T12:08, 10819
 2012-07-30T14:59, 10843
@@ -22,11 +16,21 @@ The top 10 requests p/min
 2012-07-16T15:42, 12578
 ```
 
+The top five requests p/sec during a busy lunch hour,
+
+```
+206, 2012-07-16T12:07:01
+208, 2012-07-16T12:07:08
+210, 2012-07-16T12:08:16
+212, 2012-07-16T12:27:10
+223, 2012-07-16T12:14:11
+```
+
 Burst
 -----
 
-- Peak in July was 12.5k
-- There was no ramp up for this peak (the previous and subsequent ppm were 5.4k and 7.8k) so it would be wise to accomodate that.
+- Peak in July was 12.5k.
+- There was no ramp up for this peak (the previous and subsequent requests p/minute were 5.4k and 7.8k).
 
 Breadth
 -------
@@ -39,7 +43,7 @@ The breadth of API requests is a more significant number that above as the same 
 Ratio
 -----
 
-Approximately the ~570k requests during 16 July 2012 lunch hour break down in to these three areas :-
+Approximately the ~570k requests during 16 July 2012 lunch hour break down in to these three application areas :-
 
 ```
 133k were for the network front (23%)
@@ -48,3 +52,9 @@ Approximately the ~570k requests during 16 July 2012 lunch hour break down in to
 ```
 
 The other areas all received less than 10k requests and make up the remaining 10%.
+
+Further notes
+-------------
+
+- There is no data on XHR, JSONP or polling.
+
