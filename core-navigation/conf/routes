@@ -6,8 +6,7 @@
 GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
 GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
 
-GET     /section/latest/*edition/*sectionId             controllers.LatestFromSectionController.render(edition, sectionId)
-GET     /section/latest/*edition                        controllers.LatestFromSectionController.renderGlobal(edition)
+GET     /zone/latest/*edition/*zoneId                controllers.LatestFromZoneController.render(edition, zoneId)
 
 GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
 

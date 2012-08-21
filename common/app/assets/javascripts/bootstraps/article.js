@@ -17,18 +17,15 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             
             var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
 
-            var coreNavigationHost = config.page.coreNavigationUrl;
-
             if (hasStoryPackage) {
                 relatedExpandable.initalise();
             } else { 
                 common.mediator.on('modules:related:render', relatedExpandable.initalise);
-                var relatedUrl = coreNavigationHost + '/related/' + config.page.edition + '/' + config.page.pageId;
+                var relatedUrl = config.page.coreNavigationUrl + '/related/' + config.page.edition + '/' + config.page.pageId;
                 new Related(document.getElementById('js-related')).load(relatedUrl);
             }
 
-            var latestUrl = coreNavigationHost + '/section/latest/' + config.page.edition + '/' + config.page.section;
-            new Navigation().load(latestUrl);
+            new Navigation().load(config);
 
             // show relative dates
             RelativeDates.init();

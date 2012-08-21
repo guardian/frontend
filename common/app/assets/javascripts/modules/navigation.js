@@ -22,9 +22,10 @@ define(['common', 'reqwest'], function(common, reqwest){
         
         // Model
         
-        this.load = function(url){
+        this.load = function(config){
+            var latestUrl = config.page.coreNavigationUrl + '/zone/latest/' + config.page.edition + '/' + config.page.zone;
             return reqwest({
-                    url: url,
+                    url: latestUrl,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',

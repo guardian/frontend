@@ -6,20 +6,16 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 
-case class Related(heading: String, trails: Seq[Trail])
+object LatestFromZoneController extends Controller with Logging {
 
-object LatestFromSectionController extends Controller with Logging {
-
-  def render(edition: String, sectionId: String) = Action {
+  def render(edition: String, zoneId: String) = Action {
     implicit request =>
-      lookup(edition, sectionId) map { renderLatest } getOrElse { NotFound }
+      lookup(edition, zoneId) map { renderLatest } getOrElse { NotFound }
   }
 
-  def renderGlobal(edition: String) = render(edition, "/")
-
-  private def lookup(edition: String, sectionId: String)(implicit request: RequestHeader): Option[Seq[Trail]] = suppressApi404 {
-    log.info("Fetching latest content for : " + sectionId + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(sectionId, edition)
+  private def lookup(edition: String, zoneId: String)(implicit request: RequestHeader) = suppressApi404 {
+    log.info("Fetching latest content for : " + zoneId + " for edition " + edition)
+    val response: ItemResponse = ContentApi.item(zoneId, edition)
       .showEditorsPicks(true)
       .response
 

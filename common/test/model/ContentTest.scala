@@ -105,6 +105,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     metaData("description") should be("The trail text")
     metaData("keywords") should be("Keyword_1,Keyword_2")
     metaData("section") should be("section")
+    metaData("zone") should be("news")
     metaData("author") should be("Contributor_1,Contributor_2")
     metaData("tones") should be("Tone_1,Tone_2")
     metaData("series") should be("Series_1,Series_2")
