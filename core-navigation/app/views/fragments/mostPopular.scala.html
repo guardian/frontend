@@ -1,36 +1,40 @@
 @(popular: Seq[model.MostPopular], visibleTrails: Int)
 
-<div class="trailblock trailblock-shaded zone-border" id="popular-trails">
-    <h3 class="zone-color">Most viewed</h3>
-    
-    <ol class="tabs">
-        @popular.zipWithRowInfo.map{ case (section, info) =>
-            <li@if(info.isFirst){ class="tabs-selected"}><a href="javascript://">@section.heading</a></li>
+@defining(popular.size > 1){ isTabbed =>
+
+    <div class="trailblock trailblock-shaded zone-border" id="popular-trails">
+        <h3 class="zone-color">Most viewed</h3>
+
+        @if(isTabbed) {
+            <ol class="tabs">
+                @popular.zipWithRowInfo.map{ case (section, info) =>
+                    <li@if(info.isFirst){ class="tabs-selected"}><a href="#tabs-popular-@info.rowNum" data-tabs-container="tabs-popular">@section.heading</a></li>
+                }
+            </ol>
         }
-    </ol>
 
-    <div class="tabs-content">
-        @popular.zipWithRowInfo.map{ case (section, info) =>
-            <div id="most-popular-@info.rowNum" 
-                class="tabs-panel@if(!info.isFirst){ initially-off}"
-                data-count="@{section.trails.length - visibleTrails}">
+        @if(isTabbed) {<div class="tabs-content" id="tabs-popular">}
+            @popular.zipWithRowInfo.map{ case (section, info) =>
+                <div id="tabs-popular-@info.rowNum" class="trailblock @if(isTabbed){tabs-panel @if(!info.isFirst){ initially-off}}"
+                    data-count="@{section.trails.length - visibleTrails}">
 
-                <ul class="unstyled">
-                    @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                        <li>@formatTrail(trail, info, related=true)</li>
-                    }.slice( 0, visibleTrails )
-                </ul>
-
-                @if(section.trails.length > visibleTrails) {
-                    <ul class="unstyled panel">
+                    <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                             <li>@formatTrail(trail, info, related=true)</li>
-                        }.slice( visibleTrails, section.trails.length )
+                        }.slice( 0, visibleTrails )
                     </ul>
-                }
 
-            </div>
-        }
+                    @if(section.trails.length > visibleTrails) {
+                        <ul class="unstyled panel">
+                            @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                                <li>@formatTrail(trail, info, related=true)</li>
+                            }.slice( visibleTrails, section.trails.length )
+                        </ul>
+                    }
+
+                </div>
+            }
+        @if(isTabbed) {</div>}
+
     </div>
-
-</div>
+}
