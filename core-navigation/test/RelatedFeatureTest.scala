@@ -48,6 +48,17 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Show the published dates for all trails") { // GFE-37
+
+      given("Shell spending millions of dollars on security in Nigeria, leaked data shows")
+      HtmlUnit("/related/UK/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+        import browser._
+
+        then("I see each trail block displays the published date of the corresponding article")
+
+        $(".relative-timestamp") should have length 10
+
+      }
+    }
   }
 }
-
