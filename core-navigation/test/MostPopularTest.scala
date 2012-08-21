@@ -69,5 +69,13 @@ class MostPopularTest extends FeatureSpec with GivenWhenThen with ShouldMatchers
         $(".tabs li").size should be(1)
       }
     }
+
+    scenario("Caching") {
+      given("I load most popular")
+      HtmlUnit.connection("/most-popular/UK") { connection =>
+        then("the call should be correctly cached")
+        connection.getHeaderFields.get("Cache-Control").head should be("must-revalidate, max-age=900")
+      }
+    }
   }
 }
