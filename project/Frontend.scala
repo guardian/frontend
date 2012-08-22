@@ -1,6 +1,7 @@
 import com.gu.deploy.PlayArtifact._
 import com.gu.deploy.PlayAssetHash._
 import com.typesafe.sbtscalariform.ScalariformPlugin._
+import io.Source
 import org.sbtidea.SbtIdeaPlugin._
 import sbt._
 import sbt.Keys._
@@ -11,6 +12,7 @@ import com.gu.RequireJS._
 import com.gu.RequireJS
 
 object Frontend extends Build with Prototypes {
+
   val version = "1-SNAPSHOT"
 
   val common = library("common")
@@ -33,6 +35,40 @@ object Frontend extends Build with Prototypes {
 }
 
 trait Prototypes {
+
+  val features = TaskKey[Seq[File]]("features", "Builds a file with BDD features in it")
+
+  def featuresTask = (sources in Test, target) map { (testFiles, targetDir) =>
+
+    val Feature = """.*feature\((.*)\).*""".r
+    val Scenario = """.*scenario\((.*)\).*""".r
+    val Given = """.*given\((.*)\).*""".r
+    val When = """.*when\((.*)\).*""".r
+    val Then = """.*then\((.*)\).*""".r
+    val And = """.*and\((.*)\).*""".r
+    val Info = """.*info\((.*)\).*""".r
+
+    testFiles.filter(_.getName.endsWith("FeatureTest.scala")).map{ testFile: File =>
+      val name = testFile.getName.replace("FeatureTest.scala", ".feature")
+      val featureFile = targetDir / name
+      if (featureFile.exists) featureFile.delete()
+      featureFile.createNewFile()
+      (testFile, featureFile)
+    }.map{ case(source, output) =>
+      Source.fromFile(source).getLines().foreach{
+        case Feature(message) => IO.append(output, "Feature " + message + "\n")
+        case Scenario(message) => IO.append(output, "\tScenario " + message + "\n")
+        case Given(message) => IO.append(output, "\t\tGiven " + message + "\n")
+        case When(message) => IO.append(output, "\t\t\tWhen " + message + "\n")
+        case Then(message) => IO.append(output, "\t\t\t\tThen " + message + "\n")
+        case And(message) => IO.append(output, "\t\t\t\tAnd " + message + "\n")
+        case Info(message) => IO.append(output, "\t\t\t\tInfo" + message + "\n")
+        case line => Unit
+      }
+      output
+    }
+  }
+
   val version: String
 
   def root() = Project("root", base = file("."))
@@ -122,6 +158,7 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
+    features <<= featuresTask,
     staticFilesPackage := "frontend-static",
     executableName := "frontend-%s" format  name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
