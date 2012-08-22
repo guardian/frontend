@@ -4,7 +4,7 @@
     @*
         index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
     *@
-    @if(info.rowNum <= 3) {
+    @if(info.rowNum <= 3 && (trail.thumbnail)) {
         @trail.thumbnail.map{ imageUrl =>
             <a href="@trail.url" class="img" data-link-name="trail image | @info.rowNum">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
