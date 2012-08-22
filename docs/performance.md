@@ -1,4 +1,3 @@
-
 Average
 -------
 
@@ -37,7 +36,7 @@ Breadth
 
 The breadth of API requests is a more significant number that above as the same URL requested within a short period of will hit a cache.
  
-- At 12:05 on 16 July 2012 there were ~10k request p/min of which 5.7k were *unique to the second* - Eg. if we had a caching proxy for 1 second.
+- At 12:05 on 16 July 2012 there were ~10k request p/min of which 5.7k were *unique to the second* - Ie. if we had a caching proxy in front of the application with a 1 second expiry on all requests.
 - If we assume a cache time of *60 seconds* then the number halves again to about ~45 request p/second on a busy lunch hour.
 
 Ratio
@@ -51,10 +50,9 @@ Approximately the ~570k requests during 16 July 2012 lunch hour break down in to
 61k were for sections (9%)
 ```
 
-The other areas all received less than 10k requests and make up the remaining 10%.
+The other areas (gallery, video, tags etc.) all received less than 10k requests and make up the remaining 10%.
 
 Further notes
 -------------
 
 - There is no data on XHR, JSONP or polling.
-
