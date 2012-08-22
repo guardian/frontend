@@ -12,8 +12,6 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
   Play.unsafeApplication
 
-  val they = it
-
   "Urls" should "be created relative for articles" in {
 
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
