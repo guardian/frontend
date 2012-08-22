@@ -102,6 +102,7 @@ trait Prototypes {
   def library(name: String) = base(name)
     .settings(RequireJS.settings:_*)
     .settings(requireJsConfiguration: _*).settings(
+    resources in Compile ~= checkFilesZippedSizes,
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.13",
@@ -139,4 +140,28 @@ trait Prototypes {
       "conf._"
     )
   )
+
+  private def checkFilesZippedSizes(files: Seq[File]) = {
+
+    val maxSizeFileAllowed = 20
+
+    //all assets are in the public dir
+    val assets = files.filter(_.getAbsolutePath.contains("main/public"))
+
+    val assetsWithSizes = assets.map{ file =>
+      val zipped = (IO.createTemporaryDirectory / "asset.gz")
+      IO.zip(Seq((file, "asset")), zipped)
+      zipped.deleteOnExit()
+      (file, file.length / 1024, zipped.length / 1024)
+    }
+
+    assetsWithSizes.filter(_._3 > maxSizeFileAllowed).headOption.foreach{ case (file, unzippedSize, zippedSize) =>
+      sys.error(
+        "File too big: %s has size %sK unzipped and %sK zipped - max zipped size allowed is %sK"
+        .format(file.getName, unzippedSize, zippedSize, maxSizeFileAllowed)
+      )
+    }
+
+    files
+  }
 }
