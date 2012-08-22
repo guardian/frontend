@@ -38,7 +38,9 @@ trait Prototypes {
 
   val features = TaskKey[Seq[File]]("features", "Builds a file with BDD features in it")
 
-  def featuresTask = (sources in Test, target) map { (testFiles, targetDir) =>
+  def featuresTask = (sources in Test, target, streams) map { (testFiles, targetDir, s) =>
+
+    import s.log
 
     val Feature = """.*feature\((.*)\).*""".r
     val Scenario = """.*scenario\((.*)\).*""".r
@@ -49,6 +51,7 @@ trait Prototypes {
     val Info = """.*info\((.*)\).*""".r
 
     testFiles.filter(_.getName.endsWith("FeatureTest.scala")).map{ testFile: File =>
+      log.info("creating feature file for: " + testFile)
       val name = testFile.getName.replace("FeatureTest.scala", ".feature")
       val featureFile = targetDir / name
       if (featureFile.exists) featureFile.delete()
