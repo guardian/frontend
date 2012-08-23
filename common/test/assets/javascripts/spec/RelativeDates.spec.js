@@ -27,8 +27,12 @@ define(['modules/relativedates'], function(RelativeDates) {
 	        		'date' 			 : '2012-08-13T11:00:00+01:00',
 	        		'expectedOutput' : 'about an hour ago'
 	    		},
+	    		'betweenNinetyMinutesAndOneHour': {  // bug GFE-38
+	        		'date' 			 : '2012-08-13T10:25:00+01:00',
+	        		'expectedOutput' : 'about 2 hours ago'
+	    		},
 	    		'lessThanFiveHoursAgo': { // plural
-	        		'date' 			 : '2012-08-13T07:01:00+01:00',
+	        		'date' 			 : '2012-08-13T08:30:00+01:00',
 	        		'expectedOutput' : 'about 4 hours ago'
 	    		},
 	    		'moreThanFiveHoursAgo': { // ... but still today
