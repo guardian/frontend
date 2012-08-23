@@ -23,7 +23,6 @@ trait MetaData {
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
-    "zone" -> Zone(section),
     "canonical-url" -> canonicalUrl,
     "api-url" -> apiUrl,
     "web-title" -> webTitle,
