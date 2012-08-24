@@ -1,56 +1,97 @@
 define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, bean, bonzo, qwery) {
 
     /*
-
-        expects following HTML structure
+        expects the following HTML structure
 
         <ol class="tabs">
-            <li class="tabs-selected"><a href="#foo" data-tabs-container="tabs-test">Foo</a></li>
-            <li><a href="#bar" data-tabs-container="tabs-test">Bar</a></li>
+            <li class="tabs-selected"><a href="#foo">Foo</a></li>
+            <li><a href="#bar">Bar</a></li>
         </ol>
 
-        <div class="tabs-content" id="tabs-test">
+        <div class="tabs-content">
              <div class="tabs-pane" id="foo">foo</div>
              <div class="tabs-pane initially-off" id="bar">bar</div>
         </div>
     
     */
 
-    function bind(tab) {
-        var href = tab.getAttribute('href');
-        href = href.substring(1); // trim the leading #
-        var paneToShow = document.getElementById(href);
-        var tabContainer = document.getElementById(tab.getAttribute('data-tabs-container'));
+    var Tabs = function(options) {
+
+        var view = {
+
+            showTab: function(tabSet, clickedTab, originalEvent) {
+                // find the active tab in the set. returns an array of 1 item, hence [0]
+                var currentTab = common.$g('.tabs-selected a', tabSet)[0];
+                // trim the leading # and find the matching panel element
+                var paneToShow = document.getElementById(clickedTab.getAttribute('href').substring(1));
+                var paneToHide = document.getElementById(currentTab.getAttribute('href').substring(1));
+                if (paneToShow && paneToHide) {
+                    // show hide stuff
+                    bonzo(currentTab.parentNode).removeClass('tabs-selected');
+                    bonzo(clickedTab.parentNode).addClass('tabs-selected');
+                    bonzo(paneToHide).hide();
+                    bonzo(paneToShow).removeClass('initially-off').show();
+
+                    // only do this if we know the href was a tab ID, not a URL
+                    originalEvent.preventDefault();
+                }
+            }
+
+        };
+
+        var model = {
+
+            // x-brower way of grabbing clicked element
+            getTargetElement: function(event) {
+                var target;
         
-        if (paneToShow && tabContainer) {
-            bean.add(tab, 'click', function(e) {
+                if (!event) { return; }
 
-                var tabParent = bonzo(tab).parent();
-                var selectedTab = qwery('li.tabs-selected', bonzo(tabParent).parent());
-                var allPanes = qwery('.tabs-panel', tabContainer);
-                
-                bonzo(selectedTab).removeClass('tabs-selected')
-                bonzo(tabParent).addClass('tabs-selected');
+                if (event.target) { // modern browsers
+                    target = event.target;
+                } else if (event.srcElement) { // IE
+                    target = event.srcElement;
+                }
 
-                bonzo(allPanes).hide();
-                bonzo(paneToShow).removeClass('initially-off').show();
-                
-                e.preventDefault(); // stop # anchoring
-            });
-        }
-    }
+                // safari bug (returns textnode, not element)
+                if (target.nodeType == 3) {
+                    target = target.parentNode;
+                }
 
-    function init() {
-        var tabs = common.$g('.tabs li a');
-    
-        for (var i in tabs) {
-            var t = tabs[i];
-            bind(t);
-        }
-    }
+                return target;
+            }
 
-    return {
-        init: init
-    }
+        };
+
+        this.init = function(tabSelector) {
+
+            if (!tabSelector) {
+                tabSelector = 'ol.tabs';
+            }
+
+            var ols = common.$g(tabSelector);
+
+            // bean doesn't seem to like binding to arrays of elements, bah. have to loop.
+            for (var i in ols) {
+                var tabSet = ols[i];
+                bean.add(tabSet, 'click', function(e) {
+                    var targetElm = model.getTargetElement(e);
+                    // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
+                    var tabContainer = targetElm.parentNode.parentNode;
+                    // verify they clicked an <a> element
+                    if (targetElm.nodeName.toLowerCase() === "a") {
+                        view.showTab(tabContainer, targetElm, e);
+                    }
+                });
+            }
+        };
+
+        // call this like so:
+        // common.mediator.emit('modules:tabs:render', '#my-dynamically-added-tabs');
+        common.mediator.on('modules:tabs:render', this.init);
+
+    };
+
+    return Tabs;
 
 });

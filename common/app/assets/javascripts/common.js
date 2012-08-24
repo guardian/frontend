@@ -4,7 +4,11 @@ define(["vendor/EventEmitter-3.1.5", "bonzo", "qwery"], function(placeholder, bo
     	$: function(selector) {
     		return bonzo(qwery(selector));
     	},
-        $g: function(selector) {
+        
+        $g: function(selector, context) {
+            if (context) {
+                return qwery(selector, context);    
+            }
             return qwery(selector);
         }
     }

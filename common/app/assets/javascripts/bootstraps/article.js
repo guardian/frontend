@@ -5,7 +5,8 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
         init: function(config) {
 
             // upgrade images
-            new Images().upgrade();
+            var imgs = new Images();
+            imgs.upgrade();
 
             var popularContainer = document.getElementById('js-popular');
 
@@ -29,11 +30,17 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             // show relative dates
             RelativeDates.init();
 
-            // show tabbed widget
-            common.mediator.on('modules:popular:render', Tabs.init);
+            // load tabs and initialise any already in the document
+            var tabs = new Tabs();
+            tabs.init();
 
              // loop through child tabbed elements and bind them as expanders
             common.mediator.on('modules:popular:render', function(){
+                
+                // activate tabbed widget
+                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+
+                // activate multiple expanders
                 var popularExpandables = qwery('.trailblock', popularContainer);
                 for (var i in popularExpandables) {
                     var pop = popularExpandables[i];
