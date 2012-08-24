@@ -70,6 +70,18 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
             }
         }
     }
+
+    Fonts.detectSupportedFormat = function(ua) {
+        ua = ua.toLowerCase();
+        var format = 'woff';
+        if (ua.indexOf('android') > -1) {
+            format = 'ttf';
+        }
+        if (ua.indexOf('iphone os 4') > -1) {
+            format = 'ttf';
+        }
+        return format;
+    }
     
     return Fonts;
 

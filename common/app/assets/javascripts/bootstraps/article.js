@@ -18,7 +18,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             // load fonts
             if (config.switches.fontLoading && Guardian.UserPrefs.isTrue('fontloading')) {
                 // TODO: More reliable font support detection.
-                var fileFormat = 'woff'; //(navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
+                var fileFormat = Fonts.detectSupportedFormat(navigator.userAgent);
                 var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
             } else {
