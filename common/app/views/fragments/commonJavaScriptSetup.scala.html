@@ -1,4 +1,5 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets,
+    bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
 <script id="gu">
     if ('querySelector' in document && 'addEventListener' in window) {
@@ -46,6 +47,11 @@
                         }.mkString(","),
 
                         'edition': '@Edition(request, config)'
+                    },
+                    switches : {
+                        @switches.map{ switch =>
+                            '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
+                        }.mkString(",")
                     }
                 };
             })

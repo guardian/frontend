@@ -16,10 +16,16 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             new Related(document.getElementById('related')).load(relatedUrl);
 
             // load fonts
-            var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
-            var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-            new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-            
+            if (config.switches.fontLoading) {
+
+               //TODO remove logging before merge
+                console.log("loading fonts");
+
+                var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
+                var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+            }
+
             // load related or story package
             var hasStoryPackage = !document.getElementById('js-related');
             
