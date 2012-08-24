@@ -1,6 +1,6 @@
 @(front: Front)(implicit request: RequestHeader)
 
-@main(front, Static, Configuration, Switches.all){
+@main(front, Static, Configuration){
     @if(Edition(request, Configuration) == "UK"){
         <meta name="google-site-verification" content="W1mbAtOtyQWbkB1xyLqj_oE6gkorVHc63aolsCmeJKM" />
     }

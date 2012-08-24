@@ -1,6 +1,6 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
-@main(section, Static, Configuration, Switches.all){  }{
+@main(section, Static, Configuration){  }{
     <div id="container">
 
         @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
