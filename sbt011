@@ -21,16 +21,24 @@ if [ -n "$BUILD_VCS_NUMBER" ]; then
 fi 
 
 PROXY_PARAMS="-Dhttp.proxyHost=devscreen.gudev.gnl -Dhttp.proxyPort=3128"
-if [ "$1" == "--no-proxy" || "$2" == "--no-proxy" ]; then
-  PROXY_PARAMS=""
-  shift
-fi
-
 IVY_PARAMS=""
-if [ "$1" == "--directory-ivy-cache" || "$2" == "--directory-ivy-cache" ]; then
-  IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
-  shift
-fi
+
+
+for arg in "$@"
+do
+    if [ "$arg" == "--no-proxy" ]; then
+      echo "disabling proxy"
+      PROXY_PARAMS=""
+      shift
+    fi
+
+    if [ "$arg" == "--directory-ivy-cache" ]; then
+      echo "setting ivy cache dir"
+      IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
+      shift
+    fi
+done
+
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.

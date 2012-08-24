@@ -116,7 +116,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("Review stars", ArticleComponents) {
 
-      given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On – Edinburgh festival review'")
+      given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
       HtmlUnit("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
         import browser._
 

@@ -73,7 +73,7 @@ define(['common'], function (common) {
         
         } else if (delta < (5*60*60)) { 
             return 'about ' +
-                (parseInt(delta / 3600)).toString() +
+                (Math.round(delta / 3600)).toString() +
                 ' hours ago';
         
         } else if (isToday(then)) { 
