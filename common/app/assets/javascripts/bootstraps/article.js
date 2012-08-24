@@ -16,14 +16,14 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             new Related(document.getElementById('related')).load(relatedUrl);
 
             // load fonts
-            if (config.switches.fontLoading) {
-
-               //TODO remove logging before merge
-                console.log("loading fonts");
-
-                var fileFormat = (navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
+            if (config.switches.fontLoading && Guardian.UserPrefs.isTrue('fontloading')) {
+                // TODO: More reliable font support detection.
+                var fileFormat = 'woff'; //(navigator.userAgent.toLowerCase().indexOf('android') > -1) ? 'ttf' : 'woff';
                 var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+            } else {
+                // If fonts disabled, tidy up local cache.
+                Fonts.clearFontsFromStorage();
             }
 
             // load related or story package
@@ -41,6 +41,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
             // show relative dates
             RelativeDates.init();
+
         }
     }
 });
