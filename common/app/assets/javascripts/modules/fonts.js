@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwest) {
+define(['reqwest'], function (reqwest) {
 
     function Fonts(styleNodes, fileFormat) {
 
@@ -27,22 +27,25 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
             for (var i = 0, j = this.styleNodes.length; i<j; ++i) {
             	var style = this.styleNodes[i];
             	if (fontIsRequired(style)) {
+                    PerfLog.addToLog('Loading fonts');
+                    var startLoading = (new Date().getTime());
             		this.reqwest({
 	                    url: url + style.getAttribute('data-cache-file-' + this.fileFormat),
 	                    type: 'jsonp',
 	                    jsonpCallbackName: 'guFont',
 	                    success: (function(style) {
+                            PerfLog.addToLog('Fonts downloaded', (new Date().getTime() - startLoading + 'ms'));
 	                    	return function(json) {
 	                    		if (typeof callback === 'function') {
 	                        		callback(style, json);
 	                        	}
 	                    		localStorage.setItem(Fonts.storagePrefix + style.getAttribute('data-cache-name'), json.css);
-	                        	common.mediator.emit('modules:fonts:loaded', [json.name]);
+	                        	//common.mediator.emit('modules:fonts:loaded', [json.name]);
 	                    	}
 	                    })(style)
             		});
             	} else {
-            		common.mediator.emit('modules:fonts:notloaded', []);
+            		//common.mediator.emit('modules:fonts:notloaded', []);
             	}
             }
         }
@@ -50,7 +53,9 @@ define(['common', 'modules/detect', 'reqwest'], function (common, detect, reqwes
         this.loadFromServerAndApply = function(url) {
         	var html = document.querySelector('html');
         	this.loadFromServer(url, function(style, json) {
+                var startApplyFonts = (new Date().getTime());
         		style.innerHTML = json.css;
+                PerfLog.addToLog('applyFonts', (new Date().getTime() - startApplyFonts + 'ms'));
         		if (html.className.indexOf('font-' + json.name + '-loaded') < 0) {
         			html.className += ' font-' + json.name + '-loaded';
         		}
