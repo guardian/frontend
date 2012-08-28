@@ -6,7 +6,7 @@
         data-count="@{trails.length - visibleTrails}"
         data-link-name="related : separate : @heading">
         
-        <h3 class="zone-color">@Html(heading)</h3>
+        <h3>@Html(heading)</h3>
 
         <ul class="unstyled">
             @trails.zipWithRowInfo.map{ case (trail, info) =>
