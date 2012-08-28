@@ -1,7 +1,5 @@
 define(['common'], function (common) {
 
-    var $g = common.$;
-
     function dayOfWeek(day) {
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
     }
