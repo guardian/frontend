@@ -20,23 +20,24 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
         var view = {
 
             showTab: function(tabSet, clickedTab, originalEvent) {
+            
                 // find the active tab in the set. returns an array of 1 item, hence [0]
                 var currentTab = common.$g('.tabs-selected a', tabSet)[0];
+                
                 // trim the leading # and find the matching panel element
                 var paneToShow = document.getElementById(clickedTab.getAttribute('href').substring(1));
                 var paneToHide = document.getElementById(currentTab.getAttribute('href').substring(1));
-                if (paneToShow && paneToHide) {
-                    // show hide stuff
-                    bonzo(currentTab.parentNode).removeClass('tabs-selected');
-                    bonzo(clickedTab.parentNode).addClass('tabs-selected');
-                    bonzo(paneToHide).hide();
-                    bonzo(paneToShow).removeClass('initially-off').show();
+                    
+                // show hide stuff
+                bonzo(currentTab.parentNode).removeClass('tabs-selected');
+                bonzo(clickedTab.parentNode).addClass('tabs-selected');
+                bonzo(paneToHide).hide();
+                bonzo(paneToShow).removeClass('initially-off').show();
 
-                    // only do this if we know the href was a tab ID, not a URL
-                    originalEvent.preventDefault();
-                }
+                // only do this if we know the href was a tab ID, not a URL
+                originalEvent.preventDefault();
+            
             }
-
         };
 
         var model = {
@@ -68,12 +69,8 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
             if (!tabSelector) {
                 tabSelector = 'ol.tabs';
             }
-
-            var ols = common.$g(tabSelector);
-
-            // bean doesn't seem to like binding to arrays of elements, bah. have to loop.
-            for (var i in ols) {
-                var tabSet = ols[i];
+    
+            var ols = common.$g(tabSelector).each(function(tabSet) {
                 bean.add(tabSet, 'click', function(e) {
                     var targetElm = model.getTargetElement(e);
                     // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
@@ -83,11 +80,11 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
                         view.showTab(tabContainer, targetElm, e);
                     }
                 });
-            }
+            })
         };
 
-        // call this like so:
-        // common.mediator.emit('modules:tabs:render', '#my-dynamically-added-tabs');
+        // Bindings
+        
         common.mediator.on('modules:tabs:render', this.init);
 
     };
