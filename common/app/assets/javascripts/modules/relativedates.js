@@ -109,7 +109,7 @@ define(['common'], function (common) {
         if (elms.length > 0) {
             for (var i=0, l=elms.length; i<l; i++) {
                 var e = elms[i];
-                $g(e).removeClass('js-timestamp'); // don't check this again
+                common.$g(e).removeClass('js-timestamp'); // don't check this again
                 var timestamp = e.getAttribute('data-timestamp');
                 
                 var relativeDate = makeRelativeDate(timestamp);
