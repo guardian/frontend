@@ -7,10 +7,7 @@ define(['common', 'reqwest'], function(common, reqwest){
         this.view = {
         
             render: function(html) {
-
-                //TODO something more useful
-                console.log(html);
-
+                document.getElementById('offcanvas-promotion').innerHTML = html;
                 common.mediator.emit('modules:navigation:render')
             }
         
@@ -23,7 +20,7 @@ define(['common', 'reqwest'], function(common, reqwest){
         // Model
         
         this.load = function(config){
-            var latestUrl = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
+            var latestUrl = config.page.coreNavigationUrl + 'top-stories/' + config.page.edition;
             return reqwest({
                     url: latestUrl,
                     type: 'jsonp',
