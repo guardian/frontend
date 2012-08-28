@@ -10,6 +10,14 @@ Measurements
 
 - Interactions on the Most read area at the bottom of the page should be +2% of overall page views
 
+    Scenario: Display Most Read in Article
+              Given I visit an article
+              When I scroll down to the Most Read section
+              Then 2 tabs will be displayed (viewed section & Guardian.co.uk)
+              And the viewed section tab will be pre-selected by default
+              
+
+
 
     Scenario: Display Most Read in Section
 		Given I visit an article within a section,
