@@ -1,3 +1,26 @@
-@(static: StaticAssets, config: GuardianConfiguration, metaData: MetaData)(implicit request: RequestHeader)
-<a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
-<a href="#sections" class="sections">Sections</a>
+@(static: StaticAssets, config: GuardianConfiguration)(implicit request: RequestHeader)
+
+
+<script>
+    // TODO need to happen immediately 
+    window.addEventListener("load", function load(event){
+        var sectionsH = document.getElementById('offcanvas-sections');
+        sectionsH.appendChild(sections);
+    });
+
+    // TODO rewrite as a module
+    function toggle(state) {
+        var d = document.getElementsByTagName('body')[0]
+        var oldClassName = d.className;
+        d.className = (d.className == state) ? 'was-' + state : state; // active-left or was-active-left, active-right or was-active-right
+        return (d.className == state)
+    }
+</script>
+
+<div id="navigation">
+    <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
+    <a href="#sections" class="sections"  onclick="var x=toggle('active-left'); this.className = x; return false;">Sections</a>
+    <span class="foo" onclick="var y = toggle('active-right'); this.className = y;">top stories</span>
+</div>
+
+
