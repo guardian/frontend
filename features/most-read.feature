@@ -19,10 +19,7 @@ Measurements
 		Given I visit an article within a section,
 		Then I am shown the top 10 most read stories for the section I am in
 		
-	Scenario: Remember tabs preference
-		Given I have visited an article and chosen a tab in the most viewed section,
-		Then the tab I have selected will persist on further pages I visit
-		
+	
 	
 	Scenario: 10 most read links - show 5, hide 5 - 'show more'
 	   Scenario: Should have (optional) picture, link text, trail text
