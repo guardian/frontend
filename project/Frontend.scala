@@ -75,7 +75,7 @@ trait Prototypes {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.7.1" % "test"
+        "org.scalatest" %% "scalatest" % "1.8" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -114,7 +114,7 @@ trait Prototypes {
       "com.gu" %% "management-play" % "5.13",
       "com.gu" %% "management-logback" % "5.13",
       "com.gu" %% "configuration" % "3.6",
-      "com.gu.openplatform" %% "content-api-client" % "1.16.4",
+      "com.gu.openplatform" %% "content-api-client" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
