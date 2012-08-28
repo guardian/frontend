@@ -1,0 +1,168 @@
+
+/* Prevent horizontal scrolling */
+#wrapper { 
+    overflow: hidden;
+    }
+
+/* Animations - translate3d = hardware accelerated = fast */
+@-webkit-keyframes slide-ltr { /* left to right */
+    from {
+        -webkit-transform: translate3d(0, 0, 0); // TODO check -moz -o w3 support
+    }
+    to {
+        -webkit-transform: translate3d(100%, 0, 0);
+    }
+}
+
+@-webkit-keyframes slide-rtl { /* right to left */
+    from {
+        -webkit-transform: translate3d(100%, 0, 0);
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+}
+
+/* */
+#offcanvas-sections, #container, #offcanvas-promotion {
+    float:left;
+    -moz-box-sizing: border-box; /* TODO check support. hang html5 attribute off body? */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* common animation properties */
+.was-active-right #container, .was-active-right #offcanvas-promotion,
+    .active-right #container, .active-right #offcanvas-promotion,
+        .active-left #container, .active-left #offcanvas-sections,
+            .was-active-left #container, .was-active-left #offcanvas-sections { 
+    
+   -webkit-animation-duration: 0.2s;
+   -webkit-animation-delay: 0;            
+   -webkit-animation-iteration-count: 1; 
+   -webkit-animation-direction: normal;
+   -webkit-animation-fill-mode: forwards; /* TODO also need javascript listener for this to set a css property to the finished state */
+}
+     
+// apply animation going from middle -> left
+.active-left #container, .active-left #offcanvas-sections { 
+   -webkit-animation-name: slide-ltr;
+}
+
+// apply animation going from left -> middle
+.was-active-left #container, .was-active-left #offcanvas-sections { 
+   -webkit-animation-name: slide-rtl;
+}
+
+// middle -> right 
+.active-right #container, .active-right #offcanvas-promotion {
+   -webkit-animation-name: slide-rtl;
+}
+
+// apply animation going from left -> middle
+.was-active-right #container, .was-active-right #offcanvas-promotion { 
+   -webkit-animation-name: slide-ltr;
+}
+
+#offcanvas-sections, #offcanvas-promotion {
+    width: 95%;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+/* Default state */
+#offcanvas-sections { margin-left: -100%; }
+#container { width: 100%;  }
+#offcanvas-promotion { margin-right: -50%; }
+
+/* Left panel active */
+.active-left #offcanvas-sections { margin-left: -95%; }
+.active-left #container {}
+.active-left #offcanvas-promotion { }
+
+/* Right panel active */
+.active-right #primary-navigation { margin-left:-100%; }
+.active-right #container { margin-left:-95%; }
+
+/* landscape */
+@media all and (min-width: 1025px) {
+
+    #offcanvas-sections {
+        width: 20%; 
+        margin-left: 0; /* DELETE ME? */
+        float: left; /* DELETE ME? */
+    }
+
+    #container {
+        width: 80%;
+    }
+
+}
+
+/************* TODO - temporary design work */
+
+#offcanvas-promotion li, #offcanvas-promotion ul {
+   list-style: none; }
+
+.active-right #offcanvas-promotion {
+    margin-left:0;
+    padding-right: 7px;
+    display: block;
+    
+}
+
+#offcanvas-sections ul {
+    margin: 0; 
+    padding: 0;
+    list-style: none;
+}
+
+#offcanvas-sections li {
+    line-height: 250%;
+    font-size: 1.3em;
+    text-shadow: 1px 0px 1px #000000;
+    font-family: georgia, serif; 
+    border-bottom: 1px solid #ccc;      
+}
+
+#offcanvas-sections li:nth-child(even) {
+    
+}
+
+#offcanvas-sections li a { 
+    padding-left: 1em;
+}
+
+#offcanvas-sections li a:hover { 
+    background-color: #eee;
+    color: #666;
+}
+
+#offcanvas-sections li a:link { 
+    display: block;
+    color: #eee;
+}
+#navigation { margin: 1em auto; width: 80%; clear: both; }
+#navigation span { font-size: 1.5em; padding: 5px 1em; cursor: pointer; } 
+
+#offcanvas-sections {
+    background-color: #666;
+    color: #eee;
+}
+
+.active-right #navigation span:nth-child(2) {
+    background-color: #999;
+    color: #fff;
+}
+
+.active-left #navigation span:nth-child(1) {
+    background-color: #999;
+    color: #fff;
+}
+
+/* TODO - delete me */
+#offcanvas-promotion {
+    xdisplay: none;
+    }
+
+
