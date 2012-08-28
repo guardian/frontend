@@ -1,0 +1,9 @@
+@(trails: Seq[Trail])
+<div>
+    <ul>
+        @trails.zipWithRowInfo.map{ case (trail, info) =>
+            <li>@formatTrail(trail, info, related=true)</li>
+        }
+    </ul>
+</div>
+
