@@ -1,0 +1,34 @@
+@(model: MatchesOnADay)(implicit request: RequestHeader)
+
+@main(model.page, Static, Configuration){ }{
+
+
+
+    <a href='/football/@model.previousDay.toString("yyyy/MMM/dd").toLowerCase/matches'>@model.previousDay.toString("dd MMM yyyy")</a>
+
+    @model.nextDay.map{ date => <a href='/football/@date.toString("yyyy/MMM/dd").toLowerCase/matches'>@date.toString("dd MMM yyyy")</a> }
+
+    @if(model.competitions.nonEmpty) {
+        <table>
+        @model.competitions.map{ competition =>
+            <thead>
+                <tr><th colspan="4">@competition.season.name</th></tr>
+            </thead>
+            <tbody>
+            <ul>
+                @competition.matches.map{ theMatch =>
+                    <tr>
+                        <td>@theMatch.date.toString("HH:mm")</td>
+                        <td>@theMatch.homeTeam.name</td>
+                        <td>@theMatch.homeTeam.score - @theMatch.awayTeam.score</td>
+                        <td>@theMatch.awayTeam.name</td>
+                    </tr>
+
+                }
+            </ul>
+            </tbody>
+        }
+        </table>
+    }
+}
+

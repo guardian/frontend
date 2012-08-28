@@ -1,5 +1,6 @@
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import common.RequestMetrics
+import model.Football
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
@@ -11,4 +12,15 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val errorCounter = Request50xs
   override val notFoundCounter = Request404s
   override val redirectCounter = Request30xs
+
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
+    Football.start()
+  }
+
+  override def onStop(app: play.api.Application) {
+    super.onStop(app)
+    Football.stop()
+  }
+
 }

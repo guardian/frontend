@@ -9,7 +9,7 @@ import play.api.templates.Html
 import play.api.Play.current
 import play.api.libs.concurrent.{ Akka, Promise }
 
-object FootballFragmentsController extends Controller with Logging {
+object FootballMatchStatsController extends Controller with Logging {
 
   def render(matchId: String) = Action { implicit request =>
 
@@ -17,8 +17,8 @@ object FootballFragmentsController extends Controller with Logging {
     val promiseOfMatchStats = Akka.future(FootballClient.matchStats(matchId))
 
     Async {
-      promiseOfMatchStats.flatMap { stats: MatchStats =>
-        promiseOfMatchEvents.map { events: MatchEvents =>
+      promiseOfMatchStats.flatMap { stats =>
+        promiseOfMatchEvents.map { events =>
 
           val cssFile = Static("stylesheets/football.min.css").toString
 

@@ -1,3 +1,5 @@
-@(theMatch: pa.MatchEvents)
+@(theMatch: Option[pa.MatchEvents])
 
-@theMatch.homeTeam.name @theMatch.homeTeamScore - @theMatch.awayTeamScore @theMatch.awayTeam.name
+@theMatch.map{ aMatch =>
+    @aMatch.homeTeam.name @aMatch.homeTeamScore - @aMatch.awayTeamScore @aMatch.awayTeam.name
+}
