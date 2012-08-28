@@ -4,6 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import common.GuardianConfiguration
+import java.net.{ HttpURLConnection, URL }
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
@@ -19,6 +20,35 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
   def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, "http://" + ukHost)(block)
 
   def US[T](path: String)(block: TestBrowser => T): T = goTo(path, "http://" + usHost)(block)
+
+  def connection[T](path: String)(block: HttpURLConnection => T): T = {
+    connectionUK(path)(block)
+  }
+
+  def connectionUK[T](path: String)(block: HttpURLConnection => T): T = {
+    testConnection("http://" + ukHost, path)(block)
+  }
+
+  def connectionUS[T](path: String)(block: HttpURLConnection => T): T = {
+    testConnection("http://" + usHost, path)(block)
+  }
+
+  private def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
+
+    val port = host match {
+      case Port(p) => p.toInt
+      case _ => 9000
+    }
+
+    running(TestServer(port), HTMLUNIT) {
+      browser =>
+        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+
+        val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
+        block(connection)
+    }
+  }
 
   private def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
