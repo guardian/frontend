@@ -5,7 +5,7 @@
     }
 
 /* Animations - translate3d = hardware accelerated = fast */
-@-webkit-keyframes slide-ltr { /* left to right */
+@-webkit-keyframes slide-ltr { /* swing left to right */
     from {
         -webkit-transform: translate3d(0, 0, 0); // TODO check -moz -o w3 support
     }
@@ -14,7 +14,7 @@
     }
 }
 
-@-webkit-keyframes slide-rtl { /* right to left */
+@-webkit-keyframes slide-rtl { /* swing right to left */
     from {
         -webkit-transform: translate3d(100%, 0, 0);
     }
@@ -26,7 +26,7 @@
 /* */
 #offcanvas-sections, #container, #offcanvas-promotion {
     float:left;
-    -moz-box-sizing: border-box; /* TODO check support. hang html5 attribute off body? */
+    -moz-box-sizing: border-box; /* TODO Check support for this */
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -49,40 +49,39 @@
    -webkit-animation-name: slide-ltr;
 }
 
-// apply animation going from left -> middle
-.was-active-left #container, .was-active-left #offcanvas-sections { 
-   -webkit-animation-name: slide-rtl;
-}
-
-// middle -> right 
+// from middle -> right 
 .active-right #container, .active-right #offcanvas-promotion {
    -webkit-animation-name: slide-rtl;
 }
 
-// apply animation going from left -> middle
+// from left -> middle
+.was-active-left #container, .was-active-left #offcanvas-sections { 
+   -xwebkit-animation-name: slide-rtl; /* TODO - this will animate the panel backwards, but IMHO it's better just to display the article in 
+                                                it's original state  */
+}
+
+// from left -> middle
 .was-active-right #container, .was-active-right #offcanvas-promotion { 
-   -webkit-animation-name: slide-ltr;
+   -xwebkit-animation-name: slide-ltr;
 }
 
 #offcanvas-sections, #offcanvas-promotion {
     width: 95%;
-    overflow-y:scroll;
-    overflow-x:hidden;
 }
 
 /* Default state */
 #offcanvas-sections { margin-left: -100%; }
-#container { width: 100%;  }
-#offcanvas-promotion { margin-right: -50%; }
+#container { width: 100%; }
+#offcanvas-promotion { margin-right: -100%; }
 
 /* Left panel active */
 .active-left #offcanvas-sections { margin-left: -95%; }
-.active-left #container {}
-.active-left #offcanvas-promotion { }
+.active-left #container { }
+.active-left #offcanvas-promotion {}
 
 /* Right panel active */
-.active-right #primary-navigation { margin-left:-100%; }
-.active-right #container { margin-left:-95%; }
+.active-right #primary-navigation { margin-left: -100%; }
+.active-right #container { margin-left: -100%; }
 
 /* landscape */
 @media all and (min-width: 1025px) {
@@ -142,22 +141,27 @@
     display: block;
     color: #eee;
 }
-#navigation { margin: 1em auto; width: 80%; clear: both; }
-#navigation span { font-size: 1.5em; padding: 5px 1em; cursor: pointer; } 
+
+#navigation {
+    min-height: 40px;
+}
+
+#navigation .buttons {
+    font-size: 1.5em;
+    padding: 5px 1em;
+    cursor: pointer;
+    color: #333;
+    text-decoration: none;
+} 
+
+#navigation .buttons .true {
+    font-weight: bold;
+    }
+
 
 #offcanvas-sections {
     background-color: #666;
     color: #eee;
-}
-
-.active-right #navigation span:nth-child(2) {
-    background-color: #999;
-    color: #fff;
-}
-
-.active-left #navigation span:nth-child(1) {
-    background-color: #999;
-    color: #fff;
 }
 
 /* TODO - delete me */

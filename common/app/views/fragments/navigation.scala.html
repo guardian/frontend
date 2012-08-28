@@ -19,8 +19,10 @@
 
 <div id="navigation">
     <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
-    <a href="#sections" class="sections"  onclick="var x=toggle('active-left'); this.className = x; return false;">Sections</a>
-    <span class="foo" onclick="var y = toggle('active-right'); this.className = y;">top stories</span>
+    <div class="buttons">
+        <a href="#sections" onclick="var x=toggle('active-left'); this.className = x; return false;">Sections</a>
+        <span onclick="var y = toggle('active-right'); this.className = y;">Top Stories</span>
+    </div>
 </div>
 
 
