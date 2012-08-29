@@ -77,6 +77,12 @@ define(['modules/detect', 'vendor/bean-0.4.11-1'], function(detect, bean) {
         if (isAjaxLink == "true") {
             shouldDelay = false;
         }
+
+        s.linkTrackVars = 'eVar37,events';
+        s.linkTrackEvents = 'event37';
+        s.events = 'event37';
+        s.eVar37 = componentName;
+
         s.tl(shouldDelay,'o',componentName);
     }
 

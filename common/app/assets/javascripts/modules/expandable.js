@@ -5,7 +5,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var dom, // root element of the trailblock
             id = opts.id,
             expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
-            cta = document.createElement('span'),
+            cta = document.createElement('a'),
             domCount,
             count;
 
@@ -15,6 +15,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
            
             updateCallToAction: function() {
                 cta.innerHTML = 'Show <span class="count">' + model.getCount() + '</span> ' + ((expanded) ? 'less' : 'more' );
+                cta.setAttribute('data-link-name', 'show ' + ((expanded) ? 'more' : 'less' ));
             },
             
             renderState: function(expanded) {
@@ -28,7 +29,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
                 cta.className = 'cta expander b2';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
-            },
+            }
         }
         
         // Model

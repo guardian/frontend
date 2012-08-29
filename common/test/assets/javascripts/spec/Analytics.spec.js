@@ -101,6 +101,10 @@ define(['analytics'], function(Analytics) {
 
             //then
             expect(analyticsName).toBe("Article | outer div | the link");
+            expect(s.linkTrackVars).toBe('eVar37,events');
+            expect(s.linkTrackEvents).toBe('event37');
+            expect(s.events).toBe('event37');
+            expect(s.eVar37).toBe("Article | outer div | the link");
 
         });
 

@@ -1,6 +1,6 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
     'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics', 'modules/tabs', 'qwery'],
-
+    
     function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Analytics, Tabs, qwery) {
 
         modules = {
