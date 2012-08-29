@@ -39,3 +39,9 @@ Measurements
 	   Scenario: Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago' 
 	   Scenario: Links in the story package should *not* contain the current article (deduplicated)
 		
+
+
+      Scenario: Most Read feature is tracked with Omniture
+         Given I interact with Most Read features using a mobile device, tablet or desktop
+         When I track my visit using omniture
+         Then Omniture will display data showing my interaction with Most Read features
