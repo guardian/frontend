@@ -10,8 +10,8 @@ define(['common', 'modules/detect'], function (common, detect) {
         this.view = {
             
             upgrade: function() {
-                
                 var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
+
                 for (var i = 0, j = images.length; i<j; ++i) {
                     var image = images[i];
                     var width = image.getAttribute('data-width');

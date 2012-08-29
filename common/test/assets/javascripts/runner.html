@@ -72,14 +72,15 @@
 <body>
 
     <ul>
-        <li><a href="#Common">Common</a>
-        <li><a href="#Detect">Detect</a>
-        <li><a href="#Popular">Popular</a>
-        <li><a href="#Images">Image</a>
-        <li><a href="#Related">Related</a>
         <li><a href="#Analytics">Analytics</a>
-        <li><a href="#Expandable">Expandable</a>
+        <li><a href="#Common">Common</a></li>
+        <li><a href="#Detect">Detect</a></li>
+        <li><a href="#Expandable">Expandable</a></li>
+        <li><a href="#Images">Image</a></li>
+        <li><a href="#Popular">Popular</a></li>
+        <li><a href="#Related">Related</a></li>
         <li><a href="#RelativeDates">Relative Dates</a></li>
+        <li><a href="#Tabs">Tabs</a></li>
     </ul>
 
     <div id="test-cases">
@@ -161,6 +162,36 @@
             <li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
           </ul>
         </div>
+
+
+        <!-- Tabs.spec -->
+        <p id="tabs-test">
+
+          <ol class="tabs">
+              <li class="tabs-selected"><a id="tab1" href="#tab1panel">Foo</a></li>
+              <li><a id="tab2" href="#tab2panel">Bar</a></li>
+          </ol>
+
+          <div class="tabs-content">
+               <div class="tabs-pane" id="tab1panel">foo</div>
+               <div class="tabs-pane initially-off" id="tab2panel">bar</div>
+          </div>
+
+
+          <ol class="tabs">
+              <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
+              <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
+              <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
+          </ol>
+
+          <div class="tabs-content">
+               <div class="tabs-pane" id="tab1panel_2">foo</div>
+               <div class="tabs-pane initially-off" id="tab2panel_2">bar</div>
+          </div>
+
+        </p>
+
+
     </div>
 
 <!-- just some test markup for click events -->
