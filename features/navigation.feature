@@ -1,4 +1,4 @@
-Feature: Navigation 
+Feature: Navigation - Sections
 
 In order to explore the Guardian content
 As a Guardian Reader
@@ -27,4 +27,9 @@ Measurements
 	Scenario: Search
 		Given I visit any guardian page,
 		Then I can keyword search across all guardian articles
+ 
+   Scenario: Section navigation is tracked with Omniture
+         Given I interact with Section features using a mobile device, tablet or desktop
+         When I track my visit using omniture
+         Then Omniture will display data showing my interaction with each section tab
 		
