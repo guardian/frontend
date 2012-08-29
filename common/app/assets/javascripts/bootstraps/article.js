@@ -3,56 +3,65 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
     function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Analytics, Tabs, qwery) {
 
+        modules = {
+
+            upgradeImages: function() {
+                var i = new Images();
+                i.upgrade();
+            },
+
+            transcludeRelated: function(host, pageId) {
+                 var url =  host + '/related/UK/' + pageId,
+                     hasStoryPackage = !document.getElementById('js-related'),
+                     relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
+               
+                if (hasStoryPackage) {
+                    relatedExpandable.initalise();
+                }
+                
+                if (!hasStoryPackage) { 
+                    common.mediator.on('modules:related:render', relatedExpandable.initalise);
+                    new Related(document.getElementById('js-related')).load(url);
+                }
+            },
+
+            transcludeMostPopular: function(host, section) {
+                var url = host + '/most-popular/UK/' + section,
+                    domContainer = document.getElementById('js-popular');
+
+                new Popular(domContainer).load(url);
+                
+                common.mediator.on('modules:popular:render', function(){
+                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                    qwery('.trailblock', domContainer).forEach(function(tab){
+                        var popularExpandable = new Expandable({ id: tab.id, expanded: false });
+                        common.mediator.on('modules:popular:render', popularExpandable.initalise);
+                    });
+                })
+            },
+
+            showRelativeDates: function() {
+                RelativeDates.init();
+            },
+
+            loadAnalytics: function(config) {
+                new Analytics().submit(config);
+            },
+
+            showTabs: function() {
+                var tabs = new Tabs().init();
+            }
+            
+        }
+    
     return {
         init: function(config) {
-
-            // upgrade images
-            var imgs = new Images();
-            imgs.upgrade();
-
-            var popularContainer = document.getElementById('js-popular');
-
-            // load most popular
-            var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.section;
-            new Popular(popularContainer).load(popularUrl);
-
-            // load related or story package
-            var hasStoryPackage = !document.getElementById('js-related');
-            
-            var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-
-            if (hasStoryPackage) {
-                relatedExpandable.initalise();
-            } else { 
-                common.mediator.on('modules:related:render', relatedExpandable.initalise);
-                var relatedUrl = config.page.coreNavigationUrl + '/related/UK/' + config.page.pageId;
-                new Related(document.getElementById('js-related')).load(relatedUrl);
-            }
-
-            // show relative dates
-            RelativeDates.init();
-
-            //record page view and setup click tracking
-            new Analytics().submit(config);
-            
-            // load tabs and initialise any already in the document
-            var tabs = new Tabs();
-            tabs.init();
-
-             // loop through child tabbed elements and bind them as expanders
-            common.mediator.on('modules:popular:render', function(){
-                
-                // activate tabbed widget
-                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-
-                // activate multiple expanders
-                var popularExpandables = qwery('.trailblock', popularContainer);
-                for (var i in popularExpandables) {
-                    var pop = popularExpandables[i];
-                    var popularExpandable = new Expandable({ id: pop.id, expanded: false });
-                    common.mediator.on('modules:popular:render', popularExpandable.initalise);
-                }
-            });
+            modules.upgradeImages();
+            modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+            modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+            modules.showRelativeDates();
+            modules.showTabs(); 
+            modules.loadAnalytics(config);
         }
     }
 });
