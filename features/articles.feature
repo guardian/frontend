@@ -26,6 +26,11 @@ Measurements
         Given I visit an article
         Then I see a link to the corresponding desktop (www) article 
 
+    Scenario: Article visit if tracked with Omniture
+        Given I visit an article using a mobile device
+        When I track my visit using omniture
+        Then Omniture will display data showing my interaction with the article
+
     @blocked
     Scenario: Image quality
         Given I am on a low bandwidth connection
