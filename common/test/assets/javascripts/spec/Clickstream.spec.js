@@ -2,13 +2,20 @@ define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Cli
 
     describe("Clickstream", function() { 
 
-        bean.add(document.getElementById('click-me'), 'click', function(e) {
-            e.preventDefault();
-           })
+        beforeEach(function(){
 
-        it("should record clicks with correct analytics name", function(){
+            // prevents unit tests from visiting the link
+            bean.add(document.getElementById('click-me'), 'click', function(e) {
+                e.preventDefault();
+            })
+
+            common.mediator.removeAllListeners();
+
+        });
+
+        it("should derive analytics tag name from the dom ancestors of the source element", function(){
         
-            var cs  = new Clickstream(),
+            var cs  = new Clickstream({ filter: ["a"] }),
                 object = { method: function (tag) {} },
                 spy = sinon.spy(object, "method");
              
@@ -26,11 +33,22 @@ define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Cli
             
         });
 
-        xit("should not wait to record clicks for ajax links", function(){
-        });
+        it("should ignore click not from a list of given element sources", function(){
+            
+            var cs  = new Clickstream({ filter: ['a'] }), // only log events on [a]nchor elements
+                object = { method: function (tag) {} },
+                spy = sinon.spy(object, "method");
 
-        xit("should not record clicks against an element not inside an <a> tag", function(){
-        
+            common.mediator.on('clickstream:click', spy);
+            
+            bean.fire(document.getElementById('not-inside-a-link'), 'click');
+            
+            waits(10);
+
+            runs(function(){
+                expect(spy.callCount).toBe(0);
+            });
+
         });
     
     });
