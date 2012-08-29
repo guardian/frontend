@@ -6,6 +6,27 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
   feature("Related links") {
 
+    // Feature
+
+    info("In order to continue reading more about the story")
+    info("As a Guardian reader")
+    info("I want to visit related links to the current article I am reading")
+
+    // Metrics
+
+    info("Increase average number of articles 'read' from 1.9% to 2.5%")
+
+    // TODO - scenarios pending Selenium set up
+/*
+    cenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
+    cenario("Number of 'more' items should be represented by a number")(pending)
+    cenario("Appear *after* the comments")(pending)
+    cenario("If has no Story Package, then show Related Links")(pending)
+    cenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
+    cenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
+*/
+    // Features
+
     scenario("Shows related links for each article") {
 
       given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
@@ -60,5 +81,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
       }
     }
+
   }
 }

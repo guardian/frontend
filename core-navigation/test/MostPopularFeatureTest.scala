@@ -8,6 +8,18 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
   feature("Most popular") {
 
+    // Feature
+
+    info("In order to explore the most popular Guardian stories")
+    info("As a Guardian Reader")
+    info("I want to read the most read stories across the guardian and within the section I'm in")
+
+    // Metrics
+
+    info("Interactions on the Most read area at the bottom of the page should be +2% of overall page views")
+
+    // Scenarios
+
     scenario("Most popular for a section") {
 
       given("I am on a page in the 'World' section")

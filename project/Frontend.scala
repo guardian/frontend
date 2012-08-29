@@ -65,7 +65,7 @@ trait Prototypes {
         case When(message) => IO.append(output, "\t\tWhen " + message + "\n")
         case Then(message) => IO.append(output, "\t\tThen " + message + "\n")
         case And(message) => IO.append(output, "\t\tAnd " + message + "\n")
-        case Info(message) => IO.append(output, "\t\t# " + message + "\n")
+        case Info(message) => IO.append(output, "\t" + message + "\n")
         case line => Unit
       }
       output
