@@ -1,16 +1,20 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
-    'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/navigation'],
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Navigation) {
+    'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/tabs', 'qwery',
+    'modules/navigation'],
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Tabs, qwery, Navigation) {
 
     return {
         init: function(config) {
 
             // upgrade images
-            new Images().upgrade();
+            var imgs = new Images();
+            imgs.upgrade();
+
+            var popularContainer = document.getElementById('js-popular');
 
             // load most popular
             var popularUrl = config.page.coreNavigationUrl + '/most-popular/UK/' + config.page.section;
-            new Popular(document.getElementById('js-popular')).load(popularUrl);
+            new Popular(popularContainer).load(popularUrl);
 
             // load related or story package
             var hasStoryPackage = !document.getElementById('js-related');
@@ -29,6 +33,25 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
             // show relative dates
             RelativeDates.init();
+
+            // load tabs and initialise any already in the document
+            var tabs = new Tabs();
+            tabs.init();
+
+             // loop through child tabbed elements and bind them as expanders
+            common.mediator.on('modules:popular:render', function(){
+                
+                // activate tabbed widget
+                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+
+                // activate multiple expanders
+                var popularExpandables = qwery('.trailblock', popularContainer);
+                for (var i in popularExpandables) {
+                    var pop = popularExpandables[i];
+                    var popularExpandable = new Expandable({ id: pop.id, expanded: false });
+                    common.mediator.on('modules:popular:render', popularExpandable.initalise);
+                }
+            });
         }
     }
 });

@@ -10,6 +10,14 @@ Measurements
 
 - Interactions on the Most read area at the bottom of the page should be +2% of overall page views
 
+    Scenario: Display Most Read in Article
+              Given I visit an article
+              When I scroll down to the Most Read section
+              Then 2 tabs will be displayed (viewed section & Guardian.co.uk)
+              And the viewed section tab will be pre-selected by default
+              
+
+
 
     Scenario: Display Most Read in Section
 		Given I visit an article within a section,
@@ -19,10 +27,7 @@ Measurements
 		Given I visit an article within a section,
 		Then I am shown the top 10 most read stories for the section I am in
 		
-	Scenario: Remember tabs preference
-		Given I have visited an article and chosen a tab in the most viewed section,
-		Then the tab I have selected will persist on further pages I visit
-		
+	
 	
 	Scenario: 10 most read links - show 5, hide 5 - 'show more'
 	   Scenario: Should have (optional) picture, link text, trail text
@@ -34,3 +39,9 @@ Measurements
 	   Scenario: Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago' 
 	   Scenario: Links in the story package should *not* contain the current article (deduplicated)
 		
+
+
+      Scenario: Most Read feature is tracked with Omniture
+         Given I interact with Most Read features using a mobile device, tablet or desktop
+         When I track my visit using omniture
+         Then Omniture will display data showing my interaction with Most Read features

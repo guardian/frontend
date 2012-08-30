@@ -15,8 +15,8 @@
         @fragments.relativeDate(trail.webPublicationDate, noImage=true)
     }
     <div class="bd">
-        <p>
-            <a href="@trail.url" @if(related){itemprop="relatedLink"} class="trail-headline" data-link-name="link text | @info.rowNum">
+        <p class="trail-headline">
+            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | @info.rowNum">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </p>

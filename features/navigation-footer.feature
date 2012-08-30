@@ -28,5 +28,10 @@ Measurements
 	When I click on the contact us link
 	Then I link to the contact page
 	
+
+  Scenario: Footer content feature is tracked with Omniture
+         Given I interact with Footer content features using a mobile device, tablet or desktop
+         When I track my visit using omniture
+         Then Omniture will display data showing my interaction with each footer content feature
 	
 
