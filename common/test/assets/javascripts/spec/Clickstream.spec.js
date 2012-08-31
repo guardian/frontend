@@ -35,7 +35,6 @@ define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Cli
     
             runs(function(){
                 expect(spy.withArgs(['outer div | the span', false, false])).toHaveBeenCalledOnce();
-                console.log('end test');
             });
             
         });
