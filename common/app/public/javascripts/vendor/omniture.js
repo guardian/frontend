@@ -1,3 +1,4 @@
+(function(){
 /* SiteCatalyst code version: H.25.
  Copyright 1996-2012 Adobe, Inc. All Rights Reserved
  More info available at http://www.omniture.com */
@@ -219,4 +220,5 @@ var s_code='',s_objectID;function s_gi(un,pg,ss){var c="s.version='H.25';s.an=s_
         +"'+c.substring(e+1);s=c.indexOf('=function(')}return c;");
     c=s_d(c);if(e>0){a=parseInt(i=v.substring(e+5));if(a>3)a=parseFloat(i)}else if(m>0)a=parseFloat(u.substring(m+10));else a=parseFloat(v);if(a<5||v.indexOf('Opera')>=0||u.indexOf('Opera')>=0)c=s_ft(c);if(!s){s=new Object;if(!w.s_c_in){w.s_c_il=new Array;w.s_c_in=0}s._il=w.s_c_il;s._in=w.s_c_in;s._il[s._in]=s;w.s_c_in++;}s._c='s_c';(new Function("s","un","pg","ss",c))(s,un,pg,ss);return s}
 function s_giqf(){var w=window,q=w.s_giq,i,t,s;if(q)for(i=0;i<q.length;i++){t=q[i];s=s_gi(t.oun);s.sa(t.un);s.setTagContainer(t.tagContainerName)}w.s_giq=0}s_giqf()
+})();
 

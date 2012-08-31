@@ -2,38 +2,37 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
-    function Omniture(config) {
+    function Omniture(s, config) {
 
-        var config = config;
+        var config = config,
+            s = s,
+            that = this;
 
         this.logView = function() {
             s.t();
         }
-        
+ 
         this.logTag = function(params) {
-            var delay = params[0],
-                tag = params[1];
 
+            var tag = params[0],
+                isXhr = params[1],
+                isInternalAnchor = params[2];
+
+            delay = (isXhr || isInternalAnchor) ? false : true;
+
+            that.populateEventProperties(s, tag);
+            
             s.tl(delay, 'o', tag);
         }
-
-        var log = function recordClick(){
-
-            var isAjaxLink = element.getAttribute("data-is-ajax");
-            var linkHref = element.getAttribute('href');
-            var shouldDelay = (linkHref && (linkHref.indexOf('#') === 0 || linkHref.indexOf('javascript') === 0)) ? true : this;
-            if (isAjaxLink == "true") {
-                shouldDelay = false;
-            }
-        
+    
+        this.populateEventProperties = function(tag){
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = componentName;
-                
-        }       
+            s.eVar37 = s.pageType + ' | ' + tag;
+        }
 
-        this.populate = function(s) {
+        this.populatePageProperties = function() {
        
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com';
         
@@ -85,10 +84,10 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             var that = this;
 
             require(['omniture'], function(placeholder){
-                that.populate(window.s);
+                that.populatePageProperties(window.s);
+                that.logView();
                 common.mediator.on('modules:clickstream:click', that.logTag )
             });
-        
         }    
      
     }

@@ -2,35 +2,45 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
     
     describe("Omniture", function() { 
 
-        var config, spy;
+        var config = {};
 
         beforeEach(function(){
             
-            config = {
-                page: {
-                    omnitureAccount: 'the_account'
-                }
-            };
-        
-            window.s = null; 
+            config.page = { omnitureAccount: 'the_account' }
  
-            // fake for the benefit of modules/detect 
+            s = { t: function(){}, tl: function(){} };
+            sinon.spy(s, "t");
+            sinon.spy(s, "tl");
+
             window.performance = { timing: { requestStart: 1, responseStart: 5000 } };
             window.innerWidth = 500;
-            
+           
         });
 
         it("should correctly set the Omniture account", function(){
-            new Omniture(config).init();
+            var o = new Omniture(s, config).init();
             expect(s_account).toBe("the_account");
+        });
+
+        it("should record clicks with correct analytics name", function(){
+
+            config.page.contentType = 'Article';
+            s.pageType = 'article';
+
+            var o = new Omniture(s, config)
+            o.init();
+            o.populateEventProperties('outer | link');
+
+            expect(s.linkTrackVars).toBe('eVar37,events');
+            expect(s.linkTrackEvents).toBe('event37');
+            expect(s.events).toBe('event37');
+            expect(s.eVar37).toBe("article | outer | link");
+
         });
 
         it("should correctly set page properties", function(){
         
-            var s = {
-                linkInternalFilters: 'guardian.co.uk,guardiannews.co.uk'
-            };
-
+            s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
             config.page = {
                     omnitureAccount: 'the_account',
                     webTitle: 'a really long title a really long title a really long title a really long title a really long title a really long title ',
@@ -47,8 +57,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     webPublicationDate: "2012-02-22T16:58:00.000Z"
             };
 
-            var a = new Omniture(config)
-            a.populate(s);
+            var o = new Omniture(s, config)
+            o.populatePageProperties();
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com");
             expect(s.pageName).toBe("a really long title a really long title a really long title a really lon:Article:12345");
@@ -71,7 +81,42 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.eVar19).toBe("frontend");
         });
 
+        it("should log a page view event", function() {
+            var o = new Omniture(s, config).init();
+            waits(100); 
+            runs(function() {
+                expect(s.t).toHaveBeenCalledOnce();
+            });
+        });
+        
+        it("should log a clickstream event", function() {
+
+            var o = new Omniture(s, config)
+            o.init();
+            waits(100);
+            runs(function() {
+                common.mediator.emit('modules:clickstream:click', ['tag', false, false]);
+                expect(s.tl).toHaveBeenCalledOnce();
+            });
+        });
+
+        it("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
+            
+            var o = new Omniture(s, config)
+            o.init();
+            waits(100);
+            runs(function() {
+                common.mediator.emit('modules:clickstream:click', ['tag', false, true]); // xhr
+                common.mediator.emit('modules:clickstream:click', ['tag', true, false]); // internal anchor
+                common.mediator.emit('modules:clickstream:click', ['tag', true, true]);  // xhr + internal anchor
+                common.mediator.emit('modules:clickstream:click', ['tag', false, false]); // neither 
+                expect(s.tl.withArgs(false, 'o', 'tag')).toHaveBeenCalledThrice();
+            });
+
+        });
+
     });
+
 
 });
 
