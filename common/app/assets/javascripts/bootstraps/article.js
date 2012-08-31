@@ -1,7 +1,8 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
-    'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics', 'modules/tabs', 'qwery'],
+    'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics/clickstream',
+    'modules/analytics/omniture', 'modules/tabs', 'qwery'],
     
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Analytics, Tabs, qwery) {
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Clickstream, Omniture, Tabs, qwery) {
 
         modules = {
 
@@ -45,15 +46,16 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             },
 
             loadAnalytics: function(config) {
-                new Analytics().submit(config);
+                var cs = new Clickstream({ filter: ["a", "span"] })
+                var o = new Omniture(null, config).init();
             },
 
             showTabs: function() {
                 var tabs = new Tabs().init();
             }
-            
+         
         }
-    
+
     return {
         init: function(config) {
             modules.upgradeImages();
@@ -61,7 +63,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
             modules.showRelativeDates();
             modules.showTabs(); 
-            modules.loadAnalytics(config);
+            modules.loadAnalytics(config); 
         }
     }
 });

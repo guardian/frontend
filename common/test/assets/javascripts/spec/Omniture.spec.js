@@ -7,7 +7,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         beforeEach(function(){
             
             config.page = { omnitureAccount: 'the_account' }
- 
+
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
@@ -34,7 +34,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.linkTrackVars).toBe('eVar37,events');
             expect(s.linkTrackEvents).toBe('event37');
             expect(s.events).toBe('event37');
-            expect(s.eVar37).toBe("article | outer | link");
+            expect(s.eVar37).toBe("Article | outer | link");
 
         });
 
@@ -95,7 +95,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             o.init();
             waits(100);
             runs(function() {
-                common.mediator.emit('modules:clickstream:click', ['tag', false, false]);
+                common.mediator.emit('module:clickstream:click', ['tag', false, false]);
                 expect(s.tl).toHaveBeenCalledOnce();
             });
         });
@@ -106,10 +106,10 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             o.init();
             waits(100);
             runs(function() {
-                common.mediator.emit('modules:clickstream:click', ['tag', false, true]); // xhr
-                common.mediator.emit('modules:clickstream:click', ['tag', true, false]); // internal anchor
-                common.mediator.emit('modules:clickstream:click', ['tag', true, true]);  // xhr + internal anchor
-                common.mediator.emit('modules:clickstream:click', ['tag', false, false]); // neither 
+                common.mediator.emit('module:clickstream:click', ['tag', false, true]); // xhr
+                common.mediator.emit('module:clickstream:click', ['tag', true, false]); // internal anchor
+                common.mediator.emit('module:clickstream:click', ['tag', true, true]);  // xhr + internal anchor
+                common.mediator.emit('module:clickstream:click', ['tag', false, false]); // neither 
                 expect(s.tl.withArgs(false, 'o', 'tag')).toHaveBeenCalledThrice();
             });
 

@@ -20,7 +20,7 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
 
             delay = (isXhr || isInternalAnchor) ? false : true;
 
-            that.populateEventProperties(s, tag);
+            that.populateEventProperties(tag);
             
             s.tl(delay, 'o', tag);
         }
@@ -60,7 +60,7 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             var platform = "frontend";
             s.prop19     = platform;
             s.eVar19     = platform;
-                   
+                  
             s.prop47    = config.page.edition || '';
 
             s.prop48    = detect.getConnectionSpeed();
@@ -72,8 +72,6 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             } else {
                 s.prop30 = 'non-content';
             }
-            
-            return s;
         }
 
         this.init = function() {
@@ -83,11 +81,21 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
     
             var that = this;
 
-            require(['omniture'], function(placeholder){
-                that.populatePageProperties(window.s);
+            // if the omniture object was not injected in to the consutrctor
+            // use the global 's' object 
+
+            if (s != null) {
+                that.populatePageProperties();
                 that.logView();
-                common.mediator.on('modules:clickstream:click', that.logTag )
-            });
+                common.mediator.on('module:clickstream:click', that.logTag )
+            } else {
+                require(['omniture'], function(placeholder){
+                    s = window.s; 
+                    that.populatePageProperties();
+                    that.logView();
+                    common.mediator.on('module:clickstream:click', that.logTag )
+                });
+            }
         }    
      
     }
