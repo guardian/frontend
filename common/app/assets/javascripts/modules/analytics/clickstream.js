@@ -30,9 +30,14 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             if (!filterSource(event.target.tagName.toLowerCase()).length > 0)
                 return false;
             
-            isXhr = (event.target.getAttribute("data-is-ajax")) ? true : false;
+            var target = event.target,
+                dataIsXhr = target.getAttribute("data-is-ajax"),
+                href = target.getAttribute("href");
+             
+            var isXhr = (dataIsXhr) ? true : false;
+            var isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
 
-            common.mediator.emit('module:clickstream:click', [getTag(event.target, []), isXhr]) 
+            common.mediator.emit('module:clickstream:click', [getTag(target, []), isXhr, isInternalAnchor]) 
         });
      
     }

@@ -27,14 +27,14 @@ define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Cli
                 object = { method: function (p) {} },
                 spy = sinon.spy(object, "method");
              
-            spy.withArgs(['outer div | the link', false]);
+            spy.withArgs(['outer div | the link', false, false]);
 
             common.mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me-span'), 'click');
     
             runs(function(){
-                expect(spy.withArgs(['outer div | the span', false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs(['outer div | the span', false, false])).toHaveBeenCalledOnce();
                 console.log('end test');
             });
             
@@ -69,10 +69,31 @@ define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Cli
             bean.fire(document.getElementById('click-me-quick'), 'click');
 
             runs(function(){
-                expect(spy.withArgs(['outer div | xhr link', true])).toHaveBeenCalledOnce();
+                expect(spy.withArgs(['outer div | xhr link', true, false])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
+
+        it("should indicate if a click eminates from a internal anchor", function(){
+
+            var cs  = new Clickstream({ filter: ["p"] }),
+                object = { method: function (p) {} },
+                spy = sinon.spy(object, "method");
+            
+            spy.withArgs(["outer div | parapraph", false, true]);
+
+            common.mediator.on('module:clickstream:click', spy);
+
+            bean.fire(document.getElementById('click-me-slow'), 'click');
+
+            runs(function(){
+                expect(spy.withArgs(['outer div | paragraph', false, true])).toHaveBeenCalledOnce();
+                expect(spy).toHaveBeenCalledOnce();
+            });
+        });
+
+
+
     });
 
 });
