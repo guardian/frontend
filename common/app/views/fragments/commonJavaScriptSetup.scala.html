@@ -44,7 +44,7 @@
             });
         };
 
-        document.getElementById('gu').parentNode.insertBefore(script);
+        document.getElementsByTagName("head")[0].appendChild(script); 
     
     })(guardian.isModernBrowser);
 

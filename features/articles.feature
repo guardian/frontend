@@ -27,9 +27,9 @@ Measurements
         Then I see a link to the corresponding desktop (www) article 
 
     Scenario: Article visit if tracked with Omniture
-        Given I visit an article using a mobile device
+        Given I visit an article using a mobile device, tablet or desktop
         When I track my visit using omniture
-        Then Omniture will display data showing my interaction with the article
+        Then Omniture will display data showing my interaction with the article 
 
     @blocked
     Scenario: Image quality
