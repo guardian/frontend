@@ -32,4 +32,6 @@ Measurements
          When I track my visit using omniture
          Then Omniture will display data showing my interaction with Image Gallery features
 	
+      Secenario: Test scenario
+         Given : do nothing
 
