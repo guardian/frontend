@@ -5,7 +5,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         var dom, // root element of the trailblock
             id = opts.id,
             expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
-            cta = document.createElement('a'),
+            cta = document.createElement('span'),
             domCount,
             count;
 
