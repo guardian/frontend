@@ -203,13 +203,14 @@
 
     </div>
 
-<!-- just some test markup for click events -->
-<div data-link-name="outer div">
-    <p id="not-inside-a-link">
-        <a href="/foo" id="click-me" data-link-name="the link">The link</a>
-        <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="the link">The link</a>
-    </p>
-</div>
+    <!-- Clickstream.spec -->
+    <div data-link-name="outer div">
+        <p id="not-inside-a-link">
+            <a href="/foo" id="click-me" data-link-name="the link">The link</a>
+            <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="xhr link">Xhr Link</a>
+            <span id="click-me-span" data-link-name="the span">Span Link</span>
+        </p>
+    </div>
 
 </body>
 </html>

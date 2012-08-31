@@ -12,7 +12,7 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
         }
  
         var getTag = function(element, tag) {
-        
+
             var elementName = element.tagName.toLowerCase();
             
             if (elementName === 'body')
@@ -30,7 +30,9 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             if (!filterSource(event.target.tagName.toLowerCase()).length > 0)
                 return false;
             
-            common.mediator.emit('clickstream:click', getTag(event.target, [])) 
+            isXhr = (event.target.getAttribute("data-is-ajax")) ? true : false;
+
+            common.mediator.emit('module:clickstream:click', [getTag(event.target, []), isXhr]) 
         });
      
     }
