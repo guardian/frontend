@@ -27,7 +27,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
       HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
 
-        then("the Omniture web bug should record my visit")
+        then("the Omniture webbug should record my visit")
         val webbug = findFirst("#omnitureNoScript img")
 
         webbug.getAttribute("src") should startWith("http://hits.guardian.co.uk/b/ss/guardiangu-mobiledev/1/H.24.2/")
@@ -40,7 +40,23 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
       }
     }
 
+    scenario("Ensure all clicked links are recorded by Omniture") {
+      given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
+      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+        import browser._
+
+        then("all links on the page should be decorated with the Omniture meta-data attribute")
+        val anchorsWithNoDataLink = find("a").filter(hasNoLinkName(_))
+        anchorsWithNoDataLink should have length (0)
+
+      }
+
+    }
+
     scenario("Ophan tracks user actions")(pending)
 
   }
+
+  private def hasNoLinkName(e: FluentWebElement) = e.getAttribute("data-link-name") == null
+
 }
