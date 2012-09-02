@@ -45,9 +45,15 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
                 RelativeDates.init();
             },
 
-            loadAnalytics: function(config) {
+            loadOmnitureAnalytics: function(config) {
                 var cs = new Clickstream({ filter: ["a", "span"] })
                 var o = new Omniture(null, config).init();
+            },
+
+            loadOphanAnalytics: function(config) {
+                require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
+                        console.log('ophan loaded', ophan);
+                        });
             },
 
             showTabs: function() {
@@ -63,7 +69,8 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
             modules.showRelativeDates();
             modules.showTabs(); 
-            modules.loadAnalytics(config); 
+            modules.loadOmnitureAnalytics(config); 
+            modules.loadOphanAnalytics(config); 
         }
     }
 });
