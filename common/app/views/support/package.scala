@@ -177,19 +177,34 @@ object OmnitureAnalyticsData {
     val pageCode = data.get("page-code").getOrElse("")
     val contentType = data.get("content-type").getOrElse("")
     val section = data.get("section").getOrElse("")
+    val platform = "frontend"
 
+    val isContent = page match {
+      case c: Content => true
+      case _ => false
+    }
+
+    val pageName = data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))
     val analyticsData = Map(
-      "pageName" -> (data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))),
+      "ns" -> "guardian",
+      "pageName" -> pageName,
+      "v7" -> pageName,
       "ch" -> section,
       "c9" -> section,
       "c4" -> data.get("keywords").getOrElse(""),
       "c6" -> data.get("author").getOrElse(""),
       "c8" -> pageCode,
+      "v8" -> pageCode,
+      "c9" -> contentType,
       "c10" -> data.get("tones").getOrElse(""),
       "c11" -> section,
       "c13" -> data.get("series").getOrElse(""),
       "c25" -> data.get("blogs").getOrElse(""),
-      "c14" -> data("build-number")
+      "c14" -> data("build-number"),
+      "c19" -> platform,
+      "v19" -> platform,
+      "c30" -> (if (isContent) "content" else "non-content"),
+      "pageType" -> contentType
     )
 
     Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))

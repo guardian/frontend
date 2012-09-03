@@ -2,13 +2,15 @@
 
 @defining(popular.size > 1){ isTabbed =>
 
-    <div class="trailblock trailblock-shaded zone-border" id="popular-trails">
+    <div class="trailblock trailblock-shaded zone-border" id="popular-trails" data-link-name="most popular">
         <h3 class="zone-color">Most viewed</h3>
 
         @if(isTabbed) {
             <ol class="tabs" id="js-popular-tabs">
                 @popular.zipWithRowInfo.map{ case (section, info) =>
-                    <li@if(info.isFirst){ class="tabs-selected"}><a href="#tabs-popular-@info.rowNum">@section.heading</a></li>
+                    <li@if(info.isFirst){ class="tabs-selected"}>
+                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading">@section.heading</a>
+                    </li>
                 }
             </ol>
         }
@@ -17,7 +19,9 @@
             @popular.zipWithRowInfo.map{ case (section, info) =>
                 <div id="tabs-popular-@info.rowNum" 
                     class="trailblock @if(isTabbed){tabs-panel @if(!info.isFirst){ initially-off}}"
-                    data-count="@{section.trails.length - visibleTrails}">
+                    data-count="@{section.trails.length - visibleTrails}"
+                    data-link-name="@section.heading"
+                >
 
                     <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
