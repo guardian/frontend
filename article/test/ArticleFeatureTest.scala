@@ -13,6 +13,19 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
   feature("Article") {
 
+    // Feature 
+
+    info("In order to experience all the wonderful words the Guardian write")
+    info("As a Guardian reader")
+    info("I want to read a version of the article optimised for my mobile devices")
+
+    // Metrics 
+
+    info("Page views should *not* decrease.")
+    info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
+
+    // Scenarios
+
     scenario("Display a headline", ArticleComponents) {
 
       given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
@@ -21,7 +34,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see the headline of the article")
 
-        info("The article is marked up with the correct schema")
+        and("The article is marked up with the correct schema")
         val article = findFirst("article[itemtype='http://schema.org/Article']")
 
         article.findFirst("[itemprop=headline]").getText should
@@ -121,7 +134,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the star rating of the festival")
-        info("The review is marked up with the correct schema")
+        and("The review is marked up with the correct schema")
         val review = findFirst("article[itemtype='http://schema.org/Review']")
 
         review.findFirst(".stars").getText should be("3 / 5 stars")
@@ -130,9 +143,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     }
 
     scenario("Review body", ArticleComponents) {
-      info("The schema.org markup for a review body is different to an article body")
 
-      given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On – Edinburgh festival review'")
+      // Nb, The schema.org markup for a review body is different to an article body
+
+      given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
       HtmlUnit("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
         import browser._
 
@@ -165,7 +179,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-    scenario("Navigate to www.guardian.co.uk (desktop site)") {
+    scenario("Navigate to the desktop site (UK edition - www.guardian.co.uk)") {
       given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       and("I am using the UK edition")
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
@@ -176,7 +190,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-    scenario("Navigate to www.guardiannews.com (desktop site)") {
+    scenario("Navigate to the desktop site (US edition - www.guardiannews.com)") {
       given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       and("I am using the US edition")
       HtmlUnit.US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
@@ -203,7 +217,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         relatedLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
 
         and("I should see an image link to the related content")
-        val imageLink = related.find("a").filter(hasLinkName(_, "trail image | 1")).head
+        val imageLink = related.find("a").filter(hasLinkName(_, "trail image | item 1")).head
         imageLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
         imageLink.find("img").head.getAttribute("src") should
           be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")

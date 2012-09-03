@@ -1,7 +1,7 @@
 @(content: model.Content)
 
-@* p tags may be empty as javascript can hoo onto it after page load *@
-<p class="standfirst" itemprop="description">
+@* p tags may be empty as javascript can hook onto it after page load *@
+<p class="standfirst" itemprop="description" data-link-name="standfirst">
 @content.standfirst.map { s =>
         @withJsoup(s)(
             InBodyLinkCleaner

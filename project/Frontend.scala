@@ -1,6 +1,7 @@
 import com.gu.deploy.PlayArtifact._
 import com.gu.deploy.PlayAssetHash._
 import com.typesafe.sbtscalariform.ScalariformPlugin._
+import io.Source
 import org.sbtidea.SbtIdeaPlugin._
 import sbt._
 import sbt.Keys._
@@ -11,6 +12,7 @@ import com.gu.RequireJS._
 import com.gu.RequireJS
 
 object Frontend extends Build with Prototypes {
+
   val version = "1-SNAPSHOT"
 
   val common = library("common")
@@ -38,6 +40,43 @@ object Frontend extends Build with Prototypes {
 }
 
 trait Prototypes {
+
+  val features = TaskKey[Seq[File]]("features", "Builds a file with BDD features in it")
+
+  def featuresTask = (sources in Test, target, streams) map { (testFiles, targetDir, s) =>
+
+    import s.log
+
+    val Feature = """.*feature\("(.*)"\).*""".r
+    val Scenario = """.*scenario\("(.*)".*""".r  // TODO tags
+    val Given = """.*given\("(.*)"\).*""".r
+    val When = """.*when\("(.*)"\).*""".r
+    val Then = """.*then\("(.*)"\).*""".r
+    val And = """.*and\("(.*)"\).*""".r
+    val Info = """.*info\("(.*)"\).*""".r
+
+    testFiles.filter(_.getName.endsWith("FeatureTest.scala")).map{ testFile: File =>
+      log.info("creating feature file for: " + testFile)
+      val name = testFile.getName.replace("FeatureTest.scala", ".feature")
+      val featureFile = targetDir / name
+      if (featureFile.exists) featureFile.delete()
+      featureFile.createNewFile()
+      (testFile, featureFile)
+    }.map{ case(source, output) =>
+      Source.fromFile(source).getLines().foreach{
+        case Feature(message) => IO.append(output, "Feature: " + message + "\n")
+        case Scenario(message) => IO.append(output, "\n\tScenario: " + message + "\n")
+        case Given(message) => IO.append(output, "\t\tGiven " + message + "\n")
+        case When(message) => IO.append(output, "\t\tWhen " + message + "\n")
+        case Then(message) => IO.append(output, "\t\tThen " + message + "\n")
+        case And(message) => IO.append(output, "\t\tAnd " + message + "\n")
+        case Info(message) => IO.append(output, "\t" + message + "\n")
+        case line => Unit
+      }
+      output
+    }
+  }
+
   val version: String
 
   def root() = Project("root", base = file("."))
@@ -47,8 +86,10 @@ trait Prototypes {
     )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(playAssetHashDistSettings: _*)
+    .settings(RequireJS.settings:_*)
+    .settings(requireJsConfiguration: _*)
     .settings(scalariformSettings: _*)
+    .settings(playAssetHashDistSettings: _*)
     .settings(
       scalaVersion := "2.9.1",
 
@@ -104,9 +145,7 @@ trait Prototypes {
     resourceGenerators in Compile <+=  requireJsCompiler
   )
 
-  def library(name: String) = base(name)
-    .settings(RequireJS.settings:_*)
-    .settings(requireJsConfiguration: _*).settings(
+  def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.13",
@@ -127,6 +166,7 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
+    features <<= featuresTask,
     staticFilesPackage := "frontend-static",
     executableName := "frontend-%s" format  name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },

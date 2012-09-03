@@ -1,62 +1,3 @@
-.more-on-story {
-    border-top: 2px solid #ccc;
-    padding: 3px 2% !important;
-    background-color: #eeeeee;
-    margin-bottom: 10px;
-}
-
-.more-on-story ul {
-    margin: 0 !important;
-}
-
-.more-on-story h3 {
-    font-size: 11px !important;    
-    margin-bottom: 3px !important;
-}
-
-.more-on-story li p,
-.more-on-story li a {
-    font: 13px arial !important;
-    line-height: 17px !important;
-}
-
-.more-on-story h3.expander, 
-.more-on-story li p.type-tone, 
-.more-on-story .media .img img {
-    display: none;
-}
-
-.more-on-story li:first-child .media:first-child {
-    border-top: 1px solid #ccc;
-    padding-top: 3px;
-}
-
-.more-on-story li:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-.more-inline {
-    width: 40%;
-    float: left;
-    margin: 0 20px 20px 0 !important;
-}
-
-.more-single-block .media .img img {
-    display: block;
-}
-
-.more-multiple-block .media .img img {
-    display: block;
-}
-
-.more-multiple-block h3.expander {
-    display: block;
-    margin-top: 10px;
-}
-
-
-
 /* nicole sullivan's media object */
 
 /* ====== media ====== */
@@ -75,13 +16,6 @@
 .media .img img {
     display: block;
 }
-
-.media .imgExt {
-    float: right; 
-    margin-left: 10px;
-}
-
-
 
 /* ====== /media ====== */
 
@@ -161,26 +95,6 @@
 
 .trailblock.shut .count {
     display: inline-block;
-}
-
-.comments p {
-    font-family: arial;
-    font-size: 15px;
-    line-height: 19px;
-}
-
-.comments blockquote {
-    margin: 10px;
-    padding-left: 10px;
-    border-left: 1px dotted #666;
-    font-family: arial;
-    font-size: 15px;
-    line-height: 19px;
-    color: #666;
-}
-
-.comments .datestamp {
-    color: #666;
 }
 
 .nav,
@@ -368,20 +282,72 @@ article .article-body blockquote:after {
     content: url(../images/blockquote-after.png);
 }
 
-.edition-switch {
-}
-
-img.discussion-badge {
-    float: right;
-    width: 30px;
-    height: 30px;
-}
-
-
 .expander {
     display: block;
     padding-top: 5px;
     font-size: 12px;
     line-height: 15px;
     color: #666;
+}
+
+
+.tabs,
+.tabs li {
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+.tabs {
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 10px;
+    text-align: right;  
+    font-size: 0; /* this lets us use inline-block without gaps */
+}
+
+.tabs li {
+    font-size: 12px; /* overrides the hack above */
+    display: inline-block;
+    text-align: center;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.tabs li a {
+    display: inline-block;
+    border: 1px solid #bebebe;
+    border-bottom: 1px solid #bebebe; /* gradient end colour */
+    border-right: 0;
+    padding: 6px 10px 0 10px;
+    height: 22px;
+    position: relative;
+    bottom: -1px;
+    color: #333333;
+    background: #d9d9d9; /* Old browsers */
+    background: -moz-linear-gradient(top, #d9d9d9 0%, #bebebe 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9d9d9), color-stop(100%,#bebebe)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #d9d9d9 0%,#bebebe 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9d9d9', endColorstr='#bebebe',GradientType=0 ); /* IE6-9 */
+}
+
+.tabs li.tabs-selected a {
+    border-bottom: 1px solid #ededed; /* gradient end colour */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%,#ededed 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+}
+
+.tabs li:last-child a {
+    border-right: 1px solid #bebebe;    
+}
+.tabs li a:hover {
+    text-decoration: none;
+    background: #ededed;    
 }

@@ -1,25 +1,29 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 <script id="gu">
-    if ('querySelector' in document && 'addEventListener' in window) {
+    
+    var guardian = {
+        isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
+    },
+        require = {
+        baseUrl: '@{config.static.path}javascripts',
+        paths: {
+            'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath',
+            omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
+        }
+    };
 
-        var guardian = {};
+    (function(isModern) {
 
-        var require = {
-            baseUrl: '@{config.static.path}javascripts',
-            paths: {
-                'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
-            }
-        };
+        if (!isModern)
+            return false;
 
         var script = document.createElement('script');
         script.async = 'async';
         script.src = '@static("javascripts/vendor/require-2.0.4.js")';
         script.onload = function() {
-
             define('config', function(){
                 return {
-                    isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
                     page: {
 
                         @item.metaData.map{ case(key, value) =>
@@ -38,10 +42,10 @@
             require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
                 bootstrap.init(config);
             });
-
         };
 
-        document.getElementById('gu').parentNode.insertBefore(script);
-   
-    }
+        document.getElementsByTagName("head")[0].appendChild(script); 
+    
+    })(guardian.isModernBrowser);
+
 </script>
