@@ -52,7 +52,6 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
             loadOphanAnalytics: function(config) {
                 require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
-                        console.log('ophan loaded', ophan);
                         });
             },
 
