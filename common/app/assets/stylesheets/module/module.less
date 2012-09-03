@@ -1,6 +1,61 @@
-/* nicole sullivan's media object */
+@trailblockImgWidth: 85px;
+@blockquoteMarginLeft: 31px;
 
-/* ====== media ====== */
+.standard-font-sizing {
+    font-size: 17px;
+    line-height: 22px;
+}
+
+.incidental-font-sizing {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.transition (@args) {
+    -webkit-transition: @args;
+    -moz-transition: @args;
+    transition: @args;
+}
+
+/* taken from ClearLeft's ClearLess library */
+#gradient {
+
+    .horizontal (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(left, @start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color); /* IE8+ */
+    }
+
+    .vertical (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(@start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+    }
+}
+
+
+
+/* end LESS vars/mixins */
+
+/* ====== media (nicole sullivan's OOCSS) ====== */
 
 .media, .bd {
     overflow: hidden; 
@@ -43,8 +98,7 @@
 }
 
 .trailblock h3 {
-    font-size: 17px;
-    line-height: 22px;
+    .standard-font-sizing;
     padding-top: 3px; 
     margin-bottom: 12px;
 }
@@ -55,8 +109,7 @@
 }
 
 .trail-headline {
-    font-size: 17px;
-    line-height: 22px;
+    .standard-font-sizing;
     margin-bottom: 1px;
 }
 
@@ -69,7 +122,7 @@
 }
 
 .trailblock .img img {
-    width: 85px; /** less variable */
+    width: @trailblockImgWidth;
     margin-bottom: 5px;
     margin-top: 3px;
 }
@@ -78,12 +131,12 @@
      height: auto;
      max-height: 9999px;
      overflow: hidden;
-     -webkit-transition: max-height 1s ease-in-out;
+     .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
 }
           
 .trailblock.shut .panel {
-    -webkit-transition: max-height .5s ease-in-out;
+    .transition(max-height .5s ease-in-out);
     overflow: hidden;
     position: relative;
     max-height: 0;
@@ -157,18 +210,18 @@
 }
 
 article aside {
-    font: 15px/20px helvetica, arial, sans-serif;
-    margin: 0px;
     padding: 0px 0px 15px 0px;
     list-style: none;
 }
 
 /* this duplicates article figure figcaption */
-article .article-body .caption {
-    font: 12px/15px helvetica, arial, sans-serif;
+.article-body .caption,
+article figure figcaption {
+    font-family: helvetica, arial, sans-serif;
     color: #666;
     margin-top: 5px;
     margin-bottom: 0;
+    .incidental-font-sizing;
 }
 
 article figure {
@@ -177,13 +230,6 @@ article figure {
 
 article figure img {
     display: block;
-}
-
-article figure figcaption {
-    font: 12px/15px arial, sans-serif;
-    text-indent: 0;
-    margin-top: 5px;
-    color: #666666;
 }
 
 article figure figcaption cite {
@@ -207,14 +253,12 @@ article figure figcaption cite a:visited {
     border-bottom: 1px dotted #808080;
 }
 
-article .article-body p {
+.article-body p {
     margin: 0px;
     margin-bottom: 10px;
 }
 
-article .article-body h2 {
-    font-size: 17px;
-    line-height: 22px;
+.article-body h2 {
     color: #333;
     border-top: 1px dotted #999;
     border-bottom: 1px dotted #999;
@@ -223,16 +267,17 @@ article .article-body h2 {
     margin-bottom: 3px;
     margin-top: 15px; /* feel like this should be 5px (10px margin-bottom on preceding <p>) but this has no effect till it's > 10px */
     font-family: georgia;
+    .standard-font-sizing;
 }
 
-article .article-body h2:first-child,
-article .article-body span.timestamp:first-child {
+.article-body h2:first-child,
+.article-body span.timestamp:first-child {
     border-top: none;
     padding-top: 0;
     margin-top: 0;
 }
 
-article .article-body h2.block-title {
+.article-body h2.block-title {
     color: #e47a39;
     border: none;
     padding: 0;
@@ -240,54 +285,51 @@ article .article-body h2.block-title {
     margin-bottom: 10px;
 }
 
-article .article-body h3 {
-    font-size: 17px;
-    line-height: 22px;
+.article-body h3 {
     margin: 0;
     font-family: georgia;
+    .standard-font-sizing;
 }
 
-article .article-body > p,
-article .article-body ul,
-article .article-body ol,
-article .article-body address,
-article .article-body blockquote {
-    font-size: 17px;
-    line-height: 22px;
+.article-body > p,
+.article-body ul,
+.article-body ol,
+.article-body address,
+.article-body blockquote {
     margin: 0px 0px 10px 0px;
     color: #333;
     font-family: georgia;
+    .standard-font-sizing;
 }
 
-article .article-body blockquote {
+.article-body blockquote {
     border: 0;
     padding: 0;
-    margin-left: 31px;
+    margin-left: @blockquoteMarginLeft;
 }
-article .article-body blockquote, 
-article .article-body blockquote p {
-    font-size: 15px;
-    line-height: 20px;
+
+.article-body blockquote, 
+.article-body blockquote p {
     color: #666666;
 }
 
-article .article-body blockquote:before {
+.article-body blockquote:before {
     content: url(../images/blockquote-before.png);
-    margin-left: -31px;
+    margin-left: -@blockquoteMarginLeft;
     margin-top: 5px;
     float: left;
 }
 
-article .article-body blockquote:after {
+.article-body blockquote:after {
     content: url(../images/blockquote-after.png);
+    padding-left: 5px;
 }
 
 .expander {
     display: block;
     padding-top: 5px;
-    font-size: 12px;
-    line-height: 15px;
     color: #666;
+    .incidental-font-sizing;
 }
 
 
@@ -322,26 +364,13 @@ article .article-body blockquote:after {
     position: relative;
     bottom: -1px;
     color: #333333;
-    background: #d9d9d9; /* Old browsers */
-    background: -moz-linear-gradient(top, #d9d9d9 0%, #bebebe 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9d9d9), color-stop(100%,#bebebe)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #d9d9d9 0%,#bebebe 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #d9d9d9 0%,#bebebe 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9d9d9', endColorstr='#bebebe',GradientType=0 ); /* IE6-9 */
+    #gradient > .vertical (#d9d9d9, #bebebe);
 }
 
 .tabs li.tabs-selected a {
     border-bottom: 1px solid #ededed; /* gradient end colour */
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 0%,#ededed 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    #gradient > .vertical (#ffffff, #ededed);
 }
 
 .tabs li:last-child a {

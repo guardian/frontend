@@ -1,3 +1,5 @@
+@trailblockImgWidth: 85px;
+
 /* utility classes for automatically hiding list items > n */
 .show-1 li:nth-child(n+2),
 .show-2 li:nth-child(n+3),
@@ -37,7 +39,7 @@
 }
 
 .fixed-width-timestamp {
-    width: 85px; /* should be a shared var w/ .trailblock .img img */
+    width: @trailblockImgWidth;
     float: left;
     margin-right: 10px;
 }
@@ -54,7 +56,7 @@
     }
 
     /* sorry for this :( -- it's because nth-child above has higher specificity */
-        /*
+    /* 
     .trailblock li,
     .trailblock .trail {
         display: block !important;
