@@ -24,7 +24,8 @@ object FootballMatchStatsController extends Controller with Logging {
 
           val score = views.html.fragments.scoreLine(events)
           val goals = views.html.fragments.stats(events, stats)
-          JsonComponent("score" -> score, "stats" -> goals, "cssUrl" -> Html(cssFile))
+          var tabs = views.html.fragments.statsTabs()
+          JsonComponent("score" -> score, "tabs" -> tabs, "stats" -> goals, "cssUrl" -> Html(cssFile))
         }
       }
     }

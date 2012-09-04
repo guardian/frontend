@@ -1,0 +1,23 @@
+@(table: Seq[pa.LeagueTableEntry])
+<table>
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th title="Won">W</th>
+            <th title="Drawn">D</th>
+            <th title="Lost">L</th>
+            <th title="Points">P</th>
+        </tr>
+    </thead>
+    <tbody>
+    @table.zipWithRowInfo.map{ case (entry, info) =>
+        <tr>
+            <td>@{info.rowNum}. @entry.team.name</td>
+            <td>@entry.team.won</td>
+            <td>@entry.team.drawn</td>
+            <td>@entry.team.lost</td>
+            <td>@entry.team.points</td>
+        </tr>
+    }
+    </tbody>
+</table>

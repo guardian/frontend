@@ -1,8 +1,9 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
     'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics/clickstream',
-    'modules/analytics/omniture', 'modules/tabs', 'qwery'],
+    'modules/analytics/omniture', 'modules/tabs', 'qwery', 'modules/football/football'],
 
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Clickstream, Omniture, Tabs, qwery) {
+    function(common, Related, Images, Popular, Expandable, Orientation,
+             RelativeDates, Clickstream, Omniture, Tabs, qwery, Football) {
 
         modules = {
 
@@ -57,9 +58,13 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
 
             showTabs: function() {
                 var tabs = new Tabs().init();
+            },
+
+            showFootballData: function(config){
+                Football(config);
             }
 
-        }
+        };
 
     return {
         init: function(config) {
@@ -70,6 +75,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.showTabs();
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics(config);
+            modules.showFootballData(config)
         }
-    }
+    };
 });

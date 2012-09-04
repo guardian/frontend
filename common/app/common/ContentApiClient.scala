@@ -9,13 +9,13 @@ trait ApiQueryDefaults { self: Api =>
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
-  val trailFields = "trail-text,liveBloggingNow,thumbnail"
+  val standardFields = "trail-text,liveBloggingNow,thumbnail,"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
     .edition(edition)
     .showTags("all")
-    .showFields(trailFields)
+    .showFields(standardFields)
     .showInlineElements("picture")
     .showMedia("all")
     .showStoryPackage(true)

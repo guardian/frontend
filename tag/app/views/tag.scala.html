@@ -16,8 +16,12 @@
             </div>
         }
 
+        <div id="1234"></div>
+
         <div data-link-name="latest">
-            @trails.zipWithRowInfo.map{ case(trail, info) => @fragments.formatTrail(trail, info) }
+            @trails.zipWithRowInfo.map{ case(trail, info) =>
+                @fragments.formatTrail(trail, info)
+            }
         </div>
 
         <div id="most-popular"></div>

@@ -7,5 +7,9 @@ GET     /assets/*file                                  controllers.Assets.at(pat
 
 GET     /football/*year/*month/*day/matches            controllers.MatchesOnADayController.render(year, month, day)
 
+GET     /fragments/leaguetable/*competitionId          controllers.FootballLeagueTableController.render(competitionId)
+
+
+
 GET     /fragments/match/*matchId                      controllers.FootballMatchStatsController.render(matchId)
 
