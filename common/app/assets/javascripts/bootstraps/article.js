@@ -1,9 +1,14 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
     'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics/clickstream',
-    'modules/analytics/omniture', 'modules/tabs', 'qwery', 'modules/navigation'],
-    
+        'modules/analytics/omniture', 'modules/tabs', 'qwery',
+            'modules/navigation/top-stories.js', 
+                'modules/navigation/controls.js', 
+                ],
+   
+    // ... 
     function(common, Related, Images, Popular, Expandable, Orientation, 
-                RelativeDates, Clickstream, Omniture, Tabs, qwery, Navigation) {
+                RelativeDates, Clickstream, Omniture, Tabs, qwery, 
+                    TopStories, NavigationControls) {
 
       modules = {
 
@@ -13,7 +18,8 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             },
 
             transcludeNavigation: function(config) {
-                new Navigation().load(config);
+                new NavigationControls().initialise();
+                new TopStories().load(config);
             },
 
             transcludeRelated: function(host, pageId) {
@@ -58,7 +64,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             loadOphanAnalytics: function(config) {
                 require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
                         });
-            }
+            },
 
             showTabs: function() {
                 var tabs = new Tabs().init();
