@@ -77,7 +77,7 @@ define(['reqwest', 'common'], function(reqwest, common) {
         if (ua.indexOf('android') > -1) {
             format = 'ttf';
         }
-        if (ua.indexOf('iphone os 4') > -1) {
+        if (ua.indexOf('iphone os') > -1 && ua.indexOf('iphone os 5') < 0) {
             format = 'ttf';
         }
         return format;
