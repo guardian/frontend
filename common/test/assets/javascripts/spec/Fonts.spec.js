@@ -4,7 +4,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         
         var styleNodes;
         var fileFormat;
-        var storagePrefix = 'gufont-';
+        var storagePrefix = 'guFont:';
 
         beforeEach(function() {
             localStorage.clear();
@@ -55,7 +55,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
         });
 
-        it("should request the TTF version of css files for Android devices", function() {
+        it("should request the TTF version of css files when requested", function() {
         	
             common.mediator.on('modules:fonts:loaded', callbackSpy);
 
@@ -110,15 +110,16 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 localStorage.setItem(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
             }
-            expect(localStorage.length).toEqual(styleNodes.length);
+            // Plus one non-font storage.
+            localStorage.setItem('guUserPref:myPref', 'myprefvalue')
+
+            expect(localStorage.length).toEqual(styleNodes.length + 1);
 
             Fonts.clearFontsFromStorage();
 
             // localStorage should be empty.
-            expect(localStorage.length).toEqual(0);
-
-
-            runs
+            expect(localStorage.length).toEqual(1);
+            expect(localStorage.getItem('guUserPref:myPref')).toEqual('myprefvalue');
 
         });
 
@@ -149,6 +150,30 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
                 }
             })
         		
+        });
+
+        it("should detect supported fileFormat for different UA strings", function() {
+
+            var ttfUserAgents = [
+                'iOS iPhone OS 4_0_2',
+                'Something with Android in it',
+                'iOS iPhone OS 3_1_2'
+            ];
+            var woffUserAgents = [
+                'Any old bollocks',
+                'iOS iPhone OS 5_1_1'
+            ];
+
+            for (var i = 0, j = ttfUserAgents.length; i<j; ++i) {
+                fileFormat = Fonts.detectSupportedFormat(ttfUserAgents[i]);
+                expect(fileFormat).toEqual('ttf');
+            }
+
+            for (var i = 0, j = woffUserAgents.length; i<j; ++i) {
+                fileFormat = Fonts.detectSupportedFormat(woffUserAgents[i]);
+                expect(fileFormat).toEqual('woff');
+            }
+            
         });
 
     });
