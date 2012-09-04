@@ -5,7 +5,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
     function(common, Related, Images, Popular, Expandable, Orientation, 
                 RelativeDates, Clickstream, Omniture, Tabs, qwery, Navigation) {
 
-        modules = {
+      modules = {
 
             upgradeImages: function() {
                 var i = new Images();
@@ -58,7 +58,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             loadOphanAnalytics: function(config) {
                 require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
                         });
-            },
+            }
 
             showTabs: function() {
                 var tabs = new Tabs().init();
@@ -73,7 +73,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
             modules.showRelativeDates();
             modules.showTabs(); 
-            //modules.transcludeNavigation(config); 
+            modules.transcludeNavigation(config); 
             modules.loadOmnitureAnalytics(config); 
             modules.loadOphanAnalytics(config); 
         }

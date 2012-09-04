@@ -217,7 +217,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         relatedLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
 
         and("I should see an image link to the related content")
-        val imageLink = related.find("a").filter(hasLinkName(_, "trail image | 1")).head
+        val imageLink = related.find("a").filter(hasLinkName(_, "trail image | item 1")).head
         imageLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
         imageLink.find("img").head.getAttribute("src") should
           be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")

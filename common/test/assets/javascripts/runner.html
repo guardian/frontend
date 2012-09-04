@@ -19,10 +19,15 @@
                 qwery:   'vendor/qwery',
                 bean:    'vendor/bean-0.4.11-1',
                 reqwest: 'vendor/reqwest',
+                analytics: 'modules/analytics',
+                omniture: '../../../app/public/javascripts/vendor/omniture'
             }
       });
   </script>
-  
+  <style>
+    ul ul { margin-left: 0; padding: 0; }
+    ul ul li { margin-left: 40px; }
+  </style>  
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
   <script type="text/javascript">
@@ -69,12 +74,20 @@
 <body>
 
     <ul>
+        <li>
+            <ul>
+                Analytics
+                <li><a href="#Clickstream">Clickstream</a>
+                <li><a href="#Omniture">Omniture</a> - <em>uses a mock Omniture library</em>
+                <li><a href="#OmnitureLib">OmnitureLib</a> - <em>loads the real Omniture library</em>
+            </ul>        
+        </li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
-        <li><a href="#Popular">Popular</a></li>
-        <li><a href="#Images">Image</a></li>
-        <li><a href="#Related">Related</a></li>
         <li><a href="#Expandable">Expandable</a></li>
+        <li><a href="#Images">Image</a></li>
+        <li><a href="#Popular">Popular</a></li>
+        <li><a href="#Related">Related</a></li>
         <li><a href="#RelativeDates">Relative Dates</a></li>
         <li><a href="#Tabs">Tabs</a></li>
     </ul>
@@ -188,6 +201,16 @@
         </p>
 
 
+    </div>
+
+    <!-- Clickstream.spec -->
+    <div data-link-name="outer div">
+        <p id="not-inside-a-link">
+            <a href="/foo" id="click-me" data-link-name="the link">The link</a>
+            <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="xhr link">Xhr Link</a>
+            <span id="click-me-span" data-link-name="the span">Span Link</span>
+            <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
+        </p>
     </div>
 
 </body>
