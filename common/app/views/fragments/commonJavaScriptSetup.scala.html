@@ -2,82 +2,89 @@
 @import CommonSwitches.FontSwitch
 
 <script id="gu">
-    if ('querySelector' in document && 'addEventListener' in window) {
+    
+    var guardian = {
+        isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
+    },
+        require = {
+        baseUrl: '@{config.static.path}javascripts',
+        paths: {
+            'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath',
+            omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
+        }
+    };
 
-        var Guardian = {};
-        // UserPrefs runs early so all JS has access to it.
-        Guardian.UserPrefs = (function() {
+    // UserPrefs runs early so all JS has access to it.
+    guardian.UserPrefs = (function() {
 
-            var storagePrefix = 'guUserPref:';
+        var storagePrefix = 'guUserPref:';
 
-            // Local refs for more effective code minification.
-            var store = localStorage;
-            var location = document.location;
+        // Local refs for more effective code minification.
+        var store = localStorage;
+        var location = document.location;
 
-            // Set from query string
-            var qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
-            for (var i = 0, j = qs.length; i<j; ++i) {
-                var m = qs[i].match(/^userPref:(.*)=(.*)$/);
-                if (m) {
-                    store[storagePrefix + m[1]] = m[2];
-                }
+        // Set from query string
+        var qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
+        for (var i = 0, j = qs.length; i<j; ++i) {
+            var m = qs[i].match(/^userPref:(.*)=(.*)$/);
+            if (m) {
+                store[storagePrefix + m[1]] = m[2];
             }
-
-            function set(name, value) {
-                store[storagePrefix + name] = value;
-            }
-
-            function get(name) {
-                return store[storagePrefix + name];
-            }
-
-            function isTrue(name) {
-                return (get(name) === 'true');
-            }
-
-            return {
-                set: set,
-                get: get,
-                isTrue: isTrue
-            }
-            
-        })();
-
-
-        @if(FontSwitch.isSwitchedOn){
-            // Check for fonts before any chance of async code being executed.
-            (function loadFontsFromStorage() {
-                if (Guardian.UserPrefs.isTrue('fontloading')) {
-                    var styleNodes = document.querySelectorAll('[data-cache-name]');
-                    for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                        var style = styleNodes[i];
-                        var name = style.getAttribute('data-cache-name');
-                        var cachedCss = localStorage.getItem('guFont:' + name);
-                        if (cachedCss) {
-                            style.innerHTML = cachedCss;
-                            style.setAttribute('data-cache-full', 'true');
-                            document.querySelector('html').className += ' font-' + name + '-loaded';
-                        }
-                    }
-                }
-            })();
         }
 
-        var require = {
-            baseUrl: '@{config.static.path}javascripts',
-            paths: {
-                'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath'
+        function set(name, value) {
+            store[storagePrefix + name] = value;
+        }
+
+        function get(name) {
+            return store[storagePrefix + name];
+        }
+
+        function isTrue(name) {
+            return (get(name) === 'true');
+        }
+
+        return {
+            set: set,
+            get: get,
+            isTrue: isTrue
+        }
+        
+    })();
+
+
+    @if(FontSwitch.isSwitchedOn){
+        // Check for fonts before any chance of async code being executed.
+        (function loadFontsFromStorage() {
+            if (guardian.UserPrefs.isTrue('fontloading')) {
+                console.log('hello')
+                var styleNodes = document.querySelectorAll('[data-cache-name]');
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                    var style = styleNodes[i];
+                    var name = style.getAttribute('data-cache-name');
+                    var cachedCss = localStorage.getItem('guFont:' + name);
+                    if (cachedCss) {
+                        console.log('applying');
+                        style.innerHTML = cachedCss;
+                        style.setAttribute('data-cache-full', 'true');
+                        document.querySelector('html').className += ' font-' + name + '-loaded';
+                    }
+                }
             }
-        };
+        })();
+    }
+
+    (function(isModern) {
+
+        if (!isModern)
+            return false;
 
         var script = document.createElement('script');
         script.async = 'async';
         script.src = '@static("javascripts/vendor/require-2.0.4.js")';
         script.onload = function() {
-
             define('config', function(){
                 return {
-                    isModernBrowser: ('querySelector' in document && 'addEventListener' in window),
                     page: {
 
                         @item.metaData.map{ case(key, value) =>
@@ -101,10 +108,10 @@
             require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
                 bootstrap.init(config);
             });
-
         };
 
-        document.querySelector('head').appendChild(script);
-   
-    }
+        document.getElementsByTagName("head")[0].appendChild(script); 
+    
+    })(guardian.isModernBrowser);
+
 </script>

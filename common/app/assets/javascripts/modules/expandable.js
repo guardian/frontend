@@ -15,6 +15,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
            
             updateCallToAction: function() {
                 cta.innerHTML = 'Show <span class="count">' + model.getCount() + '</span> ' + ((expanded) ? 'less' : 'more' );
+                cta.setAttribute('data-link-name', 'show ' + ((expanded) ? 'more' : 'less' ));
             },
             
             renderState: function(expanded) {
@@ -25,10 +26,10 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
                 bean.add(cta, 'click', function(e) {
                     common.mediator.emit('modules:expandable:cta:toggle:' + id);
                 });
-                cta.className = 'cta expander';
+                cta.className = 'cta expander b2';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
-            },
+            }
         }
         
         // Model
@@ -50,8 +51,8 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, bean) {
         }
 
         this.initalise = function() {
-            dom = common.$('#' + id);
-            
+            dom = common.$g('#' + id);
+
             if (model.getCount() < 3) {
                 return false;
             } 
