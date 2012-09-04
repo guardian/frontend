@@ -3,7 +3,7 @@
 
 <script>
     // TODO need to happen immediately 
-    window.addEventListener("load", function load(event){
+    window.addEventListener("DOMContentLoaded", function load(event){
         var sectionsH = document.getElementById('offcanvas-sections');
         sectionsH.appendChild(sections);
     });
@@ -20,7 +20,7 @@
 <div id="navigation">
     <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
     <div class="buttons">
-        <a href="#sections" onclick="var x=toggle('active-left'); this.className = x; return false;">Sections</a>
+        <a href="#sections" onclick="var x=toggle('active-left'); return false;">Sections</a>
         <span onclick="var y = toggle('active-right'); this.className = y;">Top Stories</span>
     </div>
 </div>

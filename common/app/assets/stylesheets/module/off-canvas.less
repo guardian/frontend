@@ -29,6 +29,7 @@
     -moz-box-sizing: border-box; /* TODO Check support for this */
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    xborder: 1px solid #000;
 }
 
 /* common animation properties */
@@ -66,7 +67,36 @@
 }
 
 #offcanvas-sections, #offcanvas-promotion {
-    width: 95%;
+    width: 100%;
+}
+
+#offcanvas-sections {
+    min-height: 100%;
+    background-color: #666;
+    padding: 10px 10px 50% 10px;
+    margin-top: 10px;
+}
+
+#offcanvas-sections ul {
+   margin-left: 0;
+   padding-left: 0;
+}
+
+#offcanvas-sections li {
+    list-style-type: none; 
+    margin-left: 0; padding-left: 0;
+    font-size: 17px;
+    line-height: 33px;
+    border-bottom: 1px solid #ccc;
+}
+
+#offcanvas-sections li:last-child {
+    border-width: 0px;
+}
+
+#offcanvas-sections a {
+    color: #fff;
+    padding-left: 2px;
 }
 
 /* Default state */
@@ -75,98 +105,36 @@
 #offcanvas-promotion { margin-right: -100%; }
 
 /* Left panel active */
-.active-left #offcanvas-sections { margin-left: -95%; }
-.active-left #container { }
-.active-left #offcanvas-promotion {}
+.active-left #offcanvas-sections { margin-left: -100%; }
+.active-left #container, .active-left #offcanvas-promotion { max-height: 200px; }
 
 /* Right panel active */
 .active-right #primary-navigation { margin-left: -100%; }
-.active-right #container { margin-left: -100%; }
+.active-right #container, .active-right #offcanvas-sections { margin-left: -100%; }
 
-/* landscape */
-@media all and (min-width: 1025px) {
+/* */
 
-    #offcanvas-sections {
-        width: 20%; 
-        margin-left: 0; /* DELETE ME? */
-        float: left; /* DELETE ME? */
-    }
-
-    #container {
-        width: 80%;
-    }
-
-}
-
-/************* TODO - temporary design work */
-
-#offcanvas-promotion li, #offcanvas-promotion ul {
-   list-style: none; }
-
-.active-right #offcanvas-promotion {
-    margin-left:0;
-    padding-right: 7px;
-    display: block;
-    
-}
-
-#offcanvas-sections ul {
-    margin: 0; 
-    padding: 0;
-    list-style: none;
-}
-
-#offcanvas-sections li {
-    line-height: 250%;
-    font-size: 1.3em;
-    text-shadow: 1px 0px 1px #000000;
-    font-family: georgia, serif; 
-    border-bottom: 1px solid #ccc;      
-}
-
-#offcanvas-sections li:nth-child(even) {
-    
-}
-
-#offcanvas-sections li a { 
-    padding-left: 1em;
-}
-
-#offcanvas-sections li a:hover { 
-    background-color: #eee;
-    color: #666;
-}
-
-#offcanvas-sections li a:link { 
-    display: block;
-    color: #eee;
-}
-
-#navigation {
-    min-height: 40px;
+#navigation .buttons:hover {
+    pointer: cursor;
 }
 
 #navigation .buttons {
-    font-size: 1.5em;
-    padding: 5px 1em;
-    cursor: pointer;
-    color: #333;
-    text-decoration: none;
-} 
-
-#navigation .buttons .true {
-    font-weight: bold;
-    }
-
-
-#offcanvas-sections {
-    background-color: #666;
-    color: #eee;
+    font-size: 17px;
+    line-height: 17px;
+    padding: 3px 10px 3px 10px;
 }
 
-/* TODO - delete me */
-#offcanvas-promotion {
-    xdisplay: none;
-    }
+#navigation .buttons span {
+    float:right;
+}
 
+#navigation a, #navigation span, #navigation a:hover, #navigation span:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+#navigation .true {
+    color: red;
+}
 
