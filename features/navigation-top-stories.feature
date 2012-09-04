@@ -20,3 +20,8 @@ Measurements
 		Given I have visited some stories within the top stories list,
 		Then I can clearly see which stories I have visited
 		
+
+ Scenario: Top Stories navigation is tracked with Omniture
+           Given I interact with Top stories feature using a mobile device, tablet or desktop
+           When I track my visit using omniture
+           Then Omniture will display data showing my interaction with Top Stories feature

@@ -7,7 +7,7 @@ define(['common'], function(common) {
         });
         
         it("should contain an shared instance of bonzo/qwery selector engine", function() {
-            expect(common.$('body').length).toBe(1);
+            expect(common.$g('body').length).toBe(1);
         });
 
     });

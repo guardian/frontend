@@ -25,5 +25,11 @@ Measurements
 	Scenario: User can choose to display captions or not
 	Scenario: From full screen view, back button should return you to the article
 	
+
+
+      Scenario: Image gallery feature is tracked with Omniture
+         Given I interact with Image Gallery features using a mobile device, tablet or desktop
+         When I track my visit using omniture
+         Then Omniture will display data showing my interaction with Image Gallery features
 	
 
