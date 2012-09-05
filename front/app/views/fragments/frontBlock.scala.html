@@ -12,14 +12,9 @@
     <div class="trailblock show-@block.description.numItemsVisible">
         @defining(block.trails.length){ numTrails =>
             <ul class="unstyled">
-                @block.trails.zipWithRowInfo.map{ case (trailWithPackage, info) =>
+                @block.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li>
-                        @* top of if statement is for AB test *@
-                        @if(trailWithPackage.layout == "impact" && ABTest(request).isB) {
-                            @fragments.formatImpactTrail(trailWithPackage)
-                        } else {
-                            @fragments.formatTrail(trailWithPackage.trail, info)
-                        }
+                        @fragments.formatTrail(trail, info)
                     </li>
                 }
             </ul>

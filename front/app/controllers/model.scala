@@ -50,7 +50,7 @@ object Front {
     val deDupedTrailblocks = trailBlocks.map { trailblock =>
 
       val deDupedTrails = trailblock.trails.flatMap { trail =>
-        if (usedTrails.contains(trail.trail.url)) {
+        if (usedTrails.contains(trail.url)) {
           None
         } else {
           Some(trail)
@@ -58,7 +58,7 @@ object Front {
       }
 
       //only dedupe on visible trails
-      usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.trail.url)
+      usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.url)
 
       Trailblock(trailblock.description, deDupedTrails take (10))
     }

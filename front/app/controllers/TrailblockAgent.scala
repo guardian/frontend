@@ -15,33 +15,13 @@ class TrailblockAgent(val description: TrailblockDescription, edition: String) e
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.send { old =>
-
-    log.info("refreshing trailblock " + description)
-
-    val trails = loadTrails(description.id)
-
-    val firstItemStoryPackage: Seq[Trail] = trails.headOption.map {
-      case c: Content => loadStoryPackage(c.id)
-      case _ => Nil
-    } getOrElse (Nil)
-
-    val trailsWithPackages = trails match {
-      case head :: tail => TrailWithPackage(head, firstItemStoryPackage) :: tail.map(TrailWithPackage(_, Nil))
-      case _ => trails.map(TrailWithPackage(_, Nil))
-    }
-
-    log.info("trailblock " + description + " refreshed with " + trailsWithPackages.size + " items")
-
-    Some(Trailblock(description, trailsWithPackages))
-  }
+  def refresh() = agent.sendOff { old => Some(Trailblock(description, loadTrails(description.id))) }
 
   def close() = agent.close()
 
   def trailblock: Option[Trailblock] = agent()
 
   private def loadTrails(id: String): Seq[Trail] = {
-    log.info("Refreshing trailblock " + id + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(id, edition)
       .showEditorsPicks(true)
       .pageSize(20)
