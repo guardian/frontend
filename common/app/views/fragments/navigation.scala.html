@@ -1,9 +1,9 @@
 @(static: StaticAssets, config: GuardianConfiguration)(implicit request: RequestHeader)
 
 <div id="navigation">
-    <a href="/"><img data-link-name="site logo" src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
-    <div class="buttons">
-        <a href="#sections" id="sections-control">Sections</a>
-        <span id="topstories-control">Top Stories</span> <!-- TODO generate with JS after top-stories transclude -->
+    <a href="/" data-link-name="site logo"><img src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
+    <div>
+        <a href="#sections" data-is-ajax="1" id="sections-control">Sections</a>
+        <a href="/" data-is-ajax="1" id="topstories-control">Top Stories</a>
     </div>
 </div>

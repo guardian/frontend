@@ -18,9 +18,8 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
                 var d = common.$g('body');
                 
                 c = (d.hasClass(state)) ? true : false; 
-               
-                console.log(c);
 
+                /* messy! */
                 if (state === 'active-left' &! c) {
                     d.addClass('active-left');
                     d.removeClass('active-right');
@@ -28,6 +27,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
                     }
 
                 if (state === 'active-left' && c) {
+                    d.addClass('was-active-left');
                     d.removeClass('active-left');
                     //common.$g('#sections-control').html('Sections')
                     }
@@ -55,11 +55,12 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
                     
                 Bean.add(document.getElementById('sections-control'), 'click', function(e) {
                     view.toggle('active-left')
-                    e.preventDefault()
+                    e.preventDefault();
                 });
                 
-                Bean.add(document.getElementById('topstories-control'), 'click', function() {
-                    view.toggle('active-right')
+                Bean.add(document.getElementById('topstories-control'), 'click', function(e) {
+                    view.toggle('active-right');
+                    e.preventDefault();
                 });
 
                 console.log(model.hasKeyframeSupport());
