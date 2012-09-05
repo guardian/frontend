@@ -24,7 +24,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
         val sections = find("div#sections li a")
         sections.length should be > 0
 
-        and("a link to that list")
+        and("a button to activate that list")
         findFirst(".sections").getAttribute("href") should include("australia-mining-boom-end#sections")
 
       }

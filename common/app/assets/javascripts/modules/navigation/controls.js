@@ -45,7 +45,7 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
             },
 
             transponseSections: function () {
-                var placeholder = common.$g('#offcanvas-sections');
+                var placeholder = common.$g('#sections-container');
                 placeholder.append(common.$g('#sections'));
             },
 
@@ -63,47 +63,13 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
                     e.preventDefault();
                 });
 
-                console.log(model.hasKeyframeSupport());
-
-                // tab Vs. slidable panel
-                if (model.hasKeyframeSupport()) { 
-                    common.$g('body').addClass('webkit-keyframes');
-                }
-
             }
                     
         }
 
-        
         // Model
 
         var model = {
-
-            hasKeyframeSupport: function(){
-
-                var animation = false,
-                    animationstring = 'animation',
-                    keyframeprefix = '',
-                    domPrefixes = 'Webkit'.split(' '),
-                    pfx  = '',
-                    elm = document.createElement('div');
- 
-                if( elm.style.animationName ) { animation = true; }    
- 
-                if( animation === false ) {
-                    for( var i = 0; i < domPrefixes.length; i++ ) {
-                        if( elm.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
-                            pfx = domPrefixes[ i ];
-                            animationstring = pfx + 'Animation';
-                            keyframeprefix = '-' + pfx.toLowerCase() + '-';
-                            animation = true;
-                            break;
-                        }
-                    }
-                }
-
-                return (animation)
-            }
         }
         
         this.initialise = function() {
