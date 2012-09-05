@@ -33,15 +33,6 @@ class TrailblockAgent(val description: TrailblockDescription, edition: String) e
 
     editorsPicks ++ latest
   }
-
-  private def loadStoryPackage(id: String): Seq[Trail] = {
-    log.info("Refreshing story package for " + id + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(id, edition)
-      .showStoryPackage(true)
-      .response
-
-    response.storyPackage map { new Content(_) } filterNot (_.id == id)
-  }
 }
 
 object TrailblockAgent {
