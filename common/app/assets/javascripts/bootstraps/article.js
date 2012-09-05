@@ -4,8 +4,6 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             'modules/navigation/top-stories.js', 
                 'modules/navigation/controls.js', 
                 ],
-   
-    // ... 
     function(common, Related, Images, Popular, Expandable, Orientation, 
                 RelativeDates, Clickstream, Omniture, Tabs, qwery, 
                     TopStories, NavigationControls) {

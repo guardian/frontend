@@ -1,10 +1,10 @@
 
-/* Prevent horizontal scrolling */
+/* Prevent horizontal scrolling on all the panels */
 #wrapper { 
     overflow: hidden;
     }
 
-/* Animations - translate3d = hardware accelerated = fast */
+/* Animations via translate3d = hardware accelerated = fast */
 @-webkit-keyframes slide-ltr { /* swing left to right */
     from {
         -webkit-transform: translate3d(0, 0, 0); // TODO check -moz -o w3 support
@@ -29,7 +29,6 @@
     -moz-box-sizing: border-box; /* TODO Check support for this */
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    xborder: 1px solid #000;
 }
 
 /* common animation properties */
@@ -42,10 +41,11 @@
    -webkit-animation-delay: 0;            
    -webkit-animation-iteration-count: 1; 
    -webkit-animation-direction: normal;
-   -webkit-animation-fill-mode: forwards; /* TODO also need javascript listener for this to set a css property to the finished state */
+   -webkit-animation-fill-mode: forwards; /* TODO also need javascript listener for
+                                        this to set a css property to the finished state */
 }
      
-// apply animation going from middle -> left
+// apply animation going from middle -> left for supported browsers
 body.webkit-keyframes.active-left #container, 
     body.webkit-keyframes.active-left #offcanvas-sections { 
    -webkit-animation-name: slide-ltr;
@@ -59,7 +59,8 @@ body.webkit-keyframes.active-right #container,
 
 // from left -> middle
 .was-active-left #container, .was-active-left #offcanvas-sections { 
-   -xwebkit-animation-name: slide-rtl; /* TODO - this will animate the panel backwards, but IMHO it's better just to display the article in 
+   -xwebkit-animation-name: slide-rtl; /* TODO - this will animate the panel backwards, but 
+                                        IMHO it's better just to display the article in 
                                                 it's original state  */
 }
 
@@ -72,8 +73,9 @@ body.webkit-keyframes.active-right #container,
     width: 100%;
 }
 
+/* sections styling */
 #offcanvas-sections {
-    min-height: 100%;
+    min-height: 100%; /* fill the screen as per design requirements */
     background-color: #666;
     padding: 10px 10px 50% 10px;
     margin-top: 10px;
@@ -108,21 +110,20 @@ body.webkit-keyframes.active-right #container,
 
 /* Left panel active */
 
-.xactive-left #offcanvas-sections { margin-left: 0%; } /* for browsers that don't do transitions */
-.xactive-left #container { display: none; } /* for browsers that don't do transitions */
-
-.active-left #offcanvas-sections { margin-left: -100%; } /* for browsers that do */
+.active-left #offcanvas-sections { margin-left: 0%; } /* for browsers that don't do transitions */
+.active-left #container { display: none; } /* for browsers that don't do transitions */
+body.webkit-keyframes.active-left #offcanvas-sections { margin-left: -100%; } /* for browsers that do */
 
 /* fixed max-height make the active panel appear at 100% */
 .active-left #container, .active-left #offcanvas-promotion,
     .active-right #container, .active-right #offcanvas-sections
-        { max-height: 200px; }
+        { display: none; }
 
 /* Right panel active */
 .active-right #primary-navigation { margin-left: -100%; }
 .active-right #container, .active-right #offcanvas-sections { margin-left: -100%; }
 
-/* */
+/* Navigation buttons */
 
 #navigation .buttons:hover {
     pointer: cursor;
@@ -143,9 +144,17 @@ body.webkit-keyframes.active-right #container,
     cursor: pointer;
 }
 
-#navigation .true {
+/* active/inactive button state */
+
+.active-left #navigation #sections-controls {
     color: red;
 }
+
+.active-right #navigation #topstories-controls {
+    color: red;
+}
+
+/* tidy top stories trailblock */
 
 #offcanvas-promotion .trailblock ul {
     list-style-type: none;
@@ -156,5 +165,7 @@ body.webkit-keyframes.active-right #container,
     margin-top: 0;
     padding: 10px;
 }
+
+
 
 
