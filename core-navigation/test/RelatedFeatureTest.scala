@@ -17,7 +17,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     info("Increase average number of articles 'read' from 1.9% to 2.5%")
 
     // TODO - scenarios pending Selenium set up
-/*
+    /*
     cenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
     cenario("Number of 'more' items should be represented by a number")(pending)
     cenario("Appear *after* the comments")(pending)

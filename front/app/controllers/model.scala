@@ -2,53 +2,17 @@ package controllers
 
 import model._
 
-case class Front(trailblocks: Seq[Trailblock]) extends MetaData {
-  override val canonicalUrl = "http://www.guardian.co.uk"
-  override val id = ""
-  override val section = ""
-  override val apiUrl = "http://content.guardianapis.com"
-  override val webTitle = "The Guardian"
+/*
+  Responsible for handling the blocks of the front for an edition
+  Responsibilites include de-duping
+ */
+class FrontEdition(agents: Seq[TrailblockAgent]) {
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "",
-    "content-type" -> "Network Front"
-  )
-
-  lazy val collapseEmptyBlocks: Front = new Front(trailblocks filterNot { _.trails.isEmpty })
-}
-
-object Front {
-
-  private lazy val ukTrailblockAgents: Seq[TrailblockAgent] = Seq(
-    TrailblockAgent(TrailblockDescription("", "Top stories", 5), "UK"),
-    TrailblockAgent(TrailblockDescription("sport", "Sport", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("commentisfree", "Comment is free", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("culture", "Culture", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("lifeandstyle", "Life and style", 3), "UK"),
-    TrailblockAgent(TrailblockDescription("business", "Business", 3), "UK")
-  )
-
-  private lazy val usTrailblockAgents: Seq[TrailblockAgent] = ukTrailblockAgents map { agent => TrailblockAgent(agent.description, "US") }
-
-  private lazy val agents = ukTrailblockAgents ++ usTrailblockAgents
-
-  def start() = agents foreach (_.refresh())
-
-  def shutdown() = agents foreach (_.close())
-
-  def refresh() = agents foreach (_.refresh())
-
-  def apply(edition: String): Front = {
-
-    val trailBlocks = edition match {
-      case "US" => usTrailblockAgents flatMap (_.trailblock)
-      case _ => ukTrailblockAgents flatMap (_.trailblock)
-    }
+  def apply(): Seq[Trailblock] = {
 
     var usedTrails = List.empty[String]
 
-    val deDupedTrailblocks = trailBlocks.map { trailblock =>
-
+    agents.flatMap(_.trailblock).map { trailblock =>
       val deDupedTrails = trailblock.trails.flatMap { trail =>
         if (usedTrails.contains(trail.url)) {
           None
@@ -60,10 +24,56 @@ object Front {
       //only dedupe on visible trails
       usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.url)
 
-      Trailblock(trailblock.description, deDupedTrails take (10))
-    }
+      val trailSize = trailblock.description.numItemsVisible match {
+        case 1 => 1
+        case other => other * 2
+      }
 
-    Front(deDupedTrailblocks)
+      Trailblock(trailblock.description, deDupedTrails take (trailSize))
+    }
   }
 
+  def refresh() = agents.foreach(_.refresh())
+  def shutDown() = agents.foreach(_.close())
+
 }
+
+class Front {
+
+  val uk = new FrontEdition(Seq(
+    TrailblockAgent("", "Top stories", 5, "UK"),
+    TrailblockAgent("sport", "Sport", 5, "UK"),
+    TrailblockAgent("commentisfree", "Comment is free", 3, "UK"),
+    TrailblockAgent("culture", "Culture", 1, "UK"),
+    TrailblockAgent("business", "Business", 1, "UK"),
+    TrailblockAgent("lifeandstyle", "Life and style", 1, "UK"),
+    TrailblockAgent("money", "Money", 1, "UK")
+  ))
+
+  val us = new FrontEdition(Seq(
+    TrailblockAgent("", "Top stories", 5, "US"),
+    TrailblockAgent("sport", "Sports", 5, "US"),
+    TrailblockAgent("commentisfree", "Comment is free", 3, "US"),
+    TrailblockAgent("culture", "Culture", 1, "US"),
+    TrailblockAgent("business", "Business", 1, "US"),
+    TrailblockAgent("lifeandstyle", "Life and style", 1, "US"),
+    TrailblockAgent("money", "Money", 1, "US")
+  ))
+
+  def refresh() {
+    uk.refresh()
+    us.refresh()
+  }
+
+  def shutdown() {
+    uk.shutDown()
+    us.shutDown()
+  }
+
+  def apply(edition: String): FrontPage = edition match {
+    case "US" => FrontPage(us())
+    case anythingElse => FrontPage(uk())
+  }
+}
+
+object Front extends Front
