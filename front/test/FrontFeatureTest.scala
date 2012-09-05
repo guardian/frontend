@@ -14,7 +14,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       Fake {
 
-        //in real life these will always be editors picks only
+        //in real life these will always be editors picks only (content api does not do latest for front)
         val agent = TrailblockAgent("", "Top Stories", 5, "UK")
 
         agent.refresh()
@@ -43,7 +43,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val trails = agent.trailblock.get.trails
 
         then("I should see the latest trails for a block that has no editors picks")
-        trails should have length (20)
+        trails should have length (20) //if only latest you just get 20 latest, hence exact length
       }
     }
 
@@ -61,7 +61,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val trails = agent.trailblock.get.trails
 
         then("I should see a combination of editors picks and latest")
-        trails.length should be > 20
+        trails.length should be > 20 //if it is a combo you get editors picks + 20 latest, hence > 20
       }
     }
   }
