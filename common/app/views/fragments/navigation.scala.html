@@ -1,10 +1,12 @@
 @(static: StaticAssets, config: GuardianConfiguration)(implicit request: RequestHeader)
 
-<a href="/" data-link-name="site logo"><img src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
-<div id="navigation">
+<a href="/" data-link-name="site logo">
+    <img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/>
+</a>
+<div id="navigation" data-link-name="global navigation">
     <div>
-        <a href="#sections" data-is-ajax="1" id="sections-control">Sections</a>
-        <a href="#" data-is-ajax="1" id="topstories-control">Top Stories</a>
+        <a href="#sections" data-is-ajax="1" data-link-name="sections" id="sections-control">Sections</a>
+        <a href="#" data-is-ajax="1" id="topstories-control" data-link-name="top-stories">Top Stories</a>
     </div>
 </div>
 <div id="sections-container" class="section"></div>
