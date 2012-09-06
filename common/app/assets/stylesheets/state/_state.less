@@ -37,7 +37,7 @@
 }
 
 .fixed-width-timestamp {
-    width: 85px; /* should be a shared var w/ .trailblock .img img */
+    width: @trailblockImgWidth;
     float: left;
     margin-right: 10px;
 }
@@ -54,7 +54,7 @@
     }
 
     /* sorry for this :( -- it's because nth-child above has higher specificity */
-        /*
+    /* 
     .trailblock li,
     .trailblock .trail {
         display: block !important;
