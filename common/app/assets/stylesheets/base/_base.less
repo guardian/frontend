@@ -1,8 +1,7 @@
 p {
-    font-size: 15px;
-    line-height: 20px;
     color: #333;
     margin-bottom: 10px;
+    .standard-font-sizing;
 }
 
 h1 {
@@ -14,17 +13,15 @@ h1 {
 
 h2,
 .standfirst {
-    font-size: 17px;
-    line-height: 22px;
     color: #666;
     margin-bottom: 15px;
     font-family: georgia;
+    .standard-font-sizing;
 }
 
 h3 {
     margin: 0 0 7px 0;
-    font-size: 14px;
-    line-height: 16px;
+    .subheading-font-sizing;
 }
 
 h4 {
@@ -32,19 +29,20 @@ h4 {
     padding: 8px 10px 7px 10px;
     background-color: #ededed;
     border-top: 1px solid #ccc;
-    font-size: 14px;
-    line-height: 16px;
+    .subheading-font-sizing;
 }
 
 .byline,
 .dateline {
-    font: 12px/15px arial;
+    font-family: arial, sans-serif;
     margin: 0px;
     color: #666;
+    .incidental-font-sizing;
 }
 
 .byline a {
   font-weight: bold;
+  foo: bar;
 }
 
 span.timestamp {
@@ -58,12 +56,11 @@ span.timestamp {
 }
 
 .relative-timestamp {
-    font-size: 12px;
-    line-height: 15px;
     color: #666;
     font-family: helvetica, arial, sans-serif;
-    width: 85px; /* todo: make this a global less variable */
+    width: @trailblockImgWidth;
     margin-bottom: 0;
+    .incidental-font-sizing;
 }
 
 ol, ul {
