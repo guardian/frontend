@@ -6,6 +6,8 @@
 GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
 GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
 
+GET     /top-stories/*edition                           controllers.TopStoriesController.render(edition)
+
 GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
 

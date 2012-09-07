@@ -2,9 +2,6 @@
 
 @main(section, Static, Configuration){  }{
     <div id="container">
-
-        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-        @fragments.navigation(Static, Configuration, section)
         @fragments.headline(section.name)
 
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
