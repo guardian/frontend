@@ -2,11 +2,7 @@
 
 @main(tag, Static, Configuration, Switches.all){  }{
     <div id="container">
-
-        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-        @fragments.navigation(Static, Configuration, tag)
         @fragments.headline(tag.name)
-    
 
         @if(leadContent nonEmpty) {
             <div data-link-name="lead content">

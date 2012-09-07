@@ -3,10 +3,6 @@
 @main(article, Static, Configuration, Switches.all){
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
 }{
-<div id="container">
-
-    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-    @fragments.navigation(Static, Configuration, article)
 
     <article itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
         @fragments.headline(article.headline)
@@ -52,6 +48,4 @@
         @fragments.mainSiteLink(article, Configuration)
         @fragments.editionSwitch(Static, Configuration, article)
     </div>
-
-</div>
 }
