@@ -73,11 +73,24 @@ define(function () {
         return speed;
 
     }
+
+    function getFontFormatSupport(ua) {
+        var ua = ua.toLowerCase(),
+            format = 'woff';
+        if (ua.indexOf('android') > -1) {
+            format = 'ttf';
+        }
+        if (ua.indexOf('iphone os') > -1 && ua.indexOf('iphone os 5') < 0) {
+            format = 'ttf';
+        }
+        return format;
+    }
     
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
+        getFontFormatSupport: getFontFormatSupport
     };
 
 });

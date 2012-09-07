@@ -1,6 +1,6 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-@main(article, Static, Configuration){
+@main(article, Static, Configuration, Switches.all){
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
 }{
 

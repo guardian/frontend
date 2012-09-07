@@ -1,9 +1,9 @@
-@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
 <html>
 <head>
     <title>@metaData.webTitle</title>
     @fragments.commonCssSetup(static, config)
-    @fragments.commonJavaScriptSetup(metaData, config, static, "article")
+    @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
     @fragments.metaData(metaData, config, static)
 
     @head

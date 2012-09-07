@@ -1,6 +1,6 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-@main(gallery, Static, Configuration){
+@main(gallery, Static, Configuration, Switches.all){
     <script>
         guardian.js.modules.swipe = 'http://6.gu-pasteup.appspot.com/js/libs/swipe.amd.js?v=2';
     </script>

@@ -19,8 +19,6 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
                 var item = ((state == "sections") ? ".sections-" + position : "#topstories-" + position + " .topstories");
                 var altitem = ((state == "sections") ?  "#topstories-" + position + " .topstories" : ".sections-" + position);
 
-                console.log(item + ", " + altitem);
-
                 var call = common.$g(item);
                 var altcall = common.$g(altitem);
 
