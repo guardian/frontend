@@ -1,4 +1,5 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+
 @import CommonSwitches.FontSwitch
 
 <script id="gu">
@@ -14,19 +15,15 @@
         }
     };
 
-    // UserPrefs runs early so all JS has access to it.
     guardian.UserPrefs = (function() {
 
-        var storagePrefix = 'guUserPref:';
+        var storagePrefix = 'gu.pref.',
+            store = localStorage,
+            location = document.location,
+            qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
 
-        // Local refs for more effective code minification.
-        var store = localStorage;
-        var location = document.location;
-
-        // Set from query string
-        var qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
         for (var i = 0, j = qs.length; i<j; ++i) {
-            var m = qs[i].match(/^userPref:(.*)=(.*)$/);
+            var m = qs[i].match(/^gu\.pref\.(.*)=(.*)$/)
             if (m) {
                 store[storagePrefix + m[1]] = m[2];
             }
@@ -41,7 +38,7 @@
         }
 
         function isTrue(name) {
-            return (get(name) === 'true');
+            return (get(name) !== undefined);
         }
 
         return {
@@ -52,25 +49,21 @@
         
     })();
 
-
     @if(FontSwitch.isSwitchedOn){
-        // Check for fonts before any chance of async code being executed.
         (function loadFontsFromStorage() {
-            if (guardian.UserPrefs.isTrue('fontloading')) {
-                console.log('hello')
-                var styleNodes = document.querySelectorAll('[data-cache-name]');
-                for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    var style = styleNodes[i];
-                    var name = style.getAttribute('data-cache-name');
-                    var cachedCss = localStorage.getItem('guFont:' + name);
-                    if (cachedCss) {
-                        console.log('applying');
-                        style.innerHTML = cachedCss;
-                        style.setAttribute('data-cache-full', 'true');
-                        document.querySelector('html').className += ' font-' + name + '-loaded';
+                if (guardian.UserPrefs.isTrue('fontloading')) {
+                    var styleNodes = document.querySelectorAll('[data-cache-name]');
+                    for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                        var style = styleNodes[i],
+                            name = style.getAttribute('data-cache-name'),
+                            cachedCss = localStorage.getItem('guFont:' + name);
+                        if (cachedCss) {
+                            style.innerHTML = cachedCss;
+                            style.setAttribute('data-cache-full', 'true');
+                            document.querySelector('html').className += ' font-' + name + '-loaded';
+                        }
                     }
                 }
-            }
         })();
     }
 

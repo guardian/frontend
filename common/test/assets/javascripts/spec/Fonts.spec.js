@@ -152,30 +152,6 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         		
         });
 
-        it("should detect supported fileFormat for different UA strings", function() {
-
-            var ttfUserAgents = [
-                'iOS iPhone OS 4_0_2',
-                'Something with Android in it',
-                'iOS iPhone OS 3_1_2'
-            ];
-            var woffUserAgents = [
-                'Any old bollocks',
-                'iOS iPhone OS 5_1_1'
-            ];
-
-            for (var i = 0, j = ttfUserAgents.length; i<j; ++i) {
-                fileFormat = Fonts.detectSupportedFormat(ttfUserAgents[i]);
-                expect(fileFormat).toEqual('ttf');
-            }
-
-            for (var i = 0, j = woffUserAgents.length; i<j; ++i) {
-                fileFormat = Fonts.detectSupportedFormat(woffUserAgents[i]);
-                expect(fileFormat).toEqual('woff');
-            }
-            
-        });
-
     });
 
 });

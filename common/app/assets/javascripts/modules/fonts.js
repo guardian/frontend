@@ -71,18 +71,6 @@ define(['reqwest', 'common'], function(reqwest, common) {
         }
     }
 
-    Fonts.detectSupportedFormat = function(ua) {
-        ua = ua.toLowerCase();
-        var format = 'woff';
-        if (ua.indexOf('android') > -1) {
-            format = 'ttf';
-        }
-        if (ua.indexOf('iphone os') > -1 && ua.indexOf('iphone os 5') < 0) {
-            format = 'ttf';
-        }
-        return format;
-    }
-    
     return Fonts;
 
 });

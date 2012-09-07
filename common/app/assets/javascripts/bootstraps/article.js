@@ -1,8 +1,9 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
     'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics/clickstream',
-    'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery'],
+    'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery', 'modules/detect'],
     
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Clickstream, Omniture, Tabs, Fonts, qwery) {
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
+                Clickstream, Omniture, Tabs, Fonts, qwery, detect) {
 
         modules = {
 
@@ -41,14 +42,12 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
                 })
             },
 
-            loadFonts: function(config) {
-                // load fonts
+            loadFonts: function(config, ua) {
                 if (config.switches.fontLoading && guardian.UserPrefs.isTrue('fontloading')) {
-                    var fileFormat = Fonts.detectSupportedFormat(navigator.userAgent);
+                    var fileFormat = detect.getFontFormatSupport(ua);
                     var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
-                    // If fonts disabled, tidy up local cache.
                     Fonts.clearFontsFromStorage();
                 }
             },
@@ -81,7 +80,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.showRelativeDates();
             modules.showTabs();
             modules.loadOmnitureAnalytics(config); 
-            modules.loadFonts(config); 
+            modules.loadFonts(config, navigator.userAgent); 
             modules.loadOphanAnalytics(config); 
         }
     }
