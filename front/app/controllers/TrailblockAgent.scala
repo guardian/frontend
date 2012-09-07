@@ -1,13 +1,12 @@
 package controllers
 
 import model._
-import common.{ ContentApiClient, Logging, AkkaSupport }
+import common.{ Logging, AkkaSupport }
 import model.Trailblock
 import scala.Some
 import model.TrailblockDescription
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.ContentApi
-import akka.util._
 
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
@@ -41,7 +40,4 @@ class TrailblockAgent(val description: TrailblockDescription, edition: String) e
 object TrailblockAgent {
   def apply(description: TrailblockDescription, edition: String): TrailblockAgent =
     new TrailblockAgent(description, edition)
-
-  def apply(id: String, name: String, numItemsVisible: Int, edition: String): TrailblockAgent =
-    new TrailblockAgent(TrailblockDescription(id, name, numItemsVisible), edition)
 }
