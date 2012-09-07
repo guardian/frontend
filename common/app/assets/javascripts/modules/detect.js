@@ -34,6 +34,9 @@ define(function () {
     }
 
     function getPageSpeed() {
+
+        //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
+
         var start_time,
             end_time,
             total_time;

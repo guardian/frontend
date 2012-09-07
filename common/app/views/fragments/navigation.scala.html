@@ -1,17 +1,16 @@
 @(static: StaticAssets, config: GuardianConfiguration, isFooter: Boolean=false)(implicit request: RequestHeader)
 @if(!isFooter){
-	<a href="/" data-link-name="site logo"><img src='@static("images/logo-mobile.gif")' alt="The Guardian"/></a>
+	<a href="/" data-link-name="site logo">
+    	<img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/>
+	</a>
 }
 
-<div class="@if(!isFooter){ navigation-header } else { navigation-footer }">
+<div class="@if(!isFooter){ navigation-header } else { navigation-footer }" data-link-name="global navigation">
     <div>
-        <a href="#topstories" data-is-ajax="1" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" class="topstories-control">Top stories</a>
+        <a href="#topstories" data-is-ajax="1" data-link-name="top-stories" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" class="topstories-control">Top stories</a>
         <span class="nav-divider"></span>
-        <a href="#sections" data-is-ajax="1" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" class="sections-control">Sections</a>
+        <a href="#sections" data-is-ajax="1"data-link-name="sections" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" class="sections-control">Sections</a>
     </div>
 </div>
 <div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-topstories"></div>
 <div id="sections-container" class="section">@if(isFooter){ @fragments.sections(config, isFooter=true) } else { @fragments.sections(config) }</div>
-
-
-
