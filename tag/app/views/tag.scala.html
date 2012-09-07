@@ -1,6 +1,6 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
-@main(tag, Static, Configuration){  }{
+@main(tag, Static, Configuration, Switches.all){  }{
     <div id="container">
         @fragments.headline(tag.name)
 

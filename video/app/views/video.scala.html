@@ -1,6 +1,6 @@
 @(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-@main(video, Static, Configuration){
+@main(video, Static, Configuration, Switches.all){
     <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
 }{
 <div id="container">
