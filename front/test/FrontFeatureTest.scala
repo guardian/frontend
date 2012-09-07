@@ -70,12 +70,37 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent("sport", "Sport", 5, "UK")
 
         agent.refresh()
-        agent.await(2000)
+        agent.await(4000)
 
         val trails = agent.trailblock.get.trails
 
         then("I should see a combination of editors picks and latest")
         trails.length should be > 20 //if it is a combo you get editors picks + 20 latest, hence > 20
+      }
+    }
+
+    scenario("load different content for UK and US front") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life these will always be editors picks only (content api does not do latest for front)
+        val ukAgent = TrailblockAgent("", "Top Stories", 5, "UK")
+        val usAgent = TrailblockAgent("", "Top Stories", 5, "US")
+
+        ukAgent.refresh()
+        usAgent.refresh()
+
+        ukAgent.await(4000)
+        usAgent.await(4000)
+
+        val ukTrails = ukAgent.trailblock.get.trails
+        val usTrails = usAgent.trailblock.get.trails
+
+        then("I should see UK Top Stories if I am in the UK edition")
+        and("I should see US Top Stories if I am in the US edition")
+
+        ukTrails should not equal (usTrails)
       }
     }
 
