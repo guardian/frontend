@@ -7,7 +7,10 @@ define(['common', 'reqwest'], function(common, reqwest){
         this.view = {
         
             render: function(html) {
-                document.getElementById('topstories').innerHTML = html;
+                var topstoriesheader = document.getElementById('topstories-header');
+                topstoriesheader.innerHTML = html;
+                var topstoriesfooter = document.getElementById('topstories-footer');
+                topstoriesfooter.innerHTML = html;
                 common.mediator.emit('modules:navigation:render')
             }
         
@@ -23,7 +26,7 @@ define(['common', 'reqwest'], function(common, reqwest){
             var latestUrl = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
             
             return reqwest({
-                    url: latestUrl,
+                    url: latestUrl + "&x=u",
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',

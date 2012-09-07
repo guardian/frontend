@@ -1,16 +1,24 @@
-@(config: common.GuardianConfiguration)
+@(config: common.GuardianConfiguration, isFooter: Boolean=false)
 
-<div id="sections" class="sections">
+@if(!isFooter){ <div id="sections" class="sections-header transition-short"> } else { <div id="sections" class="sections-footer transition-short"> }
     <ul>
         <li><a data-link-name="news" href="/">News</a></li>
         <li><a data-link-name="uk" href="/uk">UK</a></li>
         <li><a data-link-name="world" href="/world">World</a></li>
         <li><a data-link-name="culture" href="/culture">Culture</a></li>
-        <li><a data-link-name="uk" href="/uk">UK</a></li>
+        <li><a data-link-name="uk" href="/uk" class="selected">UK</a></li>
         <li><a data-link-name="lifeandstyle" href="/lifeandstyle">Life and style</a></li>
         <li><a data-link-name="world us" href="/world/usa">US</a></li>
         <li><a data-link-name="technology" href="/technology">Technology</a></li>
         <li><a data-link-name="sport" href="/sport">Sport</a></li>
         <li><a data-link-name="environment" href="/environment">Environment</a></li>
+        <li><a data-link-name="other" href="/other">Other</a></li>
+        <li><a data-link-name="more-other" href="/more-other">Other other</a></li>
+        <li><a data-link-name="all" class="bold" href="/all">All sections...</a></li>
+    </ul>
+
+    <ul>
+        <li><a data-link-name="uk-edition" href="#">UK Edition</a></li>
+        <li><a data-link-name="us-edition" href="#">US Edition</a></li>
     </ul>
 </div>
