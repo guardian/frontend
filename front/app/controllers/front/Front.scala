@@ -1,6 +1,7 @@
-package controllers
+package controllers.front
 
-import model._
+import model.TrailblockDescription
+import controllers.FrontPage
 
 //Responsible for holding the definition of the two editions
 class Front {

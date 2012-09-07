@@ -2,6 +2,7 @@ package controllers
 
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
+import front.Front
 import org.joda.time.DateTime
 import java.util.concurrent.TimeUnit.SECONDS
 

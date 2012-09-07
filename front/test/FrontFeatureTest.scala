@@ -3,7 +3,7 @@ package test
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
-import controllers.{ FrontEdition, Front, TrailblockAgent }
+import controllers.front.{ TrailblockAgent, FrontEdition, Front }
 import model._
 import org.joda.time.DateTime
 import model.Trailblock
