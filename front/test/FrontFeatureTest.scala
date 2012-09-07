@@ -79,40 +79,84 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("de-duplicate trails") {
+    scenario("de-duplicate visible trails") {
 
       given("I am on the Network Front and I have not expanded any blocks")
 
-      val DuplicateStory = StubTrail("http://www.gu.com/1234")
+      val duplicateStory = StubTrail("http://www.gu.com/1234")
 
       val description = TrailblockDescription("", "Name", 5)
 
       val topStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, Seq(DuplicateStory, StubTrail("http://1"), StubTrail("http://2"))))
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
       }
 
       val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, Seq(StubTrail("http://3"), DuplicateStory, StubTrail("http://4"))))
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
       }
 
       val front = new FrontEdition(Seq(topStoriesBlock, sportStoriesBlock))
 
       then("I should not see a link to the same piece of content twice")
 
-      front()(0).trails.contains(DuplicateStory) should be(true)
-      front()(1).trails.contains(DuplicateStory) should be(false)
+      val topStories = front()(0)
+      val sport = front()(1)
 
-      front()(1).trails should have length (2)
+      topStories.trails.contains(duplicateStory) should be(true)
+
+      sport.trails.contains(duplicateStory) should be(false)
+      sport.trails should have length (9)
     }
+
+    scenario("do not de-duplicate from hidden trails") {
+
+      given("I am on the Network Front and I have not expanded any blocks")
+
+      val duplicateStory = StubTrail("http://www.gu.com/1234")
+
+      val description = TrailblockDescription("", "Name", 5)
+      //duplicate trail is hidden behind "more" button
+      val topTrails: List[Trail] = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
+
+      val topStoriesBlock = new TrailblockAgent(description, "UK") {
+        override lazy val trailblock = Some(Trailblock(description, topTrails))
+      }
+
+      val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+      }
+
+      val front = new FrontEdition(Seq(topStoriesBlock, sportStoriesBlock))
+
+      then("I should see a link that is a duplicate of a link that is hidden")
+
+      val topStories = front()(0)
+      val sport = front()(1)
+
+      topStories.trails.contains(duplicateStory) should be(true)
+
+      sport.trails.contains(duplicateStory) should be(true)
+      sport.trails should have length (10)
+    }
+  }
+
+  private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
+    i => StubTrail("http://gu.com/" + section + "/" + i)
   }
 }
 
 private case class StubTrail(url: String) extends Trail {
   override def webPublicationDate = new DateTime()
+
   override def linkText = ""
+
   override def trailText = None
+
   override def section = ""
+
   override def sectionName = ""
+
   override def thumbnail = None
+
   override def images = Nil
 }
