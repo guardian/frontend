@@ -42,13 +42,11 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
                 })
             },
 
-            loadFonts: function(config, ua) {
-                if (config.switches.fontLoading && guardian.UserPrefs.isTrue('fontloading')) {
-                    var fileFormat = detect.getFontFormatSupport(ua);
-                    var fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+            loadFonts: function(config, ua, prefs) {
+                if (config.switches.fontFamily && prefs.exists('font-family')) {
+                    var fileFormat = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-                } else {
-                    Fonts.clearFontsFromStorage();
                 }
             },
 
@@ -62,8 +60,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             },
 
             loadOphanAnalytics: function(config) {
-                require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
-                        });
+                require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){});
             },
 
             showTabs: function() {
@@ -80,8 +77,8 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.showRelativeDates();
             modules.showTabs();
             modules.loadOmnitureAnalytics(config); 
-            modules.loadFonts(config, navigator.userAgent); 
-            modules.loadOphanAnalytics(config); 
+            modules.loadFonts(config, navigator.userAgent, guardian.userPrefs); 
+            //modules.loadOphanAnalytics(config); 
         }
     }
 });

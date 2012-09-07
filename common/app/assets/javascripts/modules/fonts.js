@@ -59,10 +59,10 @@ define(['reqwest', 'common'], function(reqwest, common) {
 
     }
 
-    Fonts.storagePrefix = "guFont:";
-
+    Fonts.storagePrefix = "_guFont:";
+    
     Fonts.clearFontsFromStorage = function() {
-        // Loop through in reverse because localStorage indexes will change as you delete items.
+        // Loop in reverse because localStorage indexes will change as you delete items.
         for (var i = localStorage.length-1; i>-1; --i) {
             var name = localStorage.key(i);
             if (name.indexOf(Fonts.storagePrefix) === 0) {

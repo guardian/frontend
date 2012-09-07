@@ -4,7 +4,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         
         var styleNodes;
         var fileFormat;
-        var storagePrefix = 'guFont:';
+        var storagePrefix = '_guFont:';
 
         beforeEach(function() {
             localStorage.clear();
