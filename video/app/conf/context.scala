@@ -12,8 +12,7 @@ object ContentApi extends ContentApiClient(Configuration)
 object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
-  //  val switch = new DefaultSwitch("name", "Description Text")
-  val all: Seq[Switchable] = List(Healthcheck.switch)
+  val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
 }
 
 object Metrics {

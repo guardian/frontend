@@ -34,6 +34,9 @@ define(function () {
     }
 
     function getPageSpeed() {
+
+        //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
+
         var start_time,
             end_time,
             total_time;
@@ -70,11 +73,24 @@ define(function () {
         return speed;
 
     }
+
+    function getFontFormatSupport(ua) {
+        var ua = ua.toLowerCase(),
+            format = 'woff';
+        if (ua.indexOf('android') > -1) {
+            format = 'ttf';
+        }
+        if (ua.indexOf('iphone os') > -1 && ua.indexOf('iphone os 5') < 0) {
+            format = 'ttf';
+        }
+        return format;
+    }
     
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
+        getFontFormatSupport: getFontFormatSupport
     };
 
 });
