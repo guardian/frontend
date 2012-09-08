@@ -5,13 +5,18 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
+import play.api.libs.concurrent.Akka
+import play.api.Play.current
 
 case class ArticlePage(article: Article, storyPackage: List[Trail])
 
 object ArticleController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
-    lookup(path).map { renderArticle }.getOrElse { NotFound }
+    val promiseOfArticle = Akka.future(lookup(path))
+    Async {
+      promiseOfArticle.map(_.map { renderArticle }.getOrElse { NotFound })
+    }
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Option[ArticlePage] = suppressApi404 {

@@ -5,13 +5,18 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
 object VideoController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
-    lookup(path).map { renderVideo }.getOrElse { NotFound }
+    val promiseOfVideo = Akka.future(lookup(path))
+    Async {
+      promiseOfVideo.map(_.map { renderVideo }.getOrElse { NotFound })
+    }
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Option[VideoPage] = suppressApi404 {

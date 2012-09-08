@@ -10,6 +10,8 @@ case class FrontPage(front: Front)
 object FrontController extends Controller with Logging {
   def render() = Action { implicit request =>
     FrontRefresher monitorStatus ()
+
+    //in this case lookup has no blocking IO - so not Async here
     lookup() map { renderFront } getOrElse { NotFound }
   }
 
