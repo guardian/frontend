@@ -5,12 +5,16 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 object TopStoriesController extends Controller with Logging {
 
-  def render(edition: String) = Action {
-    implicit request =>
-      lookup(edition) map { renderTopStories } getOrElse { NotFound }
+  def render(edition: String) = Action { implicit request =>
+    val promiseOfTopStories = Akka.future(lookup(edition))
+    Async {
+      promiseOfTopStories.map(_.map { renderTopStories } getOrElse { NotFound })
+    }
   }
 
   private def lookup(edition: String)(implicit request: RequestHeader) = suppressApi404 {
