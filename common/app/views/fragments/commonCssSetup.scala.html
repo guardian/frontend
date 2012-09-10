@@ -10,7 +10,25 @@
 
 <link rel="stylesheet" type="text/css" href="@static("stylesheets/main.min.css")" />
 
-<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@static("fonts/WebEgyptian.ttf.js")"></style>
+<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff='@static("fonts/WebEgyptian.woff.js")'
+    data-cache-file-ttf='@static("fonts/WebEgyptian.ttf.js")'>
+</style>
+
+<style>
+    @* NOTE: This is only here for dynamic resources, anything that is not dynamic should be in the less files *@
+
+    .stars, .stars:after {
+        background-image: url(@static("images/star-sprite.png"));
+    }
+
+    .article-body blockquote:before {
+        content: url(@static("images/blockquote-before.png"));
+    }
+
+    .article-body blockquote:after {
+        content: url(@static("images/blockquote-after.png");
+    }
+</style>
 
 @*
 	@if(config.debug.enabled) {
