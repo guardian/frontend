@@ -87,7 +87,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.transcludeNavigation(config); 
             modules.loadOmnitureAnalytics(config); 
             modules.loadFonts(config, navigator.userAgent, guardian.userPrefs); 
-            //modules.loadOphanAnalytics(config); 
+            modules.loadOphanAnalytics(config); 
         }
     }
 });
