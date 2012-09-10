@@ -1,4 +1,4 @@
-define(['common', 'reqwest'], function(common, reqwest){ 
+define(['common', 'reqwest', 'bonzo'], function(common, reqwest, bonzo){ 
 
     function Navigation() {
         
@@ -7,10 +7,19 @@ define(['common', 'reqwest'], function(common, reqwest){
         this.view = {
         
             render: function(html) {
-                var topstoriesheader = document.getElementById('topstories-header');
-                topstoriesheader.innerHTML = html;
-                var topstoriesfooter = document.getElementById('topstories-footer');
-                topstoriesfooter.innerHTML = html;
+                var topstoriesHeader = document.getElementById('topstories-header');
+                var topstoriesFooter = document.getElementById('topstories-footer');
+                var topstoriesNav = common.$g('.topstories-control, .sections-control');
+
+                topstoriesHeader.innerHTML = html;
+                topstoriesFooter.innerHTML = html;
+
+                // show the initially-hidden top stories nav link
+                for (var i=0, l=topstoriesNav.length; i<l; i++) {
+                    var elm = topstoriesNav[i];
+                    bonzo(elm).removeClass('initially-off');
+                }
+
                 common.mediator.emit('modules:navigation:render')
             }
         
@@ -26,7 +35,7 @@ define(['common', 'reqwest'], function(common, reqwest){
             var latestUrl = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
             
             return reqwest({
-                    url: latestUrl + "&x=u",
+                    url: latestUrl,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',

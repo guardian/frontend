@@ -1,4 +1,4 @@
-define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) { 
+define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function(common, Bean, bonzo) { 
 
     var Tab = function(label) {
         var label = document.createElement('div'),
@@ -13,88 +13,58 @@ define(['common', 'vendor/bean-0.4.11-1'], function(common, Bean) {
         
         var view = {
 
-            // FIXME hack
-            toggle: function(state, position) {
+            toggle: function(state, position, elm) {
 
-                var item = ((state == "sections") ? ".sections-" + position : "#topstories-" + position + " .topstories");
-                var altitem = ((state == "sections") ?  "#topstories-" + position + " .topstories" : ".sections-" + position);
+                var item = bonzo(document.getElementById(((state == "sections") ? "sections-" + position : "topstories-" + position)));
+                var altItem = bonzo(document.getElementById(((state == "sections") ?  "topstories-" + position : "sections-" + position)));
 
-                var call = common.$g(item);
-                var altcall = common.$g(altitem);
-
-
-                var timeout = 0;
-
-                if(common.$g(altcall).hasClass("open"))
-                {
-                    //If the other box is open, close that first and wait 1 second before opening the next
-                    //common.$g(altcall).removeClass("shadow");
-                    common.$g(altcall).toggleClass("transition-short transition-long open");
-                    var timeout = 0;
+                if (altItem.hasClass('on')) { // the "other" panel is visible, so hide it then show current
+                    altItem.toggleClass('on initially-off');
                 }
 
-                setTimeout(function(){
-                    //Open the clicked box, then when it's opened, get it's height and set it to the max-height
-                    common.$g(call).toggleClass("transition-short transition-long open");
-                    /*setTimeout(function(){
-                        common.$g(call).toggleClass("shadow");
-                    }, 1000);*/
-                }, timeout);
+                if (item.hasClass('initially-off')) {
+                    item.toggleClass('on initially-off');
+                } else if (item.hasClass('on')) {
+                    item.toggleClass('on initially-off');
+                }
 
-                /* messy! */
-                //c = (d.hasClass(state)) ? true : false; 
-                /*
-                if (state === 'active-left' &! c) {
-                    d.addClass('active-left');
-                    d.removeClass('active-right');
-                    //common.$g('#sections-control').html('&raquo; Sections')
-                    }
-
-                if (state === 'active-left' && c) {
-                    d.addClass('was-active-left');
-                    d.removeClass('active-left');
-                    //common.$g('#sections-control').html('Sections')
-                    }
-                
-                if (state === 'active-right' &! c) {
-                    d.addClass('active-right');
-                    d.removeClass('active-left');
-                    }
-                
-                if (state === 'active-right' && c) {
-                    d.removeClass('active-right');
-                    }
-                */
-            
                 return (state)
             },
 
-            transponseSections: function () {
-                var placeholder = common.$g('#sections-container');
-                placeholder.append(common.$g('#sections'));
+            // this menu is on by default for non-JS users, so we hide it once JS is loaded
+            hideBottomMenu: function () {
+                var bottomMenu = document.getElementById('sections-footer');
+                bonzo(bottomMenu).addClass('initially-off');
             },
 
             init: function() {
 
-                //view.transponseSections();
+                view.hideBottomMenu(); 
+
+                // can't seem to get bean to bind on arrays of elements properly, 
+                // and doing it inside loops does weird closure-related things. ugh.
 
                 Bean.add(document.getElementById('sections-control-header'), 'click', function(e) {
-                    view.toggle('sections', 'header');
+                    var elm = this;
+                    view.toggle('sections', 'header', elm);
                     e.preventDefault();
                 });
 
                 Bean.add(document.getElementById('sections-control-footer'), 'click', function(e) {
-                    view.toggle('sections', 'footer');
+                    var elm = this;
+                    view.toggle('sections', 'footer', elm);
                     e.preventDefault();
                 });
                 
                 Bean.add(document.getElementById('topstories-control-header'), 'click', function(e) {
-                    view.toggle('topstories', 'header');
+                    var elm = this;
+                    view.toggle('topstories', 'header', elm);
                     e.preventDefault();
                 });
 
                 Bean.add(document.getElementById('topstories-control-footer'), 'click', function(e) {
-                    view.toggle('topstories', 'footer');
+                    var elm = this;
+                    view.toggle('topstories', 'footer', elm);
                     e.preventDefault();
                 });
 
