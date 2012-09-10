@@ -5,18 +5,18 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 case class Related(heading: String, trails: Seq[Trail])
 
 object RelatedController extends Controller with Logging {
 
-  def render(edition: String, path: String) = Action {
-    implicit request =>
-      lookup(edition, path) map {
-        renderRelated
-      } getOrElse {
-        NotFound
-      }
+  def render(edition: String, path: String) = Action { implicit request =>
+    val promiseOfRelated = Akka.future(lookup(edition, path))
+    Async {
+      promiseOfRelated.map(_.map { renderRelated } getOrElse { NotFound })
+    }
   }
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[Related] = suppressApi404 {
