@@ -81,8 +81,10 @@ trait Prototypes {
     )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(playAssetHashDistSettings: _*)
+    .settings(RequireJS.settings:_*)
+    .settings(requireJsConfiguration: _*)
     .settings(scalariformSettings: _*)
+    .settings(playAssetHashDistSettings: _*)
     .settings(
       scalaVersion := "2.9.1",
 
@@ -120,7 +122,8 @@ trait Prototypes {
         "common._",
         "model._",
         "views._",
-        "views.support._"
+        "views.support._",
+        "conf._"
       )
     )
 
@@ -138,9 +141,7 @@ trait Prototypes {
     resourceGenerators in Compile <+=  requireJsCompiler
   )
 
-  def library(name: String) = base(name)
-    .settings(RequireJS.settings:_*)
-    .settings(requireJsConfiguration: _*).settings(
+  def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.13",
@@ -174,9 +175,6 @@ trait Prototypes {
         case "CHANGELOG" => MergeStrategy.first
         case x => old(x)
       }
-    },
-    templatesImport ++= Seq(
-      "conf._"
-    )
+    }
   )
 }

@@ -1,0 +1,8 @@
+@(trails: Seq[Trail])
+<div class="trailblock trailblock-topstories topstories transition-short">
+    <ul>
+        @trails.zipWithRowInfo.map{ case (trail, info) =>
+            <li>@formatTrail(trail, info, related=true)</li>
+        }
+    </ul>
+</div>

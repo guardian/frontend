@@ -17,13 +17,13 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     info("Increase average number of articles 'read' from 1.9% to 2.5%")
 
     // TODO - scenarios pending Selenium set up
-/*
-    cenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
-    cenario("Number of 'more' items should be represented by a number")(pending)
-    cenario("Appear *after* the comments")(pending)
-    cenario("If has no Story Package, then show Related Links")(pending)
-    cenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
-    cenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
+    /*
+    scenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
+    scenario("Number of 'more' items should be represented by a number")(pending)
+    scenario("Appear *after* the comments")(pending)
+    scenario("If has no Story Package, then show Related Links")(pending)
+    scenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
+    scenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
 */
     // Features
 

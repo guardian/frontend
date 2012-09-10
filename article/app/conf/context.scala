@@ -12,8 +12,7 @@ object ContentApi extends ContentApiClient(Configuration)
 object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
-  //  val switch = new DefaultSwitch("name", "Description Text")
-  val all: Seq[Switchable] = List(Healthcheck.switch)
+  val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
 }
 
 object Metrics {
@@ -26,7 +25,7 @@ object Management extends Management {
   lazy val pages = List(
     new ManifestPage,
     new HealthcheckManagementPage,
-    new Switchboard(Switches.all, applicationName),
+    new Switchboard(CommonSwitches.all, applicationName),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
