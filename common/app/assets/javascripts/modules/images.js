@@ -33,7 +33,7 @@ define(['common', 'modules/detect'], function (common, detect) {
                     }
                 }
             }
-        }
+        };
 
         // Bindings
         
