@@ -10,9 +10,9 @@ Measurements
 - Increase gallery page views from 1.6% (when on different page on desktop) to 3% of page views with gallery interactions when integrated in same page.
 
    Scenario: Display associated gallery images
-      Given I visit an article with an associated image gallery
+      Given I visit a gallery
       When I interact with the gallery image
-      Then I should have access to all the images without leaving the article page
+      Then I should have access to all the images without leaving the gallery page
 
    Scenario: Display images full screen
 	Given I see interesting images on an article
