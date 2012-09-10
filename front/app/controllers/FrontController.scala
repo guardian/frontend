@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import conf._
+import front.Front
 import model._
 import play.api.mvc.{ Result, RequestHeader, Controller, Action }
 

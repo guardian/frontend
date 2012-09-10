@@ -3,7 +3,7 @@ package test
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
-import controllers.{ FrontEdition, Front, TrailblockAgent }
+import controllers.front.{ TrailblockAgent, FrontEdition, Front }
 import model._
 import org.joda.time.DateTime
 import model.Trailblock
@@ -29,10 +29,13 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life these will always be editors picks only (content api does not do latest for front)
-        val agent = TrailblockAgent("", "Top Stories", 5, "UK")
+        val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
 
         agent.refresh()
-        agent.await(2000)
+
+        //note that this does not mean a 4 second pause, it means it will wait *up to* 4 seconds for the async agent
+        //to finish - this should normally only be a very short period.
+        agent.await(4000)
 
         val trails = agent.trailblock.get.trails
 
@@ -49,10 +52,10 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life this tag will have no editors picks
-        val agent = TrailblockAgent("lifeandstyle/seasonal-food", "Seasonal food", 5, "UK")
+        val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
 
         agent.refresh()
-        agent.await(2000)
+        agent.await(4000)
 
         val trails = agent.trailblock.get.trails
 
@@ -67,10 +70,10 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life this will be a combination of editors picks + latest
-        val agent = TrailblockAgent("sport", "Sport", 5, "UK")
+        val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
 
         agent.refresh()
-        agent.await(2000)
+        agent.await(4000)
 
         val trails = agent.trailblock.get.trails
 
@@ -79,40 +82,146 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("de-duplicate trails") {
+    scenario("load different content for UK and US front") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life these will always be editors picks only (content api does not do latest for front)
+        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
+        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "US")
+
+        ukAgent.refresh()
+        usAgent.refresh()
+
+        ukAgent.await(4000)
+        usAgent.await(4000)
+
+        val ukTrails = ukAgent.trailblock.get.trails
+        val usTrails = usAgent.trailblock.get.trails
+
+        then("I should see UK Top Stories if I am in the UK edition")
+        and("I should see US Top Stories if I am in the US edition")
+
+        ukTrails should not equal (usTrails)
+      }
+    }
+
+    scenario("de-duplicate visible trails") {
 
       given("I am on the Network Front and I have not expanded any blocks")
 
-      val DuplicateStory = StubTrail("http://www.gu.com/1234")
+      val duplicateStory = StubTrail("http://www.gu.com/1234")
 
       val description = TrailblockDescription("", "Name", 5)
 
       val topStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, Seq(DuplicateStory, StubTrail("http://1"), StubTrail("http://2"))))
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
       }
 
       val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, Seq(StubTrail("http://3"), DuplicateStory, StubTrail("http://4"))))
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
       }
 
-      val front = new FrontEdition(Seq(topStoriesBlock, sportStoriesBlock))
+      val front = new FrontEdition("UK", Nil) {
+        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
+      }
 
       then("I should not see a link to the same piece of content twice")
 
-      front()(0).trails.contains(DuplicateStory) should be(true)
-      front()(1).trails.contains(DuplicateStory) should be(false)
+      val topStories = front()(0)
+      val sport = front()(1)
 
-      front()(1).trails should have length (2)
+      topStories.trails.contains(duplicateStory) should be(true)
+
+      sport.trails.contains(duplicateStory) should be(false)
+      sport.trails should have length (9)
     }
+
+    scenario("do not de-duplicate from hidden trails") {
+
+      given("I am on the Network Front and I have not expanded any blocks")
+
+      val duplicateStory = StubTrail("http://www.gu.com/1234")
+
+      val description = TrailblockDescription("", "Name", 5)
+      //duplicate trail is hidden behind "more" button
+      val topTrails: List[Trail] = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
+
+      val topStoriesBlock = new TrailblockAgent(description, "UK") {
+        override lazy val trailblock = Some(Trailblock(description, topTrails))
+      }
+
+      val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+      }
+
+      val front = new FrontEdition("UK", Nil) {
+        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
+      }
+
+      then("I should see a link that is a duplicate of a link that is hidden")
+
+      val topStories = front()(0)
+      val sport = front()(1)
+
+      topStories.trails.contains(duplicateStory) should be(true)
+
+      sport.trails.contains(duplicateStory) should be(true)
+      sport.trails should have length (10)
+    }
+
+    scenario("Trailblocks on the front") {
+
+      given("I visit the network front")
+
+      then("I should see 10 (5 of whch are hidden) Top stories")
+      Front.uk.descriptions(0) should be(TrailblockDescription("", "Top stories", 5))
+      Front.us.descriptions(0) should be(TrailblockDescription("", "Top stories", 5))
+
+      and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
+      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5))
+      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5))
+
+      and("I should see 6 (3 of which are hidden) Comment is Free stories")
+      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
+      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
+
+      and("I should see 1 Culture story")
+      Front.uk.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
+      Front.us.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
+
+      and("I should see 1 Business story")
+      Front.uk.descriptions(4) should be(TrailblockDescription("business", "Business", 1))
+      Front.us.descriptions(4) should be(TrailblockDescription("business", "Business", 1))
+
+      and("I should see 1 Life and Style story")
+      Front.uk.descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
+      Front.us.descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
+
+      and("I should see 1 Money story")
+      Front.uk.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+      Front.us.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+    }
+  }
+
+  private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
+    i => StubTrail("http://gu.com/" + section + "/" + i)
   }
 }
 
 private case class StubTrail(url: String) extends Trail {
   override def webPublicationDate = new DateTime()
+
   override def linkText = ""
+
   override def trailText = None
+
   override def section = ""
+
   override def sectionName = ""
+
   override def thumbnail = None
+
   override def images = Nil
 }
