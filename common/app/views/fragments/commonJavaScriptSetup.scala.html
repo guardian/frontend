@@ -1,7 +1,9 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+
+@import CommonSwitches.FontSwitch
 
 <script id="gu">
-    
+
     var guardian = {
         isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
     },
@@ -12,6 +14,58 @@
             omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
         }
     };
+
+    guardian.userPrefs = (function() {
+
+        var storagePrefix = 'gu.prefs.',
+            store = localStorage,
+            location = document.location,
+            qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
+
+        for (var i = 0, j = qs.length; i<j; ++i) {
+            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/)
+            if (m) {
+                store[storagePrefix + m[1]] = m[2];
+            }
+        }
+
+        function set(name, value) {
+            store[storagePrefix + name] = value;
+        }
+
+        function get(name) {
+            return store[storagePrefix + name];
+        }
+
+        function exists(name) {
+            return (get(name) !== undefined);
+        }
+
+        return {
+            set: set,
+            get: get,
+            exists: exists
+        }
+        
+    })();
+
+    @if(FontSwitch.isSwitchedOn) {
+        (function loadFontsFromStorage(prefs) {
+            if (prefs.exists('font-family')) {
+                    var styleNodes = document.querySelectorAll('[data-cache-name]');
+                    for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                        var style = styleNodes[i],
+                            name = style.getAttribute('data-cache-name'),
+                            cachedCss = localStorage.getItem('_guFont:' + name);
+                        if (cachedCss) {
+                            style.innerHTML = cachedCss;
+                            style.setAttribute('data-cache-full', 'true');
+                            document.querySelector('html').className += ' font-' + name + '-loaded';
+                        }
+                    }
+                }
+        })(guardian.userPrefs);
+    }
 
     (function(isModern) {
 
@@ -35,6 +89,11 @@
                         }.mkString(","),
 
                         'edition': '@Edition(request, config)'
+                    },
+                    switches : {
+                        @switches.map{ switch =>
+                            '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
+                        }.mkString(",")
                     }
                 };
             })

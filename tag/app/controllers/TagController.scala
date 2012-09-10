@@ -7,12 +7,17 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging {
   def render(path: String) = Action { implicit request =>
-    lookup(path) map { renderTag } getOrElse { NotFound }
+    val promiseOfTag = Akka.future(lookup(path))
+    Async {
+      promiseOfTag.map(_.map { renderTag } getOrElse { NotFound })
+    }
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Option[TagAndTrails] = suppressApi404 {

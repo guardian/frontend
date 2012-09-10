@@ -5,12 +5,17 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 object SectionController extends Controller with Logging {
   def render(path: String) = Action { implicit request =>
-    lookup(path) map { renderSectionFront(_) } getOrElse { NotFound }
+    val promiseOfSection = Akka.future(lookup(path))
+    Async {
+      promiseOfSection.map(_.map { renderSectionFront(_) } getOrElse { NotFound })
+    }
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Option[SectionFrontPage] = suppressApi404 {

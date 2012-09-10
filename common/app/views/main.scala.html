@@ -1,16 +1,26 @@
-@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
 <html>
 <head>
     <title>@metaData.webTitle</title>
     @fragments.commonCssSetup(static, config)
-    @fragments.commonJavaScriptSetup(metaData, config, static, "article")
+    @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
     @fragments.metaData(metaData, config, static)
 
     @head
 
 </head>
 <body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
-    @body
+
+    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
+    @fragments.navigation(static, config)
+    
+    <div id="container"> 
+        @body
+        @fragments.sections(config)
+    </div>
+
+    @fragments.navigation(static, config, isFooter=true)
+    
     @fragments.analytics(metaData, config)
 </body>
 </html>

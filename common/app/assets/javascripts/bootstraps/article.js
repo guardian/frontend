@@ -1,14 +1,22 @@
 define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modules/expandable',
     'vendor/ios-orientationchange-fix', 'modules/relativedates', 'modules/analytics/clickstream',
-    'modules/analytics/omniture', 'modules/tabs', 'qwery'],
-    
-    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates, Clickstream, Omniture, Tabs, qwery) {
+    'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery', 'modules/detect',
+            'modules/navigation/top-stories.js', 
+                'modules/navigation/controls.js'], 
+    function(common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
+                Clickstream, Omniture, Tabs, Fonts, qwery, detect,
+                    TopStories, NavigationControls) {
 
-        modules = {
+      modules = {
 
             upgradeImages: function() {
                 var i = new Images();
                 i.upgrade();
+            },
+
+            transcludeNavigation: function(config) {
+                new NavigationControls().initialise();
+                new TopStories().load(config);
             },
 
             transcludeRelated: function(host, pageId) {
@@ -41,6 +49,14 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
                 })
             },
 
+            loadFonts: function(config, ua, prefs) {
+                if (config.switches.fontFamily && prefs.exists('font-family')) {
+                    var fileFormat = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                    new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                }
+            },
+
             showRelativeDates: function() {
                 RelativeDates.init();
             },
@@ -51,8 +67,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             },
 
             loadOphanAnalytics: function(config) {
-                require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){
-                        });
+                require(['http://s.ophan.co.uk/js/t6.min.js'], function(ophan){});
             },
 
             showTabs: function() {
@@ -67,9 +82,12 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular', 'modul
             modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
             modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
             modules.showRelativeDates();
+            modules.showTabs();
             modules.showTabs(); 
+            modules.transcludeNavigation(config); 
             modules.loadOmnitureAnalytics(config); 
-            modules.loadOphanAnalytics(config); 
+            modules.loadFonts(config, navigator.userAgent, guardian.userPrefs); 
+            //modules.loadOphanAnalytics(config); 
         }
     }
 });

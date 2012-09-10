@@ -122,7 +122,8 @@ trait Prototypes {
         "common._",
         "model._",
         "views._",
-        "views.support._"
+        "views.support._",
+        "conf._"
       )
     )
 
@@ -174,9 +175,6 @@ trait Prototypes {
         case "CHANGELOG" => MergeStrategy.first
         case x => old(x)
       }
-    },
-    templatesImport ++= Seq(
-      "conf._"
-    )
+    }
   )
 }
