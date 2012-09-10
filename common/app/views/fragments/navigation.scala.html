@@ -1,7 +1,8 @@
 @(static: StaticAssets, config: GuardianConfiguration, isFooter: Boolean=false)(implicit request: RequestHeader)
 @if(!isFooter){
-	<a href="/" data-link-name="site logo">
-    	<img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/>
+	<a href="/" data-link-name="site logo" id="logo">
+        The Guardian
+        <!-- <img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/> -->
 	</a>
 }
 

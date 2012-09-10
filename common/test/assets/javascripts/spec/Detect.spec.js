@@ -70,5 +70,14 @@ define(['modules/detect'], function(detect) {
 
         });
     });
+
+    describe("SVG support", function() {
+
+        it("should determine SVG support", function() {
+            expect(detect.hasSvgSupport()).toBe(true);
+        });
+
+    });
+
 });
 
