@@ -429,12 +429,10 @@ a.topstories-control,
 }
 
 #navigation-footer {
-    margin-right:3%;
-    float:right;
+    float: right;
 }
 
-#sections-header:after,
-#topstories-header:after {
+.nav-popup:after {
     content: '';
     display: block;
     position: absolute;
@@ -447,8 +445,8 @@ a.topstories-control,
     border-width: @navBorderWidth;
 }
 
-#topstories-header:after {
-    right: 65px;
+.top-stories:after {
+    right: 65px !important;
 }
 
 
