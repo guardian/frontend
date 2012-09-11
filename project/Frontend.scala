@@ -10,6 +10,8 @@ import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 import com.gu.RequireJS._
 import com.gu.RequireJS
+import com.gu.SbtJshintPlugin
+import com.gu.SbtJshintPlugin._
 
 object Frontend extends Build with Prototypes {
 
@@ -83,6 +85,7 @@ trait Prototypes {
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
     .settings(RequireJS.settings:_*)
     .settings(requireJsConfiguration: _*)
+    .settings(jshintSettings:_*)
     .settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
@@ -117,6 +120,10 @@ trait Prototypes {
 
       // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
+
+      jshintFiles <+= baseDirectory { base =>
+        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "vendor" ** "*.js") 
+      },
 
       templatesImport ++= Seq(
         "common._",
