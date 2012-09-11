@@ -9,15 +9,10 @@
     }
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
 }{
-    <div id="container">
+    <div id="front-container">
         @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
-        <div id="most-popular"></div>
-        
-        <footer class="b1">
-            @fragments.mainSiteLink(front, Configuration)
-            @fragments.editionSwitch(Static, Configuration, front)
-        </footer>
     </div>
+    <div id="most-popular"></div>
 }
