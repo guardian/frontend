@@ -1,29 +1,31 @@
-define(['common', 'reqwest', 'bonzo'], function(common, reqwest, bonzo){ 
+define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
 
     function Navigation() {
         
-        // View 
+        // View
         
         this.view = {
         
-            render: function(html) {
-                var topstoriesHeader = document.getElementById('topstories-header');
-                var topstoriesFooter = document.getElementById('topstories-footer');
-                var topstoriesNav = common.$g('.topstories-control, .sections-control');
+            render: function (html) {
+                var topstoriesHeader, topstoriesFooter, topstoriesNav, i, l, elm;
+
+                topstoriesHeader = document.getElementById('topstories-header');
+                topstoriesFooter = document.getElementById('topstories-footer');
+                topstoriesNav = common.$g('.topstories-control, .sections-control');
 
                 topstoriesHeader.innerHTML = html;
                 topstoriesFooter.innerHTML = html;
 
                 // show the initially-hidden top stories nav link
-                for (var i=0, l=topstoriesNav.length; i<l; i++) {
-                    var elm = topstoriesNav[i];
+                for (i = 0, l = topstoriesNav.length; i < l; i++) {
+                    elm = topstoriesNav[i];
                     bonzo(elm).removeClass('initially-off');
                 }
 
-                common.mediator.emit('modules:navigation:render')
+                common.mediator.emit('modules:navigation:render');
             }
         
-        }
+        };
 
         // Bindings
         
@@ -31,7 +33,7 @@ define(['common', 'reqwest', 'bonzo'], function(common, reqwest, bonzo){
         
         // Model
         
-        this.load = function(config){
+        this.load = function (config) {
             var latestUrl = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
             
             return reqwest({
@@ -39,11 +41,11 @@ define(['common', 'reqwest', 'bonzo'], function(common, reqwest, bonzo){
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',
-                    success: function(json) {
-                        common.mediator.emit('modules:navigation:loaded', [json.html])
+                    success: function (json) {
+                        common.mediator.emit('modules:navigation:loaded', [json.html]);
                     }
-            })
-        }  
+                });
+        };
 
     }
     

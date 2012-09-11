@@ -12,9 +12,9 @@ define(function () {
         EXTENDED_WIDTH = 900;
     
     function getLayoutMode() {
-        var width = window.innerWidth;
+        var width = window.innerWidth,
+            mode = "base";
 
-        var mode = "base";
         if (width > BASE_WIDTH) {
             mode = "median";
         }
@@ -22,7 +22,7 @@ define(function () {
             mode = "extended";
         }
 
-        getLayoutMode = function() {
+        getLayoutMode = function () {
             return mode;
         };
 
