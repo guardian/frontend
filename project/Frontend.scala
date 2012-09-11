@@ -23,12 +23,10 @@ object Frontend extends Build with Prototypes {
 
   val article = application("article").dependsOn(commonWithTests)
   val gallery = application("gallery").dependsOn(commonWithTests)
-
   val tag = application("tag").dependsOn(commonWithTests)
   val section = application("section").dependsOn(commonWithTests)
   val front = application("front").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
-
   val video = application("video").dependsOn(commonWithTests)
 
   val main = root().aggregate(
@@ -124,6 +122,12 @@ trait Prototypes {
       jshintFiles <+= baseDirectory { base =>
         (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "vendor" ** "*.js") 
       },
+
+      jshintOptions <+= (baseDirectory) { base =>
+        (base.getParentFile / "resources" / "jshint_conf.json")
+      },
+
+      (test in Test) <<= (test in Test) dependsOn (jshint),
 
       templatesImport ++= Seq(
         "common._",
