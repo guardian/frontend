@@ -1,16 +1,25 @@
-@(static: StaticAssets, config: GuardianConfiguration, isFooter: Boolean=false)(implicit request: RequestHeader)
+@(static: StaticAssets, config: GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 @if(!isFooter){
 	<a href="/" data-link-name="site logo" id="logo">
         The Guardian
 	</a>
+} else {
+    <ul class="footer-nav unstyled">
+        <li><i class="i-desktop-version"></i>@fragments.mainSiteLink(page, config)</li>
+        <li><i class="i-back-to-top"></i><a data-link-name="back to top" href="#top">Back to top</a></li>
+    </ul>
 }
 
-<div class="@if(!isFooter){ navigation-header } else { navigation-footer }" data-link-name="global navigation">
-    <div>
-        <a href="#topstories" data-is-ajax="1" data-link-name="top-stories" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" class="topstories-control">Top stories</a>
-        <span class="nav-divider"></span>
-        <a href="#sections" data-is-ajax="1"data-link-name="sections" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" class="sections-control">Sections</a>
-    </div>
+<div id="@if(!isFooter){navigation-header} else {navigation-footer}" data-link-name="global navigation: @if(!isFooter){header} else {footer}">
+    <a href="#topstories-footer" data-is-ajax="1" data-link-name="top-stories" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" class="topstories-control initially-off">Top stories</a>
+
+    <span class="nav-divider"></span>
+
+    <a href="#sections-footer" data-is-ajax="1" data-link-name="sections" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" class="sections-control@if(isFooter){ initially-off}"><span>Sections</span></a>
 </div>
-<div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-topstories"></div>
-<div id="sections-container" class="section">@if(isFooter){ @fragments.sections(config, isFooter=true) } else { @fragments.sections(config) }</div>
+
+<div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-popup top-stories initially-off"></div>
+
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
+    @fragments.sections(config, page)
+</div>

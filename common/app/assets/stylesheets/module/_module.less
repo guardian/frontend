@@ -265,14 +265,14 @@ article figure figcaption cite a:visited {
 }
 
 .article-body blockquote:before {
-    content: url(../images/blockquote-before.png);
+    content: url(../images/blockquote-before.94b9ad0658f2595d0022763658bf30f4.png);
     margin-left: -@blockquoteMarginLeft;
     margin-top: 5px;
     float: left;
 }
 
 .article-body blockquote:after {
-    content: url(../images/blockquote-after.png);
+    content: url(../images/blockquote-after.5f5f7f8aef2be0b9769fc234be4e89b9.png);
     padding-left: 5px;
 }
 
@@ -327,7 +327,173 @@ article figure figcaption cite a:visited {
 .tabs li:last-child a {
     border-right: 1px solid #bebebe;    
 }
+
 .tabs li a:hover {
     text-decoration: none;
     background: #ededed;    
+}
+
+
+
+.sections-control {
+    display: inline-block;
+    padding: 3px 5px 8px 5px;
+}
+
+.sections-control span {
+    background-image: url(http://i.imgur.com/cDEag.png);
+    background-repeat: repeat-x;
+    background-position: center;
+    width: 20px;
+    height: 13px;
+    display: inline-block;
+    text-indent: -1000em;
+}
+
+.nav-divider{
+    width: 1px;
+    height: 25px;
+    margin-left: 5px;
+    background-image: url('http://i.imgur.com/9jAeA.png');
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.nav-popup {
+    -webkit-transform: translate3d(0,0,0);
+    .box-shadow(0px 0px 20px #595959);
+    background-color: #ffffff;
+    margin: 50px auto 10px auto; // weird double margin here
+    padding: 0px;
+    overflow: hidden;
+    list-style: none;
+    clear: both;
+}
+
+.sections ul {
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    font-size: 14px;
+}
+
+.sections a {
+    padding: 7px 5px 7px 5px;
+    border-top: 1px solid #d4d7d7;
+    display: block;
+    height: auto;
+}
+
+.sections li:first-child a,
+.top-stories li:first-child a {
+   border-top-width: 0; 
+}
+
+.sections .selected,
+.sections a:hover {
+    display: block;
+    background-color: #428aa9;
+    color: #FFFFFF;
+    height: auto;
+    text-decoration: none;
+}
+
+.top-stories ul {
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+}
+
+.top-stories .trailblock {
+    margin-top: 0;
+}
+
+.topstories-control {
+    font-size: 14px;
+}
+
+.sections-control:active,
+.topstories-control:hover {
+    text-decoration: none !important;
+}
+
+a.topstories-control, 
+.sections-control {
+    color: #707272;
+    background-color: transparent !important;
+}
+
+#navigation-header {
+    float: right;
+    margin-top: 12px;
+}
+
+#navigation-footer {
+    margin-right:3%;
+    float:right;
+}
+
+#sections-header:after,
+#topstories-header:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -(@navBorderWidth *2);
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent #FFFFFF transparent; // border color should be same as div background color
+    border-style: solid;
+    border-width: @navBorderWidth;
+}
+
+#topstories-header:after {
+    right: 65px;
+}
+
+
+.footer-nav,
+.footer-nav li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav {
+    margin: 10px 0;   
+}
+
+.footer-nav li {
+    display: block;
+    border-top: 1px solid #ccc;
+    padding: 9px 0;
+}
+
+.footer-nav li a {
+    display: block;
+    color: #666666;
+    font-size: 14px;
+
+}
+
+.footer-nav li:last-child {
+    border-bottom: 1px solid #ccc;    
+}
+
+.footer {
+    background: #555;
+    padding: 10px;
+    box-shadow: inset 0px 2px 4px #333;
+    margin-top: 40px; // double margin bug due to floated nav, bah.
+}
+
+.footer li a {
+    color: #fff;
+}
+
+.footer p {
+    color: #999;
+    font-size: 15px;
+    line-height: 17px;
+    margin-top: 10px;
 }

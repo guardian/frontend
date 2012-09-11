@@ -33,13 +33,17 @@
 
 .placeholder,
 .initially-off {
-    display: none;
+    display: none !important; // this could get ugly. watching it.
 }
 
 .fixed-width-timestamp {
     width: @trailblockImgWidth;
     float: left;
     margin-right: 10px;
+}
+
+.on {
+    display: block;
 }
 
 @media screen and (min-width: 850px) {

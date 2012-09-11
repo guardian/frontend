@@ -13,13 +13,12 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
         }
  
         this.logTag = function(params) {
-
             var tag = params[0],
                 isXhr = params[1],
                 isInternalAnchor = params[2];
 
-            delay = (isXhr || isInternalAnchor) ? false : true;
-
+            // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
+            var delay = (isXhr || isInternalAnchor) ? true : false;
             that.populateEventProperties(tag);
             
             s.tl(delay, 'o', tag);
@@ -34,7 +33,7 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
 
         this.populatePageProperties = function() {
        
-            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com';
+            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
         
             var webTitle = (config.page.webTitle || '').trim();
             if (webTitle.length > 72) {
@@ -81,7 +80,7 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
     
             var that = this;
 
-            // if the omniture object was not injected in to the consutrctor
+            // if the omniture object was not injected in to the constructor
             // use the global 's' object 
 
             if (s != null) {
