@@ -3,6 +3,11 @@
 	<a href="/" data-link-name="site logo">
     	<img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/>
 	</a>
+} else {
+    <ul class="footer-nav unstyled">
+        <li><i class="i-desktop-version"></i>@fragments.mainSiteLink(page, config)</li>
+        <li><i class="i-back-to-top"></i><a data-link-name="back to top" href="#top">Back to top</a></li>
+    </ul>
 }
 
 <div id="@if(!isFooter){navigation-header} else {navigation-footer}" data-link-name="global navigation: @if(!isFooter){header} else {footer}">

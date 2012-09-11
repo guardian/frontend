@@ -363,11 +363,10 @@ article figure figcaption cite a:visited {
     -webkit-transform: translate3d(0,0,0);
     .box-shadow(0px 0px 20px #595959);
     background-color: #ffffff;
-    margin: 0 auto;
+    margin: 50px auto 10px auto; // weird double margin here
     padding: 0px;
     overflow: hidden;
     list-style: none;
-    width: 94%;
     clear: both;
 }
 
@@ -425,9 +424,8 @@ a.topstories-control,
 }
 
 #navigation-header {
-    position: absolute;
-    right: 3%;
-    top: 16px;
+    float: right;
+    margin-top: 18px;
 }
 
 #navigation-footer {
@@ -451,4 +449,51 @@ a.topstories-control,
 
 #topstories-header:after {
     right: 65px;
+}
+
+
+.footer-nav,
+.footer-nav li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav {
+    margin: 10px 0;   
+}
+
+.footer-nav li {
+    display: block;
+    border-top: 1px solid #ccc;
+    padding: 9px 0;
+}
+
+.footer-nav li a {
+    display: block;
+    color: #666666;
+    font-size: 14px;
+
+}
+
+.footer-nav li:last-child {
+    border-bottom: 1px solid #ccc;    
+}
+
+.footer {
+    background: #555;
+    padding: 10px;
+    box-shadow: inset 0px 2px 4px #333;
+    margin-top: 40px; // double margin bug due to floated nav, bah.
+}
+
+.footer li a {
+    color: #fff;
+}
+
+.footer p {
+    color: #999;
+    font-size: 15px;
+    line-height: 17px;
+    margin-top: 10px;
 }
