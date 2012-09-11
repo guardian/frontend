@@ -1,11 +1,11 @@
-@(static: StaticAssets, config: GuardianConfiguration, isFooter: Boolean=false, metaData: MetaData)(implicit request: RequestHeader)
+@(static: StaticAssets, config: GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 @if(!isFooter){
 	<a href="/" data-link-name="site logo">
     	<img src='@static("images/logo-mobile.gif")' data-svgsrc='@static("images/guardian-logo.svg")'/>
 	</a>
 } else {
     <ul class="footer-nav unstyled">
-        <li><i class="i-desktop-version"></i>@fragments.mainSiteLink(metaData, config)</li>
+        <li><i class="i-desktop-version"></i>@fragments.mainSiteLink(page, config)</li>
         <li><i class="i-back-to-top"></i><a href="#top">Back to top</a></li>
     </ul>
 }
@@ -21,5 +21,5 @@
 <div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-popup top-stories initially-off"></div>
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
-    @fragments.sections(config)
+    @fragments.sections(config, page)
 </div>
