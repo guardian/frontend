@@ -12,13 +12,13 @@
 <body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
 
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-    @fragments.navigation(static, config)
+    @fragments.navigation(static, config, metaData)
     
     <div id="container"> 
         @body
     </div>
 
-    @fragments.navigation(static, config, isFooter=true)
+    @fragments.navigation(static, config, metaData, isFooter=true)
     
     @fragments.analytics(metaData, config)
 </body>
