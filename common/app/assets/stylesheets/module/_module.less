@@ -238,7 +238,8 @@ article figure figcaption cite a:visited {
 .article-body ul,
 .article-body ol,
 .article-body address,
-.article-body blockquote {
+.article-body blockquote,
+.article-body blockquote p {
     margin: 0px 0px 10px 0px;
     color: #333;
     font-family: georgia;
@@ -377,11 +378,20 @@ article figure figcaption cite a:visited {
     font-size: 14px;
 }
 
-.sections a {
+.sections a,
+.sections .header {
     padding: 7px 5px 7px 5px;
     border-top: 1px solid #d4d7d7;
     display: block;
     height: auto;
+}
+
+.sections .header {
+    background: #efefef;
+}
+
+.edition-selected {
+    background: url(http://i.imgur.com/CeIKy.png) no-repeat right center;
 }
 
 .sections li:first-child a,
