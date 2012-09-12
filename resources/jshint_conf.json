@@ -1,14 +1,14 @@
-var JSLINT_OPTIONS = { 
+var JSLINT_OPTIONS = {   
     "passfail"      : false,
     "maxerr"        : 100,
-    
+
     "browser"       : true,
     "node"          : false,
     "rhino"         : false,
     "couch"         : false,
     "wsh"           : false,
 
-    "jquery"        : false,
+    "jquery"        : true,
     "prototypejs"   : false,
     "mootools"      : false,
     "dojo"          : false,
@@ -30,7 +30,7 @@ var JSLINT_OPTIONS = {
     "laxbreak"      : true,
     "bitwise"       : true,
     "boss"          : false,
-    "curly"         : true, 
+    "curly"         : true,
     "eqeqeq"        : true,
     "eqnull"        : false,
     "evil"          : false,
@@ -50,11 +50,11 @@ var JSLINT_OPTIONS = {
     "newcap"        : true,
     "noempty"       : true,
     "nonew"         : true,
-    "nomen"         : true,
-    "onevar"        : true,
+    "nomen"         : false,
+    "onevar"        : false,
     "plusplus"      : false,
     "sub"           : false,
-    "trailing"      : true, 
-    "white"         : true,
-    "indent"        : 4   
+    "trailing"      : true,
+    "white"         : false,
+    "indent"        : 4
 }
