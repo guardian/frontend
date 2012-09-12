@@ -1,4 +1,3 @@
-
 Logo management
 ---------------
 
@@ -13,7 +12,7 @@ Producing a PNG from SVG
 
 The source image is in SVG form, exported from Illustrator or some such.
 
-I used [Batik](xmlgraphics.apache.org/batik/) to convert it to a PNG..
+I used [Batik](http://xmlgraphics.apache.org/batik/) to convert it to a PNG..
 
 Download the Apache Batik SVG library and use the rasterizer tool as follows :-
 
