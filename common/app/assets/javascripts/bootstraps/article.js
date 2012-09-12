@@ -8,7 +8,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
                 Clickstream, Omniture, Tabs, Fonts, qwery, detect,
                 TopStories, NavigationControls) {
 
-        modules = {
+        var modules = {
 
             upgradeImages: function () {
                 var i = new Images();
@@ -78,7 +78,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
         };
 
         return {
-            init: function (config) {
+            init: function (config, userPrefs) {
                 modules.upgradeImages();
                 modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
                 modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
@@ -87,7 +87,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
                 modules.showTabs();
                 modules.transcludeNavigation(config);
                 modules.loadOmnitureAnalytics(config);
-                modules.loadFonts(config, navigator.userAgent, guardian.userPrefs);
+                modules.loadFonts(config, navigator.userAgent, userPrefs);
                 modules.loadOphanAnalytics(config);
             }
         };

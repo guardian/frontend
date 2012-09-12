@@ -1,3 +1,4 @@
+/*jshint loopfunc: true */
 define(['reqwest', 'common'], function (reqwest, common) {
 
     function Fonts(styleNodes, fileFormat) {
@@ -22,7 +23,7 @@ define(['reqwest', 'common'], function (reqwest, common) {
         this.loadFromServer = function (url, callback) {
 
             // If no URL, then load from standard static assets path.
-            var url = url || '';
+            url = url || '';
 
             for (var i = 0, j = this.styleNodes.length; i < j; ++i) {
                 var style = this.styleNodes[i];
@@ -39,7 +40,7 @@ define(['reqwest', 'common'], function (reqwest, common) {
                                 localStorage.setItem(Fonts.storagePrefix + style.getAttribute('data-cache-name'), json.css);
                                 common.mediator.emit('modules:fonts:loaded', [json.name]);
                             };
-                        })(style)
+                        }(style))
                     });
                 } else {
                     common.mediator.emit('modules:fonts:notloaded', []);

@@ -99,7 +99,7 @@
             })
 
             require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
-                bootstrap.init(config);
+                bootstrap.init(config, guardian.userPrefs);
             });
         };
 

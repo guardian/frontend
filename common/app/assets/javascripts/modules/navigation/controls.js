@@ -1,15 +1,8 @@
 define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function (common, Bean, bonzo) {
-    var Tab, Navigation;
-
-    Tab = function (label) {
-        var label = document.createElement('div'),
-            state = true;
-    };
+    var Navigation;
 
     Navigation = function (opts) {
         var toggles, view, model;
-
-        toggles = [new Tab('Sections'), new Tab('Top Stories')];
        
         // View
         

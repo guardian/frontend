@@ -22,14 +22,14 @@ define(['common'], function (common) {
 
     function isToday(date) {
         var today = new Date();
-        return (date.toDateString() == today.toDateString());
+        return (date.toDateString() === today.toDateString());
     }
 
     function isYesterday(relative) {
         var today = new Date(),
             yesterday = new Date();
         yesterday.setDate(today.getDate() - 1);
-        return (relative.toDateString() == yesterday.toDateString());
+        return (relative.toDateString() === yesterday.toDateString());
     }
 
     function isValidDate(date) {

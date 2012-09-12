@@ -19,7 +19,11 @@ define(['common', 'vendor/bean-0.4.11-1'], function (common, bean) {
             },
             
             renderState: function (expanded) {
-                (expanded) ? dom.removeClass('shut') : dom.addClass('shut');
+                if(expanded) {
+                    dom.removeClass('shut');
+                } else {
+                    dom.addClass('shut');
+                }
             },
             
             renderCallToAction: function () {

@@ -22,10 +22,6 @@ define(function () {
             mode = "extended";
         }
 
-        getLayoutMode = function () {
-            return mode;
-        };
-
         return mode;
     }
 
@@ -75,8 +71,9 @@ define(function () {
     }
 
     function getFontFormatSupport(ua) {
-        var ua = ua.toLowerCase(),
-            format = 'woff';
+        var format = 'woff';
+            ua = ua.toLowerCase();
+            
         if (ua.indexOf('android') > -1) {
             format = 'ttf';
         }
@@ -88,7 +85,7 @@ define(function () {
 
     // http://modernizr.com/download/#-svg
     function hasSvgSupport() {
-        ns = {'svg': 'http://www.w3.org/2000/svg'};
+        var ns = {'svg': 'http://www.w3.org/2000/svg'};
         return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
     }
 

@@ -2,24 +2,25 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function (common, d
 
     var Clickstream = function (opts) {
      
-        var opts = opts || {},
-            filters = opts.filter || [];
+            opts = opts || {};
+            var filters = opts.filter || [];
 
         var filterSource = function (element) {
             return filters.filter(function (f) {
-                return (f == element);
+                return (f === element);
             });
         };
  
         var getTag = function (element, tag) {
 
-            var elementName = element.tagName.toLowerCase();
+            var elementName = element.tagName.toLowerCase(),
+                dataLinkName = element.getAttribute("data-link-name");
             
             if (elementName === 'body') {
                 return tag.reverse().join(' | ');
             }
             
-            if (dataLinkName = element.getAttribute("data-link-name")) {
+            if (dataLinkName) {
                 tag.push(dataLinkName);
             }
 
@@ -30,18 +31,19 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function (common, d
         bean.add(document.body, "click", function (event) {
             var target, dataIsXhr, href, isXhr, isInternalAnchor;
 
-            if (!filterSource(event.target.tagName.toLowerCase()).length > 0) {
+            if (filterSource(event.target.tagName.toLowerCase()).length > 0) {
+                
+                target = event.target; // possibly worth looking at tab.js' getTargetElement() - this is not x-browser
+                dataIsXhr = target.getAttribute("data-is-ajax");
+                href = target.getAttribute("href");
+                 
+                isXhr = (dataIsXhr) ? true : false;
+                isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
+
+                common.mediator.emit('module:clickstream:click', [getTag(target, []), isXhr, isInternalAnchor]);
+            } else {
                 return false;
             }
-            
-            target = event.target; // possibly worth looking at tab.js' getTargetElement() - this is not x-browser
-            dataIsXhr = target.getAttribute("data-is-ajax");
-            href = target.getAttribute("href");
-             
-            isXhr = (dataIsXhr) ? true : false;
-            isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
-
-            common.mediator.emit('module:clickstream:click', [getTag(target, []), isXhr, isInternalAnchor]);
         });
      
     };

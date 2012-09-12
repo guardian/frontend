@@ -55,7 +55,7 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
                 }
 
                 // safari bug (returns textnode, not element)
-                if (target.nodeType == 3) {
+                if (target.nodeType === 3) {
                     target = target.parentNode;
                 }
 
