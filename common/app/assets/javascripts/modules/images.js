@@ -4,21 +4,14 @@ define(['common', 'modules/detect'], function (common, detect) {
     
         var connectionSpeed = detect.getConnectionSpeed();
 
-        //http://stackoverflow.com/questions/5539354/svg-for-images-in-browsers-with-png-fallback
-        var supportsSVG = window.SVGAngle ||
-            document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
-
         // View
 
         this.view = {
             upgrade: function() {
 
-                //upgrade svg images
-                if (supportsSVG) {
-                    var svgImages = document.querySelectorAll('img[data-svgsrc]');
-                    for (var x = 0; x < svgImages.length; ++x) {
-                        svgImages[x].src = svgImages[x].getAttribute('data-svgsrc');
-                    }
+                // upgrade svg images
+                if (detect.hasSvgSupport()) {
+                    common.$g('body').addClass('svg');
                 }
 
                 //upgrade other images

@@ -85,12 +85,19 @@ define(function () {
         }
         return format;
     }
-    
+
+    // http://modernizr.com/download/#-svg
+    function hasSvgSupport() {
+        ns = {'svg': 'http://www.w3.org/2000/svg'};
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
-        getFontFormatSupport: getFontFormatSupport
+        getFontFormatSupport: getFontFormatSupport,
+        hasSvgSupport: hasSvgSupport
     };
 
 });
