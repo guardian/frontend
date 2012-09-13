@@ -26,7 +26,16 @@
         for (var i = 0, j = qs.length; i<j; ++i) {
             var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/)
             if (m) {
-                store[storagePrefix + m[1]] = m[2];
+                key = m[1];
+                switch (m[2]) {
+                    case "0":
+                        remove(key);
+                        break;
+                    case "1":
+                        set(key, m[2]);
+                        break;
+                    default:
+                }
             }
         }
 
@@ -34,6 +43,10 @@
             store[storagePrefix + name] = value;
         }
 
+        function remove(name) {
+            store.removeItem(storagePrefix + name);
+        }
+        
         function get(name) {
             return store[storagePrefix + name];
         }
@@ -45,14 +58,15 @@
         return {
             set: set,
             get: get,
+            remove: remove,
             exists: exists
         }
         
     })();
 
     @if(FontSwitch.isSwitchedOn) {
-        (function loadFontsFromStorage(prefs) {
-            if (prefs.exists('font-family')) {
+        (function loadFontsFromStorage(prefs, key) {
+            if (prefs.exists(key)) {
                     var styleNodes = document.querySelectorAll('[data-cache-name]');
                     for (var i = 0, j = styleNodes.length; i<j; ++i) {
                         var style = styleNodes[i],
@@ -65,8 +79,15 @@
                         }
                     }
                 }
-        })(guardian.userPrefs);
+        })(guardian.userPrefs, 'font-family');
+    } else {
+        (function removePreference(prefs, key) {
+            if (prefs.exists(key)) {
+                prefs.remove(key);
+            }
+        })(guardian.userPrefs, 'font-family');
     }
+
 
     (function(isModern) {
 

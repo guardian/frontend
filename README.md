@@ -23,7 +23,7 @@ INT_SERVICE_DOMAIN=gudev.gnl
 EXT_SERVICE_DOMAIN=
 ```
 
-And one for each appliction in _~/.gu_, for example _~/.gu/frontend-article.properties_ :-
+And one for each application in _~/.gu_, for example _~/.gu/frontend-article.properties_ :-
 
 ```
 content.api.key=xxx
