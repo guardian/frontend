@@ -4,13 +4,11 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
 
     function Omniture(s, config) {
 
-        var config = config,
-            s = s,
-            that = this;
+        var that = this;
 
         this.logView = function() {
             s.t();
-        }
+        };
  
         this.logTag = function(params) {
             var tag = params[0],
@@ -22,14 +20,14 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             that.populateEventProperties(tag);
             
             s.tl(delay, 'o', tag);
-        }
+        };
     
         this.populateEventProperties = function(tag){
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
             s.eVar37 = s.pageType + ' | ' + tag;
-        }
+        };
 
         this.populatePageProperties = function() {
        
@@ -71,31 +69,31 @@ define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, de
             } else {
                 s.prop30 = 'non-content';
             }
-        }
+        };
 
         this.init = function() {
 
             // must be set before the Omniture file is parsed
-            s_account = config.page.omnitureAccount;
+            window.s_account = config.page.omnitureAccount;
     
             var that = this;
 
             // if the omniture object was not injected in to the constructor
-            // use the global 's' object 
+            // use the global 's' object
 
-            if (s != null) {
+            if (s !== null) {
                 that.populatePageProperties();
                 that.logView();
-                common.mediator.on('module:clickstream:click', that.logTag )
+                common.mediator.on('module:clickstream:click', that.logTag );
             } else {
                 require(['omniture'], function(placeholder){
-                    s = window.s; 
+                    s = window.s;
                     that.populatePageProperties();
                     that.logView();
-                    common.mediator.on('module:clickstream:click', that.logTag )
+                    common.mediator.on('module:clickstream:click', that.logTag );
                 });
             }
-        }    
+        };
      
     }
     
