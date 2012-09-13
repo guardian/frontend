@@ -27,6 +27,9 @@
   <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
+
+    .initially-off:after { content: " -- (hidden)"; }
+    .on:after { content: " -- (visible)"; }
   </style>  
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
@@ -67,7 +70,7 @@
 
   </script>
   <style>
-      #test-cases div { display: none;}}
+      #test-cases div { display: none;}
   </style>
 </head>
 
@@ -226,6 +229,20 @@
             <span id="click-me-span" data-link-name="the span">Span Link</span>
             <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
         </p>
+    </div>
+
+    <!-- Navigation.spec -->
+    <div>
+        <a id="sections-control-header" href="#">sections (header)</a>
+        <a id="topstories-control-header" href="#">top stories (header)</a>
+        <a id="sections-control-footer" href="#">sections (footer)</a>
+        <a id="topstories-control-footer" href="#">top stories (footer)</a>
+
+        <div id="sections-header" class="initially-off">sections popup (header)</div>
+        <div id="topstories-header" class="initially-off">top stories popup (header)</div>
+        <div id="sections-footer" class="">sections popup (footer)</div> <!-- should be auto-hidden -->
+        <div id="topstories-footer" class="initially-off">top stories popup (footer)</div>
+
     </div>
 
 <!-- Fonts.spec -->
