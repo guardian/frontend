@@ -1,19 +1,19 @@
-define(['common', 'reqwest'], function(common, reqwest){ 
+define(['common', 'reqwest'], function (common, reqwest) {
 
     function Popular(attachTo) {
         
-        // View 
+        // View
         
         this.view = {
         
             attachTo: attachTo,
 
-            render: function(html) {
+            render: function (html) {
                 attachTo.innerHTML = html;
-                common.mediator.emit('modules:popular:render')
+                common.mediator.emit('modules:popular:render');
             }
         
-        }
+        };
 
         // Bindings
         
@@ -21,17 +21,17 @@ define(['common', 'reqwest'], function(common, reqwest){
         
         // Model
         
-        this.load = function(url){
+        this.load = function (url) {
             return reqwest({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'showMostPopular',
-                    success: function(json) {
-                        common.mediator.emit('modules:popular:loaded', [json.html])
+                    success: function (json) {
+                        common.mediator.emit('modules:popular:loaded', [json.html]);
                     }
-            })
-        }  
+                });
+        };
 
     }
     

@@ -1,22 +1,22 @@
-@(config: common.GuardianConfiguration, isFooter: Boolean=false)
+@(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
 
-@if(!isFooter){ <div id="sections" class="sections-header transition-short"> } else { <div id="sections" class="sections-footer transition-short"> }
-    <ul>
-        <li><a data-link-name="news" href="/">News</a></li>
-        <li><a data-link-name="uk" href="/uk">UK</a></li>
-        <li><a data-link-name="world" href="/world">World</a></li>
-        <li><a data-link-name="culture" href="/culture">Culture</a></li>
-        <li><a data-link-name="uk" href="/uk">UK</a></li>
-        <li><a data-link-name="lifeandstyle" href="/lifeandstyle">Life and style</a></li>
-        <li><a data-link-name="world us" href="/world/usa">US</a></li>
-        <li><a data-link-name="technology" href="/technology">Technology</a></li>
-        <li><a data-link-name="sport" href="/sport">Sport</a></li>
-        <li><a data-link-name="environment" href="/environment">Environment</a></li>
-    </ul>
-    <!-- 
-    <ul>
-        <li><a data-link-name="uk-edition" href="/">UK Edition</a></li>
-        <li><a data-link-name="us-edition" href="/">US Edition</a></li>
-    </ul>
-    -->
-</div>
+@defining(Edition(request, config)) { edition =>
+<ul>
+    <li><a@if(page.section=="uk"){ class="selected"} data-link-name="UK News" href="/uk">UK News</a></li>
+    <li><a@if(page.section=="world"){ class="selected"} data-link-name="World News" href="/world">World News</a></li>
+    <li><a@if(page.section=="sport"){ class="selected"} data-link-name="Sport" href="/sport">@if(edition == "US"){ Sports } else { Sport }</a></li>
+    <li><a@if(page.section=="football"){ class="selected"} data-link-name="Football" href="/football">Football</a></li>
+    <li><a@if(page.section=="commentisfree"){ class="selected"} data-link-name="Comment is free" href="/commentisfree">Comment is free</a></li>
+    <li><a@if(page.section=="lifeandstyle"){ class="selected"} data-link-name="Life & Style" href="/lifeandstyle">Life &amp; Style</a></li>
+    <li><a@if(page.section=="culture"){ class="selected"} data-link-name="Culture" href="/culture">Culture</a></li>
+    <li><a@if(page.section=="business"){ class="selected"} data-link-name="Business" href="/business">Business</a></li>
+    <li><a@if(page.section=="technology"){ class="selected"} data-link-name="Technology" href="/technology">Technology</a></li>
+    <li><a@if(page.section=="film"){ class="selected"} data-link-name="Film" href="/film">Film</a></li>
+    <li><a@if(page.section=="music"){ class="selected"} data-link-name="Music" href="/music">Music</a></li>
+    <li><a data-link-name="Jobs" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
+    
+    <li class="header">Editions</li>
+    <li><a@if(edition == "UK"){ class="edition-selected"} data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK</a></li>
+    <li><a@if(edition == "US"){ class="edition-selected"} data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US</a></li>
+</ul>
+}

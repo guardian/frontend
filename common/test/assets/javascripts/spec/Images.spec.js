@@ -16,7 +16,8 @@ define(['modules/images'], function(Images) {
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
 
             new Images().upgrade();
-            expect(document.getElementById('upgradeSvgImages').src).toContain('http://x.y.z/b.svg');
+            expect(document.getElementsByTagName('body')[0].className).toContain('svg');
+        
         });
     })
 });

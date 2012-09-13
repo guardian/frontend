@@ -18,14 +18,6 @@
                     </li>
                 }
             </ul>
-            @if(numTrails > block.description.numItemsVisible) {
-                <h3 class="b1 b1b expander">
-                    <a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">
-                        More @block.description.name.toLowerCase
-                    </a>
-                    <span class="count">@(numTrails - block.description.numItemsVisible)</span>
-                </h3>
-            }
         }
     </div>
 </div>

@@ -1,0 +1,60 @@
+var JSLINT_OPTIONS = {   
+    "passfail"      : false,
+    "maxerr"        : 100,
+
+    "browser"       : true,
+    "node"          : false,
+    "rhino"         : false,
+    "couch"         : false,
+    "wsh"           : false,
+
+    "jquery"        : true,
+    "prototypejs"   : false,
+    "mootools"      : false,
+    "dojo"          : false,
+
+    "predef"        : [
+        "require",
+        "define",
+        "EventEmitter"
+    ],
+
+    "debug"         : false,
+    "devel"         : false,
+
+    "es5"           : true,
+    "strict"        : false,
+    "globalstrict"  : false,
+
+    "asi"           : false,
+    "laxbreak"      : true,
+    "bitwise"       : true,
+    "boss"          : false,
+    "curly"         : true,
+    "eqeqeq"        : true,
+    "eqnull"        : false,
+    "evil"          : false,
+    "expr"          : false,
+    "forin"         : false,
+    "immed"         : true,
+    "latedef"       : true,
+    "loopfunc"      : false,
+    "noarg"         : true,
+    "regexp"        : true,
+    "regexdash"     : false,
+    "scripturl"     : true,
+    "shadow"        : false,
+    "supernew"      : false,
+    "undef"         : true,
+
+    "newcap"        : true,
+    "noempty"       : true,
+    "nonew"         : true,
+    "nomen"         : false,
+    "onevar"        : false,
+    "plusplus"      : false,
+    "sub"           : false,
+    "trailing"      : true,
+    "white"         : false,
+    "indent"        : 4
+}
