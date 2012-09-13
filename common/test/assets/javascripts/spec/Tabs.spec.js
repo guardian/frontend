@@ -1,4 +1,4 @@
-define(['common', 'modules/tabs', 'vendor/bean-0.4.11-1'], function(common, Tabs, bean) {
+define(['common', 'modules/tabs', 'bean'], function(common, Tabs, bean) {
 
     describe("Tabs", function() {
 

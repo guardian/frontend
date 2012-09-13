@@ -1,4 +1,4 @@
-define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function (common, Bean, bonzo) {
+define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
     var Navigation;
 
     Navigation = function (opts) {
