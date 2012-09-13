@@ -102,7 +102,7 @@
             require(['config', 'bootstraps/@bootstrapJsModule', 'domReady'], function(config, bootstrap, domReady) {
 
                 domReady(function (){
-                    bootstrap.init(config);
+                    bootstrap.init(config, guardian.userPrefs);
                 });
 
             });

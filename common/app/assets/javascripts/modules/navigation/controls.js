@@ -1,22 +1,18 @@
-define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function(common, Bean, bonzo) { 
+define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function (common, Bean, bonzo) {
+    var Navigation;
 
-    var Tab = function(label) {
-        var label = document.createElement('div'),
-            state = true;
-    }
-
-    var Navigation = function(opts) {
-
-        var toggles = [new Tab('Sections'), new Tab('Top Stories')];
+    Navigation = function (opts) {
+        var toggles, view, model;
        
         // View
         
-        var view = {
+        view = {
 
-            toggle: function(state, position, elm) {
+            toggle: function (state, position, elm) {
+                var item, altItem;
 
-                var item = bonzo(document.getElementById(((state == "sections") ? "sections-" + position : "topstories-" + position)));
-                var altItem = bonzo(document.getElementById(((state == "sections") ?  "topstories-" + position : "sections-" + position)));
+                item = bonzo(document.getElementById(((state === "sections") ? "sections-" + position : "topstories-" + position)));
+                altItem = bonzo(document.getElementById(((state === "sections") ?  "topstories-" + position : "sections-" + position)));
 
                 if (altItem.hasClass('on')) { // the "other" panel is visible, so hide it then show current
                     altItem.toggleClass('on initially-off');
@@ -28,7 +24,7 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function(common, Bean, bonzo
                     item.toggleClass('on initially-off');
                 }
 
-                return (state)
+                return (state);
             },
 
             // this menu is on by default for non-JS users, so we hide it once JS is loaded
@@ -37,54 +33,53 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function(common, Bean, bonzo
                 bonzo(bottomMenu).addClass('initially-off');
             },
 
-            init: function() {
+            init: function () {
 
-                view.hideBottomMenu(); 
+                view.hideBottomMenu();
 
-                // can't seem to get bean to bind on arrays of elements properly, 
+                // can't seem to get bean to bind on arrays of elements properly,
                 // and doing it inside loops does weird closure-related things. ugh.
 
-                Bean.add(document.getElementById('sections-control-header'), 'click', function(e) {
+                Bean.add(document.getElementById('sections-control-header'), 'click', function (e) {
                     var elm = this;
                     view.toggle('sections', 'header', elm);
                     e.preventDefault();
                 });
 
-                Bean.add(document.getElementById('sections-control-footer'), 'click', function(e) {
+                Bean.add(document.getElementById('sections-control-footer'), 'click', function (e) {
                     var elm = this;
                     view.toggle('sections', 'footer', elm);
                     e.preventDefault();
                 });
                 
-                Bean.add(document.getElementById('topstories-control-header'), 'click', function(e) {
+                Bean.add(document.getElementById('topstories-control-header'), 'click', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'header', elm);
                     e.preventDefault();
                 });
 
-                Bean.add(document.getElementById('topstories-control-footer'), 'click', function(e) {
+                Bean.add(document.getElementById('topstories-control-footer'), 'click', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'footer', elm);
                     e.preventDefault();
                 });
 
-
             }
                     
-        }
+        };
 
         // Model
 
-        var model = {
-        }
+        model = {
+        };
         
-        this.initialise = function() {
-            view.init()
-        }
-    }
+        this.initialise = function () {
+            view.init();
+        };
+    };
 
 
-    return Navigation 
+    return Navigation;
    
 });
 
