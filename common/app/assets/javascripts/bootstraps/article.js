@@ -50,11 +50,13 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
                 });
             },
 
-            loadFonts: function (config, ua, prefs) {
+            loadFonts: function(config, ua, prefs) {
+                var fileFormat = detect.getFontFormatSupport(ua),
+                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 if (config.switches.fontFamily && prefs.exists('font-family')) {
-                    var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                } else {
+                    Fonts.clearFontsFromStorage();
                 }
             },
 
@@ -77,19 +79,17 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
          
         };
 
-        return {
-            init: function (config, userPrefs) {
-                modules.upgradeImages();
-                modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
-                modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
-                modules.showRelativeDates();
-                modules.showTabs();
-                modules.showTabs();
-                modules.transcludeNavigation(config);
-                modules.loadOmnitureAnalytics(config);
-                modules.loadFonts(config, navigator.userAgent, userPrefs);
-                modules.loadOphanAnalytics(config);
-            }
-        };
-    }
-);
+    return {
+        init: function(config, userPrefs) {
+            modules.upgradeImages();
+            modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+            modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+            modules.showRelativeDates();
+            modules.showTabs();
+            modules.transcludeNavigation(config);
+            modules.loadOmnitureAnalytics(config);
+            modules.loadFonts(config, navigator.userAgent, userPrefs);
+            modules.loadOphanAnalytics(config);
+        }
+    };
+});
