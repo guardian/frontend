@@ -89,6 +89,34 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
 
             showTabs: function () {
                 var tabs = new Tabs().init();
+            },
+
+            bindFeedbackBar: function () {
+                var feedback = document.getElementById('js-feedback');
+                var panel = document.getElementById('js-feedback-form');
+                var cancel = document.getElementById('js-feedback-cancel');
+                var submit = document.getElementById('js-feedback-submit');
+
+                bean.add(feedback, 'click', function(e){
+                    var currentState = panel.getAttribute('class');
+                    if (currentState === "initially-off") {
+                        panel.setAttribute('class', 'on');
+                        feedback.innerText = "x";
+                    } else {
+                        panel.setAttribute('class', 'initially-off');
+                        feedback.innerText = "Feedback";
+                    }
+                    e.preventDefault();
+                });
+
+                bean.add(cancel, 'click', function(){
+                    panel.setAttribute('class', 'initially-off');
+                });
+
+                bean.add(submit, 'click', function(e){
+                    alert("Sending your feedback... (not!)");
+                    e.preventDefault();
+                });
             }
          
         };
@@ -105,6 +133,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
             modules.loadOmnitureAnalytics(config);
             modules.loadFonts(config, navigator.userAgent, userPrefs);
             modules.loadOphanAnalytics(config);
+            modules.bindFeedbackBar();
         }
     };
 });

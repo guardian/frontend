@@ -8,8 +8,77 @@
 
     @head
 
+    <style>
+        #sticky {
+            position: fixed;
+            min-height: 20px;
+            padding: 5px;
+            padding-left: 10px;
+            width: 100%;
+            font-family: courier, serif;
+            font-size: 14px;
+            font-weight: bold;
+            background: #FFC202;
+            box-shadow: 0px 2px 7px #999;
+            -moz-box-shadow: 0px 2px 7px #999;
+            -webkit-box-shadow: 0px 2px 7px #999;
+            margin: 0px;
+            z-index: 1000;
+        }
+
+        #sticky span {
+            float: left;
+        }
+
+        #sticky a,
+        .submit,
+        .cancel {
+            float: right;
+            margin-right: 20px;
+            background: #000;
+            padding: 2px 10px !important;
+            color: #fff;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            font-family: courier, serif;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+        }
+
+        .cancel {
+            float: none;
+            background: #FFEAA9;
+            color: #333;
+        }
+
+        #sticky textarea {
+            width: 96%;
+            height: 100px;
+            margin: 10px auto;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        #top {
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
+
+    <div id="sticky">
+        <span>beta: test build v12.343a</span> <a href="#" id="js-feedback">Feedback</a>
+        <div class="initially-off" id="js-feedback-form">
+            <form method="post">
+                <textarea name="comments"></textarea>
+                <input type="button" id="js-feedback-cancel" value="Cancel" class="cancel" />
+                <input type="submit" id="js-feedback-submit" value="Send feedback" class="submit" />
+            </form>
+        </div>
+    </div>
 
     @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
     <div id="top"></div>
