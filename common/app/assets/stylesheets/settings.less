@@ -1,6 +1,7 @@
 @trailblockImgWidth: 85px;
 @inArticleInlineImgWidth: 114px;
 @blockquoteMarginLeft: 31px;
+@navBorderWidth: 10px;
 
 .standard-font-sizing {
     font-size: 17px;
@@ -18,15 +19,21 @@
 }
 
 .transition (@args) {
+    transition: @args;
     -webkit-transition: @args;
     -moz-transition: @args;
-    transition: @args;
 }
 
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
+}
+
+.box-shadow (@args) {
+    box-shadow: @args;
+    -webkit-box-shadow: @args;
+    -moz-box-shadow: @args;
 }
 
 /* taken from ClearLeft's ClearLess library */

@@ -11,7 +11,8 @@
         baseUrl: '@{config.static.path}javascripts',
         paths: {
             'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath',
-            omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
+            omniture: '@static("javascripts/vendor/omniture.js").asModulePath',
+            'domReady': '@static("javascripts/vendor/domReady.js").asModulePath'
         }
     };
 
@@ -119,8 +120,12 @@
                 };
             })
 
-            require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
-                bootstrap.init(config);
+            require(['config', 'bootstraps/@bootstrapJsModule', 'domReady'], function(config, bootstrap, domReady) {
+
+                domReady(function (){
+                    bootstrap.init(config, guardian.userPrefs);
+                });
+
             });
         };
 

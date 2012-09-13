@@ -11,6 +11,30 @@ Frontend is a set of Play Framework 2 Scala applications.
 To start the play development environment, run the provided `sbt011` script
 in the source tree root. This starts the Play Framework console.
 
+
+Configuration
+-------------
+
+You'll need a config file in _/etc/gu/install_vars_ as follows :-
+
+```
+STAGE=DEV
+INT_SERVICE_DOMAIN=gudev.gnl
+EXT_SERVICE_DOMAIN=
+```
+
+And one for each application in _~/.gu_, for example _~/.gu/frontend-article.properties_ :-
+
+```
+content.api.key=xxx
+content.api.host=http://xxx.guardianapis.com/api
+```
+
+Get the correct key and host from another developer on the project.
+
+Running
+-------
+
 Change to the project of interest using the `project <name>` command. Then use
 the `compile` command to compile the software, `test` to execute test suites.
 
@@ -28,7 +52,6 @@ IntelliJ project directories. The source tree can be opened directly as
 a project in IntelliJ.
 
 Further information on using the Play console is available [here][play2-console].
-
 
 Virtualisation
 --------------

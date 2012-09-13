@@ -15,11 +15,11 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
     
     */
 
-    var Tabs = function(options) {
+    var Tabs = function (options) {
 
         var view = {
 
-            showTab: function(tabSet, clickedTab, originalEvent) {
+            showTab: function (tabSet, clickedTab, originalEvent) {
             
                 // find the active tab in the set. returns an array of 1 item, hence [0]
                 var currentTab = common.$g('.tabs-selected a', tabSet)[0];
@@ -43,7 +43,7 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
         var model = {
 
             // x-brower way of grabbing clicked element
-            getTargetElement: function(event) {
+            getTargetElement: function (event) {
                 var target;
         
                 if (!event) { return; }
@@ -55,7 +55,7 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
                 }
 
                 // safari bug (returns textnode, not element)
-                if (target.nodeType == 3) {
+                if (target.nodeType === 3) {
                     target = target.parentNode;
                 }
 
@@ -64,14 +64,14 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
 
         };
 
-        this.init = function(tabSelector) {
+        this.init = function (tabSelector) {
 
             if (!tabSelector) {
                 tabSelector = 'ol.tabs';
             }
     
-            var ols = common.$g(tabSelector).each(function(tabSet) {
-                bean.add(tabSet, 'click', function(e) {
+            var ols = common.$g(tabSelector).each(function (tabSet) {
+                bean.add(tabSet, 'click', function (e) {
                     var targetElm = model.getTargetElement(e);
                     // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
                     var tabContainer = targetElm.parentNode.parentNode;
@@ -80,7 +80,7 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, b
                         view.showTab(tabContainer, targetElm, e);
                     }
                 });
-            })
+            });
         };
 
         // Bindings
