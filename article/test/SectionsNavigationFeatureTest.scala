@@ -55,5 +55,24 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
         editionLink.getAttribute("href") should be("http://localhost:9000/world/2012/aug/23/australia-mining-boom-end")
       }
     }
+
+    scenario("Links to user information", ArticleComponents) {
+      given("I am on any guardian.co.uk page")
+      HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+        import browser._
+
+        then("I should see a list of user information links")
+
+        val help = find("#sections-footer li a").filter(hasUserLink(_, "Help"))
+        val contact = find("#sections-footer li a").filter(hasUserLink(_, "Contact Us"))
+
+        help.length should be > 0
+        contact.length should be > 0
+
+      }
+    }
+
   }
+
+  private def hasUserLink(e: FluentWebElement, name: String) = e.getText() == name
 }

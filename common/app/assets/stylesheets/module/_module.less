@@ -337,7 +337,7 @@ article figure figcaption cite a:visited {
 
 
 .sections-control {
-    display: inline-block;
+    margin-top: 6px;
     padding: 3px 5px 8px 5px;
 }
 
@@ -345,7 +345,7 @@ article figure figcaption cite a:visited {
     background-image: url(http://i.imgur.com/cDEag.png);
     background-repeat: repeat-x;
     background-position: center;
-    width: 20px;
+    width: 24px;
     height: 13px;
     display: inline-block;
     text-indent: -1000em;
@@ -357,7 +357,7 @@ article figure figcaption cite a:visited {
     margin-left: 5px;
     background-image: url('http://i.imgur.com/9jAeA.png');
     display: inline-block;
-    vertical-align: middle;
+    //vertical-align: middle;
 }
 
 .nav-popup {
@@ -369,17 +369,19 @@ article figure figcaption cite a:visited {
     list-style: none;
     clear: both;
     position: relative;
+    .rounded-corners(2px);
 }
 
 .sections ul {
     margin: 0;
-    padding: 10px;
+    //padding: 10px;
     list-style: none;
     font-size: 14px;
 }
 
 .sections a,
-.sections .header {
+.sections .header,
+.sections .divider {
     padding: 7px 5px 7px 5px;
     border-top: 1px solid #d4d7d7;
     display: block;
@@ -388,6 +390,10 @@ article figure figcaption cite a:visited {
 
 .sections .header {
     background: #efefef;
+}
+
+.sections .divider {
+    border-width: 4px;
 }
 
 .edition-selected {
@@ -420,6 +426,7 @@ article figure figcaption cite a:visited {
 
 .topstories-control {
     font-size: 14px;
+    margin-top: 10px;
 }
 
 .sections-control:active,
@@ -431,11 +438,12 @@ a.topstories-control,
 .sections-control {
     color: #707272;
     background-color: transparent !important;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #navigation-header {
     float: right;
-    margin-top: 12px;
 }
 
 #navigation-footer {
@@ -468,7 +476,7 @@ a.topstories-control,
 }
 
 .footer-nav {
-    margin: 10px 0;   
+    margin: 10px 0 0 0;   
 }
 
 .footer-nav li {
