@@ -1,14 +1,38 @@
-define(['common', 'modules/related', 'modules/images', 'modules/popular',
-    'modules/expandable', 'vendor/ios-orientationchange-fix',
-    'modules/relativedates', 'modules/analytics/clickstream',
-    'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery',
-    'modules/detect', 'modules/navigation/top-stories.js',
-    'modules/navigation/controls.js',
-    'domReady'
+define([
+        'common',
+        'modules/related',
+        'modules/images',
+        'modules/popular',
+        'modules/expandable',
+        'vendor/ios-orientationchange-fix',
+        'modules/relativedates',
+        'modules/analytics/clickstream',
+        'modules/analytics/omniture',
+        'modules/tabs',
+        'modules/fonts',
+        'qwery',
+        'modules/detect',
+        'modules/navigation/top-stories.js',
+        'modules/navigation/controls.js',
+        'domReady'
     ],
-    function (common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
-                Clickstream, Omniture, Tabs, Fonts, qwery, detect,
-                TopStories, NavigationControls, domReady) {
+    function (
+        common,
+        Related,
+        Images,
+        Popular,
+        Expandable,
+        Orientation,
+        RelativeDates,
+        Clickstream,
+        Omniture,
+        Tabs,
+        Fonts,
+        qwery,
+        detect,
+        TopStories,
+        NavigationControls,
+        domReady) {
 
         var modules = {
 
