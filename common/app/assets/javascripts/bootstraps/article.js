@@ -26,7 +26,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
 
                 // only do this for homepage
                 if (!this.isNetworkFront) {
-                    new TopStories().load(config); 
+                    new TopStories().load(config);
                 }
 
             },

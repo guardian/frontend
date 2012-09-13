@@ -33,11 +33,11 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function (common, Bean, bonz
                 bonzo(bottomMenu).addClass('initially-off');
             },
 
-            // we don't show the bottom section icon unless JS is enabled, 
+            // we don't show the bottom section icon unless JS is enabled,
             // since it doesn't do anything at the footer
             // so we show it here since JS is on
             showHiddenSectionControls: function () {
-                var navItems = common.$g('.sections-control');
+                var navItems = common.$g('.sections-control'), i, l, elm;
                  for (i = 0, l = navItems.length; i < l; i++) {
                     elm = navItems[i];
                     bonzo(elm).removeClass('initially-off');
