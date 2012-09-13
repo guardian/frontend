@@ -5,6 +5,8 @@ import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import collection.JavaConverters._
 import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
+import org.fluentlenium.core.filter.FilterConstructor._
+
 import conf.Configuration
 
 class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
@@ -61,12 +63,14 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
       HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
         import browser._
 
-        then("I should see a list of user information links")
+        then("I should see a link to the help section")
 
-        val help = find("#sections-footer li a").filter(hasUserLink(_, "Help"))
-        val contact = find("#sections-footer li a").filter(hasUserLink(_, "Contact Us"))
-
+        val help = find("#sections-footer li a", withText().contains("Help"))
         help.length should be > 0
+
+        and("a link to the contact us page")
+        val contact = find("#sections-footer li a", withText().contains("Contact"))
+
         contact.length should be > 0
 
       }
@@ -74,5 +78,4 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
   }
 
-  private def hasUserLink(e: FluentWebElement, name: String) = e.getText() == name
 }
