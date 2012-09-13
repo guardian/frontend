@@ -3,10 +3,12 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
     'modules/relativedates', 'modules/analytics/clickstream',
     'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery',
     'modules/detect', 'modules/navigation/top-stories.js',
-    'modules/navigation/controls.js'],
+    'modules/navigation/controls.js',
+    'vendor/domReady'
+    ],
     function (common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
                 Clickstream, Omniture, Tabs, Fonts, qwery, detect,
-                TopStories, NavigationControls) {
+                TopStories, NavigationControls, domReady) {
 
         var modules = {
 
@@ -79,8 +81,7 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
          
         };
 
-    return {
-        init: function(config, userPrefs) {
+    var bootstrap = function (config, userPrefs) {
             modules.upgradeImages();
             modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
             modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
@@ -90,6 +91,17 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
             modules.loadOmnitureAnalytics(config);
             modules.loadFonts(config, navigator.userAgent, userPrefs);
             modules.loadOphanAnalytics(config);
-        }
+        };
+
+    // domReady proxy for bootstrap
+    var domReadyBootstrap = function (config, userPrefs) {
+            domReady(function () {
+                bootstrap(config, userPrefs);
+                });
+            };
+
+    return {
+        go: domReadyBootstrap
     };
+
 });
