@@ -22,6 +22,7 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
 }
 
 object FrontController extends Controller with Logging {
+
   def render() = Action { implicit request =>
     FrontRefresher monitorStatus ()
 

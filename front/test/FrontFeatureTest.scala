@@ -8,6 +8,7 @@ import model._
 import org.joda.time.DateTime
 import model.Trailblock
 import model.TrailblockDescription
+import collection.JavaConversions._
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -23,19 +24,101 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
     info("Page views should *not* decrease.")
     info("Increase repeat visits")
 
-    scenario("display top stories") {
+    //End to end integration tests
+
+    scenario("Load the network front") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("I should see the news trailblock")
+        val news = $("[data-link-name=\"front block News\"]")
+        news.findFirst("h1").getText should be("News")
+        news.find(".trail-headline") should have length (10)
+
+        and("I should see the Sport trailblock")
+        val sport = $("[data-link-name=\"front block Sport\"]")
+        sport.findFirst("h1").getText should be("Sport")
+        sport.find(".trail-headline") should have length (10)
+      }
+    }
+
+    scenario("Section navigation") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("I should see the link for section navigation")
+        findFirst("#sections-control-header").href should endWith("/#sections-footer")
+      }
+    }
+
+    scenario("Link to desktop version") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("I should see the link for the desktop site")
+        findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/?mobile-redirect=false")
+      }
+    }
+
+    scenario("Help links") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("I should see the help link")
+        findFirst("[data-link-name=help]").getText should be("Help")
+        findFirst("[data-link-name=help]").href should endWith("/help")
+
+        and("I should see the contact link")
+        findFirst("[data-link-name=contact]").getText should be("Contact us")
+        findFirst("[data-link-name=contact]").href should endWith("/help/contact-us")
+
+        and("I should see terms & conditions link")
+        findFirst("[data-link-name=terms]").getText should be("Terms & conditions")
+        findFirst("[data-link-name=terms]").href should endWith("/help/terms-of-service")
+
+        and("I should see the privacy policy link")
+        findFirst("[data-link-name=privacy]").getText should be("Privacy policy")
+        findFirst("[data-link-name=privacy]").href should endWith("/help/privacy-policy")
+      }
+    }
+
+    scenario("Copyright") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("I should see the copyright")
+        findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+
+      }
+    }
+
+    scenario("Link tracking") {
+      given("I visit the network front")
+      HtmlUnit("/") { browser =>
+        import browser._
+
+        then("All links should be tracked")
+        $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
+
+      }
+    }
+
+    //lower level tests
+
+    scenario("Display top stories") {
       given("I visit the Network Front")
 
       Fake {
-
         //in real life these will always be editors picks only (content api does not do latest for front)
         val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
 
         agent.refresh()
-
-        //note that this does not mean a 4 second pause, it means it will wait *up to* 4 seconds for the async agent
-        //to finish - this should normally only be a very short period.
-        agent.await(4000)
+        agent.waitTillReady()
 
         val trails = agent.trailblock.get.trails
 
@@ -55,7 +138,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
 
         agent.refresh()
-        agent.await(4000)
+        agent.waitTillReady()
 
         val trails = agent.trailblock.get.trails
 
@@ -69,11 +152,11 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       Fake {
 
-        //in real life this will be a combination of editors picks + latest
+        //in real life this will always be a combination of editors picks + latest
         val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
 
         agent.refresh()
-        agent.await(4000)
+        agent.waitTillReady()
 
         val trails = agent.trailblock.get.trails
 
@@ -94,8 +177,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         ukAgent.refresh()
         usAgent.refresh()
 
-        ukAgent.await(4000)
-        usAgent.await(4000)
+        ukAgent.waitTillReady()
+        usAgent.waitTillReady()
 
         val ukTrails = ukAgent.trailblock.get.trails
         val usTrails = usAgent.trailblock.get.trails
@@ -146,7 +229,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       val description = TrailblockDescription("", "Name", 5)
       //duplicate trail is hidden behind "more" button
-      val topTrails: List[Trail] = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
+      val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
 
       val topStoriesBlock = new TrailblockAgent(description, "UK") {
         override lazy val trailblock = Some(Trailblock(description, topTrails))
@@ -171,13 +254,13 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       sport.trails should have length (10)
     }
 
-    scenario("Trailblocks on the front") {
+    scenario("Default front trailblock configuration") {
 
       given("I visit the network front")
 
       then("I should see 10 (5 of whch are hidden) Top stories")
-      Front.uk.descriptions(0) should be(TrailblockDescription("", "Top stories", 5))
-      Front.us.descriptions(0) should be(TrailblockDescription("", "Top stories", 5))
+      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5))
+      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5))
 
       and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
       Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5))
@@ -202,6 +285,10 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       and("I should see 1 Money story")
       Front.uk.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
       Front.us.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+
+      and("I should see 1 Travel story")
+      Front.uk.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
+      Front.us.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
     }
   }
 
@@ -212,16 +299,10 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
 private case class StubTrail(url: String) extends Trail {
   override def webPublicationDate = new DateTime()
-
   override def linkText = ""
-
   override def trailText = None
-
   override def section = ""
-
   override def sectionName = ""
-
   override def thumbnail = None
-
   override def images = Nil
 }
