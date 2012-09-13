@@ -3,10 +3,13 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
     'modules/relativedates', 'modules/analytics/clickstream',
     'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery',
     'modules/detect', 'modules/navigation/top-stories.js',
-    'modules/navigation/controls.js', 'vendor/bean-0.4.11-1'],
+    'modules/navigation/controls.js',
+    'vendor/domReady',
+    'vendor/bean-0.4.11-1'
+    ],
     function (common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
                 Clickstream, Omniture, Tabs, Fonts, qwery, detect,
-                TopStories, NavigationControls, bean) {
+                TopStories, NavigationControls, domReady, bean) {
 
         var modules = {
 
@@ -93,18 +96,28 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
          
         };
 
-    return {
-        init: function(config, userPrefs) {
-            modules.setNetworkFrontStatus(config.page.pageId);
-            modules.upgradeImages();
-            modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
-            modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
-            modules.showRelativeDates();
-            modules.showTabs();
-            modules.transcludeNavigation(config);
-            modules.loadOmnitureAnalytics(config);
-            modules.loadFonts(config, navigator.userAgent, userPrefs);
-            modules.loadOphanAnalytics(config);
-        }
+    var bootstrap = function (config, userPrefs) {
+        modules.setNetworkFrontStatus(config.page.pageId);
+        modules.upgradeImages();
+        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+        modules.showRelativeDates();
+        modules.showTabs();
+        modules.transcludeNavigation(config);
+        modules.loadOmnitureAnalytics(config);
+        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.loadOphanAnalytics(config);
     };
+
+    // domReady proxy for bootstrap
+    var domReadyBootstrap = function (config, userPrefs) {
+        domReady(function () {
+            bootstrap(config, userPrefs);
+        });
+    };
+
+    return {
+        go: domReadyBootstrap
+    };
+
 });
