@@ -4,13 +4,20 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
     'modules/analytics/omniture', 'modules/tabs', 'modules/fonts', 'qwery',
     'modules/detect', 'modules/navigation/top-stories.js',
     'modules/navigation/controls.js',
-    'vendor/domReady'
+    'vendor/domReady',
+    'vendor/bean-0.4.11-1'
     ],
     function (common, Related, Images, Popular, Expandable, Orientation, RelativeDates,
                 Clickstream, Omniture, Tabs, Fonts, qwery, detect,
-                TopStories, NavigationControls, domReady) {
+                TopStories, NavigationControls, domReady, bean) {
 
         var modules = {
+
+            isNetworkFront: false, // use this to disable some functions for NF
+
+            setNetworkFrontStatus: function(status) {
+                this.isNetworkFront = (status === "") ? true : false;
+            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -19,7 +26,12 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
 
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
-                new TopStories().load(config);
+
+                // only do this for homepage
+                if (!this.isNetworkFront) {
+                    new TopStories().load(config);
+                }
+
             },
 
             transcludeRelated: function (host, pageId) {
@@ -38,6 +50,9 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
             },
 
             transcludeMostPopular: function (host, section) {
+
+                if (this.isNetworkFront) { return false; }
+
                 var url = host + '/most-popular/UK/' + section,
                     domContainer = document.getElementById('js-popular');
 
@@ -82,23 +97,24 @@ define(['common', 'modules/related', 'modules/images', 'modules/popular',
         };
 
     var bootstrap = function (config, userPrefs) {
-            modules.upgradeImages();
-            modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
-            modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
-            modules.showRelativeDates();
-            modules.showTabs();
-            modules.transcludeNavigation(config);
-            modules.loadOmnitureAnalytics(config);
-            modules.loadFonts(config, navigator.userAgent, userPrefs);
-            modules.loadOphanAnalytics(config);
-        };
+        modules.setNetworkFrontStatus(config.page.pageId);
+        modules.upgradeImages();
+        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+        modules.showRelativeDates();
+        modules.showTabs();
+        modules.transcludeNavigation(config);
+        modules.loadOmnitureAnalytics(config);
+        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.loadOphanAnalytics(config);
+    };
 
     // domReady proxy for bootstrap
     var domReadyBootstrap = function (config, userPrefs) {
-            domReady(function () {
-                bootstrap(config, userPrefs);
-                });
-            };
+        domReady(function () {
+            bootstrap(config, userPrefs);
+        });
+    };
 
     return {
         go: domReadyBootstrap
