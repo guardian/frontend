@@ -1,4 +1,4 @@
-define(['common'], function(common) {
+define(['common'], function (common) {
     
     describe("Common", function() {
         

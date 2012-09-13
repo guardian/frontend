@@ -10,6 +10,8 @@ import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 import com.gu.RequireJS._
 import com.gu.RequireJS
+import com.gu.SbtJshintPlugin
+import com.gu.SbtJshintPlugin._
 
 object Frontend extends Build with Prototypes {
 
@@ -21,12 +23,10 @@ object Frontend extends Build with Prototypes {
 
   val article = application("article").dependsOn(commonWithTests)
   val gallery = application("gallery").dependsOn(commonWithTests)
-
   val tag = application("tag").dependsOn(commonWithTests)
   val section = application("section").dependsOn(commonWithTests)
   val front = application("front").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
-
   val video = application("video").dependsOn(commonWithTests)
 
   val main = root().aggregate(
@@ -83,6 +83,7 @@ trait Prototypes {
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
     .settings(RequireJS.settings:_*)
     .settings(requireJsConfiguration: _*)
+    .settings(jshintSettings:_*)
     .settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
@@ -117,6 +118,16 @@ trait Prototypes {
 
       // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
+
+      jshintFiles <+= baseDirectory { base =>
+        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "vendor" ** "*.js") 
+      },
+
+      jshintOptions <+= (baseDirectory) { base =>
+        (base.getParentFile / "resources" / "jshint_conf.json")
+      },
+
+      (test in Test) <<= (test in Test) dependsOn (jshint),
 
       templatesImport ++= Seq(
         "common._",
