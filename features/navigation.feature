@@ -39,6 +39,11 @@ Measurements
                 When I click on the sections to close it
                 Then the sections menu should slide up
 
+   Scenario: Editions
+               Given I visit any guardian page
+               When I click the sections link
+               Then I can switch between the UK and US editions
+
  
    Scenario: Section navigation is tracked with Omniture
          Given I interact with Section features using a mobile device, tablet or desktop

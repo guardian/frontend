@@ -1,4 +1,4 @@
-define(['analytics/clickstream', 'vendor/bean-0.4.11-1', 'common'], function(Clickstream, bean, common) {
+define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, common) {
 
     describe("Clickstream", function() { 
 

@@ -60,7 +60,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             var o = new Omniture(s, config)
             o.populatePageProperties();
 
-            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com");
+            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
             expect(s.pageName).toBe("a really long title a really long title a really long title a really lon:Article:12345");
             expect(s.pageType).toBe("Article");
             expect(s.prop9).toBe("Article");
@@ -110,7 +110,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                 common.mediator.emit('module:clickstream:click', ['tag', true, false]); // internal anchor
                 common.mediator.emit('module:clickstream:click', ['tag', true, true]);  // xhr + internal anchor
                 common.mediator.emit('module:clickstream:click', ['tag', false, false]); // neither 
-                expect(s.tl.withArgs(false, 'o', 'tag')).toHaveBeenCalledThrice();
+                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
             });
 
         });

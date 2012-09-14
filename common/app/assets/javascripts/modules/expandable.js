@@ -1,4 +1,4 @@
-define(['common', 'vendor/bean-0.4.11-1'], function (common, bean) {
+define(['common', 'bean'], function (common, bean) {
 
     var Expandable = function (opts) {
 
