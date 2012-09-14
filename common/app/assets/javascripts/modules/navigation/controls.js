@@ -40,25 +40,25 @@ define(['common', 'vendor/bean-0.4.11-1', 'bonzo'], function (common, Bean, bonz
                 // can't seem to get bean to bind on arrays of elements properly,
                 // and doing it inside loops does weird closure-related things. ugh.
 
-                Bean.add(document.getElementById('sections-control-header'), 'click', function (e) {
+                Bean.add(document.getElementById('sections-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('sections', 'header', elm);
                     e.preventDefault();
                 });
 
-                Bean.add(document.getElementById('sections-control-footer'), 'click', function (e) {
+                Bean.add(document.getElementById('sections-control-footer'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('sections', 'footer', elm);
                     e.preventDefault();
                 });
                 
-                Bean.add(document.getElementById('topstories-control-header'), 'click', function (e) {
+                Bean.add(document.getElementById('topstories-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'header', elm);
                     e.preventDefault();
                 });
 
-                Bean.add(document.getElementById('topstories-control-footer'), 'click', function (e) {
+                Bean.add(document.getElementById('topstories-control-footer'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'footer', elm);
                     e.preventDefault();
