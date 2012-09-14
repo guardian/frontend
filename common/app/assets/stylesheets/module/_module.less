@@ -93,6 +93,8 @@
     display: inline-block;
 }
 
+.trailblock-topstories li:first-child .b2 { border-top:none;}
+
 .nav,
 .nav li,
 .nav-sub-nav,
@@ -334,21 +336,22 @@ article figure figcaption cite a:visited {
     background: #ededed;    
 }
 
-
-
 .sections-control {
-    display: inline-block;
-    padding: 3px 5px 8px 5px;
+    padding: 9px 5px 8px 5px;
 }
 
 .sections-control span {
     background-image: url(http://i.imgur.com/cDEag.png);
     background-repeat: repeat-x;
     background-position: center;
-    width: 20px;
+    width: 24px;
     height: 13px;
     display: inline-block;
     text-indent: -1000em;
+}
+
+#sections-control-footer span {
+    background-image: url(http://i.imgur.com/h62dV.png)
 }
 
 .nav-divider{
@@ -357,7 +360,6 @@ article figure figcaption cite a:visited {
     margin-left: 5px;
     background-image: url('http://i.imgur.com/9jAeA.png');
     display: inline-block;
-    vertical-align: middle;
 }
 
 .nav-popup {
@@ -369,17 +371,18 @@ article figure figcaption cite a:visited {
     list-style: none;
     clear: both;
     position: relative;
+    .rounded-corners(2px);
 }
 
 .sections ul {
     margin: 0;
-    padding: 10px;
     list-style: none;
     font-size: 14px;
 }
 
 .sections a,
-.sections .header {
+.sections .header,
+.sections .divider {
     padding: 7px 5px 7px 5px;
     border-top: 1px solid #d4d7d7;
     display: block;
@@ -388,6 +391,10 @@ article figure figcaption cite a:visited {
 
 .sections .header {
     background: #efefef;
+}
+
+.sections .divider {
+    border-width: 4px;
 }
 
 .edition-selected {
@@ -420,6 +427,7 @@ article figure figcaption cite a:visited {
 
 .topstories-control {
     font-size: 14px;
+    padding-top: 10px;
 }
 
 .sections-control:active,
@@ -431,11 +439,12 @@ a.topstories-control,
 .sections-control {
     color: #707272;
     background-color: transparent !important;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #navigation-header {
     float: right;
-    margin-top: 12px;
 }
 
 #navigation-footer {
@@ -468,7 +477,7 @@ a.topstories-control,
 }
 
 .footer-nav {
-    margin: 10px 0;   
+    margin: 10px 0 0 0;   
 }
 
 .footer-nav li {
@@ -481,7 +490,6 @@ a.topstories-control,
     display: block;
     color: #666666;
     font-size: 14px;
-
 }
 
 .footer-nav li:last-child {
@@ -489,19 +497,26 @@ a.topstories-control,
 }
 
 .footer {
-    background: #555;
-    padding: 10px;
-    box-shadow: inset 0px 2px 4px #333;
+    padding: 5px 0;
     margin-top: 40px; // double margin bug due to floated nav, bah.
-}
-
-.footer li a {
-    color: #fff;
+    border-top: 2px solid #ccc;
 }
 
 .footer p {
     color: #999;
-    font-size: 15px;
+    font-size: 12px;
     line-height: 17px;
-    margin-top: 10px;
+}
+
+.footer li { 
+    display: inline;
+}
+
+.footer a {
+    font-size: 12px;
+}
+
+.footer li:first-child:after {
+    content: '·';
+    margin-left: 4px;
 }
