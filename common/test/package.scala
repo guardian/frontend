@@ -62,9 +62,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case _ => 9000
     }
 
-    val server = TestServer(port)
-
-    running(server, HTMLUNIT) {
+    running(TestServer(port), HTMLUNIT) {
       browser =>
 
         // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
@@ -81,7 +79,12 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
     try {
       testServer.start()
       browser = TestBrowser.of(webDriver)
+
+      println("-----------------------------------------------------------------------------------")
+
       eventually { block(browser) }
+
+      println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     } finally {
       if (browser != null) {
         browser.quit()
