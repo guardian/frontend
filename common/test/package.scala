@@ -82,9 +82,11 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
 
       println("-----------------------------------------------------------------------------------")
 
-      eventually { block(browser) }
+      val p = eventually { block(browser) }
 
       println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+      p
     } finally {
       if (browser != null) {
         browser.quit()
