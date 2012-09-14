@@ -45,15 +45,17 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case _ => 9000
     }
 
-    running(TestServer(port), HTMLUNIT) {
-      browser =>
-        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+    eventually {
+      running(TestServer(port), HTMLUNIT) {
+        browser =>
+          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-        eventually {
-          val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-          block(connection)
-        }
+          eventually {
+            val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
+            block(connection)
+          }
+      }
     }
   }
 
@@ -64,15 +66,17 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case _ => 9000
     }
 
-    running(TestServer(port), HTMLUNIT) {
-      browser =>
-        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+    eventually {
+      running(TestServer(port), HTMLUNIT) {
+        browser =>
+          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-        eventually {
-          browser.goTo(host + path)
-          block(browser)
-        }
+          eventually {
+            browser.goTo(host + path)
+            block(browser)
+          }
+      }
     }
   }
 }
