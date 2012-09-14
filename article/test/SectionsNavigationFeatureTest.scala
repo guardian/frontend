@@ -76,6 +76,24 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
       }
     }
 
+    scenario("Links to legal information", ArticleComponents) {
+      given("I am on any guardian.co.uk page")
+      HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+        import browser._
+
+        then("I should see a link to the terms & Conditions in the page footer")
+
+        val terms = find(".footer li a", withText().contains("Terms"))
+        terms.length should be > 0
+
+        and("a link to the privacy policy page")
+        val privacy = find(".footer li a", withText().contains("Privacy"))
+
+        privacy.length should be > 0
+
+      }
+    }
+
   }
 
 }
