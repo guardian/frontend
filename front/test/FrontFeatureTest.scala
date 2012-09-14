@@ -9,9 +9,13 @@ import org.joda.time.DateTime
 import model.Trailblock
 import model.TrailblockDescription
 import collection.JavaConversions._
-import play.api.test.FakeApplication
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.{ Millis, Span, Seconds }
 
-class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Eventually {
+
+  implicit override val patienceConfig =
+    PatienceConfig(timeout = scaled(Span(30, Seconds)), interval = scaled(Span(5, Millis)))
 
   feature("Network Front") {
 
@@ -27,96 +31,104 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     //End to end integration tests
 
-    scenario("ignore me") {
-
-      try {
-        HtmlUnit("/") { browser =>
-
-        }
-      } catch {
-        case _ => Unit
-      }
-    }
-
     scenario("Load the network front") {
       given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
 
-        then("I should see the news trailblock")
-        val news = $("[data-link-name=\"front block News\"]")
-        news.findFirst("h1").getText should be("News")
-        news.find(".trail-headline") should have length (10)
+      eventually {
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        and("I should see the Sport trailblock")
-        val sport = $("[data-link-name=\"front block Sport\"]")
-        sport.findFirst("h1").getText should be("Sport")
-        sport.find(".trail-headline") should have length (10)
+            then("I should see the news trailblock")
+            val news = $("[data-link-name=\"front block News\"]")
+            news.findFirst("h1").getText should be("News")
+            news.find(".trail-headline") should have length (10)
+
+            and("I should see the Sport trailblock")
+            val sport = $("[data-link-name=\"front block Sport\"]")
+            sport.findFirst("h1").getText should be("Sport")
+            sport.find(".trail-headline") should have length (10)
+        }
       }
     }
 
     scenario("Section navigation") {
-      given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
+      eventually {
+        given("I visit the network front")
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        then("I should see the link for section navigation")
-        findFirst("#sections-control-header").href should endWith("/#sections-footer")
+            then("I should see the link for section navigation")
+            findFirst("#sections-control-header").href should endWith("/#sections-footer")
+        }
       }
     }
 
     scenario("Link to desktop version") {
-      given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
+      eventually {
+        given("I visit the network front")
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        then("I should see the link for the desktop site")
-        findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/?mobile-redirect=false")
+            then("I should see the link for the desktop site")
+            findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/?mobile-redirect=false")
+        }
       }
     }
 
     scenario("Help links") {
-      given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
+      eventually {
+        given("I visit the network front")
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        then("I should see the help link")
-        findFirst("[data-link-name=help]").getText should be("Help")
-        findFirst("[data-link-name=help]").href should endWith("/help")
+            then("I should see the help link")
+            findFirst("[data-link-name=help]").getText should be("Help")
+            findFirst("[data-link-name=help]").href should endWith("/help")
 
-        and("I should see the contact link")
-        findFirst("[data-link-name=contact]").getText should be("Contact us")
-        findFirst("[data-link-name=contact]").href should endWith("/help/contact-us")
+            and("I should see the contact link")
+            findFirst("[data-link-name=contact]").getText should be("Contact us")
+            findFirst("[data-link-name=contact]").href should endWith("/help/contact-us")
 
-        and("I should see terms & conditions link")
-        findFirst("[data-link-name=terms]").getText should be("Terms & conditions")
-        findFirst("[data-link-name=terms]").href should endWith("/help/terms-of-service")
+            and("I should see terms & conditions link")
+            findFirst("[data-link-name=terms]").getText should be("Terms & conditions")
+            findFirst("[data-link-name=terms]").href should endWith("/help/terms-of-service")
 
-        and("I should see the privacy policy link")
-        findFirst("[data-link-name=privacy]").getText should be("Privacy policy")
-        findFirst("[data-link-name=privacy]").href should endWith("/help/privacy-policy")
+            and("I should see the privacy policy link")
+            findFirst("[data-link-name=privacy]").getText should be("Privacy policy")
+            findFirst("[data-link-name=privacy]").href should endWith("/help/privacy-policy")
+        }
       }
     }
 
     scenario("Copyright") {
-      given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
+      eventually {
+        given("I visit the network front")
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        then("I should see the copyright")
-        findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+            then("I should see the copyright")
+            findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
 
+        }
       }
     }
 
     scenario("Link tracking") {
-      given("I visit the network front")
-      HtmlUnit("/") { browser =>
-        import browser._
+      eventually {
+        given("I visit the network front")
+        HtmlUnit("/") {
+          browser =>
+            import browser._
 
-        then("All links should be tracked")
-        $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
+            then("All links should be tracked")
+            $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
 
+        }
       }
     }
 
@@ -311,10 +323,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
 private case class StubTrail(url: String) extends Trail {
   override def webPublicationDate = new DateTime()
+
   override def linkText = ""
+
   override def trailText = None
+
   override def section = ""
+
   override def sectionName = ""
+
   override def thumbnail = None
+
   override def images = Nil
 }
