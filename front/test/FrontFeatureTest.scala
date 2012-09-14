@@ -30,7 +30,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     scenario("Load the network front") {
       given("I visit the network front")
-
       HtmlUnit("/") {
         browser =>
           import browser._
