@@ -61,7 +61,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    eventually{
+    eventually {
       running(TestServer(port), HTMLUNIT) {
         browser =>
 
