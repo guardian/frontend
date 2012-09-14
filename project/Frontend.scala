@@ -146,7 +146,14 @@ trait Prototypes {
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
     requireJsModules := Seq("bootstraps/article"),
-    requireJsPaths := Map("bonzo" -> "vendor/bonzo", "reqwest" -> "vendor/reqwest", "qwery" -> "vendor/qwery"),
+    requireJsPaths := Map(
+                            "bonzo" -> "vendor/bonzo-1.2.1",
+                            "reqwest" -> "vendor/reqwest-0.4.5",
+                            "qwery" -> "vendor/qwery-3.3.11",
+                            "bean" -> "vendor/bean-0.4.11-1",
+                            "domReady" -> "vendor/domReady-2.0.1",
+                            "EventEmitter" -> "vendor/EventEmitter-3.1.5"
+                          ),
     requireJsOptimize := true,
 
     resourceGenerators in Compile <+=  requireJsCompiler

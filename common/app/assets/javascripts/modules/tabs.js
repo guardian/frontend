@@ -1,4 +1,4 @@
-define(['common', 'vendor/bean-0.4.11-1', 'bonzo', 'qwery'], function (common, bean, bonzo, qwery) {
+define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwery) {
 
     /*
         expects the following HTML structure
