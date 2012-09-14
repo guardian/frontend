@@ -30,7 +30,7 @@ object FrontRefresher extends AkkaSupport with Logging {
       lastRefresh = DateTime.now
       Front.refresh()
     })
-    Front.refreshAndWait()
+    Front.refresh()
   }
 
   def monitorStatus() {
