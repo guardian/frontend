@@ -15,18 +15,18 @@ Measurements
 
 	Scenario: View legal links
 	Given I visit any page within the guardian site
-	When I click on the legal links
+	When I click on the legal links at the page footer
 	Then I link to the relevant legal page
 	
 	Scenario: View help link
 	Given I visit any page within the guardian site
-	When I click on the help link
-	Then I link to the help page
+	When I click on the sections link
+	Then a link to the help page is available
 	
 	Scenario: View contact page
 	Given I visit any page within the guardian site
-	When I click on the contact us link
-	Then I link to the contact page
+	When I click on the sections link
+	Then a link to the contact us available
 	
 
   Scenario: Footer content feature is tracked with Omniture
