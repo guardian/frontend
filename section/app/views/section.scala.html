@@ -1,16 +1,14 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Static, Configuration, Switches.all){  }{
-    <div id="container">
-        @fragments.headline(section.name)
+    @fragments.headline(section.name)
 
-        @defining(math.max(editorsPicks.length, 15)){ numTrails =>
-            @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
-                @trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <div class="unit size1of2">@fragments.formatTrail(trail,info)</div>
-                }
+    @defining(math.max(editorsPicks.length, 15)){ numTrails =>
+        @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
+            @trails.zipWithRowInfo.map{ case (trail, info) =>
+                <div class="unit size1of2">@fragments.formatTrail(trail,info)</div>
             }
         }
-        <div id="most-popular"></div>
-    </div>
+    }
+    <div id="most-popular"></div>
 }
