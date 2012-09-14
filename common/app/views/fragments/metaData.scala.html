@@ -5,9 +5,14 @@
         to indicate that this is a copy of a page over there.
         see: http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
     *@
-    <link rel="canonical" href="@item.canonicalUrl"/>
+    <link rel="canonical" href="@item.canonicalUrl" />
 
-    <link rel="apple-touch-icon" href='@static("images/shortcut.png")' />
+    <link rel="shortcut icon" type="image/png" href="@static("images/favicons/32x32.ico")" />
+
+    <link rel="apple-touch-icon" sizes="144x144" href="@static("images/favicons/144x144.png")" />
+    <link rel="apple-touch-icon" sizes="114x114" href="@static("images/favicons/114x114.png")" />
+    <link rel="apple-touch-icon" sizes="72x72" href="@static("images/favicons/72x72.png")" />
+    <link rel="apple-touch-icon-precomposed" href="@static("images/favicons/57x57.png")" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
