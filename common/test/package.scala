@@ -7,6 +7,8 @@ import common.GuardianConfiguration
 import java.net.{ HttpURLConnection, URL }
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{ Millis, Seconds, Span }
+import play.libs.WS
+import org.openqa.selenium.WebDriver
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
@@ -44,18 +46,12 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case Port(p) => p.toInt
       case _ => 9000
     }
+    running(TestServer(port), HTMLUNIT) { browser =>
+      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-    eventually {
-      running(TestServer(port), HTMLUNIT) {
-        browser =>
-          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
-
-          eventually {
-            val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-            block(connection)
-          }
-      }
+      val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
+      block(connection)
     }
   }
 
@@ -66,16 +62,31 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case _ => 9000
     }
 
-    running(TestServer(port), HTMLUNIT) {
+    val server = TestServer(port)
+
+    running(server, HTMLUNIT) {
       browser =>
+
         // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
         browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-        eventually { browser.goTo(host + path) }
-        eventually {
-          browser.goTo(host + path)
-          block(browser)
-        }
+        browser.goTo(host + path)
+        block(browser)
+    }
+  }
+
+  // copy n paste job from https://github.com/playframework/Play20/blob/master/framework/src/play-test/src/main/scala/play/api/test/Helpers.scala
+  private def running[T, WEBDRIVER <: WebDriver](testServer: TestServer, webDriver: Class[WEBDRIVER])(block: TestBrowser => T): T = {
+    var browser: TestBrowser = null
+    try {
+      testServer.start()
+      browser = TestBrowser.of(webDriver)
+      eventually { block(browser) }
+    } finally {
+      if (browser != null) {
+        browser.quit()
+      }
+      testServer.stop()
     }
   }
 }
