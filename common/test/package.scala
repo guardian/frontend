@@ -61,37 +61,16 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case Port(p) => p.toInt
       case _ => 9000
     }
+    eventually{
+      running(TestServer(port), HTMLUNIT) {
+        browser =>
 
-    running(TestServer(port), HTMLUNIT) {
-      browser =>
+          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
-
-        browser.goTo(host + path)
-        block(browser)
-    }
-  }
-
-  // copy n paste job from https://github.com/playframework/Play20/blob/master/framework/src/play-test/src/main/scala/play/api/test/Helpers.scala
-  private def running[T, WEBDRIVER <: WebDriver](testServer: TestServer, webDriver: Class[WEBDRIVER])(block: TestBrowser => T): T = {
-    var browser: TestBrowser = null
-    try {
-      testServer.start()
-      browser = TestBrowser.of(webDriver)
-
-      println("-----------------------------------------------------------------------------------")
-
-      val p = eventually { block(browser) }
-
-      println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-
-      p
-    } finally {
-      if (browser != null) {
-        browser.quit()
+          browser.goTo(host + path)
+          block(browser)
       }
-      testServer.stop()
     }
   }
 }
