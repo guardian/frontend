@@ -14,8 +14,8 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val redirectCounter = Request30xs
 
   override def onStart(app: play.api.Application) {
-    super.onStart(app)
     FrontRefresher.start()
+    super.onStart(app)
   }
 
   override def onStop(app: play.api.Application) {

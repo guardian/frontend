@@ -14,7 +14,7 @@ import org.scalatest.time.{ Millis, Seconds, Span }
 class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
 
   implicit override val patienceConfig =
-    PatienceConfig(timeout = scaled(Span(10, Seconds)), interval = scaled(Span(5, Millis)))
+    PatienceConfig(timeout = scaled(Span(30, Seconds)), interval = scaled(Span(5, Millis)))
 
   import config.edition._
 
@@ -66,17 +66,16 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case _ => 9000
     }
 
-    eventually {
-      running(TestServer(port), HTMLUNIT) {
-        browser =>
-          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+    running(TestServer(port), HTMLUNIT) {
+      browser =>
+        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-          eventually {
-            browser.goTo(host + path)
-            block(browser)
-          }
-      }
+        eventually { browser.goTo(host + path) }
+        eventually {
+          browser.goTo(host + path)
+          block(browser)
+        }
     }
   }
 }
