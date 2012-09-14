@@ -1,22 +1,20 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(tag, Static, Configuration, Switches.all){  }{
-    <div id="container">
-        @fragments.headline(tag.name)
+    @fragments.headline(tag.name)
 
-        @if(leadContent nonEmpty) {
-            <div data-link-name="lead content">
-                @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-                    @fragments.formatTrail(trail, info)
-                }
-            </div>
-        }
-
-        <div data-link-name="latest">
-            @trails.zipWithRowInfo.map{ case(trail, info) => @fragments.formatTrail(trail, info) }
+    @if(leadContent nonEmpty) {
+        <div data-link-name="lead content">
+            @leadContent.zipWithRowInfo.map{ case (trail, info) =>
+                @fragments.formatTrail(trail, info)
+            }
         </div>
+    }
 
-        <div id="most-popular"></div>
-        
+    <div data-link-name="latest">
+        @trails.zipWithRowInfo.map{ case(trail, info) => @fragments.formatTrail(trail, info) }
     </div>
+
+    <div id="most-popular"></div>
+
 }
