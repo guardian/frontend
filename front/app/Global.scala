@@ -1,6 +1,8 @@
-import common.RequestMetrics
+import akka.actor.Cancellable
+import akka.util.duration._
+import common.{ AkkaSupport, RequestMetrics }
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.FrontRefresher
+import controllers.{ FrontRefresher, Front }
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {

@@ -1,5 +1,16 @@
 Feature: Network front
 
+	As a user I want to be presented with a
+	I want to ... 
+	So that ...
+
+	- Metric: 
+	- Metric: 
+
+	Scenario: Trailblocks
+		Given I visit the front page
+		Then I should see the following trailblocks <a, b, c, d, e>
+
 	Scenario: Texture
 		Given a series of trailblocks network front 
 	 	Then each block should obey the visual design rules 	
@@ -15,6 +26,10 @@ Feature: Network front
 			appear after the top stories block
 		And it should be visually represented by it's parent tag section
 
+	Scenario: Deduplication of stories
+		Given the same story appears in two or more visible trailblocks 
+		Then only the first occurance should be retained
+
 	# to be discussed with content api
 	Scenario: Story importance 
 
@@ -26,3 +41,4 @@ Feature: Network front tool
 	Scenario: Set a state
 	
 		# Select a tag, select a title, save the state, preview?
+

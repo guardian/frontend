@@ -20,8 +20,8 @@ trait AkkaSupport {
     }
 
     object scheduler {
-      def every(duration: Duration, initialDelay: Duration = 0 seconds)(block: => Unit): Cancellable = {
-        system().scheduler.schedule(initialDelay, duration) { block }
+      def every(duration: Duration)(block: => Unit): Cancellable = {
+        system().scheduler.schedule(0 seconds, duration) { block }
       }
 
       def once(block: => Unit): Cancellable = {
