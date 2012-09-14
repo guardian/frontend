@@ -14,8 +14,7 @@ define([
         'modules/detect',
         'modules/navigation/top-stories.js',
         'modules/navigation/controls.js',
-        'domReady',
-        'bean'
+        'domReady'
     ],
     function (
         common,
@@ -33,8 +32,7 @@ define([
         detect,
         TopStories,
         NavigationControls,
-        domReady,
-        bean) {
+        domReady) {
 
         var modules = {
 
