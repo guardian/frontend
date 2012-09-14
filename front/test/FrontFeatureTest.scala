@@ -282,10 +282,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
 private case class StubTrail(url: String) extends Trail {
   override def webPublicationDate = new DateTime()
+
   override def linkText = ""
+
   override def trailText = None
+
   override def section = ""
+
   override def sectionName = ""
+
   override def thumbnail = None
+
   override def images = Nil
 }
