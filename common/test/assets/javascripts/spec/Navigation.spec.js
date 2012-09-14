@@ -1,4 +1,4 @@
-define(['common', 'modules/navigation/controls', 'vendor/bean-0.4.11-1'], function(common, NavigationControls, bean) {
+define(['common', 'modules/navigation/controls', 'bean'], function(common, NavigationControls, bean) {
 
     describe("Navigation", function() {
 
