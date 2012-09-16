@@ -5,10 +5,6 @@ import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import common.GuardianConfiguration
 import java.net.{ HttpURLConnection, URL }
-import org.scalatest.concurrent.Eventually
-import org.scalatest.time.{ Millis, Seconds, Span }
-import play.libs.WS
-import org.openqa.selenium.WebDriver
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
@@ -43,7 +39,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port), HTMLUNIT) { browser =>
+    running(TestServer(port, ConfiguredApp()), HTMLUNIT) { browser =>
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
@@ -58,7 +54,8 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port), HTMLUNIT) { browser =>
+
+    running(TestServer(port, ConfiguredApp()), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
@@ -67,6 +64,16 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       block(browser)
     }
   }
+}
+
+//turns out that FakeApplicaiton does not pick up the config from application.conf
+//so some test config needs to be put here.
+private object ConfiguredApp {
+  def apply() = FakeApplication(
+    additionalConfiguration = Map(
+      "play.akka.actor.promises-dispatcher.timeout" -> "20s"
+    )
+  )
 }
 
 object WithHost {
@@ -79,5 +86,5 @@ object WithHost {
  * Executes a block of code in a FakeApplication.
  */
 object Fake {
-  def apply[T](block: => T): T = running(FakeApplication()) { block }
+  def apply[T](block: => T): T = running(ConfiguredApp()) { block }
 }
