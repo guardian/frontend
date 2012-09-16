@@ -13,10 +13,7 @@ import org.openqa.selenium.WebDriver
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
-
-  implicit override val patienceConfig =
-    PatienceConfig(timeout = scaled(Span(30, Seconds)), interval = scaled(Span(5, Millis)))
+class EditionalisedHtmlUnit(config: GuardianConfiguration) {
 
   import config.edition._
 
@@ -61,16 +58,13 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    eventually {
-      running(TestServer(port), HTMLUNIT) {
-        browser =>
+    running(TestServer(port), HTMLUNIT) { browser =>
 
-          // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-          browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-          browser.goTo(host + path)
-          block(browser)
-      }
+      browser.goTo(host + path)
+      block(browser)
     }
   }
 }
