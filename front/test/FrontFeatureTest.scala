@@ -27,6 +27,11 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
     //End to end integration tests
 
     scenario("Load the network front") {
+
+      //startup under teamcity is really slow
+      //this ensures the system is up and running before starting tests
+      HtmlUnit("/") { browser => }
+
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
