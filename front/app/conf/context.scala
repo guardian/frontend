@@ -7,7 +7,11 @@ import logback.LogbackLevelPage
 
 object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env")
 
-object ContentApi extends ContentApiClient(Configuration)
+object ContentApi extends ContentApiClient(Configuration) {
+
+  //all calls from the front are async, none of them are blocking, so we allow a longer timeout.
+  override lazy val requestTimeoutInMs = 7000
+}
 
 object Static extends StaticAssets(Configuration.static.path)
 
