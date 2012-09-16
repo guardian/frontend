@@ -9,8 +9,6 @@ import org.joda.time.DateTime
 import model.Trailblock
 import model.TrailblockDescription
 import collection.JavaConversions._
-import org.scalatest.concurrent.Eventually
-import org.scalatest.time.{ Millis, Span, Seconds }
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -118,85 +116,85 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     //lower level tests
 
-    //    scenario("Display top stories") {
-    //      given("I visit the Network Front")
-    //
-    //      Fake {
-    //        //in real life these will always be editors picks only (content api does not do latest for front)
-    //        val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
-    //
-    //        agent.refresh()
-    //        agent.waitTillReady()
-    //
-    //        val trails = agent.trailblock.get.trails
-    //
-    //        then("I should see the Top Stories")
-    //        //we cannot really guarantee a length here
-    //        //but it is unlikely to ever be < 10
-    //        trails.length should be > 10
-    //      }
-    //    }
-    //
-    //    scenario("load latest trails if there are no editors picks for a block") {
-    //      given("I visit the Network Front")
-    //
-    //      Fake {
-    //
-    //        //in real life this tag will have no editors picks
-    //        val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
-    //
-    //        agent.refresh()
-    //        agent.waitTillReady()
-    //
-    //        val trails = agent.trailblock.get.trails
-    //
-    //        then("I should see the latest trails for a block that has no editors picks")
-    //        trails should have length (20) //if only latest you just get 20 latest, hence exact length
-    //      }
-    //    }
-    //
-    //    scenario("load editors picks and latest") {
-    //      given("I visit the Network Front")
-    //
-    //      Fake {
-    //
-    //        //in real life this will always be a combination of editors picks + latest
-    //        val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
-    //
-    //        agent.refresh()
-    //        agent.waitTillReady()
-    //
-    //        val trails = agent.trailblock.get.trails
-    //
-    //        then("I should see a combination of editors picks and latest")
-    //        trails.length should be > 20 //if it is a combo you get editors picks + 20 latest, hence > 20
-    //      }
-    //    }
-    //
-    //    scenario("load different content for UK and US front") {
-    //      given("I visit the Network Front")
-    //
-    //      Fake {
-    //
-    //        //in real life these will always be editors picks only (content api does not do latest for front)
-    //        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
-    //        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "US")
-    //
-    //        ukAgent.refresh()
-    //        usAgent.refresh()
-    //
-    //        ukAgent.waitTillReady()
-    //        usAgent.waitTillReady()
-    //
-    //        val ukTrails = ukAgent.trailblock.get.trails
-    //        val usTrails = usAgent.trailblock.get.trails
-    //
-    //        then("I should see UK Top Stories if I am in the UK edition")
-    //        and("I should see US Top Stories if I am in the US edition")
-    //
-    //        ukTrails should not equal (usTrails)
-    //      }
-    //    }
+    scenario("Display top stories") {
+      given("I visit the Network Front")
+
+      Fake {
+        //in real life these will always be editors picks only (content api does not do latest for front)
+        val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
+
+        agent.refresh()
+        agent.waitTillReady()
+
+        val trails = agent.trailblock.get.trails
+
+        then("I should see the Top Stories")
+        //we cannot really guarantee a length here
+        //but it is unlikely to ever be < 10
+        trails.length should be > 10
+      }
+    }
+
+    scenario("load latest trails if there are no editors picks for a block") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life this tag will have no editors picks
+        val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
+
+        agent.refresh()
+        agent.waitTillReady()
+
+        val trails = agent.trailblock.get.trails
+
+        then("I should see the latest trails for a block that has no editors picks")
+        trails should have length (20) //if only latest you just get 20 latest, hence exact length
+      }
+    }
+
+    scenario("load editors picks and latest") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life this will always be a combination of editors picks + latest
+        val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
+
+        agent.refresh()
+        agent.waitTillReady()
+
+        val trails = agent.trailblock.get.trails
+
+        then("I should see a combination of editors picks and latest")
+        trails.length should be > 20 //if it is a combo you get editors picks + 20 latest, hence > 20
+      }
+    }
+
+    scenario("load different content for UK and US front") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life these will always be editors picks only (content api does not do latest for front)
+        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
+        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "US")
+
+        ukAgent.refresh()
+        usAgent.refresh()
+
+        ukAgent.waitTillReady()
+        usAgent.waitTillReady()
+
+        val ukTrails = ukAgent.trailblock.get.trails
+        val usTrails = usAgent.trailblock.get.trails
+
+        then("I should see UK Top Stories if I am in the UK edition")
+        and("I should see US Top Stories if I am in the US edition")
+
+        ukTrails should not equal (usTrails)
+      }
+    }
 
     scenario("de-duplicate visible trails") {
 

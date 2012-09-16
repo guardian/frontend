@@ -30,7 +30,10 @@ object FrontRefresher extends AkkaSupport with Logging {
       lastRefresh = DateTime.now
       Front.refresh()
     })
-    Front.refreshAndWait()
+
+    //we do not want an error here killing the entire server. this is just here to give the stack a reasonable
+    //chance of having loaded the front trails when it comes up
+    try { Front.refreshAndWait() } catch { case e => log.error("error while waiting for front refresh", e) }
   }
 
   def monitorStatus() {
