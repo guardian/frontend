@@ -5,13 +5,18 @@ import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import common.GuardianConfiguration
 import java.net.{ HttpURLConnection, URL }
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.{ Seconds, Span, Millis }
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit(config: GuardianConfiguration) {
+class EditionalisedHtmlUnit(config: GuardianConfiguration) extends Eventually {
 
   import config.edition._
+
+  implicit override val patienceConfig =
+    PatienceConfig(timeout = scaled(Span(10, Seconds)), interval = scaled(Span(100, Millis)))
 
   val Port = """.*:(\d*)$""".r
 
@@ -43,8 +48,10 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-      val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-      block(connection)
+      eventually{
+        val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
+        block(connection)
+      }
     }
   }
 
@@ -60,8 +67,10 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
 
-      browser.goTo(host + path)
-      block(browser)
+      eventually {
+        browser.goTo(host + path)
+        block(browser)
+      }
     }
   }
 }
