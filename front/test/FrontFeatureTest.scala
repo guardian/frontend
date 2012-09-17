@@ -26,7 +26,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     //End to end integration tests
 
-    scenario("Load the network front") {
+    ignore("Load the network front") {
 
       //startup under teamcity is really slow
       //this ensures the system is up and running before starting tests
@@ -49,7 +49,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Section navigation") {
+    ignore("Section navigation") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
@@ -60,7 +60,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Link to desktop version") {
+    ignore("Link to desktop version") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
@@ -71,7 +71,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Help links") {
+    ignore("Help links") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
@@ -95,7 +95,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Copyright") {
+    ignore("Copyright") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
@@ -107,7 +107,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Link tracking") {
+    ignore("Link tracking") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
