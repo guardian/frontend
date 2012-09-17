@@ -25,15 +25,11 @@ object FrontRefresher extends AkkaSupport with Logging {
 
   def start() {
     log.info("Starting Front")
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
+    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
       log.info("Refreshing Front")
       lastRefresh = DateTime.now
       Front.refresh()
     })
-
-    //we do not want an error here killing the entire server. this is just here to give the stack a reasonable
-    //chance of having loaded the front trails when it comes up
-    try { Front.refreshAndWait() } catch { case e => log.error("error while waiting for front refresh", e) }
   }
 
   def monitorStatus() {

@@ -6,6 +6,8 @@ import controllers.FrontPage
 //Responsible for holding the definition of the two editions
 class Front {
 
+  private var started: Boolean = false
+
   val uk = new FrontEdition("UK", Seq(
     TrailblockDescription("", "News", 5),
     TrailblockDescription("sport", "Sport", 5),
@@ -29,19 +31,21 @@ class Front {
   ))
 
   def refresh() {
+    started = true
     uk.refresh()
     us.refresh()
   }
 
   def shutdown() {
+    started = false
     uk.shutDown()
     us.shutDown()
   }
 
-  def refreshAndWait() {
-    refresh()
-    uk.waitTillReady()
-    us.waitTillReady()
+  def warmup() {
+    if (!started) refresh()
+    uk.warmup()
+    us.warmup()
   }
 
   def apply(edition: String): FrontPage = edition match {

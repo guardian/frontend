@@ -129,7 +129,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
 
         agent.refresh()
-        agent.waitTillReady()
+        agent.warmup()
 
         val trails = agent.trailblock.get.trails
 
@@ -149,7 +149,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
 
         agent.refresh()
-        agent.waitTillReady()
+        agent.warmup()
 
         val trails = agent.trailblock.get.trails
 
@@ -167,7 +167,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
 
         agent.refresh()
-        agent.waitTillReady()
+        agent.warmup()
 
         val trails = agent.trailblock.get.trails
 
@@ -188,8 +188,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         ukAgent.refresh()
         usAgent.refresh()
 
-        ukAgent.waitTillReady()
-        usAgent.waitTillReady()
+        ukAgent.warmup()
+        usAgent.warmup()
 
         val ukTrails = ukAgent.trailblock.get.trails
         val usTrails = usAgent.trailblock.get.trails

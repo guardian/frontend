@@ -43,5 +43,5 @@ class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]
 
   def shutDown() = agents.foreach(_.close())
 
-  def waitTillReady() { agents.foreach(_.waitTillReady()) }
+  def warmup() { agents.foreach(_.warmup()) }
 }

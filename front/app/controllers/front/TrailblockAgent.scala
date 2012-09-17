@@ -25,11 +25,15 @@ class TrailblockAgent(val description: TrailblockDescription, edition: String) e
 
   def trailblock: Option[Trailblock] = agent()
 
-  def waitTillReady() = try {
-    agent.await(Timeout(5 seconds))
-  } catch {
-    case e => log.error("Exception while waiting to load " + description.id, e)
-  }
+  def warmup() = agent().orElse(
+    try {
+      agent.await(Timeout(5 seconds))
+    } catch {
+      case e =>
+        log.error("Exception while waiting to load " + description.id, e)
+        None
+    }
+  )
 
   private def loadTrails(id: String): Seq[Trail] = {
     val response: ItemResponse = ContentApi.item(id, edition)

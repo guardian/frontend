@@ -5,6 +5,9 @@ import conf._
 import front.Front
 import model._
 import play.api.mvc.{ Result, RequestHeader, Controller, Action }
+import play.api.libs.concurrent.Akka
+import play.api.Play
+import Play.current
 
 case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
@@ -22,6 +25,13 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
 }
 
 object FrontController extends Controller with Logging {
+
+  def warmup() = Action {
+   val promiseOfWarmup = Akka.future(Front.warmup())
+    Async {
+      promiseOfWarmup.map(warm => Ok("warm"))
+    }
+  }
 
   def render() = Action { implicit request =>
     FrontRefresher monitorStatus ()
