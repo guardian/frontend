@@ -7,7 +7,6 @@ import org.joda.time.DateTime
 import java.util.concurrent.TimeUnit.SECONDS
 
 import org.scala_tools.time.Imports._
-import java.util.concurrent.Executors
 
 object FrontRefresher extends AkkaSupport with Logging {
 
@@ -19,27 +18,23 @@ object FrontRefresher extends AkkaSupport with Logging {
 
   def secondsSinceLastRefresh = new Duration(lastRefresh, DateTime.now).getStandardSeconds
 
-  def stop() {
-    log.info("Stopping Front")
-    refreshSchedule foreach { _.cancel() }
+  def stop() = {
+    cancelScheduledJobs()
     Front.shutdown()
   }
 
-  def start() {
+  def cancelScheduledJobs() = refreshSchedule foreach { _.cancel() }
 
-    //TODO explain why not using actors
-    val executor = Executors.newSingleThreadScheduledExecutor()
-    executor.schedule(new Runnable {
-      override def run() {
-        log.info("Starting Front")
-        refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
-          log.info("Refreshing Front")
-          lastRefresh = DateTime.now
-          Front.refresh()
-          executor.shutdown()
-        })
-      }
-    }, 60, SECONDS)
+  def start() {
+    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
+      log.info("Refreshing Front")
+      lastRefresh = DateTime.now
+      Front.refresh()
+    })
+
+    //ensures the app comes up with data for the front
+    Front.refresh()
+    Front.warmup()
   }
 
   def monitorStatus() {
@@ -53,7 +48,7 @@ object FrontRefresher extends AkkaSupport with Logging {
       play_akka.scheduler.once {
         log.warn("Restarting front refresher")
         try {
-          stop()
+          cancelScheduledJobs()
         } catch { case e => log.error("Exception while shutting down front", e) } //just being over cautious here
         start()
       }

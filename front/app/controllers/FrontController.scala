@@ -28,7 +28,11 @@ object FrontController extends Controller with Logging {
 
   def warmup() = Action {
     log.info("warming up front")
-    val promiseOfWarmup = Akka.future(Front.warmup())
+    val promiseOfWarmup = Akka.future {
+      Front.refresh()
+      Front.warmup()
+    }
+
     Async {
       promiseOfWarmup.map(warm => Ok("warm"))
     }

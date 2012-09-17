@@ -19,7 +19,6 @@ object `package` {
       goTo("/_warmup", "http://" + usHost)(browser => Unit)
       super.US(path)(block)
     }
-
   }
 
   implicit def webElement2rich(element: FluentWebElement) = new {

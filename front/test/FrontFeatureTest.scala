@@ -67,31 +67,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    //these have been removec (but will be back)
-    ignore("Help links") {
-      given("I visit the network front")
-      HtmlUnit("/") {
-        browser =>
-          import browser._
-
-          then("I should see the help link")
-          findFirst("[data-link-name=help]").getText should be("Help")
-          findFirst("[data-link-name=help]").href should endWith("/help")
-
-          and("I should see the contact link")
-          findFirst("[data-link-name=contact]").getText should be("Contact us")
-          findFirst("[data-link-name=contact]").href should endWith("/help/contact-us")
-
-          and("I should see terms & conditions link")
-          findFirst("[data-link-name=terms]").getText should be("Terms & conditions")
-          findFirst("[data-link-name=terms]").href should endWith("/help/terms-of-service")
-
-          and("I should see the privacy policy link")
-          findFirst("[data-link-name=privacy]").getText should be("Privacy policy")
-          findFirst("[data-link-name=privacy]").href should endWith("/help/privacy-policy")
-      }
-    }
-
     scenario("Copyright") {
       given("I visit the network front")
       HtmlUnit("/") {

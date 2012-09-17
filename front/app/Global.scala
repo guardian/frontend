@@ -1,7 +1,8 @@
 import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.FrontRefresher
-import play.api.GlobalSettings
+import play.api.{ Play, GlobalSettings }
+import Play.current
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
 
@@ -14,12 +15,18 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val redirectCounter = Request30xs
 
   override def onStart(app: play.api.Application) {
-    FrontRefresher.start()
+    //There is a deadlock problem when running in dev/test mode.
+    //dev machines are quick enough that it hardly ever happens, but our teamcity agents are really slow
+    //and this causes many broken tests
+    //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
+    if (!Play.isTest) FrontRefresher.start()
+
     super.onStart(app)
   }
 
   override def onStop(app: play.api.Application) {
-    FrontRefresher.stop()
+    if (!Play.isTest) FrontRefresher.stop()
+
     super.onStop(app)
   }
 }
