@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import java.util.concurrent.TimeUnit.SECONDS
 
 import org.scala_tools.time.Imports._
+import java.util.concurrent.Executors
 
 object FrontRefresher extends AkkaSupport with Logging {
 
@@ -25,12 +26,20 @@ object FrontRefresher extends AkkaSupport with Logging {
   }
 
   def start() {
-    log.info("Starting Front")
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
-      log.info("Refreshing Front")
-      lastRefresh = DateTime.now
-      Front.refresh()
-    })
+
+    //TODO explain why not using actors
+    val executor = Executors.newSingleThreadScheduledExecutor()
+    executor.schedule(new Runnable {
+      override def run() {
+        log.info("Starting Front")
+        refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
+          log.info("Refreshing Front")
+          lastRefresh = DateTime.now
+          Front.refresh()
+          executor.shutdown()
+        })
+      }
+    }, 60, SECONDS)
   }
 
   def monitorStatus() {
