@@ -70,7 +70,9 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
 private object ConfiguredApp {
   def apply() = FakeApplication(
     additionalConfiguration = Map(
-      "play.akka.actor.promises-dispatcher.timeout" -> "20s"
+      "play.akka.actor.promises-dispatcher.timeout" -> "20s",
+      "play.akka.actor.promises-dispatcher.fork-join-executor.parallelism-factor" -> "10.0",
+      "play.akka.actor.promises-dispatcher.fork-join-executor.parallelism-max" -> "24"
     )
   )
 }
