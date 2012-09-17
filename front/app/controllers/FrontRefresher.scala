@@ -7,6 +7,8 @@ import org.joda.time.DateTime
 import java.util.concurrent.TimeUnit.SECONDS
 
 import org.scala_tools.time.Imports._
+import play.api.Play
+import Play.current
 
 object FrontRefresher extends AkkaSupport with Logging {
 
@@ -26,15 +28,21 @@ object FrontRefresher extends AkkaSupport with Logging {
   def cancelScheduledJobs() = refreshSchedule foreach { _.cancel() }
 
   def start() {
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
-      log.info("Refreshing Front")
-      lastRefresh = DateTime.now
-      Front.refresh()
-    })
+    //There is a deadlock problem when running in dev/test mode.
+    //dev machines are quick enough that it hardly ever happens, but our teamcity agents are really slow
+    //and this causes many broken tests
+    //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
+    if (!Play.isTest) {
+      refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
+        log.info("Refreshing Front")
+        lastRefresh = DateTime.now
+        Front.refresh()
+      })
 
-    //ensures the app comes up with data for the front
-    Front.refresh()
-    Front.warmup()
+      //ensures the app comes up with data for the front
+      Front.refresh()
+      Front.warmup()
+    }
   }
 
   def monitorStatus() {

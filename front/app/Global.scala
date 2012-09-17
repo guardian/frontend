@@ -15,18 +15,12 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val redirectCounter = Request30xs
 
   override def onStart(app: play.api.Application) {
-    //There is a deadlock problem when running in dev/test mode.
-    //dev machines are quick enough that it hardly ever happens, but our teamcity agents are really slow
-    //and this causes many broken tests
-    //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
-    if (!Play.isTest) FrontRefresher.start()
-
+    FrontRefresher.start()
     super.onStart(app)
   }
 
   override def onStop(app: play.api.Application) {
-    if (!Play.isTest) FrontRefresher.stop()
-
+    FrontRefresher.stop()
     super.onStop(app)
   }
 }
