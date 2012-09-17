@@ -67,7 +67,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Help links") {
+    //these have been removec (but will be back)
+    ignore("Help links") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
