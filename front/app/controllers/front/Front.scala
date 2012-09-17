@@ -54,19 +54,19 @@ class Front extends AkkaSupport with Logging {
     //dev machines are quick enough that it hardly ever happens, but our teamcity agents are really slow
     //and this causes many broken tests
     //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
-    if (!Play.isTest) {
+    if (!Play.isTest && !refreshSchedule.isDefined) {
       refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
         log.info("Refreshing Front")
         Front.refresh()
       })
-
-      //ensures the app comes up with data for the front
-      Front.refresh()
-      Front.warmup()
     }
+
+    //ensures the app comes up with data for the front
+    Front.refresh()
+    Front.warmup()
   }
 
-  def warmup() {
+  private def warmup() {
     uk.warmup()
     us.warmup()
   }
