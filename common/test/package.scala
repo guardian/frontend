@@ -39,7 +39,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port, ConfiguredApp()), HTMLUNIT) { browser =>
+    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
       val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
@@ -54,7 +54,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case _ => 9000
     }
 
-    running(TestServer(port, ConfiguredApp()), HTMLUNIT) { browser =>
+    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
@@ -63,18 +63,6 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       block(browser)
     }
   }
-}
-
-//turns out that FakeApplicaiton does not pick up the config from application.conf
-//so some test config needs to be put here.
-private object ConfiguredApp {
-  def apply() = FakeApplication(
-    additionalConfiguration = Map(
-      "play.akka.actor.promises-dispatcher.timeout" -> "20s",
-      "play.akka.actor.promises-dispatcher.fork-join-executor.parallelism-factor" -> "10.0",
-      "play.akka.actor.promises-dispatcher.fork-join-executor.parallelism-max" -> "24"
-    )
-  )
 }
 
 object WithHost {
@@ -87,5 +75,5 @@ object WithHost {
  * Executes a block of code in a FakeApplication.
  */
 object Fake {
-  def apply[T](block: => T): T = running(ConfiguredApp()) { block }
+  def apply[T](block: => T): T = running(FakeApplication()) { block }
 }
