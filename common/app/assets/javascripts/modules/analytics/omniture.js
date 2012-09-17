@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'vendor/bean-0.4.11-1'], function(common, detect, bean) {
+define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 

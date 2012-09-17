@@ -13,7 +13,7 @@
     , html = doc.documentElement
     , parentNode = 'parentNode'
     , query = null // used for setting a selector engine host
-    , specialAttributes = /^(checked|value|selected)$/i
+    , specialAttributes = /^(checked|value|selected|disabled)$/i
     , specialTags = /^(select|fieldset|table|tbody|tfoot|td|tr|colgroup)$/i // tags that we have trouble inserting *into*
     , table = ['<table>', '</table>', 1]
     , td = ['<table><tbody><tr>', '</tr></tbody></table>', 3]
@@ -29,7 +29,7 @@
         , option: option, optgroup: option
         , script: noscope, style: noscope, link: noscope, param: noscope, base: noscope
       }
-    , stateAttributes = /^(checked|selected)$/
+    , stateAttributes = /^(checked|selected|disabled)$/
     , ie = /msie/i.test(navigator.userAgent)
     , hasClass, addClass, removeClass
     , uidMap = {}
@@ -618,8 +618,9 @@
        * @return {Bonzo}
        */
     , show: function (opt_type) {
+        opt_type = typeof opt_type == 'string' ? opt_type : ''
         return this.each(function (el) {
-          el.style.display = opt_type || ''
+          el.style.display = opt_type
         })
       }
 
@@ -640,11 +641,12 @@
        * @return {Bonzo}
        */
     , toggle: function (opt_callback, opt_type) {
-        this.each(function (el) {
-          el.style.display = (el.offsetWidth || el.offsetHeight) ? 'none' : opt_type || ''
+        opt_type = typeof opt_type == 'string' ? opt_type : '';
+        typeof opt_callback != 'function' && (opt_callback = null)
+        return this.each(function (el) {
+          el.style.display = (el.offsetWidth || el.offsetHeight) ? 'none' : opt_type;
+          opt_callback && opt_callback.call(el)
         })
-        if (opt_callback) opt_callback()
-        return this
       }
 
 
@@ -768,7 +770,7 @@
               v = iter[k];
               // change "5" to "5px" - unless you're line-height, which is allowed
               (p = styleProperty(k)) && digit.test(v) && !(p in unitless) && (v += px)
-              el.style[p] = setter(el, v)
+              try { el.style[p] = setter(el, v) } catch(e) {}
             }
           }
         }

@@ -1,4 +1,4 @@
-@(front: FrontPage)(implicit request: RequestHeader)
+@(front: Front)(implicit request: RequestHeader)
 
 @main(front, Static, Configuration, Switches.all){
     @if(Edition(request, Configuration) == "UK"){
