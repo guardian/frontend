@@ -21,15 +21,17 @@ object FrontRefresher extends AkkaSupport with Logging {
   def stop() {
     log.info("Stopping Front")
     refreshSchedule foreach { _.cancel() }
+    Front.shutdown()
   }
 
   def start() {
     log.info("Starting Front")
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
+    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = refreshDuration) {
       log.info("Refreshing Front")
       lastRefresh = DateTime.now
       Front.refresh()
     })
+    Front.refresh()
   }
 
   def monitorStatus() {

@@ -27,7 +27,8 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
 object FrontController extends Controller with Logging {
 
   def warmup() = Action {
-   val promiseOfWarmup = Akka.future(Front.warmup())
+    log.info("warming up front")
+    val promiseOfWarmup = Akka.future(Front.warmup())
     Async {
       promiseOfWarmup.map(warm => Ok("warm"))
     }
