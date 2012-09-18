@@ -17,25 +17,25 @@ class Front extends AkkaSupport with Logging {
   private var refreshSchedule: Option[Cancellable] = None
 
   val uk = new FrontEdition("UK", Seq(
-    TrailblockDescription("", "News", 5),
-    TrailblockDescription("sport", "Sport", 5),
-    TrailblockDescription("commentisfree", "Comment is free", 3),
-    TrailblockDescription("culture", "Culture", 1),
-    TrailblockDescription("business", "Business", 1),
-    TrailblockDescription("lifeandstyle", "Life and style", 1),
-    TrailblockDescription("money", "Money", 1),
-    TrailblockDescription("travel", "Travel", 1)
+    TrailblockDescription("", "News", 5, 2),
+    TrailblockDescription("sport", "Sport", 5, 1),
+    TrailblockDescription("commentisfree", "Comment is free", 3, 0),
+    TrailblockDescription("culture", "Culture", 1, 0),
+    TrailblockDescription("business", "Business", 1, 0),
+    TrailblockDescription("lifeandstyle", "Life and style", 1, 0),
+    TrailblockDescription("money", "Money", 1, 0),
+    TrailblockDescription("travel", "Travel", 1, 0)
   ))
 
   val us = new FrontEdition("US", Seq(
-    TrailblockDescription("", "News", 5),
-    TrailblockDescription("sport", "Sports", 5),
-    TrailblockDescription("commentisfree", "Comment is free", 3),
-    TrailblockDescription("culture", "Culture", 1),
-    TrailblockDescription("business", "Business", 1),
-    TrailblockDescription("lifeandstyle", "Life and style", 1),
-    TrailblockDescription("money", "Money", 1),
-    TrailblockDescription("travel", "Travel", 1)
+    TrailblockDescription("", "News", 5, 2),
+    TrailblockDescription("sport", "Sports", 5, 1),
+    TrailblockDescription("commentisfree", "Comment is free", 3, 0),
+    TrailblockDescription("culture", "Culture", 1, 0),
+    TrailblockDescription("business", "Business", 1, 0),
+    TrailblockDescription("lifeandstyle", "Life and style", 1, 0),
+    TrailblockDescription("money", "Money", 1, 0),
+    TrailblockDescription("travel", "Travel", 1, 0)
   ))
 
   def refresh() {

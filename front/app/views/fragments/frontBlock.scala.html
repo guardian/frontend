@@ -1,6 +1,6 @@
-@(block: Trailblock)(implicit request: RequestHeader)
+@(block: Trailblock, info: RowInfo)(implicit request: RequestHeader)
 
-
+@info.rowNum
 <div data-link-name="front block @block.description.name">
 
     @if(block.description.id == "") {
@@ -14,7 +14,7 @@
             <ul class="unstyled">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li>
-                        @fragments.formatTrail(trail, info)
+                        @fragments.formatTrail(trail, info, numberOfImagesToEnlarge=1)
                     </li>
                 }
             </ul>
