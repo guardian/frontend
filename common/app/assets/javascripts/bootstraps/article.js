@@ -110,7 +110,7 @@ define([
             },
 
             loadOphanAnalytics: function () {
-                require('http://s.ophan.co.uk/js/t6.min.js', function (ophan) {});
+                require(['http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
             },
 
             showTabs: function () {
