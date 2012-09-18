@@ -13,4 +13,5 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
+
 case class TrailblockDescription(id: String, name: String, numItemsVisible: Int, numLargeImages: Int = 0)

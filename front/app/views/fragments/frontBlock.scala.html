@@ -1,22 +1,28 @@
 @(block: Trailblock)(implicit request: RequestHeader)
 
-<div data-link-name="front block @block.description.name">
+<div class="trailblock js-front-trailblock"
+    id="front-trailblock-@block.description.id"
+    data-count="@{block.trails.length - block.description.numItemsVisible}"
+    data-link-name="front block @block.description.name">
 
     @if(block.description.id == "") {
         @fragments.headline(block.description.name)
     } else {
         <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
     }
-    
-    <div class="trailblock show-@block.description.numItemsVisible">
-        @defining(block.trails.length){ numTrails =>
-            <ul class="unstyled">
+
+        <ul class="unstyled">
+            @block.trails.zipWithRowInfo.map{ case (trail, info) =>
+                <li>@formatTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+            }.slice( 0, block.description.numItemsVisible )
+        </ul>
+
+        @if( block.trails.length > block.description.numItemsVisible) {
+            <ul class="unstyled panel">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li>
-                        @fragments.formatTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
-                    </li>
-                }
+                    <li>@formatTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                }.slice( block.description.numItemsVisible, block.trails.length )
             </ul>
         }
-    </div>
+
 </div>
