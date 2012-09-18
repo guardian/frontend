@@ -19,7 +19,7 @@ phantom args sent from app.js:
   [4] - CSS filename for datasvg css
   [5] - CSS filename for datapng css
   [6] - CSS filename for urlpng css
-  [7] - png folder name
+  [7] - png folder name //Deprecated
   [8] - css classname prefix
   [9] - css basepath prefix
   [10] - generate svg boolean
@@ -29,7 +29,7 @@ var fs = require( "fs" );
 var inputdir = phantom.args[0];
 var imgOutputdir = phantom.args[1];
 var cssOutputdir  = phantom.args[2];
-var pngout =  phantom.args[7];
+var spritepath =  phantom.args[7];
 var cssprefix = phantom.args[8];
 var files = fs.list( inputdir );
 var currfile = 0;
@@ -45,7 +45,7 @@ var generatesvg = phantom.args[10];
 
 var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 'auto' };
-    sprite.content = '<html><body></body></html>';
+    sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
 // increment the current file index and process it
 function nextFile(){
@@ -55,8 +55,17 @@ function nextFile(){
 
 // files have all been processed. write the css and html files and return
 function finishUp(){
+
+    //Set viewport to containers width and hieght
+    sprite.viewportSize = sprite.evaluate(function() {
+        //Cache container
+        var container = document.getElementById('container');
+
+        return { width: container.offsetWidth, height: container.offsetHeight };
+    });
+
     //Generate sprite
-    sprite.render( imgOutputdir + pngout + "sprite.png" );
+    sprite.render( imgOutputdir + "sprite.png" );
 
     // write CSS files
     fs.write( cssOutputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
@@ -94,7 +103,7 @@ function processFile() {
                 //If we want to generate base64 svg css
                 if(generatesvg) {
                     // add rules to svg data css file
-                    datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
+                    datacssrules.push( ".svg-" + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
                 }
 
                 // set page viewport size to svg dimensions
@@ -104,14 +113,7 @@ function processFile() {
                 page.open(  inputdir + theFile, function( status ){
 
                     // create png file
-                    page.render( imgOutputdir + pngout + filenamenoext + ".png" );
-
-                    //Cache base6d encoding of png
-                    var baseEncoding = pngdatauri + page.renderBase64( "png" );
-
-                    // create png data URI
-                    pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  baseEncoding + "); background-repeat: no-repeat; }" );
-
+                    //page.render( imgOutputdir + filenamenoext + ".png" );
 
                     var coords = sprite.evaluate(function(svgdata) {
                         var placeholder = document.createElement('div');
@@ -120,13 +122,13 @@ function processFile() {
                         placeholder.innerHTML = svgdata;
                         var svgel = placeholder.querySelector('svg');
 
-                        document.body.appendChild(placeholder);
+                        document.getElementById('container').appendChild(placeholder);
 
                         return { x: placeholder.offsetLeft, y: placeholder.offsetTop, w: svgel.getAttribute('width'), h: svgel.getAttribute('height') };
 
                     }, svgdata);
 
-                  pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + imgOutputdir + pngout + "sprite.png ); background-repeat: no-repeat; background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "; height: " + coords.h + "; }");
+                  pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + spritepath + "sprite.png ); background-repeat: no-repeat; background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "; height: " + coords.h + "; }");
                   
                   // process the next svg
                   nextFile();

@@ -9,6 +9,7 @@
 
     var fs = require('fs');
     var spawn = require('child_process').spawn;
+    var crypto = require('crypto');
     var utils = {};
     var config;
 
@@ -30,6 +31,7 @@
         result.stdout = stdout;
         result.stderr = stderr;
         result.code = code;
+
         // On error, pass result object as error object.
         done(code === 0 || 'fallback' in opts ? null: result, result, code);
       });
@@ -37,7 +39,7 @@
     };
 
     //Load config from json file
-    fs.readFile('spricon-config.json', 'utf-8', function (err, data) {
+    fs.readFile(process.argv[2], 'utf-8', function (err, data) {
         if (err) { throw err; }
 
         // just a quick starting message
@@ -73,21 +75,13 @@
         // css references base path for the loader
         var cssbasepath = config.cssbasepath || "/";
 
-        // folder name (within the output folder) for generated png files
-        var pngfolder = config.pngfolder || "png/";
-        // make sure pngfolder has / at the end
-        if( !pngfolder.match( /\/$/ ) ){
-            pngfolder += "/";
-        }
+        var spritepath = config.spritepath || "../images/";
 
         // css class prefix
         var cssprefix = config.cssprefix || "icon-";
         
         // create the output directory
         fs.mkdir( config.imgDest );
-
-        // create the output icons directory
-        fs.mkdir( config.imgDest + pngfolder );
 
         console.info( "\nOuput css file created." );
 
@@ -97,7 +91,7 @@
         utils.spawn({
           cmd: 'phantomjs',
           args: [
-            'phantom.js',
+            'spricon-phantom.js',
             config.src,
             config.imgDest,
             config.cssDest,
@@ -105,14 +99,38 @@
             datasvgcss,
             datapngcss,
             urlpngcss,
-            pngfolder,
+            spritepath,
             cssprefix,
             cssbasepath,
             generatesvg
           ],
           fallback: ''
         }, function(err, result, code) {
-            if(!err) {
+            //If no error is returned from phantomjs
+            if(!err && code === 0) {
+
+                //Generate md5 hash of newly created sprite file
+                var md5sum = crypto.createHash('md5');
+                var s = fs.ReadStream(config.imgDest + 'sprite.png');
+
+                s.on('data', function(d) {
+                  md5sum.update(d);
+                });
+
+                s.on('end', function() {
+                    var hash = md5sum.digest('hex');
+
+                    //Read the png sprite css file
+                    var spriteData = fs.readFileSync(config.cssDest + config.urlpngcss, 'utf-8');
+
+                    //Replace sprite file reference with hash
+                    var newData = spriteData.replace(/sprite\.png/g, 'sprite.' + hash + '.png');
+
+                    //Write back to file
+                    fs.writeFileSync(config.cssDest + config.urlpngcss, newData, 'utf-8');
+
+                });
+
                 console.info("Spicon complete..");
             } else {
                 console.error("\nSomething went wrong with phantomjs...");
