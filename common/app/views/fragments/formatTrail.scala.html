@@ -6,11 +6,10 @@
     *@
     @if(info.rowNum <= 3 && (trail.thumbnail)) {
         @trail.thumbnail.map{ imageUrl =>
-            <a href="@trail.url" class="img" data-link-name="trail image | item @info.rowNum">
+            <a href="@trail.url" class="img@if(info.rowNum <= numberOfImagesToEnlarge) { img-large}" data-link-name="trail image | item @info.rowNum">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
                 @fragments.relativeDate(trail.webPublicationDate)
             </a>
-            @numberOfImagesToEnlarge
         }
     } else {
         @fragments.relativeDate(trail.webPublicationDate, noImage=true)
@@ -21,6 +20,7 @@
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </p>
+        
         @if(info.rowNum <= 5) {
             @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
         }

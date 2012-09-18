@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
 }{
     <div id="front-container">
-        @front.trailblocks.zipWithRowInfo.map{ case(block, row) =>
-            @fragments.frontBlock(block, row)
+        @front.trailblocks.map{ block =>
+            @fragments.frontBlock(block)
         }
     </div>
     <div id="js-popular"></div>
