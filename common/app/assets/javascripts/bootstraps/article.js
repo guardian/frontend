@@ -130,6 +130,12 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
+
+        if (config.page.contentType === "Gallery") {
+            define(['swipe'], function (swipe) {
+                console.log(swipe);
+            });
+        }
     };
 
     // domReady proxy for bootstrap
