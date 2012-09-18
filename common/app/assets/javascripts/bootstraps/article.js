@@ -57,7 +57,11 @@ define([
 
             },
 
-            transcludeRelated: function (host, pageId) {
+            transcludeRelated: function (config) {
+
+                var host = config.page.coreNavigationUrl;
+                var pageId = config.page.pageId;
+
                 var url =  host + '/related/UK/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
@@ -66,7 +70,7 @@ define([
                     relatedExpandable.initalise();
                 }
                 
-                if (!hasStoryPackage) {
+                if (!hasStoryPackage && config.page.showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
                     new Related(document.getElementById('js-related')).load(url);
                 }
@@ -122,7 +126,7 @@ define([
     var bootstrap = function (config, userPrefs) {
         modules.setNetworkFrontStatus(config.page.pageId);
         modules.upgradeImages();
-        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+        modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
         modules.showRelativeDates();
         modules.showTabs();

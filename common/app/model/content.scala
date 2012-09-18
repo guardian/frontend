@@ -52,7 +52,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "short-url" -> shortUrl,
     "byline" -> byline.getOrElse(""),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "page-code" -> fields("internalPageCode")
+    "page-code" -> fields("internalPageCode"),
+    "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true)
   )
 }
 
