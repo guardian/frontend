@@ -1,8 +1,6 @@
-import akka.actor.Cancellable
-import akka.util.duration._
-import common.{ AkkaSupport, RequestMetrics }
+import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.{ FrontRefresher, Front }
+import controllers.front.Front
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
@@ -16,10 +14,11 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val redirectCounter = Request30xs
 
   override def onStart(app: play.api.Application) {
-    FrontRefresher.start()
+    super.onStart(app)
   }
 
   override def onStop(app: play.api.Application) {
-    FrontRefresher.stop()
+    Front.shutdown()
+    super.onStop(app)
   }
 }

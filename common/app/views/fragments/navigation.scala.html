@@ -1,5 +1,6 @@
 @(static: StaticAssets, config: GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 @if(!isFooter){
+<div class="cf">
 	<a href="/" data-link-name="site logo" id="logo">
         The Guardian
 	</a>
@@ -13,10 +14,14 @@
 <div id="@if(!isFooter){navigation-header} else {navigation-footer}" data-link-name="global navigation: @if(!isFooter){header} else {footer}">
     <a href="#topstories-footer" data-is-ajax="1" data-link-name="top-stories" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" class="topstories-control initially-off">Top stories</a>
 
-    <span class="nav-divider"></span>
+    <span class="nav-divider initially-off topstories-control"></span>
 
     <a href="#sections-footer" data-is-ajax="1" data-link-name="sections" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" class="sections-control@if(isFooter){ initially-off}"><span>Sections</span></a>
 </div>
+
+@if(!isFooter) {
+    </div>
+}
 
 <div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-popup top-stories initially-off"></div>
 

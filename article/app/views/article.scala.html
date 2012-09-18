@@ -5,6 +5,11 @@
 }{
 
     <article itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+
+        <h2 class="zone-border zone-border-medium">
+            <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+        </h2>
+
         @fragments.headline(article.headline)
         @fragments.standfirst(article)
 
