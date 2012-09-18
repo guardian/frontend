@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo, related: Boolean = false)
+@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Integer = 0)
 
 <div class="media b2">
     @*
@@ -10,6 +10,7 @@
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
                 @fragments.relativeDate(trail.webPublicationDate)
             </a>
+            @numberOfImagesToEnlarge
         }
     } else {
         @fragments.relativeDate(trail.webPublicationDate, noImage=true)
