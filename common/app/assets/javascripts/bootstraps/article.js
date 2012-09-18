@@ -109,7 +109,7 @@ define([
                     o = new Omniture(null, config).init();
             },
 
-            loadOphanAnalytics: function (config) {
+            loadOphanAnalytics: function () {
                 require(['http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
             },
 
@@ -129,7 +129,7 @@ define([
         modules.transcludeNavigation(config);
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
-        modules.loadOphanAnalytics(config);
+        modules.loadOphanAnalytics();
     };
 
     // domReady proxy for bootstrap
