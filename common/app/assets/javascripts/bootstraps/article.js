@@ -12,9 +12,10 @@ define([
         'modules/fonts',
         'qwery',
         'modules/detect',
-        'modules/navigation/top-stories.js',
-        'modules/navigation/controls.js',
-        'domReady'
+        'modules/navigation/top-stories',
+        'modules/navigation/controls',
+        'domReady',
+        'modules/trailblocktoggle'
     ],
     function (
         common,
@@ -32,7 +33,8 @@ define([
         detect,
         TopStories,
         NavigationControls,
-        domReady) {
+        domReady,
+        TrailblockToggle) {
 
         var modules = {
 
@@ -50,7 +52,7 @@ define([
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
 
-                // only do this for homepage
+                // don't do this for homepage
                 if (!this.isNetworkFront) {
                     new TopStories().load(config);
                 }
@@ -115,6 +117,24 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs().init();
+            },
+
+            // only do this for homepage
+            showFrontExpanders: function () {
+                if (this.isNetworkFront) {
+                    var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
+                    for (i=0, l=frontTrailblocks.length; i<l; i++) {
+                        var elm = frontTrailblocks[i];
+                        var id = elm.id;
+                        var frontExpandable = new Expandable({ id: id, expanded: false });
+                        frontExpandable.initalise();
+                    }
+                }
+            },
+
+            showTrailblockToggles: function () {
+                var tt = new TrailblockToggle;
+                tt.go();
             }
          
         };
@@ -130,6 +150,8 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
+        modules.showFrontExpanders();
+        modules.showTrailblockToggles();
     };
 
     // domReady proxy for bootstrap
