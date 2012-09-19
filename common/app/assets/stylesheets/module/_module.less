@@ -74,7 +74,8 @@
     width: @trailblockImgWidthLarge;
 }
 
-.trailblock .panel {
+.trailblock .panel,
+.rolled-out {
      height: auto;
      max-height: 9999px;
      overflow: hidden;
@@ -82,7 +83,8 @@
      margin-bottom: 0px;
 }
           
-.trailblock.shut .panel {
+.trailblock.shut .panel,
+.rolled-up {
     .transition(max-height .5s ease-in-out);
     overflow: hidden;
     position: relative;

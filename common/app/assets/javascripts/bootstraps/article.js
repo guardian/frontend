@@ -12,9 +12,10 @@ define([
         'modules/fonts',
         'qwery',
         'modules/detect',
-        'modules/navigation/top-stories.js',
-        'modules/navigation/controls.js',
-        'domReady'
+        'modules/navigation/top-stories',
+        'modules/navigation/controls',
+        'domReady',
+        'modules/trailblocktoggle'
     ],
     function (
         common,
@@ -32,7 +33,8 @@ define([
         detect,
         TopStories,
         NavigationControls,
-        domReady) {
+        domReady,
+        TrailblockToggle) {
 
         var modules = {
 
@@ -118,7 +120,7 @@ define([
             },
 
             // only do this for homepage
-            showFrontExpanders: function (config) {
+            showFrontExpanders: function () {
                 if (this.isNetworkFront) {
                     var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
                     for (i=0, l=frontTrailblocks.length; i<l; i++) {
@@ -128,7 +130,11 @@ define([
                         frontExpandable.initalise();
                     }
                 }
+            },
 
+            showTrailblockToggles: function () {
+                var tt = new TrailblockToggle;
+                tt.go();
             }
          
         };
@@ -145,6 +151,7 @@ define([
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
         modules.showFrontExpanders();
+        modules.showTrailblockToggles();
     };
 
     // domReady proxy for bootstrap
