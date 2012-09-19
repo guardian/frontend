@@ -23,8 +23,10 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             },
 
             toggleTrailblock: function (trigger, manualTrigger) {
-                var idPrefix = "front-trailblock-";
                 
+                var idPrefix = "front-trailblock-";
+                var classesToToggle = 'rolled-out rolled-up';
+
                 if (manualTrigger) {
                     trigger = document.getElementById('js-trigger-' + manualTrigger);
                 }
@@ -38,18 +40,17 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 }
 
                 trailblock = document.getElementById(trailblock);
-                bonzo(trailblock).toggleClass('rolled-out rolled-up');
+                bonzo(trailblock).toggleClass(classesToToggle);
 
                 var trigText = trigger.innerText;
                 var hideTrailblock = (trigText === "Hide") ? true : false;
                 trigger.innerText = (hideTrailblock) ? "Show" : "Hide";
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
-                    model.logPreference(hideTrailblock, trailblockId, options.edition); // todo: proper editions
+                    model.logPreference(hideTrailblock, trailblockId);
                 }
             },
 
-            // todo: editionalise
             renderUserPreference: function () {
                 // bit of duplication here from function below
                 if (window.localStorage) {
@@ -69,8 +70,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
         var model = {
 
-            // todo: editionalise
-            logPreference: function (shouldHideSection, section, edition) {
+            logPreference: function (shouldHideSection, section) {
                 
                 if (window.localStorage) {
                     var existingPrefs = guardian.userPrefs.get(options.prefName);
