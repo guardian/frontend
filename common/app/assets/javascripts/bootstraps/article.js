@@ -132,9 +132,10 @@ define([
                 }
             },
 
-            showTrailblockToggles: function () {
+            showTrailblockToggles: function (config) {
                 var tt = new TrailblockToggle;
-                tt.go();
+                var edition = config.page.edition;
+                tt.go(edition);
             }
          
         };
@@ -151,7 +152,7 @@ define([
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
         modules.showFrontExpanders();
-        modules.showTrailblockToggles();
+        modules.showTrailblockToggles(config);
     };
 
     // domReady proxy for bootstrap
