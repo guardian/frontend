@@ -133,9 +133,11 @@ define([
             },
 
             showTrailblockToggles: function (config) {
-                var edition = config.page.edition;
-                var tt = new TrailblockToggle;
-                tt.go(edition);
+                if (this.isNetworkFront) {
+                    var edition = config.page.edition;
+                    var tt = new TrailblockToggle();
+                    tt.go(edition);
+                }
             }
          
         };
