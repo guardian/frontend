@@ -69,7 +69,8 @@ define([
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
-                
+    
+
                 if (!hasStoryPackage && config.page.showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
                     new Related(document.getElementById('js-related')).load(url);

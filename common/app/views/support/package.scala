@@ -36,8 +36,9 @@ object RemoveOuterParaHtml {
 }
 
 object JavaScriptValue {
-  def apply(s: String): String = {
-    s.replace("'", "\\'")
+  def apply(value: Any) = value match {
+    case b: Boolean => b
+    case s => "'" + s.toString.replace("'", "\\'") + "'"
   }
 }
 
