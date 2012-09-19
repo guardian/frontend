@@ -7,10 +7,11 @@ import akka.actor.Cancellable
 import play.api.Play
 import Play.current
 import org.joda.time.DateTime
-import common.{ Logging, AkkaSupport }
+import common.{ PlainOldScheduling, Logging, AkkaSupport }
+import java.util.concurrent.TimeUnit
 
 //Responsible for holding the definition of the two editions
-class Front extends AkkaSupport with Logging {
+class Front extends AkkaSupport with PlainOldScheduling with Logging {
 
   val refreshDuration = akka.util.Duration(60, SECONDS)
 
@@ -50,10 +51,12 @@ class Front extends AkkaSupport with Logging {
   }
 
   def startup() {
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
-      log.info("Refreshing Front")
-      Front.refresh()
-    })
+    executor.scheduleOnce(3, TimeUnit.SECONDS) {
+      refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
+        log.info("Refreshing Front")
+        Front.refresh()
+      })
+    }
   }
 
   def apply(edition: String): FrontPage = edition match {
@@ -62,6 +65,7 @@ class Front extends AkkaSupport with Logging {
   }
 
   def warmup() {
+    refresh()
     uk.warmup()
     us.warmup()
   }
