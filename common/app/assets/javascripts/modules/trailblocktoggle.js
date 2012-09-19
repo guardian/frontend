@@ -1,3 +1,4 @@
+/* global guardian: true */
 define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
     var TrailblockToggle = function () {
@@ -17,7 +18,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                     bonzo(toggle).removeClass('initially-off'); // show the nav links
 
                     bean.add(toggle, 'click', function (e) {
-                        view.toggleTrailblock(this);
+                        common.mediator.emit('modules:trailblockToggle:toggle', this);
                     });
                 });
             },
@@ -60,7 +61,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                         var sectionArray = existingPrefs.split(',');
                         for (var i in sectionArray) {
                             var item = sectionArray[i];
-                            view.toggleTrailblock(null, item);
+                            common.mediator.emit('modules:trailblockToggle:toggle', [null, item]);
                         }
                     }
                 }
@@ -111,8 +112,10 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             options.prefName = options.prefName + options.edition;
             view.showToggleLinks();
             view.renderUserPreference();
-
         };
+
+        //View Listeners
+        common.mediator.on('modules:trailblockToggle:toggle', view.toggleTrailblock);
 
     };
 
