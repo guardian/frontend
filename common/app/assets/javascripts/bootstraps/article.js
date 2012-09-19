@@ -133,8 +133,8 @@ define([
             },
 
             showTrailblockToggles: function (config) {
-                var tt = new TrailblockToggle;
                 var edition = config.page.edition;
+                var tt = new TrailblockToggle;
                 tt.go(edition);
             }
          
