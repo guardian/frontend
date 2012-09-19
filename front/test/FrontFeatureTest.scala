@@ -6,11 +6,16 @@ import org.scalatest.matchers.ShouldMatchers
 import controllers.front.{ TrailblockAgent, FrontEdition, Front }
 import model._
 import org.joda.time.DateTime
-import model.Trailblock
-import model.TrailblockDescription
 import collection.JavaConversions._
+import controllers.{ FrontController }
+import play.api.test.FakeRequest
+import play.api.mvc._
+import model.Trailblock
+import scala.Some
+import controllers.FrontPage
+import model.TrailblockDescription
 
-class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
 
   feature("Network Front") {
 
@@ -272,6 +277,22 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       and("I should see 1 Travel story")
       Front.uk.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
       Front.us.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
+    }
+
+    //this is so that the load balancer knows this server has a problem
+    scenario("Return error if front is empty") {
+
+      given("I visit the network front")
+      and("it is empty")
+
+      val controller = new FrontController {
+        override val front = new Front() {
+          override def apply(edition: String) = FrontPage(Seq.empty)
+        }
+      }
+
+      then("I should see an internal server error")
+      controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
     }
   }
 

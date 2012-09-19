@@ -4,10 +4,11 @@ import common._
 import conf._
 import front.Front
 import model._
-import play.api.mvc.{ Result, RequestHeader, Controller, Action }
+import play.api.mvc._
 import play.api.libs.concurrent.Akka
-import play.api.Play
-import Play.current
+import play.api.Play.current
+import model.Trailblock
+import scala.Some
 
 case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
@@ -24,7 +25,9 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   lazy val collapseEmptyBlocks: FrontPage = new FrontPage(trailblocks filterNot { _.trails.isEmpty })
 }
 
-object FrontController extends Controller with Logging {
+class FrontController extends Controller with Logging {
+
+  val front: Front = Front
 
   def warmup() = Action {
     log.info("warming up front")
@@ -44,11 +47,13 @@ object FrontController extends Controller with Logging {
 
   private def lookup()(implicit request: RequestHeader): Option[FrontPage] = {
     val edition = Edition(request, Configuration)
-    Some(Front(edition))
+    Some(front(edition))
   }
 
-  private def renderFront(model: FrontPage)(implicit request: RequestHeader): Result =
-    CachedOk(model) {
-      Compressed(views.html.front(model))
-    }
+  private def renderFront(model: FrontPage)(implicit request: RequestHeader) = model match {
+    case FrontPage(Nil) => InternalServerError
+    case m => CachedOk(m) { Compressed(views.html.front(model)) }
+  }
 }
+
+object FrontController extends FrontController
