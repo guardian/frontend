@@ -50,7 +50,6 @@ define([
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
 
-                // only do this for homepage
                 if (!this.isNetworkFront) {
                     new TopStories().load(config);
                 }
