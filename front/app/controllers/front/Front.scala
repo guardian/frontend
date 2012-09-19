@@ -11,6 +11,7 @@ import common.{ PlainOldScheduling, Logging, AkkaSupport }
 import java.util.concurrent.TimeUnit
 
 //Responsible for holding the definition of the two editions
+//and bootstrapping the front (setting up the refresh schedule)
 class Front extends AkkaSupport with PlainOldScheduling with Logging {
 
   val refreshDuration = akka.util.Duration(60, SECONDS)

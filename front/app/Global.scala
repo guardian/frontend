@@ -1,9 +1,9 @@
-import common.{ AkkaSupport, RequestMetrics }
+import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.front.Front
 import play.api.GlobalSettings
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters with AkkaSupport {
+object Global extends GlobalSettings with RequestTimer with StatusCounters {
 
   import RequestMetrics._
 
