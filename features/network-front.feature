@@ -7,9 +7,14 @@ Feature: Network front
 	- Metric: 
 	- Metric: 
 
-	Scenario: Trailblocks
+ 
+
+    Scenario: Trailblocks
 		Given I visit the front page
-		Then I should see the following trailblocks <a, b, c, d, e>
+		Then I should see the following trailblocks <News(Top stories), Sport, Comment is free, Features, 
+                Culture, Business, Life style, Money and Travel>
+                And each block have minimum 1 story maximum 5 stories
+                And expanders for each block be maximum 5 stories
 
 	Scenario: Texture
 		Given a series of trailblocks network front 
