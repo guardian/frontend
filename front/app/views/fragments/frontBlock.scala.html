@@ -1,5 +1,6 @@
 @(block: Trailblock)(implicit request: RequestHeader)
 
+<a class="initially-off js-toggle-trailblock toggle-trailblock" href="javascript://" data-zone-name="uk" data-block-name="@if(block.description.id == "") {top-stories} else {@block.description.id}" id="js-trigger-@if(block.description.id == "") {top-stories} else {@block.description.id}">Hide</a>
 
 @if(block.description.id == "") {
     @fragments.headline(block.description.name)
@@ -7,7 +8,6 @@
     <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
 }
 
-<a class="initially-off js-toggle-trailblock" href="javascript://" data-zone-name="uk" data-block-name="@if(block.description.id == "") {top-stories} else {@block.description.id}" id="js-trigger-@if(block.description.id == "") {top-stories} else {@block.description.id}">Hide</a>
 
 <div class="trailblock js-front-trailblock rolled-out"
     id="front-trailblock-@block.description.id"
