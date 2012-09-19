@@ -15,6 +15,7 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
+    Front.startup()
   }
 
   override def onStop(app: play.api.Application) {
