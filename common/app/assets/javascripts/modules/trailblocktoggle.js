@@ -2,10 +2,17 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
     var TrailblockToggle = function () {
 
+        var options = {
+            'toggleSelectorClass': '.js-toggle-trailblock',
+            'edition' : '',
+            'prefName': 'front-trailblocks-'
+        };
+
         var view = {
 
-            showToggleLinks: function (selector) {
-                var toggles = common.$g(selector).each(function (toggle) {
+            showToggleLinks: function () {
+
+                var toggles = common.$g(options.toggleSelectorClass).each(function (toggle) {
                     
                     bonzo(toggle).removeClass('initially-off'); // show the nav links
 
@@ -31,22 +38,22 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 }
 
                 trailblock = document.getElementById(trailblock);
-                bonzo(trailblock).toggleClass('rolled-out rolled-up')
+                bonzo(trailblock).toggleClass('rolled-out rolled-up');
 
-                var trigText = trigger.innerText;          
+                var trigText = trigger.innerText;
                 var hideTrailblock = (trigText === "Hide") ? true : false;
                 trigger.innerText = (hideTrailblock) ? "Show" : "Hide";
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
-                    model.logPreference(hideTrailblock, trailblockId, 'uk'); // todo: proper editions
+                    model.logPreference(hideTrailblock, trailblockId, options.edition); // todo: proper editions
                 }
             },
 
             // todo: editionalise
             renderUserPreference: function () {
                 // bit of duplication here from function below
-                if (window.localStorage) { 
-                    var existingPrefs = guardian.userPrefs.get("front-trailblocks");
+                if (window.localStorage) {
+                    var existingPrefs = guardian.userPrefs.get(options.prefName);
 
                     if (existingPrefs) {
                         var sectionArray = existingPrefs.split(',');
@@ -66,7 +73,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             logPreference: function (shouldHideSection, section, edition) {
                 
                 if (window.localStorage) {
-                    var existingPrefs = guardian.userPrefs.get("front-trailblocks");
+                    var existingPrefs = guardian.userPrefs.get(options.prefName);
                     
                     if (existingPrefs) {
 
@@ -86,11 +93,11 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                         }
 
                         var newPrefs = sectionArray.join(',');
-                        guardian.userPrefs.set("front-trailblocks", newPrefs);
+                        guardian.userPrefs.set(options.prefName, newPrefs);
                     
                     // need to create it instead
                     } else {
-                        guardian.userPrefs.set("front-trailblocks", section);
+                        guardian.userPrefs.set(options.prefName, section);
                     }
 
                 }
@@ -99,13 +106,10 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
         };
 
-        this.go = function (selector) {
-
-            if (!selector) {
-                selector = '.js-toggle-trailblock';
-            }
-        
-            view.showToggleLinks(selector);
+        this.go = function (edition) {
+            options.edition = edition;
+            options.prefName = options.prefName + options.edition;
+            view.showToggleLinks();
             view.renderUserPreference();
 
         };
