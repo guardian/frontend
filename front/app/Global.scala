@@ -1,9 +1,9 @@
-import common.RequestMetrics
+import common.{ AkkaSupport, RequestMetrics }
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.front.Front
 import play.api.GlobalSettings
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters {
+object Global extends GlobalSettings with RequestTimer with StatusCounters with AkkaSupport {
 
   import RequestMetrics._
 
@@ -14,7 +14,14 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override val redirectCounter = Request30xs
 
   override def onStart(app: play.api.Application) {
+
     super.onStart(app)
+
+    //wait for Akka to fully startup to avoid deadlocks
+    //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
+    while (play_akka.uptime() == 0) { Thread.`yield`() }
+
+    Front.startup()
   }
 
   override def onStop(app: play.api.Application) {
