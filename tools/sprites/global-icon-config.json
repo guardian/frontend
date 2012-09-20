@@ -4,6 +4,6 @@
     "cssDest": "../../common/app/assets/stylesheets/theme/",
     "datasvgcss" : "_global-icons-svg.less",
     "urlpngcss" : "_global-icons-sprite.less",
-    "spritepath" : "/assets/images/global/",
+    "spritepath" : "../assets/images/global/",
     "svg" : true
 }
