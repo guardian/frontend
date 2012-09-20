@@ -1,17 +1,17 @@
-define(['common', 'modules/trailblocktoggle'], function(common, TrailblockToggle) {
+define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, TrailblockToggle) {
 
     describe("Trailblock Toggle", function() {
 
-        var tt, 
+        var tt,
             edition;
 
-        //Have to stub the global guardian object 
+        //Have to stub the global guardian object
         window.guardian = {
             userPrefs : {
                 set : function() { return true; },
                 get : function() { return false; }
             }
-        }; 
+        };
 
         beforeEach(function() {
             tt = new TrailblockToggle();
@@ -21,6 +21,7 @@ define(['common', 'modules/trailblocktoggle'], function(common, TrailblockToggle
         });
 
         afterEach(function() {
+            common.mediator.removeAllListeners('modules:trailblockToggle:toggle');
             tt = null;
             edition = null;
         });
@@ -33,21 +34,18 @@ define(['common', 'modules/trailblocktoggle'], function(common, TrailblockToggle
 
         it("should expand and contract a panel", function() {
     
-            var trigger = common.$g('.js-toggle-trailblock')[0];
+            trigger = document.getElementById('js-trigger-sport');
 
-            // shut modules:trailblockToggle:toggle
-            //common.mediator.emit('modules:trailblockToggle:toggle', trigger);
-            //expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(true);
+            /// shut
+            common.mediator.emit('modules:trailblockToggle:toggle', trigger);
+            expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(true);
+            
            
             // open 
             common.mediator.emit('modules:trailblockToggle:toggle', trigger);
             expect(common.$g('.js-front-trailblock').hasClass('rolled-out')).toBe(true);
-
-            common.mediator.emit('modules:trailblockToggle:toggle', trigger);
-            expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(true);
         
         });
        
     });
-
 });
