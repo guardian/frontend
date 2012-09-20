@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
+@(trail: Trail, info: RowInfo, related: Boolean = false)
 
 <div class="media b2">
     @*
@@ -6,7 +6,7 @@
     *@
     @if(info.rowNum <= 3 && (trail.thumbnail)) {
         @trail.thumbnail.map{ imageUrl =>
-            <a href="@trail.url" class="img@if(info.rowNum <= numberOfImagesToEnlarge) { img-large}" data-link-name="trail image | item @info.rowNum">
+            <a href="@trail.url" class="img" data-link-name="trail image | item @info.rowNum">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
                 @fragments.relativeDate(trail.webPublicationDate)
             </a>

@@ -13,7 +13,7 @@
             <ul class="unstyled">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li>
-                        @fragments.formatTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
+                        @fragments.formatTrail(trail, info)
                     </li>
                 }
             </ul>
