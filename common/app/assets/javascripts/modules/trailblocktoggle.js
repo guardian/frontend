@@ -61,7 +61,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                         var sectionArray = existingPrefs.split(',');
                         for (var i in sectionArray) {
                             var item = sectionArray[i];
-                            common.mediator.emit('modules:trailblockToggle:toggle', [null, item]);
+                            common.mediator.emit('modules:trailblockToggle:toggle', null, item);
                         }
                     }
                 }
