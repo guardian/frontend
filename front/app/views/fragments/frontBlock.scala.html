@@ -10,7 +10,7 @@
 
 
 <div class="trailblock js-front-trailblock rolled-out"
-    id="front-trailblock-@block.description.id"
+    id="front-trailblock-@if(block.description.id == "") {top-stories} else {@block.description.id}"
     data-count="@{block.trails.length - block.description.numItemsVisible}"
     data-link-name="front block @block.description.name">
 
