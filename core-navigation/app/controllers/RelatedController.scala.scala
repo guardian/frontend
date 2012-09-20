@@ -15,7 +15,10 @@ object RelatedController extends Controller with Logging {
   def render(edition: String, path: String) = Action { implicit request =>
     val promiseOfRelated = Akka.future(lookup(edition, path))
     Async {
-      promiseOfRelated.map(_.map { renderRelated } getOrElse { NotFound })
+      promiseOfRelated.map(_.map {
+        case Related(_, Nil) => NotFound
+        case r => renderRelated(r)
+      } getOrElse { NotFound })
     }
   }
 
@@ -31,6 +34,7 @@ object RelatedController extends Controller with Logging {
     Some(Related(heading, related))
   }
 
-  private def renderRelated(model: Related)(implicit request: RequestHeader) =
+  private def renderRelated(model: Related)(implicit request: RequestHeader) = {
     Cached(900)(JsonComponent(views.html.fragments.relatedTrails(model.trails, model.heading, 5)))
+  }
 }
