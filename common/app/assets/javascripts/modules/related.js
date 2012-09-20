@@ -22,7 +22,6 @@ define(['common', 'reqwest'], function (common, reqwest) {
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showRelated',
                 success: function (json) {
-                    console.log(json);
                     common.mediator.emit('modules:related:loaded', [json.html]);
                 }
             });
