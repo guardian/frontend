@@ -5,7 +5,7 @@
 <script id="gu">
 
     var guardian = {
-        isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
+        isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
     },
         require = {
         baseUrl: '@{config.static.path}javascripts',
