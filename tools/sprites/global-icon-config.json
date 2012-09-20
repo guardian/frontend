@@ -1,9 +1,9 @@
 {
-	"src": "../../common/app/assets/images/",
+	"src": "../../common/app/assets/images/global/",
     "imgDest": "../../common/app/assets/images/",
     "cssDest": "../../common/app/assets/stylesheets/theme/",
     "datasvgcss" : "_global-icons-svg.less",
     "urlpngcss" : "_global-icons-sprite.less",
-    "spritepath" : "/assets/images/",
+    "spritepath" : "/assets/images/global/",
     "svg" : true
 }

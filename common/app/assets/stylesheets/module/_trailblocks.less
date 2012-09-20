@@ -1,0 +1,67 @@
+.trailblock {
+    margin-top: 26px;
+}
+
+.trailblock ul > li {
+    margin-bottom: 12px;
+
+}
+
+.trailblock h3 {
+    .standard-font-sizing;
+    padding-top: 3px; 
+    margin-bottom: 12px;
+}
+
+.trailblock-shaded {
+    padding: 0 5px 12px 5px; 
+    background-color: #ededed;
+}
+
+.trail-headline {
+    .standard-font-sizing;
+    margin-bottom: 1px;
+}
+
+.trailtext {
+    font-family: helvetica, arial, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    color: #262626; 
+    margin-bottom: 0;
+}
+
+.trailblock .img img {
+    width: @trailblockImgWidth;
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+
+.trailblock .img-large img {
+    width: @trailblockImgWidthLarge;
+}
+
+.trailblock .panel {
+     height: auto;
+     max-height: 9999px;
+     overflow: hidden;
+     .transition(max-height 1s ease-in-out);
+     margin-bottom: 0px;
+}
+          
+.trailblock.shut .panel {
+    .transition(max-height .5s ease-in-out);
+    overflow: hidden;
+    position: relative;
+    max-height: 0;
+}
+          
+.trailblock .count {
+    display: none;
+}
+
+.trailblock.shut .count {
+    display: inline-block;
+}
+
+.trailblock-topstories li:first-child .b2 { border-top:none;}
