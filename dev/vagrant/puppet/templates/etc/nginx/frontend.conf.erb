@@ -1,8 +1,9 @@
 server {
-    listen 80;
-    server_name localhost;
 
-    access_log  logs/host.access.log;
+    listen 80;
+    server_name _;
+
+    access_log          /var/log/nginx/extended_access.log extended;
 
     location / {
         proxy_set_header X-Real-IP  $remote_addr;
