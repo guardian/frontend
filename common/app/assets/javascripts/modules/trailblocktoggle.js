@@ -9,7 +9,6 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             'prefName': 'front-trailblocks-'
         };
 
-        //test
         var view = {
 
             showToggleLinks: function () {
