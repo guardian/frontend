@@ -29,6 +29,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
                 if (manualTrigger) {
                     trigger = document.getElementById('js-trigger-' + manualTrigger);
+                    //classesToToggle = 'initially-off';
                 }
 
                 var trailblockId = trigger.getAttribute('data-block-name'),
@@ -37,6 +38,10 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
                 if (trailblockId !== "top-stories") {
                     trailblock += trailblockId;
+                }
+
+                if (!manualTrigger) {
+                    //bonzo.trailblock.removeClass('initially-off');
                 }
 
                 trailblock = document.getElementById(trailblock);
