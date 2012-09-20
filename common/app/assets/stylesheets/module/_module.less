@@ -70,6 +70,10 @@
     margin-top: 3px;
 }
 
+.trailblock .img-large img {
+    width: @trailblockImgWidthLarge;
+}
+
 .trailblock .panel {
      height: auto;
      max-height: 9999px;
@@ -268,15 +272,19 @@ article figure figcaption cite a:visited {
 }
 
 .article-body blockquote:before {
-    content: url(../images/blockquote-before.94b9ad0658f2595d0022763658bf30f4.png);
+    display: block;
+    content: '';
     margin-left: -@blockquoteMarginLeft;
     margin-top: 5px;
     float: left;
+    .icon-blockquote-before;
 }
 
 .article-body blockquote:after {
-    content: url(../images/blockquote-after.5f5f7f8aef2be0b9769fc234be4e89b9.png);
-    padding-left: 5px;
+    display: block;
+    content: '';
+    margin-left: 5px;
+    .icon-blockquote-after;
 }
 
 .expander {
