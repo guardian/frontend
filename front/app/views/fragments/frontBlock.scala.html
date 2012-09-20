@@ -14,7 +14,6 @@
     data-count="@{block.trails.length - block.description.numItemsVisible}"
     data-link-name="front block @block.description.name">
 
-
     <ul class="unstyled">
         @block.trails.zipWithRowInfo.map{ case (trail, info) =>
             <li>@formatTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
