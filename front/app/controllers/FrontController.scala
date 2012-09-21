@@ -30,10 +30,11 @@ class FrontController extends Controller with Logging {
   val front: Front = Front
 
   def warmup() = Action {
-    log.info("warming up front")
     val promiseOfWarmup = Akka.future(Front.warmup())
     Async { promiseOfWarmup.map(warm => Ok("warm")) }
   }
+
+  def isUp() = Action { Ok("Ok") }
 
   def render() = Action { implicit request =>
     //in this case lookup has no blocking IO - so not Async here

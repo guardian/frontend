@@ -4,17 +4,14 @@ import java.util.concurrent.TimeUnit._
 import controllers.FrontPage
 import model.TrailblockDescription
 import akka.actor.Cancellable
-import play.api.Play
-import Play.current
-import org.joda.time.DateTime
 import common.{ PlainOldScheduling, Logging, AkkaSupport }
-import java.util.concurrent.TimeUnit
+import akka.util.Duration
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
 class Front extends AkkaSupport with PlainOldScheduling with Logging {
 
-  val refreshDuration = akka.util.Duration(60, SECONDS)
+  val refreshDuration = Duration(60, SECONDS)
 
   private var refreshSchedule: Option[Cancellable] = None
 
@@ -52,12 +49,10 @@ class Front extends AkkaSupport with PlainOldScheduling with Logging {
   }
 
   def startup() {
-    executor.scheduleOnce(3, TimeUnit.SECONDS) {
-      refreshSchedule = Some(play_akka.scheduler.every(refreshDuration) {
-        log.info("Refreshing Front")
-        Front.refresh()
-      })
-    }
+    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = Duration(5, SECONDS)) {
+      log.info("Refreshing Front")
+      Front.refresh()
+    })
   }
 
   def apply(edition: String): FrontPage = edition match {
