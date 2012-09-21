@@ -1,0 +1,133 @@
+article aside {
+    padding: 0px 0px 15px 0px;
+    list-style: none;
+}
+
+/* this duplicates article figure figcaption */
+.article-body .caption,
+article figure figcaption {
+    font-family: helvetica, arial, sans-serif;
+    color: #666;
+    margin-top: 5px;
+    margin-bottom: 0;
+    .incidental-font-sizing;
+}
+
+article figure {
+    margin: 0px 0px 15px 0px;
+}
+
+article figure img {
+    display: block;
+}
+
+article figure figcaption cite {
+    font-size: 10px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+article figure figcaption cite a {
+    color: #666666;
+}
+
+article figure figcaption cite a:hover,
+article figure figcaption cite a:visited:hover {
+    color: #4d4d4d;
+    border-bottom: 1px dotted #4d4d4d;
+}
+
+article figure figcaption cite a:visited {
+    color: #808080;
+    border-bottom: 1px dotted #808080;
+}
+
+.article-body p {
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.article-body h2 {
+    color: #333;
+    border-top: 1px dotted #999;
+    border-bottom: 1px dotted #999;
+    padding-top: 3px;
+    padding-bottom: 12px;
+    margin-bottom: 3px;
+    margin-top: 15px; /* feel like this should be 5px (10px margin-bottom on preceding <p>) but this has no effect till it's > 10px */
+    font-family: georgia;
+    font-weight: bold;
+    .standard-font-sizing;
+}
+
+.article-body h2:first-child,
+.article-body span.timestamp:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.article-body h2.block-title {
+    color: #e47a39;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.article-body h3 {
+    margin: 0;
+    font-family: georgia;
+    .standard-font-sizing;
+}
+
+.article-body > p,
+.article-body ul,
+.article-body ol,
+.article-body address,
+.article-body blockquote,
+.article-body blockquote p {
+    margin: 0px 0px 10px 0px;
+    color: #333;
+    font-family: georgia;
+    .standard-font-sizing;
+}
+
+.font-guardian-all-loaded article .article-body > p,
+.font-guardian-all-loaded article .article-body ul,
+.font-guardian-all-loaded article .article-body ol,
+.font-guardian-all-loaded article .article-body address,
+.font-guardian-all-loaded article .article-body blockquote {
+    font-size: 14px;
+}
+
+.article-body blockquote {
+    border: 0;
+    padding: 0;
+    margin-left: @blockquoteMarginLeft;
+}
+
+.article-body blockquote, 
+.article-body blockquote p {
+    color: #666666;
+}
+
+.article-body blockquote p {
+    display: inline; // makes quote marks work correctly
+}
+
+.article-body blockquote:before {
+    display: block;
+    content: '';
+    margin-left: -@blockquoteMarginLeft;
+    margin-top: 5px;
+    float: left;
+    .icon-blockquote-before;
+}
+
+.article-body blockquote:after {
+    display: block;
+    content: '';
+    margin-left: 5px;
+    .icon-blockquote-after;
+}
