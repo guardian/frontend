@@ -20,6 +20,7 @@
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </p>
+        
         @if(info.rowNum <= 5) {
             @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
         }

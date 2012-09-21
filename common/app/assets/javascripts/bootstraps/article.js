@@ -50,14 +50,14 @@ define([
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
 
-                // only do this for homepage
                 if (!this.isNetworkFront) {
                     new TopStories().load(config);
                 }
 
             },
 
-            transcludeRelated: function (host, pageId) {
+            transcludeRelated: function (host, pageId, showInRelated) {
+
                 var url =  host + '/related/UK/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
@@ -65,8 +65,9 @@ define([
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
-                
-                if (!hasStoryPackage) {
+    
+
+                if (!hasStoryPackage && showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
                     new Related(document.getElementById('js-related')).load(url);
                 }
@@ -122,7 +123,7 @@ define([
     var bootstrap = function (config, userPrefs) {
         modules.setNetworkFrontStatus(config.page.pageId);
         modules.upgradeImages();
-        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
+        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId, config.page.showInRelated);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
         modules.showRelativeDates();
         modules.showTabs();
