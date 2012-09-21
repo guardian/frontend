@@ -89,6 +89,32 @@ img.badge {
     .svg-icon-guardian-logo;
 }
 
+.footer {
+    padding: 5px 0;
+    margin-top: 40px; // double margin bug due to floated nav, bah.
+    border-top: 2px solid #ccc;
+}
+
+.footer p {
+    color: #999;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+.footer li { 
+    display: inline;
+}
+
+.footer a {
+    font-size: 12px;
+}
+
+.footer li:first-child:after {
+    content: '·';
+    margin-left: 4px;
+}
+
+
 @media screen and (min-width: 641px) {
     .svg #logo {
         width: 180px;
