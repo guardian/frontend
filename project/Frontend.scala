@@ -153,7 +153,7 @@ trait Prototypes {
                             "bean" -> "vendor/bean-0.4.11-1",
                             "domReady" -> "vendor/domReady-2.0.1",
                             "EventEmitter" -> "vendor/EventEmitter-3.1.5",
-                            "swipe" -> "vendor/swipe-1.0.js"
+                            "swipe" -> "vendor/swipe-1.0"
                           ),
     requireJsOptimize := true,
 

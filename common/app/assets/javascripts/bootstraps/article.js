@@ -14,7 +14,8 @@ define([
         'modules/detect',
         'modules/navigation/top-stories.js',
         'modules/navigation/controls.js',
-        'domReady'
+        'domReady',
+        'modules/gallery'
     ],
     function (
         common,
@@ -32,7 +33,8 @@ define([
         detect,
         TopStories,
         NavigationControls,
-        domReady) {
+        domReady,
+        Gallery) {
 
         var modules = {
 
@@ -115,6 +117,10 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs().init();
+            },
+
+            sexUpGallery: function () {
+                var g = new Gallery().init();
             }
          
         };
@@ -130,12 +136,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
-        if (config.page.contentType === "Gallery") {
-            define(['swipe'], function (swipe) {
-                console.log(swipe);
-            });
-        }
+        modules.sexUpGallery();
     };
 
     // domReady proxy for bootstrap
