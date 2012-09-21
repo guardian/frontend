@@ -28,15 +28,16 @@ The tool allows us to have sepreate files for seperate assets/modules. For intsa
 
 Each group needs a config.json file to tell the tool where to find the assets and where to output.
 
+```
 {
-	"src": "../../common/app/assets/images/",					//Where to find the source images
-    "cssDest": "../../common/app/assets/stylesheets/theme/",	//Where to output the generated css
-    "datasvgcss" : "_global-icons-svg.less",					//What to name the base64 encoded css file
-    "urlpngcss" : "_global-icons-sprite.less",					//What to name the sprite css file
-    "spritepath" : "/assets/images/",							//Where to output the sprite file
-    "svg" : true												//Whether or not to genearte base64 encoded svg
+ "src": "../../common/app/assets/images/", // Where to find the source images
+ "cssDest": "../../common/app/assets/stylesheets/theme/", // Where to output the generated css
+ "datasvgcss" : "_global-icons-svg.less", // What to name the base64 encoded css file
+ "urlpngcss" : "_global-icons-sprite.less", // What to name the sprite css file
+ "spritepath" : "/assets/images/", // Where to output the sprite file
+ "svg" : true // Whether or not to genearte base64 encoded svg
 }
-
+```
 
 Running the tool
 ---------------
