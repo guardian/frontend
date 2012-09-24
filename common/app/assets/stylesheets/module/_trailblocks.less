@@ -2,13 +2,17 @@
     margin-top: 26px;
 }
 
-.trailblock.rolled-up {
+.trailblock.rolled-up,
+.trailblock.rolled-out {
     margin-top: 0px;
 }
 
 .trailblock ul > li {
     margin-bottom: 24px;
+}
 
+.trailblock ul > li:last-child {
+    margin-bottom: 0;
 }
 
 .trailblock h3 {
@@ -99,4 +103,8 @@ li:first-child .trailtext {
     right: 18px;
     color: #fff;
     font-size: 12px;
+}
+
+.trailblock ul:first-child {
+    margin-top: 24px;
 }
