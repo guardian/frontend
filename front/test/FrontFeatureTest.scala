@@ -195,7 +195,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
 
       val front = new FrontEdition("UK", Nil) {
-        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
+        override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
       }
 
       then("I should not see a link to the same piece of content twice")
@@ -228,7 +228,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
 
       val front = new FrontEdition("UK", Nil) {
-        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
+        override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
       }
 
       then("I should see a link that is a duplicate of a link that is hidden")
