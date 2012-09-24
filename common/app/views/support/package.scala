@@ -124,7 +124,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
         i.caption foreach { c =>
           val caption = body.createElement("p")
           caption.attr("class", "caption")
-          caption.text(c)
+          caption.html(c)
           caption.attr("itemprop", "description")
           wrapper.appendChild(caption)
         }
