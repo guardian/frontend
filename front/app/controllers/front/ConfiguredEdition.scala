@@ -11,40 +11,30 @@ import model.Trailblock
 import scala.Some
 import model.TrailblockDescription
 
-class ConfiguredFront extends AkkaSupport with Logging {
+//responsible for managing the blocks of an edition that are externally configured
+trait ConfiguredEdition extends AkkaSupport with Logging {
 
-  val refreshDuration = Duration(60, SECONDS)
+  def edition: String
 
   //TODO
   val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json" //Configuration.configUrl
 
   val configAgent = play_akka.agent[Seq[TrailblockAgent]](Nil)
 
-  private var refreshSchedule: Option[Cancellable] = None
-
   def refresh() = configAgent.sendOff { oldAgents =>
-
-    val oldUkAgents = oldAgents.filter(_.edition == "UK")
-    val oldUsAgents = oldAgents.filter(_.edition == "US")
 
     val configString = Source.fromURL(configUrl).mkString
     val jsonConfig = Json.parse(configString)
 
-    val usBlocks = toBlocks(jsonConfig \ "us")
-    val ukBlocks = toBlocks(jsonConfig \ "uk")
+    val newTrailblocks = toBlocks(jsonConfig \ (edition.toLowerCase))
 
-    val newUkAgents = ukBlocks.map { newDescription =>
-      oldUkAgents.find(oldBlock => oldBlock.description == newDescription).getOrElse(TrailblockAgent(newDescription, "UK"))
+    //only replace blocks if they are different
+    val newAgents = newTrailblocks.map { newDescription =>
+      oldAgents.find(oldBlock => oldBlock.description == newDescription)
+        .getOrElse(TrailblockAgent(newDescription, edition))
     }
-
-    val newUsAgents = usBlocks.map { newDescription =>
-      oldUsAgents.find(oldBlock => oldBlock.description == newDescription).getOrElse(TrailblockAgent(newDescription, "US"))
-    }
-
-    val newAgents = newUkAgents ++ newUsAgents
 
     //kill unneeded agents
-
     oldAgents.filterNot(old => newAgents.exists(_.description == old.description)).foreach(_.close())
 
     newAgents.foreach(_.refresh())
@@ -52,25 +42,20 @@ class ConfiguredFront extends AkkaSupport with Logging {
     newAgents
   }
 
-  def startup() {
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = Duration(5, SECONDS)) {
-      log.info("Refreshing ConfiguredFront")
-      refresh()
-    })
+  def shutDown() = configAgent().foreach(_.close())
+
+  def warmup() = try {
+    configAgent.await(Timeout(5 seconds)).foreach(_.warmup())
+  } catch {
+    case e =>
+      log.error("Exception while waiting to load config", e)
+      None
   }
 
-  def shutDown() = {
-    refreshSchedule.foreach(_.cancel())
-    configAgent().foreach(_.close())
-  }
-
-  def await() = configAgent.await(Timeout(5 seconds))
-
-  def apply(edition: String): Seq[Trailblock] = configAgent().filter(_.edition == edition).flatMap(_.trailblock)
+  def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 
   private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = {
     (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
-
       TrailblockDescription(
         toId((block \ "id").as[String]),
         (block \ "title").as[String],
@@ -84,5 +69,3 @@ class ConfiguredFront extends AkkaSupport with Logging {
     case _ => id
   }
 }
-
-object ConfiguredFront extends ConfiguredFront
