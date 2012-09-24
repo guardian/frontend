@@ -2,28 +2,59 @@
 
 @fragments.relativeDate(trail.webPublicationDate)
 
-<div class="media b2">
-    @*
-        index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
-    *@
-    @if(info.rowNum <= 3 && (trail.thumbnail)) {
-        @trail.thumbnail.map{ imageUrl =>
-            <a href="@trail.url" class="img@if(info.rowNum <= numberOfImagesToEnlarge) { img-large}" data-link-name="trail image | item @info.rowNum">
-                <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
-            </a>
+@*
+    index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
+*@
+
+@if(info.rowNum == 1) {
+    <p class="trail-headline trail-headline-large">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+            @RemoveOuterParaHtml(trail.linkText)
+        </a>
+    </p>
+
+    @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
+
+     @if(trail.mainPicture) {
+        @trail.mainPicture.map{ mainPicture =>
+            @trail.mainPicture(width=220).map{ smallCrop =>
+                <img class="maxed" src="@smallCrop.url"
+                     data-fullsrc="@mainPicture.url"
+                     data-width="@mainPicture.width"
+                     itemprop="contentURL"
+                />
+            }
         }
-    } else {
-        @fragments.relativeDate(trail.webPublicationDate, noImage=true)
+
     }
-    <div class="bd">
-        <p class="trail-headline">
-            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
-                @RemoveOuterParaHtml(trail.linkText)
-            </a>
-        </p>
-        
-        @if(info.rowNum <= 5) {
-            @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
-        }
+}
+
+@if(info.rowNum > 1 && info.rowNum <= 5) {
+    <div class="media b2">
+
+        @if(trail.thumbnail) {
+            @trail.thumbnail.map{ imageUrl =>
+                <a href="@trail.url" class="img" data-link-name="trail image | item @info.rowNum">
+                    <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+                </a>
+            }
+        } 
+        <div class="bd">
+            <p class="trail-headline">
+                <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+                    @RemoveOuterParaHtml(trail.linkText)
+                </a>
+            </p>
+        </div>
     </div>
-</div>
+    
+    @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
+}
+
+@if(info.rowNum > 5) {
+    <p class="trail-headline trail-headline-small">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+            @RemoveOuterParaHtml(trail.linkText)
+        </a>
+    </p>
+}

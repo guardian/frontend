@@ -116,7 +116,7 @@ define(['common'], function (common) {
 
                 var prettyDate = e.innerText || e.textContent; // fix for old FF
                 if (relativeDate) {
-                    e.innerHTML = '<span title="' + prettyDate + '">' + relativeDate + '</span>';
+                    e.innerHTML = '<i class="i-date"></i><span title="' + prettyDate + '">' + relativeDate + '</span>';
                 }
             }
         }
