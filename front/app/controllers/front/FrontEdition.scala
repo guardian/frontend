@@ -16,6 +16,7 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
 
     var usedTrails = List.empty[String]
 
+<<<<<<< HEAD
     val trailblocks = manualAgents.flatMap(_.trailblock).toList match {
       case Nil => configuredTrailblocks
       case head :: Nil => head :: configuredTrailblocks
@@ -23,6 +24,9 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
     }
 
     trailblocks.map {
+=======
+    manualAgents.flatMap(_.trailblock).map {
+>>>>>>> Really rough first pass at configuring the front.
       trailblock =>
         val deDupedTrails = trailblock.trails.flatMap {
           trail =>
