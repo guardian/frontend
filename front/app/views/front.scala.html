@@ -9,7 +9,7 @@
     }
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
 }{
-    <div id="front-container">
+    <div id="front-container" class="cf">
         @front.trailblocks.map{ block =>
             @fragments.frontBlock(block)
         }
