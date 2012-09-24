@@ -10,13 +10,13 @@ import model.Trailblock
  */
 class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]) {
 
-  val agents = descriptions.map(TrailblockAgent(_, edition))
+  val manualAgents = descriptions.map(TrailblockAgent(_, edition))
 
   def apply(): Seq[Trailblock] = {
 
     var usedTrails = List.empty[String]
 
-    agents.flatMap(_.trailblock).map {
+    manualAgents.flatMap(_.trailblock).map {
       trailblock =>
         val deDupedTrails = trailblock.trails.flatMap {
           trail =>
@@ -39,9 +39,9 @@ class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]
     }
   }
 
-  def refresh() = agents.foreach(_.refresh())
+  def refresh() = manualAgents.foreach(_.refresh())
 
-  def shutDown() = agents.foreach(_.close())
+  def shutDown() = manualAgents.foreach(_.close())
 
-  def warmup() { agents.foreach(_.warmup()) }
+  def warmup() { manualAgents.foreach(_.warmup()) }
 }
