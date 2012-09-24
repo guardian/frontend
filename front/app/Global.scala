@@ -1,6 +1,6 @@
 import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.front.{ ConfiguredFront, Front }
+import controllers.front.{ ConfiguredEdition, Front }
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
@@ -16,12 +16,10 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     Front.startup()
-    ConfiguredFront.startup()
   }
 
   override def onStop(app: play.api.Application) {
     Front.shutdown()
-    ConfiguredFront.shutDown()
     super.onStop(app)
   }
 }

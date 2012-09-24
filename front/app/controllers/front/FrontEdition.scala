@@ -8,7 +8,7 @@ import model.Trailblock
   Responsible for handling the blocks of the front for an edition
   Responsibilites include de-duping
  */
-class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]) {
+class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescription]) extends ConfiguredEdition {
 
   val manualAgents = descriptions.map(TrailblockAgent(_, edition))
 
@@ -16,7 +16,13 @@ class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]
 
     var usedTrails = List.empty[String]
 
-    manualAgents.flatMap(_.trailblock).map {
+    val trailblocks = manualAgents.flatMap(_.trailblock).toList match {
+      case Nil => configuredTrailblocks
+      case head :: Nil => head :: configuredTrailblocks
+      case head :: tail => head :: configuredTrailblocks ::: tail
+    }
+
+    trailblocks.map {
       trailblock =>
         val deDupedTrails = trailblock.trails.flatMap {
           trail =>
@@ -39,9 +45,18 @@ class FrontEdition(edition: String, val descriptions: Seq[TrailblockDescription]
     }
   }
 
-  def refresh() = manualAgents.foreach(_.refresh())
+  override def refresh() = {
+    super.refresh()
+    manualAgents.foreach(_.refresh())
+  }
 
-  def shutDown() = manualAgents.foreach(_.close())
+  override def shutDown() = {
+    super.shutDown()
+    manualAgents.foreach(_.close())
+  }
 
-  def warmup() { manualAgents.foreach(_.warmup()) }
+  override def warmup() {
+    manualAgents.foreach(_.warmup())
+    super.warmup()
+  }
 }

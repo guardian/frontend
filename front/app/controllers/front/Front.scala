@@ -52,25 +52,12 @@ class Front extends AkkaSupport with Logging {
     refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = Duration(5, SECONDS)) {
       log.info("Refreshing Front")
       Front.refresh()
-
-      //TODO this is in wrong place
-      ConfiguredFront.refresh()
     })
   }
 
-  def apply(edition: String): FrontPage = {
-
-    val configuredBlocks = ConfiguredFront(edition).toList
-    val manualBlocks = edition match {
-      case "US" => us()
-      case anythingElse => uk()
-    }
-
-    manualBlocks.toList match {
-      case Nil => FrontPage(configuredBlocks)
-      case List(head) => FrontPage(head :: configuredBlocks)
-      case head :: tail => FrontPage(head :: configuredBlocks ::: tail)
-    }
+  def apply(edition: String): FrontPage = edition match {
+    case "US" => FrontPage(us())
+    case anythingElse => FrontPage(uk())
   }
 
   def warmup() {
