@@ -22,7 +22,7 @@
         </p>
         
         @if(info.rowNum <= 5) {
-            @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(withJsoup(text)(InBodyLinkCleaner("in trail text link")))</p> }
+            @trail.trailText.map { text => <div class="gt-base trailtext">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
         }
     </div>
 </div>
