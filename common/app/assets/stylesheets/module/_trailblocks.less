@@ -7,13 +7,25 @@
     margin-top: 0px;
 }
 
-.trailblock ul > li {
-    padding-bottom:12px;
+.trail {
+    padding-bottom:24px;
     margin-bottom: 12px;
     border-bottom: 1px solid #e3e3db;
 }
 
-.trailblock ul > li:last-child {
+.trail:first-child {
+    padding-bottom: 12px;
+}
+
+.trail.has-image {
+    padding-bottom: 0px;
+}
+
+.trail.has-image img {
+    vertical-align: bottom;
+}
+
+.trail:last-child {
     margin-bottom: 0;
     border-bottom: none;
 }
@@ -30,7 +42,8 @@
 }
 
 .trail-headline {
-    .standard-font-sizing;
+    font-size: 14px;
+    line-height: 22px;
     margin-bottom: 1px;
     font-weight: bold;
 }
@@ -80,6 +93,7 @@ li:first-child .trailtext {
      overflow: hidden;
      .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
+     border-top: 1px solid #e3e3db;
 }
           
 .trailblock.shut .panel,
@@ -116,4 +130,11 @@ li:first-child .trailtext {
 
 .trailblock ul:first-child {
     margin-top: 24px;
+}
+
+
+@media screen and (min-width: 400px) {
+    .trail-headline {
+        font-size: 17px;
+    }
 }

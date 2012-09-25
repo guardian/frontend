@@ -19,14 +19,16 @@
 
         <ul class="unstyled">
             @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li>@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                    @formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
+                </li>
             }.slice( 0, block.description.numItemsVisible )
         </ul>
 
         @if( block.trails.length > block.description.numItemsVisible) {
             <ul class="unstyled panel">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li>@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                    <li class="trail">@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
                 }.slice( block.description.numItemsVisible, block.trails.length )
             </ul>
         }

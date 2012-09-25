@@ -18,11 +18,13 @@
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
             @trail.mainPicture(width=220).map{ smallCrop =>
+             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
                 <img class="maxed" src="@smallCrop.url"
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
                      itemprop="contentURL"
                 />
+            </a>
             }
         }
 
