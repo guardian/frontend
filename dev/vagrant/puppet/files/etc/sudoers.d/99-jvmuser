@@ -1,0 +1,1 @@
+jvmuser ALL = NOPASSWD:/sbin/service frontend-* *

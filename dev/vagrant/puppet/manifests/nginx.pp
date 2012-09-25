@@ -1,4 +1,6 @@
-class nginx {
+class nginx($config_template) {
+
+  package { nginx: ensure  => installed }
 
   File {
     owner => root,
@@ -7,49 +9,39 @@ class nginx {
   }
 
   file {
-    "/etc/nginx/conf.d/frontend.conf":
-       source => "puppet:///files/etc/nginx/conf.d/frontend.conf";
+    '/var/log/nginx': ensure => directory;
 
-    "/etc/nginx/logs":
-       ensure => directory;
+    '/etc/yum.repos.d/nginx.repo':
+      source => 'puppet:///files/etc/yum.repos.d/nginx.repo';
 
-    "/etc/nginx/conf.d/default.conf":
-      ensure => absent;
+    '/etc/nginx':
+      ensure => directory,
+      recurse => true,
+      purge => true,
+      notify => Service[nginx];
 
-    "/etc/nginx/conf.d/example_ssl.conf":
-      ensure => absent;
+    '/etc/nginx/nginx.conf':
+      source => 'puppet:///files/etc/nginx/nginx.conf',
+      notify => Service[nginx];
 
-    "/etc/apt/sources.list.d/nginx-precise.list":
-      source => "puppet:///files/etc/apt/sources.list.d/nginx-precise.list";
+    '/etc/nginx/mime.types':
+      source => 'puppet:///files/etc/nginx/mime.types',
+      notify => Service[nginx];
 
-    "/etc/apt/trusted.gpg.d/nginx.gpg":
-      source => "puppet:///files/etc/apt/trusted.gpg.d/nginx.gpg";
-  }
-
-  exec {
-    "nginx apt-get update":
-      command => "/usr/bin/apt-get update -y --fix-missing";
-  }
-
-  package {
-    nginx: ensure => latest;
+    '/etc/nginx/conf.d/default.conf':
+      content => template($config_template),
+      notify => Service[nginx];
   }
 
   service {
     nginx:
-      enable => true,
-      ensure => running;
+      ensure => running,
+      enable => true
   }
 
-  File["/etc/apt/sources.list.d/nginx-precise.list"] -> Exec["nginx apt-get update"]
-  File["/etc/apt/trusted.gpg.d/nginx.gpg"] -> Exec["nginx apt-get update"]
+  File['/etc/yum.repos.d/nginx.repo'] -> Package[nginx] -> Service[nginx]
 
-  Exec["nginx apt-get update"] -> Package[nginx]
+  Package[nginx] -> File['/etc/nginx/nginx.conf'] -> Service[nginx]
+  Package[nginx] -> File['/etc/nginx/conf.d/default.conf'] -> Service[nginx]
 
-  Package[nginx] -> File["/etc/nginx/conf.d/frontend.conf"] -> Service[nginx]
-  Package[nginx] -> File["/etc/nginx/logs"] -> Service[nginx]
-  Package[nginx] -> File["/etc/nginx/conf.d/default.conf"] -> Service[nginx]
-  Package[nginx] -> File["/etc/nginx/conf.d/example_ssl.conf"] -> Service[nginx]
-
-  Package[nginx] -> Service[nginx]
 }
