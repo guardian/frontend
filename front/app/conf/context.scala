@@ -8,7 +8,8 @@ import java.net.{ HttpURLConnection, URL }
 
 object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env") {
 
-  lazy val configUrl = configuration.getStringProperty("front.config").getOrElse(throw new RuntimeException("Front config url not set"))
+  lazy val configUrl = configuration.getStringProperty("front.config")
+    .getOrElse(throw new RuntimeException("Front config url not set"))
 
 }
 

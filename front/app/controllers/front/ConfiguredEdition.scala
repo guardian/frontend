@@ -1,40 +1,45 @@
 package controllers.front
 
-import common.{ Logging, AkkaSupport }
-import io.Source
-import play.api.libs.json.{ JsValue, Json }
+import common._
+import play.api.libs.json.JsValue
+import play.api.libs.json.Json.parse
 import akka.util.duration._
-import akka.util.{ Duration, Timeout }
-import akka.actor.Cancellable
-import java.util.concurrent.TimeUnit._
+import akka.util.Timeout
+import conf.Configuration
+import common.Response
 import model.Trailblock
-import scala.Some
 import model.TrailblockDescription
 
 //responsible for managing the blocks of an edition that are externally configured
-trait ConfiguredEdition extends AkkaSupport with Logging {
+trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
 
   def edition: String
 
-  //TODO
-  val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json" //Configuration.configUrl
+  override lazy val proxy = Proxy(Configuration)
+
+  val configUrl = Configuration.configUrl
 
   val configAgent = play_akka.agent[Seq[TrailblockAgent]](Nil)
 
   def refresh() = configAgent.sendOff { oldAgents =>
+    http.GET(configUrl) match {
+      case Response(200, json, _) => refreshAgents(json, oldAgents)
+      case Response(errorCode, _, errorMessage) =>
+        log.error("error fetching config %s %s" format (errorCode, errorMessage))
+        oldAgents
+    }
+  }
 
-    val configString = Source.fromURL(configUrl).mkString
-    val jsonConfig = Json.parse(configString)
+  private def refreshAgents(configString: String, oldAgents: Seq[TrailblockAgent]) = {
+    val newTrailblocks = toBlocks(parse(configString) \ (edition.toLowerCase))
 
-    val newTrailblocks = toBlocks(jsonConfig \ (edition.toLowerCase))
-
-    //only replace blocks if they are different
-    val newAgents = newTrailblocks.map { newDescription =>
+    //only replace blocks if they are different (do not replace an old block with the same new block)
+    val newAgents: Seq[TrailblockAgent] = newTrailblocks.map { newDescription =>
       oldAgents.find(oldBlock => oldBlock.description == newDescription)
         .getOrElse(TrailblockAgent(newDescription, edition))
     }
 
-    //kill unneeded agents
+    //close down the old agents we no longer need so they can be garbage collected
     oldAgents.filterNot(old => newAgents.exists(_.description == old.description)).foreach(_.close())
 
     newAgents.foreach(_.refresh())
@@ -49,7 +54,6 @@ trait ConfiguredEdition extends AkkaSupport with Logging {
   } catch {
     case e =>
       log.error("Exception while waiting to load config", e)
-      None
   }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList

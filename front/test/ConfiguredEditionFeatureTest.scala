@@ -6,7 +6,7 @@ import controllers.front.ConfiguredEdition
 import model.TrailblockDescription
 import org.scalatest.matchers.ShouldMatchers
 
-class ConfiguredFrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
   feature("Configured front") {
 
