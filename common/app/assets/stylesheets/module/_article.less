@@ -55,6 +55,7 @@ cite a:visited {
     margin-bottom: 3px;
     margin-top: 15px; /* feel like this should be 5px (10px margin-bottom on preceding <p>) but this has no effect till it's > 10px */
     font-family: georgia;
+    font-weight: bold;
     .standard-font-sizing;
 }
 
@@ -108,6 +109,10 @@ cite a:visited {
 .article-body blockquote, 
 .article-body blockquote p {
     color: #666666;
+}
+
+.article-body blockquote p {
+    display: inline; // makes quote marks work correctly
 }
 
 .article-body blockquote:before {

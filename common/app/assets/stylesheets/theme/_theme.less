@@ -9,8 +9,7 @@
 }
 
 .b2 {
-    border-top: 1px dotted #999999;
-    padding-top: 3px;
+    padding: 0 20px 8px 20px;
 }
 
 .b2b {
@@ -19,8 +18,8 @@
 }
 
 .count {
-    background-color: #a5bedc;
-    padding: 2px 6px;
+    background-color: #CCDDE7;
+    padding: 2px 8px;
     .rounded-corners(8px);
     text-align: center;
 }
@@ -36,6 +35,13 @@ img.badge {
 
 #debug-timestamp {
     color: #d3d3d3;
+}
+
+.trail-headline a,
+.trail-headline a:hover,
+.trail-headline a:link,
+.trail-headline a:visited {
+    color: #333;
 }
 
 
@@ -74,23 +80,18 @@ img.badge {
 .s-5:after { width:65px; }
 
 #logo {
-    width: 128px;
-    min-height: 31px;
-    background-repeat: no-repeat;
     display: block;
-    margin-top: 6px;
     text-indent: -1000px;
     float: left;
-    .icon-guardian-logo
+    .icon-guardian-logo-small
 }
 
 .svg #logo {
-    background-position: 0 0;
-    .svg-icon-guardian-logo;
+    .svg-icon-guardian-logo-small;
 }
 
 .footer {
-    padding: 5px 0;
+    padding: 12px 20px;
     margin-top: 40px; // double margin bug due to floated nav, bah.
     border-top: 2px solid #ccc;
 }
@@ -126,7 +127,11 @@ img.badge {
 }
 
 .cta {
-    color: #005689;
+    color: #545454;
+    font-size: 13px;
+    padding: 16px 0;
+    background-color: #e3e3db;
+    text-align: center;
 }
 
 .i-desktop-version {
@@ -143,4 +148,17 @@ img.badge {
     background-image: url(http://i.imgur.com/QSTiE.png);
     float: left;
     margin-right: 5px;
+}
+
+.i-date {
+    display: inline-block;
+    margin-right: 5px;
+    .icon-clock;
+}
+
+.svg .i-date {
+    .svg-icon-clock;
+    background-size: 100%;
+    width: 10px;
+    height: 10px;
 }
