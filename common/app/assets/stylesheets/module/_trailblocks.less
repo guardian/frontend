@@ -2,9 +2,32 @@
     margin-top: 26px;
 }
 
-.trailblock ul > li {
-    margin-bottom: 12px;
+.trailblock.rolled-up,
+.trailblock.rolled-out {
+    margin-top: 0px;
+}
 
+.trail {
+    padding-bottom:24px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e3e3db;
+}
+
+.trail:first-child {
+    padding-bottom: 12px;
+}
+
+.trail.has-image {
+    padding-bottom: 0px;
+}
+
+.trail.has-image img {
+    vertical-align: bottom;
+}
+
+.trail:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .trailblock h3 {
@@ -19,16 +42,38 @@
 }
 
 .trail-headline {
-    .standard-font-sizing;
+    font-size: 14px;
+    line-height: 22px;
     margin-bottom: 1px;
+    font-weight: bold;
+}
+
+.front-section .gt-base {
+    display: block;
+}
+
+.trail-headline-large {
+    font-size:21px;
+    line-height: 24px;
+    padding: 0 20px 12px 20px;
+}
+
+.trail-headline-small {
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0 20px;
 }
 
 .trailtext {
-    font-family: helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
-    color: #262626; 
+    color: #545454; 
     margin-bottom: 0;
+    padding: 0 20px;
+}
+
+li:first-child .trailtext {
+    padding-bottom: 12px;
 }
 
 .trailblock .img img {
@@ -41,15 +86,18 @@
     width: @trailblockImgWidthLarge;
 }
 
-.trailblock .panel {
+.trailblock .panel,
+.rolled-out {
      height: auto;
      max-height: 9999px;
      overflow: hidden;
      .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
+     border-top: 1px solid #e3e3db;
 }
           
-.trailblock.shut .panel {
+.trailblock.shut .panel,
+.rolled-up {
     .transition(max-height .5s ease-in-out);
     overflow: hidden;
     position: relative;
@@ -65,3 +113,29 @@
 }
 
 .trailblock-topstories li:first-child .b2 { border-top:none;}
+
+.toggle-trailblock {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #fff;
+    font-size: 12px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.toggle-trailblock:link,
+.toggle-trailblock:visited {
+    background-color: transparent;
+}
+
+.trailblock ul:first-child {
+    margin-top: 24px;
+}
+
+
+@media screen and (min-width: 400px) {
+    .trail-headline {
+        font-size: 17px;
+    }
+}

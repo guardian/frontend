@@ -26,6 +26,14 @@
     cursor: pointer;
 }
 
+.cta:before {
+    content: '- ';
+}
+
+.shut .cta:before {
+    content: '+ ';
+}
+
 /* was max-width... still up for debate. */
 .maxed {
     width: 100%;
@@ -50,6 +58,7 @@
     color: #7CA6BE;
 }
 
+
 @media screen and (min-width: 850px) {
     .trailblock .img img {
         width: 160px;
@@ -61,14 +70,6 @@
         display: none;
     }
 
-    /* sorry for this :( -- it's because nth-child above has higher specificity */
-    /* 
-    .trailblock li,
-    .trailblock .trail {
-        display: block !important;
-    }
-    */
-
     article .trailblock {
         width: 40%;
         float: left;
@@ -79,10 +80,6 @@
 }
 
 @media screen and (min-width: 400px) {
-
-    .gt-base {
-        display: block;
-    }
 
     .comments .datestamp {
         text-align: right;

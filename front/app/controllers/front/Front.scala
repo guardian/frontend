@@ -16,25 +16,25 @@ class Front extends AkkaSupport with Logging {
   private var refreshSchedule: Option[Cancellable] = None
 
   val uk = new FrontEdition("UK", Seq(
-    TrailblockDescription("", "News", 5),
-    TrailblockDescription("sport", "Sport", 5),
-    TrailblockDescription("commentisfree", "Comment is free", 3),
-    TrailblockDescription("culture", "Culture", 1),
-    TrailblockDescription("business", "Business", 1),
-    TrailblockDescription("lifeandstyle", "Life and style", 1),
-    TrailblockDescription("money", "Money", 1),
-    TrailblockDescription("travel", "Travel", 1)
+    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
+    TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
+    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
+    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
+    TrailblockDescription("business", "Business", numItemsVisible = 1),
+    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
+    TrailblockDescription("money", "Money", numItemsVisible = 1),
+    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
   ))
 
   val us = new FrontEdition("US", Seq(
-    TrailblockDescription("", "News", 5),
-    TrailblockDescription("sport", "Sports", 5),
-    TrailblockDescription("commentisfree", "Comment is free", 3),
-    TrailblockDescription("culture", "Culture", 1),
-    TrailblockDescription("business", "Business", 1),
-    TrailblockDescription("lifeandstyle", "Life and style", 1),
-    TrailblockDescription("money", "Money", 1),
-    TrailblockDescription("travel", "Travel", 1)
+    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
+    TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
+    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
+    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
+    TrailblockDescription("business", "Business", numItemsVisible = 1),
+    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
+    TrailblockDescription("money", "Money", numItemsVisible = 1),
+    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
   ))
 
   def refresh() {
