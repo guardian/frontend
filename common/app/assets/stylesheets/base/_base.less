@@ -1,5 +1,5 @@
 p {
-    color: #333;
+    color: #545454;
     margin-bottom: 10px;
     .standard-font-sizing;
 }
@@ -34,7 +34,7 @@ h4 {
 
 .byline,
 .dateline {
-    font-family: arial, sans-serif;
+    font-family: @sans-serif;
     margin: 0px;
     color: #666;
     .incidental-font-sizing;
@@ -56,11 +56,21 @@ span.timestamp {
 }
 
 .relative-timestamp {
+    display: block;
+    height: 10px;
     color: #666;
-    font-family: helvetica, arial, sans-serif;
-    width: @trailblockImgWidth;
-    margin-bottom: 0;
+    font-family: @sans-serif;
+    margin:0 0 12px 20px;
     .incidental-font-sizing;
+    line-height: 10px;
+}
+
+.relative-timestamp span {
+    display: inline-block;
+}
+
+.front-timestamp {
+    margin-top: 24px;
 }
 
 ol, ul {
