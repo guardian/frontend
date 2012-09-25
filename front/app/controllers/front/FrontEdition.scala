@@ -16,10 +16,6 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
 
     var usedTrails = List.empty[String]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Started cleaning up configurable fronts
     val trailblocks = manualAgents.flatMap(_.trailblock).toList match {
       case Nil => configuredTrailblocks
       case head :: Nil => head :: configuredTrailblocks
