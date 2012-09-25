@@ -5,7 +5,7 @@
             "apps":[ "frontend::core-navigation" ],
             "data":{
                 "port":"9000",
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/most-popular/UK/science",
                     "/related/UK/world/2012/jun/26/taliban-bans-polio-vaccinations"
