@@ -45,5 +45,23 @@ class ConfiguredFrontFeatureTest extends FeatureSpec with GivenWhenThen with Sho
         front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("world/iraq", "Iraq", 3)))
       }
     }
+
+    scenario("Survive loading bad configuration") {
+
+      given("I visit the Network Front")
+      and("the feature trailblock has broken confiuration")
+      Fake {
+        val front = new ConfiguredEdition {
+          override def edition = "US"
+          override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-bad-does-not-exist.json"
+        }
+
+        front.refresh()
+        front.warmup()
+
+        then("I the feature trailblock should collapse")
+        front.configuredTrailblocks.map(_.description) should be(Nil)
+      }
+    }
   }
 }

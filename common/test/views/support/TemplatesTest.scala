@@ -86,7 +86,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   "InBodyLinkCleaner" should "clean links" in {
-    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner).text.trim)
+    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")).text.trim)
 
     val link = (body \\ "a").head
 
