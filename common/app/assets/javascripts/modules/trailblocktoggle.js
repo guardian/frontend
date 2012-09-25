@@ -1,4 +1,4 @@
-/* global guardian: true */
+/*global guardian:true */
 define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
 
     var TrailblockToggle = function () {

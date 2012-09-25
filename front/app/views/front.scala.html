@@ -11,7 +11,7 @@
 }{
     <div id="front-container" class="cf">
         @front.trailblocks.map{ block =>
-            @fragments.frontBlock(block)
+            @fragments.frontBlock(block, Edition(request, Configuration))
         }
     </div>
     <div id="js-popular"></div>

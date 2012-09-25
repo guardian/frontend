@@ -140,12 +140,12 @@ define([
         
         switch (isNetworkFront) {
 
-            case true: 
+            case true:
                 modules.showFrontExpanders();
                 modules.showTrailblockToggles(config);
                 break;
 
-            case false: 
+            case false:
                 modules.transcludeTopStories(config);
                 modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
                 break;
@@ -154,7 +154,7 @@ define([
 
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
-        modules.loadOphanAnalytics()
+        modules.loadOphanAnalytics();
 
     };
 
