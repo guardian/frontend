@@ -39,12 +39,12 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           then("I should see the news trailblock")
-          val news = $("[data-link-name=\"front block News\"]")
+          val news = $(".zone-news")
           news.findFirst("h1").getText should be("News")
           news.find(".trail-headline") should have length (10)
 
           and("I should see the Sport trailblock")
-          val sport = $("[data-link-name=\"front block Sport\"]")
+          val sport = $(".zone-sport")
           sport.findFirst("h1").getText should be("Sport")
           sport.find(".trail-headline") should have length (10)
       }
@@ -249,16 +249,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I visit the network front")
 
       then("I should see 10 (5 of whch are hidden) Top stories")
-      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5))
-      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5))
+      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
+      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
 
       and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
-      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5))
-      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5))
+      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1))
+      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1))
 
       and("I should see 6 (3 of which are hidden) Comment is Free stories")
-      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
-      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
+      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
+      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
 
       and("I should see 1 Culture story")
       Front.uk.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
