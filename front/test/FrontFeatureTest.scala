@@ -84,6 +84,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
+
+    //have fixed this properly in a branch, it will merge back in
     ignore("Link tracking") {
       given("I visit the network front")
       HtmlUnit("/") {
