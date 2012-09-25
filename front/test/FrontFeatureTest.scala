@@ -89,10 +89,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       HtmlUnit("/") {
         browser =>
           import browser._
-
           then("All links should be tracked")
           $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
-
       }
     }
 
