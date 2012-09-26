@@ -1,6 +1,6 @@
 @(block: Trailblock, edition: String)(implicit request: RequestHeader)
 
-    <div class="front-section @if(block.description.id == "") { zone-news } else { zone-@block.description.id }">
+    <div class="front-section @if(block.description.id == "") {zone-news} else {zone-@block.description.id}">
 
         <div class="front-section-head zone-background">
             @if(block.description.id == "") {

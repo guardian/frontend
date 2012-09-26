@@ -136,6 +136,7 @@ define([
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
         
         switch (isNetworkFront) {
 
@@ -146,7 +147,6 @@ define([
 
             case false:
                 modules.transcludeTopStories(config);
-                modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
                 break;
         
         }
