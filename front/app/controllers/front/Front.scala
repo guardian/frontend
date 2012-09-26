@@ -4,12 +4,12 @@ import java.util.concurrent.TimeUnit._
 import controllers.FrontPage
 import model.TrailblockDescription
 import akka.actor.Cancellable
-import common.{ PlainOldScheduling, Logging, AkkaSupport }
+import common.{ Logging, AkkaSupport }
 import akka.util.Duration
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
-class Front extends AkkaSupport with PlainOldScheduling with Logging {
+class Front extends AkkaSupport with Logging {
 
   val refreshDuration = Duration(60, SECONDS)
 
