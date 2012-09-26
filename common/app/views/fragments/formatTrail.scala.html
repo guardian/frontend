@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Integer = 0)
+@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
 <div class="media b2">
     @*
@@ -22,7 +22,7 @@
         </p>
         
         @if(info.rowNum <= 5) {
-            @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(text)</p> }
+            @trail.trailText.map { text => <div class="gt-base trailtext">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
         }
     </div>
 </div>
