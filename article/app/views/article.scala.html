@@ -4,20 +4,22 @@
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
 }{
 
-    <h2 class="article-zone zone-border zone-border-medium">
+    <h2 class="article-zone type-2">
         <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
     </h2>
 
     <article class="article" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header>
-            @fragments.byline(article.byline, article)
             @fragments.dateline(article.webPublicationDate)
 
             @fragments.headline(article.headline)
-        </header>
 
-        @fragments.standfirst(article)
+            @fragments.standfirst(article)
+
+            @fragments.byline(article.byline, article)
+
+        </header>
 
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
