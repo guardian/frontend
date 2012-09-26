@@ -38,12 +38,6 @@ define([
 
         var modules = {
 
-            isNetworkFront: false, // use this to disable some functions for NF
-
-            setNetworkFrontStatus: function(status) {
-                this.isNetworkFront = (status === "") ? true : false;
-            },
-
             upgradeImages: function () {
                 var i = new Images();
                 i.upgrade();
@@ -51,12 +45,10 @@ define([
 
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
-                
-                // don't do this for homepage
-                if (!this.isNetworkFront) {
-                    new TopStories().load(config);
-                }
+            },
 
+            transcludeTopStories: function (config) {
+                new TopStories().load(config);
             },
 
             transcludeRelated: function (host, pageId, showInRelated) {
@@ -68,7 +60,6 @@ define([
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
-    
 
                 if (!hasStoryPackage && showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
@@ -77,7 +68,6 @@ define([
             },
 
             transcludeMostPopular: function (host, section) {
-
                 var url = host + '/most-popular/UK/' + section, // todo: should edition be hardcoded?
                     domContainer = document.getElementById('js-popular');
 
@@ -119,42 +109,52 @@ define([
                 var tabs = new Tabs().init();
             },
 
-            // only do this for homepage
             showFrontExpanders: function () {
-                if (this.isNetworkFront) {
-                    var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
-                    for (i=0, l=frontTrailblocks.length; i<l; i++) {
-                        var elm = frontTrailblocks[i];
-                        var id = elm.id;
-                        var frontExpandable = new Expandable({ id: id, expanded: false });
-                        frontExpandable.initalise();
-                    }
+                var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
+                for (i=0, l=frontTrailblocks.length; i<l; i++) {
+                    var elm = frontTrailblocks[i];
+                    var id = elm.id;
+                    var frontExpandable = new Expandable({ id: id, expanded: false });
+                    frontExpandable.initalise();
                 }
             },
 
             showTrailblockToggles: function (config) {
-                if (this.isNetworkFront) {
-                    var edition = config.page.edition;
-                    var tt = new TrailblockToggle();
-                    tt.go(edition);
-                }
+                var edition = config.page.edition;
+                var tt = new TrailblockToggle();
+                tt.go(edition);
             }
          
         };
 
     var bootstrap = function (config, userPrefs) {
-        modules.setNetworkFrontStatus(config.page.pageId);
+
+        var isNetworkFront = (config.page.pageId === "");
+        
         modules.upgradeImages();
         modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId, config.page.showInRelated);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
+        
+        switch (isNetworkFront) {
+
+            case true:
+                modules.showFrontExpanders();
+                modules.showTrailblockToggles(config);
+                break;
+
+            case false:
+                modules.transcludeTopStories(config);
+                modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+                break;
+        
+        }
+
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-        modules.showFrontExpanders();
-        modules.showTrailblockToggles(config);
+
     };
 
     // domReady proxy for bootstrap
