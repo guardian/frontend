@@ -13,7 +13,7 @@ import akka.util.Timeout
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class TrailblockAgent(val description: TrailblockDescription, edition: String) extends AkkaSupport with Logging {
+class TrailblockAgent(val description: TrailblockDescription, val edition: String) extends AkkaSupport with Logging {
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
