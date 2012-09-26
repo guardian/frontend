@@ -4,13 +4,19 @@
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
 }{
 
-    <article itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+    <h2 class="article-zone zone-border zone-border-medium">
+        <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+    </h2>
 
-        <h2 class="zone-border zone-border-medium">
-            <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
-        </h2>
+    <article class="article" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
-        @fragments.headline(article.headline)
+        <header>
+            @fragments.byline(article.byline, article)
+            @fragments.dateline(article.webPublicationDate)
+
+            @fragments.headline(article.headline)
+        </header>
+
         @fragments.standfirst(article)
 
         @article.mainPicture.map{ mainPicture =>
@@ -25,11 +31,6 @@
             </figure>
             }
         }
-
-        <aside class="b1 b1b">
-            @fragments.byline(article.byline, article)
-            @fragments.dateline(article.webPublicationDate)
-        </aside>
 
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
