@@ -54,26 +54,24 @@ define(['common'], function (common) {
             return false;
 
         } else if (delta < 55) {
-            return 'less than a minute ago';
+            return 'Less than a minute ago';
 
         } else if (delta < 90) {
-            return 'about a minute ago';
+            return '1 minute ago';
 
         } else if (delta < (8 * 60)) {
-            return 'about ' +
-                (parseInt(delta / 60, 10)).toString(10) +
-                ' minutes ago';
+            return (parseInt(delta / 60, 10)).toString(10) +
+                ' min ago';
 
         } else if (delta < (55 * 60)) {
             return (parseInt(delta / 60, 10)).toString(10) +
-                ' minutes ago';
+                ' min ago';
 
         } else if (delta < (90 * 60)) {
-            return 'about an hour ago';
+            return '1 hour ago';
         
         } else if (delta < (5 * 60 * 60)) {
-            return 'about ' +
-                (Math.round(delta / 3600)).toString(10) +
+            return (Math.round(delta / 3600)).toString(10) +
                 ' hours ago';
 
         } else if (isToday(then)) {
