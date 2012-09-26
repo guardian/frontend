@@ -38,6 +38,10 @@ object RemoveOuterParaHtml {
   }
 }
 
+object SafeName {
+  def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
+}
+
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
