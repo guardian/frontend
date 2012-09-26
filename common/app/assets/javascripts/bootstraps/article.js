@@ -78,9 +78,7 @@ define([
 
             transcludeMostPopular: function (host, section) {
 
-                if (this.isNetworkFront) { return false; }
-
-                var url = host + '/most-popular/UK/' + section,
+                var url = host + '/most-popular/UK/' + section, // todo: should edition be hardcoded?
                     domContainer = document.getElementById('js-popular');
 
                 new Popular(domContainer).load(url);
