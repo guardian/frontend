@@ -1,11 +1,12 @@
 .article-zone {
-    padding: 12px 20px 0px 20px;
+    padding: @baseline @gutter;
+    border-top: 4px solid #E3E3DB;
+    border-bottom: 1px solid #E3E3DB;
 }
 
-.article header,
-.article .standfirst {
-    padding: 0 20px;
-    margin-bottom: 12px;
+.article header {
+    padding: @baseline @gutter 0 @gutter;
+    margin-bottom: @baseline;
 }
 
 aside {
@@ -15,11 +16,8 @@ aside {
 
 .article-body .caption,
 figcaption {
-    font-family: helvetica, arial, sans-serif;
-    color: #666;
-    margin-top: 5px;
-    margin-bottom: 0;
-    .incidental-font-sizing;
+    padding:@baseline @gutter;
+    .type-7;
 }
 
 figure {
@@ -57,7 +55,9 @@ cite a:visited {
 
 .article-body p {
     margin: 0px;
-    margin-bottom: 10px;
+    margin-bottom: @baseline;
+    .type-4;
+
 }
 
 .article-body h2 {
@@ -101,9 +101,7 @@ cite a:visited {
 .article-body blockquote,
 .article-body blockquote p {
     margin: 0px 0px 10px 0px;
-    color: #333;
-    font-family: georgia;
-    .standard-font-sizing;
+    .type-4;
 }
 
 .font-guardian-all-loaded .article-body > p,
