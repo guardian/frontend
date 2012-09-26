@@ -5,7 +5,7 @@
             "apps":[ "frontend::gallery" ],
             "data":{
                 "port":"9000",
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/football/gallery/2012/may/16/england-euro-2012-squad-pictures"
                 ]
@@ -15,7 +15,7 @@
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
             "data":{
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-static",
                 "cacheControl":"public, max-age=2592000"
             }
         }

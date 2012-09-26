@@ -5,7 +5,7 @@
             "apps":[ "frontend::video" ],
             "data":{
                 "port":"9000",
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
                 ]
@@ -15,7 +15,7 @@
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
             "data":{
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-static",
                 "cacheControl":"public, max-age=2592000"
             }
         }
