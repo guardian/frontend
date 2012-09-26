@@ -64,7 +64,7 @@ trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
       TrailblockDescription(
         toId((block \ "id").as[String]),
         (block \ "title").as[String],
-        (block \ "numItems").as[String].toInt
+        (block \ "numItems").as[Int]
       )
     }
   }
