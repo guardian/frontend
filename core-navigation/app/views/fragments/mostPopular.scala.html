@@ -2,10 +2,11 @@
 
 @defining(popular.size > 1){ isTabbed =>
 
-    <div class="trailblock trailblock-shaded zone-border" id="popular-trails" data-link-name="most popular">
-        <h3 class="zone-color">Most viewed</h3>
+    <div class="" id="popular-trails" data-link-name="most popular">
 
-        @if(isTabbed) {
+        @if(!isTabbed) {
+            <h2 class="article-zone type-1">Most read</h2>
+        } else {
             <ol class="tabs" id="js-popular-tabs">
                 @popular.zipWithRowInfo.map{ case (section, info) =>
                     <li@if(info.isFirst){ class="tabs-selected"}>
@@ -18,21 +19,21 @@
         @if(isTabbed) {<div class="tabs-content">}
             @popular.zipWithRowInfo.map{ case (section, info) =>
                 <div id="tabs-popular-@info.rowNum" 
-                    class="trailblock @if(isTabbed){tabs-panel @if(!info.isFirst){ initially-off}}"
+                    class="trailblock @if(isTabbed){tabs-panel @if(!info.isFirst){ initially-off}} headline-list"
                     data-count="@{section.trails.length - visibleTrails}"
                     data-link-name="@section.heading"
                 >
 
                     <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                            <li>@formatTrail(trail, info, related=true)</li>
+                            <li><span class="circle-count">@info.rowNum</span> @linkText(trail, info)</li>
                         }.slice( 0, visibleTrails )
                     </ul>
 
                     @if(section.trails.length > visibleTrails) {
                         <ul class="unstyled panel">
                             @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                                <li>@formatTrail(trail, info, related=true)</li>
+                                <li><span class="circle-count">@info.rowNum</span> @linkText(trail, info)</li>
                             }.slice( visibleTrails, section.trails.length )
                         </ul>
                     }
