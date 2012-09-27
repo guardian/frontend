@@ -2,7 +2,7 @@
 
 @content.standfirst.map { s =>
     <p class="standfirst" itemprop="description" data-link-name="standfirst">
-        @withJsoup(s)(
+        @withJsoup(BulletCleaner(s))(
             InBodyLinkCleaner
         )
         @content.starRating.map { s =>

@@ -36,7 +36,7 @@
 
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
-            @withJsoup(article.body)(
+            @withJsoup(BulletCleaner(article.body))(
                 PictureCleaner(article),
                 InBodyLinkCleaner,
                 BlockNumberCleaner,
