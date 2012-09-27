@@ -1,48 +1,54 @@
-.tabs,
-.tabs li {
-    margin: 0;
-    padding: 0;
-    list-style: none;    
-}
-
 .tabs {
-    border-bottom: 1px solid #bebebe;
-    margin-bottom: 10px;
-    text-align: right;  
-    font-size: 0; /* this lets us use inline-block without gaps */
+    margin: 20px 0 -1px 0;
+    list-style-type: none;
+    padding: 0 10px;
+    .type-1;
+    overflow: auto;
 }
 
 .tabs li {
-    font-size: 12px; /* overrides the hack above */
-    display: inline-block;
-    text-align: center;
-    font-family: helvetica, arial, sans-serif;
+    float: left;
+    display: block;
+    width: 49%;
+    margin-right: 2%
+}
+
+.tabs li:last-child {
+    margin-right: 0;
 }
 
 .tabs li a {
-    display: inline-block;
-    border: 1px solid #bebebe;
-    border-bottom: 1px solid #bebebe; /* gradient end colour */
-    border-right: 0;
-    padding: 6px 10px 0 10px;
-    height: 22px;
-    position: relative;
-    bottom: -1px;
-    color: #333333;
-    #gradient > .vertical (#d9d9d9, #bebebe);
+    display: block;
+    width: 86%;
+    min-height: 24px; //As text hieght changes
+    border: 1px solid #ccc;
+    padding: 16px 6%;
+    background: #f1f1eb;
+    color: #464646;
+    margin: 10px 0 0px 0;
+    .type-3;
 }
 
-.tabs li.tabs-selected a {
-    border-bottom: 1px solid #ededed; /* gradient end colour */
-    background: #ffffff; /* Old browsers */
-    #gradient > .vertical (#ffffff, #ededed);
+.tabs a:hover {
+    background: none !important;
 }
 
-.tabs li:last-child a {
-    border-right: 1px solid #bebebe;    
+li.tabs-selected a {
+    background: #fff;
+    color: #ff3d00;
+    margin-bottom: -1px;
+    border-bottom-color: #fff;
+    .type-2;
 }
 
-.tabs li a:hover {
-    text-decoration: none;
-    background: #ededed;    
+.tabs-content {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;    
+    overflow: hidden;
+    clear: left;
+    margin: 0 0 10px 0;
+}
+
+.tabs-panel .panel {
+    border-top: 1px solid #ccc;
 }

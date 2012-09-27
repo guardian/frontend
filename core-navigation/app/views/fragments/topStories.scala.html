@@ -2,7 +2,7 @@
 <div class="trailblock trailblock-topstories">
     <ul>
         @trails.zipWithRowInfo.map{ case (trail, info) =>
-            <li>@formatTrail(trail, info, related=true)</li>
+            <li class="trail">@formatTrail(trail, info, related=true)</li>
         }
     </ul>
 </div>
