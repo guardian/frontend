@@ -32,10 +32,9 @@
             }
         }
 
-        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+        @fragments.byline(article.byline, article)
 
-            @fragments.byline(article.byline, article)
-            
+        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(BulletCleaner(article.body))(
                 PictureCleaner(article),
