@@ -14,7 +14,7 @@
         }
     } 
     <div class="bd">
-        <p class="trail-headline">
+        <p class="trail-headline @if(info.rowNum > 3) {type-3}">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>

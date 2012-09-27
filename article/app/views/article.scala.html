@@ -17,8 +17,6 @@
 
             @fragments.standfirst(article)
 
-            @fragments.byline(article.byline, article)
-
         </header>
 
         @article.mainPicture.map{ mainPicture =>
@@ -35,6 +33,9 @@
         }
 
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+
+            @fragments.byline(article.byline, article)
+            
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(BulletCleaner(article.body))(
                 PictureCleaner(article),

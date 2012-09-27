@@ -11,7 +11,7 @@ h1 {
 
 .standfirst {
     color: #666;
-    margin-bottom: 12px;
+    margin-bottom: @baseline*1.5;
     font-family: georgia, serif;
     .standard-font-sizing;
 }
@@ -29,17 +29,11 @@ h4 {
     .subheading-font-sizing;
 }
 
-.byline,
 .dateline {
     font-family: @sans-serif;
     margin: 0px 0px @baseline 0px;
     color: #666;
     .incidental-font-sizing;
-}
-
-.byline a {
-  font-weight: bold;
-  foo: bar;
 }
 
 span.timestamp {
