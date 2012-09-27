@@ -7,13 +7,13 @@
 *@
 
 @if(info.rowNum == 1) {
-    <p class="trail-headline trail-headline-large">
+    <p class="trail-headline type-2 box-indent">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
     </p>
 
-    @trail.trailText.map { text => <p class="gt-base trailtext">@RemoveOuterParaHtml(BulletCleaner(text))</p> }
+    @trail.trailText.map { text => <p class="gt-base type-4 box-indent">@RemoveOuterParaHtml(BulletCleaner(text))</p> }
 
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
@@ -50,11 +50,11 @@
         </div>
     </div>
     
-    @trail.trailText.map { text => <div class="gt-base trailtext">@Html(BulletCleaner(text))</div> }
+    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@Html(BulletCleaner(text))</div> }
 }
 
 @if(info.rowNum > 5) {
-    <p class="trail-headline trail-headline-small">
+    <p class="trail-headline type-3 box-indent">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
