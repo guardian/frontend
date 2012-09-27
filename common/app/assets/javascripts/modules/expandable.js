@@ -31,7 +31,7 @@ define(['common', 'bean'], function (common, bean) {
                 bean.add(cta, 'click', function (e) {
                     common.mediator.emit('modules:expandable:cta:toggle:' + id);
                 });
-                cta.className = 'cta expander b2';
+                cta.className = 'cta expander';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
             }

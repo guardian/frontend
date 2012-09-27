@@ -13,27 +13,27 @@ define(['modules/relativedates'], function(RelativeDates) {
 	    	var datesToTest = {
 	        	'lessThanAMinuteAgo': {
 	        		'date'			 : '2012-08-13T11:59:50+01:00',
-	        		'expectedOutput' : 'less than a minute ago'
+	        		'expectedOutput' : 'Less than a minute ago'
 	    		},
 	    		'oneMinuteAgo': {  // singular
 	        		'date'			 : '2012-08-13T11:58:40+01:00',
-	        		'expectedOutput' : 'about a minute ago'
+	        		'expectedOutput' : '1 minute ago'
 	    		},
 	    		'upToEightMinutesAgo': { // plural
 	        		'date' 			 : '2012-08-13T11:52:30+01:00',
-	        		'expectedOutput' : 'about 7 minutes ago'
+	        		'expectedOutput' : '7 min ago'
 	    		},
 	    		'oneHourAgo': { // singular
 	        		'date' 			 : '2012-08-13T11:00:00+01:00',
-	        		'expectedOutput' : 'about an hour ago'
+	        		'expectedOutput' : '1 hour ago'
 	    		},
 	    		'betweenNinetyMinutesAndOneHour': {  // bug GFE-38
 	        		'date' 			 : '2012-08-13T10:25:00+01:00',
-	        		'expectedOutput' : 'about 2 hours ago'
+	        		'expectedOutput' : '2 hours ago'
 	    		},
 	    		'lessThanFiveHoursAgo': { // plural
 	        		'date' 			 : '2012-08-13T08:30:00+01:00',
-	        		'expectedOutput' : 'about 4 hours ago'
+	        		'expectedOutput' : '4 hours ago'
 	    		},
 	    		'moreThanFiveHoursAgo': { // ... but still today
 	        		'date' 			 : '2012-08-13T02:03:00+01:00',
@@ -53,7 +53,7 @@ define(['modules/relativedates'], function(RelativeDates) {
 	    		},
 	    		'oneMinuteAgoInAnotherTimeZone': { 
 	        		'date'			 : '2012-08-13T12:58:40+02:00',
-	        		'expectedOutput' : 'about a minute ago'
+	        		'expectedOutput' : '1 minute ago'
 	    		}
 	    	};
 

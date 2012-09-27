@@ -142,6 +142,10 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
   }
 }
 
+object BulletCleaner {
+  def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
+}
+
 case class InBodyLinkCleaner(dataLinkName: String) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")

@@ -67,11 +67,9 @@ define([
                 }
             },
 
-            transcludeMostPopular: function (host, section) {
-                
-                var url = host + '/most-popular/UK/' + section,
+            transcludeMostPopular: function (host, section, edition) {
+                var url = host + '/most-popular/' + edition + '/' + section,
                     domContainer = document.getElementById('js-popular');
-
                 new Popular(domContainer).load(url);
                 
                 common.mediator.on('modules:popular:render', function () {
@@ -137,6 +135,7 @@ define([
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         
         switch (isNetworkFront) {
 
@@ -147,7 +146,6 @@ define([
 
             case false:
                 modules.transcludeTopStories(config);
-                modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
                 break;
         
         }

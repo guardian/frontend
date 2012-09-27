@@ -1,6 +1,8 @@
 @(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
-<div class="media b2">
+@fragments.relativeDate(trail.webPublicationDate)
+
+<div class="media box-indent">
     @*
         index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
     *@
@@ -8,21 +10,19 @@
         @trail.thumbnail.map{ imageUrl =>
             <a href="@trail.url" class="img@if(info.rowNum <= numberOfImagesToEnlarge) { img-large}" data-link-name="trail image | item @info.rowNum">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
-                @fragments.relativeDate(trail.webPublicationDate)
             </a>
         }
-    } else {
-        @fragments.relativeDate(trail.webPublicationDate, noImage=true)
-    }
+    } 
     <div class="bd">
-        <p class="trail-headline">
+        <p class="trail-headline @if(info.rowNum > 3) {type-3}">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </p>
-        
-        @if(info.rowNum <= 5) {
-            @trail.trailText.map { text => <div class="gt-base trailtext">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
-        }
     </div>
+        
+    @if(info.rowNum <= 5) {
+        @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
+    }
+
 </div>

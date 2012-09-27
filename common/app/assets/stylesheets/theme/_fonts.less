@@ -3,23 +3,24 @@ article .article-body ul,
 article .article-body ol,
 article .article-body address,
 article .article-body blockquote {
-    font-family: "webegyptian", georgia;
+    font-family: @serif;
 }
 
 h1 {
-    font-family: "webegyptian", georgia;
-    font-weight: bold;
+	 .type-1;
 }
 
 h1 em,
 h1 i {
-    font-family: "webegyptian", georgia;
     font-style: italic;
 }
 
-h2,
+h2 {
+	.type-2;
+}
+
 .standfirst {
-    font-family: "webegyptian", georgia;
+    .type-4;
 }
 
 article .article-body h2,
@@ -27,9 +28,9 @@ article .article-body h3,
 .trailblock h3,
 .trail-headline,
 .trailtext {
-    font-family: "webegyptian", georgia;
+    font-family: @serif;
 }
 
 .toggle-trailblock {
-	font-family: @sans-serif;
+	.type-6;
 }

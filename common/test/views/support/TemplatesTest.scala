@@ -106,6 +106,10 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     body should include("""<p id="block-1">some more text</p>""")
   }
 
+  "BulletCleaner" should "format all bullets by wrapping in a span" in {
+    BulletCleaner("<p>Foo bar • foo</p>") should be("<p>Foo bar <span class=\"bullet\">•</span> foo</p>")
+  }
+
   "RowInfo" should "add row info to a sequence" in {
 
     val items = Seq("a", "b", "c", "d")
