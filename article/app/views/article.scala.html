@@ -39,9 +39,8 @@
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(BulletCleaner(article.body))(
                 PictureCleaner(article),
-                InBodyLinkCleaner,
-                BlockNumberCleaner,
-                InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
+                InBodyLinkCleaner("in body link"),
+                BlockNumberCleaner
             )
         </div>
     </article>

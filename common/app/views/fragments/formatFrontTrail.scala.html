@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Integer = 0)
+@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
 @fragments.relativeDate(trail.webPublicationDate, isFront=true)
 
@@ -50,7 +50,7 @@
         </div>
     </div>
     
-    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@Html(BulletCleaner(text))</div> }
+    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
 }
 
 @if(info.rowNum > 5) {

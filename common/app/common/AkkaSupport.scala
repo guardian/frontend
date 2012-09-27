@@ -33,21 +33,3 @@ trait AkkaSupport {
     def agent[T](value: T): Agent[T] = Agent(value)(play_akka.system())
   }
 }
-
-trait PlainOldScheduling {
-  //Akka sometimes deadlocks during startup if we try schedule things there
-  //so use this as a bootstrap mechanism
-  //https://groups.google.com/forum/?fromgroups=#!topic/play-framework/yO8GsBLzGGY
-  object executor {
-    def scheduleOnce(delay: Long, timeUnit: TimeUnit)(block: => Unit) {
-      val executor = Executors.newSingleThreadScheduledExecutor()
-      executor.schedule(new Runnable() {
-        override def run() {
-          block
-          executor.shutdown()
-        }
-      }, delay, timeUnit)
-    }
-  }
-}
-
