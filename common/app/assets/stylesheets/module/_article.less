@@ -100,45 +100,32 @@ cite a:visited {
 .article-body address,
 .article-body blockquote,
 .article-body blockquote p {
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px @baseline 0px;
     .type-4;
-}
-
-.font-guardian-all-loaded .article-body > p,
-.font-guardian-all-loaded .article-body ul,
-.font-guardian-all-loaded .article-body ol,
-.font-guardian-all-loaded .article-body address,
-.font-guardian-all-loaded .article-body blockquote {
-    font-size: 14px;
 }
 
 .article-body blockquote {
     border: 0;
     padding: 0;
-    margin-left: @blockquoteMarginLeft;
 }
 
 .article-body blockquote, 
 .article-body blockquote p {
+    display: block;
     color: #666666;
-}
-
-.article-body blockquote p {
-    display: inline; // makes quote marks work correctly
+    .type-1;
 }
 
 .article-body blockquote:before {
     display: block;
     content: '';
-    margin-left: -@blockquoteMarginLeft;
-    margin-top: 5px;
-    float: left;
+    margin: 21px 0 @baseline 0;
     .icon-blockquote-before;
 }
 
 .article-body blockquote:after {
     display: block;
     content: '';
-    margin-left: 5px;
+    margin-bottom: 22px;
     .icon-blockquote-after;
 }
