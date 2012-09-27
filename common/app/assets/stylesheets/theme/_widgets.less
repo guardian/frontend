@@ -1,5 +1,5 @@
 .box-indent {
-    padding: 0 20px 8px 20px;
+    padding: 0 @gutter @baseline @gutter;
 }
 
 .b1 {
@@ -177,9 +177,9 @@ img.badge {
 .bullet {
     display: inline-block;
     color: #f52c16;
-    margin: 0 4px @baseline 0;
+    margin: @baseline 4px 0 0;
 }
 
-.bullet:first-child {
+.bullet:first-of-type {
     margin-top: @baseline;
 }
