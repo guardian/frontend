@@ -42,11 +42,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           val news = $(".zone-news")
           news.findFirst("h1").getText should be("News")
           news.find(".trail-headline") should have length (10)
-
-          and("I should see the Sport trailblock")
-          val sport = $(".zone-sport")
-          sport.findFirst("h1").getText should be("Sport")
-          sport.find(".trail-headline") should have length (10)
       }
     }
 
