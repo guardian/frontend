@@ -51,9 +51,13 @@ define([
                 new TopStories().load(config);
             },
 
-            transcludeRelated: function (host, pageId, showInRelated) {
+            transcludeRelated: function (config){
+                var host = config.page.coreNavigationUrl,
+                    pageId = config.page.pageId,
+                    showInRelated = config.page.showInRelated,
+                    edition = config.page.edition;
 
-                var url =  host + '/related/UK/' + pageId,
+                var url =  host + '/related/' + edition + '/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
                
@@ -131,7 +135,7 @@ define([
         var isNetworkFront = (config.page.pageId === "");
         
         modules.upgradeImages();
-        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId, config.page.showInRelated);
+        modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
