@@ -21,7 +21,7 @@
 
 .sections ul {
     margin: 0;
-    padding: @gutter 0;
+    padding: 5px 0;
     list-style: none;
     font-size: 14px;
 }
@@ -45,8 +45,33 @@
 }
 
 .sections li:first-child a,
-.sections li:nth-child(2) {
+.sections li:nth-child(2) a {
     border-top:none;
+}
+
+.section-divider {
+     border-top: 3px solid #E3E3DB;
+}
+
+.edition:after {
+    display: inline-block;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-left: 10px;
+    border-radius: 100%;
+    border: 1px solid #d4d7d7;
+}
+
+.edition.edition-selected:after {
+    display: inline-block;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-left: 10px;
+    border-radius: 100%;
+    border: 1px solid #000;
+    background: #000;
 }
 
 #sections-control-footer {
@@ -56,19 +81,20 @@
 .nav-popup {
     -webkit-transform: translate3d(0,0,0);
     background-color: #ffffff;
-    padding: 0px;
+    padding: 10px 0;
     list-style: none;
     clear: both;
     position: relative;
-    border-top:1px solid  #D2D2D2;
+    border-top: 1px solid  #D2D2D2;
+    border-bottom: 1px solid  #D2D2D2;
+    margin-bottom: -4px;
     background: #ffffff;
-    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(100%,#ffffff));
-    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%,#ffffff 100%);
-    background: -o-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%,#ffffff 100%);
-    background: -ms-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%,#ffffff 100%);
-    background: linear-gradient(to bottom,  #f2f2f2 0%,#ffffff 5%,#ffffff 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#ffffff',GradientType=0 );
+    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 0%, 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(95%,#ffffff), color-stop(100%,#f2f2f2));
+    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -o-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -ms-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: linear-gradient(to bottom,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
 }
 
 .nav-popup:after {
