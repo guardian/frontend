@@ -1,5 +1,5 @@
 .headline-list ul {
-    margin: 16px;
+    margin: 0 @gutter;
 }
 
 .headline-list li {
@@ -28,5 +28,10 @@
 .headline-list .count {
 	float:left;
 	width: auto;
+    padding-left: 8px;
 	.type-2;
+}
+
+.panel li:nth-child(5) .count {
+    padding-left: 0;
 }
