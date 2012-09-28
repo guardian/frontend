@@ -67,8 +67,8 @@ define([
                 }
             },
 
-            transcludeMostPopular: function (host, section) {
-                var url = host + '/most-popular/UK/' + section, // todo: should edition be hardcoded?
+            transcludeMostPopular: function (host, section, edition) {
+                var url = host + '/most-popular/' + edition + '/' + section,
                     domContainer = document.getElementById('js-popular');
                 new Popular(domContainer).load(url);
                 
@@ -135,7 +135,7 @@ define([
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         
         switch (isNetworkFront) {
 

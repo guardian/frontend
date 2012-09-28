@@ -20,6 +20,19 @@ figcaption {
     .type-7;
 }
 
+.article-body .caption:before,
+figcaption:before {
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+    .icon-image;
+}
+
+.svg .article-body .caption:before,
+.svg figcaption:before {
+    .svg-icon-image;
+}
+
 figure {
     margin: 0px 0px 15px 0px;
 }
@@ -47,6 +60,14 @@ cite a:visited {
     border-bottom: 1px dotted #808080;
 }
 
+.byline {
+    .type-4;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 0 @gutter @baseline @gutter;
+    padding:@baseline/2 0 @baseline*2 0;
+}
+
 .article-body {
     padding: 0 20px;
 }
@@ -57,6 +78,9 @@ cite a:visited {
     .type-4;
 
 }
+.article h1 {
+    font-weight: bold;
+} 
 
 .article-body h2 {
     color: #333;

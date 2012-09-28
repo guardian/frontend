@@ -1,10 +1,14 @@
 package views.support
 
-import com.gu.openplatform.contentapi.model.{ MediaAsset, Tag => ApiTag }
-import model.{ Image, Images, Tags, Tag }
+import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
+import model._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import xml.XML
+import com.gu.openplatform.contentapi.model.MediaAsset
+import model.Image
+import scala.Some
+import model.Tag
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 
@@ -86,7 +90,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   "InBodyLinkCleaner" should "clean links" in {
-    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner).text.trim)
+    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")).text.trim)
 
     val link = (body \\ "a").head
 
@@ -137,6 +141,18 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     last.isEven should be(false)
     last.isOdd should be(true)
     last.rowClass should be("last odd")
+  }
+
+  "SafeName" should "understand the Javascript name of top stories" in {
+    SafeName(TrailblockDescription("", "News", 3)) should be("top-stories")
+  }
+
+  it should "understand a section" in {
+    SafeName(TrailblockDescription("sport", "Sport", 3)) should be("sport")
+  }
+
+  it should "understand a tag" in {
+    SafeName(TrailblockDescription("sport/triathlon", "Sport", 3)) should be("sport-triathlon")
   }
 
   private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {

@@ -1,4 +1,4 @@
-@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Integer = 0)
+@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
 @fragments.relativeDate(trail.webPublicationDate, isFront=true)
 
@@ -13,7 +13,7 @@
         </a>
     </p>
 
-    @trail.trailText.map { text => <p class="gt-base type-4 box-indent">@RemoveOuterParaHtml(text)</p> }
+    @trail.trailText.map { text => <p class="gt-base type-4 box-indent">@RemoveOuterParaHtml(BulletCleaner(text))</p> }
 
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
@@ -32,7 +32,7 @@
 }
 
 @if(info.rowNum > 1 && info.rowNum <= 5) {
-    <div class="media box-indent">
+    <div class="media">
 
         @if(trail.thumbnail) {
             @trail.thumbnail.map{ imageUrl =>
@@ -50,7 +50,7 @@
         </div>
     </div>
     
-    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@Html(text)</div> }
+    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
 }
 
 @if(info.rowNum > 5) {

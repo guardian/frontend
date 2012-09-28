@@ -6,7 +6,12 @@ import com.gu.management.play._
 import logback.LogbackLevelPage
 import java.net.{ HttpURLConnection, URL }
 
-object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env")
+object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env") {
+
+  lazy val configUrl = configuration.getStringProperty("front.config")
+    .getOrElse(throw new RuntimeException("Front config url not set"))
+
+}
 
 object ContentApi extends ContentApiClient(Configuration) {
 

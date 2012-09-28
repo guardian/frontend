@@ -5,7 +5,7 @@
 }{
 
     <h2 class="article-zone type-2">
-        <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+        <a class="zone-colour" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
     </h2>
 
     <article class="article" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
@@ -16,8 +16,6 @@
             @fragments.headline(article.headline)
 
             @fragments.standfirst(article)
-
-            @fragments.byline(article.byline, article)
 
         </header>
 
@@ -34,13 +32,14 @@
             }
         }
 
+        @fragments.byline(article.byline, article)
+
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
             @* <!-- ordering of cleaners is important --> *@
             @withJsoup(BulletCleaner(article.body))(
                 PictureCleaner(article),
-                InBodyLinkCleaner,
-                BlockNumberCleaner,
-                InsertAfterParagraph(4){ fragments.inBodyPackage(storyPackage) }
+                InBodyLinkCleaner("in body link"),
+                BlockNumberCleaner
             )
         </div>
     </article>

@@ -1,6 +1,6 @@
 import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.front.Front
+import controllers.front.{ ConfiguredEdition, Front }
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {

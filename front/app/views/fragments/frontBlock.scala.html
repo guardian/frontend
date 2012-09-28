@@ -1,6 +1,6 @@
 @(block: Trailblock, edition: String)(implicit request: RequestHeader)
-
-    <div class="front-section @if(block.description.id == "") {zone-news} else {zone-@block.description.id}">
+    
+    <div class="front-section zone-@block.description.section">
 
         <div class="front-section-head zone-background">
             @if(block.description.id == "") {
@@ -10,12 +10,12 @@
             }
 
             <span class="initially-off js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()" 
-            data-block-name="@if(block.description.id == "") {top-stories} else {@block.description.id}" 
-            id="js-trigger-@if(block.description.id == "") {top-stories} else {@block.description.id}">Hide</span>
+            data-block-name="@SafeName(block.description)"
+            id="js-trigger-@SafeName(block.description)">Hide</span>
         </div>
 
         <div class="trailblock js-front-trailblock rolled-out"
-            id="front-trailblock-@if(block.description.id == "") {top-stories} else {@block.description.id}"
+            id="front-trailblock-@SafeName(block.description)"
             data-count="@{block.trails.length - block.description.numItemsVisible}"
             data-link-name="front block @block.description.name">
 
