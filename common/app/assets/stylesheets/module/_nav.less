@@ -1,3 +1,41 @@
+/* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
+.nav {
+    list-style:none;
+    margin:0;
+    padding: @baseline 0;
+}
+
+.nav > li,
+.nav > li > a {
+    .type-6;
+    display:inline-block;
+    zoom:1;
+}
+
+.nav-stacked > li{
+    display:list-item;
+}
+
+.nav-stacked > li > a {
+    padding: 7px 0;
+    margin: 0 @gutter;
+    border-top: 1px solid #d4d7d7;
+    display: block;
+    height: auto;
+}
+
+.nav-stacked a,
+.nav-stacked > li > a:active,
+.nav-stacked > li > a:visited {
+    background-color: transparent;
+    color: #333;
+}
+
+.nav li:first-child a,
+.sections li:nth-child(2) a {
+    border-top:none;
+}
+
 .expander {
     display: block;
     padding-top: 5px;
@@ -19,15 +57,8 @@
     text-indent: -1000em;
 }
 
-.sections ul {
-    margin: 0;
-    padding: 5px 0;
-    list-style: none;
-    font-size: 14px;
-}
-
 .sections li {
-    display: inline-block;
+    float:left;
     width: 49%;
 }
 
@@ -35,22 +66,8 @@
     border-left: 1px solid #D8D8D8;
 }
 
-.sections a {
-    padding: 7px 0;
-    margin: 0 @gutter;
-    border-top: 1px solid #d4d7d7;
-    display: block;
-    height: auto;
-    color: #333;
-}
-
-.sections li:first-child a,
-.sections li:nth-child(2) a {
-    border-top:none;
-}
-
 .section-divider {
-     border-top: 3px solid #E3E3DB;
+    border-top: 3px solid #E3E3DB;
 }
 
 .edition:after {
@@ -59,29 +76,22 @@
     width: 8px;
     height: 8px;
     margin-left: 10px;
-    border-radius: 100%;
     border: 1px solid #d4d7d7;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 
 .edition.edition-selected:after {
-    display: inline-block;
-    content: '';
-    width: 8px;
-    height: 8px;
-    margin-left: 10px;
-    border-radius: 100%;
-    border: 1px solid #000;
+    border-color: #000;
     background: #000;
 }
 
-#sections-control-footer {
-    padding: 10px 20px 10px 0px;
-}
 
 .nav-popup {
     -webkit-transform: translate3d(0,0,0);
     background-color: #ffffff;
-    padding: 10px 0;
+    padding: 0;
     list-style: none;
     clear: both;
     position: relative;
@@ -109,7 +119,6 @@
     border-style: solid;
     border-width: @navBorderWidth;
 }
-
 
 .topstories-control {
     font-size: 14px;
@@ -146,38 +155,21 @@ a.topstories-control,
     float: right;
 }
 
-#navigation-footer {
-    float: right;
-}
-
 .top-stories:after {
     right: 65px !important;
 }
 
-
-.footer-nav,
-.footer-nav li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.footer .nav {
+    float: left;
+    width: 48%;
 }
 
-.footer-nav {
-    margin-bottom: 12px;
+.footer .nav:first-child {
+    border-right: 1px solid #d4d7d7;
 }
 
-.footer-nav li {
-    display: block;
-    border-top: 1px solid #ccc;
-    padding: 10px 20px 10px 20px;
+.footer .nav-stacked li a {
+    color: #6F6F6E;
+    margin-left: 0;
 }
 
-.footer-nav li a {
-    display: block;
-    color: #666666;
-    font-size: 14px;
-}
-
-.footer-nav li:last-child {
-    border-bottom: 1px solid #ccc;    
-}

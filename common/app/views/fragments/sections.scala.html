@@ -1,7 +1,7 @@
 @(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
-<ul>
+<ul class="nav nav-stacked cf">
     <li class="zone-news"><a@if(page.section=="uk"){ class="zone-color"} data-link-name="UK News" href="/uk">UK news</a></li>
     <li class="zone-world"><a@if(page.section=="world"){ class="zone-color"} data-link-name="World News" href="/world">World news</a></li>
     <li class="zone-sport"><a@if(page.section=="sport"){ class="zone-color"} data-link-name="Sport" href="/sport">@if(edition == "US"){ Sports } else { Sport }</a></li>
@@ -15,11 +15,11 @@
     <li class="zone-music"><a@if(page.section=="music"){ class="zone-color"} data-link-name="Music" href="/music">Music</a></li>
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
-<ul class="section-divider">
+<ul class="nav nav-stacked section-divider cf">
     <li><a data-link-name="help" href="/help">Help</a></li>
     <li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
 </ul>
-<ul class="section-divider">
+<ul class="nav nav-stacked section-divider cf">
     <li><a class="edition @if(edition == "UK"){edition-selected}" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li>
     <li><a class="edition @if(edition == "US"){edition-selected}" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li>
 </ul>
