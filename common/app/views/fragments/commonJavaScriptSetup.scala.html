@@ -1,9 +1,11 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String)(implicit request: RequestHeader)
+@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+
+@import CommonSwitches.FontSwitch
 
 <script id="gu">
-    
+
     var guardian = {
-        isModernBrowser: ('querySelector' in document && 'addEventListener' in window)
+        isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
     },
         require = {
         baseUrl: '@{config.static.path}javascripts',
@@ -12,6 +14,79 @@
             omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
         }
     };
+
+    guardian.userPrefs = (function() {
+
+        var storagePrefix = 'gu.prefs.',
+            store = localStorage,
+            location = document.location,
+            qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
+
+        for (var i = 0, j = qs.length; i<j; ++i) {
+            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/)
+            if (m) {
+                key = m[1];
+                switch (m[2]) {
+                    case "0":
+                        remove(key);
+                        break;
+                    case "1":
+                        set(key, m[2]);
+                        break;
+                    default:
+                }
+            }
+        }
+
+        function set(name, value) {
+            store[storagePrefix + name] = value;
+        }
+
+        function remove(name) {
+            store.removeItem(storagePrefix + name);
+        }
+        
+        function get(name) {
+            return store[storagePrefix + name];
+        }
+
+        function exists(name) {
+            return (get(name) !== undefined);
+        }
+
+        return {
+            set: set,
+            get: get,
+            remove: remove,
+            exists: exists
+        }
+        
+    })();
+
+    @if(FontSwitch.isSwitchedOn) {
+        (function loadFontsFromStorage(prefs, key) {
+            if (prefs.exists(key)) {
+                    var styleNodes = document.querySelectorAll('[data-cache-name]');
+                    for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                        var style = styleNodes[i],
+                            name = style.getAttribute('data-cache-name'),
+                            cachedCss = localStorage.getItem('_guFont:' + name);
+                        if (cachedCss) {
+                            style.innerHTML = cachedCss;
+                            style.setAttribute('data-cache-full', 'true');
+                            document.querySelector('html').className += ' font-' + name + '-loaded';
+                        }
+                    }
+                }
+        })(guardian.userPrefs, 'font-family');
+    } else {
+        (function removePreference(prefs, key) {
+            if (prefs.exists(key)) {
+                prefs.remove(key);
+            }
+        })(guardian.userPrefs, 'font-family');
+    }
+
 
     (function(isModern) {
 
@@ -26,8 +101,7 @@
                 return {
                     page: {
 
-                        @item.metaData.map{ case(key, value) =>
-                            '@{JavaScriptVariableName(key)}': '@{JavaScriptValue(value.toString)}'
+                        @item.metaData.map{ case(key, value) => '@{JavaScriptVariableName(key)}': @{JavaScriptValue(value)}                        
                         }.mkString(","),
 
                         @config.javascript.pageData.map{ case (key, value) =>
@@ -35,12 +109,17 @@
                         }.mkString(","),
 
                         'edition': '@Edition(request, config)'
+                    },
+                    switches : {
+                        @switches.map{ switch =>
+                            '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
+                        }.mkString(",")
                     }
                 };
             })
 
             require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
-                bootstrap.init(config);
+                bootstrap.go(config, guardian.userPrefs);
             });
         };
 

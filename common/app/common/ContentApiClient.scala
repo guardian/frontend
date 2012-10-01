@@ -1,7 +1,7 @@
 package common
 
 import com.gu.openplatform.contentapi.Api
-import com.gu.openplatform.contentapi.connection.{ DispatchHttp, Proxy }
+import com.gu.openplatform.contentapi.connection.{ DispatchHttp, Proxy => ContentApiProxy }
 import com.gu.management.{ Metric, TimingMetric }
 
 trait ApiQueryDefaults { self: Api =>
@@ -9,13 +9,13 @@ trait ApiQueryDefaults { self: Api =>
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
-  val standardFields = "trail-text,liveBloggingNow,thumbnail,"
+  val trailFields = "trail-text,liveBloggingNow,thumbnail,showInRelatedContent"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
     .edition(edition)
     .showTags("all")
-    .showFields(standardFields)
+    .showFields(trailFields)
     .showInlineElements("picture")
     .showMedia("all")
     .showStoryPackage(true)
@@ -35,9 +35,9 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
   override lazy val requestTimeoutInMs = 2000
   override lazy val compressionEnabled = true
 
-  override lazy val proxy: Option[Proxy] = if (proxyConfig.isDefined) {
+  override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
     log.info("Setting HTTP proxy to: %s:%s".format(proxyConfig.host, proxyConfig.port))
-    Some(Proxy(proxyConfig.host, proxyConfig.port))
+    Some(ContentApiProxy(proxyConfig.host, proxyConfig.port))
   } else None
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {

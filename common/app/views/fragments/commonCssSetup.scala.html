@@ -1,17 +1,7 @@
 @(static: StaticAssets, config: GuardianConfiguration)
 
-<link rel="shortcut icon" type="image/png" href="@static("images/favicon.png")">
-
 <link rel="stylesheet" media="screen" type="text/css" href="http://pasteup.guim.co.uk/0.0.2/css/pasteup.min.css" />
-
-<!--[if (lt IE 9) & (!IEMobile) & (gt IE6)]>
-    <link rel="stylesheet" type="text/css" href="@static("stylesheets/grid.responsive.min.css")">
-<![endif]-->
 
 <link rel="stylesheet" type="text/css" href="@static("stylesheets/main.min.css")" />
 
-@*
-	@if(config.debug.enabled) {
-	    <link rel="stylesheet" type="text/css" href="@static("stylesheets/theme/fonts.min.css")" />
-	}
-*@
+<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@static("fonts/WebEgyptian.ttf.js")"></style>

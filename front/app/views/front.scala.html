@@ -1,6 +1,6 @@
-@(front: Front)(implicit request: RequestHeader)
+@(front: FrontPage)(implicit request: RequestHeader)
 
-@main(front, Static, Configuration){
+@main(front, Static, Configuration, Switches.all){
     @if(Edition(request, Configuration) == "UK"){
         <meta name="google-site-verification" content="W1mbAtOtyQWbkB1xyLqj_oE6gkorVHc63aolsCmeJKM" />
     }
@@ -9,17 +9,10 @@
     }
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/front.min.css")" />
 }{
-    <div id="container">
-        @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-        @fragments.navigation(Static, Configuration, front)
+    <div id="front-container" class="cf">
         @front.trailblocks.map{ block =>
-            @fragments.frontBlock(block)
+            @fragments.frontBlock(block, Edition(request, Configuration))
         }
-        <div id="most-popular"></div>
-        
-        <footer class="b1">
-            @fragments.mainSiteLink(front, Configuration)
-            @fragments.editionSwitch(Static, Configuration, front)
-        </footer>
     </div>
+    <div id="js-popular"></div>
 }

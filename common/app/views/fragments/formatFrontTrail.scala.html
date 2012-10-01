@@ -1,0 +1,62 @@
+@(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
+
+@fragments.relativeDate(trail.webPublicationDate, isFront=true)
+
+@*
+    index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
+*@
+
+@if(info.rowNum == 1) {
+    <p class="trail-headline type-2 box-indent">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+            @RemoveOuterParaHtml(trail.linkText)
+        </a>
+    </p>
+
+    @trail.trailText.map { text => <p class="gt-base type-4 box-indent">@RemoveOuterParaHtml(BulletCleaner(text))</p> }
+
+     @if(trail.mainPicture) {
+        @trail.mainPicture.map{ mainPicture =>
+            @trail.mainPicture(width=220).map{ smallCrop =>
+             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+                <img class="maxed" src="@smallCrop.url"
+                     data-fullsrc="@mainPicture.url"
+                     data-width="@mainPicture.width"
+                     itemprop="contentURL"
+                />
+            </a>
+            }
+        }
+
+    }
+}
+
+@if(info.rowNum > 1 && info.rowNum <= 5) {
+    <div class="media">
+
+        @if(trail.thumbnail) {
+            @trail.thumbnail.map{ imageUrl =>
+                <a href="@trail.url" class="img" data-link-name="trail image | item @info.rowNum">
+                    <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+                </a>
+            }
+        } 
+        <div class="bd">
+            <p class="trail-headline">
+                <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+                    @RemoveOuterParaHtml(trail.linkText)
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
+}
+
+@if(info.rowNum > 5) {
+    <p class="trail-headline type-3 box-indent">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+            @RemoveOuterParaHtml(trail.linkText)
+        </a>
+    </p>
+}

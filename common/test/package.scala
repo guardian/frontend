@@ -33,37 +33,34 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
     testConnection("http://" + usHost, path)(block)
   }
 
-  private def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
+  protected def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
 
     val port = host match {
       case Port(p) => p.toInt
       case _ => 9000
     }
-
-    running(TestServer(port), HTMLUNIT) {
-      browser =>
-        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
-
-        val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-        block(connection)
+    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
+      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+      val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
+      block(connection)
     }
   }
 
-  private def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
+  protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
     val port = host match {
       case Port(p) => p.toInt
       case _ => 9000
     }
 
-    running(TestServer(port), HTMLUNIT) {
-      browser =>
-        // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-        browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
 
-        browser.goTo(host + path)
-        block(browser)
+      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+
+      browser.goTo(host + path)
+      block(browser)
     }
   }
 }

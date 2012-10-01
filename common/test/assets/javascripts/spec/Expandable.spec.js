@@ -7,8 +7,8 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             var a = new Expandable({ id: 'trail-a' }).initalise();
             var b = new Expandable({ id: 'trail-b' }).initalise();
              
-            expect(common.$g('#trail-a .count')[0].innerHTML).toBe('5');
-            expect(common.$g('#trail-b .count')[0].innerHTML).toBe('3');
+            expect(common.$g('#trail-a .cta')[0].innerHTML).toContain('5');
+            expect(common.$g('#trail-b .cta')[0].innerHTML).toContain('3');
 
             common.mediator.emit('modules:expandable:expandedChange:trail-a', false);
             common.mediator.emit('modules:expandable:expandedChange:trail-b', true);
@@ -39,7 +39,7 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
         
         it("should visually represent the number of items in the panel", function(){
             var x = new Expandable({ id: 'trail-e' }).initalise();
-            expect(common.$g('#trail-e .count')[0].innerHTML).toBe('3');
+            expect(common.$g('#trail-e .cta')[0].innerHTML).toContain('3');
         });
         
         it("should not enable expandables where there are less than three hidden trails", function(){

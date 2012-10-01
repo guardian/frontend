@@ -6,6 +6,7 @@ import akka.util.Duration
 import akka.util.duration._
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
+import java.util.concurrent.{ Executors, TimeUnit }
 
 trait AkkaSupport {
   object play_akka {
@@ -20,8 +21,8 @@ trait AkkaSupport {
     }
 
     object scheduler {
-      def every(duration: Duration)(block: => Unit): Cancellable = {
-        system().scheduler.schedule(0 seconds, duration) { block }
+      def every(duration: Duration, initialDelay: Duration = 0 seconds)(block: => Unit): Cancellable = {
+        system().scheduler.schedule(initialDelay, duration) { block }
       }
 
       def once(block: => Unit): Cancellable = {

@@ -1,13 +1,12 @@
 @(content: model.Content)
 
-@* p tags may be empty as javascript can hook onto it after page load *@
-<p class="standfirst" itemprop="description" data-link-name="standfirst">
 @content.standfirst.map { s =>
-        @withJsoup(s)(
-            InBodyLinkCleaner
+    <p class="standfirst" itemprop="description" data-link-name="standfirst">
+        @withJsoup(BulletCleaner(s))(
+            InBodyLinkCleaner("in standfirst link")
         )
         @content.starRating.map { s =>
 		    <span class="stars s-@s"><meta itemprop="reviewRating" content="@s">@s</meta> / 5 stars</span>
 		}
+    </p>
 }
-</p>

@@ -53,7 +53,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "byline" -> byline.getOrElse(""),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "page-code" -> fields("internalPageCode"),
-    "live" -> fields("liveBloggingNow").toBoolean
+    "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true)
   )
 }
 

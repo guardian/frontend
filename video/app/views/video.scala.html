@@ -1,15 +1,8 @@
 @(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-@main(video, Static, Configuration){
+@main(video, Static, Configuration, Switches.all){
     <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
 }{
-<div id="container">
-    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-    @fragments.navigation(Static, Configuration, video)
-    @fragments.headline(video.headline)
-
-    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-    @fragments.navigation(Static, Configuration, video)
     @fragments.headline(video.headline)
 
     <div id="player">
@@ -29,5 +22,4 @@
         <div id="related"></div>
     }
     <div id="most-popular"></div>
-</div>
 }

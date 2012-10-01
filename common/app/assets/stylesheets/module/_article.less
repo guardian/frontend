@@ -1,0 +1,140 @@
+.article-zone {
+    padding: @baseline @gutter;
+    border-top: 4px solid #E3E3DB;
+    border-bottom: 1px solid #E3E3DB;
+}
+
+.article header {
+    padding: @baseline @gutter 0 @gutter;
+    margin-bottom: @baseline;
+}
+
+aside {
+    padding: 0px 0px 15px 0px;
+    list-style: none;
+}
+
+.article-body .caption,
+figcaption {
+    padding:@baseline @gutter;
+    .type-7;
+}
+
+.article-body .caption:before,
+figcaption:before {
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+    .icon-image;
+}
+
+.svg .article-body .caption:before,
+.svg figcaption:before {
+    .svg-icon-image;
+}
+
+figure {
+    margin: 0px 0px 15px 0px;
+}
+
+figure img {
+    display: block;
+}
+
+cite {
+    .type-7
+}
+
+cite a {
+    color: #666666;
+}
+
+cite a:hover,
+cite a:visited:hover {
+    color: #4d4d4d;
+    border-bottom: 1px dotted #4d4d4d;
+}
+
+cite a:visited {
+    color: #808080;
+    border-bottom: 1px dotted #808080;
+}
+
+.byline {
+    .type-4;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 0 @gutter @baseline @gutter;
+    padding:@baseline/2 0 @baseline*2 0;
+}
+
+.article-body {
+    padding: 0 20px;
+}
+
+.article-body p {
+    margin: 0px;
+    margin-bottom: @baseline;
+    .type-4;
+
+}
+.article h1 {
+    font-weight: bold;
+} 
+
+.article-body h2 {
+    color: #333;
+    .type-3;
+    margin-bottom: @baseline;
+}
+
+.article-body h2.block-title {
+    color: #e47a39;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.article-body h3 {
+    margin: 0;
+    font-family: georgia;
+    .standard-font-sizing;
+}
+
+.article-body > p,
+.article-body ul,
+.article-body ol,
+.article-body address,
+.article-body blockquote,
+.article-body blockquote p {
+    margin: 0px 0px @baseline 0px;
+    .type-4;
+    color: #333;
+}
+
+.article-body blockquote {
+    border: 0;
+    padding: 0;
+}
+
+.article-body blockquote, 
+.article-body blockquote p {
+    display: block;
+    color: #545454;
+    .type-1;
+}
+
+.article-body blockquote:before {
+    display: block;
+    content: '';
+    margin: 21px 0 @baseline 0;
+    .icon-blockquote-before;
+}
+
+.article-body blockquote:after {
+    display: block;
+    content: '';
+    margin-bottom: 22px;
+    .icon-blockquote-after;
+}

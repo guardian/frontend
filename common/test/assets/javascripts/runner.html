@@ -14,19 +14,23 @@
       require.config({
         baseUrl: "../../../app/assets/javascripts/",
         paths: {
-                common:  'common',
-                bonzo:   'vendor/bonzo',
-                qwery:   'vendor/qwery',
-                bean:    'vendor/bean-0.4.11-1',
-                reqwest: 'vendor/reqwest',
-                analytics: 'modules/analytics',
-                omniture: '../../../app/public/javascripts/vendor/omniture'
+                common:       'common',
+                bonzo:        'vendor/bonzo-1.2.1',
+                qwery:        'vendor/qwery-3.3.11',
+                bean:         'vendor/bean-0.4.11-1',
+                reqwest:      'vendor/reqwest-0.4.5',
+                analytics:    'modules/analytics',
+                EventEmitter: 'vendor/EventEmitter-3.1.5',
+                omniture:     '../../../app/public/javascripts/vendor/omniture'
             }
       });
   </script>
   <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
+
+    .initially-off:after { content: " -- (hidden)"; }
+    .on:after { content: " -- (visible)"; }
   </style>  
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
@@ -67,7 +71,7 @@
 
   </script>
   <style>
-      #test-cases div { display: none;}}
+      #test-cases div { display: none;}
   </style>
 </head>
 
@@ -75,27 +79,38 @@
 
     <ul>
         <li>
+            Analytics
             <ul>
-                Analytics
                 <li><a href="#Clickstream">Clickstream</a>
                 <li><a href="#Omniture">Omniture</a> - <em>uses a mock Omniture library</em>
-                <li><a href="#OmnitureLib">OmnitureLib</a> - <em>loads the real Omniture library</em>
+                <li><a href="#OmnitureLib">Omniture Lib</a> - <em>loads the real Omniture library</em>
             </ul>        
         </li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
         <li><a href="#Expandable">Expandable</a></li>
         <li><a href="#Images">Image</a></li>
+        <li>
+            Navigation
+            <ul>
+                <li><a href="#Navigation">Navigation</a></li>
+                <li><a href="#NavigationControls">Navigation Controls</a></li>
+            </ul>
+        </li>
         <li><a href="#Popular">Popular</a></li>
         <li><a href="#Related">Related</a></li>
+        <li><a href="#Fonts">Fonts</a>
         <li><a href="#RelativeDates">Relative Dates</a></li>
         <li><a href="#Tabs">Tabs</a></li>
+        <li><a href="#TrailblockToggle">Trailblock Toggle</a></li>
     </ul>
 
     <div id="test-cases">
         
         <!-- UpgradeImages.spec -->
         <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" class="visible" />
+
+        <img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src=""/>
 
         <!-- Related.spec -->
         <div id="related-1"></div>
@@ -200,6 +215,11 @@
 
         </p>
 
+        <!-- -->
+        <div id="offcanvas-sections">offcanvas-sections-placeholder</div>
+        <div id="sections">a list of sections</div>
+        <div id="sections-control">s1</div>
+        <div id="topstories-control">s1</div>
 
     </div>
 
@@ -212,6 +232,33 @@
             <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
         </p>
     </div>
+
+    <!-- Navigation.spec -->
+    <div>
+        <a id="sections-control-header" href="#">sections (header)</a>
+        <a id="topstories-control-header" href="#">top stories (header)</a>
+        <a id="sections-control-footer" href="#">sections (footer)</a>
+        <a id="topstories-control-footer" href="#">top stories (footer)</a>
+
+        <div id="sections-header" class="initially-off">sections popup (header)</div>
+        <div id="topstories-header" class="initially-off">top stories popup (header)</div>
+        <div id="sections-footer" class="">sections popup (footer)</div> <!-- should be auto-hidden -->
+        <div id="topstories-footer" class="initially-off">top stories popup (footer)</div>
+    </div>
+
+    <!-- TrailblockToggle.spec -->
+
+    <a class="js-toggle-trailblock" href="javascript://" data-zone-name="uk" data-block-name="sport" id="js-trigger-sport">Hide</a>
+    
+    <div class="trailblock js-front-trailblock shut rolled-out" id="front-trailblock-sport" data-count="5" data-link-name="front block News">
+      <ul class="unstyled"> 
+        <li></li>
+      </ul>
+    </div>
+
+<!-- Fonts.spec -->
+<style data-cache-name="guardian-font1" data-cache-file-woff="font1.woff.js" data-cache-file-ttf="font1.ttf.js"></style>
+<style data-cache-name="guardian-font2" data-cache-file-woff="font2.woff.js" data-cache-file-ttf="font2.ttf.js"></style>
 
 </body>
 </html>

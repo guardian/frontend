@@ -6,4 +6,8 @@
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+GET     /_warmup                    controllers.FrontController.warmup()
+
+GET     /_up                        controllers.FrontController.isUp()
+
 GET     /                           controllers.FrontController.render()

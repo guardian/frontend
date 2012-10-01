@@ -33,7 +33,8 @@ object CachedOk extends Results {
     Ok(block).withHeaders(
       "Cache-Control" -> "must-revalidate, max-age=%s".format(secondsToCacheFor),
       "Expires" -> expiresTime.toHttpDateTimeString,
-      "Date" -> now.toHttpDateTimeString
+      "Date" -> now.toHttpDateTimeString,
+      "Vary" -> "host, accept-encoding"
     )
   }
 }

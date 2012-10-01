@@ -1,36 +1,39 @@
-@(block: Trailblock)(implicit request: RequestHeader)
-
-
-<div data-link-name="front block @block.description.name">
-
-    @if(block.description.id == "") {
-        @fragments.headline(block.description.name)
-    } else {
-        <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
-    }
+@(block: Trailblock, edition: String)(implicit request: RequestHeader)
     
-    <div class="trailblock show-@block.description.numItemsVisible">
-        @defining(block.trails.length){ numTrails =>
-            <ul class="unstyled">
-                @block.trails.zipWithRowInfo.map{ case (trailWithPackage, info) =>
-                    <li>
-                        @* top of if statement is for AB test *@
-                        @if(trailWithPackage.layout == "impact" && ABTest(request).isB) {
-                            @fragments.formatImpactTrail(trailWithPackage)
-                        } else {
-                            @fragments.formatTrail(trailWithPackage.trail, info)
-                        }
-                    </li>
-                }
-            </ul>
-            @if(numTrails > block.description.numItemsVisible) {
-                <h3 class="b1 b1b expander">
-                    <a class="js-expand-trailblock" data-link-name="more editors picks" href="javascript://">
-                        More @block.description.name.toLowerCase
-                    </a>
-                    <span class="count">@(numTrails - block.description.numItemsVisible)</span>
-                </h3>
+    <div class="front-section zone-@block.description.section">
+
+        <div class="front-section-head zone-background">
+            @if(block.description.id == "") {
+                @fragments.headline(block.description.name)
+            } else {
+                <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
             }
-        }
+
+            <span class="initially-off js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()" 
+            data-block-name="@SafeName(block.description)"
+            id="js-trigger-@SafeName(block.description)">Hide</span>
+        </div>
+
+        <div class="trailblock js-front-trailblock rolled-out"
+            id="front-trailblock-@SafeName(block.description)"
+            data-count="@{block.trails.length - block.description.numItemsVisible}"
+            data-link-name="front block @block.description.name">
+
+            <ul class="unstyled">
+                @block.trails.zipWithRowInfo.map{ case (trail, info) =>
+                    <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                        @formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
+                    </li>
+                }.slice( 0, block.description.numItemsVisible )
+            </ul>
+
+            @if( block.trails.length > block.description.numItemsVisible) {
+                <ul class="unstyled panel">
+                    @block.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <li class="trail">@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                    }.slice( block.description.numItemsVisible, block.trails.length )
+                </ul>
+            }
+        </div>
+
     </div>
-</div>

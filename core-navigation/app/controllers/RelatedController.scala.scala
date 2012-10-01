@@ -5,18 +5,21 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 
 case class Related(heading: String, trails: Seq[Trail])
 
 object RelatedController extends Controller with Logging {
 
-  def render(edition: String, path: String) = Action {
-    implicit request =>
-      lookup(edition, path) map {
-        renderRelated
-      } getOrElse {
-        NotFound
-      }
+  def render(edition: String, path: String) = Action { implicit request =>
+    val promiseOfRelated = Akka.future(lookup(edition, path))
+    Async {
+      promiseOfRelated.map(_.map {
+        case Related(_, Nil) => NotFound
+        case r => renderRelated(r)
+      } getOrElse { NotFound })
+    }
   }
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[Related] = suppressApi404 {
@@ -31,6 +34,7 @@ object RelatedController extends Controller with Logging {
     Some(Related(heading, related))
   }
 
-  private def renderRelated(model: Related)(implicit request: RequestHeader) =
+  private def renderRelated(model: Related)(implicit request: RequestHeader) = {
     Cached(900)(JsonComponent(views.html.fragments.relatedTrails(model.trails, model.heading, 5)))
+  }
 }

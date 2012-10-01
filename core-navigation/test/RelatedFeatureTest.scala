@@ -17,13 +17,13 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     info("Increase average number of articles 'read' from 1.9% to 2.5%")
 
     // TODO - scenarios pending Selenium set up
-/*
-    cenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
-    cenario("Number of 'more' items should be represented by a number")(pending)
-    cenario("Appear *after* the comments")(pending)
-    cenario("If has no Story Package, then show Related Links")(pending)
-    cenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
-    cenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
+    /*
+    scenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
+    scenario("Number of 'more' items should be represented by a number")(pending)
+    scenario("Appear *after* the comments")(pending)
+    scenario("If has no Story Package, then show Related Links")(pending)
+    scenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
+    scenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
 */
     // Features
 
@@ -53,10 +53,10 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val article = findFirst("li")
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("p").getText.length should be > 0
-        article.findFirst(".trailtext").getText.length should be > 0
+        article.findFirst(".gt-base").getText.length should be > 0
         article.findFirst(".relative-timestamp").getAttribute("data-timestamp") should be("1344360038000")
 
-        find("li .trailtext") should have length 5
+        find("li .gt-base") should have length 5
 
         and("I should see the pictures for the first three trails, where they exist")
         article.findFirst("img").getAttribute("src").length should be > 0

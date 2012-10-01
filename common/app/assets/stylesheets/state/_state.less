@@ -1,0 +1,84 @@
+.gt-base {
+    display: none;
+}
+
+.img-extended img,
+.gu-image {
+    width: 100%;
+    height: auto;
+}
+
+.cta { /* call to action */
+    cursor: pointer;
+}
+
+.cta:before {
+    content: '- ';
+}
+
+.shut .cta:before {
+    content: '+ ';
+}
+
+.maxed {
+    width: 100%;
+}
+
+.placeholder,
+.initially-off {
+    display: none !important; // this could get ugly. watching it.
+}
+
+.on {
+    display: block;
+}
+
+.trail-headline a:visited {
+    color: #7CA6BE;
+}
+
+/* please add media queries in ascending order of size */
+
+@media screen and (min-width: 400px) {
+
+    .comments .datestamp {
+        text-align: right;
+    }
+
+    .trail-headline {
+        font-size: 17px;
+    }
+
+}
+
+@media (min-width: 641px) {
+    
+    #container {
+        padding: 0 40px 10% 40px;
+    }
+
+    .svg #logo {
+        width: 180px;
+    }
+
+    #logo { 
+        height: 40px;
+    }
+
+}
+
+@media screen and (min-width: 850px) {
+
+    .trailblock .img img {
+        width: 160px;
+    }
+
+}
+
+@media (min-width: 1025px) {
+    
+    #container {
+        padding: 0 80px 10% 80px;
+    }
+
+}
