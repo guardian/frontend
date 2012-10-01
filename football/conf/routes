@@ -5,11 +5,5 @@
 # For dev machines
 GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
 
-GET     /football/*year/*month/*day/matches            controllers.MatchesOnADayController.render(year, month, day)
-
-GET     /fragments/leaguetable/*competitionId          controllers.FootballLeagueTableController.render(competitionId)
-
-
-
-GET     /fragments/match/*matchId                      controllers.FootballMatchStatsController.render(matchId)
+GET     /football/fixtures                              controllers.FixturesController.render()
 

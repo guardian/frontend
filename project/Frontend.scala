@@ -29,8 +29,12 @@ object Frontend extends Build with Prototypes {
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
 
+  val football = application("football").dependsOn(commonWithTests).settings(
+      libraryDependencies += "com.gu" %% "pa-client" % "2.0"
+  )
+
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation
+    common, article, gallery, tag, section, front, video, coreNavigation, football
   )
 }
 
