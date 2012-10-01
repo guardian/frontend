@@ -4,7 +4,7 @@ module ContentApi
 
     attr_accessor :params, :host
     
-    def initialize
+    def initialize(opts=nil)
         @params = OpenStruct.new
         @params.format = 'json'
         @params.api_key = 'mattc'

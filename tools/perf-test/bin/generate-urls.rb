@@ -35,10 +35,14 @@ module Api
                 end
             end
         end
-
+        
         def CoreNavigation.TopStories
-            params = TopStories.new.to_querystring
-            puts "/?%s" % [params]
+            %w{/ sport commentisfree culture business lifeandstyle money travel}.each { |trail|
+                uk = TopStories.new.to_querystring
+                us = TopStories.new({ :edition => 'US' }).to_querystring
+                puts "%s?%s" % [trail, uk]
+                puts "%s?%s" % [trail, us]
+            }
         end
 
         def CoreNavigation.MostPopular
