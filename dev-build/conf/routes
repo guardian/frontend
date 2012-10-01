@@ -1,0 +1,40 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET     /assets/*file                         controllers.Assets.at(path="/public", file)
+
+
+#Note the order of these is important
+
+
+#Core nav
+GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
+GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+
+GET     /top-stories/*edition                           controllers.TopStoriesController.render(edition)
+
+GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
+
+#Front
+GET     /_warmup                              controllers.FrontController.warmup()
+GET     /_up                                  controllers.FrontController.isUp()
+GET     /                                     controllers.FrontController.render()
+
+
+#Video
+GET     /$path<.*/video/.*>                   controllers.VideoController.render(path)
+
+#Gallery
+GET     /$path<.*/gallery/.*>                 controllers.GalleryController.render(path)
+
+#Tag
+GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
+
+#Section
+GET     /$path<[\w\d-]*>                      controllers.SectionController.render(path)
+
+#Articles
+GET     /*path                                controllers.ArticleController.render(path)

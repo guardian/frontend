@@ -29,8 +29,17 @@ object Frontend extends Build with Prototypes {
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
 
+  val dev = application("dev-build")
+    .dependsOn(front)
+    .dependsOn(article)
+    .dependsOn(video)
+    .dependsOn(tag)
+    .dependsOn(section)
+    .dependsOn(gallery)
+    .dependsOn(coreNavigation)
+
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation
+    common, article, gallery, tag, section, front, video, coreNavigation, dev
   )
 }
 
