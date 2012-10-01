@@ -19,11 +19,9 @@ object ContentApi extends ContentApiClient(Configuration)
 
 object FootballClient extends PaClient with DispatchHttp {
 
-  override lazy val base: String = "http://pads2.pa-sport.com"
-
   override lazy val maxConnections = 50
 
-  override lazy val requestTimeoutInMs = 2000
+  override lazy val requestTimeoutInMs = 5000
 
   override lazy val proxy = if (Configuration.proxy.isDefined)
     Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
