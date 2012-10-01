@@ -33,8 +33,18 @@ object Frontend extends Build with Prototypes {
       libraryDependencies += "com.gu" %% "pa-client" % "2.0"
   )
 
+  val dev = application("dev-build")
+    .dependsOn(front)
+    .dependsOn(article)
+    .dependsOn(video)
+    .dependsOn(tag)
+    .dependsOn(section)
+    .dependsOn(gallery)
+    .dependsOn(football)
+    .dependsOn(coreNavigation)
+
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation, football
+    common, article, gallery, tag, section, front, video, coreNavigation, football, dev
   )
 }
 
