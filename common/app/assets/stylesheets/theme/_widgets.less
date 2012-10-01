@@ -87,6 +87,7 @@ img.badge {
 
 .footer {
     overflow: hidden;
+    margin: 0;
     padding: @baseline @gutter;
     background-color: #E3E3DB;
 }
@@ -110,7 +111,6 @@ img.badge {
     color: #545454;
     font-size: 13px;
     padding: 16px 0;
-    margin-bottom: @baseline;
     background-color: #e3e3db;
     text-align: center;
 }
@@ -119,9 +119,10 @@ img.badge {
 .top:link,
 .top:visited,
 .top:active {
+    float: left;
     color: #545454;
     font-size: 13px;
-    margin-bottom: @baseline;
+    padding: 16px @baseline @baseline @gutter;
 }
 
 .top:before {

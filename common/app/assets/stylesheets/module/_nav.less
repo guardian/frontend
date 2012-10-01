@@ -2,7 +2,7 @@
 .nav {
     list-style:none;
     margin:0;
-    padding: @baseline 0;
+    padding: @baseline 0 4px 0;
 }
 
 .nav > li,
@@ -17,7 +17,7 @@
 }
 
 .nav-stacked > li > a {
-    padding: 7px 0;
+    padding: 10px 0;
     margin: 0 @gutter;
     border-top: 1px solid #d4d7d7;
     display: block;
@@ -48,13 +48,15 @@
 }
 
 .sections-control span {
-    background-image: url(http://i.imgur.com/cDEag.png);
-    background-repeat: repeat-x;
-    background-position: center;
     width: 24px;
     height: 13px;
     display: inline-block;
     text-indent: -1000em;
+    .icon-menu;
+}
+
+.svg .sections-control span {
+    .svg-icon-menu
 }
 
 .sections li {
@@ -67,7 +69,18 @@
 }
 
 .section-divider {
+    padding: 4px 0;
+    margin: 0 @gutter;
     border-top: 3px solid #E3E3DB;
+}
+
+.section-divider li a {
+    padding: 8px 0;
+}
+
+.section-divider li:nth-child(odd) a {
+    margin-left: 0;
+    padding-right: @gutter;
 }
 
 .edition:after {
@@ -77,9 +90,9 @@
     height: 8px;
     margin-left: 10px;
     border: 1px solid #d4d7d7;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
 }
 
 .edition.edition-selected:after {
@@ -151,8 +164,9 @@ a.topstories-control,
     vertical-align: top;
 }
 
-#navigation-header {
-    float: right;
+#navigation-header,
+#navigation-footer {
+    float: right
 }
 
 .top-stories:after {

@@ -1,21 +1,29 @@
-@(static: StaticAssets, config: GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
+@(static: StaticAssets, config: GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
+@if(!isFooter){
 <header id="header" class="cf">
 
 	<a href="/" data-link-name="site logo" id="logo">
         The Guardian
 	</a>
+} else {
+    <a class="top" data-link-name="back to top" href="#top">Back to top</a>
+}
 
-    <div id="navigation-header" data-link-name="global navigation: header">
-        <a href="#topstories-footer" data-is-ajax="1" data-link-name="top-stories" id="topstories-control-header" class="topstories-control initially-off">Top stories</a>
+<div id="@if(!isFooter){navigation-header} else {navigation-footer}" data-link-name="global navigation: @if(!isFooter){header} else {footer}">
+    <a href="#topstories-footer" data-is-ajax="1" data-link-name="top-stories" id="@if(!isFooter){topstories-control-header} else {topstories-control-footer}" 
+    class="topstories-control initially-off">Top stories</a>
 
-        <a href="#sections-footer" data-is-ajax="1" data-link-name="sections" id="sections-control-header" class="sections-control"><span>Sections</span></a>
-    </div>
+    <a href="#sections-footer" data-is-ajax="1" data-link-name="sections" id="@if(!isFooter){sections-control-header} else {sections-control-footer}" 
+    class="sections-control@if(isFooter){ initially-off}"><span>Sections</span></a>
+</div>
 
+@if(!isFooter){
 </header>
+}
 
-<div id="topstories-header" class="nav-popup top-stories initially-off"></div>
+<div id="@if(!isFooter){topstories-header} else {topstories-footer}" class="nav-popup top-stories initially-off"></div>
 
-<div id="sections-header" class="nav-popup sections initially-off">
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
     @fragments.sections(config, page)
 </div>

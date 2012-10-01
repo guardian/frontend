@@ -16,8 +16,9 @@
     <div id="top"></div>
     
     <div id="container"> 
-        @fragments.navigation(static, config, metaData)
+        @fragments.navigation(static, config, metaData, isFooter=false)
         @body
+        @fragments.navigation(static, config, metaData, isFooter=true)
         @fragments.footer(config, metaData)
     </div>
 
