@@ -1,11 +1,16 @@
-@(competitions: Seq[Competition])(implicit request: RequestHeader)
+@(model: FixturesPage)(implicit request: RequestHeader)
 
-<h1>Hello world</h1>
+
+@main(model.page, Static, Configuration, Switches.all){
+
+}{
 
 <ul>
-  @for(competition <- competitions) {
+  @for(competition <- model.competitions) {
     <li>
       <a href="/football/competitions/@competition.id">@competition.name</a>
     </li>
   }
 </ul>
+
+}

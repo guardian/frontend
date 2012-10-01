@@ -17,6 +17,10 @@ GET     /top-stories/*edition                           controllers.TopStoriesCo
 
 GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
+
+#Football
+GET     /football/fixtures                              controllers.FixturesController.render()
+
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()
