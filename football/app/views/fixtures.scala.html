@@ -1,3 +1,11 @@
-@()(implicit request: RequestHeader)
+@(competitions: Seq[Competition])(implicit request: RequestHeader)
 
 <h1>Hello world</h1>
+
+<ul>
+  @for(competition <- competitions) {
+    <li>
+      <a href="/football/competitions/@competition.id">@competition.name</a>
+    </li>
+  }
+</ul>

@@ -2,10 +2,14 @@ package controllers
 
 import common._
 import play.api.mvc.{ Action, Controller }
+import feed.Competitions
 
 object FixturesController extends Controller with Logging {
 
   def render() = Action { implicit request =>
-    Ok(views.html.fixtures())
+
+    val compeititons = Competitions.all
+
+    Ok(views.html.fixtures(compeititons))
   }
 }
