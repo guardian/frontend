@@ -5,7 +5,7 @@
 }{
 
     <h2 class="article-zone type-2">
-        <a class="zone-colour" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+        <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
     </h2>
 
     <article class="article" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
@@ -27,7 +27,9 @@
                      data-width="@mainPicture.width"
                      itemprop="contentURL"
                 />
-                <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+                    <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                }
             </figure>
             }
         }

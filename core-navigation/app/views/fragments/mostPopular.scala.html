@@ -6,35 +6,28 @@
 
         <h2 class="article-zone type-1">Most read</h2>
 
-        <ol class="tabs" id="js-popular-tabs">
-            @popular.zipWithRowInfo.map{ case (section, info) =>
-                <li@if(info.isFirst){ class="tabs-selected"}>
-                    <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading">@section.heading</a>
-                </li>
-            }
-        </ol>
+        @if(isTabbed) {
+            <ol class="tabs" id="js-popular-tabs">
+                @popular.zipWithRowInfo.map{ case (section, info) =>
+                    <li@if(info.isFirst){ class="tabs-selected"}>
+                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
+                    </li>
+                }
+            </ol>
+        }
 
         @if(isTabbed) {<div class="tabs-content">}
             @popular.zipWithRowInfo.map{ case (section, info) =>
                 <div id="tabs-popular-@info.rowNum" 
-                    class="@if(isTabbed){tabs-panel @if(!info.isFirst){ initially-off}} headline-list"
-                    data-count="@{section.trails.length - visibleTrails}"
+                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ initially-off}} headline-list"
                     data-link-name="@section.heading"
                 >
 
                     <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                             <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
-                        }.slice( 0, visibleTrails )
+                        }
                     </ul>
-
-                    @if(section.trails.length > visibleTrails) {
-                        <ul class="unstyled panel">
-                            @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                                <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
-                            }.slice( visibleTrails, section.trails.length )
-                        </ul>
-                    }
 
                 </div>
             }
