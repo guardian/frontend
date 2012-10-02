@@ -11,6 +11,17 @@
                 <a href='@comp.url'>@comp.fullName</a>
             </h3>
             <ol class="fixtures">
+                @comp.results.map{ result =>
+                <li>
+                    <p class="fixture-desc">
+                        <span class="home team">@result.homeTeam.name</span>
+                        <span class="result">@result.homeTeam.score - @result.awayTeam.score</span>
+                        <span class="away team">@result.awayTeam.name</span>
+                    </p>
+                    <p class="status"><span class="status-desc">Kick-off:</span> @result.date.toString("HH:mm")</p>
+                </li>
+                }
+
                 @comp.fixtures.map{ fixture =>
                     <li>
                         <p class="fixture-desc">
