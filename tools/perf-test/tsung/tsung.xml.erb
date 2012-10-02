@@ -16,20 +16,24 @@
     </load>
 
     <options>
-        <option name="file_server" id="id" value="<%= conf[:url] %>"/>
+        <option name="file_server" id="url" value="<%= conf[:url] %>"/>
     </options>
     
     <sessions>
         <session probability="100" type="ts_http">
-		<setdynvars sourcetype="file" fileid="id" delimiter=";" order="iter">
-		    <var name="xx"/>
-		</setdynvars>
-		<request subst="true">
-		    <http url="/api/%%_xx%%" version="1.1" method="GET">
-			<http_header name="Cache-Control" value="no-cache"/>
-			<http_header name="Accept-Encoding" value="gzip"/>
-		    </http>
-		</request>
+        <setdynvars sourcetype="file" fileid="url" delimiter=";" order="iter">
+            <var name="path"/>
+        </setdynvars>
+        <request subst="true">
+            <http url="/%%_path%%" version="1.1" method="GET">
+            <% if conf[:cache] %>
+             <http_header name="Cache-Control" value="no-cache"/>
+            <% end %>
+            <% if conf[:gzip] %>
+             <http_header name="Accept-Encoding" value="gzip"/>
+            <% end %>
+            </http>
+        </request>
         </session>
     </sessions>
 

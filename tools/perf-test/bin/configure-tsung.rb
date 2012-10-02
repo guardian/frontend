@@ -3,19 +3,16 @@ require 'rubygems'
 require 'erb'
 require 'slop'
 
-opts = Slop.parse do
+conf = Slop.parse do
     banner "ruby #{__FILE__} [options]\n"
-    on :h, :host=, 'host name of system under test'
-    on :d, :duration=, 'duration of the test in minutes', :as => :int
-    on :r, :rate=, 'arrival rate', :as => :int
-    on :u, :url=, 'file with urls to test'
+    on :h, :host=, 'host name of system under test', :default => 'test-mq-elb.content.guardianapis.com'
+    on :d, :duration=, 'duration of the test in minutes', :as => :int, :default => 3
+    on :r, :rate=, 'arrival rate', :as => :int, :default => 20
+    on :u, :url=, 'file with urls to test', :required => true
+    on :c, :cache, :default => false
+    on :z, :gzip, :default => false
 end
 
 template = IO.read('tsung/tsung.xml.erb')
-
-conf = opts
-
-puts conf.inspect
-
 puts ERB.new(template).result(binding)
 

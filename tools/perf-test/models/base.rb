@@ -21,7 +21,7 @@ module ContentApi
            v = URI::encode key[1]
            "%s=%s" % [k, v]
         }.join("&")
-        "%s?%s" % [@path, params_as_querystring]
+        "%s?%s" % ['api/' + @path, params_as_querystring]
     end
 
     # serialise the object as a frontend (ie. user) request 
