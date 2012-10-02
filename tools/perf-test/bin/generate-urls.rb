@@ -43,7 +43,7 @@ module Api
         def CoreNavigation.MostPopular(mode)
             list_of_sections = %w{sport commentisfree culture business lifeandstyle money travel}.push('')
             list_of_sections.each do |section|
-                m = MostPopular.new(section)
+                mp = MostPopular.new(section)
                 puts (mode === 'api') ? mp.to_api : mp.to_www
             end
 
