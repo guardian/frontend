@@ -4,38 +4,19 @@
 
 <ul class="nav nav-stacked cf">
     
-    @defining(Seq(
-      Map("zone" -> "news", "link-name" -> "UK News", "href" -> "/uk", "title" -> "UK news"),
-      Map("zone" -> "world", "link-name" -> "World News", "href" -> "/world", "title" -> "World news"),
-      Map("zone" -> "sport", "link-name" -> "Sport", "href" -> "/sport", "title" -> "Sport", "title-us" -> "Sports"),
-      Map("zone" -> "football", "link-name" -> "Football", "href" -> "/football", "title" -> "Football"),
-      Map("zone" -> "commentisfree", "link-name" -> "Comment is free", "href" -> "/commentisfree", "title" -> "Comment is free"),
-      Map("zone" -> "lifeandstyle", "link-name" -> "Life & Style", "href" -> "/lifeandstyle", "title" -> "Life &amp; style"),
-      Map("zone" -> "culture", "link-name" -> "Culture", "href" -> "/culture", "title" -> "Culture"),
-      Map("zone" -> "business", "link-name" -> "Business", "href" -> "/business", "title" -> "Business"),
-      Map("zone" -> "technology", "link-name" -> "Technology", "href" -> "/technology", "title" -> "Technology"),
-      Map("zone" -> "film", "link-name" -> "Film", "href" -> "/film", "title" -> "Film"),
-      Map("zone" -> "music", "link-name" -> "Music", "href" -> "/music", "title" -> "Music")
-      )){ zones =>
-      
-      @zones.map{ section => 
-        <li class="zone-@section("zone")">
-            <a href="/"
-               data-link-name="@section("link-name")"
-               @if(page.section==section("zone")) {
+    @Navigation(request, config).map{ section =>
+        <li class="zone-@section.zone">
+            <a href="@section.href"
+               data-link-name="@section.linkName"
+               @if(page.section==section.zone) {
                     class="zone-color"
                }
                >
-               @if(section.contains("title-us") && edition == "US"){
-                @HtmlFormat.raw(section("title-us"))
-               }else{
-                @HtmlFormat.raw(section("title"))
-               }
+                @HtmlFormat.raw(section.title)
             </a>
         </li>
+        }
 
-        }}
-        
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
 <ul class="nav nav-stacked section-divider cf">
