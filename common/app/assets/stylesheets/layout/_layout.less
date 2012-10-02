@@ -2,12 +2,12 @@
     clear: both;
 }
 
-#header {
-    padding: 10px 20px;
-}
-
 .component {
     margin-bottom: 20px;
+}
+
+.box-indent {
+    padding: 0 @gutter @baseline @gutter;
 }
 
 .inline-image {
@@ -17,6 +17,11 @@
 	margin-right: 10px;
 	margin-bottom: 15px;
     margin-top: 3px;
+}
+
+.img-tiny.inline-image {
+    width: auto;
+    max-width: @inArticleInlineImgWidth;
 }
 
 .img-extended {

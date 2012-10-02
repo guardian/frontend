@@ -1,7 +1,18 @@
-<div class="footer" data-link-name="footer">
-	<p>&copy; Guardian News and Media Limited or its affiliated companies. All rights reserved.</p>
-    <ul class="unstyled">
-        <li><a data-link-name="terms" href="/help/terms-of-service">Terms &amp; conditions</a></li>
-        <li><a data-link-name="privacy" href="/help/privacy-policy">Privacy policy</a></li>
+@(config: GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
+
+<footer class="footer" data-link-name="footer">
+
+    <ul class="nav nav-stacked cf">
+    	<li>@fragments.mainSiteLink(page, config)</li>
+        <li><a data-link-name="help" href="/help">Help</a></li>
+    	<li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
     </ul>
-</div>
+
+    <p>© Guardian News and Media Limited or its affiliated companies. All rights reserved.</p>
+
+    <p>
+    	<a data-link-name="terms" href="/help/terms-of-service">Terms & conditions</a>
+        <a data-link-name="privacy" href="/help/privacy-policy">Privacy policy</a>
+    </p>
+
+</footer>
