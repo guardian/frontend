@@ -3,6 +3,6 @@
     <ul class="unstyled">
         @trails.zipWithRowInfo.map{ case (trail, info) =>
             <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
-        }.slice(0, 5)
+        }
     </ul>
 </div>
