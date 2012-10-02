@@ -3,10 +3,8 @@ package test
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
-import model.Competition
-import common._
-import feed.{ FixtureAgent, Competitions }
-import conf.FootballClient;
+import feed.FixtureAgent
+import conf.FootballClient
 
 class CompetitionsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
