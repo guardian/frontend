@@ -119,6 +119,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
       img.attr("itemprop", "contentURL")
 
       wrapper.attr("class", imgWidth match {
+        case width if width <= 100 => "img-tiny inline-image"
         case width if width <= 220 => "img-base inline-image"
         case width if width < 460 => "img-median inline-image"
         case width => "img-extended"
