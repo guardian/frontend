@@ -73,6 +73,4 @@ opts = {:type => ARGV.first, :mode => ARGV[1]}
 
 usage unless (opts[:type] && opts[:mode] && (opts[:mode] =~ /^(api|www)$/))
 
-puts "related and article need a log file from STDIN" if (opts[:type] =~ /(related|article)/ && STDIN)
-
 app opts[:type], opts[:mode]
