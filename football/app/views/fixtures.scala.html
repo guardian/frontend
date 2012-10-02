@@ -1,23 +1,27 @@
 @(model: FixturesPage)(implicit request: RequestHeader)
 
-
 @main(model.page, Static, Configuration, Switches.all){
-
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/football.min.css")" />
 }{
+    <h1>All fixtures</h1>
     @model.days.map{ day =>
-        <div>
-            <h1>@day.date.toString("EEEE d MMMM yyyy")</h1>
-            @day.competitions.map{ comp =>
-            <div>
-                <h2><a href='@comp.url'>@comp.fullName</a></h2>
-                <ol>
-
-                    @comp.fixtures.map{ fixture =>
-                        <li>@fixture.homeTeam.name v @fixture.awayTeam.name @fixture.fixtureDate.toString("HH:mm")</li>
-                    }
-                </ol>
-            </div>
-            }
-        </div>
+        <h2 class="competition-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
+        @day.competitions.map{ comp =>
+            <h3 class="competition-title">
+                <a href='@comp.url'>@comp.fullName</a>
+            </h3>
+            <ol class="fixtures">
+                @comp.fixtures.map{ fixture =>
+                    <li>
+                        <p class="fixture-desc">
+                          <span class="home team">@fixture.homeTeam.name</span>
+                          <span class="result">v</span> 
+                          <span class="away team">@fixture.awayTeam.name</span>
+                        </p>
+                        <p class="status"><span class="status-desc">Kick-off:</span> @fixture.fixtureDate.toString("HH:mm")</p>
+                    </li>
+                }
+            </ol>
+        }
     }
 }
