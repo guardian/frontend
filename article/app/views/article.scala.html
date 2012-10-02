@@ -27,7 +27,9 @@
                      data-width="@mainPicture.width"
                      itemprop="contentURL"
                 />
-                <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+                    <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                }
             </figure>
             }
         }

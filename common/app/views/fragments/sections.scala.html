@@ -5,7 +5,7 @@
 <ul class="nav nav-stacked cf">
     
     @Navigation(request, config).map{ section =>
-        <li class="zone-@section.zone">
+        <li>
             <a href="@section.href"
                data-link-name="@section.linkName"
                @if(page.section==section.zone) {
@@ -15,8 +15,8 @@
                 @HtmlFormat.raw(section.title)
             </a>
         </li>
-        }
-
+    }
+        
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
 <ul class="nav nav-stacked section-divider cf">
