@@ -1,7 +1,7 @@
 Vagrant::Config.run do |config|
 
-  config.vm.box = "frontend_precise64"
-  config.vm.box_url = "http://devscreen.gudev.gnl/vagrants/frontend_precise64.box"
+  config.vm.box = "frontend_centos6"
+  config.vm.box_url = "http://devscreen.gudev.gnl/vagrants/frontend_centos6.box"
 
   # config.vm.boot_mode = :gui
   config.ssh.forward_x11 = true

@@ -12,9 +12,10 @@ define([
         'modules/fonts',
         'qwery',
         'modules/detect',
-        'modules/navigation/top-stories.js',
-        'modules/navigation/controls.js',
+        'modules/navigation/top-stories',
+        'modules/navigation/controls',
         'domReady',
+        'modules/trailblocktoggle',
         'modules/gallery'
     ],
     function (
@@ -34,15 +35,10 @@ define([
         TopStories,
         NavigationControls,
         domReady,
+        TrailblockToggle,
         Gallery) {
 
         var modules = {
-
-            isNetworkFront: false, // use this to disable some functions for NF
-
-            setNetworkFrontStatus: function(status) {
-                this.isNetworkFront = (status === "") ? true : false;
-            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -51,36 +47,35 @@ define([
 
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
-
-                // only do this for homepage
-                if (!this.isNetworkFront) {
-                    new TopStories().load(config);
-                }
-
             },
 
-            transcludeRelated: function (host, pageId) {
-                var url =  host + '/related/UK/' + pageId,
+            transcludeTopStories: function (config) {
+                new TopStories().load(config);
+            },
+
+            transcludeRelated: function (config){
+                var host = config.page.coreNavigationUrl,
+                    pageId = config.page.pageId,
+                    showInRelated = config.page.showInRelated,
+                    edition = config.page.edition;
+
+                var url =  host + '/related/' + edition + '/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
                
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
-                
-                if (!hasStoryPackage) {
+
+                if (!hasStoryPackage && showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
                     new Related(document.getElementById('js-related')).load(url);
                 }
             },
 
-            transcludeMostPopular: function (host, section) {
-
-                if (this.isNetworkFront) { return false; }
-
-                var url = host + '/most-popular/UK/' + section,
+            transcludeMostPopular: function (host, section, edition) {
+                var url = host + '/most-popular/' + edition + '/' + section,
                     domContainer = document.getElementById('js-popular');
-
                 new Popular(domContainer).load(url);
                 
                 common.mediator.on('modules:popular:render', function () {
@@ -121,22 +116,55 @@ define([
 
             sexUpGallery: function () {
                 var g = new Gallery().init();
+            },
+
+            showFrontExpanders: function () {
+                var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
+                for (i=0, l=frontTrailblocks.length; i<l; i++) {
+                    var elm = frontTrailblocks[i];
+                    var id = elm.id;
+                    var frontExpandable = new Expandable({ id: id, expanded: false });
+                    frontExpandable.initalise();
+                }
+            },
+
+            showTrailblockToggles: function (config) {
+                var edition = config.page.edition;
+                var tt = new TrailblockToggle();
+                tt.go(edition);
             }
          
         };
 
     var bootstrap = function (config, userPrefs) {
-        modules.setNetworkFrontStatus(config.page.pageId);
+
+        var isNetworkFront = (config.page.pageId === "");
+        
         modules.upgradeImages();
-        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+        modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        
+        switch (isNetworkFront) {
+
+            case true:
+                modules.showFrontExpanders();
+                modules.showTrailblockToggles(config);
+                break;
+
+            case false:
+                modules.transcludeTopStories(config);
+                break;
+        
+        }
+
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
         modules.sexUpGallery();
+
     };
 
     // domReady proxy for bootstrap

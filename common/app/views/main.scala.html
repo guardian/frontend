@@ -1,4 +1,5 @@
 @(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+<!doctype html>
 <html>
 <head>
     <title>@metaData.webTitle</title>
@@ -18,7 +19,7 @@
         @fragments.navigation(static, config, metaData, isFooter=false)
         @body
         @fragments.navigation(static, config, metaData, isFooter=true)
-        @fragments.footer()
+        @fragments.footer(config, metaData)
     </div>
 
     @fragments.analytics(metaData, config)

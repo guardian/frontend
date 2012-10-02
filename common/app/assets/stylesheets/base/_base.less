@@ -1,20 +1,17 @@
 p {
-    color: #333;
-    margin-bottom: 10px;
+    color: #545454;
+    margin-bottom: 0px;
     .standard-font-sizing;
 }
 
 h1 {
-    font-size: 24px;
-    line-height: 29px;
-    margin-bottom: 5px;
-    font-family: georgia;
+    .type-1;
+    margin-bottom: 12px;
 }
 
-h2,
 .standfirst {
     color: #666;
-    margin-bottom: 15px;
+    margin-bottom: @baseline*1.5;
     font-family: georgia, serif;
     .standard-font-sizing;
 }
@@ -32,17 +29,11 @@ h4 {
     .subheading-font-sizing;
 }
 
-.byline,
 .dateline {
-    font-family: arial, sans-serif;
-    margin: 0px;
+    font-family: @sans-serif;
+    margin: 0px 0px @baseline 0px;
     color: #666;
     .incidental-font-sizing;
-}
-
-.byline a {
-  font-weight: bold;
-  foo: bar;
 }
 
 span.timestamp {
@@ -56,11 +47,21 @@ span.timestamp {
 }
 
 .relative-timestamp {
+    display: block;
+    height: 10px;
     color: #666;
-    font-family: helvetica, arial, sans-serif;
-    width: @trailblockImgWidth;
-    margin-bottom: 0;
+    font-family: @sans-serif;
+    margin:0 0 12px 20px;
     .incidental-font-sizing;
+    line-height: 10px;
+}
+
+.relative-timestamp span {
+    display: inline-block;
+}
+
+.front-timestamp {
+    margin-top: 24px;
 }
 
 ol, ul {

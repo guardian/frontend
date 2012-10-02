@@ -1,0 +1,38 @@
+.headline-list ul {
+    margin: 0 @gutter;
+}
+
+.headline-list li {
+	display: block;
+	overflow: auto;
+    border-bottom: 1px solid #ccc;
+    padding: 24px 0;
+}
+
+.headline-list li:last-child {
+	border-bottom: none;
+}
+
+.headline-list p {
+    float: left;
+    width: 82%;
+    margin-left: 5%;
+    padding-left: 5%;
+    border-left: 1px solid #ccc;
+}
+
+.headline-list a {
+	color: #333;
+}
+
+.headline-list .count {
+	.type-2;
+    float:left;
+    width: auto;
+    padding-left: 8px;
+}
+
+// this feels a bit filthy. sorry.
+.headline-list li:nth-child(10) .count {
+    padding-left: 0;
+}

@@ -29,4 +29,8 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(404)
   }
 
+  it should "404 when article does not have related content" in Fake {
+    val result = controllers.RelatedController.render("UK", "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme")(FakeRequest())
+    status(result) should be(404)
+  }
 }

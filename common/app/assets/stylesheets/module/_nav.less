@@ -1,0 +1,187 @@
+/* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
+.nav {
+    list-style:none;
+    margin:0;
+    padding: @baseline 0 4px 0;
+}
+
+.nav > li,
+.nav > li > a {
+    .type-6;
+    display:inline-block;
+    zoom:1;
+}
+
+.nav-stacked > li{
+    display:list-item;
+}
+
+.nav-stacked > li > a {
+    padding: 10px 0;
+    margin: 0 @gutter;
+    border-top: 1px solid #d4d7d7;
+    display: block;
+    height: auto;
+}
+
+.nav-stacked a {
+    background-color: transparent;
+    color: #333;http://localhost:9000/culture
+}
+
+.nav li:first-child a,
+.sections li:nth-child(2) a {
+    border-top:none;
+}
+
+.expander {
+    display: block;
+    padding-top: 5px;
+    color: #666;
+    .incidental-font-sizing;
+}
+
+.sections-control {
+    padding: 18px @gutter 10px 5px;
+}
+
+.sections-control span {
+    width: 24px;
+    height: 13px;
+    display: inline-block;
+    text-indent: -1000em;
+    .icon-menu;
+}
+
+.svg .sections-control span {
+    .svg-icon-menu
+}
+
+.sections li {
+    float:left;
+    width: 49%;
+}
+
+.sections li:nth-child(even) {
+    border-left: 1px solid #D8D8D8;
+}
+
+.section-divider {
+    padding: 4px 0;
+    margin: 0 @gutter;
+    border-top: 3px solid #E3E3DB;
+}
+
+.section-divider li a {
+    padding: 8px 0;
+}
+
+.section-divider li:nth-child(odd) a {
+    margin-left: 0;
+    padding-right: @gutter;
+}
+
+.edition:after {
+    display: inline-block;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-left: 10px;
+    border: 1px solid #d4d7d7;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+
+.edition.edition-selected:after {
+    border-color: #000;
+    background: #000;
+}
+
+
+.nav-popup {
+    -webkit-transform: translate3d(0,0,0);
+    background-color: #ffffff;
+    padding: 0;
+    list-style: none;
+    clear: both;
+    position: relative;
+    border-top: 1px solid  #D2D2D2;
+    border-bottom: 1px solid  #D2D2D2;
+    margin-bottom: -4px;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 0%, 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(95%,#ffffff), color-stop(100%,#f2f2f2));
+    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -o-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -ms-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: linear-gradient(to bottom,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+}
+
+.nav-popup:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -(@navBorderWidth * 2)+1;
+    right: @gutter;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent #f0f0f0 transparent; // border color should be same as div background color
+    border-style: solid;
+    border-width: @navBorderWidth;
+}
+
+.topstories-control {
+    font-size: 14px;
+    margin-top: 14px;
+    padding: 2.5px 10px 2.5px 10px;
+    border-right: 1px solid #707272;
+}
+
+.top-stories ul {
+    margin: 0px !important;
+    padding-top: @baseline;
+    list-style: none;
+}
+
+.top-stories .trailblock {
+    margin-top: 0;
+}
+
+
+.sections-control:active,
+.topstories-control:hover {
+    text-decoration: none !important;
+}
+
+a.topstories-control, 
+.sections-control {
+    color: #707272;
+    background-color: transparent !important;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#navigation-header,
+#navigation-footer {
+    float: right
+}
+
+.top-stories:after {
+    right: 65px !important;
+}
+
+.footer .nav {
+    float: left;
+    width: 48%;
+}
+
+.footer .nav:first-child {
+    border-right: 1px solid #d4d7d7;
+}
+
+.footer .nav-stacked li a {
+    color: #6F6F6E;
+    margin-left: 0;
+}
+

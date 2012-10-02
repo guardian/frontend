@@ -5,7 +5,7 @@
             "apps":[ "frontend::tag" ],
             "data":{
                 "port":"9000",
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/world/turkey"
                 ]
@@ -15,7 +15,7 @@
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
             "data":{
-                "bucket":"artifacts-83445s",
+                "bucket":"aws-frontend-static",
                 "cacheControl":"public, max-age=2592000"
             }
         }

@@ -6,6 +6,7 @@ import akka.util.Duration
 import akka.util.duration._
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
+import java.util.concurrent.{ Executors, TimeUnit }
 
 trait AkkaSupport {
   object play_akka {

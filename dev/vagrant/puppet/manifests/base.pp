@@ -1,13 +1,11 @@
 class base {
 
   $packages = [
-     bash-completion,
-     vim,
+     vim-enhanced,
      curl,
      unzip,
      ntp,
-     git,
-     openjdk-6-jdk
+     rsync
   ]
 
   package {
@@ -15,12 +13,11 @@ class base {
   }
 
   service  {
-    ntp:
+    ntpd:
       enable => true,
       ensure => running;
   }
 
-  Class[apt] -> Package[$packages]
-  Package[ntp] -> Service[ntp]
+  Package[ntp] -> Service[ntpd]
 
 }
