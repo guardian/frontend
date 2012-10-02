@@ -16,8 +16,11 @@ aside {
 
 .article-body .caption,
 figcaption {
-    padding:@baseline @gutter;
     .type-7;
+}
+
+figcaption {
+    padding:@baseline @gutter;
 }
 
 .article-body .caption:before,
@@ -134,9 +137,17 @@ cite a:visited {
     clear: both;
 }
 
+.svg .article-body blockquote:before {
+    .svg-icon-blockquote-before;
+}
+
 .article-body blockquote:after {
     .icon-blockquote-after;
     display: block;
     content: '';
     margin-bottom: 22px;
+}
+
+.svg .article-body blockquote:after {
+    .svg-icon-blockquote-after;
 }
