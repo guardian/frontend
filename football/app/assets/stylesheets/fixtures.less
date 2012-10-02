@@ -2,7 +2,6 @@
 	text-indent: 10px;
 	margin-bottom: 10px;
 }
-
 .competition-title{
   background-color:#8cc540;
   line-height:2em;
@@ -11,7 +10,7 @@
   font-weight:normal;
 }
 .competition-title a{
-  color:white;	
+  color:#ffffff;	
 }
 
 .fixtures{
@@ -22,7 +21,7 @@
 .fixtures li{
 	list-style:none;
 	border-bottom:1px solid #e3e3e3;
-	padding:5px 70px 5px 10px;
+	padding:10px 70px 10px 10px;
   position:relative;	
   overflow:hidden;
 }
@@ -37,13 +36,16 @@
 }
 .fixtures .team{
 	display:block;
-	text-indent:20px;
 	float:left;
 	width:50%;
+	box-sizing:border-box;
 }
 .fixtures .home{
 	text-align:right;
-	direction:rtl;
+	padding-right:20px;
+}
+.fixtures .away{
+  padding-left:20px;
 }
 .fixtures .result{
 	position:absolute;
@@ -57,11 +59,21 @@
 .fixtures .status{
 	position:absolute;
 	width:50px;
-	top:5px;
+	top:10px;
 	right:10px;
 	color:#979797;
 }
 .fixtures .status .status-desc{
 	position:absolute;
 	left:-9999px;
+}
+.fixtures .status abbr{
+	color:#ffffff;
+	padding:5px 10px;	
+}
+.fixtures .status .half-time{
+	background-color:#8cc540;
+}
+.fixtures .status .full-time{
+  background-color:#da4b23;
 }
