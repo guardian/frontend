@@ -1,18 +1,41 @@
 @(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
+
 <ul class="nav nav-stacked cf">
-    <li class="zone-news"><a@if(page.section=="uk"){ class="zone-color"} data-link-name="UK News" href="/uk">UK news</a></li>
-    <li class="zone-world"><a@if(page.section=="world"){ class="zone-color"} data-link-name="World News" href="/world">World news</a></li>
-    <li class="zone-sport"><a@if(page.section=="sport"){ class="zone-color"} data-link-name="Sport" href="/sport">@if(edition == "US"){ Sports } else { Sport }</a></li>
-    <li class="zone-football"><a@if(page.section=="football"){ class="zone-color"} data-link-name="Football" href="/football">Football</a></li>
-    <li class="zone-commentisfree"><a@if(page.section=="commentisfree"){ class="zone-color"} data-link-name="Comment is free" href="/commentisfree">Comment is free</a></li>
-    <li class="zone-lifeandstyle"><a@if(page.section=="lifeandstyle"){ class="zone-color"} data-link-name="Life & Style" href="/lifeandstyle">Life &amp; style</a></li>
-    <li class="zone-culture"><a@if(page.section=="culture"){ class="zone-color"} data-link-name="Culture" href="/culture">Culture</a></li>
-    <li class="zone-business"><a@if(page.section=="business"){ class="zone-color"} data-link-name="Business" href="/business">Business</a></li>
-    <li class="zone-technology"><a@if(page.section=="technology"){ class="zone-color"} data-link-name="Technology" href="/technology">Technology</a></li>
-    <li class="zone-film"><a@if(page.section=="film"){ class="zone-color"} data-link-name="Film" href="/film">Film</a></li>
-    <li class="zone-music"><a@if(page.section=="music"){ class="zone-color"} data-link-name="Music" href="/music">Music</a></li>
+    
+    @defining(Seq(
+      Map("zone" -> "news", "link-name" -> "UK News", "href" -> "/uk", "title" -> "UK news"),
+      Map("zone" -> "world", "link-name" -> "World News", "href" -> "/world", "title" -> "World news"),
+      Map("zone" -> "sport", "link-name" -> "Sport", "href" -> "/sport", "title" -> "Sport", "title-us" -> "Sports"),
+      Map("zone" -> "football", "link-name" -> "Football", "href" -> "/football", "title" -> "Football"),
+      Map("zone" -> "commentisfree", "link-name" -> "Comment is free", "href" -> "/commentisfree", "title" -> "Comment is free"),
+      Map("zone" -> "lifeandstyle", "link-name" -> "Life & Style", "href" -> "/lifeandstyle", "title" -> "Life &amp; style"),
+      Map("zone" -> "culture", "link-name" -> "Culture", "href" -> "/culture", "title" -> "Culture"),
+      Map("zone" -> "business", "link-name" -> "Business", "href" -> "/business", "title" -> "Business"),
+      Map("zone" -> "technology", "link-name" -> "Technology", "href" -> "/technology", "title" -> "Technology"),
+      Map("zone" -> "film", "link-name" -> "Film", "href" -> "/film", "title" -> "Film"),
+      Map("zone" -> "music", "link-name" -> "Music", "href" -> "/music", "title" -> "Music")
+      )){ zones =>
+      
+      @zones.map{ section => 
+        <li class="zone-@section("zone")">
+            <a href="/"
+               data-link-name="@section("link-name")"
+               @if(page.section==section("zone")) {
+                    class="zone-color"
+               }
+               >
+               @if(section.contains("title-us") && edition == "US"){
+                @HtmlFormat.raw(section("title-us"))
+               }else{
+                @HtmlFormat.raw(section("title"))
+               }
+            </a>
+        </li>
+
+        }}
+        
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
 <ul class="nav nav-stacked section-divider cf">
