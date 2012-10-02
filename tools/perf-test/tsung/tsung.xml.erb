@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<tsung loglevel="info" backend="fullstats">
+
+    <clients>
+        <client host="localhost" use_controller_vm="true"/>
+    </clients>
+
+    <servers>
+        <server host="<%= conf[:host] %>" port="80" type="tcp"/>
+    </servers>
+
+    <load>
+        <arrivalphase phase="1" duration="<%= conf[:duration] %>" unit="minute">
+            <users arrivalrate="<%= conf[:rate] %>" unit="second"/>
+        </arrivalphase>
+    </load>
+
+    <options>
+        <option name="file_server" id="id" value="<%= conf[:url] %>"/>
+    </options>
+    
+    <sessions>
+        <session probability="100" type="ts_http">
+		<setdynvars sourcetype="file" fileid="id" delimiter=";" order="iter">
+		    <var name="xx"/>
+		</setdynvars>
+		<request subst="true">
+		    <http url="/api/%%_xx%%" version="1.1" method="GET">
+			<http_header name="Cache-Control" value="no-cache"/>
+			<http_header name="Accept-Encoding" value="gzip"/>
+		    </http>
+		</request>
+        </session>
+    </sessions>
+
+</tsung>
