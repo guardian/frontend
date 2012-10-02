@@ -2,7 +2,7 @@ class Article
     
     include ContentApi
 
-    def initialize
+    def initialize(path)
         super
         @params.show_fields = 'all'
         @params.show_tags = 'all'

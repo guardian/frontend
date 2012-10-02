@@ -3,8 +3,6 @@ require 'rubygems'
 
 require 'open-uri'
 require 'ostruct'
-require 'json'
-require 'httparty'
 
 require 'models/base'
 require 'models/article'
@@ -14,46 +12,39 @@ require 'models/most_popular'
 
 module Api
 
-    def Api.Articles
-        log = STDIN.read
-        a = Article.new.to_querystring
+    def Api.Articles(log, mode)
         log.split("\n").each do |entry|
-            if (url = entry.split("\t")[3])
-                puts "%s?%s" % [url, a]
-            end
+            next unless (url = entry.split("\t")[3])
+            a = Article.new(url)
+            puts (mode === 'api') ? a.to_api : a.to_www
         end
     end
 
     module CoreNavigation
 
-        def CoreNavigation.Related
-            log = STDIN.read
-            a = Related.new.to_querystring
+        def CoreNavigation.Related(log, mode)
             log.split("\n").each do |entry|
-                if (url = entry.split("\t")[3])
-                    puts "%s?%s" % [url, a]
-                end
+                next unless (url = entry.split("\t")[3])
+                r = Related.new(url)
+                puts (mode === 'api') ? r.to_api : r.to_www
             end
         end
         
-        def CoreNavigation.TopStories
-            %w{/ sport commentisfree culture business lifeandstyle money travel}.each { |trail|
-                uk = TopStories.new.to_querystring
-                us = TopStories.new({ :edition => 'US' }).to_querystring
-                puts "%s?%s" % [trail, uk]
-                puts "%s?%s" % [trail, us]
-            }
+        def CoreNavigation.TopStories(mode)
+            list_of_trailblocks = %w{sport commentisfree culture business lifeandstyle money travel}.push('')
+            list_of_trailblocks.each do |trail|
+                uk = TopStories.new(trail)
+                us = TopStories.new(trail, { :edition => 'US' })
+                puts (mode === 'api') ? uk.to_api : uk.to_www
+                puts (mode === 'api') ? us.to_api : us.to_www
+            end
         end
 
-        def CoreNavigation.MostPopular
-            
-            url = 'http://content.guardianapis.com/sections?format=json'
-            response = HTTParty.get(url)
-            params = Related.new.to_querystring
-            
-            JSON.parse(response.body)["response"]["results"].each do |result|
-                section = result["id"]
-                puts "%s?%s" % [section, params] 
+        def CoreNavigation.MostPopular(mode)
+            list_of_sections = %w{sport commentisfree culture business lifeandstyle money travel}.push('')
+            list_of_sections.each do |section|
+                m = MostPopular.new(section)
+                puts (mode === 'api') ? mp.to_api : mp.to_www
             end
 
         end
@@ -61,24 +52,27 @@ module Api
 end
 
 def usage
-    puts "Usage #{__FILE__} <article|related|top|popular> < path/to/log"
+    puts "Usage #{__FILE__} <article|related|top|popular> <api|www> < path/to/log"
     exit 1
 end
 
-def app(type)
+def app(type, mode)
     case type
         when 'article'
-            Api.Articles
+            Api.Articles STDIN.read, mode
         when 'related'
-            Api::CoreNavigation.Related
+            Api::CoreNavigation.Related STDIN.read, mode
         when 'top'
-            Api::CoreNavigation.TopStories
+            Api::CoreNavigation.TopStories mode
         when 'popular'
-            Api::CoreNavigation.MostPopular
+            Api::CoreNavigation.MostPopular mode
     end
 end
 
-usage unless ARGV.first
+opts = {:type => ARGV.first, :mode => ARGV[1]}
 
-app ARGV.first
+usage unless (opts[:type] && opts[:mode] && (opts[:mode] =~ /^(api|www)$/))
 
+puts "related and article need a log file from STDIN" if (opts[:type] =~ /(related|article)/ && STDIN)
+
+app opts[:type], opts[:mode]
