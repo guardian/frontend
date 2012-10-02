@@ -5,33 +5,31 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
 import model.Competition
 import common._
-import feed.Competitions;
+import feed.{ FixtureAgent, Competitions }
+import conf.FootballClient;
 
 class CompetitionsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
   feature("Competitions") {
 
-    scenario("Find Competitions") {
+    scenario("Load fixtures") {
+      given("I want to display fixtures")
 
-      given("I want to view fixtures")
-
-      then("I should get all the competitions")
+      then("I should be able to load fixtures")
 
       Fake {
-        Competitions.refresh()
-        Competitions.warmup()
+        val agent = new FixtureAgent("100")
+        agent.refresh()
+        agent.await
+        val fixtures = agent()
+        fixtures.foreach(println)
+        FootballClient.competitions.foreach(c => println(c.name))
 
-        val compeititons = Competitions.all
-        // should get something back
-        compeititons.size should be(2)
-        // first item should be premiership competition (i.e. 100)
-        compeititons(0) should be(Competition("100", "Barclays Premier League 12/13"))
-        // second Npower
-        compeititons(1) should be(Competition("101", "Npower Championship 12/13"))
+
+        fail("not implemented")
+        fail("not implemented")
       }
-
     }
-
   }
 
 }

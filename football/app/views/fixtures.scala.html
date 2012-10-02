@@ -4,13 +4,20 @@
 @main(model.page, Static, Configuration, Switches.all){
 
 }{
+    @model.days.map{ day =>
+        <div>
+            <h1>@day.date.toString("EEEE d MMMM yyyy")</h1>
+            @day.competitions.map{ comp =>
+            <div>
+                <h2><a href='@comp.url'>@comp.fullName</a></h2>
+                <ol>
 
-<ul>
-  @for(competition <- model.competitions) {
-    <li>
-      <a href="/football/competitions/@competition.id">@competition.name</a>
-    </li>
-  }
-</ul>
-
+                    @comp.fixtures.map{ fixture =>
+                        <li>@fixture.homeTeam.name v @fixture.awayTeam.name @fixture.fixtureDate.toString("HH:mm")</li>
+                    }
+                </ol>
+            </div>
+            }
+        </div>
+    }
 }

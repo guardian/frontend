@@ -19,6 +19,7 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   }
 
   override def onStop(app: play.api.Application) {
+    Competitions.shutDown()
     super.onStop(app)
   }
 }
