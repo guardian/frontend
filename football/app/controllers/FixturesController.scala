@@ -3,13 +3,19 @@ package controllers
 import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
-import model.{ CachedOk, Competition, MetaData, Page }
+import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
+import model.Competition
+import model.Page
+import controllers.FixturesPage
+import scala.Some
+import controllers.FixturesOnDate
+import views.html.fixtures
 
 case class FixturesOnDate(date: DateMidnight, competitions: Seq[Competition])
 
-case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate])
+case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate], nextPage: String, previousPage: String)
 
 object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
@@ -26,13 +32,19 @@ object FixturesController extends Controller with Logging {
     val dayThree = dayTwo.plusDays(1)
 
     val fixtures = Seq(
-      FixturesOnDate(dayOne, Competitions.withFixturesOn(dayOne)),
-      FixturesOnDate(dayTwo, Competitions.withFixturesOn(dayTwo)),
-      FixturesOnDate(dayThree, Competitions.withFixturesOn(dayThree))
+      FixturesOnDate(dayOne, Competitions.withFixturesOrResultsOn(dayOne)),
+      FixturesOnDate(dayTwo, Competitions.withFixturesOrResultsOn(dayTwo)),
+      FixturesOnDate(dayThree, Competitions.withFixturesOrResultsOn(dayThree))
     )
 
     CachedOk(page) {
-      Compressed(views.html.fixtures(FixturesPage(page, fixtures.filter(_.competitions.nonEmpty))))
+      Compressed(
+        views.html.fixtures(
+          FixturesPage(page, fixtures,
+            nextPage = "/football/fixtures/%s".format(dayThree.plusDays(1).toString("yyyy/MMM/dd").toLowerCase),
+            previousPage = "/football/fixtures/%s".format(dayOne.minusDays(3).toString("yyyy/MMM/dd").toLowerCase)
+          ))
+      )
     }
   }
 }

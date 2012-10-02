@@ -4,13 +4,20 @@
 @main(model.page, Static, Configuration, Switches.all){
 
 }{
+<a href="@model.previousPage">previous</a> &nbsp; &nbsp;<a href="@model.nextPage">next</a>
     @model.days.map{ day =>
         <div>
             <h1>@day.date.toString("EEEE d MMMM yyyy")</h1>
+            @if(day.competitions.isEmpty){
+                <div>No games</div>
+            }
             @day.competitions.map{ comp =>
             <div>
                 <h2><a href='@comp.url'>@comp.fullName</a></h2>
                 <ol>
+                    @comp.results.map{ result =>
+                        <li>@result.homeTeam.name @result.homeTeam.score - @result.awayTeam.score @result.awayTeam.name</li>
+                    }
 
                     @comp.fixtures.map{ fixture =>
                         <li>@fixture.homeTeam.name v @fixture.awayTeam.name @fixture.fixtureDate.toString("HH:mm")</li>
@@ -20,4 +27,6 @@
             }
         </div>
     }
+
+
 }
