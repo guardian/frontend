@@ -6,7 +6,7 @@
   */
 !function (name, definition) {
   if (typeof module != 'undefined') module.exports = definition()
-  else if (typeof define == 'function' && define.amd) define(name, definition)
+  else if (typeof define == 'function' && define.amd) define(definition)
   else this[name] = definition()
 }('reqwest', function () {
 
@@ -197,6 +197,9 @@
           break;
         case 'html':
           resp = r
+          break;
+        case 'xml':
+          resp = resp.responseXML;
           break;
         }
       }
