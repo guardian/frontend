@@ -1,4 +1,4 @@
-define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
+define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, common) {
 
     var Gallery = function () {
 
@@ -29,19 +29,20 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                   
                 var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-                if(isTouch) { // only enable this for touch devices, duh.
+                if(isTouch) { // only enable swiping for touch devices, duh.
                     
                     // add swipe styling
                     document.getElementById('js-gallery').className += ' gallery-swipe';
 
                     // when we load, grab the prev/next and show them too
-                    var currentSlide = document.getElementsByClassName('js-current-gallery-slide')[0];
+                    var currentSlide = common.$g('.js-current-gallery-slide')[0];
+                    //currentSlide = document.getElementsByClassName('js-current-gallery-slide')[0];
+
                     var nextSlide = currentSlide.nextElementSibling;
                     var prevSlide = currentSlide.previousElementSibling;
                     var totalSlides = currentSlide.getAttribute('data-total');
 
-                    view.makePlaceholderIntoImage(nextSlide);
-                    view.makePlaceholderIntoImage(prevSlide);
+                    view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
                     var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
@@ -51,7 +52,7 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
 
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
-                            var nextElm = document.querySelectorAll('.gallery-swipe li')[nextIndex];
+                            var nextElm = common.$g('.gallery-swipe li')[nextIndex];
 
                             count.innerText = nextIndexCount;
                             view.updateURL('index=' + nextIndexCount, nextIndexCount);
@@ -62,9 +63,7 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                                 var nextElmBackward = nextElm.previousElementSibling;
                                 
                                 // convert to <img> tag
-                                view.makePlaceholderIntoImage(nextElm);
-                                view.makePlaceholderIntoImage(nextElmForward);
-                                view.makePlaceholderIntoImage(nextElmBackward);
+                                view.makePlaceholderIntoImage([nextElm, nextElmForward, nextElmBackward]);
 
                                 elm.style.display = 'block';
                             }
@@ -78,7 +77,6 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                     }
 
                     // bind prev/next to just trigger swipes
-                    // might be nice if they updated the page URL too ...
                     bean.add(view.galleryConfig.nextLink, 'click', function(e) {
                         gallerySwipe.next();
                         e.preventDefault();
@@ -101,19 +99,13 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                         e.preventDefault();
                     });
 
-                    // todo: fix overlap
                     bean.add(document, 'keydown', function(e){
-                        console.log(e);
                         if (e.keyCode == 37) {
                             view.advanceGallery('prev');
                         } else if (e.keyCode == 39) {
                             view.advanceGallery('next');
                         }
                     });
-
-                    if (urlParams.index) {
-                        view.advanceGallery(null, urlParams.index);
-                    }
 
                 }
 
@@ -128,7 +120,6 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
 
             },
 
-            // gets called twice on page load... todo: fix
             advanceGallery: function (direction, customItemIndexToShow) {
 
                 var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
@@ -140,6 +131,11 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                 var isLast          = (currentIndex == totalSlides);
                 var slideCounter    = document.getElementById('js-gallery-index');
                 
+                if ( (isFirst && direction === "prev") ||
+                     (isLast && direction === "next") ) {
+                    return;
+                }
+
                 var elmToWorkWith, newSlide;
 
                 // hide the current slide
@@ -181,9 +177,6 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
                     if ( querystring !== state ) {
                         history.pushState({}, (window.title || '') + ' (' + index + ')', '?' + querystring);
                     }
-                } else {
-                    // do we want to do this? think carefully...
-                    //location.hash = '#' + querystring;
                 }
             },
 
@@ -212,25 +205,41 @@ define(["reqwest", "bean", "swipe"], function (reqwest, bean, swipe) {
             },
 
             // used to to convert placeholder <li> into <img> tag
-            // todo: allow this to take an array of elements
-            makePlaceholderIntoImage: function (elm) {
+            makePlaceholderIntoImage: function (elms) {
 
-                if (!elm || elm === null) {
+                if (!elms || elms === null) {
                     return;
                 }
 
-                var hasImage = elm.getAttribute('data-image');
+                var numElements = elms.length;
+
+                if (numElements > 1) {
+                    for (var i=0, l=elms.length; i<l; i++) {
+                        var item = elms[i];
+                        if (item) {
+                            view.processPlaceholder(item);
+                        }
+                    }
+                } else { // it's just one item
+                    view.processPlaceholder(elms);
+                }
+                
+            },
+
+            // actually updates the DOM
+            processPlaceholder: function (placeholder) {
+                var hasImage = placeholder.getAttribute('data-image');
 
                 if (hasImage && hasImage == 'false') {
                     
-                    var src = elm.getAttribute("data-src");
+                    var src = placeholder.getAttribute("data-src");
                     if (src && src !== "") { // create <img> element
-                        elm.innerHTML = '<img src="' + src + '" />' + elm.innerHTML;
-                        elm.setAttribute("data-image", "true");
+                        placeholder.innerHTML = '<img src="' + src + '" />' + placeholder.innerHTML;
+                        placeholder.setAttribute("data-image", "true");
                     }
                 }
 
-                return elm;
+                return placeholder;
             }
 
         };
