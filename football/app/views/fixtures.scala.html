@@ -12,14 +12,18 @@
             </h3>
             <ol class="fixtures">
                 @comp.results.map{ result =>
-                <li>
-                    <p class="fixture-desc">
-                        <span class="home team">@result.homeTeam.name</span>
-                        <span class="result">@result.homeTeam.score - @result.awayTeam.score</span>
-                        <span class="away team">@result.awayTeam.name</span>
-                    </p>
-                    <p class="status"><span class="status-desc">Kick-off:</span> @result.date.toString("HH:mm")</p>
-                </li>
+                    <li>
+                        <p class="fixture-desc">
+                            <span class="home team">@result.homeTeam.name</span>
+                            <span class="result">@result.homeTeam.score - @result.awayTeam.score</span>
+                            <span class="away team">@result.awayTeam.name</span>
+                        </p>
+                        <p class="status">
+                        <!-- <span class="status-desc">Minutes:</span> 86'
+                              <abbr title="Half-time" class="half-time">HT</abbr> -->
+                              <abbr title="Full-time" class="full-time">FT</abbr>
+                        </p>
+                    </li>
                 }
 
                 @comp.fixtures.map{ fixture =>
@@ -31,9 +35,6 @@
                         </p>
                         <p class="status">
                           <span class="status-desc">Kick-off:</span> @fixture.fixtureDate.toString("HH:mm")
-                          <!-- <span class="status-desc">Minutes:</span> 86'
-                          <abbr title="Half-time" class="half-time">HT</abbr>
-                          <abbr title="Full-time" class="full-time">FT</abbr> -->
                         </p>
                     </li>
                 }

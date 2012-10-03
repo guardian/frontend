@@ -1,11 +1,15 @@
+@sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+@gutter: 20px;
+@status-width: 50px;
+
 .competition-date{
 	text-indent: 10px;
-	margin-bottom: 10px;
+	margin: 10px 0;
 }
 .competition-title{
   background-color:#8cc540;
   line-height:2em;
-  text-indent:10px;
+  text-indent:@gutter;
   margin-bottom:0;
   font-weight:normal;
 }
@@ -14,14 +18,14 @@
 }
 
 .fixtures{
-  padding-left:0;
-  margin-left:0;
+  padding:0;
+  margin:0;
   border-bottom:2px solid #e3e3e3;
 }
 .fixtures li{
 	list-style:none;
 	border-bottom:1px solid #e3e3e3;
-	padding:10px 70px 10px 10px;
+	padding:10px (10px + @status-width + @gutter) 10px @gutter;
   position:relative;	
   overflow:hidden;
 }
@@ -32,13 +36,16 @@
 	border:none;
 	padding:0;
 	font-weight:normal;
-	font-family:arial,sans-serif;
+	font-family:@sans-serif
 }
 .fixtures .team{
 	display:block;
 	float:left;
 	width:50%;
 	box-sizing:border-box;
+	-moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
 }
 .fixtures .home{
 	text-align:right;
@@ -58,9 +65,9 @@
 }
 .fixtures .status{
 	position:absolute;
-	width:50px;
+	width:@status-width;
 	top:10px;
-	right:10px;
+	right:@gutter;
 	color:#979797;
 }
 .fixtures .status .status-desc{
