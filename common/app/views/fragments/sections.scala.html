@@ -1,18 +1,22 @@
 @(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
+
 <ul class="nav nav-stacked cf">
-    <li><a@if(page.section=="uk"){ class="zone-color"} data-link-name="UK News" href="/uk">UK news</a></li>
-    <li><a@if(page.section=="world"){ class="zone-color"} data-link-name="World News" href="/world">World news</a></li>
-    <li><a@if(page.section=="sport"){ class="zone-color"} data-link-name="Sport" href="/sport">@if(edition == "US"){ Sports } else { Sport }</a></li>
-    <li><a@if(page.section=="football"){ class="zone-color"} data-link-name="Football" href="/football">Football</a></li>
-    <li><a@if(page.section=="commentisfree"){ class="zone-color"} data-link-name="Comment is free" href="/commentisfree">Comment is free</a></li>
-    <li><a@if(page.section=="lifeandstyle"){ class="zone-color"} data-link-name="Life & Style" href="/lifeandstyle">Life &amp; style</a></li>
-    <li><a@if(page.section=="culture"){ class="zone-color"} data-link-name="Culture" href="/culture">Culture</a></li>
-    <li><a@if(page.section=="business"){ class="zone-color"} data-link-name="Business" href="/business">Business</a></li>
-    <li><a@if(page.section=="technology"){ class="zone-color"} data-link-name="Technology" href="/technology">Technology</a></li>
-    <li><a@if(page.section=="film"){ class="zone-color"} data-link-name="Film" href="/film">Film</a></li>
-    <li><a@if(page.section=="music"){ class="zone-color"} data-link-name="Music" href="/music">Music</a></li>
+    
+    @Navigation(request, config).map{ section =>
+        <li>
+            <a href="@section.href"
+               data-link-name="@section.linkName"
+               @if(page.section==section.zone) {
+                    class="zone-color"
+               }
+               >
+                @HtmlFormat.raw(section.title)
+            </a>
+        </li>
+    }
+        
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
 <ul class="nav nav-stacked section-divider cf">
