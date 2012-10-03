@@ -147,7 +147,7 @@ trait Prototypes {
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
     requireJsModules := Seq("bootstraps/article"),
     requireJsPaths := Map(
-                            "bonzo" -> "vendor/bonzo-1.2.1",
+                            "bonzo" -> "vendor/bonzo-1.2.3",
                             "reqwest" -> "vendor/reqwest-0.4.5",
                             "qwery" -> "vendor/qwery-3.3.11",
                             "bean" -> "vendor/bean-0.4.11-1",

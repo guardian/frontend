@@ -49,7 +49,7 @@
         , computedStyle: doc.defaultView && doc.defaultView.getComputedStyle
         , cssFloat: e[byTag]('table')[0].style.styleFloat ? 'styleFloat' : 'cssFloat'
         , transform: function () {
-            var props = ['webkitTransform', 'MozTransform', 'OTransform', 'msTransform', 'Transform'], i
+            var props = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'], i
             for (i = 0; i < props.length; i++) {
               if (props[i] in e.style) return props[i]
             }
@@ -196,7 +196,7 @@
    */
   function styleProperty(p) {
       (p == 'transform' && (p = features.transform)) ||
-        (/^transform-?[Oo]rigin$/.test(p) && (p = features.transform + "Origin")) ||
+        (/^transform-?[Oo]rigin$/.test(p) && (p = features.transform + 'Origin')) ||
         (p == 'float' && (p = features.cssFloat))
       return p ? camelize(p) : null
   }
@@ -536,14 +536,11 @@
 
       /**
        * @param {Bonzo|string|Element|Array} node
-       * @param {Object=} opt_host an optional host scope (primarily used when integrated with Ender)
        * @return {Bonzo}
        */
-    , replaceWith: function (node, opt_host) {
-        var ret = bonzo(normalize(node)).insertAfter(this, opt_host)
-        this.remove()
-        Bonzo.call(opt_host || this, ret)
-        return opt_host || this
+    , replaceWith: function (node) {
+        bonzo(normalize(node)).insertAfter(this)
+        return this.remove()
       }
 
       // class management
