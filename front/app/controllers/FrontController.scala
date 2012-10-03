@@ -48,7 +48,7 @@ class FrontController extends Controller with Logging {
 
   private def renderFront(model: FrontPage)(implicit request: RequestHeader) = model match {
     case FrontPage(Nil) => InternalServerError
-    case m => CachedOk(m) { Compressed(views.html.front(model)) }
+    case m => Cached(m) { Ok(Compressed(views.html.front(model))) }
   }
 }
 

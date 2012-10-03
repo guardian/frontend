@@ -38,7 +38,7 @@ object SectionController extends Controller with Logging {
   }
 
   private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) =
-    CachedOk(model.section) {
-      Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent))
+    Cached(model.section) {
+      Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
     }
 }

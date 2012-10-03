@@ -34,9 +34,8 @@ object FixturesController extends Controller with Logging {
     val nextPage = Competitions.nextDateWithFixturesFrom(dayOne.plusDays(2)).map(toNextPreviousUrl)
     val previousPage = Competitions.previousDateWithFixturesFrom(dayOne).map(toNextPreviousUrl)
 
-    Cached(60) {
+    Cached(page) {
       val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
-
       request.getQueryString("callback").map { callback =>
 
         JsonComponent(
