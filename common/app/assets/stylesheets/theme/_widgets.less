@@ -34,7 +34,8 @@ img.badge {
 .trail-headline a,
 .trail-headline a:hover,
 .trail-headline a:link,
-.trail-headline a:visited {
+.trail-headline a:visited,
+.trail h2 a {
     color: #333;
 }
 
@@ -78,7 +79,7 @@ img.badge {
     display: block;
     text-indent: -1000px;
     float: left;
-    margin: 10px 0 10px @gutter;
+    margin: @baseline*2 @gutter;
     .icon-guardian-logo-small
 }
 
@@ -110,8 +111,9 @@ img.badge {
 
 .cta {
     color: #545454;
-    font-size: 13px;
-    padding: 16px 0;
+    font-size: 14px;
+    line-height: @baseline*2;
+    padding: @baseline*2 0 @baseline*2 0;
     background-color: #e3e3db;
     text-align: center;
 }

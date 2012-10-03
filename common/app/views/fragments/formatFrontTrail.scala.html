@@ -7,13 +7,13 @@
 *@
 
 @if(info.rowNum == 1) {
-    <p class="trail-headline type-2 box-indent">
+    <h2 class="type-1 box-indent">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
-    </p>
+    </h2>
 
-    @trail.trailText.map { text => <p class="gt-base type-4 box-indent">@RemoveOuterParaHtml(BulletCleaner(text))</p> }
+    @trail.trailText.map { text => <div class="trail-text type-4">@RemoveOuterParaHtml(BulletCleaner(text))</div> }
 
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
@@ -36,27 +36,26 @@
 
         @if(trail.thumbnail) {
             @trail.thumbnail.map{ imageUrl =>
-                <a href="@trail.url" class="img" data-link-name="trail image | item @info.rowNum">
+                <a href="@trail.url" class="media-img" data-link-name="trail image | item @info.rowNum">
                     <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
                 </a>
             }
         } 
-        <div class="bd">
-            <p class="trail-headline">
-                <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
-                    @RemoveOuterParaHtml(trail.linkText)
-                </a>
-            </p>
-        </div>
+
+        <h3 class="media-body trail-headline">
+            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
+                @RemoveOuterParaHtml(trail.linkText)
+            </a>
+        </h3>
     </div>
     
-    @trail.trailText.map { text => <div class="gt-base type-4 box-indent">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
+    @trail.trailText.map { text => <div class="trail-text type-4">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
 }
 
 @if(info.rowNum > 5) {
-    <p class="trail-headline type-3 box-indent">
+    <h3 class="trail-headline type-3">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
-    </p>
+    </h3>
 }

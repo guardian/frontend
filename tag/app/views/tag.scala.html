@@ -3,7 +3,7 @@
 @main(tag, Static, Configuration, Switches.all){  }{
 <div class="front-section zone-@tag.section">
 
-    <h1 class="article-zone type-2 zone-color">@tag.name</h1>
+    <h1 class="article-zone zone-color">@tag.name</h1>
 
     @if(leadContent nonEmpty) {
         @leadContent.zipWithRowInfo.map{ case (trail, info) =>
