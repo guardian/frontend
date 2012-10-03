@@ -1,13 +1,24 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Static, Configuration, Switches.all){  }{
-    @fragments.headline(section.name)
+<div class="front-section zone-@section.section">
+
+	<h1 class="article-zone type-2 zone-color">@section.name</h1>
 
     @defining(math.max(editorsPicks.length, 15)){ numTrails =>
         @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
+
+	<div class="trailblock" data-count="@trails.length" data-link-name="section block @section.section">
+
+            <ul class="unstyled">
+
             @trails.zipWithRowInfo.map{ case (trail, info) =>
-                <div class="unit size1of2">@fragments.formatTrail(trail,info)</div>
+            	<li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                	@fragments.formatFrontTrail(trail, info)
+                </li>
             }
+
+        	</ul>
         }
     }
     <div id="most-popular"></div>
