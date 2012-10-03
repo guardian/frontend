@@ -37,11 +37,3 @@ Using the _www_ switch, you can serialise the resources as calls to the public f
 ```
 ruby bin/generate-urls.rb article www < logs/articles > logs/articles.test-mq-elb.www
 ```
-
-Notes
------
-
- - Perf test ELB is at [http://test-mq-elb.content.guardianapis.com/api/search.json]
- - You can see the graphs for this system at [http://graphite.guprod.gnl/dashboard/dashboards-dev/content-api-mq.php?time=2h&env=TEST]
- - Support <content.platforms@guardian.co.uk>
-
