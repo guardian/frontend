@@ -39,12 +39,6 @@ define([
 
         var modules = {
 
-            isNetworkFront: false, // use this to disable some functions for NF
-
-            setNetworkFrontStatus: function(status) {
-                this.isNetworkFront = (status === "") ? true : false;
-            },
-
             upgradeImages: function () {
                 var i = new Images();
                 i.upgrade();
@@ -52,24 +46,25 @@ define([
 
             transcludeNavigation: function (config) {
                 new NavigationControls().initialise();
-                
-                // don't do this for homepage
-                if (!this.isNetworkFront) {
-                    new TopStories().load(config);
-                }
-
             },
 
-            transcludeRelated: function (host, pageId, showInRelated) {
+            transcludeTopStories: function (config) {
+                new TopStories().load(config);
+            },
 
-                var url =  host + '/related/UK/' + pageId,
+            transcludeRelated: function (config){
+                var host = config.page.coreNavigationUrl,
+                    pageId = config.page.pageId,
+                    showInRelated = config.page.showInRelated,
+                    edition = config.page.edition;
+
+                var url =  host + '/related/' + edition + '/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
                
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
-    
 
                 if (!hasStoryPackage && showInRelated) {
                     common.mediator.on('modules:related:render', relatedExpandable.initalise);
@@ -77,13 +72,9 @@ define([
                 }
             },
 
-            transcludeMostPopular: function (host, section) {
-
-                if (this.isNetworkFront) { return false; }
-
-                var url = host + '/most-popular/UK/' + section,
+            transcludeMostPopular: function (host, section, edition) {
+                var url = host + '/most-popular/' + edition + '/' + section,
                     domContainer = document.getElementById('js-popular');
-
                 new Popular(domContainer).load(url);
                 
                 common.mediator.on('modules:popular:render', function () {
@@ -149,48 +140,58 @@ define([
                 var tabs = new Tabs().init();
             },
 
-            // only do this for homepage
             showFrontExpanders: function () {
-                if (this.isNetworkFront) {
-                    var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
-                    for (i=0, l=frontTrailblocks.length; i<l; i++) {
-                        var elm = frontTrailblocks[i];
-                        var id = elm.id;
-                        var frontExpandable = new Expandable({ id: id, expanded: false });
-                        frontExpandable.initalise();
-                    }
+                var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
+                for (i=0, l=frontTrailblocks.length; i<l; i++) {
+                    var elm = frontTrailblocks[i];
+                    var id = elm.id;
+                    var frontExpandable = new Expandable({ id: id, expanded: false });
+                    frontExpandable.initalise();
                 }
             },
 
             showTrailblockToggles: function (config) {
-                if (this.isNetworkFront) {
-                    var edition = config.page.edition;
-                    var tt = new TrailblockToggle();
-                    tt.go(edition);
-                }
+                var edition = config.page.edition;
+                var tt = new TrailblockToggle();
+                tt.go(edition);
             }
          
         };
 
-    var bootstrap = function (config) {
-        modules.setNetworkFrontStatus(config.page.pageId);
+    var bootstrap = function (config, userPrefs) {
+
+        var isNetworkFront = (config.page.pageId === "");
+        
         modules.upgradeImages();
-        modules.transcludeRelated(config.page.coreNavigationUrl, config.page.pageId, config.page.showInRelated);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section);
+        modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
+        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        
+        switch (isNetworkFront) {
+
+            case true:
+                modules.showFrontExpanders();
+                modules.showTrailblockToggles(config);
+                break;
+
+            case false:
+                modules.transcludeTopStories(config);
+                break;
+        
+        }
+
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent);
         modules.loadOphanAnalytics();
-        modules.showFrontExpanders();
-        modules.showTrailblockToggles(config);
+
     };
 
     // domReady proxy for bootstrap
-    var domReadyBootstrap = function (config) {
+    var domReadyBootstrap = function (config, userPrefs) {
         domReady(function () {
-            bootstrap(config);
+            bootstrap(config, userPrefs);
         });
     };
 

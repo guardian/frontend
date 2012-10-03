@@ -1,23 +1,23 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int, isShaded: Boolean = false)
 
 @defining(trails.length){ numTrails =>
-    <div class="zone-border trailblock @if(isShaded){trailblock-shaded}"
+    <div class="trailblock @if(isShaded){trailblock-shaded}"
         id="related-trails" 
         data-count="@{trails.length - visibleTrails}"
         data-link-name="related @heading">
         
-        <h3>@Html(heading)</h3>
+        <h3 class="type-2 article-zone">@Html(heading)</h3>
 
         <ul class="unstyled">
             @trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li>@formatTrail(trail, info, related=true)</li>
+                <li class="trail">@formatTrail(trail, info, related=true)</li>
             }.slice( 0, visibleTrails )
         </ul>
 
         @if( trails.length > visibleTrails) {
             <ul class="unstyled panel">
                 @trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li>@formatTrail(trail, info, related=true)</li>
+                    <li class="trail">@formatTrail(trail, info, related=true)</li>
                 }.slice( visibleTrails, trails.length )
             </ul>
         }

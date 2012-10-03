@@ -2,19 +2,28 @@
     margin-top: 26px;
 }
 
-.trailblock.rolled-up {
+.trailblock.rolled-up,
+.trailblock.rolled-out {
     margin-top: 0px;
 }
 
-.trailblock ul > li {
-    margin-bottom: 12px;
-
+.trail {
+    margin-bottom: @baseline;
+    border-bottom: 1px solid #e3e3db;
+    padding-bottom: @baseline;
 }
 
-.trailblock h3 {
-    .standard-font-sizing;
-    padding-top: 3px; 
-    margin-bottom: 12px;
+.trail.has-image {
+    padding-bottom: 0px;
+}
+
+.trail.has-image img {
+    vertical-align: bottom;
+}
+
+.trail:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .trailblock-shaded {
@@ -23,16 +32,34 @@
 }
 
 .trail-headline {
-    .standard-font-sizing;
-    margin-bottom: 1px;
+    .type-2;
+}
+
+.trailblock-topstories .trail-headline {
+    .type-3;
+}
+
+.front-section .gt-base {
+    display: block;
+}
+
+.trailblock .media {
+    padding: 0px @gutter 8px @gutter;
+}
+
+.trailblock h3 {
+    margin-bottom: @baseline;
 }
 
 .trailtext {
-    font-family: helvetica, arial, sans-serif;
-    font-size: 14px;
-    line-height: 18px;
-    color: #262626; 
     margin-bottom: 0;
+    padding: 0 20px;
+    color: #545454; 
+    .standard-font-sizing;
+}
+
+li:first-child .trailtext {
+    padding-bottom: 12px;
 }
 
 .trailblock .img img {
@@ -52,6 +79,12 @@
      overflow: hidden;
      .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
+     padding-top: @baseline;
+     border-top: 1px solid #e3e3db;
+}
+
+.trailblock ul { 
+    margin-bottom: 0px;
 }
           
 .trailblock.shut .panel,
@@ -60,6 +93,7 @@
     overflow: hidden;
     position: relative;
     max-height: 0;
+    padding-top: 0;
 }
           
 .trailblock .count {
@@ -70,12 +104,27 @@
     display: inline-block;
 }
 
+.trailblock .panel .trail-headline {
+    .type-3;
+}
+
 .trailblock-topstories li:first-child .b2 { border-top:none;}
 
 .toggle-trailblock {
+    .type-6;
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 0px;
+    right: 0px;
     color: #fff;
-    font-size: 12px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.toggle-trailblock:link,
+.toggle-trailblock:visited {
+    background-color: transparent;
+}
+
+.trailblock ul:first-child {
+    margin-top: 24px;
 }

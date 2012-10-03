@@ -1,17 +1,3 @@
-/* utility classes for automatically hiding list items > n */
-.show-1 li:nth-child(n+2),
-.show-2 li:nth-child(n+3),
-.show-3 li:nth-child(n+4),
-.show-4 li:nth-child(n+5),
-.show-5 li:nth-child(n+6),
-.show-6 li:nth-child(n+7),
-.show-7 li:nth-child(n+8),
-.show-8 li:nth-child(n+9),
-.show-9 li:nth-child(n+10),
-.show-10 li:nth-child(n+11) { 
-    display: none; 
-}
-
 .gt-base {
     display: none;
 }
@@ -26,7 +12,14 @@
     cursor: pointer;
 }
 
-/* was max-width... still up for debate. */
+.cta:before {
+    content: '- ';
+}
+
+.shut .cta:before {
+    content: '+ ';
+}
+
 .maxed {
     width: 100%;
 }
@@ -34,12 +27,6 @@
 .placeholder,
 .initially-off {
     display: none !important; // this could get ugly. watching it.
-}
-
-.fixed-width-timestamp {
-    width: @trailblockImgWidth;
-    float: left;
-    margin-right: 10px;
 }
 
 .on {
@@ -50,42 +37,23 @@
     color: #7CA6BE;
 }
 
-@media screen and (min-width: 850px) {
-    .trailblock .img img {
-        width: 160px;
-    }
-}
+/* please add media queries in ascending order of size */
 
-@media screen and (min-width: 600px) {
-    .lt-extended {
-        display: none;
-    }
+@media screen and (max-width: 300px) {
 
-    /* sorry for this :( -- it's because nth-child above has higher specificity */
-    /* 
-    .trailblock li,
-    .trailblock .trail {
-        display: block !important;
+    .tabs li a {
+        font-size: 14px;
     }
-    */
-
-    article .trailblock {
-        width: 40%;
-        float: left;
-        margin-right: 20px;
-        margin-bottom: 20px;
-    }
-
 }
 
 @media screen and (min-width: 400px) {
 
-    .gt-base {
-        display: block;
-    }
-
     .comments .datestamp {
         text-align: right;
+    }
+
+    .trail-headline {
+        font-size: 17px;
     }
 
 }
@@ -94,6 +62,22 @@
     
     #container {
         padding: 0 40px 10% 40px;
+    }
+
+    .svg #logo {
+        width: 180px;
+    }
+
+    #logo { 
+        height: 40px;
+    }
+
+}
+
+@media screen and (min-width: 850px) {
+
+    .trailblock .img img {
+        width: 160px;
     }
 
 }

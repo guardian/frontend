@@ -25,6 +25,9 @@ object JSON {
 //annoyingly content api will sometimes have things surrounded by <p> tags and sometimes not.
 //since you cannot nest <p> tags this causes all sorts of problems
 object RemoveOuterParaHtml {
+
+  def apply(html: Html): Html = this(html.body)
+
   def apply(text: String): Html = {
     val fragment = Jsoup.parseBodyFragment(text).body()
     if (!fragment.html().startsWith("<p>")) {
@@ -33,6 +36,10 @@ object RemoveOuterParaHtml {
       Html(fragment.html.drop(3).dropRight(4))
     }
   }
+}
+
+object SafeName {
+  def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
 }
 
 object JavaScriptValue {
@@ -112,6 +119,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
       img.attr("itemprop", "contentURL")
 
       wrapper.attr("class", imgWidth match {
+        case width if width <= 100 => "img-tiny inline-image"
         case width if width <= 220 => "img-base inline-image"
         case width if width < 460 => "img-median inline-image"
         case width => "img-extended"
@@ -124,7 +132,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
         i.caption foreach { c =>
           val caption = body.createElement("p")
           caption.attr("class", "caption")
-          caption.text(c)
+          caption.html(c)
           caption.attr("itemprop", "description")
           wrapper.appendChild(caption)
         }
@@ -135,13 +143,17 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
   }
 }
 
-object InBodyLinkCleaner extends HtmlCleaner {
+object BulletCleaner {
+  def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
+}
+
+case class InBodyLinkCleaner(dataLinkName: String) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
 
     links.foreach { link =>
       link.attr("href", InBodyLink(link.attr("href")))
-      link.attr("data-link-name", "in body link")
+      link.attr("data-link-name", dataLinkName)
     }
     body
   }
@@ -156,16 +168,15 @@ object ABTest {
   }
 }
 
+// whitespace in the <span> below is significant 
+// (results in spaces after author names before commas)
+// so don't add any, fool.
 object ContributorLinks {
   def apply(text: String, tags: Seq[Tag]): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-            <a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>
-              { tag.name }
-            </a>
-          </span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
@@ -209,19 +220,6 @@ object OmnitureAnalyticsData {
     )
 
     Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
-  }
-}
-
-object InsertAfterParagraph {
-
-  //paragraph index is 1 based, not 0 based
-  def apply(paragraphIndex: Int)(html: Html): HtmlCleaner = new HtmlCleaner {
-    def clean(body: Document) = {
-      val paras = body.getElementsByTag("p")
-      val targetPara = if (paras.length > paragraphIndex) Some(paras(paragraphIndex - 1)) else None
-      targetPara foreach (_.after(html.body))
-      body
-    }
   }
 }
 

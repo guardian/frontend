@@ -1,5 +1,8 @@
 class gu {
 
+  require check-aws-facts
+  require check-stage-facts
+
   File {
     owner => root,
     group => root,
@@ -7,12 +10,12 @@ class gu {
   }
 
   file {
-    "/etc/gu": ensure => directory;
+    '/etc/gu': ensure => directory;
 
-    "/etc/gu/install_vars":
-      source => "puppet:///files/etc/gu/install_vars";
+    '/etc/gu/install_vars':
+      content => template('etc/gu/install_vars.erb');
+
+    '/etc/gu/aws.conf':
+      content => template('etc/gu/aws.conf.erb');
   }
-
-  File["/etc/gu"] -> File["/etc/gu/install_vars"]
-
 }

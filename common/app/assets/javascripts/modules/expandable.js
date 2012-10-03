@@ -14,7 +14,7 @@ define(['common', 'bean'], function (common, bean) {
         var view = {
            
             updateCallToAction: function () {
-                cta.innerHTML = 'Show <span class="count">' + model.getCount() + '</span> ' + ((expanded) ? 'less' : 'more');
+                cta.innerHTML = 'Show ' + model.getCount() + ' ' + ((expanded) ? 'less' : 'more');
                 cta.setAttribute('data-link-name', 'show ' + ((expanded) ? 'more' : 'less'));
                 cta.setAttribute('data-is-ajax', '1');
             },
@@ -31,7 +31,7 @@ define(['common', 'bean'], function (common, bean) {
                 bean.add(cta, 'click', function (e) {
                     common.mediator.emit('modules:expandable:cta:toggle:' + id);
                 });
-                cta.className = 'cta expander b2';
+                cta.className = 'cta expander';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
             }

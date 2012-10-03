@@ -39,14 +39,9 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           then("I should see the news trailblock")
-          val news = $("[data-link-name=\"front block News\"]")
+          val news = $(".zone-news")
           news.findFirst("h1").getText should be("News")
           news.find(".trail-headline") should have length (10)
-
-          and("I should see the Sport trailblock")
-          val sport = $("[data-link-name=\"front block Sport\"]")
-          sport.findFirst("h1").getText should be("Sport")
-          sport.find(".trail-headline") should have length (10)
       }
     }
 
@@ -89,10 +84,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       HtmlUnit("/") {
         browser =>
           import browser._
-
           then("All links should be tracked")
           $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
-
       }
     }
 
@@ -182,64 +175,68 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       given("I am on the Network Front and I have not expanded any blocks")
 
-      val duplicateStory = StubTrail("http://www.gu.com/1234")
+      Fake {
+        val duplicateStory = StubTrail("http://www.gu.com/1234")
 
-      val description = TrailblockDescription("", "Name", 5)
+        val description = TrailblockDescription("", "Name", 5)
 
-      val topStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
+        val topStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
+        }
+
+        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+        }
+
+        val front = new FrontEdition("UK", Nil) {
+          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
+        }
+
+        then("I should not see a link to the same piece of content twice")
+
+        val topStories = front()(0)
+        val sport = front()(1)
+
+        topStories.trails.contains(duplicateStory) should be(true)
+
+        sport.trails.contains(duplicateStory) should be(false)
+        sport.trails should have length (9)
       }
-
-      val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
-      }
-
-      val front = new FrontEdition("UK", Nil) {
-        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
-      }
-
-      then("I should not see a link to the same piece of content twice")
-
-      val topStories = front()(0)
-      val sport = front()(1)
-
-      topStories.trails.contains(duplicateStory) should be(true)
-
-      sport.trails.contains(duplicateStory) should be(false)
-      sport.trails should have length (9)
     }
 
     scenario("do not de-duplicate from hidden trails") {
 
       given("I am on the Network Front and I have not expanded any blocks")
 
-      val duplicateStory = StubTrail("http://www.gu.com/1234")
+      Fake {
+        val duplicateStory = StubTrail("http://www.gu.com/1234")
 
-      val description = TrailblockDescription("", "Name", 5)
-      //duplicate trail is hidden behind "more" button
-      val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
+        val description = TrailblockDescription("", "Name", 5)
+        //duplicate trail is hidden behind "more" button
+        val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
 
-      val topStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, topTrails))
+        val topStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, topTrails))
+        }
+
+        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+        }
+
+        val front = new FrontEdition("UK", Nil) {
+          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
+        }
+
+        then("I should see a link that is a duplicate of a link that is hidden")
+
+        val topStories = front()(0)
+        val sport = front()(1)
+
+        topStories.trails.contains(duplicateStory) should be(true)
+
+        sport.trails.contains(duplicateStory) should be(true)
+        sport.trails should have length (10)
       }
-
-      val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-        override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
-      }
-
-      val front = new FrontEdition("UK", Nil) {
-        override val agents = Seq(topStoriesBlock, sportStoriesBlock)
-      }
-
-      then("I should see a link that is a duplicate of a link that is hidden")
-
-      val topStories = front()(0)
-      val sport = front()(1)
-
-      topStories.trails.contains(duplicateStory) should be(true)
-
-      sport.trails.contains(duplicateStory) should be(true)
-      sport.trails should have length (10)
     }
 
     scenario("Default front trailblock configuration") {
@@ -247,16 +244,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I visit the network front")
 
       then("I should see 10 (5 of whch are hidden) Top stories")
-      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5))
-      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5))
+      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
+      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
 
       and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
-      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5))
-      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5))
+      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1))
+      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1))
 
       and("I should see 6 (3 of which are hidden) Comment is Free stories")
-      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
-      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3))
+      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
+      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
 
       and("I should see 1 Culture story")
       Front.uk.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
@@ -285,14 +282,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I visit the network front")
       and("it is empty")
 
-      val controller = new FrontController {
-        override val front = new Front() {
-          override def apply(edition: String) = FrontPage(Seq.empty)
+      Fake {
+        val controller = new FrontController {
+          override val front = new Front() {
+            override def apply(edition: String) = FrontPage(Seq.empty)
+          }
         }
-      }
 
-      then("I should see an internal server error")
-      controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+        then("I should see an internal server error")
+        controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+      }
     }
   }
 
