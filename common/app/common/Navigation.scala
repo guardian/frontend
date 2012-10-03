@@ -13,7 +13,7 @@ object Navigation {
     val sportTitle = if (edition == "US") "Sports" else "Sport"
 
     val sections = Seq(
-      Section("news", "UK News", "/uk", "UK news"),
+      Section("uk", "UK News", "/uk", "UK news"),
       Section("world", "World News", "/world", "World news"),
       Section("sport", "Sport", "/sport", sportTitle),
       Section("football", "Football", "/football", "Football"),
