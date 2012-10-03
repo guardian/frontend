@@ -1,10 +1,14 @@
 package conf
 
+import play.api.Play
+import play.api.Play.current
 import common._
 import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
 import pa.{ Proxy, DispatchHttp, PaClient }
+import io.Source
+import java.net.URI
 
 object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
 
@@ -17,7 +21,7 @@ object Configuration extends GuardianConfiguration("frontend-football", webappCo
 
 object ContentApi extends ContentApiClient(Configuration)
 
-object FootballClient extends PaClient with DispatchHttp {
+object FootballClient extends PaClient with TestAwareHttp {
 
   override lazy val maxConnections = 50
 
@@ -52,4 +56,23 @@ object Management extends Management {
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )
+}
+
+sealed trait TestAwareHttp extends DispatchHttp { self: PaClient =>
+
+  private lazy val isTest = Play.isTest
+
+  override def GET(url: String) = {
+
+    //it is either this or dependency injection
+    if (isTest) {
+      val fileName = "testdata/" + (url.replace(apiKey, "test-key").replace(base, "").replace("/", "__"))
+      val file = getClass.getClassLoader.getResource(fileName)
+      val xml = Source.fromFile(file.toURI).getLines.mkString
+      pa.Response(200, xml, "ok")
+    } else {
+      super.GET(url)
+    }
+  }
+
 }

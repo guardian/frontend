@@ -4,12 +4,14 @@ import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
+import play.api.Play.current
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
 import model.Competition
 import model.Page
 import scala.Some
 import play.api.templates.Html
+import play.api.libs.concurrent.Akka
 
 case class FixturesOnDate(date: DateMidnight, competitions: Seq[Competition])
 
@@ -18,6 +20,13 @@ case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate], nextPage: Opt
 object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
   val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "Football fixtures")
+
+  def warmup() = Action {
+    val promiseOfWarmup = Akka.future(Competitions.warmup())
+    Async {
+      promiseOfWarmup.map(w => Ok("warm"))
+    }
+  }
 
   def renderDate(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)

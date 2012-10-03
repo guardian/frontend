@@ -5,6 +5,8 @@
 # For dev machines
 GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
 
+GET /_warmup                                            controllers.FixturesController.warmup()
+
 GET     /football/fixtures/:year/:month/:day            controllers.FixturesController.renderDate(year, month, day)
 GET     /football/fixtures                              controllers.FixturesController.render()
 

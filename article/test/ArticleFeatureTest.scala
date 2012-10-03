@@ -1,10 +1,9 @@
 package test
 
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import collection.JavaConverters._
-import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
+import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {

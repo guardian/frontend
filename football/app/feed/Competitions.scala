@@ -16,7 +16,7 @@ trait Competitions extends AkkaSupport {
   private val competitions = Seq(
     CompetitionAgent(Competition("100", "/football/premierleague", "Barclays Premier League", "Premier League")),
     CompetitionAgent(Competition("101", "/football/championsleague", "Npower Championship", "Championship")),
-
+    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish League")),
     CompetitionAgent(Competition("102", "/football/leagueonefootball", "Npower League One", "League One")),
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "Npower League Two", "League Two"))
   )
@@ -69,6 +69,12 @@ trait Competitions extends AkkaSupport {
   def shutDown() {
     schedules.foreach(_.cancel())
     competitions.foreach(_.shutdown())
+  }
+
+  def warmup() {
+    refreshCompetitionData()
+    refresh()
+    competitions.foreach(_.await())
   }
 }
 

@@ -5,16 +5,15 @@ import pa.{ Result, Fixture }
 import conf.FootballClient
 import org.joda.time.DateMidnight
 import model.Competition
-import scala.concurrent.ops._
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
-import akka.actor.Cancellable
+import akka.util.Timeout
+import common._
+import play.api.Logger
 
 trait HasCompetition {
   def competition: Competition
 }
 
-trait FixtureAgent extends AkkaSupport with HasCompetition {
+trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   private val agent = play_akka.agent[Seq[Fixture]](Nil)
 
@@ -22,12 +21,15 @@ trait FixtureAgent extends AkkaSupport with HasCompetition {
 
   def shutdownFixtures() { agent.close() }
 
+  def awaitFixtures() { quietly(agent.await(Timeout(5000))) }
+
   def fixtures = agent()
 
   def fixturesOn(date: DateMidnight) = fixtures.filter(_.fixtureDate.toDateMidnight == date)
 }
 
-trait ResultAgent extends AkkaSupport with HasCompetition {
+trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
+
   private val agent = play_akka.agent[Seq[Result]](Nil)
 
   def refreshResults() {
@@ -39,6 +41,8 @@ trait ResultAgent extends AkkaSupport with HasCompetition {
   def shutdownResults() { agent.close() }
 
   def results = agent()
+
+  def awaitResults() { quietly { agent.await(Timeout(5000)) } }
 
   def resultsOn(date: DateMidnight) = results.filter(_.date.toDateMidnight == date)
 }
@@ -59,6 +63,11 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
   def shutdown() {
     shutdownFixtures()
     shutdownResults()
+  }
+
+  def await() {
+    awaitFixtures()
+    awaitResults()
   }
 }
 
