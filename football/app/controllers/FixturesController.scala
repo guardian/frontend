@@ -8,14 +8,12 @@ import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
 import model.Competition
 import model.Page
-import controllers.FixturesPage
 import scala.Some
-import controllers.FixturesOnDate
-import views.html.fixtures
+import play.api.templates.Html
 
 case class FixturesOnDate(date: DateMidnight, competitions: Seq[Competition])
 
-case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate], nextPage: String, previousPage: String)
+case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate], nextPage: Option[String], previousPage: Option[String])
 
 object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
@@ -28,23 +26,30 @@ object FixturesController extends Controller with Logging {
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
 
     val dayOne = date.getOrElse(new DateMidnight)
-    val dayTwo = dayOne.plusDays(1)
-    val dayThree = dayTwo.plusDays(1)
 
-    val fixtures = Seq(
-      FixturesOnDate(dayOne, Competitions.withFixturesOrResultsOn(dayOne)),
-      FixturesOnDate(dayTwo, Competitions.withFixturesOrResultsOn(dayTwo)),
-      FixturesOnDate(dayThree, Competitions.withFixturesOrResultsOn(dayThree))
-    )
-
-    CachedOk(page) {
-      Compressed(
-        views.html.fixtures(
-          FixturesPage(page, fixtures,
-            nextPage = "/football/fixtures/%s".format(dayThree.plusDays(1).toString("yyyy/MMM/dd").toLowerCase),
-            previousPage = "/football/fixtures/%s".format(dayOne.minusDays(3).toString("yyyy/MMM/dd").toLowerCase)
-          ))
-      )
+    val fixtures = Seq(dayOne, dayOne.plusDays(1), dayOne.plusDays(2)).map { day =>
+      FixturesOnDate(day, Competitions.withFixturesOrResultsOn(day))
     }
+
+    val nextPage = Competitions.nextDateWithFixturesFrom(dayOne.plusDays(2)).map(toNextPreviousUrl)
+    val previousPage = Competitions.previousDateWithFixturesFrom(dayOne).map(toNextPreviousUrl)
+
+    Cached(60) {
+      val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
+
+      request.getQueryString("callback").map { callback =>
+
+        JsonComponent(
+          "html" -> views.html.fixtures(fixturesPage, json = true),
+          "more" -> Html(nextPage.getOrElse(""))
+        )
+
+      }.getOrElse(Ok(views.html.fixtures(fixturesPage, json = false)))
+    }
+  }
+
+  private def toNextPreviousUrl(date: DateMidnight) = date match {
+    case today if today == DateMidnight.now => "/football/fixtures"
+    case other => "/football/fixtures/%s" format (other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }
