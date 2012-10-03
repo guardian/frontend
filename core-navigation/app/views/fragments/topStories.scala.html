@@ -1,8 +1,8 @@
 @(trails: Seq[Trail])
-<div class="trailblock trailblock-topstories">
-    <ul>
+<div class="headline-list box-indent" data-link-name="top-stories">
+    <ul class="unstyled">
         @trails.zipWithRowInfo.map{ case (trail, info) =>
-            <li class="trail">@formatTrail(trail, info, related=true)</li>
+            <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
         }
     </ul>
 </div>
