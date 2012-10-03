@@ -15,7 +15,10 @@ define([
         'modules/navigation/top-stories',
         'modules/navigation/controls',
         'domReady',
-        'modules/trailblocktoggle'
+        'modules/trailblocktoggle',
+        'bean',
+        'modules/more-fixtures',
+        'bonzo'
     ],
     function (
         common,
@@ -34,7 +37,10 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle,
+        bean,
+        MoreFixtures,
+        bonzo) {
 
         var modules = {
 
@@ -126,6 +132,15 @@ define([
                 var edition = config.page.edition;
                 var tt = new TrailblockToggle();
                 tt.go(edition);
+            },
+            
+            showMoreFixtures: function() {
+            	var fixturesNav = document.getElementById('fixtures-nav');
+            	MoreFixtures.init(fixturesNav);
+            	bean.add(fixturesNav, 'a', 'click', function(e) {
+            		e.preventDefault();
+            		common.mediator.emit('ui:more-fixtures:clicked', [e.currentTarget]);
+            	})
             }
          
         };
@@ -153,7 +168,18 @@ define([
                 break;
         
         }
-
+        
+        // page specific functionality
+        switch (config.page.pageId) {
+        
+        	case 'football/fixtures':
+        		// loading only occurs on fixtures homepage (i.e. not on date)
+        		if (window.location.pathname === '/football/fixtures') {
+        			modules.showMoreFixtures();
+        		}
+        	
+        }
+        
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
