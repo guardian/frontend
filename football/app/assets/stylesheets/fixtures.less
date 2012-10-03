@@ -1,15 +1,11 @@
-@sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-@gutter: 20px;
-@status-width: 50px;
-
-.competition-date{
+.competitions-date{
 	text-indent: 10px;
-	margin: 10px 0;
+	margin: 10px 0 0px;
 }
 .competition-title{
   background-color:#8cc540;
   line-height:2em;
-  text-indent:@gutter;
+  text-indent:20px;
   margin-bottom:0;
   font-weight:normal;
 }
@@ -17,28 +13,35 @@
   color:#ffffff;	
 }
 
-.fixtures{
+.fixtures,
+.competitions{
   padding:0;
   margin:0;
   border-bottom:2px solid #e3e3e3;
 }
-.fixtures li{
+.competitions{
+	margin-top:10px;
+}
+.fixture,
+.competition{
 	list-style:none;
+}
+.fixture{	
 	border-bottom:1px solid #e3e3e3;
-	padding:10px (10px + @status-width + @gutter) 10px @gutter;
+	padding:10px 80px 10px 20px;
   position:relative;	
   overflow:hidden;
 }
-.fixtures .fixture-desc{
+.fixture .fixture-desc{
 	position:relative;
 	margin-bottom:0;
 	background-color:white;
 	border:none;
 	padding:0;
 	font-weight:normal;
-	font-family:@sans-serif
+	font-family:"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
-.fixtures .team{
+.fixture .team{
 	display:block;
 	float:left;
 	width:50%;
@@ -47,14 +50,14 @@
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
 }
-.fixtures .home{
+.fixture .home{
 	text-align:right;
 	padding-right:20px;
 }
-.fixtures .away{
+.fixture .away{
   padding-left:20px;
 }
-.fixtures .result{
+.fixture .result{
 	position:absolute;
 	display:block;
 	width:40px;
@@ -63,24 +66,24 @@
 	margin-left:-20px;
 	text-align:center;
 }
-.fixtures .status{
+.fixture .status{
 	position:absolute;
-	width:@status-width;
+	width:50px;
 	top:10px;
-	right:@gutter;
+	right:20px;
 	color:#979797;
 }
-.fixtures .status .status-desc{
+.fixture .status .status-desc{
 	position:absolute;
 	left:-9999px;
 }
-.fixtures .status abbr{
+.fixture .status abbr{
 	color:#ffffff;
 	padding:5px 10px;	
 }
-.fixtures .status .half-time{
+.fixture .status .half-time{
 	background-color:#8cc540;
 }
-.fixtures .status .full-time{
+.fixture .status .full-time{
   background-color:#da4b23;
 }

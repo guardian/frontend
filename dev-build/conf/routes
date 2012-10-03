@@ -20,6 +20,7 @@ GET     /related/:edition/*path                         controllers.RelatedContr
 
 #Football
 GET     /football/fixtures                              controllers.FixturesController.render()
+GET     /football/fixtures/:year/:month/:day            controllers.FixturesController.renderDate(year, month, day)
 
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()

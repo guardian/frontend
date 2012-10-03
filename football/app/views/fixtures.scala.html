@@ -3,38 +3,47 @@
 
 
 @render(model: FixturesPage) = {
-
-@model.days.map{ day =>
-    <h2 class="competition-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
-    @day.competitions.map{ comp =>
-        <h3 class="competition-title">
-            <a href='@comp.url'>@comp.fullName</a>
-        </h3>
-        <ol class="fixtures">
-            @comp.results.map{ result =>
-            <li>
-                <p class="fixture-desc">
-                    <span class="home team">@ShortName(result.homeTeam)</span>
-                    <span class="result">@result.homeTeam.score - @result.awayTeam.score</span>
-                    <span class="away team">@ShortName(result.awayTeam)</span>
-                </p>
-                <p class="status"><span class="status-desc">Kick-off:</span> @result.date.toString("HH:mm")</p>
+    @model.days.map{ day =>
+        <h2 class="competitions-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
+        <ol class="competitions">
+            <li class="competition">
+                @day.competitions.map{ comp =>
+                    <h3 class="competition-title">
+                        <a href="@comp.url">@comp.fullName</a>
+                    </h3>
+                    <ol class="fixtures">
+                        @comp.results.map{ result =>
+                            <li class="fixture">
+                                <p class="fixture-desc">
+                                    <span class="home team">@result.homeTeam.name</span>
+                                    <span class="result">@result.homeTeam.score - @result.awayTeam.score</span>
+                                    <span class="away team">@result.awayTeam.name</span>
+                                </p>
+                                <p class="status">
+                                <!-- <span class="status-desc">Minutes:</span> 86'
+                                      <abbr title="Half-time" class="half-time">HT</abbr> -->
+                                      <abbr title="Full-time" class="full-time">FT</abbr>
+                                </p>
+                            </li>
+                        }
+    
+                        @comp.fixtures.map{ fixture =>
+                            <li class="fixture">
+                                <p class="fixture-desc">
+                                  <span class="home team">@fixture.homeTeam.name</span>
+                                  <span class="result">v</span> 
+                                  <span class="away team">@fixture.awayTeam.name</span>
+                                </p>
+                                <p class="status">
+                                  <span class="status-desc">Kick-off:</span> @fixture.fixtureDate.toString("HH:mm")
+                                </p>
+                            </li>
+                        }
+                    </ol>
+                }
             </li>
-            }
-
-            @comp.fixtures.map{ fixture =>
-            <li>
-                <p class="fixture-desc">
-                    <span class="home team">@fixture.homeTeam.name</span>
-                    <span class="result">v</span>
-                    <span class="away team">@fixture.awayTeam.name</span>
-                </p>
-                <p class="status"><span class="status-desc">Kick-off:</span> @fixture.fixtureDate.toString("HH:mm")</p>
-            </li>
-            }
         </ol>
     }
-  }
 }
 
 
@@ -50,12 +59,12 @@
     }{
         <h1>All fixtures</h1>
 
-        @model.previousPage.map{url => <a href="@url" data-link-name="previous fixtures">previous</a>}
-
-        &nbsp; &nbsp;
-
-        @model.nextPage.map{url => <a href="@url" data-link-name="next fixtures">next</a>}
-
         @render(model)
+        
+        <div id="fixtures-nav">        
+            @model.previousPage.map{url => <a href="@url" data-link-name="previous fixtures">previous</a>}
+            @model.nextPage.map{url => <a href="@url" data-link-name="next fixtures">next</a>}
+        </div>
+
     }
 }
