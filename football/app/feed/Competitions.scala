@@ -2,7 +2,6 @@ package feed
 
 import common.AkkaSupport
 import akka.actor.Cancellable
-import feed.CompetitionAgent
 import org.joda.time.DateMidnight
 import conf.FootballClient
 import akka.util.Duration
@@ -38,29 +37,18 @@ trait Competitions extends AkkaSupport {
     c.competition.copy(fixtures = c.fixturesOn(date), results = c.resultsOn(date))
   }.filter(c => c.hasResults || c.hasFixtures)
 
-  def nextDateWithFixturesFrom(date: DateMidnight): Option[DateMidnight] = {
-    competitions.flatMap(_.fixtures)
-      .map(_.fixtureDate.toDateMidnight).distinct
-      .sortBy(_.getMillis)
-      .find(_.isAfter(date))
-  }
+  def nextThreeFixtureDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
+    .map(_.fixtureDate.toDateMidnight).distinct
+    .sortBy(_.getMillis)
+    .filter(_ isAfter date.minusDays(1))
+    .take(3)
 
-  def previousDateWithFixturesFrom(date: DateMidnight): Option[DateMidnight] = {
-
-    val candidateDays = competitions.flatMap(_.fixtures)
-      .map(_.date.toDateMidnight)
-      .distinct
-      .sortBy(_.getMillis).reverse
-      .filter(_.isBefore(date))
-      .take(3).toList
-
-    //the days may not be contiguous so it takes a bit of massaging to find the right one
-    candidateDays match {
-      case Nil => None
-      case head :: tail => (head :: (tail.filter(_.isAfter(head.minusDays(3))))).lastOption
-      case other => other.headOption
-    }
-  }
+  def threeFixtureDatesBefore(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
+    .map(_.date.toDateMidnight)
+    .distinct
+    .sortBy(_.getMillis).reverse
+    .filter(_ isBefore date)
+    .take(3)
 
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     competitions.find(_.competition.id == season.id).foreach { agent =>

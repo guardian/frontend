@@ -34,14 +34,16 @@ object FixturesController extends Controller with Logging {
 
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
 
-    val dayOne = date.getOrElse(new DateMidnight)
+    val startDate = date.getOrElse(new DateMidnight)
 
-    val fixtures = Seq(dayOne, dayOne.plusDays(1), dayOne.plusDays(2)).map { day =>
+    val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
+
+    val fixtures = fixtureDays.map { day =>
       FixturesOnDate(day, Competitions.withFixturesOrResultsOn(day))
     }
 
-    val nextPage = Competitions.nextDateWithFixturesFrom(dayOne.plusDays(2)).map(toNextPreviousUrl)
-    val previousPage = Competitions.previousDateWithFixturesFrom(dayOne).map(toNextPreviousUrl)
+    val nextPage = findNextDateWithFixtures(fixtureDays)
+    val previousPage = findPreviousDateWithFixtures(startDate)
 
     Cached(page) {
       val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
@@ -54,6 +56,13 @@ object FixturesController extends Controller with Logging {
 
       }.getOrElse(Ok(views.html.fixtures(fixturesPage, json = false)))
     }
+  }
+
+  def findPreviousDateWithFixtures(date: DateMidnight) =
+    Competitions.threeFixtureDatesBefore(date).lastOption.map(toNextPreviousUrl)
+
+  private def findNextDateWithFixtures(fixtureDays: Seq[DateMidnight]) = fixtureDays.lastOption.flatMap { date =>
+    Competitions.nextThreeFixtureDatesStarting(date.plusDays(1)).headOption.map(toNextPreviousUrl)
   }
 
   private def toNextPreviousUrl(date: DateMidnight) = date match {
