@@ -16,8 +16,11 @@ aside {
 
 .article-body .caption,
 figcaption {
-    padding:@baseline @gutter;
     .type-7;
+}
+
+figcaption {
+    padding:@baseline @gutter;
 }
 
 .article-body .caption:before,
@@ -86,6 +89,7 @@ cite a:visited {
     color: #333;
     .type-3;
     margin-bottom: @baseline;
+    clear: both;
 }
 
 .article-body h2.block-title {
@@ -126,15 +130,30 @@ cite a:visited {
 }
 
 .article-body blockquote:before {
+    .icon-blockquote-before;
     display: block;
     content: '';
     margin: 21px 0 @baseline 0;
-    .icon-blockquote-before;
+    clear: both;
+}
+
+.svg .article-body blockquote:before {
+    .svg-icon-blockquote-before;
 }
 
 .article-body blockquote:after {
+    .icon-blockquote-after;
     display: block;
     content: '';
     margin-bottom: 22px;
-    .icon-blockquote-after;
+}
+
+.svg .article-body blockquote:after {
+    .svg-icon-blockquote-after;
+}
+
+.article-body .timestamp:first-child {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
 }

@@ -1,3 +1,39 @@
+/* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
+.nav {
+    list-style:none;
+    margin:0;
+    padding: @baseline 0 4px 0;
+}
+
+.nav > li,
+.nav > li > a {
+    .type-6;
+    display:inline-block;
+    zoom:1;
+}
+
+.nav-stacked > li{
+    display:list-item;
+}
+
+.nav-stacked > li > a {
+    padding: 10px 0;
+    margin: 0 @gutter;
+    border-top: 1px solid #d4d7d7;
+    display: block;
+    height: auto;
+}
+
+.nav-stacked a {
+    background-color: transparent;
+    color: #333;http://localhost:9000/culture
+}
+
+.nav li:first-child a,
+.sections li:nth-child(2) a {
+    border-top:none;
+}
+
 .expander {
     display: block;
     padding-top: 5px;
@@ -6,87 +42,102 @@
 }
 
 .sections-control {
-    padding: 9px 0px 8px 5px;
+    padding: 18px @gutter 10px 5px;
 }
 
 .sections-control span {
-    background-image: url(http://i.imgur.com/cDEag.png);
-    background-repeat: repeat-x;
-    background-position: center;
     width: 24px;
     height: 13px;
     display: inline-block;
     text-indent: -1000em;
+    .icon-menu;
 }
 
-#sections-control-footer {
-    padding: 10px 20px 10px 0px;
+.svg .sections-control span {
+    .svg-icon-menu
 }
 
-#sections-control-footer span {
-    background-image: url(http://i.imgur.com/h62dV.png)
+.sections li {
+    float:left;
+    width: 49%;
 }
 
-.nav-divider{
-    width: 1px;
-    height: 25px;
-    margin-left: 5px;
-    background-image: url('http://i.imgur.com/9jAeA.png');
+.sections li:nth-child(even) {
+    border-left: 1px solid #D8D8D8;
+}
+
+.section-divider {
+    padding: 4px 0;
+    margin: 0 @gutter;
+    border-top: 3px solid #E3E3DB;
+}
+
+.section-divider li a {
+    padding: 8px 0;
+}
+
+.section-divider li:nth-child(odd) a {
+    margin-left: 0;
+    padding-right: @gutter;
+}
+
+.edition:after {
     display: inline-block;
+    content: '';
+    width: 5px;
+    height: 5px;
+    margin-left: 10px;
+    border: 1px solid #d4d7d7;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
 }
+
+.edition.edition-selected:after {
+    border-color: #000;
+    background: #000;
+}
+
 
 .nav-popup {
     -webkit-transform: translate3d(0,0,0);
-    .box-shadow(0px 0px 20px #595959);
+    position: relative;
+    z-index: 100;
     background-color: #ffffff;
-    margin: 8px auto 10px auto;
-    padding: 0px;
+    padding: 0;
     list-style: none;
     clear: both;
     position: relative;
-    .rounded-corners(2px);
-    margin: 0 20px 20px;
+    border-top: 1px solid  #D2D2D2;
+    border-bottom: 1px solid  #D2D2D2;
+    margin-bottom: -4px;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 0%, 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(95%,#ffffff), color-stop(100%,#f2f2f2));
+    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -o-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: -ms-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
+    background: linear-gradient(to bottom,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
 }
 
-.sections ul {
-    margin: 0;
-    list-style: none;
+.nav-popup:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -(@navBorderWidth * 2)+1;
+    right: @gutter;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent #f0f0f0 transparent; // border color should be same as div background color
+    border-style: solid;
+    border-width: @navBorderWidth;
+}
+
+.topstories-control {
     font-size: 14px;
-}
-
-.sections a,
-.sections .header,
-.sections .divider {
-    padding: 7px 5px 7px 5px;
-    border-top: 1px solid #d4d7d7;
-    display: block;
-    height: auto;
-}
-
-.sections .header {
-    background: #efefef;
-}
-
-.sections .divider {
-    border-width: 4px;
-}
-
-.edition-selected {
-    background: url(http://i.imgur.com/CeIKy.png) no-repeat 98% center;
-}
-
-.sections li:first-child a,
-.top-stories li:first-child a {
-   border-top-width: 0; 
-}
-
-.sections .selected,
-.sections a:hover {
-    display: block;
-    background-color: #428aa9;
-    color: #FFFFFF;
-    height: auto;
-    text-decoration: none;
+    margin-top: 14px;
+    padding: 2.5px 10px 2.5px 10px;
+    border-right: 1px solid #707272;
 }
 
 .top-stories ul {
@@ -99,12 +150,6 @@
     margin-top: 0;
 }
 
-.topstories-control {
-    font-size: 14px;
-    margin-top: 5px;
-    padding: 2.5px 10px 2.5px 10px;
-    border-right: 1px solid #707272;
-}
 
 .sections-control:active,
 .topstories-control:hover {
@@ -119,55 +164,26 @@ a.topstories-control,
     vertical-align: top;
 }
 
-#navigation-header {
-    float: right;
-}
-
+#navigation-header,
 #navigation-footer {
-    float: right;
-}
-
-.nav-popup:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -(@navBorderWidth * 2);
-    right: 5px;
-    width: 0;
-    height: 0;
-    border-color: transparent transparent #FFFFFF transparent; // border color should be same as div background color
-    border-style: solid;
-    border-width: @navBorderWidth;
+    float: right
 }
 
 .top-stories:after {
     right: 65px !important;
 }
 
-
-.footer-nav,
-.footer-nav li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.footer .nav {
+    float: left;
+    width: 48%;
 }
 
-.footer-nav {
-    margin-bottom: 12px;
+.footer .nav:first-child {
+    border-right: 1px solid #d4d7d7;
 }
 
-.footer-nav li {
-    display: block;
-    border-top: 1px solid #ccc;
-    padding: 10px 20px 10px 20px;
+.footer .nav-stacked li a {
+    color: #6F6F6E;
+    margin-left: 0;
 }
 
-.footer-nav li a {
-    display: block;
-    color: #666666;
-    font-size: 14px;
-}
-
-.footer-nav li:last-child {
-    border-bottom: 1px solid #ccc;    
-}
