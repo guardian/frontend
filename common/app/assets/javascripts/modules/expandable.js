@@ -41,7 +41,7 @@ define(['common', 'bean'], function (common, bean) {
                 if (!expanded) {
                     window.setTimeout(function () {
                         cta.scrollIntoView();
-                    }, 500);
+                    }, 550);
                 }
             }
         };
