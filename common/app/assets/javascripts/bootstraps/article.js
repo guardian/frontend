@@ -135,14 +135,13 @@ define([
             },
             
             showMoreFixtures: function() {
-            	var fixturesNav = document.getElementById('fixtures-nav');
-            	MoreFixtures.init(fixturesNav);
-            	bean.add(fixturesNav, 'a', 'click', function(e) {
-            		e.preventDefault();
-            		common.mediator.emit('ui:more-fixtures:clicked', [e.currentTarget]);
-            	})
+                var fixturesNav = document.getElementById('fixtures-nav');
+                MoreFixtures.init(fixturesNav);
+                bean.add(fixturesNav, 'a', 'click', function(e) {
+                    e.preventDefault();
+                    common.mediator.emit('ui:more-fixtures:clicked', [e.currentTarget]);
+                });
             }
-         
         };
 
     var bootstrap = function (config, userPrefs) {
@@ -170,14 +169,11 @@ define([
         }
         
         // page specific functionality
-        switch (config.page.pageId) {
-        
-        	case 'football/fixtures':
-        		// loading only occurs on fixtures homepage (i.e. not on date)
-        		if (window.location.pathname === '/football/fixtures') {
-        			modules.showMoreFixtures();
-        		}
-        	
+        if (config.page.pageId === 'football/fixtures') {
+            // loading only occurs on fixtures homepage (i.e. not on date)
+            if (window.location.pathname === '/football/fixtures') {
+                modules.showMoreFixtures();
+            }
         }
         
         modules.loadOmnitureAnalytics(config);
