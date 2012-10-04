@@ -34,6 +34,15 @@ define(['common', 'bean'], function (common, bean) {
                 cta.className = 'cta expander';
                 dom[0].appendChild(cta);
                 view.updateCallToAction();
+            },
+
+            scrollToCallToAction: function () {
+                // feels a bit hacky but need to give the transition time to finish before scrolling
+                if (!expanded) {
+                    window.setTimeout(function () {
+                        cta.scrollIntoView();
+                    }, 500);
+                }
             }
         };
         
@@ -72,6 +81,7 @@ define(['common', 'bean'], function (common, bean) {
         // view listeners
         common.mediator.on('modules:expandable:expandedChange:' + id, view.renderState);
         common.mediator.on('modules:expandable:expandedChange:' + id, view.updateCallToAction);
+        common.mediator.on('modules:expandable:expandedChange:' + id, view.scrollToCallToAction);
 
         // model listeners
         common.mediator.on('modules:expandable:cta:toggle:' + id, model.toggleExpanded);
