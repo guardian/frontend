@@ -172,7 +172,7 @@ define([
         if (e.persisted) {
             location.reload();
         }
-    })
+    });
 
     return {
         go: domReadyBootstrap
