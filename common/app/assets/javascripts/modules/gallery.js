@@ -114,7 +114,11 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                 window.onpopstate = function(event) {
                     var urlParams = getUrlVars(); // fetch again
                     if(urlParams.index) {
-                        view.advanceGallery(null, urlParams.index);
+                        var matches = urlParams.index.match(/\d+/); // URL params can become like ?index=10#top
+                        if (matches) {
+                            urlParams.index = matches[0];
+                            view.advanceGallery(null, urlParams.index);
+                        }
                     }
                 };
 
