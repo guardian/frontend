@@ -167,6 +167,13 @@ define([
         });
     };
 
+    // Listen for pages coming from page cache. Temporary fix for forward/back bug in iOS 6.
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            location.reload();
+        }
+    });
+
     return {
         go: domReadyBootstrap
     };
