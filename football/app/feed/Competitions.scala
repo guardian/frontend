@@ -2,6 +2,7 @@ package feed
 
 import common.AkkaSupport
 import akka.actor.Cancellable
+import feed.CompetitionAgent
 import org.joda.time.DateMidnight
 import conf.FootballClient
 import akka.util.Duration
@@ -14,11 +15,23 @@ trait Competitions extends AkkaSupport {
   private var schedules: Seq[Cancellable] = Nil
 
   private val competitions = Seq(
-    CompetitionAgent(Competition("100", "/football/premierleague", "Barclays Premier League", "Premier League")),
-    CompetitionAgent(Competition("101", "/football/championsleague", "Npower Championship", "Championship")),
-    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish League")),
-    CompetitionAgent(Competition("102", "/football/leagueonefootball", "Npower League One", "League One")),
-    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "Npower League Two", "League Two"))
+
+    CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League")),
+    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League")),
+
+    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League")),
+    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship")),
+    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One")),
+    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two")),
+    CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup")),
+
+    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League")),
+    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One")),
+    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two")),
+    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three")),
+
+    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup")),
+    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield"))
   )
 
   def withFixturesOrResultsOn(date: DateMidnight) = competitions.map { c =>
