@@ -6,6 +6,7 @@ import model.TrailblockDescription
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
 import akka.util.Duration
+import views.support.Featured
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
@@ -17,7 +18,7 @@ class Front extends AkkaSupport with Logging {
 
   val uk = new FrontEdition("UK", Seq(
     TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
-    TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
+    TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
     TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
     TrailblockDescription("culture", "Culture", numItemsVisible = 1),
     TrailblockDescription("business", "Business", numItemsVisible = 1),
