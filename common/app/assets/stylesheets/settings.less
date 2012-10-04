@@ -44,6 +44,14 @@
     -moz-box-shadow: @args;
 }
 
+.rotate (@args) {
+    transform: rotate(@args);
+    -ms-transform: rotate(@args);
+    -webkit-transform: rotate(@args);
+    -o-transform: rotate(@args);
+    -moz-transform: rotate(@args); 
+}
+
 /* taken from ClearLeft's ClearLess library */
 #gradient {
 

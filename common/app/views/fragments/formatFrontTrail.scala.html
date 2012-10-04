@@ -42,20 +42,20 @@
             }
         } 
 
-        <h3 class="media-body trail-headline">
+        <h2 class="media-body trail-headline">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
-        </h3>
+        </h2>
     </div>
     
     @trail.trailText.map { text => <div class="trail-text type-4">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
 }
 
 @if(info.rowNum > 5) {
-    <h3 class="trail-headline type-3">
+    <h2 class="trail-headline type-3">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
-    </h3>
+    </h2>
 }

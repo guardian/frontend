@@ -19,76 +19,21 @@ aside {
     list-style: none;
 }
 
-.article-body .caption,
-figcaption {
-    .type-7;
-}
-
-figcaption {
-    padding:@baseline @gutter;
-}
-
-.article-body .caption:before,
-figcaption:before {
-    display: inline-block;
-    content: '';
-    margin-right: 4px;
-    .icon-image;
-}
-
-.svg .article-body .caption:before,
-.svg figcaption:before {
-    .svg-icon-image;
-}
-
-figure {
-    margin: 0px 0px 15px 0px;
-}
-
-figure img {
-    display: block;
-}
-
-cite {
-    .type-7
-}
-
-cite a {
-    color: #666666;
-}
-
-cite a:hover,
-cite a:visited:hover {
-    color: #4d4d4d;
-    border-bottom: 1px dotted #4d4d4d;
-}
-
-cite a:visited {
-    color: #808080;
-    border-bottom: 1px dotted #808080;
-}
+.article h1 {
+    font-weight: bold;
+} 
 
 .byline {
     .type-4;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    margin: 0 @gutter @baseline @gutter;
-    padding:@baseline/2 0 @baseline*2 0;
+    margin: 0 @gutter @baseline*2 @gutter;
+    padding: @baseline 0 @baseline*3 0;
 }
 
 .article-body {
-    padding: 0 20px;
+    padding: 0 @gutter @baseline*2 @gutter;
 }
-
-.article-body p {
-    margin: 0px;
-    margin-bottom: @baseline;
-    .type-4;
-
-}
-.article h1 {
-    font-weight: bold;
-} 
 
 .article-body h2 {
     color: #333;
@@ -117,7 +62,7 @@ cite a:visited {
 .article-body address,
 .article-body blockquote,
 .article-body blockquote p {
-    margin: 0px 0px @baseline 0px;
+    margin: 0px 0px @baseline*2 0px;
     .type-4;
     color: #333;
 }
@@ -161,4 +106,50 @@ cite a:visited {
     border-top: none;
     margin-top: 0;
     padding-top: 0;
+}
+
+.article-body .caption,
+figcaption {
+    .type-7;
+    padding:@baseline*2 @gutter;
+}
+
+.article-body .caption:before,
+figcaption:before {
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+    .icon-image;
+}
+
+.svg .article-body .caption:before,
+.svg figcaption:before {
+    .svg-icon-image;
+}
+
+figure {
+    margin: 0px 0px @baseline*1 0px;
+}
+
+figure img {
+    display: block;
+}
+
+cite {
+    .type-7
+}
+
+cite a {
+    color: #666666;
+}
+
+cite a:hover,
+cite a:visited:hover {
+    color: #4d4d4d;
+    border-bottom: 1px dotted #4d4d4d;
+}
+
+cite a:visited {
+    color: #808080;
+    border-bottom: 1px dotted #808080;
 }

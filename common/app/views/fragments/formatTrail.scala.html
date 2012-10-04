@@ -20,9 +20,9 @@
             </a>
         </h3>
     </div>
-        
-    @if(info.rowNum <= 5) {
-        @trail.trailText.map { text => <div class="trail-text type-4">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
-    }
 
 </div>
+
+@if(info.rowNum <= 5) {
+    @trail.trailText.map { text => <div class="trail-text type-4">@withJsoup(text)(InBodyLinkCleaner("in trail text link"))</div> }
+}
