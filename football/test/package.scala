@@ -1,21 +1,36 @@
 package test
 
-import conf.Configuration
-import play.api.test.TestBrowser
+import conf.{ FootballClient, Configuration }
+import feed.Competitions
+import pa.Http
+import io.Source
+import play.api.Plugin
+
+class TestDependencies(app: play.api.Application) extends Plugin {
+  override def onStart() = {
+    FootballClient.setHttp(TestHttp)
+    Competitions.refresh()
+    Competitions.warmup()
+  }
+}
+
+object TestHttp extends Http {
+
+  val base = getClass.getClassLoader.getResource("testdata").getFile + "/__"
+
+  def GET(url: String) = {
+    val fileName = base + (url.replace(Configuration.pa.apiKey, "test-key")
+      .replace("http://pads6.pa-sport.com/", "")
+      .replace("/", "__"))
+
+    val xml = Source.fromFile(fileName).getLines.mkString
+
+    pa.Response(200, xml, "ok")
+  }
+}
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit(Configuration) {
-
-    import Configuration.edition._
-
-    override def UK[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + ukHost)(browser => Unit)
-      super.UK(path)(block)
-    }
-
-    override def US[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + usHost)(browser => Unit)
-      super.US(path)(block)
-    }
+    override val testPlugins = Seq(classOf[TestDependencies].getName)
   }
 }

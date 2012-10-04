@@ -24,7 +24,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
         then("I should see fixtures for today")
 
-        findFirst(".competition-date").getText should be("Saturday 13 October 2012")
+        findFirst(".competitions-date").getText should be("Saturday 13 October 2012")
 
         val fixture = findFirst(".fixtures").findFirst(".fixture-desc")
         fixture.findFirst(".home").getText should be("Bournemouth")
@@ -32,10 +32,10 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         findFirst(".status").getText should include("15:00")
 
         and("I should see fixtures for tomorrow")
-        $(".competition-date").getTexts should contain("Sunday 14 October 2012")
+        $(".competitions-date").getTexts should contain("Sunday 14 October 2012")
 
         and("I should see fixtures for the next day")
-        $(".competition-date").getTexts should contain("Monday 15 October 2012")
+        $(".competitions-date").getTexts should contain("Monday 15 October 2012")
       }
     }
 
@@ -50,7 +50,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         browser.await()
 
         then("I should navigate to the next set of fixtures")
-        findFirst(".competition-date").getText should be("Tuesday 16 October 2012")
+        findFirst(".competitions-date").getText should be("Tuesday 16 October 2012")
       }
     }
   }

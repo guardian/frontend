@@ -1,14 +1,10 @@
 package conf
 
-import play.api.Play
-import play.api.Play.current
 import common._
 import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
-import pa.{ Proxy, DispatchHttp, PaClient }
-import io.Source
-import java.net.URI
+import pa.{ Http, Proxy, DispatchHttp, PaClient }
 
 object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
 
@@ -21,17 +17,7 @@ object Configuration extends GuardianConfiguration("frontend-football", webappCo
 
 object ContentApi extends ContentApiClient(Configuration)
 
-object FootballClient extends PaClient with TestAwareHttp {
-
-  override lazy val maxConnections = 50
-
-  override lazy val requestTimeoutInMs = 5000
-
-  override lazy val proxy = if (Configuration.proxy.isDefined)
-    Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
-  else
-    None
-
+object FootballClient extends PaClient with DelegatedHttp {
   lazy val apiKey = Configuration.pa.apiKey
 }
 
@@ -58,21 +44,20 @@ object Management extends Management {
   )
 }
 
-sealed trait TestAwareHttp extends DispatchHttp { self: PaClient =>
+sealed trait DelegatedHttp extends Http {
 
-  private lazy val isTest = Play.isTest
+  private var delegate: Http = new DispatchHttp {
+    override lazy val maxConnections = 50
 
-  override def GET(url: String) = {
+    override lazy val requestTimeoutInMs = 5000
 
-    //it is either this or dependency injection
-    if (isTest) {
-      val fileName = "testdata/" + (url.replace(apiKey, "test-key").replace(base, "").replace("/", "__"))
-      val file = getClass.getClassLoader.getResource(fileName)
-      val xml = Source.fromFile(file.toURI).getLines.mkString
-      pa.Response(200, xml, "ok")
-    } else {
-      super.GET(url)
-    }
+    override lazy val proxy = if (Configuration.proxy.isDefined)
+      Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
+    else
+      None
   }
 
+  def setHttp(http: Http) { delegate = http }
+
+  override def GET(url: String) = delegate.GET(url)
 }
