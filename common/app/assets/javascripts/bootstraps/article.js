@@ -130,8 +130,10 @@ define([
                 tt.go(edition);
             },
 
-            loadAdverts: function (config) {
-                new Adverts.load(config);
+            loadAdverts: function (adUrl, siteId) {
+                var url = adUrl + siteId;
+
+                new Adverts(url).load();
             }
          
         };
@@ -163,7 +165,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-        modules.loadAdverts(config);
+        modules.loadAdverts(config.page.oasUrl, config.page.oasSiteId);
     };
 
     // domReady proxy for bootstrap
