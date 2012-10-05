@@ -5,6 +5,6 @@
 # For dev machines
 GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
 
-GET     /football/fixtures/:year/:month/:day            controllers.FixturesController.renderDate(year, month, day)
-GET     /football/fixtures                              controllers.FixturesController.render()
+GET     /football/fixtures/:year/:month/:day            controllers.FixturesController.allCompetitionsOn(year, month, day)
+GET     /football/fixtures                              controllers.FixturesController.allCompetitions()
 

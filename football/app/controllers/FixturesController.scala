@@ -4,14 +4,12 @@ import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.Play.current
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
 import model.Competition
 import model.Page
 import scala.Some
 import play.api.templates.Html
-import play.api.libs.concurrent.Akka
 
 case class FixturesOnDate(date: DateMidnight, competitions: Seq[Competition])
 
@@ -21,32 +19,28 @@ object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
   val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "Football fixtures")
 
-  def renderDate(year: String, month: String, day: String) = render(
+  def allCompetitionsOn(year: String, month: String, day: String) = allCompetitions(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
-  def render(date: Option[DateMidnight] = None) = Action { implicit request =>
+  def allCompetitions(date: Option[DateMidnight] = None) = Action { implicit request =>
 
     val startDate = date.getOrElse(new DateMidnight)
 
     val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
 
-    val fixtures = fixtureDays.map { day =>
-      FixturesOnDate(day, Competitions.withFixturesOrResultsOn(day))
-    }
+    val fixtures = fixtureDays.map { day => FixturesOnDate(day, Competitions.withFixturesOrResultsOn(day)) }
 
     val nextPage = findNextDateWithFixtures(fixtureDays)
     val previousPage = findPreviousDateWithFixtures(startDate)
 
-    Cached(page) {
-      val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
-      request.getQueryString("callback").map { callback =>
+    val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
 
+    Cached(page) {
+      request.getQueryString("callback").map { callback =>
         JsonComponent(
           "html" -> views.html.fragments.fixtureList(fixturesPage),
-          "more" -> Html(nextPage.getOrElse(""))
-        )
-
+          "more" -> Html(nextPage.getOrElse("")))
       }.getOrElse(Ok(views.html.fixtures(fixturesPage)))
     }
   }
