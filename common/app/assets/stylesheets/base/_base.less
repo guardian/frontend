@@ -9,13 +9,6 @@ h1 {
     margin-bottom: 12px;
 }
 
-.standfirst {
-    color: #666;
-    margin-bottom: @baseline*1.5;
-    font-family: georgia, serif;
-    .standard-font-sizing;
-}
-
 h3 {
     margin: 0 0 7px 0;
     .subheading-font-sizing;
@@ -31,7 +24,7 @@ h4 {
 
 .dateline {
     font-family: @sans-serif;
-    margin: 0px 0px @baseline 0px;
+    margin: 0px 0px @baseline*2 0px;
     color: #666;
     .incidental-font-sizing;
 }
@@ -51,17 +44,12 @@ span.timestamp {
     height: 10px;
     color: #666;
     font-family: @sans-serif;
-    margin:0 0 12px 20px;
+    padding:0 0 @baseline*2 @gutter;
     .incidental-font-sizing;
-    line-height: 10px;
 }
 
 .relative-timestamp span {
     display: inline-block;
-}
-
-.front-timestamp {
-    margin-top: 24px;
 }
 
 ol, ul {
