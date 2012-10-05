@@ -50,11 +50,11 @@ object FixturesController extends Controller with Logging {
       request.getQueryString("callback").map { callback =>
 
         JsonComponent(
-          "html" -> views.html.fixtures(fixturesPage, json = true),
+          "html" -> views.html.fragments.fixtureList(fixturesPage),
           "more" -> Html(nextPage.getOrElse(""))
         )
 
-      }.getOrElse(Ok(views.html.fixtures(fixturesPage, json = false)))
+      }.getOrElse(Ok(views.html.fixtures(fixturesPage)))
     }
   }
 
