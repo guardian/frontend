@@ -21,13 +21,6 @@ object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
   val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "Football fixtures")
 
-  def warmup() = Action {
-    val promiseOfWarmup = Akka.future(Competitions.warmup())
-    Async {
-      promiseOfWarmup.map(w => Ok("warm"))
-    }
-  }
-
   def renderDate(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
