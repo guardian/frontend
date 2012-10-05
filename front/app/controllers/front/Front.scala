@@ -6,6 +6,7 @@ import model.TrailblockDescription
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
 import akka.util.Duration
+import views.support.Featured
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
