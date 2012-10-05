@@ -15,7 +15,8 @@ define([
         'modules/navigation/top-stories',
         'modules/navigation/controls',
         'domReady',
-        'modules/trailblocktoggle'
+        'modules/trailblocktoggle',
+        'modules/adverts'
     ],
     function (
         common,
@@ -34,7 +35,8 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle,
+        Adverts) {
 
         var modules = {
 
@@ -126,6 +128,10 @@ define([
                 var edition = config.page.edition;
                 var tt = new TrailblockToggle();
                 tt.go(edition);
+            },
+
+            loadAdverts: function (config) {
+                new Adverts.load(config);
             }
          
         };
@@ -157,7 +163,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
+        modules.loadAdverts(config);
     };
 
     // domReady proxy for bootstrap
