@@ -8,3 +8,6 @@ GET     /assets/*file                                   controllers.Assets.at(pa
 GET     /football/fixtures/:year/:month/:day            controllers.FixturesController.allCompetitionsOn(year, month, day)
 GET     /football/fixtures                              controllers.FixturesController.allCompetitions()
 
+GET     /football/results/:year/:month/:day            controllers.ResultsController.allCompetitionsOn(year, month, day)
+GET     /football/results                              controllers.ResultsController.allCompetitions()
+

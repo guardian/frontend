@@ -1,4 +1,4 @@
-@(model: FixturesPage)
+@(model: MatchesPage)
 
 @model.days.map{ day =>
 <h2 class="competitions-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
@@ -17,8 +17,6 @@
                     <span class="away team">@result.awayTeam.name</span>
                 </p>
                 <p class="status">
-                    <!-- <span class="status-desc">Minutes:</span> 86'
-                 <abbr title="Half-time" class="half-time">HT</abbr> -->
                     <abbr title="Full-time" class="full-time">FT</abbr>
                 </p>
             </li>

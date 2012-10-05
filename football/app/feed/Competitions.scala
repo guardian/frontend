@@ -50,6 +50,19 @@ trait Competitions extends AkkaSupport {
     .filter(_ isBefore date)
     .take(3)
 
+  def lastThreeResultsDatesEnding(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.results)
+    .map(_.date.toDateMidnight).distinct
+    .sortBy(_.getMillis)
+    .reverse
+    .filter(_ isBefore date.plusDays(1))
+    .take(3)
+
+  def nextThreeResultsDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.results)
+    .map(_.date.toDateMidnight).distinct
+    .sortBy(_.getMillis)
+    .filter(_ isAfter date.minusDays(1))
+    .take(3)
+
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     competitions.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))

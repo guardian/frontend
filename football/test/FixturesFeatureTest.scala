@@ -47,7 +47,8 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         import browser._
 
         when("I click the 'next' link")
-        findFirst("[data-link-name='next fixtures']").click()
+
+        findFirst("[data-link-name=next]").click()
         browser.await()
 
         then("I should navigate to the next set of fixtures")

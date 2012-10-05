@@ -6,18 +6,13 @@ import play.api.mvc.{ Action, Controller }
 import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
-import model.Competition
 import model.Page
 import scala.Some
 import play.api.templates.Html
 
-case class FixturesOnDate(date: DateMidnight, competitions: Seq[Competition])
-
-case class FixturesPage(page: MetaData, days: Seq[FixturesOnDate], nextPage: Option[String], previousPage: Option[String])
-
 object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
-  val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "Football fixtures")
+  val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
 
   def allCompetitionsOn(year: String, month: String, day: String) = allCompetitions(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -29,19 +24,19 @@ object FixturesController extends Controller with Logging {
 
     val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
 
-    val fixtures = fixtureDays.map { day => FixturesOnDate(day, Competitions.withFixturesOrResultsOn(day)) }
+    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withFixturesOrResultsOn(day)) }
 
     val nextPage = findNextDateWithFixtures(fixtureDays)
     val previousPage = findPreviousDateWithFixtures(startDate)
 
-    val fixturesPage = FixturesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage)
+    val fixturesPage = MatchesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage, "fixtures")
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(
-          "html" -> views.html.fragments.fixtureList(fixturesPage),
+          "html" -> views.html.fragments.matchesList(fixturesPage),
           "more" -> Html(nextPage.getOrElse("")))
-      }.getOrElse(Ok(views.html.fixtures(fixturesPage)))
+      }.getOrElse(Ok(views.html.matches(fixturesPage)))
     }
   }
 
