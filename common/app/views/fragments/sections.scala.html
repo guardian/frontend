@@ -19,12 +19,9 @@
         
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
 </ul>
+
 <ul class="nav nav-stacked section-divider cf">
-    <li><a data-link-name="help" href="/help">Help</a></li>
-    <li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
-</ul>
-<ul class="nav nav-stacked section-divider cf">
-    <li><a class="edition @if(edition == "UK"){edition-selected}" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li>
-    <li><a class="edition @if(edition == "US"){edition-selected}" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li>
+    @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li> }
+    @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li> }
 </ul>
 }

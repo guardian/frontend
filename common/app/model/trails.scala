@@ -1,6 +1,7 @@
 package model
 
 import org.joda.time.DateTime
+import views.support.Style
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -13,6 +14,6 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
-case class TrailblockDescription(id: String, name: String, numItemsVisible: Int, numLargeImages: Int = 0) {
+case class TrailblockDescription(id: String, name: String, numItemsVisible: Int, numLargeImages: Int = 0, style: Option[Style] = None) {
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 }

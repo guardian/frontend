@@ -4,15 +4,16 @@
 @blockquoteMarginLeft: 31px;
 @navBorderWidth: 10px;
 
-@baseline: 12px;
-@gutter: 20px;
+@baseline: 6px;
+@gutter: 22px;
+
 
 @serif: "webegyptian", georgia, serif;
 @sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 .standard-font-sizing {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .subheading-font-sizing {
@@ -21,8 +22,8 @@
 }
 
 .incidental-font-sizing {
-    font-size: 10px;
-    line-height: 15px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .transition (@args) {
@@ -41,6 +42,14 @@
     box-shadow: @args;
     -webkit-box-shadow: @args;
     -moz-box-shadow: @args;
+}
+
+.rotate (@args) {
+    transform: rotate(@args);
+    -ms-transform: rotate(@args);
+    -webkit-transform: rotate(@args);
+    -o-transform: rotate(@args);
+    -moz-transform: rotate(@args); 
 }
 
 /* taken from ClearLeft's ClearLess library */
