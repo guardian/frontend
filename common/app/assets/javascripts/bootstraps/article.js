@@ -169,9 +169,9 @@ define([
         }
         
         // page specific functionality
-        if (config.page.pageId === 'football/fixtures') {
-            // loading only occurs on fixtures homepage (i.e. not on date)
-            if (window.location.pathname === '/football/fixtures') {
+        if (config.page.pageId === 'football/fixtures' || config.page.pageId === 'football/results') {
+            // loading only occurs on fixtures and results homepage (i.e. not on date)
+            if (window.location.pathname === '/football/fixtures' || window.location.pathname === '/football/results') {
                 modules.showMoreFixtures();
             }
         }

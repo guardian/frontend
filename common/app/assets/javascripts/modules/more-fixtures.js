@@ -9,8 +9,12 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
 
             // update nav
             bonzo(qwery('a', nav))
-                .text('Show next 3 days')
-                .addClass('cta');
+	            .addClass('cta')
+	            .each(function(element, index) {
+	            	var element = bonzo(element);
+	            	// update text in cta
+	            	element.text('Show ' + bonzo(element).attr('data-link-name') + ' 3 days');
+	            });
 
             common.mediator.on('ui:more-fixtures:clicked', function (_link) {
                 var link = bonzo(_link);
