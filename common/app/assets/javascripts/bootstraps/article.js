@@ -15,7 +15,8 @@ define([
         'modules/navigation/top-stories',
         'modules/navigation/controls',
         'domReady',
-        'modules/trailblocktoggle'
+        'modules/trailblocktoggle',
+        'modules/gallery'
     ],
     function (
         common,
@@ -34,7 +35,8 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle,
+        Gallery) {
 
         var modules = {
 
@@ -112,6 +114,10 @@ define([
                 var tabs = new Tabs().init();
             },
 
+            sexUpGallery: function () {
+                var g = new Gallery().init();
+            },
+
             showFrontExpanders: function () {
                 var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
                 for (i=0, l=frontTrailblocks.length; i<l; i++) {
@@ -157,6 +163,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
+        modules.sexUpGallery();
 
     };
 
