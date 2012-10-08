@@ -2,14 +2,19 @@ package feed
 
 import common.AkkaSupport
 import akka.actor.Cancellable
-import org.joda.time.DateMidnight
+import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
 import conf.FootballClient
 import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
+import java.util.Comparator
 
 trait Competitions extends AkkaSupport {
+
+  private implicit val dateOrdering = Ordering.comparatorToOrdering(
+    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
+  )
 
   private var schedules: Seq[Cancellable] = Nil
 
@@ -33,12 +38,22 @@ trait Competitions extends AkkaSupport {
     CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield"))
   )
 
-  def withFixturesOrResultsOn(date: DateMidnight) = competitions.map { c =>
-    c.competition.copy(fixtures = c.fixturesOn(date), results = c.resultsOn(date))
-  }.filter(c => c.hasResults || c.hasFixtures)
+  def withMatchesOn(date: DateMidnight) = competitions.map { c =>
+
+    val results = c.resultsOn(date)
+
+    //results trump live games
+    val resultsWithLiveGames = (if (date == DateMidnight.now) c.liveMatches else Nil)
+      .filterNot(g => results.exists(_.id == g.id)) ++ results
+
+    //results and live games trump fixtures
+    val allGames = c.fixturesOn(date).filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
+
+    c.competition.copy(matches = allGames.sortBy(_.date))
+  }.filter(_.matches.nonEmpty)
 
   def nextThreeFixtureDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
-    .map(_.fixtureDate.toDateMidnight).distinct
+    .map(_.date.toDateMidnight).distinct
     .sortBy(_.getMillis)
     .filter(_ isAfter date.minusDays(1))
     .take(3)
@@ -74,10 +89,10 @@ trait Competitions extends AkkaSupport {
 
   def startup() {
     import play_akka.scheduler._
-    schedules =
-      every(Duration(5, MINUTES)) { refreshCompetitionData() } ::
-        every(Duration(2, MINUTES), initialDelay = Duration(5, SECONDS)) { refresh() } ::
-        Nil
+    schedules = every(Duration(5, MINUTES)) { refreshCompetitionData() } ::
+      every(Duration(2, MINUTES), initialDelay = Duration(5, SECONDS)) { refresh() } ::
+      every(Duration(10, SECONDS)) { competitions.foreach(_.refreshLiveMatches()) } ::
+      Nil
   }
 
   def shutDown() {

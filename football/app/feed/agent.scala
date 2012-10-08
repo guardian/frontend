@@ -1,27 +1,34 @@
 package feed
 
-import common.AkkaSupport
-import pa.{ Result, Fixture }
+import pa.{ LiveMatch, Result, Fixture }
 import conf.FootballClient
-import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
+import org.joda.time.DateMidnight
 import model.Competition
 import akka.util.Timeout
 import common._
-import java.util.Comparator
 
 trait HasCompetition {
   def competition: Competition
 }
 
-trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
+trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
 
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
-  )
+  private val agent = play_akka.agent[Seq[LiveMatch]](Nil)
+
+  def refreshLiveMatches() { agent.sendOff { old => FootballClient.liveMatches(competition.id) } }
+
+  def shutdownLiveMatches() { agent.close() }
+
+  def awaitLiveMatches() { quietly(agent.await(Timeout(5000))) }
+
+  def liveMatches = agent()
+}
+
+trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   private val agent = play_akka.agent[Seq[Fixture]](Nil)
 
-  def refreshFixtures() { agent.sendOff { old => FootballClient.fixtures(competition.id).sortBy(_.fixtureDate) } }
+  def refreshFixtures() { agent.sendOff { old => FootballClient.fixtures(competition.id) } }
 
   def shutdownFixtures() { agent.close() }
 
@@ -29,20 +36,16 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   def fixtures = agent()
 
-  def fixturesOn(date: DateMidnight) = fixtures.filter(_.fixtureDate.toDateMidnight == date)
+  def fixturesOn(date: DateMidnight) = fixtures.filter(_.date.toDateMidnight == date)
 }
 
 trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
-
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
-  )
 
   private val agent = play_akka.agent[Seq[Result]](Nil)
 
   def refreshResults() {
     competition.startDate.foreach { startDate =>
-      agent.sendOff { old => FootballClient.results(competition.id, startDate).sortBy(_.date) }
+      agent.sendOff { old => FootballClient.results(competition.id, startDate) }
     }
   }
 
@@ -55,7 +58,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
   def resultsOn(date: DateMidnight) = results.filter(_.date.toDateMidnight == date)
 }
 
-class CompetitionAgent(_competition: Competition) extends FixtureAgent with ResultAgent {
+class CompetitionAgent(_competition: Competition) extends FixtureAgent with ResultAgent with LiveMatchAgent {
 
   private val agent = play_akka.agent(_competition)
 
@@ -71,6 +74,7 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
   def shutdown() {
     shutdownFixtures()
     shutdownResults()
+    shutdownLiveMatches()
   }
 
   def await() {
