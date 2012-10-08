@@ -28,14 +28,16 @@ trait MetaData {
     "web-title" -> webTitle,
     "build-number" -> buildNumber
   )
+
+  def cacheSeconds = 60
 }
 
-case class Page(
-  canonicalUrl: String,
-  id: String,
-  section: String,
-  apiUrl: String,
-  webTitle: String) extends MetaData
+class Page(
+  val canonicalUrl: String,
+  val id: String,
+  val section: String,
+  val apiUrl: String,
+  val webTitle: String) extends MetaData
 
 trait Images {
   def images: Seq[Image]

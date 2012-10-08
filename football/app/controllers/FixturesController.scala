@@ -12,7 +12,7 @@ import play.api.templates.Html
 
 object FixturesController extends Controller with Logging {
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
-  val page = Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
+  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
 
   def allCompetitionsOn(year: String, month: String, day: String) = allCompetitions(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -29,7 +29,8 @@ object FixturesController extends Controller with Logging {
     val nextPage = findNextDateWithFixtures(fixtureDays)
     val previousPage = findPreviousDateWithFixtures(startDate)
 
-    val fixturesPage = MatchesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage, "fixtures")
+    val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
+      nextPage, previousPage, "fixtures")
 
     //TODO caching for live matches
     Cached(page) {

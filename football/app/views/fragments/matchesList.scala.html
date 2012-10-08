@@ -4,17 +4,21 @@
 <h2 class="competitions-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
 <ol class="competitions" data-link-name="fixtures">
     <li class="competition">
-        @day.competitions.map{ comp =>
-        <h3 class="competition-title">
-            <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
-        </h3>
-        <ol class="fixtures">
-            @comp.matches.map{
-                case fixture: pa.Fixture => { @fragments.fixture(fixture) }
-                case result: pa.Result => { @fragments.result(result) }
-                case live: pa.LiveMatch => { @fragments.liveMatch(live) }
+        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
+            <h3 class="competition-title">
+                <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
+            </h3>
+            <ol class="fixtures">
+                @comp.matches.map{
+                    case fixture: pa.Fixture => { @fragments.fixture(fixture) }
+                    case result: pa.Result => { @fragments.result(result) }
+                    case live: pa.LiveMatch => { @fragments.liveMatch(live) }
+                }
+            </ol>
+            @* Shows the live blog (if there is one) after the first competition *@
+            @if(row.isFirst){
+                @model.blog.map{ blog => @fragments.formatTrail(blog, row) }
             }
-        </ol>
         }
     </li>
 </ol>

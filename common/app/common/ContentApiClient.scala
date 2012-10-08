@@ -20,6 +20,12 @@ trait ApiQueryDefaults { self: Api =>
     .showMedia("all")
     .showStoryPackage(true)
     .tag(supportedTypes)
+
+  //common fileds that we use across most queries.
+  def search(edition: String): SearchQuery = search
+    .edition(edition)
+    .showFields(trailFields)
+    .tag(supportedTypes)
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults with DispatchHttp

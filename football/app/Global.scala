@@ -1,5 +1,6 @@
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import common.RequestMetrics
+import model.LiveBlog
 import play.api.GlobalSettings
 import feed.Competitions
 
@@ -16,10 +17,12 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     Competitions.startup()
+    LiveBlog.startup()
   }
 
   override def onStop(app: play.api.Application) {
     Competitions.shutDown()
+    LiveBlog.shutdown()
     super.onStop(app)
   }
 }
