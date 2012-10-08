@@ -7,8 +7,8 @@ module ContentApi
     def initialize(path="/", params=nil)
         @path = path
         @params = OpenStruct.new
-        @params.format = 'json'
         @params.api_key = 'frontend-perf-test'
+        @params.format = 'json'
         @params.edition = 'UK'
         @params.user_tier = 'internal'
         @host = 'http://test-mq-elb.content.guardianapis.com/api'
