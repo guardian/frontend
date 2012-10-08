@@ -18,10 +18,16 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
 
             common.mediator.on('ui:more-fixtures:clicked', function (_link) {
                 var link = bonzo(_link);
+                var endpoint = link.attr('href') + '?callback=?';
+                // check we have a competition filter
+                var competitionFilter = window.location.search.match('(competition=[^&]+)');
+                if (competitionFilter) {
+                	endpoint += '&' + competitionFilter[0]
+                }
                 var callbackName = 'loadMoreFixtures';
                 reqwest(
                     {
-                        url:link.attr('href') + '?callback=?',
+                        url:endpoint,
                         type:'jsonp',
                         success:function (response) {
                             // place html before nav
@@ -29,6 +35,8 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
                             // update more link (if there is more)
                             if (response.more) {
                                 link.attr('href', response.more);
+                            } else {
+                            	link.remove();
                             }
                         }
                     }
