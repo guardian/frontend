@@ -38,7 +38,7 @@ trait Competitions extends AkkaSupport {
   }.filter(c => c.hasResults || c.hasFixtures)
 
   def nextThreeFixtureDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
-    .map(_.fixtureDate.toDateMidnight).distinct
+    .map(_.date.toDateMidnight).distinct
     .sortBy(_.getMillis)
     .filter(_ isAfter date.minusDays(1))
     .take(3)
