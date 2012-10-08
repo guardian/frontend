@@ -29,7 +29,7 @@ object FixturesController extends Controller with Logging {
 
     val fixtures = fixtureDays.map {
       day =>
-        MatchesOnDate(day, Competitions.withFixturesOrResultsOn(day).filter {
+        MatchesOnDate(day, Competitions.withMatchesOn(day).filter {
           // if supplied competition filter, filter out other competitions
           c => c.shortName == competitionFilter.filter(_ != "").getOrElse(c.shortName)
         })
