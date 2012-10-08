@@ -1,5 +1,6 @@
 define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, common) {
 
+    // foo
     var Gallery = function () {
 
         function getUrlVars () {
@@ -36,7 +37,6 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
 
                     // when we load, grab the prev/next and show them too
                     var currentSlide = common.$g('.js-current-gallery-slide')[0];
-                    //currentSlide = document.getElementsByClassName('js-current-gallery-slide')[0];
 
                     var nextSlide = currentSlide.nextElementSibling;
                     var prevSlide = currentSlide.previousElementSibling;
