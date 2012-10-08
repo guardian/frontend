@@ -25,7 +25,7 @@ object ResultsController extends Controller with Logging {
 
     val resultsDays = Competitions.lastThreeResultsDatesEnding(startDate)
 
-    val results = resultsDays.map { day => MatchesOnDate(day, Competitions.withFixturesOrResultsOn(day)) }
+    val results = resultsDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
 
     val nextPage = findNextDateWithResults(startDate)
 
@@ -33,6 +33,7 @@ object ResultsController extends Controller with Logging {
 
     val fixturesPage = MatchesPage(page, results.filter(_.competitions.nonEmpty), nextPage, previousPage, "results")
 
+    //TODO caching for live matches
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(

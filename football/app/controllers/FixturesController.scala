@@ -24,13 +24,14 @@ object FixturesController extends Controller with Logging {
 
     val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
 
-    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withFixturesOrResultsOn(day)) }
+    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
 
     val nextPage = findNextDateWithFixtures(fixtureDays)
     val previousPage = findPreviousDateWithFixtures(startDate)
 
     val fixturesPage = MatchesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage, "fixtures")
 
+    //TODO caching for live matches
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(
