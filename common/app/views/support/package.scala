@@ -16,6 +16,12 @@ import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 
+sealed trait Style {
+  val className: String
+}
+
+object Featured extends Style { val className = "featured" }
+
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript

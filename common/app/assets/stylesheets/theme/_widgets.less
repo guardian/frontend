@@ -34,7 +34,8 @@ img.badge {
 .trail-headline a,
 .trail-headline a:hover,
 .trail-headline a:link,
-.trail-headline a:visited {
+.trail-headline a:visited,
+.trail h2 a {
     color: #333;
 }
 
@@ -78,7 +79,7 @@ img.badge {
     display: block;
     text-indent: -1000px;
     float: left;
-    margin: 10px 0 10px @gutter;
+    margin: @baseline*2 @gutter;
     .icon-guardian-logo-small
 }
 
@@ -89,29 +90,36 @@ img.badge {
 .footer {
     overflow: hidden;
     margin: 0;
-    padding: @baseline @gutter;
+    padding: @baseline*2 @gutter @baseline*4 @gutter;
     background-color: #E3E3DB;
 }
 
 .footer p {
-    .type-7;
+    .type-8;
+    line-height: @baseline*3;
     width: 42%;
-    padding: @baseline 0 0 @gutter;
+    margin: 0;
+    padding: @baseline*2 0 0 @gutter;
     float:left;
     color: #6F6F6E;
 }
 
+.footer p:first-of-type {
+    padding-top: @baseline*4;
+}
+
 .footer p a {
     display: block;
-    line-height: 18px;
+    line-height: @baseline*4;
     color: #6F6F6E;
     text-decoration: underline;
 }
 
 .cta {
     color: #545454;
-    font-size: 13px;
-    padding: 16px 0;
+    font-size: 14px;
+    line-height: @baseline*2;
+    padding: @baseline*2 0 @baseline*2 0;
     background-color: #e3e3db;
     text-align: center;
 }
@@ -120,16 +128,17 @@ img.badge {
 .top:link,
 .top:visited,
 .top:active {
+    .type-6;
     float: left;
     color: #545454;
-    font-size: 13px;
-    padding: 16px @baseline @baseline @gutter;
+    padding: @baseline*4 @baseline @baseline*4 @gutter;
 }
 
 .top:before {
+    .rotate(180deg);
     display: inline-block;
-    content: '▲';
-    margin-right: 4px;
+    content: '▾';
+    margin-right: @baseline;
 }
 
 .i-date {

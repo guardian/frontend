@@ -1,20 +1,17 @@
-.trailblock {
-    margin-top: 26px;
-}
-
 .trailblock.rolled-up,
 .trailblock.rolled-out {
     margin-top: 0px;
 }
 
 .trail {
+    overflow: hidden;
     margin-bottom: @baseline;
     border-bottom: 1px solid #e3e3db;
-    padding-bottom: @baseline;
+    padding: @baseline*3 0 @baseline*4 0;
 }
 
 .trail.has-image {
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .trail.has-image img {
@@ -26,43 +23,33 @@
     border-bottom: none;
 }
 
-.trailblock-shaded {
-    padding: 0 5px 12px 5px; 
-    background-color: #ededed;
-}
-
 .trail-headline {
     .type-2;
+    padding: 0 @gutter;
 }
 
 .trailblock-topstories .trail-headline {
     .type-3;
 }
 
-.front-section .gt-base {
+.media .trail-headline {
+    padding: 0;
+}
+
+.trail-text {
     display: block;
+    padding: 0 @gutter;
+}
+
+.has-image .trail-text {
+    padding-bottom: @baseline*4;
 }
 
 .trailblock .media {
-    padding: 0px @gutter 8px @gutter;
+    padding: 0 @gutter @baseline*1 @gutter;
 }
 
-.trailblock h3 {
-    margin-bottom: @baseline;
-}
-
-.trailtext {
-    margin-bottom: 0;
-    padding: 0 20px;
-    color: #545454; 
-    .standard-font-sizing;
-}
-
-li:first-child .trailtext {
-    padding-bottom: 12px;
-}
-
-.trailblock .img img {
+.trailblock .media-img img {
     width: @trailblockImgWidth;
     margin-bottom: 5px;
     margin-top: 3px;
@@ -79,8 +66,10 @@ li:first-child .trailtext {
      overflow: hidden;
      .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
-     padding-top: @baseline;
-     border-top: 1px solid #e3e3db;
+}
+
+.trailblock .panel {
+    border-top: 1px solid #e3e3db;
 }
 
 .trailblock ul { 
@@ -94,10 +83,6 @@ li:first-child .trailtext {
     position: relative;
     max-height: 0;
     padding-top: 0;
-}
-          
-.trailblock .count {
-    display: none;
 }
 
 .trailblock.shut .count {
@@ -116,15 +101,11 @@ li:first-child .trailtext {
     top: 0px;
     right: 0px;
     color: #fff;
-    padding: 20px;
+    padding: @baseline*4 @gutter;
     cursor: pointer;
 }
 
 .toggle-trailblock:link,
 .toggle-trailblock:visited {
     background-color: transparent;
-}
-
-.trailblock ul:first-child {
-    margin-top: 24px;
 }

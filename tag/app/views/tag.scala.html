@@ -1,20 +1,33 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(tag, Static, Configuration, Switches.all){  }{
-    @fragments.headline(tag.name)
+<section class="front-section zone-@tag.section">
+
+    <h1 class="article-zone zone-color">@tag.name</h1>
 
     @if(leadContent nonEmpty) {
-        <div data-link-name="lead content">
-            @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-                @fragments.formatTrail(trail, info)
-            }
+        @leadContent.zipWithRowInfo.map{ case (trail, info) =>
+        <div @if(info.rowNum == 1 && trail.mainPicture) { class="has-image" } data-link-name="lead content">
+                @fragments.formatFrontTrail(trail, info)
         </div>
+        }
     }
 
-    <div data-link-name="latest">
-        @trails.zipWithRowInfo.map{ case(trail, info) => @fragments.formatTrail(trail, info) }
+    <div class="trailblock" data-count="@trails.length" data-link-name="tag block @tag.section">
+
+            <ul class="unstyled">
+
+            @trails.zipWithRowInfo.map{ case (trail, info) =>
+                <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                    @fragments.formatFrontTrail(trail, info)
+                </li>
+            }
+
+        </ul>
+
     </div>
+    
+</section>
 
-    <div id="most-popular"></div>
-
+    <div id="js-popular"></div>
 }
