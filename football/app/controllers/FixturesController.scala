@@ -31,7 +31,7 @@ object FixturesController extends Controller with Logging {
       day =>
         MatchesOnDate(day, Competitions.withFixturesOrResultsOn(day).filter {
           // if supplied competition filter, filter out other competitions
-          c => c.shortName == competitionFilter.getOrElse(c.shortName)
+          c => c.shortName == competitionFilter.filter(_ != "").getOrElse(c.shortName)
         })
     }
 
