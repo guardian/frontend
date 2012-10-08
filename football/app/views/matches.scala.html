@@ -5,6 +5,16 @@
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/football.min.css")" />
 }{
     <h1>@model.page.webTitle</h1>
+    
+    <form action="" method="get">
+      <label>Filter by competition</label>
+      <select name="competition">
+        <option value="" @if(model.selectedCompetition.getOrElse("") == ""){ selected="selected"}>All</option>
+        <option value="Premier League"@if(model.selectedCompetition == Some("Premier League")){ selected="selected"}>Premier League</option>
+        <option value="League One"@if(model.selectedCompetition == Some("League One")){ selected="selected"}>League One</option>
+      </select>
+      <input type="submit" value="Filter" />
+    </form>
 
     @fragments.matchesList(model)
 
