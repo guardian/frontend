@@ -10,7 +10,7 @@
 
     @fragments.matchesList(model)
 
-    <div id="fixtures-nav" data-link-name="@model.pageType nav">
+    <div id="matches-nav" data-link-name="@model.pageType nav">
         @model.previousPage.map{url => <a href="@url" data-link-name="previous">previous</a>}
         @model.nextPage.map{url => <a href="@url" data-link-name="next">next</a>}
     </div>

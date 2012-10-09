@@ -2,18 +2,20 @@
 
 @renderFilter(name: String) = {
     @filterMap.get(name).map{ filters =>
-        <div>@name</div>
-        <ul>
-            @filters.map{ filter => <li><a href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
-        </ul>
+        <li>
+            <h2>@name</h2>
+            <ul>
+                @filters.map{ filter => <li><a href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
+            </ul>
+        </li>
     }
 }
 
-<div data-link-name="competition filters">
-    @if(filterMap.nonEmpty){
+@if(filterMap.nonEmpty){
+    <ol data-link-name="competition filters">
         @renderFilter("English")
         @renderFilter("European")
         @renderFilter("Scottish")
         @renderFilter("Internationals")
-    }
-</div>
+    </ol>
+}

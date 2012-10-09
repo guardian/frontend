@@ -17,7 +17,7 @@ define([
         'domReady',
         'modules/trailblocktoggle',
         'bean',
-        'modules/more-fixtures',
+        'modules/more-matches',
         'bonzo'
     ],
     function (
@@ -39,7 +39,7 @@ define([
         domReady,
         TrailblockToggle,
         bean,
-        MoreFixtures,
+        MoreMatches,
         bonzo) {
 
         var modules = {
@@ -134,12 +134,12 @@ define([
                 tt.go(edition);
             },
             
-            showMoreFixtures: function() {
-                var fixturesNav = document.getElementById('fixtures-nav');
-                MoreFixtures.init(fixturesNav);
-                bean.add(fixturesNav, 'a', 'click', function(e) {
+            showMoreMatches: function() {
+                var matchesNav = document.getElementById('matches-nav');
+                MoreMatches.init(matchesNav);
+                bean.add(matchesNav, 'a', 'click', function(e) {
                     e.preventDefault();
-                    common.mediator.emit('ui:more-fixtures:clicked', [e.currentTarget]);
+                    common.mediator.emit('ui:more-matches:clicked', [e.currentTarget]);
                 });
             }
         };
@@ -171,8 +171,8 @@ define([
         // page specific functionality
         if (config.page.pageId === 'football/fixtures' || config.page.pageId === 'football/results') {
             // loading only occurs on fixtures and results homepage (i.e. not on date)
-            if (window.location.pathname === '/football/fixtures' || window.location.pathname === '/football/results') {
-                modules.showMoreFixtures();
+            if (window.location.pathname.match('/football.*(fixtures|results)')) {
+                modules.showMoreMatches();
             }
         }
         

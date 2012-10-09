@@ -2,13 +2,13 @@
 
 @model.days.map{ day =>
 <h2 class="competitions-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
-<ol class="competitions" data-link-name="fixtures">
+<ol class="competitions" data-link-name="matches">
     <li class="competition">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
             <h3 class="competition-title">
                 <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
             </h3>
-            <ol class="fixtures">
+            <ol class="matches">
                 @comp.matches.map{
                     case fixture: pa.Fixture => { @fragments.fixture(fixture) }
                     case result: pa.Result => { @fragments.result(result) }
