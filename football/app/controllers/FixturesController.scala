@@ -10,7 +10,10 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-object FixturesController extends Controller with Logging {
+object FixturesController extends Controller with Logging with CompetitionFixtureFilters {
+
+  val daysToDisplay = 3
+
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
   val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
 
@@ -22,18 +25,16 @@ object FixturesController extends Controller with Logging {
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val fixtureDays = Competitions.nextFixtureDatesStarting(startDate, numDays = 3)
+    val fixtureDays = Competitions.withFixturesOnly.nextMatchDates(startDate, daysToDisplay)
 
-    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
+    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day).competitions) }
 
-    val nextPage = findNextDateWithFixtures(fixtureDays)
-    val previousPage = findPreviousDateWithFixtures(startDate)
+    val nextPage = fixtureDays.lastOption.flatMap { date =>
+      Competitions.withFixturesOnly.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
+    }.map(toNextPreviousUrl)
 
-    val filters = Competitions.competitionsThatHaveFixtures.groupBy(_.nation)
-      .map {
-        case (nation, competitions) =>
-          nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/fixtures"))
-      }
+    val previousPage = Competitions.withFixturesOnly.previousMatchDates(startDate.minusDays(1), daysToDisplay)
+      .lastOption.map(toNextPreviousUrl)
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
       nextPage, previousPage, "fixtures", filters)
@@ -45,13 +46,6 @@ object FixturesController extends Controller with Logging {
           "more" -> Html(nextPage.getOrElse("")))
       }.getOrElse(Ok(views.html.matches(fixturesPage)))
     }
-  }
-
-  def findPreviousDateWithFixtures(date: DateMidnight) =
-    Competitions.lastFixtureDatesBefore(date, numDays = 3).lastOption.map(toNextPreviousUrl)
-
-  private def findNextDateWithFixtures(fixtureDays: Seq[DateMidnight]) = fixtureDays.lastOption.flatMap { date =>
-    Competitions.nextFixtureDatesStarting(date.plusDays(1), numDays = 3).headOption.map(toNextPreviousUrl)
   }
 
   private def toNextPreviousUrl(date: DateMidnight) = date match {

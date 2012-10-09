@@ -9,9 +9,70 @@ import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
 import java.util.Comparator
-import pa.FootballMatch
+import pa.{ Result, Fixture, FootballMatch }
 
-trait Competitions extends AkkaSupport {
+trait CompetitionSupport {
+
+  private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
+    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
+  )
+
+  implicit def match2rich(m: FootballMatch) = new {
+
+    lazy val isFixture = m match {
+      case f: Fixture => true
+      case _ => false
+    }
+
+    lazy val isResult = m match {
+      case r: Result => true
+      case _ => false
+    }
+  }
+
+  def competitions: Seq[Competition]
+
+  def withMatchesOn(date: DateMidnight) = competitionSupportWith(
+    competitions.filter(_.matches.exists(_.date.toDateMidnight == date))
+      .map(c => c.copy(matches = c.matches.filter(_.date.toDateMidnight == date)))
+  )
+
+  def withCompetitionFilter(path: String) = competitionSupportWith(
+    competitions.filter(_.url == "/football/" + path)
+  )
+
+  def withFixturesOnly = competitionSupportWith(
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isFixture)))
+  )
+
+  def withResultsOnly = competitionSupportWith(
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isResult)))
+  )
+
+  // startDate is inclusive of the days you want
+  def nextMatchDates(startDate: DateMidnight, numDays: Int) = competitions
+    .flatMap(_.matches)
+    .map(_.date.toDateMidnight).distinct
+    .sorted
+    .filter(_ isAfter startDate.minusDays(1))
+    .take(numDays)
+
+  // startDate is inclusive of the days you want
+  def previousMatchDates(date: DateMidnight, numDays: Int) = competitions
+    .flatMap(_.matches)
+    .map(_.date.toDateMidnight)
+    .distinct
+    .sorted
+    .reverse
+    .filter(_ isBefore date.plusDays(1))
+    .take(numDays)
+
+  private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
+    def competitions = comps
+  }
+}
+
+trait Competitions extends CompetitionSupport with AkkaSupport {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -19,7 +80,7 @@ trait Competitions extends AkkaSupport {
 
   private var schedules: Seq[Cancellable] = Nil
 
-  private val competitions = Seq(
+  private val competitionAgents = Seq(
 
     CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
     CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
@@ -39,75 +100,45 @@ trait Competitions extends AkkaSupport {
     CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English"))
   )
 
-  def competitionsThatHaveFixtures = competitions.filter(_.fixtures.nonEmpty).map(_.competition)
-  def competitionsThatHaveResults = competitions.filter(_.results.nonEmpty).map(_.competition)
+  override def competitions = competitionAgents.map { agent =>
 
-  def withMatchesOn(date: DateMidnight) = competitions.map { competition =>
+    val results = agent.results
 
-    val results = competition.resultsOn(date)
     //results trump live games
-    val resultsWithLiveGames = competition.liveMatches.filter(_.date.toDateMidnight == date)
-      .filterNot(g => results.exists(_.id == g.id)) ++ results
+    val resultsWithLiveGames = agent.liveMatches.filterNot(g => results.exists(_.id == g.id)) ++ results
+
     //results and live games trump fixtures
-    val allGames = competition.fixturesOn(date).filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
+    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
 
-    competition.competition.copy(matches = allGames.sortBy(_.date))
-  }.filter(_.matches.nonEmpty)
-
-  def nextFixtureDatesStarting(date: DateMidnight, numDays: Int, competitionUrl: Option[String] = None): Seq[DateMidnight] = {
-    val filteredCompetitions = competitionUrl.map(path => competitions.filter(_.competition.url == "/football/" + path)).getOrElse(competitions)
-    nextDates(date, numDays, filteredCompetitions.flatMap(_.fixtures))
+    agent.competition.copy(matches = allGames.sortBy(_.date))
   }
 
-  def lastFixtureDatesBefore(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
-    previousDates(date, numDays, competitions.flatMap(_.fixtures))
-
-  def lastResultsDatesEnding(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
-    previousDates(date, numDays, competitions.flatMap(_.results))
-
-  def nextResultsDatesStarting(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
-    nextDates(date, numDays, competitions.flatMap(_.results))
-
-  private def nextDates(date: DateMidnight, numDays: Int, matches: Seq[FootballMatch]) = matches
-    .map(_.date.toDateMidnight).distinct
-    .sortBy(_.getMillis)
-    .filter(_ isAfter date.minusDays(1))
-    .take(numDays)
-
-  private def previousDates(date: DateMidnight, numDays: Int, matches: Seq[FootballMatch]) = matches
-    .map(_.date.toDateMidnight)
-    .distinct
-    .sortBy(_.getMillis)
-    .reverse
-    .filter(_ isBefore date.plusDays(1))
-    .take(numDays)
-
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
-    competitions.find(_.competition.id == season.id).foreach { agent =>
+    competitionAgents.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))
       agent.refresh()
     }
   }
 
-  def refresh() = competitions.foreach(_.refresh())
+  def refresh() = competitionAgents.foreach(_.refresh())
 
   def startup() {
     import play_akka.scheduler._
     schedules = every(Duration(5, MINUTES)) { refreshCompetitionData() } ::
       every(Duration(2, MINUTES), initialDelay = Duration(5, SECONDS)) { refresh() } ::
-      every(Duration(10, SECONDS)) { competitions.foreach(_.refreshLiveMatches()) } ::
+      every(Duration(10, SECONDS)) { competitionAgents.foreach(_.refreshLiveMatches()) } ::
       Nil
   }
 
   def shutDown() {
     schedules.foreach(_.cancel())
-    competitions.foreach(_.shutdown())
+    competitionAgents.foreach(_.shutdown())
   }
 
   def warmup() {
     refreshCompetitionData()
     refresh()
-    competitions.foreach(_.await())
+    competitionAgents.foreach(_.await())
   }
 }
 

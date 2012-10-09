@@ -20,7 +20,7 @@ object LiveMatchesController extends Controller with Logging {
 
     val blog = LiveBlog(Edition(request, Configuration))
 
-    val matches = Seq(MatchesOnDate(today, Competitions.withMatchesOn(today)))
+    val matches = Seq(MatchesOnDate(today, Competitions.withMatchesOn(today).competitions))
 
     val livePage = MatchesPage(page, blog,
       matches.filter(_.competitions.nonEmpty),
