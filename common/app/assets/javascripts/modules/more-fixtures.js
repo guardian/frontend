@@ -12,21 +12,14 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
                 .addClass('cta')
                 .each(function(element, index) {
                     // update text in cta
-                    bonzo(element).text('Show ' + bonzo(element).attr('data-link-name') + ' 3 days');
+                    bonzo(element).text('Show more matches');
                 });
 
-            common.mediator.on('ui:more-fixtures:clicked', function (_link) {
+            common.mediator.on('ui:more-matches:clicked', function (_link) {
                 var link = bonzo(_link);
-                var endpoint = link.attr('href') + '?callback=?';
-                // check we have a competition filter
-                var competitionFilter = window.location.search.match('(competition=[^&]+)');
-                if (competitionFilter) {
-                    endpoint += '&' + competitionFilter[0];
-                }
-                var callbackName = 'loadMoreFixtures';
                 reqwest(
                     {
-                        url:endpoint,
+                        url:link.attr('href') + '?callback=?',
                         type:'jsonp',
                         success:function (response) {
                             // place html before nav
