@@ -8,7 +8,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
   feature("Football Results") {
 
-    scenario("Visit the results page") {
+    ignore("Visit the results page") {
 
       given("I visit the results page")
 
@@ -39,7 +39,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-    scenario("Next results") {
+    ignore("Next results") {
       given("I am on the results page")
       HtmlUnit("/football/results/2012/sep/02") { browser =>
         import browser._
@@ -52,7 +52,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
-    scenario("Link tracking") {
+    ignore("Link tracking") {
       given("I visit the results page")
       HtmlUnit("/football/results/2012/oct/13") { browser =>
         import browser._
