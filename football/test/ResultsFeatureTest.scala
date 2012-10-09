@@ -26,7 +26,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         findFirst(".competitions-date").getText should be("Sunday 2 September 2012")
 
-        val fixture = findFirst(".fixtures").findFirst(".fixture-desc")
+        val fixture = findFirst(".matches").findFirst(".match-desc")
         fixture.findFirst(".home").getText should be("Liverpool")
         fixture.findFirst(".away").getText should be("Arsenal")
         findFirst(".status").getText should include("FT")
