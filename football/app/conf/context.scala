@@ -67,7 +67,7 @@ sealed trait DelegatedHttp extends Http with Logging {
 
   def setHttp(http: Http) { delegate = http }
 
-  override def GET(url: String) = PaApiHttpTimingMetric.measure{
+  override def GET(url: String) = PaApiHttpTimingMetric.measure {
     log.info("PA API call: " + url)
     delegate.GET(url)
   }

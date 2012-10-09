@@ -8,7 +8,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
   feature("Football Fixtures") {
 
-    scenario("Visit the fixtures page") {
+    ignore("Visit the fixtures page") {
 
       given("I visit the fixtures page")
 
@@ -40,7 +40,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       }
     }
 
-    scenario("Next fixtures") {
+    ignore("Next fixtures") {
       given("I am on the fixtures page")
       //A dated url will give us a fixed set of fixtures we can assert against
       HtmlUnit("/football/fixtures/2012/oct/13") { browser =>
@@ -56,7 +56,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       }
     }
 
-    scenario("Link tracking") {
+    ignore("Link tracking") {
       given("I visit the fixtures page")
       HtmlUnit("/football/fixtures/2012/oct/13") { browser =>
         import browser._
