@@ -1,0 +1,3 @@
+ $ npm install ender -g
+ $ ...
+ $ ender build -x
