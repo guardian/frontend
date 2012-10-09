@@ -21,6 +21,7 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val contributorImageUrl: Option[String] = delegate.bylineImageUrl
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
+  lazy val bio: String = delegate.bio.getOrElse("")
 
   lazy val isSectionTag: Boolean = {
     val idParts = id.split("/")
