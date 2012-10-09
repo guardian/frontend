@@ -31,7 +31,7 @@ object ResultsController extends Controller with Logging {
 
     val previousPage = findPreviousDateWithResults(resultsDays.lastOption)
 
-    val fixturesPage = MatchesPage(page, results.filter(_.competitions.nonEmpty), nextPage, previousPage, "results", None)
+    val fixturesPage = MatchesPage(page, results.filter(_.competitions.nonEmpty), nextPage, previousPage, "results")
 
     //TODO caching for live matches
     Cached(page) {

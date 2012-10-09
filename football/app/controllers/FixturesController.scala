@@ -24,21 +24,12 @@ object FixturesController extends Controller with Logging {
 
     val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
 
-    // get the competition param from the query string
-    val competitionFilter = request.queryString.get("competition").map(_.head)
-
-    val fixtures = fixtureDays.map {
-      day =>
-        MatchesOnDate(day, Competitions.withMatchesOn(day).filter {
-          // if supplied competition filter, filter out other competitions
-          c => c.shortName == competitionFilter.filter(_ != "").getOrElse(c.shortName)
-        })
-    }
+    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
 
     val nextPage = findNextDateWithFixtures(fixtureDays)
     val previousPage = findPreviousDateWithFixtures(startDate)
 
-    val fixturesPage = MatchesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage, "fixtures", competitionFilter)
+    val fixturesPage = MatchesPage(page, fixtures.filter(_.competitions.nonEmpty), nextPage, previousPage, "fixtures")
 
     //TODO caching for live matches
     Cached(page) {
