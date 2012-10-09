@@ -31,9 +31,9 @@ object FixturesController extends Controller with Logging {
 
     val filters = Competitions.competitionsThatHaveFixtures.groupBy(_.nation)
       .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/fixtures"))
-    }
+        case (nation, competitions) =>
+          nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/fixtures"))
+      }
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
       nextPage, previousPage, "fixtures", filters)

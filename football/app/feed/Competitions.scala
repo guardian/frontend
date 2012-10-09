@@ -54,8 +54,10 @@ trait Competitions extends AkkaSupport {
     competition.competition.copy(matches = allGames.sortBy(_.date))
   }.filter(_.matches.nonEmpty)
 
-  def nextFixtureDatesStarting(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
-    nextDates(date, numDays, competitions.flatMap(_.fixtures))
+  def nextFixtureDatesStarting(date: DateMidnight, numDays: Int, competitionUrl: Option[String] = None): Seq[DateMidnight] = {
+    val filteredCompetitions = competitionUrl.map(path => competitions.filter(_.competition.url == "/football/" + path)).getOrElse(competitions)
+    nextDates(date, numDays, filteredCompetitions.flatMap(_.fixtures))
+  }
 
   def lastFixtureDatesBefore(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
     previousDates(date, numDays, competitions.flatMap(_.fixtures))
