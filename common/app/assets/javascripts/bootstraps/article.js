@@ -17,7 +17,7 @@ define([
         'domReady',
         'modules/trailblocktoggle',
         'bean',
-        'modules/more-fixtures',
+        'modules/more-matches',
         'bonzo'
     ],
     function (
@@ -39,7 +39,7 @@ define([
         domReady,
         TrailblockToggle,
         bean,
-        MoreFixtures,
+        MoreMatches,
         bonzo) {
 
         var modules = {
@@ -136,7 +136,7 @@ define([
             
             showMoreMatches: function() {
                 var matchesNav = document.getElementById('matches-nav');
-                MoreFixtures.init(matchesNav);
+                MoreMatches.init(matchesNav);
                 bean.add(matchesNav, 'a', 'click', function(e) {
                     e.preventDefault();
                     common.mediator.emit('ui:more-matches:clicked', [e.currentTarget]);
