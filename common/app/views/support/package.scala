@@ -16,6 +16,12 @@ import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 
+sealed trait Style {
+  val className: String
+}
+
+object Featured extends Style { val className = "featured" }
+
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
@@ -146,16 +152,15 @@ object ABTest {
   }
 }
 
+// whitespace in the <span> below is significant 
+// (results in spaces after author names before commas)
+// so don't add any, fool.
 object ContributorLinks {
   def apply(text: String, tags: Seq[Tag]): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-            <a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>
-              { tag.name }
-            </a>
-          </span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)

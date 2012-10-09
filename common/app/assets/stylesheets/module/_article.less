@@ -1,12 +1,17 @@
 .article-zone {
-    padding: @baseline @gutter;
+    .type-2;
+    padding: @baseline*3 @gutter;
+    line-height: 1em;
     border-top: 4px solid #E3E3DB;
     border-bottom: 1px solid #E3E3DB;
 }
 
+#js-popular .article-zone {
+    border-bottom: none;
+}
+
 .article header {
-    padding: @baseline @gutter 0 @gutter;
-    margin-bottom: @baseline;
+    padding: @baseline*3 @gutter @baseline*4 @gutter;
 }
 
 aside {
@@ -14,14 +19,119 @@ aside {
     list-style: none;
 }
 
+.article h1 {
+    font-weight: bold;
+} 
+
+.byline {
+    .type-4;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 0 @gutter @baseline*2 @gutter;
+    padding: @baseline 0 @baseline*3 0;
+}
+
+.article-body {
+    padding: 0 @gutter @baseline*2 @gutter;
+}
+
+.article-body h2 {
+    color: #333;
+    .type-3;
+    margin-bottom: @baseline;
+    clear: both;
+}
+
+.article-body h2.block-title {
+    color: #e47a39;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.article-body h3 {
+    margin: 0;
+    font-family: georgia;
+    .standard-font-sizing;
+}
+
+.article-body > p,
+.article-body ul,
+.article-body ol,
+.article-body address,
+.article-body blockquote,
+.article-body blockquote p {
+    margin: 0px 0px @baseline*2 0px;
+    .type-4;
+    color: #333;
+}
+
+.article-body blockquote {
+    border: 0;
+    padding: 0;
+}
+
+.article-body blockquote, 
+.article-body blockquote p {
+    display: block;
+    color: #545454;
+    .type-1;
+}
+
+.article-body blockquote:before {
+    .icon-blockquote-before;
+    display: block;
+    content: '';
+    margin: 21px 0 @baseline 0;
+    clear: both;
+}
+
+.svg .article-body blockquote:before {
+    .svg-icon-blockquote-before;
+}
+
+.article-body blockquote:after {
+    .icon-blockquote-after;
+    display: block;
+    content: '';
+    margin-bottom: 22px;
+}
+
+.svg .article-body blockquote:after {
+    .svg-icon-blockquote-after;
+}
+
+.article-body .timestamp:first-child {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+}
+
 .article-body .caption,
 figcaption {
-    padding:@baseline @gutter;
     .type-7;
 }
 
+figcaption {
+    padding: @baseline*2 @gutter;
+}
+
+.article-body .caption:before,
+figcaption:before {
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+    .icon-image;
+}
+
+.svg .article-body .caption:before,
+.svg figcaption:before {
+    .svg-icon-image;
+}
+
 figure {
-    margin: 0px 0px 15px 0px;
+    margin: 0px 0px @baseline*1 0px;
 }
 
 figure img {
@@ -45,83 +155,4 @@ cite a:visited:hover {
 cite a:visited {
     color: #808080;
     border-bottom: 1px dotted #808080;
-}
-
-.byline {
-    .type-4;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    margin: 0 @gutter @baseline @gutter;
-    padding-bottom: @baseline*2;
-}
-
-.article-body {
-    padding: 0 20px;
-}
-
-.article-body p {
-    margin: 0px;
-    margin-bottom: @baseline;
-    .type-4;
-
-}
-.article h1 {
-    font-weight: bold;
-} 
-
-.article-body h2 {
-    color: #333;
-    .type-3;
-    margin-bottom: @baseline;
-}
-
-.article-body h2.block-title {
-    color: #e47a39;
-    border: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.article-body h3 {
-    margin: 0;
-    font-family: georgia;
-    .standard-font-sizing;
-}
-
-.article-body > p,
-.article-body ul,
-.article-body ol,
-.article-body address,
-.article-body blockquote,
-.article-body blockquote p {
-    margin: 0px 0px @baseline 0px;
-    .type-4;
-    color: #333;
-}
-
-.article-body blockquote {
-    border: 0;
-    padding: 0;
-}
-
-.article-body blockquote, 
-.article-body blockquote p {
-    display: block;
-    color: #545454;
-    .type-1;
-}
-
-.article-body blockquote:before {
-    display: block;
-    content: '';
-    margin: 21px 0 @baseline 0;
-    .icon-blockquote-before;
-}
-
-.article-body blockquote:after {
-    display: block;
-    content: '';
-    margin-bottom: 22px;
-    .icon-blockquote-after;
 }

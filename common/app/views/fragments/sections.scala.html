@@ -1,22 +1,27 @@
 @(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
-<ul>
-    <li><a@if(page.section=="uk"){ class="selected"} data-link-name="UK News" href="/uk">UK news</a></li>
-    <li><a@if(page.section=="world"){ class="selected"} data-link-name="World News" href="/world">World news</a></li>
-    <li><a@if(page.section=="sport"){ class="selected"} data-link-name="Sport" href="/sport">@if(edition == "US"){ Sports } else { Sport }</a></li>
-    <li><a@if(page.section=="football"){ class="selected"} data-link-name="Football" href="/football">Football</a></li>
-    <li><a@if(page.section=="commentisfree"){ class="selected"} data-link-name="Comment is free" href="/commentisfree">Comment is free</a></li>
-    <li><a@if(page.section=="lifeandstyle"){ class="selected"} data-link-name="Life & Style" href="/lifeandstyle">Life &amp; style</a></li>
-    <li><a@if(page.section=="culture"){ class="selected"} data-link-name="Culture" href="/culture">Culture</a></li>
-    <li><a@if(page.section=="business"){ class="selected"} data-link-name="Business" href="/business">Business</a></li>
-    <li><a@if(page.section=="technology"){ class="selected"} data-link-name="Technology" href="/technology">Technology</a></li>
-    <li><a@if(page.section=="film"){ class="selected"} data-link-name="Film" href="/film">Film</a></li>
-    <li><a@if(page.section=="music"){ class="selected"} data-link-name="Music" href="/music">Music</a></li>
+
+<ul class="nav nav-stacked cf">
+    
+    @Navigation(request, config).map{ section =>
+        <li>
+            <a href="@section.href"
+               data-link-name="@section.linkName"
+               @if(page.section==section.zone) {
+                    class="zone-color"
+               }
+               >
+                @HtmlFormat.raw(section.title)
+            </a>
+        </li>
+    }
+        
     <li><a data-link-name="jobs" target="_blank" href="http://m.jobs.guardian.co.uk/">Jobs</a></li>
-    <li><a data-link-name="help" class="divider" href="/help">Help</a></li>
-    <li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
-    <li><a class="divider @if(edition == "UK"){ edition-selected }" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li>
-    <li><a@if(edition == "US"){ class="edition-selected"} data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li>
+</ul>
+
+<ul class="nav nav-stacked section-divider cf">
+    @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li> }
+    @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li> }
 </ul>
 }
