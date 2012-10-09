@@ -7,5 +7,6 @@ case class Competition(
   url: String,
   fullName: String,
   shortName: String,
+  nation: String,
   startDate: Option[DateMidnight] = None,
   matches: Seq[FootballMatch] = Nil)

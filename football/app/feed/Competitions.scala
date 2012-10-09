@@ -21,23 +21,26 @@ trait Competitions extends AkkaSupport {
 
   private val competitions = Seq(
 
-    CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League")),
-    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League")),
+    CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
+    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
 
-    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League")),
-    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship")),
-    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One")),
-    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two")),
-    CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup")),
+    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English")),
+    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English")),
+    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English")),
+    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
+    CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
-    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League")),
-    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One")),
-    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two")),
-    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three")),
+    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
+    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
+    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
+    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish")),
 
-    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup")),
-    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield"))
+    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
+    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English"))
   )
+
+  def competitionsThatHaveFixtures = competitions.filter(_.fixtures.nonEmpty).map(_.competition)
+  def competitionsThatHaveResults = competitions.filter(_.results.nonEmpty).map(_.competition)
 
   def withMatchesOn(date: DateMidnight) = competitions.map { competition =>
 

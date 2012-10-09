@@ -1,0 +1,19 @@
+@(filterMap: Map[String, Seq[CompetitionFilter]])
+
+@renderFilter(name: String) = {
+    @filterMap.get(name).map{ filters =>
+        <div>@name</div>
+        <ul>
+            @filters.map{ filter => <li><a href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
+        </ul>
+    }
+}
+
+<div data-link-name="competition filters">
+    @if(filterMap.nonEmpty){
+        @renderFilter("English")
+        @renderFilter("European")
+        @renderFilter("Scottish")
+        @renderFilter("Internationals")
+    }
+</div>

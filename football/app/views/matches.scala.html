@@ -5,6 +5,9 @@
 }{
     <h1>@model.page.webTitle</h1>
 
+
+    @fragments.filters(model.filters)
+
     @fragments.matchesList(model)
 
     <div id="fixtures-nav" data-link-name="@model.pageType nav">
