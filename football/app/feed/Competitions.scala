@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
 import java.util.Comparator
+import pa.FootballMatch
 
 trait Competitions extends AkkaSupport {
 
@@ -38,45 +39,43 @@ trait Competitions extends AkkaSupport {
     CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield"))
   )
 
-  def withMatchesOn(date: DateMidnight) = competitions.map { c =>
+  def withMatchesOn(date: DateMidnight) = competitions.map { competition =>
 
-    val results = c.resultsOn(date)
-
+    val results = competition.resultsOn(date)
     //results trump live games
-    val resultsWithLiveGames = (if (date == DateMidnight.now) c.liveMatches else Nil)
+    val resultsWithLiveGames = competition.liveMatches.filter(_.date.toDateMidnight == date)
       .filterNot(g => results.exists(_.id == g.id)) ++ results
-
     //results and live games trump fixtures
-    val allGames = c.fixturesOn(date).filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
+    val allGames = competition.fixturesOn(date).filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
 
-    c.competition.copy(matches = allGames.sortBy(_.date))
+    competition.competition.copy(matches = allGames.sortBy(_.date))
   }.filter(_.matches.nonEmpty)
 
-  def nextThreeFixtureDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
+  def nextFixtureDatesStarting(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
+    nextDates(date, numDays, competitions.flatMap(_.fixtures))
+
+  def lastFixtureDatesBefore(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
+    previousDates(date, numDays, competitions.flatMap(_.fixtures))
+
+  def lastResultsDatesEnding(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
+    previousDates(date, numDays, competitions.flatMap(_.results))
+
+  def nextResultsDatesStarting(date: DateMidnight, numDays: Int): Seq[DateMidnight] =
+    nextDates(date, numDays, competitions.flatMap(_.results))
+
+  private def nextDates(date: DateMidnight, numDays: Int, matches: Seq[FootballMatch]) = matches
     .map(_.date.toDateMidnight).distinct
     .sortBy(_.getMillis)
     .filter(_ isAfter date.minusDays(1))
-    .take(3)
+    .take(numDays)
 
-  def threeFixtureDatesBefore(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.fixtures)
+  private def previousDates(date: DateMidnight, numDays: Int, matches: Seq[FootballMatch]) = matches
     .map(_.date.toDateMidnight)
     .distinct
-    .sortBy(_.getMillis).reverse
-    .filter(_ isBefore date)
-    .take(3)
-
-  def lastThreeResultsDatesEnding(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.results)
-    .map(_.date.toDateMidnight).distinct
     .sortBy(_.getMillis)
     .reverse
     .filter(_ isBefore date.plusDays(1))
-    .take(3)
-
-  def nextThreeResultsDatesStarting(date: DateMidnight): Seq[DateMidnight] = competitions.flatMap(_.results)
-    .map(_.date.toDateMidnight).distinct
-    .sortBy(_.getMillis)
-    .filter(_ isAfter date.minusDays(1))
-    .take(3)
+    .take(numDays)
 
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     competitions.find(_.competition.id == season.id).foreach { agent =>

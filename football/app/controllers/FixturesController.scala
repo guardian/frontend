@@ -22,7 +22,7 @@ object FixturesController extends Controller with Logging {
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val fixtureDays = Competitions.nextThreeFixtureDatesStarting(startDate)
+    val fixtureDays = Competitions.nextFixtureDatesStarting(startDate, numDays = 3)
 
     val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
 
@@ -42,10 +42,10 @@ object FixturesController extends Controller with Logging {
   }
 
   def findPreviousDateWithFixtures(date: DateMidnight) =
-    Competitions.threeFixtureDatesBefore(date).lastOption.map(toNextPreviousUrl)
+    Competitions.lastFixtureDatesBefore(date, numDays = 3).lastOption.map(toNextPreviousUrl)
 
   private def findNextDateWithFixtures(fixtureDays: Seq[DateMidnight]) = fixtureDays.lastOption.flatMap { date =>
-    Competitions.nextThreeFixtureDatesStarting(date.plusDays(1)).headOption.map(toNextPreviousUrl)
+    Competitions.nextFixtureDatesStarting(date.plusDays(1), numDays = 3).headOption.map(toNextPreviousUrl)
   }
 
   private def toNextPreviousUrl(date: DateMidnight) = date match {

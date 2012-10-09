@@ -23,7 +23,7 @@ object ResultsController extends Controller with Logging {
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val resultsDays = Competitions.lastThreeResultsDatesEnding(startDate)
+    val resultsDays = Competitions.lastResultsDatesEnding(startDate, numDays = 3)
 
     val results = resultsDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day)) }
 
@@ -44,10 +44,10 @@ object ResultsController extends Controller with Logging {
   }
 
   def findNextDateWithResults(date: DateMidnight) =
-    Competitions.nextThreeResultsDatesStarting(date.plusDays(1)).lastOption.map(toNextPreviousUrl)
+    Competitions.nextResultsDatesStarting(date.plusDays(1), numDays = 3).lastOption.map(toNextPreviousUrl)
 
   private def findPreviousDateWithResults(date: Option[DateMidnight]) = date.flatMap(lastDate =>
-    Competitions.lastThreeResultsDatesEnding(lastDate.minusDays(1)).headOption.map(toNextPreviousUrl)
+    Competitions.lastResultsDatesEnding(lastDate.minusDays(1), numDays = 3).headOption.map(toNextPreviousUrl)
   )
 
   private def toNextPreviousUrl(date: DateMidnight) = date match {
