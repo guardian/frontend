@@ -32,7 +32,6 @@ object FixturesController extends Controller with Logging {
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
       nextPage, previousPage, "fixtures")
 
-    //TODO caching for live matches
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(
