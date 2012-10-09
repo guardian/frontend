@@ -124,9 +124,9 @@ trait Competitions extends CompetitionSupport with AkkaSupport {
 
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(5, MINUTES)) { refreshCompetitionData() } ::
-      every(Duration(2, MINUTES), initialDelay = Duration(5, SECONDS)) { refresh() } ::
-      every(Duration(10, SECONDS)) { competitionAgents.foreach(_.refreshLiveMatches()) } ::
+    schedules = every(Duration(5, MINUTES), initialDelay = Duration(5, SECONDS)) { refreshCompetitionData() } ::
+      every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
+      every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) { competitionAgents.foreach(_.refreshLiveMatches()) } ::
       Nil
   }
 
