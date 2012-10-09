@@ -11,6 +11,10 @@ class TestDependencies(app: play.api.Application) extends Plugin {
     FootballClient.setHttp(TestHttp)
     Competitions.refresh()
     Competitions.warmup()
+
+    // yep, do this twice for tests (ain't concurrency lovely)
+    Competitions.refresh()
+    Competitions.warmup()
   }
 }
 
