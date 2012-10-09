@@ -4,6 +4,24 @@
 <section class="front-section zone-@tag.section">
 
     <h1 class="article-zone zone-color">@tag.name</h1>
+    
+    @if(tag.isContributor) {
+        @if(tag.contributorImageUrl) {
+            <div class="media box-indent">
+                <div class="media-img">
+                    <img src="@tag.contributorImageUrl" alt="@tag.name" />
+                </div>
+        }
+            @if(tag.bio) {
+                <div class="media-bd box">
+                    @Html(tag.bio)
+                </div>
+            }
+        @if(tag.contributorImageUrl) {
+            </div>
+        }
+    }
+
 
     @if(leadContent nonEmpty) {
         @leadContent.zipWithRowInfo.map{ case (trail, info) =>
