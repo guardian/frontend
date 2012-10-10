@@ -3,16 +3,22 @@
 
 @main(model.page, Static, Configuration, Switches.all){
 }{
-    <h1>@model.page.webTitle</h1>
 
+    <div class="box-indent">
 
-    @fragments.filters(model.filters)
+        <h1 class="type-2 js-collapsible collapsible" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
 
-    @fragments.matchesList(model)
+        @fragments.filters(model.filters)
 
-    <div id="matches-nav" data-link-name="@model.pageType nav">
-        @model.previousPage.map{url => <a href="@url" data-link-name="previous">previous</a>}
-        @model.nextPage.map{url => <a href="@url" data-link-name="next">next</a>}
+        @fragments.matchesList(model)
+
+        <div id="matches-nav" data-link-name="@model.pageType nav">
+            @model.previousPage.map{url => <a href="@url" data-link-name="previous">previous</a>}
+            @model.nextPage.map{url => <a href="@url" data-link-name="next">next</a>}
+        </div>
+
     </div>
+
+    <div id="js-popular"></div>
 
 }
