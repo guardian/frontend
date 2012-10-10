@@ -21,7 +21,7 @@ object Navigation {
       SectionLink("sport", "Sport", "/sport", sportTitle),
       SectionLink("football", "Football", "/football", "Football"),
       SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
-      SectionLink("lifeandstyle", "Life & Style", "/lifeandstyle", "Life &amp; style"),
+      SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
       SectionLink("culture", "Culture", "/culture", "Culture"),
       SectionLink("business", "Business", "/business", "Business"),
       SectionLink("technology", "Technology", "/technology", "Technology"),
@@ -81,12 +81,12 @@ object Zones {
       Zone(
         SectionLink("culture", "Culture", "/culture", "Culture"),
         Seq(
-          SectionLink("culture", "Art & design", "/artanddesign", "Art & design"),
+          SectionLink("culture", "Art &amp; design", "/artanddesign", "Art & design"),
           SectionLink("culture", "Books", "/books", "Books"),
           SectionLink("culture", "Film", "/film", "Film"),
           SectionLink("culture", "Music", "/music", "Music"),
           SectionLink("culture", "Stage", "/stage", "Stage"),
-          SectionLink("culture", "Television & radio", "/tv-and-radio", "Television & radio")
+          SectionLink("culture", "Television &amp; radio", "/tv-and-radio", "Television & radio")
         )), //End culture
 
       Zone(
@@ -108,14 +108,14 @@ object Zones {
           SectionLink("money", "House prices", "/money/houseprices", "House prices"),
           SectionLink("money", "Pensions", "/money/pensions", "Pensions"),
           SectionLink("money", "Savings", "/money/savings", "Savings"),
-          SectionLink("money", "Borrowing & debt", "/money/debt", "Borrowing & debt"),
+          SectionLink("money", "Borrowing &amp; debt", "/money/debt", "Borrowing &amp; debt"),
           SectionLink("money", "Insurance", "/money/insurance", "Insurance"),
-          SectionLink("money", "Work & careers", "/money/work-and-careers", "Work & careers"),
+          SectionLink("money", "Work &amp; careers", "/money/work-and-careers", "Work &amp; careers"),
           SectionLink("money", "Consumer affairs", "/money/consumer-affairs", "Consumer affairs")
         )), //End Money
 
       Zone(
-        SectionLink("lifeandstyle", "Life & Style", "/lifeandstyle", "Life & style"),
+        SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
         Seq(
           SectionLink("lifeandstyle", "Fashion", "/fashion", "Fashion"),
           SectionLink("lifeandstyle", "Food", "/food", "Food"),
