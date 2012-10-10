@@ -27,8 +27,16 @@ object Switches {
   val all: Seq[Switchable] = List(Healthcheck.switch)
 }
 
+object PaApiHttpTimingMetric extends TimingMetric(
+  "performance",
+  "pa-api-calls",
+  "PA API calls",
+  "outgoing requests to pa api",
+  Some(RequestMetrics.RequestTimingMetric)
+) with TimingMetricLogging
+
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
+  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric)
 }
 
 object Management extends Management {
@@ -44,7 +52,7 @@ object Management extends Management {
   )
 }
 
-sealed trait DelegatedHttp extends Http {
+sealed trait DelegatedHttp extends Http with Logging {
 
   private var delegate: Http = new DispatchHttp {
     override lazy val maxConnections = 50
@@ -59,5 +67,8 @@ sealed trait DelegatedHttp extends Http {
 
   def setHttp(http: Http) { delegate = http }
 
-  override def GET(url: String) = delegate.GET(url)
+  override def GET(url: String) = PaApiHttpTimingMetric.measure {
+    log.info("PA API call: " + url)
+    delegate.GET(url)
+  }
 }

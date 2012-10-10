@@ -46,7 +46,7 @@ object LiveBlog extends LiveBlogAgent {
   private var schedule: Option[Cancellable] = None
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(2, MINUTES)) {
+    schedule = Some(play_akka.scheduler.every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) {
       refreshLiveBlogs()
     })
   }

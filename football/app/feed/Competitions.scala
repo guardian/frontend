@@ -1,6 +1,6 @@
 package feed
 
-import common.AkkaSupport
+import common.{ Logging, AkkaSupport }
 import akka.actor.Cancellable
 import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
 import conf.FootballClient
@@ -72,7 +72,7 @@ trait CompetitionSupport {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -114,19 +114,25 @@ trait Competitions extends CompetitionSupport with AkkaSupport {
   }
 
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
+    log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-      agent.refresh()
     }
   }
 
-  def refresh() = competitionAgents.foreach(_.refresh())
+  def refresh() = {
+    log.info("Refreshing results and fixtures")
+    competitionAgents.foreach(_.refresh())
+  }
 
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(5, MINUTES)) { refreshCompetitionData() } ::
-      every(Duration(2, MINUTES), initialDelay = Duration(5, SECONDS)) { refresh() } ::
-      every(Duration(10, SECONDS)) { competitionAgents.foreach(_.refreshLiveMatches()) } ::
+    schedules = every(Duration(5, MINUTES), initialDelay = Duration(5, SECONDS)) { refreshCompetitionData() } ::
+      every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
+      every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) {
+        log.info("Refreshing live matches")
+        competitionAgents.foreach(_.refreshLiveMatches())
+      } ::
       Nil
   }
 
