@@ -30,6 +30,13 @@ trait MetaData {
   )
 }
 
+case class Page(
+  canonicalUrl: String,
+  id: String,
+  section: String,
+  apiUrl: String,
+  webTitle: String) extends MetaData
+
 trait Images {
   def images: Seq[Image]
 
