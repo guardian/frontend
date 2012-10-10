@@ -68,6 +68,11 @@ public class ArticleTestPage {
 		return exists;
 	}
 
+	public void clickLink(String linkName) {
+		getDriver().findElement(By.linkText(linkName)).click();
+		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	
 	public void clickButton(By buttonName) {
 		getDriver().findElement(buttonName).click();
 		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -77,6 +82,11 @@ public class ArticleTestPage {
 		return getDriver().findElement(By.tagName("body")).getText().contains(textToSearch);
 	}
 
+	
+	public boolean isTextPresentByElement(By elementname, String textToSearch) {
+
+		return getDriver().findElement(elementname).getText().contains(textToSearch);
+	}
 	public void waitForTextPresent(String textToSearch) {
 		for (int second = 0;; second++) {
 			if (second >= 30) {

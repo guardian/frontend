@@ -14,14 +14,15 @@ Feature: Article page
 
 	Scenario: Article has no story package
 		When the article has no story package
-		Then "related content" "is" displayed
+		Then "related content" is displayed
 	
 	Scenario: Related content is unavailable
 		When "related content" is unavailable
-		Then "related content" "is not" displayed
+		Then "related content" is not displayed
 	
 	Scenario: Most read
-		Then "most read" section tab correlates to the article section
+		When I open a "sport" article
+		Then "most read" section tab show read "sport"
 
 	Scenario: Toggle between tabs
 		When I click the "Most read" tabs
@@ -34,22 +35,29 @@ Feature: Article page
 
 	Scenario: Open and close top story from foot of page
 		When I click "Top stories" tab at the foot of the page
-		Then a list of "Top stories" opens
-		And another click on "Top stories" closes the list.
+		Then a list of the footer "Top stories" opens
+		And another click on the footer "Top stories" closes the list.
  
 	Scenario: Open and close sections from top of page
-		And at the top of the page
-		When I click the "Sections" navigation tab
-		Then a list of "Sections" opens
-		And another click on "Sections" tab closes the list
+		When I click the "header" "Sections" navigation tab
+		Then a list of "Sections" opens in "header"
+		And another click on the "header" "Sections" tab closes the list
 
 	Scenario: Open and close sections from foot of page
-		And at the foot of the page
-		When I click the "Sections" navigation tab
-		Then a list of "Sections" opens
-		And another click on "Sections" tab closes the list
+		When I click the "footer" "Sections" navigation tab
+		Then a list of bottom "Sections" opens in the "footer"
+		And another click on the "footer" "Sections" tab closes the list
 
-	Scenario: More on this story
-		When I click an article with article image
-		Then the "article" page is displayed
-		And the article will have an article image and caption
+	Scenario: High resolution image and caption is displayed
+		When the article has an article image
+		Then article high resolution image and caption is displayed
+
+	Scenario: Expand and collapse expanders on more on this story
+		When "More on this story" has expanders
+		Then I can expand and collapse expanders
+ 
+ 	Scenario: Expand and collapse expanders on related content
+		When "related content" has expanders
+		Then I can expand and collapse expanders
+
+
