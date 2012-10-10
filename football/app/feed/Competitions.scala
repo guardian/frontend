@@ -114,7 +114,9 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
   private def refreshLiveMatches() {
     val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
     competitionAgents.foreach { agent =>
-      agent.updateLiveMatches(liveMatches.filter(_.competition.exists(_.id == agent.competition.id)))
+      val competitionMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
+      log.info("found %s live matches for competition %s".format(competitionMatches.size, agent.competition.fullName))
+      agent.updateLiveMatches(competitionMatches)
     }
   }
 
@@ -128,7 +130,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     schedules = every(Duration(5, MINUTES), initialDelay = Duration(5, SECONDS)) { refreshCompetitionData() } ::
       every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
       every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) {
-        log.info("Refreshing live matches")
         refreshLiveMatches()
       } ::
       Nil

@@ -28,7 +28,13 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   private val agent = play_akka.agent[Seq[Fixture]](Nil)
 
-  def refreshFixtures() { agent.sendOff { old => FootballClient.fixtures(competition.id) } }
+  def refreshFixtures() {
+    agent.sendOff { old =>
+      val fixtures = FootballClient.fixtures(competition.id)
+      log.info("found %s fixtures for competition %s".format(fixtures.size, competition.fullName))
+      fixtures
+    }
+  }
 
   def shutdownFixtures() { agent.close() }
 
@@ -45,7 +51,11 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
 
   def refreshResults() {
     competition.startDate.foreach { startDate =>
-      agent.sendOff { old => FootballClient.results(competition.id, startDate) }
+      agent.sendOff { old =>
+        val results = FootballClient.results(competition.id, startDate)
+        log.info("found %s results for competition %s".format(results.size, competition.fullName))
+        results
+      }
     }
   }
 
