@@ -31,10 +31,10 @@ object CompetitionFixturesController extends Controller with Logging with Compet
     val fixtures = fixtureDays.map { day => MatchesOnDate(day, filteredCompetitions.withMatchesOn(day).competitions) }
 
     val nextPage = fixtureDays.lastOption.flatMap { date =>
-      Competitions.withFixturesOnly.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
+      filteredCompetitions.withFixturesOnly.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
     }.map(d => toNextPreviousUrl(d, competition))
 
-    val previousPage = Competitions.withFixturesOnly.previousMatchDates(startDate.minusDays(1), daysToDisplay)
+    val previousPage = filteredCompetitions.withFixturesOnly.previousMatchDates(startDate.minusDays(1), daysToDisplay)
       .lastOption.map(d => toNextPreviousUrl(d, competition))
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
