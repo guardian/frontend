@@ -16,9 +16,10 @@ Feature: Article page
 		When the article has no story package
 		Then "related content" is displayed
 	
-	Scenario: Related content is unavailable
-		When "related content" is unavailable
-		Then "related content" is not displayed
+	#needs a page where content is not displayed
+	#Scenario: Related content is unavailable
+	#	When "related content" is unavailable
+	#	Then "related content" is not displayed
 	
 	Scenario: Most read
 		When I open a "sport" article
@@ -59,5 +60,10 @@ Feature: Article page
  	Scenario: Expand and collapse expanders on related content
 		When "related content" has expanders
 		Then I can expand and collapse expanders
+		
+	Scenario: Expand and collapse expanders on related content
+		Given I have visited some top stories
+		When I click "Top stories" tab at the top of the page
+		Then the articles I have visited will be in a visited state
 
 

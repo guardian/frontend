@@ -52,22 +52,22 @@ public class ArticleTestSteps {
 		article.open(host + "/help/terms-of-service");
 		
 	}
-	
+
 	@Then("^\"([^\"]*)\" is not displayed$")
 	public void is_not_displayed(String arg1) throws Throwable {
 		Assert.assertFalse(article.isElementPresent(By.id("related-trails")));
 	}
 	
-	@When("I open a  \"([^\"]*)\" article$")
+	@When("^I open a \"([^\"]*)\" article$")
 	public void I_open_a_article(String arg1) throws Throwable {
 		article.open(host + "/sport/2012/jul/27/london-2012-team-gb-clark-lenzly");
 	}
 
-	@Then("^\"([^\"]*)\" section tab show read ^\"([^\"]*)\"$")
-	public void section_tab_correlates_to_the_article_section(String arg1, String arg2) throws Throwable {
+	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
+	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
 		article.isTextPresentByElement(By.className("tabs-selected"), arg2);
 	}
-
+	
 	@When("^I click the \"([^\"]*)\" tabs$")
 	public void I_click_the_tabs(String arg1) throws Throwable {
 		article.clickLink("guardian.co.uk");
@@ -164,6 +164,17 @@ public class ArticleTestSteps {
 
 	}
 
+	@Given("^I have visited some top stories$")
+	public void I_have_visited_some_top_stories() throws Throwable {
+
+	}
+
+	@Then("^the articles I have visited will be in a visited state$")
+	public void the_articles_I_have_visited_will_be_in_a_visited_state() throws Throwable {
+
+	}
+
+	
 	@After
 	public void tearDown(){
 		article.close();
