@@ -17,19 +17,6 @@ trait CompetitionSupport {
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
   )
 
-  implicit def match2rich(m: FootballMatch) = new {
-
-    lazy val isFixture = m match {
-      case f: Fixture => true
-      case _ => false
-    }
-
-    lazy val isResult = m match {
-      case r: Result => true
-      case _ => false
-    }
-  }
-
   def competitions: Seq[Competition]
 
   def withMatchesOn(date: DateMidnight) = competitionSupportWith(
@@ -91,6 +78,10 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
     CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
+    //TODO just temporary for testing purposes
+    CompetitionAgent(Competition("104", "/football/bluesquarepremier", "Blue Square Premier", "Blue Square Premier", "English")),
+    CompetitionAgent(Competition("168", "/football/bluesquarepremier", "Blue Square South", "Blue Square South", "English")),
+
     CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
     CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
     CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
@@ -120,6 +111,13 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     }
   }
 
+  private def refreshLiveMatches() {
+    val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
+    competitionAgents.foreach { agent =>
+      agent.updateLiveMatches(liveMatches.filter(_.competition.exists(_.id == agent.competition.id)))
+    }
+  }
+
   def refresh() = {
     log.info("Refreshing results and fixtures")
     competitionAgents.foreach(_.refresh())
@@ -131,7 +129,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
       every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
       every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) {
         log.info("Refreshing live matches")
-        competitionAgents.foreach(_.refreshLiveMatches())
+        refreshLiveMatches()
       } ::
       Nil
   }

@@ -10,11 +10,11 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-object CompetitionFixturesController extends Controller with Logging with CompetitionFixtureFilters {
+object CompetitionResultsController extends Controller with Logging with CompetitionResultFilters {
 
   val daysToDisplay = 20
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
+  val page = new Page("http://www.guardian.co.uk/football/matches", "football/results", "football", "", "All results")
 
   def renderFor(year: String, month: String, day: String, competition: String) = render(
     competition, Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -26,19 +26,21 @@ object CompetitionFixturesController extends Controller with Logging with Compet
 
     val filteredCompetitions = Competitions.withCompetitionFilter(competition)
 
-    val fixtureDays = filteredCompetitions.withFixturesOnly.nextMatchDates(startDate, daysToDisplay)
+    val resultsDays = filteredCompetitions.withResultsOnly.previousMatchDates(startDate, daysToDisplay)
 
-    val fixtures = fixtureDays.map { day => MatchesOnDate(day, filteredCompetitions.withMatchesOn(day).competitions) }
+    val results = resultsDays.map { day => MatchesOnDate(day, filteredCompetitions.withMatchesOn(day).competitions) }
 
-    val nextPage = fixtureDays.lastOption.flatMap { date =>
-      Competitions.withFixturesOnly.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
-    }.map(d => toNextPreviousUrl(d, competition))
-
-    val previousPage = Competitions.withFixturesOnly.previousMatchDates(startDate.minusDays(1), daysToDisplay)
+    //going forward in time
+    val nextPage = Competitions.withResultsOnly.nextMatchDates(startDate.plusDays(1), daysToDisplay)
       .lastOption.map(d => toNextPreviousUrl(d, competition))
 
-    val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
-      nextPage, previousPage, "fixtures", filters)
+    //going backward in time
+    val previousPage = resultsDays.lastOption.flatMap { date =>
+      Competitions.withResultsOnly.previousMatchDates(date.minusDays(1), daysToDisplay).headOption
+    }.map(d => toNextPreviousUrl(d, competition))
+
+    val resultsPage = MatchesPage(page, None, results.filter(_.competitions.nonEmpty),
+      nextPage, previousPage, "results", filters)
 
     if (competitionDoesNotExist(competition)) {
       NotFound("not found")
@@ -46,9 +48,9 @@ object CompetitionFixturesController extends Controller with Logging with Compet
       Cached(page) {
         request.getQueryString("callback").map { callback =>
           JsonComponent(
-            "html" -> views.html.fragments.matchesList(fixturesPage),
+            "html" -> views.html.fragments.matchesList(resultsPage),
             "more" -> Html(nextPage.getOrElse("")))
-        }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
+        }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
       }
     }
   }
@@ -58,7 +60,7 @@ object CompetitionFixturesController extends Controller with Logging with Compet
   }
 
   private def toNextPreviousUrl(date: DateMidnight, competition: String) = date match {
-    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition)
-    case other => "/football/%s/fixtures/%s" format (competition, other.toString("yyyy/MMM/dd").toLowerCase)
+    case today if today == DateMidnight.now => "/football/%s/results" format (competition)
+    case other => "/football/%s/results/%s" format (competition, other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }

@@ -31,7 +31,7 @@ object LiveMatchesController extends Controller with Logging {
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(views.html.fragments.matchesList(livePage))
-      }.getOrElse(Ok(views.html.matches(livePage)))
+      }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
     }
   }
 }

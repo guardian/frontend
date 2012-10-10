@@ -6,4 +6,6 @@
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+GET		/sections					controllers.SectionsController.render()
+
 GET     /*path                      controllers.SectionController.render(path)

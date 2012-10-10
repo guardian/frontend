@@ -45,7 +45,7 @@ object ResultsController extends Controller with Logging with CompetitionResultF
         JsonComponent(
           "html" -> views.html.fragments.matchesList(resultsPage),
           "more" -> Html(previousPage.getOrElse("")))
-      }.getOrElse(Ok(views.html.matches(resultsPage)))
+      }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
     }
   }
 
