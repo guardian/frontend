@@ -19,6 +19,13 @@ object ContentApi extends ContentApiClient(Configuration)
 
 object FootballClient extends PaClient with DelegatedHttp {
   lazy val apiKey = Configuration.pa.apiKey
+
+  override def GET(urlString: String): pa.Response = {
+    //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
+    //I have reported to PA, but just trimming here so we can carry on development
+    val response = super.GET(urlString)
+    response.copy(body = response.body.dropWhile(_ != '<'))
+  }
 }
 
 object Static extends StaticAssets(Configuration.static.path)
@@ -54,7 +61,7 @@ object Management extends Management {
 
 sealed trait DelegatedHttp extends Http with Logging {
 
-  private var delegate: Http = new DispatchHttp {
+  protected var delegate: Http = new DispatchHttp {
     override lazy val maxConnections = 50
 
     override lazy val requestTimeoutInMs = 5000

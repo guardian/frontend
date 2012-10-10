@@ -1,4 +1,4 @@
-@(live: pa.LiveMatch)
+@(live: pa.MatchDay)
 <li class="match">
     <p class="match-desc">
         <span class="home team">@live.homeTeam.name</span>
@@ -6,6 +6,6 @@
         <span class="away team">@live.awayTeam.name</span>
     </p>
     <p class="status">
-        <abbr class="status-@live.status">@live.status</abbr>
+        <abbr class="status-@live.matchStatus">@live.matchStatus</abbr>
     </p>
 </li>

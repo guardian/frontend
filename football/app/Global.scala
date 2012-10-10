@@ -1,5 +1,6 @@
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import common.RequestMetrics
+import conf.FootballClient
 import model.LiveBlog
 import play.api.GlobalSettings
 import feed.Competitions
