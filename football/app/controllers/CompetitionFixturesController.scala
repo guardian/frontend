@@ -48,7 +48,7 @@ object CompetitionFixturesController extends Controller with Logging with Compet
           JsonComponent(
             "html" -> views.html.fragments.matchesList(fixturesPage),
             "more" -> Html(nextPage.getOrElse("")))
-        }.getOrElse(Ok(views.html.matches(fixturesPage)))
+        }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
       }
     }
   }

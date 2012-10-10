@@ -10,9 +10,9 @@
             </h3>
             <ol class="matches">
                 @comp.matches.map{
-                    case fixture: pa.Fixture => { @fragments.fixture(fixture) }
-                    case result: pa.Result => { @fragments.result(result) }
-                    case live: pa.LiveMatch => { @fragments.liveMatch(live) }
+                    case fixture: pa.Fixture    => { @fragments.fixture(fixture) }
+                    case result: pa.Result      => { @fragments.result(result) }
+                    case matchDay: pa.MatchDay  => { @fragments.liveMatch(matchDay) }
                 }
             </ol>
             @* Shows the live blog (if there is one) after the first competition *@

@@ -1,11 +1,13 @@
 package feed
 
-import pa.{ LiveMatch, Result, Fixture }
+import pa._
 import conf.FootballClient
 import org.joda.time.DateMidnight
-import model.Competition
 import akka.util.Timeout
 import common._
+import pa.Result
+import model.Competition
+import pa.Fixture
 
 trait HasCompetition {
   def competition: Competition
@@ -13,13 +15,11 @@ trait HasCompetition {
 
 trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
 
-  private val agent = play_akka.agent[Seq[LiveMatch]](Nil)
+  private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
 
-  def refreshLiveMatches() { agent.sendOff { old => FootballClient.liveMatches(competition.id) } }
+  def updateLiveMatches(matches: Seq[FootballMatch]) = agent.update(matches)
 
   def shutdownLiveMatches() { agent.close() }
-
-  def awaitLiveMatches() { quietly(agent.await(Timeout(5000))) }
 
   def liveMatches = agent()
 }

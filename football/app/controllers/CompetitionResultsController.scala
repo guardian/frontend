@@ -50,7 +50,7 @@ object CompetitionResultsController extends Controller with Logging with Competi
           JsonComponent(
             "html" -> views.html.fragments.matchesList(resultsPage),
             "more" -> Html(nextPage.getOrElse("")))
-        }.getOrElse(Ok(views.html.matches(resultsPage)))
+        }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
       }
     }
   }

@@ -1,0 +1,28 @@
+@(page: Page)(implicit request: RequestHeader)
+
+@main(page, Static, Configuration, Switches.all){  }{
+
+    @Zones().map{ zone =>
+
+        <section class="sections zone-@zone.name.zone">
+
+        	<h1 class="article-zone">
+                <a href="@zone.name.href" data-link-name="@zone.name.linkName" class="zone-color">
+                    @HtmlFormat.raw(zone.name.title)
+                </a>
+            </h1>
+
+            <ul class="nav nav-stacked cf">
+            
+                @zone.sections.map{ section =>
+                    <li>
+                        <a href="@section.href" data-link-name="@section.linkName">
+                            @HtmlFormat.raw(section.title)
+                        </a>
+                    </li>
+                }
+            </ul>   
+
+        </section>
+    }
+}

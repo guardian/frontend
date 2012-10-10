@@ -10,7 +10,7 @@ import org.scala_tools.time.Imports._
 
 class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
-  "CachedOk" should "cache live content for 5 seconds" in {
+  "Cached" should "cache live content for 5 seconds" in {
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
