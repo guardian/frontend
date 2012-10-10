@@ -18,7 +18,8 @@ define([
         'modules/trailblocktoggle',
         'bean',
         'modules/more-matches',
-        'bonzo'
+        'bonzo',
+        'modules/togglepanel'
     ],
     function (
         common,
@@ -40,9 +41,15 @@ define([
         TrailblockToggle,
         bean,
         MoreMatches,
-        bonzo) {
+        bonzo,
+        TogglePanel) {
 
         var modules = {
+
+            hideJsElements: function () {
+                var html = common.$g('body')[0];
+                bonzo(html).toggleClass('js-off js-on');
+            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -141,6 +148,11 @@ define([
                     e.preventDefault();
                     common.mediator.emit('ui:more-matches:clicked', [e.currentTarget]);
                 });
+            },
+
+            bindTogglePanels: function () {
+                var tp = new TogglePanel();
+                tp.init();
             }
         };
 
@@ -148,6 +160,7 @@ define([
 
         var isNetworkFront = (config.page.pageId === "");
         
+        modules.hideJsElements();
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();
@@ -179,7 +192,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
+        modules.bindTogglePanels();
     };
 
     // domReady proxy for bootstrap
