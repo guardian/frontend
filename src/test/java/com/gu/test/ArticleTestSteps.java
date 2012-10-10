@@ -9,14 +9,17 @@ import cucumber.annotation.en.When;
 public class ArticleTestSteps {
 
 	private ArticleTestPage article;
+	private String host;
 
 	@Given("^I am on an article page$")
 	public void I_am_on_an_article_page() throws Throwable {
 		
 		article = new ArticleTestPage();
-		//cant compile local host
-		//article.open(article.getHost() + "/uk/2012/sep/19/police-manchester");
-		article.open("http://www.gucode.co.uk" + "/uk/2012/sep/19/police-manchester");
+		//host = article.getHost();
+		host = "http://www.gucode.co.uk"; //cant compile local host
+
+		article.open(host + "/uk/2012/sep/19/police-manchester");
+
 	}
 
 	@When("^the article has a story package$")
