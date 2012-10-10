@@ -4,12 +4,12 @@ define(['common', 'reqwest'], function (common, reqwest) {
 
         this.sizeMap = {
             'Top2' : {
-                width : '320',
-                height: '52'
+                width : '300',
+                height: '50'
             },
             'Bottom2' : {
-                width : '320',
-                height: '52'
+                width : '300',
+                height: '50'
             }
         },
 
@@ -20,17 +20,15 @@ define(['common', 'reqwest'], function (common, reqwest) {
             var slots = document.querySelectorAll('.ad-slot'),
                 width = window.innerWidth,
                 size = (width > 728) ? 'median' : 'base',
-                length = slots.legnth,
+                length = slots.length,
                 i =0;
 
             for(; i < length; i++) {
                 var slot = slots[i].getAttribute('data-'+size),
-                    id = slot[i].id;
+                    id = slots[i].id;
 
                 this.create(slot, id);
             }
-
-            //common.mediator.emit('modules:adverts:ready');
         },
 
         //To construct and cache request URL
