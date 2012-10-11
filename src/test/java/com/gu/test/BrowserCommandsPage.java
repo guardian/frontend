@@ -1,5 +1,6 @@
 package com.gu.test;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -12,11 +13,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
 
-public class ArticleTestPage {
+public class BrowserCommandsPage {
 
 	static WebDriver driver;
 
-	public ArticleTestPage() {
+	public BrowserCommandsPage() {
 		initialiseBrowser();
 	}
 
@@ -24,7 +25,7 @@ public class ArticleTestPage {
 		return driver;
 	}
 	public static void setDriver(WebDriver driver) {
-		ArticleTestPage.driver = driver;
+		BrowserCommandsPage.driver = driver;
 	}
 
 	private static void initialiseBrowser() {
@@ -72,7 +73,7 @@ public class ArticleTestPage {
 		getDriver().findElement(By.linkText(linkName)).click();
 		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-	
+
 	public void clickButton(By buttonName) {
 		getDriver().findElement(buttonName).click();
 		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -82,7 +83,7 @@ public class ArticleTestPage {
 		return getDriver().findElement(By.tagName("body")).getText().contains(textToSearch);
 	}
 
-	
+
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
 
 		return getDriver().findElement(elementname).getText().contains(textToSearch);
@@ -159,5 +160,39 @@ public class ArticleTestPage {
 			host = System.getProperty("host");
 		}
 		return host;
+	}
+
+	public void click(By elemenName) {
+
+		if (getDriver().findElements(elemenName).size() !=0) {
+			getDriver().findElement(elemenName).click();
+			waitFor(1000);
+		}
+		else
+			System.out.println(elemenName + " the button does not exist or visible");
+	}
+
+	public void waitFor(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			System.out.println("Interrupted Exception error " + e);
+		}
+
+	}
+
+	public void closeAll(){
+		//quits webdriver any open windows
+		getDriver().quit();
+
+		//kills all running firefox process
+		Runtime rt = Runtime.getRuntime();
+		if (System.getProperty("os.name").toLowerCase().indexOf("linux") > -1)
+			try {
+				rt.exec("killall -9 firefox");
+				System.out.println("killing firefox");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 }

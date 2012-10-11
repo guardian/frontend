@@ -25,9 +25,13 @@ Feature: Article page
 		When I open a "sport" article
 		Then "most read" section tab show read "sport"
 
-	Scenario: Toggle between tabs
-		When I click the "Most read" tabs
-		Then I can toggle between the section tab and guardian.co.uk tab
+	Scenario: Most read (per section)
+		When I select sectional "Most read"
+		Then I can see a list of the most popular stories on guardian.co.uk for the section I am in
+
+	Scenario: Most read (pan-site)
+		When I select pan-site "Most read"
+		Then I can see a list of the most popular stories on guardian.co.uk for the whole guardian site
 
 	Scenario: Open and close top story from top of page
 		When I click "Top stories" tab at the top of the page
@@ -38,19 +42,14 @@ Feature: Article page
 		When I click "Top stories" tab at the foot of the page
 		Then a list of the footer "Top stories" opens
 		And another click on the footer "Top stories" closes the list.
- 
+		
 	Scenario: Open and close sections from top of page
-		When I click the "header" "Sections" navigation tab
-		Then a list of "Sections" opens in "header"
-		And another click on the "header" "Sections" tab closes the list
-
-	Scenario: Open and close sections from foot of page
-		When I click the "footer" "Sections" navigation tab
-		Then a list of bottom "Sections" opens in the "footer"
-		And another click on the "footer" "Sections" tab closes the list
+		When I select the sections navigation button
+		Then it should show me a list of sections
 
 	Scenario: High resolution image and caption is displayed
 		When the article has an article image
+		And the user's connection speed is fast
 		Then article high resolution image and caption is displayed
 
 	Scenario: Expand and collapse expanders on more on this story

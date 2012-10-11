@@ -12,13 +12,13 @@ import cucumber.annotation.en.When;
 
 public class ArticleTestSteps {
 
-	private ArticleTestPage article;
+	private BrowserCommandsPage article;
 	private String host;
 
 	@Given("^I am on an article page$")
 	public void I_am_on_an_article_page() throws Throwable {
 		
-		article = new ArticleTestPage();
+		article = new BrowserCommandsPage();
 		//host = article.getHost();
 		host = "http://beta.gucode.co.uk"; //cant compile local host
 
@@ -68,17 +68,30 @@ public class ArticleTestSteps {
 		article.isTextPresentByElement(By.className("tabs-selected"), arg2);
 	}
 	
-	@When("^I click the \"([^\"]*)\" tabs$")
-	public void I_click_the_tabs(String arg1) throws Throwable {
+
+	@When("^I select sectional \"([^\"]*)\"$")
+	public void I_select_sectional(String arg1) throws Throwable {
 		article.clickLink("guardian.co.uk");
 	}
-
-	@Then("^I can toggle between the section tab and guardian.co.uk tab$")
-	public void I_can_toggle_between_the_section_tab_and_guardian_co_uk_tab() throws Throwable {
+	
+	@When("^I select pan-site \"([^\"]*)\"$")
+	public void I_select_pan_site(String arg1) throws Throwable {
+		article.click(By.cssSelector("#js-popular-tabs > li > a"));
+	}
+	
+	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
+	public void I_can_see_list_popular_stories_on_guardian_for_the_section_i_am_in() throws Throwable {
 		String ret = article.getDriver().findElement(By.id("tabs-popular-2")).getCssValue("display");
 		Assert.assertEquals("block", ret);
 	}
 
+	@Then("^I can see a list of the most popular stories on guardian.co.uk for the whole guardian site$")
+	public void I_can_see_a_list_of_the_most_popular_stories_on_guardian_co_uk_for_the_whole_guardian_site() throws Throwable {
+		String ret = article.getDriver().findElement(By.id("tabs-popular-1")).getCssValue("display");
+		Assert.assertEquals("block", ret);
+		
+	}
+	
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
 	public void I_click_tab_at_the_top_of_the_page(String arg1) throws Throwable {
 		article.clickLink(arg1);
@@ -115,14 +128,14 @@ public class ArticleTestSteps {
 		Assert.assertEquals("none", ret);
 	}
 
-	@When("^I click the \"([^\"]*)\" \"([^\"]*)\" navigation tab$")
-	public void I_click_the_navigation_tab(String arg1, String arg2) throws Throwable {
-		article.getDriver().findElement(By.id("sections-control-" + arg1)).click();
+	@When("^I select the sections navigation button$")
+	public void I_select_the_sections_navigation_button( ) throws Throwable {
+		article.getDriver().findElement(By.id("sections-control-header")).click();
 	}
 
-	@Then("^a list of \"([^\"]*)\" opens in \"([^\"]*)\"$")
-	public void a_list_of_opens_in(String arg1, String arg2) throws Throwable {
-		String ret = article.getDriver().findElement(By.id("sections-" + arg2)).getCssValue("display");
+	@Then("^it should show me a list of sections$")
+	public void it_should_show_a_list_of_sections() throws Throwable {
+		String ret = article.getDriver().findElement(By.id("sections-header")).getCssValue("display");
 		Assert.assertEquals("block", ret);
 	}
 	
@@ -146,6 +159,11 @@ public class ArticleTestSteps {
 
 	@When("^the article has an article image$")
 	public void the_article_has_an_article_image() throws Throwable {
+
+	}
+
+	@When("^the user's connection speed is fast$")
+	public void the_user_s_connection_speed_is_fast() throws Throwable {
 
 	}
 
@@ -177,7 +195,7 @@ public class ArticleTestSteps {
 	
 	@After
 	public void tearDown(){
-		article.close();
+		article.closeAll();
 	}
 }
 
