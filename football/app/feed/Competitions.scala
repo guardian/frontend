@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
 import java.util.Comparator
-import pa.{ Result, Fixture, FootballMatch }
 
 trait CompetitionSupport {
 
@@ -67,7 +66,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   private var schedules: Seq[Cancellable] = Nil
 
-  private val competitionAgents = Seq(
+  val competitionAgents = Seq(
 
     CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
     CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
@@ -100,8 +99,10 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     agent.competition.copy(matches = allGames.sortBy(_.date))
   }
 
+  def refreshAgent(agent: CompetitionAgent) = agent.refresh()
+
   //one http call updates all competitions
-  private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
+  def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))
@@ -109,7 +110,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
   }
 
   //one http call updates all competitions
-  private def refreshLiveMatches() {
+  def refreshLiveMatches() {
     val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
     competitionAgents.foreach { agent =>
       val competitionMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
@@ -125,9 +126,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
       competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>
           //stagger fixtures and results refreshes to avoid timeouts
-          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) {
-            agent.refresh()
-          }
+          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { refreshAgent(agent) }
       }
   }
 
