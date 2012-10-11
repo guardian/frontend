@@ -6,6 +6,7 @@ import conf.{ FootballStatsPlugin, FootballClient, Configuration }
 import pa.Http
 import io.Source
 import play.api.Plugin
+import org.joda.time.DateMidnight
 
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
   override def onStart() = {
@@ -26,6 +27,8 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
 // Stubs data for Football stats integration tests
 object TestHttp extends Http {
 
+  val today = new DateMidnight().toString("dd/MM/yyyy")
+
   val base = getClass.getClassLoader.getResource("testdata").getFile + "/__"
 
   def GET(url: String) = {
@@ -38,7 +41,7 @@ object TestHttp extends Http {
     }
 
     //mess with the live matches date so it thinks the match is live
-    val xml = Source.fromFile(fileName).getLines.mkString.replace("05/09/2012", "13/09/2012")
+    val xml = Source.fromFile(fileName).getLines.mkString.replace("05/09/2012", today)
 
     pa.Response(200, xml, "ok")
   }

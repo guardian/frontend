@@ -94,7 +94,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     val resultsWithLiveGames = agent.liveMatches.filterNot(g => results.exists(_.id == g.id)) ++ results
 
     //results and live games trump fixtures
-    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
+    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
 
     agent.competition.copy(matches = allGames.sortBy(_.date))
   }

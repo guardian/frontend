@@ -2,11 +2,11 @@
 <matches xsi:noNamespaceSchemaLocation="http://pads6.pa-sport.com/API/Schemas/Football/Competitions/matches.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <match matchID="3526730" date="05/09/2012" koTime="19:45">
-        <competition competitionID="167" seasonID="217">Blue Square North 12/13</competition>
+        <competition competitionID="100" seasonID="217">Blue Square North 12/13</competition>
         <stage stageNumber="1" stageType="League"></stage>
         <round roundNumber="1"></round>
         <leg>1</leg>
-        <liveMatch>No</liveMatch>
+        <liveMatch>Yes</liveMatch>
         <result>Yes</result>
         <previewAvailable>No</previewAvailable>
         <reportAvailable>No</reportAvailable>
