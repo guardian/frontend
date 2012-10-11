@@ -78,10 +78,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
     CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
-    //TODO just temporary for testing purposes
-    CompetitionAgent(Competition("104", "/football/bluesquarepremier", "Blue Square Premier", "Blue Square Premier", "English")),
-    CompetitionAgent(Competition("168", "/football/bluesquarepremier", "Blue Square South", "Blue Square South", "English")),
-
     CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
     CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
     CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
@@ -104,6 +100,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     agent.competition.copy(matches = allGames.sortBy(_.date))
   }
 
+  //one http call updates all competitions
   private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).foreach { agent =>
@@ -111,6 +108,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     }
   }
 
+  //one http call updates all competitions
   private def refreshLiveMatches() {
     val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
     competitionAgents.foreach { agent =>
@@ -120,19 +118,17 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     }
   }
 
-  def refresh() = {
-    log.info("Refreshing results and fixtures")
-    competitionAgents.foreach(_.refresh())
-  }
-
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(5, MINUTES), initialDelay = Duration(5, SECONDS)) { refreshCompetitionData() } ::
-      every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
-      every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) {
-        refreshLiveMatches()
-      } ::
-      Nil
+    schedules = every(Duration(10, SECONDS), initialDelay = Duration(1, SECONDS)) { refreshLiveMatches() } ::
+      every(Duration(5, MINUTES), initialDelay = Duration(1, SECONDS)) { refreshCompetitionData() } ::
+      competitionAgents.zipWithIndex.toList.map {
+        case (agent, index) =>
+          //stagger fixtures and results refreshes to avoid timeouts
+          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) {
+            agent.refresh()
+          }
+      }
   }
 
   def shutDown() {
@@ -142,7 +138,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   def warmup() {
     refreshCompetitionData()
-    refresh()
+    competitionAgents.foreach(_.refresh())
     competitionAgents.foreach(_.await())
   }
 }
