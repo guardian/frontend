@@ -59,34 +59,35 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   "PictureCleaner" should "correctly format inline pictures" in {
 
     val images = new Images {
-      override val images = Seq(
-        Image(
-          MediaAsset("picture", "body", 1, Some("http://www.a.b.c/img.jpg"),
-            Some(Map("caption" -> "the caption", "width" -> "55")))
-        )
-      )
+      override val images = Nil
     }
 
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(images)).text.trim)
 
-    val imgDivs = (body \\ "div").toList
+    val figures = (body \\ "figure").toList
 
-    val baseImg = imgDivs(1)
+    val baseImg = figures(1)
     (baseImg \ "@class").text should be("img-base inline-image")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
-    (baseImg \ "p" \ "@class").text should be("caption")
-    (baseImg \ "p").text should be("the caption")
 
-    val medianImg = imgDivs(2)
+    val medianImg = figures(2)
     (medianImg \ "@class").text should be("img-median inline-image")
     (medianImg \ "img" \ "@class").text should be("gu-image")
     (medianImg \ "img" \ "@width").text should be("250")
 
-    val extendedImg = imgDivs(0)
+    val extendedImg = figures(0)
     (extendedImg \ "@class").text should be("img-extended")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
     (extendedImg \ "img" \ "@width").text should be("600")
+
+    (body \\ "figure").foreach { fig =>
+      (fig \ "@itemprop").text should be("associatedMedia")
+      (fig \ "@itemscope").text should be("")
+      (fig \ "@itemtype").text should be("http://schema.org/ImageObject")
+    }
+
+    (body \\ "figcaption").foreach { fig => (fig \ "@itemprop").text should be("description") }
   }
 
   "InBodyLinkCleaner" should "clean links" in {
@@ -162,17 +163,25 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   val bodyTextWithInlineElements = """
   <span>
-  <p>foo bar</p>
+    <p>more than hearty breakfast we asked if the hotel could find out if nearby Fraserburgh was open. "Yes, but bring your own snorkel," was the response. How could we resist?</p>
 
-  <img src="http://www.a.b.c/img3.jpg" class="gu-image" width="600" height="180"/>
+    <figure>
+      <img src='http://www.a.b.c/img3' alt='Meldrum House in Oldmeldrum\n' width='600' height='180' class='gu-image'/>
+    </figure>
 
-  <img src="http://www.a.b.c/img.jpg" class="gu-image" width="140" height="84"/>
+     <figure>
+       <img src='http://www.a.b.c/img.jpg' alt='Meldrum House in Oldmeldrum\n' width='140' height='84' class='gu-image'/>
+     </figure>
 
-  <p>lorem ipsum
-    <img src="http://www.a.b.c/img2.jpg" class="gu-image" width="250" height="100"/>
-  </p>
+
+     <figure>
+       <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='250' height='100' class='gu-image'/>
+     </figure>
+
+
+    <p>But first to <a href="http://www.glengarioch.com/verify.php" title="">Glen Garioch distillery</a></p>
   </span>
-  """
+                                   """
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.guardiannews.com/section/2011/jan/01/words-for-url">the link</a></p>
