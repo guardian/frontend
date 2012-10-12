@@ -56,18 +56,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<systemProperties>
-						<property>
-							<name>host</name>
-							<value>${host}</value>
-						</property>
-						<property>
-							<name>proxyname</name>
-							<value>${proxyname}</value>
-						</property>
-						<property>
-							<name>proxyport</name>
-							<value>${proxyport}</value>
-						</property>
+						<host>${host}</host>
+						<proxyname>${proxyname}</proxyname>
+						<proxyport>${proxyport}</proxyport>
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -82,6 +73,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			</plugin>
 		</plugins>
 	</build>
+	
 	<repositories>
 		<repository>
 			<id>guardian-nexus</id>
