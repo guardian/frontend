@@ -34,7 +34,12 @@ object Navigation {
 }
 
 object Zones {
-  def apply() = {
+  def apply(request: RequestHeader, config: GuardianConfiguration) = {
+
+    val host = request.headers.get("host")
+    val edition = config.edition(host)
+
+    val sportTitle = if (edition == "US") "Sports" else "Sport"
 
     val zones = Seq(
       Zone(
@@ -57,7 +62,7 @@ object Zones {
         )), //End News
 
       Zone(
-        SectionLink("sport", "Sport", "/sport", "Sport"),
+        SectionLink("sport", "Sport", "/sport", sportTitle),
         Seq(
           SectionLink("football", "Football", "/football", "Football"),
           SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog"),
@@ -72,7 +77,7 @@ object Zones {
       Zone(
         SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
         Seq(
-          SectionLink("commentisfree", "Cif America", "http://@config.edition.usHost/commentisfree", "Cif America"),
+          SectionLink("commentisfree", "Cif America", "http://" + config.edition.usHost + "/commentisfree", "Cif America"),
           SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief"),
           SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
         )), // end comment is free
@@ -105,7 +110,7 @@ object Zones {
         Seq(
           SectionLink("money", "Property", "/money/property", "Property"),
           SectionLink("money", "House prices", "/money/houseprices", "House prices"),
-          SectionLink("money", "Pensions", "/money/pensions", "Pensions"), 
+          SectionLink("money", "Pensions", "/money/pensions", "Pensions"),
           SectionLink("money", "Savings", "/money/savings", "Savings"),
           SectionLink("money", "Borrowing &amp; debt", "/money/debt", "Borrowing &amp; debt"),
           SectionLink("money", "Insurance", "/money/insurance", "Insurance"),
