@@ -111,18 +111,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("In body pictures", ArticleComponents) {
 
-      given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-      HtmlUnit("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
+      given("I am on an article entitled 'A food revolution in Charleston, US'")
+      HtmlUnit("/travel/2012/oct/11/charleston-food-gourmet-hotspot-barbecue") { browser =>
         import browser._
 
         then("I should see pictures in the body of the article")
-        val inBodyImage = $("[itemprop=associatedMedia]")(2)
-        inBodyImage.findFirst("img[itemprop=contentURL]").getAttribute("src") should
-          be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/7/1344330044209/Lindisfarne_longboat.jpg")
+
+        $("figure[itemprop=associatedMedia]").length should be(2)
+
+        val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
+
+        inBodyImage.getAttribute("class") should be("img-extended")
+
+        inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
+          be("http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         and("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
-          be("""A longboat among the ruins. Pic by English Heritage""")
+          be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
 
