@@ -8,7 +8,7 @@ class CompetitionsResultsFeatureTest extends FeatureSpec with GivenWhenThen with
 
   feature("Football Results") {
 
-    ignore("Visit the results page") {
+    scenario("Visit the results page") {
 
       given("I visit the results page")
 
@@ -20,42 +20,27 @@ class CompetitionsResultsFeatureTest extends FeatureSpec with GivenWhenThen with
       }
 
       //A dated url will give us a fixed set of results we can assert against
-      HtmlUnit("/football/premierleague/results/2012/oct/07") { browser =>
+      HtmlUnit("/football/premierleague/results/2012/oct/01") { browser =>
         import browser._
         then("I should see results for today")
 
-        findFirst(".competitions-date").getText should be("Sunday 7 October 2012")
+        findFirst(".competitions-date").getText should be("Monday 1 October 2012")
 
         val fixture = findFirst(".matches").findFirst(".match-desc")
-        fixture.findFirst(".home").getText should be("Southampton")
-        fixture.findFirst(".away").getText should be("Fulham")
-        fixture.findFirst(".result").getText should be("2 - 2")
+        fixture.findFirst(".home").getText should be("QPR")
+        fixture.findFirst(".away").getText should be("West Ham")
+        fixture.findFirst(".result").getText should be("1 - 2")
         findFirst(".status").getText should include("FT")
 
         and("I should see results for the past")
-        $(".competitions-date").getTexts should contain("Saturday 6 October 2012")
-        $(".competitions-date").getTexts should contain("Monday 1 October 2012")
+        $(".competitions-date").getTexts should contain("Sunday 26 August 2012")
+        $(".competitions-date").getTexts should contain("Sunday 19 August 2012")
       }
     }
 
-    ignore("Next results") {
-      given("I am on the results page")
-      //A dated url will give us a fixed set of results we can assert against
-      HtmlUnit("/football/premierleague/results/2012/oct/07") { browser =>
-        import browser._
-        when("I click the 'next' link")
-
-        findFirst("[data-link-name=next]").click()
-        browser.await()
-
-        then("I should navigate to the next set of results")
-        findFirst(".competitions-date").getText should be("Saturday 22 December 2012")
-      }
-    }
-
-    ignore("Link tracking") {
+    scenario("Link tracking") {
       given("I visit the results page")
-      HtmlUnit("/football/premierleague/results/2012/oct/07") { browser =>
+      HtmlUnit("/football/premierleague/results/2012/oct/01") { browser =>
         import browser._
         then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>

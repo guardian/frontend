@@ -8,7 +8,7 @@ class CompetitionsFixturesFeatureTest extends FeatureSpec with GivenWhenThen wit
 
   feature("Football Fixtures") {
 
-    ignore("Visit the fixtures page") {
+    scenario("Visit the fixtures page") {
 
       given("I visit the fixtures page")
 
@@ -37,7 +37,7 @@ class CompetitionsFixturesFeatureTest extends FeatureSpec with GivenWhenThen wit
       }
     }
 
-    ignore("Next fixtures") {
+    scenario("Next fixtures") {
       given("I am on the fixtures page")
       //A dated url will give us a fixed set of fixtures we can assert against
       HtmlUnit("/football/premierleague/fixtures/2012/oct/13") { browser =>
@@ -52,7 +52,7 @@ class CompetitionsFixturesFeatureTest extends FeatureSpec with GivenWhenThen wit
       }
     }
 
-    ignore("Link tracking") {
+    scenario("Link tracking") {
       given("I visit the fixtures page")
       HtmlUnit("/football/premierleague/fixtures/2012/oct/13") { browser =>
         import browser._

@@ -50,12 +50,15 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
   private val agent = play_akka.agent[Seq[Result]](Nil)
 
   def refreshResults() {
-    competition.startDate.foreach { startDate =>
-      agent.sendOff { old =>
-        val results = FootballClient.results(competition.id, startDate)
-        log.info("found %s results for competition %s".format(results.size, competition.fullName))
-        results
-      }
+
+    //it is possible that we do not know the startdate of the competition yet (concurrency)
+    //in that case just get the last 30 days results, the start date will catch up soon enough
+    val startDate = competition.startDate.getOrElse(new DateMidnight().minusDays(30))
+
+    agent.sendOff { old =>
+      val results = FootballClient.results(competition.id, startDate)
+      log.info("found %s results for competition %s".format(results.size, competition.fullName))
+      results
     }
   }
 

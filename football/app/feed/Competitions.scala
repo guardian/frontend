@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
 import java.util.Comparator
-import pa.{ Result, Fixture, FootballMatch }
 
 trait CompetitionSupport {
 
@@ -67,7 +66,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   private var schedules: Seq[Cancellable] = Nil
 
-  private val competitionAgents = Seq(
+  val competitionAgents = Seq(
 
     CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
     CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
@@ -77,10 +76,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English")),
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
     CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
-
-    //TODO just temporary for testing purposes
-    CompetitionAgent(Competition("104", "/football/bluesquarepremier", "Blue Square Premier", "Blue Square Premier", "English")),
-    CompetitionAgent(Competition("168", "/football/bluesquarepremier", "Blue Square South", "Blue Square South", "English")),
 
     CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
     CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
@@ -99,19 +94,23 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     val resultsWithLiveGames = agent.liveMatches.filterNot(g => results.exists(_.id == g.id)) ++ results
 
     //results and live games trump fixtures
-    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ results
+    val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
 
     agent.competition.copy(matches = allGames.sortBy(_.date))
   }
 
-  private def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
+  def refreshAgent(agent: CompetitionAgent) = agent.refresh()
+
+  //one http call updates all competitions
+  def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))
     }
   }
 
-  private def refreshLiveMatches() {
+  //one http call updates all competitions
+  def refreshLiveMatches() {
     val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
     competitionAgents.foreach { agent =>
       val competitionMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
@@ -120,19 +119,15 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     }
   }
 
-  def refresh() = {
-    log.info("Refreshing results and fixtures")
-    competitionAgents.foreach(_.refresh())
-  }
-
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(5, MINUTES), initialDelay = Duration(5, SECONDS)) { refreshCompetitionData() } ::
-      every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) { refresh() } ::
-      every(Duration(10, SECONDS), initialDelay = Duration(10, SECONDS)) {
-        refreshLiveMatches()
-      } ::
-      Nil
+    schedules = every(Duration(10, SECONDS), initialDelay = Duration(1, SECONDS)) { refreshLiveMatches() } ::
+      every(Duration(5, MINUTES), initialDelay = Duration(1, SECONDS)) { refreshCompetitionData() } ::
+      competitionAgents.zipWithIndex.toList.map {
+        case (agent, index) =>
+          //stagger fixtures and results refreshes to avoid timeouts
+          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { refreshAgent(agent) }
+      }
   }
 
   def shutDown() {
@@ -142,7 +137,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   def warmup() {
     refreshCompetitionData()
-    refresh()
+    competitionAgents.foreach(_.refresh())
     competitionAgents.foreach(_.await())
   }
 }

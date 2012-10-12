@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<matches xsi:noNamespaceSchemaLocation="http://pads6.pa-sport.com/API/Schemas/Football/Competitions/matches.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <match matchID="3526730" date="05/09/2012" koTime="19:45">
+        <competition competitionID="100" seasonID="217">Blue Square North 12/13</competition>
+        <stage stageNumber="1" stageType="League"></stage>
+        <round roundNumber="1"></round>
+        <leg>1</leg>
+        <liveMatch>Yes</liveMatch>
+        <result>Yes</result>
+        <previewAvailable>No</previewAvailable>
+        <reportAvailable>No</reportAvailable>
+        <lineupsAvailable>Yes</lineupsAvailable>
+        <matchStatus>FT</matchStatus>
+        <attendance>3112</attendance>
+        <referee refereeID="422921">R Johnson</referee>
+        <venue venueID="4119">Exacta Stadium</venue>
+        <homeTeam teamID="53">
+            <teamName>Chester FC</teamName>
+            <score>2</score>
+            <htScore></htScore>
+            <aggregateScore></aggregateScore>
+            <scorers><![CDATA[Ben Mills (10),Dave Hankin (52)]]></scorers>
+        </homeTeam>
+        <awayTeam teamID="79">
+            <teamName>FC Halifax</teamName>
+            <score>1</score>
+            <htScore></htScore>
+            <aggregateScore></aggregateScore>
+            <scorers><![CDATA[Jon Worthington (56)]]></scorers>
+        </awayTeam>
+        <comments></comments>
+    </match>
+</matches>

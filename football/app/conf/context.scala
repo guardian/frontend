@@ -1,10 +1,13 @@
 package conf
 
+import _root_.play.api.{ Application => PlayApp, Plugin }
 import common._
 import com.gu.management._
 import com.gu.management.play._
+import feed.Competitions
 import logback.LogbackLevelPage
 import pa.{ Http, Proxy, DispatchHttp, PaClient }
+import model.LiveBlog
 
 object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
 
@@ -17,13 +20,43 @@ object Configuration extends GuardianConfiguration("frontend-football", webappCo
 
 object ContentApi extends ContentApiClient(Configuration)
 
-object FootballClient extends PaClient with DelegatedHttp {
+class FootballStatsPlugin(app: PlayApp) extends Plugin {
+  object dispatchHttp extends DispatchHttp {
+    override lazy val maxConnections = 50
+    override lazy val requestTimeoutInMs = 5000
+    override lazy val proxy = if (Configuration.proxy.isDefined)
+      Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
+    else
+      None
+  }
+
+  override def onStart() = {
+    FootballClient.http = dispatchHttp
+    Competitions.startup()
+    LiveBlog.startup()
+  }
+
+  override def onStop() = {
+    Competitions.shutDown()
+    LiveBlog.shutdown()
+    dispatchHttp.close()
+  }
+}
+
+object FootballClient extends PaClient with Http {
+
+  private var _http: Http = _
+
+  def http = _http
+  def http_=(delegateHttp: Http) = _http = delegateHttp
+
   lazy val apiKey = Configuration.pa.apiKey
 
   override def GET(urlString: String): pa.Response = {
+    val response = _http.GET(urlString)
+
     //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
     //I have reported to PA, but just trimming here so we can carry on development
-    val response = super.GET(urlString)
     response.copy(body = response.body.dropWhile(_ != '<'))
   }
 }
@@ -57,25 +90,4 @@ object Management extends Management {
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )
-}
-
-sealed trait DelegatedHttp extends Http with Logging {
-
-  protected var delegate: Http = new DispatchHttp {
-    override lazy val maxConnections = 50
-
-    override lazy val requestTimeoutInMs = 5000
-
-    override lazy val proxy = if (Configuration.proxy.isDefined)
-      Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
-    else
-      None
-  }
-
-  def setHttp(http: Http) { delegate = http }
-
-  override def GET(url: String) = PaApiHttpTimingMetric.measure {
-    log.info("PA API call: " + url)
-    delegate.GET(url)
-  }
 }
