@@ -25,15 +25,15 @@ object FixturesController extends Controller with Logging with CompetitionFixtur
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val fixtureDays = (Seq(startDate) ++ Competitions.withFixturesOnly.nextMatchDates(startDate, daysToDisplay)).distinct
+    val fixtureDays = Competitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(startDate, daysToDisplay)
 
     val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day).competitions) }
 
     val nextPage = fixtureDays.lastOption.flatMap { date =>
-      Competitions.withFixturesOnly.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
+      Competitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
     }.map(toNextPreviousUrl)
 
-    val previousPage = Competitions.withFixturesOnly.previousMatchDates(startDate.minusDays(1), daysToDisplay)
+    val previousPage = Competitions.withTodaysMatchesAndFutureFixtures.previousMatchDates(startDate.minusDays(1), daysToDisplay)
       .lastOption.map(toNextPreviousUrl)
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),

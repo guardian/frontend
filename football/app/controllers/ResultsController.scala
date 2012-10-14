@@ -24,17 +24,17 @@ object ResultsController extends Controller with Logging with CompetitionResultF
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val resultsDays = (Seq(startDate) ++ Competitions.withResultsOnly.previousMatchDates(startDate, daysToDisplay)).distinct
+    val resultsDays = Competitions.withTodaysMatchesAndPastResults.previousMatchDates(startDate, daysToDisplay)
 
     val results = resultsDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day).competitions) }
 
     //going forward in time
-    val nextPage = Competitions.withResultsOnly.nextMatchDates(startDate.plusDays(1), daysToDisplay)
+    val nextPage = Competitions.withTodaysMatchesAndPastResults.nextMatchDates(startDate.plusDays(1), daysToDisplay)
       .lastOption.map(toNextPreviousUrl)
 
     //going backward in time
     val previousPage = resultsDays.lastOption.flatMap { date =>
-      Competitions.withResultsOnly.previousMatchDates(date.minusDays(1), daysToDisplay).headOption
+      Competitions.withTodaysMatchesAndPastResults.previousMatchDates(date.minusDays(1), daysToDisplay).headOption
     }.map(toNextPreviousUrl)
 
     val resultsPage = MatchesPage(page, None, results.filter(_.competitions.nonEmpty),

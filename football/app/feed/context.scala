@@ -1,10 +1,13 @@
 package feed
 
 import pa.{ MatchDay, Result, Fixture, FootballMatch }
+import org.joda.time.DateMidnight
 
 object `package` {
 
   implicit def match2rich(m: FootballMatch) = new {
+
+    def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
 
     lazy val isFixture = m match {
       case f: Fixture => true

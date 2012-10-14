@@ -18,26 +18,31 @@ trait CompetitionSupport {
 
   def competitions: Seq[Competition]
 
-  def withMatchesOn(date: DateMidnight) = competitionSupportWith(
-    competitions.filter(_.matches.exists(_.date.toDateMidnight == date))
-      .map(c => c.copy(matches = c.matches.filter(_.date.toDateMidnight == date)))
-  )
+  def withMatchesOn(date: DateMidnight) = competitionSupportWith {
+    val competitionsWithMatches = competitions.filter(_.matches.exists(_.isOn(date)))
+    competitionsWithMatches.map(c => c.copy(matches = c.matches.filter(_.isOn(date))))
+  }
 
   def withCompetitionFilter(path: String) = competitionSupportWith(
     competitions.filter(_.url == "/football/" + path)
   )
 
-  def withFixturesOnly = competitionSupportWith(
-    competitions.map(c => c.copy(matches = c.matches.filter(_.isFixture)))
-  )
+  def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
+    val today = new DateMidnight
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today))))
+      .filter(_.hasMatches)
+  }
 
-  def withResultsOnly = competitionSupportWith(
-    competitions.map(c => c.copy(matches = c.matches.filter(_.isResult)))
-  )
+  def withTodaysMatchesAndPastResults = competitionSupportWith {
+    val today = new DateMidnight
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today))))
+      .filter(_.hasMatches)
+  }
 
-  def withLiveMatchesOnly = competitionSupportWith(
-    competitions.map(c => c.copy(matches = c.matches.filter(_.isLive)))
-  )
+  def withTodaysMatches = competitionSupportWith {
+    val today = new DateMidnight
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
+  }
 
   // startDate is inclusive of the days you want
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = competitions
