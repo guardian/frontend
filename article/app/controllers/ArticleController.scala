@@ -23,6 +23,7 @@ object ArticleController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showInlineElements("picture")
       .showTags("all")
       .showFields("all")
       .response
