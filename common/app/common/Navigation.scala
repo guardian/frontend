@@ -105,7 +105,7 @@ object Zones {
         Seq(
           SectionLink("money", "Property", "/money/property", "Property"),
           SectionLink("money", "House prices", "/money/houseprices", "House prices"),
-          SectionLink("money", "Pensions", "/money/pensions", "Pensions"), 
+          SectionLink("money", "Pensions", "/money/pensions", "Pensions"),
           SectionLink("money", "Savings", "/money/savings", "Savings"),
           SectionLink("money", "Borrowing &amp; debt", "/money/debt", "Borrowing &amp; debt"),
           SectionLink("money", "Insurance", "/money/insurance", "Insurance"),
