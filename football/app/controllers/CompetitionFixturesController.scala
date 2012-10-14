@@ -26,7 +26,7 @@ object CompetitionFixturesController extends Controller with Logging with Compet
 
     val filteredCompetitions = Competitions.withCompetitionFilter(competition)
 
-    val fixtureDays = filteredCompetitions.withFixturesOnly.nextMatchDates(startDate, daysToDisplay)
+    val fixtureDays = (Seq(startDate) ++ filteredCompetitions.withFixturesOnly.nextMatchDates(startDate, daysToDisplay)).distinct
 
     val fixtures = fixtureDays.map { day => MatchesOnDate(day, filteredCompetitions.withMatchesOn(day).competitions) }
 

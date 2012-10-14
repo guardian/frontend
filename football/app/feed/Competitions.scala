@@ -35,6 +35,10 @@ trait CompetitionSupport {
     competitions.map(c => c.copy(matches = c.matches.filter(_.isResult)))
   )
 
+  def withLiveMatchesOnly = competitionSupportWith(
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isLive)))
+  )
+
   // startDate is inclusive of the days you want
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = competitions
     .flatMap(_.matches)

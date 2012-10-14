@@ -24,7 +24,7 @@ object ResultsController extends Controller with Logging with CompetitionResultF
 
     val startDate = date.getOrElse(new DateMidnight)
 
-    val resultsDays = Competitions.withResultsOnly.previousMatchDates(startDate, daysToDisplay)
+    val resultsDays = (Seq(startDate) ++ Competitions.withResultsOnly.previousMatchDates(startDate, daysToDisplay)).distinct
 
     val results = resultsDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day).competitions) }
 
