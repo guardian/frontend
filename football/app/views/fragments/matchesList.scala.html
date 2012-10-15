@@ -1,14 +1,15 @@
 @(model: MatchesPage)
 
 @model.days.map{ day =>
-<h2 class="competitions-date">@day.date.toString("EEEE d MMMM yyyy")</h2>
-<ol class="competitions" data-link-name="matches">
+<h2 class="competitions-data type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
+<ol class="competitions unstyled" data-link-name="matches">
     <li class="competition">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-            <h3 class="competition-title">
+            <h3 class="competition-title type-3">
                 <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
+                <i class="icon-filter-arrow-right"></i>
             </h3>
-            <ol class="matches">
+            <ol class="matches unstyled">
                 @comp.matches.map{
                     case fixture: pa.Fixture    => { @fragments.fixture(fixture) }
                     case result: pa.Result      => { @fragments.result(result) }

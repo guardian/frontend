@@ -1,103 +1,121 @@
-.competitions-date{
-	text-indent: 10px;
-	margin: 10px 0 0px;
-}
-.competition-title{
-  background-color:#8cc540;
-  line-height:2em;
-  text-indent:20px;
-  margin-bottom:0;
-  font-weight:normal;
-}
-.competition-title a{
-  color:#ffffff;	
+.competitions-date {
+    text-indent: 10px;
+    margin: 10px 0 0px;
 }
 
-.matches,
-.competitions{
-  padding:0;
-  margin:0;
-  border-bottom:2px solid #e3e3e3;
+.competition-title {
+    background-color: #efefe7;
+    margin-bottom: 0;
+    padding: 12px;
+    position: relative;
 }
-.competitions{
-	margin-top:10px;
+
+.competition-title a { 
+    color: #333333; 
 }
+
+
+.competition-title i {
+    position: absolute;
+    top: 14px;
+    right: 12px;
+}
+
+.competitions {
+    margin-top: 10px;
+}
+
 .match,
-.competition{
-	list-style:none;
-}
-.match{	
-	border-bottom:1px solid #e3e3e3;
-	padding:10px 80px 10px 20px;
-  position:relative;	
-  overflow:hidden;
-}
-.match .match-desc{
-	position:relative;
-	margin-bottom:0;
-	background-color:white;
-	border:none;
-	padding:0;
-	font-weight:normal;
-	font-family:"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-.match .team{
-	display:block;
-	float:left;
-	width:50%;
-	box-sizing:border-box;
-	-moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-}
-.match .home{
-	text-align:right;
-	padding-right:20px;
-}
-.match .away{
-  padding-left:20px;
-}
-.match .result{
-	position:absolute;
-	display:block;
-	width:40px;
-	top:0;
-	left:50%;
-	margin-left:-20px;
-	text-align:center;
-}
-.match .status{
-	position:absolute;
-	width:50px;
-	top:10px;
-	right:20px;
-	color:#979797;
-}
-.match .status .status-desc{
-	position:absolute;
-	left:-9999px;
-}
-.match .status abbr{
-	color:#ffffff;
-	padding:5px 10px;	
-}
-.match .status .half-time{
-	background-color:#8cc540;
-}
-.match .status .full-time{
-  background-color:#da4b23;
+.competition {
+    list-style: none;
 }
 
-.match .status .live{
-  background-color:#da4b23;
+.match { 
+    border-bottom: 1px solid #efefe7;
+    padding: 12px 46px 12px 0px;
+    position: relative;    
+    overflow: hidden;
 }
 
-#matches-nav a{
-	display:inline-block;
+.match .match-desc {
+    position: relative;
+    margin-bottom: 0;
+    background-color: white;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+    font-family: @sans-serif;
 }
-#matches-nav a.cta{
-	display:block;
+
+.match .team {
+    display: block;
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
 }
-#matches-nav a.cta::before{
-	content:"";
+
+.match .home {
+    text-align: right;
+    padding-right: 20px;
 }
+
+.match .away {
+  padding-left: 20px;
+}
+
+.match .result {
+    position: absolute;
+    display: block;
+    width: 40px;
+    top: 0;
+    left: 50%;
+    margin-left: -20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.match .status {
+    position: absolute;
+    right: 0px;
+    top: 18px;
+    color: #979797;
+}
+
+.match .status .status-desc {
+    position: absolute;
+    left: -9999px;
+}
+
+.match .status abbr {
+    color: #ffffff;
+    padding: 5px 10px;   
+    border: none;
+}
+
+.match .status .half-time {
+    background-color: #8cc43f;
+}
+
+.match .status .full-time {
+    background-color: #8cc43f;
+}
+
+.match .status .live {
+    background-color: #da4b23;
+}
+
+#matches-nav a {
+    display: inline-block;
+}
+
+#matches-nav a.cta {
+    display: block;
+}
+
+#matches-nav a.cta::before {
+    content: "";
+}
+
