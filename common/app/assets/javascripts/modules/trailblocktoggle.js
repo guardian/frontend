@@ -41,9 +41,14 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 trailblock = document.getElementById(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
 
-                var trigText = trigger.innerText;
+                var trigText = trigger.innerText || trigger.textContent;
                 var hideTrailblock = (trigText === "Hide") ? true : false;
-                trigger.innerText = (hideTrailblock) ? "Show" : "Hide";
+                var newTrigText = (hideTrailblock) ? "Show" : "Hide";
+                if (trigger.innerText !== undefined) {
+                    trigger.innerText = newTrigText; 
+                } else {
+                    trigger.textContent = newTrigText;
+                }
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
                     model.logPreference(hideTrailblock, trailblockId);
