@@ -1,5 +1,6 @@
 Feature: Network front
 
+    @ignore   
     Scenario: Trailblock exapnders
         Given I visit the front page
         Then expanders for each block should show a maximum of 5 stories
@@ -9,17 +10,16 @@ Feature: Network front
         Given a series of trailblocks network front 
         Then each block should obey the visual design rules
     
-    @ignore        
+    @ignore     
     Scenario: Sections tab is shown and top stories are hidden
         Given I visit the front page
         Then "Top stories" tab is hidden
             And "Sections" tab is shown 
 
-    @ignore
     Scenario: show and hide to expand and collapse each section
         Given I visit the front page 
-        When I "Hide" to collapse each section on the network front
-        Then I can "Show" to expand each section on the network front
+        Then I can click "Hide" to collapse a section
+            And I can click "Show" to expand a section
 
     @ignore
     Scenario: collapsed section will remain collapsed on moving away from page
