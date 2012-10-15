@@ -11,18 +11,18 @@ import junit.framework.Assert;
 
 public class NetworkFrontSteps {
 
-	private NetworkFrontTest networkFront;
+	private Page networkFrontPage;
 
 	@Given("^I visit the network front")
 	public void i_visit_the_network_front() throws Throwable {
-		networkFront = new NetworkFrontTest();
-		networkFront.open(networkFront.getHost() + "/");
+		networkFrontPage = new Page();
+		networkFrontPage.open("/");
 	}
 	
 	@Then("^expanders for each block should show a maximum of (\\d+) stories$")
 	public void expanders_for_each_block_should_show_a_maximum_of_stories(int numOfStories) throws Throwable {
 		// get all the trailblocks
-		List<WebElement> trailblocks = networkFront.getDriver().findElements(By.className("trailblock"));
+		List<WebElement> trailblocks = networkFrontPage.getDriver().findElements(By.className("trailblock"));
 		for (WebElement trailblock : trailblocks) {
 			// confirm expander
 			List<WebElement> expanders = trailblock.findElements(By.className("cta"));
@@ -46,7 +46,7 @@ public class NetworkFrontSteps {
 	@Then("^I can click \"([^\"]*)\" to (collapse|expand) a section$")
 	public void I_can_click_to_a_section(String buttonText, String action) throws Throwable {
 	    // get the headers
-		List<WebElement> sections = networkFront.getDriver().findElements(
+		List<WebElement> sections = networkFrontPage.getDriver().findElements(
 			By.cssSelector("section.front-section")
 		);
 		for(WebElement section : sections) {
@@ -71,7 +71,7 @@ public class NetworkFrontSteps {
 	@Then("^\"(Top stories|Sections)\" tab is (hidden|shown)$")
 	public void tab_is(String tabName, String tabState) throws Throwable {
 		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
-	    WebElement tab = networkFront.getDriver().findElement(By.id(tabId));
+	    WebElement tab = networkFrontPage.getDriver().findElement(By.id(tabId));
 	    // confirm element is shown/hidden
 	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
 	}
@@ -79,29 +79,24 @@ public class NetworkFrontSteps {
 	@Given("^I hide a section$")
 	public void I_hide_a_section() throws Throwable {
 	    // hide the first section
-		networkFront.getDriver().findElement(
-			By.cssSelector("section.front-section .toggle-trailblock")
-		).click();
+		networkFrontPage.getDriver().findElement(By.cssSelector("section.front-section .toggle-trailblock"))
+		.click();
 	}
 
 	@When("^I navigate to an article page and back to the network front$")
 	public void I_navigate_to_an_article_page_and_back_to_the_network_front() throws Throwable {
 	    // click on the first visible article
-		networkFront.getDriver().findElement(
-			By.cssSelector(".rolled-out .trail h2 a")
-		).click();
+		networkFrontPage.getDriver().findElement(By.cssSelector(".rolled-out .trail h2 a"))
+			.click();
 		// navigate back to the front (by clicking the logo)
-		networkFront.getDriver().findElement(
-			By.cssSelector("#header a")
-		).click();
+		networkFrontPage.getDriver().findElement(By.cssSelector("#header a"))
+			.click();
 	}
 
 	@Then("^the collapsed section will stay collapsed$")
 	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
 	    // confirm the first section is collapsed still
-		WebElement section = networkFront.getDriver().findElement(
-			By.cssSelector("section.front-section")
-		);
+		WebElement section = networkFrontPage.getDriver().findElement(By.cssSelector("section.front-section"));
 		// confirm toggle text is 'Show'
 		Assert.assertEquals("Show", section.findElement(By.className("toggle-trailblock")).getText());
 		// confirm trailblock is hidden
@@ -111,11 +106,12 @@ public class NetworkFrontSteps {
 	@When("^I refresh the page$")
 	public void I_refresh_the_page() throws Throwable {
 	    // refresh the page
-		networkFront.getDriver().navigate().refresh();
+		networkFrontPage.getDriver().navigate().refresh();
 	}
 	
 	@After
 	public void tearDown(){
-		networkFront.close();
+		networkFrontPage.close();
 	}
+	
 }

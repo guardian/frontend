@@ -3,28 +3,23 @@ package com.gu.test;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Assert;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.*;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-
-
-public class NetworkFrontTest {
+public class Page {
 
 	static WebDriver driver;
 
-	public NetworkFrontTest() {
+	public Page() {
 		initialiseBrowser();
 	}
 
 	public WebDriver getDriver() {
 		return driver;
 	}
+	
 	public static void setDriver(WebDriver driver) {
-		NetworkFrontTest.driver = driver;
+		Page.driver = driver;
 	}
 
 	private static void initialiseBrowser() {
@@ -45,7 +40,7 @@ public class NetworkFrontTest {
 	}
 
 	public void open(String url) {
-		getDriver().get(url);
+		getDriver().get(this.getHost() + url);
 	}
 
 	public void close() {
