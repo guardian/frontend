@@ -57,6 +57,7 @@ define(['common', 'reqwest'], function (common, reqwest) {
                 dimensions = this.sizeMap[slot];
 
             frame.src = this.url.host + slot + this.url.query;
+            frame.setAttribute('class', 'ad');
             frame.setAttribute('marginheight', '0px');
             frame.setAttribute('marginwidth', '0px');
             frame.setAttribute('frameborder', '0');
