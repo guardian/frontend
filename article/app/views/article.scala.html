@@ -28,7 +28,7 @@
                      itemprop="contentURL"
                 />
                 @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-                    <figcaption itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
                 }
             </figure>
             }

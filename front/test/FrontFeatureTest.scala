@@ -85,7 +85,9 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         browser =>
           import browser._
           then("All links should be tracked")
-          $("a").exists(!_.hasAttribute("data-link-name")) should be(false)
+          $("a").filter(!_.hasAttribute("data-link-name")).foreach { link =>
+            fail("Link with text '%s' and url '%s' is not tracked".format(link.getText, link.getAttribute("href")))
+          }
       }
     }
 
