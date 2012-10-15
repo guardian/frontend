@@ -23,7 +23,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
         it("should log javascript errors with the error message, line number and file", function(){
             var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
             e.log(fakeError);
-            expect(document.getElementById('cs-err').getAttribute('src')).toBe('//gu-pix.appspot.com/px/frontend/e/1?tag=Zm9vLDEsZm9vLmpzLE1vemlsbGEvNS4wIChpUGFkOyAuLi4=');
+            expect(document.getElementById('cs-err').getAttribute('src')).toBe('//gu-pix.appspot.com/px/frontend/e/1?tag=dWsvMjAxMi9vY3QvMTUvbW9kLW1pbGl0YXJ5LWFybXMtZmlybXMsZm9vLDEsZm9vLmpzLE1vemlsbGEvNS4wIChpUGFkOyAuLi4=');
         });
 
         xit("should log messages from module errors", function(){
