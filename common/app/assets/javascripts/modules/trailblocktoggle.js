@@ -31,8 +31,11 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 if (manualTrigger) {
                     trigger = document.getElementById('js-trigger-' + manualTrigger);
                 }
+                
+                // convert trigger to bonzo object
+                trigger = bonzo(trigger);
 
-                var trailblockId = trigger.getAttribute('data-block-name'),
+                var trailblockId = trigger.attr('data-block-name'),
                     trailblock;
 
                 trailblock = idPrefix;
@@ -41,14 +44,8 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 trailblock = document.getElementById(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
 
-                var trigText = trigger.innerText || trigger.textContent;
-                var hideTrailblock = (trigText === "Hide") ? true : false;
-                var newTrigText = (hideTrailblock) ? "Show" : "Hide";
-                if (trigger.innerText !== undefined) {
-                    trigger.innerText = newTrigText; 
-                } else {
-                    trigger.textContent = newTrigText;
-                }
+                var hideTrailblock = (trigger.text() === "Hide");
+                trigger.text((hideTrailblock) ? "Show" : "Hide");
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
                     model.logPreference(hideTrailblock, trailblockId);
