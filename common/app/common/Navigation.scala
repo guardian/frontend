@@ -122,7 +122,7 @@ object Zones {
         SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
         Seq(
           SectionLink("lifeandstyle", "Fashion", "/fashion", "Fashion"),
-          SectionLink("lifeandstyle", "Food", "/food", "Food"),
+          SectionLink("lifeandstyle", "Food &amp; drink", "/lifeandstyle/food-and-drink", "Food &amp; drink"),
           SectionLink("lifeandstyle", "Family", "/lifeandstyle/family", "Family"),
           SectionLink("lifeandstyle", "Lost in Showbiz", "/lifeandstyle/lostinshowbiz", "Lost in Showbiz")
         )), //End Life and style
