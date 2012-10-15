@@ -6,8 +6,7 @@ Feature: Display Adverts
 	So I can interact with the adverts and link to the advertised brand site
 
   	Background:
-    	Given I am on an article page 
-
+    	Given I am on the home page 
     	
     Scenario: Adverts will appear at top of all pages
         Given I visit any page on the Guardian site

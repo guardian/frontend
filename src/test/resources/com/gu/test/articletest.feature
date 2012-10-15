@@ -6,7 +6,7 @@ Feature: Article page
 	So that I am able to browse all the article content correctly
 	
   	Background:
-    	Given I am on an article page 
+    	Given I am on the home page 
 
 	Scenario: More on this story
 		When the article has a story package

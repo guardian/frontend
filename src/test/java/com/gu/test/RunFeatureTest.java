@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @Cucumber.Options(
-        tags = "@articletest, @displayadvertstest")
+        tags = "@articletest, @displayadvertstest, @networkfronttest")
 public class RunFeatureTest {
 
 }

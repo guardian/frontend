@@ -46,6 +46,7 @@ public class BrowserCommandsPage {
 	}
 
 	public void open(String url) {
+		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		getDriver().get(url);
 	}
 
@@ -80,14 +81,14 @@ public class BrowserCommandsPage {
 	}
 
 	public boolean isTextPresent(String textToSearch) {
-		return getDriver().findElement(By.tagName("body")).getText().contains(textToSearch);
+		return getDriver().findElement(By.tagName("body")).getText().toLowerCase().contains(textToSearch.toLowerCase());
 	}
 
 
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
-
-		return getDriver().findElement(elementname).getText().contains(textToSearch);
+		return getDriver().findElement(elementname).getText().toLowerCase().contains(textToSearch.toLowerCase());
 	}
+	
 	public void waitForTextPresent(String textToSearch) {
 		for (int second = 0;; second++) {
 			if (second >= 30) {

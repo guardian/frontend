@@ -15,26 +15,20 @@ public class ArticleTestSteps {
 	private BrowserCommandsPage article;
 	private String host;
 
-	@Given("^I am on an article page$")
-	public void I_am_on_an_article_page() throws Throwable {
-		
+	@Given("^I am on the home page$")
+	public void I_am_on_the_home_page() throws Throwable {
 		article = new BrowserCommandsPage();
-		//host = article.getHost();
-		host = "http://beta.gucode.co.uk"; //cant compile local host
-
-		article.open(host + "/uk/2012/sep/19/police-manchester");
-
+		host = article.getHost();
 	}
-
+	
 	@When("^the article has a story package$")
 	public void the_article_has_a_story_package() throws Throwable {
 		article.open(host + "/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
-		
 	}
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String arg1) throws Throwable {
-		Assert.assert(article.isTextPresentByElement(By.id("related-trails"), arg1));
+		Assert.assertTrue(article.isTextPresentByElement(By.id("related-trails"), arg1));
 	}
 
 	@When("^the article has no story package$")
@@ -50,7 +44,6 @@ public class ArticleTestSteps {
 	@When("^\"([^\"]*)\" is unavailable$")
 	public void is_unavailable(String arg1) throws Throwable {
 		article.open(host + "/help/terms-of-service");
-		
 	}
 
 	@Then("^\"([^\"]*)\" is not displayed$")
@@ -65,7 +58,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
-		Assert.assert(article.isTextPresentByElement(By.className("tabs-selected"), arg2));
+		Assert.assertTrue(article.isTextPresentByElement(By.className("tabs-selected"), arg2));
 	}
 	
 
@@ -89,7 +82,6 @@ public class ArticleTestSteps {
 	public void I_can_see_a_list_of_the_most_popular_stories_on_guardian_co_uk_for_the_whole_guardian_site() throws Throwable {
 		String ret = article.getDriver().findElement(By.id("tabs-popular-1")).getCssValue("display");
 		Assert.assertEquals("block", ret);
-		
 	}
 	
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
@@ -151,15 +143,17 @@ public class ArticleTestSteps {
 		article.open(host + "/technology/2012/oct/15/google-privacy-policy");
 	}
 
-	@And("^I have a fast connection speed$")
-	public void the_user_s_connection_speed_is_fast() throws Throwable {
 
+	@When("^I have a fast connection speed$")
+	public void I_have_a_fast_connection_speed() throws Throwable {
+			//TODO:
 	}
 
 	@Then("^the high resolution version of the image is displayed$")
 	public void article_high_resolution_image_and_caption_is_displayed() throws Throwable {
-		waitFor(1000);
-		Assert.assert(article.findElement(By.className('image-high')));
+		article.waitFor(1000);
+		Assert.assertTrue(article.isElementPresent(By.className("image-high")));
+
 	}
 
 	@When("^\"([^\"]*)\" has expanders$")
@@ -170,8 +164,8 @@ public class ArticleTestSteps {
 	@Then("^I can expand and collapse expanders$")
 	public void I_can_expand_and_collapse_expanders() throws Throwable {
 		article.getDriver().findElement(By.className("cta")).click();
-		waitFor(1000);
-		Assert.assertFalse(article.findElement(By.cssSelector("#related-trails.shut")));
+		article.waitFor(1000);
+		Assert.assertFalse(article.isElementPresent(By.cssSelector("#related-trails.shut")));
 	}
 	
 	@After
