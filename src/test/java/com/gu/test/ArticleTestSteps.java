@@ -34,7 +34,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String arg1) throws Throwable {
-		article.isTextPresentByElement(By.id("related-trails"), arg1);
+		Assert.assert(article.isTextPresentByElement(By.id("related-trails"), arg1));
 	}
 
 	@When("^the article has no story package$")
@@ -65,7 +65,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
-		article.isTextPresentByElement(By.className("tabs-selected"), arg2);
+		Assert.assert(article.isTextPresentByElement(By.className("tabs-selected"), arg2));
 	}
 	
 
@@ -145,53 +145,34 @@ public class ArticleTestSteps {
 		String ret = article.getDriver().findElement(By.id("sections-" + arg1)).getCssValue("display");
 		Assert.assertEquals("none", ret);
 	}
-	
-	@When("^I click an article with article image$")
-	public void I_click_an_article_with_article_image() throws Throwable {
-
-	}
-
-
-	@Then("^a list of bottom \"([^\"]*)\" opens in the \"([^\"]*)\"$")
-	public void a_list_of_bottom_opens_in_the(String arg1, String arg2) throws Throwable {
-
-	}
 
 	@When("^the article has an article image$")
 	public void the_article_has_an_article_image() throws Throwable {
-
+		article.open(host + "/technology/2012/oct/15/google-privacy-policy");
 	}
 
-	@When("^the user's connection speed is fast$")
+	@And("^I have a fast connection speed$")
 	public void the_user_s_connection_speed_is_fast() throws Throwable {
 
 	}
 
-	@Then("^article high resolution image and caption is displayed$")
+	@Then("^the high resolution version of the image is displayed$")
 	public void article_high_resolution_image_and_caption_is_displayed() throws Throwable {
-
+		waitFor(1000);
+		Assert.assert(article.findElement(By.className('image-high')));
 	}
 
 	@When("^\"([^\"]*)\" has expanders$")
 	public void has_expanders(String arg1) throws Throwable {
-
+		article.open(host + "/football/blog/2012/may/10/signing-of-season-premier-league");
 	}
 
 	@Then("^I can expand and collapse expanders$")
 	public void I_can_expand_and_collapse_expanders() throws Throwable {
-
+		article.getDriver().findElement(By.className("cta")).click();
+		waitFor(1000);
+		Assert.assertFalse(article.findElement(By.cssSelector("#related-trails.shut")));
 	}
-
-	@Given("^I have visited some top stories$")
-	public void I_have_visited_some_top_stories() throws Throwable {
-
-	}
-
-	@Then("^the articles I have visited will be in a visited state$")
-	public void the_articles_I_have_visited_will_be_in_a_visited_state() throws Throwable {
-
-	}
-
 	
 	@After
 	public void tearDown(){

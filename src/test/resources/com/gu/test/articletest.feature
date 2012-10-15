@@ -49,20 +49,20 @@ Feature: Article page
 
 	Scenario: High resolution image and caption is displayed
 		When the article has an article image
-		And the user's connection speed is fast
-		Then article high resolution image and caption is displayed
+		And I have a fast connection speed
+		Then the high resolution version of the image is displayed
 
 	Scenario: Expand and collapse expanders on more on this story
 		When "More on this story" has expanders
 		Then I can expand and collapse expanders
  
- 	Scenario: Expand and collapse expanders on related content
-		When "related content" has expanders
-		Then I can expand and collapse expanders
+ 	#Scenario: Expand and collapse expanders on related content
+	#	When "related content" has expanders
+	#	Then I can expand and collapse expanders
 		
-	Scenario: Expand and collapse expanders on related content
-		Given I have visited some top stories
-		When I click "Top stories" tab at the top of the page
-		Then the articles I have visited will be in a visited state
+	#Scenario: Expand and collapse expanders on related content
+	#	Given I have visited some top stories
+	#	When I click "Top stories" tab at the top of the page
+	#	Then the articles I have visited will be in a visited state
 
 
