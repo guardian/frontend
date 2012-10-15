@@ -3,6 +3,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
     describe("Errors", function() {
        
         var e,
+            p = 'uk/2012/oct/15/mod-military-arms-firms',
             n = { 
                 userAgent:  "Mozilla/5.0 (iPad; ..."
             },
@@ -11,7 +12,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
             };
         
         beforeEach(function() {
-            e = new Errors(w, n);
+            e = new Errors(p, w, n);
             e.init();
         });
 

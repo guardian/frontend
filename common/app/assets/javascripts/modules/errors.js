@@ -1,11 +1,12 @@
 define(['common'], function (common) {
 
-    var Errors = function (w, n) {
+    var Errors = function (page, w, n) {
 
         var host = '//gu-pix.appspot.com',
             path = '/px/frontend/e/1',
             w = w || window,
             n = n || navigator,
+            p = page,
             body = document.getElementsByTagName('body')[0],
             createImage = function(url) {
                 var image = new Image();
@@ -23,7 +24,7 @@ define(['common'], function (common) {
                 var message = err.message,
                     ln = err.lineno,
                     filename = err.filename;
-                createImage(makeUrl([message, ln, filename, n.userAgent]));
+                createImage(makeUrl([p, message, ln, filename, n.userAgent]));
             },
             init = function() {
                 w.addEventListener('error', log);
