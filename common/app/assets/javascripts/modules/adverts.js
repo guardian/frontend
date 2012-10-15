@@ -1,4 +1,4 @@
-define(['common', 'reqwest'], function (common, reqwest) {
+define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detect) {
 
     var Adverts = function () {
 
@@ -15,13 +15,14 @@ define(['common', 'reqwest'], function (common, reqwest) {
 
         //Initalise
         this.init = function(config) {
-            this.url = this.generateQuery(config);
-
             var slots = document.querySelectorAll('.ad-slot'),
+                connection = detect.getConnectionSpeed(),
                 width = window.innerWidth,
                 size = (width > 728) ? 'median' : 'base',
                 length = slots.length,
                 i =0;
+
+            this.url = this.generateQuery(config, connection);
 
             for(; i < length; i++) {
                 var slot = slots[i].getAttribute('data-'+size),
@@ -32,8 +33,12 @@ define(['common', 'reqwest'], function (common, reqwest) {
         },
 
         //To construct and cache request URL
-        this.generateQuery = function(config) {
-             var url = config.oasUrl + config.oasSiteId;
+        this.generateQuery = function(config, connection) {
+            var requestType = (connection === 'low') ? 'adstream_nx.ads/' : 'adstream_sx.ads/';
+
+            var url = config.oasUrl;
+                url += requestType;
+                url += config.oasSiteId;
                 url += '/12345@';
 
             var keywords = config.keywords.split(','),
