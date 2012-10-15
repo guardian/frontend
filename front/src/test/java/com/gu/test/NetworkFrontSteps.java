@@ -13,8 +13,8 @@ public class NetworkFrontSteps {
 
 	private NetworkFrontTest networkFront;
 
-	@Given("^I visit the front page$")
-	public void i_visit_the_front_page() throws Throwable {
+	@Given("^I visit the network front")
+	public void i_visit_the_network_front() throws Throwable {
 		networkFront = new NetworkFrontTest();
 		networkFront.open(networkFront.getHost() + "/");
 	}
@@ -67,6 +67,52 @@ public class NetworkFrontSteps {
 			}
 		}
  	}
+	
+	@Then("^\"(Top stories|Sections)\" tab is (hidden|shown)$")
+	public void tab_is(String tabName, String tabState) throws Throwable {
+		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
+	    WebElement tab = networkFront.getDriver().findElement(By.id(tabId));
+	    // confirm element is shown/hidden
+	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
+	}
+
+	@Given("^I hide a section$")
+	public void I_hide_a_section() throws Throwable {
+	    // hide the first section
+		networkFront.getDriver().findElement(
+			By.cssSelector("section.front-section .toggle-trailblock")
+		).click();
+	}
+
+	@When("^I navigate to an article page and back to the network front$")
+	public void I_navigate_to_an_article_page_and_back_to_the_network_front() throws Throwable {
+	    // click on the first visible article
+		networkFront.getDriver().findElement(
+			By.cssSelector(".rolled-out .trail h2 a")
+		).click();
+		// navigate back to the front (by clicking the logo)
+		networkFront.getDriver().findElement(
+			By.cssSelector("#header a")
+		).click();
+	}
+
+	@Then("^the collapsed section will stay collapsed$")
+	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
+	    // confirm the first section is collapsed still
+		WebElement section = networkFront.getDriver().findElement(
+			By.cssSelector("section.front-section")
+		);
+		// confirm toggle text is 'Show'
+		Assert.assertEquals("Show", section.findElement(By.className("toggle-trailblock")).getText());
+		// confirm trailblock is hidden
+		Assert.assertEquals("0px", section.findElement(By.className("trailblock")).getCssValue("max-height"));
+	}
+
+	@When("^I refresh the page$")
+	public void I_refresh_the_page() throws Throwable {
+	    // refresh the page
+		networkFront.getDriver().navigate().refresh();
+	}
 	
 	@After
 	public void tearDown(){
