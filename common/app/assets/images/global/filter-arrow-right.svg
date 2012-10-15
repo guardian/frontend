@@ -1,6 +1,7 @@
-<svg width="12px" height="20px" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>Layer 1</title>
-  <path id="svg_1" fill="#545554" d="m5.999,15.757l-9.921,-9.921l1.594,-1.593l8.328,8.328l8.327,-8.328l1.595,1.592l-9.923,9.922z" transform="rotate(-90 6.000000000000003,10.000000000000002) "/>
- </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="8.702px" height="15px" viewBox="0 0 8.702 15" enable-background="new 0 0 8.702 15" xml:space="preserve">
+<path fill="#545554" d="M8.702,7.501l-7.498,7.5L0,13.795l6.295-6.294L0,1.206l1.203-1.206L8.702,7.501z"/>
 </svg>
