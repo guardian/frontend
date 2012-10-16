@@ -16,6 +16,7 @@ object `package` {
 
     lazy val isResult = m match {
       case r: Result => true
+      case m: MatchDay => m.result
       case _ => false
     }
 

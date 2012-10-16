@@ -119,18 +119,26 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
   }
 
   //one http call updates all competitions
-  def refreshLiveMatches() {
-    val liveMatches = FootballClient.matchDay(DateMidnight.now).filter(_.isLive)
+  def refreshMatchDay() {
+    val todaysMatches = FootballClient.matchDay(DateMidnight.now).filter(m => m.isLive || m.isResult)
+    val liveMatches = todaysMatches.filter(_.isLive)
+    val results = todaysMatches.filter(_.isResult)
     competitionAgents.foreach { agent =>
-      val competitionMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-      log.info("found %s live matches for competition %s".format(competitionMatches.size, agent.competition.fullName))
-      agent.updateLiveMatches(competitionMatches)
+
+      //update the live matches of the competition
+      val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
+      log.info("found %s live matches for competition %s".format(competitionLiveMatches.size, agent.competition.fullName))
+      agent.updateLiveMatches(competitionLiveMatches)
+
+      //update the results of the competition
+      val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
+
     }
   }
 
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(10, SECONDS), initialDelay = Duration(1, SECONDS)) { refreshLiveMatches() } ::
+    schedules = every(Duration(10, SECONDS), initialDelay = Duration(1, SECONDS)) { refreshMatchDay() } ::
       every(Duration(5, MINUTES), initialDelay = Duration(1, SECONDS)) { refreshCompetitionData() } ::
       competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>

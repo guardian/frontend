@@ -8,7 +8,7 @@ class LiveMatchesTest extends FeatureSpec with GivenWhenThen with ShouldMatchers
 
   feature("Live matches page") {
 
-    scenario("Visit the live matches page") {
+    ignore("Visit the live matches page") {
 
       given("I visit the live matches page")
 

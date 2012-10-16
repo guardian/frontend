@@ -12,7 +12,7 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
   override def onStart() = {
     FootballClient.http = TestHttp
     Competitions.refreshCompetitionData()
-    Competitions.refreshLiveMatches()
+    Competitions.refreshMatchDay()
 
     //limit calls to the set of competitions we have test data for
     Competitions.competitionAgents.filter(agent => Seq("100", "101", "102", "103").contains(agent.competition.id)).

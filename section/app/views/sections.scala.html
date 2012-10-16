@@ -2,7 +2,7 @@
 
 @main(page, Static, Configuration, Switches.all){  }{
 
-    @Zones().map{ zone =>
+    @Zones(request, Configuration).map{ zone =>
 
         <section class="sections zone-@zone.name.zone">
 
