@@ -61,13 +61,14 @@
 }
 
 .sections li {
-    float:left;
     width: 46%;
     margin-right: 3%;
+    display: inline-block; // doing this instead of float to prevent mixed item height float collision
+    vertical-align: top;
 }
 
 .sections li:nth-child(even) {
-    float:right;
+    float:right; // leaving this in because it aligns right edge correctly
     margin-right: 0%;
     margin-left: 3%;
 }
@@ -177,7 +178,8 @@ a.topstories-control,
     border-top-color: #b5b5b5;
 }
 
-.nav-multi h2 {
+.nav-multi h2,
+.nav-multi h2 a {
     font-family: helvetica, arial, sans-serif;
     font-weight: normal;
     color: #999999;

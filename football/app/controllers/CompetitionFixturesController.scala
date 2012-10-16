@@ -14,7 +14,6 @@ object CompetitionFixturesController extends Controller with Logging with Compet
 
   val daysToDisplay = 20
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
 
   def renderFor(year: String, month: String, day: String, competition: String) = render(
     competition, Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -25,6 +24,15 @@ object CompetitionFixturesController extends Controller with Logging with Compet
     val startDate = date.getOrElse(new DateMidnight)
 
     val filteredCompetitions = Competitions.withCompetitionFilter(competition)
+
+    val theCompetition = filteredCompetitions.competitions.headOption
+
+    val page = new Page("http://www.guardian.co.uk/football/matches",
+      theCompetition.map(_.url.drop(1) + "/results").getOrElse("football/fixtures"),
+      "football",
+      "",
+      theCompetition.map(_.fullName).getOrElse("All fixtures")
+    )
 
     val fixtureDays = filteredCompetitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(startDate, daysToDisplay)
 
