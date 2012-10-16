@@ -107,44 +107,22 @@ object BlockNumberCleaner extends HtmlCleaner {
 
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
   def clean(body: Document): Document = {
-    val apiImages = imageHolder.images
-    val images = body.getElementsByAttributeValue("class", "gu-image")
+    body.getElementsByTag("figure").foreach { fig =>
+      fig.attr("itemprop", "associatedMedia")
+      fig.attr("itemscope", "")
+      fig.attr("itemtype", "http://schema.org/ImageObject")
 
-    images.foreach { img =>
-
-      val imgUrl = img.attr("src")
-      val imageFromApi: Option[Image] = apiImages.find(_.url == Some(imgUrl))
-
-      val imgWidth = img.attr("width").toInt
-      val wrapper = body.createElement("div")
-
-      wrapper.attr("itemprop", "associatedMedia")
-      wrapper.attr("itemscope", "")
-      wrapper.attr("itemtype", "http://schema.org/ImageObject")
-
-      img.attr("itemprop", "contentURL")
-
-      wrapper.attr("class", imgWidth match {
-        case width if width <= 100 => "img-tiny inline-image"
-        case width if width <= 220 => "img-base inline-image"
-        case width if width < 460 => "img-median inline-image"
-        case width => "img-extended"
-      })
-
-      img.replaceWith(wrapper)
-      wrapper.appendChild(img)
-
-      imageFromApi foreach { i: Image =>
-        i.caption foreach { c =>
-          val caption = body.createElement("p")
-          caption.attr("class", "caption")
-          caption.html(c)
-          caption.attr("itemprop", "description")
-          wrapper.appendChild(caption)
-        }
+      fig.getElementsByTag("img").foreach { img =>
+        img.attr("itemprop", "contentURL")
+        fig.attr("class", img.attr("width").toInt match {
+          case width if width <= 220 => "img-base inline-image"
+          case width if width < 460 => "img-median inline-image"
+          case width => "img-extended"
+        })
       }
-    }
 
+      fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+    }
     body
   }
 }
@@ -232,6 +210,8 @@ object OmnitureAnalyticsData {
 object `package` extends Formats {
 
   private object inflector extends Inflector
+
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }

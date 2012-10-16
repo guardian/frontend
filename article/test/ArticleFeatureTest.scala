@@ -1,10 +1,9 @@
 package test
 
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import collection.JavaConverters._
-import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
+import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
@@ -112,18 +111,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("In body pictures", ArticleComponents) {
 
-      given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-      HtmlUnit("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
+      given("I am on an article entitled 'A food revolution in Charleston, US'")
+      HtmlUnit("/travel/2012/oct/11/charleston-food-gourmet-hotspot-barbecue") { browser =>
         import browser._
 
         then("I should see pictures in the body of the article")
-        val inBodyImage = $("[itemprop=associatedMedia]")(2)
-        inBodyImage.findFirst("img[itemprop=contentURL]").getAttribute("src") should
-          be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/7/1344330044209/Lindisfarne_longboat.jpg")
+
+        $("figure[itemprop=associatedMedia]").length should be(2)
+
+        val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
+
+        inBodyImage.getAttribute("class") should be("img-extended")
+
+        inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
+          be("http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         and("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
-          be("""A longboat among the ruins. Pic by English Heritage""")
+          be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
 
@@ -204,23 +209,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("Story package navigation") {
 
-      given("I'm on an article entitled 'The investment strike is one the government would do well to bust'")
+      given("I'm on an article entitled 'Iraq war logs reveal 15,000 previously unlisted civilian deaths'")
 
-      HtmlUnit("/commentisfree/2012/aug/04/investment-strike-business-economy") { browser =>
+      HtmlUnit("/world/2010/oct/22/true-civilian-body-count-iraq") { browser =>
         import browser._
 
         then("I should see navigation to related content")
-        val related = $("#related-trails")
-        $("[itemprop=relatedLink]").size() should be(5)
+        $("[itemprop=relatedLink]").size() should be > (5)
         val relatedLink = findFirst("[itemprop=relatedLink]")
-        relatedLink.getText should be("Danny Alexander downplays UK's AAA credit rating")
-        relatedLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
-
-        and("I should see an image link to the related content")
-        val imageLink = related.find("a").filter(hasLinkName(_, "trail image | item 1")).head
-        imageLink.getAttribute("href") should be(WithHost("/politics/2012/aug/06/danny-alexander-downplays-aaa-rating"))
-        imageLink.find("img").head.getAttribute("src") should
-          be("http://static.guim.co.uk/sys-images/Business/Pix/pictures/2012/7/20/1342784451172/Chancellor-George-Osborne-003.jpg")
+        relatedLink.getText should be("Iraq war logs: US turned over captives to Iraqi torture squads")
+        relatedLink.getAttribute("href") should be(WithHost("/world/2010/oct/24/iraq-war-logs-us-iraqi-torture"))
       }
     }
 

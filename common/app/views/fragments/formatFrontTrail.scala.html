@@ -6,6 +6,10 @@
     index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
 *@
 
+@cleanTrailText(text: String) = {
+    @withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+}
+
 @if(info.rowNum == 1) {
     <h2 class="type-1 box-indent">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
@@ -13,7 +17,7 @@
         </a>
     </h2>
 
-    @trail.trailText.map { text => <div class="trail-text type-4">@RemoveOuterParaHtml(BulletCleaner(text))</div> }
+    @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
 
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
@@ -49,13 +53,13 @@
         </h2>
     </div>
     
-    @trail.trailText.map { text => <div class="trail-text type-4">@withJsoup(BulletCleaner(text))(InBodyLinkCleaner("in trail text link"))</div> }
+    @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
 }
 
 @if(info.rowNum > 5) {
     <h2 class="trail-headline type-3">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="link text | item @info.rowNum">
-            @RemoveOuterParaHtml(trail.linkText)
+            @cleanTrailText(trail.linkText)
         </a>
     </h2>
 }
