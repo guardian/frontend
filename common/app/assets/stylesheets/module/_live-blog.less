@@ -1,5 +1,5 @@
 .i-live {
-	padding: 5px 3px;
+	padding: 5px 5px;
 	margin-right: 5px;
 	font-size: 12px;
 	font-style: normal;
@@ -7,4 +7,68 @@
 	line-height: 1em;
 	color: #fff;
 	background-color: #ec1c1c;
+}
+
+.article.is-live .block-title {
+	font-size: 19px;
+	font-weight: bold;
+}
+
+span.timestamp {
+	font-size: 14px;
+	font-weight: bold;
+    border-top: 2px solid #E3E3DB;
+    display: block;
+    padding: @baseline*4 0px @baseline*1 0px;
+    margin-top: @baseline*2;
+}
+
+
+.article.is-live blockquote p {
+	.type-4;
+	color: #333;
+	font-weight: normal;
+}
+
+.article.is-live blockquote:before {
+	.icon-livequote-before;
+    display: block;
+    content: '';
+    margin: 21px 0 @baseline*2 0;
+    clear: both;
+}
+
+.svg .article.is-live blockquote:before {
+    .svg-icon-livequote-before;
+}
+
+.article.is-live blockquote:after {
+	.icon-livequote-after;
+    display: block;
+    content: '';
+    margin-bottom: 22px;
+}
+
+.svg .article.is-live blockquote:after {
+    .svg-icon-livequote-after;
+}
+
+.article .twt-border {
+	box-shadow: none !important;
+	border-radius: 0px !important;
+	border-color: #E3E3DB !important;
+}
+
+.article .twt-border .twt-tweet {
+	padding:0px 12px!important;
+}
+
+.article .twitter-tweet-rendered {
+	margin-bottom: @baseline*4 !important;
+}
+
+.article.is-live .twt-tweet:before,
+.article.is-live .twt-tweet:after {
+	width: 0px;
+	height:0px;
 }

@@ -1,7 +1,7 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 @main(article, Static, Configuration, Switches.all){
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/article.min.css")" />
+    @if(article.isLive){ <script src="//platform.twitter.com/widgets.js" async charset="utf-8"></script> }
 }{
 
     @fragments.articleBody(article)
