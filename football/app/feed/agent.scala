@@ -47,7 +47,7 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
 trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
 
-  private val agent = play_akka.agent[Seq[Result]](Nil)
+  private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
 
   def refreshResults() {
 
@@ -56,9 +56,23 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
     val startDate = competition.startDate.getOrElse(new DateMidnight().minusDays(30))
 
     agent.sendOff { old =>
+
+      //unfortunately we need to poll 2 feeds to get this data correctly
+      val resultsToKeep = old.filter {
+        case m: MatchDay => true
+        case _ => false
+      }
+
       val results = FootballClient.results(competition.id, startDate)
       log.info("found %s results for competition %s".format(results.size, competition.fullName))
-      results
+      results ++ resultsToKeep
+    }
+  }
+
+  def addResultsFromMatchDay(matches: Seq[FootballMatch]) {
+    agent.send { old =>
+      val matchesToKeep = old.filterNot(m => matches.exists(_.id == m.id))
+      matchesToKeep ++ matches
     }
   }
 
