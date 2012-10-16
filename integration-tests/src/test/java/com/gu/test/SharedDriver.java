@@ -8,7 +8,9 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+
 import cucumber.annotation.Before;
+
 
 public class SharedDriver extends EventFiringWebDriver {
 	
@@ -70,8 +72,10 @@ public class SharedDriver extends EventFiringWebDriver {
 	
 	public String getHost() {
 		//defaults to localhost
-		String host = "http://localhost:9000";
+		//String host = "http://localhost:9000";
 
+		String host = "http://beta.gucode.co.uk";
+		
 		if(System.getProperty("host") != null && !System.getProperty("host").isEmpty()) {
 			host = System.getProperty("host");
 		}
@@ -136,6 +140,38 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public int getPageSource(String value) {
 		return getPageSource().indexOf(value);
+	}
+
+	public boolean isTextPresentByElement(By elementname, String textToSearch) {
+		return findElement(elementname).getText().toLowerCase().contains(textToSearch.toLowerCase());
+	}
+
+	public void clickLink(String linkName) {
+		findElement(By.linkText(linkName)).click();
+		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+
+	public void click(By elemenName) {
+
+		if (findElements(elemenName).size() !=0) {
+			findElement(elemenName).click();
+			waitFor(1000);
+		}
+		else
+			System.out.println(elemenName + " the button does not exist or visible");
+	}
+	
+	public void waitFor(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			System.out.println("Interrupted Exception error " + e);
+		}
+
+	}
+
+	public String getelementCssValue(By elementName, String value) {
+		return findElement(elementName).getCssValue(value);
 	}
     
 }
