@@ -4,15 +4,18 @@ define(['common', 'modules/errors'], function(common, Errors) {
        
         var e,
             p = 'uk/2012/oct/15/mod-military-arms-firms',
-            n = { 
-                userAgent:  "Mozilla/5.0 (iPad; ..."
-            },
             w = {
-                addEventListener: jasmine.createSpy('error')
+                addEventListener: jasmine.createSpy('error'),
+                location: { 
+                    href: 'http://'
+                },
+                navigator: { 
+                    userAgent:  "Mozilla/5.0 (iPad; ..."
+                },
             };
         
         beforeEach(function() {
-            e = new Errors(p, w, n);
+            e = new Errors(w);
             e.init();
         });
 
@@ -23,18 +26,8 @@ define(['common', 'modules/errors'], function(common, Errors) {
         it("should log javascript errors with the error message, line number and file", function(){
             var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
             e.log(fakeError);
-            expect(document.getElementById('cs-err').getAttribute('src')).toBe('//gu-pix.appspot.com/px/frontend/e/1?tag=dWsvMjAxMi9vY3QvMTUvbW9kLW1pbGl0YXJ5LWFybXMtZmlybXMsZm9vLDEsZm9vLmpzLE1vemlsbGEvNS4wIChpUGFkOyAuLi4=');
-        });
-
-        xit("should log messages from module errors", function(){
+            expect(document.getElementById('js-err').getAttribute('src')).toBe('//gu-pix.appspot.com/px/frontend/e/1?tag=foo%2C1%2Cfoo.js%2Chttp%3A%2F%2F%2CMozilla%2F5.0%20(iPad%3B%20...');
         });
 
     });
 })
-
-
-// http://gu-pix.appspot.com/json/count.json?path=/fb/p/3b5am&tag=20121014
-// http://gu-pix.appspot.com/px/fb/p/3b5am?tag=20121014
-// http://gu-pix.appspot.com/json/count.json?path=/frontend/e/1
-
-

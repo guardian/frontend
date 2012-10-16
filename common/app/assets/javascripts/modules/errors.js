@@ -1,39 +1,35 @@
 define(['common'], function (common) {
 
-    var Errors = function (page, w, n) {
+    var Errors = function (w) {
 
         var host = '//gu-pix.appspot.com',
             path = '/px/frontend/e/1',
-            w = w || window,
-            n = n || navigator,
-            p = page,
-            body = document.getElementsByTagName('body')[0],
+            win = w || window,
+            body = document.body,
             createImage = function(url) {
                 var image = new Image();
-                image.id = 'cs-err';
-                image.src = url; 
+                image.id = 'js-err';
+                image.src = url;
                 body.appendChild(image);
             },
-            utf8_to_b64 = function(str) {
-                    return window.btoa(unescape(encodeURIComponent(str)));
+            encode = function(str) {
+                return encodeURIComponent(str);
             },
             makeUrl = function(properties) {
-                return host + path + '?tag=' + utf8_to_b64(properties.join(','));
+                return host + path + '?tag=' + encode(properties.join(','));
             },
-            log = function(err) {
-                var message = err.message,
-                    ln = err.lineno,
-                    filename = err.filename;
-                createImage(makeUrl([p, message, ln, filename, n.userAgent]));
+            log = function(e) {
+                var url = makeUrl([e.message, e.lineno, e.filename, win.location.href, win.navigator.userAgent]);
+                createImage(url);
             },
             init = function() {
-                w.addEventListener('error', log);
-            } 
+                win.addEventListener('error', log);
+            };
         
         return {
             log: log,
             init: init
-        }
+        };
         
     };
 
