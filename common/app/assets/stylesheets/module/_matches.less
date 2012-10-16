@@ -1,12 +1,11 @@
 .competitions-date {
-    text-indent: 10px;
     margin: 10px 0 0px;
 }
 
 .competition-title {
     background-color: #efefe7;
     margin-bottom: 0;
-    padding: 12px;
+    padding-top: 12px;
     position: relative;
 }
 
@@ -18,7 +17,7 @@
 .competition-title i {
     position: absolute;
     top: 18px;
-    right: 12px;
+    right: @gutter;
 }
 
 .competitions {
@@ -45,6 +44,8 @@
     padding: 0;
     font-weight: normal;
     font-family: @sans-serif;
+    overflow: hidden;
+    margin-right: 42px; // offsets the FT/HT box
 }
 
 .match .team {
@@ -64,7 +65,6 @@
 
 .match .away {
     padding-left: 20px;
-    padding-right: 28px; // offsets the FT/HT etc box
 }
 
 .match .result {
