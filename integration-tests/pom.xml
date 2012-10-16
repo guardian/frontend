@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cucumber.version>1.0.8</cucumber.version>
+        <cucumber.version>1.0.14</cucumber.version>
     </properties>
 
     <dependencies>
@@ -43,9 +43,15 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cucumber.version}</version>
+           	<scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.23.0</version>
+            <version>2.24.1</version>
         </dependency>
     </dependencies>
 
@@ -57,8 +63,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <configuration>
                     <systemProperties>
                         <host>${host}</host>
-                        <proxyname>${proxyname}</proxyname>
-                        <proxyport>${proxyport}</proxyport>
+                        <proxyname>${http_proxy}</proxyname>
                     </systemProperties>
                 </configuration>
             </plugin>
