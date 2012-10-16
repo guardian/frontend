@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cucumber.version>1.0.15-SNAPSHOT</cucumber.version>
+        <cucumber.version>1.0.14</cucumber.version>
     </properties>
 
     <dependencies>
@@ -63,7 +63,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <configuration>
                     <systemProperties>
                         <host>${host}</host>
-                        <proxyname>${http_proxy}</proxyname>
+                        <http_proxy>${http_proxy}</http_proxy>
                     </systemProperties>
                 </configuration>
             </plugin>
