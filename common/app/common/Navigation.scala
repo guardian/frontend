@@ -34,7 +34,12 @@ object Navigation {
 }
 
 object Zones {
-  def apply() = {
+  def apply(request: RequestHeader, config: GuardianConfiguration) = {
+
+    val host = request.headers.get("host")
+    val edition = config.edition(host)
+
+    val sportTitle = if (edition == "US") "Sports" else "Sport"
 
     val zones = Seq(
       Zone(
@@ -57,7 +62,7 @@ object Zones {
         )), //End News
 
       Zone(
-        SectionLink("sport", "Sport", "/sport", "Sport"),
+        SectionLink("sport", "Sport", "/sport", sportTitle),
         Seq(
           SectionLink("football", "Football", "/football", "Football"),
           SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog"),
@@ -72,7 +77,7 @@ object Zones {
       Zone(
         SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
         Seq(
-          SectionLink("commentisfree", "Cif America", "http://@config.edition.usHost/commentisfree", "Cif America"),
+          SectionLink("commentisfree", "Cif America", "http://" + config.edition.usHost + "/commentisfree", "Cif America"),
           SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief"),
           SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
         )), // end comment is free
@@ -117,7 +122,7 @@ object Zones {
         SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
         Seq(
           SectionLink("lifeandstyle", "Fashion", "/fashion", "Fashion"),
-          SectionLink("lifeandstyle", "Food", "/food", "Food"),
+          SectionLink("lifeandstyle", "Food &amp; drink", "/lifeandstyle/food-and-drink", "Food &amp; drink"),
           SectionLink("lifeandstyle", "Family", "/lifeandstyle/family", "Family"),
           SectionLink("lifeandstyle", "Lost in Showbiz", "/lifeandstyle/lostinshowbiz", "Lost in Showbiz")
         )), //End Life and style
