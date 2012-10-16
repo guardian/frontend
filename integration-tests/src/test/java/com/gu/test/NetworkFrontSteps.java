@@ -98,11 +98,5 @@ public class NetworkFrontSteps {
 		// confirm trailblock is hidden
 		Assert.assertEquals("0px", section.findElement(By.className("trailblock")).getCssValue("max-height"));
 	}
-
-	@When("^I refresh the page$")
-	public void I_refresh_the_page() throws Throwable {
-	    // refresh the page
-		webDriver.navigate().refresh();
-	}
 	
 }
