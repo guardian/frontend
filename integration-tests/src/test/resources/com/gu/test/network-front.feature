@@ -7,8 +7,8 @@ Feature: Network front
 
     Scenario: Sections tab is shown and top stories are hidden
         Given I visit the network front
-        Then "Top stories" tab is hidden
-            And "Sections" tab is shown 
+        Then the "Top stories" tab is hidden
+            And the "Sections" tab is shown 
 
     Scenario: show and hide to expand and collapse each section
         Given I visit the network front 

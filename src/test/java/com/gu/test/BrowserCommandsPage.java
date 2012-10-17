@@ -1,25 +1,31 @@
 package com.gu.test;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.*;
+import junit.framework.Assert;
 
-public class Page {
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+
+
+public class BrowserCommandsPage {
 
 	static WebDriver driver;
 
-	public Page() {
+	public BrowserCommandsPage() {
 		initialiseBrowser();
 	}
 
 	public WebDriver getDriver() {
 		return driver;
 	}
-	
 	public static void setDriver(WebDriver driver) {
-		Page.driver = driver;
+		BrowserCommandsPage.driver = driver;
 	}
 
 	private static void initialiseBrowser() {
@@ -40,7 +46,8 @@ public class Page {
 	}
 
 	public void open(String url) {
-		getDriver().get(this.getHost() + url);
+		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		getDriver().get(url);
 	}
 
 	public void close() {
@@ -63,15 +70,25 @@ public class Page {
 		return exists;
 	}
 
+	public void clickLink(String linkName) {
+		getDriver().findElement(By.linkText(linkName)).click();
+		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+
 	public void clickButton(By buttonName) {
 		getDriver().findElement(buttonName).click();
 		getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	public boolean isTextPresent(String textToSearch) {
-		return getDriver().findElement(By.tagName("body")).getText().contains(textToSearch);
+		return getDriver().findElement(By.tagName("body")).getText().toLowerCase().contains(textToSearch.toLowerCase());
 	}
 
+
+	public boolean isTextPresentByElement(By elementname, String textToSearch) {
+		return getDriver().findElement(elementname).getText().toLowerCase().contains(textToSearch.toLowerCase());
+	}
+	
 	public void waitForTextPresent(String textToSearch) {
 		for (int second = 0;; second++) {
 			if (second >= 30) {
@@ -87,8 +104,24 @@ public class Page {
 		}
 	}
 
+	public void type(By elementName, String elementValue) {
+		getDriver().findElement(elementName).clear();
+		getDriver().findElement(elementName).sendKeys(elementValue);
+	}
+
+	public void submit(By elementName) {
+		getDriver().findElement(elementName).submit();
+	}
+
 	public void refresh() {
 		getDriver().navigate().refresh();
+	}
+
+	public void checkApproveButton() {
+		if (isElementPresent(By.id("approve_button"))) {
+			clickButton(By.id("approve_button"));	
+			getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 	}
 
 	public void waitForElementPresent(By elementName) {
@@ -111,6 +144,15 @@ public class Page {
 		return getDriver().getPageSource().indexOf(value);
 	}
 
+	public void checkFormIsEmpty() {
+		WebElement form = getDriver().findElement(By.id("network-front-tool"));
+		// check each input element is empty
+		for (WebElement textInput : form.findElements(By.cssSelector("input[type='text']"))) {
+			Assert.assertEquals("", textInput.getText());
+		}
+
+	}
+
 	public String getHost() {
 		//defaults to localhost
 		String host = "http://localhost:9000";
@@ -119,5 +161,39 @@ public class Page {
 			host = System.getProperty("host");
 		}
 		return host;
+	}
+
+	public void click(By elemenName) {
+
+		if (getDriver().findElements(elemenName).size() !=0) {
+			getDriver().findElement(elemenName).click();
+			waitFor(1000);
+		}
+		else
+			System.out.println(elemenName + " the button does not exist or visible");
+	}
+
+	public void waitFor(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			System.out.println("Interrupted Exception error " + e);
+		}
+
+	}
+
+	public void closeAll(){
+		//quits webdriver any open windows
+		getDriver().quit();
+
+		//kills all running firefox process
+		Runtime rt = Runtime.getRuntime();
+		if (System.getProperty("os.name").toLowerCase().indexOf("linux") > -1)
+			try {
+				rt.exec("killall -9 firefox");
+				System.out.println("killing firefox");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 }
