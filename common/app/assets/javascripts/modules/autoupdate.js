@@ -2,6 +2,8 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
     function Autoupdate(path, delay, attachTo) {
 
+
+
         var options = {
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
@@ -37,7 +39,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
             },
 
             destory: function () {
-                bonzo('.update').addClass('js-hidden');
+                bonzo('.update').remove();
             }
         };
         
@@ -48,9 +50,14 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 url: path,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
-                jsonpCallbackName: 'autoupdate',
+                jsonpCallbackName: 'autoUpdate',
                 success: function (response) {
-                    common.mediator.emit('modules:autoupdate:loaded', [response.html]);
+                    if(response.refreshStatus === false) {
+                        common.mediator.emit('modules:autoupdate:off');
+                        common.mediator.emit('modules:autoupdate:destory');
+                    } else {
+                        common.mediator.emit('modules:autoupdate:loaded', [response.html]);
+                    }
                 },
                 error: function () {
                     //Log using error module
@@ -84,6 +91,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         common.mediator.on('modules:autoupdate:loaded', this.view.render);
         common.mediator.on('modules:autoupdate:on', this.on, this);
         common.mediator.on('modules:autoupdate:off', this.off, this);
+        common.mediator.on('modules:autoupdate:destory', this.view.destory);
 
         //Initalise
         this.init = function () {

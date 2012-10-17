@@ -6,7 +6,7 @@ define(['common', 'modules/related'], function(common, Related) {
 
         beforeEach(function() {
             callback = sinon.spy(function(){});
-            common.mediator.on('modules:related:loaded', callback);
+            common.mediator.on('modules:autoupdate:loaded', callback);
         });
 
         // json test needs to be run asynchronously 
