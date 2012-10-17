@@ -1,27 +1,23 @@
 .competitions-date {
-    margin: 10px 0 0px;
+    padding-top: 12px;
+    background-color: #efefe7;
 }
 
 .competition-title {
-    background-color: #efefe7;
     margin-bottom: 0;
     padding-top: 12px;
     position: relative;
+    border-bottom: 1px solid #efefe7;
 }
 
 .competition-title a { 
     color: #333333; 
 }
 
-
 .competition-title i {
     position: absolute;
     top: 18px;
     right: @gutter;
-}
-
-.competitions {
-    margin-top: 10px;
 }
 
 .match,
@@ -31,12 +27,12 @@
 
 .match { 
     border-bottom: 1px solid #efefe7;
-    padding: 12px 0;
+    padding: 12px 22px; // todo: variables
     position: relative;    
-    overflow: hidden;
 }
 
 .match .match-desc {
+    color: #333333;
     position: relative;
     margin-bottom: 0;
     background-color: white;
@@ -46,6 +42,7 @@
     font-family: @sans-serif;
     overflow: hidden;
     margin-right: 42px; // offsets the FT/HT box
+    word-break: break-all; // fixes things for small screens
 }
 
 .match .team {
@@ -60,11 +57,11 @@
 
 .match .home {
     text-align: right;
-    padding-right: 20px;
+    padding-right: 23px;
 }
 
 .match .away {
-    padding-left: 20px;
+    padding-left: 23px;
 }
 
 .match .result {
@@ -76,12 +73,13 @@
     margin-left: -20px;
     text-align: center;
     font-weight: bold;
+    letter-spacing: 2px;
 }
 
 .match .status {
     position: absolute;
-    right: 0px;
-    top: 18px;
+    right: 22px; // todo: variable
+    top: 12px; // 18px for words 
     color: #979797;
 }
 
@@ -108,6 +106,11 @@
     background-color: #da4b23;
 }
 
+.matches,
+.competitions {
+    margin-bottom: 0px;
+}
+
 #matches-nav a {
     display: inline-block;
 }
@@ -121,3 +124,8 @@
     content: "";
 }
 
+
+
+.sport-header {
+    margin-bottom: @baseline*2;
+}

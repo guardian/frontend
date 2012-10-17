@@ -31,7 +31,7 @@ object CompetitionFixturesController extends Controller with Logging with Compet
       theCompetition.map(_.url.drop(1) + "/results").getOrElse("football/fixtures"),
       "football",
       "",
-      theCompetition.map(_.fullName).getOrElse("All fixtures")
+      theCompetition.map(_.fullName + " fixtures").getOrElse("All fixtures")
     )
 
     val fixtureDays = filteredCompetitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(startDate, daysToDisplay)

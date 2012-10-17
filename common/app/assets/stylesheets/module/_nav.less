@@ -183,16 +183,27 @@ a.topstories-control,
     border-top-color: #b5b5b5;
 }
 
-.nav-multi h2,
-.nav-multi h2 a {
+.nav-multi h2 {
     font-family: helvetica, arial, sans-serif;
     font-weight: normal;
     color: #999999;
-    margin-top: 12px;
+    margin-top: @baseline*4;
     font-size: 14px;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: @baseline;
 }
 
 // bit horrible, sorry
+
+.nav-multi li:first-child h2 {
+    margin-top: @baseline*2;
+}
+
 .nav-multi .sections > li a {
     border-top: 1px solid #ddd;
+}
+
+.sections li:nth-child(-n+2) a {
+    border-top: none;
+    padding-top: 0;
 }

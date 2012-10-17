@@ -31,7 +31,7 @@ object CompetitionResultsController extends Controller with Logging with Competi
       theCompetition.map(_.url.drop(1) + "/results").getOrElse("football/results"),
       "football",
       "",
-      theCompetition.map(_.fullName).getOrElse("All results")
+      theCompetition.map(_.fullName + " results").getOrElse("All results")
     )
 
     val resultsDays = filteredCompetitions.withTodaysMatchesAndPastResults.previousMatchDates(startDate, daysToDisplay)
