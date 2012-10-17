@@ -5,13 +5,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
         var e,
             p = 'uk/2012/oct/15/mod-military-arms-firms',
             w = {
-                addEventListener: jasmine.createSpy('error'),
-                location: { 
-                    href: 'http://'
-                },
-                navigator: { 
-                    userAgent:  "Mozilla/5.0 (iPad; ..."
-                },
+                addEventListener: jasmine.createSpy('error')
             };
         
         beforeEach(function() {
@@ -26,7 +20,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
         it("should log javascript errors with the error message, line number and file", function(){
             var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
             e.log(fakeError);
-            expect(document.getElementById('js-err').getAttribute('src')).toBe('//gu-pix.appspot.com/px/frontend/e/1?tag=foo%2C1%2Cfoo.js%2Chttp%3A%2F%2F%2CMozilla%2F5.0%20(iPad%3B%20...');
+            expect(document.getElementById('js-err').getAttribute('src')).toBe('/px.gif?foo%2C1%2Cfoo.js');
         });
 
     });

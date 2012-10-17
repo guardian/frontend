@@ -2,8 +2,7 @@ define(['common'], function (common) {
 
     var Errors = function (w) {
 
-        var host = '//gu-pix.appspot.com',
-            path = '/px/frontend/e/1',
+        var path = '/px.gif',
             win = w || window,
             body = document.body,
             createImage = function(url) {
@@ -16,10 +15,10 @@ define(['common'], function (common) {
                 return encodeURIComponent(str);
             },
             makeUrl = function(properties) {
-                return host + path + '?tag=' + encode(properties.join(','));
+                return path + '?' + encode(properties.join(','));
             },
-            log = function(e) {
-                var url = makeUrl([e.message, e.lineno, e.filename, win.location.href, win.navigator.userAgent]);
+            log = function(err) {
+                var url = makeUrl([err.message, err.lineno, err.filename]);
                 createImage(url);
             },
             init = function() {
