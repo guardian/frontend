@@ -1,3 +1,4 @@
+@navigation
 Feature: Navigation - Top Stories 
 
 	In order to explore the latest Guardian stories 
@@ -16,7 +17,6 @@ Feature: Navigation - Top Stories
     	Given I visit a section front
         Then the "Top stories" tab is shown
     
-    @navigation
     Scenario: Show 10 Top stories from the guardian site on a section front
         Given I visit an article
         When I click the "Top stories" tab

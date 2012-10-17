@@ -22,7 +22,6 @@ public class Steps {
 	
 	@Given("^I visit the network front")
 	public void i_visit_the_network_front() throws Throwable {
-    	System.out.println(webDriver.manage().getCookies());
 		webDriver.open("/");
 	}
 	
@@ -40,7 +39,6 @@ public class Steps {
 	public void I_refresh_the_page() throws Throwable {
 	    // refresh the page
 		webDriver.navigate().refresh();
-		Thread.sleep(5000);
 	}
 	
 	@Then("^\"(Top stories|Sections)\" tab is (hidden|shown)$")
