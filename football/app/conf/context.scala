@@ -64,7 +64,7 @@ object FootballClient extends PaClient with Http {
 object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
-  val all: Seq[Switchable] = List(Healthcheck.switch)
+  val all: Seq[Switchable] = CommonSwitches.all
 }
 
 object PaApiHttpTimingMetric extends TimingMetric(
