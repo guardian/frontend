@@ -9,7 +9,7 @@
                 <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
                 <i class="icon-filter-arrow-right"></i>
             </h3>
-            <ol class="matches box-indent unstyled">
+            <ol class="matches unstyled">
                 @comp.matches.map{
                     case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
                     case result: pa.Result                          => { @fragments.result(result) }
