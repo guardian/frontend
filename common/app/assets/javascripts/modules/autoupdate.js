@@ -38,7 +38,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 this.setPref(action);
             },
 
-            destory: function () {
+            destroy: function () {
                 bonzo('.update').remove();
             }
         };
@@ -54,7 +54,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 success: function (response) {
                     if(response.refreshStatus === false) {
                         common.mediator.emit('modules:autoupdate:off');
-                        common.mediator.emit('modules:autoupdate:destory');
+                        common.mediator.emit('modules:autoupdate:destroy');
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', [response.html]);
                     }
@@ -91,7 +91,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         common.mediator.on('modules:autoupdate:loaded', this.view.render);
         common.mediator.on('modules:autoupdate:on', this.on, this);
         common.mediator.on('modules:autoupdate:off', this.off, this);
-        common.mediator.on('modules:autoupdate:destory', this.view.destory);
+        common.mediator.on('modules:autoupdate:destroy', this.view.destroy);
 
         //Initalise
         this.init = function () {

@@ -43,7 +43,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
         });
 
         it("should destory itself of server sends turn off response", function() {
-            common.mediator.on('modules:autoupdate:destory', callback);
+            common.mediator.on('modules:autoupdate:destroy', callback);
 
             var a = new Autoupdate('fixtures/badupdate', delay, attachTo);
                 a.init();
