@@ -63,20 +63,12 @@ public class NetworkFrontSteps {
 			}
 		}
  	}
-	
-	@Then("^\"(Top stories|Sections)\" tab is (hidden|shown)$")
-	public void tab_is(String tabName, String tabState) throws Throwable {
-		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
-	    WebElement tab = webDriver.findElement(By.id(tabId));
-	    // confirm element is shown/hidden
-	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
-	}
 
 	@Given("^I hide a section$")
 	public void I_hide_a_section() throws Throwable {
 	    // hide the first section
 		webDriver.findElement(By.cssSelector("section.front-section .toggle-trailblock"))
-		.click();
+			.click();
 	}
 
 	@When("^I navigate to an article page and back to the network front$")
