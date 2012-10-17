@@ -1,6 +1,9 @@
-define(["EventEmitter", "bonzo", "qwery"], function (placeholder, bonzo, qwery) {
+define(["EventEmitter", "bonzo", "qwery", "modules/guprefs"], function (placeholder, bonzo, qwery, guprefs) {
+    var mediator = new EventEmitter();
+    guprefs.init(mediator);
     return {
-        mediator: new EventEmitter(),
+        mediator: mediator,
+        guprefs: guprefs,
         $g: function (selector, context) {
             if (context) {
                 return bonzo(qwery(selector, context));

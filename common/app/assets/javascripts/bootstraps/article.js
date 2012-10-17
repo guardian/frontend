@@ -34,7 +34,8 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle
+    ) {
 
         var modules = {
 
@@ -85,10 +86,37 @@ define([
                 });
             },
 
-            loadFonts: function(config, ua, prefs) {
+            loadFonts: function(config, ua) {
+                var prefs = common.guprefs.get('font-family');
+    
+                if (config.switches.fontFamily) {
+                    (function loadFontsFromStorage() {
+                        if (prefs) {
+                            var styleNodes = document.querySelectorAll('[data-cache-name]');
+                            for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                                var style = styleNodes[i],
+                                    name = style.getAttribute('data-cache-name'),
+                                    cachedCss = localStorage.getItem('_guFont:' + name);
+                                if (cachedCss) {
+                                    style.innerHTML = cachedCss;
+                                    style.setAttribute('data-cache-full', 'true');
+                                    document.querySelector('html').className += ' font-' + name + '-loaded';
+                                }
+                            }
+                        }
+                    })();
+                } else {
+                    (function removePreference() {
+                        if (prefs) {
+                            common.guprefs.remove('font-family');
+                        }
+                    })();
+                }
+
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                if (config.switches.fontFamily && prefs.exists('font-family')) {
+
+                if (config.switches.fontFamily && prefs) {
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
                     Fonts.clearFontsFromStorage();
@@ -155,7 +183,7 @@ define([
         }
 
         modules.loadOmnitureAnalytics(config);
-        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.loadFonts(config, navigator.userAgent);
         modules.loadOphanAnalytics();
 
     };
