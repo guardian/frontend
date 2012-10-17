@@ -1,3 +1,4 @@
+/*global guardian:true */
 define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo, bean) {
 
     function Autoupdate(path, delay, attachTo) {
@@ -75,7 +76,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         };
 
         this.off = function () {
-            if(this.interval) window.clearInterval(this.interval);
+            if(this.interval) { window.clearInterval(this.interval); }
         };
 
         this.getPref = function () {
