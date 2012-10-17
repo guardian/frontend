@@ -16,6 +16,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	
     private static final WebDriver REAL_DRIVER;
     
+    protected EventListener eventListener;
+    
     private static final Thread CLOSE_THREAD = new Thread() {
         @Override
         public void run() {
@@ -46,6 +48,10 @@ public class SharedDriver extends EventFiringWebDriver {
 
     public SharedDriver() {
         super(REAL_DRIVER);
+
+        // add an event listener to the driver
+        eventListener = new EventListener();
+    	register(eventListener);
     }
 
     @Override
