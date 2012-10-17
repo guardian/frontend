@@ -24,8 +24,7 @@
                 <img class="maxed" src="@smallCrop.url"
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
-                     itemprop="contentURL"
-                        />
+                     itemprop="contentURL" />
                 @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
                 <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
                 }
@@ -41,6 +40,7 @@
 
         <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 		  @fragments.articleBody(article)
+
         </div>
     </article>
 

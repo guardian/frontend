@@ -2,7 +2,8 @@
 
 <p class="dateline">
 	@if(isLive){ <i class="i-live">LIVE</i> } else { <i class="i-date"></i> }
-	<time itemprop="datePublished" datetime='@webPublicationDate.toString("yyyy-MM-dd")' data-timestamp="@webPublicationDate.getMillis">
-        @Format(webPublicationDate, "EEEE d MMMM y HH.mm 'GMT'")
-    </time>
+	 <time itemprop="datePublished" datetime='@webPublicationDate.toString("yyyy-MM-dd")' 
+	 	data-timestamp="@webPublicationDate.getMillis">
+		@Format(webPublicationDate, "EEEE d MMMM y HH.mm 'GMT'")
+	</time>
 </p>
