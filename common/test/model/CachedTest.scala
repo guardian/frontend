@@ -19,7 +19,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val headers = result.header.headers
 
     headers("Cache-Control") should be("must-revalidate, max-age=5")
-    headers("Vary") should be("host, accept-encoding")
   }
 
   it should "cache content less than 24 hours old for 1 minute" in {
@@ -30,7 +29,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val headers = result.header.headers
 
     headers("Cache-Control") should be("must-revalidate, max-age=60")
-    headers("Vary") should be("host, accept-encoding")
   }
 
   it should "cache older content for 15 minutes" in {
@@ -41,7 +39,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val headers = result.header.headers
 
     headers("Cache-Control") should be("must-revalidate, max-age=900")
-    headers("Vary") should be("host, accept-encoding")
   }
 
   it should "cache other things for 1 minute" in {
@@ -61,7 +58,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val headers = result.header.headers
 
     headers("Cache-Control") should be("must-revalidate, max-age=60")
-    headers("Vary") should be("host, accept-encoding")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {

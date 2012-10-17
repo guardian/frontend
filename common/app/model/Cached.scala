@@ -23,8 +23,7 @@ object Cached extends Results {
     result.withHeaders(
       "Cache-Control" -> "must-revalidate, max-age=%s".format(seconds),
       "Expires" -> expiresTime.toHttpDateTimeString,
-      "Date" -> now.toHttpDateTimeString,
-      "Vary" -> "host, accept-encoding"
+      "Date" -> now.toHttpDateTimeString
     )
   }
 }
