@@ -102,8 +102,6 @@ define([
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
 
-                console.log('switch is: ' + config.switches.fontFamily, 'pref is ' + prefs.exists('font-family'));
-
                 if (config.switches.fontFamily && prefs.exists('font-family')) {
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
