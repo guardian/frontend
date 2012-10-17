@@ -2,8 +2,13 @@ package com.gu.test;
 
 import junit.framework.Assert;
 
-import org.openqa.selenium.*;
-import cucumber.annotation.en.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import cucumber.annotation.en.Given;
+import cucumber.annotation.en.Then;
+import cucumber.annotation.en.When;
+import cucumber.runtime.PendingException;
 
 public class NavigationSteps {
 
@@ -28,15 +33,44 @@ public class NavigationSteps {
     	// assert it has the correct number of stories
     	Assert.assertEquals(numOfTopStories, topStories.findElements(By.tagName("li")).size());
     }
-    
-    @When("^I have visited some stories within the top stories list$")
-    public void I_have_visited_some_stories_within_the_top_stories_list() throws Throwable {
-        
-    }
 
-    @Then("^the stories I have visited will have a visited state$")
-    public void the_stories_I_have_visited_will_have_a_visited_state() throws Throwable {
-        
+    @Then("^the \"(Top stories|Sections)\" menu should (open|close)$")
+    public void the_menu_should(String tabName, String menuState) throws Throwable {
+    	String menuId = tabName.toLowerCase().replace(" ", "") + "-header";
+    	Assert.assertEquals(
+			menuState.equals("open"), webDriver.findElement(By.id(menuId)).isDisplayed()
+		);
+    }
+    
+    @Given("^the \"(Top stories|Sections)\" menu is (open|close)$")
+    public void the_menu_is(String tabName, String menuState) throws Throwable {
+    	String menuId = tabName.toLowerCase().replace(" ", "") + "-header";
+    	// if it's not in the correct state, click it
+    	if (menuState.equals("open") != webDriver.findElement(By.id(menuId)).isDisplayed()) {
+    		I_click_the_tab(tabName);
+    	}
+    }
+    
+    @When("^I click on a top story$")
+    public void I_click_on_a_top_story_link() throws Throwable {
+    	// get the first top story
+    	WebElement topStory = webDriver.findElement(By.cssSelector("#topstories-header li a"));
+    	topStory.click();
+    }
+    
+    @Then("^I'm taken to that article$")
+    public void Im_taken_to_that_article() throws Throwable {
+    	// get last clicked element's href
+    	String expectedUrl = webDriver.eventListener.lastClickedElementsHref;
+    	// confirm its href is the same as current page's
+    	Assert.assertEquals(expectedUrl, webDriver.getCurrentUrl());
+    }
+    
+    @Then("^the top story link should have a (.*) of (.*)$")
+    public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
+        // confirm it has the correct css color
+    	WebElement topStoryLink = webDriver.findElement(By.cssSelector("#topstories-header li a"));
+    	Assert.assertEquals(expectedColor, topStoryLink.getCssValue(cssProperty));
     }
     
 }
