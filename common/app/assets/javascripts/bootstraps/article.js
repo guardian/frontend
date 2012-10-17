@@ -15,7 +15,8 @@ define([
         'modules/navigation/top-stories',
         'modules/navigation/controls',
         'domReady',
-        'modules/trailblocktoggle'
+        'modules/trailblocktoggle',
+        'modules/autoupdate'
     ],
     function (
         common,
@@ -34,7 +35,8 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle,
+        AutoUpdate) {
 
         var modules = {
 
@@ -126,6 +128,18 @@ define([
                 var edition = config.page.edition;
                 var tt = new TrailblockToggle();
                 tt.go(edition);
+            },
+
+            autoUpdate: function(isLive) {
+                if(isLive) {
+                    var path = window.location.pathname,
+                        delay = 5000,
+                        el = document.querySelector(".article-body");
+
+                    var a = new AutoUpdate(window.location.pathname, delay, el);
+
+                    a.init();
+                }
             }
          
         };
@@ -140,6 +154,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.autoUpdate(config.page.isLive);
         
         switch (isNetworkFront) {
 
@@ -157,7 +172,6 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
     };
 
     // domReady proxy for bootstrap

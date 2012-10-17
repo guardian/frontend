@@ -3,8 +3,46 @@
 @main(article, Static, Configuration, Switches.all){
     @if(article.isLive){ <script src="//platform.twitter.com/widgets.js" async charset="utf-8"></script> }
 }{
+	<h2 class="article-zone type-2">
+    	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+	</h2>
 
-    @fragments.articleBody(article)
+	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+
+        <header>
+            @fragments.dateline(article.webPublicationDate, article.isLive)
+
+            @fragments.headline(article.headline)
+
+            @fragments.standfirst(article)
+
+        </header>
+
+        @article.mainPicture.map{ mainPicture =>
+            @article.mainPicture(width=220).map{ smallCrop =>
+            <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                <img class="maxed" src="@smallCrop.url"
+                     data-fullsrc="@mainPicture.url"
+                     data-width="@mainPicture.width"
+                     itemprop="contentURL"
+                        />
+                @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+                <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                }
+            </figure>
+            }
+        }
+
+        @fragments.byline(article.byline, article)
+
+        @if(article.isLive) {
+            @fragments.autoUpdate()
+        }
+
+        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+		  @fragments.articleBody(article)
+        </div>
+    </article>
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

@@ -37,6 +37,39 @@
     color: #7CA6BE;
 }
 
+.update {
+    display: block;
+    margin: 0px @gutter @baseline*2 @gutter;
+    padding: 0px 0px @baseline*2 0px;
+    border-bottom: 1px solid #CCC;
+    overflow: hidden;
+}
+
+.update-text {
+    float:left;
+    margin-right: @gutter;
+    padding-top: @baseline;
+}
+
+.update-btn {
+    float:left;
+    margin: 0;
+    padding: 10px 12px;
+    background-color: #EFEFE7;
+    color: #333;
+    font-weight: normal;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.update-btn.is-active,
+.update-btn:hover { 
+    color: #fff;
+    background-color: #E47A39;
+}
+
+
 /* please add media queries in ascending order of size */
 
 @media screen and (max-width: 300px) {
