@@ -8,7 +8,7 @@ class CompetitionsResultsFeatureTest extends FeatureSpec with GivenWhenThen with
 
   feature("Football Results") {
 
-    scenario("Visit the results page") {
+    ignore("Visit the results page") {
 
       given("I visit the results page")
 
@@ -38,7 +38,7 @@ class CompetitionsResultsFeatureTest extends FeatureSpec with GivenWhenThen with
       }
     }
 
-    scenario("Link tracking") {
+    ignore("Link tracking") {
       given("I visit the results page")
       HtmlUnit("/football/premierleague/results/2012/oct/01") { browser =>
         import browser._
