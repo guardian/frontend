@@ -41,7 +41,7 @@ public class Steps {
 		webDriver.navigate().refresh();
 	}
 	
-	@Then("^\"(Top stories|Sections)\" tab is (hidden|shown)$")
+	@Then("^the \"(Top stories|Sections)\" tab is (hidden|shown)$")
 	public void tab_is(String tabName, String tabState) throws Throwable {
 		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
 	    WebElement tab = webDriver.findElement(By.id(tabId));

@@ -16,6 +16,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	
     private static final WebDriver REAL_DRIVER;
     
+    protected EventListener eventListener;
+    
     private static final Thread CLOSE_THREAD = new Thread() {
         @Override
         public void run() {
@@ -31,8 +33,7 @@ public class SharedDriver extends EventFiringWebDriver {
 				URL proxyUrl = new URL(System.getProperty("http_proxy"));
 				profile.setPreference("network.proxy.type", 1);
 				// set the proxy's url
-				String url = proxyUrl.getProtocol() + "://" + proxyUrl.getHost();
-				profile.setPreference("network.proxy.http", url);
+				profile.setPreference("network.proxy.http", proxyUrl.getHost());
 				// extract the port, or use the default
 				int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort() : proxyUrl.getDefaultPort();
 				profile.setPreference("network.proxy.http_port", port);
@@ -47,6 +48,10 @@ public class SharedDriver extends EventFiringWebDriver {
 
     public SharedDriver() {
         super(REAL_DRIVER);
+
+        // add an event listener to the driver
+        eventListener = new EventListener();
+    	register(eventListener);
     }
 
     @Override
