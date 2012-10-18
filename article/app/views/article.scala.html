@@ -1,8 +1,6 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-@main(article, Static, Configuration, Switches.all){
-    @if(article.isLive){ <script src="//platform.twitter.com/widgets.js" async charset="utf-8"></script> }
-}{
+@main(article, Static, Configuration, Switches.all){ }{
 	<h2 class="article-zone type-2">
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
@@ -50,4 +48,6 @@
         <div id="js-related"></div>
     }
     <div id="js-popular"></div>
+}{
+    @if(article.isLive){ <script src="//platform.twitter.com/widgets.js" async charset="utf-8"></script> }  
 }

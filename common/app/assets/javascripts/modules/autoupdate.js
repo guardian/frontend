@@ -30,9 +30,9 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 bonzo(this.btns).removeClass(options.activeClass);
 
                 if(action === 'on') {
-                    common.mediator.emit('modules:autoupdate:on');
+                    this.on();
                 } else {
-                    common.mediator.emit('modules:autoupdate:off');
+                    this.off();
                 }
 
                 bonzo(btn).addClass(options.activeClass);
@@ -46,7 +46,9 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         
         // Model
         this.load = function (url) {
-            var path = this.path;
+            var path = this.path,
+                that = this;
+
             return reqwest({
                 url: path,
                 type: 'jsonp',
@@ -54,8 +56,8 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 jsonpCallbackName: 'autoUpdate',
                 success: function (response) {
                     if(response.refreshStatus === false) {
-                        common.mediator.emit('modules:autoupdate:off');
-                        common.mediator.emit('modules:autoupdate:destroy');
+                        that.off();
+                        that.destroy();
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', [response.html]);
                     }
@@ -88,14 +90,13 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         };
 
         // Bindings
-        common.mediator.on('modules:autoupdate:toggle', this.view.toggle, this);
         common.mediator.on('modules:autoupdate:loaded', this.view.render);
-        common.mediator.on('modules:autoupdate:on', this.on, this);
-        common.mediator.on('modules:autoupdate:off', this.off, this);
-        common.mediator.on('modules:autoupdate:destroy', this.view.destroy);
 
         //Initalise
         this.init = function () {
+            var that = this,
+                pref = this.getPref();
+
             this.btns = common.$g(options.btnClass);
 
             this.btns.each(function (btn) {
@@ -104,17 +105,15 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
                     var isActive = bonzo(this).hasClass(options.activeClass);
                     if(!isActive) {
-                        common.mediator.emit('modules:autoupdate:toggle', this);
+                        that.view.toggle.call(that, this);
                     }
                 });
             });
 
-            var pref = this.getPref();
-
             if(pref === 'off') {
-                common.mediator.emit('modules:autoupdate:toggle', this.btns[1]);
+                this.view.toggle.call(this, this.btns[1]);
             } else {
-                common.mediator.emit('modules:autoupdate:toggle', this.btns[0]);
+                this.view.toggle.call(this, this.btns[0]);
             }
         };
 

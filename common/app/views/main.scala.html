@@ -1,4 +1,4 @@
-@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(script: Html)(implicit request: RequestHeader)
 <!doctype html>
 <html>
 <head>
@@ -6,9 +6,6 @@
     @fragments.commonCssSetup(static, config)
     @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
     @fragments.metaData(metaData, config, static)
-
-    @head
-
 </head>
 <body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
 
@@ -23,5 +20,6 @@
     </div>
 
     @fragments.analytics(metaData, config)
+    @script
 </body>
 </html>
