@@ -65,8 +65,8 @@ Feature: Article page
 	#	When I click "Top stories" tab at the top of the page
 	#	Then the articles I have visited will be in a visited state
 
-@ In progress
 
+		@in-progress
          Scenario: Back to top
                 When I click Back to top button
                 Then article page scrolls quickly to the top
