@@ -102,7 +102,7 @@ define([
             },
 
             loadOmnitureAnalytics: function (config) {
-                var cs = new Clickstream({ filter: ["a", "span"] }),
+                var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                     o = new Omniture(null, config).init();
             },
 
@@ -133,7 +133,7 @@ define([
             autoUpdate: function(isLive) {
                 if(isLive) {
                     var path = window.location.pathname,
-                        delay = 5000,
+                        delay = 20000,
                         el = document.querySelector(".article-body");
 
                     var a = new AutoUpdate(window.location.pathname, delay, el);
