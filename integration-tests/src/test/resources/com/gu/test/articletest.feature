@@ -65,4 +65,15 @@ Feature: Article page
 	#	When I click "Top stories" tab at the top of the page
 	#	Then the articles I have visited will be in a visited state
 
+@ In progress
+
+         Scenario: Back to top
+                When I click Back to top button
+                Then article page scrolls quickly to the top
+
+         Scenario: Page footer links
+                When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
+                Then the corresponding pages are displayed
+
+
 
