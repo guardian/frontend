@@ -60,25 +60,3 @@ Feature: Navigation - Top Stories
         	And the "Top stories" menu is open
         When I click on a top story
         Then I'm taken to that article
-        
-    Scenario: Links to top stories have a visited state on an article
-    	Given I visit an article
-        	And the "Top stories" menu is open
-        When I click on a top story
-        	And the "Top stories" menu is open
-        # NOTE - doesn't look like selenium can read 'visited' pseudo class styles
-        # Then the top story link should have a color of rgba(119,119,119,1)
-        
-    Scenario: Links to top stories have a visited state on a section front
-    	Given I visit a section front
-        	And the "Top stories" menu is open
-        When I click on a top story
-        	And the "Top stories" menu is open
-        # NOTE - doesn't look like selenium can read 'visited' pseudo class styles
-        # Then the top story link should have a color of rgba(119,119,119,1)
-    
-    @ignore
-	Scenario: Top Stories navigation is tracked with Omniture
-        Given I interact with Top stories feature using a mobile device, tablet or desktop
-        When I track my visit using omniture
-        Then Omniture will display data showing my interaction with Top Stories feature

@@ -65,11 +65,4 @@ public class NavigationSteps {
     	Assert.assertEquals(expectedUrl, webDriver.getCurrentUrl());
     }
     
-    @Then("^the top story link should have a (.*) of (.*)$")
-    public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
-        // confirm it has the correct css color
-    	WebElement topStoryLink = webDriver.findElement(By.cssSelector("#topstories-header li a"));
-    	Assert.assertEquals(expectedColor, topStoryLink.getCssValue(cssProperty));
-    }
-    
 }
