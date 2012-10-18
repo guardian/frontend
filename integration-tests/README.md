@@ -6,10 +6,10 @@ To run all features (except `@ignore`)
 
 	$ mvn clean test
 
-To run a particular tagged feature (excecpt `@ignore`)
+To run a particular tagged feature (e.g.`@network-front`, but not `@ignore`)
 
-	$ mvn clean test -Dcucumber.options="--tags @network-front --tags ~@ignore --glue classpath:com/gu/test \
- 	> src/test/resources --format pretty --format html:target/cucumber-html-report"
+	$ mvn clean test -Dcucumber.options="src/test/resources --tags @network-front --tags ~@ignore \
+	> --glue com/gu/test --format pretty --format html:target/cucumber-html-report"
 
 Running on a different host (i.e. not `http://localhost:9000`)
 
