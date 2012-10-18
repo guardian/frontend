@@ -1,4 +1,4 @@
-/*global guardian:true */
+/*global guardian:true, twttr:true */
 define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo, bean) {
 
     function Autoupdate(path, delay, attachTo) {
@@ -21,6 +21,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
             render: function (html) {
                 attachTo.innerHTML = html;
+                twttr.widgets.load();
                 common.mediator.emit('modules:autoupdate:render');
             },
 
