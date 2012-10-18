@@ -42,8 +42,8 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
             expect(window.guardian.userPrefs.get).toHaveBeenCalled();
         });
 
-        it("should destory itself of server sends turn off response", function() {
-            common.mediator.on('modules:autoupdate:destroy', callback);
+        it("should destroy itself of server sends turn off response", function() {
+            common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate('fixtures/badupdate', delay, attachTo);
                 a.init();

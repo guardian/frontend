@@ -3,8 +3,6 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
     function Autoupdate(path, delay, attachTo) {
 
-
-
         var options = {
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
@@ -42,6 +40,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
             destroy: function () {
                 bonzo('.update').remove();
+                common.mediator.emit('modules:autoupdate:destroyed');
             }
         };
         
@@ -58,7 +57,7 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                 success: function (response) {
                     if(response.refreshStatus === false) {
                         that.off();
-                        that.destroy();
+                        that.view.destroy();
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', [response.html]);
                     }
