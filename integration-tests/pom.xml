@@ -68,6 +68,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <name>http_proxy</name>
                             <value>${http_proxy}</value>
 	                    </property>
+	                    <property>
+                            <name>cucumber.options</name>
+                            <value>--tags @navigation --tags ~@ignore --glue com/gu/test --format progress src/test/resources</value>
+	                    </property>
 					</systemProperties>
 				</configuration>
 			</plugin>
