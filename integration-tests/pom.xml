@@ -40,13 +40,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-junit</artifactId>
 			<version>${cucumber.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-picocontainer</artifactId>
 			<version>${cucumber.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -62,8 +60,18 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<systemProperties>
-						<host>${host}</host>
-						<http_proxy>${http_proxy}</http_proxy>
+	                    <property>
+                            <name>host</name>
+                            <value>${host}</value>
+	                    </property>
+	                    <property>
+                            <name>http_proxy</name>
+                            <value>${http_proxy}</value>
+	                    </property>
+	                    <property>
+                            <name>cucumber.options</name>
+                            <value>${cucumber.options}</value>
+	                    </property>
 					</systemProperties>
 				</configuration>
 			</plugin>
