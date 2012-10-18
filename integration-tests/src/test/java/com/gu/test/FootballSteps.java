@@ -1,21 +1,29 @@
 package com.gu.test;
 
-import java.util.*;
 import java.text.SimpleDateFormat;
-import org.openqa.selenium.*;
-import cucumber.annotation.After;
-import cucumber.annotation.en.*;
-import cucumber.runtime.PendingException;
+import java.util.Date;
+import java.util.List;
+
 import junit.framework.Assert;
 
-public class FootballTestSteps {
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-	private FootballTestPage fendadmin;
+import cucumber.annotation.en.Given;
+import cucumber.annotation.en.Then;
+import cucumber.annotation.en.When;
+
+public class FootballSteps {
+
+    private final SharedDriver webDriver;
+
+    public FootballSteps(SharedDriver webDriver) {
+        this.webDriver = webDriver;
+    }
 
 	@Given("^I visit the (results|fixtures) page$")
 	public void I_visit_a_page(String matchesType) throws Throwable {
-		fendadmin = new FootballTestPage();
-		fendadmin.open(fendadmin.getHost() + "/football/" + matchesType);
+		webDriver.open("/football/" + matchesType);
 	}
 	
 	@Given("^I visit the (results|fixtures) page for (\\d{2}/\\d{2}/\\d{4})$")
@@ -35,13 +43,12 @@ public class FootballTestSteps {
 	
 	@When("^I click '(.+)'$")
 	public void I_click(String linkText) throws Throwable {
-		fendadmin.clickButton(By.linkText(linkText));
+		webDriver.clickButton(By.linkText(linkText));
 	}
 
 	@Then("^I should see (\\d+) days worth of (results|fixtures)$")
 	public void I_should_see_days_worth_of(int numOfDays, String matchesType) throws Throwable {
-		System.out.println(fendadmin.getDriver());
-		List<WebElement> competitions = fendadmin.getDriver().findElements(By.className("competitions"));
+		List<WebElement> competitions = webDriver.findElements(By.className("competitions"));
 		Assert.assertEquals(numOfDays, competitions.size());
 	}
 	
@@ -50,9 +57,5 @@ public class FootballTestSteps {
 		// should now have twice as many days worth of results
 		I_should_see_days_worth_of(numOfDays * 2, matchesType);
 	}
-
-	@After
-	public void tearDown(){
-		fendadmin.close();
-	}
+	
 }
