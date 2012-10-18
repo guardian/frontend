@@ -18,3 +18,4 @@ Running on a different host (i.e. not `http://localhost:9000`)
 Running through a proxy
 
  	$ mvn clean test -Dhttp_proxy=http://proxy.co.uk:1234
+
