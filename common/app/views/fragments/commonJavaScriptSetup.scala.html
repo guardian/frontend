@@ -25,15 +25,15 @@
         for (var i = 0, j = qs.length; i<j; ++i) {
             var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/)
             if (m) {
-                key = m[1];
-                switch (m[2]) {
-                    case "0":
-                        remove(key);
+                switch (m[1]) {
+                    case "switchOn":
+                        switchOn(m[2]);
                         break;
-                    case "1":
-                        set(key, m[2]);
+                    case "switchOff":
+                        switchOff(m[2]);
                         break;
                     default:
+                        set(m[1], m[2])
                 }
             }
         }
@@ -41,51 +41,79 @@
         function set(name, value) {
             store[storagePrefix + name] = value;
         }
-
-        function remove(name) {
-            store.removeItem(storagePrefix + name);
-        }
-        
         function get(name) {
             return store[storagePrefix + name];
         }
+        function remove(name) {
+            store.removeItem(storagePrefix + name);
+        }
 
-        function exists(name) {
-            return (get(name) !== undefined);
+        function switchOn(name) {
+            store[storagePrefix + "switchname." + name] = "true";
+        }
+        function switchOff(name) {
+            store[storagePrefix + "switchname." + name] = "false";
+        }
+        function removeSwitch(name) {
+            store.removeItem(storagePrefix + "switchname." + name);
+        }
+
+        function isOn(name) {
+            return store[storagePrefix + "switchname." + name] === "true";
+        }
+        function isOff(name) {
+            return store[storagePrefix + "switchname." + name] === "false";
         }
 
         return {
             set: set,
             get: get,
             remove: remove,
-            exists: exists
+            switchOn: switchOn,
+            switchOff: switchOff,
+            removeSwitch: removeSwitch,
+            isOn: isOn,
+            isOff: isOff
         }
         
     })();
 
-    @if(FontSwitch.isSwitchedOn) {
         (function loadFontsFromStorage(prefs, key) {
-            if (prefs.exists(key)) {
-                    var styleNodes = document.querySelectorAll('[data-cache-name]');
-                    for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                        var style = styleNodes[i],
-                            name = style.getAttribute('data-cache-name'),
-                            cachedCss = localStorage.getItem('_guFont:' + name);
-                        if (cachedCss) {
-                            style.innerHTML = cachedCss;
-                            style.setAttribute('data-cache-full', 'true');
-                            document.querySelector('html').className += ' font-' + name + '-loaded';
-                        }
+
+            var showFonts = false;
+            @if(FontSwitch.isSwitchedOn) {
+                showFonts = true;
+            }
+            if (prefs.isOn(key)) {
+                showFonts = true;
+            } else
+            if (prefs.isOff(key)) {
+                showFonts = false;
+            }
+
+            if (showFonts) {
+                var start = (new Date().getTime());
+                var styleNodes = document.querySelectorAll('[data-cache-name]');
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                    var style = styleNodes[i],
+                        name = style.getAttribute('data-cache-name'),
+                        cachedCss = localStorage.getItem('_guFont:' + name);
+                    if (cachedCss) {
+                        style.innerHTML = cachedCss;
+                        style.setAttribute('data-cache-full', 'true');
+                        document.querySelector('html').className += ' font-' + name + '-loaded';
                     }
                 }
-        })(guardian.userPrefs, 'font-family');
-    } else {
-        (function removePreference(prefs, key) {
-            if (prefs.exists(key)) {
-                prefs.remove(key);
+                var fontTime = (new Date().getTime()) - start;
+                if (fontTime > 50) {
+                    var img = document.createElement("img");
+                    img.style = "display: none";
+                    img.src = "/px.gif?fonts/&fonttime=" + fontTime;
+                    document.getElementsByTagName("head")[0].appendChild(img);
+                }
             }
         })(guardian.userPrefs, 'font-family');
-    }
+
 
 
     (function(isModern) {
