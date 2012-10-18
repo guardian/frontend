@@ -21,7 +21,7 @@ public class NavigationSteps {
     public void I_click_the_tab(String tabName) throws Throwable {
     	String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
     	// click the tab
-	    webDriver.findElement(By.id(tabId)).click();
+    	webDriver.click(By.id(tabId));
     }
 
     @Then("^I'm shown the top (\\d+) stories from the Guardian site$")
@@ -53,8 +53,7 @@ public class NavigationSteps {
     @When("^I click on a top story$")
     public void I_click_on_a_top_story_link() throws Throwable {
     	// get the first top story
-    	WebElement topStory = webDriver.findElement(By.cssSelector("#topstories-header li a"));
-    	topStory.click();
+    	webDriver.click(By.cssSelector("#topstories-header li a"));
     }
     
     @Then("^I'm taken to that article$")
@@ -68,8 +67,7 @@ public class NavigationSteps {
     @Then("^the top story link should have a (.*) of (.*)$")
     public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
         // confirm it has the correct css color
-    	WebElement topStoryLink = webDriver.findElement(By.cssSelector("#topstories-header li a"));
-    	Assert.assertEquals(expectedColor, topStoryLink.getCssValue(cssProperty));
+    	Assert.assertEquals(expectedColor, webDriver.getelementCssValue(By.cssSelector("#topstories-header li a"), cssProperty));
     }
     
 }

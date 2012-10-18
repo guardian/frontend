@@ -19,11 +19,10 @@ public class ArticleTestSteps {
         this.webDriver = webDriver;
     }
 	
-
-	@Given("^I am on the home page$")
-	public void I_am_on_the_home_page() throws Throwable {
+    @Given("^I am on the article page$")
+    public void I_am_on_the_article_page() throws Throwable {
 		webDriver.open("/");
-	}
+    }
 	
 	@When("^the article has a story package$")
 	public void the_article_has_a_story_package() throws Throwable {
