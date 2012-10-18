@@ -27,8 +27,12 @@ public class SharedDriver extends EventFiringWebDriver {
 
     static {
 		FirefoxProfile profile = new FirefoxProfile();
+		
+		System.out.print("FOO!");
+		
 		// if http_proxy system variable, set proxy in profile
 		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
+			System.out.print(System.getProperty("http_proxy"));
 			try {
 				URL proxyUrl = new URL(System.getProperty("http_proxy"));
 				profile.setPreference("network.proxy.type", 1);
@@ -88,7 +92,10 @@ public class SharedDriver extends EventFiringWebDriver {
 		//defaults to localhost
 		String host = "http://localhost:9000";
 		
+		System.out.print("BAR!");
+		
 		if (System.getProperty("host") != null && !System.getProperty("host").isEmpty()) {
+			System.out.print(System.getProperty("host"));
 			host = System.getProperty("host");
 		}
 		return host;
