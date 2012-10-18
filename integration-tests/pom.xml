@@ -60,14 +60,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<systemProperties>
-	                    <property>
-                            <name>host</name>
-                            <value>${host}</value>
-	                    </property>
-	                    <property>
-                            <name>http_proxy</name>
-                            <value>${http_proxy}</value>
-	                    </property>
+						<host>${host}</host>
+						<http_proxy>${http_proxy}</http_proxy>
 					</systemProperties>
 				</configuration>
 			</plugin>
