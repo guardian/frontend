@@ -1,3 +1,4 @@
+@ignore
 @displayadvertstest
 
 Feature: Display Adverts
