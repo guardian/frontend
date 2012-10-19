@@ -8,6 +8,7 @@ define(['common'], function (common) {
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-err';
+                image.className = 'h';
                 image.src = url;
                 body.appendChild(image);
             },
