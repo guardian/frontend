@@ -9,7 +9,6 @@ trait MetaData {
 
   def id: String
   def section: String
-  def apiUrl: String
   def webTitle: String
 
   // this is here so it can be included in analytics.
@@ -24,7 +23,6 @@ trait MetaData {
     "page-id" -> id,
     "section" -> section,
     "canonical-url" -> canonicalUrl,
-    "api-url" -> apiUrl,
     "web-title" -> webTitle,
     "build-number" -> buildNumber
   )
