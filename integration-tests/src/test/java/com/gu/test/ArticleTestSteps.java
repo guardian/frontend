@@ -4,7 +4,6 @@ import junit.framework.Assert;
 
 import org.openqa.selenium.By;
 
-import cucumber.annotation.After;
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
