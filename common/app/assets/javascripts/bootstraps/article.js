@@ -16,6 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
+        'modules/errors',
         'modules/autoupdate'
     ],
     function (
@@ -36,9 +37,14 @@ define([
         NavigationControls,
         domReady,
         TrailblockToggle,
+        Errors,
         AutoUpdate) {
 
         var modules = {
+
+            attachGlobalErrorHandler: function () {
+                new Errors(window).init();
+            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -153,7 +159,8 @@ define([
     var bootstrap = function (config, userPrefs) {
 
         var isNetworkFront = (config.page.pageId === "");
-        
+
+        modules.attachGlobalErrorHandler();
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();
