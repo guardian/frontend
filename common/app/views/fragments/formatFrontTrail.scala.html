@@ -1,6 +1,6 @@
 @(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
-@fragments.relativeDate(trail.webPublicationDate, isFront=true)
+@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
 @*
     index: used to report where this is in the list of trails to analytics (starts at 1 for first item)

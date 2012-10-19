@@ -15,7 +15,8 @@ define([
         'modules/navigation/top-stories',
         'modules/navigation/controls',
         'domReady',
-        'modules/trailblocktoggle'
+        'modules/trailblocktoggle',
+        'modules/autoupdate'
     ],
     function (
         common,
@@ -34,7 +35,8 @@ define([
         TopStories,
         NavigationControls,
         domReady,
-        TrailblockToggle) {
+        TrailblockToggle,
+        AutoUpdate) {
 
         var modules = {
 
@@ -100,7 +102,7 @@ define([
             },
 
             loadOmnitureAnalytics: function (config) {
-                var cs = new Clickstream({ filter: ["a", "span"] }),
+                var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                     o = new Omniture(null, config).init();
             },
 
@@ -126,6 +128,24 @@ define([
                 var edition = config.page.edition;
                 var tt = new TrailblockToggle();
                 tt.go(edition);
+            },
+
+            liveBlogging: function(isLive) {
+                if(isLive) {
+                    var path = window.location.pathname,
+                        delay = 60000,
+                        el = document.querySelector(".article-body");
+
+                    var t = document.createElement('script');
+                        t.async = 'async';
+                        t.src = '//platform.twitter.com/widgets.js';
+
+                    document.body.appendChild(t);
+                    common.mediator.on('modules:autoupdate:render', function() {
+                        if(window.twttr) { window.twttr.widgets.load(); }});
+
+                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                }
             }
          
         };
@@ -140,6 +160,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.liveBlogging(config.page.isLive);
         
         switch (isNetworkFront) {
 
@@ -157,7 +178,6 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
     };
 
     // domReady proxy for bootstrap
