@@ -26,8 +26,8 @@ define(['common'], function (common) {
             makeUrl = function(properties) {
                 return path + '?js/' + encode(properties.join(','));
             },
-            log = function(message, lineno, filename) {
-                var url = makeUrl([message, lineno, filename]);
+            log = function(message, filename, lineno) {
+                var url = makeUrl([message, filename, lineno]);
                 createImage(url);
             },
             init = function() {
