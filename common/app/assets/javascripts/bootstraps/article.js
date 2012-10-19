@@ -133,7 +133,7 @@ define([
             autoUpdate: function(isLive) {
                 if(isLive) {
                     var path = window.location.pathname,
-                        delay = 20000,
+                        delay = 60000,
                         el = document.querySelector(".article-body");
 
                     var a = new AutoUpdate(window.location.pathname, delay, el);
