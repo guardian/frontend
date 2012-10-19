@@ -19,7 +19,6 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
             render: function (html) {
                 attachTo.innerHTML = html;
-                if(twttr) { twttr.widgets.load(); }
                 common.mediator.emit('modules:autoupdate:render');
             },
 

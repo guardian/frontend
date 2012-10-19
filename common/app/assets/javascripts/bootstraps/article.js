@@ -130,11 +130,18 @@ define([
                 tt.go(edition);
             },
 
-            autoUpdate: function(isLive) {
+            liveBlogging: function(isLive) {
                 if(isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
+
+                    var t = document.createElement('script');
+                        t.async = 'async';
+                        t.src = '//platform.twitter.com/widgets.js';
+
+                    document.body.appendChild(t);
+                    common.mediator.on('modules:autoupdate:render', window.twttr.widgets.load);
 
                     var a = new AutoUpdate(window.location.pathname, delay, el);
 
@@ -154,7 +161,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.autoUpdate(config.page.isLive);
+        modules.liveBlogging(config.page.isLive);
         
         switch (isNetworkFront) {
 
