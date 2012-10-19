@@ -141,11 +141,10 @@ define([
                         t.src = '//platform.twitter.com/widgets.js';
 
                     document.body.appendChild(t);
-                    common.mediator.on('modules:autoupdate:render', window.twttr.widgets.load);
+                    common.mediator.on('modules:autoupdate:render', function() {
+                        if(window.twttr) { window.twttr.widgets.load(); }});
 
-                    var a = new AutoUpdate(window.location.pathname, delay, el);
-
-                    a.init();
+                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
                 }
             }
          
