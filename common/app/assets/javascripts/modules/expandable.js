@@ -14,8 +14,8 @@ define(['common', 'bean'], function (common, bean) {
         var view = {
            
             updateCallToAction: function () {
-                cta.innerHTML = 'Show ' + model.getCount() + ' ' + ((expanded) ? 'less' : 'more');
-                cta.setAttribute('data-link-name', 'show ' + ((expanded) ? 'more' : 'less'));
+                cta.innerHTML = 'Show ' + model.getCount() + ' ' + ((expanded) ? 'fewer' : 'more');
+                cta.setAttribute('data-link-name', 'show ' + ((expanded) ? 'more' : 'fewer'));
                 cta.setAttribute('data-is-ajax', '1');
             },
             

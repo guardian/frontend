@@ -19,7 +19,9 @@ define([
         'bean',
         'modules/more-matches',
         'bonzo',
-        'modules/togglepanel'
+        'modules/togglepanel',
+        'modules/errors',
+        'modules/autoupdate'
     ],
     function (
         common,
@@ -42,13 +44,19 @@ define([
         bean,
         MoreMatches,
         bonzo,
-        TogglePanel) {
+        TogglePanel,
+        Errors,
+        AutoUpdate) {
 
         var modules = {
 
             hideJsElements: function () {
                 var html = common.$g('body')[0];
                 bonzo(html).toggleClass('js-off js-on');
+            },
+
+            attachGlobalErrorHandler: function () {
+                new Errors(window).init();
             },
 
             upgradeImages: function () {
@@ -114,7 +122,7 @@ define([
             },
 
             loadOmnitureAnalytics: function (config) {
-                var cs = new Clickstream({ filter: ["a", "span"] }),
+                var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                     o = new Omniture(null, config).init();
             },
 
@@ -141,7 +149,7 @@ define([
                 var tt = new TrailblockToggle();
                 tt.go(edition);
             },
-            
+
             showMoreMatches: function() {
                 var matchesNav = document.getElementById('matches-nav');
                 MoreMatches.init(matchesNav);
@@ -154,20 +162,40 @@ define([
             bindTogglePanels: function () {
                 var tp = new TogglePanel();
                 tp.init();
+            },
+
+            liveBlogging: function(isLive) {
+                if(isLive) {
+                    var path = window.location.pathname,
+                        delay = 60000,
+                        el = document.querySelector(".article-body");
+
+                    var t = document.createElement('script');
+                        t.async = 'async';
+                        t.src = '//platform.twitter.com/widgets.js';
+
+                    document.body.appendChild(t);
+                    common.mediator.on('modules:autoupdate:render', function() {
+                        if(window.twttr) { window.twttr.widgets.load(); }});
+
+                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                }
             }
         };
 
     var bootstrap = function (config, userPrefs) {
 
         var isNetworkFront = (config.page.pageId === "");
-        
+
         modules.hideJsElements();
+        modules.attachGlobalErrorHandler();
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.liveBlogging(config.page.isLive);
         
         switch (isNetworkFront) {
 
@@ -193,6 +221,7 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
+
         modules.bindTogglePanels();
     };
 

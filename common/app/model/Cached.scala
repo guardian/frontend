@@ -21,7 +21,7 @@ object Cached extends Results {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     result.withHeaders(
-      "Cache-Control" -> "must-revalidate, max-age=%s".format(seconds),
+      "Cache-Control" -> "public, max-age=%s".format(seconds),
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
