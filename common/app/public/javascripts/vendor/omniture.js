@@ -40,7 +40,12 @@ function s_doPlugins(s) {
 
 s.doPlugins=s_doPlugins;
 
+/* ADH: Don't make request for an empty survey file until we're running surveys.
+   And investigate why our firewall is blocking this, as others will be doing so too.
+
 s.loadModule("Survey");
+
+*/
 var s_sv_dynamic_root = "survey.112.2o7.net/survey/dynamic";
 var s_sv_gather_root = "survey.112.2o7.net/survey/gather";
 

@@ -81,7 +81,8 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       "commentable" -> "true",
       "trailText" -> "The trail text",
       "internalPageCode" -> "1234",
-      "showInRelatedContent" -> "false"
+      "showInRelatedContent" -> "false",
+      "liveBloggingNow" -> "false"
     )
 
     val metaData = new Content(ApiContent(
@@ -114,6 +115,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     metaData("api-url") should be("http://content.guardianapis.com/foo/2012/jan/07/bar")
     metaData("web-title") should be("Some article")
     metaData("show-in-related").asInstanceOf[Boolean] should be(false)
+    metaData("isLive").asInstanceOf[Boolean] should be(false)
 
     metaData("tag-ids") should
       be("/keyword1,/keyword2,/contributor1,/contributor2,/series1,/series2,/tone1,/tone2,/blog1,/blog2")
