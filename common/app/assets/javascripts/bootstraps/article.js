@@ -16,7 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
-        'modules/errors'
+        'modules/errors',
         'modules/autoupdate'
     ],
     function (
@@ -37,7 +37,7 @@ define([
         NavigationControls,
         domReady,
         TrailblockToggle,
-        Errors
+        Errors,
         AutoUpdate) {
 
         var modules = {
