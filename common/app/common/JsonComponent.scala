@@ -1,9 +1,8 @@
 package common
 
 import com.codahale.jerkson.{ Json => JsonParser }
-import play.api.mvc.{ SimpleResult, RequestHeader, Results }
+import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
-import play.api.mvc.Results.EmptyContent
 
 object JsonComponent extends Results {
   def apply(html: Html, etag: Option[String] = None)(implicit request: RequestHeader) = {
