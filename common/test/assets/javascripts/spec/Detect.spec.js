@@ -3,19 +3,15 @@ define(['modules/detect'], function(detect) {
     describe("Layout", function() {
         
         it("should default to 'base' layout mode", function(){
-            window.innerWidth = null;
-            expect(detect.getLayoutMode()).toBe('base');
+            expect(detect.getLayoutMode(null)).toBe('base');
         });
     
         it("should return the correct layout mode for the device resolution", function(){
-            window.innerWidth = 100; 
-            expect(detect.getLayoutMode()).toBe('base');
+            expect(detect.getLayoutMode(100)).toBe('base');
 
-            window.innerWidth = 500; 
-            expect(detect.getLayoutMode()).toBe('median');
+            expect(detect.getLayoutMode(500)).toBe('median');
             
-            window.innerWidth = 2000;
-            expect(detect.getLayoutMode()).toBe('extended');
+            expect(detect.getLayoutMode(2000)).toBe('extended');
         });
 
     });
@@ -28,15 +24,12 @@ define(['modules/detect'], function(detect) {
         });
         
         it("should calculate the speed of a slow, medium & fast client request", function(){
+
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } })).toBe('low');
             
-            window.performance = { timing: { requestStart: 1, responseStart: 8000 } };
-            expect(detect.getConnectionSpeed()).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 3000 } })).toBe('medium');
             
-            window.performance = { timing: { requestStart: 1, responseStart: 3000 } };
-            expect(detect.getConnectionSpeed()).toBe('medium');
-            
-            window.performance = { timing: { requestStart: 1, responseStart: 1000 } };
-            expect(detect.getConnectionSpeed()).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } })).toBe('high');
         
         }); 
    });
