@@ -2,6 +2,7 @@ package views
 
 import pa.Team
 import common.Logging
+import play.api.templates.Html
 
 object ShortName {
 
@@ -18,11 +19,11 @@ object MatchStatus extends Logging {
 
   private val statuses = Map(
 
-    "KO" -> "1st", // The Match has started (Kicked Off).
+    "KO" -> "1<sup>st</sup>", // The Match has started (Kicked Off).
 
     "HT" -> "HT", // The Referee has blown the whistle for Half Time.
 
-    "SHS" -> "2nd", // The Second Half of the Match has Started.
+    "SHS" -> "2<sup>nd</sup>", // The Second Half of the Match has Started.
 
     "FT" -> "FT", // The Referee has blown the whistle for Full Time.
     "PTFT" -> "FT", // Penalty ShooT Full Time.
@@ -49,9 +50,9 @@ object MatchStatus extends Logging {
     "Cancelled" -> "C" // A Match has been Cancelled.
   )
   // if we get a status we do not expect just take the first 2 letters
-  def apply(status: String) = statuses.get(status).getOrElse {
+  def apply(status: String) = Html(statuses.get(status).getOrElse {
     log.info("unknown match status " + status)
     status.take(2)
-  }
+  })
 
 }
