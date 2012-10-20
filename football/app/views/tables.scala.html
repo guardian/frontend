@@ -20,6 +20,7 @@
                             <i class="icon-filter-arrow-right"></i>
                         </h3>
                         <table>
+                            <thead>
                             <tr>
                                 <th class="stats-3">&nbsp</th> @* placeholder for name of team *@
                                 <th class="stats-3">&nbsp</th> @* placeholder for played *@
@@ -56,46 +57,53 @@
                                 <th>GD</th>
                                 <th>Pts</th>
                             </tr>
+                            </thead>
                             @table.groups.map{ group =>
+                                <tbody>
+                                    @group.round.map { round =>
+                                        @round.name.map{ name =>
+                                            <tr>
+                                                <th colspan="19">@name</th>
+                                            </tr>
+                                        }
+                                    }
 
-                                @group.round.map { round =>
-                                    @round.name.map{ name =>
+                                    @group.entries.map{ entry =>
                                         <tr>
-                                            <th colspan="19">@name</th>
+                                            <td>@entry.team.name</td>
+                                            <td>@entry.team.total.played</td>
+
+                                            <td class="stats-3">@entry.team.home.won</td>
+                                            <td class="stats-3">@entry.team.home.drawn</td>
+                                            <td class="stats-3">@entry.team.home.lost</td>
+                                            <td class="stats-3">@entry.team.home.goalsFor</td>
+                                            <td class="stats-3">@entry.team.home.goalsAgainst</td>
+
+                                            <td class="stats-3">@entry.team.away.won</td>
+                                            <td class="stats-3">@entry.team.away.drawn</td>
+                                            <td class="stats-3">@entry.team.away.lost</td>
+                                            <td class="stats-3">@entry.team.away.goalsFor</td>
+                                            <td class="stats-3">@entry.team.away.goalsAgainst</td>
+
+                                            <td class="stats-1">@entry.team.total.won</td>
+                                            <td class="stats-1">@entry.team.total.drawn</td>
+                                            <td class="stats-1">@entry.team.total.lost</td>
+
+                                            <td class="stats-2">@entry.team.total.goalsFor</td>
+                                            <td class="stats-2">@entry.team.total.goalsAgainst</td>
+
+                                            <td>@entry.team.goalDifference</td>
+                                            <td>@entry.team.points</td>
                                         </tr>
                                     }
-                                }
-
-                                @group.entries.map{ entry =>
-                                    <tr>
-                                        <td>@entry.team.name</td>
-                                        <td>@entry.team.total.played</td>
-
-                                        <td class="stats-3">@entry.team.home.won</td>
-                                        <td class="stats-3">@entry.team.home.drawn</td>
-                                        <td class="stats-3">@entry.team.home.lost</td>
-                                        <td class="stats-3">@entry.team.home.goalsFor</td>
-                                        <td class="stats-3">@entry.team.home.goalsAgainst</td>
-
-                                        <td class="stats-3">@entry.team.away.won</td>
-                                        <td class="stats-3">@entry.team.away.drawn</td>
-                                        <td class="stats-3">@entry.team.away.lost</td>
-                                        <td class="stats-3">@entry.team.away.goalsFor</td>
-                                        <td class="stats-3">@entry.team.away.goalsAgainst</td>
-
-                                        <td class="stats-1">@entry.team.total.won</td>
-                                        <td class="stats-1">@entry.team.total.drawn</td>
-                                        <td class="stats-1">@entry.team.total.lost</td>
-
-                                        <td class="stats-2">@entry.team.total.goalsFor</td>
-                                        <td class="stats-2">@entry.team.total.goalsAgainst</td>
-
-                                        <td>@entry.team.goalDifference</td>
-                                        <td>@entry.team.points</td>
-                                    </tr>
-                                }
+                                </tbody>
                             }
                         </table>
+                        @if(!model.singleCompetition){
+                            <a href='@{table.competition.url + "/table"}' data-link-name='full table'>
+                                View full table
+                            </a>
+                        }
                 </li>
             }
         </ol>

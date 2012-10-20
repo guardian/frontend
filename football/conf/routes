@@ -18,3 +18,4 @@ GET     /football/:competition/results                      controllers.Competit
 GET     /football/live                                      controllers.LiveMatchesController.render()
 
 GET     /football/tables                                    controllers.LeagueTableController.render()
+GET     /football/:competition/table                        controllers.LeagueTableController.renderCompetition(competition)
