@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                       controllers.Assets.at(path="/public", file)
 
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.allCompetitionsOn(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.allCompetitions()
@@ -15,4 +15,6 @@ GET     /football/results                                   controllers.ResultsC
 GET     /football/:competition/results/:year/:month/:day    controllers.CompetitionResultsController.renderFor(year, month, day, competition)
 GET     /football/:competition/results                      controllers.CompetitionResultsController.render(competition)
 
-GET     /football/live                                  controllers.LiveMatchesController.render()
+GET     /football/live                                      controllers.LiveMatchesController.render()
+
+GET     /football/tables                                    controllers.LeagueTableController.render()

@@ -111,7 +111,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     //results and live games trump fixtures
     val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
 
-    agent.competition.copy(matches = allGames.sortBy(_.date))
+    agent.competition.copy(matches = allGames.sortBy(_.date), leagueTable = agent.leagueTable)
   }
 
   def refreshAgent(agent: CompetitionAgent) = agent.refresh()

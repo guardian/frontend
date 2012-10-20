@@ -31,6 +31,8 @@ GET     /football/:competition/results                      controllers.Competit
 
 GET     /football/live                                  	controllers.LiveMatchesController.render()
 
+GET     /football/tables                                    controllers.LeagueTableController.render()
+
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()
