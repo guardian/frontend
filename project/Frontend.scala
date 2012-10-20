@@ -30,7 +30,7 @@ object Frontend extends Build with Prototypes {
   val video = application("video").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-      libraryDependencies += "com.gu" %% "pa-client" % "2.3"
+      libraryDependencies += "com.gu" %% "pa-client" % "2.4"
   )
 
   val dev = application("dev-build")
