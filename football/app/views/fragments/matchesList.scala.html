@@ -19,7 +19,9 @@
             </ol>
             @* Shows the live blog (if there is one) after the first competition *@
             @if(row.isFirst){
-                @model.blog.map{ blog => @fragments.formatTrail(blog, row) }
+                @model.blog.map{ blog =>
+                    <div class="trail">@fragments.formatTrail(blog, row)</div>
+                }
             }
         }
     </li>

@@ -138,7 +138,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
       //update the results of the competition
       val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
-
+      agent.addResultsFromMatchDay(competitionResults)
     }
   }
 

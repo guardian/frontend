@@ -21,9 +21,10 @@ trait ApiQueryDefaults { self: Api =>
     .showStoryPackage(true)
     .tag(supportedTypes)
 
-  //common fileds that we use across most queries.
+  //common fields that we use across most queries.
   def search(edition: String): SearchQuery = search
     .edition(edition)
+    .showTags("all")
     .showFields(trailFields)
     .tag(supportedTypes)
 }
