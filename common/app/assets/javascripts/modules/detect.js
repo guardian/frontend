@@ -11,10 +11,14 @@ define(function () {
         MEDIAN_WIDTH   = 650,
         EXTENDED_WIDTH = 900;
     
-    function getLayoutMode() {
-        var width = window.innerWidth,
+    /**
+     * @param Number width Allow passing in of width, for testing (innerWidth read only
+     * in firefox
+     */
+    function getLayoutMode(width) {
+        var width = (width !== undefined) ? width : window.innerWidth,
             mode = "base";
-
+        
         if (width > BASE_WIDTH) {
             mode = "median";
         }
@@ -29,7 +33,10 @@ define(function () {
         return window.devicePixelRatio;
     }
 
-    function getPageSpeed() {
+    /**
+     * @param Object performance Allow passing in of window.performance, for testing
+     */
+    function getPageSpeed(performance) {
 
         //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
 
@@ -37,7 +44,8 @@ define(function () {
             end_time,
             total_time;
 
-        var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
             end_time = perf.timing.responseStart;
@@ -50,9 +58,9 @@ define(function () {
         return total_time;
     }
 
-    function getConnectionSpeed() {
+    function getConnectionSpeed(performance) {
 
-        var load_time = getPageSpeed();
+        var load_time = getPageSpeed(performance);
 
         // Assume high speed for non supporting browsers.
         var speed = "high";

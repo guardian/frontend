@@ -2,9 +2,14 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
-    function Omniture(s, config) {
+	/**
+	 * @param Object w 'window' object, used for testing
+	 */
+    function Omniture(s, config, w) {
 
         var that = this;
+        
+        var w = w || {};
 
         this.logView = function() {
             s.t();
@@ -60,9 +65,9 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                   
             s.prop47    = config.page.edition || '';
 
-            s.prop48    = detect.getConnectionSpeed();
+            s.prop48    = detect.getConnectionSpeed(w.performance);
 
-            s.prop56    = detect.getLayoutMode();
+            s.prop56    = detect.getLayoutMode(w.innerWidth);
         
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
