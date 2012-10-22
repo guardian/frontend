@@ -17,6 +17,8 @@ define([
         'domReady',
         'modules/trailblocktoggle',
         'modules/adverts'
+        'modules/errors',
+        'modules/autoupdate'
     ],
     function (
         common,
@@ -36,9 +38,15 @@ define([
         NavigationControls,
         domReady,
         TrailblockToggle,
-        Adverts) {
+        Adverts,
+        Errors,
+        AutoUpdate) {
 
         var modules = {
+
+            attachGlobalErrorHandler: function () {
+                new Errors(window).init();
+            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -88,9 +96,16 @@ define([
             },
 
             loadFonts: function(config, ua, prefs) {
+                var showFonts = false;
+                if(config.switches.fontFamily || prefs.isOn('font-family')) {
+                    showFonts = true;
+                }
+                if (prefs.isOff('font-family')) {
+                    showFonts = false;
+                }
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                if (config.switches.fontFamily && prefs.exists('font-family')) {
+                if (showFonts) {
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
                     Fonts.clearFontsFromStorage();
@@ -102,7 +117,7 @@ define([
             },
 
             loadOmnitureAnalytics: function (config) {
-                var cs = new Clickstream({ filter: ["a", "span"] }),
+                var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                     o = new Omniture(null, config).init();
             },
 
@@ -132,6 +147,24 @@ define([
 
             loadAdverts: function (config) {
                 var a = new Adverts().init(config);
+            },
+
+            liveBlogging: function(isLive) {
+                if(isLive) {
+                    var path = window.location.pathname,
+                        delay = 60000,
+                        el = document.querySelector(".article-body");
+
+                    var t = document.createElement('script');
+                        t.async = 'async';
+                        t.src = '//platform.twitter.com/widgets.js';
+
+                    document.body.appendChild(t);
+                    common.mediator.on('modules:autoupdate:render', function() {
+                        if(window.twttr) { window.twttr.widgets.load(); }});
+
+                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                }
             }
          
         };
@@ -139,13 +172,15 @@ define([
     var bootstrap = function (config, userPrefs) {
 
         var isNetworkFront = (config.page.pageId === "");
-        
+
+        modules.attachGlobalErrorHandler();
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.liveBlogging(config.page.isLive);
         
         switch (isNetworkFront) {
 
