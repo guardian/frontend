@@ -54,11 +54,14 @@ public class Steps {
 	
 	@When("^I visit the (.*) jasmine test runner$")
 	public void I_visit_the_jasmine_test_runner(String project) throws Throwable {
-		File currentDir = new File(".");
-		System.out.println(currentDir.getCanonicalPath());
-		// open the appropriate runner 
+		// get the frontend project root, if there's a system prop, otherwise assume
+		String frontendRoot = (System.getProperty("frontend.dir") != null) 
+			? System.getProperty("frontend.dir")
+			: System.getProperty("user.dir") + "/..";
+			
+		// open the appropriate runner
 		webDriver.get(
-			"file:///" + currentDir.getCanonicalPath() + "/../" + project + "/test/assets/javascripts/runner.html"
+			"file:///" + frontendRoot + "/" + project + "/test/assets/javascripts/runner.html"
 		);
 		// confirm we're on the correct page
 		Assert.assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
