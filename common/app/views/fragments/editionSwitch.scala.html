@@ -3,9 +3,9 @@
 <div class="edition-switch" data-link-name="edition switch">
     @defining(Edition(request, config)){ edition =>
         @if(edition == "US") {
-            <a href="http://@{config.edition.ukHost}/@metaData.id" data-link-name="UK">UK Edition</a>
+            <a href="http://@{config.edition.ukHost}/@metaData.id" data-link-name="Edition switch:UK">UK Edition</a>
         } else {
-            <a href="http://@{config.edition.usHost}/@metaData.id" data-link-name="US">US Edition</a>
+            <a href="http://@{config.edition.usHost}/@metaData.id" data-link-name="Edition switch:US">US Edition</a>
             }
         }
 </div>

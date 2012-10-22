@@ -11,17 +11,18 @@
 
             <span class="initially-off js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()" 
             data-block-name="@SafeName(block.description)"
-            id="js-trigger-@SafeName(block.description)">Hide</span>
+            id="js-trigger-@SafeName(block.description)"
+            data-link-name="Hide">Hide</span>
         </div>
 
         <div class="trailblock js-front-trailblock rolled-out"
             id="front-trailblock-@SafeName(block.description)"
             data-count="@{block.trails.length - block.description.numItemsVisible}"
-            data-link-name="front block @block.description.name">
+            data-link-name="Front:block:@block.description.name">
 
             <ul class="unstyled">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                    <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }" data-link-name="trail">
                         @formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
                     </li>
                 }.slice( 0, block.description.numItemsVisible )
@@ -30,7 +31,7 @@
             @if( block.trails.length > block.description.numItemsVisible) {
                 <ul class="unstyled panel">
                     @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                        <li class="trail">@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                        <li class="trail" data-link-name="trail>@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
                     }.slice( block.description.numItemsVisible, block.trails.length )
                 </ul>
             }

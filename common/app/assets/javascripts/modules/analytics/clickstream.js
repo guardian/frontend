@@ -17,7 +17,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 dataLinkName = element.getAttribute("data-link-name");
             
             if (elementName === 'body') {
-                return tag.reverse().join(' | ');
+                return tag.reverse().join(':');
             }
             
             if (dataLinkName) {

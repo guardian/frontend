@@ -2,7 +2,13 @@
 <div class="headline-list box-indent" data-link-name="top-stories">
     <ul class="unstyled">
         @trails.zipWithRowInfo.map{ case (trail, info) =>
-            <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
+            <li>
+            	<span class="count">@info.rowNum</span> 
+            	<p class="type-3">
+				    <a href="@trail.url" data-link-name="Top stories:link text:item @info.rowNum">
+				        @RemoveOuterParaHtml(trail.linkText)
+				    </a>
+				</p>
         }
     </ul>
 </div>

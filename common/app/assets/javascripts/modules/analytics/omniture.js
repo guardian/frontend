@@ -49,7 +49,6 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.prop9     = config.page.contentType || '';
             s.prop10    = config.page.tones || '';
 
-            s.prop11    = config.page.section || ''; //Third Level Mlc
             s.prop13    = config.page.series || '';
             s.prop25    = config.page.blogs || '';
                   
@@ -58,6 +57,8 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             var platform = "frontend";
             s.prop19     = platform;
             s.eVar19     = platform;
+
+            s.prop31    = 'Guest user';
                   
             s.prop47    = config.page.edition || '';
 
