@@ -1,5 +1,4 @@
 @articletest
-
 Feature: Article page
 	As a guardian mobile user
 	I want to check available content is displayed on the article page
@@ -10,11 +9,11 @@ Feature: Article page
 
 	Scenario: More on this story
 		When the article has a story package
-		Then "more on this story" is displayed 
+		Then "More on this story" is displayed 
 
 	Scenario: Article has no story package
 		When the article has no story package
-		Then "related content" is displayed
+		Then "Related content" is displayed
 	
 	#needs a page where content is not displayed
 	#Scenario: Related content is unavailable
