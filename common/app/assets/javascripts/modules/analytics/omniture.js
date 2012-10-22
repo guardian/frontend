@@ -33,11 +33,10 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
        
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
         
-            var webTitle = (config.page.webTitle || '').trim();
-            if (webTitle.length > 72) {
-                webTitle = webTitle.substring(0, 72);
-            }
-            s.pageName  = webTitle + ':' + (config.page.contentType || '') + ':' + (config.page.pageCode || '');
+            var prefix = 'GFE',
+                path = window.location.pathname;
+            
+            s.pageName  = config.page.analyticsName;
               
             s.pageType  = config.page.contentType || '';  //pageType
             s.prop9     = config.page.contentType || '';  //contentType
@@ -45,7 +44,9 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.channel   = config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
+            s.prop7     = config.page.webPublicationDate || '';
             s.prop8     = config.page.pageCode || '';
+            s.prop9     = config.page.contentType || '';
             s.prop10    = config.page.tones || '';
 
             s.prop11    = config.page.section || ''; //Third Level Mlc
@@ -69,6 +70,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             } else {
                 s.prop30 = 'non-content';
             }
+
         };
 
         this.init = function() {
