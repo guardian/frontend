@@ -1,4 +1,4 @@
-define(['common', 'modules/expandable'], function(common, Expandable) {
+define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, bonzo) {
 
     describe("Expandable", function() {
 
@@ -21,7 +21,8 @@ define(['common', 'modules/expandable'], function(common, Expandable) {
             var a = new Expandable({ id: 'trail-c', expanded: false }).initalise();
             
             expect(common.$g('#trail-c')[0].className).toBe('shut');
-            expect(common.$g('#trail-c .cta')[0].innerText).toBe('Show 3 more');
+            console.log(common.$g('#trail-c .cta'));
+            expect(common.$g('#trail-c .cta').text()).toBe('Show 3 more');
         });
 
         it("should expand and contract a panel", function(){
