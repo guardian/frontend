@@ -3,13 +3,13 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
 	/**
-	 * @param Object w 'window' object, used for testing
-	 */
+     * @param Object w 'window' object, used for testing
+     */
     function Omniture(s, config, w) {
 
         var that = this;
         
-        var w = w || {};
+        w = w || {};
 
         this.logView = function() {
             s.t();
