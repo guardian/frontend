@@ -16,8 +16,9 @@ define(function () {
      * in firefox
      */
     function getLayoutMode(width) {
-        var width = (width !== undefined) ? width : window.innerWidth,
-            mode = "base";
+        var mode = "base";
+        
+        width = (width !== undefined) ? width : window.innerWidth;
         
         if (width > BASE_WIDTH) {
             mode = "median";
