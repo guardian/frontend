@@ -11,6 +11,7 @@ trait MetaData {
   def section: String
   def apiUrl: String
   def webTitle: String
+  def analyticsName: String
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -26,7 +27,8 @@ trait MetaData {
     "canonical-url" -> canonicalUrl,
     "api-url" -> apiUrl,
     "web-title" -> webTitle,
-    "build-number" -> buildNumber
+    "build-number" -> buildNumber,
+    "analytics-name" -> analyticsName
   )
 }
 
@@ -35,7 +37,8 @@ case class Page(
   id: String,
   section: String,
   apiUrl: String,
-  webTitle: String) extends MetaData
+  webTitle: String,
+  analyticsName: String) extends MetaData
 
 trait Images {
   def images: Seq[Image]
