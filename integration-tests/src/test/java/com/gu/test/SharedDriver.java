@@ -2,7 +2,9 @@ package com.gu.test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -18,19 +20,19 @@ import cucumber.annotation.Before;
 
 
 public class SharedDriver extends EventFiringWebDriver {
-	
-    private static final WebDriver REAL_DRIVER;
-    
-    protected EventListener eventListener;
-    
-    private static final Thread CLOSE_THREAD = new Thread() {
-        @Override
-        public void run() {
-            REAL_DRIVER.close();
-        }
-    };
 
-    static {
+	private static final WebDriver REAL_DRIVER;
+
+	protected EventListener eventListener;
+
+	private static final Thread CLOSE_THREAD = new Thread() {
+		@Override
+		public void run() {
+			REAL_DRIVER.close();
+		}
+	};
+
+	static {
 		FirefoxProfile profile = new FirefoxProfile();
 		// if http_proxy system variable, set proxy in profile
 		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
@@ -47,52 +49,52 @@ public class SharedDriver extends EventFiringWebDriver {
 			}
 		}
 		REAL_DRIVER = new FirefoxDriver(profile);
-    	
-        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
-    }
 
-    public SharedDriver() {
-        super(REAL_DRIVER);
+		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+	}
 
-        // add an event listener to the driver
-        eventListener = new EventListener();
-    	register(eventListener);
-    }
+	public SharedDriver() {
+		super(REAL_DRIVER);
 
-    @Override
-    public void close() {
-        if(Thread.currentThread() != CLOSE_THREAD) {
-            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
-        }
-        super.close();
-    }
+		// add an event listener to the driver
+		eventListener = new EventListener();
+		register(eventListener);
+	}
 
-    @Before
-    public void initaliseDriver() {
-    	// delete cookies
-        manage().deleteAllCookies();
-        // clear local storage
-        clearLocalStorag();
-        // change size (iphone)
-        //manage().window().setSize(new Dimension(320, 480));
-    }
-    
+	@Override
+	public void close() {
+		if(Thread.currentThread() != CLOSE_THREAD) {
+			throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
+		}
+		super.close();
+	}
+
+	@Before
+	public void initaliseDriver() {
+		// delete cookies
+		manage().deleteAllCookies();
+		// clear local storage
+		clearLocalStorag();
+		// change size (iphone)
+		//manage().window().setSize(new Dimension(320, 480));
+	}
+
 	public void deleteCookieNamed(String cookieName) {
 		manage().deleteCookieNamed(cookieName);
 	}
-	
+
 	public void clearLocalStorag() {
-        executeScript("window.localStorage.clear();");
+		executeScript("window.localStorage.clear();");
 	}
 
 	public void open(String url) {
 		get(this.getHost() + url);
 	}
-	
+
 	public String getHost() {
 		//defaults to localhost
 		String host = "http://localhost:9000";
-		
+
 		if (System.getProperty("host") != null && !System.getProperty("host").isEmpty()) {
 			host = System.getProperty("host");
 		}
@@ -177,7 +179,7 @@ public class SharedDriver extends EventFiringWebDriver {
 		else
 			System.out.println(elemenName + " the button does not exist or visible");
 	}
-	
+
 	public void waitFor(int time) {
 		try {
 			Thread.sleep(time);
@@ -190,7 +192,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	public String getelementCssValue(By elementName, String value) {
 		return findElement(elementName).getCssValue(value);
 	}
-	
+
 	/**
 	 * Find an element, waiting for it to appear (5secs)
 	 * 
@@ -204,7 +206,7 @@ public class SharedDriver extends EventFiringWebDriver {
 		// return element
 		return findElement(locator);
 	}
-	
+
 	/**
 	 * Wait for an element to become visible
 	 * 
@@ -217,5 +219,18 @@ public class SharedDriver extends EventFiringWebDriver {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return true;
 	}
-    
+
+	public void switchWindowFocus(String mwh, WebDriver driver) {
+		//get handle for all current windows
+		Set<String> s = driver.getWindowHandles();
+		Iterator<String> ite = s.iterator();
+
+		//basically goes the next window that is not the main (previous) window
+		while(ite.hasNext())
+		{
+			String newWindowHandle=ite.next().toString();
+			if(!newWindowHandle.contains(mwh))
+				driver.switchTo().window(newWindowHandle);
+		}
+	}
 }

@@ -3,6 +3,7 @@ package com.gu.test;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import cucumber.annotation.en.Given;
@@ -11,7 +12,6 @@ import cucumber.annotation.en.When;
 
 
 public class ArticleTestSteps {
-	
 	
     private final SharedDriver webDriver;
 
@@ -64,7 +64,6 @@ public class ArticleTestSteps {
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
 		Assert.assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
 	}
-	
 
 	@When("^I select sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
@@ -76,7 +75,6 @@ public class ArticleTestSteps {
 	public void I_select_pan_site(String arg1) throws Throwable {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.click(By.cssSelector("#js-popular-tabs > li > a"));
-
 	}
 	
 	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
@@ -165,5 +163,61 @@ public class ArticleTestSteps {
 		webDriver.click(By.className("cta"));
 		webDriver.waitFor(1000);
 		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
+	}
+	
+	@When("^I click \"([^\"]*)\" button$")
+	public void I_click_Back_to_top_button(String arg1) throws Throwable {
+		
+	}
+	
+	@Then("^article page scrolls quickly to the top$")
+	public void article_page_scrolls_quickly_to_the_top() throws Throwable {
+		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
+		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");
+		Assert.assertTrue(webDriver.isElementPresent(By.id(var.substring(var.indexOf("#")+1))));
+	}
+
+	@When("^I click footer links \\(Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy\\)$")
+	public void I_click_footer_links_Desktop_version_Help_Contact_us_Feedback_T_C_s_and_Pricacy_policy() throws Throwable {
+
+	}
+
+	@Then("^the corresponding footer pages are displayed$")
+	public void the_corresponding_footer_pages_are_displayed() throws Throwable {					
+		//select Desktop version
+		webDriver.click(By.id("main-site"));
+		Assert.assertTrue(webDriver.getCurrentUrl().contains("www.guardian.co.uk"));
+		webDriver.navigate().back();
+		
+		//select Help
+		webDriver.clickLink("Help");
+		Assert.assertEquals("Help", webDriver.getTitle());
+		webDriver.navigate().back();
+		
+		//select Contact us
+		webDriver.clickLink("Contact us");
+		Assert.assertEquals("How to contact us", webDriver.getTitle());
+		webDriver.navigate().back();
+		
+		//select Terms & conditions
+		webDriver.clickLink("Terms & conditions");
+		Assert.assertEquals("Terms of service", webDriver.getTitle());
+		webDriver.navigate().back();
+		
+		//select Privacy policy 
+		webDriver.clickLink("Privacy policy");
+		Assert.assertEquals("Privacy policy", webDriver.getTitle());
+		webDriver.navigate().back();
+		
+		//select Feedback
+		webDriver.clickLink("Feedback");		
+		//find the current window handle
+		String mwh = webDriver.getWindowHandle();
+		//switch to the popup window
+		webDriver.switchWindowFocus(mwh, webDriver);
+		Assert.assertEquals("Your feedback is welcome", webDriver.getTitle());
+		//webDriver.close();
+		//switch back to main window
+		webDriver.switchTo().window(mwh);
 	}
 }
