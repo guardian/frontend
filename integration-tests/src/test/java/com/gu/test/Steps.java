@@ -1,6 +1,5 @@
 package com.gu.test;
 
-import java.io.File;
 import java.util.List;
 
 import junit.framework.Assert;
