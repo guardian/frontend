@@ -5,10 +5,12 @@
 <ol class="competitions unstyled" data-link-name="matches">
     <li class="competition">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-            <h3 class="competition-title box-indent type-3">
-                <a href="@comp.url" data-link-name="competition">@comp.fullName</a>
+        
+            <a class="competition-title football-table-link box-indent type-3" href="@comp.url" data-link-name="competition">
+                @comp.fullName
                 <i class="icon-filter-arrow-right"></i>
-            </h3>
+            </a>
+            
             <ol class="matches unstyled">
                 @comp.matches.map{
                     case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
