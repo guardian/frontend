@@ -21,18 +21,13 @@ import cucumber.annotation.Before;
 
 public class SharedDriver extends EventFiringWebDriver {
 
-	private static final WebDriver REAL_DRIVER;
+
+	public static final WebDriver REAL_DRIVER;
 
 	protected EventListener eventListener;
 
-	private static final Thread CLOSE_THREAD = new Thread() {
-		@Override
-		public void run() {
-			REAL_DRIVER.close();
-		}
-	};
-
 	static {
+
 		FirefoxProfile profile = new FirefoxProfile();
 		// if http_proxy system variable, set proxy in profile
 		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
@@ -50,7 +45,6 @@ public class SharedDriver extends EventFiringWebDriver {
 		}
 		REAL_DRIVER = new FirefoxDriver(profile);
 
-		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
 	}
 
 	public SharedDriver() {
@@ -59,14 +53,6 @@ public class SharedDriver extends EventFiringWebDriver {
 		// add an event listener to the driver
 		eventListener = new EventListener();
 		register(eventListener);
-	}
-
-	@Override
-	public void close() {
-		if(Thread.currentThread() != CLOSE_THREAD) {
-			throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
-		}
-		super.close();
 	}
 
 	@Before
@@ -89,6 +75,7 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void open(String url) {
 		get(this.getHost() + url);
+		waitFor(500);
 	}
 
 	public String getHost() {

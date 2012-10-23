@@ -28,7 +28,7 @@ object Frontend extends Build with Prototypes {
   val front = application("front").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
-
+  
   val dev = application("dev-build")
     .dependsOn(front)
     .dependsOn(article)
@@ -38,9 +38,22 @@ object Frontend extends Build with Prototypes {
     .dependsOn(gallery)
     .dependsOn(coreNavigation)
 
+  lazy val jasmine = Project(id = "jasmine", base = file("integration-tests"))
+  	.settings(
+      // use pom for dependency management
+  	  externalPom(),
+  	  testOptions += Tests.Argument(
+		  TestFrameworks.JUnit, "-q", "-v", 
+		  "-Dcucumber.options=integration-tests/src/test/resources --tags @jasmine --tags ~@ignore --glue com/gu/test --format pretty",
+		  "-Dfrontend.dir=" + System.getProperty("user.dir")
+		  
+	  )
+  	)
+    
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation, dev
+    common, article, gallery, tag, section, front, video, coreNavigation, dev, jasmine
   )
+  
 }
 
 trait Prototypes {

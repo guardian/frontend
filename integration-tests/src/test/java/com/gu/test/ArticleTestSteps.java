@@ -153,16 +153,23 @@ public class ArticleTestSteps {
 		Assert.assertTrue(webDriver.isElementPresent(By.className("image-high")));
 	}
 
-	@When("^\"([^\"]*)\" has expanders$")
-	public void has_expanders(String arg1) throws Throwable {
+	@When("^More on this story has expanders$")
+	public void More_on_this_story_has_expanders() throws Throwable {
 		webDriver.open("/football/blog/2012/may/10/signing-of-season-premier-league");
 	}
 
 	@Then("^I can expand and collapse expanders$")
 	public void I_can_expand_and_collapse_expanders() throws Throwable {
-		webDriver.click(By.className("cta"));
-		webDriver.waitFor(1000);
-		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
+		if (webDriver.isVisibleWait(By.className("cta"))) {
+			webDriver.click(By.className("cta"));
+			webDriver.waitFor(1000);
+		}
+			Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
+	}
+
+	@When("^Related content has expanders$")
+	public void Related_content_has_expanders() throws Throwable {
+		webDriver.open("/football/2012/oct/23/hillsborough-police-chief-bettison-eagle");
 	}
 	
 	@When("^I click \"([^\"]*)\" button$")
@@ -190,33 +197,38 @@ public class ArticleTestSteps {
 		webDriver.navigate().back();
 		
 		//select Help
+		webDriver.isVisibleWait(By.linkText("Help"));
 		webDriver.clickLink("Help");
 		Assert.assertEquals("Help", webDriver.getTitle());
 		webDriver.navigate().back();
 		
 		//select Contact us
+		webDriver.isVisibleWait(By.linkText("Contact us"));
 		webDriver.clickLink("Contact us");
 		Assert.assertEquals("How to contact us", webDriver.getTitle());
 		webDriver.navigate().back();
 		
 		//select Terms & conditions
+		webDriver.isVisibleWait(By.linkText("Terms & conditions"));
 		webDriver.clickLink("Terms & conditions");
 		Assert.assertEquals("Terms of service", webDriver.getTitle());
 		webDriver.navigate().back();
 		
 		//select Privacy policy 
+		webDriver.isVisibleWait(By.linkText("Privacy policy"));
 		webDriver.clickLink("Privacy policy");
 		Assert.assertEquals("Privacy policy", webDriver.getTitle());
 		webDriver.navigate().back();
 		
 		//select Feedback
+		webDriver.isVisibleWait(By.linkText("Feedback"));
 		webDriver.clickLink("Feedback");		
 		//find the current window handle
 		String mwh = webDriver.getWindowHandle();
 		//switch to the popup window
 		webDriver.switchWindowFocus(mwh, webDriver);
 		Assert.assertEquals("Your feedback is welcome", webDriver.getTitle());
-		//webDriver.close();
+		webDriver.close();
 		//switch back to main window
 		webDriver.switchTo().window(mwh);
 	}
