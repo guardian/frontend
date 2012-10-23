@@ -12,6 +12,14 @@ Feature: Football fixtures
     - The API *should* let us Replay matches - for the purpose of testing, and developing against.   
     - Caching should be 10 seconds
 
+    
+    @To do
+    Scenario: Select competition to filter results
+        Given I visit all fixtures page
+        When I click 'All fixtures' filter
+        Then I can open and close fixtures filter to all leagues and competions
+
+
     @ignore
     Scenario: Fixture pages for all competitions/leagues
         Given I visit the fixtures page
