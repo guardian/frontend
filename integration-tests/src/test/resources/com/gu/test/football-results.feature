@@ -31,4 +31,9 @@ Feature: Football results
         Given I visit the 'premierleague' results page for 07/10/2012 
         When I click 'next month'   
         Then I should see the following 20 days worth of results
-        
+
+    @To do
+    Scenario: Select competition to filter results
+        Given I visit all results page
+        When I click 'All results' filter
+        Then I can open and close result filter to all leagues and competions

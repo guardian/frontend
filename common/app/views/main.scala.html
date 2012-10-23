@@ -3,9 +3,9 @@
 <html>
 <head>
     <title>@metaData.webTitle</title>
+    @fragments.metaData(metaData, config, static)
     @fragments.commonCssSetup(static, config)
     @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
-    @fragments.metaData(metaData, config, static)
 
     @head
 

@@ -1,6 +1,6 @@
 .competitions-date,
 .football-table-header {
-    padding-top: 12px;
+    padding-top: @baseline*2;
     background-color: #efefe7;
 }
 
@@ -12,7 +12,7 @@ a.football-table-link {
 
 .competition-title {
     margin-bottom: 0;
-    padding-top: 12px;
+    padding-top: @baseline*2;
     position: relative;
     border-bottom: 1px solid #efefe7;
 }
@@ -23,7 +23,7 @@ a.football-table-link {
 
 .competition-title i {
     position: absolute;
-    top: 18px;
+    top: @baseline*3;
     right: @gutter;
 }
 
@@ -34,7 +34,7 @@ a.football-table-link {
 
 .match { 
     border-bottom: 1px solid #efefe7;
-    padding: 12px 22px; // todo: variables
+    padding: @baseline*2 @gutter;
     position: relative;    
 }
 
@@ -64,11 +64,11 @@ a.football-table-link {
 
 .match .home {
     text-align: right;
-    padding-right: 23px;
+    padding-right: @gutter;
 }
 
 .match .away {
-    padding-left: 23px;
+    padding-left: @gutter;
 }
 
 .match .result {
@@ -85,8 +85,8 @@ a.football-table-link {
 
 .match .status {
     position: absolute;
-    right: 22px; // todo: variable
-    top: 12px; // 18px for words 
+    right: @gutter;
+    top: @baseline*2;
     color: #979797;
 }
 
@@ -125,9 +125,10 @@ a.football-table-link {
 #matches-nav a.cta {
     display: block;
     color: #545454;
+    margin-bottom: @baseline*2
 }
 
-#matches-nav a.cta::before {
+#matches-nav a.cta:before {
     content: "";
 }
 
@@ -137,7 +138,7 @@ a.football-table-link {
 }
 
 .league-table {
-    margin-bottom: 24px;
+    margin-bottom: @gutter;
 }
 
 .table-football thead th {
@@ -159,7 +160,7 @@ a.football-table-link {
 
 .table-football th,
 .table-football td {
-    padding: 12px 22px 12px 22px;
+    padding: @baseline*2 @gutter;
     border-right: none;
 }
 
@@ -174,4 +175,21 @@ a.football-table-link {
 
 .table-football tbody tr:last-child {
     border-bottom: none;
+}
+
+// styling for non-ajax match nav 
+.js-off #matches-nav {
+    padding: @baseline*2 @gutter;
+}
+
+.js-off .match-next {
+    float: right;
+}
+
+.js-off .match-prev:before {
+    content: "‹ ";
+}
+
+.js-off .match-next::after {
+    content: " ›";
 }
