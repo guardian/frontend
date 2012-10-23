@@ -39,7 +39,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         });
 
         it("should correctly set page properties", function(){
-        
+
             s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
             config.page = {
                     omnitureAccount: 'the_account',
@@ -54,18 +54,18 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     blogs: "Middle East Live",
                     buildNumber: "build-73",
                     edition: "US",
-                    webPublicationDate: "2012-02-22T16:58:00.000Z"
+                    webPublicationDate: "2012-02-22T16:58:00.000Z",
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
             };
 
             var o = new Omniture(s, config)
             o.populatePageProperties();
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
-            expect(s.pageName).toBe("a really long title a really long title a really long title a really lon:Article:12345");
+            expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
             expect(s.pageType).toBe("Article");
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
-            expect(s.prop11).toBe("theworld");
             expect(s.prop4).toBe("Syria,Yemen,Egypt,Bahrain");
             expect(s.prop6).toBe("Brian Whitaker,Haroon Siddique");
             expect(s.prop8).toBe("12345");

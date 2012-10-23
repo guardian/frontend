@@ -27,14 +27,14 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
                 object = { method: function (p) {} },
                 spy = sinon.spy(object, "method");
              
-            spy.withArgs(['outer div | the link', false, false]);
+            spy.withArgs(['outer div:the link', false, false]);
 
             common.mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me-span'), 'click');
     
             runs(function(){
-                expect(spy.withArgs(['outer div | the span', false, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs(['outer div:the span', false, false])).toHaveBeenCalledOnce();
             });
             
         });
@@ -61,14 +61,14 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
                 object = { method: function (p) {} },
                 spy = sinon.spy(object, "method");
             
-            spy.withArgs(["outer div | xhr link", true]);
+            spy.withArgs(["outer div:xhr link", true]);
 
             common.mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me-quick'), 'click');
 
             runs(function(){
-                expect(spy.withArgs(['outer div | xhr link', true, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs(['outer div:xhr link', true, false])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
@@ -79,14 +79,14 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
                 object = { method: function (p) {} },
                 spy = sinon.spy(object, "method");
             
-            spy.withArgs(["outer div | parapraph", false, true]);
+            spy.withArgs(["outer div:parapraph", false, true]);
 
             common.mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me-slow'), 'click');
 
             runs(function(){
-                expect(spy.withArgs(['outer div | paragraph', false, true])).toHaveBeenCalledOnce();
+                expect(spy.withArgs(['outer div:paragraph', false, true])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
