@@ -26,7 +26,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ' | ' + tag;
+            s.eVar37 = s.pageType + ':' + tag;
         };
 
         this.populatePageProperties = function() {

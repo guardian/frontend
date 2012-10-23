@@ -37,7 +37,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
 
-  override lazy val analyticsName = "GFE:" + section + ":" + id
+  override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
@@ -63,7 +63,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
 
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 
@@ -80,7 +80,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
@@ -90,6 +90,6 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }

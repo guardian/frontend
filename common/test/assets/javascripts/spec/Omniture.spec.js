@@ -29,12 +29,12 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
             var o = new Omniture(s, config)
             o.init();
-            o.populateEventProperties('outer | link');
+            o.populateEventProperties('outer:link');
 
             expect(s.linkTrackVars).toBe('eVar37,events');
             expect(s.linkTrackEvents).toBe('event37');
             expect(s.events).toBe('event37');
-            expect(s.eVar37).toBe("Article | outer | link");
+            expect(s.eVar37).toBe("Article:outer:link");
 
         });
 
