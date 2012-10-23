@@ -16,7 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
-        'modules/adverts'
+        'modules/adverts',
         'modules/errors',
         'modules/autoupdate'
     ],
