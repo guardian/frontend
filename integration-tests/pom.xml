@@ -53,11 +53,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<artifactId>selenium-java</artifactId>
 			<version>2.24.1</version>
 		</dependency>
-        <dependency>
-            <groupId>com.novocode</groupId>
-            <artifactId>junit-interface</artifactId>
-            <version>0.10-M1</version>
-        </dependency>
 	</dependencies>
 
 	<build>
@@ -78,6 +73,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	                    <property>
                             <name>cucumber.options</name>
                             <value>${cucumber.options}</value>
+	                    </property>
+	                    <property>
+	                       <name>frontend.root.dir</name>
+	                       <value>${basedir}/..</value>
 	                    </property>
 					</systemProperties>
 				</configuration>

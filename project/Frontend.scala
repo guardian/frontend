@@ -12,11 +12,25 @@ import com.gu.RequireJS._
 import com.gu.RequireJS
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
+import templemore.xsbt.cucumber.CucumberPlugin
+import templemore.xsbt.cucumber.CucumberPlugin._
 
 object Frontend extends Build with Prototypes {
 
   val version = "1-SNAPSHOT"
-
+    
+  // jasmine project
+  val jasmine = Project("jasmine", file("integration-tests"),
+      settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++ 
+      Seq (
+        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
+      )
+    )
+  	.settings(
+      // use pom for dependency management
+  	  externalPom()
+  	)
+  	
   val common = library("common")
 
   val commonWithTests = common % "test->test;compile->compile"
@@ -37,18 +51,6 @@ object Frontend extends Build with Prototypes {
     .dependsOn(section)
     .dependsOn(gallery)
     .dependsOn(coreNavigation)
-
-  lazy val jasmine = Project(id = "jasmine", base = file("integration-tests"))
-  	.settings(
-      // use pom for dependency management
-  	  externalPom(),
-  	  testOptions += Tests.Argument(
-		  TestFrameworks.JUnit, "-q", "-v", 
-		  "-Dcucumber.options=integration-tests/src/test/resources --tags @jasmine --tags ~@ignore --glue com/gu/test --format pretty",
-		  "-Dfrontend.dir=" + System.getProperty("user.dir")
-		  
-	  )
-  	)
     
   val main = root().aggregate(
     common, article, gallery, tag, section, front, video, coreNavigation, dev, jasmine
@@ -150,7 +152,7 @@ trait Prototypes {
       },
 
       (test in Test) <<= (test in Test) dependsOn (jshint),
-
+      
       templatesImport ++= Seq(
         "common._",
         "model._",

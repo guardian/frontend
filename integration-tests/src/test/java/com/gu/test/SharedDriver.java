@@ -19,7 +19,14 @@ import cucumber.annotation.Before;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
-    public static final WebDriver REAL_DRIVER;
+    private static final WebDriver REAL_DRIVER;
+    
+    private static final Thread CLOSE_THREAD = new Thread() {
+        @Override
+        public void run() {
+            REAL_DRIVER.close();
+        }
+    };
     
     protected EventListener eventListener;
     
@@ -40,6 +47,8 @@ public class SharedDriver extends EventFiringWebDriver {
 			}
 		}
 		REAL_DRIVER = new FirefoxDriver(profile);
+		
+		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
 
     public SharedDriver() {
