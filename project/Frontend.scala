@@ -18,16 +18,18 @@ object Frontend extends Build with Prototypes {
   val version = "1-SNAPSHOT"
 
   val common = library("common")
-
   val commonWithTests = common % "test->test;compile->compile"
 
-  val article = application("article").dependsOn(commonWithTests)
-  val gallery = application("gallery").dependsOn(commonWithTests)
-  val tag = application("tag").dependsOn(commonWithTests)
-  val section = application("section").dependsOn(commonWithTests)
   val front = application("front").dependsOn(commonWithTests)
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+  val article = application("article").dependsOn(commonWithTests)
+  val section = application("section").dependsOn(commonWithTests)
+  val tag = application("tag").dependsOn(commonWithTests)
+  val gallery = application("gallery").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+
+  val router = application("router").dependsOn(commonWithTests)
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
       libraryDependencies += "com.gu" %% "pa-client" % "2.4"
@@ -36,15 +38,17 @@ object Frontend extends Build with Prototypes {
   val dev = application("dev-build")
     .dependsOn(front)
     .dependsOn(article)
-    .dependsOn(video)
-    .dependsOn(tag)
     .dependsOn(section)
+    .dependsOn(tag)
+    .dependsOn(video)
     .dependsOn(gallery)
     .dependsOn(football)
     .dependsOn(coreNavigation)
+    .dependsOn(router)
+    .dependsOn(diagnostics)
 
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation, football, dev
+    common, front, article, section, tag, video, gallery, football, coreNavigation, router, diagnostics, dev
   )
 }
 
