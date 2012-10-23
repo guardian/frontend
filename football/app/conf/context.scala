@@ -14,6 +14,8 @@ object Configuration extends GuardianConfiguration("frontend-football", webappCo
   object pa {
     lazy val apiKey = configuration.getStringProperty("pa.api.key")
       .getOrElse(throw new RuntimeException("unable to load pa api key"))
+
+    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
 }
@@ -45,6 +47,8 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
 object FootballClient extends PaClient with Http {
 
+  override lazy val base = Configuration.pa.host
+
   private var _http: Http = _
 
   def http = _http
@@ -53,6 +57,7 @@ object FootballClient extends PaClient with Http {
   lazy val apiKey = Configuration.pa.apiKey
 
   override def GET(urlString: String): pa.Response = {
+
     val response = _http.GET(urlString)
 
     //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
