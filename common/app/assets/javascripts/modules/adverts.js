@@ -7,14 +7,55 @@ define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detec
                 width : '300',
                 height: '50'
             },
+            'Top' : {
+                width : '728',
+                height: '90'
+            },
             'Bottom2' : {
                 width : '300',
                 height: '50'
+            },
+            'Bottom' : {
+                width : '728',
+                height: '90'
+            }
+        },
+
+        this.init = function(config) {
+
+            var jsonFromOAS = {
+                scripts: ['http://4sa.s3.amazonaws.com/ad-templates/expandable/v1.6/expandable-ad-template.js',
+                          'http://4sa.s3.amazonaws.com/expandables/killing-them-softly/scripts/expandable-ad-unit.js?cachebuster=%%REALRAND%%'],
+                props: {
+                    adId: 'killing-them-softly',
+                    adEnvironment: 'production',
+                    clickUrl: '%%C%%?',
+                    cacheBusterToken: '%%REALRAND%%',
+                    collapsedAdWidth: 300,
+                    collapsedAdHeight: 50,
+                    expandedAdWidth: 300,
+                    expandedAdHeight: 300
+                }
+            };
+
+            if (true) {
+                this.loadExpandable(jsonFromOAS);
+                return;
+            }
+
+
+            if (document.readyState === 'complete') {
+                this.load(config);
+            } else {
+                var that = this;
+                window.addEventListener('load', function() {
+                    that.load(config);
+                });
             }
         },
 
         //Initalise
-        this.init = function(config) {
+        this.load = function(config) {
             var slots = document.querySelectorAll('.ad-slot'),
                 connection = detect.getConnectionSpeed(),
                 width = window.innerWidth,
@@ -22,7 +63,10 @@ define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detec
                 length = slots.length,
                 i =0;
 
+            console.log(slots);
+
             this.url = this.generateQuery(config, connection);
+            console.log(this.url);
 
             for(; i < length; i++) {
                 var slot = slots[i].getAttribute('data-'+size),
@@ -30,6 +74,23 @@ define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detec
 
                 this.create(slot, id);
             }
+        },
+
+        this.loadExpandable = function(adData) {
+            require([adData.scripts[0]], function() {
+                require([adData.scripts[1]], function() {
+                    var ad = document.querySelector('#ad-slot-top-banner-ad');
+                    var div = document.createElement('div')
+                    div.setAttribute('ad-container-id', adData.props.adId)
+                    ad.parentNode.replaceChild(div, ad);
+
+                    var adUnit = new ExpandableAdUnit();
+                    for (var prop in adData.props) {
+                        adUnit[prop] = adData.props[prop];
+                    }
+                    adUnit.initialiseTemplate();
+                });
+            });
         },
 
         //To construct and cache request URL
@@ -58,6 +119,7 @@ define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detec
         },
 
         this.create = function (slot, location) {
+            console.log('creating', slot)
             var frame = document.createElement('iframe'),
                 dimensions = this.sizeMap[slot];
 
@@ -69,7 +131,7 @@ define(['common', 'reqwest', 'modules/detect'], function (common, reqwest, detec
             frame.setAttribute('seamless', 'seamless');
             frame.width = dimensions.width;
             frame.height = dimensions.height;
-
+            console.log(frame);
             common.mediator.emit('modules:adverts:created', frame, location);
         },
 
