@@ -27,12 +27,20 @@ object Frontend extends Build with Prototypes {
       )
     )
   	.settings(
-      // use pom for dependency management
-  	  externalPom()
+  	  libraryDependencies ++= Seq(
+		  "junit" % "junit" % "4.10",
+	      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
+	      "info.cukes" % "cucumber-core" % "1.0.14",
+	      "info.cukes" % "cucumber-java" % "1.0.14",
+	      "info.cukes" % "cucumber-junit" % "1.0.14",
+	      "info.cukes" % "cucumber-picocontainer" % "1.0.14"
+	  )
+  	  // TODO - doesn't work - cucumber is an input task
+  	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
   	)
   	
-  val common = library("common")
-
+  val common = library("common").dependsOn(jasmine % "test->test")
+  
   val commonWithTests = common % "test->test;compile->compile"
 
   val article = application("article").dependsOn(commonWithTests)
