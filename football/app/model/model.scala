@@ -1,5 +1,5 @@
 package model
-import pa.{ FootballMatch, Result, Fixture }
+import pa.{ LeagueTableEntry, FootballMatch, Result, Fixture }
 import org.joda.time.DateMidnight
 
 case class Competition(
@@ -9,8 +9,9 @@ case class Competition(
     shortName: String,
     nation: String,
     startDate: Option[DateMidnight] = None,
-    matches: Seq[FootballMatch] = Nil) {
+    matches: Seq[FootballMatch] = Nil,
+    leagueTable: Seq[LeagueTableEntry] = Nil) {
 
   lazy val hasMatches = matches.nonEmpty
-
+  lazy val hasLeagueTable = leagueTable.nonEmpty
 }

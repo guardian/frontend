@@ -13,6 +13,25 @@ trait HasCompetition {
   def competition: Competition
 }
 
+trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
+
+  private val agent = play_akka.agent[Seq[LeagueTableEntry]](Nil)
+
+  def refreshLeagueTable() {
+    agent.sendOff { old =>
+      val table = FootballClient.leagueTable(competition.id, new DateMidnight)
+      log.info("found %s league table entries for competition %s".format(table.size, competition.fullName))
+      table
+    }
+  }
+
+  def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
+
+  def shutdownLeagueTables() { agent.close() }
+
+  def leagueTable = agent()
+}
+
 trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
 
   private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
@@ -85,7 +104,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
   def resultsOn(date: DateMidnight) = results.filter(_.date.toDateMidnight == date)
 }
 
-class CompetitionAgent(_competition: Competition) extends FixtureAgent with ResultAgent with LiveMatchAgent {
+class CompetitionAgent(_competition: Competition) extends FixtureAgent with ResultAgent with LiveMatchAgent with LeagueTableAgent {
 
   private val agent = play_akka.agent(_competition)
 
@@ -96,17 +115,20 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
   def refresh() {
     refreshFixtures()
     refreshResults()
+    refreshLeagueTable()
   }
 
   def shutdown() {
     shutdownFixtures()
     shutdownResults()
     shutdownLiveMatches()
+    shutdownLeagueTables()
   }
 
   def await() {
     awaitFixtures()
     awaitResults()
+    awaitLeagueTable()
   }
 }
 

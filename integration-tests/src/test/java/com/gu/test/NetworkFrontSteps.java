@@ -51,7 +51,7 @@ public class NetworkFrontSteps {
 			Assert.assertEquals(buttonText, button.getText());
 			button.click();
 			// and wait half a second for it to close
-			Thread.sleep(1000);
+			webDriver.waitFor(1000);
 			// confirm correct class
 			String direction = (action.equals("collapse")) ? "up" : "out";
 			WebElement trailblock = section.findElement(By.cssSelector(".trailblock.rolled-" + direction));
@@ -67,25 +67,15 @@ public class NetworkFrontSteps {
 	@Given("^I hide a section$")
 	public void I_hide_a_section() throws Throwable {
 	    // hide the first section
-		webDriver.findElement(By.cssSelector("section.front-section .toggle-trailblock"))
-			.click();
-	}
-
-	@When("^I navigate to an article page and back to the network front$")
-	public void I_navigate_to_an_article_page_and_back_to_the_network_front() throws Throwable {
-	    // click on the first visible article
-		webDriver.findElement(By.cssSelector(".rolled-out .trail h2 a"))
-			.click();
-		// navigate back to the front (by clicking the logo)
-		webDriver.findElement(By.cssSelector("#header a"))
-			.click();
+		webDriver.click(By.cssSelector("section.front-section .toggle-trailblock"));
 	}
 
 	@Then("^the collapsed section will stay collapsed$")
 	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
 	    // confirm the first section is collapsed still
 		WebElement section = webDriver.findElement(By.cssSelector("section.front-section"));
-		// confirm toggle text is 'Show'
+		// confirm toggle text is 'Show' (wait for toggle to be visible)
+		webDriver.isVisibleWait(By.className("toggle-trailblock"));
 		Assert.assertEquals("Show", section.findElement(By.className("toggle-trailblock")).getText());
 		// confirm trailblock is hidden
 		Assert.assertEquals("0px", section.findElement(By.className("trailblock")).getCssValue("max-height"));

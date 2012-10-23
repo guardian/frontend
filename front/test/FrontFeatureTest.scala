@@ -316,4 +316,6 @@ private case class StubTrail(url: String) extends Trail {
   override def thumbnail = None
 
   override def images = Nil
+
+  override def isLive = false
 }

@@ -5,9 +5,14 @@ import java.net.URL;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.annotation.Before;
 
@@ -28,7 +33,7 @@ public class SharedDriver extends EventFiringWebDriver {
     static {
 		FirefoxProfile profile = new FirefoxProfile();
 		// if http_proxy system variable, set proxy in profile
-		if (!System.getProperty("http_proxy").isEmpty()) {
+		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
 			try {
 				URL proxyUrl = new URL(System.getProperty("http_proxy"));
 				profile.setPreference("network.proxy.type", 1);
@@ -88,7 +93,7 @@ public class SharedDriver extends EventFiringWebDriver {
 		//defaults to localhost
 		String host = "http://localhost:9000";
 		
-		if (!System.getProperty("host").isEmpty()) {
+		if (System.getProperty("host") != null && !System.getProperty("host").isEmpty()) {
 			host = System.getProperty("host");
 		}
 		return host;
@@ -184,6 +189,33 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public String getelementCssValue(By elementName, String value) {
 		return findElement(elementName).getCssValue(value);
+	}
+	
+	/**
+	 * Find an element, waiting for it to appear (5secs)
+	 * 
+	 * @param By locator 
+	 * @return WebElement
+	 */
+	public WebElement findElementWait(By locator) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		// return element
+		return findElement(locator);
+	}
+	
+	/**
+	 * Wait for an element to become visible
+	 * 
+	 * @param By locator 
+	 * @return booelan
+	 */
+	public boolean isVisibleWait(By locator) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		return true;
 	}
     
 }

@@ -1,6 +1,6 @@
 @(trail: Trail, info: RowInfo, related: Boolean = false, numberOfImagesToEnlarge: Int = 0)
 
-@fragments.relativeDate(trail.webPublicationDate)
+@fragments.relativeDate(trail.webPublicationDate, trail.isLive)
 
 <div class="media">
     @*

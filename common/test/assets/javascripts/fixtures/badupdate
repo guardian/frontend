@@ -1,0 +1,4 @@
+autoUpdate({
+	refreshStatus: false,
+	html: '<span>foo</span>'
+})

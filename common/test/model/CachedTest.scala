@@ -18,7 +18,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=5")
+    headers("Cache-Control") should be("public, max-age=5")
   }
 
   it should "cache content less than 24 hours old for 1 minute" in {
@@ -28,7 +28,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60")
+    headers("Cache-Control") should be("public, max-age=60")
   }
 
   it should "cache older content for 15 minutes" in {
@@ -38,7 +38,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=900")
+    headers("Cache-Control") should be("public, max-age=900")
   }
 
   it should "cache other things for 1 minute" in {
@@ -57,7 +57,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(page)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60")
+    headers("Cache-Control") should be("public, max-age=60")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {

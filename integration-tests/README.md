@@ -4,17 +4,20 @@
 
 To run all features (except `@ignore`)
 
-	$ mvn clean test
+	$ mvn test
 
-To run a particular tagged feature (excecpt `@ignore`)
+To run a particular tagged feature (e.g.`@network-front`, but not `@ignore`)
 
-	$ mvn clean test -Dcucumber.options="--tags @network-front --tags ~@ignore --glue classpath:com/gu/test \
- 	> src/test/resources --format pretty --format html:target/cucumber-html-report"
+	$ mvn test -Dtags="--tags @network-front --tags ~@ignore"
 
 Running on a different host (i.e. not `http://localhost:9000`)
 
- 	$ mvn clean test -Dhost=http://beta.gucode.co.uk
+ 	$ mvn test -Dhost=http://beta.gucode.co.uk
 
 Running through a proxy
 
- 	$ mvn clean test -Dhttp_proxy=http://proxy.co.uk:1234
+ 	$ mvn test -Dhttp_proxy=http://proxy.co.uk:1234
+ 	
+To run the jasmine tests
+
+	$ mvn test -Dtags="--tags @jasmine"

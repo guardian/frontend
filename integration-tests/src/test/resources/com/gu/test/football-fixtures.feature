@@ -1,3 +1,4 @@
+@football
 Feature: Football fixtures
 
     In order to view recent football results and upcoming fixtures
