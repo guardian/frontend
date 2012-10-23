@@ -16,7 +16,7 @@
             "apps":[ "aws-s3" ],
             "data":{
                 "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=2592000"
+                "cacheControl":"public, max-age=315360000"
             }
         }
     },

@@ -107,10 +107,16 @@ define([
             },
 
             loadFonts: function(config, ua, prefs) {
+                var showFonts = false;
+                if(config.switches.fontFamily || prefs.isOn('font-family')) {
+                    showFonts = true;
+                }
+                if (prefs.isOff('font-family')) {
+                    showFonts = false;
+                }
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-
-                if (config.switches.fontFamily && prefs.exists('font-family')) {
+                if (showFonts) {
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
                     Fonts.clearFontsFromStorage();
