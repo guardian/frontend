@@ -18,7 +18,7 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-router.deploy"]
+            "actionsBeforeApp": ["frontend-router.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-router.uploadArtifacts"]
