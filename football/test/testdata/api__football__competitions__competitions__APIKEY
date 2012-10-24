@@ -56,14 +56,34 @@
         <startDate>01/08/2012</startDate>
         <endDate>31/05/2013</endDate>
     </season>
-    <season competitionID="300" seasonID="127">
-        <name>The FA Cup with Budweiser 11/12</name>
-        <startDate>01/08/2011</startDate>
-        <endDate>31/05/2012</endDate>
+    <season competitionID="300" seasonID="230">
+        <name>The FA Cup with Budweiser 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
     </season>
     <season competitionID="301" seasonID="211">
         <name>Capital One Cup</name>
         <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="302" seasonID="224">
+        <name>Johnstone's Paint Trophy 12/13</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="320" seasonID="199">
+        <name>The William Hill Scottish Cup 11/12</name>
+        <startDate>01/07/2011</startDate>
+        <endDate>31/05/2012</endDate>
+    </season>
+    <season competitionID="321" seasonID="219">
+        <name>Scottish Communities League Cup 12/13</name>
+        <startDate>20/07/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="322" seasonID="221">
+        <name>Ramsdens Challenge Cup 12/13</name>
+        <startDate>01/07/2012</startDate>
         <endDate>31/05/2013</endDate>
     </season>
     <season competitionID="400" seasonID="213">
@@ -80,5 +100,15 @@
         <name>UEFA Europa League 12/13</name>
         <startDate>01/09/2012</startDate>
         <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="650" seasonID="216">
+        <name>Spanish Primera Liga BBVA</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>30/06/2013</endDate>
+    </season>
+    <season competitionID="701" seasonID="220">
+        <name>2014 FIFA World Cup qualification (UEFA)</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/10/2013</endDate>
     </season>
 </seasons>

@@ -13,13 +13,8 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
     FootballClient.http = TestHttp
     Competitions.refreshCompetitionData()
     Competitions.refreshMatchDay()
+    Competitions.competitionAgents.filter(_.competition.id != "127").foreach(Competitions.refreshAgent)
 
-    //limit calls to the set of competitions we have test data for
-    Competitions.competitionAgents.filter(agent => Seq("100", "101", "102", "103").contains(agent.competition.id)).
-      foreach(Competitions.refreshAgent)
-  }
-
-  override def onStop() = {
     Competitions.shutDown()
   }
 }
@@ -27,21 +22,22 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
 // Stubs data for Football stats integration tests
 object TestHttp extends Http {
 
-  val today = new DateMidnight().toString("dd/MM/yyyy")
+  val today = new DateMidnight()
 
-  val base = getClass.getClassLoader.getResource("testdata").getFile + "/__"
+  val base = getClass.getClassLoader.getResource("testdata").getFile + "/"
 
   def GET(url: String) = {
     val fileName = {
-      val tmp = base + (url.replace(Configuration.pa.apiKey, "test-key")
+      val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
         .replace("http://pads6.pa-sport.com/", "")
         .replace("/", "__"))
-      if (tmp.contains("competitions__matchDay")) base + "api__football__competitions__matchDay__test-key__20120905"
-      else tmp
+
+      // spoof todays date
+      file.replace(today.toString("yyyyMMdd"), "20121020")
     }
 
-    //mess with the live matches date so it thinks the match is live
-    val xml = Source.fromFile(fileName).getLines.mkString.replace("05/09/2012", today)
+    // spoof todays date
+    val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
 
     pa.Response(200, xml, "ok")
   }

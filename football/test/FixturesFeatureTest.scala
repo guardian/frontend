@@ -8,7 +8,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
   feature("Football Fixtures") {
 
-    ignore("Visit the fixtures page") {
+    scenario("Visit the fixtures page") {
 
       given("I visit the fixtures page")
 
@@ -20,30 +20,29 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       }
 
       //A dated url will give us a fixed set of fixtures we can assert against
-      HtmlUnit("/football/fixtures/2012/oct/13") { browser =>
+      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
 
         then("I should see fixtures for today")
 
-        findFirst(".competitions-date").getText should be("Saturday 13 October 2012")
+        findFirst(".competitions-date").getText should be("Sunday 21 October 2012")
 
         val fixture = $(".matches").findFirst(".match-desc")
-        fixture.findFirst(".home").getText should be("Bournemouth")
-        fixture.findFirst(".away").getText should be("Leyton Orient")
-        findFirst(".status").getText should include("15:00")
+        fixture.findFirst(".home").getText should be("Sunderland")
+        fixture.findFirst(".away").getText should be("Newcastle")
+        findFirst(".status").getText should include("13:30")
 
         and("I should see fixtures for tomorrow")
-        $(".competitions-date").getTexts should contain("Sunday 14 October 2012")
+        $(".competitions-date").getTexts should contain("Tuesday 23 October 2012")
 
         and("I should see fixtures for the next day")
-        $(".competitions-date").getTexts should contain("Monday 15 October 2012")
+        $(".competitions-date").getTexts should contain("Wednesday 24 October 2012")
       }
     }
 
-    ignore("Next fixtures") {
+    scenario("Next fixtures") {
       given("I am on the fixtures page")
-      //A dated url will give us a fixed set of fixtures we can assert against
-      HtmlUnit("/football/fixtures/2012/oct/13") { browser =>
+      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
 
         when("I click the 'next' link")
@@ -52,13 +51,30 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         browser.await()
 
         then("I should navigate to the next set of fixtures")
-        findFirst(".competitions-date").getText should be("Tuesday 16 October 2012")
+        findFirst(".competitions-date").getText should be("Thursday 25 October 2012")
       }
     }
 
-    ignore("Link tracking") {
+    scenario("Competition fixtures filter") {
+
+      given("I am on the the fixtures page")
+      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
+        import browser._
+
+        when("I click the filter to premier league link")
+
+        findFirst("[data-link-name='Premier League']").click()
+        browser.await()
+
+        then("I should navigate to the premier league fixtures page")
+        findFirst(".competitions-date").getText should be("Wednesday 24 October 2012")
+        find(".match-desc").map(_.getText) should contain("QPR v Aston Villa")
+      }
+    }
+
+    scenario("Link tracking") {
       given("I visit the fixtures page")
-      HtmlUnit("/football/fixtures/2012/oct/13") { browser =>
+      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
         then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
