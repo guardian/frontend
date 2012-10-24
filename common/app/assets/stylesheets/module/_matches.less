@@ -125,10 +125,11 @@ a.football-table-link {
 #matches-nav a.cta {
     display: block;
     color: #545454;
-    margin-bottom: @baseline*2
+    margin-bottom: @baseline*2;
 }
 
-#matches-nav a.cta:before {
+#matches-nav a.cta:before,
+.cta.football-table-link:before {
     content: "";
 }
 
@@ -160,7 +161,7 @@ a.football-table-link {
 
 .table-football th,
 .table-football td {
-    padding: @baseline*2 @gutter;
+    padding: @baseline*2 3%; // eventually will need a media query for this when it gets too wide
     border-right: none;
 }
 
@@ -192,4 +193,13 @@ a.football-table-link {
 
 .js-off .match-next::after {
     content: " ›";
+}
+
+.football-nav {
+    clear: left;
+    padding-top: @baseline*4;
+}
+
+.football-nav a {
+    color: #fff;
 }
