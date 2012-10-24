@@ -5,8 +5,8 @@
 # For dev machines
 GET     /assets/*file                                       controllers.Assets.at(path="/public", file)
 
-GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.allCompetitionsOn(year, month, day)
-GET     /football/fixtures                                  controllers.FixturesController.allCompetitions()
+GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
+GET     /football/fixtures                                  controllers.FixturesController.render()
 GET     /football/:competition/fixtures/:year/:month/:day   controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
 GET     /football/:competition/fixtures                     controllers.CompetitionFixturesController.render(competition)
 

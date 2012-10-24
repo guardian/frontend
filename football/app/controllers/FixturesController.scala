@@ -1,8 +1,8 @@
 package controllers
 
 import common._
-import feed.Competitions
-import play.api.mvc.{ Action, Controller }
+import feed.{ CompetitionSupport, Competitions }
+import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
@@ -10,31 +10,27 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-object FixturesController extends Controller with Logging with CompetitionFixtureFilters {
+trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 
   val daysToDisplay = 3
-
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
 
-  def allCompetitionsOn(year: String, month: String, day: String) = allCompetitions(
-    Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
-  )
-
-  def allCompetitions(date: Option[DateMidnight] = None) = Action { implicit request =>
-
+  def renderFixtures(page: Page,
+    competitions: CompetitionSupport,
+    date: Option[DateMidnight] = None,
+    competitionFilter: Option[String])(implicit request: RequestHeader) = {
     val startDate = date.getOrElse(new DateMidnight)
 
-    val fixtureDays = Competitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(startDate, daysToDisplay)
+    val dates = competitions.nextMatchDates(startDate, daysToDisplay)
 
-    val fixtures = fixtureDays.map { day => MatchesOnDate(day, Competitions.withMatchesOn(day).competitions) }
+    val fixtures = dates.map { day => MatchesOnDate(day, competitions.withMatchesOn(day).competitions) }
 
-    val nextPage = fixtureDays.lastOption.flatMap { date =>
-      Competitions.withTodaysMatchesAndFutureFixtures.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
-    }.map(toNextPreviousUrl)
+    val nextPage = dates.lastOption.flatMap { date =>
+      competitions.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
+    }.map(date => toNextPreviousUrl(date, competitionFilter))
 
-    val previousPage = Competitions.withTodaysMatchesAndFutureFixtures.previousMatchDates(startDate.minusDays(1), daysToDisplay)
-      .lastOption.map(toNextPreviousUrl)
+    val previousPage = competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay)
+      .lastOption.map(date => toNextPreviousUrl(date, competitionFilter))
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
       nextPage, previousPage, "fixtures", filters)
@@ -48,8 +44,45 @@ object FixturesController extends Controller with Logging with CompetitionFixtur
     }
   }
 
-  private def toNextPreviousUrl(date: DateMidnight) = date match {
+  def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]): String
+}
+
+object FixturesController extends FixtureRenderer with Logging {
+
+  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
+
+  def renderFor(year: String, month: String, day: String) = render(
+    Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
+  )
+
+  def render(date: Option[DateMidnight] = None) = Action { implicit request =>
+    renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None)
+  }
+
+  override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/fixtures"
     case other => "/football/fixtures/%s" format (other.toString("yyyy/MMM/dd").toLowerCase)
+  }
+}
+
+object CompetitionFixturesController extends FixtureRenderer with Logging {
+
+  override val daysToDisplay = 20
+
+  def renderFor(year: String, month: String, day: String, competition: String) = render(
+    competition, Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
+  )
+
+  def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
+    Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
+      val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
+        "football", "", competition.fullName + " fixtures")
+      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName))
+    }.getOrElse(NotFound)
+  }
+
+  override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
+    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition)
+    case other => "/football/%s/fixtures/%s" format (competition, other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }
