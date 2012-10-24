@@ -1,37 +1,49 @@
 package controllers
 
 import common._
-import feed.Competitions
-import play.api.mvc.{ Action, Controller }
+import feed.{ CompetitionSupport, Competitions }
+import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
 import org.joda.time.DateMidnight
 import model.Page
 import conf.Configuration
 
-object LiveMatchesController extends Controller with Logging {
+object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging {
 
   val page = new Page("http://www.guardian.co.uk/football/matches", "football/live", "football", "", "Today's matches") {
     override val cacheSeconds = 10
   }
 
-  def render = Action { implicit request =>
+  def renderFor(competitionName: String) = Action { implicit request =>
+    Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
+      renderLive(Competitions.withCompetitionFilter(competitionName))
+    }.getOrElse(NotFound)
+  }
+
+  def renderLive(competitions: CompetitionSupport)(implicit request: RequestHeader) = {
 
     val today = new DateMidnight()
 
     val blog = LiveBlog(Edition(request, Configuration))
 
-    val matches = Seq(MatchesOnDate(today, Competitions.withMatchesOn(today).competitions))
+    val matches = Seq(MatchesOnDate(today, competitions.withMatchesOn(today).competitions))
 
     val livePage = MatchesPage(page, blog,
       matches.filter(_.competitions.nonEmpty),
       nextPage = None,
       previousPage = None,
-      pageType = "live")
+      pageType = "live",
+      filters = filters
+    )
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(views.html.fragments.matchesList(livePage))
       }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
     }
+  }
+
+  def render() = Action { implicit request =>
+    renderLive(Competitions)
   }
 }

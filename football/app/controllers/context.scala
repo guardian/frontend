@@ -17,3 +17,11 @@ trait CompetitionResultFilters {
         nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/results"))
     }
 }
+
+trait CompetitionLiveFilters {
+  def filters = Competitions.withTodaysMatches.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+    .map {
+      case (nation, competitions) =>
+        nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/live"))
+    }
+}
