@@ -101,8 +101,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     agent.competition.copy(matches = allGames.sortBy(_.date), leagueTable = agent.leagueTable)
   }
 
-  def refreshAgent(agent: CompetitionAgent) = agent.refresh()
-
   //one http call updates all competitions
   def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     log.info("Refreshing competition data")
@@ -136,7 +134,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
       competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>
           //stagger fixtures and results refreshes to avoid timeouts
-          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { refreshAgent(agent) }
+          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { agent.refresh() }
       }
   }
 

@@ -33,10 +33,10 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         findFirst(".status").getText should include("13:30")
 
         and("I should see fixtures for tomorrow")
-        $(".competitions-date").getTexts should contain("Tuesday 23 October 2012")
+        $(".competitions-date").getTexts should contain("Monday 22 October 2012")
 
         and("I should see fixtures for the next day")
-        $(".competitions-date").getTexts should contain("Wednesday 24 October 2012")
+        $(".competitions-date").getTexts should contain("Tuesday 23 October 2012")
       }
     }
 
@@ -51,7 +51,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         browser.await()
 
         then("I should navigate to the next set of fixtures")
-        findFirst(".competitions-date").getText should be("Thursday 25 October 2012")
+        findFirst(".competitions-date").getText should be("Wednesday 24 October 2012")
       }
     }
 

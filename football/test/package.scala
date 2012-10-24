@@ -13,7 +13,10 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
     FootballClient.http = TestHttp
     Competitions.refreshCompetitionData()
     Competitions.refreshMatchDay()
-    Competitions.competitionAgents.filter(_.competition.id != "127").foreach(Competitions.refreshAgent)
+    Competitions.competitionAgents.filter(_.competition.id != "127").foreach { agent =>
+      agent.refresh()
+      agent.await()
+    }
 
     Competitions.shutDown()
   }
