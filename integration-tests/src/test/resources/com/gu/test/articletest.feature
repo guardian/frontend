@@ -1,20 +1,19 @@
 @articletest
-
 Feature: Article page
 	As a guardian mobile user
 	I want to check available content is displayed on the article page
 	So that I am able to browse all the article content correctly
 	
   	Background:
-    	Given I am on the home page 
+    	Given I am on the article page 
 
 	Scenario: More on this story
 		When the article has a story package
-		Then "more on this story" is displayed 
+		Then "More on this story" is displayed 
 
 	Scenario: Article has no story package
 		When the article has no story package
-		Then "related content" is displayed
+		Then "Related content" is displayed
 	
 	#needs a page where content is not displayed
 	#Scenario: Related content is unavailable
@@ -66,14 +65,14 @@ Feature: Article page
 	#	Then the articles I have visited will be in a visited state
 
 
-		@in-progress
-         Scenario: Back to top
-                When I click Back to top button
-                Then article page scrolls quickly to the top
+		#@to-do
+         #Scenario: Back to top
+          #      When I click Back to top button
+           #     Then article page scrolls quickly to the top
 
-         Scenario: Page footer links
-                When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
-                Then the corresponding pages are displayed
+         #Scenario: Page footer links
+          #      When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
+           #     Then the corresponding pages are displayed
 
 
 

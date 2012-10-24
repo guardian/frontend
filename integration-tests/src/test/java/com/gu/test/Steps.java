@@ -1,5 +1,8 @@
 package com.gu.test;
 
+import java.io.File;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
@@ -47,6 +50,44 @@ public class Steps {
 	    WebElement tab = webDriver.findElement(By.id(tabId));
 	    // confirm element is shown/hidden
 	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
+	}
+	
+	@When("^I visit the (.*) jasmine test runner$")
+	public void I_visit_the_jasmine_test_runner(String project) throws Throwable {
+		File currentDir = new File(".");
+		System.out.println(currentDir.getCanonicalPath());
+		// open the appropriate runner 
+		webDriver.get(
+			"file:///" + currentDir.getCanonicalPath() + "/../" + project + "/test/assets/javascripts/runner.html"
+		);
+		// confirm we're on the correct page
+		Assert.assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
+	}
+
+	@Then("^all the jasmine tests pass$")
+	public void all_the_tests_pass() throws Throwable {
+		// store the number of tests
+		int numOfTests = webDriver.findElements(By.cssSelector("#tests a")).size();
+		boolean testFailure = false;
+		// run each test
+		for (int i = 0; i < numOfTests; i++) {
+			WebElement test = webDriver.findElements(By.cssSelector("#tests a")).get(i);
+			String testName = test.getText();
+			test.click();
+			List<WebElement> alertBar = webDriver.findElements(By.cssSelector("span.failingAlert.bar"));
+			if (alertBar.size() != 0) {
+				System.out.println(testName + " - " + alertBar.get(0).getText());
+				for (WebElement error : webDriver.findElements(By.className("specDetail"))) {
+					System.out.println("  " + error.findElement(By.className("description")).getText());
+					for (WebElement errorMsg : error.findElements(By.className("resultMessage"))) {
+						System.out.println(" > " + errorMsg.getText());
+					}
+				}
+				testFailure = true;
+			}
+		}
+		
+		Assert.assertFalse(testFailure);
 	}
 	
 }
