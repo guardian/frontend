@@ -40,6 +40,10 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
+    "keywords" -> keywords.map { _.name }.mkString(","),
+    "publication" -> publication,
+    "author" -> contributors.map(_.name).mkString(","),
+    "tones" -> tones.map(_.name).mkString(","),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "page-code" -> fields("internalPageCode"),
