@@ -222,6 +222,13 @@ define([
             if (window.location.pathname.match('/football.*(fixtures|results)')) {
                 modules.showMoreMatches();
             }
+        } else if (config.page.pageId === 'football/live') {
+            // only load auto update module if there is a live match currently on
+            if (qwery('.match.live-match').length) {
+                // load the auto update
+                // TODO - confirm update is every 10secs
+                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container")).init();
+            }
         }
         
         modules.loadOmnitureAnalytics(config);

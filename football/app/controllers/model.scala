@@ -14,4 +14,5 @@ case class MatchesPage(
   nextPage: Option[String],
   previousPage: Option[String],
   pageType: String,
-  filters: Map[String, Seq[CompetitionFilter]] = Map.empty)
+  filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
+  isLive: Boolean = false)
