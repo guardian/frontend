@@ -218,7 +218,7 @@ define([
         
         // page specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
-        var footballIndexRegex = /\/football.*\/(fixtures|results)$/g;
+        var footballIndexRegex = /\/football\/(fixtures|results)$/g;
         if (window.location.pathname.match(footballIndexRegex)) {
             modules.showMoreMatches();
         }
