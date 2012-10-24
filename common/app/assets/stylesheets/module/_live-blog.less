@@ -52,3 +52,38 @@ span.timestamp {
 .svg .article.is-live blockquote:after {
     .svg-icon-livequote-after;
 }
+
+.tweet:before,
+.tweet:after {
+    display:none !important;
+    width: 0px;
+    height: 0px;
+    background-image: none;
+}
+
+.article .tweet {
+    background-color: #f4f4f4;
+    background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png);
+    background-position: @baseline*2 @baseline*2;
+    background-repeat: no-repeat;
+    border-top: 4px solid #3299d0;
+    padding: 10px @baseline*2 @baseline*2 @baseline*2;
+    margin: @baseline*3 0 @baseline*4 0;
+}
+
+.svg .article .tweet {
+    background-image: url(../images/twitter/bird.893619ff5dd44b934f6a49225978b926.svg)
+}
+
+.tweet-user {
+    font-weight: bold !important;
+    padding-left: 40px;
+    margin-bottom: 0px;
+}
+
+.tweet-date {
+    display: block;
+    color: #28acdb;
+    padding-left: 40px;
+    margin-bottom: @baseline*2;
+}
