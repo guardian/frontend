@@ -9,7 +9,15 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
         this.logView = function() {
             s.t();
         };
- 
+
+        this.logUpdate = function() {
+            s.linkTrackVars="events,eVar7";
+            s.linkTrackEvents="event90";
+            s.events="event90";
+            s.eVar7=config.page.analyticsName;
+            s.tl(true,'o',"AutoUpdate Refresh");
+        };
+
         this.logTag = function(params) {
             var tag = params[0],
                 isXhr = params[1],
@@ -18,10 +26,10 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
             var delay = (isXhr || isInternalAnchor) ? true : false;
             that.populateEventProperties(tag);
-            
+
             s.tl(delay, 'o', tag);
         };
-    
+
         this.populateEventProperties = function(tag){
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
@@ -30,17 +38,17 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
         };
 
         this.populatePageProperties = function() {
-       
+
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
-        
+
             var prefix = 'GFE',
                 path = window.location.pathname;
-            
+
             s.pageName  = config.page.analyticsName;
-              
+
             s.pageType  = config.page.contentType || '';  //pageType
             s.prop9     = config.page.contentType || '';  //contentType
-              
+
             s.channel   = config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
@@ -51,21 +59,21 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
             s.prop13    = config.page.series || '';
             s.prop25    = config.page.blogs || '';
-                  
+
             s.prop14    = config.page.buildNumber || '';
-              
+
             var platform = "frontend";
             s.prop19     = platform;
             s.eVar19     = platform;
 
             s.prop31    = 'Guest user';
-                  
+
             s.prop47    = config.page.edition || '';
 
             s.prop48    = detect.getConnectionSpeed();
 
             s.prop56    = detect.getLayoutMode();
-        
+
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
             } else {
@@ -78,7 +86,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
             // must be set before the Omniture file is parsed
             window.s_account = config.page.omnitureAccount;
-    
+
             var that = this;
 
             // if the omniture object was not injected in to the constructor
@@ -96,10 +104,12 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                     common.mediator.on('module:clickstream:click', that.logTag );
                 });
             }
+
+            common.mediator.on('module:autoupdate:loaded', that.logUpdate);
         };
-     
+
     }
-    
+
     return Omniture;
 
 });
