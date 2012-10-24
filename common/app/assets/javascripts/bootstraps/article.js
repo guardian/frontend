@@ -62,7 +62,7 @@ define([
                 var url =  host + '/related/' + edition + '/' + pageId,
                      hasStoryPackage = !document.getElementById('js-related'),
                      relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-               
+
                 if (hasStoryPackage) {
                     relatedExpandable.initalise();
                 }
@@ -77,7 +77,7 @@ define([
                 var url = host + '/most-popular/' + edition + '/' + section,
                     domContainer = document.getElementById('js-popular');
                 new Popular(domContainer).load(url);
-                
+
                 common.mediator.on('modules:popular:render', function () {
                     common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
                     qwery('.trailblock', domContainer).forEach(function (tab) {
@@ -147,13 +147,13 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el).init();
                 }
             }
-         
+
         };
 
     var bootstrap = function (config, userPrefs) {
 
         var isNetworkFront = (config.page.pageId === "");
-        
+
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();
@@ -161,7 +161,7 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config.page.isLive);
-        
+
         switch (isNetworkFront) {
 
             case true:
@@ -172,7 +172,7 @@ define([
             case false:
                 modules.transcludeTopStories(config);
                 break;
-        
+
         }
 
         modules.loadOmnitureAnalytics(config);
