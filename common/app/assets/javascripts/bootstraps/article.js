@@ -217,11 +217,10 @@ define([
         }
         
         // page specific functionality
-        if (config.page.pageId === 'football/fixtures' || config.page.pageId === 'football/results') {
-            // loading only occurs on fixtures and results homepage (i.e. not on date)
-            if (window.location.pathname.match('/football.*(fixtures|results)')) {
-                modules.showMoreMatches();
-            }
+        // loading only occurs on fixtures and results homepage (i.e. not on date)
+        var footballIndexRegex = /\/football.*\/(fixtures|results)$/g;
+        if (window.location.pathname.match(footballIndexRegex)) {
+            modules.showMoreMatches();
         }
         
         modules.loadOmnitureAnalytics(config);
