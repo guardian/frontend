@@ -12,18 +12,18 @@ import cucumber.annotation.en.When;
 
 
 public class ArticleTestSteps {
-	
-    private final SharedDriver webDriver;
 
-    public ArticleTestSteps(SharedDriver webDriver) {
-        this.webDriver = webDriver;
-    }
-	
-    @Given("^I am on the article page$")
-    public void I_am_on_the_article_page() throws Throwable {
+	private final SharedDriver webDriver;
+
+	public ArticleTestSteps(SharedDriver webDriver) {
+		this.webDriver = webDriver;
+	}
+
+	@Given("^I am on the article page$")
+	public void I_am_on_the_article_page() throws Throwable {
 		webDriver.open("/");
-    }
-	
+	}
+
 	@When("^the article has a story package$")
 	public void the_article_has_a_story_package() throws Throwable {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
@@ -54,7 +54,7 @@ public class ArticleTestSteps {
 	public void is_not_displayed(String arg1) throws Throwable {
 		Assert.assertFalse(webDriver.isElementPresent(By.id("related-trails")));
 	}
-	
+
 	@When("^I open a \"([^\"]*)\" article$")
 	public void I_open_a_article(String arg1) throws Throwable {
 		webDriver.open("/sport/2012/jul/27/london-2012-team-gb-clark-lenzly");
@@ -70,13 +70,13 @@ public class ArticleTestSteps {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.clickLink("guardian.co.uk");
 	}
-	
+
 	@When("^I select pan-site \"([^\"]*)\"$")
 	public void I_select_pan_site(String arg1) throws Throwable {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.click(By.cssSelector("#js-popular-tabs > li > a"));
 	}
-	
+
 	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
 	public void I_can_see_list_popular_stories_on_guardian_for_the_section_i_am_in() throws Throwable {
 		Assert.assertEquals("block", webDriver.getelementCssValue(By.id("tabs-popular-2"), "display"));
@@ -86,7 +86,7 @@ public class ArticleTestSteps {
 	public void I_can_see_a_list_of_the_most_popular_stories_on_guardian_co_uk_for_the_whole_guardian_site() throws Throwable {
 		Assert.assertEquals("block", webDriver.getelementCssValue(By.id("tabs-popular-1"), "display"));
 	}
-	
+
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
 	public void I_click_tab_at_the_top_of_the_page(String arg1) throws Throwable {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
@@ -109,12 +109,12 @@ public class ArticleTestSteps {
 		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.findElement(By.id("topstories-control-footer")).click();
 	}
-	
+
 	@Then("^a list of the footer \"([^\"]*)\" opens$")
 	public void a_list_of_the_footer_opens(String arg1) throws Throwable {
 		Assert.assertEquals("block", webDriver.getelementCssValue(By.id("topstories-footer"), "display"));
 	}
-	
+
 	@Then("^another click on the footer \"([^\"]*)\" closes the list.$")
 	public void another_click_on_the_footer_closes_the_list(String arg1) throws Throwable {
 		webDriver.click(By.id("topstories-control-footer"));
@@ -130,7 +130,7 @@ public class ArticleTestSteps {
 	public void it_should_show_a_list_of_sections() throws Throwable {
 		Assert.assertEquals("block", webDriver.getelementCssValue(By.id("sections-header"), "display"));
 	}
-	
+
 	@Then("^another click on the \"([^\"]*)\" \"([^\"]*)\" tab closes the list$")
 	public void another_click_on_the_tab_closes_the_list(String arg1, String arg2) throws Throwable {
 		webDriver.click(By.id("sections-control-" + arg1));
@@ -144,7 +144,7 @@ public class ArticleTestSteps {
 
 	@When("^I have a fast connection speed$")
 	public void I_have_a_fast_connection_speed() throws Throwable {
-			//TODO:
+		//TODO:
 	}
 
 	@Then("^the high resolution version of the image is displayed$")
@@ -164,21 +164,21 @@ public class ArticleTestSteps {
 			webDriver.click(By.className("cta"));
 			webDriver.waitFor(1000);
 		}
-			Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
+		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
 	}
 
 	@When("^Related content has expanders$")
 	public void Related_content_has_expanders() throws Throwable {
 		webDriver.open("/football/2012/oct/23/hillsborough-police-chief-bettison-eagle");
 	}
-	
-	@When("^I click \"([^\"]*)\" button$")
-	public void I_click_Back_to_top_button(String arg1) throws Throwable {
-		
+
+	@When("^Back to top is selected$")
+	public void Back_to_top_is_selected() throws Throwable {
+
 	}
-	
-	@Then("^article page scrolls quickly to the top$")
-	public void article_page_scrolls_quickly_to_the_top() throws Throwable {
+
+	@Then("^article page scrolls to the top$")
+	public void article_page_scrolls_to_the_top() throws Throwable {
 		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
 		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");
 		Assert.assertTrue(webDriver.isElementPresent(By.id(var.substring(var.indexOf("#")+1))));
@@ -190,46 +190,23 @@ public class ArticleTestSteps {
 	}
 
 	@Then("^the corresponding footer pages are displayed$")
-	public void the_corresponding_footer_pages_are_displayed() throws Throwable {					
+	public void the_corresponding_footer_pages_are_displayed() throws Throwable {			
+		//select Help
+		webDriver.selectCheckBottomOfPageLinks("Help");
+		//select Contact us
+		webDriver.selectCheckBottomOfPageLinks("Contact us");
+		//select Terms & conditions
+		webDriver.selectCheckBottomOfPageLinks("Privacy policy");
+		//select Terms & conditions
+		webDriver.selectCheckBottomOfPageLinks("Terms & conditions");
+
+		//select Feedback
+		webDriver.selectCheckBottomOfFeedbackPage("Feedback");
+
 		//select Desktop version
 		webDriver.click(By.id("main-site"));
+
 		Assert.assertTrue(webDriver.getCurrentUrl().contains("www.guardian.co.uk"));
 		webDriver.navigate().back();
-		
-		//select Help
-		webDriver.isVisibleWait(By.linkText("Help"));
-		webDriver.clickLink("Help");
-		Assert.assertEquals("Help", webDriver.getTitle());
-		webDriver.navigate().back();
-		
-		//select Contact us
-		webDriver.isVisibleWait(By.linkText("Contact us"));
-		webDriver.clickLink("Contact us");
-		Assert.assertEquals("How to contact us", webDriver.getTitle());
-		webDriver.navigate().back();
-		
-		//select Terms & conditions
-		webDriver.isVisibleWait(By.linkText("Terms & conditions"));
-		webDriver.clickLink("Terms & conditions");
-		Assert.assertEquals("Terms of service", webDriver.getTitle());
-		webDriver.navigate().back();
-		
-		//select Privacy policy 
-		webDriver.isVisibleWait(By.linkText("Privacy policy"));
-		webDriver.clickLink("Privacy policy");
-		Assert.assertEquals("Privacy policy", webDriver.getTitle());
-		webDriver.navigate().back();
-		
-		//select Feedback
-		webDriver.isVisibleWait(By.linkText("Feedback"));
-		webDriver.clickLink("Feedback");		
-		//find the current window handle
-		String mwh = webDriver.getWindowHandle();
-		//switch to the popup window
-		webDriver.switchWindowFocus(mwh, webDriver);
-		Assert.assertEquals("Your feedback is welcome", webDriver.getTitle());
-		webDriver.close();
-		//switch back to main window
-		webDriver.switchTo().window(mwh);
 	}
 }

@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import junit.framework.Assert;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,7 +22,6 @@ import cucumber.annotation.Before;
 
 
 public class SharedDriver extends EventFiringWebDriver {
-
 
 	public static final WebDriver REAL_DRIVER;
 
@@ -44,7 +45,6 @@ public class SharedDriver extends EventFiringWebDriver {
 			}
 		}
 		REAL_DRIVER = new FirefoxDriver(profile);
-
 	}
 
 	public SharedDriver() {
@@ -75,7 +75,6 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void open(String url) {
 		get(this.getHost() + url);
-		waitFor(500);
 	}
 
 	public String getHost() {
@@ -220,4 +219,33 @@ public class SharedDriver extends EventFiringWebDriver {
 				driver.switchTo().window(newWindowHandle);
 		}
 	}
+	
+	public void selectCheckBottomOfPageLinks(String linkToClick) {
+		
+		if (isVisibleWait(By.linkText(linkToClick))) {
+			clickLink(linkToClick);
+		}
+		
+		//if link name is more than one word take the 1st one - gets around page name being different from link name
+		String[] strArray = linkToClick.split(" ");
+			
+		Assert.assertTrue(getTitle().toLowerCase().contains(strArray[0].toLowerCase()));
+		navigate().back();
+	}
+	
+	public void  selectCheckBottomOfFeedbackPage(String linkToClick) {
+		isVisibleWait(By.linkText(linkToClick));
+		clickLink(linkToClick);		
+		//find the current window handle
+		String mwh = getWindowHandle();
+		//switch to the popup window
+		switchWindowFocus(mwh, REAL_DRIVER);
+		
+		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick));
+
+		close();
+		//switch back to main window
+		switchTo().window(mwh);
+	}
+
 }

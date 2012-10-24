@@ -55,14 +55,14 @@ Feature: Article page
 		Then I can expand and collapse expanders
 		
     Scenario: Back to top
-    	When I click "Back to top" button
-        Then article page scrolls quickly to the top
+    	When Back to top is selected
+        Then article page scrolls to the top
          
     Scenario: Page footer links     
     	When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
     	Then the corresponding footer pages are displayed
 
-	@to-do
+	#@to-do
 	#needs a page where content is not displayed
 	#Scenario: Related content is unavailable
 	#	When "related content" is unavailable
