@@ -19,12 +19,13 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
         };
 
         this.logTag = function(params) {
-            var tag = params[0],
-                isXhr = params[1],
-                isInternalAnchor = params[2];
+            var element = params[0],
+                tag = params[1],
+                isXhr = params[2],
+                isInternalAnchor = params[3];
 
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            var delay = (isXhr || isInternalAnchor) ? true : false;
+            var delay = (isXhr || isInternalAnchor) ? true : element;
             that.populateEventProperties(tag);
 
             s.tl(delay, 'o', tag);

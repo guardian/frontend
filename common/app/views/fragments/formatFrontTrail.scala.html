@@ -12,7 +12,7 @@
 
 @if(info.rowNum == 1) {
     <h2 class="type-1 box-indent">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum:text">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
             @RemoveOuterParaHtml(trail.linkText)
         </a>
     </h2>
@@ -22,7 +22,7 @@
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
             @trail.mainPicture(width=220).map{ smallCrop =>
-             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum:image">
+             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | image">
                 <img class="maxed" src="@smallCrop.url"
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
@@ -40,25 +40,25 @@
 
         @if(trail.thumbnail) {
             @trail.thumbnail.map{ imageUrl =>
-                <a href="@trail.url" class="media-img" data-link-name="@info.rowNum:image">
+                <a href="@trail.url" class="media-img" data-link-name="@info.rowNum | image">
                     <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
                 </a>
             }
-        } 
+        }
 
         <h2 class="media-body trail-headline">
-            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum:text">
+            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </h2>
     </div>
-    
+
     @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
 }
 
 @if(info.rowNum > 5) {
     <h2 class="trail-headline type-3">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum:text">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
             @cleanTrailText(trail.linkText)
         </a>
     </h2>
