@@ -77,7 +77,7 @@
 
 <body>
 
-    <ul>
+    <ul id="tests">
         <li>
             Analytics
             <ul>
@@ -88,6 +88,7 @@
         </li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
+        <li><a href="#Errors">Errors</a></li>
         <li><a href="#Expandable">Expandable</a></li>
         <li><a href="#Images">Image</a></li>
         <li>
@@ -109,9 +110,9 @@
     <div id="test-cases">
         
         <!-- UpgradeImages.spec -->
-        <img data-fullsrc="http://placekitten.com/1/1" data-width="5" width="10" id="upgradeImages" class="visible" />
+        <img data-fullsrc="http://placekitten.com/1/1" src="http://placekitten.com/2/2" data-width="5" width="10" id="upgradeImages" class="visible" />
 
-        <img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src=""/>
+        <img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/>
 
         <!-- Related.spec -->
         <div id="related-1"></div>

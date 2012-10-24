@@ -16,6 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
+        'modules/errors',
         'modules/autoupdate'
     ],
     function (
@@ -36,9 +37,14 @@ define([
         NavigationControls,
         domReady,
         TrailblockToggle,
+        Errors,
         AutoUpdate) {
 
         var modules = {
+
+            attachGlobalErrorHandler: function () {
+                new Errors(window).init();
+            },
 
             upgradeImages: function () {
                 var i = new Images();
@@ -88,9 +94,16 @@ define([
             },
 
             loadFonts: function(config, ua, prefs) {
+                var showFonts = false;
+                if(config.switches.fontFamily || prefs.isOn('font-family')) {
+                    showFonts = true;
+                }
+                if (prefs.isOff('font-family')) {
+                    showFonts = false;
+                }
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                if (config.switches.fontFamily && prefs.exists('font-family')) {
+                if (showFonts) {
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 } else {
                     Fonts.clearFontsFromStorage();
@@ -154,6 +167,7 @@ define([
 
         var isNetworkFront = (config.page.pageId === "");
 
+        modules.attachGlobalErrorHandler();
         modules.upgradeImages();
         modules.transcludeRelated(config);
         modules.showRelativeDates();

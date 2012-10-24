@@ -3,8 +3,8 @@ package com.gu.test;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.After;
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
@@ -30,8 +30,9 @@ public class ArticleTestSteps {
 	}
 
 	@Then("^\"([^\"]*)\" is displayed$")
-	public void is_displayed(String arg1) throws Throwable {
-		Assert.assertTrue(webDriver.isTextPresentByElement(By.id("related-trails"), arg1));
+	public void is_displayed(String headerText) throws Throwable {
+		WebElement relatedHeader = webDriver.findElementWait(By.cssSelector("#related-trails h3"));
+		Assert.assertEquals(headerText, relatedHeader.getText());
 	}
 
 	@When("^the article has no story package$")
@@ -166,9 +167,3 @@ public class ArticleTestSteps {
 		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
 	}
 }
-
-
-
-
-
-

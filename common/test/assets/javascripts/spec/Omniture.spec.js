@@ -3,6 +3,11 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
     describe("Omniture", function() { 
 
         var config = {};
+        
+        var w = {
+        	performance: { timing: { requestStart: 1, responseStart: 5000 } },
+        	innerWidth: 500
+        }
 
         beforeEach(function(){
             
@@ -11,10 +16,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
-
-            window.performance = { timing: { requestStart: 1, responseStart: 5000 } };
-            window.innerWidth = 500;
-           
+            
         });
 
         it("should correctly set the Omniture account", function(){
@@ -58,7 +60,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
             };
 
-            var o = new Omniture(s, config)
+            var o = new Omniture(s, config, w)
             o.populatePageProperties();
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
