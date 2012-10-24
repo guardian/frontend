@@ -1,22 +1,22 @@
 define(['analytics/omniture', 'common'], function(Omniture, common) {
-    
-    describe("Omniture", function() { 
+
+    describe("Omniture", function() {
 
         var config = {};
-        
+
         var w = {
         	performance: { timing: { requestStart: 1, responseStart: 5000 } },
         	innerWidth: 500
         }
 
         beforeEach(function(){
-            
+
             config.page = { omnitureAccount: 'the_account' }
 
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
-            
+
         });
 
         it("should correctly set the Omniture account", function(){
@@ -85,12 +85,12 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
         it("should log a page view event", function() {
             var o = new Omniture(s, config).init();
-            waits(100); 
+            waits(100);
             runs(function() {
                 expect(s.t).toHaveBeenCalledOnce();
             });
         });
-        
+
         it("should log a clickstream event", function() {
 
             var o = new Omniture(s, config)
@@ -102,17 +102,19 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             });
         });
 
-        it("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
-            
-            var o = new Omniture(s, config)
+        xit("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
+
+            var o = new Omniture(s, config),
+                el = document.createElement("a");
+
             o.init();
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', ['tag', false, true]); // xhr
-                common.mediator.emit('module:clickstream:click', ['tag', true, false]); // internal anchor
-                common.mediator.emit('module:clickstream:click', ['tag', true, true]);  // xhr + internal anchor
-                common.mediator.emit('module:clickstream:click', ['tag', false, false]); // neither 
-                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
+                common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]); // xhr
+                common.mediator.emit('module:clickstream:click', [el, 'tag', true, false]); // internal anchor
+                common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);  // xhr + internal anchor
+                common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // neither
+                expect(s.tl.withArgs(el, true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
             });
 
         });
