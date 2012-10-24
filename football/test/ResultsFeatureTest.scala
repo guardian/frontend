@@ -19,7 +19,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("h1").getText should be("All results")
       }
 
-      //A dated url will give us a fixed set of fixtures we can assert against
+      //A dated url will give us a fixed set of results we can assert against
       HtmlUnit("/football/results/2012/oct/20") { browser =>
         import browser._
 
@@ -27,9 +27,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         findFirst(".competitions-date").getText should be("Friday 19 October 2012")
 
-        val fixture = $(".matches").findFirst(".match-desc")
-        fixture.findFirst(".home").getText should be("Sheff Wed")
-        fixture.findFirst(".away").getText should be("Leeds")
+        val results = $(".matches").findFirst(".match-desc")
+        results.findFirst(".home").getText should be("Sheff Wed")
+        results.findFirst(".away").getText should be("Leeds")
         findFirst(".status").getText should include("FT")
 
         and("I should see results for previous days")
@@ -71,8 +71,8 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     }
 
     scenario("Link tracking") {
-      given("I visit the fixtures page")
-      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
+      given("I visit the results page")
+      HtmlUnit("/football/results/2012/oct/20") { browser =>
         import browser._
         then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
