@@ -22,37 +22,6 @@ span.timestamp {
     margin-top: @baseline*2;
 }
 
-
-.article.is-live blockquote,
-.article.is-live blockquote p {
-	.type-4;
-	color: #333;
-	font-weight: normal;
-}
-
-.article.is-live blockquote:before {
-	.icon-livequote-before;
-    display: block;
-    content: '';
-    margin: 21px 0 @baseline*2 0;
-    clear: both;
-}
-
-.svg .article.is-live blockquote:before {
-    .svg-icon-livequote-before;
-}
-
-.article.is-live blockquote:after {
-	.icon-livequote-after;
-    display: block;
-    content: '';
-    margin-bottom: 22px;
-}
-
-.svg .article.is-live blockquote:after {
-    .svg-icon-livequote-after;
-}
-
 .tweet:before,
 .tweet:after {
     display:none !important;
@@ -76,6 +45,7 @@ span.timestamp {
 }
 
 .tweet-user {
+    display: inline;
     font-weight: bold !important;
     padding-left: 40px;
     margin-bottom: 0px;

@@ -150,7 +150,7 @@ object TweetCleaner extends HtmlCleaner {
       val el = element.clone()
       val body = el.child(0).attr("class", "tweet-body")
       val date = el.child(1).attr("class", "tweet-date")
-      val user = el.ownText().substring(2)
+      val user = el.ownText()
       val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
 
       element.empty().attr("class", "tweet")
