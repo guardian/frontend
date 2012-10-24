@@ -184,8 +184,6 @@ define([
         modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.loadOphanAnalytics();
-
-        console.dir(config);
     };
 
     // domReady proxy for bootstrap
