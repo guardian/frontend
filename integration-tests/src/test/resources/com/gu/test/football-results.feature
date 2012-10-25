@@ -32,7 +32,7 @@ Feature: Football results
         When I click 'next month'   
         Then I should see the following 20 days worth of results
 
-    @To do
+    @ignore
     Scenario: Select competition to filter results
         Given I visit all results page
         When I click 'All results' filter
