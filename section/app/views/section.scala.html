@@ -3,12 +3,12 @@
 @main(section, Static, Configuration, Switches.all){  }{
 <section class="front-section zone-@section.section">
 
-	<h1 class="article-zone zone-color">@section.name</h1>
+	<h1 class="article-zone zone-color">@Html(section.name)</h1>
 
     @defining(math.max(editorsPicks.length, 15)){ numTrails =>
         @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
 
-	   <div class="trailblock" data-count="@trails.length" data-link-name="section block @section.section">
+	   <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
 
             <ul class="unstyled">
 
@@ -19,7 +19,6 @@
             }
 
         	</ul>
-
 
         </div>
 

@@ -1,0 +1,37 @@
+{
+    "packages":{
+        "frontend-football":{
+            "type":"executable-jar-webapp",
+            "apps":[ "frontend::football" ],
+            "data":{
+                "port":"9000",
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/football/fixtures"
+                ]
+            }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"aws-frontend-static",
+                "cacheControl":"public, max-age=2592000"
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
+        },
+        "deploy":{
+            "actionsPerHost": ["frontend-football.deploy"]
+        },
+        "artifactUpload":{
+            "actionsBeforeApp": ["frontend-football.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
+        }
+    }
+}

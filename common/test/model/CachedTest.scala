@@ -5,17 +5,17 @@ import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import play.api.templates.Html
-import play.api.mvc.SimpleResult
+import play.api.mvc.{ Results, SimpleResult }
 import org.scala_tools.time.Imports._
 
-class CachedOkTest extends FlatSpec with ShouldMatchers {
+class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
-  "CachedOk" should "cache live content for 5 seconds" in {
+  "Cached" should "cache live content for 5 seconds" in {
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
 
-    val result = CachedOk(liveContent)(Html("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
     headers("Cache-Control") should be("public, max-age=5")
@@ -25,7 +25,7 @@ class CachedOkTest extends FlatSpec with ShouldMatchers {
     val modifiedAlmost24HoursAgo = (DateTime.now - 23.hours) - 50.minutes
     val liveContent = content(lastModified = modifiedAlmost24HoursAgo, live = false)
 
-    val result = CachedOk(liveContent)(Html("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
     headers("Cache-Control") should be("public, max-age=60")
@@ -35,7 +35,7 @@ class CachedOkTest extends FlatSpec with ShouldMatchers {
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    val result = CachedOk(liveContent)(Html("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
     headers("Cache-Control") should be("public, max-age=900")
@@ -52,9 +52,11 @@ class CachedOkTest extends FlatSpec with ShouldMatchers {
       def apiUrl = ""
 
       def webTitle = ""
+
+      def analyticsName = ""
     }
 
-    val result = CachedOk(page)(Html("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(page)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
     headers("Cache-Control") should be("public, max-age=60")

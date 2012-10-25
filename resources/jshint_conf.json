@@ -40,7 +40,7 @@ var JSLINT_OPTIONS = {
     "latedef"       : true,
     "loopfunc"      : false,
     "noarg"         : true,
-    "regexp"        : true,
+    "regexp"        : false,
     "regexdash"     : false,
     "scripturl"     : true,
     "shadow"        : false,

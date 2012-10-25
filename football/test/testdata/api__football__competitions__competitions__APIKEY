@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<seasons xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://pads6.pa-sport.com/API/Schemas/Football/Competitions/competitions.xsd">
+    <season competitionID="100" seasonID="203">
+        <name>Barclays Premier League 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="101" seasonID="204">
+        <name>Npower Championship 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="102" seasonID="205">
+        <name>Npower League One 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="103" seasonID="206">
+        <name>Npower League Two 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="104" seasonID="212">
+        <name>Blue Square Premier 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="120" seasonID="207">
+        <name>Clydesdale Bank Premier League 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="121" seasonID="208">
+        <name>Irn-Bru Scottish First Division 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="122" seasonID="209">
+        <name>Irn-Bru Scottish Second Division 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="123" seasonID="210">
+        <name>Irn-Bru Scottish Third Division 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="167" seasonID="217">
+        <name>Blue Square North 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="168" seasonID="218">
+        <name>Blue Square South 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="300" seasonID="230">
+        <name>The FA Cup with Budweiser 12/13</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="301" seasonID="211">
+        <name>Capital One Cup</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="302" seasonID="224">
+        <name>Johnstone's Paint Trophy 12/13</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="320" seasonID="199">
+        <name>The William Hill Scottish Cup 11/12</name>
+        <startDate>01/07/2011</startDate>
+        <endDate>31/05/2012</endDate>
+    </season>
+    <season competitionID="321" seasonID="219">
+        <name>Scottish Communities League Cup 12/13</name>
+        <startDate>20/07/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="322" seasonID="221">
+        <name>Ramsdens Challenge Cup 12/13</name>
+        <startDate>01/07/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="400" seasonID="213">
+        <name>The FA Community Shield 12/13</name>
+        <startDate>01/07/2012</startDate>
+        <endDate>31/08/2012</endDate>
+    </season>
+    <season competitionID="500" seasonID="222">
+        <name>UEFA Champions League 12/13</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="510" seasonID="223">
+        <name>UEFA Europa League 12/13</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/05/2013</endDate>
+    </season>
+    <season competitionID="650" seasonID="216">
+        <name>Spanish Primera Liga BBVA</name>
+        <startDate>01/08/2012</startDate>
+        <endDate>30/06/2013</endDate>
+    </season>
+    <season competitionID="701" seasonID="220">
+        <name>2014 FIFA World Cup qualification (UEFA)</name>
+        <startDate>01/09/2012</startDate>
+        <endDate>31/10/2013</endDate>
+    </season>
+</seasons>

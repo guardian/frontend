@@ -11,6 +11,9 @@ import java.net.{ HttpURLConnection, URL }
  */
 class EditionalisedHtmlUnit(config: GuardianConfiguration) {
 
+  val testPlugins: Seq[String] = Nil
+  val disabledPlugins: Seq[String] = Nil
+
   import config.edition._
 
   val Port = """.*:(\d*)$""".r
@@ -39,7 +42,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
+    running(TestServer(port, FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins)), HTMLUNIT) { browser =>
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
       val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
@@ -54,7 +57,7 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
       case _ => 9000
     }
 
-    running(TestServer(port, FakeApplication()), HTMLUNIT) { browser =>
+    running(TestServer(port, FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins)), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false

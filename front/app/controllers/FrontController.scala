@@ -16,6 +16,7 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   override val section = ""
   override val apiUrl = "http://content.guardianapis.com"
   override val webTitle = "The Guardian"
+  override lazy val analyticsName = "GFE:Network Front"
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> "",
@@ -48,7 +49,7 @@ class FrontController extends Controller with Logging {
 
   private def renderFront(model: FrontPage)(implicit request: RequestHeader) = model match {
     case FrontPage(Nil) => InternalServerError
-    case m => CachedOk(m) { Compressed(views.html.front(model)) }
+    case m => Cached(m) { Ok(Compressed(views.html.front(model))) }
   }
 }
 
