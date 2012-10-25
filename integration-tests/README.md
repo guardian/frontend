@@ -2,10 +2,13 @@
 
 We are using [Cucumber JVM](https://github.com/cucumber/cucumber-jvm) to run integration tests.
 
-## Guidance
+## Authoring Guidance
 
+- Each _feature_ should describe an actual audience benefit.
+- Each _scenario_ should start with a user-focussed verb - Eg, "*Read* a story ...", "*Find* a list of ..." 
 - We very much favour high-level, imperative style tests.
-- Features should describe an actual end-user benefit.
+
+
 
 ## Usage
 
