@@ -166,8 +166,8 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(config) {
-                if(config.page.isLive) {
+            liveBlogging: function(isLive) {
+                if(isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
@@ -183,6 +183,7 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
+
         };
 
     var bootstrap = function (config, userPrefs) {
@@ -197,7 +198,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config);
+        modules.liveBlogging(config.page.isLive);
 
         switch (isNetworkFront) {
 
