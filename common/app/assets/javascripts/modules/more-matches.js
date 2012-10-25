@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'bonzo', 'qwery', 'bean'], function (common, reqwest, bonzo, qwery, bean) {
+define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo, bean) {
 
     return {
 
@@ -6,15 +6,13 @@ define(['common', 'reqwest', 'bonzo', 'qwery', 'bean'], function (common, reqwes
 
         init: function (nav) {
 
-            this.nav = nav;
-
             // if nav doesn't exist then this will change every <a> on the page...
             if (!nav) { return; }
 
             bonzo(nav).removeClass('js-not-ajax'); // removes the default left/right float style
 
             // update nav
-            bonzo(qwery('a', nav))
+            bonzo(common.$g('a', nav))
                 .addClass('cta')
                 .each(function(element, index) {
                     // update text in cta
