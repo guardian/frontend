@@ -102,7 +102,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             });
         });
 
-        xit("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
+        it("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
 
             var o = new Omniture(s, config),
                 el = document.createElement("a");
@@ -114,7 +114,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                 common.mediator.emit('module:clickstream:click', [el, 'tag', true, false]); // internal anchor
                 common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);  // xhr + internal anchor
                 common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // neither
-                expect(s.tl.withArgs(el, true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
+                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
             });
 
         });

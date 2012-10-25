@@ -33,7 +33,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
             if (filterSource(event.target.tagName.toLowerCase()).length > 0) {
 
-                target = common.getTargetElement(event);
+                target = event.target;
                 dataIsXhr = target.getAttribute("data-is-ajax");
                 href = target.getAttribute("href");
 
