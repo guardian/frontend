@@ -15,7 +15,7 @@
 
     <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
 
-    @if(model.isLive) {
+    @if(model.isLive && model.pageType == "live") {
         @fragments.autoUpdate()
     }
     
