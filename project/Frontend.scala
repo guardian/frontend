@@ -31,6 +31,10 @@ object Frontend extends Build with Prototypes {
   val router = application("router").dependsOn(commonWithTests)
   val diagnostics = application("diagnostics").dependsOn(commonWithTests)
 
+  val football = application("football").dependsOn(commonWithTests).settings(
+      libraryDependencies += "com.gu" %% "pa-client" % "2.4"
+  )
+
   val dev = application("dev-build")
     .dependsOn(front)
     .dependsOn(article)
@@ -38,6 +42,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(tag)
     .dependsOn(video)
     .dependsOn(gallery)
+    .dependsOn(football)
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
@@ -55,7 +60,7 @@ object Frontend extends Build with Prototypes {
   	)
     
   val main = root().aggregate(
-    common, front, article, section, tag, video, gallery, coreNavigation, router, diagnostics, dev
+    common, front, article, section, tag, video, gallery, football, coreNavigation, router, diagnostics, dev
   )
   
 }

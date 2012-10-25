@@ -34,7 +34,7 @@ object VideoController extends Controller with Logging {
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
-    CachedOk(model.video) {
-      Compressed(views.html.video(model.video, model.storyPackage))
+    Cached(model.video) {
+      Ok(Compressed(views.html.video(model.video, model.storyPackage)))
     }
 }

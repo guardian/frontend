@@ -6,6 +6,8 @@ object CommonSwitches {
 
   val FontSwitch = DefaultSwitch("font-family", "Enables web font loading")
 
-  val all: Seq[Switchable] = Seq(FontSwitch)
+  val PollingSwitch = DefaultSwitch("polling", "Disables polling across site")
+
+  val all: Seq[Switchable] = Seq(FontSwitch, PollingSwitch)
 
 }
