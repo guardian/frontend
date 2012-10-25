@@ -183,6 +183,7 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
+
         };
 
     var bootstrap = function (config, userPrefs) {
@@ -197,8 +198,8 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config);
-        
+        modules.liveBlogging(config.page.isLive);
+
         switch (isNetworkFront) {
 
             case true:
@@ -209,7 +210,7 @@ define([
             case false:
                 modules.transcludeTopStories(config);
                 break;
-        
+
         }
         
         // page-specific functionality

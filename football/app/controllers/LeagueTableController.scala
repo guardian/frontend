@@ -29,7 +29,9 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
 
   def render() = Action { implicit request =>
 
-    val page = new Page("http://www.guardian.co.uk/football/matches", "football/tables", "football", "", "All tables")
+    val page = new Page("http://www.guardian.co.uk/football/matches", "football/tables", "football", "", "All tables",
+      "GFE: Football : automatic : tables"
+    )
 
     val groups = loadTables.map { table =>
       if (table.multiGroup) {
@@ -48,7 +50,8 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
       val page = new Page("http://www.guardian.co.uk/football/matches",
-        table.competition.url.drop(1) + "/tables", "football", "", table.competition.fullName + " table")
+        table.competition.url.drop(1) + "/tables", "football", "", table.competition.fullName + " table",
+        "GFE: Football : automatic : competition tables")
 
       Cached(page) {
         Ok(Compressed(views.html.tables(TablesPage(page, Seq(table)))))

@@ -51,7 +51,9 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 
 object FixturesController extends FixtureRenderer with Logging {
 
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
+  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures",
+    "GFE: Football : automatic : fixtures"
+  )
 
   def renderFor(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -78,7 +80,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
   def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
-        "football", "", competition.fullName + " fixtures")
+        "football", "", competition.fullName + " fixtures", "GFE: Football : automatic : competition fixtures")
       renderFixtures(
         page,
         Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competitionName),
