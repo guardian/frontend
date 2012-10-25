@@ -9,5 +9,5 @@ Feature: Akamai (CDN)
     @cdn
     Scenario: View compressed web pages
         Given I have a browser that supports content encoding
-        Then the site should be served with a supported compression format
+        Then pages should be served with a supported compression format
 
