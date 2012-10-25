@@ -1,5 +1,6 @@
 @navigation
-Feature: Navigation - Sections
+
+Feature: Sections Navigation
 
 In order to explore the Guardian content
 As a Guardian Reader

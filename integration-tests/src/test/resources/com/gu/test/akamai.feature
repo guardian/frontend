@@ -1,3 +1,5 @@
+@akamai
+
 Feature: Akamai (CDN)
 
     As a Guardian reader
@@ -5,8 +7,7 @@ Feature: Akamai (CDN)
     So that I can have a faster reading experience
 
     @cdn
-    Scenario: Compress web pages
-        Given I visit the network front
-        And I have a browser that supports content encoding
-        Then the should be served with a supported compression format
+    Scenario: View compressed web pages
+        Given I have a browser that supports content encoding
+        Then the site should be served with a supported compression format
 
