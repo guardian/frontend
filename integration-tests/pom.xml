@@ -12,7 +12,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cucumber.version>1.0.14</cucumber.version>
-		<tags>--tags ~@ignore</tags>
+        <tags>--tags ~@ignore ~@cdn ~@routing</tags> <!-- tags that don't run by default -->
 		<cucumber.options>src/test/resources ${tags} --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
 	</properties>
 
