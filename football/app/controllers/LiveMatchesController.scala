@@ -33,7 +33,8 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
       nextPage = None,
       previousPage = None,
       pageType = "live",
-      filters = filters
+      filters = filters,
+      None
     )
 
     Cached(page) {

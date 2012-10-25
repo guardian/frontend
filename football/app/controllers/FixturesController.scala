@@ -18,7 +18,8 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
   def renderFixtures(page: Page,
     competitions: CompetitionSupport,
     date: Option[DateMidnight] = None,
-    competitionFilter: Option[String])(implicit request: RequestHeader) = {
+    competitionFilter: Option[String],
+    competition: Option[String])(implicit request: RequestHeader) = {
     val startDate = date.getOrElse(new DateMidnight)
 
     val dates = competitions.nextMatchDates(startDate, daysToDisplay)
@@ -33,7 +34,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
       .lastOption.map(date => toNextPreviousUrl(date, competitionFilter))
 
     val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
-      nextPage, previousPage, "fixtures", filters)
+      nextPage, previousPage, "fixtures", filters, competition)
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
@@ -49,14 +50,20 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 
 object FixturesController extends FixtureRenderer with Logging {
 
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/fixtures", "football", "", "All fixtures")
+  val page = new Page(
+    "http://www.guardian.co.uk/football/matches",
+    "football/fixtures",
+    "football",
+    "",
+    "All fixtures"
+  )
 
   def renderFor(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
-    renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None)
+    renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None, None)
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
@@ -75,9 +82,14 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
   def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
-        "football", "", competition.fullName + " fixtures")
-      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName))
+      val page = new Page(
+        "http://www.guardian.co.uk/football/matches",
+        competition.url.drop(1) + "/results",
+        "football",
+        "",
+        competition.fullName + " fixtures"
+      )
+      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName), Some(competition.url))
     }.getOrElse(NotFound)
   }
 

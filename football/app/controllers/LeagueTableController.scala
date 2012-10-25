@@ -7,7 +7,7 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 
-case class TablesPage(page: Page, tables: Seq[Table]) {
+case class TablesPage(page: Page, tables: Seq[Table], urlBase: String) {
   lazy val singleCompetition = tables.size == 1
 }
 
@@ -29,7 +29,13 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
 
   def render() = Action { implicit request =>
 
-    val page = new Page("http://www.guardian.co.uk/football/matches", "football/tables", "football", "", "All tables")
+    val page = new Page(
+      "http://www.guardian.co.uk/football/matches",
+      "football/tables",
+      "football",
+      "",
+      "All tables"
+    )
 
     val groups = loadTables.map { table =>
       if (table.multiGroup) {
@@ -40,18 +46,23 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     }
 
     Cached(page) {
-      Ok(Compressed(views.html.tables(TablesPage(page, groups))))
+      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football"))))
     }
   }
 
   def renderCompetition(competition: String) = Action { implicit request =>
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
-      val page = new Page("http://www.guardian.co.uk/football/matches",
-        table.competition.url.drop(1) + "/tables", "football", "", table.competition.fullName + " table")
+      val page = new Page(
+        "http://www.guardian.co.uk/football/matches",
+        table.competition.url.drop(1) + "/tables",
+        "football",
+        "",
+        table.competition.fullName + " table"
+      )
 
       Cached(page) {
-        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table)))))
+        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url))))
       }
     }.getOrElse(NotFound("Not found"))
   }
