@@ -22,22 +22,11 @@ object LiveMatchesController extends Controller with Logging {
 
     val matches = Seq(MatchesOnDate(today, Competitions.withMatchesOn(today).competitions))
 
-    // are there any live matches
-    val liveMatches = matches.filter { day =>
-      day.competitions.filter { competition =>
-        competition.matches.filter {
-          case matchDay: pa.MatchDay => { !matchDay.result }
-          case _ => false
-        }.nonEmpty
-      }.nonEmpty
-    }
-
     val livePage = MatchesPage(page, blog,
       matches.filter(_.competitions.nonEmpty),
       nextPage = None,
       previousPage = None,
-      pageType = "live",
-      isLive = liveMatches.nonEmpty)
+      pageType = "live")
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
