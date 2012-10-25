@@ -29,6 +29,8 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
       competitions.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
     }.map(date => toNextPreviousUrl(date, competitionFilter))
 
+    competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay).foreach(d => println(d.toString("dd MMM yyyy")))
+
     val previousPage = competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay)
       .lastOption.map(date => toNextPreviousUrl(date, competitionFilter))
 
@@ -77,12 +79,15 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
         "football", "", competition.fullName + " fixtures")
-      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName))
+      renderFixtures(
+        page,
+        Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competitionName),
+        date, Some(competitionName))
     }.getOrElse(NotFound)
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
-    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition)
-    case other => "/football/%s/fixtures/%s" format (competition, other.toString("yyyy/MMM/dd").toLowerCase)
+    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.get)
+    case other => "/football/%s/fixtures/%s" format (competition.get, other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }

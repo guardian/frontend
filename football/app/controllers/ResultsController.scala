@@ -79,13 +79,11 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
         "football", "", competition.fullName + " results")
-      renderResults(page, Competitions.withCompetitionFilter(competitionName), Some(competitionName), date)
+      renderResults(page,
+        Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competitionName),
+        Some(competitionName), date)
     }.getOrElse(NotFound)
 
-  }
-
-  def competitionDoesNotExist(competition: String): Boolean = {
-    Competitions.withCompetitionFilter(competition).competitions.isEmpty
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
