@@ -1,7 +1,7 @@
 @(trail: Trail, info: RowInfo)
 
 <p class="type-3">
-    <a href="@trail.url" data-link-name="link text | item @info.rowNum">
+    <a href="@trail.url" data-link-name="@info.rowNum | text">
         @RemoveOuterParaHtml(trail.linkText)
     </a>
 </p>
