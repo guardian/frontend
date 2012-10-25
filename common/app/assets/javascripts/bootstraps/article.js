@@ -159,10 +159,6 @@ define([
             showMoreMatches: function() {
                 var matchesNav = document.getElementById('matches-nav');
                 MoreMatches.init(matchesNav);
-                bean.add(matchesNav, 'a', 'click', function(e) {
-                    e.preventDefault();
-                    common.mediator.emit('ui:more-matches:clicked', [e.currentTarget]);
-                });
             },
 
             bindTogglePanels: function () {
@@ -216,9 +212,10 @@ define([
         
         }
         
-        // page specific functionality
+        // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
-        var footballIndexRegex = /\/football\/(fixtures|results)$/g;
+        //var footballIndexRegex = /\/football\/(fixtures|results)$/g;
+        var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;
         if (window.location.pathname.match(footballIndexRegex)) {
             modules.showMoreMatches();
         }

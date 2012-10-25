@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo, qwery) {
+define(['common', 'reqwest', 'bonzo', 'qwery', 'bean'], function (common, reqwest, bonzo, qwery, bean) {
 
     return {
 
@@ -7,6 +7,9 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
         init: function (nav) {
 
             this.nav = nav;
+
+            // if nav doesn't exist then this will change every <a> on the page...
+            if (!nav) { return; }
 
             bonzo(nav).removeClass('js-not-ajax'); // removes the default left/right float style
 
@@ -36,6 +39,11 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
                         }
                     }
                 });
+            });
+
+            bean.add(nav, 'a', 'click', function(e) {
+                common.mediator.emit('ui:more-matches:clicked', [e.target]);
+                e.preventDefault();
             });
 
         }
