@@ -1,3 +1,8 @@
+.js-on .js-hidden,
+.js-off .js-visible {
+    display: none;
+}
+
 .gt-base {
     display: none;
 }
@@ -70,6 +75,10 @@
 }
 
 
+.stats-1, .stats-2, .stats-3 {
+    display: none;
+}
+
 /* please add media queries in ascending order of size */
 
 @media screen and (max-width: 300px) {
@@ -89,6 +98,10 @@
         font-size: 17px;
     }
 
+    .stats-1 {
+        display: table-cell;
+    }
+
 }
 
 @media (min-width: 641px) {
@@ -105,12 +118,25 @@
         height: 40px;
     }
 
+    .stats-2 {
+        display: table-cell;
+    }
+
+    .table-football th,
+    .table-football td {
+        padding: @baseline*2 3px;
+    }
+    
 }
 
 @media screen and (min-width: 850px) {
 
     .trailblock .img img {
         width: 160px;
+    }
+
+    .stats-3 {
+        display: table-cell;
     }
 
 }

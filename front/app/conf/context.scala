@@ -5,6 +5,7 @@ import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
 import java.net.{ HttpURLConnection, URL }
+import common._
 
 object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env") {
 

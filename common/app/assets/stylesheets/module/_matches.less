@@ -1,0 +1,218 @@
+.competitions-date,
+.football-table-header {
+    padding-top: @baseline*2;
+    background-color: #efefe7;
+}
+
+a.football-table-link {
+    color: #333;
+    display: block;
+    text-decoration: none;
+}
+
+.competition-title {
+    margin-bottom: 0;
+    padding-top: @baseline*2;
+    position: relative;
+    border-bottom: 1px solid #efefe7;
+}
+
+.competition-title a { 
+    color: #333333; 
+}
+
+.competition-title i {
+    position: absolute;
+    top: @baseline*3;
+    right: @gutter;
+}
+
+.match,
+.competition {
+    list-style: none;
+}
+
+.match { 
+    border-bottom: 1px solid #efefe7;
+    padding: @baseline*2 @gutter;
+    position: relative;    
+}
+
+.match .match-desc {
+    color: #333333;
+    position: relative;
+    margin-bottom: 0;
+    background-color: white;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+    font-family: @sans-serif;
+    overflow: hidden;
+    margin-right: 42px; // offsets the FT/HT box
+    word-break: break-all; // fixes things for small screens
+}
+
+.match .team {
+    display: block;
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.match .home {
+    text-align: right;
+    padding-right: @gutter;
+}
+
+.match .away {
+    padding-left: @gutter;
+}
+
+.match .result {
+    position: absolute;
+    display: block;
+    width: 40px;
+    top: 0;
+    left: 50%;
+    margin-left: -20px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.match .status {
+    position: absolute;
+    right: @gutter;
+    top: @baseline*2;
+    color: #979797;
+}
+
+.match .status .status-desc {
+    position: absolute;
+    left: -9999px;
+}
+
+.match .status abbr {
+    color: #ffffff;
+    padding: 5px 10px;   
+    border: none;
+}
+
+.match .status .half-time {
+    background-color: #8cc43f;
+}
+
+.match .status .full-time {
+    background-color: #8cc43f;
+}
+
+.match .status .live {
+    background-color: #da4b23;
+}
+
+.matches,
+.competitions {
+    margin-bottom: 0px;
+}
+
+#matches-nav a {
+    display: inline-block;
+}
+
+#matches-nav a.cta {
+    display: block;
+    color: #545454;
+    margin-bottom: @baseline*2;
+}
+
+#matches-nav a.cta:before,
+.cta.football-table-link:before {
+    content: "";
+}
+
+
+.sport-header {
+    margin-bottom: @baseline*2;
+}
+
+.league-table {
+    margin-bottom: @gutter;
+}
+
+.table-football thead th {
+    background-color: #1c515a;
+    color: #8cc43f;
+    font-weight: normal;    
+}
+
+.table-football th {
+    border-bottom: none;
+}
+
+.table-football tbody th {
+    background: #efefef;
+    font-weight: bold;
+    color: #aaa;
+    text-align: center;
+}
+
+.table-football th,
+.table-football td {
+    padding: @baseline*2 3%; // eventually will need a media query for this when it gets too wide
+    border-right: none;
+}
+
+.table-football tr td:last-child {
+    font-weight: bold;
+}
+
+.table-football tbody tr {
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+}
+
+.table-football tbody tr:last-child {
+    border-bottom: none;
+}
+
+// styling for non-ajax match nav 
+.js-not-ajax {
+    padding: @baseline*2 @gutter;
+}
+
+.js-not-ajax .match-next {
+    float: right;
+}
+
+.js-not-ajax .match-prev:before {
+    content: "‹ ";
+}
+
+.js-not-ajax .match-next::after {
+    content: " ›";
+}
+
+.zone-football .dateline{
+	margin-left:22px;
+}
+.zone-football .update{
+	border-bottom:0;
+	margin-bottom:0;
+	margin-top:12px;
+}
+.zone-football .update .is-active,
+.zone-football .update button:hover{
+	background-color:#8CC43F;
+}
+
+.football-nav {
+    clear: left;
+    padding-top: @baseline*4;
+}
+
+.football-nav a {
+    color: #fff;
+}

@@ -4,7 +4,7 @@
 <head>
 
   <title id="foo">Jasmine Spec Runner</title>
-    
+
   <link rel="shortcut icon" type="image/png" href="vendor/jasmine-1.2.0/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
   <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
@@ -31,7 +31,7 @@
 
     .initially-off:after { content: " -- (hidden)"; }
     .on:after { content: " -- (visible)"; }
-  </style>  
+  </style>
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
   <script type="text/javascript">
@@ -44,7 +44,7 @@
 
     if (spec) {
 
-        document.getElementById("foo").innerHTML = 'Jasmine Spec Runner - ' + spec; 
+        document.getElementById("foo").innerHTML = 'Jasmine Spec Runner - ' + spec;
 
         // jasmine boilerplate
         (function() {
@@ -84,7 +84,7 @@
                 <li><a href="#Clickstream">Clickstream</a>
                 <li><a href="#Omniture">Omniture</a> - <em>uses a mock Omniture library</em>
                 <li><a href="#OmnitureLib">Omniture Lib</a> - <em>loads the real Omniture library</em>
-            </ul>        
+            </ul>
         </li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
@@ -105,10 +105,11 @@
         <li><a href="#Tabs">Tabs</a></li>
         <li><a href="#TrailblockToggle">Trailblock Toggle</a></li>
         <li><a href="#Autoupdate">Auto update</a></li>
+        <li><a href="#MoreMatches">More Matches</a></li>
     </ul>
 
     <div id="test-cases">
-        
+
         <!-- UpgradeImages.spec -->
         <img data-fullsrc="http://placekitten.com/1/1" src="http://placekitten.com/2/2" data-width="5" width="10" id="upgradeImages" class="visible" />
 
@@ -127,7 +128,7 @@
                 transition: background-color 0.5s linear;
                 -moz-transition: background-color 0.5s linear;
                 -o-transition: background-color 0.5s linear;
-                -webkit-transition: background-color 0.5s linear; 
+                -webkit-transition: background-color 0.5s linear;
             }
             .shut ul.flex { background-color: #999; } /* illustrative */
             ul.flex { background-color: #ccc; }
@@ -230,7 +231,7 @@
         <p id="not-inside-a-link">
             <a href="/foo" id="click-me" data-link-name="the link">The link</a>
             <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="xhr link">Xhr Link</a>
-            <span id="click-me-span" data-link-name="the span">Span Link</span>
+            <button id="click-me-button" data-link-name="the button">Span Link</button>
             <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
         </p>
     </div>
@@ -251,9 +252,9 @@
     <!-- TrailblockToggle.spec -->
 
     <a class="js-toggle-trailblock" href="javascript://" data-zone-name="uk" data-block-name="sport" id="js-trigger-sport">Hide</a>
-    
+
     <div class="trailblock js-front-trailblock shut rolled-out" id="front-trailblock-sport" data-count="5" data-link-name="front block News">
-      <ul class="unstyled"> 
+      <ul class="unstyled">
         <li></li>
       </ul>
     </div>
@@ -262,10 +263,11 @@
 
     <div id="update-area"></div>
 
-    <div class="update js-visible">
-      <p class="update-text type-4">Auto update</p>
-      <button class="update-btn type-6" data-action="on">On</button>
-      <button class="update-btn type-6" data-action="off">Off</button>
+    <div class="update"></div>
+
+    <!-- MoreMatches.spec -->
+    <div id="matches-nav" class="cf js-not-ajax">
+        <a href="fixtures/football-prev" class="match-prev" data-js-title="Show previous day's matches">Previous day</a>
     </div>
 
 

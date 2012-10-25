@@ -37,7 +37,7 @@ img.badge {
 
 
 /*  credit for this microsprite:
-    @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/ 
+    @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/
 */
 .stars {
     display: block;
@@ -53,7 +53,7 @@ img.badge {
 .stars:after {
     height:13px;
     background-image: url(../images/star-sprite.1ece5491a4afa7e5f558d75717c754e7.png);
-}  
+}
 
 .stars:after{
     content: "";
@@ -118,6 +118,14 @@ img.badge {
     padding: @baseline*2 0 @baseline*2 0;
     background-color: #e3e3db;
     text-align: center;
+    box-shadow: none;
+    text-shadow: none;
+    border: none;
+}
+
+.cta:hover,
+.cta:active {
+    box-shadow: none;
 }
 
 .top,
@@ -167,3 +175,20 @@ img.badge {
 .bullet:first-of-type {
     margin-top: @baseline;
 }
+
+.collapsible {
+      border-bottom: 1px solid #E3E3DB;
+      padding-bottom: 12px;
+      padding-right: 44px; // offsets icon
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 0;
+}
+
+.collapsible i {
+    position: absolute;
+    right: @gutter;
+    display: inline-block;
+    top: 15%;
+}
+

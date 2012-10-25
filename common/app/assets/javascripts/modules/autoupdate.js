@@ -1,7 +1,7 @@
 /*global guardian:true, twttr:true */
-define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo, bean) {
+define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwest, bonzo, bean, qwery) {
 
-    function Autoupdate(path, delay, attachTo) {
+    function Autoupdate(path, delay, attachTo, switches) {
 
         var options = {
             'activeClass': 'is-active',
@@ -12,6 +12,11 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
         this.path = path;
         this.delay = delay;
         this.attachTo = attachTo;
+        this.switches = switches || {},
+        this.template =
+            '<p class="update-text type-4">Auto update</p>' +
+            '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>' +
+            '<button class="update-btn type-6" data-action="off" data-link-name="autoupdate off">Off</button>';
 
         // View
         this.view = {
@@ -93,9 +98,17 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
         //Initalise
         this.init = function () {
+            
+            if (this.switches.polling !== true) {
+                return;
+            }
+            
             var that = this,
                 pref = this.getPref();
-
+            
+            // add the component to the page
+            qwery('.update')[0].innerHTML = this.template;
+            
             this.btns = common.$g(options.btnClass);
 
             this.btns.each(function (btn) {
