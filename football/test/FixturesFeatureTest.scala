@@ -3,6 +3,7 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
+import org.joda.time.DateTime
 
 class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -45,13 +46,10 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
 
-        when("I click the 'next' link")
+        when("I should see a link to the next fixtures")
 
-        findFirst("[data-link-name=next]").click()
-        browser.await()
+        findFirst("[data-link-name=next]").getAttribute("href") should endWith("/football/fixtures/2012/oct/24")
 
-        then("I should navigate to the next set of fixtures")
-        findFirst(".competitions-date").getText should be("Wednesday 24 October 2012")
       }
     }
 
@@ -67,7 +65,6 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         browser.await()
 
         then("I should navigate to the premier league fixtures page")
-        findFirst(".competitions-date").getText should be("Wednesday 24 October 2012")
         find(".match-desc").map(_.getText) should contain("QPR v Aston Villa")
       }
     }
