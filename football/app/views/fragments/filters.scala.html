@@ -1,0 +1,30 @@
+@(filterMap: Map[String, Seq[CompetitionFilter]], page: MetaData, pageTitle: String)
+
+@renderFilter(name: String) = {
+    @filterMap.get(name).map{ filters =>
+        <li class="cf">
+            <h2>@name</h2>
+            <ul class="nav nav-stacked sections">
+                @filters.map{ filter => <li><a href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
+            </ul>
+        </li>
+    }
+}
+
+@if(filterMap.nonEmpty){
+    <ol data-link-name="competition filters" class="nav-multi box-indent unstyled cf js-hidden" id="js-football-league-list">
+        @renderFilter("English")
+        @renderFilter("European")
+        @renderFilter("Scottish")
+        @renderFilter("Internationals")
+        @renderFilter("Rest of world")
+        <li class="cf">
+            <h2>All competitions</h2>
+            <ul class="nav nav-stacked sections">
+                <li class="section-full">
+                    <a href="/@page.id"  data-link-name="@page.webTitle.toLowerCase">View all @pageTitle</a>
+                </li>
+            </ul>
+        </li>
+    </ol>
+}

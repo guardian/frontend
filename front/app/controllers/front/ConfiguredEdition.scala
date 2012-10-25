@@ -50,12 +50,7 @@ trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
 
   def shutDown() = configAgent().foreach(_.close())
 
-  def warmup() = try {
-    configAgent.await(Timeout(5 seconds)).foreach(_.warmup())
-  } catch {
-    case e =>
-      log.error("Exception while waiting to load config", e)
-  }
+  def warmup() = quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 

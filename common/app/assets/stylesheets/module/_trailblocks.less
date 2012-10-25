@@ -72,10 +72,10 @@
     border-top: 1px solid #e3e3db;
 }
 
-.trailblock ul { 
+.trailblock ul {
     margin-bottom: 0px;
 }
-          
+
 .trailblock.shut .panel,
 .rolled-up {
     .transition(max-height .5s ease-in-out);
@@ -103,9 +103,14 @@
     color: #fff;
     padding: @baseline*4 @gutter;
     cursor: pointer;
+    background-color: transparent;
+    box-shadow: none;
+    text-shadow: none;
+    border: none;
 }
 
-.toggle-trailblock:link,
-.toggle-trailblock:visited {
+.toggle-trailblock:hover,
+.toggle-trailblock:active {
+    box-shadow: none;
     background-color: transparent;
 }

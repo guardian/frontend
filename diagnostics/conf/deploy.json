@@ -1,10 +1,11 @@
 {
     "packages":{
         "frontend-diagnostics":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::diagnostics" ],
             "data":{
-                "port":"18080",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/management/healthcheck"
@@ -17,7 +18,7 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-diagnostics.deploy"]
+            "actionsBeforeApp": ["frontend-diagnostics.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-diagnostics.uploadArtifacts"]

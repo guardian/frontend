@@ -3,14 +3,14 @@
 <html>
 <head>
     <title>@metaData.webTitle</title>
+    @fragments.metaData(metaData, config, static)
     @fragments.commonCssSetup(static, config)
     @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
-    @fragments.metaData(metaData, config, static)
 
     @head
 
 </head>
-<body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
+<body class="zone-@metaData.section js-off" itemscope itemtype="http://schema.org/WebPage">
 
     @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
     

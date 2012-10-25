@@ -2,6 +2,7 @@ package model
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
 import org.joda.time.DateTime
+import org.scala_tools.time.Imports._
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
@@ -37,6 +38,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
 
+  override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -56,11 +59,20 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "isLive" -> isLive
   )
+
+  override lazy val cacheSeconds = {
+    if (isLive) 5
+    else if (lastModified > DateTime.now - 24.hours) 60
+    else 900
+  }
 }
 
 class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Article")
+  lazy val contentType = "Article"
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
 
@@ -74,8 +86,9 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
 
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
-
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Video")
+  lazy val contentType = "Video"
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
@@ -83,6 +96,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
-
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "Gallery")
+  lazy val contentType = "Gallery"
+  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
