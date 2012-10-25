@@ -125,10 +125,11 @@ a.football-table-link {
 #matches-nav a.cta {
     display: block;
     color: #545454;
-    margin-bottom: @baseline*2
+    margin-bottom: @baseline*2;
 }
 
-#matches-nav a.cta:before {
+#matches-nav a.cta:before,
+.cta.football-table-link:before {
     content: "";
 }
 
@@ -160,7 +161,7 @@ a.football-table-link {
 
 .table-football th,
 .table-football td {
-    padding: @baseline*2 @gutter;
+    padding: @baseline*2 3%; // eventually will need a media query for this when it gets too wide
     border-right: none;
 }
 
@@ -178,19 +179,19 @@ a.football-table-link {
 }
 
 // styling for non-ajax match nav 
-.js-off #matches-nav {
+.js-not-ajax {
     padding: @baseline*2 @gutter;
 }
 
-.js-off .match-next {
+.js-not-ajax .match-next {
     float: right;
 }
 
-.js-off .match-prev:before {
+.js-not-ajax .match-prev:before {
     content: "‹ ";
 }
 
-.js-off .match-next::after {
+.js-not-ajax .match-next::after {
     content: " ›";
 }
 
@@ -205,4 +206,13 @@ a.football-table-link {
 .zone-football .update .is-active,
 .zone-football .update button:hover{
 	background-color:#8CC43F;
+}
+
+.football-nav {
+    clear: left;
+    padding-top: @baseline*4;
+}
+
+.football-nav a {
+    color: #fff;
 }

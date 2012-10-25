@@ -216,13 +216,13 @@ define([
         
         }
         
-        // page specific functionality
-        if (config.page.pageId === 'football/fixtures' || config.page.pageId === 'football/results') {
-            // loading only occurs on fixtures and results homepage (i.e. not on date)
-            if (window.location.pathname.match('/football.*(fixtures|results)')) {
-                modules.showMoreMatches();
-            }
-        } else if (config.page.pageId === 'football/live') {
+        // loading only occurs on fixtures and results homepage (i.e. not on date)
+        var footballIndexRegex = /\/football\/(fixtures|results)$/g;
+        if (window.location.pathname.match(footballIndexRegex)) {
+            modules.showMoreMatches();
+        }
+        // auto-update for live page
+        if (config.page.pageId === 'football/live') {
             // only load auto update module if there is a live match currently on
             if (qwery('.match.live-match').length) {
                 // load the auto update

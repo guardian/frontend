@@ -1,6 +1,7 @@
 package model
 import pa.{ LeagueTableEntry, FootballMatch, Result, Fixture }
 import org.joda.time.DateMidnight
+import feed._
 
 case class Competition(
     id: String,
@@ -14,4 +15,6 @@ case class Competition(
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLeagueTable = leagueTable.nonEmpty
+
+  lazy val matchDates = matches.map(_.date.toDateMidnight).distinct
 }

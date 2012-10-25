@@ -8,6 +8,8 @@ define(['common', 'reqwest', 'bonzo', 'qwery'], function (common, reqwest, bonzo
 
             this.nav = nav;
 
+            bonzo(nav).removeClass('js-not-ajax'); // removes the default left/right float style
+
             // update nav
             bonzo(qwery('a', nav))
                 .addClass('cta')

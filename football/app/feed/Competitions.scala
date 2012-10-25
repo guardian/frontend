@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit._
 import model.Competition
 import scala.Some
 import java.util.Comparator
+import org.scala_tools.time.Imports._
 
 trait CompetitionSupport {
 
@@ -29,14 +30,12 @@ trait CompetitionSupport {
 
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
     val today = new DateMidnight
-    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today))))
-      .filter(_.hasMatches)
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
   }
 
   def withTodaysMatchesAndPastResults = competitionSupportWith {
     val today = new DateMidnight
-    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today))))
-      .filter(_.hasMatches)
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today)))).filter(_.hasMatches)
   }
 
   def withTodaysMatches = competitionSupportWith {
@@ -44,23 +43,11 @@ trait CompetitionSupport {
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
 
-  // startDate is inclusive of the days you want
-  def nextMatchDates(startDate: DateMidnight, numDays: Int) = competitions
-    .flatMap(_.matches)
-    .map(_.date.toDateMidnight).distinct
-    .sorted
-    .filter(_ isAfter startDate.minusDays(1))
-    .take(numDays)
+  def matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
-  // startDate is inclusive of the days you want
-  def previousMatchDates(date: DateMidnight, numDays: Int) = competitions
-    .flatMap(_.matches)
-    .map(_.date.toDateMidnight)
-    .distinct
-    .sorted
-    .reverse
-    .filter(_ isBefore date.plusDays(1))
-    .take(numDays)
+  def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
+
+  def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
@@ -114,8 +101,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     agent.competition.copy(matches = allGames.sortBy(_.date), leagueTable = agent.leagueTable)
   }
 
-  def refreshAgent(agent: CompetitionAgent) = agent.refresh()
-
   //one http call updates all competitions
   def refreshCompetitionData() = FootballClient.competitions.foreach { season =>
     log.info("Refreshing competition data")
@@ -149,7 +134,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
       competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>
           //stagger fixtures and results refreshes to avoid timeouts
-          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { refreshAgent(agent) }
+          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { agent.refresh() }
       }
   }
 
