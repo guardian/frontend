@@ -166,8 +166,8 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(isLive) {
-                if(isLive) {
+            liveBlogging: function(config) {
+                if(config.page.isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
@@ -198,7 +198,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config.page.isLive);
+        modules.liveBlogging(config);
 
         switch (isNetworkFront) {
 
