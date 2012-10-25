@@ -44,8 +44,9 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                 trailblock = document.getElementById(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
 
-                var hideTrailblock = (trigger.text() === "Hide");
-                trigger.text((hideTrailblock) ? "Show" : "Hide");
+                var hideTrailblock = (trigger.text() === "Hide") ? "Show" : "Hide";
+                trigger.text(hideTrailblock);
+                trigger.attr('data-link-name', hideTrailblock);
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
                     model.logPreference(hideTrailblock, trailblockId);

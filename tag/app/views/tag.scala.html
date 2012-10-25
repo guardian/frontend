@@ -1,7 +1,7 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(tag, Static, Configuration, Switches.all){  }{
-<section class="front-section zone-@tag.section">
+<section class="front-section zone-@tag.section" data-link-name="@tag.section">
 
     <h1 class="article-zone zone-color">@tag.name</h1>
     
@@ -31,7 +31,7 @@
         }
     }
 
-    <div class="trailblock" data-count="@trails.length" data-link-name="tag block @tag.section">
+    <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
 
             <ul class="unstyled">
 

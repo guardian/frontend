@@ -52,6 +52,8 @@ class CachedOkTest extends FlatSpec with ShouldMatchers {
       def apiUrl = ""
 
       def webTitle = ""
+
+      def analyticsName = ""
     }
 
     val result = CachedOk(page)(Html("foo")).asInstanceOf[SimpleResult[Html]]
