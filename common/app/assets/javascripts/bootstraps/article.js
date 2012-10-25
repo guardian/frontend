@@ -170,8 +170,8 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(isLive) {
-                if(isLive) {
+            liveBlogging: function(config) {
+                if(config.page.isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
@@ -184,7 +184,7 @@ define([
                     common.mediator.on('modules:autoupdate:render', function() {
                         if(window.twttr) { window.twttr.widgets.load(); }});
 
-                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                    var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
         };
@@ -201,7 +201,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config.page.isLive);
+        modules.liveBlogging(config);
         
         switch (isNetworkFront) {
 
@@ -227,7 +227,7 @@ define([
             if (qwery('.match.live-match').length) {
                 // load the auto update
                 // TODO - confirm update is every 10secs
-                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container")).init();
+                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container"), config.switches).init();
             }
         }
         
