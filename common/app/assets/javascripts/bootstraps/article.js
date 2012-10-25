@@ -226,7 +226,7 @@ define([
             if (qwery('.match.live-match').length) {
                 // load the auto update
                 // TODO - confirm update is every 10secs
-                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container"), config.switches).init();
+                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container")[0], config.switches).init();
             }
         }
         
