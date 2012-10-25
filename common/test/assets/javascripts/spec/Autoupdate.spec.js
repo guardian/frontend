@@ -26,7 +26,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
         it("should request the feed and attach response to the dom", function(){
             common.mediator.on('modules:autoupdate:loaded', callback);
 
-            var a = new Autoupdate(path, delay, attachTo);
+            var a = new Autoupdate(path, delay, attachTo, {polling: true});
                 a.init();
 
             waits(2000);
@@ -42,16 +42,29 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
             expect(window.guardian.userPrefs.get).toHaveBeenCalled();
         });
 
-        it("should destroy itself of server sends turn off response", function() {
+        it("should destroy itself if server sends turn off response", function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
-            var a = new Autoupdate('fixtures/badupdate', delay, attachTo);
+            var a = new Autoupdate('fixtures/badupdate', delay, attachTo, {polling: true});
                 a.init();
 
             waits(2000);
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
+            });
+        });
+        
+        it('should not poll if `polling` switch turned off (default)', function() {
+            common.mediator.on('modules:autoupdate:destroyed', callback);
+            
+            var a = new Autoupdate(path, delay, attachTo);
+                a.init();
+
+            waits(2000);
+
+            runs(function(){
+                expect(callback).not.toHaveBeenCalled();
             });
         });
        

@@ -159,10 +159,6 @@ define([
             showMoreMatches: function() {
                 var matchesNav = document.getElementById('matches-nav');
                 MoreMatches.init(matchesNav);
-                bean.add(matchesNav, 'a', 'click', function(e) {
-                    e.preventDefault();
-                    common.mediator.emit('ui:more-matches:clicked', [e.currentTarget]);
-                });
             },
 
             bindTogglePanels: function () {
@@ -170,8 +166,8 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(isLive) {
-                if(isLive) {
+            liveBlogging: function(config) {
+                if(config.page.isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
@@ -184,7 +180,7 @@ define([
                     common.mediator.on('modules:autoupdate:render', function() {
                         if(window.twttr) { window.twttr.widgets.load(); }});
 
-                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                    var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
         };
@@ -201,7 +197,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config.page.isLive);
+        modules.liveBlogging(config);
         
         switch (isNetworkFront) {
 
@@ -216,11 +212,21 @@ define([
         
         }
         
-        // page specific functionality
+        // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
-        var footballIndexRegex = /\/football\/(fixtures|results)$/g;
+        var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;
         if (window.location.pathname.match(footballIndexRegex)) {
             modules.showMoreMatches();
+        }
+        
+        // auto-update for live page
+        if (config.page.pageId === 'football/live') {
+            // only load auto update module if there is a live match currently on
+            if (qwery('.match.live-match').length) {
+                // load the auto update
+                // TODO - confirm update is every 10secs
+                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container"), config.switches).init();
+            }
         }
         
         modules.loadOmnitureAnalytics(config);

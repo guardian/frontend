@@ -87,7 +87,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
-    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.get)
-    case other => "/football/%s/fixtures/%s" format (competition.get, other.toString("yyyy/MMM/dd").toLowerCase)
+    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.getOrElse(""))
+    case other => "/football/%s/fixtures/%s" format (competition.getOrElse(""), other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }
