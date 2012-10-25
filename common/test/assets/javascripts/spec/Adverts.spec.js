@@ -7,6 +7,12 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
         'contentType': 'contentType',
         'section': 'section'
     }
+
+    window.guardian = {
+        userPrefs: {
+            isOff: function() { return false; }
+        }
+    }
     
     describe("Iframe advert slots", function() {
 
@@ -69,6 +75,20 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
             runs(function() {
                 for (var i = 0, j = adNodes.length; i<j; ++i) {
                     expect(adNodes[i].firstChild.nodeName.toLowerCase()).toBe('iframe');
+                }
+            });
+        });
+
+        it("should not create ads if userPref is switchedOff", function() {
+
+            guardian.userPrefs.isOff = function() { return true; };
+
+            Adverts.init(config);
+            Adverts.loadAds();
+
+            runs(function() {
+                for (var i = 0, j = adNodes.length; i<j; ++i) {
+                    expect(adNodes[i].firstChild).toBe(null);
                 }
             });
         });

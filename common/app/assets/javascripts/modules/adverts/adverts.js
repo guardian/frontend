@@ -27,7 +27,6 @@ define(['common', 'reqwest', 'modules/detect', 'modules/adverts/iframeadslot', '
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
                 if (!slots[i].loaded && isOnScreen(slots[i].el)) {
-                    console.log("is on screen:", i);
                     slots[i].load();
                 }
             }
