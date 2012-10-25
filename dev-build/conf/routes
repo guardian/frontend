@@ -19,19 +19,21 @@ GET     /related/:edition/*path                         controllers.RelatedContr
 
 
 #Football
-GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.allCompetitionsOn(year, month, day)
-GET     /football/fixtures                                  controllers.FixturesController.allCompetitions()
+GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
+GET     /football/fixtures                                  controllers.FixturesController.render()
 GET     /football/:competition/fixtures/:year/:month/:day   controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
 GET     /football/:competition/fixtures                     controllers.CompetitionFixturesController.render(competition)
 
-GET     /football/results/:year/:month/:day                 controllers.ResultsController.allCompetitionsOn(year, month, day)
-GET     /football/results                                   controllers.ResultsController.allCompetitions()
+GET     /football/results/:year/:month/:day                 controllers.ResultsController.renderFor(year, month, day)
+GET     /football/results                                   controllers.ResultsController.render()
 GET     /football/:competition/results/:year/:month/:day    controllers.CompetitionResultsController.renderFor(year, month, day, competition)
 GET     /football/:competition/results                      controllers.CompetitionResultsController.render(competition)
 
-GET     /football/live                                  	controllers.LiveMatchesController.render()
+GET     /football/live                                      controllers.LiveMatchesController.render()
+GET     /football/:competition/live                         controllers.LiveMatchesController.renderFor(competition)
 
 GET     /football/tables                                    controllers.LeagueTableController.render()
+GET     /football/:competition/table                        controllers.LeagueTableController.renderCompetition(competition)
 
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()

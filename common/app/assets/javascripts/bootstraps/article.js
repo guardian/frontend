@@ -183,6 +183,7 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
+
         };
 
     var bootstrap = function (config, userPrefs) {
@@ -198,7 +199,7 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
-        
+
         switch (isNetworkFront) {
 
             case true:
@@ -209,7 +210,7 @@ define([
             case false:
                 modules.transcludeTopStories(config);
                 break;
-        
+
         }
         
         // page-specific functionality
@@ -218,7 +219,7 @@ define([
         if (window.location.pathname.match(footballIndexRegex)) {
             modules.showMoreMatches();
         }
-        
+
         // auto-update for live page
         if (config.page.pageId === 'football/live') {
             // only load auto update module if there is a live match currently on

@@ -56,7 +56,8 @@ object ResultsController extends ResultsRenderer with Logging {
     "football/results",
     "football",
     "",
-    "All results"
+    "All results",
+    "GFE: Football : automatic : results"
   )
 
   def renderFor(year: String, month: String, day: String) = render(
@@ -89,15 +90,18 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
         competition.url.drop(1) + "/results",
         "football",
         "",
-        competition.fullName + " results"
+        competition.fullName + " results",
+        "GFE: Football : automatic : competition results"
       )
-      renderResults(page, Competitions.withCompetitionFilter(competitionName), Some(competitionName), date, Some(competition.url))
+      renderResults(
+        page,
+        Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competitionName),
+        Some(competitionName),
+        date,
+        Some(competition.url)
+      )
     }.getOrElse(NotFound)
 
-  }
-
-  def competitionDoesNotExist(competition: String): Boolean = {
-    Competitions.withCompetitionFilter(competition).competitions.isEmpty
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {

@@ -4,20 +4,20 @@
     <div class="trailblock @if(isShaded){trailblock-shaded}"
         id="related-trails" 
         data-count="@{trails.length - visibleTrails}"
-        data-link-name="related @heading">
+        data-link-name="Related @heading">
         
         <h3 class="type-2 article-zone">@Html(heading)</h3>
 
         <ul class="unstyled">
             @trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li class="trail">@formatTrail(trail, info, related=true)</li>
+                <li class="trail" data-link-name="trail">@formatTrail(trail, info, related=true)</li>
             }.slice( 0, visibleTrails )
         </ul>
 
         @if( trails.length > visibleTrails) {
             <ul class="unstyled panel">
                 @trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="trail">@formatTrail(trail, info, related=true)</li>
+                    <li class="trail" data-link-name="trail">@formatTrail(trail, info, related=true)</li>
                 }.slice( visibleTrails, trails.length )
             </ul>
         }

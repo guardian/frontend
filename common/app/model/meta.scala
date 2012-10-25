@@ -11,6 +11,7 @@ trait MetaData {
   def section: String
   def apiUrl: String
   def webTitle: String
+  def analyticsName: String
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -26,7 +27,8 @@ trait MetaData {
     "canonical-url" -> canonicalUrl,
     "api-url" -> apiUrl,
     "web-title" -> webTitle,
-    "build-number" -> buildNumber
+    "build-number" -> buildNumber,
+    "analytics-name" -> analyticsName
   )
 
   def cacheSeconds = 60
@@ -37,7 +39,18 @@ class Page(
   val id: String,
   val section: String,
   val apiUrl: String,
-  val webTitle: String) extends MetaData
+  val webTitle: String,
+  val analyticsName: String) extends MetaData
+
+object Page {
+  def apply(
+    canonicalUrl: String,
+    id: String,
+    section: String,
+    apiUrl: String,
+    webTitle: String,
+    analyticsName: String) = new Page(canonicalUrl, id, section, apiUrl, webTitle, analyticsName)
+}
 
 trait Images {
   def images: Seq[Image]

@@ -55,7 +55,8 @@ object FixturesController extends FixtureRenderer with Logging {
     "football/fixtures",
     "football",
     "",
-    "All fixtures"
+    "All fixtures",
+    "GFE: Football : automatic : fixtures"
   )
 
   def renderFor(year: String, month: String, day: String) = render(
@@ -82,19 +83,28 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
   def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
+
       val page = new Page(
         "http://www.guardian.co.uk/football/matches",
         competition.url.drop(1) + "/results",
         "football",
         "",
-        competition.fullName + " fixtures"
+        competition.fullName + " fixtures",
+        "GFE: Football : automatic : competition fixtures"
       )
-      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName), Some(competition.url))
+      renderFixtures(
+        page,
+        Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competitionName),
+        date,
+        Some(competitionName),
+        Some(competition.url)
+      )
+
     }.getOrElse(NotFound)
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
-    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition)
-    case other => "/football/%s/fixtures/%s" format (competition, other.toString("yyyy/MMM/dd").toLowerCase)
+    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.getOrElse(""))
+    case other => "/football/%s/fixtures/%s" format (competition.getOrElse(""), other.toString("yyyy/MMM/dd").toLowerCase)
   }
 }

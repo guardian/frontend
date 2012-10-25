@@ -34,7 +34,8 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
       "football/tables",
       "football",
       "",
-      "All tables"
+      "All tables",
+      "GFE: Football : automatic : tables"
     )
 
     val groups = loadTables.map { table =>
@@ -58,7 +59,8 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
         table.competition.url.drop(1) + "/tables",
         "football",
         "",
-        table.competition.fullName + " table"
+        table.competition.fullName + " table",
+        "GFE: Football : automatic : competition tables"
       )
 
       Cached(page) {

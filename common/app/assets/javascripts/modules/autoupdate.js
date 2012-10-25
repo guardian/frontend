@@ -13,7 +13,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         this.delay = delay;
         this.attachTo = attachTo;
         this.switches = switches || {},
-        this.template = 
+        this.template =
             '<p class="update-text type-4">Auto update</p>' +
             '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>' +
             '<button class="update-btn type-6" data-action="off" data-link-name="autoupdate off">Off</button>';
