@@ -77,7 +77,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
         "football", "", competition.fullName + " fixtures")
-      renderFixtures(page, Competitions.withCompetitionFilter(competitionName), date, Some(competitionName))
+      renderFixtures(page, Competitions.withCompetitionFilter(competitionName).withTodaysMatchesAndFutureFixtures, date, Some(competitionName))
     }.getOrElse(NotFound)
   }
 
