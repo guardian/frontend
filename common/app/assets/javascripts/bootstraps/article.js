@@ -16,7 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
-        'modules/adverts',
+        'modules/adverts/adverts',
         'modules/errors',
         'modules/autoupdate'
     ],
@@ -146,7 +146,12 @@ define([
             },
 
             loadAdverts: function (config) {
-                var a = new Adverts().init(config);
+                console.log('here')
+                Adverts.init(config);
+                Adverts.loadAds();
+                window.addEventListener('scroll', common.throttle(function() {
+                    Adverts.loadAds();
+                }), false);
             },
 
             liveBlogging: function(isLive) {
@@ -195,10 +200,15 @@ define([
         
         }
 
-        modules.loadOmnitureAnalytics(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
-        modules.loadOphanAnalytics();
-        modules.loadAdverts(config.page);
+
+        // If you can wait for load event, do so.
+        deferToLoadEvent(function() {
+            modules.loadOmnitureAnalytics(config);
+            modules.loadOphanAnalytics();
+            modules.loadAdverts(config.page);
+        });
+
     };
 
     // domReady proxy for bootstrap
@@ -207,6 +217,16 @@ define([
             bootstrap(config, userPrefs);
         });
     };
+
+    var deferToLoadEvent = function(ref) {
+        if (document.readyState === 'complete') {
+            ref();
+        } else {
+            window.addEventListener('load', function() {
+                ref();
+            });
+        }
+    }
 
     return {
         go: domReadyBootstrap
