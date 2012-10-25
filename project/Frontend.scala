@@ -42,9 +42,22 @@ object Frontend extends Build with Prototypes {
     .dependsOn(router)
     .dependsOn(diagnostics)
 
+  lazy val jasmine = Project(id = "jasmine", base = file("integration-tests"))
+  	.settings(
+      // use pom for dependency management
+  	  externalPom(),
+  	  testOptions += Tests.Argument(
+		  TestFrameworks.JUnit, "-q", "-v", 
+		  "-Dcucumber.options=integration-tests/src/test/resources --tags @jasmine --tags ~@ignore --glue com/gu/test --format pretty",
+		  "-Dfrontend.dir=" + System.getProperty("user.dir")
+		  
+	  )
+  	)
+    
   val main = root().aggregate(
     common, front, article, section, tag, video, gallery, coreNavigation, router, diagnostics, dev
   )
+  
 }
 
 trait Prototypes {
