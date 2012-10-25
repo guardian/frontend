@@ -183,6 +183,7 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
+
         };
 
     var bootstrap = function (config, userPrefs) {
