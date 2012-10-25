@@ -12,10 +12,11 @@ Feature: Football results
     - The API *should* let us Replay matches - for the purpose of testing, and developing against.   
     - Caching should be 10 seconds
 
-    Scenario: Results for a competitions/leagues  
-        Given I visit the results page for 08/10/2012
+    Scenario: User can see up to three days worth of results  
+        Given I visit the "all" results page
         Then I should see 3 days worth of results
 
+    @ignore
     Scenario: Pagination results for all competitions/leagues  
         Given I visit the results page for 08/10/2012
         When I click 'Show more matches'
@@ -32,7 +33,7 @@ Feature: Football results
         When I click 'next month'   
         Then I should see the following 20 days worth of results
 
-    @To do
+    @ignore
     Scenario: Select competition to filter results
         Given I visit all results page
         When I click 'All results' filter

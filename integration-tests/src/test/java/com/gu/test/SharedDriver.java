@@ -187,7 +187,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	 */
 	public WebElement findElementWait(By locator) {
 		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5000);
+		WebDriverWait wait = new WebDriverWait(this, 5);
 		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 		// return element
 		return findElement(locator);
@@ -201,8 +201,21 @@ public class SharedDriver extends EventFiringWebDriver {
 	 */
 	public boolean isVisibleWait(By locator) {
 		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5000);
+		WebDriverWait wait = new WebDriverWait(this, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		return true;
+	}
+
+	/**
+	 * Wait for an element to become hidden
+	 * 
+	 * @param By locator 
+	 * @return booelan
+	 */
+	public boolean isHiddenWait(By locator) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
 		return true;
 	}
 
