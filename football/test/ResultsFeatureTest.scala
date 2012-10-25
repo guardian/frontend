@@ -43,13 +43,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/football/results/2012/oct/20") { browser =>
         import browser._
 
-        when("I click the 'previous' link")
+        then("I should see the 'previous'")
 
-        findFirst("[data-link-name=previous]").click()
-        browser.await()
-
-        then("I should navigate to the previous set of results")
-        findFirst(".competitions-date").getText should be("Monday 15 October 2012")
+        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/15")
       }
     }
 
@@ -65,7 +61,6 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         browser.await()
 
         then("I should navigate to the premier league results page")
-        findFirst(".competitions-date").getText should be("Wednesday 24 October 2012")
         find(".match-desc").map(_.getText) should contain("Tottenham 2-4 Chelsea")
       }
     }
