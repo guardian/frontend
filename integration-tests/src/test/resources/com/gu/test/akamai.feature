@@ -6,7 +6,6 @@ Feature: Akamai (CDN)
 
     @cdn
     Scenario: Compress web pages
-        Given I visit the network front
-        And I have a browser that supports content encoding
-        Then the should be served with a supported compression format
+        Given I have a browser that supports content encoding
+        Then pages should be served with a supported compression format
 
