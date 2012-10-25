@@ -2,13 +2,18 @@
 
 We are using [Cucumber JVM](https://github.com/cucumber/cucumber-jvm) to run integration tests.
 
+## Guidance
+
+- We very much favour high-level, imperative style tests.
+- Features should describe an actual end-user benefit.
+
 ## Usage
 
 As a prerequisite you'll need to run the dev-build on your localhost
 
     $ ./sbt001
-    $ project dev-build
-    $ run 9000
+    $ sbt> project dev-build
+    $ sbt> run 9000
 
 To run all features (except `@ignore`)
 
