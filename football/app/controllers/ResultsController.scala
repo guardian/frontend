@@ -57,7 +57,7 @@ object ResultsController extends ResultsRenderer with Logging {
     "football",
     "",
     "All results",
-    "GFE: Football : automatic : results"
+    "GFE:Football:automatic:results"
   )
 
   def renderFor(year: String, month: String, day: String) = render(
@@ -91,7 +91,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
         "football",
         "",
         competition.fullName + " results",
-        "GFE: Football : automatic : competition results"
+        "GFE:Football:automatic:competition results"
       )
       renderResults(
         page,

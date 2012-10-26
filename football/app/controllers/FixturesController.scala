@@ -56,7 +56,7 @@ object FixturesController extends FixtureRenderer with Logging {
     "football",
     "",
     "All fixtures",
-    "GFE: Football : automatic : fixtures"
+    "GFE:Football:automatic:fixtures"
   )
 
   def renderFor(year: String, month: String, day: String) = render(
@@ -90,7 +90,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
         "football",
         "",
         competition.fullName + " fixtures",
-        "GFE: Football : automatic : competition fixtures"
+        "GFE:Football:automatic:competition fixtures"
       )
       renderFixtures(
         page,
