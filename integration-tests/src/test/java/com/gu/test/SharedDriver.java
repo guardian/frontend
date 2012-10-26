@@ -241,7 +241,7 @@ public class SharedDriver extends EventFiringWebDriver {
 		//switch to the popup window
 		switchWindowFocus(mwh, REAL_DRIVER);
 		
-		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick));
+		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick.toLowerCase()));
 
 		close();
 		//switch back to main window
