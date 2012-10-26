@@ -1,11 +1,11 @@
 @(urlBase: String)
 
 <div class="sections zone-background cf football-nav" data-link-name="football bottom nav">
-    <h3 class="box-indent type-2">More on Football</h3>
+    <h3 class="box-indent type-2"><a href="/football">Football</a> statistics</h3>
     <ul class="nav nav-stacked">
+        <li><a href="/football/live">Live scores</a></li>
         <li><a href="@urlBase/fixtures" data-link-name="fixtures">Fixtures</a></li>
         <li><a href="@urlBase/results" data-link-name="results">Results</a></li>
         <li><a href="@if(urlBase == "/football"){@urlBase/tables} else {@urlBase/table}" data-link-name="tables">Tables</a></li>
-        <li><a href="/football/live">Live matches</a></li>
     </ul>
 </div>
