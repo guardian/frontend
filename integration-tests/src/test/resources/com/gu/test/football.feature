@@ -24,9 +24,8 @@ Feature: Football fixtures
             | pageType | competition   | date       |
             | fixtures | all           | today      |
             | fixtures | premierleague | today      |
-            # need to use the stub service
-            # | fixtures | all           | 25/10/2012 |
-            # | fixtures | premierleague | 25/10/2012 |
+            | fixtures | all           | 25/10/2012 |
+            | fixtures | premierleague | 25/10/2012 |
             | results  | all           | today      |
             | results  | premierleague | today      |
             | results  | all           | 25/10/2012 |
@@ -40,9 +39,9 @@ Feature: Football fixtures
         Examples:
             | pageType | competition   | numOfDays | date       | buttonText                  |
             | fixtures | all           | 3         | today      | Show next day's matches     |
+            # need to use the stub service
             #| fixtures | premierleague | 20        | today      | Show next day's matches     |
             | results  | all           | 3         | today      | Show previous day's matches |
-            # need to use the stub service
             # | results  | premierleague | 20        | today      | Show previous day's matches |
     
     @scala-test
