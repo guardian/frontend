@@ -15,6 +15,8 @@ object Switches {
   val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
 }
 
+class SwitchBoardPlugin(app: play.api.Application) extends SwitchBoardAgent(Configuration)
+
 object Metrics {
   val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
 }

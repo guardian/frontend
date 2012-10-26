@@ -6,6 +6,12 @@ import com.gu.management.{ Manifest => ManifestFile }
 class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
+  object switches {
+    lazy val configurationUrl = configuration.getStringProperty("switchboard.config.url").getOrElse(
+      throw new IllegalStateException("Switchboard configuration url not configured")
+    )
+  }
+
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
       throw new IllegalStateException("Content Api Host not configured")
