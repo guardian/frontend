@@ -47,11 +47,14 @@ define(['common', 'modules/detect' ], function (common, detect) {
         var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + this.config.oasSiteId + '/12345@' + '[SLOT_NAME]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'sx';
 
-        var keywords = this.config.keywords.split(',');
-        var query = '?';
-        for(var i = 0, j = keywords.length; i < j; i++) {
-            query += 'k=' + encodeURIComponent(keywords[i]);
+        if (this.config.keywords) {
+            var keywords = this.config.keywords.split(',');
+            var query = '?';
+            for(var i = 0, j = keywords.length; i < j; i++) {
+                query += 'k=' + encodeURIComponent(keywords[i]);
+            }
         }
+
         query += '&ct=' + encodeURIComponent(this.config.contentType.toLowerCase());
         query += '&pt=' + encodeURIComponent(this.config.contentType.toLowerCase());
         query += '&cat=' + encodeURIComponent(this.config.section.toLowerCase());
