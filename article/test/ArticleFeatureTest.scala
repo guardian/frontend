@@ -92,7 +92,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the publication date of the article")
-        //cannot use the fluentium to select a meta tag and then get its text
         findFirst(".dateline").getText should be("Monday 6 August 2012 19.30 GMT")
         findFirst("time").getAttribute("datetime") should be("2012-08-06")
       }
