@@ -14,12 +14,10 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
   override val id = ""
   override val section = ""
-  override val apiUrl = "http://content.guardianapis.com"
   override val webTitle = "The Guardian"
   override lazy val analyticsName = "GFE:Network Front"
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "",
     "content-type" -> "Network Front"
   )
 
