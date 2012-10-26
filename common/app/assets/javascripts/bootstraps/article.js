@@ -21,7 +21,8 @@ define([
         'bonzo',
         'modules/togglepanel',
         'modules/errors',
-        'modules/autoupdate'
+        'modules/autoupdate',
+        'modules/footballtables'
     ],
     function (
         common,
@@ -46,7 +47,8 @@ define([
         bonzo,
         TogglePanel,
         Errors,
-        AutoUpdate) {
+        AutoUpdate,
+        FootballTable) {
 
         var modules = {
 
@@ -56,7 +58,9 @@ define([
             },
 
             attachGlobalErrorHandler: function () {
-                new Errors(window).init();
+                var e = new Errors(window);
+                e.init();
+                common.mediator.on("module:error", e.log);
             },
 
             upgradeImages: function () {
@@ -175,6 +179,28 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el).init();
 
                 }
+            },
+
+            footballTable: function(page, competition) {
+                var appendTo,
+                    table;
+
+                switch(page.pageId) {
+                    case "football" :
+                        appendTo = common.$g('.trailblock ul')[0];
+                        table = new FootballTable(appendTo);
+                        break;
+                    case "sport" :
+                        appendTo = common.$g('.trailblock ul')[0];
+                        table = new FootballTable(appendTo);
+                    break;
+                    default:
+                        if(page.contentType === "Network Front") {
+                            appendTo = common.$g('.trailblock ul', 'zone-sport')[0];
+                            table = new FootballTable(appendTo);
+                        }
+                    break;
+                }
             }
 
         };
@@ -192,7 +218,7 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config.page.isLive);
-
+        modules.footballTable(config.page);
 
         switch (isNetworkFront) {
 
