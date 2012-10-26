@@ -1,3 +1,4 @@
+/*global guardian:true */
 define(['common', 'reqwest', 'modules/detect', 'modules/adverts/iframeadslot', 'modules/adverts/dimensionMap'], function (common, reqwest, detect, IframeAdSlot, dimensionMap) {
 
     var config,
@@ -44,5 +45,5 @@ define(['common', 'reqwest', 'modules/detect', 'modules/adverts/iframeadslot', '
         init: init,
         loadAds: loadAds,
         isOnScreen: isOnScreen
-    }
+    };
 });

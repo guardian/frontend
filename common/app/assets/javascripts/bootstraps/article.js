@@ -267,7 +267,7 @@ define([
                 ref();
             });
         }
-    }
+    };
 
     return {
         go: domReadyBootstrap

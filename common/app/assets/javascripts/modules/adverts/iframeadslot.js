@@ -20,12 +20,12 @@ define(['common', 'modules/detect' ], function (common, detect) {
         this.loaded = false;
         // Why is this here?
         this.config = config;
-    }
+    };
 
     IframeAdSlot.prototype.load = function() {
         this.loaded = true;
         this.createIframe();
-    }
+    };
 
     IframeAdSlot.prototype.createIframe = function() {
         // Create an iframe to insert in the slot.
@@ -41,7 +41,7 @@ define(['common', 'modules/detect' ], function (common, detect) {
 
         // Append it to the containing el.
         this.el.appendChild(frame);
-    }
+    };
 
     IframeAdSlot.prototype.generateUrl = function() {
         var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + this.config.oasSiteId + '/12345@' + '[SLOT_NAME]' + '[QUERY]';
@@ -62,11 +62,11 @@ define(['common', 'modules/detect' ], function (common, detect) {
         url = url.replace('[QUERY]', query);
 
         return url;
-    }
+    };
 
     IframeAdSlot.prototype.setDimensions = function(dimensions) {
         this.dimensions = dimensions;
-    }
+    };
 
     return IframeAdSlot;
 
