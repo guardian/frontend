@@ -6,6 +6,7 @@ import views.support.Style
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
   def linkText: String
+  def headline: String
   def url: String
   def trailText: Option[String]
   def section: String //sectionId
