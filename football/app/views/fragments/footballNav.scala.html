@@ -5,6 +5,6 @@
     <ul class="nav nav-stacked">
         <li><a href="@urlBase/fixtures" data-link-name="fixtures">Fixtures</a></li>
         <li><a href="@urlBase/results" data-link-name="results">Results</a></li>
-        <li><a href="@urlBase/tables" data-link-name="tables">Tables</a></li>
+        <li><a href="@if(urlBase == "/football"){@urlBase/tables} else {@urlBase/table}" data-link-name="tables">Tables</a></li>
     </ul>
 </div>
