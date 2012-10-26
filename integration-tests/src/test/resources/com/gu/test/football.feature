@@ -40,7 +40,7 @@ Feature: Football fixtures
         Examples:
             | pageType | competition   | numOfDays | date       | buttonText                  |
             | fixtures | all           | 3         | today      | Show next day's matches     |
-            | fixtures | premierleague | 20        | today      | Show next day's matches     |
+            #| fixtures | premierleague | 20        | today      | Show next day's matches     |
             | results  | all           | 3         | today      | Show previous day's matches |
             # need to use the stub service
             # | results  | premierleague | 20        | today      | Show previous day's matches |

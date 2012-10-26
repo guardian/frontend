@@ -75,7 +75,7 @@ public class FootballSteps {
 	public void I_should_see_the_following_days_worth_of(int numOfDays, String matchesType) throws Throwable {
 		// should now have twice as many days worth of results
 		List<WebElement> competitions = webDriver.findElements(By.className("competitions"));
-		Assert.assertEquals(numOfDays * 2, competitions.size());
+		Assert.assertEquals(numOfDays, competitions.size() - numOfDays);
 	}
 	
 	@Then("^there should be an auto-update component$")
