@@ -24,6 +24,8 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                     item.toggleClass('on initially-off');
                 }
 
+                elm.scrollIntoView(); // means navs won't get rendered offscreen
+
                 return (state);
             },
 

@@ -74,6 +74,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <name>cucumber.options</name>
                             <value>${cucumber.options}</value>
 	                    </property>
+	                    <property>
+	                       <name>frontend.root.dir</name>
+	                       <value>${basedir}/..</value>
+	                    </property>
 					</systemProperties>
 				</configuration>
 			</plugin>

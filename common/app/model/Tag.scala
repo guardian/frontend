@@ -29,6 +29,8 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
     !idParts.exists(_ != section)
   }
 
+  override lazy val analyticsName = "GFE:" + section + ":" + name
+
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
     "content-type" -> "Tag"

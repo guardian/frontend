@@ -10,11 +10,11 @@ Feature: Display Adverts
     	Given I am on the article page 
     	
     Scenario: Adverts will appear at top of all pages
-        Given I visit any page on the Guardian site
+        Given I visit a page
         Then an advert will be at the top of the page
    
    	Scenario: Adverts will appear at the foot of all pages
-        Given I visit any page on the Guardian site
+        Given I visit a page
         Then an advert will be at the foot of the page
 
 	#Scenario: Click Adverts to navigate to brand site

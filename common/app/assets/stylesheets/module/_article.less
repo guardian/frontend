@@ -21,7 +21,7 @@ aside {
 
 .article h1 {
     font-weight: bold;
-} 
+}
 
 .byline {
     .type-4;
@@ -53,7 +53,7 @@ aside {
 .article-body h3 {
     margin: 0;
     font-family: georgia;
-    .standard-font-sizing;
+    .type-3;
 }
 
 .article-body > p,
@@ -62,44 +62,41 @@ aside {
 .article-body address,
 .article-body blockquote,
 .article-body blockquote p {
-    margin: 0px 0px @baseline*2 0px;
     .type-4;
+    margin: 0px 0px @baseline*2 0px;
+    padding: 0px;
     color: #333;
 }
 
-.article-body blockquote {
-    border: 0;
-    padding: 0;
+.article blockquote,
+.article blockquote p {
+    .type-4;
+    color: #333;
+    font-weight: normal;
+    border-left: none;
 }
 
-.article-body blockquote, 
-.article-body blockquote p {
-    display: block;
-    color: #545454;
-    .type-1;
-}
-
-.article-body blockquote:before {
-    .icon-blockquote-before;
+.article blockquote:before {
+    .icon-livequote-before;
     display: block;
     content: '';
-    margin: 21px 0 @baseline 0;
+    margin: 21px 0 @baseline*2 0;
     clear: both;
 }
 
-.svg .article-body blockquote:before {
-    .svg-icon-blockquote-before;
+.svg .article blockquote:before {
+    .svg-icon-livequote-before;
 }
 
-.article-body blockquote:after {
-    .icon-blockquote-after;
+.article blockquote:after {
+    .icon-livequote-after;
     display: block;
     content: '';
     margin-bottom: 22px;
 }
 
-.svg .article-body blockquote:after {
-    .svg-icon-blockquote-after;
+.svg .article blockquote:after {
+    .svg-icon-livequote-after;
 }
 
 .article-body .timestamp:first-child {
