@@ -214,6 +214,19 @@ public class SharedDriver extends EventFiringWebDriver {
 		return true;
 	}
 
+	/**
+	 * Wait for an element to become hidden
+	 * 
+	 * @param By locator 
+	 * @return booelan
+	 */
+	public boolean isHiddenWait(By locator) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+		return true;
+	}
+
 	public void switchWindowFocus(String mwh, WebDriver driver) {
 		//get handle for all current windows
 		Set<String> s = driver.getWindowHandles();

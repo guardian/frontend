@@ -24,6 +24,8 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
 
             render: function (html) {
                 attachTo.innerHTML = html;
+                // add a timestamp to the attacher
+                bonzo(attachTo).attr('data-last-updated', new Date().toString());
                 common.mediator.emit('modules:autoupdate:render');
             },
 
