@@ -161,9 +161,15 @@ define([
             loadAdverts: function (config) {
                 Adverts.init(config);
                 Adverts.loadAds();
-                window.addEventListener('scroll', common.throttle(function() {
-                    Adverts.loadAds();
-                }), false);
+
+                // Check every second if page has scrolled and attempt to load new ads.
+                var currentScroll = window.pageYOffset;
+                setInterval(function() {
+                    if (window.pageYOffset !== currentScroll) {
+                        currentScroll = window.pageYOffset;
+                        Adverts.loadAds();
+                    }
+                }, 1000);
             },
 
             showMoreMatches: function() {
