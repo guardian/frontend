@@ -176,21 +176,14 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(config) {
-                if(config.page.isLive) {
+            liveBlogging: function(isLive) {
+                if(isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
 
-                    var t = document.createElement('script');
-                        t.async = 'async';
-                        t.src = '//platform.twitter.com/widgets.js';
+                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
 
-                    document.body.appendChild(t);
-                    common.mediator.on('modules:autoupdate:render', function() {
-                        if(window.twttr) { window.twttr.widgets.load(); }});
-
-                    var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
                 }
             }
 
@@ -208,7 +201,8 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config);
+        modules.liveBlogging(config.page.isLive);
+
 
         switch (isNetworkFront) {
 
@@ -220,7 +214,6 @@ define([
             case false:
                 modules.transcludeTopStories(config);
                 break;
-
         }
         
         // page-specific functionality

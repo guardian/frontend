@@ -49,7 +49,7 @@ Feature: Article page
 	Scenario: Expand and collapse expanders on more on this story
 		When More on this story has expanders
 		Then I can expand and collapse expanders
- 
+
  	Scenario: Expand and collapse expanders on related content
 		When Related content has expanders
 		Then I can expand and collapse expanders
@@ -57,13 +57,13 @@ Feature: Article page
     Scenario: Back to top
     	When Back to top is selected
         Then article page scrolls to the top
-         
+
     Scenario: Page footer links     
     	When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
     	Then the corresponding footer pages are displayed
 
-	#@to-do
-	#needs a page where content is not displayed
-	#Scenario: Related content is unavailable
-	#	When "related content" is unavailable
-	#	Then "related content" is not displayed
+	# needs a page where content is not displayed
+	@ignore
+	Scenario: Related content is unavailable
+		When "related content" is unavailable
+		Then "related content" is not displayed

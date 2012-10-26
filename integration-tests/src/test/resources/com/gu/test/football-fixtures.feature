@@ -13,7 +13,7 @@ Feature: Football fixtures
     - Caching should be 10 seconds
 
     
-    @To do
+    @ignore
     Scenario: Select competition to filter results
         Given I visit all fixtures page
         When I click 'All fixtures' filter
