@@ -37,7 +37,6 @@ class FrontController extends Controller with Logging {
 
   def render() = renderFor("front")
 
-
   //todo 404 on not found
   def renderFor(path: String) = Action { implicit request =>
     //in this case lookup has no blocking IO - so not Async here

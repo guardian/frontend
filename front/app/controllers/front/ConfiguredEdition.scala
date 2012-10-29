@@ -11,9 +11,9 @@ import model.Trailblock
 import model.TrailblockDescription
 
 //responsible for managing the blocks of an edition that are externally configured
-trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
-
-  def edition: String
+class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription])
+    extends FrontEdition(edition, descriptions)
+    with AkkaSupport with HttpSupport with Logging {
 
   override lazy val proxy = Proxy(Configuration)
 
@@ -21,13 +21,25 @@ trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
 
   val configAgent = play_akka.agent[Seq[TrailblockAgent]](Nil)
 
-  def refresh() = configAgent.sendOff { oldAgents =>
-    log.info("loading front configuration from: " + configUrl)
-    http.GET(configUrl) match {
-      case Response(200, json, _) => refreshAgents(json, oldAgents)
-      case Response(errorCode, _, errorMessage) =>
-        log.error("error fetching config %s %s" format (errorCode, errorMessage))
-        oldAgents
+  override def apply(): Seq[Trailblock] = {
+    val trailblocks = manualAgents.flatMap(_.trailblock).toList match {
+      case Nil => configuredTrailblocks
+      case head :: Nil => head :: configuredTrailblocks
+      case head :: tail => head :: configuredTrailblocks ::: tail
+    }
+    super.apply()
+  }
+
+  override def refresh() = {
+    super.refresh()
+    configAgent.sendOff { oldAgents =>
+      log.info("loading front configuration from: " + configUrl)
+      http.GET(configUrl) match {
+        case Response(200, json, _) => refreshAgents(json, oldAgents)
+        case Response(errorCode, _, errorMessage) =>
+          log.error("error fetching config %s %s" format (errorCode, errorMessage))
+          oldAgents
+      }
     }
   }
 
@@ -48,9 +60,15 @@ trait ConfiguredEdition extends AkkaSupport with HttpSupport with Logging {
     newAgents
   }
 
-  def shutDown() = configAgent().foreach(_.close())
+  override def shutDown() = {
+    super.refresh()
+    configAgent().foreach(_.close())
+  }
 
-  def warmup() = quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
+  override def warmup() = {
+    super.warmup()
+    quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
+  }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 
