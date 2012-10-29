@@ -46,10 +46,10 @@ define(['common', 'modules/detect' ], function (common, detect) {
     IframeAdSlot.prototype.generateUrl = function() {
         var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + this.config.oasSiteId + '/12345@' + '[SLOT_NAME]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'sx';
+        var query = '?';
 
         if (this.config.keywords) {
             var keywords = this.config.keywords.split(',');
-            var query = '?';
             for(var i = 0, j = keywords.length; i < j; i++) {
                 query += 'k=' + encodeURIComponent(keywords[i]);
             }
