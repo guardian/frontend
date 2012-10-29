@@ -1,27 +1,15 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
 
-    @*
-        canonical url for this page - it should point back to www.guardian.co.uk
-        to indicate that this is a copy of a page over there.
-        see: http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-    *@
     <link rel="canonical" href="@item.canonicalUrl" />
-
     <link rel="shortcut icon" type="image/png" href="@static("images/favicons/32x32.ico")" />
-
+    
     <link rel="apple-touch-icon" sizes="144x144" href="@static("images/favicons/144x144.png")" />
     <link rel="apple-touch-icon" sizes="114x114" href="@static("images/favicons/114x114.png")" />
     <link rel="apple-touch-icon" sizes="72x72" href="@static("images/favicons/72x72.png")" />
     <link rel="apple-touch-icon-precomposed" href="@static("images/favicons/57x57.png")" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <meta charset="utf-8" />
-
-@item.metaData.map { case (key, value) =>
-    <meta name="@key" content="@value"/>
-}
-    <meta name="edition" content="@Edition(request, config)"/>
-    <meta name="rendered-at" content="@{(new org.joda.time.DateTime()).toISODateTimeNoMillisString}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no"> 
 
 @*
