@@ -8,11 +8,11 @@ Feature: Section Fronts - Sport
 	Scenario: Page contains the top 10 stories across sport
 	   Given I am on the 'sport' section front
 	   Then I should see the top 10 stories across sport
-	   
+
     Scenario: Sport top stories should display 5 and hide the rest
         Given I am on the 'sport' section front
-        Then up to 5 top stories should be displayed
-            And more than 5 top stories should be hidden
+        Then I should see up to 5 'Sport' top stories
+            And any more than 5 'Sport' top stories should be hidden
        
     @scala-test
     Scenario Outline: Sub-sections show a number of top stories, and be of the correct visual 'level'
@@ -35,16 +35,13 @@ Feature: Section Fronts - Sport
             | Boxing       | 1              | 3     |
             | Cycling      | 1              | 3     |
             
-       
     Scenario: Football top stories should display 3 and hide the rest
         Given I am on the 'sport' section front
-        Then up to 3 top stories for football should be displayed
-            And any more than 3 top stories for football should be hidden
-            
+        Then I should see up to 3 'Football' top stories
+            And any more than 3 'Football' top stories should be hidden
+
     Scenario: User can hide and show the sections
         Given I am on the 'sport' section front
-        When I click the 'hide' section button
-        Then the section should collapse
-        When I click the 'show' section button
-        Then the section should expand
+        Then I can click "Hide" to collapse a section
+            And I can click "Show" to expand a section
             

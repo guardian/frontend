@@ -1,4 +1,3 @@
-@section-fronts
 Feature: Section Fronts - Culture
     As a Guardian user
     I want to get a further break-down of sections on the culture section front
@@ -7,12 +6,12 @@ Feature: Section Fronts - Culture
     @scala-test
     Scenario: Page contains the top 10 stories across culture
        Given I am on the 'culture' section front
-       Then I the page should contains the top 10 stories across culture
+       Then I should see the top 10 stories across culture
        
     Scenario: Culture top stories should display 5 and hide the rest
         Given I am on the 'culture' section front
-        Then up to 5 top stories should be displayed
-            And more than 5 top stories should be hidden
+        Then I should see up to 5 'Culture' top stories
+            And any more than 5 'Culture' top stories should be hidden
        
     @scala-test
     Scenario Outline: Sub-sections show a number of top stories, and be of the correct visual 'level'
@@ -33,8 +32,6 @@ Feature: Section Fronts - Culture
        
     Scenario: User can hide and show the sections
         Given I am on the 'culture' section front
-        When I click the 'hide' section button
-        Then the section should collapse
-        When I click the 'show' section button
-        Then the section should expand
+        Then I can click "Hide" to collapse a section
+            And I can click "Show" to expand a section
             
