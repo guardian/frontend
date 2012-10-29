@@ -1,0 +1,47 @@
+@(model: TablesPage)(implicit request: RequestHeader)
+@import support._
+
+@renderTeamList(name: String) = {
+    @model.tables.filter(_.competition.fullName == name).map{ table =>
+        <section class="sections" data-link-name="Football | Teams | @HtmlFormat.raw(table.competition.fullName)">
+            <h1 class="article-zone">@table.competition.fullName</h1>
+
+            @table.groups.map{ group =>
+
+                @group.round.map { round =>
+                    @round.name.map { name =>
+                        <h3>@name</h3>
+                    }
+                }
+
+                <ul class="nav nav-stacked cf">
+                    @group.entries.sortBy{ _.team.name }.zipWithRowInfo.map{ case (entry, row) =>
+                        <li><a href="#" data-link-name="@HtmlFormat.raw(entry.team.name)">@HtmlFormat.raw(entry.team.name)</a></li>
+                    }   
+                </ul>
+            }
+        </section>
+    }
+}
+
+@main(model.page, Static, Configuration, Switches.all){ } {
+
+    <h2 class="article-zone type-2 sport-header">
+        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+    </h2>
+
+    <h1 class="type-1a box-indent">@model.page.webTitle</h1>
+
+    @renderTeamList("Premier League")
+    @renderTeamList("Championship")
+    @renderTeamList("League One")
+    @renderTeamList("League Two")
+    @renderTeamList("Scottish Premier League")
+    @renderTeamList("Scottish Division One")
+    @renderTeamList("Scottish Division Two")
+    @renderTeamList("Scottish Division Three")
+
+    @fragments.footballNav(model.urlBase)
+
+    <div id="js-popular"></div> 
+}
