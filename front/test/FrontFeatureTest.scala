@@ -278,6 +278,56 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
     }
 
+    /**
+     * Football section front
+     */
+    scenario("Footbll section front contains the top 10 stories across sport") {
+
+      given("I am on the 'sport' section front")
+
+      then("I should see the top 10 stories across sport")
+      Front.ukEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sport", 5))
+      Front.usEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sports", 5))
+    }
+
+    scenario("Sub-sections on the Sport section front show a number of top stories") {
+
+      given("I am on the 'sport' section front")
+
+      then("the 'Football' should contain up to 6 stories")
+      Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3))
+
+      and("the 'Cricket' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(2) should be(TrailblockDescription("sport/cricket", "Cricket", 1))
+
+      and("the 'Rugby Union' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
+
+      and("the 'Motor Sport' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(4) should be(TrailblockDescription("sport/motorsports", "Motor Sport", 1))
+
+      and("the 'Tennis' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(5) should be(TrailblockDescription("sport/tennis", "Tennis", 1))
+
+      and("the 'Golf' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1))
+
+      and("the 'Horse Racing' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(7) should be(TrailblockDescription("sport/horse-racing", "Horse Racing", 1))
+
+      and("the 'Rugby League' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(8) should be(TrailblockDescription("sport/rugbyleague", "Rugby League", 1))
+
+      and("the 'US Sport' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(9) should be(TrailblockDescription("sport/us-sport", "US Sport", 1))
+
+      and("the 'Boxing' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(10) should be(TrailblockDescription("sport/boxing", "Boxing", 1))
+
+      and("the 'Cycling' should contain up to 1 story")
+      Front.ukEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1))
+    }
+
     //this is so that the load balancer knows this server has a problem
     scenario("Return error if front is empty") {
 
