@@ -18,7 +18,7 @@ class Front extends AkkaSupport with Logging {
 
   private val ukEditions = Map(
 
-    "front" -> new FrontEdition("UK", Seq(
+    "front" -> new ConfiguredEdition("UK", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
@@ -38,7 +38,7 @@ class Front extends AkkaSupport with Logging {
 
   private val usEditions = Map(
 
-    "front" -> new FrontEdition("US", Seq(
+    "front" -> new ConfiguredEdition("US", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
       TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
