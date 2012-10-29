@@ -12,11 +12,13 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
 
   val manualAgents = descriptions.map(TrailblockAgent(_, edition))
 
-  def apply(): Seq[Trailblock] = {
+  def apply(): Seq[Trailblock] = dedupe(manualAgents.flatMap(_.trailblock))
+
+  protected def dedupe(trailblocks: Seq[Trailblock]): Seq[Trailblock] = {
 
     var usedTrails = List.empty[String]
 
-    manualAgents.flatMap(_.trailblock).map {
+    trailblocks.map {
       trailblock =>
         val deDupedTrails = trailblock.trails.flatMap {
           trail =>

@@ -27,7 +27,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
       case head :: Nil => head :: configuredTrailblocks
       case head :: tail => head :: configuredTrailblocks ::: tail
     }
-    super.apply()
+    dedupe(trailblocks)
   }
 
   override def refresh() = {
