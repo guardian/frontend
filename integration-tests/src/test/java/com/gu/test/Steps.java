@@ -54,9 +54,10 @@ public class Steps {
 	@When("^I visit the (.*) jasmine test runner$")
 	public void I_visit_the_jasmine_test_runner(String project) throws Throwable {
 		// get the frontend project root, if there's a system prop, otherwise assume
-		String frontendRoot = (System.getProperty("frontend.dir") != null) 
-			? System.getProperty("frontend.dir")
-			: System.getProperty("user.dir") + "/..";
+		// we're there already
+		String frontendRoot = (System.getProperty("frontend.root.dir") != null) 
+			? System.getProperty("frontend.root.dir")
+			: System.getProperty("user.dir");
 			
 		// open the appropriate runner
 		webDriver.get(

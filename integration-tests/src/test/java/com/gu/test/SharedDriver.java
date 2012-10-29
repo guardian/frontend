@@ -22,13 +22,19 @@ import cucumber.annotation.Before;
 
 
 public class SharedDriver extends EventFiringWebDriver {
-
-	public static final WebDriver REAL_DRIVER;
-
-	protected EventListener eventListener;
-
-	static {
-
+	
+    private static final WebDriver REAL_DRIVER;
+    
+    private static final Thread CLOSE_THREAD = new Thread() {
+        @Override
+        public void run() {
+            REAL_DRIVER.close();
+        }
+    };
+    
+    protected EventListener eventListener;
+    
+    static {
 		FirefoxProfile profile = new FirefoxProfile();
 		// if http_proxy system variable, set proxy in profile
 		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
@@ -45,26 +51,28 @@ public class SharedDriver extends EventFiringWebDriver {
 			}
 		}
 		REAL_DRIVER = new FirefoxDriver(profile);
-	}
+		
+		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+    }
 
-	public SharedDriver() {
-		super(REAL_DRIVER);
+    public SharedDriver() {
+        super(REAL_DRIVER);
 
-		// add an event listener to the driver
-		eventListener = new EventListener();
-		register(eventListener);
-	}
+        // add an event listener to the driver
+        eventListener = new EventListener();
+    	register(eventListener);
+    }
 
-	@Before
-	public void initaliseDriver() {
-		// delete cookies
-		manage().deleteAllCookies();
-		// clear local storage
-		clearLocalStorag();
-		// change size (iphone)
-		//manage().window().setSize(new Dimension(320, 480));
-	}
-
+    @Before
+    public void initaliseDriver() {
+    	// delete cookies
+        manage().deleteAllCookies();
+        // clear local storage
+        clearLocalStorag();
+        // change size (iphone)
+        //manage().window().setSize(new Dimension(320, 480));
+    }
+    
 	public void deleteCookieNamed(String cookieName) {
 		manage().deleteCookieNamed(cookieName);
 	}
@@ -206,6 +214,19 @@ public class SharedDriver extends EventFiringWebDriver {
 		return true;
 	}
 
+	/**
+	 * Wait for an element to become hidden
+	 * 
+	 * @param By locator 
+	 * @return booelan
+	 */
+	public boolean isHiddenWait(By locator) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+		return true;
+	}
+
 	public void switchWindowFocus(String mwh, WebDriver driver) {
 		//get handle for all current windows
 		Set<String> s = driver.getWindowHandles();
@@ -241,7 +262,7 @@ public class SharedDriver extends EventFiringWebDriver {
 		//switch to the popup window
 		switchWindowFocus(mwh, REAL_DRIVER);
 		
-		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick));
+		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick.toLowerCase()));
 
 		close();
 		//switch back to main window

@@ -22,53 +22,38 @@ span.timestamp {
     margin-top: @baseline*2;
 }
 
-
-.article.is-live blockquote,
-.article.is-live blockquote p {
-	.type-4;
-	color: #333;
-	font-weight: normal;
+.article .tweet:before,
+.article .tweet:after {
+    display:none;
+    width: 0px;
+    height: 0px;
+    background-image: none;
 }
 
-.article.is-live blockquote:before {
-	.icon-livequote-before;
+.article .tweet {
+    background-color: #f4f4f4;
+    background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png);
+    background-position: @baseline*2 @baseline*2;
+    background-repeat: no-repeat;
+    border-top: 4px solid #3299d0;
+    padding: 10px @baseline*2 @baseline*2 @baseline*2;
+    margin: @baseline*3 0 @baseline*4 0;
+}
+
+.svg .article .tweet {
+    background-image: url(../images/twitter/bird.893619ff5dd44b934f6a49225978b926.svg)
+}
+
+.tweet-user {
+    display: inline;
+    font-weight: bold !important;
+    padding-left: 40px;
+    margin-bottom: 0px;
+}
+
+.tweet-date {
     display: block;
-    content: '';
-    margin: 21px 0 @baseline*2 0;
-    clear: both;
-}
-
-.svg .article.is-live blockquote:before {
-    .svg-icon-livequote-before;
-}
-
-.article.is-live blockquote:after {
-	.icon-livequote-after;
-    display: block;
-    content: '';
-    margin-bottom: 22px;
-}
-
-.svg .article.is-live blockquote:after {
-    .svg-icon-livequote-after;
-}
-
-.article .twt-border {
-	box-shadow: none !important;
-	border-radius: 0px !important;
-	border-color: #E3E3DB !important;
-}
-
-.article .twt-border .twt-tweet {
-	padding:0px 12px!important;
-}
-
-.article .twitter-tweet-rendered {
-	margin-bottom: @baseline*4 !important;
-}
-
-.article.is-live .twt-tweet:before,
-.article.is-live .twt-tweet:after {
-	width: 0px;
-	height:0px;
+    color: #28acdb;
+    padding-left: 40px;
+    margin-bottom: @baseline*2;
 }

@@ -168,7 +168,7 @@ public class ArticleTestSteps {
 
 	@When("^Related content has expanders$")
 	public void Related_content_has_expanders() throws Throwable {
-		webDriver.open("/football/2012/oct/23/hillsborough-police-chief-bettison-eagle");
+		webDriver.open("/world/2012/oct/07/venezuela-voters-chavez");
 	}
 
 	@When("^Back to top is selected$")
