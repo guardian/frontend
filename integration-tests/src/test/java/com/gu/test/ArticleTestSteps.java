@@ -180,7 +180,7 @@ public class ArticleTestSteps {
 	public void article_page_scrolls_to_the_top() throws Throwable {
 		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
 		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");
-		Assert.assertTrue(webDriver.isElementPresent(By.className(var.substring(var.indexOf("#")+1))));
+		Assert.assertTrue(webDriver.isElementPresent(By.id(var.substring(var.indexOf("#")+1))));
 	}
 
 	@When("^I click footer links \\(Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy\\)$")

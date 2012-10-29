@@ -59,7 +59,6 @@ public class Steps {
 			? System.getProperty("frontend.root.dir")
 			: System.getProperty("user.dir");
 			
-			String var2 = "file:///" + frontendRoot + "/" + project + "/test/assets/javascripts/runner.html";
 		// open the appropriate runner
 		webDriver.get(
 			"file:///" + frontendRoot + "/" + project + "/test/assets/javascripts/runner.html"
