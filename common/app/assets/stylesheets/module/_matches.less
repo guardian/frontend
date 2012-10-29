@@ -174,8 +174,13 @@ a.football-table-link {
     background-color: transparent;
 }
 
+// overriding pasteup :(
+.table-football tbody:hover tr,
+.table-football tbody:hover tr:nth-child(even),
+.table-football tbody:hover tr:hover,
+.table-football tr.highlighted-row,
 .table-football tbody tr:last-child {
-    border-bottom: none;
+    background-color: transparent;
 }
 
 // styling for non-ajax match nav 
@@ -210,7 +215,7 @@ a.football-table-link {
 
 .football-nav {
     clear: left;
-    padding-top: @baseline*4;
+    padding: @baseline*4 0;
 }
 
 .football-nav a {
