@@ -51,6 +51,26 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     }
   }
 
+  def renderTeamlist() = Action { implicit request =>
+
+    val page = new Page(
+      "http://www.guardian.co.uk/football/matches",
+      "football/tables",
+      "football",
+      "",
+      "All tables",
+      "GFE:Football:automatic:tables"
+    )
+
+    val groups = loadTables.map { table =>
+      table.copy(groups = table.groups)
+    }
+
+    Cached(page) {
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football"))))
+    }
+  }
+
   def renderCompetition(competition: String) = Action { implicit request =>
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
