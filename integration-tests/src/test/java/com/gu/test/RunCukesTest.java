@@ -7,5 +7,6 @@ import cucumber.junit.Cucumber;
 @RunWith(Cucumber.class)
 @Cucumber.Options(tags = "~@ignore", format = {"pretty", "html:target/cucumber-html-report"})
 
-public class RunCukesTest {	
+public class RunCukesTest {
+	
 }

@@ -53,20 +53,8 @@ public class SharedDriver extends EventFiringWebDriver {
 				System.out.println("Unable to parse `http_proxy`: " + e.getMessage());
 			}
 		}
-		
-		//run tests on saucelabs
-        DesiredCapabilities capabillities = DesiredCapabilities.firefox();
-        
-        capabillities.setCapability("version", "5");
-        capabillities.setCapability("platform", Platform.XP);
-        try {
-			REAL_DRIVER = new RemoteWebDriver(
-			        new URL("http://sbukhari:08a5e7d7-50b5-47a2-a1e7-b2ba8f221522@ondemand.saucelabs.com:80/wd/hub"),
-			        capabillities);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		REAL_DRIVER = new FirefoxDriver(profile);
 		
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
@@ -224,8 +212,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * @return booelan
 	 */
 	public boolean isVisibleWait(By locator) {
-		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
+		// wait for 10 secs
+		WebDriverWait wait = new WebDriverWait(this, 10);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return true;
 	}
