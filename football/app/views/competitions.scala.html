@@ -2,25 +2,7 @@
 
 @main(page, Static, Configuration, Switches.all){  }{
 
-    @CompetitionList().map{ comp =>
-
-        <section class="sections" data-link-name="Football | Competitions | @HtmlFormat.raw(comp.name)">
-
-            <h1 class="article-zone">@HtmlFormat.raw(comp.name)</h1>
-
-            <ul class="nav nav-stacked cf">
-
-                @comp.competitions.map{ section =>
-                    <li>
-                        <a href="@section.href" data-link-name="@HtmlFormat.raw(section.title)">
-                            @HtmlFormat.raw(section.title)
-                        </a>
-                    </li>
-                }
-            </ul>
-
-        </section>
-    }
+    comp list
 
     <div id="js-popular"></div>
 }
