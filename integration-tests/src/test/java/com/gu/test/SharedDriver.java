@@ -50,6 +50,7 @@ public class SharedDriver extends EventFiringWebDriver {
 				System.out.println("Unable to parse `http_proxy`: " + e.getMessage());
 			}
 		}
+		
 		REAL_DRIVER = new FirefoxDriver(profile);
 		
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);

@@ -20,6 +20,8 @@ public class NavigationSteps {
     @When("^I click the \"(Top stories|Sections)\" tab$")
     public void I_click_the_tab(String tabName) throws Throwable {
     	String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
+    	//adding a wait for the element to appear
+    	webDriver.findElementWait(By.id(tabId));
     	// click the tab
     	webDriver.click(By.id(tabId));
     }
