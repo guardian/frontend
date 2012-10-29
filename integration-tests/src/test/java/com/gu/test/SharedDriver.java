@@ -10,10 +10,13 @@ import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,14 +26,15 @@ import cucumber.annotation.Before;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
-    private static final WebDriver REAL_DRIVER;
+    //private static final WebDriver REAL_DRIVER;
+    public static WebDriver REAL_DRIVER;
     
-    private static final Thread CLOSE_THREAD = new Thread() {
-        @Override
-        public void run() {
-            REAL_DRIVER.close();
-        }
-    };
+//    private static final Thread CLOSE_THREAD = new Thread() {
+//        @Override
+//        public void run() {
+//            REAL_DRIVER.close();
+//        }
+//    };
     
     protected EventListener eventListener;
     
@@ -50,9 +54,23 @@ public class SharedDriver extends EventFiringWebDriver {
 				System.out.println("Unable to parse `http_proxy`: " + e.getMessage());
 			}
 		}
-		REAL_DRIVER = new FirefoxDriver(profile);
 		
-		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+		//REAL_DRIVER = new FirefoxDriver(profile);
+		
+        DesiredCapabilities capabillities = DesiredCapabilities.firefox();
+        
+        capabillities.setCapability("version", "5");
+        capabillities.setCapability("platform", Platform.XP);
+        try {
+			REAL_DRIVER = new RemoteWebDriver(
+			        new URL("http://sbukhari:08a5e7d7-50b5-47a2-a1e7-b2ba8f221522@ondemand.saucelabs.com:80/wd/hub"),
+			        capabillities);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		//Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
 
     public SharedDriver() {

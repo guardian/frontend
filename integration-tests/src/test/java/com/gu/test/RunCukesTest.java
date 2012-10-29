@@ -1,5 +1,6 @@
 package com.gu.test;
 
+import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
 import cucumber.junit.Cucumber;
@@ -8,4 +9,10 @@ import cucumber.junit.Cucumber;
 @Cucumber.Options(tags = "~@ignore", format = {"pretty", "html:target/cucumber-html-report"})
 
 public class RunCukesTest {	
+	
+	@AfterClass
+	 public static void tearDown() throws Exception {
+		SharedDriver.REAL_DRIVER.close();
+	}
+	
 }

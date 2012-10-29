@@ -61,7 +61,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
-		Assert.assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
+		Assert.assertTrue(webDriver.isTextPresentByElement(By.id("tabs-selected"), arg2));
 	}
 
 	@When("^I select sectional \"([^\"]*)\"$")
