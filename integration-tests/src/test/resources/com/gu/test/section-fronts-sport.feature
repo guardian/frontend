@@ -7,7 +7,7 @@ Feature: Section Fronts - Sport
 	@scala-test
 	Scenario: Page contains the top 10 stories across sport
 	   Given I am on the 'sport' section front
-	   Then I the page should contains the top 10 stories across sport
+	   Then I should see the top 10 stories across sport
 	   
     Scenario: Sport top stories should display 5 and hide the rest
         Given I am on the 'sport' section front

@@ -59,10 +59,10 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "sport" -> new FrontEdition("US", Seq(
-      TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
-      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 3),
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5),
       TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 1)
     ))
+
   )
 
   private def allFronts = ukEditions.toSeq ++ usEditions.toSeq
