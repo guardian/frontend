@@ -15,8 +15,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       given("I visit the Network Front")
       and("I am on the UK edition")
       Fake {
-        val front = new ConfiguredEdition {
-          override def edition = "UK"
+        val front = new ConfiguredEdition("UK", Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json"
         }
 
@@ -33,8 +32,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       given("I visit the Network Front")
       and("I am on the US edition")
       Fake {
-        val front = new ConfiguredEdition {
-          override def edition = "US"
+        val front = new ConfiguredEdition("US", Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json"
         }
 
@@ -51,8 +49,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       given("I visit the Network Front")
       and("the feature trailblock has broken confiuration")
       Fake {
-        val front = new ConfiguredEdition {
-          override def edition = "US"
+        val front = new ConfiguredEdition("US", Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-bad-does-not-exist.json"
         }
 

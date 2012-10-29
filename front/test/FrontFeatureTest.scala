@@ -148,153 +148,153 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    //    scenario("load different content for UK and US front") {
-    //      given("I visit the Network Front")
-    //
-    //      Fake {
-    //
-    //        //in real life these will always be editors picks only (content api does not do latest for front)
-    //        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
-    //        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "US")
-    //
-    //        ukAgent.refresh()
-    //        usAgent.refresh()
-    //
-    //        ukAgent.warmup()
-    //        usAgent.warmup()
-    //
-    //        val ukTrails = ukAgent.trailblock.get.trails
-    //        val usTrails = usAgent.trailblock.get.trails
-    //
-    //        then("I should see UK Top Stories if I am in the UK edition")
-    //        and("I should see US Top Stories if I am in the US edition")
-    //
-    //        ukTrails should not equal (usTrails)
-    //      }
-    //    }
-    //
-    //    scenario("de-duplicate visible trails") {
-    //
-    //      given("I am on the Network Front and I have not expanded any blocks")
-    //
-    //      Fake {
-    //        val duplicateStory = StubTrail("http://www.gu.com/1234")
-    //
-    //        val description = TrailblockDescription("", "Name", 5)
-    //
-    //        val topStoriesBlock = new TrailblockAgent(description, "UK") {
-    //          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
-    //        }
-    //
-    //        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-    //          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
-    //        }
-    //
-    //        val front = new FrontEdition("UK", Nil) {
-    //          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
-    //        }
-    //
-    //        then("I should not see a link to the same piece of content twice")
-    //
-    //        val topStories = front()(0)
-    //        val sport = front()(1)
-    //
-    //        topStories.trails.contains(duplicateStory) should be(true)
-    //
-    //        sport.trails.contains(duplicateStory) should be(false)
-    //        sport.trails should have length (9)
-    //      }
-    //    }
-    //
-    //    scenario("do not de-duplicate from hidden trails") {
-    //
-    //      given("I am on the Network Front and I have not expanded any blocks")
-    //
-    //      Fake {
-    //        val duplicateStory = StubTrail("http://www.gu.com/1234")
-    //
-    //        val description = TrailblockDescription("", "Name", 5)
-    //        //duplicate trail is hidden behind "more" button
-    //        val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
-    //
-    //        val topStoriesBlock = new TrailblockAgent(description, "UK") {
-    //          override lazy val trailblock = Some(Trailblock(description, topTrails))
-    //        }
-    //
-    //        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
-    //          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
-    //        }
-    //
-    //        val front = new FrontEdition("UK", Nil) {
-    //          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
-    //        }
-    //
-    //        then("I should see a link that is a duplicate of a link that is hidden")
-    //
-    //        val topStories = front()(0)
-    //        val sport = front()(1)
-    //
-    //        topStories.trails.contains(duplicateStory) should be(true)
-    //
-    //        sport.trails.contains(duplicateStory) should be(true)
-    //        sport.trails should have length (10)
-    //      }
-    //    }
-    //
-    //    scenario("Default front trailblock configuration") {
-    //
-    //      given("I visit the network front")
-    //
-    //      then("I should see 10 (5 of whch are hidden) Top stories")
-    //      Front.uk.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
-    //      Front.us.descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
-    //
-    //      and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
-    //      Front.uk.descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1))
-    //      Front.us.descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1))
-    //
-    //      and("I should see 6 (3 of which are hidden) Comment is Free stories")
-    //      Front.uk.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
-    //      Front.us.descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
-    //
-    //      and("I should see 1 Culture story")
-    //      Front.uk.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
-    //      Front.us.descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
-    //
-    //      and("I should see 1 Business story")
-    //      Front.uk.descriptions(4) should be(TrailblockDescription("business", "Business", 1))
-    //      Front.us.descriptions(4) should be(TrailblockDescription("business", "Business", 1))
-    //
-    //      and("I should see 1 Life and Style story")
-    //      Front.uk.descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
-    //      Front.us.descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
-    //
-    //      and("I should see 1 Money story")
-    //      Front.uk.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
-    //      Front.us.descriptions(6) should be(TrailblockDescription("money", "Money", 1))
-    //
-    //      and("I should see 1 Travel story")
-    //      Front.uk.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
-    //      Front.us.descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
-    //    }
-    //
-    //    //this is so that the load balancer knows this server has a problem
-    //    scenario("Return error if front is empty") {
-    //
-    //      given("I visit the network front")
-    //      and("it is empty")
-    //
-    //      Fake {
-    //        val controller = new FrontController {
-    //          override val front = new Front() {
-    //            override def apply(edition: String) = FrontPage(Seq.empty)
-    //          }
-    //        }
-    //
-    //        then("I should see an internal server error")
-    //        controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
-    //      }
-    //    }
+    scenario("load different content for UK and US front") {
+      given("I visit the Network Front")
+
+      Fake {
+
+        //in real life these will always be editors picks only (content api does not do latest for front)
+        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
+        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "US")
+
+        ukAgent.refresh()
+        usAgent.refresh()
+
+        ukAgent.warmup()
+        usAgent.warmup()
+
+        val ukTrails = ukAgent.trailblock.get.trails
+        val usTrails = usAgent.trailblock.get.trails
+
+        then("I should see UK Top Stories if I am in the UK edition")
+        and("I should see US Top Stories if I am in the US edition")
+
+        ukTrails should not equal (usTrails)
+      }
+    }
+
+    scenario("de-duplicate visible trails") {
+
+      given("I am on the Network Front and I have not expanded any blocks")
+
+      Fake {
+        val duplicateStory = StubTrail("http://www.gu.com/1234")
+
+        val description = TrailblockDescription("", "Name", 5)
+
+        val topStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
+        }
+
+        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+        }
+
+        val front = new FrontEdition("UK", Nil) {
+          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
+        }
+
+        then("I should not see a link to the same piece of content twice")
+
+        val topStories = front()(0)
+        val sport = front()(1)
+
+        topStories.trails.contains(duplicateStory) should be(true)
+
+        sport.trails.contains(duplicateStory) should be(false)
+        sport.trails should have length (9)
+      }
+    }
+
+    scenario("do not de-duplicate from hidden trails") {
+
+      given("I am on the Network Front and I have not expanded any blocks")
+
+      Fake {
+        val duplicateStory = StubTrail("http://www.gu.com/1234")
+
+        val description = TrailblockDescription("", "Name", 5)
+        //duplicate trail is hidden behind "more" button
+        val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
+
+        val topStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, topTrails))
+        }
+
+        val sportStoriesBlock = new TrailblockAgent(description, "UK") {
+          override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
+        }
+
+        val front = new FrontEdition("UK", Nil) {
+          override val manualAgents = Seq(topStoriesBlock, sportStoriesBlock)
+        }
+
+        then("I should see a link that is a duplicate of a link that is hidden")
+
+        val topStories = front()(0)
+        val sport = front()(1)
+
+        topStories.trails.contains(duplicateStory) should be(true)
+
+        sport.trails.contains(duplicateStory) should be(true)
+        sport.trails should have length (10)
+      }
+    }
+
+    scenario("Default front trailblock configuration") {
+
+      given("I visit the network front")
+
+      then("I should see 10 (5 of whch are hidden) Top stories")
+      Front.ukEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
+      Front.usEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
+
+      and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
+      Front.ukEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1))
+      Front.usEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1))
+
+      and("I should see 6 (3 of which are hidden) Comment is Free stories")
+      Front.ukEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
+      Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
+
+      and("I should see 1 Culture story")
+      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
+      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
+
+      and("I should see 1 Business story")
+      Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1))
+      Front.usEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1))
+
+      and("I should see 1 Life and Style story")
+      Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
+      Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
+
+      and("I should see 1 Money story")
+      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+
+      and("I should see 1 Travel story")
+      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
+      Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
+    }
+
+    //this is so that the load balancer knows this server has a problem
+    scenario("Return error if front is empty") {
+
+      given("I visit the network front")
+      and("it is empty")
+
+      Fake {
+        val controller = new FrontController {
+          override val front = new Front() {
+            override def apply(path: String, edition: String) = FrontPage(Seq.empty)
+          }
+        }
+
+        then("I should see an internal server error")
+        controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+      }
+    }
   }
 
   private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
