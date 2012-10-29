@@ -1,8 +1,12 @@
-@(page: Page)(implicit request: RequestHeader)
+@(competitions: Map[String, Seq[CompetitionFilter]], page: Page)(implicit request: RequestHeader)
 
 @main(page, Static, Configuration, Switches.all){  }{
 
-    comp list
+    <ul>
+    @competitions.map { case (name, filter) =>
+      <li>@name @filter</li>
+    }
+    </ul>
 
     <div id="js-popular"></div>
 }
