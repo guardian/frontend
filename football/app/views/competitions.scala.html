@@ -1,12 +1,27 @@
 @(competitions: Map[String, Seq[CompetitionFilter]], page: Page)(implicit request: RequestHeader)
 
+@renderFilter(name: String) = {
+    @competitions.get(name).map{ filters =>
+        <section class="sections" data-link-name="Football | Competitions | @HtmlFormat.raw(name)">
+            <h1 class="article-zone">@HtmlFormat.raw(name)</h1>
+            <ul class="nav nav-stacked cf">
+                @filters.map{ competition =>
+                    <li><a href="@competition.url" data-link-name="@HtmlFormat.raw(competition.name)">@HtmlFormat.raw(competition.name)</a></li>
+                }
+            </ul>
+        </section>
+    }
+}
+
 @main(page, Static, Configuration, Switches.all){  }{
 
-    <ul>
-    @competitions.map { case (name, filter) =>
-      <li>@name @filter</li>
-    }
-    </ul>
+    @renderFilter("English")
+    @renderFilter("European")
+    @renderFilter("Scottish")
+    @renderFilter("Internationals")
+    @renderFilter("Rest of world")
+
+    @fragments.footballNav("/football")
 
     <div id="js-popular"></div>
 }
