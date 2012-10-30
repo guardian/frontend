@@ -1,15 +1,6 @@
 package com.gu.test;
 
-import java.util.List;
-
-import junit.framework.Assert;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
 
 public class SharedSteps {
 
