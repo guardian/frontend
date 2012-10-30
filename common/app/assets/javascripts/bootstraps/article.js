@@ -181,25 +181,21 @@ define([
                 }
             },
 
-            footballTable: function(page, competition) {
-                var appendTo,
+            showFootballTables: function(page) {
+                    var path = window.location.pathname,
+                    appendTo = null,
                     table;
 
-                switch(page.pageId) {
-                    case "football" :
-                        appendTo = common.$g('.trailblock ul')[0];
-                        table = new FootballTable(appendTo);
-                        break;
-                    case "sport" :
-                        appendTo = common.$g('.trailblock ul')[0];
-                        table = new FootballTable(appendTo);
-                    break;
-                    default:
-                        if(page.contentType === "Network Front") {
-                            appendTo = common.$g('.trailblock ul', 'zone-sport')[0];
-                            table = new FootballTable(appendTo);
-                        }
-                    break;
+                if (path === "/" || path === "/football" || path === "/sport") {
+                    console.log('In path');
+                    appendTo = (path === "/") ? qwery('ul > li', 'zone-sport')[1] : qwery('ul > li', '.trailblock')[1];
+                    table = new FootballTable(appendTo).init();
+                }
+
+                if(page.paFootballCompetition) {
+                    console.log("Has PA id");
+                    appendTo = qwery('ul > li', '.trailblock')[1];
+                    table = new FootballTable(appendTo, page.paFootballCompetition).init();
                 }
             }
 
@@ -218,13 +214,14 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config.page.isLive);
-        modules.footballTable(config.page);
+        modules.showFootballTables(config.page);
 
         switch (isNetworkFront) {
 
             case true:
                 modules.showFrontExpanders();
                 modules.showTrailblockToggles(config);
+                new FootballTable(qwery('ul > li', 'zone-sport')[1], [500, 510, 100]).init();
                 break;
 
             case false:

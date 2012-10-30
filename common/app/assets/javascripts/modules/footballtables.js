@@ -1,24 +1,24 @@
-define(['common'], function (common) {
+define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
 
-    function FootballTables(attachTo, list) {
+    function FootballTables(prependTo, competition) {
 
-        this.competitions = ['100'];
-        this.path =  "/football/api/frontscores&";
-        this.queryString = "competitionId";
+        this.competitions = ['500', '510', '100', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
+        this.path =  "/football/api/frontscores?";
+        this.queryString = "&competitionId=";
+
 
         // View
         this.view = {
-            attachTo: this.attachTo,
-
+            prependTo: this.prependTo,
             render: function (html) {
-                attachTo.innerHTML = html;
+                bonzo(prependTo).after(html);
                 common.mediator.emit('modules:footballtables:render');
             }
         };
         
         // Model
-        this.load = function (url) {
-            var path = this.path,
+        this.load = function (query) {
+            var path = this.path + query,
                 that = this;
 
             return reqwest({
@@ -28,7 +28,7 @@ define(['common'], function (common) {
                 jsonpCallbackName: 'footballtables',
                 success: function (response) {
                     if(response.html) {
-                        common.mediator.emit('modules:footballtables:loaded', [response.html]);
+                        common.mediator.emit('modules:footballtables:loaded', response.html);
                     }
                 },
                 error: function () {
@@ -40,13 +40,27 @@ define(['common'], function (common) {
         // Bindings
         common.mediator.on('modules:footballtables:loaded', this.view.render);
 
+        this.generateQuery = function() {
+            var query = this.queryString;
+
+            switch(typeof competition) {
+                case 'string' :
+                    query += competition;
+                    break;
+                case 'array' :
+                    query += competition.join(this.queryString);
+                    break;
+                default :
+                    query += this.competitions.join(this.queryString);
+                    break;
+            }
+
+            return query;
+        };
+
         //Initalise
         this.init = function () {
-            var query = this.path;
-
-            for(var i =0, j = list.length; i < j; i++) {
-                query += this.queryString + list[i];
-            }
+            var query = this.generateQuery();
 
             this.load(query);
         };

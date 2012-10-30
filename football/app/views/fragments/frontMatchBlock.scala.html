@@ -1,11 +1,10 @@
 @(competition: Competition)
 
-<div data-link-name="front scores">
-<div class="competition-title football-table-link box-indent type-3">
-   Today's <a href="@competition.url" data-link-name="competition">@competition.fullName</a> matches
-</div>
+<li class="trail-table" data-link-name="front scores">
+    <div class="competition-title football-table-link box-indent type-3">
+       Today's <a href="@competition.url" data-link-name="competition">@competition.fullName</a> matches
+    </div>
 
-@fragments.competitionMatches(competition)
-
-<a href="/football/live" data-link-name="all todays matches">View all today's matches</a>
-</div>
+    @fragments.competitionMatches(competition)
+</li>
+<a href="/football/live" class="cta" data-link-name="all todays matches">View all today's matches</a>
