@@ -1,3 +1,4 @@
+@section-fronts
 Feature: Section Fronts - Culture
     As a Guardian user
     I want to get a further break-down of sections on the culture section front
@@ -17,8 +18,8 @@ Feature: Section Fronts - Culture
     Scenario Outline: Sub-sections show a number of top stories, and be of the correct visual 'level'
         Give I am on the 'culture' section front
         Then there should be a '<sub-section>' section
-            And the '<sub-section>' should contain up to <num-of-stories> stories
-            And the '<sub-section>' should be a visual level <level>
+            And the '<sub-section>' sub-section should contain up to <num-of-stories> stories
+            And the '<sub-section>' sub-section should be a visual level <level>
         
         Examples:
             | sub-section  | num-of-stories | level |

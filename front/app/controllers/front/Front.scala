@@ -42,6 +42,17 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1),
       TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1),
       TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1)
+    )),
+
+    "culture" -> new FrontEdition("UK", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
+      TrailblockDescription("film", "Film", numItemsVisible = 1),
+      TrailblockDescription("music", "Music", numItemsVisible = 1),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
+      TrailblockDescription("books", "Books", numItemsVisible = 1),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
     ))
   )
 
@@ -60,7 +71,28 @@ class Front extends AkkaSupport with Logging {
 
     "sport" -> new FrontEdition("US", Seq(
       TrailblockDescription("sport", "Sports", numItemsVisible = 5),
-      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 1)
+      TrailblockDescription("football", "Football", numItemsVisible = 3),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1),
+      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1),
+      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1),
+      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1),
+      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1),
+      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1),
+      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1),
+      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1)
+    )),
+
+    "culture" -> new FrontEdition("US", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
+      TrailblockDescription("film", "Film", numItemsVisible = 1),
+      TrailblockDescription("music", "Music", numItemsVisible = 1),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
+      TrailblockDescription("books", "Books", numItemsVisible = 1),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
     ))
 
   )

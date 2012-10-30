@@ -18,8 +18,8 @@ Feature: Section Fronts - Sport
     Scenario Outline: Sub-sections show a number of top stories, and be of the correct visual 'level'
         Give I am on the 'sport' section front
         Then there should be a '<sub-section>' section
-            And the '<sub-section>' should contain up to <num-of-stories> stories
-            And the '<sub-section>' should be a visual level <level>
+            And the '<sub-section>' sub-section should contain up to <num-of-stories> stories
+            And the '<sub-section>' sub-section should be a visual level <level>
         
         Examples:
             | sub-section  | num-of-stories | level |
