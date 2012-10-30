@@ -1,33 +1,31 @@
 @(model: MatchesPage)
 
-<div class="matches-container">
-	@model.days.map{ day =>
-		<h2 class="competitions-date box-indent type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
-		<ol class="competitions unstyled" data-link-name="matches">
-		    <li class="competition">
-		        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-		        
-		            <a class="competition-title football-table-link box-indent type-3" href="@comp.url" data-link-name="competition">
-		                @comp.fullName
-		                <i class="icon-filter-arrow-right"></i>
-		            </a>
-		            
-		            <ol class="matches unstyled">
-		                @comp.matches.map{
-		                    case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
-		                    case result: pa.Result                          => { @fragments.result(result) }
-		                    case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
-		                    case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
-		                }
-		            </ol>
-		            @* Shows the live blog (if there is one) after the first competition *@
-		            @if(row.isFirst){
-		                @model.blog.map{ blog =>
-		                    <div class="trailblock trail">@fragments.formatTrail(blog, row)</div>
-		                }
-		            }
-		        }
-		    </li>
-		</ol>
-	}
-</div>
+@model.days.map{ day =>
+	<h2 class="competitions-date box-indent type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
+	<ol class="competitions unstyled" data-link-name="matches">
+	    <li class="competition">
+	        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
+	        
+	            <a class="competition-title football-table-link box-indent type-3" href="@comp.url" data-link-name="competition">
+	                @comp.fullName
+	                <i class="icon-filter-arrow-right"></i>
+	            </a>
+	            
+	            <ol class="matches unstyled">
+	                @comp.matches.map{
+	                    case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
+	                    case result: pa.Result                          => { @fragments.result(result) }
+	                    case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
+	                    case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
+	                }
+	            </ol>
+	            @* Shows the live blog (if there is one) after the first competition *@
+	            @if(row.isFirst){
+	                @model.blog.map{ blog =>
+	                    <div class="trailblock trail">@fragments.formatTrail(blog, row)</div>
+	                }
+	            }
+	        }
+	    </li>
+	</ol>
+}
