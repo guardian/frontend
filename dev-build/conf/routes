@@ -35,6 +35,9 @@ GET     /football/:competition/live                         controllers.LiveMatc
 GET     /football/tables                                    controllers.LeagueTableController.render()
 GET     /football/:competition/table                        controllers.LeagueTableController.renderCompetition(competition)
 
+GET     /football/competitions                              controllers.CompetitionListController.render()
+GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
+
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()

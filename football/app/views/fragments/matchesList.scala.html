@@ -1,5 +1,3 @@
-@(model: MatchesPage)
-
 @model.days.map{ day =>
 	<h2 class="competitions-date box-indent type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
 	<ol class="competitions unstyled" data-link-name="matches">
@@ -28,4 +26,8 @@
 	        }
 	    </li>
 	</ol>
+}
+
+@if(!model.days) {
+	<p class="box-indent">There are no matches being played today. Why not check out upcoming <a href="/football/fixtures">fixtures</a> or previous <a href="/football/results">results</a>?</p>
 }
