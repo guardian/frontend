@@ -166,13 +166,13 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(isLive) {
-                if(isLive) {
+            liveBlogging: function(config) {
+                if(config.page.isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
 
-                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                    var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
 
                 }
             }
@@ -191,7 +191,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config.page.isLive);
+        modules.liveBlogging(config);
 
 
         switch (isNetworkFront) {
