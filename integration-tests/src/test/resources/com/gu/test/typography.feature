@@ -3,7 +3,7 @@ Feature: Typography
 
     Scenario: Setting the typeface
         Given I visit a page
-        Then the typeface should be rendered as "webegyptian1"
+        Then the typeface should be rendered as "webegyptian"
 
 #@not-testable
    # Scenario: Typeface kill-switch

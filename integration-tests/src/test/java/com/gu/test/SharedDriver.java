@@ -10,10 +10,13 @@ import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,12 +26,12 @@ import cucumber.annotation.Before;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
-    private static final WebDriver REAL_DRIVER;
+    private static WebDriver REAL_DRIVER;
     
     private static final Thread CLOSE_THREAD = new Thread() {
         @Override
         public void run() {
-            REAL_DRIVER.close();
+            REAL_DRIVER.quit();
         }
     };
     
@@ -50,6 +53,7 @@ public class SharedDriver extends EventFiringWebDriver {
 				System.out.println("Unable to parse `http_proxy`: " + e.getMessage());
 			}
 		}
+
 		REAL_DRIVER = new FirefoxDriver(profile);
 		
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
@@ -208,8 +212,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * @return booelan
 	 */
 	public boolean isVisibleWait(By locator) {
-		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
+		// wait for 10 secs
+		WebDriverWait wait = new WebDriverWait(this, 10);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return true;
 	}
