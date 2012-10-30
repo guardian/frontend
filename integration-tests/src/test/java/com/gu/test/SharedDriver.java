@@ -213,7 +213,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	 */
 	public boolean isVisibleWait(By locator) {
 		// wait for 10 secs
-		WebDriverWait wait = new WebDriverWait(this, 10);
+		WebDriverWait wait = new WebDriverWait(this, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return true;
 	}
@@ -228,6 +228,20 @@ public class SharedDriver extends EventFiringWebDriver {
 		// wait for 5 secs
 		WebDriverWait wait = new WebDriverWait(this, 5);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+		return true;
+	}
+
+	/**
+	 * Wait for an element to have some text
+	 * 
+	 * @param By locator 
+	 * @param String The text
+	 * @return booelan
+	 */
+	public boolean hasTextWait(By locator, String text) {
+		// wait for 5 secs
+		WebDriverWait wait = new WebDriverWait(this, 5);
+		wait.until(ExpectedConditions.textToBePresentInElement(locator, text));
 		return true;
 	}
 
