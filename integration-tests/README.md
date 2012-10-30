@@ -6,7 +6,7 @@ Set-up
 
 For use with Eclipse
 
-    $ mvn eclispe:eclipse
+    $ mvn eclipse:eclipse
 
 Usage
 -----
