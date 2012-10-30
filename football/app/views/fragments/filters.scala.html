@@ -13,11 +13,13 @@
 
 @if(filterMap.nonEmpty){
     <ol data-link-name="competition filters" class="nav-multi box-indent unstyled cf js-hidden" id="js-football-league-list">
+        
         @renderFilter("English")
         @renderFilter("European")
         @renderFilter("Scottish")
         @renderFilter("Internationals")
         @renderFilter("Rest of world")
+
         <li class="cf">
             <h2>All competitions</h2>
             <ul class="nav nav-stacked sections">

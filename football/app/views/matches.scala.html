@@ -34,7 +34,8 @@
         @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
     </div>
 
+    @fragments.footballNav(model.urlBase)
+    
     <div id="js-popular"></div>
 
-    @fragments.footballNav()
 }
