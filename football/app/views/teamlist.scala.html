@@ -1,4 +1,4 @@
-@(model: TablesPage)(implicit request: RequestHeader)
+@(model: TablesPage, competitionList: List[String])(implicit request: RequestHeader)
 @import support._
 
 @renderTeamList(name: String) = {
@@ -32,14 +32,10 @@
 
     <h1 class="type-1a box-indent">@model.page.webTitle</h1>
 
-    @renderTeamList("Premier League")
-    @renderTeamList("Championship")
-    @renderTeamList("League One")
-    @renderTeamList("League Two")
-    @renderTeamList("Scottish Premier League")
-    @renderTeamList("Scottish Division One")
-    @renderTeamList("Scottish Division Two")
-    @renderTeamList("Scottish Division Three")
+
+    @competitionList.map{ comp =>
+        @renderTeamList(comp)
+    }
 
     @fragments.footballNav(model.urlBase)
 

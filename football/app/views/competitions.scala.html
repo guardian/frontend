@@ -1,4 +1,4 @@
-@(competitions: Map[String, Seq[CompetitionFilter]], page: Page)(implicit request: RequestHeader)
+@(competitions: Map[String, Seq[CompetitionFilter]], page: Page, competitionList: List[String])(implicit request: RequestHeader)
 
 @renderFilter(name: String) = {
     @competitions.get(name).map{ filters =>
@@ -21,11 +21,9 @@
 
     <h1 class="type-1a box-indent">@page.webTitle</h1>
 
-    @renderFilter("English")
-    @renderFilter("European")
-    @renderFilter("Scottish")
-    @renderFilter("Internationals")
-    @renderFilter("Rest of world")
+    @competitionList.map{ comp =>
+        @renderFilter(comp)
+    }
 
     @fragments.footballNav("/football")
 
