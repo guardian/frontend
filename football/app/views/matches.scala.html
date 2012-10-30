@@ -10,13 +10,17 @@
     </h2>
     
     @if(model.isLive) {
-	    @fragments.dateline(new DateTime, true)
+        <div class="live-matches-dateline">
+	       @fragments.dateline(new DateTime, true)
+	    </div>
     }
 
     <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
 
     @if(model.isLive && model.pageType == "live") {
-        @fragments.autoUpdate()
+        <div class="live-matches-update">
+            @fragments.autoUpdate()
+        </div>
     }
     
     @fragments.filters(model.filters, model.page, model.pageType)
