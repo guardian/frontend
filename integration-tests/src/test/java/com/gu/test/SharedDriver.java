@@ -287,22 +287,9 @@ public class SharedDriver extends EventFiringWebDriver {
 		switchTo().window(mwh);
 	}
 
-	public boolean checkURLReturns200(String URL) {
-		try {
-			HttpURLConnection.setFollowRedirects(false);
-			HttpURLConnection con = (HttpURLConnection) new URL(URL)
-			.openConnection();
-			con.setRequestMethod("HEAD");
-			return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	public int checkURLReturns(String urlString) throws IOException {
 		
-		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
+		// returns response code
 		URL url = new URL(urlString);
 
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
