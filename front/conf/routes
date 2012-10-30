@@ -10,6 +10,6 @@ GET     /_warmup                    controllers.FrontController.warmup()
 
 GET     /_up                        controllers.FrontController.isUp()
 
-GET     /:path                      controllers.FrontController.renderFor(path)
+GET     /$path<culture|sport>       controllers.FrontController.renderFor(path)
 
 GET     /                           controllers.FrontController.render()
