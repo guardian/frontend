@@ -307,6 +307,8 @@ private case class StubTrail(url: String) extends Trail {
 
   override def linkText = ""
 
+  override def headline = ""
+
   override def trailText = None
 
   override def section = ""
