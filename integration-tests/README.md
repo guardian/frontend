@@ -1,6 +1,15 @@
-# Integration Tests
+Integration Tests
+=================
 
-## Usage
+Set-up
+------
+
+For use with Eclipse
+
+    $ mvn eclispe:eclipse
+
+Usage
+-----
 
 To run all features (except `@ignore` and `@scala-test`)
 
