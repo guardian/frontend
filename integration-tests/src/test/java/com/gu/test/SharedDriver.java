@@ -1,6 +1,9 @@
 package com.gu.test;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -23,60 +26,62 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.annotation.Before;
 
-
 public class SharedDriver extends EventFiringWebDriver {
-	
-    private static WebDriver REAL_DRIVER;
-    
-    private static final Thread CLOSE_THREAD = new Thread() {
-        @Override
-        public void run() {
-            REAL_DRIVER.quit();
-        }
-    };
-    
-    protected EventListener eventListener;
-    
-    static {
+
+	private static WebDriver REAL_DRIVER;
+
+	private static final Thread CLOSE_THREAD = new Thread() {
+		@Override
+		public void run() {
+			REAL_DRIVER.quit();
+		}
+	};
+
+	protected EventListener eventListener;
+
+	static {
 		FirefoxProfile profile = new FirefoxProfile();
 		// if http_proxy system variable, set proxy in profile
-		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
+		if (System.getProperty("http_proxy") != null
+				&& !System.getProperty("http_proxy").isEmpty()) {
 			try {
 				URL proxyUrl = new URL(System.getProperty("http_proxy"));
 				profile.setPreference("network.proxy.type", 1);
 				// set the proxy's url
 				profile.setPreference("network.proxy.http", proxyUrl.getHost());
 				// extract the port, or use the default
-				int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort() : proxyUrl.getDefaultPort();
+				int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort()
+						: proxyUrl.getDefaultPort();
 				profile.setPreference("network.proxy.http_port", port);
 			} catch (MalformedURLException e) {
-				System.out.println("Unable to parse `http_proxy`: " + e.getMessage());
+				System.out.println("Unable to parse `http_proxy`: "
+						+ e.getMessage());
 			}
 		}
 
 		REAL_DRIVER = new FirefoxDriver(profile);
-		
+
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
-    }
+	}
 
-    public SharedDriver() {
-        super(REAL_DRIVER);
+	public SharedDriver() {
+		super(REAL_DRIVER);
 
-        // add an event listener to the driver
-        eventListener = new EventListener();
-    	register(eventListener);
-    }
+		// add an event listener to the driver
+		eventListener = new EventListener();
+		register(eventListener);
+	}
 
-    @Before
-    public void initaliseDriver() {
-    	// delete cookies
-        manage().deleteAllCookies();
-        // clear local storage
-        clearLocalStorag();
-        // change size (iphone)
-        //manage().window().setSize(new Dimension(320, 480));
-    }
-    
+	@Before
+	public void initaliseDriver() {
+		// delete cookies
+		manage().deleteAllCookies();
+		// clear local storage
+		clearLocalStorag();
+		// change size (iphone)
+		// manage().window().setSize(new Dimension(320, 480));
+	}
+
 	public void deleteCookieNamed(String cookieName) {
 		manage().deleteCookieNamed(cookieName);
 	}
@@ -90,21 +95,22 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public String getHost() {
-		//defaults to localhost
+		// defaults to localhost
 		String host = "http://localhost:9000";
 
-		if (System.getProperty("host") != null && !System.getProperty("host").isEmpty()) {
+		if (System.getProperty("host") != null
+				&& !System.getProperty("host").isEmpty()) {
 			host = System.getProperty("host");
 		}
 		return host;
 	}
 
-	public boolean isElementPresent(By elementName){
+	public boolean isElementPresent(By elementName) {
 		manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		boolean exists=false;
-		try{
+		boolean exists = false;
+		try {
 			exists = findElements(elementName).size() != 0;
-		}catch(NoSuchElementException e){
+		} catch (NoSuchElementException e) {
 		}
 
 		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -126,12 +132,15 @@ public class SharedDriver extends EventFiringWebDriver {
 				System.out.println("could not find " + textToSearch);
 				break;
 			}
-			try { if (isTextPresent(textToSearch)) 
-				break;
-			} catch (Exception e) {}
+			try {
+				if (isTextPresent(textToSearch))
+					break;
+			} catch (Exception e) {
+			}
 			try {
 				Thread.sleep(1000);
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
 	}
 
@@ -148,10 +157,12 @@ public class SharedDriver extends EventFiringWebDriver {
 			try {
 				if (isElementPresent(elementName))
 					break;
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			try {
 				Thread.sleep(1000);
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
 	}
 
@@ -160,7 +171,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
-		return findElement(elementname).getText().toLowerCase().contains(textToSearch.toLowerCase());
+		return findElement(elementname).getText().toLowerCase()
+				.contains(textToSearch.toLowerCase());
 	}
 
 	public void clickLink(String linkName) {
@@ -170,12 +182,12 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void click(By elemenName) {
 
-		if (findElements(elemenName).size() !=0) {
+		if (findElements(elemenName).size() != 0) {
 			findElement(elemenName).click();
 			waitFor(1000);
-		}
-		else
-			System.out.println(elemenName + " the button does not exist or visible");
+		} else
+			System.out.println(elemenName
+					+ " the button does not exist or visible");
 	}
 
 	public void waitFor(int time) {
@@ -194,7 +206,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	/**
 	 * Find an element, waiting for it to appear (5secs)
 	 * 
-	 * @param By locator 
+	 * @param By
+	 *            locator
 	 * @return WebElement
 	 */
 	public WebElement findElementWait(By locator) {
@@ -208,7 +221,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	/**
 	 * Wait for an element to become visible
 	 * 
-	 * @param By locator 
+	 * @param By
+	 *            locator
 	 * @return booelan
 	 */
 	public boolean isVisibleWait(By locator) {
@@ -221,7 +235,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	/**
 	 * Wait for an element to become hidden
 	 * 
-	 * @param By locator 
+	 * @param By
+	 *            locator
 	 * @return booelan
 	 */
 	public boolean isHiddenWait(By locator) {
@@ -232,45 +247,68 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public void switchWindowFocus(String mwh, WebDriver driver) {
-		//get handle for all current windows
+		// get handle for all current windows
 		Set<String> s = driver.getWindowHandles();
 		Iterator<String> ite = s.iterator();
 
-		//basically goes the next window that is not the main (previous) window
-		while(ite.hasNext())
-		{
-			String newWindowHandle=ite.next().toString();
-			if(!newWindowHandle.contains(mwh))
+		// basically goes the next window that is not the main (previous) window
+		while (ite.hasNext()) {
+			String newWindowHandle = ite.next().toString();
+			if (!newWindowHandle.contains(mwh))
 				driver.switchTo().window(newWindowHandle);
 		}
 	}
-	
-	public void selectCheckBottomOfPageLinks(String linkToClick) {
-		
+
+	public void selectCheckBottomOfPageLinks(String linkToClick) throws IOException {
+
 		if (isVisibleWait(By.linkText(linkToClick))) {
 			clickLink(linkToClick);
 		}
+
+		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
+		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));
 		
-		//if link name is more than one word take the 1st one - gets around page name being different from link name
-		String[] strArray = linkToClick.split(" ");
-			
-		Assert.assertTrue(getTitle().toLowerCase().contains(strArray[0].toLowerCase()));
 		navigate().back();
 	}
-	
-	public void  selectCheckBottomOfFeedbackPage(String linkToClick) {
+
+	public void selectCheckBottomOfFeedbackPage(String linkToClick) {
 		isVisibleWait(By.linkText(linkToClick));
-		clickLink(linkToClick);		
-		//find the current window handle
+		clickLink(linkToClick);
+		// find the current window handle
 		String mwh = getWindowHandle();
-		//switch to the popup window
+		// switch to the popup window
 		switchWindowFocus(mwh, REAL_DRIVER);
-		
-		Assert.assertTrue(getTitle().toLowerCase().contains(linkToClick.toLowerCase()));
+
+		Assert.assertTrue(getTitle().toLowerCase().contains(
+				linkToClick.toLowerCase()));
 
 		close();
-		//switch back to main window
+		// switch back to main window
 		switchTo().window(mwh);
 	}
 
+	public boolean checkURLReturns200(String URL) {
+		try {
+			HttpURLConnection.setFollowRedirects(false);
+			HttpURLConnection con = (HttpURLConnection) new URL(URL)
+			.openConnection();
+			con.setRequestMethod("HEAD");
+			return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public int checkURLReturns(String urlString) throws IOException {
+		
+		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
+		URL url = new URL(urlString);
+
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("GET");
+		connection.connect();
+
+		return connection.getResponseCode();
+	}
 }
