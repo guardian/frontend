@@ -42,6 +42,7 @@ GET     /football/teams                                     controllers.LeagueTa
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()
 GET     /                                     controllers.FrontController.render()
+GET     /$path<culture|sport>                 controllers.FrontController.renderFor(path)
 
 
 #Video

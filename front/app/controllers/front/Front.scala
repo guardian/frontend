@@ -16,37 +16,96 @@ class Front extends AkkaSupport with Logging {
 
   private var refreshSchedule: Option[Cancellable] = None
 
-  val uk = new FrontEdition("UK", Seq(
-    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
-    TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
-    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
-    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
-    TrailblockDescription("business", "Business", numItemsVisible = 1),
-    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
-    TrailblockDescription("money", "Money", numItemsVisible = 1),
-    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
-  ))
+  val ukEditions = Map(
 
-  val us = new FrontEdition("US", Seq(
-    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
-    TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
-    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
-    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
-    TrailblockDescription("business", "Business", numItemsVisible = 1),
-    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
-    TrailblockDescription("money", "Money", numItemsVisible = 1),
-    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
-  ))
+    "front" -> new ConfiguredEdition("UK", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 1),
+      TrailblockDescription("business", "Business", numItemsVisible = 1),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
+      TrailblockDescription("money", "Money", numItemsVisible = 1),
+      TrailblockDescription("travel", "Travel", numItemsVisible = 1)
+    )),
+
+    "sport" -> new FrontEdition("UK", Seq(
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5),
+      TrailblockDescription("football", "Football", numItemsVisible = 3),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1),
+      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1),
+      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1),
+      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1),
+      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1),
+      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1),
+      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1),
+      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1)
+    )),
+
+    "culture" -> new FrontEdition("UK", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
+      TrailblockDescription("film", "Film", numItemsVisible = 1),
+      TrailblockDescription("music", "Music", numItemsVisible = 1),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
+      TrailblockDescription("books", "Books", numItemsVisible = 1),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
+    ))
+  )
+
+  val usEditions = Map(
+
+    "front" -> new ConfiguredEdition("US", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 1),
+      TrailblockDescription("business", "Business", numItemsVisible = 1),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
+      TrailblockDescription("money", "Money", numItemsVisible = 1),
+      TrailblockDescription("travel", "Travel", numItemsVisible = 1)
+    )),
+
+    "sport" -> new FrontEdition("US", Seq(
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5),
+      TrailblockDescription("football", "Football", numItemsVisible = 3),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1),
+      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1),
+      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1),
+      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1),
+      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1),
+      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1),
+      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1),
+      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1),
+      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1)
+    )),
+
+    "culture" -> new FrontEdition("US", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
+      TrailblockDescription("film", "Film", numItemsVisible = 1),
+      TrailblockDescription("music", "Music", numItemsVisible = 1),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
+      TrailblockDescription("books", "Books", numItemsVisible = 1),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
+    ))
+
+  )
+
+  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq
 
   def refresh() {
-    uk.refresh()
-    us.refresh()
+    allFronts.foreach { case (name, front) => front.refresh() }
   }
 
   def shutdown() {
     refreshSchedule foreach { _.cancel() }
-    uk.shutDown()
-    us.shutDown()
+    allFronts.foreach { case (name, front) => front.shutDown() }
   }
 
   def startup() {
@@ -56,15 +115,14 @@ class Front extends AkkaSupport with Logging {
     })
   }
 
-  def apply(edition: String): FrontPage = edition match {
-    case "US" => FrontPage(us())
-    case anythingElse => FrontPage(uk())
+  def apply(path: String, edition: String): FrontPage = edition match {
+    case "US" => FrontPage(usEditions(path)())
+    case anythingElse => FrontPage(ukEditions(path)())
   }
 
   def warmup() {
     refresh()
-    uk.warmup()
-    us.warmup()
+    allFronts.foreach { case (name, front) => front.warmup() }
   }
 }
 
