@@ -6,7 +6,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -273,40 +275,33 @@ public class SharedDriver extends EventFiringWebDriver {
 		}
 	}
 
-	public void selectCheckBottomOfPageLinks(String linkToClick) throws IOException {
+	public void selectCheckBottomOfPageLinks() throws IOException {
+		//located all footer links
+		List<WebElement> urlL = findElements(By.cssSelector("footer a"));
 
-		if (isVisibleWait(By.linkText(linkToClick))) {
-			clickLink(linkToClick);
+		for (int i = 0; i < urlL.size(); i++) {
+			// checks if the page is 200 - errors if it finds another type of page eg 404, 502
+			Assert.assertEquals(200, checkURLReturns(urlL.get(i).getAttribute("href")));
+		}
+	}
+
+	public int checkURLReturns(String url) throws IOException {
+
+		// returns response code
+		URL server = new URL(url);
+		Properties systemProperties = System.getProperties();
+		if (System.getProperty("http_proxy") != null
+				&& !System.getProperty("http_proxy").isEmpty()) {
+			URL proxyUrl = new URL(System.getProperty("http_proxy"));
+			systemProperties.setProperty("http.proxyHost", proxyUrl.getHost());
+			// extract the port, or use the default
+			int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort()
+					: proxyUrl.getDefaultPort();
+			systemProperties.setProperty("http.proxyPort", Integer.toString(port));
 		}
 
-		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));
-		
-		navigate().back();
-	}
-
-	public void selectCheckBottomOfFeedbackPage(String linkToClick) {
-		isVisibleWait(By.linkText(linkToClick));
-		clickLink(linkToClick);
-		// find the current window handle
-		String mwh = getWindowHandle();
-		// switch to the popup window
-		switchWindowFocus(mwh, REAL_DRIVER);
-
-		Assert.assertTrue(getTitle().toLowerCase().contains(
-				linkToClick.toLowerCase()));
-
-		close();
-		// switch back to main window
-		switchTo().window(mwh);
-	}
-
-	public int checkURLReturns(String urlString) throws IOException {
-		
-		// returns response code
-		URL url = new URL(urlString);
-
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		HttpURLConnection connection = (HttpURLConnection) server
+				.openConnection();
 		connection.setRequestMethod("GET");
 		connection.connect();
 
