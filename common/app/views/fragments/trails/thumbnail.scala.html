@@ -1,0 +1,20 @@
+@(trail: Trail, rowNum: Int, related: Boolean = false)
+
+<div class="media">
+
+    @if(trail.thumbnail) {
+        @trail.thumbnail.map{ imageUrl =>
+            <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
+                <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+            </a>
+        }
+    }
+
+    <h2 class="media-body trail-headline">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @RemoveOuterParaHtml(trail.headline)
+        </a>
+    </h2>
+</div>
+
+@trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }

@@ -1,0 +1,5 @@
+@(trail: Trail, info: RowInfo, related: Boolean = false, numItemsVisible: Int = 5)
+
+@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+@fragments.trails.headline(trail, info.rowNum, related)
