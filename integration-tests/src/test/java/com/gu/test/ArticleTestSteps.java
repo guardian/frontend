@@ -190,22 +190,7 @@ public class ArticleTestSteps {
 
 	@Then("^the corresponding footer pages are displayed$")
 	public void the_corresponding_footer_pages_are_displayed() throws Throwable {			
-		//select Help
-		webDriver.selectCheckBottomOfPageLinks("Help");
-		//select Contact us
-		webDriver.selectCheckBottomOfPageLinks("Contact us");
-		//select Terms & conditions
-		webDriver.selectCheckBottomOfPageLinks("Privacy policy");
-		//select Terms & conditions
-		webDriver.selectCheckBottomOfPageLinks("Terms & conditions");
-
-		//select Feedback
-		webDriver.selectCheckBottomOfFeedbackPage("Feedback");
-
-		//select Desktop version
-		webDriver.click(By.id("main-site"));
-
-		Assert.assertTrue(webDriver.getCurrentUrl().contains("www.guardian.co.uk"));
-		webDriver.navigate().back();
+		//check all bottom of page links
+		webDriver.selectCheckBottomOfPageLinks();
 	}
 }
