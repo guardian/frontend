@@ -1,13 +1,14 @@
 {
     "packages":{
         "frontend-gallery":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::gallery" ],
             "data":{
-                "port":"9000",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/football/gallery/2012/may/16/england-euro-2012-squad-pictures"
+                    "/management/healthcheck"
                 ]
             }
         },
@@ -25,7 +26,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-gallery.deploy"]
+            "actionsBeforeApp": ["frontend-gallery.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-gallery.uploadArtifacts"]
