@@ -299,9 +299,9 @@ public class SharedDriver extends EventFiringWebDriver {
 		URL server = new URL(url);
 		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
 			Properties systemProperties = System.getProperties();
-			systemProperties.setProperty("http.proxyHost","http://proxy.co.uk");
+			systemProperties.setProperty("http.proxyHost","http://proxy.gudev.gnl");
 			systemProperties.setProperty("network.proxy.type","1");
-			systemProperties.setProperty("http.proxyPort", "1234");
+			systemProperties.setProperty("http.proxyPort", "3128");
 
 		}
 
