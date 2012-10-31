@@ -260,32 +260,29 @@ public class SharedDriver extends EventFiringWebDriver {
 		}
 	}
 
-	public void selectCheckBottomOfPageLinks(String linkToClick) throws IOException {
+	public void selectCheckBottomOfPageLinks() throws IOException {
 
-		if (isVisibleWait(By.linkText(linkToClick))) {
-			clickLink(linkToClick);
+		// located all left-footer link href
+		for (int i = 2; i < 5; i++) {
+			String urlLocated = findElement(
+					By.xpath("//*[@id='container']/footer/ul/li[" + i + "]/a"))
+					.getAttribute("href");
+			// checks if the page is 200 - errors if it finds another type of page eg 404, 502
+			Assert.assertEquals(200, checkURLReturns(urlLocated));
 		}
 
-		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));	
+		// located right-footer link href
+		for (int i = 1; i < 3; i++) {
+			String urlLocated = findElement(
+					By.xpath("//*[@id='container']/footer/p[2]/a[" + i + "]"))
+					.getAttribute("href");
+			Assert.assertEquals(200, checkURLReturns(urlLocated));
+		}
 
-		navigate().back();
-	}
+		//select Desktop version link
+		String urlLocated = findElement(By.xpath("//*[@id='main-site']")).getAttribute("href");
+		Assert.assertEquals(200, checkURLReturns(urlLocated));
 
-	public void selectCheckBottomOfFeedbackPage(String linkToClick) throws IOException {
-		isVisibleWait(By.linkText(linkToClick));
-		clickLink(linkToClick);
-		// find the current window handle
-		String mwh = getWindowHandle();
-		// switch to the popup window
-		switchWindowFocus(mwh, REAL_DRIVER);
-		
-		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));	
-
-		close();
-		waitFor(2000);
-		// switch back to main window
-		switchTo().window(mwh);
 	}
 
 	public int checkURLReturns(String url) throws IOException {
@@ -293,12 +290,14 @@ public class SharedDriver extends EventFiringWebDriver {
 		// returns response code
 		URL server = new URL(url);
 		Properties systemProperties = System.getProperties();
-		//if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {	
+		if (System.getProperty("http_proxy") != null
+				&& !System.getProperty("http_proxy").isEmpty()) {
 			systemProperties.setProperty("http.proxyHost", "proxy.gudev.gnl");
 			systemProperties.setProperty("http.proxyPort", "3128");
-		//}
+		}
 
-		HttpURLConnection connection = (HttpURLConnection)server.openConnection();
+		HttpURLConnection connection = (HttpURLConnection) server
+				.openConnection();
 		connection.setRequestMethod("GET");
 		connection.connect();
 
