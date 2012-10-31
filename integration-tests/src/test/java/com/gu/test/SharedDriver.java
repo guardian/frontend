@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
@@ -261,28 +262,13 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public void selectCheckBottomOfPageLinks() throws IOException {
+		//located all footer links
+		List<WebElement> urlL = findElements(By.cssSelector("footer a"));
 
-		// located all left-footer link href
-		for (int i = 2; i < 5; i++) {
-			String urlLocated = findElement(
-					By.xpath("//*[@id='container']/footer/ul/li[" + i + "]/a"))
-					.getAttribute("href");
+		for (int i = 0; i < urlL.size(); i++) {
 			// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-			Assert.assertEquals(200, checkURLReturns(urlLocated));
+			Assert.assertEquals(200, checkURLReturns(urlL.get(i).getAttribute("href")));
 		}
-
-		// located right-footer link href
-		for (int i = 1; i < 3; i++) {
-			String urlLocated = findElement(
-					By.xpath("//*[@id='container']/footer/p[2]/a[" + i + "]"))
-					.getAttribute("href");
-			Assert.assertEquals(200, checkURLReturns(urlLocated));
-		}
-
-		//select Desktop version link
-		String urlLocated = findElement(By.xpath("//*[@id='main-site']")).getAttribute("href");
-		Assert.assertEquals(200, checkURLReturns(urlLocated));
-
 	}
 
 	public int checkURLReturns(String url) throws IOException {
@@ -292,7 +278,8 @@ public class SharedDriver extends EventFiringWebDriver {
 		Properties systemProperties = System.getProperties();
 		if (System.getProperty("http_proxy") != null
 				&& !System.getProperty("http_proxy").isEmpty()) {
-			systemProperties.setProperty("http.proxyHost", "proxy.gudev.gnl");
+			URL proxyUrl = new URL(System.getProperty("http_proxy"));
+			systemProperties.setProperty("http.proxyHost", proxyUrl.getHost());
 			systemProperties.setProperty("http.proxyPort", "3128");
 		}
 
