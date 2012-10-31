@@ -1,18 +1,17 @@
 define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
 
-    function FootballTables(prependTo, competition) {
-
+    function FootballTables(options) {
+        //Full list of competitions from CM, in priority order.
         this.competitions = ['500', '510', '100', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
+
         this.path =  "/football/api/frontscores?";
         this.queryString = "&competitionId=";
 
-
         // View
         this.view = {
-            prependTo: this.prependTo,
             render: function (html) {
-                var el = bonzo(prependTo).after(html);
-                common.mediator.emit('modules:footballtables:render', 'front-competition-table');
+                var el = bonzo(options.prependTo).after(html);
+                common.mediator.emit('modules:footballtables:render');
             }
         };
         
@@ -38,21 +37,22 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         };
 
         // Bindings
-        common.mediator.on('modules:footballtables:loaded', this.view.render);
+        common.mediator.on('modules:footballtables:loaded', this.view.render, this);
+        common.mediator.on('modules:footballtables:render', function() {
+            console.log(options.expandable);
+            if(options.expandable) {
+                common.mediator.emit('modules:footballtables:expand' ,'front-competition-table');
+            }
+        }, this);
 
         this.generateQuery = function() {
-            var query = this.queryString;
+            var query = this.queryString,
+                competitions = options.competitions;
 
-            switch(typeof competition) {
-                case 'string' :
-                    query += competition;
-                    break;
-                case 'array' :
-                    query += competition.join(this.queryString);
-                    break;
-                default :
-                    query += this.competitions.join(this.queryString);
-                    break;
+            if(options.competitions) {
+                query += (competitions.length > 1) ? competitions.join(this.queryString) : competitions[0];
+            } else {
+                query += this.competitions.join(this.queryString);
             }
 
             return query;

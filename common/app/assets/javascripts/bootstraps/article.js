@@ -183,22 +183,32 @@ define([
 
             showFootballTables: function(page) {
                     var path = window.location.pathname,
-                    appendTo = null,
+                    prependTo = null,
                     table;
 
-                common.mediator.on('modules:footballtables:render', function(id) {
+                common.mediator.on('modules:footballtables:expand', function(id) {
                     var expandable = new Expandable({ id: id, expanded: false });
                     expandable.initalise();
                 });
 
-                if (path === "/" || path === "/football" || path === "/sport") {
-                    appendTo = (path === "/") ? qwery('ul > li', '.zone-sport')[1] : qwery('ul > li', '.trailblock')[1];
-                    table = new FootballTable(appendTo).init();
+                switch(path) {
+                    case "/" :
+                        prependTo = qwery('ul > li', '.zone-sport')[1];
+                        table = new FootballTable({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                        break;
+                    case "/sport" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballTable({prependTo: prependTo, expandable: true}).init();
+                        break;
+                    case "/football" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballTable({prependTo: prependTo, expandable: false}).init();
+                        break;
                 }
 
                 if(page.paFootballCompetition) {
-                    appendTo = qwery('ul > li', '.trailblock')[1];
-                    table = new FootballTable(appendTo, page.paFootballCompetition).init();
+                    prependTo = qwery('ul > li', '.trailblock')[1];
+                    table = new FootballTable({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
                 }
             }
 

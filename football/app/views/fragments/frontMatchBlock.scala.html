@@ -1,10 +1,9 @@
 @(competition: Competition)
-
-<li id="front-competition-table" class="trail-table js-front-trailblock rolled-out" data-link-name="front scores" 
+<li id="front-competition-table" class="competition-table js-front-trailblock rolled-out" data-link-name="front scores" 
     data-count="@{competition.matches.length - 5}">
-    <div class="competition-title football-table-link box-indent type-3">
-       Today's <a href="@competition.url" data-link-name="competition">@competition.fullName</a> matches
-    </div>
+    <a href="/football/live" class="competition-title football-table-link box-indent type-3" data-link-name="all todays matches">
+       Today's @competition.fullName matches <i class="icon-filter-arrow-right"></i>
+    </a>
 
     <ol class="matches unstyled">
         @competition.matches.map{
@@ -27,4 +26,3 @@
     }
 
 </li>
-<a href="/football/live" class="cta" data-link-name="all todays matches">View all today's matches</a>
