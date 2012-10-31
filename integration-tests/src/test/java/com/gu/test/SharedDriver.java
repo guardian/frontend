@@ -7,6 +7,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -266,33 +267,45 @@ public class SharedDriver extends EventFiringWebDriver {
 		}
 
 		// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));
-		
+		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));	
+
 		navigate().back();
 	}
 
-	public void selectCheckBottomOfFeedbackPage(String linkToClick) {
+	public void selectCheckBottomOfFeedbackPage(String linkToClick) throws IOException {
 		isVisibleWait(By.linkText(linkToClick));
 		clickLink(linkToClick);
 		// find the current window handle
 		String mwh = getWindowHandle();
 		// switch to the popup window
 		switchWindowFocus(mwh, REAL_DRIVER);
-
-		Assert.assertTrue(getTitle().toLowerCase().contains(
-				linkToClick.toLowerCase()));
+		
+		Assert.assertEquals(200, checkURLReturns(getCurrentUrl()));	
 
 		close();
+		waitFor(2000);
 		// switch back to main window
 		switchTo().window(mwh);
 	}
 
-	public int checkURLReturns(String urlString) throws IOException {
-		
-		// returns response code
-		URL url = new URL(urlString);
+	public int checkURLReturns(String url) throws IOException {
 
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		// returns response code
+		//URL url = new URL(urlString);
+
+		//HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		//connection.setRequestMethod("GET");
+
+		URL server = new URL(url);
+		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
+			Properties systemProperties = System.getProperties();
+			systemProperties.setProperty("http.proxyHost","http://proxy.co.uk");
+			systemProperties.setProperty("network.proxy.type","1");
+			systemProperties.setProperty("http.proxyPort", "1234");
+
+		}
+
+		HttpURLConnection connection = (HttpURLConnection)server.openConnection();
 		connection.setRequestMethod("GET");
 		connection.connect();
 
