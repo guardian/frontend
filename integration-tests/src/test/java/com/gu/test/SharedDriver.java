@@ -280,7 +280,10 @@ public class SharedDriver extends EventFiringWebDriver {
 				&& !System.getProperty("http_proxy").isEmpty()) {
 			URL proxyUrl = new URL(System.getProperty("http_proxy"));
 			systemProperties.setProperty("http.proxyHost", proxyUrl.getHost());
-			systemProperties.setProperty("http.proxyPort", "3128");
+			// extract the port, or use the default
+			int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort()
+					: proxyUrl.getDefaultPort();
+			systemProperties.setProperty("http.proxyPort", Integer.toString(port));
 		}
 
 		HttpURLConnection connection = (HttpURLConnection) server
