@@ -23,7 +23,10 @@
             <ul class="unstyled">
                 @block.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }" data-link-name="trail">
-                        @formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)
+                        @block.description.style match {
+                            case Some(style) => { @style.getClass.getSimpleName } 
+                            case None        => { @formatFrontTrail(trail, info, numItemsVisible = block.description.numItemsVisible) }
+                        }
                     </li>
                 }.slice( 0, block.description.numItemsVisible )
             </ul>
@@ -31,7 +34,7 @@
             @if( block.trails.length > block.description.numItemsVisible) {
                 <ul class="unstyled panel">
                     @block.trails.zipWithRowInfo.map{ case (trail, info) =>
-                        <li class="trail" data-link-name="trail">@formatFrontTrail(trail, info, numberOfImagesToEnlarge=block.description.numLargeImages)</li>
+                        <li class="trail" data-link-name="trail">@formatFrontTrail(trail, info, numItemsVisible = block.description.numItemsVisible)</li>
                     }.slice( block.description.numItemsVisible, block.trails.length )
                 </ul>
             }

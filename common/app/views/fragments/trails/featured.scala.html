@@ -6,21 +6,20 @@
     </a>
 </h2>
 
-@trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
+@trail.trailText.map { text => <div class="trail-text type-4 box-indent">@cleanTrailText(text)</div> }
 
 @if(trail.mainPicture) {
-   @trail.mainPicture.map{ mainPicture =>
-       @trail.mainPicture(width=220).map{ smallCrop =>
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
-           <img class="maxed" src="@smallCrop.url"
-                data-fullsrc="@mainPicture.url"
-                data-width="@mainPicture.width"
-                itemprop="contentURL"
-                alt="@Html(mainPicture.altText.getOrElse(""))" 
-                title="@Html(mainPicture.caption.getOrElse(""))"
-           />
-       </a>
-       }
-   }
-
+    @trail.mainPicture.map{ mainPicture =>
+        @trail.mainPicture(width=220).map{ smallCrop =>
+            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
+                <img class="maxed" src="@smallCrop.url"
+                    data-fullsrc="@mainPicture.url"
+                    data-width="@mainPicture.width"
+                    itemprop="contentURL"
+                    alt="@Html(mainPicture.altText.getOrElse(""))" 
+                    title="@Html(mainPicture.caption.getOrElse(""))"
+                />
+            </a>
+        }
+    }
 }
