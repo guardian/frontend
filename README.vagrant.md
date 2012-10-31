@@ -29,7 +29,7 @@ The vagrant instance to use is the one defined in
 `dev/vagrant/frontend_precise64`. There should be a prebuilt version at the
 following location:
 
-    http://devscreen.gudev.gnl/vagrant/frontend_precise64.box
+    http://devscreen.gudev.gnl/vagrants/frontend_precise64.box
 
 If this is unreachable, you will need to build the package from scratch and
 update the `config.vm.box_url` property of the `Vagrantfile` at the top level.
