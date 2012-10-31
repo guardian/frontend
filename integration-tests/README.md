@@ -1,14 +1,23 @@
-# Integration Tests
+Integration Tests
+=================
 
-## Usage
+Set-up
+------
 
-To run all features (except `@ignore`)
+For use with Eclipse
+
+    $ mvn eclipse:eclipse
+
+Usage
+-----
+
+To run all features (except `@ignore` and `@scala-test`)
 
 	$ mvn test
 
-To run a particular tagged feature (e.g.`@network-front`, but not `@ignore`)
+To run a particular tagged feature (e.g.`@network-front`, but not `@ignore` or `@scala-test`)
 
-	$ mvn test -Dtags="--tags @network-front --tags ~@ignore"
+	$ mvn test -Dtags="--tags @network-front"
 
 Running on a different host (i.e. not `http://localhost:9000`)
 

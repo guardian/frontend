@@ -14,12 +14,10 @@ case class FrontPage(trailblocks: Seq[Trailblock]) extends MetaData {
   override val canonicalUrl = "http://www.guardian.co.uk"
   override val id = ""
   override val section = ""
-  override val apiUrl = "http://content.guardianapis.com"
   override val webTitle = "The Guardian"
   override lazy val analyticsName = "GFE:Network Front"
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "",
     "content-type" -> "Network Front"
   )
 
@@ -37,14 +35,17 @@ class FrontController extends Controller with Logging {
 
   def isUp() = Action { Ok("Ok") }
 
-  def render() = Action { implicit request =>
+  def render() = renderFor("front")
+
+  //todo 404 on not found
+  def renderFor(path: String) = Action { implicit request =>
     //in this case lookup has no blocking IO - so not Async here
-    lookup() map { renderFront } getOrElse { NotFound }
+    lookup(path) map { renderFront } getOrElse { NotFound }
   }
 
-  private def lookup()(implicit request: RequestHeader): Option[FrontPage] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Option[FrontPage] = {
     val edition = Edition(request, Configuration)
-    Some(front(edition))
+    Some(front(path, edition))
   }
 
   private def renderFront(model: FrontPage)(implicit request: RequestHeader) = model match {

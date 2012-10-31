@@ -92,7 +92,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the publication date of the article")
-        //cannot use the fluentium to select a meta tag and then get its text
         findFirst(".dateline").getText should be("Monday 6 August 2012 19.30 GMT")
         findFirst("time").getAttribute("datetime") should be("2012-08-06")
       }
@@ -172,8 +171,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val adPlaceholder = $("#ad-slot-top-banner-ad").first()
 
         and("the placeholder has the correct slot names")
-        adPlaceholder.getAttribute("data-base") should be("x50")
-        adPlaceholder.getAttribute("data-median") should be("x52")
+        adPlaceholder.getAttribute("data-base") should be("Top2")
+        adPlaceholder.getAttribute("data-median") should be("Top")
         adPlaceholder.getAttribute("data-extended") should be("x54")
 
         and("the placeholder has the correct class name")

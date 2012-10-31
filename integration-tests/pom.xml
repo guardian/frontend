@@ -3,17 +3,17 @@
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gu</groupId>
-	<artifactId>frontend-integration-tests</artifactId>
+	<artifactId>integration-tests</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>frontend-integration-tests</name>
+	<name>integration-tests</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cucumber.version>1.0.14</cucumber.version>
-		<tags>--tags ~@ignore</tags>
-		<cucumber.options>src/test/resources ${tags} --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
+		<tags>--tags ~@nothing</tags>
+		<cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
 	</properties>
 
 	<dependencies>
@@ -53,11 +53,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<artifactId>selenium-java</artifactId>
 			<version>2.24.1</version>
 		</dependency>
-        <dependency>
-            <groupId>com.novocode</groupId>
-            <artifactId>junit-interface</artifactId>
-            <version>0.10-M1</version>
-        </dependency>
 	</dependencies>
 
 	<build>
@@ -78,6 +73,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	                    <property>
                             <name>cucumber.options</name>
                             <value>${cucumber.options}</value>
+	                    </property>
+	                    <property>
+	                       <name>frontend.root.dir</name>
+	                       <value>${basedir}/..</value>
 	                    </property>
 					</systemProperties>
 				</configuration>

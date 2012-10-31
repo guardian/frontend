@@ -13,7 +13,7 @@
 @if(info.rowNum == 1) {
     <h2 class="type-1 box-indent">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
-            @RemoveOuterParaHtml(trail.linkText)
+            @RemoveOuterParaHtml(trail.headline)
         </a>
     </h2>
 
@@ -27,8 +27,8 @@
                      data-fullsrc="@mainPicture.url"
                      data-width="@mainPicture.width"
                      itemprop="contentURL"
-                     alt='@Html(trail.linkText)' 
-                     title="@Html(trail.linkText)"
+                     alt="@Html(mainPicture.altText.getOrElse(""))" 
+                     title="@Html(mainPicture.caption.getOrElse(""))"
                 />
             </a>
             }
@@ -50,7 +50,7 @@
 
         <h2 class="media-body trail-headline">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
-                @RemoveOuterParaHtml(trail.linkText)
+                @RemoveOuterParaHtml(trail.headline)
             </a>
         </h2>
     </div>
@@ -61,7 +61,7 @@
 @if(info.rowNum > 5) {
     <h2 class="trail-headline type-3">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
-            @cleanTrailText(trail.linkText)
+            @cleanTrailText(trail.headline)
         </a>
     </h2>
 }

@@ -10,25 +10,32 @@
     </h2>
     
     @if(model.isLive) {
-	    @fragments.dateline(new DateTime, true)
+        <div class="live-matches-dateline">
+	       @fragments.dateline(new DateTime, true)
+	    </div>
     }
 
     <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
 
     @if(model.isLive && model.pageType == "live") {
-        @fragments.autoUpdate()
+        <div class="live-matches-update">
+            @fragments.autoUpdate()
+        </div>
     }
     
     @fragments.filters(model.filters, model.page, model.pageType)
     
-    @fragments.matchesList(model)
+    <div class="matches-container">
+        @fragments.matchesList(model)
+    </div>
 
     <div id="matches-nav" class="cf js-not-ajax" data-link-name="@model.pageType nav">
         @model.previousPage.map{url => <a href="@url" class="type-6a match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
         @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
     </div>
 
+    @fragments.footballNav(model.urlBase)
+    
     <div id="js-popular"></div>
 
-    @fragments.footballNav()
 }

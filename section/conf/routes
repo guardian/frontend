@@ -4,8 +4,10 @@
 
 
 # For dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                     controllers.Assets.at(path="/public", file)
 
-GET		/sections					controllers.SectionsController.render()
+GET		/sections					      controllers.SectionsController.render()
 
-GET     /*path                      controllers.SectionController.render(path)
+# culture and sport sections now live in front
+#GET     /$path<(?!culture|sport)[\w\d-]*> controllers.SectionController.render(path)
+GET     /:path                            controllers.SectionController.render(path)

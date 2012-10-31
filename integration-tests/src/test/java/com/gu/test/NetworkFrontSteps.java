@@ -6,6 +6,7 @@ import java.util.regex.*;
 import junit.framework.Assert;
 import org.openqa.selenium.*;
 import cucumber.annotation.en.*;
+import cucumber.junit.Cucumber;
 
 public class NetworkFrontSteps {
 
@@ -50,7 +51,7 @@ public class NetworkFrontSteps {
 			WebElement button = section.findElement(By.cssSelector(".front-section-head .toggle-trailblock"));
 			Assert.assertEquals(buttonText, button.getText());
 			button.click();
-			// and wait half a second for it to close
+			// and wait a second for it to close
 			webDriver.waitFor(1000);
 			// confirm correct class
 			String direction = (action.equals("collapse")) ? "up" : "out";
@@ -66,19 +67,26 @@ public class NetworkFrontSteps {
 
 	@Given("^I hide a section$")
 	public void I_hide_a_section() throws Throwable {
+		By firstSectionToggle = By.cssSelector("#front-container section:first-child .toggle-trailblock");
+		// wait for the toggle to become visible
+		webDriver.isVisibleWait(firstSectionToggle);
 	    // hide the first section
-		webDriver.click(By.cssSelector("section.front-section .toggle-trailblock"));
+		webDriver.findElement(firstSectionToggle).click();
 	}
 
 	@Then("^the collapsed section will stay collapsed$")
 	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
-	    // confirm the first section is collapsed still
-		WebElement section = webDriver.findElement(By.cssSelector("section.front-section"));
-		// confirm toggle text is 'Show' (wait for toggle to be visible)
-		webDriver.isVisibleWait(By.className("toggle-trailblock"));
-		Assert.assertEquals("Show", section.findElement(By.className("toggle-trailblock")).getText());
-		// confirm trailblock is hidden
-		Assert.assertEquals("0px", section.findElement(By.className("trailblock")).getCssValue("max-height"));
+		String firstSectionLocator = "#front-container section:first-child ";
+		// wait for first section to collapse
+		webDriver.hasTextWait(
+			By.cssSelector(firstSectionLocator + ".toggle-trailblock"), "Show"
+		);
+		// and wait a second for it to close
+		webDriver.waitFor(1000);
+		// confirm trailblock has 0 height
+		Assert.assertEquals(
+			"0px", webDriver.findElement(By.cssSelector(firstSectionLocator + ".trailblock")).getCssValue("max-height")
+		);
 	}
 	
 }

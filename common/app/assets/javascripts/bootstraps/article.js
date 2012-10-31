@@ -16,6 +16,7 @@ define([
         'modules/navigation/controls',
         'domReady',
         'modules/trailblocktoggle',
+        'modules/adverts/adverts',
         'bean',
         'modules/more-matches',
         'bonzo',
@@ -42,6 +43,7 @@ define([
         NavigationControls,
         domReady,
         TrailblockToggle,
+        Adverts,
         bean,
         MoreMatches,
         bonzo,
@@ -160,6 +162,20 @@ define([
                 tt.go(edition);
             },
 
+            loadAdverts: function (config) {
+                Adverts.init(config);
+                Adverts.loadAds();
+
+                // Check every second if page has scrolled and attempt to load new ads.
+                var currentScroll = window.pageYOffset;
+                setInterval(function() {
+                    if (window.pageYOffset !== currentScroll) {
+                        currentScroll = window.pageYOffset;
+                        Adverts.loadAds();
+                    }
+                }, 1000);
+            },
+
             showMoreMatches: function() {
                 var matchesNav = document.getElementById('matches-nav');
                 MoreMatches.init(matchesNav);
@@ -170,13 +186,13 @@ define([
                 tp.init();
             },
 
-            liveBlogging: function(isLive) {
-                if(isLive) {
+            liveBlogging: function(config) {
+                if(config.page.isLive) {
                     var path = window.location.pathname,
                         delay = 60000,
                         el = document.querySelector(".article-body");
 
-                    var a = new AutoUpdate(window.location.pathname, delay, el).init();
+                    var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
 
                 }
             },
@@ -229,6 +245,7 @@ define([
         modules.liveBlogging(config.page.isLive);
         modules.showFootballTables(config.page);
 
+
         switch (isNetworkFront) {
 
             case true:
@@ -248,21 +265,27 @@ define([
             modules.showMoreMatches();
         }
 
+        modules.loadFonts(config, navigator.userAgent, userPrefs);
+
         // auto-update for live page
         if (config.page.pageId === 'football/live') {
             // only load auto update module if there is a live match currently on
             if (qwery('.match.live-match').length) {
                 // load the auto update
                 // TODO - confirm update is every 10secs
-                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container"), config.switches).init();
+                new AutoUpdate(window.location.pathname, 10000, qwery(".matches-container")[0], config.switches).init();
             }
         }
         
-        modules.loadOmnitureAnalytics(config);
-        modules.loadFonts(config, navigator.userAgent, userPrefs);
-        modules.loadOphanAnalytics();
-
         modules.bindTogglePanels();
+
+        // If you can wait for load event, do so.
+        deferToLoadEvent(function() {
+            modules.loadOmnitureAnalytics(config);
+            modules.loadOphanAnalytics();
+            modules.loadAdverts(config.page);
+        });
+
     };
 
     // domReady proxy for bootstrap
@@ -270,6 +293,16 @@ define([
         domReady(function () {
             bootstrap(config, userPrefs);
         });
+    };
+
+    var deferToLoadEvent = function(ref) {
+        if (document.readyState === 'complete') {
+            ref();
+        } else {
+            window.addEventListener('load', function() {
+                ref();
+            });
+        }
     };
 
     return {

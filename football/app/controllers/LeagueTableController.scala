@@ -7,7 +7,7 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 
-case class TablesPage(page: Page, tables: Seq[Table]) {
+case class TablesPage(page: Page, tables: Seq[Table], urlBase: String) {
   lazy val singleCompetition = tables.size == 1
 }
 
@@ -29,8 +29,13 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
 
   def render() = Action { implicit request =>
 
-    val page = new Page("http://www.guardian.co.uk/football/matches", "football/tables", "football", "", "All tables",
-      "GFE: Football : automatic : tables"
+    val page = new Page(
+      "http://www.guardian.co.uk/football/matches",
+      "football/tables",
+      "football",
+      "",
+      "All tables",
+      "GFE:Football:automatic:tables"
     )
 
     val groups = loadTables.map { table =>
@@ -42,19 +47,55 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     }
 
     Cached(page) {
-      Ok(Compressed(views.html.tables(TablesPage(page, groups))))
+      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football"))))
+    }
+  }
+
+  def renderTeamlist() = Action { implicit request =>
+
+    val page = new Page(
+      "http://www.guardian.co.uk/football/teams",
+      "football/teams",
+      "football",
+      "",
+      "All teams",
+      "GFE:Football:automatic:teams"
+    )
+
+    val groups = loadTables.map { table =>
+      table.copy(groups = table.groups)
+    }
+
+    val competitionList = List(
+      "Premier League",
+      "Championship",
+      "League One",
+      "League Two",
+      "Scottish Premier League",
+      "Scottish Division One",
+      "Scottish Division Two",
+      "Scottish Division Three"
+    )
+
+    Cached(page) {
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football"), competitionList)))
     }
   }
 
   def renderCompetition(competition: String) = Action { implicit request =>
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
-      val page = new Page("http://www.guardian.co.uk/football/matches",
-        table.competition.url.drop(1) + "/tables", "football", "", table.competition.fullName + " table",
-        "GFE: Football : automatic : competition tables")
+      val page = new Page(
+        "http://www.guardian.co.uk/football/matches",
+        table.competition.url.drop(1) + "/tables",
+        "football",
+        "",
+        table.competition.fullName + " table",
+        "GFE:Football:automatic:competition tables"
+      )
 
       Cached(page) {
-        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table)))))
+        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url))))
       }
     }.getOrElse(NotFound("Not found"))
   }

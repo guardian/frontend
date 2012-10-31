@@ -64,28 +64,40 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
 
   val competitionAgents = Seq(
 
-    CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
-
     CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
-    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
 
     CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English")),
-    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English")),
-    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English")),
-    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
+
+    CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
+
+    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
+
     CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
+    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
+
+    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English")),
+
+    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English")),
+
+    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
+
+    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "Rest of world")),
+
     CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
-    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
-    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
-    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish")),
+
     CompetitionAgent(Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish")),
+
     CompetitionAgent(Competition("320", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish")),
 
-    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
-    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English")),
+    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
 
-    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "Rest of world"))
+    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
+
+    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish")),
+
+    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English"))
+
   )
 
   override def competitions = competitionAgents.map { agent =>
