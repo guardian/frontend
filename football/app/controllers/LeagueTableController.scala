@@ -7,7 +7,11 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 
-case class TablesPage(page: Page, tables: Seq[Table], urlBase: String) {
+case class TablesPage(
+    page: Page,
+    tables: Seq[Table],
+    urlBase: String,
+    filters: Map[String, Seq[CompetitionFilter]] = Map.empty) {
   lazy val singleCompetition = tables.size == 1
 }
 
@@ -17,7 +21,7 @@ case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
 }
 
-object LeagueTableController extends Controller with Logging with CompetitionFixtureFilters {
+object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
 
   private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { comp =>
     val groups = comp.leagueTable
@@ -47,7 +51,7 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     }
 
     Cached(page) {
-      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football"))))
+      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football", filters))))
     }
   }
 
@@ -78,7 +82,7 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     )
 
     Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football"), competitionList)))
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters), competitionList)))
     }
   }
 
@@ -87,7 +91,8 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
 
       val page = new Page(
         "http://www.guardian.co.uk/football/matches",
-        table.competition.url.drop(1) + "/tables",
+        //table.competition.url.drop(1) + "/tables",
+        "football/tables",
         "football",
         "",
         table.competition.fullName + " table",
@@ -95,7 +100,7 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
       )
 
       Cached(page) {
-        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url))))
+        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters))))
       }
     }.getOrElse(NotFound("Not found"))
   }

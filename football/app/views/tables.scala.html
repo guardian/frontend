@@ -8,8 +8,9 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-1a box-indent">@model.page.webTitle</h1>
-
+    <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
+    
+    @fragments.filters(model.filters, model.page, "tables")
 
     <ol class="competitions unstyled" data-link-name="tables">
         @model.tables.map{ table =>

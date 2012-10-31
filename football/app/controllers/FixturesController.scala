@@ -86,7 +86,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
       val page = new Page(
         "http://www.guardian.co.uk/football/matches",
-        competition.url.drop(1) + "/results",
+        "football/fixtures",
         "football",
         "",
         competition.fullName + " fixtures",
