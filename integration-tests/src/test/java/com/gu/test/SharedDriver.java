@@ -291,18 +291,11 @@ public class SharedDriver extends EventFiringWebDriver {
 	public int checkURLReturns(String url) throws IOException {
 
 		// returns response code
-		//URL url = new URL(urlString);
-
-		//HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		//connection.setRequestMethod("GET");
-
 		URL server = new URL(url);
-		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {
-			Properties systemProperties = System.getProperties();
-			systemProperties.setProperty("http.proxyHost","http://proxy.gudev.gnl");
-			systemProperties.setProperty("network.proxy.type","1");
-			systemProperties.setProperty("http.proxyPort", "3128");
-
+		if (System.getProperty("http_proxy") != null && !System.getProperty("http_proxy").isEmpty()) {	
+			System.setProperty("http.proxyHost", "http://proxy.gudev.gnl");
+			System.setProperty("http.proxyPort", "3128");
+			System.setProperty("network.proxy.type","1");
 		}
 
 		HttpURLConnection connection = (HttpURLConnection)server.openConnection();
