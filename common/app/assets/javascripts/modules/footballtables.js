@@ -11,8 +11,8 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         this.view = {
             prependTo: this.prependTo,
             render: function (html) {
-                bonzo(prependTo).after(html);
-                common.mediator.emit('modules:footballtables:render');
+                var el = bonzo(prependTo).after(html);
+                common.mediator.emit('modules:footballtables:render', 'front-competition-table');
             }
         };
         

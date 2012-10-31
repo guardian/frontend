@@ -186,14 +186,17 @@ define([
                     appendTo = null,
                     table;
 
+                common.mediator.on('modules:footballtables:render', function(id) {
+                    var expandable = new Expandable({ id: id, expanded: false });
+                    expandable.initalise();
+                });
+
                 if (path === "/" || path === "/football" || path === "/sport") {
-                    console.log('In path');
-                    appendTo = (path === "/") ? qwery('ul > li', 'zone-sport')[1] : qwery('ul > li', '.trailblock')[1];
+                    appendTo = (path === "/") ? qwery('ul > li', '.zone-sport')[1] : qwery('ul > li', '.trailblock')[1];
                     table = new FootballTable(appendTo).init();
                 }
 
                 if(page.paFootballCompetition) {
-                    console.log("Has PA id");
                     appendTo = qwery('ul > li', '.trailblock')[1];
                     table = new FootballTable(appendTo, page.paFootballCompetition).init();
                 }
@@ -219,9 +222,8 @@ define([
         switch (isNetworkFront) {
 
             case true:
-                modules.showFrontExpanders();
                 modules.showTrailblockToggles(config);
-                new FootballTable(qwery('ul > li', 'zone-sport')[1], [500, 510, 100]).init();
+                modules.showFrontExpanders();
                 break;
 
             case false:

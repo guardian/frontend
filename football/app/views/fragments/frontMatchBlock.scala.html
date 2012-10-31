@@ -1,10 +1,30 @@
 @(competition: Competition)
 
-<li class="trail-table" data-link-name="front scores">
+<li id="front-competition-table" class="trail-table js-front-trailblock rolled-out" data-link-name="front scores" 
+    data-count="@{competition.matches.length - 5}">
     <div class="competition-title football-table-link box-indent type-3">
        Today's <a href="@competition.url" data-link-name="competition">@competition.fullName</a> matches
     </div>
 
-    @fragments.competitionMatches(competition)
+    <ol class="matches unstyled">
+        @competition.matches.map{
+            case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
+            case result: pa.Result                          => { @fragments.result(result) }
+            case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
+            case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
+        }.slice(0, 5)
+    </ol>
+
+    @if(competition.matches.length > 5) {
+    <ol class="matches unstyled panel">
+        @competition.matches.map{
+            case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
+            case result: pa.Result                          => { @fragments.result(result) }
+            case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
+            case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
+        }.slice(5, competition.matches.length)
+    </ol>
+    }
+
 </li>
 <a href="/football/live" class="cta" data-link-name="all todays matches">View all today's matches</a>
