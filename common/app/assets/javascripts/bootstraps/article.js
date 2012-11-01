@@ -23,7 +23,8 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
-        'modules/footballfixtures'
+        'modules/footballfixtures',
+        'modules/cookies'
     ],
     function (
         common,
@@ -49,7 +50,8 @@ define([
         bonzo,
         TogglePanel,
         Errors,
-        AutoUpdate) {
+        AutoUpdate,
+        Cookies) {
 
         var modules = {
 
@@ -194,6 +196,10 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
 
                 }
+            },
+
+            cleanupCookies: function() {
+                Cookies.cleanup(["mmcore.pd", "mmcore.srv", "mmid"]);
             }
 
         };
@@ -250,6 +256,7 @@ define([
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
             modules.loadAdverts(config.page);
+            modules.cleanupCookies();
         });
 
     };
