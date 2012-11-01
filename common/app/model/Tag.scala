@@ -1,6 +1,7 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
+import common.Reference
 
 case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val name: String = webTitle
@@ -34,5 +35,5 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
     "content-type" -> "Tag"
-  )
+  ) ++ delegate.references.map(r => Reference(r.id)).toMap
 }

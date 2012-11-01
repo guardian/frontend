@@ -17,11 +17,11 @@
     cursor: pointer;
 }
 
-.cta:before {
+.expander:before {
     content: '- ';
 }
 
-.shut .cta:before {
+.shut .expander:before {
     content: '+ ';
 }
 
@@ -36,6 +36,26 @@
 
 .on {
     display: block;
+}
+
+//These should be refactored to is-shut/is-open
+.trailblock .panel,
+.rolled-out {
+     height: auto;
+     max-height: 9999px;
+     overflow: hidden;
+     .transition(max-height 1s ease-in-out);
+     margin-bottom: 0px;
+}
+
+.trailblock.shut > .panel,
+.competition-table.shut > .panel,
+.rolled-up {
+    .transition(max-height .5s ease-in-out);
+    overflow: hidden;
+    position: relative;
+    max-height: 0;
+    padding-top: 0;
 }
 
 .trail-headline a:visited {
