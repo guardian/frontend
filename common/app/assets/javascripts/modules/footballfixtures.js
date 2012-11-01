@@ -1,6 +1,8 @@
-define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
+define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
 
     function FootballFixtures(options) {
+        var reqwest = Reqwest;
+
         //Full list of competitions from CM, in priority order.
         this.competitions = ['500', '510', '100', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
 
@@ -11,7 +13,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         this.view = {
             render: function (html) {
                 var el = bonzo(options.prependTo).after(html);
-                common.mediator.emit('modules:footballtables:render');
+                common.mediator.emit('modules:footballfixtures:render');
             }
         };
         
@@ -24,23 +26,23 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 url: path,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
-                jsonpCallbackName: 'footballtables',
+                jsonpCallbackName: 'footballfixtures',
                 success: function (response) {
                     if(response.html) {
-                        common.mediator.emit('modules:footballtables:loaded', response.html);
+                        common.mediator.emit('modules:footballfixtures:loaded', response.html);
                     }
                 },
                 error: function () {
-                    common.mediator.emit("modules:error", 'Failed to load football table', 'footballtables.js', '35');
+                    common.mediator.emit("modules:error", 'Failed to load football table', 'footballfixtures.js', '35');
                 }
             });
         };
 
         // Bindings
-        common.mediator.on('modules:footballtables:loaded', this.view.render, this);
-        common.mediator.on('modules:footballtables:render', function() {
+        common.mediator.on('modules:footballfixtures:loaded', this.view.render, this);
+        common.mediator.on('modules:footballfixtures:render', function() {
             if(options.expandable) {
-                common.mediator.emit('modules:footballtables:expand' ,'front-competition-table');
+                common.mediator.emit('modules:footballfixtures:expand', 'front-competition-table');
             }
         }, this);
 
@@ -58,7 +60,10 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         };
 
         //Initalise
-        this.init = function () {
+        this.init = function(opts) {
+            opts = opts || {};
+            reqwest = opts.reqwest || Reqwest;
+
             var query = this.generateQuery();
 
             this.load(query);

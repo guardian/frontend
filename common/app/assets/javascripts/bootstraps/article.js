@@ -202,7 +202,7 @@ define([
                     prependTo = null,
                     table;
 
-                common.mediator.on('modules:footballtables:expand', function(id) {
+                common.mediator.on('modules:footballfixtures:expand', function(id) {
                     var expandable = new Expandable({ id: id, expanded: false });
                     expandable.initalise();
                 });
@@ -242,7 +242,7 @@ define([
         modules.showTabs();
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-        modules.liveBlogging(config.page.isLive);
+        modules.liveBlogging(config);
         modules.showFootballFixtures(config.page);
 
 
