@@ -92,7 +92,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
       val page = new Page(
         "http://www.guardian.co.uk/football/matches",
-        //table.competition.url.drop(1) + "/tables",
         "football/tables",
         "football",
         "",
