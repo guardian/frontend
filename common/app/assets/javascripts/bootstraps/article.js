@@ -196,7 +196,7 @@ define([
         };
 
     var bootstrap = function (config, userPrefs) {
-
+        
         var isNetworkFront = (config.page.pageId === "");
 
         modules.hideJsElements();
@@ -208,13 +208,16 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
-
+        
+        // trailblock toggles are now on sport and culture section fronts
+        if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
+            modules.showTrailblockToggles(config);
+        } 
 
         switch (isNetworkFront) {
 
             case true:
                 modules.showFrontExpanders();
-                modules.showTrailblockToggles(config);
                 break;
 
             case false:

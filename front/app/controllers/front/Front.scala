@@ -3,6 +3,7 @@ package controllers.front
 import java.util.concurrent.TimeUnit._
 import controllers.FrontPage
 import model.TrailblockDescription
+import model.Trailblock
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
 import akka.util.Duration
@@ -115,9 +116,9 @@ class Front extends AkkaSupport with Logging {
     })
   }
 
-  def apply(path: String, edition: String): FrontPage = edition match {
-    case "US" => FrontPage(usEditions(path)())
-    case anythingElse => FrontPage(ukEditions(path)())
+  def apply(path: String, edition: String): Seq[Trailblock] = edition match {
+    case "US" => usEditions(path)()
+    case anythingElse => ukEditions(path)()
   }
 
   def warmup() {
