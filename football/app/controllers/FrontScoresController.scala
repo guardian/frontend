@@ -29,6 +29,6 @@ object FrontScoresController extends Controller with Logging {
           }
         }
       }
-    } getOrElse (NotFound)
+    } getOrElse (NoContent)
   }
 }
