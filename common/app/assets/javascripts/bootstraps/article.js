@@ -22,7 +22,8 @@ define([
         'bonzo',
         'modules/togglepanel',
         'modules/errors',
-        'modules/autoupdate'
+        'modules/autoupdate',
+        'modules/footballfixtures'
     ],
     function (
         common,
@@ -48,7 +49,8 @@ define([
         bonzo,
         TogglePanel,
         Errors,
-        AutoUpdate) {
+        AutoUpdate,
+        FootballFixtures) {
 
         var modules = {
 
@@ -58,7 +60,9 @@ define([
             },
 
             attachGlobalErrorHandler: function () {
-                new Errors(window).init();
+                var e = new Errors(window);
+                e.init();
+                common.mediator.on("module:error", e.log);
             },
 
             upgradeImages: function () {
@@ -191,6 +195,37 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
 
                 }
+            },
+
+            showFootballFixtures: function(page) {
+                    var path = window.location.pathname,
+                    prependTo = null,
+                    table;
+
+                common.mediator.on('modules:footballfixtures:expand', function(id) {
+                    var expandable = new Expandable({ id: id, expanded: false });
+                    expandable.initalise();
+                });
+
+                switch(path) {
+                    case "/" :
+                        prependTo = qwery('ul > li', '.zone-sport')[1];
+                        table = new FootballFixtures({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                        break;
+                    case "/sport" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: true}).init();
+                        break;
+                    case "/football" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: false}).init();
+                        break;
+                }
+
+                if(page.paFootballCompetition) {
+                    prependTo = qwery('ul > li', '.trailblock')[1];
+                    table = new FootballFixtures({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
+                }
             }
 
         };
@@ -208,13 +243,14 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
+        modules.showFootballFixtures(config.page);
 
 
         switch (isNetworkFront) {
 
             case true:
-                modules.showFrontExpanders();
                 modules.showTrailblockToggles(config);
+                modules.showFrontExpanders();
                 break;
 
             case false:
