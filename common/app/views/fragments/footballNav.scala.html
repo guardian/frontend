@@ -1,7 +1,9 @@
-@(urlBase: String)
+@(urlBase: String, competitionName: Option[String] = None, competitionUrl: Option[String] = None)
 
 <div class="sections zone-background cf football-nav" data-link-name="football bottom nav">
-    <h3 class="box-indent type-2"><a href="/football" data-link-name"football index">Football</a> statistics</h3>
+    <h3 class="box-indent type-2">
+        <a href="@competitionUrl.getOrElse("/football")" data-link-name"football index">@competitionName.getOrElse("Football")</a> statistics
+    </h3>
     <ul class="nav nav-stacked">
         <li><a href="@urlBase/live" data-link-name="livescores">Live scores</a></li>
         <li><a href="@urlBase/fixtures" data-link-name="fixtures">Fixtures</a></li>

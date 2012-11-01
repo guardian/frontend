@@ -114,7 +114,7 @@
         }
     </ol>
     
-    @fragments.footballNav(model.urlBase)
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
 
     <div id="js-popular"></div> 
 

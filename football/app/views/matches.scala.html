@@ -4,15 +4,15 @@
 
 @main(model.page, Static, Configuration, Switches.all){
 }{
-
+    
     <h2 class="article-zone type-2 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
     
     @if(model.isLive) {
         <div class="live-matches-dateline">
-	       @fragments.dateline(new DateTime, true)
-	    </div>
+           @fragments.dateline(new DateTime, true)
+        </div>
     }
 
     <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
@@ -25,7 +25,6 @@
         </div>
     }
     
-    
     <div class="matches-container">
         @fragments.matchesList(model)
     </div>
@@ -35,7 +34,8 @@
         @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
     </div>
 
-    @fragments.footballNav(model.urlBase)
+
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
     
     <div id="js-popular"></div>
 

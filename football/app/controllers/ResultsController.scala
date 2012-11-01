@@ -19,7 +19,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
     competitions: CompetitionSupport,
     competitionName: Option[String],
     date: Option[DateMidnight],
-    competition: Option[String])(implicit request: RequestHeader) = {
+    comp: Option[Competition])(implicit request: RequestHeader) = {
     val startDate = date.getOrElse(new DateMidnight)
 
     val resultsDays = competitions.previousMatchDates(startDate, daysToDisplay)
@@ -33,8 +33,16 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       competitions.previousMatchDates(date.minusDays(1), daysToDisplay).headOption
     }.map(toNextPreviousUrl(_, competitionName))
 
-    val resultsPage = MatchesPage(page, None, results.filter(_.competitions.nonEmpty),
-      nextPage, previousPage, "results", filters, competition)
+    val resultsPage = MatchesPage(
+      page = page,
+      blog = None,
+      days = results.filter(_.competitions.nonEmpty),
+      nextPage = nextPage,
+      previousPage = previousPage,
+      pageType = "results",
+      filters = filters,
+      comp = comp
+    )
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
@@ -98,7 +106,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
         Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competitionName),
         Some(competitionName),
         date,
-        Some(competition.url)
+        Some(competition)
       )
     }.getOrElse(NotFound)
 
