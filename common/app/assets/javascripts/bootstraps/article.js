@@ -23,7 +23,7 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
-        'modules/footballtables'
+        'modules/footballfixtures'
     ],
     function (
         common,
@@ -50,7 +50,7 @@ define([
         TogglePanel,
         Errors,
         AutoUpdate,
-        FootballTable) {
+        FootballFixtures) {
 
         var modules = {
 
@@ -197,7 +197,7 @@ define([
                 }
             },
 
-            showFootballTables: function(page) {
+            showFootballFixtures: function(page) {
                     var path = window.location.pathname,
                     prependTo = null,
                     table;
@@ -210,21 +210,21 @@ define([
                 switch(path) {
                     case "/" :
                         prependTo = qwery('ul > li', '.zone-sport')[1];
-                        table = new FootballTable({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                        table = new FootballFixtures({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
                         break;
                     case "/sport" :
                         prependTo = qwery('ul > li', '.trailblock')[1];
-                        table = new FootballTable({prependTo: prependTo, expandable: true}).init();
+                        table = new FootballFixtures({prependTo: prependTo, expandable: true}).init();
                         break;
                     case "/football" :
                         prependTo = qwery('ul > li', '.trailblock')[1];
-                        table = new FootballTable({prependTo: prependTo, expandable: false}).init();
+                        table = new FootballFixtures({prependTo: prependTo, expandable: false}).init();
                         break;
                 }
 
                 if(page.paFootballCompetition) {
                     prependTo = qwery('ul > li', '.trailblock')[1];
-                    table = new FootballTable({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
+                    table = new FootballFixtures({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
                 }
             }
 
@@ -243,7 +243,7 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config.page.isLive);
-        modules.showFootballTables(config.page);
+        modules.showFootballFixtures(config.page);
 
 
         switch (isNetworkFront) {
