@@ -47,8 +47,9 @@ class FrontController extends Controller with Logging {
 
     page map { page =>
       // get the trailblocks
-      val trailblocks: Seq[Trailblock] = Front(path, edition)
-      Cached(page) { Ok(Compressed(views.html.front(page, trailblocks))) }
+      val trailblocks: Seq[Trailblock] = front(path, edition)
+      if (trailblocks.isEmpty) InternalServerError
+      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks))) }
     } getOrElse (InternalServerError)
   }
 
