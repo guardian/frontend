@@ -1,13 +1,14 @@
 {
     "packages":{
         "frontend-football":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::football" ],
             "data":{
-                "port":"9000",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/football/fixtures"
+                    "/management/healthcheck"
                 ]
             }
         },
@@ -25,7 +26,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-football.deploy"]
+            "actionsBeforeApp": ["frontend-football.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-football.uploadArtifacts"]
