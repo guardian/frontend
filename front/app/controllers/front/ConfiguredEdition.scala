@@ -61,7 +61,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
   }
 
   override def shutDown() = {
-    super.refresh()
+    super.shutDown()
     configAgent().foreach(_.close())
   }
 
