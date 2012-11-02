@@ -23,6 +23,7 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
+        'modules/footballfixtures',
         'modules/cookies'
     ],
     function (
@@ -50,7 +51,8 @@ define([
         TogglePanel,
         Errors,
         AutoUpdate,
-        CookieManager) {
+        FootballFixtures,
+        Cookies) {
 
         var modules = {
 
@@ -198,7 +200,38 @@ define([
             },
 
             cleanupCookies: function() {
-                CookieManager.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+                Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            },
+
+            showFootballFixtures: function(page) {
+                    var path = window.location.pathname,
+                    prependTo = null,
+                    table;
+
+                common.mediator.on('modules:footballfixtures:expand', function(id) {
+                    var expandable = new Expandable({ id: id, expanded: false });
+                    expandable.initalise();
+                });
+
+                switch(path) {
+                    case "/" :
+                        prependTo = qwery('ul > li', '.zone-sport')[1];
+                        table = new FootballFixtures({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                        break;
+                    case "/sport" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: true}).init();
+                        break;
+                    case "/football" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: false}).init();
+                        break;
+                }
+
+                if(page.paFootballCompetition) {
+                    prependTo = qwery('ul > li', '.trailblock')[1];
+                    table = new FootballFixtures({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
+                }
             }
 
         };
@@ -216,6 +249,7 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
+        modules.showFootballFixtures(config.page);
 
         // trailblock toggles are now on sport and culture section fronts
         if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
