@@ -12,10 +12,11 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
     var config,
         adsSwitchedOn,
         audienceScienceSegments,
-        slots = [];
+        slots;
 
     function init(c) {
         config = c;
+        slots = [];
 
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 728) ? 'median' : 'base';
@@ -25,7 +26,7 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
         // Run through slots and create IframeAdSlots for each.
         // Other ad types to be plugged in later.
         if (adsSwitchedOn) {
-            for(var i = 0, j = slotHolders.length; i < j; i++) {
+            for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
                 var slot = new IframeAdSlot(name, slotHolders[i], config);
                 slot.setDimensions(dimensionMap[name]);

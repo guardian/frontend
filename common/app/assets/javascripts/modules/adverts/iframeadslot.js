@@ -23,8 +23,8 @@ define(['common', 'modules/detect','modules/adverts/audience-science'], function
     };
 
     IframeAdSlot.prototype.load = function() {
-        this.loaded = true;
         this.createIframe();
+        this.loaded = true;
     };
 
     IframeAdSlot.prototype.createIframe = function() {
@@ -50,7 +50,7 @@ define(['common', 'modules/detect','modules/adverts/audience-science'], function
 
         if (this.config.keywords) {
             var keywords = this.config.keywords.split(',');
-            for(var i = 0, j = keywords.length; i < j; i++) {
+            for(var i = 0, j = keywords.length; i < j; ++i) {
                 query += 'k=' + encodeURIComponent(keywords[i]) + "&";
             }
         }

@@ -1,16 +1,37 @@
-define(['modules/cookies'], function(cookies) {
+define(['modules/adverts/audience-science'], function(AudienceScience) {
    
-    describe("Cookie", function() {
+    describe("AudienceScience", function() {
 
-        beforeEach(function() {
+        it("should get correct values from localStorage.", function() {
 
+            localStorage.setItem("gu.ads.audsci", '["E012712","E012390","E012478","E012819","E013064","E013074","E013080","E013167","E013267","E013273","E013299","E013410","E013464","E013519"]');
 
+            var segments = AudienceScience.getSegments()
+            expect(segments.length).toBe(14);
         });
 
-        it("should let list of cookies be cleared", function() {
+        it("should update values in localStorage when loaded.", function() {
 
-            expect(true).toBe(true);
+            var config = {
+                'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516'
+            }
 
+            localStorage.removeItem("gu.ads.audsci");
+            var segments = AudienceScience.getSegments();
+
+            expect(segments).toBe(undefined);
+
+            AudienceScience.load(config)
+
+
+            waitsFor(function() {
+                return (localStorage.getItem("gu.ads.audsci") !== null);
+            }, "segments never arrived in localStorage", 1000);
+
+            runs(function() {
+                segments = AudienceScience.getSegments();
+                expect(segments.length > 0).toBe(true);
+            })
 
         });
 

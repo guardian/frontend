@@ -1,11 +1,15 @@
 define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'modules/detect'], function(common, Adverts, IframeAdSlot, detect) {
 
+    //Ignore audience science for these tests.
+    localStorage.removeItem("gu.ads.audsci");
+
     var config = {
         'keywords': 'keyword,go,here',
         'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
         'oasSiteId':"beta.guardian.co.uk/oas.html",
         'contentType': 'contentType',
-        'section': 'section'
+        'section': 'section',
+        'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516'
     }
 
     window.guardian = {
@@ -18,8 +22,8 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
 
         var createIframe = IframeAdSlot.prototype.createIframe;
 
-        var slowUrl = "http://oas.guardian.co.uk/RealMedia/ads/adstream_nx.ads/beta.guardian.co.uk/oas.html/12345@[SLOT_NAME]?k=keywordk=gok=here&ct=contenttype&pt=contenttype&cat=section";
-        var fastUrl = "http://oas.guardian.co.uk/RealMedia/ads/adstream_sx.ads/beta.guardian.co.uk/oas.html/12345@[SLOT_NAME]?k=keywordk=gok=here&ct=contenttype&pt=contenttype&cat=section";
+        var slowUrl = "http://oas.guardian.co.uk/RealMedia/ads/adstream_nx.ads/beta.guardian.co.uk/oas.html/12345@[SLOT_NAME]?k=keyword&k=go&k=here&ct=contenttype&pt=contenttype&cat=section&";
+        var fastUrl = "http://oas.guardian.co.uk/RealMedia/ads/adstream_sx.ads/beta.guardian.co.uk/oas.html/12345@[SLOT_NAME]?k=keyword&k=go&k=here&ct=contenttype&pt=contenttype&cat=section&";
 
         beforeEach(function() {
             IframeAdSlot.prototype.createIframe = function() { return; };

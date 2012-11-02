@@ -12,7 +12,7 @@ define(['modules/cookies'], function(Cookies) {
         // Audience Science calls these functions on window.
         window.DM_prepClient = function(csid, client) {
             client.DM_addEncToLoc('siteName', config.audienceScienceSiteName);
-            //client.DM_addEncToLoc('comFolder', guardian.r2.revsci.commercialFolder);
+            client.DM_addEncToLoc('comFolder', guardian.r2.revsci.commercialFolder);
 
             if(config.audienceScienceData) {
                 for(var i = 0, j = config.audienceScienceData.length; i<j; ++i) {
@@ -24,7 +24,6 @@ define(['modules/cookies'], function(Cookies) {
         window.DM_onSegsAvailable = function(segments, id) {
             segments = processSegments(segments);
             localStorage.setItem("gu.ads.audsci", JSON.stringify(segments));
-
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);
 
