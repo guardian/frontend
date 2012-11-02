@@ -215,7 +215,7 @@ define([
         // trailblock toggles are now on sport and culture section fronts
         if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
             modules.showTrailblockToggles(config);
-        } 
+        }
 
         switch (isNetworkFront) {
 
