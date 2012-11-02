@@ -12,7 +12,7 @@ define(['modules/cookies'], function(Cookies) {
         // Audience Science calls these functions on window.
         window.DM_prepClient = function(csid, client) {
             client.DM_addEncToLoc('siteName', config.audienceScienceSiteName);
-            client.DM_addEncToLoc('comFolder', guardian.r2.revsci.commercialFolder);
+            client.DM_addEncToLoc('comFolder', "");
 
             if(config.audienceScienceData) {
                 for(var i = 0, j = config.audienceScienceData.length; i<j; ++i) {
