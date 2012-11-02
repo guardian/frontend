@@ -48,15 +48,3 @@ Feature: Navigation - Top Stories
         Given I visit a section front
         When I click the "Top stories" tab
         Then I'm shown the top 10 stories from the Guardian site
-    
-    Scenario: Link to top story should work on an article
-        Given I visit an article
-        	And the "Top stories" menu is open
-        When I click on a top story
-        Then I'm taken to that article
-        
-    Scenario: Link to top story should work on a section front
-        Given I visit a section front
-        	And the "Top stories" menu is open
-        When I click on a top story
-        Then I'm taken to that article

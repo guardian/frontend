@@ -296,47 +296,51 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       then("the 'Football' sub-section should contain up to 6 stories")
       Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3))
-      Front.usEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3))
 
       and("the 'Cricket' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(2) should be(TrailblockDescription("sport/cricket", "Cricket", 1))
-      Front.usEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3))
 
       and("the 'Rugby Union' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
-      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
 
       and("the 'Motor Sport' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(4) should be(TrailblockDescription("sport/motorsports", "Motor Sport", 1))
-      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
 
       and("the 'Tennis' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(5) should be(TrailblockDescription("sport/tennis", "Tennis", 1))
-      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
 
       and("the 'Golf' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1))
-      Front.usEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1))
 
       and("the 'Horse Racing' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(7) should be(TrailblockDescription("sport/horse-racing", "Horse Racing", 1))
-      Front.usEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1))
 
       and("the 'Rugby League' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(8) should be(TrailblockDescription("sport/rugbyleague", "Rugby League", 1))
-      Front.usEditions("sport").descriptions(8) should be(TrailblockDescription("sport/rugbyleague", "Rugby League", 1))
 
       and("the 'US Sport' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(9) should be(TrailblockDescription("sport/us-sport", "US Sport", 1))
-      Front.usEditions("sport").descriptions(9) should be(TrailblockDescription("sport/us-sport", "US Sport", 1))
 
       and("the 'Boxing' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(10) should be(TrailblockDescription("sport/boxing", "Boxing", 1))
-      Front.usEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1))
 
       and("the 'Cycling' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1))
-      Front.usEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1))
+
+      then("the 'NFL' sub-section should contain up to 6 stories (US)")
+      Front.usEditions("sport").descriptions(1) should be(TrailblockDescription("sport/nfl", "NFL", 3))
+
+      and("the 'MLB' sub-section should contain up to 1 story (US)")
+      Front.usEditions("sport").descriptions(2) should be(TrailblockDescription("sport/mlb", "MLB", 1))
+
+      and("the 'NBA' sub-section should contain up to 1 story (US)")
+      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/nba", "NBA", 1))
+
+      and("the 'MLS' sub-section should contain up to 1 story (US)")
+      Front.usEditions("sport").descriptions(4) should be(TrailblockDescription("football/mls", "MLS", 1))
+
+      and("the 'NHL' sub-section should contain up to 1 story (US)")
+      Front.usEditions("sport").descriptions(5) should be(TrailblockDescription("sport/nhl", "NHL", 1))
     }
 
     /**
@@ -384,7 +388,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.usEditions("culture").descriptions(7) should be(TrailblockDescription("technology/games", "Games", 1))
     }
 
-    //this is so that the load balancer knows this server has a problem
+    // this is so that the load balancer knows this server has a problem
     scenario("Return error if front is empty") {
 
       given("I visit the network front")
@@ -393,12 +397,12 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
         val controller = new FrontController {
           override val front = new Front() {
-            override def apply(path: String, edition: String) = FrontPage(Seq.empty)
+            override def apply(path: String, edition: String) = Nil
           }
         }
 
         then("I should see an internal server error")
-        controller.render()(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+        controller.render("front")(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
       }
     }
   }
