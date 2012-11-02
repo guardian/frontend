@@ -1,30 +1,35 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Static, Configuration, Switches.all){  }{
-<section class="front-section zone-@section.section">
+    <section class="front-section zone-@section.section">
 
-	<h1 class="article-zone zone-color">@Html(section.name)</h1>
+    	<h1 class="article-zone zone-color">@Html(section.name)</h1>
 
-    @defining(math.max(editorsPicks.length, 15)){ numTrails =>
-        @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
+        @defining(math.max(editorsPicks.length, 15)){ numTrails =>
+            @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
 
-	   <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
+    	   <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
 
-            <ul class="unstyled">
+                <ul class="unstyled">
 
-            @trails.zipWithRowInfo.map{ case (trail, info) =>
-            	<li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
-                	@fragments.formatFrontTrail(trail, info)
-                </li>
+                @trails.zipWithRowInfo.map{ case (trail, info) =>
+                	<li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
+                    	@fragments.formatFrontTrail(trail, info)
+                    </li>
+                }
+
+            	</ul>
+
+            </div>
+
             }
-
-        	</ul>
-
-        </div>
-
         }
+
+    </section>
+
+    @if(section.name == "Football") {
+        @fragments.footballNav("/football")
     }
 
-</section>
-<div id="js-popular"></div>
+    <div id="js-popular"></div>
 }
