@@ -71,18 +71,6 @@ img.badge {
 .s-4:after { width:52px; }
 .s-5:after { width:65px; }
 
-#logo {
-    display: block;
-    text-indent: -1000px;
-    float: left;
-    margin: @baseline*2 @gutter;
-    .icon-guardian-logo-beta;
-}
-
-.svg #logo {
-    .svg-icon-guardian-logo-beta
-}
-
 .footer {
     overflow: hidden;
     margin: 0;
@@ -136,17 +124,20 @@ img.badge {
 .top:link,
 .top:visited,
 .top:active {
-    .type-6;
-    float: left;
-    color: #545454;
-    padding: @baseline*4 @baseline @baseline*4 @gutter;
+    display: block;
+    color: #A1B7CF;
+    background-color: @darkBlue;
+    padding: @baseline*2 @gutter @baseline*2 @gutter;
 }
 
-.top:before {
-    .rotate(180deg);
+.i-arrow-down {
     display: inline-block;
-    content: '▾';
-    margin-right: @baseline;
+    margin-left: @baseline;
+    .icon-arrow-down
+}
+
+.svg .i-arrow-down {
+    .svg-icon-arrow-down
 }
 
 .i-date {

@@ -1,3 +1,19 @@
+#header {
+    background-color: @blue;
+}
+
+#logo {
+    display: block;
+    float: left;
+    margin: @baseline*3 @gutter @baseline*2 @gutter;
+    text-indent: -9999px;
+    .icon-guardian-logo;
+}
+
+.svg #logo {
+    .svg-icon-guardian-logo
+}
+
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
 .nav {
     list-style:none;
@@ -41,7 +57,7 @@
 }
 
 .sections-control {
-    padding: 20px @gutter 10px 5px;
+    padding: 20px @gutter 10px @baseline*2;
 }
 
 .sections-control span {
@@ -49,6 +65,7 @@
     height: 13px;
     display: inline-block;
     text-indent: -1000em;
+    border-left: 1px solid #2E56AF;
     .icon-menu;
 }
 
@@ -105,13 +122,6 @@
     border-top: 1px solid  #D2D2D2;
     border-bottom: 1px solid  #D2D2D2;
     margin-bottom: -4px;
-    background: #ffffff;
-    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 0%, 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(95%,#ffffff), color-stop(100%,#f2f2f2));
-    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: -o-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: -ms-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: linear-gradient(to bottom,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
 }
 
 .nav-popup:after {
@@ -128,10 +138,24 @@
 }
 
 .topstories-control {
-    font-size: 14px;
-    margin-top: @baseline*2;
-    padding: @baseline 10px @baseline 10px;
-    border-right: 1px solid #707272;
+    color: #fff;
+    font-family: @serif !important;
+    border-left: 1px solid #06152B;
+    border-right: 1px solid #06152B;
+    margin: @baseline*2 0;
+}
+
+.topstories-control:link,
+.topstories-control:visited,
+.topstories-control:hover {
+    color: #fff;
+}
+
+.topstories-control span {
+    display: block;
+    padding: @baseline*1 10px;
+    border-left: 1px solid #2E56AF;
+    border-right: 1px solid #2E56AF;
 }
 
 .top-stories ul {
@@ -150,9 +174,9 @@
     text-decoration: none !important;
 }
 
-a.topstories-control, 
+.topstories-control, 
 .sections-control {
-    color: #707272;
+    color: #fff;
     background-color: transparent !important;
     display: inline-block;
     vertical-align: top;
@@ -164,7 +188,7 @@ a.topstories-control,
 }
 
 #navigation-footer {
-    margin-top: @baseline;
+    background-color: @blue;
 }
 
 .top-stories:after {

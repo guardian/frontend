@@ -29,12 +29,6 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                 return (state);
             },
 
-            // this menu is on by default for non-JS users, so we hide it once JS is loaded
-            hideBottomMenu: function () {
-                var bottomMenu = document.getElementById('sections-footer');
-                bonzo(bottomMenu).addClass('initially-off');
-            },
-
             // we don't show the bottom section icon unless JS is enabled,
             // since it doesn't do anything at the footer
             // so we show it here since JS is on
@@ -48,8 +42,6 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
 
             init: function () {
 
-                view.hideBottomMenu();
-
                 view.showHiddenSectionControls();
 
                 // can't seem to get bean to bind on arrays of elements properly,
@@ -60,25 +52,12 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                     view.toggle('sections', 'header', elm);
                     e.preventDefault();
                 });
-
-                Bean.add(document.getElementById('sections-control-footer'), 'click touchstart', function (e) {
-                    var elm = this;
-                    view.toggle('sections', 'footer', elm);
-                    e.preventDefault();
-                });
                 
                 Bean.add(document.getElementById('topstories-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'header', elm);
                     e.preventDefault();
                 });
-
-                Bean.add(document.getElementById('topstories-control-footer'), 'click touchstart', function (e) {
-                    var elm = this;
-                    view.toggle('topstories', 'footer', elm);
-                    e.preventDefault();
-                });
-
             }
                     
         };
