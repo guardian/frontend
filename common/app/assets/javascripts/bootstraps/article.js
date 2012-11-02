@@ -23,7 +23,6 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
-        'modules/footballfixtures',
         'modules/cookies'
     ],
     function (
@@ -51,7 +50,7 @@ define([
         TogglePanel,
         Errors,
         AutoUpdate,
-        Cookies) {
+        CookieManager) {
 
         var modules = {
 
@@ -199,7 +198,7 @@ define([
             },
 
             cleanupCookies: function() {
-                Cookies.cleanup(["mmcore.pd", "mmcore.srv", "mmid"]);
+                CookieManager.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
             }
 
         };

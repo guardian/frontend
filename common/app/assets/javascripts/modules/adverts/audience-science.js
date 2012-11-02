@@ -1,5 +1,5 @@
 
-define(['common'], function(common) {
+define(['modules/cookies'], function(Cookies) {
 
     function getSegments() {
         var segments = localStorage.getItem("gu.ads.audsci");
@@ -24,6 +24,9 @@ define(['common'], function(common) {
         window.DM_onSegsAvailable = function(segments, id) {
             segments = processSegments(segments);
             localStorage.setItem("gu.ads.audsci", JSON.stringify(segments));
+
+            // Kill any legacy cookies
+            Cookies.cleanUp(["rsi_segs"]);
 
         };
         window.rs_logSocialNetwork = function(network) {
