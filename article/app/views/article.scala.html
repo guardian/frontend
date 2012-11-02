@@ -43,7 +43,7 @@
     </article>
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     } else {
         <div id="js-related"></div>
     }

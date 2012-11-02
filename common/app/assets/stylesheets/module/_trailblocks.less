@@ -7,7 +7,11 @@
     overflow: hidden;
     margin-bottom: @baseline;
     border-bottom: 1px solid #e3e3db;
-    padding: @baseline*3 0 @baseline*4 0;
+    padding: @baseline*2 0 @baseline*3 0;
+}
+
+.trail:first-child {
+    padding-top: @baseline*3
 }
 
 .trail.has-image {
@@ -24,7 +28,6 @@
 }
 
 .trail-headline {
-    .type-2;
     padding: 0 @gutter;
 }
 
@@ -38,7 +41,12 @@
 
 .trail-text {
     display: block;
+    clear: left;
     padding: 0 @gutter;
+}
+
+.media .trail-text {
+    padding: 0;
 }
 
 .has-image .trail-text {
@@ -48,6 +56,8 @@
 .trailblock .media {
     padding: 0 @gutter @baseline*1 @gutter;
 }
+
+.trailblock .media-img { width: 40%; }
 
 .trailblock .media-img img {
     width: @trailblockImgWidth;

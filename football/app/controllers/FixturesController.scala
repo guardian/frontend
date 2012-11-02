@@ -19,7 +19,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
     competitions: CompetitionSupport,
     date: Option[DateMidnight] = None,
     competitionFilter: Option[String],
-    competition: Option[String])(implicit request: RequestHeader) = {
+    comp: Option[Competition])(implicit request: RequestHeader) = {
     val startDate = date.getOrElse(new DateMidnight)
 
     val dates = competitions.nextMatchDates(startDate, daysToDisplay)
@@ -33,8 +33,16 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
     val previousPage = competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay)
       .lastOption.map(date => toNextPreviousUrl(date, competitionFilter))
 
-    val fixturesPage = MatchesPage(page, None, fixtures.filter(_.competitions.nonEmpty),
-      nextPage, previousPage, "fixtures", filters, competition)
+    val fixturesPage = MatchesPage(
+      page = page,
+      blog = None,
+      days = fixtures.filter(_.competitions.nonEmpty),
+      nextPage = nextPage,
+      previousPage = previousPage,
+      pageType = "fixtures",
+      filters = filters,
+      comp = comp
+    )
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
@@ -86,7 +94,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
       val page = new Page(
         "http://www.guardian.co.uk/football/matches",
-        competition.url.drop(1) + "/results",
+        "football/fixtures",
         "football",
         "",
         competition.fullName + " fixtures",
@@ -97,7 +105,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
         Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competitionName),
         date,
         Some(competitionName),
-        Some(competition.url)
+        Some(competition)
       )
 
     }.getOrElse(NotFound)
