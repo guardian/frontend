@@ -4,6 +4,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         var reqwest = Reqwest;
 
         //Full list of competitions from CM, in priority order.
+        //Mappings can be found here: http://cms.guprod.gnl/tools/mappings/pafootballtournament
         this.competitions = ['500', '510', '100', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
 
         this.path =  "/football/api/frontscores?";
@@ -28,18 +29,18 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'footballfixtures',
                 success: function (response) {
-                    if(response.html) {
-                        common.mediator.emit('modules:footballfixtures:loaded', response.html);
+                    //This is because the endpoint can also return a 204 no-content
+                    if(response) {
+                       that.view.render(response.html);
                     }
                 },
                 error: function () {
-                    common.mediator.emit("modules:error", 'Failed to load football table', 'footballfixtures.js', '35');
+                    common.mediator.emit("modules:error", 'Failed to load football fixtures', 'footballfixtures.js');
                 }
             });
         };
 
         // Bindings
-        common.mediator.on('modules:footballfixtures:loaded', this.view.render, this);
         common.mediator.on('modules:footballfixtures:render', function() {
             if(options.expandable) {
                 common.mediator.emit('modules:footballfixtures:expand', 'front-competition-table');
