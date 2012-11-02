@@ -1,4 +1,4 @@
-@articletest
+@articletest @article
 Feature: Article page
 	As a guardian mobile user
 	I want to check available content is displayed on the article page
