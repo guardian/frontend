@@ -17,7 +17,7 @@
         </a>
     </h2>
 
-    @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
+    @trail.trailText.map { text => <div class="trail-text type-4 box-indent">@cleanTrailText(text)</div> }
 
      @if(trail.mainPicture) {
         @trail.mainPicture.map{ mainPicture =>
@@ -53,9 +53,10 @@
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
         </h2>
+
+        @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
     </div>
 
-    @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
 }
 
 @if(info.rowNum > 5) {
