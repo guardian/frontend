@@ -1,5 +1,6 @@
- @(model: MatchesPage)
- @model.days.map{ day =>
+@(model: MatchesPage)
+
+@model.days.map{ day =>
 	<h2 class="competitions-date box-indent type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
 	<ol class="competitions unstyled" data-link-name="matches">
 	    <li class="competition">

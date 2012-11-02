@@ -8,8 +8,9 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-1a box-indent">@model.page.webTitle</h1>
-
+    <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
+    
+    @fragments.filters(model.filters, model.page, "tables")
 
     <ol class="competitions unstyled" data-link-name="tables">
         @model.tables.map{ table =>
@@ -104,16 +105,15 @@
                 }
             </table>
 
-            @if(!model.singleCompetition){
+            @if(!model.singleCompetition) {
                 <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta">View full table</a>
-
             }
         
         </li>
         }
     </ol>
     
-    @fragments.footballNav(model.urlBase)
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
 
     <div id="js-popular"></div> 
 
