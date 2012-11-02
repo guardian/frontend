@@ -14,7 +14,7 @@
         }
     }
     <div class="media-body">
-        <h3 class="trail-headline @if(info.rowNum > 3) {type-3}">
+        <h3 class="trail-headline @if(info.rowNum > 3) {type-3} else {type-2}">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | text">
                 @RemoveOuterParaHtml(trail.linkText)
             </a>
