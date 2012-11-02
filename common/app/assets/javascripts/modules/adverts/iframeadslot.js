@@ -12,7 +12,7 @@
 */
 
 
-define(['common', 'modules/detect' ], function (common, detect) {
+define(['common', 'modules/detect','modules/adverts/audience-science'], function (common, detect, audienceScience) {
 
     var IframeAdSlot = function(name, el, config) {
         this.name = name;
@@ -51,13 +51,20 @@ define(['common', 'modules/detect' ], function (common, detect) {
         if (this.config.keywords) {
             var keywords = this.config.keywords.split(',');
             for(var i = 0, j = keywords.length; i < j; i++) {
-                query += 'k=' + encodeURIComponent(keywords[i]);
+                query += 'k=' + encodeURIComponent(keywords[i]) + "&";
             }
         }
 
-        query += '&ct=' + encodeURIComponent(this.config.contentType.toLowerCase());
-        query += '&pt=' + encodeURIComponent(this.config.contentType.toLowerCase());
-        query += '&cat=' + encodeURIComponent(this.config.section.toLowerCase());
+        var segments = audienceScience.getSegments();
+        if (segments) {
+            for (var k = 0, l = segments.length; k<l; ++k) {
+                query += "a=" + segments[k] + "&";
+            }
+        }
+
+        query += 'ct=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
+        query += 'pt=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
+        query += 'cat=' + encodeURIComponent(this.config.section.toLowerCase()) + "&";
 
         var url = oasUrl;
         url = url.replace('[SLOT_NAME]', this.name);
