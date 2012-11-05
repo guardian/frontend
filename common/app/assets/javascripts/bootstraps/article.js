@@ -23,7 +23,8 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
-        'modules/footballfixtures'
+        'modules/footballfixtures',
+        'modules/cookies'
     ],
     function (
         common,
@@ -50,7 +51,8 @@ define([
         TogglePanel,
         Errors,
         AutoUpdate,
-        FootballFixtures) {
+        FootballFixtures,
+        Cookies) {
 
         var modules = {
 
@@ -197,6 +199,10 @@ define([
                 }
             },
 
+            cleanupCookies: function() {
+                Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            },
+
             showFootballFixtures: function(page) {
                     var path = window.location.pathname,
                     prependTo = null,
@@ -280,7 +286,8 @@ define([
         deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
-            modules.loadAdverts(config.page);
+            modules.loadAdverts(config);
+            modules.cleanupCookies();
         });
 
     };
