@@ -18,6 +18,7 @@ trait ApiQueryDefaults { self: Api =>
     .showFields(trailFields)
     .showInlineElements("picture")
     .showMedia("all")
+    .showReferences("pa-football-competition")
     .showStoryPackage(true)
     .tag(supportedTypes)
 
@@ -25,6 +26,7 @@ trait ApiQueryDefaults { self: Api =>
   def search(edition: String): SearchQuery = search
     .edition(edition)
     .showTags("all")
+    .showReferences("pa-football-competition")
     .showFields(trailFields)
     .tag(supportedTypes)
 }

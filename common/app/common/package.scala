@@ -47,3 +47,10 @@ object `package` {
       default
   }
 }
+
+object Reference {
+  def apply(s: String) = {
+    val parts = s.split("/")
+    parts(0) -> parts(1)
+  }
+}

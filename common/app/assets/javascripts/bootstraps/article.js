@@ -22,7 +22,9 @@ define([
         'bonzo',
         'modules/togglepanel',
         'modules/errors',
-        'modules/autoupdate'
+        'modules/autoupdate',
+        'modules/footballfixtures',
+        'modules/cookies'
     ],
     function (
         common,
@@ -48,7 +50,9 @@ define([
         bonzo,
         TogglePanel,
         Errors,
-        AutoUpdate) {
+        AutoUpdate,
+        FootballFixtures,
+        Cookies) {
 
         var modules = {
 
@@ -58,7 +62,9 @@ define([
             },
 
             attachGlobalErrorHandler: function () {
-                new Errors(window).init();
+                var e = new Errors(window);
+                e.init();
+                common.mediator.on("module:error", e.log);
             },
 
             upgradeImages: function () {
@@ -191,12 +197,47 @@ define([
                     var a = new AutoUpdate(window.location.pathname, delay, el, config.switches).init();
 
                 }
+            },
+
+            cleanupCookies: function() {
+                Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            },
+
+            showFootballFixtures: function(page) {
+                    var path = window.location.pathname,
+                    prependTo = null,
+                    table;
+
+                common.mediator.on('modules:footballfixtures:expand', function(id) {
+                    var expandable = new Expandable({ id: id, expanded: false });
+                    expandable.initalise();
+                });
+
+                switch(path) {
+                    case "/" :
+                        prependTo = qwery('ul > li', '.zone-sport')[1];
+                        table = new FootballFixtures({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                        break;
+                    case "/sport" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: true}).init();
+                        break;
+                    case "/football" :
+                        prependTo = qwery('ul > li', '.trailblock')[1];
+                        table = new FootballFixtures({prependTo: prependTo, expandable: false}).init();
+                        break;
+                }
+
+                if(page.paFootballCompetition) {
+                    prependTo = qwery('ul > li', '.trailblock')[1];
+                    table = new FootballFixtures({prependTo: prependTo, competitions: [page.paFootballCompetition], expandable: false}).init();
+                }
             }
 
         };
 
     var bootstrap = function (config, userPrefs) {
-
+        
         var isNetworkFront = (config.page.pageId === "");
 
         modules.hideJsElements();
@@ -209,12 +250,14 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
+        modules.showFootballFixtures(config.page);
 
-       if (isNetworkFront) {
-            modules.showFrontExpanders();
+        // trailblock toggles and expanders are now on sport and culture section fronts
+        if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
             modules.showTrailblockToggles(config);
+            modules.showFrontExpanders();
         }
-        
+
         // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;
@@ -240,7 +283,8 @@ define([
         deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
-            modules.loadAdverts(config.page);
+            modules.loadAdverts(config);
+            modules.cleanupCookies();
         });
 
     };

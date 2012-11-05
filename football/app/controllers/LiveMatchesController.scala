@@ -17,11 +17,11 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
   def renderFor(competitionName: String) = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      renderLive(Competitions.withCompetitionFilter(competitionName), Some(competition.url))
+      renderLive(Competitions.withCompetitionFilter(competitionName), Some(competition))
     }.getOrElse(NotFound)
   }
 
-  def renderLive(competitions: CompetitionSupport, competitionUrl: Option[String])(implicit request: RequestHeader) = {
+  def renderLive(competitions: CompetitionSupport, competition: Option[Competition])(implicit request: RequestHeader) = {
 
     val today = new DateMidnight()
 
@@ -29,13 +29,15 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
     val matches = Seq(MatchesOnDate(today, competitions.withMatchesOn(today).competitions))
 
-    val livePage = MatchesPage(page, blog,
-      matches.filter(_.competitions.nonEmpty),
+    val livePage = MatchesPage(
+      page = page,
+      blog = blog,
+      days = matches.filter(_.competitions.nonEmpty),
       nextPage = None,
       previousPage = None,
       pageType = "live",
       filters = filters,
-      competitionUrl
+      comp = competition
     )
 
     Cached(page) {
