@@ -1,6 +1,8 @@
 
 define(['modules/cookies'], function(Cookies) {
 
+    var revenueScienceUrl = "http://js.revsci.net/gateway/gw.js?csid=E05516";
+
     function getSegments() {
         var segments = localStorage.getItem("gu.ads.audsci");
         if (segments) {
@@ -11,7 +13,7 @@ define(['modules/cookies'], function(Cookies) {
     function load(config) {
         // Audience Science calls these functions on window.
         window.DM_prepClient = function(csid, client) {
-            client.DM_addEncToLoc('siteName', config.audienceScienceSiteName);
+            client.DM_addEncToLoc('siteName', "");
             client.DM_addEncToLoc('comFolder', "");
 
             if(config.audienceScienceData) {
@@ -38,7 +40,7 @@ define(['modules/cookies'], function(Cookies) {
             window.E05516.DM_tag();
         };
         // Then load audsci to get latests segments.
-        require([config.audienceScienceUrl], function() {
+        require([revenueScienceUrl], function() {
             window.E05516.DM_tag();
         });
     }
