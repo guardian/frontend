@@ -7,17 +7,17 @@
     <a class="top type-6" data-link-name="back to top" href="#top">Back to top</a>
 }
 
-<a href="/" data-link-name="site logo" id="logo">
+<a href="/" data-link-name="site logo" id="logo" class="i-guardian-logo">
     The Guardian
 </a>
 
 @if(!isFooter){
     <div id="navigation-header" data-link-name="global navigation: header">
         <a href="#topstories-footer" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header" 
-        class="topstories-control initially-off type-6"><span>Top stories <i class="i-arrow-down"></i></span></a>
+        class="topstories-control initially-off type-6"><span>Top stories <i class="i-arrow-small-down"></i></span></a>
         
         <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" 
-        class="sections-control"><span>Sections</span></a>
+        class="sections-control"><span class="i-menu">Sections</span></a>
     </div>
 
 </header>
@@ -26,7 +26,7 @@
 }
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
-    @fragments.sections(config, page)
+    @fragments.sections(config, page, isFooter)
 </div>
 
 @if(isFooter){

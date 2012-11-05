@@ -1,8 +1,8 @@
-@(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
+@(config: common.GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
 
-<ul class="nav nav-stacked cf">
+<ul class="nav nav-stacked @if(isFooter){nav-footer} cf">
     
     @Navigation(request, config).map{ section =>
         <li>

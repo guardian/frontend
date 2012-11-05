@@ -5,13 +5,8 @@
 #logo {
     display: block;
     float: left;
-    margin: @baseline*3 @gutter @baseline*2 @gutter;
+    margin: @baseline*3 0 @baseline*2 @gutter;
     text-indent: -9999px;
-    .icon-guardian-logo;
-}
-
-.svg #logo {
-    .svg-icon-guardian-logo
 }
 
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
@@ -57,20 +52,12 @@
 }
 
 .sections-control {
-    padding: 20px @gutter 10px @baseline*2;
+    padding: 22px @gutter 16px 10px;
 }
 
 .sections-control span {
-    width: 24px;
-    height: 13px;
     display: inline-block;
     text-indent: -1000em;
-    border-left: 1px solid #2E56AF;
-    .icon-menu;
-}
-
-.svg .sections-control span {
-    .svg-icon-menu
 }
 
 .sections .nav {
@@ -110,39 +97,38 @@
     padding-right: @gutter;
 }
 
+.nav-footer li a {
+    border-top: 1px solid #2B528B;
+}
+
+#sections-footer .section-divider {
+    color: #fff !important;
+    border-top: 2px solid #2B528B;
+}
+#sections-footer .section-divider a {
+    color: #fff;
+}
+
 .nav-popup {
     -webkit-transform: translate3d(0,0,0);
     position: relative;
     z-index: 100;
-    background-color: #ffffff;
     padding: 0;
     list-style: none;
     clear: both;
     position: relative;
-    border-top: 1px solid  #D2D2D2;
-    border-bottom: 1px solid  #D2D2D2;
     margin-bottom: -4px;
 }
 
-.nav-popup:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -(@navBorderWidth * 2);
-    right: @gutter + 2;
-    width: 0;
-    height: 0;
-    border-color: transparent transparent #F2F2F2 transparent; // border color should be same as div background color
-    border-style: solid;
-    border-width: @navBorderWidth;
+#section-footer .nav-popup {
+    background-color: @blue;
 }
 
 .topstories-control {
     color: #fff;
     font-family: @serif !important;
-    border-left: 1px solid #06152B;
-    border-right: 1px solid #06152B;
-    margin: @baseline*2 0;
+    margin: 0;
+    padding: 14px 0 @baseline*2 0;
 }
 
 .topstories-control:link,
@@ -153,9 +139,28 @@
 
 .topstories-control span {
     display: block;
-    padding: @baseline*1 10px;
-    border-left: 1px solid #2E56AF;
-    border-right: 1px solid #2E56AF;
+    height: 28px;
+    vertical-align: top;
+    line-height: 28px;
+    padding-left: 10px;
+    border-right: 1px solid #2a4fa2;
+    background: -moz-linear-gradient(left,  #06152b 0px, #2a4fa2 1px, #214583 2px);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0px,#06152b), color-stop(1px,#2a4fa2), color-stop(2px,#214583));
+    background: -webkit-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
+    background: -o-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
+    background: -ms-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
+    background: linear-gradient(to right,  #06152b 0px,#2a4fa2 1px,#214583 2px);
+}
+
+.topstories-control i {
+    padding: 10.5px 10px 10.5px 0;
+    background-origin: content-box;
+    border-right: 1px solid #183267;
+}
+
+.topstories-control.is-active span  {
+    background: none !important;
+    border-color: transparent !important;
 }
 
 .top-stories ul {
@@ -168,18 +173,23 @@
     margin-top: 0;
 }
 
-
-.sections-control:active,
-.topstories-control:hover {
-    text-decoration: none !important;
-}
-
 .topstories-control, 
 .sections-control {
     color: #fff;
-    background-color: transparent !important;
+    background-color: transparent;
     display: inline-block;
     vertical-align: top;
+}
+
+.sections-control.is-active,
+.topstories-control.is-active {
+    background-color: #fff;
+    color: @blue;
+}
+
+.sections-control:hover, 
+.topstories-control:hover {
+    text-decoration: none !important;
 }
 
 #navigation-header,
@@ -191,8 +201,8 @@
     background-color: @blue;
 }
 
-.top-stories:after {
-    right: 65px !important;
+#sections-footer {
+    border-top: 1px solid #2B528B;
 }
 
 .footer .nav {
@@ -202,9 +212,9 @@
 }
 
 .footer .nav-stacked li a {
-    color: #6F6F6E;
+    color: @blue;
     margin-left: 0;
-    border-top-color: #b5b5b5;
+    border-top-color: #C0C9CE;
 }
 
 .nav-multi h2 {
@@ -225,9 +235,4 @@
 
 .nav-multi .sections > li a {
     border-top: 1px solid #ddd;
-}
-
-.sections li:nth-child(-n+2) a {
-    border-top: none;
-    padding-top: 0;
 }
