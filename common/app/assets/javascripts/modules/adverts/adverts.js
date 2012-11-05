@@ -28,7 +28,7 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new IframeAdSlot(name, slotHolders[i], config);
+                var slot = new IframeAdSlot(name, slotHolders[i], config.page);
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
@@ -38,7 +38,7 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
     function loadAds() {
         if (adsSwitchedOn) {
             if (config.switches.audienceScience) {
-                audienceScience.load(config);
+                audienceScience.load(config.page);
             }
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {

@@ -286,7 +286,7 @@ define([
         deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
-            modules.loadAdverts(config.page);
+            modules.loadAdverts(config);
             modules.cleanupCookies();
         });
 
