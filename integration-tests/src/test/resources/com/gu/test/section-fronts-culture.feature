@@ -1,4 +1,4 @@
-@section-fronts
+@front @section-fronts
 Feature: Section Fronts - Culture
     As a Guardian user
     I want to get a further break-down of sections on the culture section front

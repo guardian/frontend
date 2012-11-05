@@ -251,20 +251,14 @@ define([
         modules.liveBlogging(config);
         modules.showFootballFixtures(config.page);
 
-        // trailblock toggles are now on sport and culture section fronts
+        // trailblock toggles and expanders are now on sport and culture section fronts
         if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
             modules.showTrailblockToggles(config);
+            modules.showFrontExpanders();
         }
 
-        switch (isNetworkFront) {
-
-            case true:
-                modules.showFrontExpanders();
-                break;
-
-            case false:
-                modules.transcludeTopStories(config);
-                break;
+        if (!isNetworkFront) {
+            modules.transcludeTopStories(config);
         }
         
         // page-specific functionality

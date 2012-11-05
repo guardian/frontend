@@ -1,4 +1,4 @@
-@network-front
+@front  @network-front
 Feature: Network front
 
     Scenario: Trailblock exapnders
