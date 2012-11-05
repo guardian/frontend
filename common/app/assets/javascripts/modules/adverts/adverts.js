@@ -37,7 +37,9 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
 
     function loadAds() {
         if (adsSwitchedOn) {
-            audienceScience.load(config);
+            if (config.switches.audienceScience) {
+                audienceScience.load(config);
+            }
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
                 if (!slots[i].loaded && isOnScreen(slots[i].el)) {
