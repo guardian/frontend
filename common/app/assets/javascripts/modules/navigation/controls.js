@@ -9,22 +9,19 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
         view = {
 
             toggle: function (state, position, elm) {
-                var item, altItem;
+                var item, altItem, altButton;
 
                 item = bonzo(document.getElementById(((state === "sections") ? "sections-" + position : "topstories-" + position)));
                 altItem = bonzo(document.getElementById(((state === "sections") ?  "topstories-" + position : "sections-" + position)));
+                altButton = bonzo(document.getElementById(((state === "sections") ?  "topstories-control-" + position : "sections-control-" + position)));
 
                 if (altItem.hasClass('on')) { // the "other" panel is visible, so hide it then show current
                     altItem.toggleClass('on initially-off');
+                    altButton.toggleClass('is-active');
                 }
 
-                if (item.hasClass('initially-off')) {
-                    item.toggleClass('on initially-off');
-                } else if (item.hasClass('on')) {
-                    item.toggleClass('on initially-off');
-                }
-
-                elm.scrollIntoView(); // means navs won't get rendered offscreen
+                item.toggleClass('on initially-off');
+                elm = bonzo(elm).toggleClass('is-active');
 
                 return (state);
             },
@@ -59,7 +56,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                     e.preventDefault();
                 });
             }
-                    
+
         };
 
         // Model

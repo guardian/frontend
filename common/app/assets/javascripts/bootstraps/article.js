@@ -202,6 +202,7 @@ define([
         modules.hideJsElements();
         modules.attachGlobalErrorHandler();
         modules.upgradeImages();
+        modules.transcludeTopStories(config);
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
@@ -209,17 +210,9 @@ define([
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
         modules.liveBlogging(config);
 
-
-        switch (isNetworkFront) {
-
-            case true:
-                modules.showFrontExpanders();
-                modules.showTrailblockToggles(config);
-                break;
-
-            case false:
-                modules.transcludeTopStories(config);
-                break;
+       if (isNetworkFront) {
+            modules.showFrontExpanders();
+            modules.showTrailblockToggles(config);
         }
         
         // page-specific functionality
