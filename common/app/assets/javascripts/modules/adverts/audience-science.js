@@ -28,16 +28,6 @@ define(['modules/cookies'], function(Cookies) {
             localStorage.setItem("gu.ads.audsci", JSON.stringify(segments));
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);
-
-        };
-        window.rs_logSocialNetwork = function(network) {
-            if (network.match('Reddit')) {
-                network = 'Reddit';
-            }
-            window.E05516.DM_event('Shared with Social Network');
-            window.E05516.DM_tag();
-            window.E05516.DM_event('Shared with ' + network);
-            window.E05516.DM_tag();
         };
         // Then load audsci to get latests segments.
         require([revenueScienceUrl], function() {
