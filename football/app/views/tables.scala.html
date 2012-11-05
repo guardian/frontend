@@ -8,16 +8,16 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
-    
+    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="icon-filter-arrow-down js-visible"></i></span></h1>
+
     @fragments.filters(model.filters, model.page, "tables")
 
-    <ol class="competitions unstyled" data-link-name="tables">
+    <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables">
         @model.tables.map{ table =>
 
         <li class="league-table">
 
-            <a class="competition-title football-table-header football-table-link box-indent type-3" href="@table.competition.url" data-link-name="competition">
+            <a class="competition-title football-table-header football-table-link type-3" href="@table.competition.url" data-link-name="competition">
                 @table.competition.fullName
                 <i class="icon-filter-arrow-right"></i>
             </a>
@@ -67,7 +67,7 @@
                     @group.round.map { round =>
                         @round.name.map { name =>
                             <tr>
-                                <th colspan="20">@name</th>
+                                <th colspan="20" class="type-3">@name</th>
                             </tr>
                         }
                     }
@@ -106,7 +106,7 @@
             </table>
 
             @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta">View full table</a>
+                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table</a>
             }
         
         </li>

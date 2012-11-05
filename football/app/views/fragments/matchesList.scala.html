@@ -1,12 +1,12 @@
 @(model: MatchesPage)
 
 @model.days.map{ day =>
-	<h2 class="competitions-date box-indent type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
+	<h2 class="competitions-date type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
 	<ol class="competitions unstyled" data-link-name="matches">
 	    <li class="competition">
 	        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
 	        
-	            <a class="competition-title football-table-link box-indent type-3" href="@comp.url" data-link-name="competition">
+	            <a class="competition-title football-table-link type-3" href="@comp.url" data-link-name="competition">
 	                @comp.fullName
 	                <i class="icon-filter-arrow-right"></i>
 	            </a>
@@ -31,6 +31,6 @@
 }
 
 @if(!model.days) {
-	<p class="box-indent">There are no matches being played today. Why not check out upcoming <a href="/football/fixtures">fixtures</a> or previous <a href="/football/results">results</a>?</p>
+	<p>There are no matches being played today. Why not check out upcoming <a href="/football/fixtures">fixtures</a> or previous <a href="/football/results">results</a>?</p>
 }
 

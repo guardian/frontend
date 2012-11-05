@@ -15,7 +15,7 @@
         </div>
     }
 
-    <h1 class="type-1a js-collapsible collapsible box-indent" data-toggle-panel="js-football-league-list">@model.page.webTitle <i class="icon-filter-arrow-down js-visible"></i></h1>
+    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="icon-filter-arrow-down js-visible"></i></span></h1>
     
     @fragments.filters(model.filters, model.page, model.pageType)
 
@@ -25,13 +25,16 @@
         </div>
     }
     
-    <div class="matches-container">
+    <div class="matches-container box-indent">
         @fragments.matchesList(model)
-    </div>
 
-    <div id="matches-nav" class="cf js-not-ajax" data-link-name="@model.pageType nav">
-        @model.previousPage.map{url => <a href="@url" class="type-6a match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
-        @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+        @if(model.previousPage || model.nextPage) {
+            <div id="matches-nav" class="cf js-not-ajax" data-link-name="@model.pageType nav">
+                @model.previousPage.map{url => <a href="@url" class="type-6a match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+                @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+            </div>
+        }
+        
     </div>
 
     @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))

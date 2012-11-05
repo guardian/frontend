@@ -4,7 +4,15 @@
     background-color: #efefe7;
 }
 
-a.football-table-link {
+.competitions-date {
+    background-color: #064951;
+    color: #ffffff;
+    margin-top: @baseline*2;
+    margin-bottom: @baseline;
+    padding: 9px @baseline*2;
+}
+
+.football-table-link {
     color: #333;
     display: block;
     text-decoration: none;
@@ -12,19 +20,26 @@ a.football-table-link {
 
 .competition-title {
     margin-bottom: 0;
-    padding-top: @baseline*2;
+    padding: 9px @baseline*2;
     position: relative;
-    border-bottom: 1px solid #efefe7;
+    border-bottom: 1px solid #cccccc;
+    color: #064951;
+    background: #f4f4ee;
 }
 
+a.competition-title {
+    color: #064951;
+}
+
+// todo: what is this?
 .competition-title a { 
     color: #333333; 
 }
 
 .competition-title i {
     position: absolute;
-    top: @baseline*3;
-    right: @gutter;
+    top: 14px;
+    right: @baseline*2;
 }
 
 .match,
@@ -33,22 +48,25 @@ a.football-table-link {
 }
 
 .match { 
-    border-bottom: 1px solid #efefe7;
-    padding: @baseline*2 @gutter;
+    border-bottom: 1px solid #cccccc;
+    padding: @baseline*2;
     position: relative;    
+}
+
+.match:last-child {
+    border-bottom: none;
 }
 
 .match .match-desc {
     color: #333333;
     position: relative;
     margin-bottom: 0;
-    background-color: white;
     border: none;
     padding: 0;
     font-weight: normal;
     font-family: @sans-serif;
     overflow: hidden;
-    margin-right: 42px; // offsets the FT/HT box
+    margin-right: 36px; // offsets the FT/HT box
     word-break: break-all; // fixes things for small screens
 }
 
@@ -85,9 +103,9 @@ a.football-table-link {
 
 .match .status {
     position: absolute;
-    right: @gutter;
+    right: @baseline*2;
     top: @baseline*2;
-    color: #979797;
+    color: #777777;
 }
 
 .match .status .status-desc {
@@ -97,8 +115,11 @@ a.football-table-link {
 
 .match .status abbr {
     color: #ffffff;
-    padding: 5px 10px;   
+    padding: 2px 0px;   
     border: none;
+    width: 28px;
+    text-align: center;
+    display: block;
 }
 
 .match .status .half-time {
@@ -115,7 +136,11 @@ a.football-table-link {
 
 .matches,
 .competitions {
-    margin-bottom: 0px;
+    margin-bottom: @baseline;
+}
+
+.matches {
+    background-color: #f4f4ee;
 }
 
 .competition-table {
@@ -147,6 +172,11 @@ a.football-table-link {
     content: "";
 }
 
+#matches-nav a.cta:active {
+    background: #666666;
+    color: #ffffff;
+    text-decoration: none;
+}
 
 .sport-header {
     margin-bottom: @baseline*2;
@@ -156,9 +186,22 @@ a.football-table-link {
     margin-bottom: @gutter;
 }
 
+.league-table:last-child,
+.matches:last-child {
+    margin-bottom: 0;
+}
+
+.table-football {
+    background-color: #f4f4ee;
+}
+
+.table-football thead {
+    border-bottom: 1px solid #cccccc;
+}
+
 .table-football thead th {
-    background-color: #1c515a;
-    color: #8cc43f;
+    background-color: #f4f4ee;
+    color: #777777;
     font-weight: normal;    
 }
 
@@ -167,16 +210,28 @@ a.football-table-link {
 }
 
 .table-football tbody th {
-    background: #efefef;
+    background: #f4f4ee;
     font-weight: bold;
-    color: #aaa;
-    text-align: center;
+    color: #064951;
 }
 
+
+// see equivalent media queries in _state.less for these
 .table-football th,
 .table-football td {
-    padding: @baseline*2 3%; // eventually will need a media query for this when it gets too wide
     border-right: none;
+}
+
+.table-football thead th {
+    padding: @baseline*2 3%;
+}
+
+.table-football tbody th {
+    padding: 9px 3%;
+}
+
+.table-football td {
+    padding: @baseline*2 3%;
 }
 
 .table-football tr td:last-child {
@@ -186,6 +241,10 @@ a.football-table-link {
 .table-football tbody tr {
     border-bottom: 1px solid #ccc;
     background-color: transparent;
+}
+
+.table-football tbody tr:last-child {
+    border-bottom: none;
 }
 
 // overriding pasteup :(
@@ -215,24 +274,106 @@ a.football-table-link {
 }
 
 .live-matches-dateline .dateline{
-	margin-left:22px;
+	margin-left: 22px;
 }
 .live-matches-update .update{
-	border-bottom:0;
-	margin-bottom:0;
-	margin-top:12px;
+	border-bottom: 0;
+	margin-bottom: 0;
+	margin-top: 12px;
 }
 .live-matches-update .update .is-active,
 .live-matches-update .update button:hover{
-	background-color:#8CC43F;
+	background-color: #8CC43F;
 }
 
 .football-nav {
     clear: left;
-    padding: @baseline*4 0;
-    margin: @baseline*4 0;
+    padding: 16px @baseline*2;
+    margin: 0 @gutter 24px @gutter;
+    color: #ffffff;
+    background: #438622;
 }
 
 .football-nav a {
-    color: #fff;
+    color: #ffffff;
+}
+
+.football-nav .nav {
+    padding: @baseline*2 0;
+}
+
+// i'm sorry, this is truly hideous. too many things to override. needs a better way. (MA)
+.football-nav li:nth-child(-n+2) a,
+.football-nav li:nth-child(2) a,
+.football-nav .nav li:first-child a {
+    border-top: 1px solid #a1c391;  
+    padding-top: @baseline*2;
+}
+
+.football-nav .nav-stacked > li > a {
+    border-color: #a1c391;  
+}
+
+.football-filters {
+    margin-bottom: 0px;
+}
+
+.football-filters > li {
+    background: #438622;
+    padding: 0 12px;
+}
+
+.football-filters h2 {
+    color: #BDE786;
+    font-weight: bold;
+    border-bottom-color: #a1c391;
+    margin-top: @gutter;
+}
+
+.football-filters .sections li a {
+    color: #ffffff;
+    border-top-color: #a1c391;
+    line-height: 21px;
+}
+
+.football-filters .cta {
+    background: #2c6711;
+    color: #ffffff;
+    margin-bottom: @baseline*2;
+    margin-top: @gutter;
+    padding: 15px 0;
+}
+
+.football-table-container .cta {
+    background-color: #f4f4ee;
+    border-top: 1px solid #cccccc;
+}
+
+.football-filters .cta:link, 
+.football-filters .cta:visited {
+    color: #ffffff;
+}
+
+// football-filter is the dropdown link item,
+// football-filters is the dropdown list itself
+
+.football-filter {
+    background: #8cc640;
+    margin: 0 @gutter;
+    color: #fff; 
+    border-bottom: none;
+}
+
+.football-filter span {    
+    background: #438622;
+    height: 100%;
+    width: 48px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.matches-container,
+.football-table-container {
+    margin-top: @baseline*2;
 }
