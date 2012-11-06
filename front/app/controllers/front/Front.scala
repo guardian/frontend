@@ -33,8 +33,8 @@ class Front extends AkkaSupport with Logging {
     "sport" -> new FrontEdition("UK", Seq(
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured)),
       TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured)),
-      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -46,14 +46,14 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "culture" -> new FrontEdition("UK", Seq(
-      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
-      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
-      TrailblockDescription("film", "Film", numItemsVisible = 1),
-      TrailblockDescription("music", "Music", numItemsVisible = 1),
-      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
-      TrailblockDescription("books", "Books", numItemsVisible = 1),
-      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
-      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ))
   )
 
@@ -71,23 +71,23 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "sport" -> new FrontEdition("US", Seq(
-      TrailblockDescription("sport", "Sports", numItemsVisible = 5),
-      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3),
-      TrailblockDescription("sport/mlb", "MLB", numItemsVisible = 1),
-      TrailblockDescription("sport/nba", "NBA", numItemsVisible = 1),
-      TrailblockDescription("football/mls", "MLS", numItemsVisible = 1),
-      TrailblockDescription("sport/nhl", "NHL", numItemsVisible = 1)
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("sport/mlb", "MLB", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/nba", "NBA", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("football/mls", "MLS", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/nhl", "NHL", numItemsVisible = 1, style = Some(Thumbnail))
     )),
 
     "culture" -> new FrontEdition("US", Seq(
-      TrailblockDescription("culture", "Culture", numItemsVisible = 5),
-      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1),
-      TrailblockDescription("film", "Film", numItemsVisible = 1),
-      TrailblockDescription("music", "Music", numItemsVisible = 1),
-      TrailblockDescription("stage", "Stage", numItemsVisible = 1),
-      TrailblockDescription("books", "Books", numItemsVisible = 1),
-      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1),
-      TrailblockDescription("technology/games", "Games", numItemsVisible = 1)
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ))
 
   )

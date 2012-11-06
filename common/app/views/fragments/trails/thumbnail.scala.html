@@ -1,9 +1,9 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false)
+@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true)
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
 <div class="media">
-    @if(trail.thumbnail) {
+    @if(trail.thumbnail && showThumbnail) {
         @trail.thumbnail.map{ imageUrl =>
             <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
                 <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
