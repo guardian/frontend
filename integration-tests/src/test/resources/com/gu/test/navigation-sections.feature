@@ -1,4 +1,4 @@
-@navigation
+@navigation @core-navigation
 Feature: Navigation - Sections
 
 In order to explore the Guardian content
