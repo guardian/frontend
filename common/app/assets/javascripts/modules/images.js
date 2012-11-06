@@ -19,8 +19,8 @@ define(['common', 'modules/detect'], function (common, detect) {
                 var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
                 for (var i = 0, j = images.length; i < j; ++i) {
                     var image = images[i];
-                    var thumbWidth = image.getAttribute('data-thumb-width');
-                    var fullWidth = image.getAttribute('data-full-width');
+                    var thumbWidth = parseFloat(image.getAttribute('data-thumb-width'));
+                    var fullWidth = parseFloat(image.getAttribute('data-full-width'));
                     var fullsrc = image.getAttribute('data-fullsrc');
                     var upgrade = image.getAttribute('data-upgrade');
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
