@@ -6,10 +6,6 @@
     index: used to report where this is in the list of trails to analytics (starts at 1 for first item)
 *@
 
-@block.description.style match {
-    case Some(style) => { @style.getClass.getSimpleName } 
-    case None        => { @formatFrontTrail(trail, info, numItemsVisible = block.description.numItemsVisible) }
-}
 
 @if(info.rowNum == 1) {
     @fragments.trails.featured(trail, info.rowNum, related)
