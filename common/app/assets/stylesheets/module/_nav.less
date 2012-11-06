@@ -53,10 +53,26 @@
 
 .sections-control {
     float:left;
-    padding: 24px 16px 19px 16px;
+    width: 34px;
+    padding: 15px 16px 15px 0px;
+}
+
+.i-nav-divider {
+    float: left;
+    height: 28px;
+    width:1px;
+    background-color: #274C98;
+    border-left: 1px solid #122853;
+}
+
+.is-active .i-nav-divider {
+    border-color: #fff;
+    background-color: #fff;
 }
 
 .sections-control span {
+    float: right;
+    margin-top: 8px;
     display: inline-block;
     text-indent: -1000em;
 }
@@ -128,6 +144,7 @@
 
 .topstories-control {
     float: left;
+    height: 28px;
     color: #fff;
     font-family: @serif !important;
     font-size: 13px;
@@ -142,12 +159,11 @@
 }
 
 .topstories-control span {
-    display: block;
+    display: inline-block;
     height: 28px;
     vertical-align: top;
     line-height: 28px;
     padding-left: 10px;
-    border-right: 1px solid #2a4fa2;
     background: -moz-linear-gradient(left,  #06152b 0px, #2a4fa2 1px, #214583 2px);
     background: -webkit-gradient(linear, left top, right top, color-stop(0px,#06152b), color-stop(1px,#2a4fa2), color-stop(2px,#214583));
     background: -webkit-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
@@ -157,9 +173,8 @@
 }
 
 .topstories-control i {
-    padding: 13px 10px 8px 0;
+    margin: 12px 10px 8px 5px;
     background-origin: content-box;
-    border-right: 1px solid #183267;
 }
 
 .topstories-control.is-active span  {
@@ -202,6 +217,7 @@
 }
 
 #navigation-footer {
+    width: 100%;
     background-color: @blue;
 }
 
