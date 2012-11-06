@@ -8,7 +8,7 @@
         <li>
             <a href="@section.href"
                data-link-name="@section.linkName"
-               @if(page.section==section.zone) {
+               @if(page.section==section.zone && !isFooter) {
                     class="zone-color"
                }
                >
