@@ -12,17 +12,21 @@
     padding: 9px @baseline*2;
 }
 
-.football-table-link {
-    color: #333;
+.football-table-link,
+.football-table-link.cta {
+    color: #333333;
     display: block;
     text-decoration: none;
+    text-align: left;
+    position: relative;
+    padding-left: @baseline*2;
 }
 
 .competition-title {
     margin-bottom: 0;
     padding: 9px @baseline*2;
     position: relative;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #DEDEDD;
     color: #064951;
     background: #f4f4ee;
 }
@@ -36,7 +40,8 @@ a.competition-title {
     color: #333333; 
 }
 
-.competition-title i {
+.competition-title i,
+.football-table-link i {
     position: absolute;
     top: 14px;
     right: @baseline*2;
@@ -48,7 +53,7 @@ a.competition-title {
 }
 
 .match { 
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #DEDEDD;
     padding: @baseline*2;
     position: relative;    
 }
@@ -159,6 +164,7 @@ a.competition-title {
 
 #matches-nav a {
     display: inline-block;
+    text-decoration: none;
 }
 
 #matches-nav a.cta {
@@ -167,9 +173,8 @@ a.competition-title {
     margin-bottom: @baseline*2;
 }
 
-#matches-nav a.cta:before,
-.cta.football-table-link:before {
-    content: "";
+#matches-nav a.cta:before {
+    content: "+ ";
 }
 
 #matches-nav a.cta:active {
@@ -183,7 +188,7 @@ a.competition-title {
 }
 
 .league-table {
-    margin-bottom: @gutter;
+    margin-bottom: @baseline*2;
 }
 
 .league-table:last-child,
@@ -196,10 +201,11 @@ a.competition-title {
 }
 
 .table-football thead {
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #DEDEDD;
 }
 
-.table-football thead th {
+.table-football thead th,
+.table-football tbody .table-football-legend th {
     background-color: #f4f4ee;
     color: #777777;
     font-weight: normal;    
@@ -213,6 +219,7 @@ a.competition-title {
     background: #f4f4ee;
     font-weight: bold;
     color: #064951;
+    border-top: 1px solid #DEDEDD;
 }
 
 
@@ -224,14 +231,18 @@ a.competition-title {
 
 .table-football thead th {
     padding: @baseline*2 3%;
+    text-align: right;
 }
 
+// todo: get rid of this
 .table-football tbody th {
-    padding: 9px 3%;
+    padding: @baseline*2 3%;
 }
 
-.table-football td {
+.table-football td,
+.table-football tbody .table-football-legend th {
     padding: @baseline*2 3%;
+    text-align: right;
 }
 
 .table-football tr td:last-child {
@@ -239,12 +250,21 @@ a.competition-title {
 }
 
 .table-football tbody tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
 }
 
 .table-football tbody tr:last-child {
     border-bottom: none;
+}
+
+// sorry :( -- MA
+.table-football .table-football-leftaligned {
+    text-align: left !important;
+}
+
+.table-football tbody {
+    border-bottom: 3px solid #fff; // this is a border because margins don't appear :(
 }
 
 // overriding pasteup :(
@@ -288,14 +308,14 @@ a.competition-title {
 
 .football-nav {
     clear: left;
-    padding: 16px @baseline*2;
-    margin: 0 @gutter 24px @gutter;
-    color: #ffffff;
-    background: #438622;
+    padding: 16px @gutter;
+    margin: 0 0 24px 0;
+    color: #064951;
+    background: #7bae38;
 }
 
 .football-nav a {
-    color: #ffffff;
+    color: #064951;
 }
 
 .football-nav .nav {
@@ -319,7 +339,7 @@ a.competition-title {
 }
 
 .football-filters > li {
-    background: #438622;
+    background: #5b8622;
     padding: 0 12px;
 }
 
@@ -327,7 +347,12 @@ a.competition-title {
     color: #BDE786;
     font-weight: bold;
     border-bottom-color: #a1c391;
-    margin-top: @gutter;
+    margin-top: 10px;
+}
+
+
+.football-filters li:first-child h2 {
+    margin-top: 30px;
 }
 
 .football-filters .sections li a {
@@ -344,28 +369,28 @@ a.competition-title {
     padding: 15px 0;
 }
 
-.football-table-container .cta {
+.football-table-container a.cta {
     background-color: #f4f4ee;
-    border-top: 1px solid #cccccc;
+    color: #064951;
 }
+
+// football-filter is the dropdown link item,
+// football-filters is the dropdown list itself
 
 .football-filters .cta:link, 
 .football-filters .cta:visited {
     color: #ffffff;
 }
 
-// football-filter is the dropdown link item,
-// football-filters is the dropdown list itself
-
 .football-filter {
-    background: #8cc640;
+    background: #7bae38;
     margin: 0 @gutter;
     color: #fff; 
     border-bottom: none;
 }
 
 .football-filter span {    
-    background: #438622;
+    background: #5b8622; 
     height: 100%;
     width: 48px;
     position: absolute;

@@ -24,58 +24,25 @@
 
             <table class="table-football type-6a">
                 <thead>
-                    <tr>
-                        <th class="stats-3" colspan="1">&nbsp;</th> @* placeholder for name of team *@
-                        <th class="stats-3" colspan="2">&nbsp;</th> @* placeholder for played *@
-                        <th class="stats-3" colspan="5">Home</th>
-                        <th class="stats-3" colspan="5">Away</th>
-                        <th class="stats-3" colspan="7">&nbsp;</th> @* placeholder for total *@
-                    </tr>
-                    <tr>
-                        <th>Pos</th> @* placeholder for league position *@
-                        <th>Team</th> @* placeholder for name of team *@
-                        <th>P</th>
-
-                        @* home *@
-                        <th class="stats-3">W</th>
-                        <th class="stats-3">D</th>
-                        <th class="stats-3">L</th>
-                        <th class="stats-3">F</th>
-                        <th class="stats-3">A</th>
-
-                        @* away *@
-                        <th class="stats-3">W</th>
-                        <th class="stats-3">D</th>
-                        <th class="stats-3">L</th>
-                        <th class="stats-3">F</th>
-                        <th class="stats-3">A</th>
-
-                        @* total *@
-                        <th class="stats-1">W</th>
-                        <th class="stats-1">D</th>
-                        <th class="stats-1">L</th>
-
-                        <th class="stats-2">F</th>
-                        <th class="stats-2">A</th>
-
-                        <th>GD</th>
-                        <th>Pts</th>
-                    </tr>
+                    @fragments.tableColumnHeaders()
                 </thead>
+
                 @table.groups.map{ group =>
                 <tbody>
                     @group.round.map { round =>
                         @round.name.map { name =>
                             <tr>
-                                <th colspan="20" class="type-3">@name</th>
+                                <th colspan="20" class="type-6a">@name</th>
                             </tr>
+                            @* we repeat this nav for group tables *@
+                            @fragments.tableColumnHeaders()
                         }
                     }
 
                     @group.entries.zipWithRowInfo.map{ case (entry, row) =>
                     <tr>
-                        <td>@row.rowNum</td>
-                        <td>@entry.team.name</td>
+                        <td class="table-football-leftaligned">@row.rowNum</td>
+                        <td class="table-football-leftaligned">@entry.team.name</td>
                         <td>@entry.team.total.played</td>
 
                         <td class="stats-3">@entry.team.home.won</td>
@@ -106,7 +73,7 @@
             </table>
 
             @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table</a>
+                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="icon-filter-arrow-right"></i></a>
             }
         
         </li>
