@@ -2,8 +2,12 @@
 
 <ul class="unstyled">
     @block.trails.slice( 0, block.description.numItemsVisible ).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail" data-link-name="trail">
-            @fragments.trails.headline(trail, info.rowNum, related)
+        <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }" data-link-name="trail">
+            @if(info.rowNum == 1) {
+                @fragments.trails.featured(trail, info.rowNum, related)
+            } else {
+                @fragments.trails.thumbnail(trail, info.rowNum, related) 
+            }
         </li>
     }
 </ul>

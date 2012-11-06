@@ -31,17 +31,17 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "sport" -> new FrontEdition("UK", Seq(
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5),
-      TrailblockDescription("football", "Football", numItemsVisible = 3),
-      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1),
-      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1),
-      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1),
-      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1),
-      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1),
-      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1),
-      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1),
-      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1),
-      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
     )),
 
