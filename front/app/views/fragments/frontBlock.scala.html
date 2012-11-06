@@ -3,7 +3,7 @@
     <section class="front-section zone-@block.description.section">
 
         <div class="front-section-head zone-background">
-            @if(block.description.id == "") {
+            @if("/" + block.description.id == request.path) {
                 @fragments.headline(block.description.name)
             } else {
                 <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
