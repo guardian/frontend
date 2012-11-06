@@ -37,15 +37,13 @@
 .table-football th,
 .table-football td {
     border-right: none;
+    text-align: right;
+    padding: @baseline*2 3% @baseline*2 3%;
 }
 
-// todo: fix this mess
-.table-football tbody th,
-.table-football thead th,
-.table-football td,
-.table-football tbody .table-football-legend th {
+.table-football thead th:first-child,
+.table-football tr td:first-child {
     padding: @baseline*2 3% @baseline*2 @baseline*2;
-    text-align: right;
 }
 
 .table-football thead th:last-child,
