@@ -1,5 +1,7 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false)
 
+@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
 <h2 class="trail-headline type-3">
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
         @cleanTrailText(trail.headline)
