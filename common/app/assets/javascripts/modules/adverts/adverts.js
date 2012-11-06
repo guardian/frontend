@@ -32,14 +32,14 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
+            if (config.switches.audienceScience) {
+                audienceScience.load(config.page);
+            }
         }
     }
 
     function loadAds() {
         if (adsSwitchedOn) {
-            if (config.switches.audienceScience) {
-                audienceScience.load(config.page);
-            }
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
                 if (!slots[i].loaded && isOnScreen(slots[i].el)) {
