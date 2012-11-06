@@ -24,27 +24,37 @@
             @trail.mainPicture(width=220).map{ smallCrop =>
              <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@info.rowNum | image">
                 <img class="maxed" src="@smallCrop.url"
-                     data-fullsrc="@mainPicture.url"
-                     data-width="@mainPicture.width"
-                     itemprop="contentURL"
-                     alt="@Html(mainPicture.altText.getOrElse(""))" 
-                     title="@Html(mainPicture.caption.getOrElse(""))"
+                    data-upgrade="true"
+                    data-thumb-width="@smallCrop.width"
+                    data-fullsrc="@mainPicture.url"
+                    data-full-width="@mainPicture.width"
+                    itemprop="contentURL"
+                    alt="@Html(mainPicture.altText.getOrElse(""))" 
+                    title="@Html(mainPicture.caption.getOrElse(""))"
                 />
             </a>
             }
         }
-
     }
 }
 
 @if(info.rowNum > 1 && info.rowNum <= 5) {
     <div class="media">
 
-        @if(trail.thumbnail) {
-            @trail.thumbnail.map{ imageUrl =>
-                <a href="@trail.url" class="media-img" data-link-name="@info.rowNum | image">
-                    <img class="maxed" src="@imageUrl" alt='@Html(trail.linkText)' title="@Html(trail.linkText)" />
+        @if(trail.mainPicture) {
+            @trail.mainPicture.map{ mainPicture =>
+                @trail.mainPicture(width=220).map{ smallCrop =>
+                 <a href="@trail.url" class="media-img" data-link-name="@info.rowNum | image">
+                    <img class="maxed" src="@smallCrop.url"
+                        data-thumb-width="@smallCrop.width"
+                        data-fullsrc="@mainPicture.url"
+                        data-full-width="@mainPicture.width"
+                        itemprop="contentURL"
+                        alt="@Html(mainPicture.altText.getOrElse(""))" 
+                        title="@Html(mainPicture.caption.getOrElse(""))"
+                    />
                 </a>
+                }
             }
         }
 

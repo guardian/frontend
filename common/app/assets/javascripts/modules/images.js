@@ -2,7 +2,8 @@ define(['common', 'modules/detect'], function (common, detect) {
 
     function Images() {
     
-        var connectionSpeed = detect.getConnectionSpeed();
+        var connectionSpeed = detect.getConnectionSpeed(),
+            layoutMode = detect.getLayoutMode();
 
         // View
 
@@ -18,11 +19,15 @@ define(['common', 'modules/detect'], function (common, detect) {
                 var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
                 for (var i = 0, j = images.length; i < j; ++i) {
                     var image = images[i];
-                    var width = image.getAttribute('data-width');
+                    var thumbWidth = image.getAttribute('data-thumb-width');
+                    var fullWidth = image.getAttribute('data-full-width');
                     var fullsrc = image.getAttribute('data-fullsrc');
-                    if (width && width <= image.offsetWidth && fullsrc) {
-                        image.src = fullsrc;
-                        image.className += ' image-high';
+                    var upgrade = image.getAttribute('data-upgrade');
+                    if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
+                        if(upgrade || layoutMode === 'extended') {
+                            image.src = fullsrc;
+                            image.className += ' image-high';
+                        }
                     }
                 }
             }
