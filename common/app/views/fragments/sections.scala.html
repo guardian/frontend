@@ -2,7 +2,7 @@
 
 @defining(Edition(request, config)) { edition =>
 
-<ul class="nav nav-stacked cf">
+<ul class="nav nav-columns nav-top-border-off cf">
     
     @Navigation(request, config).map{ section =>
         <li>
@@ -21,7 +21,7 @@
     <li><a data-link-name="all sections" href="/sections">All sections</a></li>
 </ul>
 
-<ul class="nav nav-stacked section-divider cf">
+<ul class="nav nav-stacked nav-section-divider nav-top-border-off cf">
     @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li> }
     @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li> }
 </ul>

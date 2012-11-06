@@ -1,30 +1,31 @@
 @(urlBase: String, competitionName: Option[String] = None, competitionUrl: Option[String] = None)(implicit request: RequestHeader)
+<div class="box-indent">
+    <div class="sections cf football-nav" data-link-name="football bottom nav">
+        
+        <h3 class="type-2">
+            <a href="@competitionUrl.getOrElse("/football")" data-link-name"football index">@competitionName.getOrElse("Football")</a>
+        </h3>
 
-<div class="sections cf football-nav" data-link-name="football bottom nav">
-    
-    <h3 class="type-2">
-        <a href="@competitionUrl.getOrElse("/football")" data-link-name"football index">@competitionName.getOrElse("Football")</a>
-    </h3>
-
-    <ul class="nav nav-stacked">
-        @defining({ 
-            Seq(
-                Link(urlBase + "/live", "livescores", "Live scores"),
-                Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
-                Link(urlBase + "/results", "results", "Results"),
-                if (urlBase == "/football") {
-                  Link(urlBase + "/tables", "tables", "Tables")
-                } else {
-                  Link(urlBase + "/table", "tables", "Tables")
-                }
-            )
-        }) { links =>
-            @links.map{ l =>
-                @if(l.url != request.path) {
-                    <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
+        <ul class="nav nav-columns">
+            @defining({ 
+                Seq(
+                    Link(urlBase + "/live", "livescores", "Live scores"),
+                    Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
+                    Link(urlBase + "/results", "results", "Results"),
+                    if (urlBase == "/football") {
+                      Link(urlBase + "/tables", "tables", "Tables")
+                    } else {
+                      Link(urlBase + "/table", "tables", "Tables")
+                    }
+                )
+            }) { links =>
+                @links.map{ l =>
+                    @if(l.url != request.path) {
+                        <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
+                    }
                 }
             }
-        }
-        <li><a href="/football/competitions" data-link-name"leagues and competitions">Leagues &amp; competitions</a></li>
-    </ul>
+            <li><a href="/football/competitions" data-link-name"leagues and competitions">Leagues &amp; competitions</a></li>
+        </ul>
+    </div>
 </div>

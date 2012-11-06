@@ -16,23 +16,6 @@
     display:list-item;
 }
 
-.nav-stacked > li > a {
-    padding: @baseline*2 0;
-    border-top: 1px solid #ddd;
-    display: block;
-    height: auto;
-}
-
-.nav-stacked a {
-    background-color: transparent;
-    color: #333;
-}
-
-.nav li:first-child a,
-.sections li:nth-child(2) a {
-    border-top:none;
-}
-
 .expander {
     .type-8;
     display: block;
@@ -53,44 +36,48 @@
 }
 
 .svg .sections-control span {
-    .svg-icon-menu
+    .svg-icon-menu;
 }
 
 .sections .nav {
     padding: @baseline*2 @gutter @baseline @gutter;
 }
 
-.sections li {
+.nav-columns li {
     width: 46%;
     margin-right: 3%;
     display: inline-block; // doing this instead of float to prevent mixed item height float collision
     vertical-align: top;
 }
 
-.sections .section-full {
-    width: 100%;
-    margin: 0;
-}
-
-.sections li:nth-child(even) {
-    float:right; // leaving this in because it aligns right edge correctly
+.nav-columns li:nth-child(even) {
+    float: right; // this aligns right edge correctly
     margin-right: 0%;
     margin-left: 3%;
 }
 
-.sections .section-divider {
+.sections li a {
+    padding: @baseline*2 0;
+    border-top: 1px solid #dddddd;
+    display: block;
+    height: auto;
+}
+
+.sections a {
+    background-color: transparent;
+    color: #333;
+}
+
+.nav-columns.nav-top-border-off > li:nth-child(-n+2) a,
+.nav-stacked.nav-top-border-off > li:nth-child(1) a {
+    border-top: none;
+    padding-top: 0;
+}
+
+.nav-section-divider {
     padding: 0 0 @baseline*2 0;
     margin: 0 @gutter;
     border-top: 2px solid #E3E3DB;
-}
-
-.section-divider li:nth-child(odd) {
-    border-right: none;
-}
-
-.section-divider li:nth-child(odd) a {
-    margin-left: 0;
-    padding-right: @gutter;
 }
 
 .nav-popup {
@@ -144,7 +131,6 @@
     margin-top: 0;
 }
 
-
 .sections-control:active,
 .topstories-control:hover {
     text-decoration: none !important;
@@ -181,29 +167,4 @@ a.topstories-control,
     color: #6F6F6E;
     margin-left: 0;
     border-top-color: #b5b5b5;
-}
-
-.nav-multi h2 {
-    font-family: helvetica, arial, sans-serif;
-    font-weight: normal;
-    color: #999999;
-    margin-top: @baseline*4;
-    font-size: 14px;
-    border-bottom: 1px solid #DDD;
-    padding-bottom: @baseline;
-}
-
-// bit horrible, sorry
-
-.nav-multi li:first-child h2 {
-    margin-top: @baseline*2;
-}
-
-.nav-multi .sections > li a {
-    border-top: 1px solid #ddd;
-}
-
-.sections li:nth-child(-n+2) a {
-    border-top: none;
-    padding-top: 0;
 }

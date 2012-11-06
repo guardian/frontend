@@ -1,0 +1,85 @@
+.football-table-container a.cta {
+    background-color: #f4f4ee;
+    color: #064951;
+}
+
+.table-football {
+    background-color: #f4f4ee;
+}
+
+.table-football thead {
+    border-bottom: 1px solid #DEDEDD;
+}
+
+// todo: clean
+.table-football thead th,
+.table-football tbody .table-football-legend th {
+    background-color: #f4f4ee;
+    color: #777777;
+    font-weight: normal;    
+}
+
+.table-football th {
+    border-bottom: none;
+}
+
+.table-football tbody th {
+    background: #f4f4ee;
+    font-weight: bold;
+    color: #064951;
+    border-top: 1px solid #DEDEDD;
+}
+
+.table-football tbody th:first-child {
+    border-top: none;
+}
+
+.table-football th,
+.table-football td {
+    border-right: none;
+}
+
+// todo: fix this mess
+.table-football tbody th,
+.table-football thead th,
+.table-football td,
+.table-football tbody .table-football-legend th {
+    padding: @baseline*2 3% @baseline*2 @baseline*2;
+    text-align: right;
+}
+
+.table-football thead th:last-child,
+.table-football tr td:last-child {
+    padding: @baseline*2 @baseline*2 @baseline*2 3%;
+}
+
+.table-football tr td:last-child {
+    font-weight: bold;
+}
+
+.table-football tbody tr {
+    border-bottom: 1px solid #DEDEDD;
+    background-color: transparent;
+}
+
+.table-football tbody tr:last-child {
+    border-bottom: none;
+}
+
+// todo: clean
+.table-football .table-football-leftaligned {
+    text-align: left !important;
+}
+
+.table-football tbody {
+    border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
+}
+
+// overriding pasteup :(
+.table-football tbody:hover tr,
+.table-football tbody:hover tr:nth-child(even),
+.table-football tbody:hover tr:hover,
+.table-football tr.highlighted-row,
+.table-football tbody tr:last-child {
+    background-color: transparent;
+}

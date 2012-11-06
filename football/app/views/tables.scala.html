@@ -23,16 +23,18 @@
             </a>
 
             <table class="table-football type-6a">
-                <thead>
-                    @fragments.tableColumnHeaders()
-                </thead>
+                @if(!table.multiGroup) {
+                    <thead>
+                        @fragments.tableColumnHeaders()
+                    </thead>
+                }
 
                 @table.groups.map{ group =>
                 <tbody>
                     @group.round.map { round =>
                         @round.name.map { name =>
                             <tr>
-                                <th colspan="20" class="type-6a">@name</th>
+                                <th colspan="20" class="type-6a table-football-leftaligned">@name</th>
                             </tr>
                             @* we repeat this nav for group tables *@
                             @fragments.tableColumnHeaders()
