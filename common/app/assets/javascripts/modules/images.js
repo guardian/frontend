@@ -22,9 +22,9 @@ define(['common', 'modules/detect'], function (common, detect) {
                     var thumbWidth = parseFloat(image.getAttribute('data-thumb-width'));
                     var fullWidth = parseFloat(image.getAttribute('data-full-width'));
                     var fullsrc = image.getAttribute('data-fullsrc');
-                    var upgrade = image.getAttribute('data-upgrade');
+                    var forceUpgrade = image.getAttribute('data-force-upgrade');
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if(upgrade || layoutMode === 'extended') {
+                        if(forceUpgrade || layoutMode === 'extended') {
                             image.src = fullsrc;
                             image.className += ' image-high';
                         }
