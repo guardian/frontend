@@ -38,6 +38,7 @@ object Frontend extends Build with Prototypes {
   	  // TODO - doesn't work - cucumber is an input task
   	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
   	)
+	.settings(ideaSettings: _*)
   	
   val common = library("common").dependsOn(jasmine % "test->test")
   
