@@ -17,10 +17,7 @@ define(['common', 'modules/navigation/controls', 'bean'], function(common, Navig
         // initialise nav + bindings
         var controls = new NavigationControls();
         controls.initialise();
-
-        it("should hide the bottom navigation popup once the page is loaded", function () {
-            expect(sectionFooterPopup.getAttribute('class')).toBe('initially-off');
-        });
+        
 
         it("should show the correct item when a nav link is clicked", function() {
             bean.fire(sectionHeaderLink, 'click');

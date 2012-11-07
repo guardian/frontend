@@ -243,6 +243,7 @@ define([
         modules.hideJsElements();
         modules.attachGlobalErrorHandler();
         modules.upgradeImages();
+        modules.transcludeTopStories(config);
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
@@ -257,10 +258,6 @@ define([
             modules.showFrontExpanders();
         }
 
-        if (!isNetworkFront) {
-            modules.transcludeTopStories(config);
-        }
-        
         // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;

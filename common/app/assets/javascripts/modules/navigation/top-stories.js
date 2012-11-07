@@ -10,11 +10,9 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 var topstoriesHeader, topstoriesFooter, topstoriesNav, i, l, elm;
 
                 topstoriesHeader = document.getElementById('topstories-header');
-                topstoriesFooter = document.getElementById('topstories-footer');
                 topstoriesNav = common.$g('.topstories-control');
 
                 topstoriesHeader.innerHTML = html;
-                topstoriesFooter.innerHTML = html;
 
                 //  show the initially-hidden top stories nav link
                 for (i = 0, l = topstoriesNav.length; i < l; i++) {
