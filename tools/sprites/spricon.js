@@ -78,7 +78,7 @@
         var spritepath = config.spritepath || "../images/";
 
         // css class prefix
-        var cssprefix = config.cssprefix || "icon-";
+        var cssprefix = config.cssprefix || "i-";
         
         // create the output directory
         fs.mkdir( config.imgDest );

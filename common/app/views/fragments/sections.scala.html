@@ -1,16 +1,14 @@
-@(config: common.GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
+@(config: common.GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @defining(Edition(request, config)) { edition =>
 
-<ul class="nav nav-stacked cf">
+<ul class="nav nav-stacked @if(isFooter){nav-footer} cf">
     
     @Navigation(request, config).map{ section =>
         <li>
             <a href="@section.href"
                data-link-name="@section.linkName"
-               @if(page.section==section.zone) {
-                    class="zone-color"
-               }
+               @if(page.section==section.zone) { class="is-active @if(!isFooter){zone-color}"}
                >
                 @HtmlFormat.raw(section.title)
             </a>
