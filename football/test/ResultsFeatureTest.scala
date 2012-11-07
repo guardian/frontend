@@ -28,9 +28,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".competitions-date").getText should be("Friday 19 October 2012")
 
         val results = $(".matches").findFirst(".match-desc")
-        results.findFirst(".home").getText should be("Sheff Wed")
-        results.findFirst(".away").getText should be("Leeds")
-        findFirst(".status").getText should include("FT")
+        results.findFirst(".match-home").getText should be("Sheff Wed")
+        results.findFirst(".match-away").getText should be("Leeds")
+        findFirst(".match-status").getText should include("FT")
 
         and("I should see results for previous days")
         $(".competitions-date").getTexts should contain("Wednesday 17 October 2012")
