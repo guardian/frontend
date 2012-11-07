@@ -56,11 +56,6 @@ define([
 
         var modules = {
 
-            hideJsElements: function () {
-                var html = common.$g('body')[0];
-                bonzo(html).toggleClass('js-off js-on');
-            },
-
             attachGlobalErrorHandler: function () {
                 var e = new Errors(window);
                 e.init();
@@ -240,7 +235,6 @@ define([
         
         var isNetworkFront = (config.page.pageId === "");
 
-        modules.hideJsElements();
         modules.attachGlobalErrorHandler();
         modules.upgradeImages();
         modules.transcludeTopStories(config);
