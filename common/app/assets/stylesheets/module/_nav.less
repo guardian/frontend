@@ -11,48 +11,31 @@
 
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
 .nav {
-    list-style:none;
-    margin:0;
+    list-style: none;
+    margin: 0;
     padding: @baseline *2 0 4px 0;
 }
 
 .nav > li,
 .nav > li > a {
     .type-6;
-    display:inline-block;
-    zoom:1;
+    display: inline-block;
+    zoom: 1;
 }
 
-.nav-stacked > li{
-    display:list-item;
-}
-
-.nav-stacked > li > a {
-    padding: @baseline*2 0;
-    border-top: 1px solid #ddd;
-    display: block;
-    height: auto;
-}
-
-.nav-stacked a {
-    background-color: transparent;
-    color: #333;
-}
-
-.nav li:first-child a,
-.sections li:nth-child(2) a {
-    border-top:none;
+.nav-stacked > li {
+    display: list-item;
 }
 
 .expander {
     .type-8;
     display: block;
     padding-top: 5px;
-    color: #666;
+    color: #666666;
 }
 
 .sections-control {
-    float:left;
+    float: left;
     width: 34px;
     padding: 15px 16px 15px 0px;
 }
@@ -60,15 +43,15 @@
 .i-nav-divider {
     float: left;
     height: 28px;
-    width:1px;
+    width: 1px;
     margin-right: 8px;
     background-color: #274C98;
     border-left: 1px solid #122853;
 }
 
 .is-active .i-nav-divider {
-    border-color: #fff;
-    background-color: #fff;
+    border-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .sections-control span {
@@ -82,11 +65,18 @@
     padding: @baseline*2 @gutter @baseline @gutter;
 }
 
-.sections li {
+.nav-columns li {
     width: 46%;
     margin-right: 3%;
     display: inline-block; // doing this instead of float to prevent mixed item height float collision
     vertical-align: top;
+}
+
+
+.nav-columns li:nth-child(even) {
+    float: right; // this aligns right edge correctly
+    margin-right: 0%;
+    margin-left: 3%;
 }
 
 .sections .is-active {
@@ -98,25 +88,28 @@
     margin: 0;
 }
 
-.sections li:nth-child(even) {
-    float:right; // leaving this in because it aligns right edge correctly
-    margin-right: 0%;
-    margin-left: 3%;
+.sections li a {
+    padding: @baseline*2 0;
+    border-top: 1px solid #dddddd;
+    display: block;
+    height: auto;
 }
 
-.sections .section-divider {
-    padding: 0 0 @baseline*2 0;
+.sections a {
+    background-color: transparent;
+    color: #333333;
+}
+
+.nav-columns.nav-top-border-off > li:nth-child(-n+2) a,
+.nav-stacked.nav-top-border-off > li:nth-child(1) a {
+    border-top: none;
+    padding-top: 0;
+}
+
+.nav.nav-section-divider {
+    padding: @baseline*2 0;
     margin: 0 @gutter;
     border-top: 2px solid #E3E3DB;
-}
-
-.section-divider li:nth-child(odd) {
-    border-right: none;
-}
-
-.section-divider li:nth-child(odd) a {
-    margin-left: 0;
-    padding-right: @gutter;
 }
 
 #topstories-header, 
@@ -124,18 +117,18 @@
     border-bottom: @baseline solid @blue;
 }
 
-
 .nav-footer li a {
-    color: #fff;
+    color: #ffffff;
     border-top: 1px solid #2B528B;
 }
 
-#sections-footer .section-divider {
-    color: #fff !important;
+#sections-footer .nav-section-divider {
+    color: #ffffff !important;
     border-top: 2px solid #2B528B;
 }
-#sections-footer .section-divider a {
-    color: #fff;
+
+#sections-footer .nav-section-divider a {
+    color: #ffffff;
 }
 
 .nav-popup {
@@ -156,7 +149,7 @@
 .topstories-control {
     float: left;
     height: 28px;
-    color: #fff;
+    color: #ffffff;
     font-family: @serif !important;
     font-size: 13px;
     margin: 0;
@@ -166,7 +159,7 @@
 .topstories-control:link,
 .topstories-control:visited,
 .topstories-control:hover {
-    color: #fff;
+    color: #ffffff;
 }
 
 .topstories-control span {
@@ -181,7 +174,7 @@
     background-origin: content-box;
 }
 
-.topstories-control.is-active span  {
+.topstories-control.is-active span {
     background: none !important;
     border-color: transparent !important;
 }
@@ -196,9 +189,14 @@
     margin-top: 0;
 }
 
-.topstories-control, 
+.sections-control:active,
+.topstories-control:hover {
+    text-decoration: none !important;
+}
+
+a.topstories-control, 
 .sections-control {
-    color: #fff;
+    color: #ffffff;
     background-color: transparent;
     display: inline-block;
     vertical-align: top;
@@ -206,7 +204,7 @@
 
 .sections-control.is-active,
 .topstories-control.is-active {
-    background-color: #fff;
+    background-color: #ffffff;
     color: @blue;
 }
 
@@ -217,7 +215,7 @@
 
 #navigation-header,
 #navigation-footer {
-    float: right
+    float: right;
 }
 
 #navigation-footer {
@@ -247,7 +245,7 @@
     color: #999999;
     margin-top: @baseline*4;
     font-size: 14px;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #DDDDDD;
     padding-bottom: @baseline;
 }
 
@@ -258,5 +256,5 @@
 }
 
 .nav-multi .sections > li a {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #DDDDDD;
 }

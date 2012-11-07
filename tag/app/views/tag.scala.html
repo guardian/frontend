@@ -39,7 +39,7 @@
     </section>
 
     @if(tag.section == "football") {
-        @fragments.footballNav("/football")
+        @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
     }
 
     <div id="js-popular"></div>

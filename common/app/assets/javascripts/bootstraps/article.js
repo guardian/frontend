@@ -179,7 +179,7 @@ define([
             },
 
             showMoreMatches: function() {
-                var matchesNav = document.getElementById('matches-nav');
+                var matchesNav = document.getElementById('js-matches-nav');
                 MoreMatches.init(matchesNav);
             },
 
