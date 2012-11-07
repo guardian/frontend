@@ -24,13 +24,13 @@
 
             <table class="table-football type-6a">
                 @if(!table.multiGroup) {
-                    <thead>
+                    <thead class="table-football-header">
                         @fragments.tableColumnHeaders()
                     </thead>
                 }
 
                 @table.groups.map{ group =>
-                <tbody>
+                <tbody class="table-football-body">
                     @group.round.map { round =>
                         @round.name.map { name =>
                             <tr>

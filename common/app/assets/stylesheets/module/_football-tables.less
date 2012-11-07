@@ -7,13 +7,12 @@
     background-color: #f4f4ee;
 }
 
-.table-football thead {
+.table-football-header {
     border-bottom: 1px solid #DEDEDD;
 }
 
-// todo: clean
-.table-football thead th,
-.table-football tbody .table-football-legend th {
+.table-football-header th,
+.table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
     background-color: #f4f4ee;
     color: #777777;
     font-weight: normal;    
@@ -23,14 +22,14 @@
     border-bottom: none;
 }
 
-.table-football tbody th {
+.table-football-body th {
     background: #f4f4ee;
     font-weight: bold;
     color: #064951;
     border-top: 1px solid #DEDEDD;
 }
 
-.table-football tbody th:first-child {
+.table-football-body th:first-child {
     border-top: none;
 }
 
@@ -41,43 +40,42 @@
     padding: @baseline*2 3% @baseline*2 3%;
 }
 
-.table-football thead th:first-child,
-.table-football tr td:first-child {
+.table-football-header th:first-child,
+.table-football td:first-child {
     padding: @baseline*2 3% @baseline*2 @baseline*2;
 }
 
-.table-football thead th:last-child,
-.table-football tr td:last-child {
+.table-football-header th:last-child,
+.table-football td:last-child {
     padding: @baseline*2 @baseline*2 @baseline*2 3%;
 }
 
-.table-football tr td:last-child {
+.table-football td:last-child {
     font-weight: bold;
 }
 
-.table-football tbody tr {
+.table-football-body tr {
     border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
 }
 
-.table-football tbody tr:last-child {
+.table-football-body tr:last-child {
     border-bottom: none;
 }
 
-// todo: clean
-.table-football .table-football-leftaligned {
+.table-football-leftaligned {
     text-align: left !important;
 }
 
-.table-football tbody {
+.table-football-body {
     border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
 }
 
 // overriding pasteup :(
-.table-football tbody:hover tr,
-.table-football tbody:hover tr:nth-child(even),
-.table-football tbody:hover tr:hover,
+.table-football-body:hover tr,
+.table-football-body:hover tr:nth-child(even),
+.table-football-body:hover tr:hover,
 .table-football tr.highlighted-row,
-.table-football tbody tr:last-child {
+.table-football-body tr:last-child {
     background-color: transparent;
 }
