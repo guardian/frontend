@@ -1,56 +1,51 @@
+@tabBackground: #edede7;
+@tabBorderWidth: 4px;
+
 .tabs {
-    .type-1;
-    margin: 0 0 -1px 0;
+    border: @tabBorderWidth solid @tabBackground;
+    margin: 0px @gutter;
+    border-bottom: none;
+    padding: 0px;
     list-style-type: none;
-    padding: 0 10px;
+    background: @tabBackground;
     overflow: hidden;
 }
 
 .tabs li {
+    width: 50%;
     float: left;
-    display: block;
-    width: 49%;
-    margin-right: 2%;
-    text-align: center;
+    margin: 0px;
+    padding: 0px;
 }
 
-.tabs li:last-child {
-    margin-right: 0;
-}
-
-.tabs li a {
+.tabs a {
     .type-3;
+    text-align: center;
+    color: #545454;
+    padding: @baseline*2;
     display: block;
-    width: 86%;
-    min-height: 24px; // as text height changes
-    border: 1px solid #ccc;
-    padding: 16px 6%;
-    background: #f1f1eb;
-    color: #464646;
-    margin: 10px 0 0px 0;
+    font-weight: normal;
     text-decoration: none;
 }
 
-.tabs a:hover {
-    background: none !important;
+.tabs a:active,
+.tabs a:focus {
+    text-decoration: none;
 }
 
-li.tabs-selected a {
-    .type-2;
-    background: #fff;
-    color: #ff3d00;
-    margin-bottom: -1px;
-    border-bottom-color: #fff;
+.tabs .tabs-selected a {
+    background: #ffffff;
+    color: #333333;
+    font-weight: bold;
+}
+
+.tabs a:active {
+    background-color: #ffffff;
 }
 
 .tabs-content {
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;    
-    overflow: hidden;
-    clear: left;
-    margin: 0;
-}
-
-.tabs-panel .panel {
-    border-top: 1px solid #ccc;
+    clear: both;
+    margin: 0px @gutter;
+    border: @tabBorderWidth solid @tabBackground;
+    border-top: none;
 }

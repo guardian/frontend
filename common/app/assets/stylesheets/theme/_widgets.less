@@ -19,7 +19,7 @@ img.badge {
 }
 
 .live-stamp a {
-    color: white;
+    color: #ffffff;
     text-decoration: none!important;
 }
 
@@ -32,7 +32,7 @@ img.badge {
 .trail-headline a:link,
 .trail-headline a:visited,
 .trail h2 a {
-    color: #333;
+    color: #333333;
 }
 
 
@@ -184,7 +184,7 @@ img.badge {
 .bullet {
     font-size: 13px;
     display: inline-block;
-    color: #999;
+    color: #999999;
     margin: @baseline/2 4px 0 0;
 }
 
@@ -193,18 +193,17 @@ img.badge {
 }
 
 .collapsible {
-      border-bottom: 1px solid #E3E3DB;
-      padding-bottom: 12px;
-      padding-right: 44px; // offsets icon
-      position: relative;
-      cursor: pointer;
-      margin-bottom: 0;
+    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
+    padding: 9px @gutter*2 9px @baseline*2; // double space on right to avoid icon
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0;
 }
 
 .collapsible i {
     position: absolute;
-    right: @gutter;
+    right: 14px;
     display: inline-block;
-    top: 15%;
+    top: 40%;
 }
 
