@@ -8,21 +8,25 @@
 
         <ul class="nav nav-columns">
             @defining({ 
-                Seq(
+                var linkList = List(
                     Link(urlBase + "/live", "livescores", "Live scores"),
                     Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
-                    Link(urlBase + "/results", "results", "Results"),
-                    if (urlBase == "/football") {
-                      Link(urlBase + "/tables", "tables", "Tables")
-                    } else {
-                      Link(urlBase + "/table", "tables", "Tables")
-                    }
+                    Link(urlBase + "/results", "results", "Results")
                 )
+
+                if(!List("Scottish Cup", "Capital One Cup", "FA Cup").contains(competitionName.getOrElse(""))) {                
+                    if (urlBase == "/football") {
+                      linkList ::= Link(urlBase + "/tables", "tables", "Tables")
+                    } else {
+                      linkList ::= Link(urlBase + "/table", "tables", "Tables")
+                    }
+                }
+
+                linkList
+
             }) { links =>
                 @links.map{ l =>
-                    @if(l.url != request.path) {
-                        <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
-                    }
+                    <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
                 }
             }
             <li><a href="/football/competitions" data-link-name"leagues and competitions">Leagues &amp; competitions</a></li>
