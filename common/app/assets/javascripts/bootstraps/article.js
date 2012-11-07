@@ -23,7 +23,8 @@ define([
         'modules/togglepanel',
         'modules/errors',
         'modules/autoupdate',
-        'modules/footballfixtures'
+        'modules/footballfixtures',
+        'modules/cookies'
     ],
     function (
         common,
@@ -50,7 +51,8 @@ define([
         TogglePanel,
         Errors,
         AutoUpdate,
-        FootballFixtures) {
+        FootballFixtures,
+        Cookies) {
 
         var modules = {
 
@@ -197,6 +199,10 @@ define([
                 }
             },
 
+            cleanupCookies: function() {
+                Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+            },
+
             showFootballFixtures: function(page) {
                     var path = window.location.pathname,
                     prependTo = null,
@@ -231,12 +237,13 @@ define([
         };
 
     var bootstrap = function (config, userPrefs) {
-
+        
         var isNetworkFront = (config.page.pageId === "");
 
         modules.hideJsElements();
         modules.attachGlobalErrorHandler();
         modules.upgradeImages();
+        modules.transcludeTopStories(config);
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
@@ -245,19 +252,12 @@ define([
         modules.liveBlogging(config);
         modules.showFootballFixtures(config.page);
 
-
-        switch (isNetworkFront) {
-
-            case true:
-                modules.showTrailblockToggles(config);
-                modules.showFrontExpanders();
-                break;
-
-            case false:
-                modules.transcludeTopStories(config);
-                break;
+        // trailblock toggles and expanders are now on sport and culture section fronts
+        if (["", "sport", "culture"].indexOf(config.page.pageId) !== -1) {
+            modules.showTrailblockToggles(config);
+            modules.showFrontExpanders();
         }
-        
+
         // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;
@@ -283,7 +283,8 @@ define([
         deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
-            modules.loadAdverts(config.page);
+            modules.loadAdverts(config);
+            modules.cleanupCookies();
         });
 
     };

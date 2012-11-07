@@ -1,12 +1,16 @@
 package com.gu.test;
 
 import java.util.List;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import junit.framework.Assert;
-import org.openqa.selenium.*;
-import cucumber.annotation.en.*;
-import cucumber.junit.Cucumber;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import cucumber.annotation.en.Given;
+import cucumber.annotation.en.Then;
 
 public class NetworkFrontSteps {
 

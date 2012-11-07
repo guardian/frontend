@@ -34,7 +34,7 @@ define(['common', 'qwery', 'modules/footballfixtures'], function(common, qwery, 
             });
         });
 
-        it("should prepend fixtues to the DOM", function() {
+        it("should prepend a succesful fixtures request to the DOM", function() {
 
             waits(500);
 
@@ -42,6 +42,16 @@ define(['common', 'qwery', 'modules/footballfixtures'], function(common, qwery, 
                 mockReqwest.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
                 expect(document.getElementById('football-fixtures').innerHTML).toContain('<p>foo</p>');
                 expect(renderCall).toHaveBeenCalled();
+            });
+        });
+
+        it("should fail silently if no response is returned from fixtures request", function() {
+
+            waits(500);
+
+            runs(function(){
+                mockReqwest.mostRecentCall.args[0].success.call(this);
+                expect(renderCall).not.toHaveBeenCalled();
             });
         });
 

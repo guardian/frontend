@@ -1,0 +1,30 @@
+@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true)
+
+@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+<div class="media">
+    @if(trail.mainPicture) {
+        @trail.mainPicture.map{ mainPicture =>
+            @trail.mainPicture(width=220).map{ smallCrop =>
+	            <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
+	                <img class="maxed" src="@smallCrop.url"
+	                    data-thumb-width="@smallCrop.width"
+	                    data-fullsrc="@mainPicture.url"
+	                    data-full-width="@mainPicture.width"
+	                    itemprop="contentURL"
+	                    alt="@Html(mainPicture.altText.getOrElse(""))" 
+	                    title="@Html(mainPicture.caption.getOrElse(""))"
+	                />
+	            </a>
+            }
+        }
+    }
+
+    <h2 class="media-body trail-headline type-2">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @RemoveOuterParaHtml(trail.headline)
+        </a>
+    </h2>
+
+     @trail.trailText.map { text => <div class="trail-text type-4">@cleanTrailText(text)</div> }
+ </div>
