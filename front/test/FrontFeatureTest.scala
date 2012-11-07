@@ -14,6 +14,7 @@ import model.Trailblock
 import scala.Some
 import controllers.FrontPage
 import model.TrailblockDescription
+import views.support.{ Featured, Thumbnail, Headline }
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
 
@@ -245,36 +246,36 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I visit the network front")
 
       then("I should see 10 (5 of whch are hidden) Top stories")
-      Front.ukEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
-      Front.usEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2))
+      Front.ukEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2, style = Some(Featured)))
+      Front.usEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2, style = Some(Featured)))
 
       and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
-      Front.ukEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1))
-      Front.usEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1))
+      Front.ukEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1, style = Some(Featured)))
+      Front.usEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1, style = Some(Featured)))
 
       and("I should see 6 (3 of which are hidden) Comment is Free stories")
-      Front.ukEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
-      Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0))
+      Front.ukEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0, style = Some(Featured)))
+      Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0, style = Some(Featured)))
 
       and("I should see 1 Culture story")
-      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
-      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1))
+      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Business story")
-      Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1))
-      Front.usEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1))
+      Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Life and Style story")
-      Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
-      Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1))
+      Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Money story")
-      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1))
-      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1))
+      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Travel story")
-      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
-      Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1))
+      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
     }
 
     /**
@@ -285,8 +286,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'sport' section front")
 
       then("I should see the top 10 stories across sport")
-      Front.ukEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sport", 5))
-      Front.usEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sports", 5))
+      Front.ukEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sport", 5, style = Some(Featured)))
+      Front.usEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sports", 5, style = Some(Featured)))
     }
 
     scenario("Sub-sections on the Sport section front show a number of top stories") {
@@ -294,52 +295,52 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'sport' section front")
 
       then("the 'Football' sub-section should contain up to 6 stories")
-      Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3))
+      Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3, style = Some(Featured)))
 
       and("the 'Cricket' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(2) should be(TrailblockDescription("sport/cricket", "Cricket", 1))
+      Front.ukEditions("sport").descriptions(2) should be(TrailblockDescription("sport/cricket", "Cricket", 1, style = Some(Thumbnail)))
 
       and("the 'Rugby Union' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1))
+      Front.ukEditions("sport").descriptions(3) should be(TrailblockDescription("sport/rugby-union", "Rugby Union", 1, style = Some(Thumbnail)))
 
       and("the 'Motor Sport' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(4) should be(TrailblockDescription("sport/motorsports", "Motor Sport", 1))
+      Front.ukEditions("sport").descriptions(4) should be(TrailblockDescription("sport/motorsports", "Motor Sport", 1, style = Some(Thumbnail)))
 
       and("the 'Tennis' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(5) should be(TrailblockDescription("sport/tennis", "Tennis", 1))
+      Front.ukEditions("sport").descriptions(5) should be(TrailblockDescription("sport/tennis", "Tennis", 1, style = Some(Thumbnail)))
 
       and("the 'Golf' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1))
+      Front.ukEditions("sport").descriptions(6) should be(TrailblockDescription("sport/golf", "Golf", 1, style = Some(Thumbnail)))
 
       and("the 'Horse Racing' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(7) should be(TrailblockDescription("sport/horse-racing", "Horse Racing", 1))
+      Front.ukEditions("sport").descriptions(7) should be(TrailblockDescription("sport/horse-racing", "Horse Racing", 1, style = Some(Headline)))
 
       and("the 'Rugby League' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(8) should be(TrailblockDescription("sport/rugbyleague", "Rugby League", 1))
+      Front.ukEditions("sport").descriptions(8) should be(TrailblockDescription("sport/rugbyleague", "Rugby League", 1, style = Some(Headline)))
 
       and("the 'US Sport' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(9) should be(TrailblockDescription("sport/us-sport", "US Sport", 1))
+      Front.ukEditions("sport").descriptions(9) should be(TrailblockDescription("sport/us-sport", "US Sport", 1, style = Some(Headline)))
 
       and("the 'Boxing' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(10) should be(TrailblockDescription("sport/boxing", "Boxing", 1))
+      Front.ukEditions("sport").descriptions(10) should be(TrailblockDescription("sport/boxing", "Boxing", 1, style = Some(Headline)))
 
       and("the 'Cycling' sub-section should contain up to 1 story")
-      Front.ukEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1))
+      Front.ukEditions("sport").descriptions(11) should be(TrailblockDescription("sport/cycling", "Cycling", 1, style = Some(Headline)))
 
       then("the 'NFL' sub-section should contain up to 6 stories (US)")
-      Front.usEditions("sport").descriptions(1) should be(TrailblockDescription("sport/nfl", "NFL", 3))
+      Front.usEditions("sport").descriptions(1) should be(TrailblockDescription("sport/nfl", "NFL", 3, style = Some(Featured)))
 
       and("the 'MLB' sub-section should contain up to 1 story (US)")
-      Front.usEditions("sport").descriptions(2) should be(TrailblockDescription("sport/mlb", "MLB", 1))
+      Front.usEditions("sport").descriptions(2) should be(TrailblockDescription("sport/mlb", "MLB", 1, style = Some(Thumbnail)))
 
       and("the 'NBA' sub-section should contain up to 1 story (US)")
-      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/nba", "NBA", 1))
+      Front.usEditions("sport").descriptions(3) should be(TrailblockDescription("sport/nba", "NBA", 1, style = Some(Thumbnail)))
 
       and("the 'MLS' sub-section should contain up to 1 story (US)")
-      Front.usEditions("sport").descriptions(4) should be(TrailblockDescription("football/mls", "MLS", 1))
+      Front.usEditions("sport").descriptions(4) should be(TrailblockDescription("football/mls", "MLS", 1, style = Some(Thumbnail)))
 
       and("the 'NHL' sub-section should contain up to 1 story (US)")
-      Front.usEditions("sport").descriptions(5) should be(TrailblockDescription("sport/nhl", "NHL", 1))
+      Front.usEditions("sport").descriptions(5) should be(TrailblockDescription("sport/nhl", "NHL", 1, style = Some(Thumbnail)))
     }
 
     /**
@@ -350,8 +351,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'culture' section front")
 
       then("I should see the top 10 stories across culture")
-      Front.ukEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5))
-      Front.usEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5))
+      Front.ukEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured)))
+      Front.usEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured)))
     }
 
     scenario("Sub-sections on the Culture section front show a number of top stories") {
@@ -359,32 +360,32 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'culture' section front")
 
       then("the 'TV & Radio' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(1) should be(TrailblockDescription("tv-and-radio", "TV & Radio", 1))
-      Front.usEditions("culture").descriptions(1) should be(TrailblockDescription("tv-and-radio", "TV & Radio", 1))
+      Front.ukEditions("culture").descriptions(1) should be(TrailblockDescription("tv-and-radio", "TV & Radio", 1, style = Some(Thumbnail)))
+      Front.usEditions("culture").descriptions(1) should be(TrailblockDescription("tv-and-radio", "TV & Radio", 1, style = Some(Thumbnail)))
 
       then("the 'Film' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(2) should be(TrailblockDescription("film", "Film", 1))
-      Front.usEditions("culture").descriptions(2) should be(TrailblockDescription("film", "Film", 1))
+      Front.ukEditions("culture").descriptions(2) should be(TrailblockDescription("film", "Film", 1, style = Some(Thumbnail)))
+      Front.usEditions("culture").descriptions(2) should be(TrailblockDescription("film", "Film", 1, style = Some(Thumbnail)))
 
       then("the 'Music' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(3) should be(TrailblockDescription("music", "Music", 1))
-      Front.usEditions("culture").descriptions(3) should be(TrailblockDescription("music", "Music", 1))
+      Front.ukEditions("culture").descriptions(3) should be(TrailblockDescription("music", "Music", 1, style = Some(Thumbnail)))
+      Front.usEditions("culture").descriptions(3) should be(TrailblockDescription("music", "Music", 1, style = Some(Thumbnail)))
 
       then("the 'Stage' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(4) should be(TrailblockDescription("stage", "Stage", 1))
-      Front.usEditions("culture").descriptions(4) should be(TrailblockDescription("stage", "Stage", 1))
+      Front.ukEditions("culture").descriptions(4) should be(TrailblockDescription("stage", "Stage", 1, style = Some(Thumbnail)))
+      Front.usEditions("culture").descriptions(4) should be(TrailblockDescription("stage", "Stage", 1, style = Some(Thumbnail)))
 
       then("the 'Books' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(5) should be(TrailblockDescription("books", "Books", 1))
-      Front.usEditions("culture").descriptions(5) should be(TrailblockDescription("books", "Books", 1))
+      Front.ukEditions("culture").descriptions(5) should be(TrailblockDescription("books", "Books", 1, style = Some(Headline)))
+      Front.usEditions("culture").descriptions(5) should be(TrailblockDescription("books", "Books", 1, style = Some(Headline)))
 
       then("the 'Art & Design' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(6) should be(TrailblockDescription("artanddesign", "Art & Design", 1))
-      Front.usEditions("culture").descriptions(6) should be(TrailblockDescription("artanddesign", "Art & Design", 1))
+      Front.ukEditions("culture").descriptions(6) should be(TrailblockDescription("artanddesign", "Art & Design", 1, style = Some(Headline)))
+      Front.usEditions("culture").descriptions(6) should be(TrailblockDescription("artanddesign", "Art & Design", 1, style = Some(Headline)))
 
       then("the 'Games' sub-section should contain up to 1 story")
-      Front.ukEditions("culture").descriptions(7) should be(TrailblockDescription("technology/games", "Games", 1))
-      Front.usEditions("culture").descriptions(7) should be(TrailblockDescription("technology/games", "Games", 1))
+      Front.ukEditions("culture").descriptions(7) should be(TrailblockDescription("technology/games", "Games", 1, style = Some(Headline)))
+      Front.usEditions("culture").descriptions(7) should be(TrailblockDescription("technology/games", "Games", 1, style = Some(Headline)))
     }
 
     // this is so that the load balancer knows this server has a problem

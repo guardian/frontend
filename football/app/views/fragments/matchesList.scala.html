@@ -22,7 +22,7 @@
 	            @* Shows the live blog (if there is one) after the first competition *@
 	            @if(row.isFirst){
 	                @model.blog.map{ blog =>
-	                    <div class="trailblock trail">@fragments.formatTrail(blog, row)</div>
+	                    <div class="trailblock trail">@fragments.trails.thumbnail(blog, row.rowNum)</div>
 	                }
 	            }
 	        }
