@@ -8,7 +8,7 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="icon-filter-arrow-down js-visible"></i></span></h1>
+    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
 
     @fragments.filters(model.filters, model.page, "tables")
 
@@ -19,7 +19,7 @@
 
             <a class="competition-title football-table-header football-table-link type-3" href="@table.competition.url" data-link-name="competition">
                 @table.competition.fullName
-                <i class="icon-filter-arrow-right"></i>
+                <i class="i-filter-arrow-right"></i>
             </a>
 
             <table class="table-football type-6a">
@@ -75,7 +75,7 @@
             </table>
 
             @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="icon-filter-arrow-right"></i></a>
+                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
             }
         
         </li>

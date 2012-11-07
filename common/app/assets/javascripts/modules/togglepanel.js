@@ -9,7 +9,7 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
                 var elmToToggle = common.$g('#' + elmId);
 
                 if (elmToToggle) {
-                    bonzo(iconElm).toggleClass('icon-filter-arrow-down icon-filter-arrow-up');
+                    bonzo(iconElm).toggleClass('i-filter-arrow-down i-filter-arrow-up');
                     bonzo(elmToToggle).toggleClass('js-hidden');
                 }
             }
