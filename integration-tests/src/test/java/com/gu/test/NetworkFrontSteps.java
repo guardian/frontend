@@ -48,7 +48,7 @@ public class NetworkFrontSteps {
 	public void I_can_click_to_a_section(String buttonText, String action) throws Throwable {
 	    // get the headers
 		List<WebElement> sections = webDriver.findElements(
-			By.cssSelector("section.front-section")
+			By.cssSelector("section.front-section:nth-child(n+2)")
 		);
 		for(WebElement section : sections) {
 			// click button
@@ -71,7 +71,7 @@ public class NetworkFrontSteps {
 
 	@Given("^I hide a section$")
 	public void I_hide_a_section() throws Throwable {
-		By firstSectionToggle = By.cssSelector("#front-container section:first-child .toggle-trailblock");
+		By firstSectionToggle = By.cssSelector("#front-container section:nth-child(2) .toggle-trailblock");
 		// wait for the toggle to become visible
 		webDriver.isVisibleWait(firstSectionToggle);
 	    // hide the first section
@@ -80,7 +80,7 @@ public class NetworkFrontSteps {
 
 	@Then("^the collapsed section will stay collapsed$")
 	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
-		String firstSectionLocator = "#front-container section:first-child ";
+		String firstSectionLocator = "#front-container section:nth-child(2) ";
 		// wait for first section to collapse
 		webDriver.hasTextWait(
 			By.cssSelector(firstSectionLocator + ".toggle-trailblock"), "Show"
