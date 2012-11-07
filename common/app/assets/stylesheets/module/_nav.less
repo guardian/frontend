@@ -61,6 +61,7 @@
     float: left;
     height: 28px;
     width:1px;
+    margin-right: 8px;
     background-color: #274C98;
     border-left: 1px solid #122853;
 }
@@ -118,6 +119,12 @@
     padding-right: @gutter;
 }
 
+#topstories-header, 
+#sections-header {
+    border-bottom: @baseline solid @blue;
+}
+
+
 .nav-footer li a {
     color: #fff;
     border-top: 1px solid #2B528B;
@@ -167,16 +174,9 @@
     height: 28px;
     vertical-align: top;
     line-height: 28px;
-    padding-left: 10px;
-    background: -moz-linear-gradient(left,  #06152b 0px, #2a4fa2 1px, #214583 2px);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0px,#06152b), color-stop(1px,#2a4fa2), color-stop(2px,#214583));
-    background: -webkit-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
-    background: -o-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
-    background: -ms-linear-gradient(left,  #06152b 0px,#2a4fa2 1px,#214583 2px);
-    background: linear-gradient(to right,  #06152b 0px,#2a4fa2 1px,#214583 2px);
 }
 
-.topstories-control i {
+.topstories-control .i-arrow-small-down {
     margin: 12px 10px 8px 5px;
     background-origin: content-box;
 }
