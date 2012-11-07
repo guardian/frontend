@@ -33,12 +33,6 @@ Feature: Article page
 		When I click "Top stories" tab at the top of the page
 		Then a list of "Top stories" opens
             And another click on "Top stories" closes the list.
-
-	Scenario: Open and close top story from foot of page
-        Given I am on an article
-		When I click "Top stories" tab at the foot of the page
-		Then a list of the footer "Top stories" opens
-		    And another click on the footer "Top stories" closes the list.
 		
 	Scenario: Open and close sections from top of page
 	    Given I am on an article
