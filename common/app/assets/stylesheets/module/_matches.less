@@ -69,7 +69,6 @@ a.competition-title {
     font-family: @sans-serif;
     overflow: hidden;
     margin-right: 36px; // offsets the FT/HT box
-    word-break: break-all; // fixes things for small screens
 }
 
 .match-team {
@@ -139,6 +138,12 @@ a.competition-title {
 .matches,
 .competitions {
     margin-bottom: @baseline;
+}
+
+// this overrides components when places on a front (to avoid gaps)
+.trailblock .matches,
+.trailblock .competitions {
+    margin-bottom: 0;
 }
 
 .matches {
