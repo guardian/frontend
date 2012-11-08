@@ -30,6 +30,7 @@ object Frontend extends Build with Prototypes {
   	  libraryDependencies ++= Seq(
 		  "junit" % "junit" % "4.10",
 	      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
+	      "junit-addons" % "junit-addons" % "1.4",
 	      "info.cukes" % "cucumber-core" % "1.0.14",
 	      "info.cukes" % "cucumber-java" % "1.0.14",
 	      "info.cukes" % "cucumber-junit" % "1.0.14",
