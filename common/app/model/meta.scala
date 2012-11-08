@@ -9,8 +9,8 @@ trait MetaData {
 
   def id: String
   def section: String
-  def apiUrl: String
   def webTitle: String
+  def analyticsName: String
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -24,10 +24,30 @@ trait MetaData {
     "page-id" -> id,
     "section" -> section,
     "canonical-url" -> canonicalUrl,
-    "api-url" -> apiUrl,
     "web-title" -> webTitle,
-    "build-number" -> buildNumber
+    "build-number" -> buildNumber,
+    "analytics-name" -> analyticsName
   )
+
+  def cacheSeconds = 60
+}
+
+class Page(
+  val canonicalUrl: String,
+  val id: String,
+  val section: String,
+  val apiUrl: String,
+  val webTitle: String,
+  val analyticsName: String) extends MetaData
+
+object Page {
+  def apply(
+    canonicalUrl: String,
+    id: String,
+    section: String,
+    apiUrl: String,
+    webTitle: String,
+    analyticsName: String) = new Page(canonicalUrl, id, section, apiUrl, webTitle, analyticsName)
 }
 
 trait Images {

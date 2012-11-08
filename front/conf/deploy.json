@@ -1,13 +1,14 @@
 {
     "packages":{
         "frontend-front":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::front" ],
             "data":{
-                "port":"9000",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/_up"
+                    "/management/healthcheck"
                 ]
             }
         },
@@ -16,7 +17,7 @@
             "apps":[ "aws-s3" ],
             "data":{
                 "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=2592000"
+                "cacheControl":"public, max-age=315360000"
             }
         }
     },
@@ -25,7 +26,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-front.deploy"]
+            "actionsBeforeApp": ["frontend-front.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-front.uploadArtifacts"]

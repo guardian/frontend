@@ -41,7 +41,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         then("I should see a tab containing site-wide popular news")
-        $(".tabs li")(1).getText should include("guardian.co.uk")
+        $(".tabs li")(1).getText should include("the guardian")
         $("#tabs-popular-2 li").size should be > (0)
 
       }
@@ -64,7 +64,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
       given("I load most popular")
       HtmlUnit.connection("/most-popular/UK") { connection =>
         then("the requested should be cached for 15 minutes")
-        connection.getHeaderFields.get("Cache-Control").head should be("must-revalidate, max-age=900")
+        connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900")
       }
     }
   }

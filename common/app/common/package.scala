@@ -37,6 +37,20 @@ object `package` {
     block
   } catch {
     case e => log.error("Failing quietly on: " + e.getMessage, e)
-    case e => log.error("Failing quietly on: " + e.getMessage, e)
+  }
+
+  def quietlyWithDefault[A](default: A)(block: => A)(implicit log: Logger) = try {
+    block
+  } catch {
+    case e =>
+      log.error("Failing quietly on: " + e.getMessage, e)
+      default
+  }
+}
+
+object Reference {
+  def apply(s: String) = {
+    val parts = s.split("/")
+    parts(0) -> parts(1)
   }
 }

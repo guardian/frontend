@@ -3,21 +3,20 @@
 <html>
 <head>
     <title>@metaData.webTitle</title>
+    @fragments.metaData(metaData, config, static)
     @fragments.commonCssSetup(static, config)
     @fragments.commonJavaScriptSetup(metaData, config, static, "article", switches)
-    @fragments.metaData(metaData, config, static)
 
     @head
 
 </head>
-<body class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
-
-    @fragments.adSlot(id="top-banner-ad", baseSlot="x50", medianSlot="x52", extendedSlot="x54")
-    <div id="top"></div>
+<body id="top" class="zone-@metaData.section js-off" itemscope itemtype="http://schema.org/WebPage">
     
     <div id="container"> 
+        @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
         @fragments.navigation(static, config, metaData, isFooter=false)
         @body
+        @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
         @fragments.navigation(static, config, metaData, isFooter=true)
         @fragments.footer(config, metaData)
     </div>

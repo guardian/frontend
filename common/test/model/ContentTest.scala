@@ -57,69 +57,6 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
   }
 
-  "Content" should "understand the meta data used by the plugins framework" in {
-
-    val webPublicationDate = new DateTime
-
-    val tags = List(
-      tag(id = "/keyword1", name = "Keyword_1", tagType = "keyword"),
-      tag(id = "/keyword2", name = "Keyword_2", tagType = "keyword"),
-      tag(id = "/contributor1", name = "Contributor_1", tagType = "contributor"),
-      tag(id = "/contributor2", name = "Contributor_2", tagType = "contributor"),
-      tag(id = "/series1", name = "Series_1", tagType = "series"),
-      tag(id = "/series2", name = "Series_2", tagType = "series"),
-      tag(id = "/tone1", name = "Tone_1", tagType = "tone"),
-      tag(id = "/tone2", name = "Tone_2", tagType = "tone"),
-      tag(id = "/blog1", name = "Blog_1", tagType = "blog"),
-      tag(id = "/blog2", name = "Blog_2", tagType = "blog")
-    )
-
-    val fields = Map(
-      "publication" -> "The Guardian",
-      "shortUrl" -> "http://gu.com/p/12345",
-      "byline" -> "Jack and Jill",
-      "commentable" -> "true",
-      "trailText" -> "The trail text",
-      "internalPageCode" -> "1234",
-      "showInRelatedContent" -> "false"
-    )
-
-    val metaData = new Content(ApiContent(
-      id = "foo/2012/jan/07/bar",
-      sectionId = Some("section"),
-      sectionName = None,
-      webPublicationDate = webPublicationDate,
-      webTitle = "Some article",
-      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      fields = Some(fields),
-      tags = tags
-    )).metaData
-
-    //      "tag-ids" -> tags.map(_.id).mkString(","),
-
-    metaData("page-id") should be("foo/2012/jan/07/bar")
-    metaData("short-url") should be("http://gu.com/p/12345")
-    metaData("publication") should be("The Guardian")
-    metaData("byline") should be("Jack and Jill")
-    metaData("commentable").toString should be("true")
-    metaData("description") should be("The trail text")
-    metaData("keywords") should be("Keyword_1,Keyword_2")
-    metaData("section") should be("section")
-    metaData("author") should be("Contributor_1,Contributor_2")
-    metaData("tones") should be("Tone_1,Tone_2")
-    metaData("series") should be("Series_1,Series_2")
-    metaData("blogs") should be("Blog_1,Blog_2")
-    metaData("web-publication-date") should be(webPublicationDate)
-    metaData("api-url") should be("http://content.guardianapis.com/foo/2012/jan/07/bar")
-    metaData("web-title") should be("Some article")
-    metaData("show-in-related").asInstanceOf[Boolean] should be(false)
-
-    metaData("tag-ids") should
-      be("/keyword1,/keyword2,/contributor1,/contributor2,/series1,/series2,/tone1,/tone2,/blog1,/blog2")
-
-  }
-
   "Canonical urls" should "point back to guardian.co.uk" in {
     val apiContent = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",

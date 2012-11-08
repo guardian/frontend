@@ -22,6 +22,16 @@ sealed trait Style {
 
 object Featured extends Style { val className = "featured" }
 
+/**
+ * trails display trailText and thumbnail (if available)
+ */
+object Thumbnail extends Style { val className = "with-thumbnail" }
+
+/**
+ * trails only display headline
+ */
+object Headline extends Style { val className = "headline-only" }
+
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
@@ -107,44 +117,22 @@ object BlockNumberCleaner extends HtmlCleaner {
 
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
   def clean(body: Document): Document = {
-    val apiImages = imageHolder.images
-    val images = body.getElementsByAttributeValue("class", "gu-image")
+    body.getElementsByTag("figure").foreach { fig =>
+      fig.attr("itemprop", "associatedMedia")
+      fig.attr("itemscope", "")
+      fig.attr("itemtype", "http://schema.org/ImageObject")
 
-    images.foreach { img =>
-
-      val imgUrl = img.attr("src")
-      val imageFromApi: Option[Image] = apiImages.find(_.url == Some(imgUrl))
-
-      val imgWidth = img.attr("width").toInt
-      val wrapper = body.createElement("div")
-
-      wrapper.attr("itemprop", "associatedMedia")
-      wrapper.attr("itemscope", "")
-      wrapper.attr("itemtype", "http://schema.org/ImageObject")
-
-      img.attr("itemprop", "contentURL")
-
-      wrapper.attr("class", imgWidth match {
-        case width if width <= 100 => "img-tiny inline-image"
-        case width if width <= 220 => "img-base inline-image"
-        case width if width < 460 => "img-median inline-image"
-        case width => "img-extended"
-      })
-
-      img.replaceWith(wrapper)
-      wrapper.appendChild(img)
-
-      imageFromApi foreach { i: Image =>
-        i.caption foreach { c =>
-          val caption = body.createElement("p")
-          caption.attr("class", "caption")
-          caption.html(c)
-          caption.attr("itemprop", "description")
-          wrapper.appendChild(caption)
-        }
+      fig.getElementsByTag("img").foreach { img =>
+        img.attr("itemprop", "contentURL")
+        fig.attr("class", img.attr("width").toInt match {
+          case width if width <= 220 => "img-base inline-image"
+          case width if width < 460 => "img-median inline-image"
+          case width => "img-extended"
+        })
       }
-    }
 
+      fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+    }
     body
   }
 }
@@ -165,6 +153,24 @@ case class InBodyLinkCleaner(dataLinkName: String) extends HtmlCleaner {
   }
 }
 
+object TweetCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("twitter-tweet").foreach { element =>
+      val el = element.clone()
+      val body = el.child(0).attr("class", "tweet-body")
+      val date = el.child(1).attr("class", "tweet-date")
+      val user = el.ownText()
+      val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+
+      element.empty().attr("class", "tweet")
+      element.appendChild(userEl).appendChild(date).appendChild(body)
+
+    }
+    document
+  }
+}
+
 // beta.guardian.co.uk goes in A group
 // test.guardian.co.uk goes in B group
 object ABTest {
@@ -174,7 +180,7 @@ object ABTest {
   }
 }
 
-// whitespace in the <span> below is significant 
+// whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
 object ContributorLinks {
@@ -233,6 +239,8 @@ object `package` extends Formats {
 
   private object inflector extends Inflector
 
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
+
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
     Html(cleanedHtml.body.html)
@@ -257,5 +265,11 @@ object `package` extends Formats {
 object Format {
   def apply(date: DateTime, pattern: String): String = {
     date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("GMT")))
+  }
+}
+
+object cleanTrailText {
+  def apply(text: String): Html = {
+    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }

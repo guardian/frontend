@@ -1,4 +1,4 @@
-define(['modules/relativedates'], function(RelativeDates) {
+define(['modules/relativedates', 'bonzo'], function(RelativeDates, bonzo) {
 
     describe("Relative dates", function() {
       
@@ -78,7 +78,7 @@ define(['modules/relativedates'], function(RelativeDates) {
 			var testTimestamp = document.getElementById('relative-date-test-item');
 			var expectedTestOutput = RelativeDates.makeRelativeDate(testTimestamp.getAttribute('data-timestamp')); 
 			var invalidItem = document.getElementById('relative-date-invalid-item')
-			var invalidItemTextBefore = invalidItem.innerText;
+			var invalidItemTextBefore = bonzo(invalidItem).text();
 
 			runs(function() {
 	   			RelativeDates.init(); 
@@ -87,8 +87,8 @@ define(['modules/relativedates'], function(RelativeDates) {
             waits(1);
 
             runs(function(){
-            	expect(testTimestamp.innerText).toBe(expectedTestOutput);
-            	expect(invalidItem.innerText).toBe(invalidItemTextBefore);
+            	expect(bonzo(testTimestamp).text()).toBe(expectedTestOutput);
+            	expect(bonzo(invalidItem).text()).toBe(invalidItemTextBefore);
             });
 		});
 

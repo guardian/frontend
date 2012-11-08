@@ -12,35 +12,70 @@ import com.gu.RequireJS._
 import com.gu.RequireJS
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
+import templemore.xsbt.cucumber.CucumberPlugin
+import templemore.xsbt.cucumber.CucumberPlugin._
 
 object Frontend extends Build with Prototypes {
 
   val version = "1-SNAPSHOT"
 
-  val common = library("common")
-
+  // jasmine project
+  val jasmine = Project("jasmine", file("integration-tests"),
+      settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++ 
+      Seq (
+        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
+      )
+    )
+  	.settings(
+  	  libraryDependencies ++= Seq(
+		  "junit" % "junit" % "4.10",
+	      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
+	      "info.cukes" % "cucumber-core" % "1.0.14",
+	      "info.cukes" % "cucumber-java" % "1.0.14",
+	      "info.cukes" % "cucumber-junit" % "1.0.14",
+	      "info.cukes" % "cucumber-picocontainer" % "1.0.14"
+	  )
+  	  // TODO - doesn't work - cucumber is an input task
+  	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
+  	)
+	.settings(ideaSettings: _*)
+  	
+  val common = library("common").dependsOn(jasmine % "test->test")
+  
   val commonWithTests = common % "test->test;compile->compile"
 
-  val article = application("article").dependsOn(commonWithTests)
-  val gallery = application("gallery").dependsOn(commonWithTests)
-  val tag = application("tag").dependsOn(commonWithTests)
-  val section = application("section").dependsOn(commonWithTests)
   val front = application("front").dependsOn(commonWithTests)
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+  val article = application("article").dependsOn(commonWithTests)
+  val section = application("section").dependsOn(commonWithTests)
+  val tag = application("tag").dependsOn(commonWithTests)
+  val gallery = application("gallery").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+
+  val router = application("router").dependsOn(commonWithTests)
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests)
+
+  val football = application("football").dependsOn(commonWithTests).settings(
+      libraryDependencies += "com.gu" %% "pa-client" % "2.4"
+  )
 
   val dev = application("dev-build")
     .dependsOn(front)
     .dependsOn(article)
-    .dependsOn(video)
-    .dependsOn(tag)
     .dependsOn(section)
+    .dependsOn(tag)
+    .dependsOn(video)
     .dependsOn(gallery)
+    .dependsOn(football)
     .dependsOn(coreNavigation)
+    .dependsOn(router)
+    .dependsOn(diagnostics)
 
+    
   val main = root().aggregate(
-    common, article, gallery, tag, section, front, video, coreNavigation, dev
+    common, front, article, section, tag, video, gallery, football, coreNavigation, router, diagnostics, dev, jasmine
   )
+  
 }
 
 trait Prototypes {
@@ -137,7 +172,7 @@ trait Prototypes {
       },
 
       (test in Test) <<= (test in Test) dependsOn (jshint),
-
+      
       templatesImport ++= Seq(
         "common._",
         "model._",
@@ -178,6 +213,9 @@ trait Prototypes {
       "com.gu.openplatform" %% "content-api-client" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
+      "commons-io" % "commons-io" % "2.4",
+      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.opencsv" % "opencsv" % "2.3",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",

@@ -1,13 +1,14 @@
 {
     "packages":{
         "frontend-article":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::article" ],
             "data":{
-                "port":"9000",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/info/2011/oct/06/submitting-content-to-print-publications"
+                    "/management/healthcheck"
                 ]
             }
         },
@@ -16,7 +17,7 @@
             "apps":[ "aws-s3" ],
             "data":{
                 "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=2592000"
+                "cacheControl":"public, max-age=315360000"
             }
         }
     },
@@ -25,7 +26,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-article.deploy"]
+            "actionsBeforeApp": ["frontend-article.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-article.uploadArtifacts"]

@@ -9,6 +9,7 @@ import scala.Some
 import model.TrailblockDescription
 import akka.util.duration._
 import akka.util.Timeout
+import common._
 
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
@@ -17,23 +18,13 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.sendOff {
-    old => Some(Trailblock(description, loadTrails(description.id)))
-  }
+  def refresh() = agent.send { old => Some(Trailblock(description, loadTrails(description.id))) }
 
   def close() = agent.close()
 
   def trailblock: Option[Trailblock] = agent()
 
-  def warmup() = agent().orElse(
-    try {
-      agent.await(Timeout(5 seconds))
-    } catch {
-      case e =>
-        log.error("Exception while waiting to load " + description.id, e)
-        None
-    }
-  )
+  def warmup() = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(Timeout(5 seconds)) })
 
   private def loadTrails(id: String): Seq[Trail] = {
     val response: ItemResponse = ContentApi.item(id, edition)

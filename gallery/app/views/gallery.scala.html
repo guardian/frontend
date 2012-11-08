@@ -3,6 +3,7 @@
 @main(gallery, Static, Configuration, Switches.all){
 
     <style>
+        /* todo: move somewhere proper (MA) */
         .gallery-container {
             width: 100%;
             overflow: hidden;
@@ -35,7 +36,7 @@
     <article class="article" itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType">
 
         <header>
-            @fragments.dateline(gallery.webPublicationDate)
+            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
             @fragments.headline(gallery.headline)
             @fragments.standfirst(gallery)
         </header>
@@ -88,6 +89,5 @@
     }
 
     <div id="js-popular"></div>
-
 
 }

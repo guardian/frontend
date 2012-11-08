@@ -1,0 +1,313 @@
+@import "module/_football-tables";
+
+.competitions-date,
+.football-table-header {
+    padding-top: @baseline*2;
+    background-color: #efefe7;
+}
+
+.competitions-date {
+    background-color: #064951;
+    color: #ffffff;
+    margin-top: @baseline*2;
+    margin-bottom: @baseline;
+    padding: 9px @baseline*2;
+}
+
+.football-table-link,
+.football-table-link.cta {
+    color: #333333;
+    display: block;
+    text-decoration: none;
+    text-align: left;
+    position: relative;
+    padding-left: @baseline*2;
+}
+
+.competition-title {
+    margin-bottom: 0;
+    padding: 9px @baseline*2;
+    position: relative;
+    border-bottom: 1px solid #DEDEDD;
+    color: #064951;
+    background: #f4f4ee;
+}
+
+a.competition-title {
+    color: #064951;
+}
+
+.competition-title i,
+.football-table-link i {
+    position: absolute;
+    top: 14px;
+    right: @baseline*2;
+}
+
+.match,
+.competition {
+    list-style: none;
+}
+
+.match { 
+    border-bottom: 1px solid #DEDEDD;
+    padding: @baseline*2;
+    position: relative;    
+}
+
+.match:last-child {
+    border-bottom: none;
+}
+
+.match-desc {
+    color: #333333;
+    position: relative;
+    margin-bottom: 0;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+    font-family: @sans-serif;
+    overflow: hidden;
+    margin-right: 36px; // offsets the FT/HT box
+    word-break: break-all; // fixes things for small screens
+}
+
+.match-team {
+    display: block;
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.match-home {
+    text-align: right;
+    padding-right: @gutter;
+}
+
+.match-away {
+    padding-left: @gutter;
+}
+
+.match-result {
+    position: absolute;
+    display: block;
+    width: 40px;
+    top: 0;
+    left: 50%;
+    margin-left: -20px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.match-status {
+    position: absolute;
+    right: @baseline*2;
+    top: @baseline*2;
+    color: #777777;
+}
+
+.match-status abbr {
+    color: #ffffff;
+    padding: 2px 0px;   
+    border: none;
+    width: 28px;
+    text-align: center;
+    display: block;
+}
+
+.match-status-desc {
+    position: absolute;
+    left: -9999px;
+}
+
+.match-live {
+    background-color: #da4b23;
+}
+
+.match-half-time {
+    background-color: #8cc43f;
+}
+
+.match-full-time {
+    background-color: #8cc43f;
+}
+
+.matches,
+.competitions {
+    margin-bottom: @baseline;
+}
+
+.matches {
+    background-color: #f4f4ee;
+}
+
+.competition-table {
+    border-bottom: 1px solid #E3E3DB;
+}
+
+.competition-table .competition-title {
+    border-bottom: 1px solid #E3E3DB;
+}
+
+.competition-table .matches {
+    border-top: none;
+    border-left: 1px solid #E3E3DB;
+    border-right: 1px solid #E3E3DB;
+}
+
+.matches-nav a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.matches-nav a.cta {
+    display: block;
+    color: #545454;
+    margin-bottom: @baseline*2;
+}
+
+.matches-nav a.cta:before {
+    content: "+ ";
+}
+
+.matches-nav a.cta:active {
+    background: #666666;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.sport-header {
+    margin-bottom: @baseline*2;
+}
+
+.league-table {
+    margin-bottom: @baseline*2;
+}
+
+.league-table:last-child,
+.matches:last-child {
+    margin-bottom: 0;
+}
+
+// styling for non-ajax match nav 
+.js-not-ajax {
+    padding: @baseline*2 @gutter;
+}
+
+.js-not-ajax .match-next {
+    float: right;
+}
+
+.js-not-ajax .match-prev:before {
+    content: "‹ ";
+}
+
+.js-not-ajax .match-next::after {
+    content: " ›";
+}
+
+.live-matches-dateline .dateline {
+	margin-left: 22px;
+}
+
+.live-matches-update .update { 
+	border-bottom: 0;
+	margin-bottom: 0;
+	margin-top: 12px;
+}
+
+.live-matches-update .update .is-active,
+.live-matches-update .update button:hover {
+	background-color: #8CC43F;
+}
+
+.football-nav {
+    clear: left;
+    padding: 16px @gutter;
+    margin: 0 0 24px 0;
+    color: #064951;
+    background: #7bae38;
+}
+
+.football-nav a {
+    color: #064951;
+}
+
+.football-nav .nav {
+    padding: @baseline*2 0;
+}
+
+.football-nav .nav-stacked > li > a {
+    border-color: #a1c391;  
+}
+
+// football-filters is the dropdown list
+
+.football-filters {
+    margin-bottom: 0px;
+}
+
+.football-filters > li {
+    background: #5b8622;
+    padding: 0 12px;
+}
+
+.football-filters h2 {
+    font-weight: bold;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 14px;
+    color: #BDE786;
+    border-bottom: 1px solid #a1c391;
+    padding-bottom: @baseline;
+    margin-top: 10px;
+}
+
+.football-filters li:first-child h2 {
+    margin-top: 30px;
+}
+
+.football-filters .sections li a {
+    color: #ffffff;
+    border-top-color: #a1c391;
+    line-height: 21px;
+}
+
+.football-filters .cta {
+    background: #2c6711;
+    color: #ffffff;
+    margin-bottom: @baseline*2;
+    margin-top: @gutter;
+    padding: 15px 0;
+}
+
+.football-filters .cta:link, 
+.football-filters .cta:visited {
+    color: #ffffff;
+}
+
+// football-filter is the dropdown link item
+
+.football-filter {
+    background: #7bae38;
+    margin: 0 @gutter;
+    color: #ffffff; 
+    border-bottom: none;
+}
+
+.football-filter span {    
+    background: #5b8622; 
+    height: 100%;
+    width: 48px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.matches-container,
+.football-table-container {
+    margin-top: @baseline*2;
+}
