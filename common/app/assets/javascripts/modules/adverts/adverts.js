@@ -19,7 +19,7 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
         slots = [];
 
         var slotHolders = document.querySelectorAll('.ad-slot'),
-            size = (window.innerWidth > 728) ? 'median' : 'base';
+            size = (window.innerWidth > 810) ? 'median' : 'base';
 
         adsSwitchedOn = !guardian.userPrefs.isOff('adverts');
 
