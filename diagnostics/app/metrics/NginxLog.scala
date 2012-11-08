@@ -62,10 +62,18 @@ object NginxLog {
 
   Tailer.create(new File(conf.Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
-      val fields = csv.parseLine(line)
 
-      val path = fields(2).trim.split(" ").toList.drop(1).headOption
-      val userAgent = fields(6)
+      var fields = Array("")
+      var path = Option("")
+      var userAgent = ""
+      
+      try {
+        fields = csv.parseLine(line)
+        path = fields(2).trim.split(" ").toList.drop(1).headOption
+        userAgent = fields(6)
+      } catch {
+        case _ => return
+      }
 
       // px.gif metrics
       path filter { _ startsWith "/px.gif" } foreach { _ =>
