@@ -31,6 +31,12 @@
     padding: 0 @gutter;
 }
 
+@media screen and (min-width: 400px) {
+    .trail-headline {
+        font-size: 17px;
+    }
+}
+
 .trailblock-topstories .trail-headline {
     .type-3;
 }
@@ -43,6 +49,11 @@
     display: block;
     clear: left;
     padding: 0 @gutter;
+}
+@media screen and (min-width: 600px) {
+    .trail-text {
+        clear: none;
+    }
 }
 
 .media .trail-text {
@@ -67,6 +78,12 @@
 
 .trailblock .img-large img {
     width: @trailblockImgWidthLarge;
+}
+
+@media screen and (min-width: 850px) {
+    .trailblock .img img {
+        width: 160px;
+    }
 }
 
 .trailblock .panel {
