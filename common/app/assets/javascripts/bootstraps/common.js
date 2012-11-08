@@ -49,7 +49,8 @@ define([
         var modules = {
 
             attachGlobalErrorHandler: function () {
-                var e = new Errors(window).init();
+                var e = new Errors(window);
+                    e.init();
                 common.mediator.on("module:error", e.log);
             },
 
@@ -149,8 +150,7 @@ define([
 
             modules.loadFonts(config, navigator.userAgent, userPrefs);
             modules.upgradeImages();
-
-            modules.transcludeRelated(config);
+            
             modules.showRelativeDates();
             modules.showTabs();
 
