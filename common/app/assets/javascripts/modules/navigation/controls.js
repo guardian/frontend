@@ -88,7 +88,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
         model = {
         };
         
-        this.initialise = function () {
+        this.init = function () {
             view.init();
         };
     };
