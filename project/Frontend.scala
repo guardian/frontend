@@ -30,6 +30,7 @@ object Frontend extends Build with Prototypes {
   	  libraryDependencies ++= Seq(
 		  "junit" % "junit" % "4.10",
 	      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
+	      "junit-addons" % "junit-addons" % "1.4",
 	      "info.cukes" % "cucumber-core" % "1.0.14",
 	      "info.cukes" % "cucumber-java" % "1.0.14",
 	      "info.cukes" % "cucumber-junit" % "1.0.14",
@@ -38,6 +39,7 @@ object Frontend extends Build with Prototypes {
   	  // TODO - doesn't work - cucumber is an input task
   	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
   	)
+	.settings(ideaSettings: _*)
   	
   val common = library("common").dependsOn(jasmine % "test->test")
   
@@ -211,6 +213,9 @@ trait Prototypes {
       "com.gu.openplatform" %% "content-api-client" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
+      "commons-io" % "commons-io" % "2.4",
+      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.opencsv" % "opencsv" % "2.3",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",

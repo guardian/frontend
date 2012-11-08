@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.pagefactory.ByChained;
 
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
@@ -25,27 +24,32 @@ public class SectionFrontsSteps {
 	
 	@Then("^I should see up to (\\d+) '([^']*)' top stories$")
 	public void I_should_see_up_to_top_stories(int numOfTopStories, String subSectionTitle) throws Throwable {
-		WebElement subSectionLink = webDriver.findElement(
-			new ByChained(By.id("front-container"), By.linkText(subSectionTitle))
-		);
-		// get the associated (visible) trails
-		List<WebElement> trails = subSectionLink.findElements(By.xpath("../following-sibling::div/ul[1]/li[@class='trail']"));
-		Assert.assertTrue(trails.size() <= numOfTopStories);
+		// get the trailblock associated with this sub-section
+		WebElement trailblock = findTrailblock(subSectionTitle);
+		// get the (visible) trailblock
+		WebElement visibleTrailblock = trailblock.findElement(By.xpath("ul[not(contains(@class, 'panel'))]"));
+		// shouldn't show any more than n stories
+		Assert.assertTrue(visibleTrailblock.findElements(By.className("trail")).size() <= numOfTopStories);
 	}
 	
 	@Then("^any more than (\\d+) '([^']*)' top stories should be hidden$")
 	public void any_more_than_top_stories_should_be_hidden(int numOfTopStories, String subSectionTitle) throws Throwable {
-		WebElement subSectionLink = webDriver.findElement(
-			new ByChained(By.id("front-container"), By.linkText(subSectionTitle))
-		);
-		// get the associated (invisible) trails
-		WebElement hiddenTrailblock = subSectionLink.findElement(By.xpath("../following-sibling::div/ul[2]"));
-		Assert.assertTrue(hiddenTrailblock.findElements(By.tagName("li")).size() <= numOfTopStories);
-		// make sure they're invisible
-		webDriver.findElementWait(new ByChained(
-			By.id("front-container"), By.linkText(subSectionTitle), By.xpath("../following-sibling::div/span[contains(@class, 'cta')]")
-		));
+		// get the trailblock associated with this sub-section
+		WebElement trailblock = findTrailblock(subSectionTitle);
+		// get the (invisible) trailblock
+		WebElement hiddenTrailblock = trailblock.findElement(By.className("panel"));
+		// make sure the num of trails is less than the number of stories
+		List<WebElement> hiddenTrails = hiddenTrailblock.findElements(By.className("trail"));
+		Assert.assertTrue(hiddenTrails.size() <= numOfTopStories);
+		// make sure they're hidden
 		Assert.assertEquals("0px", hiddenTrailblock.getCssValue("max-height"));
+	}
+	
+	protected WebElement findTrailblock(String name) {
+		// get the trailblock associated with this sub-section
+		return webDriver.findElement(
+			By.xpath("//section[.//h1/text()='" + name + "']/div[contains(@class, 'trailblock')]")
+		);
 	}
 	
 }

@@ -14,7 +14,7 @@
                     }
                 }
 
-                <ul class="nav nav-stacked cf">
+                <ul class="nav nav-columns nav-top-border-off cf">
                     @group.entries.sortBy{ _.team.name }.zipWithRowInfo.map{ case (entry, row) =>
                         <li><a href="#" data-link-name="@HtmlFormat.raw(entry.team.name)">@HtmlFormat.raw(entry.team.name)</a></li>
                     }   

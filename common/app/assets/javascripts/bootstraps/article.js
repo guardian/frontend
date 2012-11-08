@@ -56,11 +56,6 @@ define([
 
         var modules = {
 
-            hideJsElements: function () {
-                var html = common.$g('body')[0];
-                bonzo(html).toggleClass('js-off js-on');
-            },
-
             attachGlobalErrorHandler: function () {
                 var e = new Errors(window);
                 e.init();
@@ -179,7 +174,7 @@ define([
             },
 
             showMoreMatches: function() {
-                var matchesNav = document.getElementById('matches-nav');
+                var matchesNav = document.getElementById('js-matches-nav');
                 MoreMatches.init(matchesNav);
             },
 
@@ -240,9 +235,9 @@ define([
         
         var isNetworkFront = (config.page.pageId === "");
 
-        modules.hideJsElements();
         modules.attachGlobalErrorHandler();
         modules.upgradeImages();
+        modules.transcludeTopStories(config);
         modules.transcludeRelated(config);
         modules.showRelativeDates();
         modules.showTabs();
@@ -257,10 +252,6 @@ define([
             modules.showFrontExpanders();
         }
 
-        if (!isNetworkFront) {
-            modules.transcludeTopStories(config);
-        }
-        
         // page-specific functionality
         // loading only occurs on fixtures and results homepage (i.e. not on date)
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;

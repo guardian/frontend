@@ -62,9 +62,13 @@ define(['common', 'modules/detect','modules/adverts/audience-science'], function
             }
         }
 
-        query += 'ct=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
-        query += 'pt=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
-        query += 'cat=' + encodeURIComponent(this.config.section.toLowerCase()) + "&";
+        if (this.config.contentType) {
+             query += 'ct=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
+             query += 'pt=' + encodeURIComponent(this.config.contentType.toLowerCase()) + "&";
+        }
+        if (this.config.section) {
+            query += 'cat=' + encodeURIComponent(this.config.section.toLowerCase()) + "&";
+        }
 
         var url = oasUrl;
         url = url.replace('[SLOT_NAME]', this.name);

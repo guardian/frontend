@@ -34,7 +34,7 @@ Feature: Section Fronts - Sport
             | US Sport     | 1              | 3     |
             | Boxing       | 1              | 3     |
             | Cycling      | 1              | 3     |
-            
+
     Scenario: Football top stories should display 3 and hide the rest
         Given I am on the 'sport' section front
         Then I should see up to 3 'Football' top stories

@@ -1,70 +1,86 @@
+#header {
+    background-color: @blue;
+}
+
+#logo {
+    display: block;
+    float: left;
+    margin: 20px 0 @baseline*2 @gutter;
+    text-indent: -9999px;
+}
+
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
 .nav {
-    list-style:none;
-    margin:0;
+    list-style: none;
+    margin: 0;
     padding: @baseline *2 0 4px 0;
 }
 
 .nav > li,
 .nav > li > a {
     .type-6;
-    display:inline-block;
-    zoom:1;
+    display: inline-block;
+    zoom: 1;
 }
 
-.nav-stacked > li{
-    display:list-item;
-}
-
-.nav-stacked > li > a {
-    padding: @baseline*2 0;
-    border-top: 1px solid #ddd;
-    display: block;
-    height: auto;
-}
-
-.nav-stacked a {
-    background-color: transparent;
-    color: #333;
-}
-
-.nav li:first-child a,
-.sections li:nth-child(2) a {
-    border-top:none;
+.nav-stacked > li {
+    display: list-item;
 }
 
 .expander {
     .type-8;
     display: block;
     padding-top: 5px;
-    color: #666;
+    color: #666666;
 }
 
 .sections-control {
-    padding: 20px @gutter 10px 5px;
+    float: left;
+    width: 34px;
+    padding: 15px 16px 15px 0px;
+}
+
+.i-nav-divider {
+    float: left;
+    height: 28px;
+    width: 1px;
+    margin-right: 8px;
+    background-color: #274C98;
+    border-left: 1px solid #122853;
+}
+
+.is-active .i-nav-divider {
+    border-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .sections-control span {
-    width: 24px;
-    height: 13px;
+    float: right;
+    margin-top: 8px;
     display: inline-block;
     text-indent: -1000em;
-    .icon-menu;
-}
-
-.svg .sections-control span {
-    .svg-icon-menu
 }
 
 .sections .nav {
     padding: @baseline*2 @gutter @baseline @gutter;
 }
 
-.sections li {
+.nav-columns li {
     width: 46%;
     margin-right: 3%;
     display: inline-block; // doing this instead of float to prevent mixed item height float collision
     vertical-align: top;
+}
+
+
+.nav-columns li:nth-child(even) {
+    float: right; // this aligns right edge correctly
+    margin-right: 0%;
+    margin-left: 3%;
+}
+
+.sections .is-active {
+    font-weight: bold;
 }
 
 .sections .section-full {
@@ -72,66 +88,95 @@
     margin: 0;
 }
 
-.sections li:nth-child(even) {
-    float:right; // leaving this in because it aligns right edge correctly
-    margin-right: 0%;
-    margin-left: 3%;
+.sections li a {
+    padding: @baseline*2 0;
+    border-top: 1px solid #dddddd;
+    display: block;
+    height: auto;
 }
 
-.sections .section-divider {
-    padding: 0 0 @baseline*2 0;
+.sections a {
+    background-color: transparent;
+    color: #333333;
+}
+
+.nav-columns.nav-top-border-off > li:nth-child(-n+2) a,
+.nav-stacked.nav-top-border-off > li:nth-child(1) a {
+    border-top: none;
+    padding-top: 0;
+}
+
+.nav.nav-section-divider {
+    padding: @baseline*2 0;
     margin: 0 @gutter;
     border-top: 2px solid #E3E3DB;
 }
 
-.section-divider li:nth-child(odd) {
-    border-right: none;
+#topstories-header, 
+#sections-header {
+    border-bottom: @baseline solid @blue;
 }
 
-.section-divider li:nth-child(odd) a {
-    margin-left: 0;
-    padding-right: @gutter;
+.nav-footer li a {
+    color: #ffffff;
+    border-top: 1px solid #2B528B;
+}
+
+#sections-footer .nav-section-divider {
+    color: #ffffff !important;
+    border-top: 2px solid #2B528B;
+}
+
+#sections-footer .nav-section-divider a {
+    color: #ffffff;
 }
 
 .nav-popup {
     -webkit-transform: translate3d(0,0,0);
     position: relative;
     z-index: 100;
-    background-color: #ffffff;
     padding: 0;
     list-style: none;
     clear: both;
     position: relative;
-    border-top: 1px solid  #D2D2D2;
-    border-bottom: 1px solid  #D2D2D2;
     margin-bottom: -4px;
-    background: #ffffff;
-    background: -moz-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 0%, 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(5%,#ffffff), color-stop(95%,#ffffff), color-stop(100%,#f2f2f2));
-    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: -o-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: -ms-linear-gradient(top,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
-    background: linear-gradient(to bottom,  #f2f2f2 0%, #ffffff 5%, #ffffff 95%, #f2f2f2 100%);
 }
 
-.nav-popup:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -(@navBorderWidth * 2);
-    right: @gutter + 2;
-    width: 0;
-    height: 0;
-    border-color: transparent transparent #F2F2F2 transparent; // border color should be same as div background color
-    border-style: solid;
-    border-width: @navBorderWidth;
+#section-footer .nav-popup {
+    background-color: @blue;
 }
 
 .topstories-control {
-    font-size: 14px;
-    margin-top: @baseline*2;
-    padding: @baseline 10px @baseline 10px;
-    border-right: 1px solid #707272;
+    float: left;
+    height: 28px;
+    color: #ffffff;
+    font-family: @serif !important;
+    font-size: 13px;
+    margin: 0;
+    padding: 15px 0;
+}
+
+.topstories-control:link,
+.topstories-control:visited,
+.topstories-control:hover {
+    color: #ffffff;
+}
+
+.topstories-control span {
+    display: inline-block;
+    height: 28px;
+    vertical-align: top;
+    line-height: 28px;
+}
+
+.topstories-control .i-arrow-small-down {
+    margin: 12px 10px 8px 5px;
+    background-origin: content-box;
+}
+
+.topstories-control.is-active span {
+    background: none !important;
+    border-color: transparent !important;
 }
 
 .top-stories ul {
@@ -144,7 +189,6 @@
     margin-top: 0;
 }
 
-
 .sections-control:active,
 .topstories-control:hover {
     text-decoration: none !important;
@@ -152,23 +196,35 @@
 
 a.topstories-control, 
 .sections-control {
-    color: #707272;
-    background-color: transparent !important;
+    color: #ffffff;
+    background-color: transparent;
     display: inline-block;
     vertical-align: top;
 }
 
+.sections-control.is-active,
+.topstories-control.is-active {
+    background-color: #ffffff;
+    color: @blue;
+}
+
+.sections-control:hover, 
+.topstories-control:hover {
+    text-decoration: none !important;
+}
+
 #navigation-header,
 #navigation-footer {
-    float: right
+    float: right;
 }
 
 #navigation-footer {
-    margin-top: @baseline;
+    width: 100%;
+    background-color: @blue;
 }
 
-.top-stories:after {
-    right: 65px !important;
+#sections-footer {
+    border-top: 1px solid #2B528B;
 }
 
 .footer .nav {
@@ -178,9 +234,9 @@ a.topstories-control,
 }
 
 .footer .nav-stacked li a {
-    color: #6F6F6E;
+    color: @blue;
     margin-left: 0;
-    border-top-color: #b5b5b5;
+    border-top-color: #C0C9CE;
 }
 
 .nav-multi h2 {
@@ -189,7 +245,7 @@ a.topstories-control,
     color: #999999;
     margin-top: @baseline*4;
     font-size: 14px;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #DDDDDD;
     padding-bottom: @baseline;
 }
 
@@ -200,10 +256,5 @@ a.topstories-control,
 }
 
 .nav-multi .sections > li a {
-    border-top: 1px solid #ddd;
-}
-
-.sections li:nth-child(-n+2) a {
-    border-top: none;
-    padding-top: 0;
+    border-top: 1px solid #DDDDDD;
 }
