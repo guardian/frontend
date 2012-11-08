@@ -48,7 +48,7 @@ public class SectionFrontsSteps {
 	protected WebElement findTrailblock(String name) {
 		// get the trailblock associated with this sub-section
 		return webDriver.findElement(
-			By.xpath("//div[contains(@class, 'trailblock')][preceding-sibling::div//h1/text()='" + name + "']")
+			By.xpath("//section[.//h1/text()='" + name + "']/div[contains(@class, 'trailblock')]")
 		);
 	}
 	
