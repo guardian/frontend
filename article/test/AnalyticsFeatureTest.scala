@@ -35,7 +35,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
         // test a few token properties in the web bug
         webbug.getAttribute("src") should include("c11=sport")
         webbug.getAttribute("src") should include("c8=1758359")
-        webbug.getAttribute("src") should include("pageName=Olympic+opening+ceremony+will+recreate+countryside+with+real+animals%3AArticle%3A1758359")
+        webbug.getAttribute("src") should include("pageName=GFE%3Asport%3AArticle%3Alondon-2012-olympic-opening-ceremony")
 
       }
     }
