@@ -1,6 +1,5 @@
 define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, common) {
 
-    // foo
     var Gallery = function () {
 
         function getUrlVars () {
@@ -30,7 +29,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                   
                 var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-                if(isTouch) { // only enable swiping for touch devices, duh.
+                if (isTouch) { // only enable swiping for touch devices, duh.
                     
                     // add swipe styling
                     document.getElementById('js-gallery').className += ' gallery-swipe';
@@ -58,7 +57,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                             view.updateURL('index=' + nextIndexCount, nextIndexCount);
                             view.handlePrevNextLinks(nextIndexCount, totalSlides);
                             
-                            if(nextElm) {
+                            if (nextElm) {
                                 var nextElmForward = nextElm.nextElementSibling;
                                 var nextElmBackward = nextElm.previousElementSibling;
                                 
@@ -67,12 +66,11 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
 
                                 elm.style.display = 'block';
                             }
-
                         }
                     });
 
                     // check if we need to jump to a specific gallery slide
-                    if(urlParams.index) {
+                    if (urlParams.index) {
                         gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0);
                     }
 
@@ -99,7 +97,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                         e.preventDefault();
                     });
 
-                    bean.add(document, 'keydown', function(e){
+                    bean.add(document, 'keydown', function(e) {
                         if (e.keyCode == 37) {
                             view.advanceGallery('prev');
                         } else if (e.keyCode == 39) {
