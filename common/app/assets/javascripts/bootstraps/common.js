@@ -1,7 +1,7 @@
 define([
         //Commmon libraries
         'common',
-        'detect',
+        'modules/detect',
         //Vendor libraries
         'domReady',
         'bonzo',
@@ -144,7 +144,6 @@ define([
     // All methods placed inside here will exec after DOMReady
     var ready = function(config, userPrefs) {
         domReady(function() {
-            modules.hideJsElements();
             modules.attachGlobalErrorHandler();
             modules.transcludeNavigation(config);
 
