@@ -208,7 +208,7 @@ object OmnitureAnalyticsData {
       case _ => false
     }
 
-    val pageName = data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))
+    val pageName = page.analyticsName
     val analyticsData = Map(
       "ns" -> "guardian",
       "pageName" -> pageName,
