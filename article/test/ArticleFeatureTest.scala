@@ -92,9 +92,27 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the publication date of the article")
-        findFirst(".dateline").getText should be("Monday 6 August 2012 19.30 GMT")
+        findFirst(".dateline").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06")
       }
+    }
+
+    scenario("Articles should have the correct timezone for when they were published") {
+
+      given("I am on an article published on '2012-11-10'")
+      HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
+        import browser._
+        then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
+        findFirst(".dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+      }
+
+      given("I am on an article published on '2012-08-19'")
+      HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+        import browser._
+        then("the date should be 'Sunday 19 August 2012 18.38 BST'")
+        findFirst(".dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+      }
+
     }
 
     scenario("Article body", ArticleComponents) {
@@ -232,6 +250,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
+
   }
 
   private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name

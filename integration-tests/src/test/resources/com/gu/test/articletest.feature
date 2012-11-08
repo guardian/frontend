@@ -67,3 +67,14 @@ Feature: Article page
 	Scenario: Related content is unavailable
 	    Given I am on an article with a story package
 		Then "related content" is not displayed
+		
+    @scala-test
+    Scenario Outline: Articles should have the correct timezone for when they were published
+        Given I am on an article published on '<date>'
+        Then the published date should be in '<timezone>'
+            And the published time should be '<time>'
+        
+        Examples:
+            | date       | timezone | time  |
+            | 2012-11-10 | GMT      | 00.01 |
+            | 2012-08-19 | BST      | 18.38 |

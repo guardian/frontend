@@ -264,7 +264,7 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String): String = {
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("GMT")))
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("Europe/London")))
   }
 }
 

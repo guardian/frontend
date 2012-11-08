@@ -24,6 +24,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+	        <groupId>junit-addons</groupId>
+	        <artifactId>junit-addons</artifactId>
+	        <version>1.4</version>
+        </dependency>
+		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
 			<version>1.3</version>
