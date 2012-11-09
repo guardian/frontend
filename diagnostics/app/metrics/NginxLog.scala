@@ -15,8 +15,8 @@ object NginxLog {
     userAgent startsWith "ELB-HealthChecker"
   }
 
-  def isPxGif(path: String): Boolean = {
-    path.startsWith("/px.gif")
+  def isMetric(path: String): Boolean = {
+    path startsWith "/px.gif"
   }
 
   // all errors
@@ -51,7 +51,7 @@ object NginxLog {
     val js_ios_5_mobilesafari = CountMetric("diagnostics", "js_ios_5_safari", "iOS 5 Safari JS errors", "")
     val js_ios_4_and_lower_mobilesafari = CountMetric("diagnostics", "js_ios_4_and_lower_safari", "iOS 4 and lower Safari JS errors", "")
     val js_ios_x_chrome = CountMetric("diagnostics", "js_ios_x_chrome", "iOS Chrome JS errors", "")
-    val js_ios_other = CountMetric("diagnostics", "js_ios_other", "iOS 6 other JS errors", "")
+    val js_ios_other = CountMetric("diagnostics", "js_ios_other", "iOS other JS errors", "")
 
     /*  Android */
     val js_android_4_safari = CountMetric("diagnostics", "js_android_4_safari", "Android 4 Safari JS errors", "")
@@ -59,6 +59,7 @@ object NginxLog {
     val js_android_other = CountMetric("diagnostics", "js_android_other", "Android other errors", "")
 
     /* Windows */
+    val js_windows_8_ie10 = CountMetric("diagnostics", "js_windows_8_ie10", "Windows 8 IE 10 JS errors", "")
     val js_windows_7_iemobile = CountMetric("diagnostics", "js_windows_7_iemobile", "Windows 7 IE JS errors", "")
     val js_windows_other = CountMetric("diagnostics", "js_windows_other", "Windows other JS errors", "")
 
@@ -75,7 +76,7 @@ object NginxLog {
     val metrics: Seq[Metric] = Seq(total,
       js_ios_6_mobilesafari, js_ios_5_mobilesafari, js_ios_4_and_lower_mobilesafari, js_ios_x_chrome, js_ios_other,
       js_android_4_safari, js_android_3_and_lower_safari, js_android_other,
-      js_windows_7_iemobile, js_windows_other,
+      js_windows_7_iemobile, js_windows_other, js_windows_8_ie10,
       js_osx_safari, js_osx_other,
       js_rimos, js_linux, js_symbianos, js_other
     )
@@ -93,28 +94,32 @@ object NginxLog {
 
       val key = Array(osFamily.toLowerCase, osVersion, uaFamily.toLowerCase).mkString("_")
 
-      //System.out.println(key)
-      //System.out.println(userAgent)
-
       osFamily.toLowerCase match {
 
         case "ios" => key match {
           case "ios_6_mobilesafari" => js_ios_6_mobilesafari.recordCount(1)
           case "ios_5_mobilesafari" => js_ios_5_mobilesafari.recordCount(1)
-          case "ios_4_mobilesafari" | "js_ios_3_mobilesafari" => js_ios_4_and_lower_mobilesafari.recordCount(1)
-          case "ios_5_chromemobile" | "js_ios_6_chromemobile" => js_ios_x_chrome.recordCount(1)
+          case "ios_4_mobilesafari" | "ios_3_mobilesafari" => js_ios_4_and_lower_mobilesafari.recordCount(1)
+          case "ios_5_chromemobile" | "ios_6_chromemobile" => js_ios_x_chrome.recordCount(1)
           case _ => js_ios_other.recordCount(1)
+
         }
 
         case "android" => key match {
           case "android_4_safari" | "android_4_androidwebkit" => js_android_4_safari.recordCount(1)
-          case "android_3_safari" | "js_android_2_safari" | "js_android_2_androidwebkit" => js_android_3_and_lower_safari.recordCount(1)
+          case "android_3_safari" | "android_2_safari" | "android_2_androidwebkit" => js_android_3_and_lower_safari.recordCount(1)
           case _ => js_android_other.recordCount(1)
         }
 
         case "windows" => key match {
           case "windows_7_iemobile" => js_windows_7_iemobile.recordCount(1)
-          case _ => js_windows_other.recordCount(1)
+          case _ => {
+            if (userAgent contains "MSIE 10.0; Windows Phone 8.0") {
+              js_windows_8_ie10.recordCount(1)
+            } else {
+              js_windows_other.recordCount(1)
+            }
+          }
         }
 
         case "osx" => key match {
@@ -148,12 +153,14 @@ object NginxLog {
         case _ => return
       }
 
-      path filter { path => isPxGif(path) && (!isHealthCheck(userAgent)) } foreach { _ =>
+      path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>
 
         val namespace = path.getOrElse("").split("[?\\/]").toList.drop(2).headOption
 
+        // log all errors
         entry()
 
+        // handle individual errors
         namespace.getOrElse("unknown") match {
           case "fonts" => fonts()
           case "js" => js(userAgent)
