@@ -93,9 +93,6 @@ object NginxLog {
 
       val key = Array(osFamily.toLowerCase, osVersion, uaFamily.toLowerCase).mkString("_")
 
-      System.out.println(key)
-      System.out.println(userAgent)
-
       osFamily.toLowerCase match {
 
         case "ios" => key match {
