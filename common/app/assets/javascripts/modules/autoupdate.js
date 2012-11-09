@@ -96,7 +96,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         //Initalise
         this.init = function () {
             
-            if (options.switches.polling !== true) {
+            if (options.switches && options.switches.polling !== true) {
                 return;
             }
             
