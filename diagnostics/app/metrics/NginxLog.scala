@@ -140,7 +140,7 @@ object NginxLog {
       try {
         fields = csv.parseLine(line)
         path = fields(2).trim.split(" ").toList.drop(1).headOption
-        userAgent = fields(6) + fields(7)
+        userAgent = fields(6)
       } catch {
         case _ => return
       }
