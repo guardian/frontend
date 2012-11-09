@@ -5,7 +5,7 @@ define([
     //Vendor libraries
     'domReady',
     'qwery',
-    //Moodules
+    //Modules
     'modules/router',
     'modules/errors',
     'modules/images',
