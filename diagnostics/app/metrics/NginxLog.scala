@@ -22,7 +22,7 @@ object NginxLog {
   // all errors
   object entry {
 
-    val total = CountMetric("diagnostics", "px_gif", "px.gif accesses", "Accesses to px.gif")
+    val total = CountMetric("diagnostics", "px_gif", "Accesses to px.gif", "")
     val metrics: Seq[Metric] = Seq(total)
 
     def apply() {
@@ -33,7 +33,7 @@ object NginxLog {
   // handle _fonts_ namespaced errors
   object fonts {
 
-    val total = CountMetric("diagnostics", "fonts", "px.gif/fonts accesses", "Font render time warnings")
+    val total = CountMetric("diagnostics", "fonts", "Font render time warnings", "")
     val metrics: Seq[Metric] = Seq(total)
 
     def apply() {
@@ -44,33 +44,33 @@ object NginxLog {
   // handle _js_ namespaced errors
   object js {
 
-    val total = CountMetric("diagnostics", "js", "px.gif/js accesses", "JavaScript errors")
+    val total = CountMetric("diagnostics", "js", "Total JavaScript errors", "")
 
     /*  iOS */
-    val js_ios_6_mobilesafari = CountMetric("diagnostics", "js_ios_6_safari", "", "")
-    val js_ios_5_mobilesafari = CountMetric("diagnostics", "js_ios_5_safari", "", "")
-    val js_ios_4_and_lower_mobilesafari = CountMetric("diagnostics", "js_ios_4_and_lower_safari", "", "")
-    val js_ios_x_chrome = CountMetric("diagnostics", "js_ios_x_chrome", "", "")
-    val js_ios_other = CountMetric("diagnostics", "js_ios_other", "", "")
+    val js_ios_6_mobilesafari = CountMetric("diagnostics", "js_ios_6_safari", "iOS 6 Safari JS errors", "")
+    val js_ios_5_mobilesafari = CountMetric("diagnostics", "js_ios_5_safari", "iOS 5 Safari JS errors", "")
+    val js_ios_4_and_lower_mobilesafari = CountMetric("diagnostics", "js_ios_4_and_lower_safari", "iOS 4 and lower Safari JS errors", "")
+    val js_ios_x_chrome = CountMetric("diagnostics", "js_ios_x_chrome", "iOS Chrome JS errors", "")
+    val js_ios_other = CountMetric("diagnostics", "js_ios_other", "iOS 6 other JS errors", "")
 
     /*  Android */
-    val js_android_4_safari = CountMetric("diagnostics", "js_android_4_safari", "", "")
-    val js_android_3_and_lower_safari = CountMetric("diagnostics", "js_android_3_and_lower_safari", "", "")
-    val js_android_other = CountMetric("diagnostics", "js_android_other", "", "")
+    val js_android_4_safari = CountMetric("diagnostics", "js_android_4_safari", "Android 4 Safari JS errors", "")
+    val js_android_3_and_lower_safari = CountMetric("diagnostics", "js_android_3_and_lower_safari", "Android 3 and lower Safari JS errors", "")
+    val js_android_other = CountMetric("diagnostics", "js_android_other", "Android other errors", "")
 
     /* Windows */
-    val js_windows_7_iemobile = CountMetric("diagnostics", "js_windows_7_iemobile", "", "")
-    val js_windows_other = CountMetric("diagnostics", "js_windows_other", "", "")
+    val js_windows_7_iemobile = CountMetric("diagnostics", "js_windows_7_iemobile", "Windows 7 IE JS errors", "")
+    val js_windows_other = CountMetric("diagnostics", "js_windows_other", "Windows other JS errors", "")
 
     /* OSX */
-    val js_osx_safari = CountMetric("diagnostics", "js_osx_safari", "", "")
-    val js_osx_other = CountMetric("diagnostics", "js_osx_other", "", "")
+    val js_osx_safari = CountMetric("diagnostics", "js_osx_safari", "OSX Safari JS errors", "")
+    val js_osx_other = CountMetric("diagnostics", "js_osx_other", "OSX other JS errors", "")
 
     /* RIM, Symbian, Linux, Other */
-    val js_rimos = CountMetric("diagnostics", "js_rimos_safari", "", "")
-    val js_linux = CountMetric("diagnostics", "js_linux", "", "")
-    val js_symbianos = CountMetric("diagnostics", "js_symbianos", "", "")
-    val js_other = CountMetric("diagnostics", "js_other", "Other", "Accesses to /px.gif from other agents")
+    val js_rimos = CountMetric("diagnostics", "js_rimos", "RIMOS JS errors", "")
+    val js_linux = CountMetric("diagnostics", "js_linux", "Linux JS errors", "")
+    val js_symbianos = CountMetric("diagnostics", "js_symbianos", "SymbianOS JS errors", "")
+    val js_other = CountMetric("diagnostics", "js_other", "JS errors other agents", "")
 
     val metrics: Seq[Metric] = Seq(total,
       js_ios_6_mobilesafari, js_ios_5_mobilesafari, js_ios_4_and_lower_mobilesafari, js_ios_x_chrome, js_ios_other,
@@ -92,6 +92,9 @@ object NginxLog {
       val osVersion = os.getVersionNumber.getMajor
 
       val key = Array(osFamily.toLowerCase, osVersion, uaFamily.toLowerCase).mkString("_")
+
+      System.out.println(key)
+      System.out.println(userAgent)
 
       osFamily.toLowerCase match {
 
