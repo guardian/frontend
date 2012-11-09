@@ -29,6 +29,9 @@ define(['common', 'reqwest'], function (common, reqwest) {
                     jsonpCallbackName: 'showMostPopular',
                     success: function (json) {
                         common.mediator.emit('modules:popular:loaded', [json.html]);
+                    },
+                    error: function () {
+                        common.mediator('module:error', 'Failed to load most popluar', 'popular.js');
                     }
                 });
         };

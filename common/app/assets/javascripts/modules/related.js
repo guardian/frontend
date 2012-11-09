@@ -23,6 +23,9 @@ define(['common', 'reqwest'], function (common, reqwest) {
                 jsonpCallbackName: 'showRelated',
                 success: function (json) {
                     common.mediator.emit('modules:related:loaded', [json.html]);
+                },
+                error: function () {
+                    common.mediator('module:error', 'Failed to load related', 'related.js');
                 }
             });
         };

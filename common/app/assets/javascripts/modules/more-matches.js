@@ -35,6 +35,9 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                         } else {
                             link.remove();
                         }
+                    },
+                    error: function () {
+                        common.mediator('module:error', 'Failed to load more matches', 'more-matches.js');
                     }
                 });
             });
