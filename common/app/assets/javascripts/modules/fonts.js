@@ -32,6 +32,9 @@ define(['reqwest', 'common'], function (reqwest, common) {
                         url: url + style.getAttribute('data-cache-file-' + this.fileFormat),
                         type: 'jsonp',
                         jsonpCallbackName: 'guFont',
+                        error: function () {
+                            common.mediator('module:error', 'Failed to load fonts', 'fonts.js');
+                        },
                         success: (function (style) {
                             return function (json) {
                                 if (typeof callback === 'function') {
