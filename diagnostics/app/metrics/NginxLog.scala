@@ -93,6 +93,9 @@ object NginxLog {
 
       val key = Array(osFamily.toLowerCase, osVersion, uaFamily.toLowerCase).mkString("_")
 
+      //System.out.println(key)
+      //System.out.println(userAgent)
+
       osFamily.toLowerCase match {
 
         case "ios" => key match {
@@ -104,8 +107,8 @@ object NginxLog {
         }
 
         case "android" => key match {
-          case "android_4_safari" => js_android_4_safari.recordCount(1)
-          case "android_3_safari" | "js_android_2_safari" => js_android_3_and_lower_safari.recordCount(1)
+          case "android_4_safari" | "android_4_androidwebkit" => js_android_4_safari.recordCount(1)
+          case "android_3_safari" | "js_android_2_safari" | "js_android_2_androidwebkit" => js_android_3_and_lower_safari.recordCount(1)
           case _ => js_android_other.recordCount(1)
         }
 
