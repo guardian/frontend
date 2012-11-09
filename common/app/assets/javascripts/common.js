@@ -1,4 +1,5 @@
-define(["EventEmitter", "bonzo", "qwery"], function (placeholder, bonzo, qwery) {
+define([
+    "EventEmitter","bonzo", "qwery"], function (placeholder, bonzo, qwery) {
     return {
         mediator: new EventEmitter(),
         $g: function (selector, context) {
@@ -15,6 +16,12 @@ define(["EventEmitter", "bonzo", "qwery"], function (placeholder, bonzo, qwery) 
                     ref();
                 });
             }
+        },
+        extend : function(destination, source) {
+            for (var property in source) {
+                destination[property] = source[property];
+            }
+            return destination;
         }
     };
 });

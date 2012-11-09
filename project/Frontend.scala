@@ -190,7 +190,7 @@ trait Prototypes {
     requireJsAppDir <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
-    requireJsModules := Seq("bootstraps/common"),
+    requireJsModules := Seq("bootstraps/app"),
     requireJsPaths := Map(
                             "bonzo" -> "vendor/bonzo-1.2.1",
                             "reqwest" -> "vendor/reqwest-0.4.5",

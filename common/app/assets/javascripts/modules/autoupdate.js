@@ -1,18 +1,14 @@
 /*global guardian:true, twttr:true */
 define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwest, bonzo, bean, qwery) {
 
-    function Autoupdate(path, delay, attachTo, switches) {
+    function Autoupdate(config) {
 
-        var options = {
+        var options = common.extend({
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
             'prefName': 'auto-update'
-        };
+        }, config);
 
-        this.path = path;
-        this.delay = delay;
-        this.attachTo = attachTo;
-        this.switches = switches || {},
         this.template =
             '<p class="update-text type-4">Auto update</p>' +
             '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>' +
@@ -20,9 +16,8 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
 
         // View
         this.view = {
-            attachTo: this.attachTo,
-
             render: function (html) {
+                var attachTo = options.attachTo;
                 attachTo.innerHTML = html;
                 // add a timestamp to the attacher
                 bonzo(attachTo).attr('data-last-updated', new Date().toString());
@@ -52,7 +47,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         
         // Model
         this.load = function (url) {
-            var path = this.path,
+            var path = options.path,
                 that = this;
 
             return reqwest({
@@ -69,7 +64,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
                     }
                 },
                 error: function () {
-                    //Log using error module
+                    common.mediator('module:error', 'Failed to load auto-update:' + options.path, 'autoupdate.js');
                 }
             });
         };
@@ -80,7 +75,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
 
             this.interval = window.setInterval(function() {
                 that.load.call(that);
-            }, this.delay);
+            }, options.delay);
         };
 
         this.off = function () {
@@ -101,7 +96,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         //Initalise
         this.init = function () {
             
-            if (this.switches.polling !== true) {
+            if (options.switches.polling !== true) {
                 return;
             }
             

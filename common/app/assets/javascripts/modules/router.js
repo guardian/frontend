@@ -33,17 +33,21 @@ define(['common'], function (common) {
         var matchRoute = function(url) {
             var route = null;
             for(var i = 0; route = _routes[i]; i ++) {
-                var routeMatch = (route.regex.regexp.exec(url)) ? true : false;
-                if(routeMatch) continue;
 
-                var params = {};
-                for(var g in route.regex.groups) {
-                    var group = route.regex.groups[g];
-                    params[g] = routeMatch[group + 1];
+                var routeExec = route.regex.regexp.exec(url);
+                var routeMatch = (routeExec) ? true : false;
+
+                if(routeMatch) {
+
+                    var params = {};
+                    for(var g in route.regex.groups) {
+                        var group = route.regex.groups[g];
+                        params[g] = routeExec[group + 1];
+                    }
+
+                    route.callback({"url": url, "params": params});
+                    return true;
                 }
-
-                route.callback({"url": url, "params": params});
-                return true;
             }
 
             return false;
@@ -51,10 +55,6 @@ define(['common'], function (common) {
 
         this.get = function(route, callback) {
             _routes.push({regex: this.parseRoute(route), "callback": callback});
-        };
-
-        this.test = function(url) {
-            matchRoute(url);
         };
 
         this.init = function() {
@@ -65,6 +65,6 @@ define(['common'], function (common) {
         };
 
     }
-    
+
     return Router;
 });
