@@ -64,7 +64,7 @@ define(['common', 'bean'], function (common, bean) {
             }
         };
 
-        this.initalise = function () {
+        this.init = function () {
             dom = common.$g('#' + id);
 
             if (model.getCount() < 3) {
