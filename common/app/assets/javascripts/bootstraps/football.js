@@ -3,6 +3,7 @@ define([
     "common",
     "qwery",
     //Modules
+    "modules/router",
     "modules/togglepanel",
     "modules/expandable",
     "modules/footballfixtures",
@@ -12,6 +13,7 @@ define([
     common,
     qwery,
 
+    Router,
     TogglePanel,
     Expandable,
     FootballFixtures,
@@ -66,9 +68,7 @@ define([
 
     var ready = function(req, config, userPrefs) {
 
-        var page = req.params.page;
-
-        modules.initTogglePanels();
+        var page = req.params.action || req.params.page;
 
         switch(page) {
             case undefined :
@@ -76,14 +76,18 @@ define([
                 break;
             case 'fixtures':
                 modules.showMoreMatches();
+                modules.initTogglePanels();
                 break;
             case 'results':
                 modules.showMoreMatches();
+                modules.initTogglePanels();
                 break;
             case 'live':
+                modules.showMoreMatches();
+                modules.initTogglePanels();
                 modules.initAutoUpdate(config.switches);
                 break;
-            default :
+            default:
                 var competition = config.page.paFootballCompetition;
                 if(competition) { modules.showCompetitionFixtures(competition); }
                 break;
