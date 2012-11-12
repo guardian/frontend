@@ -27,10 +27,11 @@ define([
             r.get('/', function(req) { Front.init(req, config, userPrefs); });
             r.get('/sport', function(req) { Front.init(req, config, userPrefs); });
             r.get('/culture', function(req) { Front.init(req, config, userPrefs); });
-
+            
             //Football
             r.get('/football', function(req) { Football.init(req, config, userPrefs); });
             r.get('/football/:action', function(req) { Football.init(req, config, userPrefs); });
+            r.get('/football/:action/:year/:month/:day', function(req) { Football.init(req, config, userPrefs); });
             r.get('/football/:tag/:action', function(req) { Football.init(req, config, userPrefs); });
             r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, userPrefs); });
 
