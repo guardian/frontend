@@ -1,4 +1,4 @@
-define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, common) {
+define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwest, bean, swipe, common, detect) {
 
     var Gallery = function () {
 
@@ -30,7 +30,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                   
                 var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
-                if (isTouch) { // only enable swiping for touch devices, duh.
+                if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
 
                     // add swipe styling
                     document.getElementById('js-gallery').className += ' gallery-swipe';
@@ -170,7 +170,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
             },
 
             updateURL: function (querystring, index) {
-                var supportsPushState = 'pushState' in history;
+                var supportsPushState = detect.hasPushStateSupport();
 
                 var state = window.location.search.replace( /^\?/, '' );
                 
