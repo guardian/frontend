@@ -68,7 +68,7 @@ define([
 
     var ready = function(req, config, userPrefs) {
 
-        var page = req.params.action || req.params.page;
+        var page = req.params.action;
 
         switch(page) {
             case undefined :
