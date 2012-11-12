@@ -1,33 +1,6 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-@main(gallery, Static, Configuration, Switches.all){
-
-    <style>
-        /* todo: move somewhere proper (MA) */
-        .gallery-container {
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        .gallery-swipe,
-        .gallery-swipe li {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .gallery-swipe li img {
-            max-width: 100%;
-        }
-
-        .gallery-swipe li {
-            float: left;
-            width: 300px;
-            min-height: 200px;
-        }
-    </style>
-
-}{
+@main(gallery, Static, Configuration, Switches.all){ }{
 
     <h2 class="article-zone type-2">
         <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>

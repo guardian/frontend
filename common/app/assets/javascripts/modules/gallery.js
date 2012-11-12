@@ -24,7 +24,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                 currentIndex: urlParams.index || 0
             },
 
-            // run on domloaded
+            // runs on domready
             bindGallery: function () {
                   
                 var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
@@ -236,7 +236,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                     
                     var src = placeholder.getAttribute("data-src");
                     if (src && src !== "") { // create <img> element
-                        placeholder.innerHTML = '<img src="' + src + '" />' + placeholder.innerHTML;
+                        placeholder.innerHTML = '<img src="' + src + '" class="maxed" />' + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
                     }
                 }
