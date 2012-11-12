@@ -6,3 +6,4 @@ ios-orientationchange-fix - https://github.com/scottjehl/iOS-Orientationchange-F
 qwery - https://github.com/ded/qwery
 require - http://requirejs.org/
 reqwest - https://github.com/ded/reqwest
+swipe - https://github.com/bradbirdsall/Swipe

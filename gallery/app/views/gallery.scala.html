@@ -19,19 +19,19 @@
         @if(trail) {
             <p class="trail">Trail page here...</p>
         } else {
-            <p class="box-indent">
+            <p class="box-indent gallery-nav">
                 @if(index > 1) {
-                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)">Previous</a>
+                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)" class="gallery-prev">&laquo; Previous</a>
                 } else {
-                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://">Previous</a>
+                    <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://" class="gallery-prev">&laquo; Previous</a>
                 }
 
                 Image <span id="js-gallery-index">@index</span> of @gallery.size
 
                 @if(index < gallery.size) {
-                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)">Next</a>
+                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)" class="gallery-next">Next &raquo;</a>
                 } else {
-                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true">Next</a>
+                    <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true" class="gallery-next">Next &raquo;</a>
                 }
             </p>
 

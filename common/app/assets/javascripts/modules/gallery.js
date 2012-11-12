@@ -21,7 +21,8 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
             galleryConfig: {
                 nextLink: document.getElementById('js-gallery-next'),
                 prevLink: document.getElementById('js-gallery-prev'),
-                currentIndex: urlParams.index || 0
+                currentIndex: urlParams.index || 0,
+                currentSlideClassName: 'js-current-gallery-slide'
             },
 
             // runs on domready
@@ -30,12 +31,12 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                 var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
                 if (isTouch) { // only enable swiping for touch devices, duh.
-                    
+
                     // add swipe styling
                     document.getElementById('js-gallery').className += ' gallery-swipe';
 
                     // when we load, grab the prev/next and show them too
-                    var currentSlide = common.$g('.js-current-gallery-slide')[0];
+                    var currentSlide = common.$g('.' + view.galleryConfig.currentSlideClassName)[0];
 
                     var nextSlide = currentSlide.nextElementSibling;
                     var prevSlide = currentSlide.previousElementSibling;
@@ -46,7 +47,6 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                     // set up the swipe actions
                     var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
                         callback: function(event, index, elm) {
-
                             var count = document.getElementById('js-gallery-index');
 
                             var nextIndex = parseInt(index, 10);
@@ -123,8 +123,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
             },
 
             advanceGallery: function (direction, customItemIndexToShow) {
-
-                var currentSlide    = document.getElementsByClassName('js-current-gallery-slide')[0];
+                var currentSlide    = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
                 var nextSlide       = currentSlide.nextElementSibling;
                 var prevSlide       = currentSlide.previousElementSibling;
                 var currentIndex    = currentSlide.getAttribute('data-index');
@@ -165,7 +164,7 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
                 view.updateURL('index=' + newSlide, newSlide);
                 view.makePlaceholderIntoImage(elmToWorkWith); // convert it if we need to
 
-                elmToWorkWith.className = 'js-current-gallery-slide';
+                elmToWorkWith.className = view.galleryConfig.currentSlideClassName;
                 elmToWorkWith.style.display = 'block';
 
             },
@@ -185,6 +184,8 @@ define(["reqwest", "bean", "swipe", "common"], function (reqwest, bean, swipe, c
             handlePrevNextLinks: function (index, total) {
                 var nextLink = view.galleryConfig.nextLink;
                 var prevLink = view.galleryConfig.prevLink;
+
+                index = parseInt(index, 10); // just in case
 
                 if (index == 1) { // we've gone back to the start, hide prev
                     prevLink.style.display = 'none';
