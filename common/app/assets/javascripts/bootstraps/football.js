@@ -71,7 +71,7 @@ define([
         modules.initTogglePanels();
 
         switch(page) {
-            case null :
+            case undefined :
                 modules.showFrontFixtures();
                 break;
             case 'fixtures':
