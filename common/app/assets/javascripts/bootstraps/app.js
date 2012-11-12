@@ -29,6 +29,7 @@ define([
             //Football
             r.get('/football', function(req) { Football.init(req, config, userPrefs); });
             r.get('/football/:page', function(req) { Football.init(req, config, userPrefs); });
+            r.get('/football/:tag/:action', function(req) { Football.init(req, config, userPrefs); });
 
             //Articles
             if(config.page.contentType === "Article") {
