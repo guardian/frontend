@@ -37,12 +37,5 @@ define(['common', 'modules/router'], function(common, Router) {
             expect(r.getRoutes()[0].regex.regexp).toEqual(/\/([^\/.\\\\]+)$/);
         });
 
-        it("should call callback function when route is matched", function() {
-            var spy = jasmine.createSpy("spy");
-            r.get("runner", spy);
-            r.init();
-            expect(spy).toHaveBeenCalled();
-        });
-
     });
 });
