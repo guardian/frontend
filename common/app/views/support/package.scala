@@ -263,8 +263,12 @@ object `package` extends Formats {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String): String = {
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("Europe/London")))
+  def apply(date: DateTime, pattern: String, edition: String = "UK"): String = {
+    val timezone = edition match {
+      case "US" => "America/New_York"
+      case _ 	=> "Europe/London"
+    }
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID(timezone)))
   }
 }
 
