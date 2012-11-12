@@ -6,7 +6,6 @@ define(['common'], function (common) {
     function Router() {
     
         var _routes = [];
-        var triggered = false;
 
         this.parseRoute = function(path) {
             this.parseGroups = function(loc) {
@@ -57,11 +56,12 @@ define(['common'], function (common) {
             _routes.push({regex: this.parseRoute(route), "callback": callback});
         };
 
+        this.getRoutes = function() {
+            return _routes;
+        };
+
         this.init = function() {
-            if(!triggered) {
-                matchRoute(window.location.pathname);
-                triggered = true;
-            }
+            matchRoute(window.location.pathname);
         };
 
     }
