@@ -208,7 +208,7 @@ object OmnitureAnalyticsData {
       case _ => false
     }
 
-    val pageName = data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))
+    val pageName = page.analyticsName
     val analyticsData = Map(
       "ns" -> "guardian",
       "pageName" -> pageName,
@@ -264,7 +264,7 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String): String = {
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("GMT")))
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("Europe/London")))
   }
 }
 

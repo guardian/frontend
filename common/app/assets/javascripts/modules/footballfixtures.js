@@ -63,7 +63,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         //Initalise
         this.init = function(opts) {
             opts = opts || {};
-            reqwest = opts.reqwest || Reqwest;
+            reqwest = opts.reqwest || Reqwest; //For unit testing
 
             var query = this.generateQuery();
 

@@ -16,7 +16,7 @@ define(['common', 'modules/navigation/controls', 'bean'], function(common, Navig
 
         // initialise nav + bindings
         var controls = new NavigationControls();
-        controls.initialise();
+        controls.init();
         
 
         it("should show the correct item when a nav link is clicked", function() {

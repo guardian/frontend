@@ -31,7 +31,7 @@
 
 .placeholder,
 .initially-off {
-    display: none;
+    display: none !important; // this could get ugly. watching it.
 }
 
 .on {
@@ -92,87 +92,4 @@
 .update-btn:hover { 
     color: #ffffff;
     background-color: #E47A39;
-}
-
-
-.stats-1, .stats-2, .stats-3 {
-    display: none;
-}
-
-/* please add media queries in ascending order of size */
-
-@media screen and (max-width: 300px) {
-
-    .tabs li a {
-        font-size: 14px;
-    }
-}
-
-@media screen and (min-width: 400px) {
-
-    .comments .datestamp {
-        text-align: right;
-    }
-
-    .trail-headline {
-        font-size: 17px;
-    }
-
-    .stats-1 {
-        display: table-cell;
-    }
-
-}
-
-@media screen and (min-width: 600px) {
-    .trail-text {
-        clear: none;
-    }
-}
-
-@media (min-width: 641px) {
-    
-    #container {
-        padding: 0 40px 10% 40px;
-    }
-
-    .stats-2 {
-        display: table-cell;
-    }
-
-    .table-football th,
-    .table-football td {
-        padding: @baseline*2 3px;
-    }
-
-    .table-football-header th:first-child,
-    .table-football td:first-child {
-        padding-left: 12px;
-    }
-
-    .table-football-header th:last-child,
-    .table-football td:last-child {
-        padding-right: 12px;
-    }
-    
-}
-
-@media screen and (min-width: 850px) {
-
-    .trailblock .img img {
-        width: 160px;
-    }
-
-    .stats-3 {
-        display: table-cell;
-    }
-
-}
-
-@media (min-width: 1025px) {
-    
-    #container {
-        padding: 0 80px 10% 80px;
-    }
-
 }
