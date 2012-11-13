@@ -1,20 +1,8 @@
-define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwest, bean, swipe, common, detect) {
+define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], function (reqwest, bean, swipe, common, detect, url) {
 
     var Gallery = function () {
 
-        function getUrlVars () {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            var hash_length = hashes.length;
-            for (var i = 0; i < hash_length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        }
-
-        var urlParams = getUrlVars();
+        var urlParams = url.getUrlVars();
 
         var view = {
 
@@ -42,6 +30,8 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
                     var prevSlide = currentSlide.previousElementSibling;
                     var totalSlides = currentSlide.getAttribute('data-total');
 
+                    // preload the slides ahead/behind the current one
+                    // (we only do this for swipe, to allow seamless swiping)
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
@@ -85,7 +75,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
                         e.preventDefault();
                     });
 
-                } else {
+                } else { // non-touch version
 
                     bean.add(view.galleryConfig.nextLink, 'click', function(e) {
                         view.advanceGallery('next');
@@ -97,10 +87,11 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
                         e.preventDefault();
                     });
 
+                    // bind arrow key navigation
                     bean.add(document, 'keydown', function(e) {
-                        if (e.keyCode == 37) {
+                        if (e.keyCode == 37) { // left
                             view.advanceGallery('prev');
-                        } else if (e.keyCode == 39) {
+                        } else if (e.keyCode == 39) { // right
                             view.advanceGallery('next');
                         }
                     });
@@ -110,7 +101,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
                 // this means the user used the back/forward buttons
                 // so we should change gallery state to match
                 window.onpopstate = function(event) {
-                    var urlParams = getUrlVars(); // fetch again
+                    var urlParams = url.getUrlVars(); // fetch again
                     if(urlParams.index) {
                         var matches = urlParams.index.match(/\d+/); // URL params can become like ?index=10#top
                         if (matches) {
@@ -132,6 +123,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
                 var isLast          = (currentIndex == totalSlides);
                 var slideCounter    = document.getElementById('js-gallery-index');
                 
+                // don't try to do anything if we're at the start/end going forward/back
                 if ( (isFirst && direction === "prev") ||
                      (isLast && direction === "next") ) {
                     return;
@@ -170,15 +162,13 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
             },
 
             updateURL: function (querystring, index) {
-                var supportsPushState = detect.hasPushStateSupport();
-
-                var state = window.location.search.replace( /^\?/, '' );
+                var args = {
+                    'state': {},
+                    'title': (window.title || '') + ' (' + index + ')',
+                    'querystring': '?' + querystring
+                };
                 
-                if (supportsPushState) {
-                    if ( querystring !== state ) {
-                        history.pushState({}, (window.title || '') + ' (' + index + ')', '?' + querystring);
-                    }
-                }
+                common.mediator.emit('modules:url:pushquerystring', args);
             },
 
             handlePrevNextLinks: function (index, total) {
@@ -208,6 +198,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect"], function (reqwe
             },
 
             // used to to convert placeholder <li> into <img> tag
+            // elms can be either an array of elements or a single one
             makePlaceholderIntoImage: function (elms) {
 
                 if (!elms || elms === null) {
