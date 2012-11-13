@@ -21,7 +21,7 @@
             @if(index > 1) {
                 <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)" class="gallery-prev">Previous</a>
             } else {
-                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://" class="gallery-prev">Previous</a>
+                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="gallery-prev initially-off" href="javascript://">Previous</a>
             }
 
             Image <span id="js-gallery-index">@index</span> of @gallery.size

@@ -43,6 +43,17 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.eVar37 = s.pageType + ':' + tag;
         };
 
+        // used where we don't have an element to pass as a tag
+        // eg. keyboard interaction
+        this.trackNonLinkEvent = function(tagStr) {
+            s.linkTrackVars = 'eVar37,events';
+            s.linkTrackEvents = 'event37';
+            s.events = 'event37';
+            s.eVar37 = s.pageType + ':' + tagStr;
+            s.tl(true, 'o', tagStr);
+        };
+
+
         this.populatePageProperties = function() {
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
@@ -115,6 +126,8 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                 that.populatePageProperties();
                 that.logUpdate();
             });
+
+            common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
         };
 
     }

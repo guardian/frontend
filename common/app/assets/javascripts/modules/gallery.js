@@ -37,11 +37,20 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     // set up the swipe actions
                     var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
                         callback: function(event, index, elm) {
+
                             var count = document.getElementById('js-gallery-index');
                             var currentSlide = common.$g('.' + view.galleryConfig.currentSlideClassName)[0];
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
                             var nextElm = common.$g('.gallery-swipe li')[nextIndex];
+                            var currentPos = parseInt(count.innerText, 10);
+
+                            // track the swipe and its direction
+                            if (nextIndexCount > currentPos) {
+                                view.trackInteraction("swipe:forward");
+                            } else {
+                                view.trackInteraction("swipe:backward");
+                            }
 
                             count.innerText = nextIndexCount;
                             view.updateURL('index=' + nextIndexCount, nextIndexCount);
@@ -70,6 +79,9 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
 
                     // bind prev/next to just trigger swipes
                     bean.add(view.galleryConfig.nextLink, 'click', function(e) {
+                        // we get 2 omniture calls here and in the function below
+                        // one is for the link click (which seems to be impossible to remove)
+                        // the other is for the faux swipes triggered here
                         gallerySwipe.next();
                         e.preventDefault();
                     });
@@ -94,8 +106,10 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     // bind arrow key navigation
                     bean.add(document, 'keydown', function(e) {
                         if (e.keyCode == 37) { // left
+                            view.trackInteraction("keyboard:previous");
                             view.advanceGallery('prev');
                         } else if (e.keyCode == 39) { // right
+                            view.trackInteraction("keyboard:next");
                             view.advanceGallery('next');
                         }
                     });
@@ -115,6 +129,13 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     }
                 };
 
+            },
+
+            // send custom (eg non-link) interactions to omniture
+            trackInteraction: function (str) {
+                if (str) {
+                    common.mediator.emit('module:clickstream:interaction', str);
+                }
             },
 
             advanceGallery: function (direction, customItemIndexToShow) {
