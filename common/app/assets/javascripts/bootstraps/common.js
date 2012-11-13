@@ -134,7 +134,7 @@ define([
         modules.upgradeImages();
         modules.showTabs();
 
-        //modules.transcludeNavigation(config);
+        modules.transcludeNavigation(config);
         modules.transcludeTopStories(config);
 
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
@@ -145,9 +145,9 @@ define([
     // If you can wait for load event, do so.
     var defer = function(config) {
         common.deferToLoadEvent(function() {
-            //modules.loadOmnitureAnalytics(config);
-            //modules.loadOphanAnalytics();
-            //modules.loadAdverts(config);
+            modules.loadOmnitureAnalytics(config);
+            modules.loadOphanAnalytics();
+            modules.loadAdverts(config);
             modules.cleanupCookies();
         });
     };
