@@ -20,7 +20,7 @@ And have the option to view full table and data
    Scenario: Football table on team pages
 
         Given I visit any Football team tag page
-        Then football table will show the top four for teams
+        Then Football table will show team within four rows in current position
         And a click to view full table and data will display the complete Football league table
 
 
