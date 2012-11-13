@@ -4,6 +4,9 @@
 
 <script id="gu">
 
+    // we want this to happen ASAP to avoid FOUC
+    document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
+
     var guardian = {
         isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
     },
@@ -118,8 +121,7 @@
 
     (function(isModern) {
 
-        if (!isModern)
-            return false;
+        if (!isModern) { return false; }
 
         var script = document.createElement('script');
         script.async = 'async';

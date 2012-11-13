@@ -33,12 +33,6 @@ Feature: Article page
 		When I click "Top stories" tab at the top of the page
 		Then a list of "Top stories" opens
             And another click on "Top stories" closes the list.
-
-	Scenario: Open and close top story from foot of page
-        Given I am on an article
-		When I click "Top stories" tab at the foot of the page
-		Then a list of the footer "Top stories" opens
-		    And another click on the footer "Top stories" closes the list.
 		
 	Scenario: Open and close sections from top of page
 	    Given I am on an article
@@ -73,3 +67,18 @@ Feature: Article page
 	Scenario: Related content is unavailable
 	    Given I am on an article with a story package
 		Then "related content" is not displayed
+		
+    @scala-test
+    Scenario Outline: Articles should have the correct timezone for when they were published
+        Given I am on an article published on '<date>'
+            And I am on the '<edition>' edition
+        Then the published date should be in '<timezone>'
+            And the published time should be '<time>'
+        
+        Examples:
+            | date       | timezone | time  | edition |
+            | 2012-11-10 | GMT      | 00.01 | UK      |
+            | 2012-08-19 | BST      | 18.38 | UK      |
+            | 2012-11-09 | EST      | 19.01 | US      |
+            | 2012-08-19 | EDT      | 13.38 | US      |
+            

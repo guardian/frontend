@@ -13,6 +13,8 @@ Feature: Navigation - Top Stories
     	Given I visit a section front
         Then the "Top stories" tab is shown
 
+    #Ignoring this whilst we test whether people use this functionality in PROD
+    @ignore 
     Scenario: Top stories tab not shown on the network front
         Given I visit the network front
         Then the "Top stories" tab is hidden

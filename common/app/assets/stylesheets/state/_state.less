@@ -66,7 +66,7 @@
     display: block;
     margin: 0px @gutter @baseline*2 @gutter;
     padding: 0px 0px @baseline*2 0px;
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px solid #CCCCCC;
     overflow: hidden;
 }
 
@@ -81,7 +81,7 @@
     margin: 0;
     padding: 10px 12px;
     background-color: #EFEFE7;
-    color: #333;
+    color: #333333;
     font-weight: normal;
     border: none;
     text-shadow: none;
@@ -90,87 +90,6 @@
 
 .update-btn.is-active,
 .update-btn:hover { 
-    color: #fff;
+    color: #ffffff;
     background-color: #E47A39;
-}
-
-
-.stats-1, .stats-2, .stats-3 {
-    display: none;
-}
-
-/* please add media queries in ascending order of size */
-
-@media screen and (max-width: 300px) {
-
-    .tabs li a {
-        font-size: 14px;
-    }
-}
-
-@media screen and (min-width: 400px) {
-
-    .comments .datestamp {
-        text-align: right;
-    }
-
-    .trail-headline {
-        font-size: 17px;
-    }
-
-    .stats-1 {
-        display: table-cell;
-    }
-
-}
-
-@media screen and (min-width: 600px) {
-    .trail-text {
-        clear: none;
-    }
-}
-
-@media (min-width: 641px) {
-    
-    #container {
-        padding: 0 40px 10% 40px;
-    }
-
-    .svg #logo {
-        width: 180px;
-    }
-
-    #logo { 
-        height: 40px;
-    }
-
-    .stats-2 {
-        display: table-cell;
-    }
-
-    .table-football th,
-    .table-football td {
-        padding: @baseline*2 3px;
-    }
-    
-}
-
-@media screen and (min-width: 850px) {
-
-    .trailblock .img img {
-        width: 160px;
-    }
-
-    .stats-3 {
-        display: table-cell;
-    }
-
-}
-
-@media (min-width: 1025px) {
-    
-    #container {
-        padding: 0 80px 10% 80px;
-    }
-
 }

@@ -29,9 +29,9 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         findFirst(".competitions-date").getText should be("Sunday 21 October 2012")
 
         val fixture = $(".matches").findFirst(".match-desc")
-        fixture.findFirst(".home").getText should be("Sunderland")
-        fixture.findFirst(".away").getText should be("Newcastle")
-        findFirst(".status").getText should include("13:30")
+        fixture.findFirst(".match-home").getText should be("Sunderland")
+        fixture.findFirst(".match-away").getText should be("Newcastle")
+        findFirst(".match-status").getText should include("13:30")
 
         and("I should see fixtures for tomorrow")
         $(".competitions-date").getTexts should contain("Monday 22 October 2012")

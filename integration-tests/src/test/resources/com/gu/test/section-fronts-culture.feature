@@ -8,7 +8,7 @@ Feature: Section Fronts - Culture
     Scenario: Page contains the top 10 stories across culture
        Given I am on the 'culture' section front
        Then I should see the top 10 stories across culture
-       
+    
     Scenario: Culture top stories should display 5 and hide the rest
         Given I am on the 'culture' section front
         Then I should see up to 5 'Culture' top stories

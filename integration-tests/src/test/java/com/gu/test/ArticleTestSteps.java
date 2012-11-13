@@ -1,6 +1,10 @@
 package com.gu.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Assert;
+import junitx.framework.StringAssert;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -21,9 +25,13 @@ public class ArticleTestSteps {
 	protected String articleWithImage = "/technology/2012/oct/15/google-privacy-policy";
 	protected String articleWithMoreExapnders = "/football/blog/2012/may/10/signing-of-season-premier-league";
 	protected String articleWithRelatedExapnders = "/world/2012/oct/07/venezuela-voters-chavez";
-
+	protected Map<String, String> datedArticles = new HashMap<String, String>();
+	
 	public ArticleTestSteps(SharedDriver webDriver) {
 		this.webDriver = webDriver;
+		// set up a map of dated articles
+		datedArticles.put("2012-11-10", "/world/2012/nov/08/syria-arms-embargo-rebel");
+		datedArticles.put("2012-08-19", "/business/2012/aug/19/shell-spending-security-nigeria-leak");
 	}
 	
 	@Given("^I am on an article$")
@@ -60,6 +68,12 @@ public class ArticleTestSteps {
 	public void I_am_on_an_article_with_exapnders_for_related_content() throws Throwable {
 		webDriver.open(articleWithRelatedExapnders);
 	}
+	
+	@Given("^I am on an article published on '([^']*)'$")
+	public void I_am_on_an_article_published_on(String date) throws Throwable {
+		// open an article for this date
+		webDriver.open(datedArticles.get(date));
+	} 
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
@@ -198,4 +212,21 @@ public class ArticleTestSteps {
 		//check all bottom of page links
 		webDriver.selectCheckBottomOfPageLinks();
 	}
+	
+	@Then("^the published date should be in '([^']*)'$")
+	public void the_published_date_should_be_in(String timezone) throws Throwable {
+		// get the dateline
+		WebElement dateline = webDriver.findElement(By.cssSelector(".dateline time"));
+		// make sure it has the correct timezone
+		StringAssert.assertContains(timezone, dateline.getText());
+	}
+	
+	@Then("^the published time should be '([^']*)'$")
+	public void the_published_time_should_be(String time) throws Throwable {
+		// get the dateline
+		WebElement dateline = webDriver.findElement(By.cssSelector(".dateline time"));
+		// make sure it has the correct timezone
+		StringAssert.assertContains(time, dateline.getText());
+	}
+	
 }

@@ -16,7 +16,7 @@ class ContentApiSanityTest extends FlatSpec with ShouldMatchers {
 
   "ContentApi" should "have a sensible response" in {
 
-    val connection = new URL("http://content.guardianapis.com/index?format=json&show-editors-picks=true&order-by=newest")
+    val connection = new URL("http://content.guardianapis.com/index?format=json&show-editors-picks=true&order-by=newest&api-key=v5aqu6tbws8btjr67bbfsv89")
       .openConnection().asInstanceOf[HttpURLConnection]
 
     connection.setRequestProperty("Accept-Encoding", "gzip")

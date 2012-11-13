@@ -8,18 +8,6 @@
         
         <h3 class="type-2 article-zone">@Html(heading)</h3>
 
-        <ul class="unstyled">
-            @trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li class="trail" data-link-name="trail">@formatTrail(trail, info, related=true)</li>
-            }.slice( 0, visibleTrails )
-        </ul>
-
-        @if( trails.length > visibleTrails) {
-            <ul class="unstyled panel">
-                @trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="trail" data-link-name="trail">@formatTrail(trail, info, related=true)</li>
-                }.slice( visibleTrails, trails.length )
-            </ul>
-        }
+        @fragments.trailblocks.thumbnail(trails, numItemsVisible = 5, numThumbnails = 3, related = true, headingLevel = 3                                                                   )
     </div>
 }
