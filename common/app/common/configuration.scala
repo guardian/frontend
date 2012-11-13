@@ -3,7 +3,7 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 
-class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
+class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object switches {
@@ -11,6 +11,28 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       throw new IllegalStateException("Switchboard configuration url not configured")
     )
   }
+
+  object healthcheck {
+    lazy val properties = configuration.getPropertyNames filter {
+      _ matches """healthcheck\..*\.url"""
+    }
+
+    lazy val urls = properties map { property =>
+      configuration.getStringProperty(property).get
+    }
+  }
+
+  object debug {
+    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+  }
+
+  override def toString(): String = configuration.toString
+}
+
+class GuardianConfiguration(
+  override val application: String,
+  override val webappConfDirectory: String = "env")
+    extends BaseGuardianConfiguration(application, webappConfDirectory) {
 
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
@@ -68,11 +90,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     }
   }
 
-  object debug {
-    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
-  }
-
-  override def toString(): String = configuration.toString
 }
 
 object ManifestData {

@@ -21,12 +21,12 @@ aside {
 
 .article h1 {
     font-weight: bold;
-} 
+}
 
 .byline {
     .type-4;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     margin: 0 @gutter @baseline*2 @gutter;
     padding: @baseline 0 @baseline*3 0;
 }
@@ -36,7 +36,7 @@ aside {
 }
 
 .article-body h2 {
-    color: #333;
+    color: #333333;
     .type-3;
     margin-bottom: @baseline;
     clear: both;
@@ -53,7 +53,7 @@ aside {
 .article-body h3 {
     margin: 0;
     font-family: georgia;
-    .standard-font-sizing;
+    .type-3;
 }
 
 .article-body > p,
@@ -62,44 +62,41 @@ aside {
 .article-body address,
 .article-body blockquote,
 .article-body blockquote p {
-    margin: 0px 0px @baseline*2 0px;
     .type-4;
-    color: #333;
+    margin: 0px 0px @baseline*2 0px;
+    padding: 0px;
+    color: #333333;
 }
 
-.article-body blockquote {
-    border: 0;
-    padding: 0;
+.article blockquote,
+.article blockquote p {
+    .type-4;
+    color: #333333;
+    font-weight: normal;
+    border-left: none;
 }
 
-.article-body blockquote, 
-.article-body blockquote p {
-    display: block;
-    color: #545454;
-    .type-1;
-}
-
-.article-body blockquote:before {
-    .icon-blockquote-before;
+.article blockquote:before {
+    .i-livequote-before;
     display: block;
     content: '';
-    margin: 21px 0 @baseline 0;
+    margin: 21px 0 @baseline*2 0;
     clear: both;
 }
 
-.svg .article-body blockquote:before {
-    .svg-icon-blockquote-before;
+.svg .article blockquote:before {
+    .svg-i-livequote-before;
 }
 
-.article-body blockquote:after {
-    .icon-blockquote-after;
+.article blockquote:after {
+    .i-livequote-after;
     display: block;
     content: '';
     margin-bottom: 22px;
 }
 
-.svg .article-body blockquote:after {
-    .svg-icon-blockquote-after;
+.svg .article blockquote:after {
+    .svg-i-livequote-after;
 }
 
 .article-body .timestamp:first-child {
@@ -113,7 +110,7 @@ figcaption {
     .type-7;
 }
 
-figcaption {
+figcaption.main-caption {
     padding: @baseline*2 @gutter;
 }
 
@@ -122,12 +119,12 @@ figcaption:before {
     display: inline-block;
     content: '';
     margin-right: 4px;
-    .icon-image;
+    .i-image;
 }
 
 .svg .article-body .caption:before,
 .svg figcaption:before {
-    .svg-icon-image;
+    .svg-i-image;
 }
 
 figure {
@@ -136,6 +133,7 @@ figure {
 
 figure img {
     display: block;
+    margin-bottom: @baseline*2;
 }
 
 cite {

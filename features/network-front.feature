@@ -46,4 +46,36 @@ Feature: Network front tool
 	Scenario: Set a state
 	
 		# Select a tag, select a title, save the state, preview?
+		
+	
+	######################## additional tests ###########################	
+Scenario: guardian logo and icon are displayed
+		Then guardian icon is displayed
+		And guardian logo is displayed
+		
+			
+ Scenario: Sections tab is shown amd top stories are hidden
+		Then "Top stories" tab is hidden
+		And "Sections" tab is shown	
+
+	Scenario: show and hide to expand and collapse each section 
+		When I "Hide" to collapse each section on the network front
+		Then I can "Show" to expand each section on the network front
+
+	Scenario: collapsed section will remain collapsed on moving away from page
+		Given I "Hide" to collapse a section on the network front
+		When I navigate to an article page and back to the network front
+		Then the collapsed section will stay collapsed
+
+	Scenario: collapsed section will remain collapsed on refresh
+		Given I "Hide" to collapse a section on the network front
+		When I refresh the network front
+		Then the collapsed section will stay collapsed
+
+	Scenario: collapsed section will remain collapsed on moving to navigate to a section front
+		Given I "Hide" to collapse a section on the network front
+		When I navigate to a section front
+		Then the collapsed section will stay collapsed
+
+
 

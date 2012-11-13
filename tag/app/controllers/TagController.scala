@@ -37,7 +37,7 @@ object TagController extends Controller with Logging {
     tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
   }
 
-  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = CachedOk(model.tag) {
-    Compressed(views.html.tag(model.tag, model.trails, model.leadContent))
+  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = Cached(model.tag) {
+    Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
   }
 }

@@ -3,10 +3,11 @@ package controllers.front
 import java.util.concurrent.TimeUnit._
 import controllers.FrontPage
 import model.TrailblockDescription
+import model.Trailblock
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
 import akka.util.Duration
-import views.support.Featured
+import views.support.{ Featured, Thumbnail, Headline }
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
@@ -16,37 +17,90 @@ class Front extends AkkaSupport with Logging {
 
   private var refreshSchedule: Option[Cancellable] = None
 
-  val uk = new FrontEdition("UK", Seq(
-    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
-    TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1),
-    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
-    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
-    TrailblockDescription("business", "Business", numItemsVisible = 1),
-    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
-    TrailblockDescription("money", "Money", numItemsVisible = 1),
-    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
-  ))
+  val ukEditions = Map(
 
-  val us = new FrontEdition("US", Seq(
-    TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2),
-    TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1),
-    TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3),
-    TrailblockDescription("culture", "Culture", numItemsVisible = 1),
-    TrailblockDescription("business", "Business", numItemsVisible = 1),
-    TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1),
-    TrailblockDescription("money", "Money", numItemsVisible = 1),
-    TrailblockDescription("travel", "Travel", numItemsVisible = 1)
-  ))
+    "front" -> new ConfiguredEdition("UK", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
+    )),
+
+    "sport" -> new FrontEdition("UK", Seq(
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
+    )),
+
+    "culture" -> new FrontEdition("UK", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+    ))
+  )
+
+  val usEditions = Map(
+
+    "front" -> new ConfiguredEdition("US", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
+    )),
+
+    "sport" -> new FrontEdition("US", Seq(
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("sport/mlb", "MLB", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/nba", "NBA", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("football/mls", "MLS", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("sport/nhl", "NHL", numItemsVisible = 1, style = Some(Thumbnail))
+    )),
+
+    "culture" -> new FrontEdition("US", Seq(
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+    ))
+
+  )
+
+  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq
 
   def refresh() {
-    uk.refresh()
-    us.refresh()
+    allFronts.foreach { case (name, front) => front.refresh() }
   }
 
   def shutdown() {
     refreshSchedule foreach { _.cancel() }
-    uk.shutDown()
-    us.shutDown()
+    allFronts.foreach { case (name, front) => front.shutDown() }
   }
 
   def startup() {
@@ -56,15 +110,14 @@ class Front extends AkkaSupport with Logging {
     })
   }
 
-  def apply(edition: String): FrontPage = edition match {
-    case "US" => FrontPage(us())
-    case anythingElse => FrontPage(uk())
+  def apply(path: String, edition: String): Seq[Trailblock] = edition match {
+    case "US" => usEditions(path)()
+    case anythingElse => ukEditions(path)()
   }
 
   def warmup() {
     refresh()
-    uk.warmup()
-    us.warmup()
+    allFronts.foreach { case (name, front) => front.warmup() }
   }
 }
 

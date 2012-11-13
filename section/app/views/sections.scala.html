@@ -2,26 +2,26 @@
 
 @main(page, Static, Configuration, Switches.all){  }{
 
-    @Zones().map{ zone =>
+    @Zones(request, Configuration).map{ zone =>
 
-        <section class="sections zone-@zone.name.zone">
+        <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
 
         	<h1 class="article-zone">
-                <a href="@zone.name.href" data-link-name="@zone.name.linkName" class="zone-color">
+                <a href="@zone.name.href" data-link-name="zone:text" class="zone-color">
                     @HtmlFormat.raw(zone.name.title)
                 </a>
             </h1>
 
             <ul class="nav nav-stacked cf">
-            
+
                 @zone.sections.map{ section =>
                     <li>
-                        <a href="@section.href" data-link-name="@section.linkName">
+                        <a href="@section.href" data-link-name="@section.linkName:text">
                             @HtmlFormat.raw(section.title)
                         </a>
                     </li>
                 }
-            </ul>   
+            </ul>
 
         </section>
     }

@@ -1,7 +1,9 @@
+@import "base/_type";
+
 p {
     color: #545454;
     margin-bottom: 0px;
-    .standard-font-sizing;
+    .type-4;
 }
 
 h1 {
@@ -11,41 +13,31 @@ h1 {
 
 h3 {
     margin: 0 0 7px 0;
-    .subheading-font-sizing;
+    .type-6;
 }
 
 h4 {
     margin: 0;
     padding: 8px 10px 7px 10px;
     background-color: #ededed;
-    border-top: 1px solid #ccc;
-    .subheading-font-sizing;
+    border-top: 1px solid #cccccc;
+    .type-6;
 }
 
 .dateline {
     font-family: @sans-serif;
     margin: 0px 0px @baseline*2 0px;
-    color: #666;
-    .incidental-font-sizing;
-}
-
-span.timestamp {
-    font-weight: bold;
-    font-family: helvetica, arial, sans-serif;
-    border-top: 1px dotted #999;
-    display: block;
-    padding-top: 3px;
-    margin-bottom: 9px;
-    margin-top: 15px;
+    color: #666666;
+    .type-8;
 }
 
 .relative-timestamp {
     display: block;
     height: 10px;
-    color: #666;
+    color: #777777;
     font-family: @sans-serif;
     padding:0 0 @baseline*2 @gutter;
-    .incidental-font-sizing;
+    .type-8;
 }
 
 .relative-timestamp span {

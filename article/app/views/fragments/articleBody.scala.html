@@ -1,0 +1,10 @@
+@(article: Article)(implicit request: RequestHeader)
+
+@* <!-- ordering of cleaners is important --> *@
+
+@withJsoup(BulletCleaner(article.body))(
+    PictureCleaner(article),
+    InBodyLinkCleaner("in body link"),
+    BlockNumberCleaner,
+    TweetCleaner
+)

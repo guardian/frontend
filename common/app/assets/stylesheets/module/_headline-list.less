@@ -5,8 +5,8 @@
 .headline-list li {
 	display: block;
 	overflow: auto;
-    border-bottom: 1px solid #DDD;
-    padding: @baseline*3 0;
+    border-bottom: 1px solid #DDDDDD;
+    padding: @baseline*2 0;
 }
 
 .headline-list li:last-child {
@@ -16,22 +16,19 @@
 .headline-list p {
     float: left;
     width: 82%;
-    padding-left: @baseline*3;
+    padding-left: @baseline*2;
 }
 
 .headline-list a {
-	color: #333;
+	color: #333333;
+}
+.headline-list a:visited{
+	color:#777777;
 }
 
 .headline-list .count {
-	.type-3;
+	.type-9;
     float:left;
-    width: auto;
-    padding-left: 8px;
-    color: #777;
-}
-
-// this feels a bit filthy. sorry.
-.headline-list li:nth-child(10) .count {
-    padding-left: 0;
+    color: #777777;
+    width: 12px;
 }

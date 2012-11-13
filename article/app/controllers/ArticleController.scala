@@ -1,14 +1,15 @@
 package controllers
 
 import com.gu.openplatform.contentapi.model.ItemResponse
-import conf._
 import common._
 import model._
+import conf._
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
+import play.api.libs.Crypto
 
-case class ArticlePage(article: Article, storyPackage: List[Trail])
+case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
 object ArticleController extends Controller with Logging {
 
@@ -23,6 +24,7 @@ object ArticleController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showInlineElements("picture")
       .showTags("all")
       .showFields("all")
       .response
@@ -30,11 +32,12 @@ object ArticleController extends Controller with Logging {
     val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
+    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
-    CachedOk(model.article) {
-      Compressed(views.html.article(model.article, model.storyPackage))
-    }
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.articleBody(model.article), Some(Crypto.sign(model.article.lastModified.toString)))
+    }.getOrElse(CachedOk(model.article)(Compressed(views.html.article(model.article, model.storyPackage, model.edition))))
+
 }

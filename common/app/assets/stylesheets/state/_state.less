@@ -1,3 +1,8 @@
+.js-on .js-hidden,
+.js-off .js-visible {
+    display: none;
+}
+
 .gt-base {
     display: none;
 }
@@ -12,11 +17,11 @@
     cursor: pointer;
 }
 
-.cta:before {
+.expander:before {
     content: '- ';
 }
 
-.shut .cta:before {
+.shut .expander:before {
     content: '+ ';
 }
 
@@ -33,59 +38,58 @@
     display: block;
 }
 
+//These should be refactored to is-shut/is-open
+.trailblock .panel,
+.rolled-out {
+     height: auto;
+     max-height: 9999px;
+     overflow: hidden;
+     .transition(max-height 1s ease-in-out);
+     margin-bottom: 0px;
+}
+
+.trailblock.shut > .panel,
+.competition-table.shut > .panel,
+.rolled-up {
+    .transition(max-height .5s ease-in-out);
+    overflow: hidden;
+    position: relative;
+    max-height: 0;
+    padding-top: 0;
+}
+
 .trail-headline a:visited {
     color: #7CA6BE;
 }
 
-/* please add media queries in ascending order of size */
-
-@media screen and (max-width: 300px) {
-
-    .tabs li a {
-        font-size: 14px;
-    }
+.update {
+    display: block;
+    margin: 0px @gutter @baseline*2 @gutter;
+    padding: 0px 0px @baseline*2 0px;
+    border-bottom: 1px solid #CCCCCC;
+    overflow: hidden;
 }
 
-@media screen and (min-width: 400px) {
-
-    .comments .datestamp {
-        text-align: right;
-    }
-
-    .trail-headline {
-        font-size: 17px;
-    }
-
+.update-text {
+    float:left;
+    margin-right: @gutter;
+    padding-top: @baseline;
 }
 
-@media (min-width: 641px) {
-    
-    #container {
-        padding: 0 40px 10% 40px;
-    }
-
-    .svg #logo {
-        width: 180px;
-    }
-
-    #logo { 
-        height: 40px;
-    }
-
+.update-btn {
+    float:left;
+    margin: 0;
+    padding: 10px 12px;
+    background-color: #EFEFE7;
+    color: #333333;
+    font-weight: normal;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
 }
 
-@media screen and (min-width: 850px) {
-
-    .trailblock .img img {
-        width: 160px;
-    }
-
-}
-
-@media (min-width: 1025px) {
-    
-    #container {
-        padding: 0 80px 10% 80px;
-    }
-
+.update-btn.is-active,
+.update-btn:hover { 
+    color: #ffffff;
+    background-color: #E47A39;
 }

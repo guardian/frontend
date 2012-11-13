@@ -1,13 +1,14 @@
 {
     "packages":{
         "frontend-section":{
-            "type":"executable-jar-webapp",
+            "type":"asg-elb",
             "apps":[ "frontend::section" ],
             "data":{
-                "port":"9000",
+                "secondsToWait":600,
+                "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/sport"
+                    "/management/healthcheck"
                 ]
             }
         },
@@ -16,7 +17,7 @@
             "apps":[ "aws-s3" ],
             "data":{
                 "bucket":"aws-frontend-static",
-                "cacheControl":"public, max-age=2592000"
+                "cacheControl":"public, max-age=315360000"
             }
         }
     },
@@ -25,7 +26,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsPerHost": ["frontend-section.deploy"]
+            "actionsBeforeApp": ["frontend-section.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-section.uploadArtifacts"]

@@ -1,0 +1,44 @@
+@(model: MatchesPage)(implicit request: RequestHeader)
+@import support._
+@import org.joda.time.DateTime
+
+@main(model.page, Static, Configuration, Switches.all){
+}{
+    
+    <h2 class="article-zone type-2 sport-header">
+        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+    </h2>
+    
+    @if(model.isLive) {
+        <div class="live-matches-dateline">
+           @fragments.dateline(new DateTime, true)
+        </div>
+    }
+
+    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
+    
+    @fragments.filters(model.filters, model.page, model.pageType)
+
+    @if(model.isLive && model.pageType == "live") {
+        <div class="live-matches-update">
+            @fragments.autoUpdate()
+        </div>
+    }
+    
+    <div class="matches-container box-indent">
+        @fragments.matchesList(model)
+
+        @if(model.previousPage || model.nextPage) {
+            <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
+                @model.previousPage.map{url => <a href="@url" class="type-6a match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+                @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+            </div>
+        }
+        
+    </div>
+
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+    
+    <div id="js-popular"></div>
+
+}
