@@ -49,23 +49,20 @@ define(['common', 'bean', 'modules/gallery', 'bonzo'], function(common, bean, Ga
         });
 
         // test that swiping the gallery correctly advances it
-        /*
-        // some weirdness going on here:
-        //      the code definitely removes the selected classname from the element after swiping
-        //      logging the element in this test shows the class on it,
-        //      but inspecting it in console shows it's gone.
-        //      tried increasing the wait time hugely, still shows the problem.
-        //      bit stumped, so leaving it out for now (MA)
-        //
         it("should advance the slideshow when the image is swiped to the left", function() {
             nextLink.click(); // this triggers the swipe callback -- easiest way to test
             bean.fire(firstSlide, 'transitionend'); // this fakes/forces the callback to fire
-            waits(500);
             expect(firstSlide.className).not.toContain(selectedItemClass);
         });
-        */
 
-
+        // test that swiping the gallery backwards correctly reverses it
+        it("should reverse the slideshow when the image is swiped to the right", function() {
+            var currentSlide = document.querySelector('.' + selectedItemClass);
+            prevLink.click(); // this triggers the swipe callback -- easiest way to test
+            bean.fire(currentSlide, 'transitionend'); // this fakes/forces the callback to fire
+            expect(currentSlide.className).not.toContain(selectedItemClass);
+        });
+        
     });
 
 });

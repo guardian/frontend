@@ -38,7 +38,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
                         callback: function(event, index, elm) {
                             var count = document.getElementById('js-gallery-index');
-
+                            var currentSlide = common.$g('.' + view.galleryConfig.currentSlideClassName)[0];
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
                             var nextElm = common.$g('.gallery-swipe li')[nextIndex];
@@ -55,6 +55,10 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                                 view.makePlaceholderIntoImage([nextElm, nextElmForward, nextElmBackward]);
 
                                 elm.style.display = 'block';
+
+                                // toggle classnames
+                                elm.className = view.galleryConfig.currentSlideClassName;
+                                currentSlide.className = '';
                             }
                         }
                     });
