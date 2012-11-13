@@ -87,6 +87,14 @@ define([
                 modules.initTogglePanels();
                 modules.initAutoUpdate(config.switches);
                 break;
+            case 'table':
+                modules.showMoreMatches();
+                modules.initTogglePanels();
+                break;
+            case 'tables':
+                modules.showMoreMatches();
+                modules.initTogglePanels();
+                break;
             default:
                 var competition = config.page.paFootballCompetition;
                 if(competition) { modules.showCompetitionFixtures(competition); }
