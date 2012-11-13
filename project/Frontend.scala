@@ -8,12 +8,15 @@ import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-import com.gu.RequireJS._
-import com.gu.RequireJS
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
 import templemore.xsbt.cucumber.CucumberPlugin
 import templemore.xsbt.cucumber.CucumberPlugin._
+
+import RequireJsPlugin._
+import RequireJsPlugin.RequireJsKeys._
+import net.liftweb.json._
+import net.liftweb.json.JsonDSL._
 
 object Frontend extends Build with Prototypes {
 
@@ -40,7 +43,7 @@ object Frontend extends Build with Prototypes {
   	)
 	.settings(ideaSettings: _*)
   	
-  val common = library("common").dependsOn(jasmine % "test->test")
+  val common = library("common")//.dependsOn(jasmine % "test->test")
   
   val commonWithTests = common % "test->test;compile->compile"
 
@@ -125,8 +128,8 @@ trait Prototypes {
     )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(RequireJS.settings:_*)
-    .settings(requireJsConfiguration: _*)
+    .settings(requireJsSettings: _*)
+  	.settings(requireJsConfiguration: _*)
     .settings(jshintSettings:_*)
     .settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
@@ -156,7 +159,7 @@ trait Prototypes {
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.8" % "test"
       ),
-
+	  
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
       testOptions in Test := Nil,
 
@@ -185,22 +188,22 @@ trait Prototypes {
   val requireJsConfiguration = Seq(
     //effectively disables built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
-
-    requireJsAppDir <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
-    requireJsBaseUrl := ".",
-    requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
-    requireJsModules := Seq("bootstraps/article"),
-    requireJsPaths := Map(
-                            "bonzo" -> "vendor/bonzo-1.2.1",
-                            "reqwest" -> "vendor/reqwest-0.4.5",
-                            "qwery" -> "vendor/qwery-3.3.11",
-                            "bean" -> "vendor/bean-0.4.11-1",
-                            "domReady" -> "vendor/domReady-2.0.1",
-                            "EventEmitter" -> "vendor/EventEmitter-3.1.5"
-                          ),
-    requireJsOptimize := true,
-
-    resourceGenerators in Compile <+=  requireJsCompiler
+    // require js settings
+    buildProfile in (Compile, requireJs) := (
+	  ("out" -> "../main/public/javascripts/bootstraps/article.js") ~
+	  ("name" -> "bootstraps/article") ~
+	  ("paths" ->
+	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
+	    ("reqwest"      -> "vendor/reqwest-0.4.5") ~
+	    ("qwery"        -> "vendor/qwery-3.3.11") ~
+	    ("bean"         -> "vendor/bean-0.4.11-1") ~
+	    ("domReady"     -> "vendor/domReady-2.0.1") ~
+	    ("EventEmitter" -> "vendor/EventEmitter-3.1.5")
+      ) ~
+      ("optimize" -> "none")
+	),
+	baseUrl in (Compile, requireJs) := "../app/assets/javascripts",
+	resourceGenerators in Compile <+=  requireJs in Compile
   )
 
   def library(name: String) = base(name).settings(
