@@ -2,6 +2,7 @@ define([
     //Commmon libraries
     'common',
     'modules/detect',
+    'modules/userPrefs',
     //Vendor libraries
     'domReady',
     'qwery',
@@ -23,6 +24,7 @@ define([
 ], function (
     common,
     detect,
+    userPrefs,
 
     domReady,
     qwery,
@@ -126,13 +128,13 @@ define([
         }
     };
 
-    var ready = function(config, userPrefs) {
+    var ready = function(config) {
         modules.attachGlobalErrorHandler();
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.upgradeImages();
         modules.showTabs();
 
-        modules.transcludeNavigation(config);
+        //modules.transcludeNavigation(config);
         modules.transcludeTopStories(config);
 
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
@@ -141,18 +143,18 @@ define([
     };
 
     // If you can wait for load event, do so.
-    var defer = function(config, userPrefs) {
+    var defer = function(config) {
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics();
-            modules.loadAdverts(config);
+            //modules.loadOmnitureAnalytics(config);
+            //modules.loadOphanAnalytics();
+            //modules.loadAdverts(config);
             modules.cleanupCookies();
         });
     };
 
-    var init = function (config, userPrefs) {
+    var init = function (config) {
         ready(config, userPrefs);
-        defer(config, userPrefs);
+        defer(config);
     };
 
     return {

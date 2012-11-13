@@ -183,6 +183,8 @@ trait Prototypes {
       )
     )
 
+
+
   val requireJsConfiguration = Seq(
     //effectively disables built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
@@ -191,6 +193,15 @@ trait Prototypes {
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
     requireJsModules := Seq("bootstraps/app"),
+    
+    requireJsWrap <<= (baseDirectory){ base =>
+       Map(
+         "startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/vendor/curl-0.7.2.js"),
+         "endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/vendor/fileEnd.js")
+       )
+    },
+
+    //requireJsWrap := Map("startFile" -> baseDirectory.toString + "app/assets/javascripts/vendor/curl-0.7.2.js", "endFile" -> ""),
     requireJsPaths := Map(
                             "bonzo" -> "vendor/bonzo-1.2.1",
                             "reqwest" -> "vendor/reqwest-0.4.5",
