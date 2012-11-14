@@ -14,15 +14,19 @@ object CommonSwitches {
 
   val FontSwitch = DefaultSwitch("font-family", "Enables web font loading")
 
-  val PollingSwitch = DefaultSwitch("polling", "Disables polling across site")
+  val PollingSwitch = DefaultSwitch("auto-refresh", "Disables polling across site")
 
   val AudienceScienceSwitch = DefaultSwitch("audience-science", "Disables Audience Science tracking")
 
-  val all: Seq[Switchable] = Seq(FontSwitch, PollingSwitch, AudienceScienceSwitch)
+  val DoubleCacheTimesSwitch = DefaultSwitch("double-cache-times",
+    "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
+    initiallyOn = false)
+
+  val all: Seq[Switchable] = Seq(FontSwitch, PollingSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
 
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with HttpSupport with Plugin {
+class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
 
   val configUrl = config.switches.configurationUrl
 
@@ -30,12 +34,12 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with L
 
   private var schedule: Option[Cancellable] = None
 
-  private def refresh() {
+  def refresh() {
     log.info("Refreshing switches")
     loadConfig.foreach { config =>
       val properties = new Properties()
       properties.load(IOUtils.toInputStream(config))
-      CommonSwitches.all.foreach { switch =>
+      switches.foreach { switch =>
         Option(properties.getProperty(switch.name)).map {
           case "on" => switch.switchOn()
           case "off" => switch.switchOff()

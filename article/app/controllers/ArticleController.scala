@@ -38,6 +38,8 @@ object ArticleController extends Controller with Logging {
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
     request.getQueryString("callback").map { callback =>
       JsonComponent(views.html.fragments.articleBody(model.article), Some(Crypto.sign(model.article.lastModified.toString)))
-    }.getOrElse(CachedOk(model.article)(Compressed(views.html.article(model.article, model.storyPackage, model.edition))))
+    }.getOrElse(Cached(model.article) {
+      Ok(Compressed(views.html.article(model.article, model.storyPackage, model.edition)))
+    })
 
 }
