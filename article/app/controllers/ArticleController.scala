@@ -2,8 +2,8 @@ package controllers
 
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
-import model._
 import conf._
+import model._
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
@@ -41,5 +41,4 @@ object ArticleController extends Controller with Logging {
     }.getOrElse(Cached(model.article) {
       Ok(Compressed(views.html.article(model.article, model.storyPackage, model.edition)))
     })
-
 }
