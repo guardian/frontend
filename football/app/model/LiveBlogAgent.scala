@@ -17,9 +17,11 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
   }
 
   private def findBlogFor(edition: String) = {
+    val tag = "football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")"
+    log.info("Fetching football blogs with tag: " + tag)
     val liveBlogs: Seq[Content] = ContentApi.search(edition)
       .section("football")
-      .tag("football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")")
+      .tag(tag)
       .response.results.map(new Content(_))
       .filter(_.isLive)
 
