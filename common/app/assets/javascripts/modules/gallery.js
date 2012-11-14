@@ -126,7 +126,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
             },
 
             advanceGallery: function (direction, customItemIndexToShow) {
-                console.log('advancing gallery: ' + direction);
 
                 // set up variables
                 var currentSlide    = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
