@@ -7,7 +7,6 @@ import conf._
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
-import play.api.libs.Crypto
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
@@ -37,7 +36,7 @@ object ArticleController extends Controller with Logging {
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
     request.getQueryString("callback").map { callback =>
-      JsonComponent(views.html.fragments.articleBody(model.article), Some(Crypto.sign(model.article.lastModified.toString)))
+      JsonComponent(views.html.fragments.articleBody(model.article))
     }.getOrElse(CachedOk(model.article)(Compressed(views.html.article(model.article, model.storyPackage, model.edition))))
 
 }
