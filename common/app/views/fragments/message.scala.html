@@ -1,0 +1,5 @@
+@(name: String)(header: Html)(body: Html)(isPersistent: Boolean = false)
+<div class="message" data-message-name="@name" data-persistent="@isPersistent">
+    <h2>@header</h2>
+    <p>@body</p> 
+</div>
