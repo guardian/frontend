@@ -1,8 +1,8 @@
 @(item: MetaData, config: common.GuardianConfiguration)(implicit request: RequestHeader)
 
-@import java.net.URL
+@import java.net.URI
 
-@defining(new URL(item.canonicalUrl).getPath()){ canonicalPath =>
+@defining(new URI(item.canonicalUrl).getPath()){ canonicalPath =>
     @if(Edition(request, config) == "US") {
         <a id="main-site" href="http://www.guardiannews.com@canonicalPath?mobile-redirect=false" data-link-name="US">Desktop version</a>
     } else {
