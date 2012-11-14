@@ -1,4 +1,4 @@
-define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], function (reqwest, bean, swipe, common, detect, url) {
+define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], function (reqwest, bean, Swipe, common, detect, url) {
 
     var Gallery = function () {
 
@@ -10,15 +10,16 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                 nextLink: document.getElementById('js-gallery-next'),
                 prevLink: document.getElementById('js-gallery-prev'),
                 currentIndex: urlParams.index || 0,
-                currentSlideClassName: 'js-current-gallery-slide'
+                currentSlideClassName: 'js-current-gallery-slide',
+                inSwipeMode: false
             },
 
             // runs on domready
             bindGallery: function () {
                   
-                var isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
-
                 if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
+                    
+                    view.galleryConfig.inSwipeMode = true;
 
                     // add swipe styling
                     document.getElementById('js-gallery').className += ' gallery-swipe';
@@ -35,40 +36,23 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
-                    var gallerySwipe = new swipe(document.getElementById('js-gallery'), {
+                    var gallerySwipe = new Swipe(document.getElementById('js-gallery'), {
                         callback: function(event, index, elm) {
 
                             var count = document.getElementById('js-gallery-index');
-                            var currentSlide = common.$g('.' + view.galleryConfig.currentSlideClassName)[0];
+                            var currentPos = parseInt(count.innerText, 10);
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
-                            var nextElm = common.$g('.gallery-swipe li')[nextIndex];
-                            var currentPos = parseInt(count.innerText, 10);
-
+                            
                             // track the swipe and its direction
                             if (nextIndexCount > currentPos) {
                                 view.trackInteraction("swipe:forward");
+                                view.advanceGallery('next');
                             } else {
                                 view.trackInteraction("swipe:backward");
+                                view.advanceGallery('prev');
                             }
 
-                            count.innerText = nextIndexCount;
-                            view.updateURL('index=' + nextIndexCount, nextIndexCount);
-                            view.handlePrevNextLinks(nextIndexCount, totalSlides);
-                            
-                            if (nextElm) {
-                                var nextElmForward = nextElm.nextElementSibling;
-                                var nextElmBackward = nextElm.previousElementSibling;
-                                
-                                // convert to <img> tag
-                                view.makePlaceholderIntoImage([nextElm, nextElmForward, nextElmBackward]);
-
-                                elm.style.display = 'block';
-
-                                // toggle classnames
-                                elm.className = view.galleryConfig.currentSlideClassName;
-                                currentSlide.className = '';
-                            }
                         }
                     });
 
@@ -87,6 +71,9 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     });
 
                     bean.add(view.galleryConfig.prevLink, 'click', function(e) {
+                        // we could just call advanceGallery('prev') here
+                        // but doing it this way means we get the nice swipe animation too
+                        // (and omniture swipe tracking, see above)
                         gallerySwipe.prev();
                         e.preventDefault();
                     });
@@ -105,10 +92,10 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
 
                     // bind arrow key navigation
                     bean.add(document, 'keydown', function(e) {
-                        if (e.keyCode == 37) { // left
+                        if (e.keyCode === 37) { // left
                             view.trackInteraction("keyboard:previous");
                             view.advanceGallery('prev');
-                        } else if (e.keyCode == 39) { // right
+                        } else if (e.keyCode === 39) { // right
                             view.trackInteraction("keyboard:next");
                             view.advanceGallery('next');
                         }
@@ -139,48 +126,64 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
             },
 
             advanceGallery: function (direction, customItemIndexToShow) {
+                console.log('advancing gallery: ' + direction);
+
+                // set up variables
                 var currentSlide    = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
-                var nextSlide       = currentSlide.nextElementSibling;
-                var prevSlide       = currentSlide.previousElementSibling;
                 var currentIndex    = currentSlide.getAttribute('data-index');
                 var totalSlides     = currentSlide.getAttribute('data-total');
-                var isFirst         = (currentIndex == 1);
-                var isLast          = (currentIndex == totalSlides);
+                var isFirst         = (currentIndex === 1);
+                var isLast          = (currentIndex === totalSlides);
                 var slideCounter    = document.getElementById('js-gallery-index');
                 
                 // don't try to do anything if we're at the start/end going forward/back
-                if ( (isFirst && direction === "prev") ||
+                if ( (isFirst && directin === "prev") ||
                      (isLast && direction === "next") ) {
                     return;
                 }
 
-                var elmToWorkWith, newSlide;
+                var elmToWorkWith, newSlideIndex;
 
                 // hide the current slide
                 currentSlide.className = '';
-                currentSlide.style.display = 'none';
+
+                // this hides the current slide (we don't need to do this when swiping)
+                if (!view.galleryConfig.inSwipeMode) {
+                    currentSlide.style.display = 'none';
+                }
 
                 if(!customItemIndexToShow) {
 
                     // choose the element to show
-                    elmToWorkWith = (direction == 'next') ? nextSlide : prevSlide;
+                    elmToWorkWith = (direction === 'next') ? currentSlide.nextElementSibling : currentSlide.previousElementSibling;
 
                     // update counter
-                    newSlide = (direction == 'next') ? (parseInt(currentIndex, 10) + 1) : (parseInt(currentIndex, 10) - 1);
+                    newSlideIndex = (direction === 'next') ? (parseInt(currentIndex, 10) + 1) : (parseInt(currentIndex, 10) - 1);
                 
                 } else {
+                    // used for scrolling to a custom item on pageload
                     elmToWorkWith = document.getElementById('js-gallery-item-' + customItemIndexToShow);
-                    newSlide = customItemIndexToShow;
+                    newSlideIndex = customItemIndexToShow;
                 }
 
+                // now we have an element to work with, let's get the ones on either side of it
+                var nextSlide = elmToWorkWith.nextElementSibling;
+                var prevSlide = elmToWorkWith.previousElementSibling;
+
+
                 // show and hide next/prev links
-                view.handlePrevNextLinks(newSlide, totalSlides);
+                view.handlePrevNextLinks(newSlideIndex, totalSlides);
 
-                slideCounter.innerHTML = newSlide; // update count of current position
+                // update count of current position
+                slideCounter.innerHTML = newSlideIndex;
 
-                view.updateURL('index=' + newSlide, newSlide);
-                view.makePlaceholderIntoImage(elmToWorkWith); // convert it if we need to
+                // tweak the page URL
+                view.updateURL('index=' + newSlideIndex, newSlideIndex);
 
+                // convert the slide to an image if we need to
+                view.makePlaceholderIntoImage([prevSlide, elmToWorkWith, nextSlide]); 
+
+                // make this slide active
                 elmToWorkWith.className = view.galleryConfig.currentSlideClassName;
                 elmToWorkWith.style.display = 'block';
 
@@ -202,18 +205,18 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
 
                 index = parseInt(index, 10); // just in case
 
-                if (index == 1) { // we've gone back to the start, hide prev
+                if (index === 1) { // we've gone back to the start, hide prev
                     prevLink.style.display = 'none';
                     nextLink.setAttribute('href', '?index=2');
-                } else if (index == 2) { // we can now go back, show prev
+                } else if (index === 2) { // we can now go back, show prev
                     prevLink.style.display = 'inline';
                     prevLink.setAttribute('href', '?index=1');
                     nextLink.setAttribute('href', '?index=3');
-                } else if (index == total-1) { // show next again...?
+                } else if (index === total-1) { // show next again...?
                     nextLink.style.display = 'inline';
                     prevLink.setAttribute('href', '?index=' + (index - 1));
                     nextLink.setAttribute('href', '?index=' + total);
-                } else if (index == total) { //we're at the end, hide next
+                } else if (index === total) { //we're at the end, hide next
                     nextLink.style.display = 'none';
                     prevLink.setAttribute('href', '?index=' + (total -1));
                 } else { // it's in the middle
@@ -249,7 +252,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
             processPlaceholder: function (placeholder) {
                 var hasImage = placeholder.getAttribute('data-image');
 
-                if (hasImage && hasImage == 'false') {
+                if (hasImage && hasImage === 'false') {
                     
                     var src = placeholder.getAttribute("data-src");
                     if (src && src !== "") { // create <img> element
