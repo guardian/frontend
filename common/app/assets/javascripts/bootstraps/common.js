@@ -106,7 +106,7 @@ define([
         },
 
         loadOphanAnalytics: function () {
-            require(['js!http://s.ophan.co.uk/js/t6.min'], function (ophan) {});
+            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
         },
 
         loadAdverts: function (config) {

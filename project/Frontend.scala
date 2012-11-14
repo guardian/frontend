@@ -197,16 +197,15 @@ trait Prototypes {
     requireJsWrap <<= (baseDirectory){ base =>
        Map(
          "startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/vendor/curl-0.7.2.js"),
-         "endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/vendor/fileEnd.js")
+         "endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js")
        )
     },
 
-    //requireJsWrap := Map("startFile" -> baseDirectory.toString + "app/assets/javascripts/vendor/curl-0.7.2.js", "endFile" -> ""),
     requireJsPaths := Map(
                             "bonzo" -> "vendor/bonzo-1.2.1",
                             "reqwest" -> "vendor/reqwest-0.4.5",
-                            "qwery" -> "vendor/qwery-3.3.11",
-                            "bean" -> "vendor/bean-0.4.11-1",
+                            "qwery" -> "vendor/qwery-mobile-3.3.11",
+                            "bean" -> "vendor/bean-1.0.1",
                             "domReady" -> "vendor/domReady-2.0.1",
                             "EventEmitter" -> "vendor/EventEmitter-3.1.5"
                           ),

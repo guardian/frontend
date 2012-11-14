@@ -90,7 +90,7 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
 
         it("should not create ads if userPref is switchedOff", function() {
 
-            guardian.userPrefs.isOff = function() { return true; };
+            window.localStorage['gu.prefs.switch.adverts'] = false;
 
             Adverts.init(config);
             Adverts.loadAds();
