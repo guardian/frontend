@@ -115,8 +115,6 @@ define([
             
             var that = this,
                 pref = this.getPref();
-
-            console.log(pref);
             
             // add the component to the page
             qwery('.update')[0].innerHTML = this.template;
