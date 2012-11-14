@@ -1,51 +1,46 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(tag, Static, Configuration, Switches.all){  }{
-<section class="front-section zone-@tag.section" data-link-name="@tag.section">
 
-    <h1 class="article-zone zone-color">@Html(tag.name)</h1>
-    
-    @if(tag.isContributor) {
-        <div class="profile media">
-            @if(tag.contributorImageUrl) {
-                <div class="profile-img media-img">
-                    <img src="@tag.contributorImageUrl" alt="@tag.name" />
-                </div>
-            }
-            @if(tag.bio) {
-                <p class="type-4 profile-bio">
-                    @RemoveOuterParaHtml(tag.bio)
-                </p>
-            }
-        </div>
-    
-        <h2 class="type-2 article-zone b1">Latest</h2>
-    }
+    <section class="front-section zone-@tag.section" data-link-name="@tag.section">
 
-
-    @if(leadContent nonEmpty) {
-        @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-        <div @if(info.rowNum == 1 && trail.mainPicture) { class="has-image" } data-link-name="lead content">
-                @fragments.formatFrontTrail(trail, info)
-        </div>
+        <h1 class="article-zone zone-color">@Html(tag.name)</h1>
+        
+        @if(tag.isContributor) {
+            <div class="profile media">
+                @if(tag.contributorImageUrl) {
+                    <div class="profile-img media-img">
+                        <img src="@tag.contributorImageUrl" alt="@tag.name" />
+                    </div>
+                }
+                @if(tag.bio) {
+                    <p class="type-4 profile-bio">
+                        @RemoveOuterParaHtml(tag.bio)
+                    </p>
+                }
+            </div>
+        
+            <h2 class="type-2 article-zone b1">Latest</h2>
         }
-    }
 
-    <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
 
-            <ul class="unstyled">
-
-            @trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li class="trail @if(info.rowNum == 1 && trail.mainPicture) { has-image }">
-                    @fragments.formatFrontTrail(trail, info)
-                </li>
+        @if(leadContent nonEmpty) {
+            @leadContent.zipWithRowInfo.map{ case (trail, info) =>
+	            <div @if(info.rowNum == 1 && trail.mainPicture) { class="has-image" } data-link-name="lead content">
+                    @fragments.trails.featured(trail, info.rowNum)
+	            </div>
             }
+        }
 
-        </ul>
+        <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
+            @fragments.trailblocks.section(trails)
+        </div>
+        
+    </section>
 
-    </div>
-    
-</section>
+    @if(tag.section == "football") {
+        @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
+    }
 
     <div id="js-popular"></div>
 }

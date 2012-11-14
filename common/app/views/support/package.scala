@@ -22,6 +22,16 @@ sealed trait Style {
 
 object Featured extends Style { val className = "featured" }
 
+/**
+ * trails display trailText and thumbnail (if available)
+ */
+object Thumbnail extends Style { val className = "with-thumbnail" }
+
+/**
+ * trails only display headline
+ */
+object Headline extends Style { val className = "headline-only" }
+
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
@@ -198,7 +208,7 @@ object OmnitureAnalyticsData {
       case _ => false
     }
 
-    val pageName = data("web-title").take(72) + (":%s:%s" format (contentType, pageCode))
+    val pageName = page.analyticsName
     val analyticsData = Map(
       "ns" -> "guardian",
       "pageName" -> pageName,
@@ -253,7 +263,17 @@ object `package` extends Formats {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String): String = {
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID("GMT")))
+  def apply(date: DateTime, pattern: String, edition: String = "UK"): String = {
+    val timezone = edition match {
+      case "US" => "America/New_York"
+      case _ => "Europe/London"
+    }
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID(timezone)))
+  }
+}
+
+object cleanTrailText {
+  def apply(text: String): Html = {
+    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }

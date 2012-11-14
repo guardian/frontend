@@ -7,7 +7,12 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 
-case class TablesPage(page: Page, tables: Seq[Table]) {
+case class TablesPage(
+    page: Page,
+    tables: Seq[Table],
+    urlBase: String,
+    filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
+    comp: Option[Competition]) {
   lazy val singleCompetition = tables.size == 1
 }
 
@@ -17,7 +22,7 @@ case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
 }
 
-object LeagueTableController extends Controller with Logging with CompetitionFixtureFilters {
+object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
 
   private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { comp =>
     val groups = comp.leagueTable
@@ -29,8 +34,13 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
 
   def render() = Action { implicit request =>
 
-    val page = new Page("http://www.guardian.co.uk/football/matches", "football/tables", "football", "", "All tables",
-      "GFE: Football : automatic : tables"
+    val page = new Page(
+      "http://www.guardian.co.uk/football/matches",
+      "football/tables",
+      "football",
+      "",
+      "All tables",
+      "GFE:Football:automatic:tables"
     )
 
     val groups = loadTables.map { table =>
@@ -42,19 +52,55 @@ object LeagueTableController extends Controller with Logging with CompetitionFix
     }
 
     Cached(page) {
-      Ok(Compressed(views.html.tables(TablesPage(page, groups))))
+      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football", filters, None))))
+    }
+  }
+
+  def renderTeamlist() = Action { implicit request =>
+
+    val page = new Page(
+      "http://www.guardian.co.uk/football/teams",
+      "football/teams",
+      "football",
+      "",
+      "All teams",
+      "GFE:Football:automatic:teams"
+    )
+
+    val groups = loadTables.map { table =>
+      table.copy(groups = table.groups)
+    }
+
+    val competitionList = List(
+      "Premier League",
+      "Championship",
+      "League One",
+      "League Two",
+      "Scottish Premier League",
+      "Scottish Division One",
+      "Scottish Division Two",
+      "Scottish Division Three"
+    )
+
+    Cached(page) {
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), competitionList)))
     }
   }
 
   def renderCompetition(competition: String) = Action { implicit request =>
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
-      val page = new Page("http://www.guardian.co.uk/football/matches",
-        table.competition.url.drop(1) + "/tables", "football", "", table.competition.fullName + " table",
-        "GFE: Football : automatic : competition tables")
+      val page = new Page(
+        "http://www.guardian.co.uk/football/matches",
+        "football/tables",
+        "football",
+        "",
+        table.competition.fullName + " table",
+        "GFE:Football:automatic:competition tables"
+      )
 
       Cached(page) {
-        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table)))))
+        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
       }
     }.getOrElse(NotFound("Not found"))
   }

@@ -1,5 +1,13 @@
 #container {
     clear: both;
+    max-width: 1024px;
+}
+@media (min-width: 641px) {
+    #container {
+        padding-bottom: 10%;
+        width: 90%;
+        margin: 0 auto;
+    }
 }
 
 .component {
@@ -7,7 +15,7 @@
 }
 
 .box-indent {
-    padding: 0 @gutter @baseline*2 @gutter;
+    padding: 0 @gutter @baseline*1 @gutter;
 }
 
 .inline-image {

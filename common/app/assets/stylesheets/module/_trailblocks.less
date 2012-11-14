@@ -7,7 +7,11 @@
     overflow: hidden;
     margin-bottom: @baseline;
     border-bottom: 1px solid #e3e3db;
-    padding: @baseline*3 0 @baseline*4 0;
+    padding: @baseline*2 0 @baseline*3 0;
+}
+
+.trail:first-child {
+    padding-top: @baseline*3
 }
 
 .trail.has-image {
@@ -24,8 +28,13 @@
 }
 
 .trail-headline {
-    .type-2;
     padding: 0 @gutter;
+}
+
+@media screen and (min-width: 400px) {
+    .trail-headline {
+        font-size: 17px;
+    }
 }
 
 .trailblock-topstories .trail-headline {
@@ -38,7 +47,17 @@
 
 .trail-text {
     display: block;
+    clear: left;
     padding: 0 @gutter;
+}
+@media screen and (min-width: 600px) {
+    .trail-text {
+        clear: none;
+    }
+}
+
+.media .trail-text {
+    padding: 0;
 }
 
 .has-image .trail-text {
@@ -48,6 +67,8 @@
 .trailblock .media {
     padding: 0 @gutter @baseline*1 @gutter;
 }
+
+.trailblock .media-img { width: 40%; }
 
 .trailblock .media-img img {
     width: @trailblockImgWidth;
@@ -59,13 +80,10 @@
     width: @trailblockImgWidthLarge;
 }
 
-.trailblock .panel,
-.rolled-out {
-     height: auto;
-     max-height: 9999px;
-     overflow: hidden;
-     .transition(max-height 1s ease-in-out);
-     margin-bottom: 0px;
+@media screen and (min-width: 850px) {
+    .trailblock .img img {
+        width: 160px;
+    }
 }
 
 .trailblock .panel {
@@ -74,15 +92,6 @@
 
 .trailblock ul {
     margin-bottom: 0px;
-}
-
-.trailblock.shut .panel,
-.rolled-up {
-    .transition(max-height .5s ease-in-out);
-    overflow: hidden;
-    position: relative;
-    max-height: 0;
-    padding-top: 0;
 }
 
 .trailblock.shut .count {
@@ -100,11 +109,12 @@
     position: absolute;
     top: 0px;
     right: 0px;
-    color: #fff;
+    color: #ffffff;
     padding: @baseline*4 @gutter;
     cursor: pointer;
     background-color: transparent;
     box-shadow: none;
+    font-weight: normal;
     text-shadow: none;
     border: none;
     -webkit-box-shadow: none;

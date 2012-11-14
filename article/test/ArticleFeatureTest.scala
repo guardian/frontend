@@ -92,10 +92,45 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the publication date of the article")
-        //cannot use the fluentium to select a meta tag and then get its text
-        findFirst(".dateline").getText should be("Monday 6 August 2012 19.30 GMT")
+        findFirst(".dateline").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06")
       }
+    }
+
+    scenario("Articles should have the correct timezone for when they were published") {
+
+      given("I am on an article published on '2012-11-10'")
+      and("I am on the 'UK' edition")
+      HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
+        import browser._
+        then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
+        findFirst(".dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+      }
+
+      given("I am on an article published on '2012-11-10'")
+      and("I am on the 'US' edition")
+      HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
+        import browser._
+        then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
+        findFirst(".dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+      }
+
+      given("I am on an article published on '2012-08-19'")
+      and("I am on the 'UK' edition")
+      HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+        import browser._
+        then("the date should be 'Sunday 19 August 2012 18.38 BST'")
+        findFirst(".dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+      }
+
+      given("I am on an article published on '2012-08-19'")
+      and("I am on the 'US' edition")
+      HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+        import browser._
+        then("the date should be 'Sunday 19 August 2012 13.38 BST'")
+        findFirst(".dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+      }
+
     }
 
     scenario("Article body", ArticleComponents) {
@@ -172,8 +207,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val adPlaceholder = $("#ad-slot-top-banner-ad").first()
 
         and("the placeholder has the correct slot names")
-        adPlaceholder.getAttribute("data-base") should be("x50")
-        adPlaceholder.getAttribute("data-median") should be("x52")
+        adPlaceholder.getAttribute("data-base") should be("Top2")
+        adPlaceholder.getAttribute("data-median") should be("Top")
         adPlaceholder.getAttribute("data-extended") should be("x54")
 
         and("the placeholder has the correct class name")
@@ -233,6 +268,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
+
   }
 
   private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name

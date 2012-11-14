@@ -15,8 +15,10 @@ case class MatchesPage(
     nextPage: Option[String],
     previousPage: Option[String],
     pageType: String,
-    filters: Map[String, Seq[CompetitionFilter]] = Map.empty) {
+    filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
+    comp: Option[Competition]) {
 
   lazy val isLive = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
+  lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
 
 }

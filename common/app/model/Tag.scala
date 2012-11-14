@@ -1,6 +1,7 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
+import common.Reference
 
 case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val name: String = webTitle
@@ -29,10 +30,12 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
     !idParts.exists(_ != section)
   }
 
+  lazy val tagWithoutSection = id.split("/")(1) // used for football nav
+
   override lazy val analyticsName = "GFE:" + section + ":" + name
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
     "content-type" -> "Tag"
-  )
+  ) ++ delegate.references.map(r => Reference(r.id)).toMap
 }

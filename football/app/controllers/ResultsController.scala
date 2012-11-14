@@ -18,7 +18,8 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
   def renderResults(page: Page,
     competitions: CompetitionSupport,
     competitionName: Option[String],
-    date: Option[DateMidnight])(implicit request: RequestHeader) = {
+    date: Option[DateMidnight],
+    comp: Option[Competition])(implicit request: RequestHeader) = {
     val startDate = date.getOrElse(new DateMidnight)
 
     val resultsDays = competitions.previousMatchDates(startDate, daysToDisplay)
@@ -32,8 +33,16 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       competitions.previousMatchDates(date.minusDays(1), daysToDisplay).headOption
     }.map(toNextPreviousUrl(_, competitionName))
 
-    val resultsPage = MatchesPage(page, None, results.filter(_.competitions.nonEmpty),
-      nextPage, previousPage, "results", filters)
+    val resultsPage = MatchesPage(
+      page = page,
+      blog = None,
+      days = results.filter(_.competitions.nonEmpty),
+      nextPage = nextPage,
+      previousPage = previousPage,
+      pageType = "results",
+      filters = filters,
+      comp = comp
+    )
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
@@ -50,15 +59,21 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
 
 object ResultsController extends ResultsRenderer with Logging {
 
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/results", "football", "", "All results",
-    "GFE: Football : automatic : results")
+  val page = new Page(
+    "http://www.guardian.co.uk/football/matches",
+    "football/results",
+    "football",
+    "",
+    "All results",
+    "GFE:Football:automatic:results"
+  )
 
   def renderFor(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
-    renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date)
+    renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date, None)
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
@@ -78,11 +93,21 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
   def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
 
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      val page = new Page("http://www.guardian.co.uk/football/matches", competition.url.drop(1) + "/results",
-        "football", "", competition.fullName + " results", "GFE: Football : automatic : competition results")
-      renderResults(page,
+      val page = new Page(
+        "http://www.guardian.co.uk/football/matches",
+        "football/results",
+        "football",
+        "",
+        competition.fullName + " results",
+        "GFE:Football:automatic:competition results"
+      )
+      renderResults(
+        page,
         Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competitionName),
-        Some(competitionName), date)
+        Some(competitionName),
+        date,
+        Some(competition)
+      )
     }.getOrElse(NotFound)
 
   }

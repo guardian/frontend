@@ -12,12 +12,37 @@ import com.gu.RequireJS._
 import com.gu.RequireJS
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
+import templemore.xsbt.cucumber.CucumberPlugin
+import templemore.xsbt.cucumber.CucumberPlugin._
 
 object Frontend extends Build with Prototypes {
 
   val version = "1-SNAPSHOT"
 
-  val common = library("common")
+  // jasmine project
+  val jasmine = Project("jasmine", file("integration-tests"),
+      settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++ 
+      Seq (
+        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
+      )
+    )
+  	.settings(
+  	  libraryDependencies ++= Seq(
+		  "junit" % "junit" % "4.10",
+	      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
+	      "junit-addons" % "junit-addons" % "1.4",
+	      "info.cukes" % "cucumber-core" % "1.0.14",
+	      "info.cukes" % "cucumber-java" % "1.0.14",
+	      "info.cukes" % "cucumber-junit" % "1.0.14",
+	      "info.cukes" % "cucumber-picocontainer" % "1.0.14"
+	  )
+  	  // TODO - doesn't work - cucumber is an input task
+  	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
+  	)
+	.settings(ideaSettings: _*)
+  	
+  val common = library("common").dependsOn(jasmine % "test->test")
+  
   val commonWithTests = common % "test->test;compile->compile"
 
   val front = application("front").dependsOn(commonWithTests)
@@ -47,20 +72,9 @@ object Frontend extends Build with Prototypes {
     .dependsOn(router)
     .dependsOn(diagnostics)
 
-  lazy val jasmine = Project(id = "jasmine", base = file("integration-tests"))
-  	.settings(
-      // use pom for dependency management
-  	  externalPom(),
-  	  testOptions += Tests.Argument(
-		  TestFrameworks.JUnit, "-q", "-v", 
-		  "-Dcucumber.options=integration-tests/src/test/resources --tags @jasmine --tags ~@ignore --glue com/gu/test --format pretty",
-		  "-Dfrontend.dir=" + System.getProperty("user.dir")
-		  
-	  )
-  	)
     
   val main = root().aggregate(
-    common, front, article, section, tag, video, gallery, football, coreNavigation, router, diagnostics, dev
+    common, front, article, section, tag, video, gallery, football, coreNavigation, router, diagnostics, dev, jasmine
   )
   
 }
@@ -159,7 +173,7 @@ trait Prototypes {
       },
 
       (test in Test) <<= (test in Test) dependsOn (jshint),
-
+      
       templatesImport ++= Seq(
         "common._",
         "model._",
@@ -176,7 +190,7 @@ trait Prototypes {
     requireJsAppDir <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
     requireJsBaseUrl := ".",
     requireJsDir <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
-    requireJsModules := Seq("bootstraps/article"),
+    requireJsModules := Seq("bootstraps/app"),
     requireJsPaths := Map(
                             "bonzo" -> "vendor/bonzo-1.2.1",
                             "reqwest" -> "vendor/reqwest-0.4.5",
@@ -199,6 +213,9 @@ trait Prototypes {
       "com.gu.openplatform" %% "content-api-client" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
+      "commons-io" % "commons-io" % "2.4",
+      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.opencsv" % "opencsv" % "2.3",
       "org.scala-tools.time" % "time_2.9.1" % "0.5",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",

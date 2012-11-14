@@ -1,6 +1,10 @@
 package com.gu.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Assert;
+import junitx.framework.StringAssert;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,20 +17,63 @@ import cucumber.annotation.en.When;
 public class ArticleTestSteps {
 
 	private final SharedDriver webDriver;
-
+	
+	protected String articleWithStoryPackage = "/sport/2012/oct/10/icc-suspends-umpires-corruption-claims";
+	protected String articleWithoutStoryPackage = "/sport/2012/jul/27/london-2012-team-gb-clark-lenzly";
+	protected String sportArticle = "/sport/2012/jul/27/london-2012-team-gb-clark-lenzly";
+	protected String article = "/sport/2012/oct/10/icc-suspends-umpires-corruption-claims";
+	protected String articleWithImage = "/technology/2012/oct/15/google-privacy-policy";
+	protected String articleWithMoreExapnders = "/football/blog/2012/may/10/signing-of-season-premier-league";
+	protected String articleWithRelatedExapnders = "/world/2012/oct/07/venezuela-voters-chavez";
+	protected Map<String, String> datedArticles = new HashMap<String, String>();
+	
 	public ArticleTestSteps(SharedDriver webDriver) {
 		this.webDriver = webDriver;
+		// set up a map of dated articles
+		datedArticles.put("2012-11-10", "/world/2012/nov/08/syria-arms-embargo-rebel");
+		datedArticles.put("2012-08-19", "/business/2012/aug/19/shell-spending-security-nigeria-leak");
+	}
+	
+	@Given("^I am on an article$")
+	public void I_am_on_an_article() throws Throwable {
+		webDriver.open(article);
 	}
 
-	@Given("^I am on the article page$")
-	public void I_am_on_the_article_page() throws Throwable {
-		webDriver.open("/");
+	@Given("^I am on an article with a story package$")
+	public void I_am_on_an_article_with_a_story_package() throws Throwable {
+		webDriver.open(articleWithStoryPackage);
+	}
+	
+	@Given("^I am on an article without a story package$")
+	public void I_am_on_an_article_without_a_story_package() throws Throwable {
+		webDriver.open(articleWithoutStoryPackage);
 	}
 
-	@When("^the article has a story package$")
-	public void the_article_has_a_story_package() throws Throwable {
-		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
+	@Given("^I open a \"sport\" article$")
+	public void I_open_a_article() throws Throwable {
+		webDriver.open(sportArticle);
 	}
+	
+	@Given("^I am on an article with an image$")
+	public void I_am_on_an_article_with_an_image() throws Throwable {
+		webDriver.open(articleWithImage);
+	}
+	
+	@Given("^I am on an article with expanders for \"More on this story\"$")
+	public void I_am_on_an_article_with_exapnders_for_more_on_this_story() throws Throwable {
+		webDriver.open(articleWithMoreExapnders);
+	}
+	
+	@Given("^I am on an article with expanders for \"Related content\"$")
+	public void I_am_on_an_article_with_exapnders_for_related_content() throws Throwable {
+		webDriver.open(articleWithRelatedExapnders);
+	}
+	
+	@Given("^I am on an article published on '([^']*)'$")
+	public void I_am_on_an_article_published_on(String date) throws Throwable {
+		// open an article for this date
+		webDriver.open(datedArticles.get(date));
+	} 
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
@@ -34,45 +81,18 @@ public class ArticleTestSteps {
 		Assert.assertEquals(headerText, relatedHeader.getText());
 	}
 
-	@When("^the article has no story package$")
-	public void the_article_has_no_story_package() throws Throwable {
-		webDriver.open("/sport/2012/jul/27/london-2012-team-gb-clark-lenzly");
-	}
-
 	@Then("^\"([^\"]*)\" \"([^\"]*)\" displayed$")
 	public void displayed(String arg1, String arg2) throws Throwable {
 		webDriver.isTextPresentByElement(By.id("related-trails"), arg1);
 	}
 
-	@When("^\"([^\"]*)\" is unavailable$")
-	public void is_unavailable(String arg1) throws Throwable {
-		webDriver.open("/help/terms-of-service");
-	}
-
-	@Then("^\"([^\"]*)\" is not displayed$")
-	public void is_not_displayed(String arg1) throws Throwable {
-		Assert.assertFalse(webDriver.isElementPresent(By.id("related-trails")));
-	}
-
-	@When("^I open a \"([^\"]*)\" article$")
-	public void I_open_a_article(String arg1) throws Throwable {
-		webDriver.open("/sport/2012/jul/27/london-2012-team-gb-clark-lenzly");
-	}
-
-	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
-	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
-		Assert.assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
-	}
-
-	@When("^I select sectional \"([^\"]*)\"$")
+	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
-		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
-		webDriver.clickLink("guardian.co.uk");
+		webDriver.clickLink("the guardian");
 	}
 
-	@When("^I select pan-site \"([^\"]*)\"$")
+	@When("^I select the pan-site \"([^\"]*)\"$")
 	public void I_select_pan_site(String arg1) throws Throwable {
-		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.click(By.cssSelector("#js-popular-tabs > li > a"));
 	}
 
@@ -85,10 +105,24 @@ public class ArticleTestSteps {
 	public void I_can_see_a_list_of_the_most_popular_stories_on_guardian_co_uk_for_the_whole_guardian_site() throws Throwable {
 		Assert.assertEquals("block", webDriver.getelementCssValue(By.id("tabs-popular-1"), "display"));
 	}
+	
+	@When("^\"([^\"]*)\" is unavailable$")
+	public void is_unavailable(String arg1) throws Throwable {
+		webDriver.open("/help/terms-of-service");
+	}
+
+	@Then("^\"([^\"]*)\" is not displayed$")
+	public void is_not_displayed(String arg1) throws Throwable {
+		Assert.assertFalse(webDriver.isElementPresent(By.id("related-trails")));
+	}
+
+	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
+	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
+		Assert.assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
+	}
 
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
 	public void I_click_tab_at_the_top_of_the_page(String arg1) throws Throwable {
-		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.clickLink(arg1);
 	}
 
@@ -105,7 +139,6 @@ public class ArticleTestSteps {
 
 	@When("^I click \"([^\"]*)\" tab at the foot of the page$")
 	public void I_click_tab_at_the_foot_of_the_page(String arg1) throws Throwable {
-		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
 		webDriver.findElement(By.id("topstories-control-footer")).click();
 	}
 
@@ -136,12 +169,7 @@ public class ArticleTestSteps {
 		Assert.assertEquals("none", webDriver.getelementCssValue(By.id("sections-" + arg1), "display"));
 	}
 
-	@When("^the article has an article image$")
-	public void the_article_has_an_article_image() throws Throwable {
-		webDriver.open("/technology/2012/oct/15/google-privacy-policy");
-	}
-
-	@When("^I have a fast connection speed$")
+	@Given("^I have a fast connection speed$")
 	public void I_have_a_fast_connection_speed() throws Throwable {
 		//TODO:
 	}
@@ -152,10 +180,6 @@ public class ArticleTestSteps {
 		Assert.assertTrue(webDriver.isElementPresent(By.className("image-high")));
 	}
 
-	@When("^More on this story has expanders$")
-	public void More_on_this_story_has_expanders() throws Throwable {
-		webDriver.open("/football/blog/2012/may/10/signing-of-season-premier-league");
-	}
 
 	@Then("^I can expand and collapse expanders$")
 	public void I_can_expand_and_collapse_expanders() throws Throwable {
@@ -164,11 +188,6 @@ public class ArticleTestSteps {
 			webDriver.waitFor(1000);
 		}
 		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
-	}
-
-	@When("^Related content has expanders$")
-	public void Related_content_has_expanders() throws Throwable {
-		webDriver.open("/football/2012/oct/23/hillsborough-police-chief-bettison-eagle");
 	}
 
 	@When("^Back to top is selected$")
@@ -190,22 +209,24 @@ public class ArticleTestSteps {
 
 	@Then("^the corresponding footer pages are displayed$")
 	public void the_corresponding_footer_pages_are_displayed() throws Throwable {			
-		//select Help
-		webDriver.selectCheckBottomOfPageLinks("Help");
-		//select Contact us
-		webDriver.selectCheckBottomOfPageLinks("Contact us");
-		//select Terms & conditions
-		webDriver.selectCheckBottomOfPageLinks("Privacy policy");
-		//select Terms & conditions
-		webDriver.selectCheckBottomOfPageLinks("Terms & conditions");
-
-		//select Feedback
-		webDriver.selectCheckBottomOfFeedbackPage("Feedback");
-
-		//select Desktop version
-		webDriver.click(By.id("main-site"));
-
-		Assert.assertTrue(webDriver.getCurrentUrl().contains("www.guardian.co.uk"));
-		webDriver.navigate().back();
+		//check all bottom of page links
+		webDriver.selectCheckBottomOfPageLinks();
 	}
+	
+	@Then("^the published date should be in '([^']*)'$")
+	public void the_published_date_should_be_in(String timezone) throws Throwable {
+		// get the dateline
+		WebElement dateline = webDriver.findElement(By.cssSelector(".dateline time"));
+		// make sure it has the correct timezone
+		StringAssert.assertContains(timezone, dateline.getText());
+	}
+	
+	@Then("^the published time should be '([^']*)'$")
+	public void the_published_time_should_be(String time) throws Throwable {
+		// get the dateline
+		WebElement dateline = webDriver.findElement(By.cssSelector(".dateline time"));
+		// make sure it has the correct timezone
+		StringAssert.assertContains(time, dateline.getText());
+	}
+	
 }

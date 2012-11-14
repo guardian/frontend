@@ -19,7 +19,7 @@ img.badge {
 }
 
 .live-stamp a {
-    color: white;
+    color: #ffffff;
     text-decoration: none!important;
 }
 
@@ -32,7 +32,7 @@ img.badge {
 .trail-headline a:link,
 .trail-headline a:visited,
 .trail h2 a {
-    color: #333;
+    color: #333333;
 }
 
 
@@ -71,18 +71,6 @@ img.badge {
 .s-4:after { width:52px; }
 .s-5:after { width:65px; }
 
-#logo {
-    display: block;
-    text-indent: -1000px;
-    float: left;
-    margin: @baseline*2 @gutter;
-    .icon-guardian-logo-beta;
-}
-
-.svg #logo {
-    .svg-icon-guardian-logo-beta
-}
-
 .footer {
     overflow: hidden;
     margin: 0;
@@ -97,7 +85,7 @@ img.badge {
     margin: 0;
     padding: @baseline*2 0 0 @gutter;
     float:left;
-    color: #6F6F6E;
+    color: @blue;
 }
 
 .footer p:first-of-type {
@@ -107,11 +95,12 @@ img.badge {
 .footer p a {
     display: block;
     line-height: @baseline*4;
-    color: #6F6F6E;
+    color: @blue;
     text-decoration: underline;
 }
 
 .cta {
+    display: block;
     color: #545454;
     font-size: 14px;
     line-height: @baseline*2;
@@ -125,6 +114,11 @@ img.badge {
     border: none;
 }
 
+.cta:link,
+.cta:visited {
+    color: #545454;
+}
+
 .cta:hover,
 .cta:active {
     box-shadow: none;
@@ -136,28 +130,46 @@ img.badge {
 .top:link,
 .top:visited,
 .top:active {
-    .type-6;
-    float: left;
-    color: #545454;
-    padding: @baseline*4 @baseline @baseline*4 @gutter;
+    display: block;
+    color: #A1B7CF;
+    background-color: @darkBlue;
+    padding: @baseline*2 @gutter @baseline*2 @gutter;
 }
 
-.top:before {
-    .rotate(180deg);
+.top .i-arrow-small-up {
     display: inline-block;
-    content: '▾';
-    margin-right: @baseline;
+    margin-left: 5px;
+}
+
+.i-arrow-small-down {
+    display: inline-block;
+    margin-left: @baseline;
+}
+
+.is-active .i-arrow-small-down {
+    .i-arrow-small-up;
+    border-color: transparent !important;
+}
+
+.svg .is-active .i-arrow-small-down {
+    .svg-i-arrow-small-up;
+}
+
+.is-active .i-menu {
+    .i-menu-active;
+}
+
+.svg .is-active .i-menu {
+    .svg-i-menu-active;
 }
 
 .i-date {
     display: inline-block;
     margin-right: 5px;
     margin-bottom: -1px;
-    .icon-clock;
 }
 
 .svg .i-date {
-    .svg-icon-clock;
     background-size: 100%;
     width: 10px;
     height: 10px;
@@ -172,7 +184,7 @@ img.badge {
 .bullet {
     font-size: 13px;
     display: inline-block;
-    color: #999;
+    color: #999999;
     margin: @baseline/2 4px 0 0;
 }
 
@@ -181,18 +193,17 @@ img.badge {
 }
 
 .collapsible {
-      border-bottom: 1px solid #E3E3DB;
-      padding-bottom: 12px;
-      padding-right: 44px; // offsets icon
-      position: relative;
-      cursor: pointer;
-      margin-bottom: 0;
+    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
+    padding: 9px @gutter*2 9px @baseline*2; // double space on right to avoid icon
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0;
 }
 
 .collapsible i {
     position: absolute;
-    right: @gutter;
+    right: 14px;
     display: inline-block;
-    top: 15%;
+    top: 40%;
 }
 

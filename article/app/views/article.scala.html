@@ -1,4 +1,4 @@
-@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
+@(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
 @main(article, Static, Configuration, Switches.all){ }{
 	<h2 class="article-zone type-2">
@@ -8,7 +8,7 @@
 	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header>
-            @fragments.dateline(article.webPublicationDate, article.isLive)
+            @fragments.dateline(article.webPublicationDate, article.isLive, edition)
 
             @fragments.headline(article.headline)
 
@@ -20,8 +20,9 @@
             @article.mainPicture(width=220).map{ smallCrop =>
             <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
                 <img class="maxed" src="@smallCrop.url"
+                     data-thumb-width="@smallCrop.width"
                      data-fullsrc="@mainPicture.url"
-                     data-width="@mainPicture.width"
+                     data-full-width="@mainPicture.width"
                      itemprop="contentURL" />
                 @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
                 <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
@@ -43,7 +44,7 @@
     </article>
 
     @if(storyPackage.nonEmpty && ABTest(request).isA) {
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     } else {
         <div id="js-related"></div>
     }

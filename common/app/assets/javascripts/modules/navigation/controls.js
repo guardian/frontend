@@ -9,30 +9,21 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
         view = {
 
             toggle: function (state, position, elm) {
-                var item, altItem;
+                var item, altItem, altButton;
 
                 item = bonzo(document.getElementById(((state === "sections") ? "sections-" + position : "topstories-" + position)));
                 altItem = bonzo(document.getElementById(((state === "sections") ?  "topstories-" + position : "sections-" + position)));
+                altButton = bonzo(document.getElementById(((state === "sections") ?  "topstories-control-" + position : "sections-control-" + position)));
 
                 if (altItem.hasClass('on')) { // the "other" panel is visible, so hide it then show current
                     altItem.toggleClass('on initially-off');
+                    altButton.toggleClass('is-active');
                 }
 
-                if (item.hasClass('initially-off')) {
-                    item.toggleClass('on initially-off');
-                } else if (item.hasClass('on')) {
-                    item.toggleClass('on initially-off');
-                }
-
-                elm.scrollIntoView(); // means navs won't get rendered offscreen
+                item.toggleClass('on initially-off');
+                elm = bonzo(elm).toggleClass('is-active');
 
                 return (state);
-            },
-
-            // this menu is on by default for non-JS users, so we hide it once JS is loaded
-            hideBottomMenu: function () {
-                var bottomMenu = document.getElementById('sections-footer');
-                bonzo(bottomMenu).addClass('initially-off');
             },
 
             // we don't show the bottom section icon unless JS is enabled,
@@ -48,8 +39,6 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
 
             init: function () {
 
-                view.hideBottomMenu();
-
                 view.showHiddenSectionControls();
 
                 // can't seem to get bean to bind on arrays of elements properly,
@@ -60,27 +49,14 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                     view.toggle('sections', 'header', elm);
                     e.preventDefault();
                 });
-
-                Bean.add(document.getElementById('sections-control-footer'), 'click touchstart', function (e) {
-                    var elm = this;
-                    view.toggle('sections', 'footer', elm);
-                    e.preventDefault();
-                });
                 
                 Bean.add(document.getElementById('topstories-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     view.toggle('topstories', 'header', elm);
                     e.preventDefault();
                 });
-
-                Bean.add(document.getElementById('topstories-control-footer'), 'click touchstart', function (e) {
-                    var elm = this;
-                    view.toggle('topstories', 'footer', elm);
-                    e.preventDefault();
-                });
-
             }
-                    
+
         };
 
         // Model
@@ -88,7 +64,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
         model = {
         };
         
-        this.initialise = function () {
+        this.init = function () {
             view.init();
         };
     };

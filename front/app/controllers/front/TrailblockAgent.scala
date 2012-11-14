@@ -18,9 +18,7 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.sendOff {
-    old => Some(Trailblock(description, loadTrails(description.id)))
-  }
+  def refresh() = agent.send { old => Some(Trailblock(description, loadTrails(description.id))) }
 
   def close() = agent.close()
 

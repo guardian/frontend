@@ -9,7 +9,7 @@ import play.api.libs.concurrent.Akka
 import play.api.Play.current
 import play.api.libs.Crypto
 
-case class ArticlePage(article: Article, storyPackage: List[Trail])
+case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
 object ArticleController extends Controller with Logging {
 
@@ -32,7 +32,7 @@ object ArticleController extends Controller with Logging {
     val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
+    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
@@ -40,8 +40,7 @@ object ArticleController extends Controller with Logging {
       JsonComponent(views.html.fragments.articleBody(model.article), Some(Crypto.sign(model.article.lastModified.toString)))
     }.getOrElse {
       Cached(model.article)(
-        Ok(Compressed(views.html.article(model.article, model.storyPackage)))
+        Ok(Compressed(views.html.article(model.article, model.storyPackage, Edition(request, Configuration))))
       )
     }
-
 }

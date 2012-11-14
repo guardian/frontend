@@ -111,7 +111,10 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                 });
             }
 
-            common.mediator.on('module:autoupdate:loaded', that.logUpdate);
+            common.mediator.on('module:autoupdate:loaded', function() {
+                that.populatePageProperties();
+                that.logUpdate();
+            });
         };
 
     }
