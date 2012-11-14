@@ -1,6 +1,7 @@
 package common
 
 import com.codahale.jerkson.{ Json => JsonParser }
+import conf.CommonSwitches.PollingSwitch
 import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
 
@@ -9,15 +10,21 @@ object JsonComponent extends Results {
   private val ValidCallback = """([a-zA-Z0-9]+)""".r
 
   def apply(html: Html)(implicit request: RequestHeader) = {
-    val json = JsonParser.generate(Map("html" -> Compressed(html).body))
+    val json = jsonFor(("html" -> html))
     resultFor(request, json) getOrElse (Ok(html))
   }
 
   def apply(items: (String, Html)*)(implicit request: RequestHeader) = {
-    val json = JsonParser.generate(
-      items.toMap.map { case (name, html) => (name -> Compressed(html).body) }
-    )
+    val json = jsonFor(items: _*)
     resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
+  }
+
+  private def jsonFor(items: (String, Html)*)(implicit request: RequestHeader) = {
+    JsonParser.generate(
+      (items.toMap).map {
+        case (name, html) => (name -> Compressed(html).body)
+      } ++ Map("refreshStatus" -> PollingSwitch.isSwitchedOn)
+    )
   }
 
   private def resultFor(request: RequestHeader, json: String) = {

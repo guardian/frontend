@@ -1,5 +1,6 @@
 package common
 
+import conf.CommonSwitches
 import org.scalatest.FlatSpec
 import play.api.test.FakeRequest
 import play.api.templates.Html
@@ -18,7 +19,7 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     val result = JsonComponent(Html("hello world"))(request)
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
-    contentAsString(result) should be("""success({"html":"hello world"});""")
+    contentAsString(result) should be("""success({"html":"hello world","refreshStatus":true});""")
   }
 
   it should "build json from multiple items" in {
@@ -26,7 +27,13 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     val result = JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"))(request)
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
-    contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com"});""")
+    contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com","refreshStatus":true});""")
   }
 
+  it should "disable refreshing if auto refres switch is off" in {
+    CommonSwitches.PollingSwitch.switchOff()
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
+    val result = JsonComponent(Html("hello world"))(request)
+    contentAsString(result) should be("""success({"html":"hello world","refreshStatus":false});""")
+  }
 }
