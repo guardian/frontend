@@ -6,17 +6,16 @@
     // we want this to happen ASAP to avoid FOUC
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
-    guardian = {
-        isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
-    };
-
-    curl = {
-        baseUrl: '@{config.static.path}javascripts',
-        apiName: 'require',
-        paths: {
-            omniture: '@static("javascripts/vendor/omniture.js")'
-        }
-    };
+    var guardian = {
+            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
+            }, 
+            curl = {
+                baseUrl: '@{config.static.path}javascripts',
+                apiName: 'require',
+                paths: {
+                    omniture: '@static("javascripts/vendor/omniture.js")'
+                }
+            };
 
     (function loadFontsFromStorage(prefs, key) {
 
