@@ -7,11 +7,7 @@
   * dperini: https://github.com/dperini/nwevents
   * the entire mootools team: github.com/mootools/mootools-core
   */
-!function (name, context, definition) {
-  if (typeof module !== 'undefined') module.exports = definition(name, context);
-  else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
-  else context[name] = definition(name, context);
-}('bean', this, function (name, context) {
+define('bean', function (name, context) {
   var win = window
     , old = context[name]
     , overOut = /over|out/
