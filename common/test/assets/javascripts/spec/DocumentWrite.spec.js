@@ -35,7 +35,7 @@ define([
             var d = new DocumentWrite(config).load('fixtures/oas');
             
             waitsFor(function(){
-                return (window.advert_doc_write != undefined) // variable evaluated in fixtures 
+                return (window.admeld_url != undefined) // variable evaluated in fixtures 
             }, "window.admeld_url never evaluated", 1000)
             
             runs(function(){ 

@@ -6,7 +6,7 @@ define([
     'modules/adverts/document-write',
     'modules/adverts/audience-science'
 ],
-function (common, reqwest, detect, documentWrite, audienceScience) {
+function (common, reqwest, userPrefs, detect, documentWrite, audienceScience) {
     
     var config,
         adsSwitchedOn,
@@ -20,7 +20,7 @@ function (common, reqwest, detect, documentWrite, audienceScience) {
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 
-        adsSwitchedOn = !guardian.userPrefs.isOff('adverts');
+        adsSwitchedOn = !userPrefs.isOff('adverts');
 
         // Run through slots and create IframeAdSlots for each.
         // Other ad types to be plugged in later.
