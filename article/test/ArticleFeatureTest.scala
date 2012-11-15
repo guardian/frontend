@@ -269,6 +269,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Primary image upgrades to high resolution") {
+
+      given("I am on an aricle")
+      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+        import browser._
+
+        then("the primary image's 'data-force-upgrade' attribute should be 'true'")
+        findFirst("#article figure img").getAttribute("data-force-upgrade") should be("true")
+      }
+    }
+
   }
 
   private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name
