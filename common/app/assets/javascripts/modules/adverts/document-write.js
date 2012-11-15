@@ -1,13 +1,12 @@
-define(['common', 'reqwest'], function (Common, reqwest) {
+define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
+
  
-    // fire some test adverts here & see what comes back
-    window.document.write = function(a) {
-        console.log(a);
-    }   
-    
     var DocWrite = function (config) {
 
-        var config = config;
+        domwrite.capture();
+        
+        var config = config,
+            buffer;
 
         this.getPageUrl = function(){
             return config.page.pageId + '/oas.html'
@@ -26,9 +25,14 @@ define(['common', 'reqwest'], function (Common, reqwest) {
         this.getCategory = function() {
             return config.page.section.toLowerCase();
         }
+        
+        this.render = function () {
+            OAS_RICH('Top2');
+            var slot = document.getElementById('ad-slot-top-banner-ad');
+            domwrite.render(slot);
+        }
 
-        this.constructUrl = function() {
-            
+        this.getOasUrl = function() {
             return config.page.oasUrl + 
                'adstream_mjx.ads/' + 
                 this.getPageUrl() + '/' +
@@ -37,21 +41,22 @@ define(['common', 'reqwest'], function (Common, reqwest) {
                 '&pt=' + this.getPageType() + 
                 '&ct=' + this.getPageType();
         }
-    
-        this.load = function() { 
+        
+        this.load = function() {
+            var oasUrl = this.getOasUrl();
             reqwest({
-                url: this.constructUrl(),
+                url: oasUrl,
                 type: 'jsonp',
-                success: function (json) {
-                    eval(json);
-                     //common.mediator.emit('modules:related:loaded', [js]);
+                success: function (js) {
+                    common.mediator.emit('modules:adverts:docwrite:loaded');
                 },
                 error: function () {
-                    //common.mediator('module:error', 'Failed to load related', 'document-write.js');
+                    common.mediator('module:error', 'Failed to load related', 'document-write.js');
                 }
             });
         }
-        // TODO - call - OAS_RICH('Bottom2') - on success
+
+        common.mediator.on('modules:adverts:docwrite:loaded', this.render);
 
     }
 
