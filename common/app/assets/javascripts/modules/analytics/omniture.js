@@ -103,7 +103,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                 that.logView();
                 common.mediator.on('module:clickstream:click', that.logTag );
             } else {
-                require(['omniture'], function(placeholder){
+                require(['js!omniture'], function(placeholder){
                     s = window.s;
                     that.populatePageProperties();
                     that.logView();

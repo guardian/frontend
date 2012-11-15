@@ -66,7 +66,7 @@ define([
         });
     };
 
-    var ready = function(req, config, userPrefs) {
+    var ready = function(req, config) {
 
         var page = req.params.action;
 

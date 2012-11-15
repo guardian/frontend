@@ -1,7 +1,7 @@
 
 define(['modules/cookies'], function(Cookies) {
 
-    var revenueScienceUrl = "http://js.revsci.net/gateway/gw.js?csid=E05516";
+    var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
 
     function getSegments() {
         var segments = localStorage.getItem("gu.ads.audsci");
