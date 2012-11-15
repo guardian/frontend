@@ -63,7 +63,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           then("I should see the link for the desktop site")
-          findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/?mobile-redirect=false")
+          findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk?mobile-redirect=false")
       }
     }
 
