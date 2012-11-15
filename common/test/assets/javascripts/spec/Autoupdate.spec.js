@@ -33,7 +33,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
                     path: path,
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {polling: true}
+                    switches: {autoRefresh: true}
                 });
                 a.init();
 
@@ -53,7 +53,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
                     path: path,
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {polling: true}
+                    switches: {autoRefresh: true}
                 });
 
             a.init();
@@ -73,7 +73,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
                     path: 'fixtures/badupdate',
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {polling: true}
+                    switches: {autoRefresh: true}
                 });
                 a.init();
 
@@ -84,7 +84,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
             });
         });
         
-        xit('should not poll if `polling` switch turned off (default)', function() {
+        xit('should not poll if `autoRefresh` switch turned off (default)', function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
             
             var a = new Autoupdate({

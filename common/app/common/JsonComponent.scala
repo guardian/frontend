@@ -1,7 +1,7 @@
 package common
 
 import com.codahale.jerkson.{ Json => JsonParser }
-import conf.CommonSwitches.PollingSwitch
+import conf.CommonSwitches.AutoRefreshSwitch
 import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
 
@@ -23,7 +23,7 @@ object JsonComponent extends Results {
     JsonParser.generate(
       (items.toMap).map {
         case (name, html) => (name -> Compressed(html).body)
-      } ++ Map("refreshStatus" -> PollingSwitch.isSwitchedOn)
+      } ++ Map("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)
     )
   }
 

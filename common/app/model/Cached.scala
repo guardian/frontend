@@ -4,6 +4,7 @@ import org.joda.time.DateTime
 
 import org.scala_tools.time.Imports._
 import play.api.mvc.{ Result, SimpleResult, Results }
+import conf.CommonSwitches.DoubleCacheTimesSwitch
 
 object Cached extends Results {
 
@@ -21,7 +22,7 @@ object Cached extends Results {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     result.withHeaders(
-      "Cache-Control" -> "public, max-age=%s".format(seconds),
+      "Cache-Control" -> "public, max-age=%s".format(if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds),
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
