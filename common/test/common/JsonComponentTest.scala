@@ -15,11 +15,11 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "build json output with standard name" in {
-    val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=success_0")
     val result = JsonComponent(Html("hello world"))(request)
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
-    contentAsString(result) should be("""success({"html":"hello world","refreshStatus":true});""")
+    contentAsString(result) should be("""success_0({"html":"hello world","refreshStatus":true});""")
   }
 
   it should "build json from multiple items" in {
