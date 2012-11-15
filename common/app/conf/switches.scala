@@ -12,9 +12,15 @@ import play.api.{ Application => PlayApp }
 
 object CommonSwitches {
 
-  val FontSwitch = DefaultSwitch("font-family", "Enables web font loading")
+  val FontSwitch = DefaultSwitch("web-fonts",
+    "If this is switched on then the custom Guardian web font will load.",
+    initiallyOn = true)
 
-  val PollingSwitch = DefaultSwitch("auto-refresh", "Disables polling across site")
+  val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
+    "If this switch is on then autorefreshing features such as live blogs and football scores will poll for fresh content." +
+      " Turn off to help handle exceptional load.",
+    initiallyOn = true
+  )
 
   val AudienceScienceSwitch = DefaultSwitch("audience-science", "Disables Audience Science tracking")
 
@@ -22,7 +28,7 @@ object CommonSwitches {
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     initiallyOn = false)
 
-  val all: Seq[Switchable] = Seq(FontSwitch, PollingSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
+  val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
 
 }
 
