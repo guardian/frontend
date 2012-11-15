@@ -196,8 +196,6 @@ define(function() {
                 return attributeNode.specified;
             },
             appendScript: function(parent, scriptElt, listener) {
-                //var safelistener = catchError(listener,'script.onload');
-                //scriptElt.onload = safelistener;
                 parent.appendChild( scriptElt ); 
             }
         }
