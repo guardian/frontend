@@ -7,7 +7,7 @@ import play.api.templates.Html
 
 object JsonComponent extends Results {
 
-  private val ValidCallback = """([a-zA-Z0-9]+)""".r
+  private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
   def apply(html: Html)(implicit request: RequestHeader) = {
     val json = jsonFor(("html" -> html))
