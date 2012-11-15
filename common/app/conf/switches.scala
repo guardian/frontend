@@ -12,13 +12,12 @@ import play.api.{ Application => PlayApp }
 
 object CommonSwitches {
 
-  val FontSwitch = DefaultSwitch("web-fonts",
-    "If this is switched on then the custom Guardian web font will load.",
+  val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
+    "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     initiallyOn = true)
 
-  val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
-    "If this switch is on then autorefreshing features such as live blogs and football scores will poll for fresh content." +
-      " Turn off to help handle exceptional load.",
+  val FontSwitch = DefaultSwitch("web-fonts",
+    "If this is switched on then the custom Guardian web font will load.",
     initiallyOn = true)
 
   val AudienceScienceSwitch = DefaultSwitch("audience-science",
@@ -30,7 +29,6 @@ object CommonSwitches {
     initiallyOn = false)
 
   val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
-
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
