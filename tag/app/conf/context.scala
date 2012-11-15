@@ -1,6 +1,6 @@
 package conf
 
-import play.api.{Application => PlayApp}
+import play.api.{ Application => PlayApp }
 import common._
 import com.gu.management._
 import com.gu.management.play._
