@@ -5,22 +5,6 @@ define(function() {
         location = document.location,
         qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
 
-    for (var i = 0, j = qs.length; i<j; ++i) {
-        var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
-        if (m) {
-            switch (m[1]) {
-                case "switchOn":
-                    switchOn(m[2]);
-                    break;
-                case "switchOff":
-                    switchOff(m[2]);
-                    break;
-                default:
-                    set(m[1], m[2]);
-            }
-        }
-    }
-
     function set(name, value) {
         store[storagePrefix + name] = value;
     }
@@ -46,6 +30,22 @@ define(function() {
     }
     function isOff(name) {
         return store[storagePrefix + "switch." + name] === "false";
+    }
+
+    for (var i = 0, j = qs.length; i<j; ++i) {
+        var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+        if (m) {
+            switch (m[1]) {
+                case "switchOn":
+                    switchOn(m[2]);
+                    break;
+                case "switchOff":
+                    switchOff(m[2]);
+                    break;
+                default:
+                    set(m[1], m[2]);
+            }
+        }
     }
 
     return {
