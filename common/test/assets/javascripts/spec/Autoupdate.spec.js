@@ -54,7 +54,6 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
                     delay: delay,
                     attachTo: attachTo,
                     switches: {autoRefresh: true}
-                    switches: {polling: true}
                 });
 
             a.init();
