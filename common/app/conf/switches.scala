@@ -6,7 +6,7 @@ object CommonSwitches {
 
   val FontSwitch = DefaultSwitch("font-family", "Enables web font loading")
 
-  val PollingSwitch = DefaultSwitch("polling", "Disables polling across site")
+  val PollingSwitch = DefaultSwitch("polling", "Turn off to disable polling across site", initiallyOn = true)
 
   val AudienceScienceSwitch = DefaultSwitch("audience-science", "Disables Audience Science tracking")
 
