@@ -19,13 +19,14 @@ object CommonSwitches {
   val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
     "If this switch is on then autorefreshing features such as live blogs and football scores will poll for fresh content." +
       " Turn off to help handle exceptional load.",
-    initiallyOn = true
-  )
+    initiallyOn = true)
 
-  val AudienceScienceSwitch = DefaultSwitch("audience-science", "Disables Audience Science tracking")
+  val AudienceScienceSwitch = DefaultSwitch("audience-science",
+    "If this switch is on the Audience Science will be enabled.",
+    initiallyOn = true)
 
   val DoubleCacheTimesSwitch = DefaultSwitch("double-cache-times",
-    "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
+    "If this switch is turned on it doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     initiallyOn = false)
 
   val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
