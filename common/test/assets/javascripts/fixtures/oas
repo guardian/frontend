@@ -1,0 +1,35 @@
+function OAS_RICH(position) {
+if (position == 'Bottom2') {
+document.write ('\n');
+document.write ('<IMG SRC="http://oas.guardian.co.uk/5/m.guardian.co.uk/oas.html/L25/376280811/Bottom2/Guardian/Admeld_Bottom_ROS_UK/Admeld_2_Bottom_ROS_UK.html/55503665584643466858594142747174?_RM_EMPTY_&&cf=&ct=&pt=keyword&cat=home" WIDTH=1 HEIGHT=1>');
+}
+if (position == 'Top2') {
+document.write ('\n');
+document.write ('<script type="text/javascript">\n');
+document.write ('admeld_publisher  = 653;\n');
+document.write ('admeld_site       = ');
+document.write ("'");
+document.write ('newsuk-mobileweb');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_size       = ');
+document.write ("'");
+document.write ('320x50');
+document.write ("'");
+document.write (';\n');
+document.write ('advert_doc_write  = ');
+document.write ("'");
+document.write ('top');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_no_iframe = true;\n');
+document.write ('admeld_url = ');
+document.write ("'");
+document.write ('http://www.premiumnewsuk.com');
+document.write ("'");
+document.write (';\n');
+document.write ('</script>\n');
+document.write ('<div id="advert-via-doc-write">advert</div>\n');
+document.write ('\n');
+}
+}
