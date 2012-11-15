@@ -15,11 +15,6 @@
     <div id="container"> 
         @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
         @fragments.navigation(static, config, metaData, isFooter=false)
-        @fragments.siteMessage{
-            Trial of our new mobile site
-        }{
-            This afternoon we are running a short test. <br /><a href="/help/2012/nov/15/1">Find out more about upcoming changes</a>
-        }("maintenance")
         @body
         @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
         @fragments.navigation(static, config, metaData, isFooter=true)

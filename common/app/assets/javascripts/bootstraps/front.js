@@ -58,7 +58,7 @@ define([
     };
 
     // All methods placed inside here will exec after DOMReady
-    var ready = function(req, config, userPrefs) {
+    var ready = function(req, config) {
         modules.showFrontExpanders();
         modules.showTrailblockToggles(config);
         modules.showFootballFixtures(req.url);

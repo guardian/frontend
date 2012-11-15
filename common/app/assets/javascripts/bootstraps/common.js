@@ -2,6 +2,7 @@ define([
     //Commmon libraries
     'common',
     'modules/detect',
+    'modules/userPrefs',
     //Vendor libraries
     'domReady',
     'qwery',
@@ -23,6 +24,7 @@ define([
 ], function (
     common,
     detect,
+    userPrefs,
 
     domReady,
     qwery,
@@ -101,7 +103,7 @@ define([
         },
 
         loadOphanAnalytics: function () {
-            require(['http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
+            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
         },
 
         loadAdverts: function (config) {
@@ -123,7 +125,7 @@ define([
         }
     };
 
-    var ready = function(config, userPrefs) {
+    var ready = function(config) {
         modules.attachGlobalErrorHandler();
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.upgradeImages();
@@ -138,7 +140,7 @@ define([
     };
 
     // If you can wait for load event, do so.
-    var defer = function(config, userPrefs) {
+    var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics();
@@ -147,9 +149,9 @@ define([
         });
     };
 
-    var init = function (config, userPrefs) {
+    var init = function (config) {
         ready(config, userPrefs);
-        defer(config, userPrefs);
+        defer(config);
     };
 
     return {

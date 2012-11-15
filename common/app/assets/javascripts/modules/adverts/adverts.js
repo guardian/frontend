@@ -1,13 +1,13 @@
-/*global guardian:true */
 define([
     'common',
     'reqwest',
+    'modules/userPrefs',
     'modules/detect',
     'modules/adverts/iframeadslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science'
 ],
-function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) {
+function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audienceScience) {
 
     var config,
         adsSwitchedOn,
@@ -21,7 +21,7 @@ function (common, reqwest, detect, IframeAdSlot, dimensionMap, audienceScience) 
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 
-        adsSwitchedOn = !guardian.userPrefs.isOff('adverts');
+        adsSwitchedOn = !userPrefs.isOff('adverts');
 
         // Run through slots and create IframeAdSlots for each.
         // Other ad types to be plugged in later.
