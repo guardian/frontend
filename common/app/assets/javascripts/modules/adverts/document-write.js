@@ -42,7 +42,7 @@ define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
         }
         
         this.load = function(url) {
-            var oasUrl = this.getOasUrl();
+            var oasUrl = url || this.getOasUrl();
             reqwest({
                 url: oasUrl,
                 type: 'jsonp',
