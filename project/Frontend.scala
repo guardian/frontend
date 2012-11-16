@@ -41,7 +41,7 @@ object Frontend extends Build with Prototypes {
   	)
 	.settings(ideaSettings: _*)
   	
-  val common = library("common").dependsOn(jasmine % "test->test")
+  val common = library("common")//.dependsOn(jasmine % "test->test")
   
   val commonWithTests = common % "test->test;compile->compile"
 
