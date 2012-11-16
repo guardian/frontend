@@ -1,5 +1,6 @@
 package model
 
+import conf.CommonSwitches
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
@@ -60,6 +61,18 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val headers = result.header.headers
 
     headers("Cache-Control") should be("public, max-age=60")
+  }
+
+  it should "double the cache time if DoubleCacheTimesSwitch is switched on" in {
+
+    CommonSwitches.DoubleCacheTimesSwitch.switchOn()
+
+    val liveContent = content(lastModified = DateTime.now, live = false)
+
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val headers = result.header.headers
+
+    headers("Cache-Control") should be("public, max-age=120")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {

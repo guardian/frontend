@@ -81,11 +81,8 @@ define([
 
         loadFonts: function(config, ua, prefs) {
             var showFonts = false;
-            if(config.switches.fontFamily || prefs.isOn('font-family')) {
+            if(config.switches.webFonts) {
                 showFonts = true;
-            }
-            if (prefs.isOff('font-family')) {
-                showFonts = false;
             }
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
