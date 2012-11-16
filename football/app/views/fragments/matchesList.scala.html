@@ -12,7 +12,8 @@
 	            </a>
 	            
 	            <ol class="matches unstyled">
-	                @comp.matches.map{
+	                @* sort matches by start time, then alphabet *@
+	                @comp.matches.sortBy(m => (m.date.minuteOfDay().get(), m.homeTeam.name)).map{
 	                    case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
 	                    case result: pa.Result                          => { @fragments.result(result) }
 	                    case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
