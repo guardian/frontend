@@ -72,6 +72,8 @@ object Switches {
   val all: Seq[Switchable] = CommonSwitches.all
 }
 
+class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
+
 object PaApiHttpTimingMetric extends TimingMetric(
   "performance",
   "pa-api-calls",

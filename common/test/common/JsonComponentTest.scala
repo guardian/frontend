@@ -1,6 +1,6 @@
 package common
 
-import conf.CommonSwitches
+import conf.CommonSwitches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
 import play.api.test.FakeRequest
 import play.api.templates.Html
@@ -31,7 +31,7 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "disable refreshing if auto refresh switch is off" in {
-    CommonSwitches.PollingSwitch.switchOff()
+    AutoRefreshSwitch.switchOff()
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
     val result = JsonComponent(Html("hello world"))(request)
     contentAsString(result) should be("""success({"html":"hello world","refreshStatus":false});""")

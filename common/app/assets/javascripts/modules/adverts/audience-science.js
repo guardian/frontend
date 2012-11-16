@@ -1,4 +1,3 @@
-
 define(['modules/cookies'], function(Cookies) {
 
     var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
