@@ -52,7 +52,7 @@ public class NetworkFrontSteps {
 		);
 		for(WebElement section : sections) {
 			// click button
-			WebElement button = section.findElement(By.cssSelector(".front-section-head .toggle-trailblock"));
+			WebElement button = section.findElement(By.cssSelector(".toggle-trailblock"));
 			Assert.assertEquals(buttonText, button.getText());
 			button.click();
 			// and wait a second for it to close
