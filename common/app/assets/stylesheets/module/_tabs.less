@@ -1,5 +1,7 @@
+@tabBorderWidth: 2px;
+
 .tabs {
-    border: 2px solid @mushroom;
+    border: @tabBorderWidth solid @mushroom;
     margin: @baseline @gutter 0 @gutter;
     border-bottom: none;
     padding: 0px;
@@ -49,6 +51,6 @@
 .tabs-content {
     clear: both;
     margin: 0px @gutter;
-    border: 2px solid @mushroom;
+    border: @tabBorderWidth solid @mushroom;
     border-top: none;
 }
