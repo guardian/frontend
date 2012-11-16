@@ -25,8 +25,8 @@ object Navigation {
       SectionLink("culture", "Culture", "/culture", "Culture"),
       SectionLink("business", "Business", "/business", "Business"),
       SectionLink("technology", "Technology", "/technology", "Technology"),
-      SectionLink("film", "Film", "/film", "Film"),
-      SectionLink("music", "Music", "/music", "Music")
+      SectionLink("environment", "Environment", "/environment", "Environment"),
+      SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates")
     )
 
     sections
