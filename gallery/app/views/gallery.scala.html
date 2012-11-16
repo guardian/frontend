@@ -13,7 +13,7 @@
             @fragments.headline(gallery.headline)
         </header>
         
-        <p class="box-indent gallery-nav type-6">
+        <p class="box-indent gallery-nav type-6" id="js-gallery-nav">
             @if(index > 1) {
                 <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)" class="gallery-prev">Previous</a>
             } else {
