@@ -43,7 +43,7 @@ define([
         }
     };
 
-    var ready = function(req, config, userPrefs) {
+    var ready = function(req, config) {
         modules.transcludeRelated(config);
 
         if (config.page.isLive) {

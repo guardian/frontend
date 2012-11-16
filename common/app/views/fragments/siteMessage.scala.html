@@ -1,0 +1,5 @@
+@(header: Html)(body: Html)(messageType: String = "standard")
+<div class="site-message site-message-type-@messageType">
+    <h2><span class="site-message-icon"></span>@header</h2>
+    <p>@body</p> 
+</div>

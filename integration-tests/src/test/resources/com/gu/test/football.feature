@@ -102,4 +102,21 @@ Feature: Football fixtures
     @scala-test
     Scenario: User can see up to 28 days worth of results for a particular competition  
         Given I visit the "premierleague" results page
-        Then I should see 28 days of results  
+        Then I should see 28 days of results
+        
+    @scala-test
+    Scenario Outline: The 'Desktop version' link points to the correct, equivalent desktop page
+        Given I visit the '<page>' page
+            And I am on the '<edition>' edition
+        Then the 'Desktop version' link should point to '<url>'
+        
+        Examples:
+            | page     | edition | url                                                                |
+            | table    | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
+            | table    | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
+            | live     | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
+            | live     | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
+            | fixtures | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
+            | fixtures | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
+            | results  | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
+            | results  | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
