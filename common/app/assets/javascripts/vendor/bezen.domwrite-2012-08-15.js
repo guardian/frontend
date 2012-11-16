@@ -1,3 +1,19 @@
+
+var catchError = function(func,description){
+    description = description || 'error.catchError';
+    var safefunc = function(){
+      try {
+              return func.apply(this,arguments);
+                } catch(e) {
+                        if (window.onerror){
+                                  window.onerror(description+': '+e.message+' in '+func,
+                                                               e.fileName, e.lineNumber,true);
+                                      }
+                          }
+      };
+    return safefunc;
+};
+
 /*
  * bezen.domwrite.js - Simulated document.write and writeln for the safe
  *                     loading of external scripts after page load
@@ -196,6 +212,23 @@ define(function() {
                 return attributeNode.specified;
             },
             appendScript: function(parent, scriptElt, listener) {
+                var safelistener = catchError(listener,'script.onload');
+                    // Opera has readyState too, but does not behave in a consistent way
+                    if (scriptElt.readyState && scriptElt.onload!==null) {
+                    // IE only (onload===undefined) not Opera (onload===null)
+                    scriptElt.onreadystatechange = function() {
+                    if ( scriptElt.readyState === "loaded" ||
+                    scriptElt.readyState === "complete" ) {
+                    // Avoid memory leaks (and duplicate call to callback) in IE
+                    scriptElt.onreadystatechange = null;
+                    scriptElt.onerror = null;
+                    safelistener();
+                    }
+                    };
+                    } else {
+                    // other browsers (DOM Level 0)
+                    scriptElt.onload = safelistener;
+                } 
                 parent.appendChild( scriptElt ); 
             }
         }

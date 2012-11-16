@@ -22,9 +22,11 @@ define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
         }
 
         this.getCategory = function() {
-            return config.page.section.toLowerCase();
+            if (config.page.section) {
+                return config.page.section.toLowerCase();
+            }
         }
-        
+
         this.render = function () {
             OAS_RICH('Top2'); // TODO need to be slot aware 
             var slot = document.getElementById('ad-slot-top-banner-ad'); // ad-slot-top-banner-ad
@@ -38,7 +40,8 @@ define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
                 Math.random().toString().substring(2,11) + '@Top2,Bottom2' +
                 '?' + this.getKeywords() + 
                 '&pt=' + this.getPageType() + 
-                '&ct=' + this.getPageType();
+                '&ct=' + this.getPageType() + 
+                '&cat=' + this.getCategory();
         }
         
         this.load = function(url) {

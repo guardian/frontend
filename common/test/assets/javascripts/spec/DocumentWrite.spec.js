@@ -27,11 +27,12 @@ define([
 
         it("Construct an OAS request using page metadata", function() {
             var d = new DocumentWrite(config),
-                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype';
+                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype&cat=section';
             expect(d.getOasUrl()).toBe(url);
         });
         
         it("Buffer multiple document.write calls", function() {
+            
             var d = new DocumentWrite(config).load('fixtures/oas');
             
             waitsFor(function(){
