@@ -12,7 +12,8 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 currentIndex: urlParams.index || 0,
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
-                currentlyShowingCaptions: false
+                currentlyShowingCaptions: false,
+                fullscreenPlaceholder: document.getElementById('js-gallery-fullscreen-placeholder');
             },
 
             toggleCaptions: function (toggler) {
@@ -31,29 +32,12 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 }
             },
 
-            /*
+            
             bindCaptionTogglers: function () {
                 var galleryContainer = document.getElementById('js-gallery');
-                bean.add(galleryContainer, 'click', function(e) {
-                    var targetElm = e.target;
-                    if (targetElm.nodeName.toLowerCase() === "p") {
-                        if (bonzo(targetElm).hasClass("js-gallery-caption-toggle")) {
-                            view.toggleCaptions(targetElm);
-                        }
-                    }
+                bean.on(galleryContainer, 'click', '.js-gallery-caption-toggle', function(e) {
+                    view.toggleCaptions(this);
                 });
-
-                var togglers = document.querySelectorAll('.js-gallery-caption-toggle');
-                console.log(togglers, togglers.length);
-                for (var i=0, l=togglers.length; i<l; i++) {
-                    var elm = togglers[i];
-                    console.log('binding ' + elm);
-                    elm.onclick = (function(value) {
-                        return function() {
-                            alert(value);
-                        }
-                    })(i);
-                }
 
                 // todo: put this somewhere else
                 var galleryImgs = document.querySelectorAll('.js-gallery-img');
@@ -66,11 +50,23 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
             bindPopup: function (elm) {
                 elm.onclick = (function() {
                     return function() {
-                        console.log("popping up " + elm);
+                        view.showFullscreenImage(elm);
                     }
                 })();
             },
-            */
+            
+            showFullscreenImage: function (elm) {
+                // copy gallery-nav to placeholder
+                // replace its fullscreen button with a close one
+                // copy caption/credit to hidden div
+                // copy image to central position
+                // bind toggle event on image to show caption
+                // bind close button to kill the popup
+                    // remove all bound events when closing
+
+                var galleryNavHTML = document.getElementById('js-gallery-nav').innerHTML;
+                bonzo(galleryNavHTML).appendTo(view.galleryConfig.fullscreenPlaceholder);
+            },
 
             // runs on domready
             bindGallery: function () {
@@ -297,7 +293,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     if (src && src !== "") { // create <img> element
                         placeholder.innerHTML = '<img src="' + src + '" class="js-gallery-img maxed" />' + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
-                        //view.bindPopup(placeholder.querySelector('img'));
+                        view.bindPopup(placeholder.querySelector('img'));
                     }
                 }
 
@@ -308,7 +304,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
         this.init = function () {
             view.bindGallery();
-            //view.bindCaptionTogglers();
+            view.bindCaptionTogglers();
         };
 
     };
