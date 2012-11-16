@@ -1,15 +1,7 @@
 .gallery-container {
-    width: 100%;
     overflow: hidden;
+    margin: 0px @gutter;
 }
-
-.gallery-swipe,
-.gallery-swipe li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 
 .gallery-swipe li img {
     width: 100%;
@@ -39,4 +31,33 @@
 
 .gallery-next:after {
     content: " »";
+}
+
+.gallery-caption-toggle i,
+.gallery-nav i {
+    display: inline-block;
+}
+
+.gallery-caption-toggle,
+.gallery-fullscreen-toggle {
+    cursor: pointer;
+}
+
+// we don't show prev/next links for swipe users
+.gallery-swipe .gallery-prev,
+.gallery-swipe .gallery-next {
+    display: none !important; // sorry for this - it's because the JS tries to force it to show (MA)
+}
+
+.gallery-swipe .gallery-nav {
+    text-align: left;
+}
+
+.gallery-swipe .gallery-fullscreen-toggle {
+    display: inline-block;
+    float: right;
+}
+
+.gallery-page header {
+    padding-bottom: 0;
 }

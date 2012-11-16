@@ -1,4 +1,4 @@
-define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], function (reqwest, bean, Swipe, common, detect, url) {
+define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], function (reqwest, bean, Swipe, common, detect, url, bonzo) {
 
     var Gallery = function () {
 
@@ -11,14 +11,72 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                 prevLink: document.getElementById('js-gallery-prev'),
                 currentIndex: urlParams.index || 0,
                 currentSlideClassName: 'js-current-gallery-slide',
-                inSwipeMode: false
+                inSwipeMode: false,
+                currentlyShowingCaptions: false
             },
+
+            toggleCaptions: function (toggler) {
+                
+                var captionId = toggler.getAttribute('data-caption-id');
+                var caption = document.getElementById('js-gallery-caption-' + captionId);
+                var icon = toggler.querySelector('i'); // icon
+                toggler = toggler.querySelector('span'); // text holder
+
+                bonzo(icon).toggleClass('i-expand-plus i-contract-minus');
+                bonzo(caption).toggleClass('js-hidden');
+                if (bonzo(toggler).text() === "Show caption") {
+                    bonzo(toggler).text('Hide caption');
+                } else {
+                    bonzo(toggler).text('Show caption');
+                }
+            },
+
+            /*
+            bindCaptionTogglers: function () {
+                var galleryContainer = document.getElementById('js-gallery');
+                bean.add(galleryContainer, 'click', function(e) {
+                    var targetElm = e.target;
+                    if (targetElm.nodeName.toLowerCase() === "p") {
+                        if (bonzo(targetElm).hasClass("js-gallery-caption-toggle")) {
+                            view.toggleCaptions(targetElm);
+                        }
+                    }
+                });
+
+                var togglers = document.querySelectorAll('.js-gallery-caption-toggle');
+                console.log(togglers, togglers.length);
+                for (var i=0, l=togglers.length; i<l; i++) {
+                    var elm = togglers[i];
+                    console.log('binding ' + elm);
+                    elm.onclick = (function(value) {
+                        return function() {
+                            alert(value);
+                        }
+                    })(i);
+                }
+
+                // todo: put this somewhere else
+                var galleryImgs = document.querySelectorAll('.js-gallery-img');
+                for (var i=0, l=galleryImgs.length; i<l; i++) {
+                    var elm = galleryImgs[i];
+                    view.bindPopup(elm);
+                }
+            },
+
+            bindPopup: function (elm) {
+                elm.onclick = (function() {
+                    return function() {
+                        console.log("popping up " + elm);
+                    }
+                })();
+            },
+            */
 
             // runs on domready
             bindGallery: function () {
-                  
+
                 if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
-                    
+
                     view.galleryConfig.inSwipeMode = true;
 
                     // add swipe styling
@@ -36,7 +94,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
-                    var gallerySwipe = new Swipe(document.getElementById('js-gallery'), {
+                    var gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
                         callback: function(event, index, elm) {
 
                             var count = document.getElementById('js-gallery-index');
@@ -60,23 +118,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     if (urlParams.index) {
                         gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0);
                     }
-
-                    // bind prev/next to just trigger swipes
-                    bean.add(view.galleryConfig.nextLink, 'click', function(e) {
-                        // we get 2 omniture calls here and in the function below
-                        // one is for the link click (which seems to be impossible to remove)
-                        // the other is for the faux swipes triggered here
-                        gallerySwipe.next();
-                        e.preventDefault();
-                    });
-
-                    bean.add(view.galleryConfig.prevLink, 'click', function(e) {
-                        // we could just call advanceGallery('prev') here
-                        // but doing it this way means we get the nice swipe animation too
-                        // (and omniture swipe tracking, see above)
-                        gallerySwipe.prev();
-                        e.preventDefault();
-                    });
 
                 } else { // non-touch version
 
@@ -169,7 +210,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                 var nextSlide = elmToWorkWith.nextElementSibling;
                 var prevSlide = elmToWorkWith.previousElementSibling;
 
-
                 // show and hide next/prev links
                 view.handlePrevNextLinks(newSlideIndex, totalSlides);
 
@@ -255,8 +295,9 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
                     
                     var src = placeholder.getAttribute("data-src");
                     if (src && src !== "") { // create <img> element
-                        placeholder.innerHTML = '<img src="' + src + '" class="maxed" />' + placeholder.innerHTML;
+                        placeholder.innerHTML = '<img src="' + src + '" class="js-gallery-img maxed" />' + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
+                        //view.bindPopup(placeholder.querySelector('img'));
                     }
                 }
 
@@ -267,6 +308,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url"], 
 
         this.init = function () {
             view.bindGallery();
+            //view.bindCaptionTogglers();
         };
 
     };
