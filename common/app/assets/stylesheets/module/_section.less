@@ -1,12 +1,18 @@
-.front-section-head h1 {
+.front-section-head h1,
+.sub-section-head h1 {
 	margin-bottom: 0px;
 	padding: @baseline*3 @gutter;
 	line-height: 1em;
 }
 
-.front-section-head {
+.front-section-head, .sub-section-head {
 	position: relative;
     overflow: hidden;
+    border-top: @baseline solid @mushroom;
+}
+
+.sub-section-head {
+    border-bottom: 1px solid @mushroom;
 }
 
 .front-section-head a, 
