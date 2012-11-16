@@ -1,12 +1,11 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int, isShaded: Boolean = false)
 
 @defining(trails.length){ numTrails =>
+    <h3 class="type-2 article-zone">@Html(heading)</h3>
     <div class="trailblock @if(isShaded){trailblock-shaded}"
         id="related-trails" 
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading">
-        
-        <h3 class="type-2 article-zone">@Html(heading)</h3>
 
         @fragments.trailblocks.thumbnail(trails, numItemsVisible = 5, numThumbnails = 3, related = true, headingLevel = 3                                                                   )
     </div>
