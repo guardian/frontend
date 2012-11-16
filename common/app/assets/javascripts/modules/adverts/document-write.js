@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
+define(['common', 'reqwest', 'domwrite', 'modules/adverts/audience-science'], function (common, reqwest, domwrite, audienceScience) {
  
     var DocWrite = function (config) {
 
@@ -11,7 +11,13 @@ define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
             return 'm.guardian.co.uk/' + config.page.pageId + '/oas.html'
         }
 
-        this.getKeywords = function() {
+       this.getAudienceScience = function() {
+           return audienceScience.getSegments().map(function(segment) { 
+              return "&a=" + segment;
+              }).join('');
+       }
+
+       this.getKeywords = function() {
             return config.page.keywords.split(',').map(function(keyword){
                 return 'k=' + encodeURIComponent(keyword.toLowerCase())
             }).join('&')
@@ -41,7 +47,8 @@ define(['common', 'reqwest', 'domwrite'], function (common, reqwest, domwrite) {
                 '?' + this.getKeywords() + 
                 '&pt=' + this.getPageType() + 
                 '&ct=' + this.getPageType() + 
-                '&cat=' + this.getCategory();
+                '&cat=' + this.getCategory() + 
+                this.getAudienceScience();
         }
         
         this.load = function(url) {

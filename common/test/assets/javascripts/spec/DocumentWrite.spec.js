@@ -17,6 +17,7 @@ define([
     }
    
     beforeEach(function(){
+        localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
         common.mediator.removeAllListeners();
     });
  
@@ -27,7 +28,7 @@ define([
 
         it("Construct an OAS request using page metadata", function() {
             var d = new DocumentWrite(config),
-                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype&cat=section';
+                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype&cat=section&a=E012390&a=E012782';
             expect(d.getOasUrl()).toBe(url);
         });
         
@@ -35,6 +36,20 @@ define([
             
             var d = new DocumentWrite(config).load('fixtures/oas');
             
+            waitsFor(function(){
+                return (window.admeld_url != undefined) // variable evaluated in fixtures 
+            }, "window.admeld_url never evaluated", 1000)
+            
+            runs(function(){ 
+                expect(window.admeld_url).toBeTruthy()
+                expect(document.getElementById('advert-via-doc-write')).toBeTruthy()
+            })
+        });
+        
+        it("Pass audience science tags to the OAS", function() {
+            
+            var d = new DocumentWrite(config).load('fixtures/oas');
+             
             waitsFor(function(){
                 return (window.admeld_url != undefined) // variable evaluated in fixtures 
             }, "window.admeld_url never evaluated", 1000)

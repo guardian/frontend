@@ -7,6 +7,8 @@ define(['modules/cookies'], function(Cookies) {
         var segments = localStorage.getItem("gu.ads.audsci");
         if (segments) {
             return JSON.parse(segments);
+        } else { 
+            return [];
         }
     }
 
