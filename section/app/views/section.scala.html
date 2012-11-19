@@ -1,6 +1,6 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
-@main(section, Static, Configuration, Switches.all){  }{
+@main(section, Switches.all){  }{
     <section class="front-section zone-@section.section">
 
     	<h1 class="article-zone zone-color">@Html(section.name)</h1>

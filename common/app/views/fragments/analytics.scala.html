@@ -1,8 +1,8 @@
-@(page: MetaData, config: common.GuardianConfiguration)
+@(page: MetaData)
 
 @defining(
 "http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-    config.javascript.pageData("guardian.page.omnitureAccount"),
+    Configuration.javascript.pageData("guardian.page.omnitureAccount"),
     OmnitureAnalyticsData(page))
 ){ omnitureCall =>
         <noscript id="omnitureNoScript">

@@ -4,7 +4,6 @@ import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
 import org.scalatest.FlatSpec
 import conf.Configuration
-import common.GuardianConfiguration
 
 class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
 

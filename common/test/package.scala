@@ -1,20 +1,20 @@
 package test
 
+import conf.Configuration
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import common.GuardianConfiguration
 import java.net.{ HttpURLConnection, URL }
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit(config: GuardianConfiguration) {
+class EditionalisedHtmlUnit {
+
+  import Configuration.edition._
 
   val testPlugins: Seq[String] = Nil
   val disabledPlugins: Seq[String] = Nil
-
-  import config.edition._
 
   val Port = """.*:(\d*)$""".r
 
@@ -69,9 +69,9 @@ class EditionalisedHtmlUnit(config: GuardianConfiguration) {
 }
 
 object WithHost {
-  def apply(path: String)(implicit config: GuardianConfiguration): String = UK(path)(config)
-  def UK(path: String)(implicit config: GuardianConfiguration): String = "http://" + config.edition.ukHost + path
-  def US(path: String)(implicit config: GuardianConfiguration): String = "http://" + config.edition.usHost + path
+  def apply(path: String): String = UK(path)
+  def UK(path: String): String = "http://" + Configuration.edition.ukHost + path
+  def US(path: String): String = "http://" + Configuration.edition.usHost + path
 }
 
 /**

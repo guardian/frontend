@@ -1,4 +1,4 @@
-@(static: StaticAssets, config: GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
+@(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @if(!isFooter){
 <header id="header" class="cf">
@@ -32,7 +32,7 @@
 }
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
-    @fragments.sections(config, page, isFooter)
+    @fragments.sections(page, isFooter)
 </div>
 
 @if(isFooter){
