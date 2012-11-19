@@ -13,7 +13,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
                 currentlyShowingCaptions: false,
-                fullscreenPlaceholder: document.getElementById('js-gallery-fullscreen-placeholder');
+                fullscreenPlaceholder: document.getElementById('js-gallery-fullscreen-placeholder')
             },
 
             toggleCaptions: function (toggler) {
@@ -56,16 +56,33 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
             },
             
             showFullscreenImage: function (elm) {
-                // copy gallery-nav to placeholder
-                // replace its fullscreen button with a close one
-                // copy caption/credit to hidden div
-                // copy image to central position
                 // bind toggle event on image to show caption
                 // bind close button to kill the popup
                     // remove all bound events when closing
 
+                var li = elm.parentNode;
+
+                // copy the current gallery-nav to placeholder
                 var galleryNavHTML = document.getElementById('js-gallery-nav').innerHTML;
-                bonzo(galleryNavHTML).appendTo(view.galleryConfig.fullscreenPlaceholder);
+                var cloneNav = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-nav-placeholder');
+                bonzo(cloneNav.querySelector('.i-image')).toggleClass('i-image-inverted');
+                cloneNav.innerHTML = galleryNavHTML;
+
+                // replace its fullscreen button with a close one
+                cloneNav.querySelector('.js-toggle-fullscreen').innerHTML = '<i class="i-close-x"</i>';
+
+                // copy image to central position
+                var currentImageSrc = document.querySelector('.js-current-gallery-slide img').getAttribute('src');
+                var cloneImage = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-image-placeholder');
+                cloneImage.innerHTML = '<img src="'+ currentImageSrc + '" />';
+
+                // copy caption/credit to hidden div
+                var captionHTML = li.querySelector('.js-gallery-caption').innerHTML;
+                var cloneCaption = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-caption-placeholder')
+                cloneCaption.innerHTML = captionHTML;
+                
+                bonzo(view.galleryConfig.fullscreenPlaceholder).removeClass('initially-off');
+
             },
 
             // runs on domready
