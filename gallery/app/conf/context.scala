@@ -5,12 +5,6 @@ import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
 
-object Configuration extends GuardianConfiguration("frontend-gallery", webappConfDirectory = "env")
-
-object ContentApi extends ContentApiClient(Configuration)
-
-object Static extends StaticAssets(Configuration.static.path)
-
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
 }
