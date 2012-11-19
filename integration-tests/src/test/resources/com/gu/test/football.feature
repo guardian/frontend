@@ -120,3 +120,14 @@ Feature: Football fixtures
             | fixtures | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
             | results  | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
             | results  | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
+            
+    @scala-test
+    Scenario Outline: Matches are ordered by start time, then alphabet
+        Given I am on the 'results' page
+        Then the '<competition>' matches on '<date>' should be ordered as '<order>'
+        
+        Examples:
+            | competition           | date  | order                                            |
+            | Scottish Division Two | today | Albion, Aloa, Brechin, East Fife, Queen of South |
+    
+        

@@ -1,10 +1,9 @@
 package conf
 
-import common._
+import play.api.{ Application => PlayApp }
 import com.gu.management._
 import com.gu.management.play._
 import logback.LogbackLevelPage
-import java.net.{ HttpURLConnection, URL }
 import common._
 
 object Configuration extends GuardianConfiguration("frontend-front", webappConfDirectory = "env") {
@@ -25,6 +24,8 @@ object Static extends StaticAssets(Configuration.static.path)
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
 }
+
+class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object Metrics {
   val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all

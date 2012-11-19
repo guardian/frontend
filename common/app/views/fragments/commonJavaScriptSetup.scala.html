@@ -3,155 +3,82 @@
 @import CommonSwitches.FontSwitch
 
 <script id="gu">
-
     // we want this to happen ASAP to avoid FOUC
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
     var guardian = {
-        isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
-    },
-        require = {
-        baseUrl: '@{config.static.path}javascripts',
-        paths: {
-            'bootstraps/@bootstrapJsModule': '@static("javascripts/bootstraps/%s.js".format(bootstrapJsModule)).asModulePath',
-            omniture: '@static("javascripts/vendor/omniture.js").asModulePath'
+            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
+            }, 
+            curl = {
+                baseUrl: '@{config.static.path}javascripts',
+                apiName: 'require',
+                paths: {
+                    omniture: '@static("javascripts/vendor/omniture.js")'
+                }
+            };
+
+    (function loadFontsFromStorage(prefs, key) {
+
+        var showFonts = false;
+        @if(FontSwitch.isSwitchedOn) {
+            showFonts = true;
         }
-    };
+        if (localStorage['gu.prefs.switch.font-family'] === true) {
+            showFonts = true;
+        } else
+        if (localStorage['gu.prefs.switch.font-family'] === false) {
+            showFonts = false;
+        }
 
-    guardian.userPrefs = (function() {
-
-        var storagePrefix = 'gu.prefs.',
-            store = localStorage,
-            location = document.location,
-            qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
-
-        for (var i = 0, j = qs.length; i<j; ++i) {
-            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/)
-            if (m) {
-                switch (m[1]) {
-                    case "switchOn":
-                        switchOn(m[2]);
-                        break;
-                    case "switchOff":
-                        switchOff(m[2]);
-                        break;
-                    default:
-                        set(m[1], m[2])
+        if (showFonts) {
+            var start = (new Date().getTime());
+            var styleNodes = document.querySelectorAll('[data-cache-name]');
+            for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                var style = styleNodes[i],
+                    name = style.getAttribute('data-cache-name'),
+                    cachedCss = localStorage.getItem('_guFont:' + name);
+                if (cachedCss) {
+                    style.innerHTML = cachedCss;
+                    style.setAttribute('data-cache-full', 'true');
+                    document.querySelector('html').className += ' font-' + name + '-loaded';
                 }
             }
+            var fontTime = (new Date().getTime()) - start;
+            if (fontTime > 50) {
+                var img = document.createElement("img");
+                img.style = "display: none";
+                img.src = "/px.gif?fonts/&fonttime=" + fontTime;
+                document.getElementsByTagName("head")[0].appendChild(img);
+            }
         }
-
-        function set(name, value) {
-            store[storagePrefix + name] = value;
-        }
-        function get(name) {
-            return store[storagePrefix + name];
-        }
-        function remove(name) {
-            store.removeItem(storagePrefix + name);
-        }
-
-        function switchOn(name) {
-            store[storagePrefix + "switch." + name] = "true";
-        }
-        function switchOff(name) {
-            store[storagePrefix + "switch." + name] = "false";
-        }
-        function removeSwitch(name) {
-            store.removeItem(storagePrefix + "switch." + name);
-        }
-
-        function isOn(name) {
-            return store[storagePrefix + "switch." + name] === "true";
-        }
-        function isOff(name) {
-            return store[storagePrefix + "switch." + name] === "false";
-        }
-
-        return {
-            set: set,
-            get: get,
-            remove: remove,
-            switchOn: switchOn,
-            switchOff: switchOff,
-            removeSwitch: removeSwitch,
-            isOn: isOn,
-            isOff: isOff
-        }
-        
     })();
-
-        (function loadFontsFromStorage(prefs, key) {
-
-            var showFonts = false;
-            @if(FontSwitch.isSwitchedOn) {
-                showFonts = true;
-            }
-            if (prefs.isOn(key)) {
-                showFonts = true;
-            } else
-            if (prefs.isOff(key)) {
-                showFonts = false;
-            }
-
-            if (showFonts) {
-                var start = (new Date().getTime());
-                var styleNodes = document.querySelectorAll('[data-cache-name]');
-                for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    var style = styleNodes[i],
-                        name = style.getAttribute('data-cache-name'),
-                        cachedCss = localStorage.getItem('_guFont:' + name);
-                    if (cachedCss) {
-                        style.innerHTML = cachedCss;
-                        style.setAttribute('data-cache-full', 'true');
-                        document.querySelector('html').className += ' font-' + name + '-loaded';
-                    }
-                }
-                var fontTime = (new Date().getTime()) - start;
-                if (fontTime > 50) {
-                    var img = document.createElement("img");
-                    img.style = "display: none";
-                    img.src = "/px.gif?fonts/&fonttime=" + fontTime;
-                    document.getElementsByTagName("head")[0].appendChild(img);
-                }
-            }
-        })(guardian.userPrefs, 'font-family');
-
-
 
     (function(isModern) {
 
         if (!isModern) { return false; }
 
+        guardian.config = {
+            page: {
+
+                @item.metaData.map{ case(key, value) => '@{JavaScriptVariableName(key)}': @{JavaScriptValue(value)}                        
+                }.mkString(","),
+
+                @config.javascript.pageData.map{ case (key, value) =>
+                    '@{JavaScriptVariableName(key.split('.').last)}': '@value'
+                }.mkString(","),
+
+                'edition': '@Edition(request, config)'
+            },
+            switches : {
+                @switches.map{ switch =>
+                    '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
+                }.mkString(",")
+            }
+        };
+
         var script = document.createElement('script');
         script.async = 'async';
-        script.src = '@static("javascripts/vendor/require-2.0.4.js")';
-        script.onload = function() {
-            define('config', function(){
-                return {
-                    page: {
-
-                        @item.metaData.map{ case(key, value) => '@{JavaScriptVariableName(key)}': @{JavaScriptValue(value)}                        
-                        }.mkString(","),
-
-                        @config.javascript.pageData.map{ case (key, value) =>
-                            '@{JavaScriptVariableName(key.split('.').last)}': '@value'
-                        }.mkString(","),
-
-                        'edition': '@Edition(request, config)'
-                    },
-                    switches : {
-                        @switches.map{ switch =>
-                            '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
-                        }.mkString(",")
-                    }
-                };
-            })
-
-            require(['config', 'bootstraps/@bootstrapJsModule'], function(config, bootstrap) {
-                bootstrap.go(config, guardian.userPrefs);
-            });
-        };
+        script.src = '@static("javascripts/bootstraps/app.js")';
 
         document.getElementsByTagName("head")[0].appendChild(script); 
     

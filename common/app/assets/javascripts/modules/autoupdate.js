@@ -1,5 +1,18 @@
-/*global guardian:true, twttr:true */
-define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwest, bonzo, bean, qwery) {
+define([
+    'common',
+    'reqwest',
+    'bonzo',
+    'bean',
+    'qwery',
+    'modules/userPrefs'
+], function (
+    common,
+    reqwest,
+    bonzo,
+    bean,
+    qwery,
+    userPrefs
+) {
 
     function Autoupdate(config) {
 
@@ -83,11 +96,11 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         };
 
         this.getPref = function () {
-            return guardian.userPrefs.get(options.prefName);
+            return userPrefs.get(options.prefName);
         };
 
         this.setPref = function(pref) {
-            guardian.userPrefs.set(options.prefName, pref);
+            userPrefs.set(options.prefName, pref);
         };
 
         // Bindings
@@ -96,7 +109,7 @@ define(['common', 'reqwest', 'bonzo', 'bean', 'qwery'], function (common, reqwes
         //Initalise
         this.init = function () {
             
-            if (options.switches && options.switches.polling !== true) {
+            if (options.switches && options.switches.autoRefresh !== true) {
                 return;
             }
             

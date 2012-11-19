@@ -1,5 +1,14 @@
-/*global guardian:true */
-define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
+define([
+    'common',
+    'modules/userPrefs',
+    'bonzo',
+    'bean'
+], function(
+    common,
+    userPrefs,
+    bonzo,
+    bean
+) {
 
     var TrailblockToggle = function () {
 
@@ -56,7 +65,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             renderUserPreference: function () {
                 // bit of duplication here from function below
                 if (window.localStorage) {
-                    var existingPrefs = guardian.userPrefs.get(options.prefName);
+                    var existingPrefs = userPrefs.get(options.prefName);
 
                     if (existingPrefs) {
                         var sectionArray = existingPrefs.split(',');
@@ -75,7 +84,7 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
             logPreference: function (shouldHideSection, section) {
                 
                 if (window.localStorage) {
-                    var existingPrefs = guardian.userPrefs.get(options.prefName);
+                    var existingPrefs = userPrefs.get(options.prefName);
                     
                     if (existingPrefs) {
 
@@ -95,11 +104,11 @@ define(['common', 'bonzo', 'bean'], function(common, bonzo, bean) {
                         }
 
                         var newPrefs = sectionArray.join(',');
-                        guardian.userPrefs.set(options.prefName, newPrefs);
+                        userPrefs.set(options.prefName, newPrefs);
                     
                     // need to create it instead
                     } else {
-                        guardian.userPrefs.set(options.prefName, section);
+                        userPrefs.set(options.prefName, section);
                     }
 
                 }

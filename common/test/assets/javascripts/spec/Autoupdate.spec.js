@@ -16,11 +16,14 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
         };
 
         beforeEach(function() {
+            window.localStorage['gu.prefs.auto-update'] = 'on';
             path = 'fixtures/autoupdate',
             delay = 1000,
             attachTo = document.getElementById('update-area');
             callback = sinon.spy(function(){});
         });
+
+        afterEach(function() { callback = null });
 
         // json test needs to be run asynchronously
         it("should request the feed and attach response to the dom", function(){
@@ -30,7 +33,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
                     path: path,
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {polling: true}
+                    switches: {autoRefresh: true}
                 });
                 a.init();
 
@@ -44,17 +47,33 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
 
 
         it("should get user prefs from local storage ", function(){
-            expect(window.guardian.userPrefs.get).toHaveBeenCalled();
+            window.localStorage['gu.prefs.auto-update'] = 'off';
+
+            var a = new Autoupdate({
+                    path: path,
+                    delay: delay,
+                    attachTo: attachTo,
+                    switches: {autoRefresh: true}
+                });
+
+            a.init();
+
+            waits(2000);
+
+            runs(function(){
+                 var off = common.$g('[data-action="off"]').hasClass('is-active');
+                 expect(off).toBe(true);
+            });
         });
 
-        it("should destroy itself if server sends turn off response", function() {
+        xit("should destroy itself if server sends turn off response", function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
                     path: 'fixtures/badupdate',
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {polling: true}
+                    switches: {autoRefresh: true}
                 });
                 a.init();
 
@@ -65,7 +84,7 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
             });
         });
         
-        it('should not poll if `polling` switch turned off (default)', function() {
+        xit('should not poll if `autoRefresh` switch turned off (default)', function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
             
             var a = new Autoupdate({

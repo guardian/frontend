@@ -5,12 +5,12 @@
 @main(model.page, Static, Configuration, Switches.all){
 }{
 
-    <h2 class="article-zone type-2 sport-header">
+    <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
     <div class="live-matches-dateline">
-       @fragments.dateline(new DateTime, false)
+        @fragments.dateline(new DateTime, false, Edition(request, Configuration))
     </div>
 
     <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
