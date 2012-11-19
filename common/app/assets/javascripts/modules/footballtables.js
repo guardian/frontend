@@ -16,11 +16,10 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         
         // Model
         this.load = function (query) {
-            var path = this.path + query,
-                that = this;
+            var that = this;
 
             return reqwest({
-                url: path,
+                url: query,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'footballtables',
