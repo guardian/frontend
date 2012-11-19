@@ -94,7 +94,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with Impl
   def addResultsFromMatchDay(matches: Seq[FootballMatch]) {
     agent.send { old =>
       val matchesToKeep = old.filterNot(m => matches.exists(_.id == m.id))
-      matchesToKeep ++ matches
+      (matchesToKeep ++ matches).distinctBy(_.id)
     }
   }
 
