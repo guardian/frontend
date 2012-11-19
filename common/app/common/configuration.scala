@@ -84,6 +84,11 @@ class GuardianConfiguration(
     }
   }
 
+  object front {
+    lazy val config = configuration.getStringProperty("front.config")
+      .getOrElse(throw new RuntimeException("Front config url not set"))
+  }
+
 }
 
 object ManifestData {
