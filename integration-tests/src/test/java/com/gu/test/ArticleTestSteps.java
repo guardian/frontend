@@ -77,7 +77,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
-		WebElement relatedHeader = webDriver.findElementWait(By.cssSelector("#related-trails h3"));
+		WebElement relatedHeader = webDriver.findElementWait(By.cssSelector("#js-related h3"));
 		Assert.assertEquals(headerText, relatedHeader.getText());
 	}
 
