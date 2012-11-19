@@ -89,6 +89,13 @@ class GuardianConfiguration(
       .getOrElse(throw new RuntimeException("Front config url not set"))
   }
 
+  object pa {
+    lazy val apiKey = configuration.getStringProperty("pa.api.key")
+      .getOrElse(throw new RuntimeException("unable to load pa api key"))
+
+    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
+  }
+
 }
 
 object ManifestData {
