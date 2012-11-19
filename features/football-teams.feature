@@ -1,26 +1,18 @@
 Feature: Football Teams
 
-As 
-I 
-So 
+As a Guardian news reader
+I want to view Team pages
+So that I can see a teams next fixtures and previous result.
 
 
 
 
 
-   Scenario: 
+   Scenario: Fixtures and results on team page
 
-        Given
-        When
-        Then
+        Given I'm on a football team page
+        Then there is a team fixtures and results component 
+        And the next fixtures are shown(confirm number to display)
+        And the previous result is shown
 
-   Scenario: 
-
-        Given 
-        Then 
-
-   Scenario: 
-
-         Given 
-         When 
-         Then 
+  
