@@ -1,6 +1,6 @@
 define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
 
-    function FootballFixtures(options) {
+    function FootballTables(options) {
         var reqwest = Reqwest;
 
         this.path =  "/football/api/fronttables?";

@@ -51,8 +51,8 @@ define([
 
         showCompetitionTable: function(comp) {
             var table = new FootballTable({
-                prependTo: qwery('ul > li', '.trailblock')[1],
-                competition: competition
+                prependTo: qwery('ul > li', '.trailblock')[2],
+                competition: comp
             }).init();
         },
 
