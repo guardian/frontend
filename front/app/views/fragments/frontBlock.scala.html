@@ -4,10 +4,12 @@
 
     @if(block.description.id != "") {
 	    @if("/" + block.description.id == request.path) {
-	        @fragments.headline(block.description.name, List("article-zone", "zone-color"))
+	        @fragments.headline(block.description.name, List("article-zone", "zone-color", "type-0"))
 	    } else {
-	        <div class="front-section-head zone-background">
-	            <a data-link-name="heading link" href="/@block.description.id">@fragments.headline(block.description.name)</a>
+	        <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
+	            <a @if(request.path != ""){class="zone-color"} data-link-name="heading link" href="/@block.description.id">
+                    @fragments.headline(block.description.name, List("type-1"))
+                </a>
 		        <button class="initially-off js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()"
 		            data-block-name="@SafeName(block.description)"
 		            id="js-trigger-@SafeName(block.description)"

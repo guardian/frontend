@@ -5,6 +5,7 @@ import conf.ContentApi
 import akka.actor.Cancellable
 import akka.util.Duration
 import java.util.concurrent.TimeUnit._
+import com.gu.openplatform.contentapi.model.ItemResponse
 
 trait LiveBlogAgent extends AkkaSupport with Logging {
 
@@ -17,11 +18,21 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
   }
 
   private def findBlogFor(edition: String) = {
-    val liveBlogs: Seq[Content] = ContentApi.search(edition)
-      .section("football")
-      .tag("football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")")
-      .response.results.map(new Content(_))
-      .filter(_.isLive)
+    val tag = "football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")"
+    log.info("Fetching football blogs with tag: " + tag)
+    val response: ItemResponse = ContentApi.item("/football", edition)
+      .tag(tag)
+      .showEditorsPicks(true)
+      .response
+
+    val editorsPicks = response.editorsPicks map { new Content(_) }
+
+    val editorsPicksIds = editorsPicks map { _.id }
+
+    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+
+    // order by editors' picks first
+    val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
 
     liveBlogs.find(isClockWatch).orElse(liveBlogs.headOption)
   }
