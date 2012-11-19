@@ -17,9 +17,6 @@ object FrontTablesController extends Controller with Logging with CompetitionTab
     Table(comp, groups)
   }
 
-  /*
-   * Finds the first competition with matches on today in a list of competition ids passed in
-   */
   def render() = Action { implicit request =>
     val competitionIds = request.queryString("competitionId")
     val competitions = Competitions.competitions
