@@ -16,22 +16,6 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
-
-case class Table(competition: Competition, groups: Seq[Group]) {
-  lazy val multiGroup = groups.size > 1
-}
-
-object Table {
-  def apply(competition: Competition): Table = {
-    val groups = competition.leagueTable
-      .groupBy(_.round)
-      .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.map(_.roundNumber).getOrElse(""))
-    Table(competition, groups)
-  }
-}
-
 object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
 
   private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { Table(_) }
