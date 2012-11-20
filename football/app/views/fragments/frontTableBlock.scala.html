@@ -1,60 +1,31 @@
+
 @(table: Table)
+<li id="front-competition-table" class="competition-table" data-link-name="front table">
+    <h3 class="type-2">Table</h3>
 
-<a class="competition-title football-table-header football-table-link type-3" href="@table.competition.url" data-link-name="competition">
-    @table.competition.fullName
-    <i class="i-filter-arrow-right"></i>
-</a>
-
-<table class="table-football type-6a">
-    @if(!table.multiGroup) {
-        <thead class="table-football-header">
-            @fragments.tableColumnHeaders()
-        </thead>
-    }
-
-    @table.groups.map{ group =>
-    <tbody class="table-football-body">
-        @group.round.map { round =>
-            @round.name.map { name =>
-                <tr>
-                    <th colspan="20" class="type-6a table-football-leftaligned">@name</th>
-                </tr>
-                @* we repeat this nav for group tables *@
+    <table class="table-football type-6a">
+        @if(!table.multiGroup) {
+            <thead class="table-football-header">
                 @fragments.tableColumnHeaders()
+            </thead>
+        }
+
+        @table.groups.map{ group =>
+        <tbody class="table-football-body">
+            @group.round.map { round =>
+                @round.name.map { name =>
+                    <tr>
+                        <th colspan="20" class="type-6a table-football-leftaligned">@name</th>
+                    </tr>
+                    @* we repeat this nav for group tables *@
+                    @fragments.tableColumnHeaders()
+                }
             }
+
+            @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
+        </tbody>
         }
+    </table>
 
-        @group.entries.zipWithRowInfo.map{ case (entry, row) =>
-        <tr>
-            <td class="table-football-leftaligned">@row.rowNum</td>
-            <td class="table-football-leftaligned">@entry.team.name</td>
-            <td>@entry.team.total.played</td>
-
-            <td class="stats-3">@entry.team.home.won</td>
-            <td class="stats-3">@entry.team.home.drawn</td>
-            <td class="stats-3">@entry.team.home.lost</td>
-            <td class="stats-3">@entry.team.home.goalsFor</td>
-            <td class="stats-3">@entry.team.home.goalsAgainst</td>
-
-            <td class="stats-3">@entry.team.away.won</td>
-            <td class="stats-3">@entry.team.away.drawn</td>
-            <td class="stats-3">@entry.team.away.lost</td>
-            <td class="stats-3">@entry.team.away.goalsFor</td>
-            <td class="stats-3">@entry.team.away.goalsAgainst</td>
-
-            <td class="stats-1">@entry.team.total.won</td>
-            <td class="stats-1">@entry.team.total.drawn</td>
-            <td class="stats-1">@entry.team.total.lost</td>
-
-            <td class="stats-2">@entry.team.total.goalsFor</td>
-            <td class="stats-2">@entry.team.total.goalsAgainst</td>
-
-            <td>@entry.team.goalDifference</td>
-            <td>@entry.team.points</td>
-        </tr>
-        }
-    </tbody>
-    }
-</table>
-
-<a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
+    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
+</li>

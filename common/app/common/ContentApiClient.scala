@@ -18,7 +18,7 @@ trait ApiQueryDefaults { self: Api =>
     .showFields(trailFields)
     .showInlineElements("picture")
     .showMedia("all")
-    .showReferences("pa-football-competition")
+    .showReferences("pa-football-competition,pa-football-team")
     .showStoryPackage(true)
     .tag(supportedTypes)
 

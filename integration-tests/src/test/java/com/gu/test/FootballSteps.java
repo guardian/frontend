@@ -111,5 +111,25 @@ public class FootballSteps {
 	    WebElement offButton = webDriver.findElement(By.cssSelector(".update button[data-action='off']"));
 	    Assert.assertTrue(offButton.getAttribute("class").contains("is-active"));
 	}
+
+	@Given("^I visit any Football league and/or Domestic competition tag page$")
+	public void I_visit_any_Football_league_and_or_Domestic_competition_tag_page() throws Throwable {
+	    webDriver.open("/football/premierleague");
+	}
 	
+	@Then("^there should be a table component$")
+	public void there_should_be_a_table_component() throws Throwable {
+		webDriver.findElementWait(By.id("front-competition-table"));
+	}
+
+	@Then("^table should show the top (\\d+) teams$")
+	public void table_should_show_the_top_teams(int teams) throws Throwable {
+	    List<WebElement> rows = webDriver.findElements(By.cssSelector(".table-football-body tr"));
+		Assert.assertEquals(teams, rows.size());
+	}
+
+	@Then("^there should be a link to \"([^\"]*)\"$")
+	public void there_should_be_a_link_to(String linkText) throws Throwable {
+		webDriver.findElement(By.linkText(linkText));
+	}
 }
