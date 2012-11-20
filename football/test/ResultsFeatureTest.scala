@@ -107,7 +107,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         then("the 'Scottish Division Two' matches on 'today' should be ordered as 'Albion, Aloa, Brechin, East Fife, Queen of South'")
         val orderedMatches: List[String] = "Albion, Alloa, Brechin, East Fife, Queen of South".split(", ").toList
 
-        findFirst(".competitions").find(".matches", 6).find(".match-home").getTexts().toList should be(orderedMatches)
+        $("[data-link-name='competition | Scottish Division Two']").find(".matches").find(".match-home").getTexts().toList should be(orderedMatches)
       }
 
     }
