@@ -1,4 +1,4 @@
-@front @section-fronts
+@front @section-fronts @sport-front
 Feature: Section Fronts - Sport
 	As a Guardian user
 	I want to get a further break-down of sections on the sport section front

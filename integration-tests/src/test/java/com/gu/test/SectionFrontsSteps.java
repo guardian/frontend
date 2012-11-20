@@ -37,7 +37,7 @@ public class SectionFrontsSteps {
 		// get the trailblock associated with this sub-section
 		WebElement trailblock = findTrailblock(subSectionTitle);
 		// get the (invisible) trailblock
-		WebElement hiddenTrailblock = trailblock.findElement(By.className("panel"));
+		WebElement hiddenTrailblock = trailblock.findElement(By.cssSelector("ul.panel"));
 		// make sure the num of trails is less than the number of stories
 		List<WebElement> hiddenTrails = hiddenTrailblock.findElements(By.className("trail"));
 		Assert.assertTrue(hiddenTrails.size() <= numOfTopStories);
