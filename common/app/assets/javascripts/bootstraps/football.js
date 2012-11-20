@@ -7,6 +7,7 @@ define([
     "modules/togglepanel",
     "modules/expandable",
     "modules/footballfixtures",
+    "modules/footballtables",
     "modules/more-matches",
     "modules/autoupdate"
 ], function (
@@ -17,6 +18,7 @@ define([
     TogglePanel,
     Expandable,
     FootballFixtures,
+    FootballTable,
     MoreMatches,
     AutoUpdate
 ) {
@@ -40,11 +42,18 @@ define([
         },
 
         showCompetitionFixtures: function(competition) {
-            var table = new FootballFixtures({
+            var fixtures = new FootballFixtures({
                     prependTo: qwery('ul > li', '.trailblock')[1],
                     competitions: [competition],
                     expandable: false
                 }).init();
+        },
+
+        showCompetitionTable: function(comp) {
+            var table = new FootballTable({
+                prependTo: qwery('ul > li', '.trailblock')[1],
+                competition: comp
+            }).init();
         },
 
         initAutoUpdate: function(switches) {
@@ -96,8 +105,11 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var competition = config.page.paFootballCompetition;
-                if(competition) { modules.showCompetitionFixtures(competition); }
+                var comp = config.page.paFootballCompetition;
+                if(comp) {
+                    modules.showCompetitionFixtures(comp);
+                    modules.showCompetitionTable(comp);
+                }
                 break;
         }
     };

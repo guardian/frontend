@@ -5,8 +5,8 @@
 
 .trail {
     overflow: hidden;
-    margin-bottom: @baseline;
-    border-bottom: 1px solid #e3e3db;
+    margin: 0 0 @baseline 0;
+    border-bottom: 1px solid @mushroom;
     padding: @baseline*2 0 @baseline*3 0;
 }
 
@@ -14,8 +14,8 @@
     padding-top: @baseline*3
 }
 
-.trail.has-image {
-    padding-bottom: 0;
+.trail:first-child h2 {
+    margin-bottom: @baseline;
 }
 
 .trail.has-image img {
@@ -24,11 +24,6 @@
 
 .trail:last-child {
     margin-bottom: 0;
-    border-bottom: none;
-}
-
-.trail-headline {
-    padding: 0 @gutter;
 }
 
 @media screen and (min-width: 400px) {
@@ -43,13 +38,16 @@
 
 .media .trail-headline {
     padding: 0;
+    margin-bottom: @baseline;
 }
 
 .trail-text {
     display: block;
     clear: left;
-    padding: 0 @gutter;
+    padding: 0;
+    color: #555555;
 }
+
 @media screen and (min-width: 600px) {
     .trail-text {
         clear: none;
@@ -64,30 +62,30 @@
     padding-bottom: @baseline*4;
 }
 
-.trailblock .media {
-    padding: 0 @gutter @baseline*1 @gutter;
+.trail .media {
+    padding: 0 0 @baseline*1 0;
 }
 
-.trailblock .media-img { width: 40%; }
+.trail .media-img { width: 35%; }
 
-.trailblock .media-img img {
+.trail .media-img img {
     width: @trailblockImgWidth;
     margin-bottom: 5px;
     margin-top: 3px;
 }
 
-.trailblock .img-large img {
+.trail .img-large img {
     width: @trailblockImgWidthLarge;
 }
 
 @media screen and (min-width: 850px) {
-    .trailblock .img img {
+    .trail .img img {
         width: 160px;
     }
 }
 
-.trailblock .panel {
-    border-top: 1px solid #e3e3db;
+.trailblock {
+    padding: 0 @gutter;
 }
 
 .trailblock ul {
@@ -110,7 +108,7 @@
     top: 0px;
     right: 0px;
     color: #ffffff;
-    padding: @baseline*4 @gutter;
+    padding: @gutter @gutter 0 @gutter;
     cursor: pointer;
     background-color: transparent;
     box-shadow: none;
@@ -119,6 +117,10 @@
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
+}
+
+.sub-section-head .toggle-trailblock {
+    color: #888;
 }
 
 .toggle-trailblock:hover,

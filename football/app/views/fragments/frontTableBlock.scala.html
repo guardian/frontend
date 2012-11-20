@@ -1,0 +1,31 @@
+
+@(table: Table)
+<li id="front-competition-table" class="competition-table" data-link-name="front table">
+    <h3 class="type-2">Table</h3>
+
+    <table class="table-football type-6a">
+        @if(!table.multiGroup) {
+            <thead class="table-football-header">
+                @fragments.tableColumnHeaders()
+            </thead>
+        }
+
+        @table.groups.map{ group =>
+        <tbody class="table-football-body">
+            @group.round.map { round =>
+                @round.name.map { name =>
+                    <tr>
+                        <th colspan="20" class="type-6a table-football-leftaligned">@name</th>
+                    </tr>
+                    @* we repeat this nav for group tables *@
+                    @fragments.tableColumnHeaders()
+                }
+            }
+
+            @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
+        </tbody>
+        }
+    </table>
+
+    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
+</li>

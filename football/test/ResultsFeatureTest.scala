@@ -98,5 +98,19 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     }
 
+    scenario("Matches are ordered by start time, then alphabet") {
+
+      given("I am on the 'results' page")
+      HtmlUnit("/football/results") { browser =>
+        import browser._
+
+        then("the 'Scottish Division Two' matches on 'today' should be ordered as 'Albion, Aloa, Brechin, East Fife, Queen of South'")
+        val orderedMatches: List[String] = "Albion, Alloa, Brechin, East Fife, Queen of South".split(", ").toList
+
+        $("[data-link-name='competition | Scottish Division Two']").find(".matches").find(".match-home").getTexts().toList should be(orderedMatches)
+      }
+
+    }
+
   }
 }
