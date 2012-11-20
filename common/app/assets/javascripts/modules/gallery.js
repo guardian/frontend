@@ -12,77 +12,22 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 currentIndex: urlParams.index || 0,
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
-                currentlyShowingCaptions: false,
-                fullscreenPlaceholder: document.getElementById('js-gallery-fullscreen-placeholder')
+                inFullScreenMode: false,
+                gallerySwipe: null
             },
 
-            toggleCaptions: function (toggler) {
-                
-                var captionId = toggler.getAttribute('data-caption-id');
-                var caption = document.getElementById('js-gallery-caption-' + captionId);
-                var icon = toggler.querySelector('i'); // icon
-                toggler = toggler.querySelector('span'); // text holder
-
-                bonzo(icon).toggleClass('i-expand-plus i-contract-minus');
-                bonzo(caption).toggleClass('js-hidden');
-                if (bonzo(toggler).text() === "Show caption") {
-                    bonzo(toggler).text('Hide caption');
-                } else {
-                    bonzo(toggler).text('Show caption');
-                }
-            },
-
-            
-            bindCaptionTogglers: function () {
-                var galleryContainer = document.getElementById('js-gallery');
-                bean.on(galleryContainer, 'click', '.js-gallery-caption-toggle', function(e) {
-                    view.toggleCaptions(this);
-                });
-
-                // todo: put this somewhere else
-                var galleryImgs = document.querySelectorAll('.js-gallery-img');
-                for (var i=0, l=galleryImgs.length; i<l; i++) {
-                    var elm = galleryImgs[i];
-                    view.bindPopup(elm);
-                }
-            },
-
-            bindPopup: function (elm) {
-                elm.onclick = (function() {
-                    return function() {
-                        view.showFullscreenImage(elm);
-                    }
-                })();
-            },
-            
+            // currently unused
             showFullscreenImage: function (elm) {
-                // bind toggle event on image to show caption
-                // bind close button to kill the popup
-                    // remove all bound events when closing
-
+                view.galleryConfig.inFullScreenMode = true;
                 var li = elm.parentNode;
+                var body = document.body;
+                bonzo(body).toggleClass('gallery-fullscreen');
 
-                // copy the current gallery-nav to placeholder
-                var galleryNavHTML = document.getElementById('js-gallery-nav').innerHTML;
-                var cloneNav = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-nav-placeholder');
-                bonzo(cloneNav.querySelector('.i-image')).toggleClass('i-image-inverted');
-                cloneNav.innerHTML = galleryNavHTML;
-
-                // replace its fullscreen button with a close one
-                cloneNav.querySelector('.js-toggle-fullscreen').innerHTML = '<i class="i-close-x"</i>';
-
-                // copy image to central position
-                var currentImageSrc = document.querySelector('.js-current-gallery-slide img').getAttribute('src');
-                var cloneImage = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-image-placeholder');
-                cloneImage.innerHTML = '<img src="'+ currentImageSrc + '" />';
-
-                // copy caption/credit to hidden div
-                var captionHTML = li.querySelector('.js-gallery-caption').innerHTML;
-                var cloneCaption = view.galleryConfig.fullscreenPlaceholder.querySelector('.js-gallery-caption-placeholder')
-                cloneCaption.innerHTML = captionHTML;
-                
-                bonzo(view.galleryConfig.fullscreenPlaceholder).removeClass('initially-off');
-
+                // bit hacky, this effectively fires a resize event
+                // which in turns causes the swipe gallery to resize itself to fit
+                var evt = document.createEvent('UIEvents');
+                evt.initUIEvent('resize', true, false,window,0);
+                window.dispatchEvent(evt);
             },
 
             // runs on domready
@@ -107,7 +52,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
-                    var gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
+                    view.galleryConfig.gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
                         callback: function(event, index, elm) {
 
                             var count = document.getElementById('js-gallery-index');
@@ -129,8 +74,22 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
                     // check if we need to jump to a specific gallery slide
                     if (urlParams.index) {
-                        gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0);
+                        view.galleryConfig.gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0);
                     }
+
+                    // bind prev/next to just trigger swipes
+                    bean.add(view.galleryConfig.nextLink, 'click', function(e) {
+                        // we get 2 omniture calls here and in the function below
+                        // one is for the link click (which seems to be impossible to remove)
+                        // the other is for the faux swipes triggered here
+                        view.galleryConfig.gallerySwipe.next();
+                        e.preventDefault();
+                    });
+
+                    bean.add(view.galleryConfig.prevLink, 'click', function(e) {
+                        view.galleryConfig.gallerySwipe.prev();
+                        e.preventDefault();
+                    });
 
                 } else { // non-touch version
 
@@ -146,12 +105,19 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
                     // bind arrow key navigation
                     bean.add(document, 'keydown', function(e) {
+                        var didAdvance = false;
                         if (e.keyCode === 37) { // left
-                            view.trackInteraction("keyboard:previous");
-                            view.advanceGallery('prev');
+                            didAdvance = view.advanceGallery('prev');
+                            if (didAdvance) {
+                                // don't track keypresses if they're already at the start
+                                view.trackInteraction("keyboard:previous");
+                            }
                         } else if (e.keyCode === 39) { // right
-                            view.trackInteraction("keyboard:next");
-                            view.advanceGallery('next');
+                            didAdvance = view.advanceGallery('next');
+                            if (didAdvance) {
+                                // don't track keypresses if they're already at the end
+                                view.trackInteraction("keyboard:next");
+                            }
                         }
                     });
 
@@ -183,16 +149,16 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
                 // set up variables
                 var currentSlide    = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
-                var currentIndex    = currentSlide.getAttribute('data-index');
-                var totalSlides     = currentSlide.getAttribute('data-total');
+                var currentIndex    = parseInt(currentSlide.getAttribute('data-index'), 10);
+                var totalSlides     = parseInt(currentSlide.getAttribute('data-total'), 10);
                 var isFirst         = (currentIndex === 1);
                 var isLast          = (currentIndex === totalSlides);
                 var slideCounter    = document.getElementById('js-gallery-index');
                 
                 // don't try to do anything if we're at the start/end going forward/back
-                if ( (isFirst && directin === "prev") ||
+                if ( (isFirst && direction === "prev") ||
                      (isLast && direction === "next") ) {
-                    return;
+                    return false;
                 }
 
                 var elmToWorkWith, newSlideIndex;
@@ -211,7 +177,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     elmToWorkWith = (direction === 'next') ? currentSlide.nextElementSibling : currentSlide.previousElementSibling;
 
                     // update counter
-                    newSlideIndex = (direction === 'next') ? (parseInt(currentIndex, 10) + 1) : (parseInt(currentIndex, 10) - 1);
+                    newSlideIndex = (direction === 'next') ? (currentIndex + 1) : (currentIndex - 1);
                 
                 } else {
                     // used for scrolling to a custom item on pageload
@@ -233,11 +199,15 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 view.updateURL('index=' + newSlideIndex, newSlideIndex);
 
                 // convert the slide to an image if we need to
-                view.makePlaceholderIntoImage([prevSlide, elmToWorkWith, nextSlide]); 
+
+                var elmsToPreload = [prevSlide, elmToWorkWith, nextSlide];
+                view.makePlaceholderIntoImage(elmsToPreload);
 
                 // make this slide active
                 elmToWorkWith.className = view.galleryConfig.currentSlideClassName;
                 elmToWorkWith.style.display = 'block';
+
+                return true;
 
             },
 
@@ -255,7 +225,8 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 var nextLink = view.galleryConfig.nextLink;
                 var prevLink = view.galleryConfig.prevLink;
 
-                index = parseInt(index, 10); // just in case
+                index = parseInt(index, 10);
+                total = parseInt(total, 10);
 
                 if (index === 1) { // we've gone back to the start, hide prev
                     prevLink.style.display = 'none';
@@ -307,10 +278,12 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 if (hasImage && hasImage === 'false') {
                     
                     var src = placeholder.getAttribute("data-src");
+                    var orientation = placeholder.getAttribute("data-orientation");
+                    var width = placeholder.getAttribute("data-width");
+                    var height = placeholder.getAttribute("data-height");
                     if (src && src !== "") { // create <img> element
-                        placeholder.innerHTML = '<img src="' + src + '" class="js-gallery-img maxed" />' + placeholder.innerHTML;
+                        placeholder.innerHTML = '<img src="' + src + '" class="js-gallery-img maxed ' + orientation + '" data-width="' + width + '" data-height="' + height + '" />' + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
-                        view.bindPopup(placeholder.querySelector('img'));
                     }
                 }
 
@@ -321,7 +294,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
         this.init = function () {
             view.bindGallery();
-            view.bindCaptionTogglers();
         };
 
     };

@@ -79,7 +79,7 @@
       }
   
       // set start position and force translate to remove initial flickering
-      this.slide(this.index, 0); 
+      this.slide(this.index, 0);
   
       // show slider element
       this.container.style.visibility = 'visible';
@@ -136,7 +136,7 @@
       var _this = this;
   
       this.interval = (this.delay)
-        ? setTimeout(function() { 
+        ? setTimeout(function() {
           _this.next(_this.delay);
         }, this.delay)
         : 0;
