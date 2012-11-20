@@ -3,10 +3,9 @@
 @model.days.map{ day =>
 	<h2 class="competitions-date type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
 	<ol class="competitions unstyled" data-link-name="matches">
-	    <li class="competition">
-	        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-	        
-	            <a class="competition-title football-table-link type-3" href="@comp.url" data-link-name="competition">
+        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
+        	<li class="competition" data-link-name="competition | @comp.fullName">
+	            <a class="competition-title football-table-link type-3" href="@comp.url" data-link-name="view competition">
 	                @comp.fullName
 	                <i class="i-filter-arrow-right"></i>
 	            </a>
@@ -26,8 +25,8 @@
 	                    <div class="trailblock trail">@fragments.trails.thumbnail(blog, row.rowNum)</div>
 	                }
 	            }
-	        }
-	    </li>
+       		</li>
+        }
 	</ol>
 }
 

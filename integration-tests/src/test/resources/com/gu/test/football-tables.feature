@@ -1,3 +1,4 @@
+@football
 Feature: Football Tables
 
 As a guardian reader 
@@ -11,6 +12,7 @@ And have the option to view full table and data
          And table should show the top 4 teams
          And there should be a link to "View full table"
     
+    @ignore
     Scenario: Football table on team pages
         Given I visit any Football team tag page
          Then there should be a table component
