@@ -3,7 +3,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
     function FootballTables(options) {
         var reqwest = Reqwest;
 
-        this.path =  "/football/api/fronttables?";
+        this.path =  "/football/api/competitiontable?";
         this.queryString = "&competitionId=";
 
         // View
