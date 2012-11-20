@@ -5,9 +5,9 @@ import conf.FootballClient
 import org.joda.time.DateMidnight
 import akka.util.Timeout
 import common._
-import pa.Result
 import model.Competition
 import pa.Fixture
+import org.scala_tools.time.Imports._
 
 trait HasCompetition {
   def competition: Competition
@@ -64,7 +64,7 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   def fixturesOn(date: DateMidnight) = fixtures.filter(_.date.toDateMidnight == date)
 }
 
-trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
+trait ResultAgent extends AkkaSupport with HasCompetition with Logging with Implicits {
 
   private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
 
@@ -76,22 +76,25 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging {
 
     agent.sendOff { old =>
 
+      val today = new DateMidnight
+
       //unfortunately we need to poll 2 feeds to get this data correctly
-      val resultsToKeep = old.filter {
+      val resultsToKeep = old.filter(_.date >= today).filter {
         case m: MatchDay => true
         case _ => false
       }
 
       val results = FootballClient.results(competition.id, startDate)
       log.info("found %s results for competition %s".format(results.size, competition.fullName))
-      results ++ resultsToKeep
+
+      (results ++ resultsToKeep).distinctBy(_.id)
     }
   }
 
   def addResultsFromMatchDay(matches: Seq[FootballMatch]) {
     agent.send { old =>
       val matchesToKeep = old.filterNot(m => matches.exists(_.id == m.id))
-      matchesToKeep ++ matches
+      (matchesToKeep ++ matches).distinctBy(_.id)
     }
   }
 

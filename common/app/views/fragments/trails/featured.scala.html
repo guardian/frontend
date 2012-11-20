@@ -2,13 +2,13 @@
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-<h@headingLevel class="type-1 box-indent">
+<h@headingLevel class="type-1">
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
         @RemoveOuterParaHtml(trail.headline)
     </a>
 </h@headingLevel>
 
-@trail.trailText.map { text => <div class="trail-text type-4 box-indent">@cleanTrailText(text)</div> }
+@trail.trailText.map { text => <div class="trail-text type-5">@cleanTrailText(text)</div> }
 
 @if(trail.mainPicture) {
     @trail.mainPicture.map{ mainPicture =>

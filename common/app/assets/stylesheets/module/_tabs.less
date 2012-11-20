@@ -1,13 +1,12 @@
-@tabBackground: #edede7;
-@tabBorderWidth: 4px;
+@tabBorderWidth: 2px;
 
 .tabs {
-    border: @tabBorderWidth solid @tabBackground;
-    margin: 0px @gutter;
+    border: @tabBorderWidth solid @mushroom;
+    margin: @baseline @gutter 0 @gutter;
     border-bottom: none;
     padding: 0px;
     list-style-type: none;
-    background: @tabBackground;
+    background: @mushroom;
     overflow: hidden;
 }
 
@@ -52,6 +51,6 @@
 .tabs-content {
     clear: both;
     margin: 0px @gutter;
-    border: @tabBorderWidth solid @tabBackground;
+    border: @tabBorderWidth solid @mushroom;
     border-top: none;
 }
