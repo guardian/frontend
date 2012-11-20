@@ -54,7 +54,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     // set up the swipe actions
                     view.galleryConfig.gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
                         callback: function(event, index, elm) {
-
                             var count = document.getElementById('js-gallery-index');
                             var currentPos = parseInt(count.innerText, 10);
                             var nextIndex = parseInt(index, 10);
@@ -64,7 +63,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                             if (nextIndexCount > currentPos) {
                                 view.trackInteraction("swipe:forward");
                                 view.advanceGallery('next');
-                            } else {
+                            } else if (nextIndexCount < currentPos) {
                                 view.trackInteraction("swipe:backward");
                                 view.advanceGallery('prev');
                             }
