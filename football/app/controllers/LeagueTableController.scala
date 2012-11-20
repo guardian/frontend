@@ -22,15 +22,19 @@ case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
 }
 
-object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
-
-  private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { comp =>
-    val groups = comp.leagueTable
+object Table {
+  def apply(competition: Competition): Table = {
+    val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
       .toSeq.sortBy(_.round.map(_.roundNumber).getOrElse(""))
-    Table(comp, groups)
+    Table(competition, groups)
   }
+}
+
+object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
+
+  private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { Table(_) }
 
   def render() = Action { implicit request =>
 

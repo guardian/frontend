@@ -9,13 +9,8 @@ object FrontTablesController extends Controller with Logging with CompetitionTab
 
   private def loadTable(competitionId: String): Option[Table] = Competitions.competitions
     .find(_.id == competitionId)
-    .filter(_.hasLeagueTable).map { comp =>
-      val groups = comp.leagueTable
-        .groupBy(_.round)
-        .map { case (round, table) => Group(round, table) }
-        .toSeq.sortBy(_.round.map(_.roundNumber).getOrElse(""))
-      Table(comp, groups)
-    }
+    .filter(_.hasLeagueTable)
+    .map { Table(_) }
 
   def render() = Action { implicit request =>
     val competitionId = request.queryString("competitionId").headOption
