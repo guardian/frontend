@@ -74,6 +74,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
+
   override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
