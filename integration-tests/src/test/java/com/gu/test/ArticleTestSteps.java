@@ -88,7 +88,7 @@ public class ArticleTestSteps {
 
 	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
-		webDriver.clickLink("the guardian");
+		webDriver.clickLink("The Guardian");
 	}
 
 	@When("^I select the pan-site \"([^\"]*)\"$")
