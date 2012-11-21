@@ -22,7 +22,11 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
+    new UrlPagesHealthcheckManagementPage(
+      "/core-navigation/top-stories/UK?callback=navigation",
+      "/core-navigation/most-popular/UK/society?callback=showMostPopular",
+      "/core-navigation/related/UK/theobserver/2012/nov/18/the-big-issue-cyclists-versus-motorists?callback=showRelated"
+    ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

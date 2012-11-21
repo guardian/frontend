@@ -21,8 +21,10 @@ object Management extends Management {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
-    new Switchboard(CommonSwitches.all, applicationName),
+    new UrlPagesHealthcheckManagementPage(
+      "/world/2012/sep/11/barcelona-march-catalan-independence",
+      "/sport/2012/nov/17/becky-james-jess-varnish-rio-olympics"
+    ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

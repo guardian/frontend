@@ -18,7 +18,7 @@ object Management extends com.gu.management.play.Management {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
+    new UrlPagesHealthcheckManagementPage(""),
     StatusPage(applicationName, NginxLog.metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
