@@ -108,7 +108,7 @@ define([
 
         loadAdverts: function (config) {
             Adverts.init(config);
-            //Adverts.loadAds();
+            Adverts.loadAds();
 
             // Check every second if page has scrolled and attempt to load new ads.
             //var currentScroll = window.pageYOffset;

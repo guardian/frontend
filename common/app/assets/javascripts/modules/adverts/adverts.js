@@ -1,12 +1,24 @@
 define([
     'common',
     'reqwest',
+    'domwrite',
     'modules/userPrefs',
     'modules/detect',
     'modules/adverts/document-write',
+    'modules/adverts/dimensionMap',
     'modules/adverts/audience-science'
 ],
-function (common, reqwest, userPrefs, detect, documentWrite, audienceScience) {
+function (
+    common,
+    reqwest,
+    domwrite,
+
+    userPrefs,
+    detect,
+    documentWrite,
+    dimensionMap,
+    audienceScience
+) {
     
     var config,
         adsSwitchedOn,
@@ -22,10 +34,15 @@ function (common, reqwest, userPrefs, detect, documentWrite, audienceScience) {
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
 
-        // Run through slots and create IframeAdSlots for each.
-        // Other ad types to be plugged in later.
+        // Run through slots and create documentWrite for each.
+        // Other ad types suchas iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
-            var d = new documentWrite(config).load();
+            for(var i = 0, j = slotHolders.length; i < j; ++i) {
+                var name = slotHolders[i].getAttribute('data-' + size);
+                var slot = new documentWrite(name, slotHolders[i], config.page);
+                slot.setDimensions(dimensionMap[name]);
+                slots.push(slot);
+            }
             if (config.switches.audienceScience) {
                 audienceScience.load(config.page);
             }
@@ -33,10 +50,12 @@ function (common, reqwest, userPrefs, detect, documentWrite, audienceScience) {
     }
 
     function loadAds() {
-       if (adsSwitchedOn) {
+        domwrite.capture();
+        if (adsSwitchedOn) {
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
-                if (!slots[i].loaded && isOnScreen(slots[i].el)) {
+                //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
+                if (!slots[i].loaded) {
                     slots[i].load();
                 }
             }
