@@ -17,8 +17,6 @@ function (common, reqwest, userPrefs, detect, documentWrite, audienceScience) {
         config = c;
         slots = [];
 
-        document.cookie = "adtest=6; expires=Tue, 19 Jan 2038 03:14:07 GMT";
-
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 
