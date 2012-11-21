@@ -30,7 +30,8 @@ object Table {
     val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.map(_.roundNumber).getOrElse(""))
+      // feed consistency around round names and numbers is a little dodgy, hence complex sorting
+      .toSeq.sortBy(_.round.map(r => r.name.getOrElse(r.roundNumber)).getOrElse(""))
     Table(competition, groups)
   }
 }
