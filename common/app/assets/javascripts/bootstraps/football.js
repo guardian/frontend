@@ -41,18 +41,21 @@ define([
             MoreMatches.init(matchesNav);
         },
 
-        showCompetitionFixtures: function(competition) {
-            var fixtures = new FootballFixtures({
-                    prependTo: qwery('ul > li', '.trailblock')[1],
-                    competitions: [competition],
-                    expandable: false
-                }).init();
-        },
+        showCompetitionData: function(competition) {
+            common.mediator.on('modules:footballfixtures:render', function(){
+                var title = document.querySelector('.football-table-link');
+                if(title) { title.className = "js-hidden"; }
+            });
 
-        showCompetitionTable: function(comp) {
+            var fixtures = new FootballFixtures({
+                prependTo: document.querySelector('.t2'),
+                competitions: [competition],
+                expandable: false
+            }).init();
+
             var table = new FootballTable({
-                prependTo: qwery('ul > li', '.trailblock')[1],
-                competition: comp
+                prependTo: document.querySelector('.t3'),
+                competition: competition
             }).init();
         },
 
@@ -107,8 +110,7 @@ define([
             default:
                 var comp = config.page.paFootballCompetition;
                 if(comp) {
-                    modules.showCompetitionFixtures(comp);
-                    modules.showCompetitionTable(comp);
+                    modules.showCompetitionData(comp);
                 }
                 break;
         }
