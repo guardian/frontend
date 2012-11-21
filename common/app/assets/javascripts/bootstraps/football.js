@@ -48,13 +48,13 @@ define([
             });
 
             var fixtures = new FootballFixtures({
-                prependTo: qwery('.t2')[0],
+                prependTo: document.querySelector('.t2'),
                 competitions: [competition],
                 expandable: false
             }).init();
 
             var table = new FootballTable({
-                prependTo: qwery('.t3')[0],
+                prependTo: document.querySelector('.t3'),
                 competition: competition
             }).init();
         },
