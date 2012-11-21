@@ -16,7 +16,11 @@ object Management extends com.gu.management.play.Management {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
+    new UrlPagesHealthcheckManagementPage(
+      "/",
+      "/sport/2012/sep/23/world-road-race-championship-gilbert-cavendish",
+      "/football"
+    ) { override val base = "http://localhost" },
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )

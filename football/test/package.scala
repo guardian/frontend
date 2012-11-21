@@ -47,7 +47,7 @@ object TestHttp extends Http {
 }
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(Configuration) {
+  object HtmlUnit extends EditionalisedHtmlUnit {
     override val testPlugins = Seq(classOf[StubFootballStatsPlugin].getName)
     override val disabledPlugins = Seq(classOf[FootballStatsPlugin].getName)
   }

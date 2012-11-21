@@ -1,9 +1,9 @@
-@(config: GuardianConfiguration, page: MetaData)(implicit request: RequestHeader)
+@(page: MetaData)(implicit request: RequestHeader)
 
 <footer class="footer" data-link-name="footer">
 
     <ul class="sections nav nav-stacked nav-top-border-off cf">
-    	<li>@fragments.mainSiteLink(page, config)</li>
+    	<li>@fragments.mainSiteLink(page)</li>
         <li><a data-link-name="help" href="/help">Help</a></li>
     	<li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
         <li><a data-link-name="feedback" target="_blank" href="http://survey.omniture.com/d1/hosted/815f9cfba1">Feedback</a></li>

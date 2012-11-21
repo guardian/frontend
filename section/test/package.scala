@@ -4,6 +4,6 @@ import conf.Configuration
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit(Configuration)
+  object HtmlUnit extends EditionalisedHtmlUnit
 
 }
