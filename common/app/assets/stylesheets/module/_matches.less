@@ -30,6 +30,7 @@
     position: relative;
     color: #064951;
     background: #f4f4ee;
+    border-bottom: 1px solid #DEDEDD;
 }
 
 a.competition-title {
@@ -147,12 +148,15 @@ a.competition-title {
 
 .matches {
     background-color: #f4f4ee;
-    border-top: 1px solid #E3E3DB;
+}
+
+.matches.panel {
+    border-top: 1px solid #DEDEDD;
 }
 
 .competition-table {
     border-bottom: 1px solid @mushroom;
-    padding-bottom: @baseline*2;
+    padding:@baseline*2 0 @baseline*2 0;
 }
 
 .competition-table h3 {
@@ -186,6 +190,10 @@ a.competition-title {
 
 .league-table {
     margin-bottom: @baseline*2;
+}
+
+#front-competition-fixtures {
+    padding-bottom: @baseline*3;
 }
 
 // styling for non-ajax match nav 

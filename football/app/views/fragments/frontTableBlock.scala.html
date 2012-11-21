@@ -1,7 +1,9 @@
 
 @(table: Table)
 <li id="front-competition-table" class="competition-table" data-link-name="front table">
-    <h3 class="type-2">Table</h3>
+    <h3 class="type-2">@table.competition.fullName table</h3>
+
+    <p class="dateline"><i class="i-date"></i> <span>Last updated: a minute ago</span></p>
 
     <table class="table-football type-6a">
         @if(!table.multiGroup) {

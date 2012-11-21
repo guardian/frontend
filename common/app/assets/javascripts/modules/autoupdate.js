@@ -108,7 +108,6 @@ define([
 
         //Initalise
         this.init = function () {
-            
             if (options.switches && options.switches.autoRefresh !== true) {
                 return;
             }
