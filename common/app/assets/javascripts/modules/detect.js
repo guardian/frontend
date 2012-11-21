@@ -4,6 +4,7 @@
                  layout mode, connection speed, battery level, etc...
 */
 /*jshint strict: false */
+/*global DocumentTouch: true */
 
 define(function () {
 

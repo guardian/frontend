@@ -9,7 +9,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         // View
         this.view = {
             render: function (html) {
-                var el = bonzo(options.prependTo).after(html);
+                var el = bonzo(options.prependTo).before(html);
                 common.mediator.emit('modules:footballtables:render');
             }
         };
