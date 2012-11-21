@@ -1,13 +1,13 @@
 define(["modules/gallery"], function(Gallery) {
 
     var modules = {
-        sexUpGallery: function () {
+        augmentGallery: function () {
             var g = new Gallery().init();
         }
     };
 
     var init = function() {
-        modules.sexUpGallery();
+        modules.augmentGallery();
     };
 
     return {
