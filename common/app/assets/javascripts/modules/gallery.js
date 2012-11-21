@@ -16,20 +16,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 gallerySwipe: null
             },
 
-            // currently unused
-            showFullscreenImage: function (elm) {
-                view.galleryConfig.inFullScreenMode = true;
-                var li = elm.parentNode;
-                var body = document.body;
-                bonzo(body).toggleClass('gallery-fullscreen');
-
-                // bit hacky, this effectively fires a resize event
-                // which in turns causes the swipe gallery to resize itself to fit
-                var evt = document.createEvent('UIEvents');
-                evt.initUIEvent('resize', true, false,window,0);
-                window.dispatchEvent(evt);
-            },
-
             // runs on domready
             bindGallery: function () {
 
@@ -281,7 +267,16 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     var width = placeholder.getAttribute("data-width");
                     var height = placeholder.getAttribute("data-height");
                     if (src && src !== "") { // create <img> element
-                        placeholder.innerHTML = '<img src="' + src + '" class="js-gallery-img maxed ' + orientation + '" data-width="' + width + '" data-height="' + height + '" />' + placeholder.innerHTML;
+                        var html = '<img src="[SRC]" class="[CLASS]" data-width="[WIDTH]" data-height="[HEIGHT]" />';
+                        var classList = 'js-gallery-img maxed ' + orientation;
+                        
+                        html = html.replace('[SRC]', src);
+                        html = html.replace('[CLASS]', classList);
+                        html = html.replace('[WIDTH]', width);
+                        html = html.replace('[HEIGHT]', height);
+                        
+                        // prepend it to what's there already (caption etc)
+                        placeholder.innerHTML = html + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
                     }
                 }
