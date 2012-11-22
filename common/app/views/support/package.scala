@@ -195,13 +195,14 @@ object ContributorLinks {
 }
 
 object OmnitureAnalyticsData {
-  def apply(page: MetaData): Html = {
+  def apply(page: MetaData, jsSupport: String): Html = {
 
     val data = page.metaData.map { case (key, value) => key -> value.toString }
     val pageCode = data.get("page-code").getOrElse("")
     val contentType = data.get("content-type").getOrElse("")
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
+    val publication = data.get("publication").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -213,6 +214,7 @@ object OmnitureAnalyticsData {
       "ns" -> "guardian",
       "pageName" -> pageName,
       "v7" -> pageName,
+      "c3" -> publication,
       "ch" -> section,
       "c9" -> section,
       "c4" -> data.get("keywords").getOrElse(""),
@@ -228,7 +230,7 @@ object OmnitureAnalyticsData {
       "c19" -> platform,
       "v19" -> platform,
       "c30" -> (if (isContent) "content" else "non-content"),
-      "pageType" -> contentType
+      "c56" -> jsSupport
     )
 
     Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
