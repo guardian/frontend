@@ -110,15 +110,6 @@ define([
             Adverts.init(config);
 
             common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-
-            // Check every second if page has scrolled and attempt to load new ads.
-            //var currentScroll = window.pageYOffset;
-            //setInterval(function() {
-            //    if (window.pageYOffset !== currentScroll) {
-            //        currentScroll = window.pageYOffset;
-            //        Adverts.loadAds();
-            //    }
-            //}, 1000);
         },
 
         cleanupCookies: function() {
