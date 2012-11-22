@@ -17,7 +17,7 @@ function (
     userPrefs,
     detect,
     documentWrite,
-    documentWriteSlot,
+    DocumentWriteSlot,
     dimensionMap,
     audienceScience
 ) {
@@ -31,8 +31,6 @@ function (
         config = c;
         slots = [];
 
-        console.log(config);
-
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 
@@ -43,7 +41,7 @@ function (
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new documentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
+                var slot = new DocumentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }

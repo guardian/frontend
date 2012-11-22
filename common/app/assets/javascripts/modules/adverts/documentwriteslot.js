@@ -1,3 +1,4 @@
+/*global OAS_RICH:true */
 define([
     'common',
     'domwrite'

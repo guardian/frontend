@@ -68,7 +68,9 @@ define([
     }
 
     function load(options) {
-        if(!options.config) return;
+        if(!options.config) {
+            return;
+        }
 
         var oasUrl = options.url || generateUrl(options.config.page, options.slots);
 
