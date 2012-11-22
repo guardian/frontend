@@ -37,8 +37,7 @@ define([
     }
 
     function generateUrl(config, slots) {
-        //var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + this.config.oasSiteId + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
-        var oasUrl = 'http://gr7k.t.proxylocal.com/' + 'adstream_[REQUEST_TYPE].ads/' + config.oasSiteId + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
+        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + config.oasSiteId + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
         var query = '?';
 
