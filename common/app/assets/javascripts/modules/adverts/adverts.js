@@ -5,6 +5,7 @@ define([
     'modules/userPrefs',
     'modules/detect',
     'modules/adverts/document-write',
+    'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science'
 ],
@@ -16,6 +17,7 @@ function (
     userPrefs,
     detect,
     documentWrite,
+    documentWriteSlot,
     dimensionMap,
     audienceScience
 ) {
@@ -39,7 +41,7 @@ function (
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new documentWrite(name, slotHolders[i].querySelector('.ad-container'), config.page);
+                var slot = new documentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
@@ -47,6 +49,12 @@ function (
                 audienceScience.load(config.page);
             }
         }
+
+        //Make the request to ad server
+        documentWrite.load({
+            config: config,
+            slots: slots
+        });
     }
 
     function loadAds() {
@@ -56,7 +64,7 @@ function (
             for (var i = 0, j = slots.length; i<j; ++i) {
                 //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
                 if (!slots[i].loaded) {
-                    slots[i].load();
+                    slots[i].render();
                 }
             }
         }

@@ -20,7 +20,7 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies',
+    'modules/cookies'
 ], function (
     common,
     detect,
@@ -108,7 +108,8 @@ define([
 
         loadAdverts: function (config) {
             Adverts.init(config);
-            Adverts.loadAds();
+
+            common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
 
             // Check every second if page has scrolled and attempt to load new ads.
             //var currentScroll = window.pageYOffset;
