@@ -28,9 +28,9 @@
     margin-bottom: 0;
     padding: 9px @baseline*2;
     position: relative;
-    border-bottom: 1px solid #DEDEDD;
     color: #064951;
     background: #f4f4ee;
+    border-bottom: 1px solid #DEDEDD;
 }
 
 a.competition-title {
@@ -150,21 +150,17 @@ a.competition-title {
     background-color: #f4f4ee;
 }
 
+.matches.panel {
+    border-top: 1px solid #DEDEDD;
+}
+
 .competition-table {
-    border-bottom: 1px solid #E3E3DB;
-    padding-bottom: @baseline*2;
+    border-bottom: 1px solid @mushroom;
+    padding:@baseline*2 0 @baseline*2 0;
 }
 
 .competition-table h3 {
     margin-bottom: @baseline*3;
-}
-
-.competition-table .competition-title {
-    border-bottom: 1px solid #E3E3DB;
-}
-
-.competition-table .matches {
-    border-top: none;
 }
 
 .matches-nav a {
@@ -196,14 +192,13 @@ a.competition-title {
     margin-bottom: @baseline*2;
 }
 
-.league-table:last-child,
-.matches:last-child {
-    margin-bottom: 0;
+#front-competition-fixtures {
+    padding-bottom: @baseline*3;
 }
 
 // styling for non-ajax match nav 
 .js-not-ajax {
-    padding: @baseline*2 @gutter;
+    padding: @baseline*2 0;
 }
 
 .js-not-ajax .match-next {

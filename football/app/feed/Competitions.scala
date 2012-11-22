@@ -1,6 +1,6 @@
 package feed
 
-import common.{ Logging, AkkaSupport }
+import common.{ Implicits, Logging, AkkaSupport }
 import akka.actor.Cancellable
 import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
 import conf.FootballClient
@@ -54,7 +54,7 @@ trait CompetitionSupport {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging with Implicits {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -110,7 +110,12 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging {
     //results and live games trump fixtures
     val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
 
-    agent.competition.copy(matches = allGames.sortBy(_.date), leagueTable = agent.leagueTable)
+    val distinctGames = allGames.distinctBy(_.id).sortBy(m => (m.date.minuteOfDay().get(), m.homeTeam.name))
+
+    agent.competition.copy(
+      matches = distinctGames,
+      leagueTable = agent.leagueTable
+    )
   }
 
   //one http call updates all competitions

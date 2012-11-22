@@ -1,91 +1,68 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-@main(gallery, Static, Configuration, Switches.all){
-    <script>
-        guardian.js.modules.swipe = 'http://6.gu-pasteup.appspot.com/js/libs/swipe.amd.js?v=2';
-    </script>
-    <style>
-        .gallery-container {
-            width: 100%;
-            min-height: 600px;
-            overflow: hidden;
-        }
-        .gallery-swipe,
-        .gallery-swipe li {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+@main(gallery, Static, Configuration, Switches.all){ }{
 
-        .gallery-swipe li img {
-            max-width: 100%;
-        }
+    <h2 class="article-zone type-2">
+        <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+    </h2>
 
-        .gallery-swipe li {
-            float: left;
-            width: 300px;
-            min-height: 200px;
-        }
-    </style>
+    <article class="article gallery-page" itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" id="js-gallery">
 
-    <script>
-        guardian.gallery = @JSON(gallery);
-    </script>
-}{
-    @fragments.headline(gallery.headline)
-    @fragments.standfirst(gallery)
-
-    @fragments.byline(gallery.byline, gallery)
-    @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-
-    @if(trail) {
-        <p class="trail">Trail page here...</p>
-    } else {
-        <p class="nav">
-
-            @*
-              TODO: Standard CS navigation indexing functions in views.support.
-            *@
-
+        <header>
+            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+            @fragments.headline(gallery.headline)
+            @fragments.standfirst(gallery)
+        </header>
+        
+        @fragments.byline(gallery.byline, gallery)
+        
+        <p class="box-indent gallery-nav type-8" id="js-gallery-nav">
             @if(index > 1) {
-                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)">Previous</a>
+                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)" class="gallery-prev">Previous</a>
             } else {
-                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="initially-off" href="javascript://">Previous</a>
+                <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" class="gallery-prev initially-off" href="javascript://">Previous</a>
             }
 
             Image <span id="js-gallery-index">@index</span> of @gallery.size
 
+            <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible initially-off">Fullscreen <i class="i-fullscreen-toggle"></i></span>
+
             @if(index < gallery.size) {
-                <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)">Next</a>
+                <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)" class="gallery-next">Next</a>
             } else {
-                <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true">Next</a>
+                <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail" href="?trail=true" class="gallery-next">Next</a>
             }
         </p>
 
-        <div class="gallery-container" id="js-gallery">
+        <div class="gallery-container" id="js-gallery-holder">
             <ul class="unstyled">
                 @gallery.images.zipWithRowInfo.map{ case(image, row) =>
                     @if(row.rowNum == index) {
                         <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true" data-index="@row.rowNum" data-total="@gallery.size">
-                            <img class="maxed" src="@image.url" data-width="@image.width" />
+                            <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}" src="@image.url" data-width="@image.width" data-height="@image.height" />
                     } else {
-                        <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-width="@image.width">
+                        <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum" data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url' data-orientation="@if(image.width >= image.height){landscape} else {portrait}" data-width="@image.width" data-height="@image.height">
                     }
-                            @fragments.caption(image.caption.getOrElse(""))
-                            <p class="caption-credit"><strong>@image.credit</strong></p>
-                        </li>
-                    
+
+                        <div class="gallery-caption">
+                            <p class="caption type-7"><i class="i-image"></i> @Html(image.caption.getOrElse(""))</p>
+                            <p class="caption-credit type-7">@image.credit</p>
+                        </div>
+                    </li>
                 }
             </ul>
         </div>
 
-    }
+    </article>
 
     @if(storyPackage nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     } else {
-        <div id="related"></div>
+        <div id="js-related"></div>
     }
 
-    <div id="most-popular"></div>
+    <div id="js-popular"></div>
+
+    <div class="gallery-overlay-bg"></div>
+
 }

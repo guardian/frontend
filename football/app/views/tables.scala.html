@@ -10,7 +10,7 @@
     </h2>
 
     <div class="live-matches-dateline">
-        @fragments.dateline(new DateTime, false, Edition(request, Configuration))
+        <p class="dateline"><i class="i-date"></i> <span>Last updated: a minute ago</span></p>
     </div>
 
     <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
@@ -46,35 +46,7 @@
                         }
                     }
 
-                    @group.entries.zipWithRowInfo.map{ case (entry, row) =>
-                    <tr>
-                        <td class="table-football-leftaligned">@row.rowNum</td>
-                        <td class="table-football-leftaligned">@entry.team.name</td>
-                        <td>@entry.team.total.played</td>
-
-                        <td class="stats-3">@entry.team.home.won</td>
-                        <td class="stats-3">@entry.team.home.drawn</td>
-                        <td class="stats-3">@entry.team.home.lost</td>
-                        <td class="stats-3">@entry.team.home.goalsFor</td>
-                        <td class="stats-3">@entry.team.home.goalsAgainst</td>
-
-                        <td class="stats-3">@entry.team.away.won</td>
-                        <td class="stats-3">@entry.team.away.drawn</td>
-                        <td class="stats-3">@entry.team.away.lost</td>
-                        <td class="stats-3">@entry.team.away.goalsFor</td>
-                        <td class="stats-3">@entry.team.away.goalsAgainst</td>
-
-                        <td class="stats-1">@entry.team.total.won</td>
-                        <td class="stats-1">@entry.team.total.drawn</td>
-                        <td class="stats-1">@entry.team.total.lost</td>
-
-                        <td class="stats-2">@entry.team.total.goalsFor</td>
-                        <td class="stats-2">@entry.team.total.goalsAgainst</td>
-
-                        <td>@entry.team.goalDifference</td>
-                        <td>@entry.team.points</td>
-                    </tr>
-                    }
+                    @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
                 </tbody>
                 }
             </table>

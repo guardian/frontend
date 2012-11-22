@@ -4,6 +4,7 @@
                  layout mode, connection speed, battery level, etc...
 */
 /*jshint strict: false */
+/*global DocumentTouch: true */
 
 define(function () {
 
@@ -98,12 +99,22 @@ define(function () {
         return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
     }
 
+    function hasTouchScreen() {
+        return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+    }
+
+    function hasPushStateSupport() {
+        return 'pushState' in history;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
-        hasSvgSupport: hasSvgSupport
+        hasSvgSupport: hasSvgSupport,
+        hasTouchScreen: hasTouchScreen,
+        hasPushStateSupport: hasPushStateSupport
     };
 
 });

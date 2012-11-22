@@ -23,6 +23,7 @@
                 domwrite:     'vendor/bezen.domwrite-2012-08-15',
                 analytics:    'modules/analytics',
                 EventEmitter: 'vendor/EventEmitter-3.1.5',
+                swipe:        'vendor/swipe-1.0',
                 omniture:     '../../../app/public/javascripts/vendor/omniture'
             }
       });
@@ -30,7 +31,6 @@
   <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
-
     .initially-off:after { content: " -- (hidden)"; }
     .on:after { content: " -- (visible)"; }
   </style>
@@ -126,6 +126,9 @@
         <li><a href="#Autoupdate">Auto update</a></li>
         <li><a href="#MoreMatches">More Matches</a></li>
         <li><a href="#FootballFixtures">Football Fixtures</a></li>
+        <li><a href="#Gallery">Gallery</a></li>
+        <li><a href="#GallerySwipe">Gallery (Swipe)</a></li>
+        <li><a href="#FootballTables">Football Tables</a></li>
         <li><a href="#Router">Router</a></li>
     </ul>
 
@@ -305,7 +308,241 @@
       </ul>
     </div>
     
-    <!-- Fonts.spec -->
+
+    <!--  FootballTables.spec -->
+    <div id="football-tables">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+
+    <!-- Gallery.spec -->
+    <div style="display: none">
+      <p class="box-indent"><a class="initially-off" data-is-ajax="true"
+      data-link-name="Gallery Previous" href="javascript://" id="js-gallery-prev"
+      name="js-gallery-prev">Previous</a> Image <span id=
+      "js-gallery-index">1</span> of 16 <a data-is-ajax="true" data-link-name=
+      "Gallery Next" href="?index=2" id="js-gallery-next" name=
+      "js-gallery-next">Next</a></p>
+
+      <div class="gallery-container" id="js-gallery">
+          <ul class="unstyled">
+              <li class="js-current-gallery-slide" data-image="true" data-index=
+              "1" data-total="16" id="js-gallery-item-1">
+                  <img class="maxed" data-width="393" src=
+                  "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352700016/Tour-of-Britain-006.jpg">
+
+                  <p class="caption box-indent">The 8.8km individual time-trial
+                  through London is the penultimate event in this year's Tour of
+                  Britain which began in Dumfries seven days ago. Here, Ben Swift
+                  proudly displays his nationality on his cycling shoes</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg'
+              data-image="false" data-index="2" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg"
+              data-total="16" data-width="724" id="js-gallery-item-2">
+                  <p class="caption box-indent">Andreas Dietziker of Team NetApp
+                  is counted down to the start of his time-trial</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg'
+              data-image="false" data-index="3" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg"
+              data-total="16" data-width="732" id="js-gallery-item-3">
+                  <p class="caption box-indent">Here's the man many people have
+                  come to see - Mark Cavendish. The green jersey winner at this
+                  year's Tour de France is top of the sprint classification in
+                  this year's Tour of Britain. After a few last-minute tweaks to
+                  his bike, he sets off</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg'
+              data-image="false" data-index="4" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg"
+              data-total="16" data-width="721" id="js-gallery-item-4">
+                  <p class="caption box-indent">This rainbow coloured saddle
+                  belongs to the current road-race world champion Thor Hushovd.
+                  He's entitled to wear it for one more week until he defends his
+                  world title next Sunday in Copenhagen</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg'
+              data-image="false" data-index="5" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg"
+              data-total="16" data-width="760" id="js-gallery-item-5">
+                  <p class="caption box-indent">Alex Dowsett of Team Sky passes
+                  the finish-line with by far the best time thus far - 10 minutes
+                  14 seconds</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg'
+              data-image="false" data-index="6" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg"
+              data-total="16" data-width="752" id="js-gallery-item-6">
+                  <p class="caption box-indent">Michael Rogers of Team Sky
+                  prepares in the start hut</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg'
+              data-image="false" data-index="7" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg"
+              data-total="16" data-width="721" id="js-gallery-item-7">
+                  <p class="caption box-indent">Meanwhile, members of the Sigma
+                  Sport team warm up</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg'
+              data-image="false" data-index="8" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg"
+              data-total="16" data-width="756" id="js-gallery-item-8">
+                  <p class="caption box-indent">The overall Tour of Britain
+                  leader, Lars Boom, sets off last and is only one second down on
+                  Dowsett at the intermediate split, but come the finish-line he
+                  is five seconds slower. That earns him second place in the
+                  time-trial and keeps his overall advantage intact. Boom now
+                  leads the Czech Leopold Konig by 28 seconds and Britain's
+                  Daniel Lloyd by a further second with one stage remaining</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg'
+              data-image="false" data-index="9" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg"
+              data-total="16" data-width="725" id="js-gallery-item-9">
+                  <p class="caption box-indent">The final stage is a ten-lap
+                  circuit race around the streets of the capital. Boom, wearing
+                  the yellow jersey, turns through Parliament Square in a strong
+                  position</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg'
+              data-image="false" data-index="10" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg"
+              data-total="16" data-width="721" id="js-gallery-item-10">
+                  <p class="caption box-indent">The peloton speed past Horse
+                  Guards Parade</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg'
+              data-image="false" data-index="11" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg"
+              data-total="16" data-width="760" id="js-gallery-item-11">
+                  <p class="caption box-indent">And along embankment - it's quite
+                  a scenic stage, this</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg'
+              data-image="false" data-index="12" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg"
+              data-total="16" data-width="743" id="js-gallery-item-12">
+                  <p class="caption box-indent">Down they head into a tunnel</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg'
+              data-image="false" data-index="13" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg"
+              data-total="16" data-width="712" id="js-gallery-item-13">
+                  <p class="caption box-indent">Team Sky lead the chasing peloton
+                  through Blackfriars tunnel</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg'
+              data-image="false" data-index="14" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg"
+              data-total="16" data-width="760" id="js-gallery-item-14">
+                  <p class="caption box-indent">But it's the HTC rider Mark
+                  Renshaw who funnels his team-mate, Cavendish, into a winning
+                  position on the final straight</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg'
+              data-image="false" data-index="15" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg"
+              data-total="16" data-width="760" id="js-gallery-item-15">
+                  <p class="caption box-indent">Cavendish duly obliges by winning
+                  the stage with a powerful sprint-finish</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+
+              <li class="initially-off" data-fullsrc=
+              'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg'
+              data-image="false" data-index="16" data-src=
+              "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg"
+              data-total="16" data-width="730" id="js-gallery-item-16">
+                  <p class="caption box-indent">Victory for the Manxman, and a
+                  great way to sign off before next weekend's World Champs. The
+                  overall Tour victory goes, of course, to Boom by a total margin
+                  of 36 seconds</p>
+
+                  <p class="caption-credit box-indent"><strong>Tom Jenkins for
+                  The Guardian</strong></p>
+              </li>
+          </ul>
+      </div>
+    </div>
+
+
+
+<!-- Fonts.spec -->
+
 <style data-cache-name="guardian-font1" data-cache-file-woff="font1.woff.js" data-cache-file-ttf="font1.ttf.js"></style>
 <style data-cache-name="guardian-font2" data-cache-file-woff="font2.woff.js" data-cache-file-ttf="font2.ttf.js"></style>
 

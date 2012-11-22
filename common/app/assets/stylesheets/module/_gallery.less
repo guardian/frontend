@@ -1,0 +1,92 @@
+.gallery-container {
+    overflow: hidden;
+    margin: 0px @gutter;
+}
+
+.gallery-caption {
+    margin-top: @baseline;
+}
+
+.gallery-caption i {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.gallery-container .caption-credit {
+    margin-bottom: 20px;
+    border-top: 1px solid #f4f4ee;
+    padding-top: @baseline;
+    margin-top: @baseline;
+}
+
+.gallery-swipe li img {
+    width: 100%;
+}
+
+.gallery-swipe li {
+    float: left;
+    width: 300px;
+    min-height: 200px;
+}
+
+.gallery-nav {
+    text-align: center;
+    margin-bottom: @baseline;
+}
+
+.gallery-prev,
+.gallery-next {
+    width: 75px; // this is to ensure the "Image x of y" is centered. (MA)
+}
+
+.gallery-prev {
+    text-align: left;
+}
+
+.gallery-next {
+    text-align: right;
+}
+
+.gallery-swipe .gallery-prev {
+    .i-filter-arrow-left;
+}
+
+.gallery-swipe .gallery-next {
+    .i-filter-arrow-right;
+}
+
+.gallery-swipe .gallery-prev ,
+.gallery-swipe .gallery-next {
+    text-indent: -1000em;
+    display: inline-block;
+    text-align: left;
+}
+
+.gallery-prev {
+    float: left;
+}
+
+.gallery-prev:before {
+    content: "« ";
+}
+
+.gallery-next {
+    float: right;
+}
+
+.gallery-next:after {
+    content: " »";
+}
+
+.gallery-nav i {
+    display: inline-block;
+}
+
+.gallery-fullscreen-toggle {
+    cursor: pointer;
+}
+
+.gallery-swipe .gallery-fullscreen-toggle {
+    display: none;
+    float: right;
+}
