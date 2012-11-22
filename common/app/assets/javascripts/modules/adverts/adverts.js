@@ -39,7 +39,7 @@ function (
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new documentWrite(name, slotHolders[i], config.page);
+                var slot = new documentWrite(name, slotHolders[i].querySelector('.ad-container'), config.page);
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
