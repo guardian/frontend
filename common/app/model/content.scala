@@ -45,6 +45,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   override def metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> keywords.map { _.name }.mkString(","),
     "publication" -> publication,
+    "headline" -> headline,
     "web-publication-date" -> webPublicationDate,
     "author" -> contributors.map(_.name).mkString(","),
     "tones" -> tones.map(_.name).mkString(","),

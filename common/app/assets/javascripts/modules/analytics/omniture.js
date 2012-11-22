@@ -64,6 +64,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
 
+            s.prop1     = config.page.headline || '';
             s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
