@@ -20,6 +20,10 @@ define([
         }).join('');
     }
 
+    function getPageUrl(config) {
+            return 'm.guardian.co.uk/' + config.pageId + '/oas.html';
+    }
+
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
             return 'k=' + encodeURIComponent(keyword.toLowerCase());
@@ -37,7 +41,7 @@ define([
     }
 
     function generateUrl(config, slots) {
-        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + config.oasSiteId + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
+        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config)+ '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
         var query = '?';
 
@@ -45,17 +49,18 @@ define([
             query += getKeywords(config);
         }
 
-        var segments = audienceScience.getSegments();
-        if (segments) {
-            query += getSegments(segments);
-        }
-
         if (config.contentType) {
-             query += 'ct=' + getPageType(config) + "&";
-             query += 'pt=' + getPageType(config) + "&";
+            query += '&pt=' + getPageType(config);
+            query += '&ct=' + getPageType(config);
         }
         if (config.section) {
-            query += 'cat=' + encodeURIComponent(config.section.toLowerCase()) + "&";
+            query += '&cat=' + encodeURIComponent(config.section.toLowerCase());
+        }
+
+        var segments = audienceScience.getSegments();
+        console.log(getSegments(segments));
+        if (segments) {
+            query += getSegments(segments);
         }
 
         var url = oasUrl;
@@ -87,7 +92,8 @@ define([
     }
 
     return {
-        load: load
+        load: load,
+        generateUrl: generateUrl
     };
 
 });
