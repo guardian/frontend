@@ -17,10 +17,10 @@
 
                 <ul class="nav nav-columns nav-top-border-off cf">
                     @group.entries.sortBy{ _.team.name }.zipWithRowInfo.map{ case (entry, row) =>
-                        @Teams.teams.find(_.id == entry.team.id).filter(_.url).map { team =>
+                        @LeagueTeamLookup(entry.team).filter(_.url).map { team =>
 	                        <li>
-                                <a href="@team.url" data-link-name="@HtmlFormat.raw(entry.team.name)">
-                                    @HtmlFormat.raw(entry.team.name)
+                                <a href="@team.url" data-link-name="@HtmlFormat.raw(team.shortName)">
+                                    @HtmlFormat.raw(team.shortName)
                                 </a>
 	                        </li>
                         }
