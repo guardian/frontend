@@ -6,7 +6,7 @@
 }{
 
     <h2 class="article-zone type-1 sport-header">
-        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+        <a class="zone-color" data-link-name="article section" href="/football">Football | Table</a>
     </h2>
 
     <div class="live-matches-dateline">
@@ -22,7 +22,7 @@
 
         <li class="league-table">
 
-            <a class="competition-title football-table-header football-table-link type-3" href="@table.competition.url" data-link-name="competition">
+            <a class="competition-title football-table-header football-table-link type-4 zone-color" href="@table.competition.url" data-link-name="competition">
                 @table.competition.fullName
                 <i class="i-filter-arrow-right"></i>
             </a>
@@ -52,7 +52,7 @@
             </table>
 
             @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
+                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-6 zone-color">View full @table.competition.fullName table ><i class="i-filter-arrow-right"></i></a>
             }
         
         </li>

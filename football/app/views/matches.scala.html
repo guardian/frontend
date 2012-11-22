@@ -6,7 +6,7 @@
 }{
     
     <h2 class="article-zone type-1 sport-header">
-        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+        <a class="zone-color" data-link-name="article section" href="/football">Football | @model.pageType</a>
     </h2>
     
     @if(model.isLive) {
@@ -17,13 +17,13 @@
 
     <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
     
-    @fragments.filters(model.filters, model.page, model.pageType)
-
-    @if(model.isLive && model.pageType == "live") {
+    @if(model.pageType == "live") {
         <div class="live-matches-update">
-            @fragments.autoUpdate()
+            
         </div>
     }
+
+    @fragments.filters(model.filters, model.page, model.pageType)
     
     <div class="matches-container box-indent">
         @fragments.matchesList(model)

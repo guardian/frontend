@@ -64,8 +64,9 @@
 
 .update {
     display: block;
-    margin: 0px @gutter @baseline*2 @gutter;
-    padding: 0px 0px @baseline*2 0px;
+    background-color: @mushroom;
+    margin: 0 @gutter @baseline*4 @gutter;
+    padding: 0 0 0 @baseline*2;
     border-bottom: 1px solid #CCCCCC;
     overflow: hidden;
 }
@@ -73,14 +74,15 @@
 .update-text {
     float:left;
     margin-right: @gutter;
-    padding-top: @baseline;
+    padding: @baseline 0;
+    line-height: 32px;
 }
 
 .update-btn {
-    float:left;
+    float:right;
     margin: 0;
-    padding: 10px 12px;
-    background-color: #EFEFE7;
+    padding: 13px 12px;
+    background-color: @mushroom;
     color: #333333;
     font-weight: normal;
     border: none;
