@@ -1,0 +1,8 @@
+@(game: pa.FootballMatch)
+
+@game match {
+    case fixture: pa.Fixture                                                        => { @fragments.fixture(fixture) }
+    case result: pa.Result                                                          => { @fragments.result(result) }
+    case matchDay: pa.MatchDay if matchDay.result || matchDay.matchStatus == "FT"   => { @fragments.result(matchDay) }
+    case matchDay: pa.MatchDay                                                      => { @fragments.liveMatch(matchDay) }
+}
