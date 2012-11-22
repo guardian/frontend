@@ -20,6 +20,7 @@
                 qwery:        'vendor/qwery-mobile-3.3.11',
                 bean:         'vendor/bean-1.0.1',
                 reqwest:      'vendor/reqwest-0.4.5',
+                domwrite:     'vendor/bezen.domwrite-2012-08-15',
                 analytics:    'modules/analytics',
                 EventEmitter: 'vendor/EventEmitter-3.1.5',
                 swipe:        'vendor/swipe-1.0',
@@ -35,6 +36,7 @@
   </style>
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
+  <script type="text/javascript" src="vendor/seedrandom.js"></script>
   <script type="text/javascript">
 
     window.onhashchange = function(){
@@ -79,8 +81,12 @@
 <body>
 
     <!-- Adverts.spec, keeping these here so they stay on screen. :/ -->
-    <div id="ad-slot-top-banner-ad" data-link-name="ad slot top-banner-ad" data-base="Top2" data-median="Top" data-extended="x54" class="ad-slot"></div>
-    <div id="ad-slot-bottom-banner-ad" data-link-name="ad slot bottom-banner-ad" data-base="Bottom2" data-median="Bottom" data-extended="x54" class="ad-slot"></div>
+    <div id="ad-slot-top-banner-ad" data-link-name="ad slot top-banner-ad" data-base="Top2" data-median="Top" data-extended="x54" class="ad-slot">
+        advert-top
+    </div>
+    <div id="ad-slot-bottom-banner-ad" data-link-name="ad slot bottom-banner-ad" data-base="Bottom2" data-median="Bottom" data-extended="x54" class="ad-slot">
+        advert-bottom
+    </div>
 
     <ul id="tests">
         <li>
@@ -96,6 +102,7 @@
             <ul>
                 <li><a href="#AudienceScience">AudienceScience</a>
                 <li><a href="#Adverts">Adverts</a>
+                <li><a href="#DocumentWrite">DocumentWrite</a></li>
             </ul>        
         </li>
         <li><a href="#Common">Common</a></li>
@@ -302,6 +309,7 @@
       </ul>
     </div>
     
+
     <!--  FootballTables.spec -->
     <div id="football-tables">
       <ul>
@@ -535,6 +543,7 @@
 
 
 <!-- Fonts.spec -->
+
 <style data-cache-name="guardian-font1" data-cache-file-woff="font1.woff.js" data-cache-file-ttf="font1.ttf.js"></style>
 <style data-cache-name="guardian-font2" data-cache-file-woff="font2.woff.js" data-cache-file-ttf="font2.ttf.js"></style>
 

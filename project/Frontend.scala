@@ -207,6 +207,7 @@ trait Prototypes {
                             "qwery" -> "vendor/qwery-mobile-3.3.11",
                             "bean" -> "vendor/bean-1.0.1",
                             "domReady" -> "vendor/domReady-2.0.1",
+                            "domwrite" -> "vendor/bezen.domwrite-2012-08-15",
                             "EventEmitter" -> "vendor/EventEmitter-3.1.5",
                             "swipe" -> "vendor/swipe-1.0"
                           ),

@@ -1,14 +1,27 @@
 define([
     'common',
     'reqwest',
+    'domwrite',
     'modules/userPrefs',
     'modules/detect',
-    'modules/adverts/iframeadslot',
+    'modules/adverts/document-write',
+    'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science'
 ],
-function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audienceScience) {
+function (
+    common,
+    reqwest,
+    domwrite,
 
+    userPrefs,
+    detect,
+    documentWrite,
+    DocumentWriteSlot,
+    dimensionMap,
+    audienceScience
+) {
+    
     var config,
         adsSwitchedOn,
         audienceScienceSegments,
@@ -23,12 +36,12 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
 
-        // Run through slots and create IframeAdSlots for each.
-        // Other ad types to be plugged in later.
+        // Run through slots and create documentWrite for each.
+        // Other ad types suchas iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new IframeAdSlot(name, slotHolders[i], config.page);
+                var slot = new DocumentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
@@ -36,14 +49,22 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
                 audienceScience.load(config.page);
             }
         }
+
+        //Make the request to ad server
+        documentWrite.load({
+            config: config,
+            slots: slots
+        });
     }
 
     function loadAds() {
+        domwrite.capture();
         if (adsSwitchedOn) {
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
-                if (!slots[i].loaded && isOnScreen(slots[i].el)) {
-                    slots[i].load();
+                //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
+                if (!slots[i].loaded) {
+                    slots[i].render();
                 }
             }
         }
@@ -61,4 +82,5 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
         loadAds: loadAds,
         isOnScreen: isOnScreen
     };
+
 });
