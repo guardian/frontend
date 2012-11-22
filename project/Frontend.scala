@@ -1,33 +1,28 @@
-import com.gu.deploy.PlayArtifact._
-import com.gu.deploy.PlayAssetHash._
-import com.typesafe.sbtscalariform.ScalariformPlugin._
+//import com.gu.deploy.PlayArtifact._
+//import com.gu.deploy.PlayAssetHash._
+//import com.typesafe.sbtscalariform.ScalariformPlugin._
 import io.Source
 import org.sbtidea.SbtIdeaPlugin._
 import sbt._
-import sbt.Keys._
-import sbt.PlayProject._
-import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin.MergeStrategy
+import Keys._
+import play.Project._
+//import sbtassembly.Plugin.AssemblyKeys._
+//import sbtassembly.Plugin.MergeStrategy
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
 import templemore.xsbt.cucumber.CucumberPlugin
 import templemore.xsbt.cucumber.CucumberPlugin._
-
-import RequireJsPlugin._
-import RequireJsPlugin.RequireJsKeys._
-import net.liftweb.json._
-import net.liftweb.json.JsonDSL._
 
 object Frontend extends Build with Prototypes {
 
   val version = "1-SNAPSHOT"
 
   // jasmine project
-  val jasmine = Project("jasmine", file("integration-tests"),
-      settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++ 
-      Seq (
-        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
-      )
+  val jasmine = Project("jasmine", file("integration-tests")//,
+//      settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++ 
+//      Seq (
+//        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
+//      )
     )
   	.settings(
   	  libraryDependencies ++= Seq(
@@ -127,14 +122,13 @@ trait Prototypes {
       parallelExecution in Global := false
     )
 
-  def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(requireJsSettings: _*)
+  def base(name: String) = play.Project(name, version, path = file(name))
   	.settings(requireJsConfiguration: _*)
     .settings(jshintSettings:_*)
-    .settings(scalariformSettings: _*)
-    .settings(playAssetHashDistSettings: _*)
+//    .settings(scalariformSettings: _*)
+//    .settings(playAssetHashDistSettings: _*)
     .settings(
-      scalaVersion := "2.9.1",
+      scalaVersion := "2.9.2",
 
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
@@ -187,31 +181,32 @@ trait Prototypes {
 
   val requireJsConfiguration = Seq(
     //effectively disables built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
+//    javascriptEntryPoints <<= (sourceDirectory in Compile)(base => (base / "assets" ** "*.none")),
+      requireJs += "main.js"
     // require js settings
-    buildProfile in (Compile, requireJs) := (
-	  ("out" -> "../main/public/javascripts/bootstraps/article.js") ~
-	  ("name" -> "bootstraps/article") ~
-	  ("paths" ->
-	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
-	    ("reqwest"      -> "vendor/reqwest-0.4.5") ~
-	    ("qwery"        -> "vendor/qwery-3.3.11") ~
-	    ("bean"         -> "vendor/bean-0.4.11-1") ~
-	    ("domReady"     -> "vendor/domReady-2.0.1") ~
-	    ("EventEmitter" -> "vendor/EventEmitter-3.1.5")
-      ) ~
-      ("optimize" -> "none")
-	),
-	baseUrl in (Compile, requireJs) := "../app/assets/javascripts",
-	resourceGenerators in Compile <+=  requireJs in Compile
+//    buildProfile in (Compile, requireJs) := (
+//      ("baseUrl" -> "../../common/app/assets/javascripts") ~
+//	  ("out" -> "../main/public/javascripts/bootstraps/article.js") ~
+//	  ("name" -> "bootstraps/article") ~
+//	  ("paths" ->
+//	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
+//	    ("reqwest"      -> "vendor/reqwest-0.4.5") ~
+//	    ("qwery"        -> "vendor/qwery-3.3.11") ~
+//	    ("bean"         -> "vendor/bean-0.4.11-1") ~
+//	    ("domReady"     -> "vendor/domReady-2.0.1") ~
+//	    ("EventEmitter" -> "vendor/EventEmitter-3.1.5")
+//      ) ~
+//      ("optimize" -> "uglify")
+//	),
+//	resourceGenerators in Compile <+=  requireJs in Compile
   )
 
   def library(name: String) = base(name).settings(
-    staticFilesPackage := "frontend-static",
+//    staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.13",
-      "com.gu" %% "management-logback" % "5.13",
-      "com.gu" %% "configuration" % "3.6",
+      "com.gu" % "management-play_2.9.1" % "5.19",
+      "com.gu" % "management-logback_2.9.1" % "5.19",
+      "com.gu" % "configuration_2.9.1" % "3.7",
       "com.gu.openplatform" %% "content-api-client" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
@@ -230,19 +225,19 @@ trait Prototypes {
   )
 
   def application(name: String) = base(name).settings(
-    features <<= featuresTask,
-    staticFilesPackage := "frontend-static",
-    executableName := "frontend-%s" format  name,
-    jarName in assembly <<= (executableName) { "%s.jar" format _ },
+    features <<= featuresTask//,
+//    staticFilesPackage := "frontend-static",
+//    executableName := "frontend-%s" format  name,
+//    jarName in assembly <<= (executableName) { "%s.jar" format _ },
     //these merge strategies are for the htmlcompressor
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
-      {
-        case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
-        case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
-        case "README" => MergeStrategy.first
-        case "CHANGELOG" => MergeStrategy.first
-        case x => old(x)
-      }
-    }
+//    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+//      {
+//        case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
+//        case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
+//        case "README" => MergeStrategy.first
+//        case "CHANGELOG" => MergeStrategy.first
+//        case x => old(x)
+//      }
+//    }
   )
 }
