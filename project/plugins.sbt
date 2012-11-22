@@ -4,17 +4,12 @@ logLevel := Level.Warn
 resolvers ++= Seq(
   "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
   "Templemore Repository" at "http://templemore.co.uk/repo",
+  "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"
   Classpaths.typesafeResolver
 )
 
-addSbtPlugin("play" % "sbt-plugin" % "2.1-06142012")
+addSbtPlugin("play" % "sbt-plugin" % "2.1-SNAPSHOT")
 
-addSbtPlugin("com.typesafe.sbtscalariform" % "sbtscalariform" % "0.4.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.0.0")
 
-addSbtPlugin("templemore" %% "xsbt-cucumber-plugin" % "0.5.0")
- 
-resolvers += Resolver.url("sbt-plugin-releases",
-  new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(
-    Resolver.ivyStylePatterns)
-    
-addSbtPlugin("org.scalatra.requirejs" % "sbt-requirejs" % "0.0.3")
+addSbtPlugin("templemore" % "sbt-cucumber-plugin" % "0.7.0")
