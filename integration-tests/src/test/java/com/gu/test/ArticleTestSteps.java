@@ -88,12 +88,12 @@ public class ArticleTestSteps {
 
 	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
-		webDriver.clickLink("The Guardian");
+		webDriver.click(By.xpath("//*[@id='js-popular-tabs']/li[2]/a"));
 	}
 
 	@When("^I select the pan-site \"([^\"]*)\"$")
 	public void I_select_pan_site(String arg1) throws Throwable {
-		webDriver.click(By.cssSelector("#js-popular-tabs > li > a"));
+		webDriver.click(By.xpath("//*[@id='js-popular-tabs']/li[1]/a"));
 	}
 
 	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
