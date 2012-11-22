@@ -31,6 +31,8 @@ function (
         config = c;
         slots = [];
 
+        console.log(config);
+
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 

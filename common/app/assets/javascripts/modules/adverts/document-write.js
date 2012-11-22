@@ -21,13 +21,13 @@ define([
     }
 
     function getKeywords(config) {
-        return config.page.keywords.split(',').map(function(keyword){
+        return config.keywords.split(',').map(function(keyword){
             return 'k=' + encodeURIComponent(keyword.toLowerCase());
         }).join('&');
     }
 
     function getPageType(config) {
-        return encodeURIComponent(config.page.contentType.toLowerCase());
+        return encodeURIComponent(config.contentType.toLowerCase());
     }
 
     function getSlots(slots) {
@@ -70,7 +70,7 @@ define([
     function load(options) {
         if(!options.config) return;
 
-        var oasUrl = options.url || generateUrl(options.config, options.slots);
+        var oasUrl = options.url || generateUrl(options.config.page, options.slots);
 
         reqwest({
             url: oasUrl,
