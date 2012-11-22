@@ -22,6 +22,7 @@ logs
 tmp
 old
 target
+bin
 
 RUNNING_PID
 
@@ -30,3 +31,4 @@ frontend.sublime-project
 
 tags
 
+local.sbt
