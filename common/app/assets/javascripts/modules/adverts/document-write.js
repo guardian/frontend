@@ -58,7 +58,6 @@ define([
         }
 
         var segments = audienceScience.getSegments();
-        console.log(getSegments(segments));
         if (segments) {
             query += getSegments(segments);
         }
