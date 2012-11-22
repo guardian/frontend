@@ -61,9 +61,10 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             var prefix = 'GFE',
                 path = window.location.pathname;
 
+            s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
 
-            s.pageType  = config.page.contentType || '';  //pageType
+            s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
             s.channel   = config.page.section || '';
@@ -89,7 +90,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
             s.prop48    = detect.getConnectionSpeed(w.performance);
 
-            s.prop56    = detect.getLayoutMode(w.innerWidth);
+            s.prop56    = 'Javascript';
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
