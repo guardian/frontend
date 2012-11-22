@@ -20,7 +20,7 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies',
+    'modules/cookies'
 ], function (
     common,
     detect,
@@ -108,16 +108,8 @@ define([
 
         loadAdverts: function (config) {
             Adverts.init(config);
-            Adverts.loadAds();
 
-            // Check every second if page has scrolled and attempt to load new ads.
-            var currentScroll = window.pageYOffset;
-            setInterval(function() {
-                if (window.pageYOffset !== currentScroll) {
-                    currentScroll = window.pageYOffset;
-                    Adverts.loadAds();
-                }
-            }, 1000);
+            common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
         },
 
         cleanupCookies: function() {
