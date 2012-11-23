@@ -47,7 +47,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlist() = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/teams",
+      "http://www.guardian.co.uk/football/clubs",
       "football/teams",
       "football",
       "",
