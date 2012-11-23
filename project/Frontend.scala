@@ -209,6 +209,7 @@ trait Prototypes {
                             "domReady" -> "vendor/domReady-2.0.1",
                             "domwrite" -> "vendor/bezen.domwrite-2012-08-15",
                             "EventEmitter" -> "vendor/EventEmitter-3.1.5",
+                            "iosOrientationChangeBug" -> "vendor/ios-orientationchange-fix",
                             "swipe" -> "vendor/swipe-1.0"
                           ),
     requireJsOptimize := true,
