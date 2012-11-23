@@ -10,20 +10,18 @@
 
 @trail.trailText.map { text => <div class="trail-text type-5">@cleanTrailText(text)</div> }
 
-@if(trail.mainPicture) {
-    @trail.mainPicture.map{ mainPicture =>
-        @trail.mainPicture(width=220).map{ smallCrop =>
-	        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
-	            <img class="maxed" src="@smallCrop.url"
-	                data-force-upgrade="true"
-	                data-thumb-width="@smallCrop.width"
-	                data-fullsrc="@mainPicture.url"
-	                data-full-width="@mainPicture.width"
-	                itemprop="contentURL"
-	                alt="@Html(mainPicture.altText.getOrElse(""))" 
-	                title="@Html(mainPicture.caption.getOrElse(""))"
-	            />
-	        </a>
-        }
-    }
+@trail.mainPicture(width=220).map{ smallCrop =>
+    <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
+        <img class="maxed" src="@smallCrop.url"
+            data-force-upgrade="true"
+            data-thumb-width="@smallCrop.width"
+            @trail.mainPicture(width=460).map { largeCrop =>
+                data-fullsrc="@largeCrop.url"
+                data-full-width="@largeCrop.width"
+            }
+            itemprop="contentURL"
+            alt="@Html(smallCrop.altText.getOrElse(""))" 
+            title="@Html(smallCrop.caption.getOrElse(""))"
+        />
+    </a>
 }
