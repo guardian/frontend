@@ -27,6 +27,8 @@ object InBodyLink extends Logging {
 
   private val DiscussionLink = """.*/(discussion/comment-permalink)/.*""".r
 
+  private val FeedArticle = """.*/(feedarticle)/.*""".r
+
   private object Supported {
     def unapply(s: String): Option[String] = if (supportedContentTypes.exists(_ == s.drop(1))) Some(s) else None
   }
@@ -56,6 +58,10 @@ object InBodyLink extends Logging {
   }
 
   private def pageTypes(url: String): PartialFunction[String, String] = {
+
+    case FeedArticle(_) =>
+      log.debug("unsupported: resolved %s as a feed article" format (url))
+      url
 
     case DiscussionLink(_) =>
       log.debug("unsupported: resolved %s as a discussion perma link" format (url))

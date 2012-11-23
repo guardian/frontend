@@ -94,4 +94,9 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
       be("http://www.guardian.co.uk/discussion/comment-permalink/19452022")
 
   }
+
+  it should "not resolve feed articles" in {
+    InBodyLink("http://www.guardian.co.uk/football/feedarticle/10541078") should
+      be("http://www.guardian.co.uk/football/feedarticle/10541078")
+  }
 }
