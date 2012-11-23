@@ -20,7 +20,7 @@
             @article.mainPicture.map{ mainPicture =>
                 @article.mainPicture(width=220).map{ smallCrop =>
                 <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                    <img class="maxed" src="@smallCrop.url"
+                    <img class="maxed main-image" src="@smallCrop.url"
                         data-force-upgrade="true"
                         data-thumb-width="@smallCrop.width"
                         data-fullsrc="@mainPicture.url"
