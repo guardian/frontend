@@ -138,9 +138,9 @@ define([
             });
 
             if(pref === 'off') {
-                this.view.toggle.call(this, this.btns[1]);
-            } else {
                 this.view.toggle.call(this, this.btns[0]);
+            } else {
+                this.view.toggle.call(this, this.btns[1]);
             }
         };
 
