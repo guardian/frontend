@@ -9,7 +9,9 @@
                 var linkList = List(
                     Link(urlBase + "/live", "livescores", "Live scores"),
                     Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
-                    Link(urlBase + "/results", "results", "Results")
+                    Link(urlBase + "/results", "results", "Results"),
+                    Link(urlBase + "/teams", "teams", "Teams"),
+                    Link(urlBase + "/competitions", "leagues and competitions", "Leagues & competitions")
                 )
 
                 if(!List("Scottish Cup", "Capital One Cup", "FA Cup").contains(competitionName.getOrElse(""))) {                
@@ -27,7 +29,6 @@
                     <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
                 }
             }
-            <li><a href="/football/competitions" data-link-name"leagues and competitions">Leagues &amp; competitions</a></li>
         </ul>
     </div>
 </div>
