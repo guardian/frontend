@@ -42,7 +42,7 @@
         @if(tag.isFootballCompetition) {
             @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
         } else {
-            @fragments.footballNav("/football", None, None)
+            @fragments.footballNav("/football")
         }
     }
 
