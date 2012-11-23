@@ -60,12 +60,11 @@ define([
         },
 
         initAutoUpdate: function(switches) {
-            console.log(qwery(".live-matches-update")[0]);
             if (qwery('.match.live-match').length > 0) {
                 var a = new AutoUpdate({
                     path: window.location.pathname,
                     delay: 10000,
-                    attachTo: qwery(".live-matches-update")[0],
+                    attachTo: qwery(".matches-container")[0],
                     switches: switches
                 }).init();
             }

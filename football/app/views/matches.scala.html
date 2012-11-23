@@ -15,13 +15,11 @@
         </div>
     }
 
-    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
-    
     @if(model.pageType == "live") {
-        <div class="live-matches-update">
-            
-        </div>
+        <div class="update update-live-matches"></div>
     }
+
+    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
 
     @fragments.filters(model.filters, model.page, model.pageType)
     

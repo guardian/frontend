@@ -19,11 +19,13 @@ define([
         var options = common.extend({
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
-            'prefName': 'auto-update'
+            'prefName': 'auto-update',
+            'iconClass' : 'i-update'
         }, config);
 
         this.template =
-            '<p class="update-text type-4">Auto update <img src="" /></p>' +
+            '<p class="update-text type-4">Auto update</p>' +
+            '<img class="'+ options.iconClass + '" src="/assets/images/auto-update-activity.d5fb332d0688824c41e9690287739806.gif" />' +
             '<button class="update-btn type-6" data-action="off" data-link-name="autoupdate off">Off</button>' +
             '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>';
 
@@ -32,6 +34,7 @@ define([
             render: function (html) {
                 var attachTo = options.attachTo;
                 attachTo.innerHTML = html;
+
                 // add a timestamp to the attacher
                 bonzo(attachTo).attr('data-last-updated', new Date().toString());
                 common.mediator.emit('modules:autoupdate:render');
@@ -41,9 +44,11 @@ define([
                 var action = btn.getAttribute('data-action');
 
                 bonzo(this.btns).removeClass(options.activeClass);
+                bonzo(this.icon).removeClass(options.activeClass);
 
                 if(action === 'on') {
                     this.on();
+                    bonzo(this.icon).addClass(options.activeClass);
                 } else {
                     this.off();
                 }
@@ -118,6 +123,7 @@ define([
             // add the component to the page
             qwery('.update')[0].innerHTML = this.template;
             
+            this.icon = common.$g('.' + options.iconClass);
             this.btns = common.$g(options.btnClass);
 
             this.btns.each(function (btn) {

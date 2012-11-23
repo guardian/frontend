@@ -21,7 +21,7 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
     Competitions.startup()
 
     //warmup is only for dev machines, do not propagate outside of dev-build
-    //Front.warmup()
+    Front.warmup()
   }
 
   override def onStop(app: play.api.Application) {
