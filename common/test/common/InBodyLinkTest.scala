@@ -87,4 +87,11 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
     }
     urls foreach { url => InBodyLink(url) should be(url) }
   }
+
+  it should "not resolve direct comment links" in {
+
+    InBodyLink("http://www.guardian.co.uk/discussion/comment-permalink/19452022") should
+      be("http://www.guardian.co.uk/discussion/comment-permalink/19452022")
+
+  }
 }
