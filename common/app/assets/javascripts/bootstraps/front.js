@@ -61,7 +61,9 @@ define([
     var ready = function(req, config) {
         modules.showFrontExpanders();
         modules.showTrailblockToggles(config);
-        modules.showFootballFixtures(req.url);
+        if(config.page.edition === "UK") {
+            modules.showFootballFixtures(req.url);
+        }
     };
 
     return {
