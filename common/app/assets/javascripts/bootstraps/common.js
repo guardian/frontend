@@ -6,7 +6,6 @@ define([
     //Vendor libraries
     'domReady',
     'qwery',
-    'iosOrientationChangeBug',
     //Modules
     'modules/router',
     'modules/errors',
