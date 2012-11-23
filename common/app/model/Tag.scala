@@ -30,6 +30,10 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
     !idParts.exists(_ != section)
   }
 
+  lazy val isFootballTeam = delegate.references.exists(_.`type` == "pa-football-team")
+
+  lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
+
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
   override lazy val analyticsName = "GFE:" + section + ":" + name
