@@ -58,7 +58,12 @@ object FootballClient extends PaClient with Http {
 
   override def GET(urlString: String): pa.Response = {
 
-    val response = _http.GET(urlString)
+    val response = PaApiHttpTimingMetric.measure(_http.GET(urlString))
+
+    response.status match {
+      case 200 => PaApiHttpOkMetric.recordCount(1)
+      case _ => PaApiHttpErrorMetric.recordCount(1)
+    }
 
     //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
     //I have reported to PA, but just trimming here so we can carry on development
@@ -75,15 +80,29 @@ object Switches {
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object PaApiHttpTimingMetric extends TimingMetric(
-  "performance",
+  "pa-api",
   "pa-api-calls",
   "PA API calls",
   "outgoing requests to pa api",
   Some(RequestMetrics.RequestTimingMetric)
 ) with TimingMetricLogging
 
+object PaApiHttpOkMetric extends CountMetric(
+  "pa-api",
+  "pa-api-ok",
+  "PA API calls OK",
+  "AP api returned OK"
+)
+
+object PaApiHttpErrorMetric extends CountMetric(
+  "pa-api",
+  "pa-api-error",
+  "PA API calls error",
+  "AP api returned error"
+)
+
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric)
+  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
 object Management extends Management {
