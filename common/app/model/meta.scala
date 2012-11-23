@@ -66,9 +66,10 @@ trait Images {
   //some arbitrary conventions.
 
   //Assumption number 1 - All alt-size images are crops of the main picture
+  // Note, if no main image, just return all alt-size images, regardless of aspect ratio (e.g. for video articles)
   private lazy val mainPictureCrops: Seq[Image] = mainPicture.map { main =>
     images.filter(_.rel == "alt-size").filter(_.aspectRatio == main.aspectRatio)
-  } getOrElse Nil
+  } getOrElse images.filter(_.rel == "alt-size")
 
   //at the moment all the crops will exists, or none of them will exist. If we have no crops then
   //fall back to full size image
