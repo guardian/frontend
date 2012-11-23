@@ -1,6 +1,6 @@
 define(['common', 'reqwest'], function (common, reqwest) {
 
-    function Related(attachTo) {
+    function Related(attachTo, switches) {
         
         // View
         this.view = {
@@ -16,18 +16,21 @@ define(['common', 'reqwest'], function (common, reqwest) {
         
         // Model
         this.load = function (url) {
-            return reqwest({
-                url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'showRelated',
-                success: function (json) {
-                    common.mediator.emit('modules:related:loaded', [json.html]);
-                },
-                error: function () {
-                    common.mediator('module:error', 'Failed to load related', 'related.js');
-                }
-            });
+
+            if (switches.relatedContent) {
+                return reqwest({
+                    url: url,
+                    type: 'jsonp',
+                    jsonpCallback: 'callback',
+                    jsonpCallbackName: 'showRelated',
+                    success: function (json) {
+                        common.mediator.emit('modules:related:loaded', [json.html]);
+                    },
+                    error: function () {
+                        common.mediator('module:error', 'Failed to load related', 'related.js');
+                    }
+                });
+            }
         };
 
     }

@@ -86,7 +86,7 @@ public class FootballSteps {
 	@Then("^auto-update should be on$")
 	public void auto_update_should_be_on() throws Throwable {
 		WebElement autoUpdate = webDriver.findElement(By.className("update"));
-	    WebElement selectedButton = autoUpdate.findElement(By.className("is-active"));
+	    WebElement selectedButton = autoUpdate.findElement(By.cssSelector("button.is-active"));
 	    Assert.assertEquals("on", selectedButton.getAttribute("data-action"));
 	}
 

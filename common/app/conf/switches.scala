@@ -28,7 +28,11 @@ object CommonSwitches {
     "If this switch is turned on it doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     initiallyOn = false)
 
-  val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch)
+  val RelatedContentSwitch = DefaultSwitch("related-content",
+    "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
+    initiallyOn = true)
+
+  val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch, RelatedContentSwitch)
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
