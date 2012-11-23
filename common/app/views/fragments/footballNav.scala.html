@@ -10,8 +10,8 @@
                     Link(urlBase + "/live", "livescores", "Live scores"),
                     Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
                     Link(urlBase + "/results", "results", "Results"),
-                    Link(urlBase + "/teams", "teams", "Teams"),
-                    Link(urlBase + "/competitions", "leagues and competitions", "Leagues & competitions")
+                    Link("/football/teams", "teams", "Teams"),
+                    Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
                 )
 
                 if(!List("Scottish Cup", "Capital One Cup", "FA Cup").contains(competitionName.getOrElse(""))) {                
