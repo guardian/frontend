@@ -1,13 +1,13 @@
-@(model: MatchesPage)
+@(model: MatchesPage, isLive: String = "false")
 
 @model.days.map{ day =>
-	<h2 class="competitions-date type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>
+	@if(isLive != "live") { <h2 class="competitions-date type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>}
 	<ol class="competitions unstyled" data-link-name="matches">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
         	<li class="competition" data-link-name="competition | @comp.fullName">
-	            <a class="competition-title football-table-link type-3" href="@comp.url" data-link-name="view competition">
+	            <a class="competition-title football-table-link zone-color type-4" href="@comp.url" data-link-name="view competition">
 	                @comp.fullName
-	                <i class="i-filter-arrow-right"></i>
+	                <i class="i-sport-arrow"></i>
 	            </a>
 	            
 	            <ol class="matches unstyled">
@@ -19,7 +19,7 @@
 	            @* Shows the live blog (if there is one) after the first competition *@
 	            @if(row.isFirst){
 	                @model.blog.map{ blog =>
-	                    <div class="trailblock trail">@fragments.trails.thumbnail(blog, row.rowNum)</div>
+	                    <div class="trail">@fragments.trails.thumbnail(blog, row.rowNum)</div>
 	                }
 	            }
        		</li>

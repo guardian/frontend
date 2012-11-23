@@ -6,7 +6,7 @@
 .trail {
     overflow: hidden;
     margin: 0 0 @baseline 0;
-    border-bottom: 1px solid @mushroom;
+    border-bottom: 1px solid #EDEDE7;
     padding: @baseline*2 0 @baseline*3 0;
 }
 
@@ -48,6 +48,10 @@
     color: #555555;
 }
 
+.matches-container .trail-text {
+    display: none;
+}
+
 @media screen and (min-width: 600px) {
     .trail-text {
         clear: none;
@@ -78,6 +82,11 @@
     width: @trailblockImgWidthLarge;
 }
 
+.competition .trail {
+    margin-top: @baseline*3;
+    border-bottom: none;
+}
+
 @media screen and (min-width: 850px) {
     .trail .img img {
         width: 160px;
@@ -96,10 +105,6 @@
     display: inline-block;
 }
 
-.trailblock .panel .trail-headline {
-    .type-3;
-}
-
 .trailblock-topstories li:first-child .b2 { border-top:none;}
 
 .toggle-trailblock {
@@ -108,7 +113,7 @@
     top: 0px;
     right: 0px;
     color: #ffffff;
-    padding: @gutter @gutter 0 @gutter;
+    padding: @gutter @gutter 16px @gutter;
     cursor: pointer;
     background-color: transparent;
     box-shadow: none;

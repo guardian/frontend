@@ -7,7 +7,7 @@
 }
 
 .competitions-date {
-    background-color: #064951;
+    background-color: @sportMid;
     color: #ffffff;
     margin-top: @baseline*2;
     margin-bottom: @baseline;
@@ -34,7 +34,8 @@
 }
 
 a.competition-title {
-    color: #064951;
+    color: @sportBright;
+    font-weight: bold;
 }
 
 .competition-title i,
@@ -110,7 +111,6 @@ a.competition-title {
 }
 
 .match-status abbr {
-    color: #ffffff;
     padding: 2px 0px;   
     border: none;
     width: 28px;
@@ -124,15 +124,14 @@ a.competition-title {
 }
 
 .match-live {
-    background-color: #da4b23;
+    color: #777777;
 }
 
-.match-half-time {
-    background-color: #8cc43f;
-}
-
-.match-full-time {
-    background-color: #8cc43f;
+.match-full-time,
+.match-half-time,
+.match-HT {
+    color: #ffffff;
+    background-color: @sportBright;
 }
 
 .matches,
@@ -214,7 +213,7 @@ a.competition-title {
 }
 
 .live-matches-dateline .dateline {
-	margin-left: 22px;
+	margin-left: @gutter;
 }
 
 .live-matches-update .update { 
@@ -225,7 +224,7 @@ a.competition-title {
 
 .live-matches-update .update .is-active,
 .live-matches-update .update button:hover {
-	background-color: #8CC43F;
+	background-color: @sportBright;
 }
 
 .football-nav {
@@ -254,7 +253,7 @@ a.competition-title {
 }
 
 .football-filters > li {
-    background: #5b8622;
+    background: @sportMid;
     padding: 0 12px;
 }
 
@@ -262,7 +261,7 @@ a.competition-title {
     font-weight: bold;
     font-family: helvetica, arial, sans-serif;
     font-size: 14px;
-    color: #BDE786;
+    color: #FFFFFF;
     border-bottom: 1px solid #a1c391;
     padding-bottom: @baseline;
     margin-top: 10px;
@@ -279,7 +278,7 @@ a.competition-title {
 }
 
 .football-filters .cta {
-    background: #2c6711;
+    background: @sportDark;
     color: #ffffff;
     margin-bottom: @baseline*2;
     margin-top: @gutter;
@@ -294,14 +293,14 @@ a.competition-title {
 // football-filter is the dropdown link item
 
 .football-filter {
-    background: #7bae38;
+    background: @sportBright;
     margin: 0 @gutter;
     color: #ffffff; 
     border-bottom: none;
 }
 
 .football-filter span {    
-    background: #5b8622; 
+    background: @sportMid;
     height: 100%;
     width: 48px;
     position: absolute;
@@ -312,4 +311,9 @@ a.competition-title {
 .matches-container,
 .football-table-container {
     margin-top: @baseline*2;
+}
+
+.live-matches-dateline {
+    display:block;
+    margin-bottom: @baseline*3 ;
 }
