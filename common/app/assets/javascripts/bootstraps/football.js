@@ -60,7 +60,7 @@ define([
         },
 
         initAutoUpdate: function(switches) {
-            if (qwery('.match.live-match').length) {
+            if (qwery('.match.live-match').length > 0) {
                 var a = new AutoUpdate({
                     path: window.location.pathname,
                     delay: 10000,
