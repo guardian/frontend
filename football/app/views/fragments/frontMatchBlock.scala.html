@@ -1,6 +1,6 @@
 @(competition: Competition)
 <li id="front-competition-fixtures" class="competition-table js-front-trailblock rolled-out" data-link-name="front scores" 
-    data-count="8">
+    data-count="@{competition.matches.length - 5}">
     <h3 class="type-2">Today's fixtures</h3>
     <a href="@competition.url" class="competition-title football-table-link box-indent zone-color type-4" data-link-name="all todays matches">
        @competition.fullName <i class="i-sport-arrow"></i>
@@ -10,17 +10,11 @@
         @competition.matches.take(5).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
 
-
-    <ol class="matches unstyled panel"> <li class="match live-match"> <p class="match-desc type-6a"> <span class="match-home match-team">West Brom</span> <span class="match-result">0-0</span> <span class="match-away match-team">Man City</span> </p> <p class="match-status type-7"> <abbr class="match-HT">HT</abbr> </p> </li> <li class="match live-match"> <p class="match-desc type-6a"> <span class="match-home match-team">West Ham</span> <span class="match-result">1-0</span> <span class="match-away match-team">Southampton</span> </p> <p class="match-status type-7"> <abbr class="match-2&lt;sup&gt;nd&lt;/sup&gt;">2<sup>nd</sup></abbr> </p> </li> <li class="match"> <p class="match-desc type-6a"> <span class="match-home match-team">Norwich</span> <span class="match-result">v</span> <span class="match-away match-team">Arsenal</span> </p> <p class="match-status type-7"> <span class="match-status-desc">Kick-off:</span> 17:30 </p> </li>
-    <li class="match live-match"> <p class="match-desc type-6a"> <span class="match-home match-team">West Brom</span> <span class="match-result">0-0</span> <span class="match-away match-team">Man City</span> </p> <p class="match-status type-7"> <abbr class="match-HT">HT</abbr> </p> </li> <li class="match live-match"> <p class="match-desc type-6a"> <span class="match-home match-team">West Ham</span> <span class="match-result">1-0</span> <span class="match-away match-team">Southampton</span> </p> <p class="match-status type-7"> <abbr class="match-2&lt;sup&gt;nd&lt;/sup&gt;">2<sup>nd</sup></abbr> </p> </li> <li class="match"> <p class="match-desc type-6a"> <span class="match-home match-team">Norwich</span> <span class="match-result">v</span> <span class="match-away match-team">Arsenal</span> </p> <p class="match-status type-7"> <span class="match-status-desc">Kick-off:</span> 17:30 </p> </li> </ol>
-
-    <!-- 
     @if(competition.matches.length > 5) {
     <ol class="matches unstyled panel">
         @competition.matches.drop(5).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
     }
-    -->
 </li>
 
 <a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>
