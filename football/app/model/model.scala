@@ -2,7 +2,6 @@ package model
 import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
-import play.api.templates.Html
 
 case class Competition(
     id: String,
