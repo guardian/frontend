@@ -43,7 +43,6 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         // Bindings
         common.mediator.on('modules:footballfixtures:render', function() {
             if(options.expandable) {
-                console.log(options.expandable);
                 common.mediator.emit('modules:footballfixtures:expand', 'front-competition-fixtures');
             }
         }, this);

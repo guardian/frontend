@@ -40,7 +40,6 @@ define([
             table;
 
             common.mediator.on('modules:footballfixtures:expand', function(id) {
-                console.log('expand');
                 var expandable = new Expandable({ id: id, expanded: false });
                 expandable.init();
             });
