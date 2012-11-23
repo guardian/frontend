@@ -66,7 +66,6 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("culture", "Culture", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     )),
 
@@ -81,13 +80,13 @@ class Front extends AkkaSupport with Logging {
 
     "culture" -> new FrontEdition("US", Seq(
       TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
-      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline)),
+      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail))
     ))
 
   )

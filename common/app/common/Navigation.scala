@@ -2,34 +2,49 @@ package common
 
 import play.api.mvc.RequestHeader
 
-case class SectionLink(zone: String, linkName: String, href: String, title: String)
+case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 object Navigation {
+
+  private val ukSections = Seq(
+    SectionLink("home", "Home", "/", "Home"),
+    SectionLink("uk", "UK News", "/uk", "UK news"),
+    SectionLink("world", "World News", "/world", "World news"),
+    SectionLink("sport", "Sport", "/sport", "Sport"),
+    SectionLink("football", "Football", "/football", "Football"),
+    SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
+    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("culture", "Culture", "/culture", "Culture"),
+    SectionLink("business", "Business", "/business", "Business"),
+    SectionLink("technology", "Technology", "/technology", "Technology"),
+    SectionLink("environment", "Environment", "/environment", "Environment"),
+    SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates", newWindow = true),
+    SectionLink("jobs", "Jobs", "http://m.jobs.guardian.co.uk/", "Jobs", newWindow = true)
+  )
+
+  private val usSections = Seq(
+    SectionLink("home", "Home", "/", "Home"),
+    SectionLink("world", "US News", "/world/usa", "US news"),
+    SectionLink("world", "World News", "/world", "World news"),
+    SectionLink("sport", "Sport", "/sport", "Sports"),
+    SectionLink("football", "Football", "/football", "Football"),
+    SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
+    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("culture", "Culture", "/culture", "Culture"),
+    SectionLink("business", "Business", "/business", "Business"),
+    SectionLink("technology", "Technology", "/technology", "Technology"),
+    SectionLink("environment", "Environment", "/environment", "Environment"),
+    SectionLink("media", "Media", "/media", "Media")
+  )
+
   def apply(request: RequestHeader, config: GuardianConfiguration) = {
-
     val host = request.headers.get("host")
-    val edition = config.edition(host)
-
-    val sportTitle = if (edition == "US") "Sports" else "Sport"
-
-    val sections = Seq(
-      SectionLink("home", "Home", "/", "Home"),
-      SectionLink("uk", "UK News", "/uk", "UK news"),
-      SectionLink("world", "World News", "/world", "World news"),
-      SectionLink("sport", "Sport", "/sport", sportTitle),
-      SectionLink("football", "Football", "/football", "Football"),
-      SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
-      SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
-      SectionLink("culture", "Culture", "/culture", "Culture"),
-      SectionLink("business", "Business", "/business", "Business"),
-      SectionLink("technology", "Technology", "/technology", "Technology"),
-      SectionLink("environment", "Environment", "/environment", "Environment"),
-      SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates")
-    )
-
-    sections
+    config.edition(host) match {
+      case "US" => usSections
+      case _ => ukSections
+    }
   }
 }
 
