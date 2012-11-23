@@ -2,6 +2,7 @@ package model
 import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
+import play.api.templates.Html
 
 case class Competition(
     id: String,
@@ -38,7 +39,7 @@ object Table {
 
 case class Team(id: String, url: String, tagName: String, shortName: String)
 
-object LeagueTeamLookup {
+object TeamMap {
 
   val teams: Map[String, Team] = Map(
     ("94", Team("94", "/football/celtic", "Celtic", "Celtic")),
@@ -343,4 +344,9 @@ object LeagueTeamLookup {
     teams.get(team.id)
   }
 
+}
+
+object TeamName {
+  def apply(team: LeagueTeam): String = TeamMap(team).map(_.shortName).getOrElse(team.name)
+  def apply(team: Team): String = team.shortName
 }
