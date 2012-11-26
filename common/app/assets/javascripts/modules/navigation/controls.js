@@ -45,7 +45,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                 // can't seem to get bean to bind on arrays of elements properly,
                 // and doing it inside loops does weird closure-related things. ugh.
 
-                Bean.add(document.getElementById('sections-control-header'), 'click', function (e) {
+                Bean.add(document.getElementById('sections-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     var current = new Date().getTime();
                     var delta = current - lastClickTime;
@@ -56,7 +56,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                     lastClickTime = current;
                 });
                 
-                Bean.add(document.getElementById('topstories-control-header'), 'click', function (e) {
+                Bean.add(document.getElementById('topstories-control-header'), 'click touchstart', function (e) {
                     var elm = this;
                     var current = new Date().getTime();
                     var delta = current - lastClickTime;
