@@ -157,7 +157,7 @@ trait Prototypes {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" % "scalatest" % "1.8" % "test"
+        "org.scalatest" %% "scalatest" % "1.8" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -193,7 +193,7 @@ trait Prototypes {
 
     // require js settings
     buildProfile in (Compile, requireJs) := (
-	  ("out" -> "../main/public/javascripts/bootstraps/article.js") ~
+	  //("out" -> "../main/public/javascripts/bootstraps/article.js") ~
 	  ("name" -> "bootstraps/article") ~
 	  ("paths" ->
 	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
@@ -205,8 +205,10 @@ trait Prototypes {
 	  ) ~
 	  ("optimize" -> "none")
 	),
-	baseUrl in (Compile, requireJs) := "../app/assets/javascripts",
-	resourceGenerators in Compile <+=  requireJs in Compile
+	sourceDirectory in (Compile, requireJs) <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
+	baseUrl in (Compile, requireJs) := ".",
+	target in (Compile, requireJs) <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
+	resourceGenerators in (Compile, requireJs) <+=  requireJs in (Compile, requireJs)
   )
 
   def library(name: String) = base(name).settings(
