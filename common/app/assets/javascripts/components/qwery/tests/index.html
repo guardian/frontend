@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Qwery tests</title>
+    <link rel="stylesheet" href="../vendor/sink.css" type="text/css">
+    <script src="../vendor/sink.js"></script>
+    <script type="text/javascript">
+      // test for noConflict()
+      var qwery = function () {
+        return 'success';
+      };
+    </script>
+    <script src="../src/qwery.js"></script>
+    <script type="text/javascript">
+      var Q = qwery.noConflict();
+    </script>
+  </head>
+  <body>
+    <h1>Qwery Tests</h1>
+      <div foo="bar"></div>
+      <div class="a"></div>
+      <div id="boosh">
+        <div class="a b">
+          <div class="d e" test="fg" id="booshTest"></div>
+          <em test="f g"></em>
+          <span class="h i a"></span>
+        </div>
+      </div>
+      <div id="attr-test1" -data-attr></div>
+      <div id="attr-test2" -data-attr></div>
+      <div id="attr-test3" class="found you" -data-attr title="whatup duders"></div>
+     <ol id="tests"></ol>
+     <script src="tests.js"></script>
+  </body>
+</html>

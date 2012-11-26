@@ -185,29 +185,29 @@ trait Prototypes {
       )
     )
 
-
-
   val requireJsConfiguration = Seq(
     //effectively disables built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile)(base ⇒ (base / "assets" ** "*.none")),
 
     // require js settings
-    buildProfile in (Compile, requireJs) := (
-	  //("out" -> "../main/public/javascripts/bootstraps/article.js") ~
-	  ("name" -> "bootstraps/article") ~
-	  ("paths" ->
-	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
-	    ("reqwest"      -> "vendor/reqwest-0.4.5") ~
-	    ("qwery"        -> "vendor/qwery-3.3.11") ~
-	    ("bean"         -> "vendor/bean-0.4.11-1") ~
-	    ("domReady"     -> "vendor/domReady-2.0.1") ~
-	    ("EventEmitter" -> "vendor/EventEmitter-3.1.5")
-	  ) ~
-	  ("optimize" -> "none")
-	),
-	sourceDirectory in (Compile, requireJs) <<= (baseDirectory){ base => base / "app" / "assets" / "javascripts" },
-	baseUrl in (Compile, requireJs) := ".",
-	target in (Compile, requireJs) <<= (resourceManaged) { resources => resources / "main" /"public" / "javascripts"},
+    buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
+      (
+	    ("baseUrl" -> (base.toString + "/app/assets/javascripts")) ~
+	    ("name" -> "bootstraps/app") ~
+		("out" -> (resources.toString + "/main/public/javascripts/bootstraps/app.js")) ~
+		("paths" ->
+		  ("bean"         -> "components/bean/bean") ~
+		  ("bonzo"        -> "components/bonzo/bonzo") ~
+		  ("domReady"     -> "components/domReady/ready") ~
+		  ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
+		  ("qwery"        -> "components/qwery/qwery") ~
+		  ("reqwest"      -> "components/reqwest/reqwest") ~
+		  ("domwrite"     -> "components/domwrite/index") ~
+		  ("swipe"        -> "components/swipe/swipe")
+		) ~
+		("optimize" -> "uglify")
+      )
+    },
 	resourceGenerators in (Compile, requireJs) <+=  requireJs in (Compile, requireJs)
   )
 

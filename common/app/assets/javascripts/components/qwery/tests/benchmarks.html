@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Qwery Benchmarks</title>
+    <style type="text/css">
+      body {
+        width: 600px;
+        margin: 0 auto;
+        font: 300 18px 'helvetica neue', helvetica, arial;
+      }
+
+      ul,li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        width: 150px;
+        float: left;
+        padding: 50px;
+        border: 1px dotted #ccc;
+        font-size: 50px;
+      }
+      h1 {
+        font: 300 36px 'helvetica neue', helvetica, arial;
+      }
+    </style>
+    <script src="../vendor/sizzle.js"></script>
+    <script src="../src/qwery.js"></script>
+    <script type="text/javascript">
+      var Q = qwery.noConflict();
+    </script>
+  </head>
+  <body>
+    <h1>Selector Benchmarks</h1>
+    <ul>
+      <li>Qwery: <span id="qwery">0</span>ms</li>
+      <li>Sizzle: <span id="sizzle">0</span>ms</li>
+    </ul>
+    <div foo="bar"></div>
+    <div class="a"></div>
+    <div id="boosh">
+      <div class="a b">
+        <div class="d e" test="fg" id="booshTest"></div>
+        <em test="f g"></em>
+        <span class="h i a"></span>
+      </div>
+    </div>
+    <div id="attr-test1" -data-attr></div>
+    <div id="attr-test2" -data-attr></div>
+    <div id="attr-test3" class="found you" -data-attr title="whatup duders"></div>
+    <script type="text/javascript">
+      var i = 0, j;
+      var start = +new Date;
+      var tests = ['div', '#boosh div', 'div#attr-test3.found.you[title="whatup duders"]', '.a', '#boosh'];
+      while (i < 1000) {
+        i++;
+        for (j = 0; j < tests.length; j++) {
+          Q(tests[j]);
+        }
+      }
+      var qweryTime = +new Date - start;
+      i = 0;
+      var start2 = +new Date;
+      while (i < 1000) {
+        i++;
+        for (j = 0; j < tests.length; j++) {
+          Sizzle(tests[j]);
+        }
+      }
+      var sizzleTime = +new Date - start2;
+      Q('#qwery')[0].innerHTML = qweryTime;
+      Sizzle('#sizzle')[0].innerHTML = sizzleTime;
+    </script>
+  </body>
+</html>

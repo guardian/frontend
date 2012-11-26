@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+  <head>
+    <title>Bonzo Tests</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="../build/sink/src/sink.css" type="text/css">
+    <style type="text/css">
+      #fixtures {
+        position: absolute;
+        top: -999em;
+      }
+    </style>
+    <script src="../build/sink/src/sink.js"></script>
+    <script src="../build/qwery/qwery.min.js"></script>
+    <script type="text/javascript">
+      function bonzo() {
+        return 'success';
+      }
+    </script>
+    <script src="../src/bonzo.js"></script>
+    <script type="text/javascript">
+      var dom = bonzo.noConflict();
+      var Q = qwery.noConflict();
+      function $(s) {
+        return dom(Q(s));
+      }
+      dom.augment(dom, $);
+    </script>
+  </head>
+  <body>
+    <div id="fixtures">
+      <div id="class-test" class="existing-class"></div>
+      <div id="append">
+        <div></div>
+        <div></div>
+      </div>
+      <div id="prepend">
+        <div id="prepend-a"></div>
+        <div id="prepend-b"></div>
+      </div>
+      <div id="after">
+        <div class="after-examples"></div>
+        <div class="after-examples"></div>
+      </div>
+      <div id="before">
+        <div class="before-examples"></div>
+        <div class="before-examples"></div>
+      </div>
+      <div id="html"></div>
+      <div id="show-hide" style="width:10px"></div>
+      <div id="augment" style="color:orange;"></div>
+      <div id="empty">
+        <p>one</p>
+        <p>two</p>
+        <p>tre</p>
+      </div>
+      <div id="detach">
+        <div id="detach-a"></div>
+        <div id="detach-b"></div>
+      </div>
+      <div id="attrs">
+        <a id="twitter" href="http://twitter.com/">twitter.com</a>
+        <input type="hidden" value="eyo">
+        <input type="checkbox" checked>
+      </div>
+    </div>
+    <h1>Bonzo Tests</h1>
+    <ol id="tests"></ol>
+
+    <script>
+      sink('Bonzo', function(test, ok, before, after) {
+        test('should contain a noConflict() method', 2, function() {
+          ok(bonzo() == 'success', 'bonzo() is B()');
+          ok(typeof dom().each == 'function', 'B() is the library');
+        });
+
+        test('add/remove/has classes', 6, function () {
+          var el = Q('#class-test');
+          ok(!dom(el).hasClass('boosh'), 'element does not start off having class "boosh"');
+          ok(dom(el).hasClass('existing-class'), 'element has existing class "existing-class"');
+          dom(el).addClass('boosh');
+          ok(dom(el).hasClass('boosh'), 'element now has class "boosh" after addClass()');
+          ok(dom(el).hasClass('existing-class'), 'element still has pre-existing class "existing-class"');
+          dom(el).removeClass('boosh');
+          ok(!dom(el).hasClass('boosh'), 'element no longer has class "boosh" after removeClass()');
+          ok(dom(el).hasClass('existing-class'), 'element still has pre-existing class "existing-class"');
+        });
+
+        test('should append nodes', 1, function () {
+          $('#append div').append('<p>hello</p><p>world <a href="#">hunger</a></p>');
+          ok(Q('#append p').length == 4, 'appended two {p} nodes on all elements');
+        });
+
+        test('should prepend nodes', 2, function () {
+          $('#prepend').prepend('<p>hello</p><p>world <a href="#">hunger</a></p>');
+          ok(Q('#prepend p')[0] == Q('#prepend')[0].firstChild, 'prepend two {p} nodes on all elements');
+          ok(Q('#prepend p').length == 2, 'prepended 2 {p} nodes');
+        });
+
+        test('should insert nodes before target', 2, function () {
+          var el = document.createElement('span');
+          el.innerHTML = '<b>some <em>shiza</em></b>';
+          $('.before-examples').before(el);
+          ok(Q('#before span').length == 2, 'inserted all nodes');
+          ok(Q('#before span')[0] == Q('.before-examples')[0].previousSibling, 'inserted node before target');
+        });
+
+        test('should insert nodes after target', 2, function () {
+          $('.after-examples').after('<span>some <em>shiza</em></span>');
+          ok(Q('#after em').length == 2, 'inserted all nodes');
+          ok(Q('#after span')[0] == Q('.after-examples')[0].nextSibling, 'inserted node after target');
+        });
+
+        test('get and set html', 2, function () {
+          var fixture = '<p>oh yeeeeeah!</p>';
+          $('#html').html(fixture);
+          ok(Q('#html')[0].innerHTML.toLowerCase() == fixture, 'sets appropriate fixture html');
+          ok($('#html').html().toLowerCase() == fixture, 'gets appropriate fixture html');
+        });
+
+        test('show and hide', 3, function () {
+          ok(Q('#show-hide')[0].offsetWidth > 0, 'element has flow');
+          $('#show-hide').hide();
+          ok(Q('#show-hide')[0].offsetWidth == 0, 'element has no flow');
+          $('#show-hide').show();
+          ok(Q('#show-hide')[0].offsetWidth > 0, 'element has flow');
+        });
+
+        test('should augment special methods', 3, function () {
+          ok(!dom.hasOwnProperty('color'), 'bonzo has no "color" method');
+          dom.augment({
+            color: function (color) {
+              ok(this.prototype == dom().prototype, 'calls augmented methods in scope of bonzo prototype');
+              this.css('color', color);
+            }
+          });
+          var originalColor = Q('#augment')[0].style.color;
+          $('#augment').color('red');
+          ok(Q('#augment')[0].style.color != originalColor, 'augment appropriately changed elements');
+        });
+
+        test('viewport width & height', 2, function () {
+          ok(isFinite($.viewport().width), 'has width property');
+          ok(isFinite($.viewport().height), 'has height property');
+        });
+
+        test('document width & height', 2, function () {
+          ok(isFinite($.doc().width), 'has width property');
+          ok(isFinite($.doc().height), 'has height property');
+        });
+
+        test('should empty a node without removing node', 2, function () {
+          ok(Q('#empty p').length == 3, 'target has 3 {p} elements');
+          $('#empty').empty();
+          ok(Q('#empty p').length == 0, 'target has 0 {p} elements');
+        });
+
+        test('should detach and return node list', 4, function () {
+          ok(Q('#detach div').length == 2, 'target originally has 2 nodes');
+          var orphans = $('#detach div').detach();
+          ok(Q('#detach div').length == 0, 'target has detached 2 nodes');
+          ok(orphans.length == 2, '2 orphans were returned');
+          ok(!$.contains(document.body, orphans[0]), 'orphans do not exist in document');
+        });
+
+        test('setting & getting attributes', 4, function () {
+          ok($('#attrs a').attr('href').match(/twitter\.com/), 'retrieves "href" attribute from anchor');
+          ok($('#attrs input[type="hidden"]').attr('value') == 'eyo', 'retrieves "value" attribute from {input} element');
+          ok($('#attrs input[type="checkbox"]').attr('checked'), 'retrieves "checked" attribute without value as true');
+          ok($('#attrs input[type="hidden"]').attr('value', 'boosh').attr('value') == 'boosh', 'sets value attribute of input');
+        });
+
+      });
+      start();
+    </script>
+
+  </body>
+</html>

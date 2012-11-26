@@ -1,0 +1,21 @@
+{
+  "JSHINT_OPTS": {
+    "boss": true,
+    "forin": true,
+    "curly": true,
+    "debug": false,
+    "devel": false,
+    "evil": false,
+    "regexp": false,
+    "undef": false,
+    "sub": false,
+    "white": true,
+    "indent": 2,
+    "whitespace": true,
+    "asi": false
+  },
+  "JAVASCRIPT": {
+    "DIST_DIR": "tmp",
+    "qwery": [ "./src/qwery.js" ]
+  }
+}
