@@ -157,7 +157,7 @@ trait Prototypes {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.8" % "test"
+        "org.scalatest" % "scalatest" % "1.8" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
