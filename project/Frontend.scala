@@ -5,13 +5,18 @@ import io.Source
 import org.sbtidea.SbtIdeaPlugin._
 import sbt._
 import Keys._
-import play.Project._
+import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 import com.gu.SbtJshintPlugin
 import com.gu.SbtJshintPlugin._
-import templemore.sbt.cucumber.CucumberPlugin
-import templemore.sbt.cucumber.CucumberPlugin._
+import templemore.xsbt.cucumber.CucumberPlugin
+import templemore.xsbt.cucumber.CucumberPlugin._
+
+import RequireJsPlugin._
+import RequireJsPlugin.RequireJsKeys._
+import net.liftweb.json._
+import net.liftweb.json.JsonDSL._
 
 object Frontend extends Build with Prototypes {
 
@@ -21,7 +26,7 @@ object Frontend extends Build with Prototypes {
   val jasmine = Project("jasmine", file("integration-tests"),
     settings = Defaults.defaultSettings ++ CucumberPlugin.cucumberSettings ++
       Seq(
-        CucumberPlugin.cucumberFeaturesLocation := "./integration-tests/src/test/resources/com/gu/test/common.feature"
+        CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
       )
     ).settings(
   	  libraryDependencies ++= Seq(
@@ -123,12 +128,13 @@ trait Prototypes {
     )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
+    .settings(requireJsSettings: _*)
     .settings(requireJsConfiguration: _*)
     .settings(jshintSettings: _*)
     .settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
-      scalaVersion := "2.9.2",
+      scalaVersion := "2.9.1",
 
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
@@ -151,7 +157,7 @@ trait Prototypes {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.8" % "test"
+        "org.scalatest" % "scalatest" % "1.8" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -183,42 +189,33 @@ trait Prototypes {
 
   val requireJsConfiguration = Seq(
     //effectively disables built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile)(base ⇒ (base / "assets" ** "*.none"))//,
+    javascriptEntryPoints <<= (sourceDirectory in Compile)(base ⇒ (base / "assets" ** "*.none")),
 
-//    requireJsAppDir <<= (baseDirectory) { base ⇒ base / "app" / "assets" / "javascripts" },
-//    requireJsBaseUrl := ".",
-//    requireJsDir <<= (resourceManaged) { resources ⇒ resources / "main" / "public" / "javascripts" },
-//    requireJsModules := Seq("bootstraps/app"),
-//
-//    requireJsWrap <<= (baseDirectory) { base ⇒
-//      Map(
-//        "startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/vendor/curl-0.7.2.js"),
-//        "endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js")
-//      )
-//    },
-//
-//    requireJsPaths := Map(
-//      "bonzo" -> "vendor/bonzo-1.2.1",
-//      "reqwest" -> "vendor/reqwest-0.4.5",
-//      "qwery" -> "vendor/qwery-mobile-3.3.11",
-//      "bean" -> "vendor/bean-1.0.1",
-//      "domReady" -> "vendor/domReady-2.0.1",
-//      "domwrite" -> "vendor/bezen.domwrite-2012-08-15",
-//      "EventEmitter" -> "vendor/EventEmitter-3.1.5",
-//      "swipe" -> "vendor/swipe-1.0"
-//    ),
-//    requireJsOptimize := true,
-//
-//    resourceGenerators in Compile <+= requireJsCompiler
+    // require js settings
+    buildProfile in (Compile, requireJs) := (
+	  ("out" -> "../main/public/javascripts/bootstraps/article.js") ~
+	  ("name" -> "bootstraps/article") ~
+	  ("paths" ->
+	    ("bonzo"        -> "vendor/bonzo-1.2.1") ~
+	    ("reqwest"      -> "vendor/reqwest-0.4.5") ~
+	    ("qwery"        -> "vendor/qwery-3.3.11") ~
+	    ("bean"         -> "vendor/bean-0.4.11-1") ~
+	    ("domReady"     -> "vendor/domReady-2.0.1") ~
+	    ("EventEmitter" -> "vendor/EventEmitter-3.1.5")
+	  ) ~
+	  ("optimize" -> "none")
+	),
+	baseUrl in (Compile, requireJs) := "../app/assets/javascripts",
+	resourceGenerators in Compile <+=  requireJs in Compile
   )
 
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.13",
-      "com.gu" %% "management-logback" % "5.13",
-      "com.gu" %% "configuration" % "3.6",
-      "com.gu.openplatform" %% "content-api-client" % "1.17",
+      "com.gu" % "management-play_2.9.1" % "5.13",
+      "com.gu" % "management-logback_2.9.1" % "5.13",
+      "com.gu" % "configuration_2.9.1" % "3.6",
+      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.17",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "commons-io" % "commons-io" % "2.4",
