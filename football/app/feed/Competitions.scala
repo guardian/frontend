@@ -43,6 +43,10 @@ trait CompetitionSupport {
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
 
+  def withTeam(team: String) = competitionSupportWith {
+    competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
+  }
+
   def matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)

@@ -13,13 +13,35 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .map { Table(_) }
     .filterNot(_.multiGroup) //Ensures eurpoean cups don't come through
 
-  def render() = Action { implicit request =>
+  private def loadTableWithTeam(teamId: String): Option[Table] = Competitions.withTeam(teamId)
+    .competitions
+    .map { Table(_) }
+    .headOption
+
+  def renderCompetition() = Action { implicit request =>
     val competitionId = request.queryString("competitionId").headOption
 
     competitionId.map { id =>
       loadTable(id).map { table =>
         Cached(60) {
-          val html = views.html.fragments.frontTableBlock(table)
+          val html = views.html.fragments.frontTableBlock(table, false)
+          request.getQueryString("callback").map { callback =>
+            JsonComponent(html)
+          } getOrElse {
+            Ok(Compressed(html))
+          }
+        }
+      }.getOrElse(Cached(600)(NoContent))
+    } getOrElse (BadRequest("need a competition id"))
+  }
+
+  def renderTeam() = Action { implicit request =>
+    val teamId = request.queryString("teamId").headOption
+
+    teamId.map { id =>
+      loadTableWithTeam(id).map { table =>
+        Cached(60) {
+          val html = views.html.fragments.frontTableBlock(table, true, id)
           request.getQueryString("callback").map { callback =>
             JsonComponent(html)
           } getOrElse {
