@@ -56,7 +56,7 @@ object Frontend extends Build with Prototypes {
             ("bean"         -> "components/bean/bean") ~
             ("bonzo"        -> "components/bonzo/src/bonzo") ~
             ("domReady"     -> "components/domready/ready") ~
-            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
+            ("EventEmitter" -> "components/eventEmitter/src/EventEmitter") ~
             ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
             ("reqwest"      -> "components/reqwest/src/reqwest") ~
             ("domwrite"     -> "components/dom-write/dom-write") ~

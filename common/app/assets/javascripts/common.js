@@ -1,7 +1,6 @@
-define([
-    "EventEmitter","bonzo", "qwery"], function (eventEmitter, bonzo, qwery) {
+define(["EventEmitter", "bonzo", "qwery"], function (placeholder, bonzo, qwery) {
     return {
-        mediator: new eventEmitter,
+        mediator: new EventEmitter(),
         $g: function (selector, context) {
             if (context) {
                 return bonzo(qwery(selector, context));
