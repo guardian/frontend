@@ -24,6 +24,7 @@
     this.speed = this.options.speed || 300;
     this.callback = this.options.callback || function() {};
     this.delay = this.options.auto || 0;
+    this.isDisabled = false;
   
     // reference dom elements
     this.container = element;
@@ -87,7 +88,8 @@
     },
   
     slide: function(index, duration) {
-  
+      console.log("begin slide");
+      //this.disable();
       var style = this.element.style;
   
       // set duration speed (0 represents 1-to-1 scrolling)
@@ -99,7 +101,15 @@
   
       // set new index to allow for expression arguments
       this.index = index;
-  
+      console.log("end slide");
+    },
+
+    disable: function() {
+      this.isDisabled = true;
+    },
+
+    enable: function() {
+      this.isDisabled = false;
     },
   
     getPos: function() {
@@ -132,7 +142,7 @@
     },
   
     start: function() {
-  
+      console.log("start");
       var _this = this;
   
       this.interval = (this.delay)
@@ -157,7 +167,8 @@
     },
   
     transitionEnd: function(e) {
-      
+      console.log("transitionend");
+      //this.enable();
       if (this.delay) this.start();
       
       this.callback(e, this.index, this.slides[this.index]);
@@ -165,7 +176,11 @@
     },
   
     onTouchStart: function(e) {
-  
+      console.log("onTouchStart");
+      if (this.isDisabled) {
+        return false;
+      }
+
       // cancel slideshow
       clearTimeout(this.interval);
       
@@ -192,7 +207,12 @@
     },
   
     onTouchMove: function(e) {
-  
+      console.log("onTouchMove");
+      if (this.isDisabled) {
+        return false;
+      }
+
+
       this.deltaX = e.touches[0].pageX - this.start.pageX;
   
       // determine if scrolling test has run - one time test
@@ -202,7 +222,6 @@
   
       // if user is not trying to scroll vertically
       if (!this.isScrolling) {
-  
         // prevent native scrolling 
         e.preventDefault();
   
@@ -224,6 +243,10 @@
     },
   
     onTouchEnd: function(e) {
+      console.log("onTouchEnd");
+      if (this.isDisabled) {
+        return false;
+      }
   
       // determine if slide attempt triggers next/prev slide
       var isValidSlide = 
@@ -238,7 +261,7 @@
   
       // if not scrolling vertically
       if (!this.isScrolling) {
-  
+
         // call slide function with slide end value based on isValidSlide and isPastBounds tests
         this.slide( this.index + ( isValidSlide && !isPastBounds ? (this.deltaX < 0 ? 1 : -1) : 0 ), this.speed );
   

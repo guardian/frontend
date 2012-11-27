@@ -13,7 +13,8 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
                 inFullScreenMode: false,
-                gallerySwipe: null
+                gallerySwipe: null,
+                container: document.getElementById('js-gallery-holder')
             },
 
             // runs on domready
@@ -38,10 +39,11 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
-                    view.galleryConfig.gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
+                    view.galleryConfig.gallerySwipe = new Swipe(view.galleryConfig.container, {
                         callback: function(event, index, elm) {
+                            console.log("calling, " + index);
                             var count = document.getElementById('js-gallery-index');
-                            var currentPos = parseInt(count.innerText, 10);
+                            var currentPos = parseInt(bonzo(count).text(), 10);
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
                             
@@ -191,6 +193,10 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 // make this slide active
                 elmToWorkWith.className = view.galleryConfig.currentSlideClassName;
                 elmToWorkWith.style.display = 'block';
+                
+                // we set the height of the <ul> to the element height
+                // otherwise large portrait images add space underneath photos
+                view.galleryConfig.container.style.height = elmToWorkWith.offsetHeight + 'px';
 
                 return true;
 
@@ -236,7 +242,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
             // used to to convert placeholder <li> into <img> tag
             // elms can be either an array of elements or a single one
             makePlaceholderIntoImage: function (elms) {
-
                 if (!elms || elms === null) {
                     return;
                 }
