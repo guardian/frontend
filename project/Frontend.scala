@@ -157,7 +157,7 @@ trait Prototypes {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" % "scalatest" % "1.8" % "test"
+        "org.scalatest" %% "scalatest" % "1.8" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -205,10 +205,13 @@ trait Prototypes {
 		  ("domwrite"     -> "components/domwrite/index") ~
 		  ("swipe"        -> "components/swipe/swipe")
 		) ~
-		("optimize" -> "uglify")
+		("optimize" -> "uglify") ~
+		("uglify" -> 
+		  ("no_copyright" -> true)
+		)
       )
     },
-	resourceGenerators in (Compile, requireJs) <+=  requireJs in (Compile, requireJs)
+	resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
   )
 
   def library(name: String) = base(name).settings(
