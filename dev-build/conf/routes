@@ -37,7 +37,7 @@ GET     /football/:competition/table                        controllers.LeagueTa
 
 GET     /football/api/frontscores                           controllers.FrontScoresController.render()
 GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
-GET     /football/api/teamtable                             controllers.CompetitionTablesController.renderTeam()
+GET     /football/api/teamtable/:teamId                      controllers.CompetitionTablesController.renderTeam(teamId)
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
