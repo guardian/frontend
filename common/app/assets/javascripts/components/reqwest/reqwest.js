@@ -1,12 +1,12 @@
 /*!
   * Reqwest! A general purpose XHR connection manager
-  * (c) Dustin Diaz 2011
+  * (c) Dustin Diaz 2012
   * https://github.com/ded/reqwest
   * license MIT
   */
 !function (name, definition) {
   if (typeof module != 'undefined') module.exports = definition()
-  else if (typeof define == 'function' && define.amd) define(name, definition)
+  else if (typeof define == 'function' && define.amd) define(definition)
   else this[name] = definition()
 }('reqwest', function () {
 
@@ -19,7 +19,7 @@
     , requestedWith = 'X-Requested-With'
     , head = doc[byTag]('head')[0]
     , uniqid = 0
-    , callbackPrefix = 'reqwest_' + (+new Date)
+    , callbackPrefix = 'reqwest_' + (+new Date())
     , lastValue // data stored by the most recent JSONP callback
     , xmlHttpRequest = 'XMLHttpRequest'
 
@@ -30,14 +30,14 @@
       contentType: 'application/x-www-form-urlencoded'
     , requestedWith: xmlHttpRequest
     , accept: {
-          '*':  'text/javascript, text/html, application/xml, text/xml, */*'
-        , xml:  'application/xml, text/xml'
-        , html: 'text/html'
-        , text: 'text/plain'
-        , json: 'application/json, text/javascript'
-        , js:   'application/javascript, text/javascript'
+        '*':  'text/javascript, text/html, application/xml, text/xml, */*'
+      , xml:  'application/xml, text/xml'
+      , html: 'text/html'
+      , text: 'text/plain'
+      , json: 'application/json, text/javascript'
+      , js:   'application/javascript, text/javascript'
       }
-  }
+    }
   var xhr = win[xmlHttpRequest] ?
     function () {
       return new XMLHttpRequest()
@@ -86,7 +86,8 @@
   function handleJsonp(o, fn, err, url) {
     var reqId = uniqid++
       , cbkey = o.jsonpCallback || 'callback' // the 'callback' key
-      , cbval = o.jsonpCallbackName || (callbackPrefix + '_' + reqId) // the 'callback' value
+      , cbval = o.jsonpCallbackName || reqwest.getcallbackPrefix(reqId)
+      // , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
       , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
@@ -369,6 +370,10 @@
     return qs.replace(/&$/, '').replace(/%20/g, '+')
   }
 
+  reqwest.getcallbackPrefix = function (reqId) {
+    return callbackPrefix
+  }
+
   // jQuery and Zepto compatibility, differences can be remapped here so you can call
   // .ajax.compat(options, callback)
   reqwest.compat = function (o, fn) {
@@ -382,4 +387,4 @@
   }
 
   return reqwest
-})
+});

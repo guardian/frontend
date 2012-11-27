@@ -200,9 +200,9 @@ trait Prototypes {
     // require js settings
     buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
       (
-	    ("baseUrl" -> (base.toString + "/app/assets/javascripts")) ~
+	    ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
 	    ("name" -> "bootstraps/app") ~
-		("out" -> (resources.toString + "/main/public/javascripts/bootstraps/app.js")) ~
+		("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
 		("paths" ->
 		  ("bean"         -> "components/bean/bean") ~
 		  ("bonzo"        -> "components/bonzo/bonzo") ~
@@ -213,10 +213,12 @@ trait Prototypes {
 		  ("domwrite"     -> "components/domwrite/index") ~
 		  ("swipe"        -> "components/swipe/swipe")
 		) ~
-		("optimize" -> "uglify") ~
-		("uglify" -> 
-		  ("no_copyright" -> true)
-		)
+		("wrap" -> 
+		  ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/src/curl.js")) ~
+		  ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
+		) ~
+		("optimize" -> "uglify2") ~
+		("preserveLicenseComments" -> false)
       )
     },
 	resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)

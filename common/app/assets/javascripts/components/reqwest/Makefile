@@ -1,7 +1,7 @@
 .PHONY: boosh test
 
 boosh:
-	smoosh make ./build.json
+	node_modules/smoosh/bin/smoosh make build.json
 
 test:
 	npm test

@@ -44,10 +44,15 @@
     })
 
     test('JSONP', function (complete) {
+      // stub callback prefix
+      reqwest.getcallbackPrefix = function (id) {
+        return 'reqwest_' + id
+      }
       ajax({
         url: '/tests/fixtures/fixtures_jsonp.jsonp?callback=?',
         type: 'jsonp',
         success: function (resp) {
+          console.log('RESPONSE IS', resp)
           ok(resp, 'received response for unique generated callback')
           ok(resp && resp.boosh == "boosh", "correctly evaluated response for unique generated callback as JSONP")
           complete()

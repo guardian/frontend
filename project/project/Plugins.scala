@@ -3,7 +3,7 @@ import sbt._
 object Plugins extends Build {
 
   val playAssetHashPluginVersion = "2.3"
-  val sbtRequireJsVersion = "0.3"
+  val sbtRequireJsVersion = "v0.3"
   val sbtJsHintVersion = "1.0"
   val teamcityReportingPluginVersion = "1.2"
 

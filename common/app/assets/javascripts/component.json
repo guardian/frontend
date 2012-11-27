@@ -2,14 +2,15 @@
   "name": "frontend-common",
   "version": "0.1.0 ",
   "dependencies": {
-    "bean": "5a407b1fd4a2f9496f477ed3534c52567023cdda",
+    "bean": "",
     "bonzo": "1.0",
-    "domready": "bfa04d3d9af0f461b599c8d6b3195c41bdc8e7e0",
+    "curl": "0.7",
+    "domready": "",
     "domwrite": "http://bezen.org/javascript/src/bezen.domwrite.js",
     "eventEmitter": "4.0",
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
     "qwery": "1.0",
-    "reqwest": "84a70b6b430c9b3e66a7126acdae49182809987b",
+    "reqwest": "",
     "swipe": "git://github.com/bradbirdsall/Swipe.git"
   }
 }
