@@ -180,6 +180,7 @@ trait Prototypes {
 	      Seq(
 	        (sourceDirectory / "assets" / "stylesheets") ** "*.css",
 	        (sourceDirectory / "assets" / "images") ** "*",
+	        (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
 	        (sourceDirectory / "public") ** "*"
 	      )
       },
@@ -206,18 +207,18 @@ trait Prototypes {
 		("paths" ->
 		  ("bean"         -> "components/bean/bean") ~
 		  ("bonzo"        -> "components/bonzo/bonzo") ~
-		  ("domReady"     -> "components/domReady/ready") ~
+		  ("domReady"     -> "components/domready/ready") ~
 		  ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
 		  ("qwery"        -> "components/qwery/qwery") ~
-		  ("reqwest"      -> "components/reqwest/reqwest") ~
-		  ("domwrite"     -> "components/domwrite/index") ~
+		  ("reqwest"      -> "components/reqwest/src/reqwest") ~
+		  ("domwrite"     -> "components/dom-write/dom-write") ~
 		  ("swipe"        -> "components/swipe/swipe")
 		) ~
 		("wrap" -> 
 		  ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/src/curl.js")) ~
 		  ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
 		) ~
-		("optimize" -> "uglify2") ~
+		("optimize" -> "none") ~
 		("preserveLicenseComments" -> false)
       )
     },

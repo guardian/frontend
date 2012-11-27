@@ -70,24 +70,6 @@ reqwest({
 ```
 
 ``` js
-
-// Uses XMLHttpRequest2 credentialled requests (cookies, HTTP basic auth) if supported
-
-reqwest({
-    url: 'path/to/json'
-  , type: 'json'
-  , method: 'post'
-  , contentType: 'application/json'
-  , crossOrigin: true
-  , withCredentials: true
-  , error: function (err) { }
-  , success: function (resp) {
-      qwery('#content').html(resp.content)
-    }
-})
-```
-
-``` js
 reqwest({
     url: 'path/to/data.jsonp?callback=?'
   , type: 'jsonp'
@@ -166,22 +148,6 @@ Or, get a bit fancy:
 $('#myform input[name=myradios]').serialize({type:'map'})['myradios'] // get the selected value
 $('input[type=text],#specialthing').serialize() // turn any arbitrary set of form elements into a query string
 ```
-
-
-RequireJs and Jam
-------------------
-Reqwest can also be used with RequireJs and can be installed via jam
-
-```
-jam install reqwest
-```
-
-```js
-define(function(require){
-  var reqwest = require('reqwest');
-});
-```
-
 
 jQuery and Zepto Compatibility
 ------------------------------

@@ -13,32 +13,30 @@
     , requestedWith = 'X-Requested-With'
     , head = doc[byTag]('head')[0]
     , uniqid = 0
-    , callbackPrefix = 'reqwest_' + (+new Date())
     , lastValue // data stored by the most recent JSONP callback
     , xmlHttpRequest = 'XMLHttpRequest'
-
-  var isArray = typeof Array.isArray == 'function' ? Array.isArray : function (a) {
-    return a instanceof Array
-  }
-  var defaultHeaders = {
-      contentType: 'application/x-www-form-urlencoded'
-    , requestedWith: xmlHttpRequest
-    , accept: {
-        '*':  'text/javascript, text/html, application/xml, text/xml, */*'
-      , xml:  'application/xml, text/xml'
-      , html: 'text/html'
-      , text: 'text/plain'
-      , json: 'application/json, text/javascript'
-      , js:   'application/javascript, text/javascript'
+    , isArray = typeof Array.isArray == 'function' ? Array.isArray : function (a) {
+        return a instanceof Array
       }
-    }
-  var xhr = win[xmlHttpRequest] ?
-    function () {
-      return new XMLHttpRequest()
-    } :
-    function () {
-      return new ActiveXObject('Microsoft.XMLHTTP')
-    }
+    , defaultHeaders = {
+          contentType: 'application/x-www-form-urlencoded'
+        , accept: {
+              '*':  'text/javascript, text/html, application/xml, text/xml, */*'
+            , xml:  'application/xml, text/xml'
+            , html: 'text/html'
+            , text: 'text/plain'
+            , json: 'application/json, text/javascript'
+            , js:   'application/javascript, text/javascript'
+          }
+        , requestedWith: xmlHttpRequest
+      }
+    , xhr = win[xmlHttpRequest] ?
+        function () {
+          return new XMLHttpRequest()
+        } :
+        function () {
+          return new ActiveXObject('Microsoft.XMLHTTP')
+        }
 
   function handleReadyState(o, success, error) {
     return function () {
@@ -63,12 +61,6 @@
     }
   }
 
-  function setCredentials(http, o) {
-    if (typeof o.withCredentials !== "undefined" && typeof http.withCredentials !== "undefined") {
-      http.withCredentials = !!o.withCredentials
-    }
-  }
-
   function generalCallback(data) {
     lastValue = data
   }
@@ -80,8 +72,7 @@
   function handleJsonp(o, fn, err, url) {
     var reqId = uniqid++
       , cbkey = o.jsonpCallback || 'callback' // the 'callback' key
-      , cbval = o.jsonpCallbackName || reqwest.getcallbackPrefix(reqId)
-      // , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
+      , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
       , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
@@ -103,11 +94,11 @@
     script.src = url
     script.async = true
     if (typeof script.onreadystatechange !== 'undefined') {
-      // need this for IE due to out-of-order onreadystatechange(), binding script
-      // execution to an event listener gives us control over when the script
-      // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
-      script.event = 'onclick'
-      script.htmlFor = script.id = '_reqwest_' + reqId
+        // need this for IE due to out-of-order onreadystatechange(), binding script
+        // execution to an event listener gives us control over when the script
+        // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
+        script.event = 'onclick'
+        script.htmlFor = script.id = '_reqwest_' + reqId
     }
 
     script.onload = script.onreadystatechange = function () {
@@ -148,7 +139,6 @@
     http = xhr()
     http.open(method, url, true)
     setHeaders(http, o)
-    setCredentials(http, o)
     http.onreadystatechange = handleReadyState(http, fn, err)
     o.before && o.before(http)
     http.send(data)
@@ -244,7 +234,7 @@
   function serial(el, cb) {
     var n = el.name
       , t = el.tagName.toLowerCase()
-      , optCb = function (o) {
+      , optCb = function(o) {
           // IE gives value="" even where there is no value attribute
           // 'specified' ref: http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-862529273
           if (o && !o.disabled)
@@ -285,7 +275,7 @@
   function eachFormElement() {
     var cb = this
       , e, i, j
-      , serializeSubtags = function (e, tags) {
+      , serializeSubtags = function(e, tags) {
         for (var i = 0; i < tags.length; i++) {
           var fa = e[byTag](tags[i])
           for (j = 0; j < fa.length; j++) serial(fa[j], cb)
@@ -319,7 +309,7 @@
   // [ { name: 'name', value: 'value' }, ... ] style serialization
   reqwest.serializeArray = function () {
     var arr = []
-    eachFormElement.apply(function (name, value) {
+    eachFormElement.apply(function(name, value) {
       arr.push({name: name, value: value})
     }, arguments)
     return arr
@@ -361,11 +351,7 @@
     }
 
     // spaces should be + according to spec
-    return qs.replace(/&$/, '').replace(/%20/g, '+')
-  }
-
-  reqwest.getcallbackPrefix = function (reqId) {
-    return callbackPrefix
+    return qs.replace(/&$/, '').replace(/%20/g,'+')
   }
 
   // jQuery and Zepto compatibility, differences can be remapped here so you can call
@@ -381,4 +367,4 @@
   }
 
   return reqwest
-});
+})

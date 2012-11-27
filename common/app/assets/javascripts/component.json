@@ -6,11 +6,11 @@
     "bonzo": "1.0",
     "curl": "0.7",
     "domready": "",
-    "domwrite": "http://bezen.org/javascript/src/bezen.domwrite.js",
+    "dom-write": "git://github.com/ironsidevsquincy/dom-write",
     "eventEmitter": "4.0",
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
-    "qwery": "1.0",
-    "reqwest": "",
+    "qwery": "git://github.com/guardian/qwery.git",
+    "reqwest": "git://github.com/guardian/reqwest.git",
     "swipe": "git://github.com/bradbirdsall/Swipe.git"
   }
 }

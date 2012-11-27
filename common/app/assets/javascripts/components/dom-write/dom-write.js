@@ -1,3 +1,19 @@
+
+var catchError = function(func,description){
+    description = description || 'error.catchError';
+    var safefunc = function(){
+      try {
+              return func.apply(this,arguments);
+                } catch(e) {
+                        if (window.onerror){
+                                  window.onerror(description+': '+e.message+' in '+func,
+                                                               e.fileName, e.lineNumber,true);
+                                      }
+                          }
+      };
+    return safefunc;
+};
+
 /*
  * bezen.domwrite.js - Simulated document.write and writeln for the safe
  *                     loading of external scripts after page load
@@ -166,7 +182,60 @@
 /*requires bezen.dom.js */
 /*jslint evil:true, nomen:false, white:false, onevar:false, plusplus:false */
 /*global bezen, document, setTimeout */
+
+
+define(function() { 
+
+    var bezen = {
+        nix: function(){},
+        string: {
+            trim: function(string) {
+                string = string.replace(/^\s\s*/, '');
+                return string.replace(/\s\s*$/, '');
+            }
+        },
+        array: {
+            empty: function(a) {
+                a.length = 0;
+            }
+        },
+        dom: {
+            hasAttribute: function(node, attributeName) {
+                if (node.hasAttribute) {
+                    return node.hasAttribute(attributeName);
+                }
+
+                var attributeNode = node.getAttributeNode(attributeName);
+                if (attributeNode === null) {
+                    return false;
+                }
+                return attributeNode.specified;
+            },
+            appendScript: function(parent, scriptElt, listener) {
+                var safelistener = catchError(listener,'script.onload');
+                    // Opera has readyState too, but does not behave in a consistent way
+                    if (scriptElt.readyState && scriptElt.onload!==null) {
+                    // IE only (onload===undefined) not Opera (onload===null)
+                    scriptElt.onreadystatechange = function() {
+                    if ( scriptElt.readyState === "loaded" ||
+                    scriptElt.readyState === "complete" ) {
+                    // Avoid memory leaks (and duplicate call to callback) in IE
+                    scriptElt.onreadystatechange = null;
+                    scriptElt.onerror = null;
+                    safelistener();
+                    }
+                    };
+                    } else {
+                    // other browsers (DOM Level 0)
+                    scriptElt.onload = safelistener;
+                } 
+                parent.appendChild( scriptElt ); 
+            }
+        }
+    } 
+ 
 bezen.domwrite = (function() {
+
   // Builder of
   // Closure for Simulated document.write and document.writeln
 
@@ -195,8 +264,8 @@ bezen.domwrite = (function() {
     //
     // params:
     //   markup - (string) HTML markup
-
-    markupArray.push( markup );
+    
+      markupArray.push( markup );
   };
 
   var domWriteln = function(markup) {
@@ -204,7 +273,7 @@ bezen.domwrite = (function() {
     //
     // params:
     //   markup - (string) HTML markup
-
+    
     domWrite( markup+'\n' );
   };
 
@@ -219,7 +288,7 @@ bezen.domwrite = (function() {
     if (markupArray.length === 0) {
       return null;
     }
-
+    
     var markup = markupArray.join('');
     empty(markupArray);
     return markup;
@@ -521,6 +590,7 @@ bezen.domwrite = (function() {
     // Note:
     //   In case no markup has been collected, the callback fires immediately.
     //
+    
     if (parent instanceof Function) {
       // callback provided as first parameter, no parent provided
       callback = parent;
@@ -531,8 +601,9 @@ bezen.domwrite = (function() {
     }
 
     var markup = collectMarkup();
+    
     if (markup===null) {
-      callback();
+      callback.call();
     } else {
       loadPiecemeal(parent, parseMarkup(markup), callback);
     }
@@ -563,3 +634,8 @@ bezen.domwrite = (function() {
     }
   };
 }());
+
+    return bezen.domwrite;
+
+});
+

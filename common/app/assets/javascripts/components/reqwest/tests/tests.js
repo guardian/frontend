@@ -44,15 +44,10 @@
     })
 
     test('JSONP', function (complete) {
-      // stub callback prefix
-      reqwest.getcallbackPrefix = function (id) {
-        return 'reqwest_' + id
-      }
       ajax({
         url: '/tests/fixtures/fixtures_jsonp.jsonp?callback=?',
         type: 'jsonp',
         success: function (resp) {
-          console.log('RESPONSE IS', resp)
           ok(resp, 'received response for unique generated callback')
           ok(resp && resp.boosh == "boosh", "correctly evaluated response for unique generated callback as JSONP")
           complete()
@@ -281,65 +276,6 @@
         }
       })
     })
-  })
-
-  sink('Cross-origin Resource Sharing', function(test, ok) {
-
-    var supportsCors = window.XMLHttpRequest && ("withCredentials" in new window.XMLHttpRequest)
-
-    test('make request to another origin', 1, function() {
-      ajax({
-        url: 'http://localhost:5678/get-value',
-        type: 'text',
-        method: 'get',
-        crossOrigin: true,
-        complete: function (resp) {
-          if (supportsCors)
-            ok(resp.responseText === 'hello', 'request made successfully')
-          else
-            ok(true, 'browser does not support Cross-Origin Resource Sharing')
-        }
-      })
-    })
-
-    test('set cookie on other origin', 2, function() {
-      ajax({
-        url: 'http://localhost:5678/set-cookie',
-        type: 'text',
-        method: 'get',
-        crossOrigin: true,
-        withCredentials: true,
-        before: function (http) {
-          if (supportsCors)
-            ok(http.withCredentials === true, 'has set withCredentials on connection object')
-          else
-            ok(true, 'browser does not support Cross-Origin Resource Sharing')
-        },
-        complete: function (resp) {
-          if (supportsCors)
-            ok(resp.status === 200, 'cookie set successfully')
-          else
-            ok(true, 'browser does not support Cross-Origin Resource Sharing')
-        }
-      })
-    })
-
-    test('get cookie from other origin', 1, function() {
-      ajax({
-          url: 'http://localhost:5678/get-cookie-value',
-          type: 'text',
-          method: 'get',
-          crossOrigin: true,
-          withCredentials: true,
-          complete: function (resp) {
-            if (supportsCors)
-              ok(resp.responseText === 'hello', 'cookie value retrieved successfully')
-            else
-              ok(true, 'browser does not support Cross-Origin Resource Sharing')
-          }
-      })
-    })
-
   })
 
   sink('Connection Object', function (test, ok) {
