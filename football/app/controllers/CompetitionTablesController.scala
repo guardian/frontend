@@ -40,8 +40,9 @@ object CompetitionTablesController extends Controller with Logging with Competit
 
     teamId.map { id =>
       loadTableWithTeam(id).map { table =>
+
         Cached(60) {
-          val html = views.html.fragments.frontTableBlock(table, true, id)
+          val html = views.html.fragments.frontTableBlock(table, true)
           request.getQueryString("callback").map { callback =>
             JsonComponent(html)
           } getOrElse {

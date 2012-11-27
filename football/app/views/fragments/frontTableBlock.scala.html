@@ -1,5 +1,5 @@
+@(table: Table, isTeamTable: Boolean)
 
-@(table: Table, isTeamTable: Boolean, teamId: String = "0")
 <li id="front-competition-table" class="competition-table" data-link-name="front table">
     <h3 class="type-2">@table.competition.fullName table</h3>
 
@@ -24,11 +24,7 @@
                 }
             }
 
-            @if(isTeamTable) {
-                @group.entries.padTo(4, _.indexid).
-            } else {
-                @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
-            }
+            @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
         </tbody>
         }
     </table>
