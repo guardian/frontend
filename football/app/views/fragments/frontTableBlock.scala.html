@@ -1,4 +1,4 @@
-@(table: Table, isTeamTable: Boolean)
+@(table: Table)
 
 <li id="front-competition-table" class="competition-table" data-link-name="front table">
     <h3 class="type-2">@table.competition.fullName table</h3>
@@ -24,7 +24,7 @@
                 }
             }
 
-            @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
+            @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
         </tbody>
         }
     </table>

@@ -23,6 +23,25 @@ case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
 
 case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
+
+  def topOfTableSnippet = {
+    val snippet = groups.map(g => g.copy(entries = g.entries.take(4)))
+    this.copy(groups = snippet)
+  }
+
+  def snippetForTeam(teamId: String) = {
+
+    val snippet = groups.map { g =>
+      val length = g.entries.size
+      val teamIndex: Int = g.entries.indexWhere(_.team.id == teamId)
+
+      if (teamIndex < 3) g.copy(entries = g.entries.slice(0, 5))
+      if (teamIndex > 2 && teamIndex < (length - 3)) g.copy(entries = g.entries.slice(teamIndex - 2, teamIndex + 3))
+      if (teamIndex > (length - 3)) g.copy(entries = g.entries.slice(length - 5, length))
+    }
+
+    this.copy(groups = snippet)
+  }
 }
 
 object Table {

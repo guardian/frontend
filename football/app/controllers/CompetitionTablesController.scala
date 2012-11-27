@@ -10,12 +10,13 @@ object CompetitionTablesController extends Controller with Logging with Competit
   private def loadTable(competitionId: String): Option[Table] = Competitions.competitions
     .find(_.id == competitionId)
     .filter(_.hasLeagueTable)
-    .map { Table(_) }
+    .map { Table(_).topOfTableSnippet }
     .filterNot(_.multiGroup) //Ensures eurpoean cups don't come through
 
   private def loadTableWithTeam(teamId: String): Option[Table] = Competitions.withTeam(teamId)
     .competitions
-    .map { Table(_) }
+    .map { Table(_).snippetForTeam(teamId) }
+    .filterNot(_.multiGroup)
     .headOption
 
   def renderCompetition() = Action { implicit request =>
@@ -24,7 +25,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     competitionId.map { id =>
       loadTable(id).map { table =>
         Cached(60) {
-          val html = views.html.fragments.frontTableBlock(table, false)
+          val html = views.html.fragments.frontTableBlock(table)
           request.getQueryString("callback").map { callback =>
             JsonComponent(html)
           } getOrElse {
@@ -42,7 +43,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
       loadTableWithTeam(id).map { table =>
 
         Cached(60) {
-          val html = views.html.fragments.frontTableBlock(table, true)
+          val html = views.html.fragments.frontTableBlock(table)
           request.getQueryString("callback").map { callback =>
             JsonComponent(html)
           } getOrElse {
