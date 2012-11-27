@@ -2,6 +2,8 @@
 <tr @if(highlight){ class="highlight" }>
     <td class="table-football-leftaligned">@entry.team.rank</td>
     <td class="table-football-leftaligned">@entry.team.name</td>
+    <td class="table-football-leftaligned">@TeamName(entry.team)</td>
+    
     <td>@entry.team.total.played</td>
 
     <td class="stats-3">@entry.team.home.won</td>

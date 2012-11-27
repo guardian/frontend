@@ -9,6 +9,13 @@
     text-indent: -9999px;
 }
 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    #logo {
+        background-image: url('/assets/images/guardian-logo@2x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
+        background-size: 100%;
+    }
+}
+
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
 .nav {
     list-style: none;
@@ -198,7 +205,6 @@ a.topstories-control,
 .sections-control {
     color: #ffffff;
     background-color: transparent;
-    display: inline-block;
     vertical-align: top;
 }
 
