@@ -175,6 +175,14 @@ trait Prototypes {
       },
 
       (test in Test) <<= (test in Test) dependsOn (jshint),
+      
+      assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
+	      Seq(
+	        (sourceDirectory / "assets" / "stylesheets") ** "*.css",
+	        (sourceDirectory / "assets" / "images") ** "*",
+	        (sourceDirectory / "public") ** "*"
+	      )
+      },
 
       templatesImport ++= Seq(
         "common._",
