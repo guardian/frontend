@@ -35,9 +35,11 @@ case class Table(competition: Competition, groups: Seq[Group]) {
       val length = g.entries.size
       val teamIndex: Int = g.entries.indexWhere(_.team.id == teamId)
 
-      if (teamIndex < 3) g.copy(entries = g.entries.slice(0, 5))
-      if (teamIndex > 2 && teamIndex < (length - 3)) g.copy(entries = g.entries.slice(teamIndex - 2, teamIndex + 3))
-      if (teamIndex > (length - 3)) g.copy(entries = g.entries.slice(length - 5, length))
+      if (teamIndex < 3) g.copy(entries = g.entries.take(5))
+
+      else if (teamIndex > (length - 3)) g.copy(entries = g.entries.takeRight(5))
+
+      else g.copy(entries = g.entries.slice(teamIndex - 2, teamIndex + 3))
     }
 
     this.copy(groups = snippet)

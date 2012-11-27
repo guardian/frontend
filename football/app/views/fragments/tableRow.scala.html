@@ -1,6 +1,6 @@
-@(entry: pa.LeagueTableEntry, row: RowInfo)
-<tr>
-    <td class="table-football-leftaligned">@row.rowNum</td>
+@(entry: pa.LeagueTableEntry, row: RowInfo, highlight: Boolean = false)
+<tr @if(highlight){ class="highlight" }>
+    <td class="table-football-leftaligned">@entry.team.rank</td>
     <td class="table-football-leftaligned">@entry.team.name</td>
     <td>@entry.team.total.played</td>
 
