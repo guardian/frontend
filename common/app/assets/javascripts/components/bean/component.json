@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:guardian/bean.git"
+    "url": "git://github.com/guardian/bean.git"
   },
   "keywords": [
     "ender",

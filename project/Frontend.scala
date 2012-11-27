@@ -66,7 +66,7 @@ object Frontend extends Build with Prototypes {
             ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-kitchen-sink/curl.js")) ~
             ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
           ) ~
-          ("optimize" -> "none") ~
+          ("optimize" -> "uglify2") ~
           ("preserveLicenseComments" -> false)
         )
       },

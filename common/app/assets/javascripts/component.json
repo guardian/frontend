@@ -7,7 +7,7 @@
     "curl": "0.7",
     "domready": "",
     "dom-write": "git://github.com/ironsidevsquincy/dom-write",
-    "eventEmitter": "3.0",
+    "eventEmitter": "3.1",
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
     "qwery": "git://github.com/guardian/qwery.git",
     "reqwest": "git://github.com/guardian/reqwest.git",

@@ -1,10 +1,5 @@
-default: validate compress
-develop: validate
-
-validate:
-	@@echo 'Validating'
-	@@node build/validate.js src/EventEmitter.js
+default: compress
 
 compress:
 	@@echo 'Compressing'
-	@@java -jar build/compiler.jar --js src/EventEmitter.js --js_output_file src/EventEmitter.min.js
+	@@uglifyjs -o src/EventEmitter.min.js src/EventEmitter.js
