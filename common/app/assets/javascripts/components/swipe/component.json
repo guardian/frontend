@@ -1,9 +1,9 @@
 {
   "name": "swipe",
   "version": "0.0.0",
-  "commit": "82a1170d323c5dcb4978d98440521c7030e7a098",
+  "commit": "0c15cc8f6a9e336819f8c4def2bd87c6b9d51c51",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bradbirdsall/Swipe.git"
+    "url": "git://github.com/ironsidevsquincy/swipe.git"
   }
 }

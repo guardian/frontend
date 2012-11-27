@@ -12,14 +12,18 @@
       beforeMethods = [],
       afterMethods = [],
       currentSetName,
-      isHeadless = (typeof module !== 'undefined' && module.exports);
-
-  isHeadless && require('colors');
+      isHeadless = false;
 
   function reset() {
     total = 0;
     fail = false;
     init();
+  }
+
+  function each(items, fn) {
+    for (var i = 0; i < items.length; i++) {
+      fn(items[i]);
+    }
   }
 
   function failure(li, check) {
@@ -40,13 +44,13 @@
   }
 
   function before(fn) {
-    fn ? beforeMethods.push(fn) : beforeMethods.forEach(function (f) {
+    fn ? beforeMethods.push(fn) : each(beforeMethods, function (f) {
       f();
     });
   }
 
   function after(fn) {
-    fn ? afterMethods.push(fn) : afterMethods.forEach(function (f) {
+    fn ? afterMethods.push(fn) : each(afterMethods, function (f) {
       f();
     });
   }
@@ -130,12 +134,6 @@
     }
   }
 
-  function expose() {
-    for (var i=0; i < arguments.length; i++) {
-      context[arguments[i].name] = arguments[i];
-    }
-  }
-
   var modules = [];
 
   function sink(name, fn) {
@@ -176,7 +174,8 @@
     exports.sink = sink;
     exports.start = start;
   } else {
-    expose(sink, start);
+    context.sink = sink;
+    context.start = start;
   }
 
 }(this);

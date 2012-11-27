@@ -3,33 +3,61 @@
   <head>
     <title>Bonzo Tests</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../build/sink/src/sink.css" type="text/css">
+    <link rel="stylesheet" href="../node_modules/sink-test/src/sink.css" type="text/css">
     <style type="text/css">
       #fixtures {
         position: absolute;
-        top: -999em;
+        top: -9999em;
+        width: 1000px; /*for ie<=7*/
+      }
+      #overflowed {
+        overflow: auto;
+        width: 50px;
+        height: 100px;
+        top: 10000px;
+        position: absolute;
+      }
+      #overflower {
+        height: 1000px;
+        width: 1000px;
+      }
+
+      .show-hide-css {
+        display: none;
       }
     </style>
-    <script src="../build/sink/src/sink.js"></script>
-    <script src="../build/qwery/qwery.min.js"></script>
-    <script type="text/javascript">
-      function bonzo() {
-        return 'success';
-      }
-    </script>
+    <script src="../node_modules/sink-test/src/sink.js"></script>
+    <script src="../node_modules/qwery/qwery.js"></script>
+    <script src="../node_modules/bowser/bowser.js"></script>
     <script src="../src/bonzo.js"></script>
     <script type="text/javascript">
-      var dom = bonzo.noConflict();
-      var Q = qwery.noConflict();
+      var dom = bonzo
+      var Q = qwery
+      dom.setQueryEngine(Q)
       function $(s) {
-        return dom(Q(s));
+        return dom(Q(s))
       }
-      dom.augment(dom, $);
+      dom.aug(dom, $)
     </script>
+    <script src="ender-js.js"></script>
+    <script type="text/javascript">
+      var ender = $.noConflict()
+      dom.setQueryEngine = function() {}
+      provide('bonzo', dom)
+      ender._select = Q
+    </script>
+    <script src="../src/ender.js"></script>
+    <!-- we now have an 'ender' object to test on that has Bonzo integrated via the bridge -->
   </head>
   <body>
     <div id="fixtures">
+      <div class="prepend-with-engine"></div>
+      <div class="prepend-with-engine"></div>
+
+      <div class="prepend-with-engine-move"></div>
+
       <div id="class-test" class="existing-class"></div>
+      <div id="toggle-class" class="toggle-me"></div>
       <div id="append">
         <div></div>
         <div></div>
@@ -46,8 +74,20 @@
         <div class="before-examples"></div>
         <div class="before-examples"></div>
       </div>
+      <div id="insert-before">
+        <div class="before-target"></div>
+      </div>
+      <div id="insert-after">
+        <div class="after-target"></div>
+      </div>
+      <div id="insert-after-last"><div class="after-last-target"></div></div>
       <div id="html"></div>
+      <p id="html-p"></p>
+      <div id="html-select"></div>
+      <div id="html-table"></div>
+      <div id="text"></div>
       <div id="show-hide" style="width:10px"></div>
+      <div id="toggle" style="width:10px"></div>
       <div id="augment" style="color:orange;"></div>
       <div id="empty">
         <p>one</p>
@@ -60,119 +100,69 @@
       </div>
       <div id="attrs">
         <a id="twitter" href="http://twitter.com/">twitter.com</a>
-        <input type="hidden" value="eyo">
-        <input type="checkbox" checked>
+        <a id="hrefrel" href="/relative">relative</a>
+        <a id="hrefname" href="#name">name</a>
+        <img id="srcabs" src="http://a2.twimg.com/a/1317419607/phoenix/img/twitter_logo_right.png">
+        <img id="srcrel" src="/relative">
+        <form id="resetme">
+          <input type="text" value="eyo">
+          <input type="checkbox" checked disabled>
+        </form>
       </div>
+      <div id="first-last">
+        <div id="first"></div>
+        <div id="second"></div>
+        <div id="last"></div>
+      </div>
+      <div id="append-to"></div>
+      <div id="prepend-to">
+        <div id="prepend-first-child"></div>
+      </div>
+      <div id="sibling-tests">
+        <ul>
+          <li>zero</li>
+          <li class="nextr">one</li>
+          <li>two</li>
+          <li class="nextr">three</li>
+          <li>four</li>
+          <li class="nextr">five</li>
+        </ul>
+      </div>
+      <div id="parent-test-wrapper">
+        <div id="parent-test"></div>
+      </div>
+      <div id="checkboxes-bug">
+        <input type="checkbox" checked="checked">
+        <input type="checkbox" checked="checked">
+        <input type="checkbox" checked="checked">
+      </div>
+      <div id="styles" style="margin-left:5px;"><div style="float: left;"></div></div>
+      <div id="callback-styles" data-original="15"></div>
+      <div id="data-test" data-foo="bar" data-hoo-haa="true" data-no-hoo-haa="false" data-int="100" data-float="111.11" data-empty="" data-whitespace="   " data-nulltastic="null"></div>
+      <div id="data-temp"></div>
+      <div id="insertiontasticSource"></div>
+      <div id="insertiontastic"></div>
     </div>
+
+    <!-- special fixtures -->
+    <div id="overflowed">
+      <div id="overflower"></div>
+    </div>
+
     <h1>Bonzo Tests</h1>
     <ol id="tests"></ol>
 
+    <script src="misc-test.js"></script>
+    <script src="traversal-test.js"></script>
+    <script src="layout-test.js"></script>
+    <script src="dommanip-test.js"></script>
+    <script src="dommanip_insertions-test.js"></script>
+    <script src="attributes-test.js"></script>
+    <script src="selectorengine-test.js"></script>
+    <script src="emptycollection-test.js"></script>
+    <script src="bridge-test.js"></script>
     <script>
-      sink('Bonzo', function(test, ok, before, after) {
-        test('should contain a noConflict() method', 2, function() {
-          ok(bonzo() == 'success', 'bonzo() is B()');
-          ok(typeof dom().each == 'function', 'B() is the library');
-        });
-
-        test('add/remove/has classes', 6, function () {
-          var el = Q('#class-test');
-          ok(!dom(el).hasClass('boosh'), 'element does not start off having class "boosh"');
-          ok(dom(el).hasClass('existing-class'), 'element has existing class "existing-class"');
-          dom(el).addClass('boosh');
-          ok(dom(el).hasClass('boosh'), 'element now has class "boosh" after addClass()');
-          ok(dom(el).hasClass('existing-class'), 'element still has pre-existing class "existing-class"');
-          dom(el).removeClass('boosh');
-          ok(!dom(el).hasClass('boosh'), 'element no longer has class "boosh" after removeClass()');
-          ok(dom(el).hasClass('existing-class'), 'element still has pre-existing class "existing-class"');
-        });
-
-        test('should append nodes', 1, function () {
-          $('#append div').append('<p>hello</p><p>world <a href="#">hunger</a></p>');
-          ok(Q('#append p').length == 4, 'appended two {p} nodes on all elements');
-        });
-
-        test('should prepend nodes', 2, function () {
-          $('#prepend').prepend('<p>hello</p><p>world <a href="#">hunger</a></p>');
-          ok(Q('#prepend p')[0] == Q('#prepend')[0].firstChild, 'prepend two {p} nodes on all elements');
-          ok(Q('#prepend p').length == 2, 'prepended 2 {p} nodes');
-        });
-
-        test('should insert nodes before target', 2, function () {
-          var el = document.createElement('span');
-          el.innerHTML = '<b>some <em>shiza</em></b>';
-          $('.before-examples').before(el);
-          ok(Q('#before span').length == 2, 'inserted all nodes');
-          ok(Q('#before span')[0] == Q('.before-examples')[0].previousSibling, 'inserted node before target');
-        });
-
-        test('should insert nodes after target', 2, function () {
-          $('.after-examples').after('<span>some <em>shiza</em></span>');
-          ok(Q('#after em').length == 2, 'inserted all nodes');
-          ok(Q('#after span')[0] == Q('.after-examples')[0].nextSibling, 'inserted node after target');
-        });
-
-        test('get and set html', 2, function () {
-          var fixture = '<p>oh yeeeeeah!</p>';
-          $('#html').html(fixture);
-          ok(Q('#html')[0].innerHTML.toLowerCase() == fixture, 'sets appropriate fixture html');
-          ok($('#html').html().toLowerCase() == fixture, 'gets appropriate fixture html');
-        });
-
-        test('show and hide', 3, function () {
-          ok(Q('#show-hide')[0].offsetWidth > 0, 'element has flow');
-          $('#show-hide').hide();
-          ok(Q('#show-hide')[0].offsetWidth == 0, 'element has no flow');
-          $('#show-hide').show();
-          ok(Q('#show-hide')[0].offsetWidth > 0, 'element has flow');
-        });
-
-        test('should augment special methods', 3, function () {
-          ok(!dom.hasOwnProperty('color'), 'bonzo has no "color" method');
-          dom.augment({
-            color: function (color) {
-              ok(this.prototype == dom().prototype, 'calls augmented methods in scope of bonzo prototype');
-              this.css('color', color);
-            }
-          });
-          var originalColor = Q('#augment')[0].style.color;
-          $('#augment').color('red');
-          ok(Q('#augment')[0].style.color != originalColor, 'augment appropriately changed elements');
-        });
-
-        test('viewport width & height', 2, function () {
-          ok(isFinite($.viewport().width), 'has width property');
-          ok(isFinite($.viewport().height), 'has height property');
-        });
-
-        test('document width & height', 2, function () {
-          ok(isFinite($.doc().width), 'has width property');
-          ok(isFinite($.doc().height), 'has height property');
-        });
-
-        test('should empty a node without removing node', 2, function () {
-          ok(Q('#empty p').length == 3, 'target has 3 {p} elements');
-          $('#empty').empty();
-          ok(Q('#empty p').length == 0, 'target has 0 {p} elements');
-        });
-
-        test('should detach and return node list', 4, function () {
-          ok(Q('#detach div').length == 2, 'target originally has 2 nodes');
-          var orphans = $('#detach div').detach();
-          ok(Q('#detach div').length == 0, 'target has detached 2 nodes');
-          ok(orphans.length == 2, '2 orphans were returned');
-          ok(!$.contains(document.body, orphans[0]), 'orphans do not exist in document');
-        });
-
-        test('setting & getting attributes', 4, function () {
-          ok($('#attrs a').attr('href').match(/twitter\.com/), 'retrieves "href" attribute from anchor');
-          ok($('#attrs input[type="hidden"]').attr('value') == 'eyo', 'retrieves "value" attribute from {input} element');
-          ok($('#attrs input[type="checkbox"]').attr('checked'), 'retrieves "checked" attribute without value as true');
-          ok($('#attrs input[type="hidden"]').attr('value', 'boosh').attr('value') == 'boosh', 'sets value attribute of input');
-        });
-
-      });
-      start();
+      start()
     </script>
-
   </body>
 </html>

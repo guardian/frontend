@@ -1,24 +1,36 @@
-require('../build/smoosh').config({
+{
   "JAVASCRIPT": {
-    "DIST_DIR": "./",
-    "bonzo": [
-      "./src/copyright.js",
-      "./src/bonzo.js"
-    ]
-  },
-  "JSHINT_OPTS": {
-    "boss": true,
-    "forin": true,
-    "curly": true,
-    "debug": false,
-    "devel": false,
-    "evil": false,
-    "regexp": false,
-    "undef": false,
-    "sub": false,
-    "white": true,
-    "indent": 2,
-    "whitespace": true,
-    "asi": false
+      "DIST_DIR": "./"
+    , "bonzo": [
+          "./src/copyright.js"
+        , "./src/bonzo.js"
+      ]
   }
-}).run().build().analyze();
+  , "JSHINT_OPTS": {
+        "predef": [ "assert", "refute", "define", "self" ]
+      , "boss": true
+      , "shadow": true
+      , "trailing": true
+      , "latedef": true
+      , "forin": false
+      , "curly": false
+      , "debug": true
+      , "devel": false
+      , "evil": true
+      , "regexp": false
+      , "undef": true
+      , "sub": true
+      , "white": false
+      , "indent": 2
+      , "asi": true
+      , "laxbreak": true
+      , "eqnull": true
+      , "browser": true
+      , "node": true
+      , "laxcomma": true
+      , "proto": true
+      , "expr": true
+      , "es5": true
+      , "strict": false
+    }
+}

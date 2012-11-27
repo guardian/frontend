@@ -1,6 +1,5 @@
 /*!
-  * bonzo.js - copyright @dedfat 2011
+  * Bonzo: DOM Utility (c) Dustin Diaz 2012
   * https://github.com/ded/bonzo
-  * Follow our software http://twitter.com/dedfat
-  * MIT License
+  * License MIT
   */

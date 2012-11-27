@@ -43,7 +43,36 @@ object Frontend extends Build with Prototypes {
   	)
 	.settings(ideaSettings: _*)
   	
-  val common = library("common")//.dependsOn(jasmine % "test->test")
+  val common = library("common")
+    .settings(requireJsSettings: _*)
+    .settings(
+      // require js settings
+      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
+        (
+          ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
+          ("name" -> "bootstraps/app") ~
+          ("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
+          ("paths" ->
+            ("bean"         -> "components/bean/bean") ~
+            ("bonzo"        -> "components/bonzo/src/bonzo") ~
+            ("domReady"     -> "components/domready/ready") ~
+            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
+            ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
+            ("reqwest"      -> "components/reqwest/src/reqwest") ~
+            ("domwrite"     -> "components/dom-write/dom-write") ~
+            ("swipe"        -> "components/swipe/swipe")
+          ) ~
+          ("wrap" -> 
+            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-kitchen-sink/curl.js")) ~
+            ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
+          ) ~
+          ("optimize" -> "none") ~
+          ("preserveLicenseComments" -> false)
+        )
+      },
+      resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
+    )
+    //.dependsOn(jasmine % "test->test")
 
   val commonWithTests = common % "test->test;compile->compile"
 
@@ -128,8 +157,6 @@ trait Prototypes {
     )
 
   def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(requireJsSettings: _*)
-    .settings(requireJsConfiguration: _*)
     .settings(jshintSettings: _*)
     .settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
@@ -175,6 +202,9 @@ trait Prototypes {
       },
 
       (test in Test) <<= (test in Test) dependsOn (jshint),
+
+      //effectively disables built in Play javascript compiler
+      javascriptEntryPoints <<= (sourceDirectory in Compile)(base ⇒ (base / "assets" ** "*.none")),
       
       assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
 	      Seq(
@@ -193,37 +223,6 @@ trait Prototypes {
         "conf._"
       )
     )
-
-  val requireJsConfiguration = Seq(
-    //effectively disables built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile)(base ⇒ (base / "assets" ** "*.none")),
-
-    // require js settings
-    buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
-      (
-	    ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
-	    ("name" -> "bootstraps/app") ~
-		("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
-		("paths" ->
-		  ("bean"         -> "components/bean/bean") ~
-		  ("bonzo"        -> "components/bonzo/bonzo") ~
-		  ("domReady"     -> "components/domready/ready") ~
-		  ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
-		  ("qwery"        -> "components/qwery/qwery") ~
-		  ("reqwest"      -> "components/reqwest/src/reqwest") ~
-		  ("domwrite"     -> "components/dom-write/dom-write") ~
-		  ("swipe"        -> "components/swipe/swipe")
-		) ~
-		("wrap" -> 
-		  ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/src/curl.js")) ~
-		  ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
-		) ~
-		("optimize" -> "none") ~
-		("preserveLicenseComments" -> false)
-      )
-    },
-	resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
-  )
 
   def library(name: String) = base(name).settings(
     staticFilesPackage := "frontend-static",
