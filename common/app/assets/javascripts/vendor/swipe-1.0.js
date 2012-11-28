@@ -4,6 +4,8 @@
  * Brad Birdsall, Prime
  * Copyright 2011, Licensed GPL & MIT
  *
+ * NOTE: this has been patched by MA to add enable/disable functionality
+ *       this will need to be preserved / re-patched if we update this library
 */
 !function (name, definition) {
   if (typeof define == 'function') define(definition)
