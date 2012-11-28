@@ -7,6 +7,7 @@ import conf.FootballClient
 import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import model.Competition
+import model.TeamFixture
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
@@ -52,6 +53,24 @@ trait CompetitionSupport {
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
 
   def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
+
+  def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
+    c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortBy(_.date.getMillis).map { m =>
+      TeamFixture(c, m)
+    }
+  )
+
+  // TeamFixture(c, c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).filter(_.isFixture).sortBy(_.date.getMillis))
+
+  //  def withTeamNextMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap( comp =>
+  //    comp.matches.filter(fff)map{ theMatch =>
+  //      TeamFixture(comp, theMatch)
+  //    }
+  //  )
+
+  // def withTeamMatches(teamId: String) = competitionSupportWith {
+  //   competitions.map(c => c.copy(matches = c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam == teamId))).filter(_.hasMatches)
+  // }
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps

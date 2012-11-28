@@ -61,3 +61,5 @@ object Table {
     Table(competition, groups)
   }
 }
+
+case class TeamFixture(competition: Competition, fixture: pa.FootballMatch)

@@ -60,6 +60,12 @@ define([
         },
 
         showTeamData: function(team) {
+            var fixtures = new FootballFixtures({
+                prependTo: document.querySelector('.t2'),
+                path: '/football/api/teamfixtures/' + team,
+                expandable: false
+            }).init();
+
             var table = new FootballTable({
                 prependTo: document.querySelector('.t3'),
                 path: '/football/api/teamtable/' + team
@@ -120,7 +126,6 @@ define([
 
                 if(comp) { modules.showCompetitionData(comp); }
                 if(team) {
-                    console.log(team);
                     modules.showTeamData(team);
                 }
 
