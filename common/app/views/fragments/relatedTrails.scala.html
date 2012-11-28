@@ -6,7 +6,7 @@
         id="related-trails" 
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading">
-
-        @fragments.trailblocks.thumbnail(trails, numItemsVisible = 5, numThumbnails = 3, related = true, headingLevel = 3                                                                   )
+        @* order the related trails by date *@
+        @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = 5, numThumbnails = 3, related = true, headingLevel = 3)
     </div>
 }
