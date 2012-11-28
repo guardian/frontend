@@ -208,8 +208,8 @@ trait Prototypes {
       
       assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
 	      Seq(
-	        (sourceDirectory / "assets" / "stylesheets") ** "*.css",
-	        (sourceDirectory / "assets" / "images") ** "*",
+	        // don't copy across svg files (they're inline)
+	        (sourceDirectory / "assets" / "images") ** "*.png",
 	        (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
 	        (sourceDirectory / "public") ** "*"
 	      )
