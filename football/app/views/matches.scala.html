@@ -9,24 +9,22 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
     
-    @if(model.isLive) {
+    @if(model.pageType == "live") {
         <div class="live-matches-dateline">
            @fragments.dateline(new DateTime, true)
         </div>
     }
 
-    <h1 class="type-3 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
-    
-    @fragments.filters(model.filters, model.page, model.pageType)
-
-    @if(model.isLive && model.pageType == "live") {
-        <div class="live-matches-update">
-            @fragments.autoUpdate()
-        </div>
+    @if(model.pageType == "live") {
+        <div class="update update-live-matches" data-link-name="autoupdate"></div>
     }
+
+    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
+
+    @fragments.filters(model.filters, model.page, model.pageType)
     
     <div class="matches-container box-indent">
-        @fragments.matchesList(model)
+        @fragments.matchesList(model, model.pageType)
 
         @if(model.previousPage || model.nextPage) {
             <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">

@@ -14,6 +14,7 @@ define([
     var modules = {
 
         transcludeRelated: function (config){
+
             var host = config.page.coreNavigationUrl,
                 pageId = config.page.pageId,
                 showInRelated = config.page.showInRelated,
@@ -29,7 +30,7 @@ define([
 
             if (!hasStoryPackage && showInRelated) {
                 common.mediator.on('modules:related:render', relatedExpandable.init);
-                new Related(document.getElementById('js-related')).load(url);
+                new Related(document.getElementById('js-related'), config.switches).load(url);
             }
         },
 

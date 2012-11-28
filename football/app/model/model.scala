@@ -26,11 +26,17 @@ case class Table(competition: Competition, groups: Seq[Group]) {
 }
 
 object Table {
+
+  val IsNumber = """(\d+)""".r
+
   def apply(competition: Competition): Table = {
     val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.map(_.roundNumber).getOrElse(""))
+      .toSeq.sortBy(_.round.map(_.roundNumber).map {
+        case IsNumber(num) => num.toInt
+        case other => 0
+      })
     Table(competition, groups)
   }
 }

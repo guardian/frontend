@@ -3,7 +3,7 @@
 @defining(
 "http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
     config.javascript.pageData("guardian.page.omnitureAccount"),
-    OmnitureAnalyticsData(page))
+    OmnitureAnalyticsData(page, "No Javascript"))
 ){ omnitureCall =>
         <noscript id="omnitureNoScript">
             <div>
@@ -11,6 +11,13 @@
                      src='@omnitureCall' width="1" height="1" class="h" />
             </div>
         </noscript>
+}
+
+@defining(
+"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+    config.javascript.pageData("guardian.page.omnitureAccount"),
+    OmnitureAnalyticsData(page, "Partial Javascript"))
+){ omnitureCall =>
         <script>
             @*
             //    we do not run our javascript on some browsers, hence analytics will not run.

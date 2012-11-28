@@ -1,5 +1,6 @@
 @(model: TablesPage, competitionList: List[String])(implicit request: RequestHeader)
 @import support._
+@import model._
 
 @renderTeamList(name: String) = {
     @model.tables.filter(_.competition.fullName == name).map{ table =>
@@ -15,8 +16,12 @@
                 }
 
                 <ul class="nav nav-columns nav-top-border-off cf">
-                    @group.entries.sortBy{ _.team.name }.zipWithRowInfo.map{ case (entry, row) =>
-                        <li><a href="#" data-link-name="@HtmlFormat.raw(entry.team.name)">@HtmlFormat.raw(entry.team.name)</a></li>
+                    @group.entries.flatMap(e => TeamMap(e.team)).sortBy{ _.shortName }.zipWithRowInfo.map{ case (team, row) =>
+                    <li>
+                        <a href="@team.url" data-link-name="@TeamName(team)">
+                            @TeamName(team)
+                        </a>
+                    </li>
                     }   
                 </ul>
             }

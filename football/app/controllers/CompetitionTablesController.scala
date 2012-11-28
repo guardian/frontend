@@ -11,6 +11,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .find(_.id == competitionId)
     .filter(_.hasLeagueTable)
     .map { Table(_) }
+    .filterNot(_.multiGroup) //Ensures eurpoean cups don't come through
 
   def render() = Action { implicit request =>
     val competitionId = request.queryString("competitionId").headOption
@@ -25,7 +26,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
             Ok(Compressed(html))
           }
         }
-      }.getOrElse(Cached(600)(NotFound))
+      }.getOrElse(Cached(600)(NoContent))
     } getOrElse (BadRequest("need a competition id"))
   }
 }

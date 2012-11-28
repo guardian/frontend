@@ -14,7 +14,7 @@ class NavigationTest extends FlatSpec with ShouldMatchers {
 
     sectionTitles should be(Seq(
       "Home", "UK news", "World news", "Sport", "Football", "Comment is free",
-      "Life &amp; style", "Culture", "Business", "Technology", "Environment", "Soulmates"
+      "Life &amp; style", "Culture", "Business", "Technology", "Environment", "Soulmates", "Jobs"
     ))
   }
 

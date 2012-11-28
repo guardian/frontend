@@ -1,29 +1,20 @@
 @(competition: Competition)
 <li id="front-competition-fixtures" class="competition-table js-front-trailblock rolled-out" data-link-name="front scores" 
     data-count="@{competition.matches.length - 5}">
-    <h3 class="type-2">Today's matches</h3>
-    <a href="/football/live" class="competition-title football-table-link box-indent type-3" data-link-name="all todays matches">
-       @competition.fullName <i class="i-filter-arrow-right"></i>
+    <h3 class="type-2">Today's fixtures</h3>
+    <a href="@competition.url" class="competition-title football-table-link box-indent zone-color type-4" data-link-name="all todays matches">
+       @competition.fullName <i class="i-sport-arrow"></i>
     </a>
 
     <ol class="matches unstyled">
-        @competition.matches.map{
-            case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
-            case result: pa.Result                          => { @fragments.result(result) }
-            case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
-            case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
-        }.slice(0, 5)
+        @competition.matches.take(5).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
 
     @if(competition.matches.length > 5) {
     <ol class="matches unstyled panel">
-        @competition.matches.map{
-            case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
-            case result: pa.Result                          => { @fragments.result(result) }
-            case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
-            case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
-        }.slice(5, competition.matches.length)
+        @competition.matches.drop(5).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
     }
-
 </li>
+
+<a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>

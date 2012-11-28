@@ -26,7 +26,7 @@
 
         @if(leadContent nonEmpty) {
             @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-	            <div @if(info.rowNum == 1 && trail.mainPicture) { class="has-image" } data-link-name="lead content">
+	            <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}" data-link-name="lead content">
                     @fragments.trails.featured(trail, info.rowNum)
 	            </div>
             }
@@ -39,7 +39,11 @@
     </section>
 
     @if(tag.section == "football") {
-        @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
+        @if(tag.isFootballCompetition) {
+            @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
+        } else {
+            @fragments.footballNav("/football")
+        }
     }
 
     <div id="js-popular"></div>

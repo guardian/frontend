@@ -2,34 +2,49 @@ package common
 
 import play.api.mvc.RequestHeader
 
-case class SectionLink(zone: String, linkName: String, href: String, title: String)
+case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 object Navigation {
+
+  private val ukSections = Seq(
+    SectionLink("home", "Home", "/", "Home"),
+    SectionLink("uk", "UK News", "/uk", "UK news"),
+    SectionLink("world", "World News", "/world", "World news"),
+    SectionLink("sport", "Sport", "/sport", "Sport"),
+    SectionLink("football", "Football", "/football", "Football"),
+    SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
+    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("culture", "Culture", "/culture", "Culture"),
+    SectionLink("business", "Business", "/business", "Business"),
+    SectionLink("technology", "Technology", "/technology", "Technology"),
+    SectionLink("environment", "Environment", "/environment", "Environment"),
+    SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates", newWindow = true),
+    SectionLink("jobs", "Jobs", "http://m.jobs.guardian.co.uk/", "Jobs", newWindow = true)
+  )
+
+  private val usSections = Seq(
+    SectionLink("home", "Home", "/", "Home"),
+    SectionLink("world", "US News", "/world/usa", "US news"),
+    SectionLink("world", "World News", "/world", "World news"),
+    SectionLink("sport", "Sport", "/sport", "Sports"),
+    SectionLink("football", "Football", "/football", "Football"),
+    SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
+    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("culture", "Culture", "/culture", "Culture"),
+    SectionLink("business", "Business", "/business", "Business"),
+    SectionLink("technology", "Technology", "/technology", "Technology"),
+    SectionLink("environment", "Environment", "/environment", "Environment"),
+    SectionLink("media", "Media", "/media", "Media")
+  )
+
   def apply(request: RequestHeader, config: GuardianConfiguration) = {
-
     val host = request.headers.get("host")
-    val edition = config.edition(host)
-
-    val sportTitle = if (edition == "US") "Sports" else "Sport"
-
-    val sections = Seq(
-      SectionLink("home", "Home", "/", "Home"),
-      SectionLink("uk", "UK News", "/uk", "UK news"),
-      SectionLink("world", "World News", "/world", "World news"),
-      SectionLink("sport", "Sport", "/sport", sportTitle),
-      SectionLink("football", "Football", "/football", "Football"),
-      SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
-      SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
-      SectionLink("culture", "Culture", "/culture", "Culture"),
-      SectionLink("business", "Business", "/business", "Business"),
-      SectionLink("technology", "Technology", "/technology", "Technology"),
-      SectionLink("environment", "Environment", "/environment", "Environment"),
-      SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates")
-    )
-
-    sections
+    config.edition(host) match {
+      case "US" => usSections
+      case _ => ukSections
+    }
   }
 }
 
@@ -39,7 +54,28 @@ object Zones {
     val host = request.headers.get("host")
     val edition = config.edition(host)
 
-    val sportTitle = if (edition == "US") "Sports" else "Sport"
+    var sportSections = List(
+      SectionLink("football", "Football", "/football", "Football"),
+      SectionLink("sport", "Cricket", "/sport/cricket", "Cricket"),
+      SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog"),
+      SectionLink("sport", "Rugby union", "/sport/rugby-union", "Rugby union"),
+      SectionLink("sport", "Motor sport", "/sport/motorsports", "Motor sport"),
+      SectionLink("sport", "Tennis", "/sport/tennis", "Tennis"),
+      SectionLink("sport", "Golf", "/sport/golf", "Golf"),
+      SectionLink("sport", "Rugby league", "/sport/rugbyleague", "Rugby league"),
+      SectionLink("sport", "Horse racing", "/sport/horse-racing", "Horse racing")
+    )
+
+    // prepend US sports
+    if (edition == "US") {
+      sportSections :::= List(
+        SectionLink("sport", "NFL", "/sport/nfl", "NFL"),
+        SectionLink("sport", "MLB", "/sport/mlb", "MLB"),
+        SectionLink("sport", "NBA", "/sport/nba", "NBA"),
+        SectionLink("football", "MLS", "/football/mls", "MLS"),
+        SectionLink("sport", "NHL", "/sport/nhl", "NHL")
+      )
+    }
 
     val zones = Seq(
       Zone(
@@ -62,17 +98,9 @@ object Zones {
         )), //End News
 
       Zone(
-        SectionLink("sport", "Sport", "/sport", sportTitle),
-        Seq(
-          SectionLink("football", "Football", "/football", "Football"),
-          SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog"),
-          SectionLink("sport", "Rugby union", "/sport/rugby-union", "Rugby union"),
-          SectionLink("sport", "Motor sport", "/sport/motorsports", "Motor sport"),
-          SectionLink("sport", "Tennis", "/sport/tennis", "Tennis"),
-          SectionLink("sport", "Golf", "/sport/golf", "Golf"),
-          SectionLink("sport", "Rugby league", "/sport/rugbyleague", "Rugby league"),
-          SectionLink("sport", "Horse racing", "/sport/horse-racing", "Horse racing")
-        )), //End Sport
+        SectionLink("sport", "Sport", "/sport", if (edition == "US") "Sports" else "Sport"),
+        sportSections
+      ),
 
       Zone(
         SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
@@ -92,6 +120,19 @@ object Zones {
           SectionLink("culture", "Stage", "/stage", "Stage"),
           SectionLink("culture", "Television &amp; radio", "/tv-and-radio", "Television &amp; radio")
         )), //End culture
+
+      Zone(
+        SectionLink("technology", "Technology", "/technology", "Technology"),
+        Seq(
+          SectionLink("technology", "Technology blog", "/technology/blog", "Technology blog"),
+          SectionLink("technology", "Games", "/technology/games", "Games"),
+          SectionLink("technology", "Games blog", "/technology/gamesblog", "Games blog"),
+          SectionLink("technology", "Apps blog", "/technology/appsblog", "Apps blog"),
+          SectionLink("technology", "Ask Jack", "/technology/askjack", "Apps Jack"),
+          SectionLink("technology", "Internet", "/technology/internet", "Internet"),
+          SectionLink("technology", "Mobile phones", "/technology/mobilephones", "Mobile phones"),
+          SectionLink("technology", "Gadgets", "/technology/gadgets", "Gadgets")
+        )),
 
       Zone(
         SectionLink("business", "Business", "/business", "Business"),

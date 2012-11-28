@@ -1,9 +1,4 @@
 @(competition: Competition)
 <ol class="matches unstyled">
-    @competition.matches.map{
-        case fixture: pa.Fixture                        => { @fragments.fixture(fixture) }
-        case result: pa.Result                          => { @fragments.result(result) }
-        case matchDay: pa.MatchDay if matchDay.result   => { @fragments.result(matchDay) }
-        case matchDay: pa.MatchDay                      => { @fragments.liveMatch(matchDay) }
-    }
+    @competition.matches.map{theMatch => @fragments.renderMatch(theMatch) }
 </ol>

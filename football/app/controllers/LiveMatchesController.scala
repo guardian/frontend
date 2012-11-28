@@ -42,7 +42,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
-        JsonComponent(views.html.fragments.matchesList(livePage))
+        JsonComponent(views.html.fragments.matchesList(livePage, livePage.pageType))
       }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
     }
   }

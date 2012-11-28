@@ -1,25 +1,40 @@
-@(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
+@(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
-@main(video, Static, Configuration, Switches.all){
-    <link rel="stylesheet" type="text/css" href='@Static("stylesheets/video.min.css")' />
-}{
-    @fragments.headline(video.headline)
+@main(video, Static, Configuration, Switches.all){ }{
+    <h2 class="article-zone type-1">
+        <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
+    </h2>
+    
+    <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType">
 
-    <div id="player">
-        <video controls="controls">
-            @video.encodings.map{ encoding =>
-                <source src="@encoding.url"/>
-            }
-            Your browser does not support the video tag.
-        </video>
+        <header>
+            @fragments.dateline(video.webPublicationDate, video.isLive, edition)
+            @fragments.headline(video.headline)
+        </header>
+
+
+        <div id="player">
+            <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
+                @video.encodings.map{ encoding =>
+                    <source src="@encoding.url" />
+                }
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+    </article>
+
+    <div class="gallery-byline">
+        @fragments.byline(video.byline, video)
     </div>
-
-    @fragments.standfirst(video)
+    <div class="box-indent video-standfirst">
+        @fragments.standfirst(video)
+    </div>
 
     @if(storyPackage nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     } else {
-        <div id="related"></div>
+        <div id="js-related"></div>
     }
-    <div id="most-popular"></div>
+    <div id="js-popular"></div>
 }

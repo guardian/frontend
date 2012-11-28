@@ -1,0 +1,63 @@
+function OAS_RICH(position) {
+if (position == 'Bottom2') {
+document.write ('\n');
+document.write ('<script type="text/javascript">\n');
+document.write ('admeld_publisher  = 653;\n');
+document.write ('admeld_site       = ');
+document.write ("'");
+document.write ('newsrow-mobileweb');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_size       = ');
+document.write ("'");
+document.write ('320x50');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_placement   = ');
+document.write ("'");
+document.write ('bottom');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_no_iframe = true;\n');
+document.write ('admeld_url = ');
+document.write ("'");
+document.write ('http://www.guardian.co.uk');
+document.write ("'");
+document.write (';\n');
+document.write ('</script>\n');
+document.write ('<script type="text/javascript" src="http://js.admeld.com/meld128.js"></script>\n');
+document.write ('\n');
+document.write ('<IMG SRC="http://oas.guardian.co.uk/5/m.guardian.co.uk/uk/2012/nov/15/hms-astute-submarine-slow-leaky-rusty/oas.html/L19/1538713113/Bottom2/Guardian/Admeld_Bottom_ROS_ROW/Admeld_2_Bottom_ROS_ROW.html/555036656e46436c62466b4142696635?_RM_EMPTY_&k=royal%20navy&k=uk%20news&k=military&k=defence%20policy&k=politics&pt=article&ct=article&cat=uk&callback=reqwest_2" WIDTH=1 HEIGHT=1>');
+}
+if (position == 'Top2') {
+document.write ('\n');
+document.write ('<div id="advert-via-doc-write"></div>');
+document.write ('<script type="text/javascript">\n');
+document.write ('admeld_publisher  = 653;\n');
+document.write ('admeld_site       = ');
+document.write ("'");
+document.write ('newsrow-mobileweb');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_size       = ');
+document.write ("'");
+document.write ('320x50');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_placement   = ');
+document.write ("'");
+document.write ('top');
+document.write ("'");
+document.write (';\n');
+document.write ('admeld_no_iframe = true;\n');
+document.write ('admeld_url = ');
+document.write ("'");
+document.write ('http://www.guardian.co.uk');
+document.write ("'");
+document.write (';\n');
+document.write ('</script>\n');
+document.write ('<script type="text/javascript" src="http://js.admeld.com/meld128.js"></script>\n');
+document.write ('\n');
+document.write ('<IMG SRC="http://oas.guardian.co.uk/5/m.guardian.co.uk/uk/2012/nov/15/hms-astute-submarine-slow-leaky-rusty/oas.html/L19/1208165962/Top2/Guardian/Admeld_Top_Mobile_ROS_ROW/Admeld_2_Top_Mobile_ROS_ROW.html/555036656e46436c62466b4142696635?_RM_EMPTY_&k=royal%20navy&k=uk%20news&k=military&k=defence%20policy&k=politics&pt=article&ct=article&cat=uk&callback=reqwest_2" WIDTH=1 HEIGHT=1>');
+}
+}
