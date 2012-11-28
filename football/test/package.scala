@@ -7,6 +7,7 @@ import pa.Http
 import io.Source
 import play.api.Plugin
 import org.joda.time.DateMidnight
+import common._
 
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
   override def onStart() = {
