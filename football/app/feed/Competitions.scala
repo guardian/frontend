@@ -10,6 +10,7 @@ import model.Competition
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
+import pa.FootballMatch
 
 trait CompetitionSupport {
 
@@ -48,6 +49,8 @@ trait CompetitionSupport {
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
 
   def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
+
+  def findMatch(id: String): Option[FootballMatch] = competitions.flatMap(_.matches.find(_.id == id)).headOption
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps

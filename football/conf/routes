@@ -26,3 +26,5 @@ GET     /football/api/competitiontable                      controllers.Competit
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
+
+GET     /football/match/:matchId                            controllers.MatchController.render(matchId)

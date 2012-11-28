@@ -1,8 +1,14 @@
 package views
 
-import pa.Team
+import pa.{ LineUpPlayer, Team }
 import common.Logging
 import play.api.templates.Html
+
+object FootballHelpers {
+  implicit def lineUpPlayer2rich(t: LineUpPlayer) = new {
+    lazy val isUnusedSub = t.substitute && !t.events.exists(_.eventType == "substitution")
+  }
+}
 
 object ShortName {
 

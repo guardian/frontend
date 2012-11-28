@@ -1,0 +1,75 @@
+@(model: MatchPage)(implicit request: RequestHeader)
+@import support._
+@import FootballHelpers._
+
+
+@stat(title: String, home: Int, away: Int) = {
+    @defining(home + away){ total =>
+        <h3>@title</h3>
+        <ol class="match-stat">
+            <li>@home<span class="home-stat" style="width:@{(home.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span></li>
+            <li><span class="away-stat" style="width:@{(away.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span>@away</li>
+        </ol>
+    }
+}
+
+
+@* TODO obviously not the correct icons, just hacky temp ones *@
+@events(player: pa.LineUpPlayer) = {
+    @player.events.map{ event =>
+        @{ event.eventType match {
+            case "booking" => <img src="http://a734.phobos.apple.com/us/r1000/045/Purple/37/34/40/mzl.irchzicw.320x480-75.jpg" width="5px" height="10px"/>
+            case "dismissal" => <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Red_card.svg/200px-Red_card.svg.png" width="5px" height="10px"/>
+            case "goal" => <img src="http://www.ourkidssports.com/js/tiny_mce/plugins/imagemanager/football_public_domain.jpg" width="10px" height="10px"/>
+            case _ =>  ""
+        }}
+    }
+}
+
+@team(team: pa.LineUpTeam) = {
+<div>
+    <ul class="team-list">
+        @team.players.filterNot(_.isUnusedSub).map{ player =>
+        <li>
+            @player.name @if(player.substitute){
+                (s @player.events.filter(_.eventType == "substitution").map{ e => @{e.eventTime}'})
+            }
+            @events(player)
+        </li>
+        }
+    </ul>
+
+    Unused subs
+    <ul class="team-list">
+        @team.players.filter(_.isUnusedSub).map{ player =>
+        <li>@player.name (s)</li>
+        }
+    </ul>
+</div>
+}
+
+@main(model.page, Static, Configuration, Switches.all){
+}{
+    <hgroup>
+        <h2>@model.theMatch.homeTeam.name @model.theMatch.homeTeam.score</h2>
+        @model.theMatch.homeTeam.scorers.map{ scorers => @scorers }
+        <h2>@model.theMatch.awayTeam.name @model.theMatch.awayTeam.score</h2>
+        @model.theMatch.awayTeam.scorers.map{ scorers => @scorers }
+    </hgroup>
+
+    @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession)
+    @stat("Shots on target", model.lineUp.homeTeam.shotsOn, model.lineUp.awayTeam.shotsOn)
+    @stat("Shots off target", model.lineUp.homeTeam.shotsOff, model.lineUp.awayTeam.shotsOff)
+    @stat("Fouls", model.lineUp.homeTeam.fouls, model.lineUp.awayTeam.fouls)
+    @stat("Offsides", model.lineUp.homeTeam.offsides, model.lineUp.awayTeam.offsides)
+    @stat("Bookings", model.lineUp.homeTeam.bookings, model.lineUp.awayTeam.bookings)
+    @stat("Dismissals", model.lineUp.homeTeam.dismissals, model.lineUp.awayTeam.dismissals)
+
+    <h3>Teams</h3>
+    @team(model.lineUp.homeTeam)
+    @team(model.lineUp.awayTeam)
+
+    @fragments.footballNav("/football", None, None)
+
+    <div id="js-popular"></div>
+}
