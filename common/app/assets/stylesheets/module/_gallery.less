@@ -3,6 +3,10 @@
     margin: 0px @gutter;
 }
 
+.gallery-swipe .gallery-container {
+    margin: 0;
+}
+
 .gallery-caption {
     margin-top: @baseline;
 }
@@ -19,13 +23,14 @@
     margin-top: @baseline;
 }
 
-.gallery-swipe li img {
-    width: 100%;
+.gallery-swipe li img,
+.gallery-swipe .gallery-caption {
+    width: 94%;
+    margin: 0 3%;
 }
 
 .gallery-swipe li {
     float: left;
-    width: 300px;
     min-height: 200px;
 }
 
