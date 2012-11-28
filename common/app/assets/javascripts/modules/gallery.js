@@ -56,8 +56,8 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                                 view.trackInteraction("swipe:backward");
                                 view.advanceGallery('prev');
                             }
-
-                        }
+                        },
+                        speed: 200
                     });
 
                     // check if we need to jump to a specific gallery slide
