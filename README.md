@@ -14,7 +14,7 @@ in the source tree root. This starts the Play Framework console.
 Requirements
 ------------
 
- * [Node.js](http://nodejs.org)
+ * [Node.js](http://nodejs.org) (if you're having issues, try installing it with a [package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) 
 
 Configuration
 -------------
