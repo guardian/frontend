@@ -9,6 +9,7 @@ GET     /football/fixtures/:year/:month/:day                controllers.Fixtures
 GET     /football/fixtures                                  controllers.FixturesController.render()
 GET     /football/:competition/fixtures/:year/:month/:day   controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
 GET     /football/:competition/fixtures                     controllers.CompetitionFixturesController.render(competition)
+GET     /football/fixtures/:team                            controllers.TeamFixturesController.render(team)
 
 GET     /football/results/:year/:month/:day                 controllers.ResultsController.renderFor(year, month, day)
 GET     /football/results                                   controllers.ResultsController.render()
@@ -24,7 +25,7 @@ GET     /football/:competition/table                        controllers.LeagueTa
 GET     /football/api/frontscores                           controllers.FrontScoresController.render()
 GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
 GET     /football/api/teamtable/:teamId                     controllers.CompetitionTablesController.renderTeam(teamId)
-GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.render(teamId)
+GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
