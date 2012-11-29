@@ -12,13 +12,16 @@ So that I can see a teams next fixtures and previous result.
 
         Given I'm on a football team page
         Then there is a team fixtures component 
-        And the next fixtures are shown(confirm number to display)
-        And there should be a link to 'view fixtures'
+        And the team's 2 upcoming fixtures are shown
+        And there is a link to 'view fixtures'
 
         
         Given I'm on a football team page
         Then there is a team results component
         And the previous result is shown
-        And there should be a link to 'view results'
+        And there is a link to 'view results'
+
+
+       
 
   
