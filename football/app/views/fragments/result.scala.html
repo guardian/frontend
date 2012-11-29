@@ -1,6 +1,6 @@
 @(result: pa.FootballMatch)
 <li class="match">
-    <a href="/football/match/@result.id" data-link-name="result stats">
+    <a href="@MatchUrl(result)" data-link-name="result stats">
         <p class="match-desc type-6a">
             <span class="match-home match-team">@result.homeTeam.name</span>
             <span class="match-result">@result.homeTeam.score-@result.awayTeam.score</span>

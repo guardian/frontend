@@ -88,7 +88,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "2.7"
+    libraryDependencies += "com.gu" %% "pa-client" % "2.7",
+    templatesImport ++= Seq("pa._")
   )
 
   val dev = application("dev-build")
@@ -220,8 +221,7 @@ trait Prototypes {
         "model._",
         "views._",
         "views.support._",
-        "conf._",
-        "pa._"
+        "conf._"
       )
     )
 

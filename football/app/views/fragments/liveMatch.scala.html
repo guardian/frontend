@@ -1,7 +1,7 @@
 @(live: pa.MatchDay)
 
 <li class="match live-match">
-    <a href="/football/match/@live.id" data-link-name="live stats">
+    <a href="@MatchUrl(live)" data-link-name="live stats">
         <p class="match-desc type-6a">
             <span class="match-home match-team">@live.homeTeam.name</span>
             <span class="match-result">@live.homeTeam.score-@live.awayTeam.score</span>

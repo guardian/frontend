@@ -317,3 +317,18 @@ object TeamName {
   def apply(team: FootballTeam): String = TeamMap(team).map(_.shortName).getOrElse(team.name)
   def apply(team: Team): String = team.shortName
 }
+
+// if we have tags for the matches we can make a sensible url for it
+object MatchUrl {
+  def apply(theMatch: FootballMatch): String = {
+    (TeamMap(theMatch.homeTeam), TeamMap(theMatch.awayTeam)) match {
+      case (Some(Team(_, home, _, _)), Some(Team(_, away, _, _))) =>
+        "/football/match/%s/%s-v-%s".format(
+          theMatch.date.toString("yyyy/MMM/dd").toLowerCase,
+          home.replace("/football/", ""),
+          away.replace("/football/", "")
+        )
+      case _ => "/football/match/%s".format(theMatch.id)
+    }
+  }
+}
