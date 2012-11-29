@@ -1,10 +1,10 @@
 import com.gu.deploy.PlayArtifact._
 import com.gu.deploy.PlayAssetHash._
-import com.typesafe.sbt.SbtScalariform._
+import com.typesafe.sbtscalariform.ScalariformPlugin._
 import io.Source
 import org.sbtidea.SbtIdeaPlugin._
 import sbt._
-import Keys._
+import sbt.Keys._
 import sbt.PlayProject._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
