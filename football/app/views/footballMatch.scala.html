@@ -5,7 +5,7 @@
 
 @stat(title: String, home: Int, away: Int) = {
     @defining(home + away){ total =>
-        <h3>@title</h3>
+        <h4>@title</h4>
         <ol class="match-stat">
             <li>@home<span class="home-stat" style="width:@{(home.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span></li>
             <li><span class="away-stat" style="width:@{(away.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span>@away</li>
@@ -28,6 +28,10 @@
 
 @team(team: pa.LineUpTeam) = {
 <div>
+    <h5>@team.name</h5>
+    <div>@team.manager.name</div>
+    <div>@team.formation</div>
+    <br/>
     <ul class="team-list">
         @team.players.filterNot(_.isUnusedSub).map{ player =>
         <li>
@@ -38,8 +42,7 @@
         </li>
         }
     </ul>
-
-    Unused subs
+    <br/>
     <ul class="team-list">
         @team.players.filter(_.isUnusedSub).map{ player =>
         <li>@player.name (s)</li>
@@ -65,7 +68,7 @@
     @stat("Bookings", model.lineUp.homeTeam.bookings, model.lineUp.awayTeam.bookings)
     @stat("Dismissals", model.lineUp.homeTeam.dismissals, model.lineUp.awayTeam.dismissals)
 
-    <h3>Teams</h3>
+    <h4>Teams</h4>
     @team(model.lineUp.homeTeam)
     @team(model.lineUp.awayTeam)
 
