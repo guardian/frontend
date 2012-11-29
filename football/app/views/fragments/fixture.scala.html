@@ -2,9 +2,9 @@
 
 <li class="match">
     <p class="match-desc type-6a">
-        <span class="match-home match-team">@TeamName(fixture.homeTeam)</span>
+        <span class="match-home match-team">@fixture.homeTeam.name</span>
         <span class="match-result">v</span>
-        <span class="match-away match-team">@TeamName(fixture.awayTeam)</span>
+        <span class="match-away match-team">@fixture.awayTeam.name</span>
     </p>
     <p class="match-status type-7">
         <span class="match-status-desc">Kick-off:</span> @fixture.date.toString("HH:mm")

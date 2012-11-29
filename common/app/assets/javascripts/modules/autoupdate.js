@@ -25,7 +25,7 @@ define([
 
         this.template =
             '<p class="update-text type-4">Auto update</p>' +
-            '<img class="'+ options.iconClass + '" src="/assets/images/auto-update-activity.d5fb332d0688824c41e9690287739806.gif" />' +
+            '<i class="i '+ options.iconClass + '"/></i>' +
             '<button class="update-btn type-6" data-action="off" data-link-name="autoupdate off">Off</button>' +
             '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>';
 

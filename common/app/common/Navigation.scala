@@ -128,7 +128,7 @@ object Zones {
           SectionLink("technology", "Games", "/technology/games", "Games"),
           SectionLink("technology", "Games blog", "/technology/gamesblog", "Games blog"),
           SectionLink("technology", "Apps blog", "/technology/appsblog", "Apps blog"),
-          SectionLink("technology", "Ask Jack", "/technology/askjack", "Apps Jack"),
+          SectionLink("technology", "Ask Jack", "/technology/askjack", "Ask Jack"),
           SectionLink("technology", "Internet", "/technology/internet", "Internet"),
           SectionLink("technology", "Mobile phones", "/technology/mobilephones", "Mobile phones"),
           SectionLink("technology", "Gadgets", "/technology/gadgets", "Gadgets")
