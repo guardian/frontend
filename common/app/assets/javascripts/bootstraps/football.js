@@ -124,7 +124,9 @@ define([
                 var comp = config.page.paFootballCompetition,
                     team = config.page.paFootballTeam;
 
-                if(comp) { modules.showCompetitionData(comp); }
+                if(comp) {
+                    modules.showCompetitionData(comp);
+                }
                 if(team) {
                     modules.showTeamData(team);
                 }

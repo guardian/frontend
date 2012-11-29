@@ -60,18 +60,6 @@ trait CompetitionSupport {
     }
   )
 
-  // TeamFixture(c, c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).filter(_.isFixture).sortBy(_.date.getMillis))
-
-  //  def withTeamNextMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap( comp =>
-  //    comp.matches.filter(fff)map{ theMatch =>
-  //      TeamFixture(comp, theMatch)
-  //    }
-  //  )
-
-  // def withTeamMatches(teamId: String) = competitionSupportWith {
-  //   competitions.map(c => c.copy(matches = c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam == teamId))).filter(_.hasMatches)
-  // }
-
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
   }
