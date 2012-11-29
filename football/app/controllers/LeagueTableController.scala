@@ -67,7 +67,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       "Scottish Premier League",
       "Scottish Division One",
       "Scottish Division Two",
-      "Scottish Division Three"
+      "Scottish Division Three",
+      "La Liga"
     )
 
     Cached(page) {
