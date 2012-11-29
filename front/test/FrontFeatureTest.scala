@@ -56,14 +56,25 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
-    scenario("Link to desktop version") {
+    scenario("Link to desktop version for UK edition") {
       given("I visit the network front")
       HtmlUnit("/") {
         browser =>
           import browser._
 
           then("I should see the link for the desktop site")
-          findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk?mobile-redirect=false")
+          findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/fullsite")
+      }
+    }
+
+    scenario("Link to desktop version for US edition") {
+      given("I visit the network front")
+      HtmlUnit.US("/") {
+        browser =>
+          import browser._
+
+          then("I should see the link for the desktop site")
+          findFirst("[data-link-name=US]").href should endWith("http://www.guardiannews.com/fullsite")
       }
     }
 
