@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>main curl test file</title>
+
+<script>
+
+	curl = {
+		paths: {
+			curl: '../src/curl/'
+		}
+	};
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+	curl(
+		[
+			'stuff/three',
+			'css!stuff/base',
+			'text!stuff/template.html',
+			'domReady!'
+		]
+	).then(
+		function (three, link, template) {
+			write((cssLoaded() ? 'SUCCESS' : 'FAILED') + ' css loaded before callback.')
+			write((3 == three ? 'SUCCESS' : 'FAILED') + ': A module with dependencies loaded successfully.');
+			write('There should be a success message below if the text file loaded:');
+			write(template);
+		}
+	);
+
+function write (msg) {
+	curl(['domReady!'], function () {
+		document.body.appendChild(document.createElement('div')).innerHTML = msg;
+	});
+}
+
+function cssLoaded () {
+	var el1 = document.getElementById('test1');
+	var el2 = document.getElementById('test2');
+	if ('currentStyle' in el1) {
+		return el1.currentStyle.color == el2.currentStyle.color;
+	}
+	else {
+		return window.getComputedStyle(el1, false).color == window.getComputedStyle(el2, false).color;
+	}
+}
+
+</script>
+
+</head>
+<body>
+
+<p id="test1">This text should all be the same <span id="test2" style="color: #00f;">color</span> if the css file loaded.</p>
+
+</body>
+</html>
