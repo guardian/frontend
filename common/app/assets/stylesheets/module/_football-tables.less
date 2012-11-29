@@ -59,11 +59,6 @@
     background-color: transparent;
 }
 
-.table-football-body tr.highlight,
-.table-football-body:hover tr.highlight {
-    background-color: #FAB036;
-}
-
 .table-football-body tr:last-child {
     border-bottom: none;
 }
@@ -105,9 +100,17 @@
 .table-football-body:hover tr:nth-child(even),
 .table-football-body tr:nth-child(even),
 .table-football-body:hover tr:hover,
-.table-football tr.highlighted-row,
 .table-football-body tr:last-child {
     background-color: transparent !important;
+}
+
+.table-football-body tr.highlight,
+.table-football-body:hover tr.highlight,
+.table-football-body tr.highlight:nth-child(even),
+.table-football-body:hover tr.highlight:nth-child(even) {
+    background-color: #FAB036 !important;
+    border-bottom: none;
+    margin-top: -1px;
 }
 
 

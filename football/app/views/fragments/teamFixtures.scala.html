@@ -17,7 +17,7 @@
 
 <a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>
 
-<li class="team-fixtures js-front-trailblock" data-link-name="Team fixtures">
+<li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
     <h3 class="type-2">Previous result</h3>
     @previousResult.map{ result => 
         <h2 class="competitions-date type-4">@result.fixture.date.toString("EEEE d MMMM yyyy")</h2>
@@ -30,3 +30,5 @@
         </ol>
     }
 </li>
+
+<a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all results <i class="i-sport-arrow-small"></i></a>
