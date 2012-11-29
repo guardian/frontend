@@ -1,3 +1,6 @@
+@homeColour: #004179;
+@awayColour: #20A111;
+
 .match-stat {
     padding: 0;
     margin-left: 25px;
@@ -14,13 +17,39 @@
 }
 
 .match-stat .home-stat {
-    background-color: #004179;
+    background-color: @homeColour;
+    float: right;
+    clear: both;
+    height: 25px;
+}
+
+.match-stat .home-num {
     float: right;
 }
 
-.match-stat .away-stat {
+.match-stat .away-num {
     float:left;
-    background-color: #20A111;
+}
+
+.home-stat-background {
+    float: right;
+}
+
+.away-stat-background {
+    float: left;
+}
+
+.home-stat-background,
+.away-stat-background {
+    background-color: #EDEDED;
+    width: 100%;
+}
+
+.match-stat .away-stat {
+    background-color: @awayColour;
+    height: 25px;
+    clear: both;
+    float:left;
 }
 
 .match-stat li:nth-child(2) {
@@ -28,6 +57,28 @@
 }
 
 .team-list {
+    list-style: none
+}
+
+.home-header {
     display: inline-block;
-    width: 45%;
+    width: 49%;
+    color: @homeColour;
+    border-top: 10px solid @homeColour;
+    margin-bottom: 25px;
+}
+
+.away-header {
+    display: inline-block;
+    width: 49%;
+    color: @awayColour;
+    border-top: 10px solid @awayColour;
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.lineup{
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
 }

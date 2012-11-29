@@ -56,7 +56,7 @@ object MatchStatus extends Logging {
     "Cancelled" -> "C" // A Match has been Cancelled.
   )
   // if we get a status we do not expect just take the first 2 letters
-  def apply(status: String) = Html(statuses.get(status).getOrElse {
+  def apply(status: String): Html = Html(statuses.get(status).getOrElse {
     log.info("unknown match status " + status)
     status.take(2)
   })

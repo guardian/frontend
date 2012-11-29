@@ -220,7 +220,8 @@ trait Prototypes {
         "model._",
         "views._",
         "views.support._",
-        "conf._"
+        "conf._",
+        "pa._"
       )
     )
 

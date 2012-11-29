@@ -1,77 +1,122 @@
 @(model: MatchPage)(implicit request: RequestHeader)
 @import support._
 @import FootballHelpers._
+@import feed._
 
 
 @stat(title: String, home: Int, away: Int) = {
     @defining(home + away){ total =>
-        <h4>@title</h4>
+        @defining(((home.toDouble / total.toDouble * 100).toInt, (away.toDouble / total.toDouble * 100).toInt)){ case (homePercent, awayPercent) =>
+            <h3>@title</h3>
+            <ol class="match-stat">
+                <li>
+                    <div class="home-num" style="width:@{homePercent}%"><p>@home@if(home+away == 100){%}</p></div>
+                    <div class="home-stat-background"><div class="home-stat" style="width:@{homePercent}%">&nbsp;</div></div>
+                </li>
+                <li>
+                    <div class="away-num" style="width:@{awayPercent}%"><p>@away@if(home+away == 100){%}</p></div>
+                    <div class="away-stat-background"><div class="away-stat" style="width:@{awayPercent}%">&nbsp;</div></div>
+                </li>
+            </ol>
+        }
+    }
+}
+
+@*
+@stat(title: String, home: Int, away: Int) = {
+    @defining(home + away){ total =>
+        <h3>@title</h3>
         <ol class="match-stat">
             <li>@home<span class="home-stat" style="width:@{(home.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span></li>
             <li><span class="away-stat" style="width:@{(away.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span>@away</li>
         </ol>
     }
 }
-
+*@
 
 @* TODO obviously not the correct icons, just hacky temp ones *@
-@events(player: pa.LineUpPlayer) = {
+@events(player: LineUpPlayer) = {
     @player.events.map{ event =>
         @{ event.eventType match {
             case "booking" => <img src="http://a734.phobos.apple.com/us/r1000/045/Purple/37/34/40/mzl.irchzicw.320x480-75.jpg" width="5px" height="10px"/>
             case "dismissal" => <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Red_card.svg/200px-Red_card.svg.png" width="5px" height="10px"/>
-            case "goal" => <img src="http://www.ourkidssports.com/js/tiny_mce/plugins/imagemanager/football_public_domain.jpg" width="10px" height="10px"/>
+            case "substitution" => "(s " + event.eventTime + "')"
             case _ =>  ""
         }}
     }
 }
 
-@team(team: pa.LineUpTeam) = {
-<div>
-    <h5>@team.name</h5>
-    <div>@team.manager.name</div>
-    <div>@team.formation</div>
-    <br/>
+@team(players: Seq[LineUpPlayer]) = {
     <ul class="team-list">
-        @team.players.filterNot(_.isUnusedSub).map{ player =>
+        @players.map{ player =>
         <li>
-            @player.name @if(player.substitute){
-                (s @player.events.filter(_.eventType == "substitution").map{ e => @{e.eventTime}'})
-            }
+            @player.name
             @events(player)
         </li>
         }
     </ul>
-    <br/>
-    <ul class="team-list">
-        @team.players.filter(_.isUnusedSub).map{ player =>
-        <li>@player.name (s)</li>
-        }
-    </ul>
-</div>
 }
 
 @main(model.page, Static, Configuration, Switches.all){
 }{
-    <hgroup>
-        <h2>@model.theMatch.homeTeam.name @model.theMatch.homeTeam.score</h2>
-        @model.theMatch.homeTeam.scorers.map{ scorers => @scorers }
-        <h2>@model.theMatch.awayTeam.name @model.theMatch.awayTeam.score</h2>
-        @model.theMatch.awayTeam.scorers.map{ scorers => @scorers }
-    </hgroup>
 
-    @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession)
-    @stat("Shots on target", model.lineUp.homeTeam.shotsOn, model.lineUp.awayTeam.shotsOn)
-    @stat("Shots off target", model.lineUp.homeTeam.shotsOff, model.lineUp.awayTeam.shotsOff)
-    @stat("Fouls", model.lineUp.homeTeam.fouls, model.lineUp.awayTeam.fouls)
-    @stat("Offsides", model.lineUp.homeTeam.offsides, model.lineUp.awayTeam.offsides)
-    @stat("Bookings", model.lineUp.homeTeam.bookings, model.lineUp.awayTeam.bookings)
-    @stat("Dismissals", model.lineUp.homeTeam.dismissals, model.lineUp.awayTeam.dismissals)
 
-    <h4>Teams</h4>
-    @team(model.lineUp.homeTeam)
-    @team(model.lineUp.awayTeam)
+    <h2 class="article-zone type-1 sport-header">
+        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+    </h2>
 
+
+
+    @defining((model.theMatch, model.theMatch.homeTeam, model.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
+
+  <article class="article">
+
+          <p class="dateline  box-indent">
+            @fragments.status(theMatch)
+            <time data-timestamp="@theMatch.date.getMillis">
+          		@Format(theMatch.date, "EEEE d MMMM y HH.mm z", Edition(request, Configuration))
+          	</time>
+          </p>
+
+        <header>
+            <h2 class="type-1">@homeTeam.name @homeTeam.score</h2>
+            <p>@homeTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }</p>
+            <h2 class="type-1">@awayTeam.name @awayTeam.score</h2>
+            <p>@awayTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }</p>
+        </header>
+
+      <div class="box-indent">
+        <h2 class="home-header">@homeTeam.name</h2>
+        <h2 class="away-header">@awayTeam.name</h2>
+        @if(model.theMatch.isLive || model.theMatch.isResult){
+          @defining((model.lineUp.homeTeam, model.lineUp.awayTeam)){ case (homeStats, awayStats) =>
+            @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession)
+            @stat("Goal attempts", homeStats.shotsOn + homeStats.shotsOff, awayStats.shotsOn + awayStats.shotsOff)
+            @stat("On target", homeStats.shotsOn, awayStats.shotsOn)
+            @stat("Off target", homeStats.shotsOff, awayStats.shotsOff)
+            @stat("Corners", homeStats.corners, awayStats.corners)
+            @stat("Fouls", homeStats.fouls, awayStats.fouls)
+            @stat("Offsides", homeStats.offsides, awayStats.offsides)
+          }
+        }
+
+        <h3>Teams</h3>
+        <div class="lineup">
+            @team(model.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+        </div>
+        <div class="lineup">
+            @team(model.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+        </div>
+        <h3>Unused substitues</h3>
+        <div class="lineup">
+            @team(model.lineUp.homeTeam.players.filter{_.isUnusedSub})
+        </div>
+        <div class="lineup">
+            @team(model.lineUp.awayTeam.players.filter{_.isUnusedSub})
+        </div>
+      </div>
+  </article>
+  }
     @fragments.footballNav("/football", None, None)
 
     <div id="js-popular"></div>

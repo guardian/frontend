@@ -1,0 +1,11 @@
+@(theMatch: FootballMatch)
+
+@defining(
+    theMatch match {
+        case f: Fixture => ("KO", Some("Kick Off"))
+        case r: pa.Result => ("FT", Some("Full Time"))
+        case l: MatchDay => (l.matchStatus, None)
+    }
+){ case (status, desc) =>
+    <abbr @desc.map{d => title="@d"} class="match-@status">@MatchStatus(status)</abbr>
+}
