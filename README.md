@@ -14,7 +14,7 @@ in the source tree root. This starts the Play Framework console.
 Requirements
 ------------
 
- * [Node.js](nodejs.org)
+ * [Node.js](http://nodejs.org)
 
 Configuration
 -------------
