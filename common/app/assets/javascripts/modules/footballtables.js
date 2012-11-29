@@ -48,7 +48,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             opts = opts || {};
             reqwest = opts.reqwest || Reqwest; //For unit testing
 
-            var query = this.generateQuery();
+            var query = (options.path) ? options.path : this.generateQuery();
 
             this.load(query);
         };

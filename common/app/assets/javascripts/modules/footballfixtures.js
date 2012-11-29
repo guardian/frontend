@@ -20,7 +20,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         
         // Model
         this.load = function (query) {
-            var path = this.path + query,
+            var path = query,
                 that = this;
 
             return reqwest({
@@ -57,7 +57,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
                 query += this.competitions.join(this.queryString);
             }
 
-            return query;
+            return this.path + query;
         };
 
         //Initalise
@@ -65,7 +65,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             opts = opts || {};
             reqwest = opts.reqwest || Reqwest; //For unit testing
 
-            var query = this.generateQuery();
+            var query = (options.path) ? options.path : this.generateQuery();
 
             this.load(query);
         };

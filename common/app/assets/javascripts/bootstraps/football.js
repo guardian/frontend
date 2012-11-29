@@ -59,6 +59,19 @@ define([
             }).init();
         },
 
+        showTeamData: function(team) {
+            var fixtures = new FootballFixtures({
+                prependTo: document.querySelector('.t2'),
+                path: '/football/api/teamfixtures/' + team,
+                expandable: false
+            }).init();
+
+            var table = new FootballTable({
+                prependTo: document.querySelector('.t3'),
+                path: '/football/api/teamtable/' + team
+            }).init();
+        },
+
         initAutoUpdate: function(switches) {
             if (qwery('.match.live-match').length > 0) {
                 var a = new AutoUpdate({
@@ -108,10 +121,16 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var comp = config.page.paFootballCompetition;
+                var comp = config.page.paFootballCompetition,
+                    team = config.page.paFootballTeam;
+
                 if(comp) {
                     modules.showCompetitionData(comp);
                 }
+                if(team) {
+                    modules.showTeamData(team);
+                }
+
                 break;
         }
     };
