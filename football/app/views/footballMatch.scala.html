@@ -6,16 +6,16 @@
 
 @stat(title: String, home: Int, away: Int) = {
     @defining(home + away){ total =>
-        @defining(((home.toDouble / total.toDouble * 100).toInt, (away.toDouble / total.toDouble * 100).toInt)){ case (homePercent, awayPercent) =>
+        @defining(((home.toDouble / total.toDouble * 100).toInt, 100 - (home.toDouble / total.toDouble * 100).toInt)){ case (homePercent, awayPercent) =>
             <h3>@title</h3>
             <ol class="match-stat">
-                <li>
-                    <div class="home-num" style="width:@{homePercent}%"><p>@home@if(home+away == 100){%}</p></div>
-                    <div class="home-stat-background"><div class="home-stat" style="width:@{homePercent}%">&nbsp;</div></div>
+                <li style="width:@{homePercent - 1}%">
+                    <div class="home-num" ><p>@home@if(home+away == 100){%}</p></div>
+                    <div class="home-stat">&nbsp;</div>
                 </li>
-                <li>
-                    <div class="away-num" style="width:@{awayPercent}%"><p>@away@if(home+away == 100){%}</p></div>
-                    <div class="away-stat-background"><div class="away-stat" style="width:@{awayPercent}%">&nbsp;</div></div>
+                <li style="width:@{awayPercent - 1}%">
+                    <div class="away-num"><p>@away@if(home+away == 100){%}</p></div>
+                    <div class="away-stat">&nbsp;</div>
                 </li>
             </ol>
         }
@@ -107,7 +107,7 @@
         <div class="lineup">
             @team(model.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
         </div>
-        <h3>Unused substitues</h3>
+        <h3>Unused substitutes</h3>
         <div class="lineup">
             @team(model.lineUp.homeTeam.players.filter{_.isUnusedSub})
         </div>
