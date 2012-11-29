@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>iOS bug test page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	
+<h1>Test page for ios-orientationchange-fix.js</h1>
+
+<p>This page is a demo of a bugfix for the iOS orientation change bug, in which the page zooms beyond the viewport on orientationchange when user scaling is enabled. Summary below.</p>
+
+
+<h2>Summary of bug</h2>
+<p>When the meta viewport tag is set to content="width=device-width,initial-scale=1", or any value that allows user-scaling, changing the device to landscape orientation causes the page to scale larger than 1.0. As a result, a portion of the page is cropped off the right, and the user must double-tap (sometimes more than once) to get the page to zoom properly into view.</p>
+
+<p>When switching to portrait mode, the layout adapts perfectly. The issue only occurs in landscape.
+If the content attribute is adjusted with either user-scalable=no or maximum-scale=1, the problem goes away, but then scaling is disabled, which is undesirable.</p>
+
+<h2>Steps to Reproduce: </h2>
+<ol>
+	<li>Open this page in portrait orientation on an iOS device or emulator.</li>
+	<li>Change to landscape orientation</li>
+</ol>
+
+<h2>Expected Results:</h2>
+<p>The page should remain scaled at 1.0, and the page width should shrink to fit the viewport.</p>
+
+<h2>Actual Results (without included fix):</h2>
+<p>The page is zoomed past 1.0, cropping a portion of the page from view and causing the content to be much too large.</p>
+
+<h3>Notes: </h3>
+<p>Developers should not have to disable user-scaling to enable smooth changes in orientation.</p>
+
+
+<p>Thanks!</p>
+<p>Scott Jehl, Filament Group / jQuery Mobile Team</p>
+	
+	
+<script src="ios-orientationchange-fix.js"></script>
+</body>
+</html>

@@ -17,7 +17,6 @@ define(['common', 'modules/navigation/controls', 'bean'], function(common, Navig
         // initialise nav + bindings
         var controls = new NavigationControls();
         controls.init();
-        
 
         it("should show the correct item when a nav link is clicked", function() {
             bean.fire(sectionHeaderLink, 'click');
@@ -26,12 +25,14 @@ define(['common', 'modules/navigation/controls', 'bean'], function(common, Navig
 
         // at this stage, the section header popup will now be visible
         it("should hide any open popups when a nav link is clicked", function() {
+            waits(500);
             bean.fire(topstoriesHeaderLink, 'click');
             expect(sectionHeaderPopup.getAttribute('class')).toBe('initially-off')
         });
 
         // at this stage, the top stories header popup will now be visible
         it("should not effect the header popups when a footer nav link is clicked", function() {
+            waits(500);
             bean.fire(topstoriesFooterLink, 'click');
             bean.fire(sectionFooterLink, 'click');
             expect(topstoriesHeaderPopup.getAttribute('class')).toBe('on');
