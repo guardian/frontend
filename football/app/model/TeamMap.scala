@@ -308,6 +308,11 @@ object TeamMap {
 
 }
 
+object TeamUrl {
+  def apply(team: FootballTeam): String = TeamMap(team).map(_.url).getOrElse("#")
+  def apply(team: Team): String = team.url
+}
+
 object TeamName {
   def apply(team: FootballTeam): String = TeamMap(team).map(_.shortName).getOrElse(team.name)
   def apply(team: Team): String = team.shortName
