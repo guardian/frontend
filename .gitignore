@@ -1,5 +1,5 @@
 artifacts.zip
-dist
+/dist
 
 frontend-article.properties
 frontend-core-navigation.properties
@@ -22,7 +22,7 @@ logs
 tmp
 old
 target
-bin
+/*/bin/
 
 RUNNING_PID
 

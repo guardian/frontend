@@ -194,7 +194,7 @@ trait Prototypes {
       unmanagedClasspath in Test <+= (baseDirectory) map { bd ⇒ Attributed.blank(bd / "test") },
 
       jshintFiles <+= baseDirectory { base ⇒
-        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "vendor" ** "*.js")
+        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "components" ** "*.js")
       },
 
       jshintOptions <+= (baseDirectory) { base ⇒
