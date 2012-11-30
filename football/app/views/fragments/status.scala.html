@@ -7,5 +7,7 @@
         case l: MatchDay => (l.matchStatus, None)
     }
 ){ case (status, desc) =>
-    <abbr @desc.map{d => title="@d"} class="match-@status">@MatchStatus(status)</abbr>
+
+    @* TODO status is not quite right *@
+    <span class="i-status"><abbr @desc.map{d => title="@d"} class="match-@status">@MatchStatus(status)</abbr></span>
 }

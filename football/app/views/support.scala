@@ -62,3 +62,24 @@ object MatchStatus extends Logging {
   })
 
 }
+
+object NudgePercent {
+  // the realities of padding and margins means we never actually want 100%
+  def apply(main: Int, other: Int) = {
+    if (main == 0 && other == 0) 49
+    else if (main >= 99) 97
+    else if (main < 1) 1
+    else main - 1
+  }
+}
+
+object PercentMaker {
+  // I want the percentages to add up to 100
+  def apply(home: Int, away: Int) = {
+    val homeD = home.toDouble
+    val totalD = (home + away).toDouble
+    if (home + away == 100) (home, away)
+    else if (home == 0 && away == 0) (50, 50)
+    else ((homeD / totalD * 100).toInt, 100 - (homeD / totalD * 100).toInt)
+  }
+}

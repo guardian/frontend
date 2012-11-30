@@ -57,8 +57,16 @@ a.competition-title {
 
 .match { 
     border-bottom: 1px solid #DEDEDD;
+    position: relative;
+}
+
+.match a {
+    display: block;
     padding: @baseline*2;
-    position: relative;    
+}
+
+.match a:active {
+    background-color: red;
 }
 
 .match:last-child {

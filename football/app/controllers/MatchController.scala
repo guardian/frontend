@@ -9,8 +9,12 @@ import pa.{ LineUp, FootballMatch, MatchStats, MatchEvents }
 import play.api.libs.concurrent.Akka
 import play.api.Play._
 import org.joda.time.format.DateTimeFormat
+import feed._
 
-case class MatchPage(page: Page, theMatch: FootballMatch, lineUp: LineUp)
+case class MatchPage(page: Page, theMatch: FootballMatch, lineUp: LineUp) {
+  lazy val hasLiveMatch = theMatch.isLive || theMatch.isResult
+  lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
+}
 
 object MatchController extends Controller with Logging {
 
@@ -28,19 +32,19 @@ object MatchController extends Controller with Logging {
   def renderMatchId(matchId: String) = render(Competitions.findMatch(matchId))
 
   def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
+
     val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
     val homeTeam = TeamMap.teams.find(_._2.url == "/football/" + home).map(_._2)
     val awayTeam = TeamMap.teams.find(_._2.url == "/football/" + away).map(_._2)
     (homeTeam, awayTeam) match {
-      case (Some(Team(homeId, _, _, _)), Some(Team(awayId, _, _, _))) => render(Competitions.matchFor(date, homeId, awayId))
+      case (Some(Team(homeId, _, _, _)), Some(Team(awayId, _, _, _))) =>
+        render(Competitions.matchFor(date, homeId, awayId))
       case _ => render(None)
     }
   }
 
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
-
     maybeMatch.map { theMatch =>
-
       val promiseOfLineup = Akka.future(FootballClient.lineUp(theMatch.id))
 
       Async {
@@ -52,5 +56,4 @@ object MatchController extends Controller with Logging {
       }
     }.getOrElse(NotFound)
   }
-
 }

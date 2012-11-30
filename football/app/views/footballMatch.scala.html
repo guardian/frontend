@@ -4,35 +4,27 @@
 @import feed._
 
 
-@stat(title: String, home: Int, away: Int) = {
+@stat(title: String, home: Int, away: Int, firstItem: Boolean = false) = {
     @defining(home + away){ total =>
-        @defining(((home.toDouble / total.toDouble * 100).toInt, 100 - (home.toDouble / total.toDouble * 100).toInt)){ case (homePercent, awayPercent) =>
-            <h3>@title</h3>
-            <ol class="match-stat">
-                <li style="width:@{homePercent - 1}%">
-                    <div class="home-num" ><p>@home@if(home+away == 100){%}</p></div>
+        @defining(PercentMaker(home, away)){ case (homePercent, awayPercent) =>
+<div class="stat @if(!firstItem){item-divider}" data-stat="@title"
+     data-home-stat="@home" data-home-percent="@homePercent"
+     data-away-stat="@away" data-away-percent="@awayPercent">
+            <h3 class="type-5">@title</h3>
+            <ol class="match-stat unstyled">
+                <li style="width:@{NudgePercent(homePercent, awayPercent)}%">
+                    <div class="home-num type-5" >@home@if(home+away == 100){%}</div>
                     <div class="home-stat">&nbsp;</div>
                 </li>
-                <li style="width:@{awayPercent - 1}%">
-                    <div class="away-num"><p>@away@if(home+away == 100){%}</p></div>
+                <li style="width:@{NudgePercent(awayPercent, homePercent)}%">
+                    <div class="away-num type-5">@away@if(home+away == 100){%}</div>
                     <div class="away-stat">&nbsp;</div>
                 </li>
             </ol>
+</div>
         }
     }
 }
-
-@*
-@stat(title: String, home: Int, away: Int) = {
-    @defining(home + away){ total =>
-        <h3>@title</h3>
-        <ol class="match-stat">
-            <li>@home<span class="home-stat" style="width:@{(home.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span></li>
-            <li><span class="away-stat" style="width:@{(away.toDouble / total.toDouble * 100).toInt}%">&nbsp;</span>@away</li>
-        </ol>
-    }
-}
-*@
 
 @* TODO obviously not the correct icons, just hacky temp ones *@
 @events(player: LineUpPlayer) = {
@@ -47,9 +39,9 @@
 }
 
 @team(players: Seq[LineUpPlayer]) = {
-    <ul class="team-list">
+    <ul class="team-list unstyled">
         @players.map{ player =>
-        <li>
+        <li class="type-6a">
             @player.name
             @events(player)
         </li>
@@ -71,26 +63,36 @@
 
   <article class="article">
 
-          <p class="dateline  box-indent">
+      <div class="box-indent">
+          <p class="dateline">
             @fragments.status(theMatch)
             <time data-timestamp="@theMatch.date.getMillis">
           		@Format(theMatch.date, "EEEE d MMMM y HH.mm z", Edition(request, Configuration))
           	</time>
           </p>
 
-        <header>
-            <h2 class="type-1">@homeTeam.name @homeTeam.score</h2>
-            <p>@homeTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }</p>
-            <h2 class="type-1">@awayTeam.name @awayTeam.score</h2>
-            <p>@awayTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }</p>
-        </header>
+        @if(model.hasLiveMatch){
+          <div class="match-summary">
+              <h2 class="type-1">@homeTeam.name @homeTeam.score</h2>
+              <p class="home-scorers type-8">@homeTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }.getOrElse(Html("&nbsp;"))</p>
+              <h2 class="away-team type-1">@awayTeam.name @awayTeam.score</h2>
+              <p class="type-8">@awayTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }.getOrElse(Html("&nbsp;"))</p>
+          </div>
+        } else {
+          <div class="match-summary">
+              <h2 class="type-1">@homeTeam.name v @awayTeam.name</h2>
+          </div>
+        }
 
-      <div class="box-indent">
-        <h2 class="home-header">@homeTeam.name</h2>
-        <h2 class="away-header">@awayTeam.name</h2>
-        @if(model.theMatch.isLive || model.theMatch.isResult){
+        @if(model.hasLiveMatch){
+            <h3 class="type-2 section-divider">Stats</h3>
+
+
+          <h2 class="home-header type-5">@homeTeam.name</h2>
+          <h2 class="away-header type-5">@awayTeam.name</h2>
+
           @defining((model.lineUp.homeTeam, model.lineUp.awayTeam)){ case (homeStats, awayStats) =>
-            @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession)
+            @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession, firstItem = true)
             @stat("Goal attempts", homeStats.shotsOn + homeStats.shotsOff, awayStats.shotsOn + awayStats.shotsOff)
             @stat("On target", homeStats.shotsOn, awayStats.shotsOn)
             @stat("Off target", homeStats.shotsOff, awayStats.shotsOff)
@@ -100,20 +102,30 @@
           }
         }
 
-        <h3>Teams</h3>
-        <div class="lineup">
-            @team(model.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
-        </div>
-        <div class="lineup">
-            @team(model.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
-        </div>
-        <h3>Unused substitutes</h3>
-        <div class="lineup">
-            @team(model.lineUp.homeTeam.players.filter{_.isUnusedSub})
-        </div>
-        <div class="lineup">
-            @team(model.lineUp.awayTeam.players.filter{_.isUnusedSub})
-        </div>
+
+
+            <h3 class="type-2 section-divider">Teams</h3>
+
+            <h3 class="team-list-name type-5">@homeTeam.name</h3>
+            <h3 class="team-list-name type-5">@awayTeam.name</h3>
+          @if(!model.hasLineUp){
+            <p class="type-6a place-holder">Team lineups will be available once announced.</p>
+
+          } else {
+            <div class="lineup">
+                @team(model.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+            </div>
+            <div class="lineup">
+                @team(model.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+            </div>
+            <h3 class="type-2 item-divider">Unused substitutes</h3>
+            <div class="lineup">
+                @team(model.lineUp.homeTeam.players.filter{_.isUnusedSub})
+            </div>
+            <div class="lineup">
+                @team(model.lineUp.awayTeam.players.filter{_.isUnusedSub})
+            </div>
+        }
       </div>
   </article>
   }

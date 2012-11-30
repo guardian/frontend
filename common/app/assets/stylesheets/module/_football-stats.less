@@ -1,10 +1,8 @@
-@homeColour: #004179;
-@awayColour: #20A111;
+@homeColour: @sportBright;
+@awayColour: #19646E;
 
 .match-stat {
-    padding: 0;
-    margin-left: 25px;
-    margin-right: 25px;
+    padding-bottom: @baseline;
 }
 
 .match-stat li {
@@ -18,8 +16,12 @@
 
 .match-stat .home-stat {
     background-color: @homeColour;
-    height: 25px;
+    height: 15px;
     width: 100%;
+}
+
+.stat h3 {
+    margin-bottom: 0px;
 }
 
 .match-stat .home-num {
@@ -38,7 +40,7 @@
 
 .match-stat .away-stat {
     background-color: @awayColour;
-    height: 25px;
+    height: 15px;
 }
 
 .match-stat li:nth-child(2) {
@@ -49,25 +51,97 @@
     list-style: none
 }
 
+.team-list-name {
+    width: 49%;
+    display: inline-block;
+}
+
 .home-header {
     display: inline-block;
     width: 49%;
-    color: @homeColour;
-    border-top: 10px solid @homeColour;
-    margin-bottom: 25px;
+    margin-bottom: @baseline * 3;
+    border-bottom: 5px solid @homeColour;
+    padding-bottom: @baseline;
 }
 
 .away-header {
     display: inline-block;
     width: 49%;
-    color: @awayColour;
-    border-top: 10px solid @awayColour;
     text-align: right;
-    margin-bottom: 25px;
+    margin-bottom: @baseline * 3;
+    border-bottom: 5px solid @awayColour;
+    padding-bottom: @baseline;
 }
 
 .lineup{
     display: inline-block;
     width: 49%;
     vertical-align: top;
+    padding-bottom: @baseline * 2;
 }
+
+.i-status {
+    padding: 5px 5px;
+    margin-right: 5px;
+    font-size: 10px;
+    font-style: normal;
+    line-height: 1em;
+    color: #ffffff;
+    background-color: @sportBright;
+    abbr {
+        border-bottom: none !important;
+    }
+}
+
+.match-summary {
+    padding-top: 5px;
+    padding-bottom: @baseline !important;
+    h2 {
+        margin-bottom: @baseline * 2;
+    }
+
+    .home-scorers{
+        margin-bottom: @baseline * 2;
+    }
+    .away-team {
+        border-top: 1px solid @mushroom;
+        padding-top: @baseline;
+    }
+    margin-bottom: @baseline * 3;
+    p:nth-child(3){
+        margin-bottom: @baseline * 2;
+    }
+}
+
+.stats {
+    margin-bottom: @baseline * 4;
+}
+
+.stats-tabs{
+    padding-left: 10px;
+    li {
+        width: auto !important;
+    }
+    margin-right: 0px !important;
+}
+
+.item-divider {
+    border-top: 1px solid @mushroom;
+    padding-top: @baseline
+}
+
+.section-divider {
+    border-top: 4px solid @mushroom;
+    border-bottom: 1px solid @mushroom;
+    padding-top: @baseline * 2;
+    padding-bottom: @baseline * 3;
+}
+
+.lineup .type-6a {
+    line-height: 20px;
+}
+
+.place-holder {
+    padding-bottom: 10px;
+}
+
