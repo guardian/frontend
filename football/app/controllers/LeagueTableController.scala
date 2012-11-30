@@ -6,6 +6,7 @@ import play.api.mvc.{ Action, Controller }
 import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
+import common.TeamCompetitions
 
 case class TablesPage(
     page: Page,
@@ -59,20 +60,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       table.copy(groups = table.groups)
     }
 
-    val competitionList = List(
-      "Premier League",
-      "Championship",
-      "League One",
-      "League Two",
-      "Scottish Premier League",
-      "Scottish Division One",
-      "Scottish Division Two",
-      "Scottish Division Three",
-      "La Liga"
-    )
-
     Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), competitionList)))
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), TeamCompetitions.competitions)))
     }
   }
 

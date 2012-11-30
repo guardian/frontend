@@ -4,7 +4,7 @@
 
 @renderTeamList(name: String) = {
     @model.tables.filter(_.competition.fullName == name).map{ table =>
-        <section class="sections" data-link-name="Football | Teams | @HtmlFormat.raw(table.competition.fullName)">
+        <section class="sections" data-link-name="Football | Teams | @HtmlFormat.raw(table.competition.fullName)" id="@table.competition.url.split("/")(2)">
             <h1 class="article-zone">@table.competition.fullName</h1>
 
             @table.groups.map{ group =>
