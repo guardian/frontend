@@ -26,7 +26,7 @@ trait CompetitionSupport {
   }
 
   def withCompetitionFilter(path: String) = competitionSupportWith(
-    competitions.filter(_.url == "/football/" + path)
+    competitions.filter(_.url == path)
   )
 
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {

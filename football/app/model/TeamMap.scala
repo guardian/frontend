@@ -302,8 +302,8 @@ object TeamMap {
     "77" -> Team("77", "/football/gillingham", "Gillingham", "Gillingham")
   )
 
-  def getTeamWithUrl(teamUrl: String): Option[(String, Team)] = {
-    teams find { case (k, v) => v.url == teamUrl }
+  def getTeamWithName(team: String): Option[(String, Team)] = {
+    teams find { case (k, v) => v.url.endsWith(team) }
   }
 
   def apply(team: FootballTeam): Option[Team] = {

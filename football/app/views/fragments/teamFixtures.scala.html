@@ -1,4 +1,4 @@
-@(previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
+@(teamName:String, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
 @import org.joda.time.DateTime
 
 <li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
@@ -15,7 +15,7 @@
     }
 </li>
 
-<a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>
+<a href="/football/@teamName/fixtures" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>
 
 <li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
     <h3 class="type-2">Previous result</h3>
@@ -31,4 +31,4 @@
     }
 </li>
 
-<a href="/football/live" class="cta-small cta-small-border type-6 zone-color">View all results <i class="i-sport-arrow-small"></i></a>
+<a href="/football/@teamName/results" class="cta-small cta-small-border type-6 zone-color">View all results <i class="i-sport-arrow-small"></i></a>
