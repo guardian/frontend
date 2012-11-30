@@ -66,7 +66,7 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular/' + edition + '/' + section,
+            var url = host + '/most-popular/' + edition + (section ? '/' + section : ''),
                 domContainer = document.getElementById('js-popular'),
                 p = new Popular(domContainer).load(url);
 
