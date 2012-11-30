@@ -29,6 +29,7 @@ GET     /football/results/:year/:month/:day                 controllers.ResultsC
 GET     /football/results                                   controllers.ResultsController.render()
 GET     /football/:competition/results/:year/:month/:day    controllers.CompetitionResultsController.renderFor(year, month, day, competition)
 GET     /football/:competition/results                      controllers.CompetitionResultsController.render(competition)
+GET     /football/results/:team                             controllers.TeamResultsController.render(team)
 
 GET     /football/live                                      controllers.LiveMatchesController.render()
 GET     /football/:competition/live                         controllers.LiveMatchesController.renderFor(competition)
