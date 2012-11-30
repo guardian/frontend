@@ -34,8 +34,11 @@ object MatchController extends Controller with Logging {
   def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
 
     val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
+
+    //TODO move to TeamMap
     val homeTeam = TeamMap.teams.find(_._2.url == "/football/" + home).map(_._2)
     val awayTeam = TeamMap.teams.find(_._2.url == "/football/" + away).map(_._2)
+
     (homeTeam, awayTeam) match {
       case (Some(Team(homeId, _, _, _)), Some(Team(awayId, _, _, _))) =>
         render(Competitions.matchFor(date, homeId, awayId))

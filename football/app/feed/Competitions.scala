@@ -64,8 +64,8 @@ trait CompetitionSupport {
   )
 
   def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).competitions
-    .flatMap(_.matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId))
-    .headOption
+    .flatMap(_.matches).find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
