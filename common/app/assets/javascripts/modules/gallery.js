@@ -13,7 +13,9 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
                 inFullScreenMode: false,
-                gallerySwipe: null
+                gallerySwipe: null,
+                container: document.getElementById('js-gallery-holder'),
+                stopUpdatingURL: false
             },
 
             // runs on domready
@@ -38,13 +40,14 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     view.makePlaceholderIntoImage([nextSlide, prevSlide]);
 
                     // set up the swipe actions
-                    view.galleryConfig.gallerySwipe = new Swipe(document.getElementById('js-gallery-holder'), {
+                    view.galleryConfig.gallerySwipe = new Swipe(view.galleryConfig.container, {
                         callback: function(event, index, elm) {
+
                             var count = document.getElementById('js-gallery-index');
-                            var currentPos = parseInt(count.innerText, 10);
+                            var currentPos = parseInt(bonzo(count).text(), 10);
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
-                            
+
                             // track the swipe and its direction
                             if (nextIndexCount > currentPos) {
                                 view.trackInteraction("swipe:forward");
@@ -53,13 +56,13 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                                 view.trackInteraction("swipe:backward");
                                 view.advanceGallery('prev');
                             }
-
-                        }
+                        },
+                        speed: 200
                     });
 
                     // check if we need to jump to a specific gallery slide
                     if (urlParams.index) {
-                        view.galleryConfig.gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0);
+                        view.galleryConfig.gallerySwipe.slide(parseInt(urlParams.index, 10)-1, 0, true);
                     }
 
                     // bind prev/next to just trigger swipes
@@ -111,12 +114,27 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 // this means the user used the back/forward buttons
                 // so we should change gallery state to match
                 window.onpopstate = function(event) {
-                    var urlParams = url.getUrlVars(); // fetch again
-                    if(urlParams.index) {
-                        var matches = urlParams.index.match(/\d+/); // URL params can become like ?index=10#top
-                        if (matches) {
-                            urlParams.index = matches[0];
-                            view.advanceGallery(null, urlParams.index);
+                    if (event.state && event.state.index) {
+
+                        // if it's swipe we need to animate the slider
+                        // so first we work out which direction to move in
+                        if (view.galleryConfig.inSwipeMode) {
+
+                            var currentSlide = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
+                            var currentIndex = parseInt(currentSlide.getAttribute('data-index'), 10);
+
+                            // we don't need to manually update URLs as popstate does it for us
+                            view.galleryConfig.stopUpdatingURL = true;
+
+                            if (currentIndex <= event.state.index) {
+                                view.galleryConfig.gallerySwipe.next();
+                            } else {
+                                view.galleryConfig.gallerySwipe.prev();
+                            }
+
+                        } else {
+                            // in non-touch mode, so just move to a specific slide
+                            view.advanceGallery(null, event.state.index);
                         }
                     }
                 };
@@ -139,7 +157,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 var isFirst         = (currentIndex === 1);
                 var isLast          = (currentIndex === totalSlides);
                 var slideCounter    = document.getElementById('js-gallery-index');
-                
+
                 // don't try to do anything if we're at the start/end going forward/back
                 if ( (isFirst && direction === "prev") ||
                      (isLast && direction === "next") ) {
@@ -163,7 +181,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
                     // update counter
                     newSlideIndex = (direction === 'next') ? (currentIndex + 1) : (currentIndex - 1);
-                
+
                 } else {
                     // used for scrolling to a custom item on pageload
                     elmToWorkWith = document.getElementById('js-gallery-item-' + customItemIndexToShow);
@@ -180,11 +198,19 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 // update count of current position
                 slideCounter.innerHTML = newSlideIndex;
 
-                // tweak the page URL
-                view.updateURL('index=' + newSlideIndex, newSlideIndex);
+                // this tweaks the index parameter in the URL
+                // we don't need to do this when using customItemIndexToShow
+                // as popState does this for us
+                if (!customItemIndexToShow) {
+                    if (!view.galleryConfig.stopUpdatingURL) {
+                        view.updateURL('index=' + newSlideIndex, newSlideIndex);
+                    } else {
+                        // reset this so other things can update URLs
+                        view.galleryConfig.stopUpdatingURL = false;
+                    }
+                }
 
                 // convert the slide to an image if we need to
-
                 var elmsToPreload = [prevSlide, elmToWorkWith, nextSlide];
                 view.makePlaceholderIntoImage(elmsToPreload);
 
@@ -192,17 +218,25 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 elmToWorkWith.className = view.galleryConfig.currentSlideClassName;
                 elmToWorkWith.style.display = 'block';
 
+                // we set the height of the <ul> to the element height
+                // otherwise large portrait images add space underneath photos
+                if (view.galleryConfig.inSwipeMode) {
+                    // no need to do this for non-swipe as offscreen items aren't visible anyway
+                    view.galleryConfig.container.style.height = elmToWorkWith.offsetHeight + 'px';
+                }
+
                 return true;
 
             },
 
             updateURL: function (querystring, index) {
+
                 var args = {
-                    'state': {},
+                    'state': { 'index' : index },
                     'title': (window.title || '') + ' (' + index + ')',
                     'querystring': '?' + querystring
                 };
-                
+
                 common.mediator.emit('modules:url:pushquerystring', args);
             },
 
@@ -236,7 +270,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
             // used to to convert placeholder <li> into <img> tag
             // elms can be either an array of elements or a single one
             makePlaceholderIntoImage: function (elms) {
-
                 if (!elms || elms === null) {
                     return;
                 }
@@ -253,7 +286,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 } else { // it's just one item
                     view.processPlaceholder(elms);
                 }
-                
+
             },
 
             // actually updates the DOM
@@ -261,7 +294,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                 var hasImage = placeholder.getAttribute('data-image');
 
                 if (hasImage && hasImage === 'false') {
-                    
+
                     var src = placeholder.getAttribute("data-src");
                     var orientation = placeholder.getAttribute("data-orientation");
                     var width = placeholder.getAttribute("data-width");
@@ -269,12 +302,12 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
                     if (src && src !== "") { // create <img> element
                         var html = '<img src="[SRC]" class="[CLASS]" data-width="[WIDTH]" data-height="[HEIGHT]" />';
                         var classList = 'js-gallery-img maxed ' + orientation;
-                        
+
                         html = html.replace('[SRC]', src);
                         html = html.replace('[CLASS]', classList);
                         html = html.replace('[WIDTH]', width);
                         html = html.replace('[HEIGHT]', height);
-                        
+
                         // prepend it to what's there already (caption etc)
                         placeholder.innerHTML = html + placeholder.innerHTML;
                         placeholder.setAttribute("data-image", "true");
@@ -291,7 +324,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
         };
 
     };
-        
+
     return Gallery;
 
 });
