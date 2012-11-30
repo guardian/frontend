@@ -40,7 +40,7 @@
 
     @if(tag.section == "football") {
         @if(tag.isFootballCompetition) {
-            @fragments.footballNav(tag.tagWithoutSection, Some(tag.webTitle), Some(tag.tagWithoutSection))
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
         } else {
             @fragments.footballNav("/football")
         }
