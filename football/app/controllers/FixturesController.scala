@@ -59,7 +59,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 object FixturesController extends FixtureRenderer with Logging {
 
   val page = new Page(
-    "http://www.guardian.co.uk/football/matches",
+    Some("http://www.guardian.co.uk/football/matches"),
     "football/fixtures",
     "football",
     "All fixtures",
@@ -92,7 +92,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
 
       val page = new Page(
-        "http://www.guardian.co.uk/football/matches",
+        Some("http://www.guardian.co.uk/football/matches"),
         "football/fixtures",
         "football",
         competition.fullName + " fixtures",

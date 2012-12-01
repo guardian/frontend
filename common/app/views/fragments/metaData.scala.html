@@ -1,6 +1,6 @@
 @(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
 
-    <link rel="canonical" href="@item.canonicalUrl" />
+    @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
     <link rel="shortcut icon" type="image/png" href="@static("images/favicons/32x32.ico")" />
 
     <link rel="apple-touch-icon" sizes="144x144" href="@static("images/favicons/144x144.png")" />

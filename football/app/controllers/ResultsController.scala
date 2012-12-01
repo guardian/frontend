@@ -60,7 +60,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
 object ResultsController extends ResultsRenderer with Logging {
 
   val page = new Page(
-    "http://www.guardian.co.uk/football/matches",
+    Some("http://www.guardian.co.uk/football/matches"),
     "football/results",
     "football",
     "All results",
@@ -93,7 +93,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
 
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       val page = new Page(
-        "http://www.guardian.co.uk/football/matches",
+        Some("http://www.guardian.co.uk/football/%s/results".format(competitionName)),
         "football/results",
         "football",
         competition.fullName + " results",

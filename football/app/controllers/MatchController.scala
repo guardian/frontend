@@ -21,7 +21,7 @@ object MatchController extends Controller with Logging {
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
   val page = new Page(
-    "http://www.guardian.co.uk", //TODO we do not always have canonical
+    canonicalUrl = None,
     "/foo/bar", //todo
     "football",
     "match", //todo

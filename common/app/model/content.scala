@@ -31,7 +31,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
-  lazy val canonicalUrl: String = webUrl
+  override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
