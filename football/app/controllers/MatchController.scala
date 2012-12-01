@@ -1,32 +1,37 @@
 package controllers
 
 import common._
-import feed.Competitions
 import model._
 import play.api.mvc.{ Controller, Action }
 import conf.FootballClient
-import pa.{ LineUp, FootballMatch, MatchStats, MatchEvents }
+import pa.FootballMatch
 import play.api.libs.concurrent.Akka
 import play.api.Play._
 import org.joda.time.format.DateTimeFormat
 import feed._
+import org.joda.time._
+import pa.LineUp
+import scala.Some
+import model.Team
 
-case class MatchPage(page: Page, theMatch: FootballMatch, lineUp: LineUp) {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   lazy val hasLiveMatch = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
+
+  override lazy val canonicalUrl = None
+  override lazy val id = MatchUrl(theMatch)
+  override lazy val section = "football"
+  override lazy val webTitle = "%s %s - %s %s ".format(theMatch.homeTeam.name, theMatch.homeTeam.score.getOrElse(""),
+    theMatch.awayTeam.score.getOrElse(""), theMatch.awayTeam.name)
+
+  override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
+    theMatch.date.toString("ss MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
+
 }
 
 object MatchController extends Controller with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
-
-  val page = new Page(
-    canonicalUrl = None,
-    "/foo/bar", //todo
-    "football",
-    "match", //todo
-    "......." //TODO
-  )
 
   def renderMatchId(matchId: String) = render(Competitions.findMatch(matchId))
 
@@ -48,11 +53,10 @@ object MatchController extends Controller with Logging {
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
     maybeMatch.map { theMatch =>
       val promiseOfLineup = Akka.future(FootballClient.lineUp(theMatch.id))
-
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            Ok(views.html.footballMatch(MatchPage(page, theMatch, lineUp)))
+            Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
           }
         }
       }

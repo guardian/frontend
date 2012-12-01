@@ -1,4 +1,4 @@
-@(model: MatchPage)(implicit request: RequestHeader)
+@(page: MatchPage)(implicit request: RequestHeader)
 @import support._
 @import FootballHelpers._
 @import feed._
@@ -52,7 +52,7 @@
     </ul>
 }
 
-@main(model.page, Static, Configuration, Switches.all){
+@main(page, Static, Configuration, Switches.all){
 }{
 
 
@@ -62,7 +62,7 @@
 
 
 
-    @defining((model.theMatch, model.theMatch.homeTeam, model.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
+    @defining((page.theMatch, page.theMatch.homeTeam, page.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
 
   <article class="article">
 
@@ -74,7 +74,7 @@
           	</time>
           </p>
 
-        @if(model.hasLiveMatch){
+        @if(page.hasLiveMatch){
           <div class="match-summary">
               <h2 class="type-1">@homeTeam.name @homeTeam.score</h2>
               <p class="home-scorers type-8">@cleanScorers(homeTeam.scorers)</p>
@@ -87,15 +87,15 @@
           </div>
         }
 
-        @if(model.hasLiveMatch){
+        @if(page.hasLiveMatch){
             <h3 class="type-2 section-divider">Stats</h3>
 
 
           <h5 class="home-header type-5">@homeTeam.name</h5>
           <h5 class="away-header type-5">@awayTeam.name</h5>
 
-          @defining((model.lineUp.homeTeam, model.lineUp.awayTeam)){ case (homeStats, awayStats) =>
-            @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession, firstItem = true)
+          @defining((page.lineUp.homeTeam, page.lineUp.awayTeam)){ case (homeStats, awayStats) =>
+            @stat("Possession", page.lineUp.homeTeamPossession, page.lineUp.awayTeamPossession, firstItem = true)
             @stat("Goal attempts", homeStats.shotsOn + homeStats.shotsOff, awayStats.shotsOn + awayStats.shotsOff)
             @stat("On target", homeStats.shotsOn, awayStats.shotsOn)
             @stat("Off target", homeStats.shotsOff, awayStats.shotsOff)
@@ -111,22 +111,22 @@
 
             <h5 class="team-list-name type-5">@homeTeam.name</h5>
             <h5 class="team-list-name type-5">@awayTeam.name</h5>
-          @if(!model.hasLineUp){
+          @if(!page.hasLineUp){
             <p class="type-6a place-holder">Team lineups will be available once announced.</p>
 
           } else {
             <div class="lineup">
-                @team(model.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+                @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
             </div>
             <div class="lineup">
-                @team(model.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+                @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
             </div>
             <h3 class="type-2 item-divider">Unused substitutes</h3>
             <div class="lineup">
-                @team(model.lineUp.homeTeam.players.filter{_.isUnusedSub})
+                @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
             </div>
             <div class="lineup">
-                @team(model.lineUp.awayTeam.players.filter{_.isUnusedSub})
+                @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
             </div>
         }
       </div>

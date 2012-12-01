@@ -24,11 +24,10 @@ trait MetaData {
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
-    "canonical-url" -> canonicalUrl,
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName
-  )
+  ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
 
   def cacheSeconds = 60
 }
