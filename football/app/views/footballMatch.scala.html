@@ -26,16 +26,19 @@
     }
 }
 
-@* TODO obviously not the correct icons, just hacky temp ones *@
 @events(player: LineUpPlayer) = {
     @player.events.map{ event =>
         @{ event.eventType match {
-            case "booking" => <img src="http://a734.phobos.apple.com/us/r1000/045/Purple/37/34/40/mzl.irchzicw.320x480-75.jpg" width="5px" height="10px"/>
-            case "dismissal" => <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Red_card.svg/200px-Red_card.svg.png" width="5px" height="10px"/>
+            case "booking" => <i class="i-yellow-card"></i>
+            case "dismissal" => <i class="i-red-card"></i>
             case "substitution" => "(s " + event.eventTime + "')"
             case _ =>  ""
         }}
     }
+}
+
+@cleanScorers(teamScorers: Option[String]) = {
+    @teamScorers.map{ scorers => @scorers.replace("(", "").replace(")", "").replace(",", ", ") }.getOrElse(Html("&nbsp;"))
 }
 
 @team(players: Seq[LineUpPlayer]) = {
@@ -74,9 +77,9 @@
         @if(model.hasLiveMatch){
           <div class="match-summary">
               <h2 class="type-1">@homeTeam.name @homeTeam.score</h2>
-              <p class="home-scorers type-8">@homeTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }.getOrElse(Html("&nbsp;"))</p>
+              <p class="home-scorers type-8">@cleanScorers(homeTeam.scorers)</p>
               <h2 class="away-team type-1">@awayTeam.name @awayTeam.score</h2>
-              <p class="type-8">@awayTeam.scorers.map{ scorers => @scorers.replace("(", "").replace(")", "") }.getOrElse(Html("&nbsp;"))</p>
+              <p class="type-8">@cleanScorers(awayTeam.scorers)</p>
           </div>
         } else {
           <div class="match-summary">
