@@ -50,8 +50,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
       def section = ""
 
-      def apiUrl = ""
-
       def webTitle = ""
 
       def analyticsName = ""

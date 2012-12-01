@@ -36,7 +36,6 @@ class Page(
   val canonicalUrl: String,
   val id: String,
   val section: String,
-  val apiUrl: String,
   val webTitle: String,
   val analyticsName: String) extends MetaData
 
@@ -45,9 +44,8 @@ object Page {
     canonicalUrl: String,
     id: String,
     section: String,
-    apiUrl: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, apiUrl, webTitle, analyticsName)
+    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
 }
 
 trait Images {

@@ -27,7 +27,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       "http://www.guardian.co.uk/football/matches",
       "football/tables",
       "football",
-      "",
       "All tables",
       "GFE:Football:automatic:tables"
     )
@@ -51,7 +50,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       "http://www.guardian.co.uk/football/clubs",
       "football/teams",
       "football",
-      "",
       "All teams",
       "GFE:Football:automatic:teams"
     )
@@ -72,7 +70,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         "http://www.guardian.co.uk/football/matches",
         "football/tables",
         "football",
-        "",
         table.competition.fullName + " table",
         "GFE:Football:automatic:competition tables"
       )

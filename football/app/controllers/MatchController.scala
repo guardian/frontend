@@ -24,7 +24,6 @@ object MatchController extends Controller with Logging {
     "http://www.guardian.co.uk", //TODO we do not always have canonical
     "/foo/bar", //todo
     "football",
-    "", //todo we do not always have an api url
     "match", //todo
     "......." //TODO
   )

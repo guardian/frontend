@@ -63,7 +63,6 @@ object ResultsController extends ResultsRenderer with Logging {
     "http://www.guardian.co.uk/football/matches",
     "football/results",
     "football",
-    "",
     "All results",
     "GFE:Football:automatic:results"
   )
@@ -97,7 +96,6 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
         "http://www.guardian.co.uk/football/matches",
         "football/results",
         "football",
-        "",
         competition.fullName + " results",
         "GFE:Football:automatic:competition results"
       )

@@ -62,7 +62,6 @@ object FixturesController extends FixtureRenderer with Logging {
     "http://www.guardian.co.uk/football/matches",
     "football/fixtures",
     "football",
-    "",
     "All fixtures",
     "GFE:Football:automatic:fixtures"
   )
@@ -96,7 +95,6 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
         "http://www.guardian.co.uk/football/matches",
         "football/fixtures",
         "football",
-        "",
         competition.fullName + " fixtures",
         "GFE:Football:automatic:competition fixtures"
       )
