@@ -5,6 +5,8 @@ case class Team(id: String, url: String, tagName: String, shortName: String)
 
 object TeamMap {
 
+  // TODO: Sort this list by code and resolve duplicates.
+
   val teams: Map[String, Team] = Map(
     "94" -> Team("94", "/football/celtic", "Celtic", "Celtic"),
     "84" -> Team("84", "/football/peterborough", "Peterborough", "Peterboro"),
@@ -97,11 +99,11 @@ object TeamMap {
     "26412" -> Team("26412", "/football/fccopenhagen", "FC Copenhagen", "Copenhagen"),
     "18" -> Team("18", "/football/southampton", "Southampton", "Southampton"),
     "92" -> Team("92", "/football/york-city", "York City", "York"),
+// "92" -> Team("92", "/football/newyorkredbulls", "New York Red Bulls", "NY Red Bulls"),
     "87" -> Team("87", "/football/scunthorpe", "Scunthorpe", "Scunthorpe"),
     "115" -> Team("115", "/football/stjohnstone", "St Johnstone", "St Johnstone"),
     "64" -> Team("64", "/football/shrewsbury", "Shrewsbury", "Shrewsbury"),
     "102" -> Team("102", "/football/stmirren", "St Mirren", "St Mirren"),
-    "92" -> Team("92", "/football/newyorkredbulls", "New York Red Bulls", "NY Red Bulls"),
     "38" -> Team("38", "/football/stokecity", "Stoke City", "Stoke"),
     "26284" -> Team("26284", "/football/krc-genk", "Genk", "Genk"),
     "17635" -> Team("17635", "/football/annan-athletic", "Annan Athletic", "Annan"),
