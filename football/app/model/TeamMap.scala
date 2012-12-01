@@ -99,7 +99,7 @@ object TeamMap {
     "26412" -> Team("26412", "/football/fccopenhagen", "FC Copenhagen", "Copenhagen"),
     "18" -> Team("18", "/football/southampton", "Southampton", "Southampton"),
     "92" -> Team("92", "/football/york-city", "York City", "York"),
-// "92" -> Team("92", "/football/newyorkredbulls", "New York Red Bulls", "NY Red Bulls"),
+    // "92" -> Team("92", "/football/newyorkredbulls", "New York Red Bulls", "NY Red Bulls"),
     "87" -> Team("87", "/football/scunthorpe", "Scunthorpe", "Scunthorpe"),
     "115" -> Team("115", "/football/stjohnstone", "St Johnstone", "St Johnstone"),
     "64" -> Team("64", "/football/shrewsbury", "Shrewsbury", "Shrewsbury"),

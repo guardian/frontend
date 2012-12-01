@@ -7,11 +7,11 @@
 @stat(title: String, home: Int, away: Int, firstItem: Boolean = false) = {
     @defining(home + away){ total =>
         @defining(PercentMaker(home, away)){ case (homePercent, awayPercent) =>
-<div class="stat @if(!firstItem){item-divider}" data-stat="@title"
+<div class="match-stat @if(!firstItem){item-divider}" data-stat="@title"
      data-home-stat="@home" data-home-percent="@homePercent"
      data-away-stat="@away" data-away-percent="@awayPercent">
-            <h3 class="type-5">@title</h3>
-            <ol class="match-stat unstyled">
+            <h5 class="type-5">@title</h5>
+            <ol class="unstyled">
                 <li style="width:@{NudgePercent(homePercent, awayPercent)}%">
                     <div class="home-num type-5" >@home@if(home+away == 100){%}</div>
                     <div class="home-stat">&nbsp;</div>
@@ -66,7 +66,7 @@
 
   <article class="article">
 
-      <div class="box-indent">
+      <div class="box-indent football-stats">
           <p class="dateline">
             @fragments.status(theMatch)
             <time data-timestamp="@theMatch.date.getMillis">
@@ -91,8 +91,8 @@
             <h3 class="type-2 section-divider">Stats</h3>
 
 
-          <h2 class="home-header type-5">@homeTeam.name</h2>
-          <h2 class="away-header type-5">@awayTeam.name</h2>
+          <h5 class="home-header type-5">@homeTeam.name</h5>
+          <h5 class="away-header type-5">@awayTeam.name</h5>
 
           @defining((model.lineUp.homeTeam, model.lineUp.awayTeam)){ case (homeStats, awayStats) =>
             @stat("Possession", model.lineUp.homeTeamPossession, model.lineUp.awayTeamPossession, firstItem = true)
@@ -109,8 +109,8 @@
 
             <h3 class="type-2 section-divider">Teams</h3>
 
-            <h3 class="team-list-name type-5">@homeTeam.name</h3>
-            <h3 class="team-list-name type-5">@awayTeam.name</h3>
+            <h5 class="team-list-name type-5">@homeTeam.name</h5>
+            <h5 class="team-list-name type-5">@awayTeam.name</h5>
           @if(!model.hasLineUp){
             <p class="type-6a place-holder">Team lineups will be available once announced.</p>
 
