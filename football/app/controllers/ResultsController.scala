@@ -77,17 +77,15 @@ object ResultsController extends ResultsRenderer with Logging {
     renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date, None)
   }
 
-  def renderTag(tag: String) = {
-
-    Competitions.competitions.find(_.url.endsWith(tag)).orElse {
-      TeamMap.getTeamWithName(tag).map { case (x, team) => team }
-    } match {
-      case Some(comp: Competition) => CompetitionResultsController.render(tag, comp)
-      case Some(team: Team) => TeamResultsController.render(tag, team)
-      case _ => Action(NotFound)
-    }
-
+  def routeCompetition(tag: String) = {
+    Competitions.withTag(tag) map { CompetitionResultsController.render(tag, _) }
   }
+
+  def routeTeam(tag: String) = {
+    TeamMap.getTeamWithName(tag) map { TeamResultsController.render(tag, _) }
+  }
+
+  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/results"
@@ -101,7 +99,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
 
   def renderFor(year: String, month: String, day: String, competitionName: String) = render(
     competitionName,
-    Competitions.competitions.find(_.url.endsWith(competitionName)).map { comp => comp }.get,
+    Competitions.withTag(competitionName).get,
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
