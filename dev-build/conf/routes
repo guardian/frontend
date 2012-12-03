@@ -22,12 +22,12 @@ GET     /related/:edition/*path                         controllers.RelatedContr
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()
 GET     /football/:competition/fixtures/:year/:month/:day   controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
-GET     /football/:competition/fixtures                     controllers.CompetitionFixturesController.render(competition)
+GET     /football/:tag/fixtures                             controllers.FixturesController.renderTag(tag)
 
 GET     /football/results/:year/:month/:day                 controllers.ResultsController.renderFor(year, month, day)
 GET     /football/results                                   controllers.ResultsController.render()
 GET     /football/:competition/results/:year/:month/:day    controllers.CompetitionResultsController.renderFor(year, month, day, competition)
-GET     /football/:competition/results                      controllers.CompetitionResultsController.render(competition)
+GET     /football/:tag/results                              controllers.ResultsController.renderTag(tag)
 
 GET     /football/live                                      controllers.LiveMatchesController.render()
 GET     /football/:competition/live                         controllers.LiveMatchesController.renderFor(competition)
@@ -38,7 +38,7 @@ GET     /football/:competition/table                        controllers.LeagueTa
 GET     /football/api/frontscores                           controllers.FrontScoresController.render()
 GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
 GET     /football/api/teamtable/:teamId                      controllers.CompetitionTablesController.renderTeam(teamId)
-GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.render(teamId)
+GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
