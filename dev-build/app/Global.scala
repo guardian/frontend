@@ -2,6 +2,7 @@ import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.front.{ ConfiguredEdition, Front }
 import feed.Competitions
+import model.TeamMap
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
@@ -18,10 +19,13 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
     super.onStart(app)
     Front.startup()
     Competitions.startup()
+    TeamMap.startup()
   }
 
   override def onStop(app: play.api.Application) {
     Front.shutdown()
+    Competitions.shutDown()
+    TeamMap.shutdown()
     super.onStop(app)
   }
 }

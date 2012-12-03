@@ -12,9 +12,7 @@ class MatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       given("I visit a match page")
 
-      val today = new DateMidnight().toString("yyyy/MMM/dd").toLowerCase
-
-      HtmlUnit("/football/match/" + today + "/derbycounty-v-blackburn") { browser =>
+      HtmlUnit("/football/match/3518296") { browser =>
         import browser._
 
         then("I should see the home team score")
