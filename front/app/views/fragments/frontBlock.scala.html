@@ -30,4 +30,8 @@
         }
     </div>
 
+    @if(request.path == "/" && block.description.id == "commentisfree"){
+        @fragments.adSlot(id="middle-banner-ad", baseSlot="x55", medianSlot="x55", extendedSlot="x55")
+    }
+
 </section>  

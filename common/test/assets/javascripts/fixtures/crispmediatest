@@ -1,0 +1,5 @@
+function OAS_RICH(position) {
+if (position == 'Top2') {
+document.write ('<script type="text/javascript" src="http://ads.crisppremium.com/partners/the_guardian/the_guardian.js"></script>');
+}
+}
