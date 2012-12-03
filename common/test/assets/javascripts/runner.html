@@ -9,21 +9,21 @@
   <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
   <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
   <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine-html.js"></script>
-  <script type="text/javascript" src="../../../app/assets/javascripts/vendor/curl-0.7.2.js"></script>
+  <script type="text/javascript" src="../../../app/assets/javascripts/components/curl/dist/curl/curl.js"></script>
   <script>
       curl({
         baseUrl: "../../../app/assets/javascripts/",
         apiName: 'require',
         paths: {
                 common:       'common',
-                bonzo:        'vendor/bonzo-1.2.1',
-                qwery:        'vendor/qwery-mobile-3.3.11',
-                bean:         'vendor/bean-1.0.1',
-                reqwest:      'vendor/reqwest-0.4.5',
-                domwrite:     'vendor/bezen.domwrite-2012-08-15',
+                bonzo:        'components/bonzo/src/bonzo',
+                qwery:        'components/qwery/mobile/qwery-mobile',
+                bean:         'components/bean/bean',
+                reqwest:      'components/reqwest/src/reqwest',
+                domwrite:     'components/dom-write/dom-write',
                 analytics:    'modules/analytics',
-                EventEmitter: 'vendor/EventEmitter-3.1.5',
-                swipe:        'vendor/swipe-1.0',
+                EventEmitter: 'components/eventEmitter/src/EventEmitter',
+                swipe:        'components/swipe/swipe',
                 omniture:     '../../../app/public/javascripts/vendor/omniture'
             }
       });
@@ -33,6 +33,23 @@
     ul ul li { margin-left: 40px; }
     .initially-off:after { content: " -- (hidden)"; }
     .on:after { content: " -- (visible)"; }
+    .ad-slot {
+        display: block;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+        min-height: 70px;
+        background-color: #f8f8f2;
+        //For expandables
+        position: relative;
+        z-index: 1000;
+    }
+
+    .ad-container {
+        display: inline-block;
+        width: auto;
+        margin: 0 auto !important;
+    }
   </style>
   <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
   <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
@@ -82,10 +99,11 @@
 
     <!-- Adverts.spec, keeping these here so they stay on screen. :/ -->
     <div id="ad-slot-top-banner-ad" data-link-name="ad slot top-banner-ad" data-base="Top2" data-median="Top" data-extended="x54" class="ad-slot">
-        advert-top
+      <div class="ad-container"></div>
     </div>
+
     <div id="ad-slot-bottom-banner-ad" data-link-name="ad slot bottom-banner-ad" data-base="Bottom2" data-median="Bottom" data-extended="x54" class="ad-slot">
-        advert-bottom
+       <div class="ad-container"></div>
     </div>
 
     <ul id="tests">
