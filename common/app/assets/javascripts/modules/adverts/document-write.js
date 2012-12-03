@@ -21,7 +21,6 @@ define([
     }
 
     function getPageUrl(config) {
-            console.log(config.pageId);
             var id = (config.pageId === '') ? '' : config.pageId + '/';
             return 'm.guardian.co.uk/' + id + 'oas.html';
     }
