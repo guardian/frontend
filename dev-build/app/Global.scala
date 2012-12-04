@@ -2,6 +2,7 @@ import common.RequestMetrics
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.front.{ ConfiguredEdition, Front }
 import feed.Competitions
+import model.TeamMap
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters {
@@ -17,15 +18,14 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters {
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     Front.startup()
-
     Competitions.startup()
-
-    //warmup is only for dev machines, do not propagate outside of dev-build
-    //Front.warmup()
+    TeamMap.startup()
   }
 
   override def onStop(app: play.api.Application) {
     Front.shutdown()
+    Competitions.shutDown()
+    TeamMap.shutdown()
     super.onStop(app)
   }
 }

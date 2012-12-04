@@ -61,10 +61,9 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
 object ResultsController extends ResultsRenderer with Logging {
 
   val page = new Page(
-    "http://www.guardian.co.uk/football/matches",
+    Some("http://www.guardian.co.uk/football/matches"),
     "football/results",
     "football",
-    "",
     "All results",
     "GFE:Football:automatic:results"
   )
@@ -82,7 +81,7 @@ object ResultsController extends ResultsRenderer with Logging {
   }
 
   def routeTeam(tag: String) = {
-    TeamMap.getTeamWithName(tag) map { TeamResultsController.render(tag, _) }
+    TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamResultsController.render(tag, teamId) }
   }
 
   def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
@@ -106,10 +105,9 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
   def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/matches",
+      Some("http://www.guardian.co.uk/football/matches"),
       "football/results",
       "football",
-      "",
       competition.fullName + " results",
       "GFE:Football:automatic:competition results"
     )
@@ -120,7 +118,6 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
       date,
       Some(competition)
     )
-
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
@@ -131,24 +128,26 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
 
 object TeamResultsController extends Controller with Logging with CompetitionResultFilters {
 
-  def render(teamName: String, team: Team) = Action { implicit request =>
+  def render(teamName: String, teamId: String) = Action { implicit request =>
 
-    val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
-    val startDate = new DateMidnight
-    val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
+    Competitions.findTeam(teamId).map { team =>
 
-    val page = new Page(
-      "http://www.guardian.co.uk/" + teamName + "/results",
-      team.url + "/results",
-      "football",
-      "",
-      TeamName(team) + " results",
-      "GFE:Football:automatic:team results"
-    )
+      val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
+      val startDate = new DateMidnight
+      val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
 
-    Cached(60) {
-      val html = views.html.teamFixtures(page, filters, upcomingFixtures)
-      Ok(Compressed(html))
-    }
+      val page = new Page(
+        Some("http://www.guardian.co.uk/" + teamName + "/results"),
+        "/football/" + teamName + "/results",
+        "football",
+        team.name + " results",
+        "GFE:Football:automatic:team results"
+      )
+
+      Cached(60) {
+        val html = views.html.teamFixtures(page, filters, upcomingFixtures)
+        Ok(Compressed(html))
+      }
+    }.getOrElse(NotFound)
   }
 }

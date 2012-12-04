@@ -1,8 +1,14 @@
 package views
 
-import pa.Team
+import pa.{ LineUpPlayer, Team }
 import common.Logging
 import play.api.templates.Html
+
+object FootballHelpers {
+  implicit def lineUpPlayer2rich(t: LineUpPlayer) = new {
+    lazy val isUnusedSub = t.substitute && !t.events.exists(_.eventType == "substitution")
+  }
+}
 
 object ShortName {
 
@@ -50,9 +56,30 @@ object MatchStatus extends Logging {
     "Cancelled" -> "C" // A Match has been Cancelled.
   )
   // if we get a status we do not expect just take the first 2 letters
-  def apply(status: String) = Html(statuses.get(status).getOrElse {
+  def apply(status: String): Html = Html(statuses.get(status).getOrElse {
     log.info("unknown match status " + status)
     status.take(2)
   })
 
+}
+
+object NudgePercent {
+  // the realities of padding and margins means we never actually want 100%
+  def apply(main: Int, other: Int) = {
+    if (main == 0 && other == 0) 49
+    else if (main >= 99) 97
+    else if (main < 1) 1
+    else main - 1
+  }
+}
+
+object PercentMaker {
+  // I want the percentages to add up to 100
+  def apply(home: Int, away: Int) = {
+    val homeD = home.toDouble
+    val totalD = (home + away).toDouble
+    if (home + away == 100) (home, away)
+    else if (home == 0 && away == 0) (50, 50)
+    else ((homeD / totalD * 100).toInt, 100 - (homeD / totalD * 100).toInt)
+  }
 }
