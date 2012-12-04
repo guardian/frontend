@@ -52,9 +52,13 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
                 competitions = options.competitions;
 
             if(options.competitions) {
-                query += (competitions.length > 1) ? competitions.join(this.queryString) : competitions[0];
+                if(competitions.length > 1) {
+                    query += competitions.join(this.queryString) + '&competitionPage=false';
+                } else {
+                    query += competitions[0] + '&competitionPage=true';
+                }
             } else {
-                query += this.competitions.join(this.queryString);
+                query += this.competitions.join(this.queryString) + '&competitionPage=false';
             }
 
             return this.path + query;

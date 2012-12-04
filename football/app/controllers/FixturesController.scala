@@ -152,7 +152,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
   }
 
   def renderComponent(teamId: String) = Action { implicit request =>
-    TeamMap.findUrlNameFor(teamId).map { teamName =>
+    Competitions.findTeam(teamId).map { team =>
       val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
 
       val startDate = new DateMidnight
@@ -161,7 +161,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
 
       Cached(60) {
-        val html = views.html.fragments.teamFixtures(teamName, previousResult, upcomingFixtures)
+        val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
         request.getQueryString("callback").map { callback =>
           JsonComponent(html)
         } getOrElse {
