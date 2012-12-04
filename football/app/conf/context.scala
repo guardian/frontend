@@ -7,7 +7,7 @@ import com.gu.management.play._
 import feed.Competitions
 import logback.LogbackLevelPage
 import pa.{ Http, Proxy, DispatchHttp, PaClient }
-import model.LiveBlog
+import model.{ TeamMap, LiveBlog }
 
 object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
 
@@ -36,11 +36,13 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     FootballClient.http = dispatchHttp
     Competitions.startup()
     LiveBlog.startup()
+    TeamMap.startup()
   }
 
   override def onStop() = {
     Competitions.shutDown()
     LiveBlog.shutdown()
+    TeamMap.shutdown()
     dispatchHttp.close()
   }
 }

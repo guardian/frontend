@@ -21,7 +21,6 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
-  lazy val apiUrl: String = delegate.apiUrl
   lazy val webUrl: String = delegate.webUrl
   lazy val headline: String = fields("headline")
   lazy val webTitle: String = delegate.webTitle
@@ -32,7 +31,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
-  lazy val canonicalUrl: String = webUrl
+  override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
