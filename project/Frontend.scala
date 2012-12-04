@@ -88,7 +88,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "2.4"
+    libraryDependencies += "com.gu" %% "pa-client" % "2.7",
+    templatesImport ++= Seq("pa._")
   )
 
   val dev = application("dev-build")

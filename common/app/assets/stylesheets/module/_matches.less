@@ -57,8 +57,18 @@ a.competition-title {
 
 .match { 
     border-bottom: 1px solid #DEDEDD;
+    position: relative;
+}
+
+.match a {
+    display: block;
     padding: @baseline*2;
-    position: relative;    
+}
+
+.match a:active {
+    background: #666666;
+    color: #ffffff !important;
+    text-decoration: none;
 }
 
 .match:last-child {
@@ -133,8 +143,7 @@ a.competition-title {
     color: #777777;
 }
 
-.match-full-time,
-.match-half-time,
+.match-FT,
 .match-HT {
     color: #ffffff;
     background-color: @sportBright;
@@ -286,6 +295,20 @@ a.competition-title {
     color: #ffffff;
     border-top-color: #a1c391;
     line-height: 21px;
+}
+
+.team-list li span {
+    padding: @baseline*2 0;
+    border-top: 1px solid @mushroom;
+    display: block;
+    height: auto;
+    color: #999;
+}
+
+.nav-columns.nav-top-border-off > li:nth-child(-n+2) span,
+.nav-stacked.nav-top-border-off > li:nth-child(1) span {
+    border-top: none;
+    padding-top: 0;
 }
 
 .football-filters .cta {

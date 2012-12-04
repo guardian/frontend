@@ -44,13 +44,11 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
   it should "cache other things for 1 minute" in {
     val page = new MetaData {
-      def canonicalUrl = ""
+      def canonicalUrl = None
 
       def id = ""
 
       def section = ""
-
-      def apiUrl = ""
 
       def webTitle = ""
 

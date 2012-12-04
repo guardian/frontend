@@ -43,6 +43,9 @@ GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixt
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
 
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
+GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
+
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()

@@ -104,7 +104,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/football/results") { browser =>
         import browser._
 
-        then("the 'Scottish Division Two' matches on 'today' should be ordered as 'Alloa, Brechin, East Fife, QOS FC, West Brom'")
+        then("the 'Scottish Division Two' matches on 'today' should be ordered correctly")
         val orderedMatches: List[String] = "Alloa, Brechin, East Fife, QOS FC, West Brom".split(", ").toList
 
         $("[data-link-name='competition | Scottish Division Two']").find(".matches").find(".match-home").getTexts().toList should be(orderedMatches)

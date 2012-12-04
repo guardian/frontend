@@ -1,4 +1,4 @@
-@(competition: Competition)
+@(competition: model.Competition)
 <ol class="matches unstyled">
     @competition.matches.map{theMatch => @fragments.renderMatch(theMatch) }
 </ol>

@@ -12,7 +12,7 @@ import scala.Some
 import com.gu.openplatform.contentapi.model.ItemResponse
 
 object FrontPage extends MetaData {
-  override val canonicalUrl = "http://www.guardian.co.uk"
+  override val canonicalUrl = Some("http://www.guardian.co.uk")
   override val id = ""
   override val section = ""
   override val webTitle = "The Guardian"

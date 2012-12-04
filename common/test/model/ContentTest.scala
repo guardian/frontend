@@ -65,9 +65,9 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
     val apiTag = tag(url = "http://www.guardian.co.uk/sport/cycling")
 
-    new Content(apiContent).canonicalUrl should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
+    new Content(apiContent).canonicalUrl should be(Some("http://www.guardian.co.uk/foo/2012/jan/07/bar"))
 
-    Tag(apiTag).canonicalUrl should be("http://www.guardian.co.uk/sport/cycling")
+    Tag(apiTag).canonicalUrl should be(Some("http://www.guardian.co.uk/sport/cycling"))
   }
 
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
