@@ -1,16 +1,22 @@
 @(page: MetaData, config: common.GuardianConfiguration)
+@import conf.CommonSwitches._
 
 @defining(
-"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+("http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
     config.javascript.pageData("guardian.page.omnitureAccount"),
-    OmnitureAnalyticsData(page, "No Javascript"))
-){ omnitureCall =>
+    OmnitureAnalyticsData(page, "No Javascript")), config.javascript.pageData("guardian.page.omnitureAccount"))
+){ case (omnitureCall, omnitureAccount) =>
         <noscript id="omnitureNoScript">
             <div>
                 <img id="omnitureNoScriptImage" alt=""
                      src='@omnitureCall' width="1" height="1" class="h" />
             </div>
         </noscript>
+
+    @if(OmnitureVerificationSwitch.isSwitchedOn){
+        <img id="omnitureVerificationScriptImage" alt=""
+            src='@omnitureCall.replace(omnitureAccount, "guardiangu-frontend-dev")' width="1" height="1" class="h" />
+    }
 }
 
 @defining(

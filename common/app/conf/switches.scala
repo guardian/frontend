@@ -32,7 +32,14 @@ object CommonSwitches {
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     initiallyOn = true)
 
-  val all: Seq[Switchable] = Seq(FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch, RelatedContentSwitch)
+  val OmnitureVerificationSwitch = DefaultSwitch("omniture-verification",
+    "If this switch is turned on then a separate call to Omniture will be made to help verify our tracking.",
+    initiallyOn = false)
+
+  val all: Seq[Switchable] = Seq(
+    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
+    RelatedContentSwitch, OmnitureVerificationSwitch
+  )
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
