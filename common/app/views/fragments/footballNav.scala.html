@@ -26,7 +26,7 @@
                     Link(urlBase + "/results", "results", "Results")
                 )
 
-                if(!List("Scottish Cup", "Capital One Cup", "FA Cup").contains(competitionName.getOrElse(""))) {                
+                if(!competitionName.getOrElse("").contains("Cup")) {                
                     if (urlBase == "/football") {
                       linkList ::= Link(urlBase + "/tables", "tables", "Tables")
                     } else {
