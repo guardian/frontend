@@ -11,7 +11,7 @@ import model.TeamFixture
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
-import pa.FootballMatch
+import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
 
 trait CompetitionSupport {
 
@@ -27,8 +27,10 @@ trait CompetitionSupport {
   }
 
   def withCompetitionFilter(path: String) = competitionSupportWith(
-    competitions.filter(_.url == "/football/" + path)
+    competitions.filter(_.url == path)
   )
+
+  def withTag(tag: String) = competitions.find(_.url.endsWith(tag))
 
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
     val today = new DateMidnight
@@ -62,6 +64,10 @@ trait CompetitionSupport {
       TeamFixture(c, m)
     }
   )
+
+  def findTeam(teamId: String): Option[FootballTeam] = competitions.flatMap(_.teams).find(_.id == teamId).map { unclean =>
+    MatchDayTeam(teamId, unclean.name, None, None, None, None)
+  }
 
   def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).competitions
     .flatMap(_.matches).find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)

@@ -8,10 +8,10 @@ import com.gu.openplatform.contentapi.model.TagsResponse
 import scala.Some
 import akka.actor.Cancellable
 
-case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) {
+case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.url)
-  lazy val name = shortName.getOrElse(team.name)
-  lazy val id = team.id
+  override lazy val name = shortName.getOrElse(team.name)
+  override lazy val id = team.id
 }
 
 object TeamMap extends AkkaSupport with Logging {
@@ -44,7 +44,6 @@ object TeamMap extends AkkaSupport with Logging {
     "19337" -> "Newport County",
     "89" -> "Stockport County",
     "1456" -> "Inverness CT",
-    "95" -> "Dundee",
     "45938" -> "Airdrie Utd",
     "103" -> "Albion",
     "125" -> "Queen of South",
@@ -108,13 +107,18 @@ object TeamMap extends AkkaSupport with Logging {
 
   def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == ("football/" + name)).map(_._1)
 
+  def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
+
   def startup() {
     schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
       incrementalRefresh(1) //pages are 1 based
     })
   }
 
-  def shutdown() { schedule.foreach(_.cancel()) }
+  def shutdown() {
+    schedule.foreach(_.cancel())
+    teamAgent.close()
+  }
 
   private def incrementalRefresh(page: Int) {
     log.info("Refreshing team tag mappings - page " + page)

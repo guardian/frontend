@@ -17,6 +17,8 @@ case class Competition(
   lazy val hasLeagueTable = leagueTable.nonEmpty
 
   lazy val matchDates = matches.map(_.date.toDateMidnight).distinct
+
+  lazy val teams = matches.flatMap { m => Seq(m.homeTeam, m.awayTeam) }.distinct
 }
 
 case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])

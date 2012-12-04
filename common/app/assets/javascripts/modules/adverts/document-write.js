@@ -21,7 +21,8 @@ define([
     }
 
     function getPageUrl(config) {
-            return 'm.guardian.co.uk/' + config.pageId + '/oas.html';
+            var id = (config.pageId === '') ? '' : config.pageId + '/';
+            return 'm.guardian.co.uk/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
