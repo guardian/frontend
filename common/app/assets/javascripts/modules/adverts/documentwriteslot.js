@@ -23,6 +23,7 @@ define([
             var slot = this.el;
             domwrite.render(slot);
             this.loaded = true;
+            common.$g(this.el).addClass('has-content');
          } catch(e) {
              common.mediator.emit('module:error', e, 'document-write.js');
         }
