@@ -47,7 +47,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
   }
 }
 
-object FootballClient extends PaClient with Http {
+object FootballClient extends PaClient with Http with Logging {
 
   override lazy val base = Configuration.pa.host
 
@@ -59,6 +59,8 @@ object FootballClient extends PaClient with Http {
   lazy val apiKey = Configuration.pa.apiKey
 
   override def GET(urlString: String): pa.Response = {
+
+    log.info("PA Client GET: " + urlString)
 
     val response = PaApiHttpTimingMetric.measure(_http.GET(urlString))
 
