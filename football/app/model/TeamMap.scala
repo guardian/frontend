@@ -44,7 +44,7 @@ object TeamMap extends AkkaSupport with Logging {
     "9262" -> "Braintree",
     "89" -> "Stockport",
     "1456" -> "Inverness",
-    "95" -> "Dundee Utd",
+    "96" -> "Dundee Utd",
     "45938" -> "Airdrie",
     "103" -> "West Brom",
     "125" -> "QOS FC",
