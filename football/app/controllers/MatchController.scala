@@ -25,7 +25,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
     theMatch.awayTeam.score.getOrElse(""), theMatch.awayTeam.name)
 
   override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
-    theMatch.date.toString("ss MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
+    theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
 
 }
 
