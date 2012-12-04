@@ -30,6 +30,14 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
         teamsPageLinks.length should be(0)
       }
 
+      given("I visit the 'Scottish League Cup' tag page")
+
+      HtmlUnit("/football/cis-insurance-cup") { browser =>
+        import browser._
+        val teamsPageLinks = $("ul.nav a[data-link-name='teams']")
+        teamsPageLinks.length should be(0)
+      }
+
     }
 
   }
