@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import org.joda.time.DateMidnight
+import scala.collection.JavaConversions._
 
 class MatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -32,10 +32,13 @@ class MatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
         and("I should see the away corners")
         findFirst("[data-stat=Corners]").findFirst(".away-num").getText should be("5")
+
+        and("I should see the home team lineup")
+        findFirst(".team-list").getText should include("John Brayford")
+
+        and("I should see the away team lineup")
+        $(".team-list")(1).getText should include("Colin Kazim-Richards")
       }
-
     }
-
   }
-
 }
