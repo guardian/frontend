@@ -93,6 +93,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val dev = application("dev-build")
+    .dependsOn(common) // include common otherwise we get classpath issues
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(section)
