@@ -42,7 +42,9 @@ Assuming you have checked out this project, open a console and change directory 
 
 Start Simple Build Tool (sbt) by running `./sbt011 --no-proxy`
 
-Once sbt is running (it may take a while first time) then switch project by typing `project dev-build`
+Once sbt is running (it may take a while first time) then compile the project by typing `compile` (also can take a while first time)
+
+Switch project by typing `project dev-build`
 
 Now start the local server by typing `run` (this too will take long the first time)
 
