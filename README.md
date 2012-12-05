@@ -25,7 +25,7 @@ INT_SERVICE_DOMAIN=gudev.gnl
 EXT_SERVICE_DOMAIN=
 ```
 
-And one called _~/.gu/frontend.properties_, alternatively _/gu/etc/frontend.properties_ with the following content :-
+And one called _~/.gu/frontend.properties_, ( alternatively _/gu/etc/frontend.properties_ ) with the following content :-
 
 ```
 content.api.key=XXXX
