@@ -1,6 +1,5 @@
 package test
 
-import conf.Configuration
 import java.util.{ List => JList }
 import collection.JavaConversions._
 
@@ -13,6 +12,3 @@ object `package` {
   }
 
 }
-
-//test.ArticleFeatureTest
-//test.SectionNavigationFeatureTest
