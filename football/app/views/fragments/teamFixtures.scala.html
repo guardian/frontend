@@ -1,4 +1,4 @@
-@(teamName:String, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
+@(team:pa.FootballTeam, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
 @import org.joda.time.DateTime
 
 <li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
@@ -15,7 +15,11 @@
     }
 </li>
 
-<a href="/football/@teamName/fixtures" class="cta-small cta-small-border type-6 zone-color">View all fixtures <i class="i-sport-arrow-small"></i></a>
+@TeamMap(team).url.map{ url => 
+<a href="@url/fixtures" class="cta-small cta-small-border type-6 zone-color" data-link-name="View all team fixtures">
+    View all @TeamName(team) fixtures <i class="i-sport-arrow-small"></i>
+</a>
+}
 
 <li class="team-results competition-table js-front-trailblock" data-link-name="Team fixtures">
     <h3 class="type-2">Previous result</h3>
@@ -31,4 +35,8 @@
     }
 </li>
 
-<a href="/football/@teamName/results" class="cta-small cta-small-border type-6 zone-color">View all results <i class="i-sport-arrow-small"></i></a>
+@TeamMap(team).url.map{ url => 
+    <a href="@url/results" class="cta-small cta-small-border type-6 zone-color" data-link-name="View all team results">
+        View all @TeamName(team) results <i class="i-sport-arrow-small"></i>
+    </a>
+}

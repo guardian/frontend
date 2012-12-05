@@ -63,7 +63,7 @@ object Frontend extends Build with Prototypes {
             ("swipe"        -> "components/swipe/swipe")
           ) ~
           ("wrap" -> 
-            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-kitchen-sink/curl.js")) ~
+            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
             ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
           ) ~
           ("optimize" -> "uglify2") ~
