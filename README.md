@@ -49,7 +49,7 @@ Now start the local server by typing `run` (this too will take long the first ti
 Now test you are up and running by hitting the following URLs:
    * http://localhost:9000/books
    * http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson
-   * http://loclahost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery
+   * http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery
 
 
 To use in Eclipse, use the `eclipsify` command. This will create Eclipse
