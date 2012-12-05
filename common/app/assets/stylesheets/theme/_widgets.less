@@ -88,10 +88,6 @@ img.badge {
     color: @blue;
 }
 
-.footer p:first-of-type {
-    padding-top: @baseline*4;
-}
-
 .footer p a {
     display: block;
     line-height: @baseline*4;
@@ -137,6 +133,15 @@ img.badge {
     padding: @baseline*2 @gutter @baseline*2 @gutter;
 }
 
+.cta-small {
+    display: block;
+    padding: @baseline*2 0 @baseline*3 0;
+}
+
+.cta-small.cta-small-border {
+    border-bottom: 1px solid #EDEDE7;
+}
+
 .top .i-arrow-small-up {
     display: inline-block;
     margin-left: 5px;
@@ -145,6 +150,16 @@ img.badge {
 .i-arrow-small-down {
     display: inline-block;
     margin-left: @baseline;
+}
+
+.i-sport-arrow-small {
+    display:inline-block;
+    margin: 0 0 -1px @baseline;
+}
+
+.i-red-card,
+.i-yellow-card {
+    display: inline-block;
 }
 
 .is-active .i-arrow-small-down {
@@ -207,4 +222,6 @@ img.badge {
     display: inline-block;
     top: 40%;
 }
+
+.lead-content a { color: #333333;}
 

@@ -7,9 +7,11 @@ import conf.FootballClient
 import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import model.Competition
+import model.TeamFixture
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
+import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
 
 trait CompetitionSupport {
 
@@ -25,8 +27,10 @@ trait CompetitionSupport {
   }
 
   def withCompetitionFilter(path: String) = competitionSupportWith(
-    competitions.filter(_.url == "/football/" + path)
+    competitions.filter(_.url == path)
   )
+
+  def withTag(tag: String) = competitions.find(_.url.endsWith(tag))
 
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
     val today = new DateMidnight
@@ -43,11 +47,30 @@ trait CompetitionSupport {
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
 
+  def withTeam(team: String) = competitionSupportWith {
+    competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
+  }
+
   def matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
 
   def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
+
+  def findMatch(id: String): Option[FootballMatch] = competitions.flatMap(_.matches.find(_.id == id)).headOption
+
+  def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
+    c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortBy(_.date.getMillis).map { m =>
+      TeamFixture(c, m)
+    }
+  )
+
+  def findTeam(teamId: String): Option[FootballTeam] = competitions.flatMap(_.teams).find(_.id == teamId).map { unclean =>
+    MatchDayTeam(teamId, unclean.name, None, None, None, None)
+  }
+
+  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).competitions
+    .flatMap(_.matches).find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
@@ -110,9 +133,12 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
     //results and live games trump fixtures
     val allGames = agent.fixtures.filterNot(f => resultsWithLiveGames.exists(_.id == f.id)) ++ resultsWithLiveGames
 
-    val distinctGames = allGames.distinctBy(_.id)
+    val distinctGames = allGames.distinctBy(_.id).sortBy(m => (m.date.minuteOfDay().get(), m.homeTeam.name))
 
-    agent.competition.copy(matches = distinctGames.sortBy(_.date), leagueTable = agent.leagueTable)
+    agent.competition.copy(
+      matches = distinctGames,
+      leagueTable = agent.leagueTable
+    )
   }
 
   //one http call updates all competitions

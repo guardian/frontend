@@ -1,14 +1,32 @@
 define([
     'common',
     'reqwest',
+    'domwrite',
+    'qwery',
+    'bonzo',
+
     'modules/userPrefs',
     'modules/detect',
-    'modules/adverts/iframeadslot',
+    'modules/adverts/document-write',
+    'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science'
 ],
-function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audienceScience) {
+function (
+    common,
+    reqwest,
+    domwrite,
+    qwery,
+    bonzo,
 
+    userPrefs,
+    detect,
+    documentWrite,
+    DocumentWriteSlot,
+    dimensionMap,
+    audienceScience
+) {
+    
     var config,
         adsSwitchedOn,
         audienceScienceSegments,
@@ -18,17 +36,19 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
         config = c;
         slots = [];
 
+        generateMiddleSlot(config);
+
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
 
-        // Run through slots and create IframeAdSlots for each.
-        // Other ad types to be plugged in later.
+        // Run through slots and create documentWrite for each.
+        // Other ad types suchas iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new IframeAdSlot(name, slotHolders[i], config.page);
+                var slot = new DocumentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
@@ -36,15 +56,33 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
                 audienceScience.load(config.page);
             }
         }
+
+        //Make the request to ad server
+        documentWrite.load({
+            config: config,
+            slots: slots
+        });
     }
 
     function loadAds() {
+        domwrite.capture();
         if (adsSwitchedOn) {
             //Run through adslots and check if they are on screen. Load if so.
             for (var i = 0, j = slots.length; i<j; ++i) {
-                if (!slots[i].loaded && isOnScreen(slots[i].el)) {
-                    slots[i].load();
+                //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
+                if (!slots[i].loaded) {
+                    slots[i].render();
                 }
+            }
+        }
+
+        //This is a horrible hack to hide slot if no creative is returned from oas
+        //Check existance of empty tracking pixel
+        if(config.page.pageId === "") {
+            var middleSlot = document.getElementById('ad-slot-middle-banner-ad');
+
+            if(middleSlot.innerHTML.indexOf("x55/default/empty.gif")  !== -1) {
+                bonzo(middleSlot).hide();
             }
         }
     }
@@ -56,9 +94,20 @@ function (common, reqwest, userPrefs, detect, IframeAdSlot, dimensionMap, audien
         );
     }
 
+    function generateMiddleSlot(config) {
+        //Temporary middle slot needs better implementation in the future
+        if(config.page.pageId === "") {
+            var slot =  '<div id="ad-slot-middle-banner-ad" data-link-name="ad slot middle-banner-ad"';
+                slot += ' data-base="x55" data-median="x55" class="ad-slot"><div class="ad-container"></div></div>';
+
+            bonzo(qwery('#front-trailblock-commentisfree li')[1]).after(slot);
+        }
+    }
+
     return {
         init: init,
         loadAds: loadAds,
         isOnScreen: isOnScreen
     };
+
 });

@@ -86,7 +86,7 @@ public class FootballSteps {
 	@Then("^auto-update should be on$")
 	public void auto_update_should_be_on() throws Throwable {
 		WebElement autoUpdate = webDriver.findElement(By.className("update"));
-	    WebElement selectedButton = autoUpdate.findElement(By.className("is-active"));
+	    WebElement selectedButton = autoUpdate.findElement(By.cssSelector("button.is-active"));
 	    Assert.assertEquals("on", selectedButton.getAttribute("data-action"));
 	}
 
@@ -131,5 +131,42 @@ public class FootballSteps {
 	@Then("^there should be a link to \"([^\"]*)\"$")
 	public void there_should_be_a_link_to(String linkText) throws Throwable {
 		webDriver.findElement(By.linkText(linkText));
+	}
+
+	@Given("^I visit any Football team tag page$")
+	public void I_visit_any_Football_team_tag_page() throws Throwable {
+	    webDriver.open("/football/arsenal");
+	}
+
+	@Then("^there is a team \"([^\"]*)\" component$")
+	public void there_is_a_team_component(String matchesType) throws Throwable {
+	    webDriver.findElementWait(By.cssSelector(".team-" + matchesType));
+	}
+
+	@Then("^the team's (\\d+) upcoming fixtures are shown$")
+	public void the_team_s_upcoming_fixtures_are_shown(int matchCount) throws Throwable {
+	    WebElement fixturesContainer = webDriver.findElementWait(By.cssSelector(".team-fixtures"));
+	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
+	    Assert.assertEquals(matchCount, matches.size());
+	}
+
+	@Then("^the previous result is shown$")
+	public void the_previous_result_is_shown() throws Throwable {
+		WebElement fixturesContainer = webDriver.findElementWait(By.cssSelector(".team-results"));
+	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
+	    Assert.assertEquals(1, matches.size());
+	}
+
+	@Then("^table will show the teams current position within (\\d+) rows$")
+	public void table_will_show_the_teams_current_position_within_rows(int rowsCount) throws Throwable {
+	    WebElement table = webDriver.findElementWait(By.className("table-football"));
+	    List<WebElement> rows = table.findElements(By.cssSelector("tbody tr"));
+	    Assert.assertEquals(rowsCount, rows.size());
+	}
+
+	@Then("^the teams row should be highlighted$")
+	public void the_teams_row_should_be_highlighted() throws Throwable {
+	    WebElement table = webDriver.findElementWait(By.className("table-football"));
+	    table.findElement(By.className("highlight"));
 	}
 }

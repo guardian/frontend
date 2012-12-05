@@ -7,7 +7,7 @@ import com.gu.management.play._
 import feed.Competitions
 import logback.LogbackLevelPage
 import pa.{ Http, Proxy, DispatchHttp, PaClient }
-import model.LiveBlog
+import model.{ TeamMap, LiveBlog }
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
   object dispatchHttp extends DispatchHttp {
@@ -23,16 +23,18 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     FootballClient.http = dispatchHttp
     Competitions.startup()
     LiveBlog.startup()
+    TeamMap.startup()
   }
 
   override def onStop() = {
     Competitions.shutDown()
     LiveBlog.shutdown()
+    TeamMap.shutdown()
     dispatchHttp.close()
   }
 }
 
-object FootballClient extends PaClient with Http {
+object FootballClient extends PaClient with Http with Logging {
 
   override lazy val base = Configuration.pa.host
 

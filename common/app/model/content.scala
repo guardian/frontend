@@ -21,7 +21,6 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
-  lazy val apiUrl: String = delegate.apiUrl
   lazy val webUrl: String = delegate.webUrl
   lazy val headline: String = fields("headline")
   lazy val webTitle: String = delegate.webTitle
@@ -32,7 +31,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
-  lazy val canonicalUrl: String = webUrl
+  override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
@@ -45,8 +44,12 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   override def metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> keywords.map { _.name }.mkString(","),
     "publication" -> publication,
+    "headline" -> headline,
+    "web-publication-date" -> webPublicationDate,
     "author" -> contributors.map(_.name).mkString(","),
     "tones" -> tones.map(_.name).mkString(","),
+    "series" -> series.map { _.name }.mkString(","),
+    "blogs" -> blogs.map { _.name }.mkString(","),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "page-code" -> fields("internalPageCode"),
@@ -74,6 +77,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
+
   override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }

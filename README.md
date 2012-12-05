@@ -11,6 +11,10 @@ Frontend is a set of Play Framework 2 Scala applications.
 To start the play development environment, run the provided `sbt011` script
 in the source tree root. This starts the Play Framework console.
 
+Requirements
+------------
+
+ * [Node.js](http://nodejs.org) (if you're having issues, try installing it with a [package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) 
 
 Configuration
 -------------

@@ -2,10 +2,10 @@
 
 @import java.net.URI
 
-@defining(new URI(item.canonicalUrl).getPath()){ canonicalPath =>
-    @if(Edition(request, Configuration) == "US") {
-        <a id="main-site" href="http://www.guardiannews.com@canonicalPath?mobile-redirect=false" data-link-name="US">Desktop version</a>
-    } else {
-        <a id="main-site" href="http://www.guardian.co.uk@canonicalPath?mobile-redirect=false" data-link-name="UK">Desktop version</a>
+@item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
+@defining(if(item.id == "") "/fullsite" else "?mobile-redirect=false") { redirectPath =>
+        @defining(if(Edition(request, Configuration) == "US") "guardiannews.com" else "guardian.co.uk") { host =>
+	        <a id="main-site" href="http://www.@host@url@redirectPath" data-link-name="@Edition(request, Configuration)">Desktop version</a>
+	    }
     }
 }

@@ -35,7 +35,7 @@ trait CompetitionListFilters {
 }
 
 trait CompetitionTableFilters {
-  def filters = Competitions.withTodaysMatchesAndFutureFixtures.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+  def filters = Competitions.withTodaysMatchesAndFutureFixtures.competitions.filter(_.hasLeagueTable).groupBy(_.nation)
     .map {
       case (nation, competitions) =>
         nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url + "/table"))

@@ -25,7 +25,7 @@
 .table-football-body th {
     background: #f4f4ee;
     font-weight: bold;
-    color: #064951;
+    color: @sportMid;
     border-top: 1px solid #DEDEDD;
 }
 
@@ -63,6 +63,11 @@
     border-bottom: none;
 }
 
+.table-football-body a {
+    color: #000000;
+    font-weight: bold;
+}
+
 @media (min-width: 641px) {
 
     .table-football th,
@@ -95,9 +100,17 @@
 .table-football-body:hover tr:nth-child(even),
 .table-football-body tr:nth-child(even),
 .table-football-body:hover tr:hover,
-.table-football tr.highlighted-row,
 .table-football-body tr:last-child {
     background-color: transparent !important;
+}
+
+.table-football-body tr.highlight,
+.table-football-body:hover tr.highlight,
+.table-football-body tr.highlight:nth-child(even),
+.table-football-body:hover tr.highlight:nth-child(even) {
+    background-color: #FAB036 !important;
+    border-bottom: none;
+    margin-top: -1px;
 }
 
 

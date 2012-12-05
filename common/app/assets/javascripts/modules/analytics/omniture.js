@@ -43,6 +43,17 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.eVar37 = s.pageType + ':' + tag;
         };
 
+        // used where we don't have an element to pass as a tag
+        // eg. keyboard interaction
+        this.trackNonLinkEvent = function(tagStr) {
+            s.linkTrackVars = 'eVar37,events';
+            s.linkTrackEvents = 'event37';
+            s.events = 'event37';
+            s.eVar37 = s.pageType + ':' + tagStr;
+            s.tl(true, 'o', tagStr);
+        };
+
+
         this.populatePageProperties = function() {
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
@@ -50,9 +61,11 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             var prefix = 'GFE',
                 path = window.location.pathname;
 
+            s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
 
-            s.pageType  = config.page.contentType || '';  //pageType
+            s.prop1     = config.page.headline || '';
+            s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
             s.channel   = config.page.section || '';
@@ -78,7 +91,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
             s.prop48    = detect.getConnectionSpeed(w.performance);
 
-            s.prop56    = detect.getLayoutMode(w.innerWidth);
+            s.prop56    = 'Javascript';
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
@@ -115,6 +128,8 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                 that.populatePageProperties();
                 that.logUpdate();
             });
+
+            common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
         };
 
     }

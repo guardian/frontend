@@ -58,7 +58,11 @@ define([
                 trigger.attr('data-link-name', hideTrailblock);
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
-                    model.logPreference(hideTrailblock, trailblockId);
+                    var shouldHideSection = true;
+                    if (hideTrailblock === "Hide") {
+                        shouldHideSection = false;
+                    }
+                    model.logPreference(shouldHideSection, trailblockId);
                 }
             },
 
@@ -82,7 +86,7 @@ define([
         var model = {
 
             logPreference: function (shouldHideSection, section) {
-                
+
                 if (window.localStorage) {
                     var existingPrefs = userPrefs.get(options.prefName);
                     

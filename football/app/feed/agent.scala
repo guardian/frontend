@@ -1,6 +1,7 @@
 package feed
 
 import pa._
+import model._
 import conf.FootballClient
 import org.joda.time.DateMidnight
 import akka.util.Timeout
@@ -21,7 +22,10 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
     agent.sendOff { old =>
       val table = FootballClient.leagueTable(competition.id, new DateMidnight)
       log.info("found %s league table entries for competition %s".format(table.size, competition.fullName))
-      table
+      table.map { t =>
+        val team = t.team.copy(name = TeamName(t.team))
+        t.copy(team = team)
+      }
     }
   }
 
@@ -34,9 +38,16 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
 
 trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
 
-  private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
+  private val agent = play_akka.agent[Seq[MatchDay]](Nil)
 
-  def updateLiveMatches(matches: Seq[FootballMatch]) = agent.update(matches)
+  def updateLiveMatches(matches: Seq[MatchDay]) = {
+    val copiedMatches = matches.map { m =>
+      val homeTeam = m.homeTeam.copy(name = TeamName(m.homeTeam))
+      val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
+      m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+    }
+    agent.update(copiedMatches)
+  }
 
   def shutdownLiveMatches() { agent.close() }
 
@@ -51,7 +62,11 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
     agent.sendOff { old =>
       val fixtures = FootballClient.fixtures(competition.id)
       log.info("found %s fixtures for competition %s".format(fixtures.size, competition.fullName))
-      fixtures
+      fixtures.map { f =>
+        val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
+        val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
+        f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+      }
     }
   }
 
@@ -84,17 +99,27 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with Impl
         case _ => false
       }
 
-      val results = FootballClient.results(competition.id, startDate)
+      val results = FootballClient.results(competition.id, startDate).map { r =>
+        val homeTeam = r.homeTeam.copy(name = TeamName(r.homeTeam))
+        val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
+        r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+      }
       log.info("found %s results for competition %s".format(results.size, competition.fullName))
 
       (results ++ resultsToKeep).distinctBy(_.id)
     }
   }
 
-  def addResultsFromMatchDay(matches: Seq[FootballMatch]) {
+  def addResultsFromMatchDay(matches: Seq[MatchDay]) {
     agent.send { old =>
       val matchesToKeep = old.filterNot(m => matches.exists(_.id == m.id))
-      (matchesToKeep ++ matches).distinctBy(_.id)
+      val copiedMatches = matches.map { m =>
+        val homeTeam = m.homeTeam.copy(name = TeamName(m.homeTeam))
+        val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
+        m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+      }
+
+      (matchesToKeep ++ copiedMatches).distinctBy(_.id)
     }
   }
 

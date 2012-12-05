@@ -9,11 +9,10 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   lazy val id: String = delegate.id
   lazy val section: String = delegate.sectionId.getOrElse("")
-  lazy val apiUrl: String = delegate.apiUrl
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
-  lazy val canonicalUrl: String = webUrl
+  lazy val canonicalUrl = Some(webUrl)
 
   lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
@@ -29,6 +28,10 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
     // a section tag id looks like     science/science
     !idParts.exists(_ != section)
   }
+
+  lazy val isFootballTeam = delegate.references.exists(_.`type` == "pa-football-team")
+
+  lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
 
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 

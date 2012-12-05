@@ -4,14 +4,16 @@ define('bootstraps/app', [
     "bootstraps/common",
     "bootstraps/front",
     "bootstraps/football",
-    "bootstraps/article"
+    "bootstraps/article",
+    "bootstraps/gallery"
 ], function (
     domReady,
     Router,
     Common,
     Front,
     Football,
-    Article
+    Article,
+    Gallery
 ) {
 
     var routes = function(config) {
@@ -37,6 +39,11 @@ define('bootstraps/app', [
             if(config.page.contentType === "Article") {
                 Article.init({url: window.location.pathName}, config);
             }
+
+            if (config.page.contentType === "Gallery") {
+                Gallery.init();
+            }
+
 
             //Kick it all off
             r.init();

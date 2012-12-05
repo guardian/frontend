@@ -1,9 +1,11 @@
+@(table: Table, highlightTeamId: Option[String] = None)
 
-@(table: Table)
 <li id="front-competition-table" class="competition-table" data-link-name="front table">
-    <h3 class="type-2">Table</h3>
+    <h3 class="type-2">@table.competition.fullName table</h3>
 
-    <table class="table-football type-6a">
+    <p class="dateline"><i class="i-date"></i> <span>Last updated: a minute ago</span></p>
+
+    <table class="table-football type-6a" data-link-name="Table component">
         @if(!table.multiGroup) {
             <thead class="table-football-header">
                 @fragments.tableColumnHeaders()
@@ -22,10 +24,10 @@
                 }
             }
 
-            @group.entries.take(4).zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
+            @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row, highlightTeamId.map(_ == entry.team.id).getOrElse(false)) }
         </tbody>
         }
     </table>
 
-    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="football-table-link cta type-6a">View full table <i class="i-filter-arrow-right"></i></a>
+    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small cta-small-border type-6 zone-color">View full table <i class="i-sport-arrow-small"></i></a>
 </li>

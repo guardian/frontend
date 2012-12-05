@@ -41,23 +41,39 @@ define([
             MoreMatches.init(matchesNav);
         },
 
-        showCompetitionFixtures: function(competition) {
+        showCompetitionData: function(competition) {
+            common.mediator.on('modules:footballfixtures:render', function(){
+                var title = document.querySelector('.football-table-link');
+                if(title) { title.className = "js-hidden"; }
+            });
+
             var fixtures = new FootballFixtures({
-                    prependTo: qwery('ul > li', '.trailblock')[1],
-                    competitions: [competition],
-                    expandable: false
-                }).init();
+                prependTo: document.querySelector('.t2'),
+                competitions: [competition],
+                expandable: false
+            }).init();
+
+            var table = new FootballTable({
+                prependTo: document.querySelector('.t3'),
+                competition: competition
+            }).init();
         },
 
-        showCompetitionTable: function(comp) {
+        showTeamData: function(team) {
+            var fixtures = new FootballFixtures({
+                prependTo: document.querySelector('.t2'),
+                path: '/football/api/teamfixtures/' + team,
+                expandable: false
+            }).init();
+
             var table = new FootballTable({
-                prependTo: qwery('ul > li', '.trailblock')[1],
-                competition: comp
+                prependTo: document.querySelector('.t3'),
+                path: '/football/api/teamtable/' + team
             }).init();
         },
 
         initAutoUpdate: function(switches) {
-            if (qwery('.match.live-match').length) {
+            if (qwery('.match.live-match').length > 0) {
                 var a = new AutoUpdate({
                     path: window.location.pathname,
                     delay: 10000,
@@ -105,11 +121,16 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var comp = config.page.paFootballCompetition;
+                var comp = config.page.paFootballCompetition,
+                    team = config.page.paFootballTeam;
+
                 if(comp) {
-                    modules.showCompetitionFixtures(comp);
-                    modules.showCompetitionTable(comp);
+                    modules.showCompetitionData(comp);
                 }
+                if(team) {
+                    modules.showTeamData(team);
+                }
+
                 break;
         }
     };

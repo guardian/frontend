@@ -6,6 +6,7 @@ import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
+import org.scala_tools.time.Imports._
 import model.Page
 import scala.Some
 import play.api.templates.Html
@@ -60,10 +61,9 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
 object ResultsController extends ResultsRenderer with Logging {
 
   val page = new Page(
-    "http://www.guardian.co.uk/football/matches",
+    Some("http://www.guardian.co.uk/football/matches"),
     "football/results",
     "football",
-    "",
     "All results",
     "GFE:Football:automatic:results"
   )
@@ -76,6 +76,16 @@ object ResultsController extends ResultsRenderer with Logging {
     renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date, None)
   }
 
+  def routeCompetition(tag: String) = {
+    Competitions.withTag(tag) map { CompetitionResultsController.render(tag, _) }
+  }
+
+  def routeTeam(tag: String) = {
+    TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamResultsController.render(tag, teamId) }
+  }
+
+  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
+
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/results"
     case other => "/football/results/%s" format (other.toString("yyyy/MMM/dd").toLowerCase)
@@ -86,34 +96,58 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
 
   override val daysToDisplay = 20
 
-  def renderFor(year: String, month: String, day: String, competition: String) = render(
-    competition, Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
+  def renderFor(year: String, month: String, day: String, competitionName: String) = render(
+    competitionName,
+    Competitions.withTag(competitionName).get,
+    Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
-  def render(competitionName: String, date: Option[DateMidnight] = None) = Action { implicit request =>
+  def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
 
-    Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      val page = new Page(
-        "http://www.guardian.co.uk/football/matches",
-        "football/results",
-        "football",
-        "",
-        competition.fullName + " results",
-        "GFE:Football:automatic:competition results"
-      )
-      renderResults(
-        page,
-        Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competitionName),
-        Some(competitionName),
-        date,
-        Some(competition)
-      )
-    }.getOrElse(NotFound)
-
+    val page = new Page(
+      Some("http://www.guardian.co.uk/football/matches"),
+      "football/results",
+      "football",
+      competition.fullName + " results",
+      "GFE:Football:automatic:competition results"
+    )
+    renderResults(
+      page,
+      Competitions.withTodaysMatchesAndPastResults.withCompetitionFilter(competition.url),
+      Some(competitionName),
+      date,
+      Some(competition)
+    )
   }
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/%s/results" format (competition.get)
     case other => "/football/%s/results/%s" format (competition.get, other.toString("yyyy/MMM/dd").toLowerCase)
+  }
+}
+
+object TeamResultsController extends Controller with Logging with CompetitionResultFilters {
+
+  def render(teamName: String, teamId: String) = Action { implicit request =>
+
+    Competitions.findTeam(teamId).map { team =>
+
+      val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
+      val startDate = new DateMidnight
+      val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
+
+      val page = new Page(
+        Some("http://www.guardian.co.uk/" + teamName + "/results"),
+        "/football/" + teamName + "/results",
+        "football",
+        team.name + " results",
+        "GFE:Football:automatic:team results"
+      )
+
+      Cached(60) {
+        val html = views.html.teamFixtures(page, filters, upcomingFixtures)
+        Ok(Compressed(html))
+      }
+    }.getOrElse(NotFound)
   }
 }

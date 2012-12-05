@@ -5,7 +5,8 @@ import common.ManifestData
 trait MetaData {
   // indicates the absolute url of this page (the one to be used for search engine indexing)
   // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-  def canonicalUrl: String
+  // never give this a default value, we need people to think each time before using it
+  def canonicalUrl: Option[String]
 
   def id: String
   def section: String
@@ -23,31 +24,28 @@ trait MetaData {
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
-    "canonical-url" -> canonicalUrl,
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName
-  )
+  ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
 
   def cacheSeconds = 60
 }
 
 class Page(
-  val canonicalUrl: String,
+  val canonicalUrl: Option[String],
   val id: String,
   val section: String,
-  val apiUrl: String,
   val webTitle: String,
   val analyticsName: String) extends MetaData
 
 object Page {
   def apply(
-    canonicalUrl: String,
+    canonicalUrl: Option[String],
     id: String,
     section: String,
-    apiUrl: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, apiUrl, webTitle, analyticsName)
+    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
 }
 
 trait Images {
@@ -66,9 +64,10 @@ trait Images {
   //some arbitrary conventions.
 
   //Assumption number 1 - All alt-size images are crops of the main picture
+  // Note, if no main image, just return all alt-size images, regardless of aspect ratio (e.g. for video articles)
   private lazy val mainPictureCrops: Seq[Image] = mainPicture.map { main =>
     images.filter(_.rel == "alt-size").filter(_.aspectRatio == main.aspectRatio)
-  } getOrElse Nil
+  } getOrElse images.filter(_.rel == "alt-size")
 
   //at the moment all the crops will exists, or none of them will exist. If we have no crops then
   //fall back to full size image

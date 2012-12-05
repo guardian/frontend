@@ -20,7 +20,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         
         // Model
         this.load = function (query) {
-            var path = this.path + query,
+            var path = query,
                 that = this;
 
             return reqwest({
@@ -43,7 +43,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         // Bindings
         common.mediator.on('modules:footballfixtures:render', function() {
             if(options.expandable) {
-                common.mediator.emit('modules:footballfixtures:expand', 'front-competition-table');
+                common.mediator.emit('modules:footballfixtures:expand', 'front-competition-fixtures');
             }
         }, this);
 
@@ -52,12 +52,16 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
                 competitions = options.competitions;
 
             if(options.competitions) {
-                query += (competitions.length > 1) ? competitions.join(this.queryString) : competitions[0];
+                if(competitions.length > 1) {
+                    query += competitions.join(this.queryString) + '&competitionPage=false';
+                } else {
+                    query += competitions[0] + '&competitionPage=true';
+                }
             } else {
-                query += this.competitions.join(this.queryString);
+                query += this.competitions.join(this.queryString) + '&competitionPage=false';
             }
 
-            return query;
+            return this.path + query;
         };
 
         //Initalise
@@ -65,7 +69,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             opts = opts || {};
             reqwest = opts.reqwest || Reqwest; //For unit testing
 
-            var query = this.generateQuery();
+            var query = (options.path) ? options.path : this.generateQuery();
 
             this.load(query);
         };

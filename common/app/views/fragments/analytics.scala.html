@@ -1,16 +1,29 @@
 @(page: MetaData)
+@import conf.CommonSwitches._
 
 @defining(
-"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+("http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
     Configuration.javascript.pageData("guardian.page.omnitureAccount"),
-    OmnitureAnalyticsData(page))
-){ omnitureCall =>
+    OmnitureAnalyticsData(page, "No Javascript")), Configuration.javascript.pageData("guardian.page.omnitureAccount"))
+){ case (omnitureCall, omnitureAccount) =>
         <noscript id="omnitureNoScript">
             <div>
                 <img id="omnitureNoScriptImage" alt=""
                      src='@omnitureCall' width="1" height="1" class="h" />
             </div>
         </noscript>
+
+    @if(OmnitureVerificationSwitch.isSwitchedOn){
+        <img id="omnitureVerificationScriptImage" alt=""
+            src='@omnitureCall.replace(omnitureAccount, "guardiangu-frontend-dev")' width="1" height="1" class="h" />
+    }
+}
+
+@defining(
+"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+Configuration.javascript.pageData("guardian.page.omnitureAccount"),
+    OmnitureAnalyticsData(page, "Partial Javascript"))
+){ omnitureCall =>
         <script>
             @*
             //    we do not run our javascript on some browsers, hence analytics will not run.

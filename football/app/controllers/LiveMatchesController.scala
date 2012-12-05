@@ -10,8 +10,8 @@ import conf.Configuration
 
 object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging {
 
-  val page = new Page("http://www.guardian.co.uk/football/matches", "football/live", "football", "", "Today's matches",
-    "GFE:Football:automatic:live matches") {
+  val page = new Page(Some("http://www.guardian.co.uk/football/matches"), "football/live", "football",
+    "Today's matches", "GFE:Football:automatic:live matches") {
     override val cacheSeconds = 10
   }
 
@@ -42,7 +42,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
     Cached(page) {
       request.getQueryString("callback").map { callback =>
-        JsonComponent(views.html.fragments.matchesList(livePage))
+        JsonComponent(views.html.fragments.matchesList(livePage, livePage.pageType))
       }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
     }
   }

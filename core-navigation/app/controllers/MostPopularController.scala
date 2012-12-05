@@ -37,7 +37,7 @@ object MostPopularController extends Controller with Logging {
       .showMostViewed(true)
       .response
 
-    val heading = response.section.map(s => s.webTitle).getOrElse("the guardian")
+    val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
     val popular = response.mostViewed map { new Content(_) } take (10)
 
     if (popular.isEmpty) None else Some(MostPopular(heading, popular))

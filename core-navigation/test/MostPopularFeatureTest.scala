@@ -41,7 +41,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         then("I should see a tab containing site-wide popular news")
-        $(".tabs li")(1).getText should include("the guardian")
+        $(".tabs li")(1).getText should include("The Guardian")
         $("#tabs-popular-2 li").size should be > (0)
 
       }

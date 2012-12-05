@@ -1,0 +1,17 @@
+{
+    "name": "domready"
+  , "description": "bullet proof DOM ready method"
+  , "version": "0.2.11"
+  , "homepage": "https://github.com/ded/domready"
+  , "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)"
+  , "keywords": ["ender", "domready", "dom"]
+  , "main": "./ready.js"
+  , "ender": "./src/ender.js"
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/ded/domready.git"
+  }
+  , "devDependencies": {
+      "smoosh": ">=0.3.0"
+  }
+}

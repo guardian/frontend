@@ -36,7 +36,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.linkTrackVars).toBe('eVar37,events');
             expect(s.linkTrackEvents).toBe('event37');
             expect(s.events).toBe('event37');
-            expect(s.eVar37).toBe("Article:outer:link");
+            expect(s.eVar37).toBe("article:outer:link");
 
         });
 
@@ -65,7 +65,6 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
-            expect(s.pageType).toBe("Article");
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
             expect(s.prop4).toBe("Syria,Yemen,Egypt,Bahrain");
@@ -77,7 +76,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop14).toBe("build-73");
             expect(s.prop47).toBe("US");
             expect(s.prop48).toBe("low");
-            expect(s.prop56).toBe("median");
+            expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");
             expect(s.eVar19).toBe("frontend");

@@ -9,7 +9,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         // View
         this.view = {
             render: function (html) {
-                var el = bonzo(options.prependTo).after(html);
+                var el = bonzo(options.prependTo).before(html);
                 common.mediator.emit('modules:footballtables:render');
             }
         };
@@ -48,7 +48,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             opts = opts || {};
             reqwest = opts.reqwest || Reqwest; //For unit testing
 
-            var query = this.generateQuery();
+            var query = (options.path) ? options.path : this.generateQuery();
 
             this.load(query);
         };

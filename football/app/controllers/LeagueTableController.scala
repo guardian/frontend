@@ -6,6 +6,7 @@ import play.api.mvc.{ Action, Controller }
 import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
+import common.TeamCompetitions
 
 case class TablesPage(
     page: Page,
@@ -23,10 +24,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def render() = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/matches",
+      canonicalUrl = None,
       "football/tables",
       "football",
-      "",
       "All tables",
       "GFE:Football:automatic:tables"
     )
@@ -47,10 +47,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlist() = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/teams",
+      Some("http://www.guardian.co.uk/football/clubs"),
       "football/teams",
       "football",
-      "",
       "All teams",
       "GFE:Football:automatic:teams"
     )
@@ -59,19 +58,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       table.copy(groups = table.groups)
     }
 
-    val competitionList = List(
-      "Premier League",
-      "Championship",
-      "League One",
-      "League Two",
-      "Scottish Premier League",
-      "Scottish Division One",
-      "Scottish Division Two",
-      "Scottish Division Three"
-    )
-
     Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), competitionList)))
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), TeamCompetitions.competitions)))
     }
   }
 
@@ -79,10 +67,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
       val page = new Page(
-        "http://www.guardian.co.uk/football/matches",
+        Some("http://www.guardian.co.uk/football/%/tables".format(competition)),
         "football/tables",
         "football",
-        "",
         table.competition.fullName + " table",
         "GFE:Football:automatic:competition tables"
       )

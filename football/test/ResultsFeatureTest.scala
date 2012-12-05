@@ -61,7 +61,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         browser.await()
 
         then("I should navigate to the premier league results page")
-        find(".match-desc").map(_.getText) should contain("Tottenham 2-4 Chelsea")
+        find(".match-desc").map(_.getText) should contain("Spurs 2-4 Chelsea")
       }
     }
 
@@ -104,8 +104,8 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/football/results") { browser =>
         import browser._
 
-        then("the 'Scottish Division Two' matches on 'today' should be ordered as 'Albion, Aloa, Brechin, East Fife, Queen of South'")
-        val orderedMatches: List[String] = "Albion, Alloa, Brechin, East Fife, Queen of South".split(", ").toList
+        then("the 'Scottish Division Two' matches on 'today' should be ordered correctly")
+        val orderedMatches: List[String] = "Albion, Alloa, Brechin, East Fife, QOS FC".split(", ").toList
 
         $("[data-link-name='competition | Scottish Division Two']").find(".matches").find(".match-home").getTexts().toList should be(orderedMatches)
       }
