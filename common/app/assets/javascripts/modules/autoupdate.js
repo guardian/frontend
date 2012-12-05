@@ -120,8 +120,8 @@ define([
             var that = this,
                 pref = this.getPref();
             
-            // add the component to the page
-            qwery('.update')[0].innerHTML = this.template;
+            // add the component to the page, and show it
+            common.$g('.update').html(this.template).removeClass('hidden')
             
             this.icon = common.$g('.' + options.iconClass);
             this.btns = common.$g(options.btnClass);
