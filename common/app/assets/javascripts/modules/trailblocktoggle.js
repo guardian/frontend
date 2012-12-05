@@ -54,7 +54,8 @@ define([
                 bonzo(trailblock).toggleClass(classesToToggle);
 
                 var text = trigger.text();
-                trigger.text((text === "Hide") ? "Show" : "Hide");
+                var hideTrailblock = (text === "Hide") ? "Show" : "Hide";
+                trigger.text(hideTrailblock);
                 //This is backwards as executes before omniture call
                 trigger.attr('data-link-name', (text === "Hide") ? "Hide" : "Show");
                 
