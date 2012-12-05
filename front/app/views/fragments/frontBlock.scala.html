@@ -1,6 +1,6 @@
 @(block: Trailblock, edition: String)(implicit request: RequestHeader)
 
-<section class="front-section zone-@block.description.section" data-link-name="Front | block | @block.description.name">
+<section class="front-section zone-@block.description.section" data-link-name="block | @block.description.name">
 
     @if(block.description.id != "") {
 	    @if("/" + block.description.id == request.path) {
