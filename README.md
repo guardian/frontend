@@ -56,9 +56,7 @@ To use in Eclipse, use the `eclipsify` command. This will create Eclipse
 project and settings files which can be imported using the Import Existing
 Project options in Eclipse.
 
-To use in IntelliJ, use the `gen-idea` command from the. This will create
-IntelliJ project directories. The source tree can be opened directly as 
-a project in IntelliJ.
+To use in IntelliJ, see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].
 
