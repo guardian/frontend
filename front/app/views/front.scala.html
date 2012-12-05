@@ -2,7 +2,7 @@
 
 @main(front, Static, Configuration, Switches.all){
 }{
-    <div id="front-container" class="cf">
+    <div id="front-container" class="cf" data-link-name="Front">
         @trailblocks.map{ block =>
             @fragments.frontBlock(block, Edition(request, Configuration))
         }

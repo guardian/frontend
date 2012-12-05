@@ -53,9 +53,10 @@ define([
                 trailblock = document.getElementById(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
 
-                var hideTrailblock = (trigger.text() === "Hide") ? "Show" : "Hide";
-                trigger.text(hideTrailblock);
-                trigger.attr('data-link-name', hideTrailblock);
+                var text = trigger.text();
+                trigger.text((text === "Hide") ? "Show" : "Hide");
+                //This is backwards as executes before omniture call
+                trigger.attr('data-link-name', (text === "Hide") ? "Hide" : "Show");
                 
                 if (!manualTrigger) { // don't add it to prefs since we're reading from them
                     var shouldHideSection = true;
