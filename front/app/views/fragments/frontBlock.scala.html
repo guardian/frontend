@@ -7,9 +7,11 @@
 	        @fragments.headline(block.description.name, List("article-zone", "zone-color", "type-0"))
 	    } else {
 	        <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
-	            <a @if(request.path != ""){class="zone-color"} data-link-name="section link" href="/@block.description.id">
-                    @fragments.headline(block.description.name, List("type-1"))
-                </a>
+                <h1 itemprop="headline" class="type-1 ">
+	               <a @if(request.path != ""){class="zone-color"} data-link-name="section heading" href="/@block.description.id">
+                     @block.description.name
+                    </a>
+                </h1>
 		        <button class="initially-off js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()"
 		            data-block-name="@SafeName(block.description)"
 		            id="js-trigger-@SafeName(block.description)"
