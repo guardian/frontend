@@ -13,13 +13,20 @@
 	font-weight: bold;
 }
 
-span.timestamp {
+span.timestamp,
+.published-time time {
 	font-size: 14px;
 	font-weight: bold;
     border-top: 2px solid #E3E3DB;
     display: block;
     padding: @baseline*4 0px @baseline*1 0px;
     margin-top: @baseline*2;
+    color:#333333;
+}
+
+.article-body .published-time {
+	margin:0;
+	font-family:arial,sans-serif
 }
 
 .article .tweet:before,

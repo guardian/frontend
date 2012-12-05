@@ -56,6 +56,7 @@ aside {
 }
 
 .article-body > p,
+.article-body .block-elements > p,
 .article-body ul,
 .article-body ol,
 .article-body address,
@@ -98,7 +99,8 @@ aside {
     .svg-i-livequote-after;
 }
 
-.article-body .timestamp:first-child {
+.article-body .timestamp:first-child,
+.article-body .block:first-child .published-time time {
     border-top: none;
     margin-top: 0;
     padding-top: 0;
