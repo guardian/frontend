@@ -8,6 +8,7 @@ import com.gu.management.ManagementPage
 import com.gu.management.HttpRequest
 import com.gu.management.PlainTextResponse
 import com.gu.management.ErrorResponse
+import java.net.{ HttpURLConnection, URL }
 
 class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPage with Logging {
 
@@ -18,6 +19,8 @@ class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPag
   def get(req: HttpRequest) = {
     val checks = urls map { base + _ } map { url =>
       log.info("Healthcheck: Checking " + url)
+
+      // IF this is failing on your local box, then you need to run as ./sbt011 --no-proxy
       WS.url(url).get() map { response => url -> response }
     }
 
