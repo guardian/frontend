@@ -43,9 +43,6 @@ define(['common', 'bonzo'], function (common, bonzo) {
         var then = new Date(Number(epoch)),
             now = new Date(),
             delta;
-        
-        console.log(now.getTimezoneOffset())
-        console.log(now.toLocaleString())
 
         if (!isValidDate(then)) {
             return false;
