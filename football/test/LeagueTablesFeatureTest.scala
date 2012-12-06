@@ -36,5 +36,15 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
 
     }
 
+    scenario("Should show league table for competition") {
+      given("I visit the a competition league table page")
+
+      HtmlUnit("/football/premierleague/table") { browser =>
+        import browser._
+
+        $(".table-football-body td").getTexts should contain("Arsenal")
+      }
+
+    }
   }
 }
