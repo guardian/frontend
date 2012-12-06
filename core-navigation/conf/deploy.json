@@ -4,7 +4,7 @@
             "type":"asg-elb",
             "apps":[ "frontend::core-navigation" ],
             "data":{
-                "secondsToWait":600,
+                "secondsToWait":900,
                 "port":18080,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
