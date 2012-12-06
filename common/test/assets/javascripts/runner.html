@@ -233,9 +233,24 @@
         <div id="relative-dates">
           <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
           <ul>
-            <li id="relative-date-test-item" class="js-timestamp" data-timestamp="1334339016">Friday 13th Apr. 2012, 6.43pm</li>
-            <li class="js-timestamp" data-timestamp="1344859200">Monday 13th Aug. 2012, 12pm</li>
-            <li id="relative-date-invalid-item" class="js-timestamp" data-timestamp="last tuesday">(deliberate invalid timestamp)</li>
+            <li>
+                <time id="relative-date-test-item" 
+                      class="js-timestamp" 
+                      datetime="2012-08-12T18:43:00.000Z" 
+                      data-expected-output='<span title="12th Aug, 2012">Yesterday, 7:43pm</span>'>12th Aug, 2012</time>
+            </li>
+            <li class="block-time">
+                <time id="relative-date-test-item-block" 
+                      class="js-timestamp" 
+                      datetime="2012-08-11T18:43:00.000Z" 
+                      data-expected-output='<span title="11th Aug, 2012">Saturday 11 Aug 2012, 7:43pm</span>'>11th Aug, 2012</time>
+            </li>
+            <li>
+                <time id="relative-date-invalid-item" 
+                      class="js-timestamp" 
+                      datetime="last tuesday" 
+                      data-expected-output="Last Tuesday">Last Tuesday</time>
+            </li>
           </ul>
         </div>
 

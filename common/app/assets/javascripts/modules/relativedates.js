@@ -1,4 +1,4 @@
-define(['common'], function (common) {
+define(['common', 'bonzo'], function (common, bonzo) {
 
     function dayOfWeek(day) {
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
@@ -39,10 +39,13 @@ define(['common'], function (common) {
         return !isNaN(date.getTime());
     }
 
-    function makeRelativeDate(epoch) {
+    function makeRelativeDate(epoch, showTime) {
         var then = new Date(Number(epoch)),
             now = new Date(),
             delta;
+        
+        console.log(now.getTimezoneOffset())
+        console.log(now.toLocaleString())
 
         if (!isValidDate(then)) {
             return false;
@@ -75,50 +78,44 @@ define(['common'], function (common) {
                 ' hours ago';
 
         } else if (isToday(then)) {
-            return 'Today, ' +
-                twelveHourClock(then.getHours()) +
-                ':' +
-                pad(then.getMinutes()) +
-                ampm(then.getHours());
+            return 'Today' + withTime(then, true);
 
         } else if (isYesterday(then)) { // yesterday
-            return 'Yesterday, ' +
-                twelveHourClock(then.getHours()) +
-                ':' +
-                pad(then.getMinutes()) +
-                ampm(then.getHours());
+            return 'Yesterday' + withTime(then, true);
 
         } else if (delta < 5 * 24 * 60 * 60) { // less than 5 days
-            return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ');
+            return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
+                withTime(then, showTime);
 
         } else {
-            return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ');
+            return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
+                withTime(then, showTime);
 
         }
+    }
+    
+    function withTime(date, show) {
+        return (show === true) ? ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours()) : '';
     }
 
     function findValidTimestamps() {
-        var elms = document.querySelectorAll('.js-timestamp');
-        //var elms = document.querySelectorAll('.js-timestamp, .block-time time');
-        return elms;
+        // `.blocktime time` used in blog html
+        return common.$g('.js-timestamp, .block-time time');
     }
 
     function replaceValidTimestamps() {
-        var elms = findValidTimestamps();
-        if (elms.length > 0) {
-            for (var i = 0, l = elms.length; i < l; i++) {
-                var e = elms[i];
-                common.$g(e).removeClass('js-timestamp'); // don't check this again
-                var datetime = new Date(e.getAttribute('datetime'));
-                // convert to milliseconds since epoch   
-                var relativeDate = makeRelativeDate(datetime.getTime());
+        findValidTimestamps().each(function(e, i) {
+            e = bonzo(e);
+            e.removeClass('js-timestamp'); // don't check this again
+            var datetime = new Date(e.attr('datetime'));
+            // convert to milliseconds since epoch
+            // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
+            var relativeDate = makeRelativeDate(datetime.getTime(), bonzo(e.parent()).hasClass('block-time'));
 
-                var prettyDate = e.innerText || e.textContent; // fix for old FF
-                if (relativeDate) {
-                    e.innerHTML = '<span title="' + prettyDate + '">' + relativeDate + '</span>';
-                }
+            if (relativeDate) {
+                e.html('<span title="' + e.text() + '">' + relativeDate + '</span>');
             }
-        }
+        });
     }
 
     // bind to pubsub
