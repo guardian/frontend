@@ -6,7 +6,7 @@ import play.api.test.TestBrowser
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit(Configuration) {
+  object HtmlUnit extends EditionalisedHtmlUnit {
 
     import Configuration.edition._
 

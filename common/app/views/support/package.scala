@@ -186,7 +186,7 @@ object ContributorLinks {
 }
 
 object OmnitureAnalyticsData {
-  def apply(page: MetaData, jsSupport: String): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String): Html = {
 
     val data = page.metaData.map { case (key, value) => key -> value.toString }
     val pageCode = data.get("page-code").getOrElse("")
@@ -202,6 +202,7 @@ object OmnitureAnalyticsData {
 
     val pageName = page.analyticsName
     val analyticsData = Map(
+      "g" -> path,
       "ns" -> "guardian",
       "pageName" -> pageName,
       "v7" -> pageName,

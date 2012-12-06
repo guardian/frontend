@@ -182,12 +182,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
   }
-
-  def warmup() {
-    refreshCompetitionData()
-    competitionAgents.foreach(_.refresh())
-    competitionAgents.foreach(_.await())
-  }
 }
 
 object Competitions extends Competitions

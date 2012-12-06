@@ -139,7 +139,7 @@ object NginxLog {
   // combine all the metrics
   val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics
 
-  Tailer.create(new File(conf.Configuration.nginx.log), new TailerListenerAdapter() {
+  Tailer.create(new File(conf.DiagnosticsConfiguration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
       var fields = Array("")
       var path = Option("")

@@ -52,8 +52,7 @@
     </ul>
 }
 
-@main(page, Static, Configuration, Switches.all){
-
+@main(page, Switches.all){
     @* gives javascript plugins access to match details *@
     <script type="text/javascript">
         guardian.footballMatch = {
@@ -63,11 +62,7 @@
             awayTeam: '@page.theMatch.awayTeam.id'
         };
     </script>
-
-
 }{
-
-
     <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
