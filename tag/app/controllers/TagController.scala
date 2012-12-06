@@ -23,7 +23,7 @@ object TagController extends Controller with Logging {
   private def lookup(path: String)(implicit request: RequestHeader): Option[TagAndTrails] = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching tag: " + path + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(path, edition).response
+    val response: ItemResponse = ContentApi.item(path, edition).pageSize(20).response
 
     val tag = response.tag map { new Tag(_) }
     val trails = response.results map { new Content(_) }
