@@ -14,13 +14,13 @@ object DiagnosticsConfiguration extends BaseGuardianConfiguration("frontend-diag
 }
 
 object Management extends com.gu.management.play.Management {
-  val applicationName = Configuration.application
+  val applicationName = DiagnosticsConfiguration.application
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage("/"),
     StatusPage(applicationName, NginxLog.metrics),
-    new PropertiesPage(Configuration.toString),
+    new PropertiesPage(DiagnosticsConfiguration.toString),
     new LogbackLevelPage(applicationName)
   )
 }
