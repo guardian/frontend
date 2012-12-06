@@ -1,6 +1,6 @@
 @(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
-@main(front, Static, Configuration, Switches.all){
+@main(front, Switches.all){
 }{
     <div id="front-container" class="cf" data-link-name="Front">
         @trailblocks.map{ block =>

@@ -1,10 +1,10 @@
-@(config: common.GuardianConfiguration, page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
+@(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
-@defining(Edition(request, config)) { edition =>
+@defining(Edition(request, Configuration)) { edition =>
 
     <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
 
-        @Navigation(request, config).map{ section =>
+        @Navigation(request, Configuration).map{ section =>
             <li>
                 <a href="@section.href"
                     data-link-name="@section.linkName"
@@ -19,7 +19,7 @@
     </ul>
 
     <ul class="nav nav-columns nav-section-divider nav-top-border-off @if(isFooter){nav-footer} cf">
-        @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@config.edition.ukHost/@page.id">UK edition</a></li> }
-        @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@config.edition.usHost/@page.id">US edition</a></li> }
+        @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@Configuration.edition.ukHost/@page.id">UK edition</a></li> }
+        @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@Configuration.edition.usHost/@page.id">US edition</a></li> }
     </ul>
 }
