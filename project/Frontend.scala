@@ -84,6 +84,13 @@ object Frontend extends Build with Prototypes {
 
   val router = application("router").dependsOn(commonWithTests)
   val diagnostics = application("diagnostics").dependsOn(commonWithTests)
+    .settings(mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) ⇒
+      {
+        case s: String if s.endsWith("DEV.properties") ⇒ MergeStrategy.first
+        case x ⇒ old(x)
+      }
+    }
+  )
 
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "2.7",

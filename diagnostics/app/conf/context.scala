@@ -5,7 +5,7 @@ import com.gu.management._
 import com.gu.management.logback.LogbackLevelPage
 import metrics._
 
-object Configuration extends BaseGuardianConfiguration("frontend-diagnostics") {
+object DiagnosticsConfiguration extends BaseGuardianConfiguration("frontend-diagnostics") {
   object nginx {
     lazy val log: String = configuration.getStringProperty("nginx.log") getOrElse {
       throw new IllegalStateException("NGINX log file property not configured")
