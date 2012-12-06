@@ -95,6 +95,11 @@ aside {
     border-left:none;	
 }
 
+.article .block blockquote:before,
+.article .block blockquote:after{
+    display:none
+}
+
 .article blockquote:before,
 .article .block .quoted:before {
     .i-livequote-before;
@@ -105,7 +110,7 @@ aside {
 }
 
 .svg .article blockquote:before,
-.article .block .quoted:before {
+.svg .article .block .quoted:before {
     .svg-i-livequote-before;
 }
 
@@ -117,13 +122,8 @@ aside {
     margin-bottom: 22px;
 }
 
-.article .block blockquote:before,
-.article .block blockquote:after{
-    display:none
-}
-
 .svg .article blockquote:after,
-.article .block .quoted {
+.svg .article .block .quoted:after {
     .svg-i-livequote-after;
 }
 
