@@ -53,6 +53,18 @@
 }
 
 @main(page, Static, Configuration, Switches.all){
+
+    @* gives javascript plugins access to match details *@
+    <script type="text/javascript">
+        guardian.footballMatch = {
+            id: '@page.theMatch.id',
+            date: new Date(@page.theMatch.date.getMillis),
+            homeTeam: '@page.theMatch.homeTeam.id',
+            awayTeam: '@page.theMatch.awayTeam.id'
+        };
+    </script>
+
+
 }{
 
 
@@ -132,6 +144,9 @@
       </div>
   </article>
   }
+
+    <div id="js-related"></div>
+
     @fragments.footballNav("/football", None, None)
 
     <div id="js-popular"></div>

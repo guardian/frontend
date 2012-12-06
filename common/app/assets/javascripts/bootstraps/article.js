@@ -1,37 +1,23 @@
 define([
     "common",
 
-    "modules/related",
     "modules/expandable",
     "modules/autoupdate"
 ], function (
     common,
-    Related,
     Expandable,
     AutoUpdate
 ) {
 
     var modules = {
 
-        transcludeRelated: function (config){
-
+        related: function(config){
             var host = config.page.coreNavigationUrl,
                 pageId = config.page.pageId,
-                showInRelated = config.page.showInRelated,
                 edition = config.page.edition;
 
-            var url =  host + '/related/' + edition + '/' + pageId,
-                 hasStoryPackage = !document.getElementById('js-related'),
-                 relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-
-            if (hasStoryPackage) {
-                relatedExpandable.init();
-            }
-
-            if (!hasStoryPackage && showInRelated) {
-                common.mediator.on('modules:related:render', relatedExpandable.init);
-                new Related(document.getElementById('js-related'), config.switches).load(url);
-            }
+            var url =  host + '/related/' + edition + '/' + pageId;
+            common.mediator.emit("modules:related:load", [url]);
         },
 
         initLiveBlogging: function(switches) {
@@ -44,13 +30,16 @@ define([
         }
     };
 
+
     var ready = function(req, config) {
-        modules.transcludeRelated(config);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
         }
-        
+
+        if (config.page.showInRelated) {
+            modules.related(config);
+        }
     };
 
     return {

@@ -171,15 +171,6 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-// beta.guardian.co.uk goes in A group
-// test.guardian.co.uk goes in B group
-object ABTest {
-  def apply(implicit request: RequestHeader) = new {
-    val isB = request.getQueryString("host").map(_ == "test").getOrElse(request.host.contains("frontend-router-prod"))
-    val isA = !isB
-  }
-}
-
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.

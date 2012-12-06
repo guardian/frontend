@@ -1,3 +1,4 @@
+/*global guardian:false */
 define([
     //Common libraries
     "common",
@@ -24,6 +25,33 @@ define([
 ) {
 
     var modules = {
+
+        related: function(config){
+
+            // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
+            function pad(number, length) {
+                var str = '' + number;
+                while (str.length < length) {
+                    str = '0' + str;
+                }
+                return str;
+            }
+
+            var match = guardian.footballMatch;
+            var host = config.page.coreNavigationUrl;
+            var date = match.date;
+
+
+
+            var url = host + '/football/api/more-on-match/'
+                + date.getFullYear() + '/'
+                + pad(date.getMonth() + 1, 2) + '/'
+                + pad(date.getDate(), 2) + '/'
+                + match.homeTeam + '/'
+                + match.awayTeam;
+
+            common.mediator.emit("modules:related:load", [url]);
+        },
 
         initTogglePanels: function () {
             TogglePanel.init();
@@ -129,6 +157,9 @@ define([
                 }
                 if(team) {
                     modules.showTeamData(team);
+                }
+                if(guardian.footballMatch){
+                    modules.related(config);
                 }
 
                 break;
