@@ -79,6 +79,8 @@ define([
                         that.view.destroy();
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', [response.html]);
+                        // relativise dates
+                        common.mediator.emit('modules:relativedates:relativise');
                     }
                 },
                 error: function () {
@@ -121,7 +123,7 @@ define([
                 pref = this.getPref();
             
             // add the component to the page, and show it
-            common.$g('.update').html(this.template).removeClass('hidden')
+            common.$g('.update').html(this.template).removeClass('hidden');
             
             this.icon = common.$g('.' + options.iconClass);
             this.btns = common.$g(options.btnClass);
