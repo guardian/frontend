@@ -1,3 +1,5 @@
+@articleOrange: #e47a39;
+
 .article-zone {
     padding: @baseline*3 @gutter;
     line-height: 1em;
@@ -42,11 +44,18 @@ aside {
 }
 
 .article-body h2.block-title {
-    color: #e47a39;
+    color: @articleOrange;
     border: none;
     padding: 0;
     margin: 0;
     margin-bottom: 10px;
+}
+.article-body .block .block-title{
+	color: #333333;
+}
+.article-body .is-summary .block-title,
+.article-body .is-key-event .block-title{
+    color: @articleOrange;
 }
 
 .article-body h3 {
