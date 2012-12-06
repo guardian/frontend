@@ -85,7 +85,18 @@ aside {
     border-left: none;
 }
 
-.article blockquote:before {
+.article .block blockquote {
+    padding-left:20px;
+    border-left:5px solid #E3E3DB; 
+}
+
+.article .block .quoted{
+    padding:0;
+    border-left:none;	
+}
+
+.article blockquote:before,
+.article .block .quoted:before {
     .i-livequote-before;
     display: block;
     content: '';
@@ -93,18 +104,26 @@ aside {
     clear: both;
 }
 
-.svg .article blockquote:before {
+.svg .article blockquote:before,
+.article .block .quoted:before {
     .svg-i-livequote-before;
 }
 
-.article blockquote:after {
+.article blockquote:after,
+.article .block .quoted:after {
     .i-livequote-after;
     display: block;
     content: '';
     margin-bottom: 22px;
 }
 
-.svg .article blockquote:after {
+.article .block blockquote:before,
+.article .block blockquote:after{
+    display:none
+}
+
+.svg .article blockquote:after,
+.article .block .quoted {
     .svg-i-livequote-after;
 }
 
