@@ -19,7 +19,7 @@
         <div class="update update-live-matches" data-link-name="autoupdate"></div>
     }
 
-    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
+    @fragments.filterBar(model.page.webTitle)
 
     @fragments.filters(model.filters, model.page, model.pageType)
     
