@@ -99,6 +99,7 @@ define(['common'], function (common) {
 
     function findValidTimestamps() {
         var elms = document.querySelectorAll('.js-timestamp');
+        //var elms = document.querySelectorAll('.js-timestamp, .block-time time');
         return elms;
     }
 
@@ -108,9 +109,9 @@ define(['common'], function (common) {
             for (var i = 0, l = elms.length; i < l; i++) {
                 var e = elms[i];
                 common.$g(e).removeClass('js-timestamp'); // don't check this again
-                var timestamp = e.getAttribute('data-timestamp');
-                
-                var relativeDate = makeRelativeDate(timestamp);
+                var datetime = new Date(e.getAttribute('datetime'));
+                // convert to milliseconds since epoch   
+                var relativeDate = makeRelativeDate(datetime.getTime());
 
                 var prettyDate = e.innerText || e.textContent; // fix for old FF
                 if (relativeDate) {
