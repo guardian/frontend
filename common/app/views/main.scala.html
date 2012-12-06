@@ -1,11 +1,11 @@
-@(metaData: MetaData, static: StaticAssets, config: GuardianConfiguration, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
 <!doctype html>
 <html class="js-off">
 <head>
     <title>@metaData.webTitle</title>
-    @fragments.metaData(metaData, config, static)
-    @fragments.commonCssSetup(static, config)
-    @fragments.commonJavaScriptSetup(metaData, config, static, "app", switches)
+    @fragments.metaData(metaData)
+    @fragments.commonCssSetup()
+    @fragments.commonJavaScriptSetup(metaData, "app", switches)
 
     @head
 
@@ -14,13 +14,13 @@
 
     <div id="container">
         @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
-        @fragments.navigation(static, config, metaData, isFooter=false)
+        @fragments.navigation(metaData, isFooter=false)
         @body
         @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
-        @fragments.navigation(static, config, metaData, isFooter=true)
-        @fragments.footer(config, metaData)
+        @fragments.navigation(metaData, isFooter=true)
+        @fragments.footer(metaData)
     </div>
 
-    @fragments.analytics(metaData, config)
+    @fragments.analytics(metaData)
 </body>
 </html>

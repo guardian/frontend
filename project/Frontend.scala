@@ -2,7 +2,6 @@ import com.gu.deploy.PlayArtifact._
 import com.gu.deploy.PlayAssetHash._
 import com.typesafe.sbtscalariform.ScalariformPlugin._
 import io.Source
-import org.sbtidea.SbtIdeaPlugin._
 import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
@@ -41,8 +40,7 @@ object Frontend extends Build with Prototypes {
   	  // TODO - doesn't work - cucumber is an input task
   	  // (test in Test) <<= (test in Test) dependsOn (cucumber)
   	)
-	.settings(ideaSettings: _*)
-  	
+
   val common = library("common")
     .settings(requireJsSettings: _*)
     .settings(
@@ -93,6 +91,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val dev = application("dev-build")
+    .dependsOn(common)
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(section)
@@ -152,7 +151,6 @@ trait Prototypes {
   val version: String
 
   def root() = Project("root", base = file("."))
-    .settings(ideaSettings: _*)
     .settings(
       parallelExecution in Global := false
     )

@@ -9,19 +9,6 @@ import logback.LogbackLevelPage
 import pa.{ Http, Proxy, DispatchHttp, PaClient }
 import model.{ TeamMap, LiveBlog }
 
-object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
-
-  object pa {
-    lazy val apiKey = configuration.getStringProperty("pa.api.key")
-      .getOrElse(throw new RuntimeException("unable to load pa api key"))
-
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
-  }
-
-}
-
-object ContentApi extends ContentApiClient(Configuration)
-
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
   object dispatchHttp extends DispatchHttp {
     override lazy val maxConnections = 50
@@ -60,8 +47,6 @@ object FootballClient extends PaClient with Http with Logging {
 
   override def GET(urlString: String): pa.Response = {
 
-    log.info("PA Client GET: " + urlString)
-
     val response = PaApiHttpTimingMetric.measure(_http.GET(urlString))
 
     response.status match {
@@ -74,8 +59,6 @@ object FootballClient extends PaClient with Http with Logging {
     response.copy(body = response.body.dropWhile(_ != '<'))
   }
 }
-
-object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all
@@ -114,8 +97,10 @@ object Management extends Management {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
-    new Switchboard(Switches.all, applicationName),
+    new UrlPagesHealthcheckManagementPage(
+      "/football/live",
+      "/football/premierleague/results"
+    ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

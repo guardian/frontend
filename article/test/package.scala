@@ -7,6 +7,6 @@ object ArticleComponents extends Tag("article components")
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit(Configuration)
+  object HtmlUnit extends EditionalisedHtmlUnit
 
 }
