@@ -6,6 +6,22 @@ import collection.JavaConversions._
 
 class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
+  feature("Tag Pages trail size") {
+
+    scenario("Tag pages should show 20 trails") {
+
+      given("I visit a tag page")
+
+      HtmlUnit("/technology/askjack") { browser =>
+        import browser._
+        val trails = $(".trailblock .unstyled > li")
+        trails.length should be(20)
+      }
+
+    }
+
+  }
+
   feature("Tag Pages Football Nav") {
 
     scenario("Tags that are football compeitions that have teams, link to that place on the teams page") {
