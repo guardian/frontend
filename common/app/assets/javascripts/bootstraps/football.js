@@ -38,12 +38,9 @@ define([
             }
 
             var match = guardian.footballMatch;
-            var host = config.page.coreNavigationUrl;
             var date = match.date;
 
-
-
-            var url = host + '/football/api/more-on-match/'
+            var url = '/football/api/more-on-match/'
                 + date.getFullYear() + '/'
                 + pad(date.getMonth() + 1, 2) + '/'
                 + pad(date.getDate(), 2) + '/'
