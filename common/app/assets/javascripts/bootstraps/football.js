@@ -37,15 +37,15 @@ define([
                 return str;
             }
 
-            var c = config.page;
-            var date = new Date(c.matchDate);
+            var match = config.page.footballMatch;
+            var date = new Date(Number(match.dateInMillis));
 
             var url = '/football/api/more-on-match/';
                 url += date.getFullYear() + '/';
                 url += pad(date.getMonth() + 1, 2) + '/';
                 url += pad(date.getDate(), 2) + '/';
-                url += c.matchHomeTeam + '/';
-                url += c.matchAwayTeam;
+                url += match.homeTeam + '/';
+                url += match.awayTeam;
 
             common.mediator.emit("modules:related:load", [url]);
         },

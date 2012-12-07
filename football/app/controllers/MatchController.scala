@@ -28,11 +28,13 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
     theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
 
   override lazy val metaData: Map[String, Any] = super.metaData + (
-    "matchId" -> theMatch.id,
-    "matchDate" -> theMatch.date.getMillis,
-    "matchHomeTeam" -> theMatch.homeTeam.id,
-    "matchAwayTeam" -> theMatch.awayTeam.id,
-    "matchIsLive" -> theMatch.isLive
+    "footballMatch" -> Map(
+      "id" -> theMatch.id,
+      "dateInMillis" -> theMatch.date.getMillis,
+      "homeTeam" -> theMatch.homeTeam.id,
+      "awayTeam" -> theMatch.awayTeam.id,
+      "IsLive" -> theMatch.isLive
+    )
   )
 }
 
@@ -58,7 +60,8 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
+            //Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
+            Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
           }
         }
       }
