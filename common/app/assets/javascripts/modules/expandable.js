@@ -75,7 +75,7 @@ define(['common', 'bean'], function (common, bean) {
         this.init = function () {
             dom = common.$g('#' + id);
 
-            if (model.getCount() < 2) {
+            if (model.getCount() < 3) {
                 return false;
             }
 
