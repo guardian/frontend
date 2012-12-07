@@ -14,14 +14,17 @@ object FrontScoresController extends Controller with Logging {
    */
   def render() = Action { implicit request =>
     val competitionIds = request.queryString("competitionId")
-    val isCompetitionPage = request.queryString("competitionPage").head.toBoolean
+
+    val numVisible = request.queryString.get("numVisible").getOrElse(Nil).headOption.map { _.toInt }.getOrElse(0)
+    val isCompetitionPage = request.queryString.get("competitionPage").getOrElse(Nil).headOption.map { _.toBoolean }.getOrElse(false)
+
     val todaysCompetitions = Competitions.withTodaysMatches.competitions
 
     //keep competitions in same order as passed in ids
     val competition = competitionIds.flatMap(id => todaysCompetitions.find(_.id == id)).headOption
     competition.map { comp =>
       Cached(60) {
-        val html = views.html.fragments.frontMatchBlock(comp, isCompetitionPage)
+        val html = views.html.fragments.frontMatchBlock(comp, numVisible, isCompetitionPage)
         request.getQueryString("callback").map { callback =>
           JsonComponent(html)
         } getOrElse {

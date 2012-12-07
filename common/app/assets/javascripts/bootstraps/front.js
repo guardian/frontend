@@ -47,11 +47,22 @@ define([
             switch(path) {
                 case "/" :
                     prependTo = qwery('ul > li', '.zone-sport')[1];
-                    table = new FootballFixtures({prependTo: prependTo, competitions: ['500', '510', '100'], expandable: true}).init();
+                    table = new FootballFixtures({
+                        prependTo: prependTo,
+                        competitions: ['500', '510', '100'],
+                        contextual: false,
+                        expandable: true,
+                        numVisible: 3
+                    }).init();
                     break;
                 case "/sport" :
                     prependTo = qwery('ul > li', '.trailblock')[1];
-                    table = new FootballFixtures({prependTo: prependTo, expandable: true}).init();
+                    table = new FootballFixtures({
+                        prependTo: prependTo,
+                        contextual: false,
+                        expandable: true,
+                        numVisible: 5
+                    }).init();
                     break;
             }
         }
