@@ -12,6 +12,7 @@ define([
     'modules/images',
     'modules/navigation/controls',
     'modules/navigation/top-stories',
+    "modules/related",
     'modules/popular',
     'modules/expandable',
     'modules/fonts',
@@ -34,6 +35,7 @@ define([
     Images,
     NavigationControls,
     TopStories,
+    Related,
     Popular,
     Expandable,
     Fonts,
@@ -63,6 +65,23 @@ define([
 
         transcludeTopStories: function (config) {
             new TopStories().load(config);
+        },
+
+        transcludeRelated: function (config){
+
+          common.mediator.on("modules:related:load", function(url){
+
+              var hasStoryPackage = document.getElementById("related-trails") !== null;
+
+              var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
+
+              if (hasStoryPackage) {
+                  relatedExpandable.init();
+              } else {
+                  common.mediator.on('modules:related:render', relatedExpandable.init);
+                  new Related(document.getElementById('js-related'), config.switches).load(url[0]);
+              }
+          });
         },
 
         transcludeMostPopular: function (host, section, edition) {
@@ -126,7 +145,9 @@ define([
         modules.transcludeNavigation(config);
         modules.transcludeTopStories(config);
 
+        modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+
 
         modules.showRelativeDates();
     };
