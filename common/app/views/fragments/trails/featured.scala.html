@@ -15,7 +15,7 @@
         <img class="maxed" src="@smallCrop.url"
             data-force-upgrade="true"
             data-thumb-width="@smallCrop.width"
-            @trail.mainPicture(width=460).map { largeCrop =>
+            @trail.mainPicture.map { largeCrop =>
                 data-fullsrc="@largeCrop.url"
                 data-full-width="@largeCrop.width"
             }
