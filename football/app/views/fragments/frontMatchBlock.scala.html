@@ -1,19 +1,19 @@
 
-@(competition: model.Competition, isCompetitionPage: Boolean)
+@(competition: model.Competition, numVisible: Int, isCompetitionPage: Boolean)
 <li id="front-competition-fixtures" class="competition-table js-front-trailblock rolled-out" data-link-name="front scores" 
-    data-count="@{competition.matches.length - 5}">
+    data-count="@{competition.matches.length - numVisible}">
     <h3 class="type-2">Today's matches</h3>
     <a href="@competition.url" class="competition-title football-table-link box-indent zone-color type-4" data-link-name="all todays matches">
        @competition.fullName <i class="i-sport-arrow"></i>
     </a>
 
     <ol class="matches unstyled">
-        @competition.matches.take(5).map{theMatch => @fragments.renderMatch(theMatch) }
+        @competition.matches.take(numVisible).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
 
-    @if(competition.matches.length > 5) {
+    @if(competition.matches.length > numVisible) {
     <ol class="matches unstyled panel">
-        @competition.matches.drop(5).map{theMatch => @fragments.renderMatch(theMatch) }
+        @competition.matches.drop(numVisible).map{theMatch => @fragments.renderMatch(theMatch) }
     </ol>
     }
 </li>

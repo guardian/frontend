@@ -2,8 +2,17 @@ package common
 
 import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
+import play.api.mvc.RequestHeader
 
 object `package` {
+
+  implicit def request2rich(r: RequestHeader) = new {
+
+    def getParameter(name: String): Option[String] = r.queryString.get(name).flatMap(_.headOption)
+    def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
+    def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
+
+  }
 
   implicit def string2ToOptions(s: String) = new {
     lazy val toIntOption: Option[Int] = try {

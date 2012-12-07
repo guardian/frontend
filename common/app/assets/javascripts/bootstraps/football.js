@@ -58,9 +58,15 @@ define([
         },
 
         showFrontFixtures: function() {
+            common.mediator.on('modules:footballfixtures:expand', function(id) {
+                var expandable = new Expandable({ id: id, expanded: false });
+                expandable.init();
+            });
             var table = new FootballFixtures({
-                    prependTo: qwery('ul > li', '.trailblock')[1],
-                    expandable: false
+                prependTo: qwery('ul > li', '.trailblock')[1],
+                contextual: false,
+                expandable: true,
+                numVisible: 10
             }).init();
         },
 
@@ -78,6 +84,7 @@ define([
             var fixtures = new FootballFixtures({
                 prependTo: document.querySelector('.t2'),
                 competitions: [competition],
+                contextual: true,
                 expandable: false
             }).init();
 
