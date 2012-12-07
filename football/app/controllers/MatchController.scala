@@ -51,7 +51,7 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
+            Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
           }
         }
       }
