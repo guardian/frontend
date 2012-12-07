@@ -4,8 +4,6 @@ import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
-import model.Page
-import play.api.templates.Html
 
 object FrontScoresController extends Controller with Logging {
 
@@ -15,8 +13,8 @@ object FrontScoresController extends Controller with Logging {
   def render() = Action { implicit request =>
     val competitionIds = request.queryString("competitionId")
 
-    val numVisible = request.queryString.get("numVisible").getOrElse(Nil).headOption.map { _.toInt }.getOrElse(0)
-    val isCompetitionPage = request.queryString.get("competitionPage").getOrElse(Nil).headOption.map { _.toBoolean }.getOrElse(false)
+    val numVisible = request.getIntParameter("numVisible").getOrElse(0)
+    val isCompetitionPage = request.getBooleanParameter("competitionPage").getOrElse(false)
 
     val todaysCompetitions = Competitions.withTodaysMatches.competitions
 
