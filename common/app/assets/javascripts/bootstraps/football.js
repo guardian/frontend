@@ -37,18 +37,15 @@ define([
                 return str;
             }
 
-            var match = guardian.footballMatch;
-            var host = config.page.coreNavigationUrl;
-            var date = match.date;
+            var c = config.page;
+            var date = new Date(c.matchDate);
 
-
-
-            var url = host + '/football/api/more-on-match/'
-                + date.getFullYear() + '/'
-                + pad(date.getMonth() + 1, 2) + '/'
-                + pad(date.getDate(), 2) + '/'
-                + match.homeTeam + '/'
-                + match.awayTeam;
+            var url = '/football/api/more-on-match/';
+                url += date.getFullYear() + '/';
+                url += pad(date.getMonth() + 1, 2) + '/';
+                url += pad(date.getDate(), 2) + '/';
+                url += c.matchHomeTeam + '/';
+                url += c.matchAwayTeam;
 
             common.mediator.emit("modules:related:load", [url]);
         },
@@ -165,7 +162,7 @@ define([
                 if(team) {
                     modules.showTeamData(team);
                 }
-                if(guardian.footballMatch){
+                if(config.page.footballMatch){
                     modules.related(config);
                 }
 

@@ -27,6 +27,13 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
     theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
 
+  override lazy val metaData: Map[String, Any] = super.metaData + (
+    "matchId" -> theMatch.id,
+    "matchDate" -> theMatch.date.getMillis,
+    "matchHomeTeam" -> theMatch.homeTeam.id,
+    "matchAwayTeam" -> theMatch.awayTeam.id,
+    "matchIsLive" -> theMatch.isLive
+  )
 }
 
 object MatchController extends Controller with Logging {
