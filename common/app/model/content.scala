@@ -14,6 +14,11 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val images: Seq[Image] = delegate.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
 
+  lazy val videoImages: Seq[Image] = delegate.mediaAssets.filter { _.`type` == "video" } map { videoAsset =>
+    val imageAsset = videoAsset.copy(file = Option(videoAsset.fields.get("stillImageUrl")))
+    Image(imageAsset)
+  }
+
   lazy val id: String = delegate.id
   lazy val sectionName: String = delegate.sectionName.getOrElse("")
   lazy val section: String = delegate.sectionId.getOrElse("")

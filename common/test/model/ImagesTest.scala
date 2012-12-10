@@ -12,6 +12,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.imageOfWidth(70).get.caption should be(Some("exact size"))
@@ -23,6 +24,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.imageOfWidth(70, tolerance = 10) should be(None)
@@ -35,6 +37,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.imageOfWidth(70, tolerance = 10).get.caption should be(Some("exact size"))
@@ -47,6 +50,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.imageOfWidth(70, tolerance = 10).get.caption should be(Some("find me"))
@@ -58,6 +62,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
       override lazy val inBodyPictureCount = 4
     }
 
@@ -71,12 +76,55 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
       override lazy val inBodyPictureCount = 3
     }
 
     images.hasMainPicture should be(true)
     images.mainPicture.isDefined should be(true)
     images.mainPicture.foreach(_.index should be(1))
+  }
+
+  it should "understand that main image is the image of rel 'gallery' with an index of 1" in {
+
+    val imageMedia = List(image("a", 50, rel = "gallery", index = 1), image("b", 69, rel = "gallery", index = 2))
+
+    val images = new Images {
+      def images = imageMedia.map(Image(_))
+      def videoImages = Nil
+    }
+
+    images.hasMainPicture should be(true)
+    images.mainPicture.size should be(1)
+    images.mainPicture.foreach(_.caption should be(Some("a")))
+  }
+
+  it should "understand that main image is the image of type 'video' and rel 'body' with an index of 1" in {
+
+    val imageMedia = List(image("a", 50, `type` = "video", index = 1), image("b", 69, `type` = "video", index = 2))
+
+    val images = new Images {
+      def images = Nil
+      def videoImages = imageMedia.map(Image(_))
+    }
+
+    images.mainPicture.size should be(1)
+    images.mainPicture.foreach(_.caption should be(Some("a")))
+  }
+
+  it should "return crops with index 1 if more than one body picture" in {
+
+    val imageMedia = List(image("a", 50, index = 1), image("b", 69, index = 2), image("c", 50, rel = "alt-size", index = 1), image("d", 69, rel = "alt-size", index = 2))
+
+    val images = new Images {
+      def images = imageMedia.map(Image(_))
+      def videoImages = Nil
+    }
+
+    images.mainPicture(50).foreach { crop =>
+      crop.index should be(1)
+      crop.caption should be(Some("c"))
+    }
   }
 
   it should "get a crop of the main pic of a specific size" in {
@@ -86,6 +134,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.mainPicture(70).isDefined should be(true)
@@ -99,14 +148,15 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
 
     val images = new Images {
       def images = imageMedia.map(Image(_))
+      def videoImages = Nil
     }
 
     images.mainPicture(69).isDefined should be(true)
     images.mainPicture(69).foreach(_.caption should be(Some("main pic")))
   }
 
-  private def image(caption: String, width: Int, rel: String = "body", index: Int = 1) = {
-    MediaAsset("picture", rel, 1, Some("http://www.foo.com/bar"),
+  private def image(caption: String, width: Int, rel: String = "body", index: Int = 1, `type`: String = "picture") = {
+    MediaAsset(`type`, rel, 1, Some("http://www.foo.com/bar"),
       Some(Map("caption" -> caption, "width" -> width.toString)))
   }
 }
