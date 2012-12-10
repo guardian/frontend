@@ -44,7 +44,6 @@ define('bootstraps/app', [
                 Gallery.init();
             }
 
-
             //Kick it all off
             r.init();
         });
