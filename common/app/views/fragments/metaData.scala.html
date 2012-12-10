@@ -1,4 +1,6 @@
 @(item: MetaData)(implicit request: RequestHeader)
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
     @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
@@ -8,11 +10,8 @@
     <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
     <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-
 @*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/

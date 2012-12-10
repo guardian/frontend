@@ -26,7 +26,7 @@ define([
 
     var modules = {
 
-        related: function(config){
+        related: function(match) {
 
             // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
             function pad(number, length) {
@@ -37,7 +37,6 @@ define([
                 return str;
             }
 
-            var match = config.page.footballMatch;
             var date = new Date(Number(match.dateInMillis));
 
             var url = '/football/api/more-on-match/';
@@ -104,15 +103,13 @@ define([
             }).init();
         },
 
-        initAutoUpdate: function(switches) {
-            if (qwery('.match.live-match').length > 0) {
-                var a = new AutoUpdate({
-                    path: window.location.pathname,
-                    delay: 10000,
-                    attachTo: qwery(".matches-container")[0],
-                    switches: switches
-                }).init();
-            }
+        initAutoUpdate: function(container, switches) {
+            var a = new AutoUpdate({
+                path: window.location.pathname,
+                delay: 10000,
+                attachTo: container,
+                switches: switches
+            }).init();
         }
     };
 
@@ -142,7 +139,9 @@ define([
             case 'live':
                 modules.showMoreMatches();
                 modules.initTogglePanels();
-                modules.initAutoUpdate(config.switches);
+                if (qwery('.match.live-match').length > 0) {
+                    modules.initAutoUpdate(qwery(".matches-container")[0], config.switches);
+                }
                 break;
             case 'table':
                 modules.showMoreMatches();
@@ -163,7 +162,16 @@ define([
                     modules.showTeamData(team);
                 }
                 if(config.page.footballMatch){
-                    modules.related(config);
+                    var match = config.page.footballMatch;
+                    modules.related(match);
+                    if(match.isLive) {
+                        modules.initAutoUpdate({
+                                "summary"   : qwery('.match-summary')[0],
+                                "stats"     : qwery('.match-stats')[0]
+                            },
+                            config.switches,
+                            true);
+                    }
                 }
 
                 break;

@@ -33,7 +33,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
       "dateInMillis" -> theMatch.date.getMillis,
       "homeTeam" -> theMatch.homeTeam.id,
       "awayTeam" -> theMatch.awayTeam.id,
-      "IsLive" -> theMatch.isLive
+      "isLive" -> theMatch.isLive
     )
   )
 }
@@ -60,8 +60,17 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            //Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
-            Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
+            request.getQueryString("callback").map { callback =>
+              JsonComponent(
+                "summary" -> views.html.fragments.matchSummary(MatchPage(theMatch, lineUp)),
+                "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))
+              )
+            } getOrElse {
+              Cached(60) {
+                //Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
+                Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
+              }
+            }
           }
         }
       }
