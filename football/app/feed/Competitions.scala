@@ -99,7 +99,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
 
-    CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
+    CompetitionAgent(Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
     CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
 
