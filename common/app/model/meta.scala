@@ -83,7 +83,7 @@ trait Images {
 
   //the canonical main picture, the actual one the editor chose
   lazy val mainPicture: Option[Image] = if (hasMainPicture)
-    images.filter(_.rel == "body").filter(_.index == 1).headOption
+    images.filter(List("body", "gallery") contains _.rel).filter(_.index == 1).headOption
   else
     // we might have videos
     videoImages.sortBy(_.index).filter(_.index == 1).headOption.orElse {
@@ -95,7 +95,7 @@ trait Images {
   //Assumption number 2 - the first rel="body" picture is the main picture if (and only if) there are more rel="body"
   //pictures than there are in-body pictures. If there are the same amount, then there is no main picture.
   lazy val hasMainPicture: Boolean = {
-    val bodyPictureCount = images.filter(_.rel == "body").size
+    val bodyPictureCount = images.filter(List("body", "gallery") contains _.rel).size
     bodyPictureCount > inBodyPictureCount
   }
 
