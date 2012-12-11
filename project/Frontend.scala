@@ -65,19 +65,11 @@ object Frontend extends Build with Prototypes with Testing {
     templatesImport ++= Seq("pa._")
   )
 
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests)
-    .settings(
-      libraryDependencies ++= Seq(
-        "net.sf.uadetector" % "uadetector-resources" % "2012.08",
-        "net.sf.opencsv" % "opencsv" % "2.3"
-      ),
-
-      mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
-        {
-          case s: String if s.endsWith("DEV.properties") => MergeStrategy.first
-          case x => old(x)
-        }
-      }
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.opencsv" % "opencsv" % "2.3"
+    )
   )
 
   val dev = application("dev-build")
