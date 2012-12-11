@@ -79,7 +79,7 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   def fixturesOn(date: DateMidnight) = fixtures.filter(_.date.toDateMidnight == date)
 }
 
-trait ResultAgent extends AkkaSupport with HasCompetition with Logging with Implicits {
+trait ResultAgent extends AkkaSupport with HasCompetition with Logging with implicits.Collections {
 
   private val agent = play_akka.agent[Seq[FootballMatch]](Nil)
 
