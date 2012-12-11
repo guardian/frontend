@@ -7,8 +7,8 @@ import sbtassembly.Plugin.MergeStrategy
 import templemore.xsbt.cucumber.CucumberPlugin
 import RequireJsPlugin._
 import RequireJsPlugin.RequireJsKeys._
-
 import net.liftweb.json.JsonDSL._
+import org.sbtidea.SbtIdeaPlugin._
 
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
@@ -99,5 +99,5 @@ object Frontend extends Build with Prototypes with Testing {
     router,
     diagnostics,
     dev
-  )
+  ).settings(ideaSettings: _*)
 }
