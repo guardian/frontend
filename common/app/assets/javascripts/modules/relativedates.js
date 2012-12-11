@@ -92,7 +92,9 @@ define(['common', 'bonzo'], function (common, bonzo) {
     }
     
     function withTime(date, show) {
-        return (show === true) ? ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours()) : '';
+        return (show === true)
+            ? ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours())
+            : '';
     }
 
     function findValidTimestamps() {
