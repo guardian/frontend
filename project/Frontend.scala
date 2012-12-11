@@ -65,6 +65,15 @@ object Frontend extends Build with Prototypes with Testing {
     templatesImport ++= Seq("pa._")
   )
 
+  val image = application("image").dependsOn(commonWithTests)
+    .settings(
+       libraryDependencies ++= Seq(
+         "org.imgscalr" % "imgscalr-lib" % "4.2",
+         "commons-io" % "commons-io" % "2.0.1",
+         "commons-lang" % "commons-lang" % "2.5"
+       )
+   )
+
   val diagnostics = application("diagnostics").dependsOn(commonWithTests)
     .settings(
       libraryDependencies ++= Seq(
@@ -89,6 +98,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(video)
     .dependsOn(gallery)
     .dependsOn(football)
+    .dependsOn(image)
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
@@ -103,6 +113,7 @@ object Frontend extends Build with Prototypes with Testing {
     video,
     gallery,
     football,
+    image,
     coreNavigation,
     router,
     diagnostics,
