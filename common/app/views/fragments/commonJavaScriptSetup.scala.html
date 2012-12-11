@@ -60,8 +60,7 @@
         guardian.config = {
             page: {
 
-                @item.metaData.map{ case(key, value) => '@{JavaScriptVariableName(key)}': @{JavaScriptValue(value)}                        
-                }.mkString(","),
+                @item.metaData.map{ data => @MetadataJson(data) }.mkString(","),
 
                 @Configuration.javascript.pageData.map{ case (key, value) =>
                     '@{JavaScriptVariableName(key.split('.').last)}': '@value'
@@ -69,8 +68,7 @@
 
                 'edition': '@Edition(request, Configuration)'
             },
-            switches : {
-                @switches.map{ switch =>
+            switches : { @switches.map{ switch =>
                     '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
                 }.mkString(",")
             }

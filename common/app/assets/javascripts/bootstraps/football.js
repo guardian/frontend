@@ -26,7 +26,7 @@ define([
 
     var modules = {
 
-        related: function(config){
+        related: function(match) {
 
             // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
             function pad(number, length) {
@@ -37,15 +37,14 @@ define([
                 return str;
             }
 
-            var match = guardian.footballMatch;
-            var date = match.date;
+            var date = new Date(Number(match.dateInMillis));
 
-            var url = '/football/api/more-on-match/'
-                + date.getFullYear() + '/'
-                + pad(date.getMonth() + 1, 2) + '/'
-                + pad(date.getDate(), 2) + '/'
-                + match.homeTeam + '/'
-                + match.awayTeam;
+            var url = '/football/api/more-on-match/';
+                url += date.getFullYear() + '/';
+                url += pad(date.getMonth() + 1, 2) + '/';
+                url += pad(date.getDate(), 2) + '/';
+                url += match.homeTeam + '/';
+                url += match.awayTeam;
 
             common.mediator.emit("modules:related:load", [url]);
         },
@@ -104,15 +103,13 @@ define([
             }).init();
         },
 
-        initAutoUpdate: function(switches) {
-            if (qwery('.match.live-match').length > 0) {
-                var a = new AutoUpdate({
-                    path: window.location.pathname,
-                    delay: 10000,
-                    attachTo: qwery(".matches-container")[0],
-                    switches: switches
-                }).init();
-            }
+        initAutoUpdate: function(container, switches) {
+            var a = new AutoUpdate({
+                path: window.location.pathname,
+                delay: 10000,
+                attachTo: container,
+                switches: switches
+            }).init();
         }
     };
 
@@ -142,7 +139,9 @@ define([
             case 'live':
                 modules.showMoreMatches();
                 modules.initTogglePanels();
-                modules.initAutoUpdate(config.switches);
+                if (qwery('.match.live-match').length > 0) {
+                    modules.initAutoUpdate(qwery(".matches-container")[0], config.switches);
+                }
                 break;
             case 'table':
                 modules.showMoreMatches();
@@ -162,8 +161,17 @@ define([
                 if(team) {
                     modules.showTeamData(team);
                 }
-                if(guardian.footballMatch){
-                    modules.related(config);
+                if(config.page.footballMatch){
+                    var match = config.page.footballMatch;
+                    modules.related(match);
+                    if(match.isLive) {
+                        modules.initAutoUpdate({
+                                "summary"   : qwery('.match-summary')[0],
+                                "stats"     : qwery('.match-stats')[0]
+                            },
+                            config.switches,
+                            true);
+                    }
                 }
 
                 break;

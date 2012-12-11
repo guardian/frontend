@@ -27,6 +27,15 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
     theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
 
+  override lazy val metaData: Map[String, Any] = super.metaData + (
+    "footballMatch" -> Map(
+      "id" -> theMatch.id,
+      "dateInMillis" -> theMatch.date.getMillis,
+      "homeTeam" -> theMatch.homeTeam.id,
+      "awayTeam" -> theMatch.awayTeam.id,
+      "isLive" -> theMatch.isLive
+    )
+  )
 }
 
 object MatchController extends Controller with Logging {
@@ -51,7 +60,17 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
+            request.getQueryString("callback").map { callback =>
+              JsonComponent(
+                "summary" -> views.html.fragments.matchSummary(MatchPage(theMatch, lineUp)),
+                "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))
+              )
+            } getOrElse {
+              Cached(60) {
+                //Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
+                Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
+              }
+            }
           }
         }
       }
