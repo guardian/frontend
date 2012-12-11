@@ -93,7 +93,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I should see the publication date of the article")
         findFirst(".dateline").getText should be("Monday 6 August 2012 20.30 BST")
-        findFirst("time").getAttribute("datetime") should be("2012-08-06")
+        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00Z")
       }
     }
 
