@@ -1,6 +1,6 @@
 package feed
 
-import common.{ Implicits, Logging, AkkaSupport }
+import common.{ Logging, AkkaSupport }
 import akka.actor.Cancellable
 import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
 import conf.FootballClient
@@ -77,7 +77,7 @@ trait CompetitionSupport {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with Implicits {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
