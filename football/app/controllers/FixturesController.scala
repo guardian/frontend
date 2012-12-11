@@ -120,6 +120,28 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
     )
   }
 
+  def renderComponent(compId: String) = Action { implicit request =>
+    Competitions.withId(compId).map { comp =>
+      val fixtures = comp.matches.sortBy(_.date.getMillis)
+
+      val startDate = new DateMidnight
+
+      val previousResult = fixtures.filter(_.date <= startDate).takeRight(1)
+      val upcomingFixtures = fixtures.filter(_.date >= startDate.plusDays(1)).take(2)
+
+      Cached(60) {
+        val html = views.html.fragments.competitionFixtures(comp, previousResult, upcomingFixtures)
+        request.getQueryString("callback").map { callback =>
+          JsonComponent(html)
+        } getOrElse {
+          Cached(60) {
+            Ok(Compressed(html))
+          }
+        }
+      }
+    }.getOrElse(NotFound)
+  }
+
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.getOrElse(""))
     case other => "/football/%s/fixtures/%s" format (competition.getOrElse(""), other.toString("yyyy/MMM/dd").toLowerCase)

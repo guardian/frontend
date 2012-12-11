@@ -77,7 +77,7 @@ define([
                 if(title) { title.className = "js-hidden"; }
             });
 
-            var fixtures = new FootballFixtures({
+            var todaysFixtures = new FootballFixtures({
                 prependTo: document.querySelector('.t2'),
                 competitions: [competition],
                 contextual: true,

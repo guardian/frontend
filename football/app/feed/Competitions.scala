@@ -32,6 +32,8 @@ trait CompetitionSupport {
 
   def withTag(tag: String) = competitions.find(_.url.endsWith(tag))
 
+  def withId(compId: String) = competitions.find(_.id == compId)
+
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
     val today = new DateMidnight
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
