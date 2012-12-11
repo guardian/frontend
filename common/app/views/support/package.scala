@@ -32,6 +32,14 @@ object Thumbnail extends Style { val className = "with-thumbnail" }
  */
 object Headline extends Style { val className = "headline-only" }
 
+object MetadataJson {
+
+  def apply(data: (String, Any)): String = data match {
+    case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
+    case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
+  }
+}
+
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
