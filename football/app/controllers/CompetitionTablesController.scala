@@ -5,13 +5,14 @@ import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
 
-object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters {
+object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters
+  with implicits.Requests {
 
   private def loadTable(competitionId: String): Option[Table] = Competitions.competitions
     .find(_.id == competitionId)
     .filter(_.hasLeagueTable)
     .map { Table(_).topOfTableSnippet }
-    .filterNot(_.multiGroup) //Ensures eurpoean cups don't come through
+    .filterNot(_.multiGroup) // Ensures European cups don't come through
 
   private def loadTableWithTeam(teamId: String): Option[Table] = Competitions.withTeam(teamId)
     .competitions
@@ -26,7 +27,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
       loadTable(id).map { table =>
         Cached(60) {
           val html = views.html.fragments.frontTableBlock(table)
-          request.getQueryString("callback").map { callback =>
+          request.getParameter("callback").map { callback =>
             JsonComponent(html)
           } getOrElse {
             Ok(Compressed(html))
@@ -40,7 +41,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     loadTableWithTeam(teamId).map { table =>
       Cached(60) {
         val html = views.html.fragments.frontTableBlock(table, Some(teamId))
-        request.getQueryString("callback").map { callback =>
+        request.getParameter("callback").map { callback =>
           JsonComponent(html)
         } getOrElse {
           Ok(Compressed(html))

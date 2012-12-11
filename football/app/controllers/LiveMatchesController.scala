@@ -8,7 +8,8 @@ import org.joda.time.DateMidnight
 import model.Page
 import conf.Configuration
 
-object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging {
+object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging
+  with implicits.Requests {
 
   val page = new Page(Some("http://www.guardian.co.uk/football/matches"), "football/live", "football",
     "Today's matches", "GFE:Football:automatic:live matches") {
@@ -41,7 +42,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
     )
 
     Cached(page) {
-      request.getQueryString("callback").map { callback =>
+      request.getParameter("callback").map { callback =>
         JsonComponent(views.html.fragments.matchesList(livePage, livePage.pageType))
       }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
     }

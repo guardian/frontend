@@ -11,7 +11,8 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters {
+sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters
+  with implicits.Requests {
 
   val daysToDisplay = 3
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
@@ -46,7 +47,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
     )
 
     Cached(page) {
-      request.getQueryString("callback").map { callback =>
+      request.getParameter("callback").map { callback =>
         JsonComponent(
           "html" -> views.html.fragments.matchesList(resultsPage),
           "more" -> Html(previousPage.getOrElse("")))
