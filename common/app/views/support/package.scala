@@ -248,6 +248,8 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def stripHtmlTags(html: String): String = Jsoup.parse(html).text()
+
   implicit def tags2tagUtils(t: Tags) = new {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
