@@ -1,3 +1,7 @@
+/*
+    Module: autoupdate.js
+    Description: Used to load update fragments of the DOM from specfied endpoint
+*/
 define([
     'common',
     'reqwest',
@@ -13,7 +17,13 @@ define([
     qwery,
     userPrefs
 ) {
-
+    /*
+        @param {Object} options hash of configuration options:
+            path    : {String}              Endpoint path to ajax request,
+            delay   : {Number}              Timeout in milliseconds to query endpoint,
+            attachTo: {DOMElement|Object}   DOMElement or list of elements insert response into
+            switches: {Object}              Global swicthes object
+    */
     function Autoupdate(config) {
 
         var options = common.extend({
@@ -31,12 +41,25 @@ define([
 
         // View
         this.view = {
-            render: function (html) {
-                var attachTo = options.attachTo;
-                attachTo.innerHTML = html;
+            render: function (res) {
+                var attachTo = options.attachTo,
+                    date = new Date().toString();
 
-                // add a timestamp to the attacher
-                bonzo(attachTo).attr('data-last-updated', new Date().toString());
+                //Check if we are handling single fragment
+                if(attachTo.nodeType) {
+                    attachTo.innerHTML = res.html;
+
+                    // add a timestamp to the attacher
+                    bonzo(attachTo).attr('data-last-updated', date);
+                //Multiple frgamnets to update
+                } else {
+                    for (var view in attachTo) {
+                        if(attachTo.hasOwnProperty(view)) {
+                            attachTo[view].innerHTML = res[view];
+                            bonzo(attachTo[view]).attr('data-last-updated', date);
+                        }
+                    }
+                }
                 common.mediator.emit('modules:autoupdate:render');
             },
 
@@ -78,7 +101,7 @@ define([
                         that.off();
                         that.view.destroy();
                     } else {
-                        common.mediator.emit('modules:autoupdate:loaded', [response.html]);
+                        common.mediator.emit('modules:autoupdate:loaded', response);
                         // relativise dates
                         common.mediator.emit('modules:relativedates:relativise');
                     }

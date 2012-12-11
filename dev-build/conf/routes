@@ -10,12 +10,12 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+GET     /core-navigation/most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
+GET     /core-navigation/most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
 
-GET     /top-stories/*edition                           controllers.TopStoriesController.render(edition)
+GET     /core-navigation/top-stories/*edition                           controllers.TopStoriesController.render(edition)
 
-GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
+GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
 
 #Football

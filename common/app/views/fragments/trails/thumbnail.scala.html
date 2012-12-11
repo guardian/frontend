@@ -4,17 +4,17 @@
 
 <div class="media">
     @if(showThumbnail) {
-        @trail.mainPicture(width=140, height=84).orElse(trail.mainPicture(width=220)).map{ smallCrop =>
+        @trail.thumbnail.map{ thumbnailUrl =>
             <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
-                <img class="maxed" src="@smallCrop.url"
-                    data-thumb-width="@smallCrop.width"
-                    @trail.mainPicture(width=220).orElse(trail.mainPicture(width=460)).map { largeCrop =>
+                <img class="maxed" src="@thumbnailUrl"
+                    data-thumb-width="140"
+                    @trail.mainPicture(width=220).map { largeCrop =>
                         data-fullsrc="@largeCrop.url"
                         data-full-width="@largeCrop.width"
+	                    alt="@Html(largeCrop.altText.getOrElse(""))" 
+	                    title="@Html(largeCrop.caption.getOrElse(""))"
                     }
                     itemprop="contentURL"
-                    alt="@Html(smallCrop.altText.getOrElse(""))" 
-                    title="@Html(smallCrop.caption.getOrElse(""))"
                 />
             </a>
         }
