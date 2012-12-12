@@ -18,7 +18,7 @@ object Metrics {
 }
 
 object Management extends GuManagement {
-  val applicationName = Configuration.application
+  val applicationName = "frontend-core-navigation"
 
   lazy val pages = List(
     new ManifestPage,
