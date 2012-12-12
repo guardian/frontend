@@ -20,8 +20,8 @@
                 data-full-width="@largeCrop.width"
             }
             itemprop="contentURL"
-            alt="@Html(smallCrop.altText.getOrElse(""))" 
-            title="@Html(smallCrop.caption.getOrElse(""))"
+            alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))" 
+            title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
         />
     </a>
 }
