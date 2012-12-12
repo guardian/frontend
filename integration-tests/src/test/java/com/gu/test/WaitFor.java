@@ -14,6 +14,10 @@ public class WaitFor {
 			public Boolean apply(WebDriver driver) {
 				WebElement element = driver.findElement(locator);
 				currentCssValue = element.getCssValue(cssProp);
+				// remove px from zero value (consistent across drivers)
+				if (currentCssValue.equals("0px")) {
+					currentCssValue = "0";
+				}
 				return cssValue.equals(currentCssValue);
 			}
 

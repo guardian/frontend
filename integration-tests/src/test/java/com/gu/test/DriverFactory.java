@@ -30,7 +30,7 @@ public class DriverFactory {
 		} else {
 
 			FirefoxProfile profile = new FirefoxProfile();
-			// if http_proxy system variable, set proxy in profile
+			
 			if (!httpProxy.isEmpty()) {
 				try {
 					URL proxyUrl = new URL(httpProxy);

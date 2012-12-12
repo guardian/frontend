@@ -1,4 +1,4 @@
-@articletest @article
+@article
 Feature: Article page
 	As a guardian mobile user
 	I want to check available content is displayed on the article page
@@ -39,6 +39,7 @@ Feature: Article page
 		When I select the sections navigation button
 		Then it should show me a list of sections
 
+    @foo
 	Scenario: High resolution image and caption is displayed
         Given I am on an article with an image
     		And I have a fast connection speed

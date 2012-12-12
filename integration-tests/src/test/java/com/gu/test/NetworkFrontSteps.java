@@ -1,16 +1,13 @@
 package com.gu.test;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 
 import junit.framework.Assert;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
+import cucumber.annotation.en.*;
 
 public class NetworkFrontSteps {
 
@@ -44,52 +41,35 @@ public class NetworkFrontSteps {
 		}
 	}
 	
-	@Then("^I can click \"([^\"]*)\" to (collapse|expand) a section$")
-	public void I_can_click_to_a_section(String buttonText, String action) throws Throwable {
-	    // get the headers
-		List<WebElement> sections = webDriver.findElements(
-			By.cssSelector("section.front-section:nth-child(n+2)")
-		);
-		for(WebElement section : sections) {
-			// click button
-			WebElement button = section.findElement(By.cssSelector(".toggle-trailblock"));
-			Assert.assertEquals(buttonText, button.getText());
-			button.click();
-			// and wait a second for it to close
-			webDriver.waitFor(1000);
-			// confirm correct class
-			String direction = (action.equals("collapse")) ? "up" : "out";
-			WebElement trailblock = section.findElement(By.cssSelector(".trailblock.rolled-" + direction));
-			// confirm css
-			if (action.equals("collapse")) {
-				Assert.assertEquals("0px", trailblock.getCssValue("max-height"));
-			} else {
-				Assert.assertEquals("9999px", trailblock.getCssValue("max-height"));
-			}
-		}
- 	}
-
-	@Given("^I hide a section$")
-	public void I_hide_a_section() throws Throwable {
-		By firstSectionToggle = By.cssSelector("#front-container section:nth-child(2) .toggle-trailblock");
-		// wait for the toggle to become visible
-		webDriver.isVisibleWait(firstSectionToggle);
-	    // hide the first section
-		webDriver.findElement(firstSectionToggle).click();
+	// xpath to the first hideable section
+	protected String sectionXpath = "//div[@id = 'front-container']/section[2]";
+	protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]";
+	
+	@Given("^a section is hidden$")
+	public void a_section_is_hidden() throws Throwable {
+		I_toggle_a_section("hide");
 	}
 
-	@Then("^the collapsed section will stay collapsed$")
-	public void the_collapsed_section_will_stay_collapsed() throws Throwable {
-		String firstSectionLocator = "#front-container section:nth-child(2) ";
-		// wait for first section to collapse
-		webDriver.hasTextWait(
-			By.cssSelector(firstSectionLocator + ".toggle-trailblock"), "Show"
+	@When("^I (hide|show) a section$")
+	public void I_toggle_a_section(String sectionState) throws Throwable {
+		// wait for the toggle to become visible
+		WebElement trailblockToggle = webDriver.waitForVisible(
+			By.xpath(sectionXpath + "//button[contains(@class, 'toggle-trailblock')]")
 		);
-		// and wait a second for it to close
-		webDriver.waitFor(1000);
-		// confirm trailblock has 0 height
-		Assert.assertEquals(
-			"0px", webDriver.findElement(By.cssSelector(firstSectionLocator + ".trailblock")).getCssValue("max-height")
+		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "9999px" : "0";
+		// only click if not in correct state
+		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
+		if (actualTrailblockHeight != expectedTrailblockHeight) {
+			trailblockToggle.click();
+		}
+	}
+
+	@Then("^the section will be (hidden|shown)$")
+	public void the_section_will_be_toggled(String sectionState) throws Throwable {
+		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "9999px" : "0";
+		// sections are hidden with css max-height
+		Assert.assertTrue(webDriver.waitForCss(
+			By.xpath(trailblockXpath), "max-height", expectedTrailblockHeight)
 		);
 	}
 	
