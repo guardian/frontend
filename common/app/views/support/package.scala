@@ -5,6 +5,7 @@ import java.net.URLEncoder._
 import model._
 import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -248,8 +249,6 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def stripHtmlTags(html: String): String = Jsoup.parse(html).text()
-
   implicit def tags2tagUtils(t: Tags) = new {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
@@ -280,4 +279,8 @@ object cleanTrailText {
   def apply(text: String): Html = {
     `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
+}
+
+object StripHtmlTags {
+  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }
