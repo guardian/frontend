@@ -157,6 +157,14 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     SafeName(TrailblockDescription("sport/triathlon", "Sport", 3)) should be("sport-triathlon")
   }
 
+  "StripHtmlTags" should "strip html from string" in {
+    StripHtmlTags("<a href=\"www.guardian.co.uk\">Foo <b>Bar</b></a>") should be("Foo Bar")
+  }
+
+  it should "convert to html entites" in {
+    StripHtmlTags("This is \"sarcasm\" & so is \"this\"") should be("This is &quot;sarcasm&quot; &amp; so is &quot;this&quot;")
+  }
+
   private def tag(name: String = "name", tagType: String = "keyword", id: String = "/id") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)
