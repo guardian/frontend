@@ -121,8 +121,13 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
 
-    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "Rest of world"))
+    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European")),
 
+    CompetitionAgent(Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European")),
+
+    CompetitionAgent(Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European")),
+
+    CompetitionAgent(Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European"))
   )
 
   override def competitions = competitionAgents.map { agent =>
