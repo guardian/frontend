@@ -12,10 +12,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class DriverFactory {
 	
-	public static WebDriver createDriver(String type) {
-		return createDriver(type, "");
-	}
-	
 	public static WebDriver createDriver(String type, String httpProxy) {
 		
 		WebDriver driver;

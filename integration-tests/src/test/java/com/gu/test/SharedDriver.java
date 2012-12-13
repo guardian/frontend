@@ -43,7 +43,7 @@ public class SharedDriver extends EventFiringWebDriver {
 			? System.getProperty("host") : "http://localhost:9000";
 		
 		// create driver
-		REAL_DRIVER = DriverFactory.createDriver("firefox", System.getProperty("http_proxy"));
+		REAL_DRIVER = DriverFactory.createDriver(System.getProperty("driver", "firefox"), System.getProperty("http_proxy", ""));
 		// implicitly wait on 'finds'
 		REAL_DRIVER.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS);
 

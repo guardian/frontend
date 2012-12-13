@@ -178,7 +178,7 @@ public class ArticleTestSteps {
 	@Given("^I have a fast connection speed$")
 	public void I_have_a_fast_connection_speed() throws Throwable {
 		JavascriptExecutor js = (JavascriptExecutor) webDriver;
-		js.executeScript("window.performance = {timing: {requestStart: 0, responseStart: 1}};");
+		js.executeScript("window.performance = {timing: {requestStart: 1, responseStart: 5000}};");
 	}
 
 	@Then("^the high resolution version of the image is displayed$")

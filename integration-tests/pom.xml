@@ -75,6 +75,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <name>http_proxy</name>
                             <value>${http_proxy}</value>
 	                    </property>
+                        <property>
+                            <name>driver</name>
+                            <value>${driver}</value>
+                        </property>
 	                    <property>
                             <name>cucumber.options</name>
                             <value>${cucumber.options}</value>
