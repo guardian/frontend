@@ -12,7 +12,11 @@ define(['modules/relativedates',
                 }
 
     describe("Relative dates", function() {
-      
+       
+        beforeEach(function() {
+            fixtures.render(conf);
+        })
+
         // make the date static so tests are stable
     	var fakeNow = Date.parse('2012-08-13T12:00:00+01:00');
         sinon.useFakeTimers(fakeNow, "Date");
@@ -83,29 +87,21 @@ define(['modules/relativedates',
 			expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
 		});
 		
-		describe('Render relative dates on to the DOM', function() {
-
-            beforeEach(function(){
-                fixtures.render(conf);
-            })
-
-    	    it("Convert valid timestamps into their expected output", function(){
-	            RelativeDates.init();
-                expect(document.getElementById('time-valid').innerHTML).toBe('<span title="12th August">Yesterday, 7:43pm</span>');
-            });
-    	    
-            // each XHR load event fires replaceValidTimestamps(), so we want to avoid replacing date twice
-            it("Once converted remove the need", function(){
-	            RelativeDates.init();
-                expect(document.getElementById('time-valid').className).not.toContain('js-timestamp');
-            });
-
-            it("Not convert invalid timestamps", function(){
-	            RelativeDates.init();
-                expect(document.getElementById('time-invalid').innerHTML).toBe('Last Tuesday');
-            });
+        it("Convert valid timestamps in the HTML document into their expected output", function(){
+            RelativeDates.init();
+            expect(document.getElementById('time-valid').innerHTML).toBe('<span title="12th August">Yesterday, 7:43pm</span>');
+        });
         
-		})
+        // each XHR load event fires replaceValidTimestamps(), so we want to avoid replacing date twice
+        it("Once converted remove the need to convert them again", function(){
+            RelativeDates.init();
+            expect(document.getElementById('time-valid').className).not.toContain('js-timestamp');
+        });
+
+        it("Ignore invalid timestamps", function(){
+            RelativeDates.init();
+            expect(document.getElementById('time-invalid').innerHTML).toBe('Last Tuesday');
+        });
 
     });
 
