@@ -27,7 +27,7 @@ Running through a proxy
 
  	$ mvn test -Dhttp_proxy=http://proxy.co.uk:1234
 
-Running on a different driver
+Running on a different driver (e.g. `htmlUnit`, `firefox` (default))
 
     $ mvn test -Ddriver=htmlUnit
      	
