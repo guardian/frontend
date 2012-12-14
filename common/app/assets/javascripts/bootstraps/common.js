@@ -67,10 +67,15 @@ define([
             new Sections().init();
 
             // the toolbar
-            ['sections-control-header', 'topstories-control-header'].forEach(function(id) {
-                new Control({id: id}).init();
-            });
+            var t = new Control({id: 'topstories-control-header'}),
+                s = new Control({id: 'sections-control-header'});
 
+            t.init();
+            s.init();
+
+            common.mediator.on('modules:topstories:render', function(args) {
+                t.show();
+            });
         },
 
         transcludeTopStories: function (config) {

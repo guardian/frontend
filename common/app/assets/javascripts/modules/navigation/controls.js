@@ -54,10 +54,6 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             }
         };
 
-        common.mediator.on('modules:topstories:render', function(args) {
-           view.show();
-        });
-
         // deactivate this button if another button has been activated
         common.mediator.on('modules:control:change', function(args) {
             
@@ -69,6 +65,10 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             }
 
         });
+
+        this.show = function() {
+            view.show();
+        };
 
         this.init = function() {
             dom = common.$g('#' + id);

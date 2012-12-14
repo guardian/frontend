@@ -90,8 +90,14 @@ define([ 'common',
             
             it("Should reveal the navigation control when the content has loaded", function() { // An Android
                 
-                new Control({id: 'button-1', delay: 0}).init();
-                common.mediator.emit('modules:topstories:render');
+                var c = new Control({id: 'button-1', delay: 0})
+                c.init();
+
+                common.mediator.on('foo', function() {
+                    c.show();   
+                });
+
+                common.mediator.emit('foo');
                 expect(document.getElementById('button-1').className).not.toContain('initially-off');
             
             });
