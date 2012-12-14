@@ -16,6 +16,7 @@ import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
+import conf.Configuration
 
 sealed trait Style {
   val className: String
@@ -195,7 +196,7 @@ object ContributorLinks {
 }
 
 object OmnitureAnalyticsData {
-  def apply(page: MetaData, jsSupport: String, path: String): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
 
     val data = page.metaData.map { case (key, value) => key -> value.toString }
     val pageCode = data.get("page-code").getOrElse("")
@@ -214,6 +215,8 @@ object OmnitureAnalyticsData {
       "g" -> path,
       "ns" -> "guardian",
       "pageName" -> pageName,
+      // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
+      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,
