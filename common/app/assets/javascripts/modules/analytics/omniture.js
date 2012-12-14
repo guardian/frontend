@@ -56,6 +56,9 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
         this.populatePageProperties = function() {
 
+            // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
+            s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
+
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
 
             var prefix = 'GFE',
