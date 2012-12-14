@@ -32,6 +32,38 @@ var routes = {
 
 Connect.createServer(Connect.query(), dispatch(routes)).listen(1234)
 
+var otherOriginRoutes = {
+    '/get-value': function (req, res) {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': 'http://localhost:1234',
+        'Content-Type': 'text/plain'
+      })
+      res.end('hello')
+    },
+    '/set-cookie': function (req, res) {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': 'http://localhost:1234',
+        'Access-Control-Allow-Credentials': 'true',
+        'Content-Type': 'text/plain',
+        'Set-Cookie': 'cookie=hello'
+      })
+      res.end('Set a cookie!')
+    },
+    '/get-cookie-value': function (req, res) {
+      var cookies = req.headers.cookie
+      var value = ((cookies.indexOf('=') > -1) ? cookies.split('=')[1] : '')
+
+      res.writeHead(200, {
+          'Access-Control-Allow-Origin': 'http://localhost:1234',
+          'Access-Control-Allow-Credentials': 'true',
+          'Content-Type': 'text/plain'
+      })
+      res.end(value)
+    }
+}
+
+Connect.createServer(Connect.query(), dispatch(otherOriginRoutes)).listen(5678)
+
 exec('open http://localhost:1234', function () {
   console.log('opening tests at http://localhost:1234')
 })

@@ -5,6 +5,7 @@ import java.net.URLEncoder._
 import model._
 import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -31,6 +32,14 @@ object Thumbnail extends Style { val className = "with-thumbnail" }
  * trails only display headline
  */
 object Headline extends Style { val className = "headline-only" }
+
+object MetadataJson {
+
+  def apply(data: (String, Any)): String = data match {
+    case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
+    case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
+  }
+}
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -270,4 +279,8 @@ object cleanTrailText {
   def apply(text: String): Html = {
     `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
+}
+
+object StripHtmlTags {
+  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }

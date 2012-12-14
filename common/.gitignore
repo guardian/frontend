@@ -1,7 +1,0 @@
-application.log
-.cache
-.classpath
-.project
-target
-.idea*
-.DS_Store
