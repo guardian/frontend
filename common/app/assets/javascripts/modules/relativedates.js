@@ -105,13 +105,13 @@ define(['common', 'bonzo'], function (common, bonzo) {
     function replaceValidTimestamps() {
         findValidTimestamps().each(function(e, i) {
             var el = bonzo(e),
-                datetime = new Date(e.attr('datetime')),
+                datetime = new Date(el.attr('datetime')),
                 // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-                relativeDate = makeRelativeDate(datetime.getTime(), bonzo(e.parent()).hasClass('block-time'));
+                relativeDate = makeRelativeDate(datetime.getTime(), bonzo(el.parent()).hasClass('block-time'));
 
             el.removeClass('js-timestamp');
             if (relativeDate) {
-                el.html('<span title="' + e.text() + '">' + relativeDate + '</span>');
+                el.html('<span title="' + el.text() + '">' + relativeDate + '</span>');
             }
         });
     }
