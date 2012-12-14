@@ -21,12 +21,12 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
           "League Two",
           "Champions League",
           "Europa League",
+          "La Liga",
           "Scottish Premier League",
           "Scottish Division One",
           "Scottish Division Two",
           "Scottish Division Three",
           "World Cup 2014 qualifiers",
-          "La Liga",
           "View all tables"
         )
 
