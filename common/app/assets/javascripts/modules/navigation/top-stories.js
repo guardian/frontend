@@ -16,7 +16,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 common.mediator.emit('modules:topstories:render');
                 
                 common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
-                    bonzo(topstoriesHeader).removeClass('initially-off')
+                    bonzo(topstoriesHeader).removeClass('initially-off');
                 });
                 
                 common.mediator.on('modules:control:change', function(args) {
@@ -24,8 +24,8 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                     var control = args[0],
                         state = args[1];
                     
-                    if (state === false || control != 'topstories-control-header') {
-                        bonzo(topstoriesHeader).addClass('initially-off')
+                    if (state === false || control !== 'topstories-control-header') {
+                        bonzo(topstoriesHeader).addClass('initially-off');
                     }
 
                 });

@@ -64,9 +64,9 @@ define([
         initialiseNavigation: function (config) {
            
             // the section panel
-            new Sections().init();   
+            new Sections().init();
 
-            // the toolbar 
+            // the toolbar
             ['sections-control-header', 'topstories-control-header'].forEach(function(id) {
                 new Control({id: id}).init();
             });

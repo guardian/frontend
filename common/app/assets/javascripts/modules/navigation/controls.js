@@ -17,14 +17,14 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                     var delta = current - lastClickTime;
                     if (delta >= delay) {
                         view.renderState();
-                        lastClickTime = current; 
+                        lastClickTime = current;
                     }
                     e.preventDefault();
                 });
             },
 
             isActive: function () {
-                return dom.hasClass('is-active')
+                return dom.hasClass('is-active');
             },
     
             deactivate: function () {
@@ -52,19 +52,19 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 common.mediator.emit('modules:control:change', [id, !isActive]);
                 common.mediator.emit('modules:control:change:' + id + ':' + !isActive);
             }
-        }
+        };
 
         common.mediator.on('modules:topstories:render', function(args) {
-           view.show(); 
+           view.show();
         });
 
         // deactivate this button if another button has been activated
         common.mediator.on('modules:control:change', function(args) {
             
             var control = args[0],
-                state = args[1]
+                state = args[1];
             
-            if (id != control) {
+            if (id !== control) {
                 view.deactivate();
             }
 
@@ -73,9 +73,9 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         this.init = function() {
             dom = common.$g('#' + id);
             view.bindEventToButton();
-        }  
+        };
     
-    }
+    };
 
     return Controls;
    
