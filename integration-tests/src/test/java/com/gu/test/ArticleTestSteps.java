@@ -136,7 +136,7 @@ public class ArticleTestSteps {
 	@Then("^another click on \"([^\"]*)\" closes the list.$")
 	public void another_click_on_closes_the_list(String linkText) throws Throwable {
 		// NOTE - HACKY! need to force wait 400ms wait, as can't click on again any quicker
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		// click the tab
 		webDriver.findElement(By.linkText(linkText)).click();
 		// wait for top stories tab to close
