@@ -12,7 +12,8 @@ define([
     'modules/images',
     'modules/navigation/controls',
     'modules/navigation/top-stories',
-    "modules/related",
+    'modules/navigation/sections',
+    'modules/related',
     'modules/popular',
     'modules/expandable',
     'modules/fonts',
@@ -33,8 +34,9 @@ define([
     Router,
     Errors,
     Images,
-    NavigationControls,
+    Control,
     TopStories,
+    Sections,
     Related,
     Popular,
     Expandable,
@@ -59,8 +61,16 @@ define([
             new Images().upgrade();
         },
 
-        transcludeNavigation: function (config) {
-            new NavigationControls().init();
+        initialiseNavigation: function (config) {
+           
+            // the section panel
+            new Sections().init();   
+
+            // the toolbar 
+            ['sections-control-header', 'topstories-control-header'].forEach(function(id) {
+                new Control({id: id}).init();
+            });
+
         },
 
         transcludeTopStories: function (config) {
@@ -142,7 +152,7 @@ define([
         modules.upgradeImages();
         modules.showTabs();
 
-        modules.transcludeNavigation(config);
+        modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
 
         modules.transcludeRelated(config);
