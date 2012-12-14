@@ -31,7 +31,7 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                             image.addClass('image-high');
                         }
                     }
-                })
+                });
             }
         };
 
