@@ -6,8 +6,11 @@ import model.TrailblockDescription
 import model.Trailblock
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
+import conf.CommonSwitches._
 import akka.util.Duration
+import org.joda.time.DateTime
 import views.support.{ Featured, Thumbnail, Headline }
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 
 //Responsible for holding the definition of the two editions
 //and bootstrapping the front (setting up the refresh schedule)
@@ -23,9 +26,10 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     )),
@@ -63,9 +67,10 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
       TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     )),
 
@@ -121,5 +126,43 @@ class Front extends AkkaSupport with Logging {
 }
 
 object Front extends Front
+
+object FrontCharity {
+
+  def apply(): Option[Trailblock] = {
+
+    if (NetworkFrontAppealSwitch.isSwitchedOn) {
+
+      val donateContent = ApiContent(
+        "https://guardian.paythru.com", None, None, new DateTime,
+        "SocietyGuardian - news, comment and analysis on the public and voluntary sectors | Society | guardian.co.uk",
+        "https://guardian.paythru.com",
+        "https://guardian.paythru.com", fields = Option(
+          Map(
+            "liveBloggingNow" -> "false",
+            "headline" -> "Donate now"
+          )
+        )
+      )
+      val appealContent = ApiContent(
+        "society/christmas-charity-appeal-2012", None, None, new DateTime,
+        "Christmas charity appeal 2012", "/society/christmas-charity-appeal-2012",
+        "http://content.guardianapis.com/society/christmas-charity-appeal-2012", fields = Option(Map(
+          "liveBloggingNow" -> "false",
+          "headline" -> "Read more about our Christmas charity appeal"
+        ))
+      )
+      val description = new TrailblockDescription(
+        "society/christmas-charity-appeal-2012", "Christmas charity appeal", 2, style = Some(Thumbnail)
+      )
+      Option(new Trailblock(description, Seq(new model.Content(donateContent), new model.Content(appealContent))))
+
+    } else {
+      None
+    }
+
+  }
+
+}
 
 case class FrontStats(nukUkTrails: Int, numUsTrails: Int)
