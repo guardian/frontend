@@ -30,6 +30,8 @@ trait MetaData {
   ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
 
   def cacheSeconds = 60
+
+  def edition: Option[String] = None
 }
 
 class Page(
@@ -37,7 +39,8 @@ class Page(
   val id: String,
   val section: String,
   val webTitle: String,
-  val analyticsName: String) extends MetaData
+  val analyticsName: String,
+  override val edition: Option[String] = None) extends MetaData
 
 object Page {
   def apply(
@@ -45,7 +48,8 @@ object Page {
     id: String,
     section: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
+    analyticsName: String,
+    edition: Option[String] = None) = new Page(canonicalUrl, id, section, webTitle, analyticsName, edition)
 }
 
 trait Images {
