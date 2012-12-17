@@ -1,5 +1,4 @@
-@ignore
-@displayadvertstest
+@ignore @displayadvertstest
 
 Feature: Display Adverts
 	As a guardian reader 

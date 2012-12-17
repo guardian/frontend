@@ -1,4 +1,4 @@
-@front @section-fronts @sport-front
+@front @section-fronts @section-fronts-sport
 Feature: Section Fronts - Sport
 	As a Guardian user
 	I want to get a further break-down of sections on the sport section front
@@ -39,9 +39,15 @@ Feature: Section Fronts - Sport
         Given I am on the 'sport' section front
         Then I should see up to 3 'Football' top stories
             And any more than 3 'Football' top stories should be hidden
-
-    Scenario: User can hide and show the sections
+         
+    Scenario: Users can hide sections
+        Given I am on the 'sport' section front 
+        When I hide a section
+        Then the section will be hidden
+    
+    Scenario: Users can show hidden sections
         Given I am on the 'sport' section front
-        Then I can click "Hide" to collapse a section
-            And I can click "Show" to expand a section
+            And a section is hidden 
+        When I show a section
+        Then the section will be shown
             

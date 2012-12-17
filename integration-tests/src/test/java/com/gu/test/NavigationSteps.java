@@ -21,7 +21,7 @@ public class NavigationSteps {
     public void I_click_the_tab(String tabName) throws Throwable {
     	String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
     	//adding a wait for the element to appear
-    	webDriver.findElementWait(By.id(tabId));
+    	webDriver.waitForElement(By.id(tabId));
     	// click the tab
     	webDriver.click(By.id(tabId));
     }
@@ -69,7 +69,7 @@ public class NavigationSteps {
     @Then("^the top story link should have a (.*) of (.*)$")
     public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
         // confirm it has the correct css color
-    	Assert.assertEquals(expectedColor, webDriver.getelementCssValue(By.cssSelector("#topstories-header li a"), cssProperty));
+    	Assert.assertEquals(expectedColor, webDriver.getElementCssValue(By.cssSelector("#topstories-header li a"), cssProperty));
     }
     
 }
