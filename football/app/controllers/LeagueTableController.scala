@@ -79,6 +79,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       Cached(page) {
         Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
       }
-    }.getOrElse(NotFound("Not found"))
+    }.getOrElse(Redirect("/football/tables"))
   }
 }
