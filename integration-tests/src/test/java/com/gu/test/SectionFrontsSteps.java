@@ -42,7 +42,7 @@ public class SectionFrontsSteps {
 		List<WebElement> hiddenTrails = hiddenTrailblock.findElements(By.className("trail"));
 		Assert.assertTrue(hiddenTrails.size() <= numOfTopStories);
 		// make sure they're hidden
-		Assert.assertEquals("0px", hiddenTrailblock.getCssValue("max-height"));
+		Assert.assertEquals("0", hiddenTrailblock.getCssValue("max-height").replace("px", ""));
 	}
 	
 	protected WebElement findTrailblock(String name) {
