@@ -2,6 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# For dev machines
+GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
+
 ##########################################################################################
 # the extra routes (without '/core-navigation') are temporary till we own our own stack
 ##########################################################################################
@@ -17,8 +20,3 @@ GET     /core-navigation/top-stories/*edition           controllers.TopStoriesCo
 
 GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
 GET     /core-navigation/related/:edition/*path         controllers.RelatedController.render(edition, path)
-
-
-# For dev machines
-#GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
-
