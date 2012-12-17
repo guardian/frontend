@@ -1,0 +1,6 @@
+@(page: Page, trails: Seq[Trail], edition: String)(implicit request: RequestHeader)
+
+@main(page, Switches.all){
+}{
+    @fragments.topStories(trails)
+}
