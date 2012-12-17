@@ -13,7 +13,7 @@ object TopStoriesController extends Controller with Logging {
   def render(edition: String) = Action { implicit request =>
     val promiseOfTopStories = Akka.future(lookup(edition))
     Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_, edition) } getOrElse { NotFound })
+      promiseOfTopStories.map(_.map { renderTopStories(_) } getOrElse { NotFound })
     }
   }
 
@@ -32,7 +32,7 @@ object TopStoriesController extends Controller with Logging {
 
   }
 
-  private def renderTopStories(trails: Seq[Trail], edition: String)(implicit request: RequestHeader) =
+  private def renderTopStories(trails: Seq[Trail])(implicit request: RequestHeader) =
 
     Cached(900) {
       request.getQueryString("callback").map { callback =>
@@ -43,10 +43,9 @@ object TopStoriesController extends Controller with Logging {
           "",
           "top-stories",
           "Top Stories",
-          "GFE:Top Stories",
-          edition = Option(Edition(request, Configuration))
+          "GFE:Top Stories"
         )
-        Ok(Compressed(views.html.topStories(page, trails, edition)))
+        Ok(Compressed(views.html.topStories(page, trails)))
       }
     }
 
