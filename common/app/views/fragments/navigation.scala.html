@@ -13,11 +13,11 @@
 
 @if(!isFooter){
     <div id="navigation-header" data-link-name="global navigation: header">
-        <a href="#topstories-footer" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header" 
-        class="topstories-control initially-off">
+        <a href="/core-navigation/top-stories/@page.edition.getOrElse("UK")" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header" 
+        class="topstories-control">
             <i class="i-nav-divider"></i>
             <span>Top stories</span>
-            <i class="i-arrow-small-down"></i>
+            <i class="i-arrow-small-down js-visible"></i>
         </a>
         
         <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" class="sections-control">
