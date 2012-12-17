@@ -190,11 +190,10 @@ public class ArticleTestSteps {
 
 	@Then("^I can expand and collapse expanders$")
 	public void I_can_expand_and_collapse_expanders() throws Throwable {
-		// esit for expander to appear
+		// waits for expander to appear
 		WebElement expander = webDriver.waitForVisible(By.className("cta"));
 		expander.click();
-		webDriver.waitFor(1000);
-		Assert.assertFalse(webDriver.isElementPresent(By.cssSelector("#related-trails.shut")));
+		Assert.assertTrue(webDriver.findElement(By.cssSelector("#related-trails.shut")) != null);
 	}
 
 	@When("^Back to top is selected$")
