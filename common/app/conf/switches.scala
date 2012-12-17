@@ -42,7 +42,7 @@ object CommonSwitches {
 
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch
+    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch
   )
 }
 
