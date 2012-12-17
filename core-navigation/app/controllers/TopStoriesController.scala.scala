@@ -10,7 +10,8 @@ import play.api.libs.concurrent.Akka
 
 object TopStoriesController extends Controller with Logging {
 
-  def render(edition: String) = Action { implicit request =>
+  def render() = Action { implicit request =>
+    val edition = Edition(request, Configuration)
     val promiseOfTopStories = Akka.future(lookup(edition))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories } getOrElse { NotFound })
