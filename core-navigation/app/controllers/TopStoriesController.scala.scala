@@ -13,7 +13,7 @@ object TopStoriesController extends Controller with Logging {
   def render(edition: String) = Action { implicit request =>
     val promiseOfTopStories = Akka.future(lookup(edition))
     Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_) } getOrElse { NotFound })
+      promiseOfTopStories.map(_.map { renderTopStories } getOrElse { NotFound })
     }
   }
 
