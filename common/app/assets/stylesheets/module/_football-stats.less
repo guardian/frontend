@@ -18,6 +18,20 @@
     }
 }
 
+.match-comment {
+  width: 90%;
+  text-align: center;
+  padding-right: 28px; /* to compensate for the status on above line */
+}
+
+a:hover p.match-comment {
+  text-decoration:none !important;
+}
+
+a:visited p.match-comment {
+  text-decoration:none !important;
+}
+
 .home-stat {
     background-color: @homeColour;
     height: 15px;
@@ -39,6 +53,13 @@
     padding-bottom: @baseline !important;
     h2 {
         margin-bottom: @baseline * 2;
+    }
+
+    .match-comment {
+      text-align: left;
+      border-top: 1px solid #F4F4EE;
+      margin-top: @baseline * 2;
+      padding-top: 5px;
     }
 
     .home-scorers{
