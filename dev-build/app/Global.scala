@@ -1,11 +1,13 @@
 import common.{ AkkaSupport, RequestMetrics }
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import controllers.front.{ ConfiguredEdition, Front }
-import feed.Competitions
+import feed.{ MostPopularAgent, Competitions }
 import model.TeamMap
 import play.api.GlobalSettings
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters with AkkaSupport {
+object Global extends GlobalSettings with RequestTimer with StatusCounters
+    with MostPopularLifecycle
+    with FrontLifecycle {
 
   import RequestMetrics._
 
@@ -15,18 +17,4 @@ object Global extends GlobalSettings with RequestTimer with StatusCounters with 
   override val notFoundCounter = Request404s
   override val redirectCounter = Request30xs
 
-  override def onStart(app: play.api.Application) {
-    Front.startup()
-    Competitions.startup()
-    TeamMap.startup()
-    super.onStart(app)
-
-  }
-
-  override def onStop(app: play.api.Application) {
-    Front.shutdown()
-    Competitions.shutDown()
-    TeamMap.shutdown()
-    super.onStop(app)
-  }
 }
