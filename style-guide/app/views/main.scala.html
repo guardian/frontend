@@ -5,12 +5,13 @@
     <title>@metaData.webTitle</title>
     @fragments.metaData(metaData)
     @fragments.commonCssSetup()
+    <link rel="stylesheet" href='@Static("stylesheets/prettify.min.css")' type="text/css" />
+    <script type="text/javascript" src="http://code-highlighter.appspot.com/js/prettify.js"></script>
     @fragments.commonJavaScriptSetup(metaData, "app", switches)
-
     @head
 
 </head>
-<body id="top" class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
+<body id="top" class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage" onload="prettyPrint();">
 
     <div id="container">
         @fragments.navigation(metaData, isFooter=false)

@@ -3,7 +3,7 @@
 # ~~~~
 
 GET     /style-guide                controllers.StyleGuideController.renderIndex
-GET     /style-guide/base/:path     controllers.StyleGuideController.renderBase(path)
+GET     /style-guide/modules        controllers.StyleGuideController.renderModules
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
