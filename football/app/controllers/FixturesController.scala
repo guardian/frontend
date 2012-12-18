@@ -60,10 +60,9 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 object FixturesController extends FixtureRenderer with Logging {
 
   val page = new Page(
-    "http://www.guardian.co.uk/football/matches",
+    Some("http://www.guardian.co.uk/football/matches"),
     "football/fixtures",
     "football",
-    "",
     "All fixtures",
     "GFE:Football:automatic:fixtures"
   )
@@ -81,7 +80,7 @@ object FixturesController extends FixtureRenderer with Logging {
   }
 
   def routeTeam(tag: String) = {
-    TeamMap.getTeamWithName(tag) map { TeamFixturesController.render(tag, _) }
+    TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamFixturesController.render(tag, teamId) }
   }
 
   def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
@@ -105,13 +104,13 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
   def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/matches",
+      Some("http://www.guardian.co.uk/football/matches"),
       "football/fixtures",
       "football",
-      "",
       competition.fullName + " fixtures",
       "GFE:Football:automatic:competition fixtures"
     )
+
     renderFixtures(
       page,
       Competitions.withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competition.url),
@@ -129,44 +128,48 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
 object TeamFixturesController extends Controller with Logging with CompetitionFixtureFilters {
 
-  def render(teamName: String, team: Team) = Action { implicit request =>
-    val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
-    val startDate = new DateMidnight
-    val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate)
+  def render(teamName: String, teamId: String) = Action { implicit request =>
 
-    val page = new Page(
-      "http://www.guardian.co.uk/football/" + teamName + "/fixtures",
-      team.url + "/fixtures",
-      "football",
-      "",
-      TeamName(team) + " fixtures",
-      "GFE:Football:automatic:team fixtures"
-    )
+    Competitions.findTeam(teamId).map { team =>
 
-    Cached(60) {
-      val html = views.html.teamFixtures(page, filters, upcomingFixtures)
-      Ok(Compressed(html))
-    }
+      val fixtures = Competitions.withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
+      val startDate = new DateMidnight
+      val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate)
+
+      val page = new Page(
+        Some("http://www.guardian.co.uk/football/" + teamName + "/fixtures"),
+        "football/" + teamName + "/fixtures",
+        "football",
+        team.name + " fixtures",
+        "GFE:Football:automatic:team fixtures"
+      )
+
+      Cached(60) {
+        val html = views.html.teamFixtures(page, filters, upcomingFixtures)
+        Ok(Compressed(html))
+      }
+    }.getOrElse(NotFound)
   }
 
   def renderComponent(teamId: String) = Action { implicit request =>
-    val teamName = TeamMap.teams(teamId).url.drop(10)
-    val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
+    Competitions.findTeam(teamId).map { team =>
+      val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
 
-    val startDate = new DateMidnight
+      val startDate = new DateMidnight
 
-    val previousResult = fixtures.filter(_.fixture.date <= startDate).takeRight(1)
-    val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
+      val previousResult = fixtures.filter(_.fixture.date <= startDate).takeRight(1)
+      val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
 
-    Cached(60) {
-      val html = views.html.fragments.teamFixtures(teamName, previousResult, upcomingFixtures)
-      request.getQueryString("callback").map { callback =>
-        JsonComponent(html)
-      } getOrElse {
-        Cached(60) {
-          Ok(Compressed(html))
+      Cached(60) {
+        val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
+        request.getQueryString("callback").map { callback =>
+          JsonComponent(html)
+        } getOrElse {
+          Cached(60) {
+            Ok(Compressed(html))
+          }
         }
       }
-    }
+    }.getOrElse(NotFound)
   }
 }

@@ -5,7 +5,8 @@ import common.ManifestData
 trait MetaData {
   // indicates the absolute url of this page (the one to be used for search engine indexing)
   // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-  def canonicalUrl: String
+  // never give this a default value, we need people to think each time before using it
+  def canonicalUrl: Option[String]
 
   def id: String
   def section: String
@@ -23,35 +24,33 @@ trait MetaData {
   def metaData: Map[String, Any] = Map(
     "page-id" -> id,
     "section" -> section,
-    "canonical-url" -> canonicalUrl,
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName
-  )
+  ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
 
   def cacheSeconds = 60
 }
 
 class Page(
-  val canonicalUrl: String,
+  val canonicalUrl: Option[String],
   val id: String,
   val section: String,
-  val apiUrl: String,
   val webTitle: String,
   val analyticsName: String) extends MetaData
 
 object Page {
   def apply(
-    canonicalUrl: String,
+    canonicalUrl: Option[String],
     id: String,
     section: String,
-    apiUrl: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, apiUrl, webTitle, analyticsName)
+    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
 }
 
 trait Images {
   def images: Seq[Image]
+  def videoImages: Seq[Image]
 
   def imageOfWidth(desiredWidth: Int, tolerance: Int = 0): Option[Image] = {
     val widthRange = (desiredWidth - tolerance) to (desiredWidth + tolerance)
@@ -66,28 +65,37 @@ trait Images {
   //some arbitrary conventions.
 
   //Assumption number 1 - All alt-size images are crops of the main picture
-  // Note, if no main image, just return all alt-size images, regardless of aspect ratio (e.g. for video articles)
   private lazy val mainPictureCrops: Seq[Image] = mainPicture.map { main =>
-    images.filter(_.rel == "alt-size").filter(_.aspectRatio == main.aspectRatio)
-  } getOrElse images.filter(_.rel == "alt-size")
+    var crops = images.filter(_.rel == "alt-size").filter(_.aspectRatio == main.aspectRatio)
+    // if there's more than one body image, use the crops with the same index
+    if (images.filter(_.rel == "body").size > 1) {
+      crops = crops.filter(_.index == main.index)
+    }
+    crops
+  } getOrElse (Nil)
 
   //at the moment all the crops will exists, or none of them will exist. If we have no crops then
   //fall back to full size image
   def mainPicture(width: Int): Option[Image] = mainPictureCrops.filter(_.width == width).headOption.orElse(mainPicture)
 
   def mainPicture(width: Int, height: Int): Option[Image] =
-    mainPictureCrops.filter(_.width == width).filter(_.height == height).headOption
+    mainPictureCrops.filter(_.width == width).filter(_.height == height).headOption.orElse(mainPicture)
 
   //the canonical main picture, the actual one the editor chose
   lazy val mainPicture: Option[Image] = if (hasMainPicture)
-    images.filter(_.rel == "body").filter(_.index == 1).headOption
+    images.filter(List("body", "gallery") contains _.rel).filter(_.index == 1).headOption
   else
-    None
+    // we might have videos
+    videoImages.sortBy(_.index).filter(_.index == 1).headOption.orElse {
+      // otherwise just get the 460 sized crop
+      // NOTE safe?
+      images.filter(_.rel == "alt-size").filter(_.width == 460).headOption
+    }
 
   //Assumption number 2 - the first rel="body" picture is the main picture if (and only if) there are more rel="body"
   //pictures than there are in-body pictures. If there are the same amount, then there is no main picture.
   lazy val hasMainPicture: Boolean = {
-    val bodyPictureCount = images.filter(_.rel == "body").size
+    val bodyPictureCount = images.filter(List("body", "gallery") contains _.rel).size
     bodyPictureCount > inBodyPictureCount
   }
 

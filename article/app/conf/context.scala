@@ -6,12 +6,6 @@ import com.gu.management.play._
 import com.gu.management._
 import logback.LogbackLevelPage
 
-object Configuration extends GuardianConfiguration("frontend-article", webappConfDirectory = "env")
-
-object ContentApi extends ContentApiClient(Configuration)
-
-object Static extends StaticAssets(Configuration.static.path)
-
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all
 }
@@ -23,12 +17,14 @@ object Metrics {
 }
 
 object Management extends Management {
-  val applicationName = Configuration.application
+  val applicationName = "frontend-article"
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
-    new Switchboard(CommonSwitches.all, applicationName),
+    new UrlPagesHealthcheckManagementPage(
+      "/world/2012/sep/11/barcelona-march-catalan-independence",
+      "/sport/2012/nov/17/becky-james-jess-varnish-rio-olympics"
+    ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

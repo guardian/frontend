@@ -7,20 +7,7 @@ import com.gu.management.play._
 import feed.Competitions
 import logback.LogbackLevelPage
 import pa.{ Http, Proxy, DispatchHttp, PaClient }
-import model.LiveBlog
-
-object Configuration extends GuardianConfiguration("frontend-football", webappConfDirectory = "env") {
-
-  object pa {
-    lazy val apiKey = configuration.getStringProperty("pa.api.key")
-      .getOrElse(throw new RuntimeException("unable to load pa api key"))
-
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
-  }
-
-}
-
-object ContentApi extends ContentApiClient(Configuration)
+import model.{ TeamMap, LiveBlog }
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
   object dispatchHttp extends DispatchHttp {
@@ -36,16 +23,18 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     FootballClient.http = dispatchHttp
     Competitions.startup()
     LiveBlog.startup()
+    TeamMap.startup()
   }
 
   override def onStop() = {
     Competitions.shutDown()
     LiveBlog.shutdown()
+    TeamMap.shutdown()
     dispatchHttp.close()
   }
 }
 
-object FootballClient extends PaClient with Http {
+object FootballClient extends PaClient with Http with Logging {
 
   override lazy val base = Configuration.pa.host
 
@@ -70,8 +59,6 @@ object FootballClient extends PaClient with Http {
     response.copy(body = response.body.dropWhile(_ != '<'))
   }
 }
-
-object Static extends StaticAssets(Configuration.static.path)
 
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all
@@ -106,12 +93,14 @@ object Metrics {
 }
 
 object Management extends Management {
-  val applicationName = Configuration.application
+  val applicationName = "frontend-football"
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Configuration.healthcheck.urls.toList),
-    new Switchboard(Switches.all, applicationName),
+    new UrlPagesHealthcheckManagementPage(
+      "/football/live",
+      "/football/premierleague/results"
+    ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

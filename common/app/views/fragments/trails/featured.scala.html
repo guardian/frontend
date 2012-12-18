@@ -15,13 +15,13 @@
         <img class="maxed" src="@smallCrop.url"
             data-force-upgrade="true"
             data-thumb-width="@smallCrop.width"
-            @trail.mainPicture(width=460).map { largeCrop =>
+            @trail.mainPicture.map { largeCrop =>
                 data-fullsrc="@largeCrop.url"
                 data-full-width="@largeCrop.width"
             }
             itemprop="contentURL"
-            alt="@Html(smallCrop.altText.getOrElse(""))" 
-            title="@Html(smallCrop.caption.getOrElse(""))"
+            alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))" 
+            title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
         />
     </a>
 }

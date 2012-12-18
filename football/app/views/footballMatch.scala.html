@@ -1,0 +1,35 @@
+@(page: MatchPage)(implicit request: RequestHeader)
+@import feed._
+@main(page, Switches.all){ }{
+    <h2 class="article-zone type-1 sport-header">
+        <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+    </h2>
+
+    <article class="article box-indent">
+        <p class="dateline">
+            @fragments.status(page.theMatch)
+            <time data-timestamp="@page.theMatch.date.getMillis">
+                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z", Edition(request, Configuration))
+            </time>
+        </p>
+      
+        <div class="match-summary">
+            @fragments.matchSummary(page)
+        </div>
+
+        @if(page.theMatch.isLive) {
+            <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+        }
+
+        <div class="match-stats">
+            @fragments.matchStats(page)
+        </div>
+
+    </article>
+
+    <div id="js-related"></div>
+
+  @fragments.footballNav("/football", None, None)
+
+  <div id="js-popular"></div>
+}

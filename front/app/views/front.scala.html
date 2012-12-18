@@ -1,10 +1,13 @@
-@(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
+@(front: MetaData, trailblocks: Seq[Trailblock], charity: Option[Trailblock] = None)(implicit request: RequestHeader)
 
-@main(front, Static, Configuration, Switches.all){
+@main(front, Switches.all){
 }{
-    <div id="front-container" class="cf">
+    <div id="front-container" class="cf" data-link-name="Front">
         @trailblocks.map{ block =>
             @fragments.frontBlock(block, Edition(request, Configuration))
+        }
+        @charity.map { block =>
+	        @fragments.frontBlock(block, Edition(request, Configuration))
         }
     </div>
     <div id="js-popular"></div>

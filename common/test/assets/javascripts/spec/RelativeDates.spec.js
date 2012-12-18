@@ -1,4 +1,4 @@
-define(['modules/relativedates', 'bonzo'], function(RelativeDates, bonzo) {
+define(['modules/relativedates', 'bonzo', 'qwery'], function(RelativeDates, bonzo, qwery) {
 
     describe("Relative dates", function() {
       
@@ -71,26 +71,33 @@ define(['modules/relativedates', 'bonzo'], function(RelativeDates, bonzo) {
 		it("should fail politely if given non-date / invalid input for either argument", function(){
 			expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
 		});
+		
+		describe('Test output', function() {
 
-		it("should convert valid timestamps into their expected output", function(){
+	        RelativeDates.init();
+	        
+            waitsFor(function() {
+                return (qwery('.js-timestamp').length === 0)
+            }, 'Dates not relativised', 100);
+            
+            function testOutput(elementId) {
+                var testTimestamp = bonzo(qwery('#' + elementId));
+                expect(testTimestamp.html()).toBe(testTimestamp.attr('data-expected-output'));
+            }
 
-			// this item has a custom relativeTo value to ensure expected output is consistent
-			var testTimestamp = document.getElementById('relative-date-test-item');
-			var expectedTestOutput = RelativeDates.makeRelativeDate(testTimestamp.getAttribute('data-timestamp')); 
-			var invalidItem = document.getElementById('relative-date-invalid-item')
-			var invalidItemTextBefore = bonzo(invalidItem).text();
+    		it("should convert valid timestamps into their expected output", function(){
+                testOutput('relative-date-test-item');
+    		});
 
-			runs(function() {
-	   			RelativeDates.init(); 
+            it("should convert valid timestamps into their expected output in blocks", function(){
+                testOutput('relative-date-test-item-block');
             });
-
-            waits(1);
-
-            runs(function(){
-            	expect(bonzo(testTimestamp).text()).toBe(expectedTestOutput);
-            	expect(bonzo(invalidItem).text()).toBe(invalidItemTextBefore);
+    
+            it("should not convert invalid timestamps", function(){
+                testOutput('relative-date-invalid-item');
             });
-		});
+        
+		})
 
     });
 

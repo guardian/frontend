@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import conf._
-import front.Front
+import front._
 import model._
 import play.api.mvc._
 import play.api.libs.concurrent.Akka
@@ -12,7 +12,7 @@ import scala.Some
 import com.gu.openplatform.contentapi.model.ItemResponse
 
 object FrontPage extends MetaData {
-  override val canonicalUrl = "http://www.guardian.co.uk"
+  override val canonicalUrl = Some("http://www.guardian.co.uk")
   override val id = ""
   override val section = ""
   override val webTitle = "The Guardian"
@@ -49,7 +49,7 @@ class FrontController extends Controller with Logging {
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
       if (trailblocks.isEmpty) InternalServerError
-      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks))) }
+      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks, FrontCharity()))) }
     } getOrElse (InternalServerError)
   }
 

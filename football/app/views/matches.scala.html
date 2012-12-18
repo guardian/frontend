@@ -2,7 +2,7 @@
 @import support._
 @import org.joda.time.DateTime
 
-@main(model.page, Static, Configuration, Switches.all){
+@main(model.page, Switches.all){
 }{
     
     <h2 class="article-zone type-1 sport-header">
@@ -19,14 +19,14 @@
         <div class="update update-live-matches" data-link-name="autoupdate"></div>
     }
 
-    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@model.page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
+    @fragments.filterBar(model.page.webTitle)
 
     @fragments.filters(model.filters, model.page, model.pageType)
     
     <div class="matches-container box-indent">
         @fragments.matchesList(model, model.pageType)
 
-        @if(model.previousPage || model.nextPage) {
+        @if(model.previousPage.isDefined || model.nextPage.isDefined) {
             <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
                 @model.previousPage.map{url => <a href="@url" class="type-6a match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
                 @model.nextPage.map{url => <a href="@url" class="type-6a match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}

@@ -2,13 +2,13 @@
 @import support._
 @import org.joda.time.DateTime
 
-@main(page, Static, Configuration, Switches.all){
+@main(page, Switches.all){
 }{
     <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-4 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">@page.webTitle <span><i class="i-filter-arrow-down js-visible"></i></span></h1>
+    @fragments.filterBar(page.webTitle)
 
     @fragments.filters(filters, page, "fixtures")
     

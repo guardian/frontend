@@ -1,6 +1,6 @@
 @(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
-@main(article, Static, Configuration, Switches.all){ }{
+@main(article, Switches.all){ }{
 	<h2 class="article-zone type-1">
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
@@ -46,7 +46,7 @@
         </div>
     </article>
 
-    @if(storyPackage.nonEmpty && ABTest(request).isA) {
+    @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     } else {
         <div id="js-related"></div>

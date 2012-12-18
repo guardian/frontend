@@ -1,11 +1,11 @@
-@(item: MetaData, config: common.GuardianConfiguration)(implicit request: RequestHeader)
+@(item: MetaData)(implicit request: RequestHeader)
 
 @import java.net.URI
 
-@defining(new URI(item.canonicalUrl).getPath()){ canonicalPath =>
-    @defining(if(item.id == "") "/fullsite" else "?mobile-redirect=false") { redirectPath =>
-        @defining(if(Edition(request, config) == "US") "guardiannews.com" else "guardian.co.uk") { host =>
-	        <a id="main-site" href="http://www.@host@canonicalPath@redirectPath" data-link-name="@Edition(request, config)">Desktop version</a>
+@item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
+@defining(if(item.id == "") "/fullsite" else "?mobile-redirect=false") { redirectPath =>
+        @defining(if(Edition(request, Configuration) == "US") "guardiannews.com" else "guardian.co.uk") { host =>
+	        <a id="main-site" href="http://www.@host@url@redirectPath" data-link-name="@Edition(request, Configuration)">Desktop version</a>
 	    }
     }
 }

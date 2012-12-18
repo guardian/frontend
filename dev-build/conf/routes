@@ -10,12 +10,12 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+GET     /core-navigation/most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
+GET     /core-navigation/most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
 
-GET     /top-stories/*edition                           controllers.TopStoriesController.render(edition)
+GET     /core-navigation/top-stories/*edition                           controllers.TopStoriesController.render(edition)
 
-GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
+GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
 
 #Football
@@ -39,9 +39,13 @@ GET     /football/api/frontscores                           controllers.FrontSco
 GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
 GET     /football/api/teamtable/:teamId                      controllers.CompetitionTablesController.renderTeam(teamId)
 GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
+GET     /football/api/more-on-match/:year/:month/:day/:home/:away    controllers.MoreOnMatchController.render(year, month, day, home, away)
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
+
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
+GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
 
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()

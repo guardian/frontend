@@ -58,17 +58,18 @@ public class FootballSteps {
 
 	@Then("^the competition filter list opens$")
 	public void the_competition_filter_list_opens() throws Throwable {
-	    Assert.assertTrue(webDriver.isVisibleWait(By.id("js-football-league-list")));
+		WebElement leagueList = webDriver.waitForVisible(By.id("js-football-league-list"));
+	    Assert.assertTrue(leagueList != null);
 	}
 
 	@Then("^the competition filter list closes$")
 	public void the_competition_filter_list_closes() throws Throwable {
-	    Assert.assertTrue(webDriver.isHiddenWait(By.id("js-football-league-list")));
+	    Assert.assertTrue(webDriver.waitForHidden(By.id("js-football-league-list")));
 	}
 	
 	@When("^I click \"(.+)\"$")
 	public void I_click(String linkText) throws Throwable {
-		webDriver.clickButton(By.linkText(linkText));
+		webDriver.findElement(By.linkText(linkText)).click();
 	}
 
 	@Then("^(\\d+) days worth of (results|fixtures) should load in$")
@@ -80,7 +81,7 @@ public class FootballSteps {
 	
 	@Then("^there should be an auto-update component$")
 	public void there_should_be_an_auto_update_component() throws Throwable {
-	    webDriver.findElementWait(By.cssSelector(".update .update-text"));
+	    webDriver.waitForElement(By.cssSelector(".update .update-text"));
 	}
 
 	@Then("^auto-update should be on$")
@@ -95,7 +96,7 @@ public class FootballSteps {
 		// wait the update time
 		Thread.sleep(secs * 1000);
 	    // matches container should now have a last-updated data attribute
-		webDriver.findElementWait(By.cssSelector(".matches-container[data-last-updated]"));
+		webDriver.waitForElement(By.cssSelector(".matches-container[data-last-updated]"));
 	}
 	
 	@Then("^I click the auto-update off button$")
@@ -119,7 +120,7 @@ public class FootballSteps {
 	
 	@Then("^there should be a table component$")
 	public void there_should_be_a_table_component() throws Throwable {
-		webDriver.findElementWait(By.id("front-competition-table"));
+		webDriver.waitForElement(By.id("front-competition-table"));
 	}
 
 	@Then("^table should show the top (\\d+) teams$")
@@ -140,33 +141,33 @@ public class FootballSteps {
 
 	@Then("^there is a team \"([^\"]*)\" component$")
 	public void there_is_a_team_component(String matchesType) throws Throwable {
-	    webDriver.findElementWait(By.cssSelector(".team-" + matchesType));
+	    webDriver.waitForElement(By.cssSelector(".team-" + matchesType));
 	}
 
 	@Then("^the team's (\\d+) upcoming fixtures are shown$")
 	public void the_team_s_upcoming_fixtures_are_shown(int matchCount) throws Throwable {
-	    WebElement fixturesContainer = webDriver.findElementWait(By.cssSelector(".team-fixtures"));
+	    WebElement fixturesContainer = webDriver.waitForElement(By.cssSelector(".team-fixtures"));
 	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
 	    Assert.assertEquals(matchCount, matches.size());
 	}
 
 	@Then("^the previous result is shown$")
 	public void the_previous_result_is_shown() throws Throwable {
-		WebElement fixturesContainer = webDriver.findElementWait(By.cssSelector(".team-results"));
+		WebElement fixturesContainer = webDriver.waitForElement(By.cssSelector(".team-results"));
 	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
 	    Assert.assertEquals(1, matches.size());
 	}
 
 	@Then("^table will show the teams current position within (\\d+) rows$")
 	public void table_will_show_the_teams_current_position_within_rows(int rowsCount) throws Throwable {
-	    WebElement table = webDriver.findElementWait(By.className("table-football"));
+	    WebElement table = webDriver.waitForElement(By.className("table-football"));
 	    List<WebElement> rows = table.findElements(By.cssSelector("tbody tr"));
 	    Assert.assertEquals(rowsCount, rows.size());
 	}
 
 	@Then("^the teams row should be highlighted$")
 	public void the_teams_row_should_be_highlighted() throws Throwable {
-	    WebElement table = webDriver.findElementWait(By.className("table-football"));
+	    WebElement table = webDriver.waitForElement(By.className("table-football"));
 	    table.findElement(By.className("highlight"));
 	}
 }

@@ -1,34 +1,54 @@
-@(page: MetaData, config: common.GuardianConfiguration)
+@(page: MetaData)( implicit request:RequestHeader)
+@import conf.CommonSwitches._
 
-@defining(
-"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-    config.javascript.pageData("guardian.page.omnitureAccount"),
-    OmnitureAnalyticsData(page, "No Javascript"))
-){ omnitureCall =>
-        <noscript id="omnitureNoScript">
-            <div>
-                <img id="omnitureNoScriptImage" alt=""
-                     src='@omnitureCall' width="1" height="1" class="h" />
-            </div>
-        </noscript>
+@defining(request.host + request.path) { path =>
+
+    @defining(
+    ("http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
+        OmnitureAnalyticsData(page, "No Javascript", path)), Configuration.javascript.pageData("guardian.page.omnitureAccount"))
+    ){ case (omnitureCall, omnitureAccount) =>
+            <noscript id="omnitureNoScript">
+                <div>
+                    <img id="omnitureNoScriptImage" alt=""
+                         src="@omnitureCall" width="1" height="1" class="h" />
+                </div>
+            </noscript>
+
+        @if(OmnitureVerificationSwitch.isSwitchedOn){
+            <img id="omnitureVerificationScriptImage" alt=""
+                 src='@omnitureCall.replace(omnitureAccount, "guardiangu-frontend-dev")' width="1" height="1" class="h" />
+        }
+    }
+
+    @defining(
+        "http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
+        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
+        OmnitureAnalyticsData(page, "Partial Javascript", path))
+    ){ omnitureCall =>
+            <script>
+                @*
+                //    we do not run our javascript on some browsers, hence analytics will not run.
+                //    this does a minimal tracking for those devices
+                 *@
+                if (!guardian.isModernBrowser) {
+                    var analyticsImage = document.createElement("img");
+                    analyticsImage.src = "@omnitureCall";
+                    analyticsImage.width = "1";
+                    analyticsImage.height = "1";
+                    document.body.appendChild(analyticsImage);
+                }
+            </script>
+    }
 }
 
-@defining(
-"http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-    config.javascript.pageData("guardian.page.omnitureAccount"),
-    OmnitureAnalyticsData(page, "Partial Javascript"))
-){ omnitureCall =>
-        <script>
-            @*
-            //    we do not run our javascript on some browsers, hence analytics will not run.
-            //    this does a minimal tracking for those devices
-             *@
-            if (!guardian.isModernBrowser) {
-                var analyticsImage = document.createElement("img");
-                analyticsImage.src = "@omnitureCall";
-                analyticsImage.width = "1";
-                analyticsImage.height = "1";
-                document.body.appendChild(analyticsImage);
-            }
-        </script>
-}
+<script type="text/javascript">
+  (function () {
+    var d = new Image(1, 1);
+    d.src = ["//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
+  })();
+</script>
+<noscript>
+    <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript"
+    width="1" height="1" alt="" />
+</noscript>

@@ -2,6 +2,9 @@ define([
     'common',
     'reqwest',
     'domwrite',
+    'qwery',
+    'bonzo',
+
     'modules/userPrefs',
     'modules/detect',
     'modules/adverts/document-write',
@@ -13,6 +16,8 @@ function (
     common,
     reqwest,
     domwrite,
+    qwery,
+    bonzo,
 
     userPrefs,
     detect,
@@ -30,6 +35,8 @@ function (
     function init(c) {
         config = c;
         slots = [];
+
+        generateMiddleSlot(config);
 
         var slotHolders = document.querySelectorAll('.ad-slot'),
             size = (window.innerWidth > 810) ? 'median' : 'base';
@@ -68,6 +75,16 @@ function (
                 }
             }
         }
+
+        //This is a horrible hack to hide slot if no creative is returned from oas
+        //Check existance of empty tracking pixel
+        if(config.page.pageId === "") {
+            var middleSlot = document.getElementById('ad-slot-middle-banner-ad');
+
+            if(middleSlot.innerHTML.indexOf("x55/default/empty.gif")  !== -1) {
+                bonzo(middleSlot).hide();
+            }
+        }
     }
 
     function isOnScreen(el) {
@@ -75,6 +92,16 @@ function (
             el.offsetTop < (window.innerHeight + window.pageYOffset) &&
             (el.offsetTop + el.offsetHeight) > window.pageYOffset
         );
+    }
+
+    function generateMiddleSlot(config) {
+        //Temporary middle slot needs better implementation in the future
+        if(config.page.pageId === "") {
+            var slot =  '<div id="ad-slot-middle-banner-ad" data-link-name="ad slot middle-banner-ad"';
+                slot += ' data-base="x55" data-median="x55" class="ad-slot"><div class="ad-container"></div></div>';
+
+            bonzo(qwery('#front-trailblock-commentisfree li')[1]).after(slot);
+        }
     }
 
     return {

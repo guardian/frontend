@@ -24,10 +24,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def render() = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/matches",
+      canonicalUrl = None,
       "football/tables",
       "football",
-      "",
       "All tables",
       "GFE:Football:automatic:tables"
     )
@@ -48,10 +47,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlist() = Action { implicit request =>
 
     val page = new Page(
-      "http://www.guardian.co.uk/football/clubs",
+      Some("http://www.guardian.co.uk/football/clubs"),
       "football/teams",
       "football",
-      "",
       "All teams",
       "GFE:Football:automatic:teams"
     )
@@ -60,8 +58,10 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       table.copy(groups = table.groups)
     }
 
+    val comps = Competitions.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
+
     Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), TeamCompetitions.competitions)))
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)))
     }
   }
 
@@ -69,10 +69,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
       val page = new Page(
-        "http://www.guardian.co.uk/football/matches",
+        Some("http://www.guardian.co.uk/football/%s/tables".format(competition)),
         "football/tables",
         "football",
-        "",
         table.competition.fullName + " table",
         "GFE:Football:automatic:competition tables"
       )

@@ -1,10 +1,11 @@
 package metrics
 
+import java.io.File
 import au.com.bytecode.opencsv.CSVParser
 import com.gu.management.{ CountMetric, Metric }
-import java.io.File
 import net.sf.uadetector.UADetectorServiceFactory
 import org.apache.commons.io.input.{ TailerListenerAdapter, Tailer }
+import conf.Configuration
 
 object NginxLog {
 
@@ -139,7 +140,7 @@ object NginxLog {
   // combine all the metrics
   val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics
 
-  Tailer.create(new File(conf.Configuration.nginx.log), new TailerListenerAdapter() {
+  Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
       var fields = Array("")
       var path = Option("")

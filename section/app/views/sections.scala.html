@@ -1,6 +1,6 @@
 @(page: Page)(implicit request: RequestHeader)
 
-@main(page, Static, Configuration, Switches.all){  }{
+@main(page, Switches.all){  }{
 
     @Zones(request, Configuration).map{ zone =>
 

@@ -1,4 +1,4 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
 @import CommonSwitches.FontSwitch
 
@@ -10,10 +10,10 @@
             isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
             }, 
             curl = {
-                baseUrl: '@{config.static.path}javascripts',
+                baseUrl: '@{Configuration.static.path}javascripts',
                 apiName: 'require',
                 paths: {
-                    omniture: '@static("javascripts/vendor/omniture.js")'
+                    omniture: '@Static("javascripts/vendor/omniture.js")'
                 }
             };
 
@@ -60,17 +60,15 @@
         guardian.config = {
             page: {
 
-                @item.metaData.map{ case(key, value) => '@{JavaScriptVariableName(key)}': @{JavaScriptValue(value)}                        
-                }.mkString(","),
+                @item.metaData.map{ data => @MetadataJson(data) }.mkString(","),
 
-                @config.javascript.pageData.map{ case (key, value) =>
+                @Configuration.javascript.pageData.map{ case (key, value) =>
                     '@{JavaScriptVariableName(key.split('.').last)}': '@value'
                 }.mkString(","),
 
-                'edition': '@Edition(request, config)'
+                'edition': '@Edition(request, Configuration)'
             },
-            switches : {
-                @switches.map{ switch =>
+            switches : { @switches.map{ switch =>
                     '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
                 }.mkString(",")
             }
@@ -78,7 +76,7 @@
 
         var script = document.createElement('script');
         script.async = 'async';
-        script.src = '@static("javascripts/bootstraps/app.js")';
+        script.src = '@Static("javascripts/bootstraps/app.js")';
 
         document.getElementsByTagName("head")[0].appendChild(script); 
     

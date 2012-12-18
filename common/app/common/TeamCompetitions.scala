@@ -11,7 +11,10 @@ object TeamCompetitions {
     "Scottish Division One",
     "Scottish Division Two",
     "Scottish Division Three",
-    "La Liga"
+    "La Liga",
+    "Ligue 1",
+    "Bundesliga",
+    "Serie A"
   )
 
   // is the supplied competition a 'team' competition, i.e. does it appear in the /football/teams pgge

@@ -65,7 +65,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         browser.await()
 
         then("I should navigate to the premier league fixtures page")
-        find(".match-desc").map(_.getText) should contain("Man City v Man Utd")
+        find(".match-desc").map(_.getText) should contain("QPR v Norwich")
       }
     }
 

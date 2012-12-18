@@ -1,4 +1,4 @@
-@football
+@football @football-teams
 Feature: Football Team tag pages
 
 As a Guardian news reader
@@ -9,13 +9,13 @@ So that I can see a teams upcoming fixtures, previous result and position within
         Given I visit any Football team tag page
         Then there is a team "fixtures" component 
          And the team's 2 upcoming fixtures are shown
-         And there should be a link to "View all fixtures"
+         And there should be a link to "View all Arsenal fixtures"
 
     Scenario: Results on team tag page
         Given I visit any Football team tag page
         Then there is a team "results" component
          And the previous result is shown
-         And there should be a link to "View all results"
+         And there should be a link to "View all Arsenal results"
 
     Scenario: 5 row Football table on team tag page
         Given I visit any Football team tag page

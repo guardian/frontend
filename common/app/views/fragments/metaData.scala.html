@@ -1,22 +1,21 @@
-@(item: MetaData, config: common.GuardianConfiguration, static: StaticAssets)(implicit request: RequestHeader)
-
-    <link rel="canonical" href="@item.canonicalUrl" />
-    <link rel="shortcut icon" type="image/png" href="@static("images/favicons/32x32.ico")" />
-
-    <link rel="apple-touch-icon" sizes="144x144" href="@static("images/favicons/144x144.png")" />
-    <link rel="apple-touch-icon" sizes="114x114" href="@static("images/favicons/114x114.png")" />
-    <link rel="apple-touch-icon" sizes="72x72" href="@static("images/favicons/72x72.png")" />
-    <link rel="apple-touch-icon-precomposed" href="@static("images/favicons/57x57.png")" />
-
+@(item: MetaData)(implicit request: RequestHeader)
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
+    @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
+    <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+
+    <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
+    <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
+    <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
+    <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
 @*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/
 *@
 @if(play.Play.isDev()) {
-    @config.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
+    @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }

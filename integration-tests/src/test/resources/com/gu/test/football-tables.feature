@@ -1,4 +1,4 @@
-@football
+@football @football-tables
 Feature: Football Tables
 
 As a guardian reader 

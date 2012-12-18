@@ -1,325 +1,168 @@
 package model
 import pa._
+import common.{ Logging, AkkaSupport }
+import conf.ContentApi
+import akka.util.Duration
+import java.util.concurrent.TimeUnit._
+import com.gu.openplatform.contentapi.model.TagsResponse
+import scala.Some
+import akka.actor.Cancellable
 
-case class Team(id: String, url: String, tagName: String, shortName: String)
+case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
+  lazy val url = tag.map(_.url)
+  override lazy val name = shortName.getOrElse(team.name)
+  override lazy val id = team.id
+}
 
-object TeamMap {
+object TeamMap extends AkkaSupport with Logging {
 
-  // TODO: Sort this list by code and resolve duplicates.
+  val teamAgent = play_akka.agent(Map.empty[String, Tag])
 
-  val teams: Map[String, Team] = Map(
-    "94" -> Team("94", "/football/celtic", "Celtic", "Celtic"),
-    "84" -> Team("84", "/football/peterborough", "Peterborough", "Peterboro"),
-    "26303" -> Team("26303", "/football/realmadrid", "Real Madrid", "Real Madrid"),
-    "103" -> Team("103", "/football/burton-albion", "Burton Albion", "Burton A"),
-    "79" -> Team("79", "", "", "Halifax"),
-    "15" -> Team("15", "/football/nottinghamforest", "", "Nottm Forest"),
-    "208" -> Team("208", "", "", "Gainsboro"),
-    "103" -> Team("103", "/football/brightonfootball", "Brighton & Hove Albion", "Brighton"),
-    "38299" -> Team("38299", "/football/shakhtardonetsk", "Shakhtar Donetsk", "Shakhtar"),
-    "6997" -> Team("6997", "/football/spartakmoscow", "Spartak Moscow", "Spartak"),
-    "1006" -> Team("1006", "/football/arsenal", "Arsenal", "Arsenal"),
-    "215" -> Team("215", "/football/morecambe", "Morecambe", "Morecambe"),
-    "41" -> Team("41", "/football/watford", "Watford", "Watford"),
-    "44" -> Team("44", "/football/wolves", "Wolverhampton Wanderers", "Wolves"),
-    "23" -> Team("23", "/football/bournemouth", "Bournemouth", "Bournemouth"),
-    "95" -> Team("95", "/football/dundee", "Dundee", "Dundee"),
-    "48" -> Team("48", "/football/brentford", "Brentford", "Brentford"),
-    "51" -> Team("51", "/football/bury", "Bury", "Bury"),
-    "59" -> Team("59", "/football/northampton", "Northampton", "Northampton"),
-    "2" -> Team("2", "/football/aston-villa", "Aston Villa", "Aston Villa"),
-    "26316" -> Team("26316", "/football/valencia", "Valencia", "Valencia"),
-    "103" -> Team("103", "/football/westbrom", "West Bromwich Albion", "West Brom"),
-    "104" -> Team("104", "/football/alloa", "Alloa", "Alloa"),
-    "35475" -> Team("35475", "", "", "Gloucester"),
-    "18890" -> Team("18890", "", "", "Guiseley"),
-    "17" -> Team("17", "/football/sheffieldwednesday", "", "Sheff Wed"),
-    "20" -> Team("20", "/football/mkdons", "", "MK Dons"),
-    "13732" -> Team("13732", "", "", "Harrogate"),
-    "116" -> Team("116", "/football/arbroath", "Arbroath", "Arbroath"),
-    "4" -> Team("4", "/football/chelsea", "Chelsea", "Chelsea"),
-    "34" -> Team("34", "/football/plymouthargyle", "Plymouth Argyle", "Plymouth"),
-    "72" -> Team("72", "/football/carlisle", "Carlisle", "Carlisle"),
-    "74" -> Team("74", "/football/colchester", "Colchester", "Cochester"),
-    "95" -> Team("95", "/football/dundeeunited", "Dundee United", "Dundee Utd"),
-    "98" -> Team("98", "/football/hearts", "Hearts", "Hearts"),
-    "6" -> Team("6", "/football/coventrycity", "Coventry City", "Coventry"),
-    "35" -> Team("35", "/football/portvale", "Port Vale", "Port Vale"),
-    "8" -> Team("8", "/football/everton", "Everton", "Everton"),
-    "55" -> Team("55", "/football/fulham", "Fulham", "Fulham"),
-    "9" -> Team("9", "/football/liverpool", "Liverpool", "Liverpool"),
-    "38276" -> Team("38276", "/football/zenitstpetersburg", "Zenit St Petersburg", "Zenit"),
-    "105" -> Team("105", "/football/ayr", "Ayr", "Ayr"),
-    "10186" -> Team("10186", "", "", "Hinckley"),
-    "19786" -> Team("19786", "", "", "Histon"),
-    "37" -> Team("37", "/football/sheffieldunited", "", "Sheff Utd"),
-    "13361" -> Team("13361", "", "", "Oxford City"),
-    "179" -> Team("179", "", "", "Dag & Red"),
-    "33" -> Team("33", "/football/oxford-united", "", "Oxford Utd"),
-    "49567" -> Team("49567", "", "", "Telford"),
-    "118" -> Team("118", "/football/brechin", "Brechin", "Brechin"),
-    "26238" -> Team("26238", "/football/aiksolna", "AIK Solna", "AIK"),
-    "26313" -> Team("26313", "/football/athleticbilbao", "Athletic Bilbao", "A Bilbao"),
-    "31" -> Team("31", "/football/newcastleunited", "Newcastle United", "Newcastle"),
-    "85" -> Team("85", "/football/rochdale", "Rochdale", "Rochdale"),
-    "63" -> Team("63", "/football/rotherham", "Rotherham", "Rotherham"),
-    "188" -> Team("188", "/football/crawley-town", "Crawley Town", "Crawley"),
-    "54" -> Team("54", "/football/crewealexandra", "Crewe Alexandra", "Crewe"),
-    "99" -> Team("99", "/football/hibernian", "Hibernian", "Hibernian"),
-    "123" -> Team("123", "/football/kilmarnock", "Kilmarnock", "Kilmarnock"),
-    "100" -> Team("100", "/football/motherwell", "Motherwell", "Motherwell"),
-    "6794" -> Team("6794", "/football/doncaster", "Doncaster Rovers", "Doncaster"),
-    "80" -> Team("80", "/football/hartlepool", "Hartlepool", "Hartlepool"),
-    "57" -> Team("57", "/football/leytonorient", "Leyton Orient", "Leyton Orient"),
-    "60" -> Team("60", "/football/nottscounty", "Notts County", "Notts County"),
-    "32" -> Team("32", "/football/oldham", "Oldham", "Oldham"),
-    "88" -> Team("88", "/football/southend", "Southend", "Southend"),
-    "14" -> Team("14", "/football/norwichcity", "Norwich City", "Norwich"),
-    "26256" -> Team("26256", "/football/bayerleverkusen", "Bayer Leverkusen", "Leverkusen"),
-    "121" -> Team("121", "/football/eastfife", "East Fife", "East Fife"),
-    "1205" -> Team("1205", "", "", "Alfreton"),
-    "473" -> Team("473", "", "", "Solihull"),
-    "135" -> Team("135", "", "", "Barrow"),
-    "109" -> Team("109", "/football/forfar", "Forfar", "Forfar"),
-    "26340" -> Team("26340", "/football/bordeaux", "Bordeaux", "Bordeaux"),
-    "26282" -> Team("26282", "/football/clubbrugge", "Club Brugge", "Club Brugge"),
-    "16" -> Team("16", "/football/qpr", "QPR", "QPR"),
-    "90" -> Team("90", "/football/torquay-united", "Torquay United", "Torquay"),
-    "36" -> Team("36", "/football/portsmouth", "Portsmouth", "Portsmouth"),
-    "848" -> Team("848", "/football/rosscounty", "Ross County", "Ross County"),
-    "61" -> Team("61", "/football/preston", "Preston North End", "Preston"),
-    "153" -> Team("153", "/football/wycombe", "Wycombe", "Wycombe"),
-    "62" -> Team("62", "/football/reading", "Reading", "Reading"),
-    "38305" -> Team("38305", "/football/dniprodnipropetrovsk", "Dnipro Dnipropetrovsk", "Dnipro"),
-    "127" -> Team("127", "/football/stenhousemuir", "Stenhousemuir", "Stenhousemuir"),
-    "9262" -> Team("9262", "", "", "Braintree"),
-    "221" -> Team("221", "", "", "Stalybridge"),
-    "71" -> Team("71", "", "", "Cambridge"),
-    "129" -> Team("129", "/football/stranraer", "Stranraer", "Stranraer"),
-    "26412" -> Team("26412", "/football/fccopenhagen", "FC Copenhagen", "Copenhagen"),
-    "18" -> Team("18", "/football/southampton", "Southampton", "Southampton"),
-    "92" -> Team("92", "/football/york-city", "York City", "York"),
-    // "92" -> Team("92", "/football/newyorkredbulls", "New York Red Bulls", "NY Red Bulls"),
-    "87" -> Team("87", "/football/scunthorpe", "Scunthorpe", "Scunthorpe"),
-    "115" -> Team("115", "/football/stjohnstone", "St Johnstone", "St Johnstone"),
-    "64" -> Team("64", "/football/shrewsbury", "Shrewsbury", "Shrewsbury"),
-    "102" -> Team("102", "/football/stmirren", "St Mirren", "St Mirren"),
-    "38" -> Team("38", "/football/stokecity", "Stoke City", "Stoke"),
-    "26284" -> Team("26284", "/football/krc-genk", "Genk", "Genk"),
-    "17635" -> Team("17635", "/football/annan-athletic", "Annan Athletic", "Annan"),
-    "10208" -> Team("10208", "", "", "Dartford"),
-    "24612" -> Team("24612", "", "", "Vauxhall"),
-    "7813" -> Team("7813", "", "", "Ebbsfleet"),
-    "117" -> Team("117", "/football/berwick", "Berwick", "Berwick"),
-    "35999" -> Team("35999", "/football/hapoeltelaviv", "Hapoel Tel Aviv", "Hapoel"),
-    "7520" -> Team("7520", "/football/helsingborg", "Helsingborg", "Helsingborg"),
-    "26362" -> Team("26362", "/football/lazio", "Lazio", "Lazio"),
-    "39" -> Team("39", "/football/sunderland", "Sunderland", "Sunderland"),
-    "78" -> Team("78", "/football/grimsby", "Grimsby", "Grimsby"),
-    "119" -> Team("119", "/football/cowdenbeath", "Cowdenbeath", "Cowdenbeath"),
-    "1073" -> Team("1073", "/football/stevenage", "Stevenage", "Stevenage"),
-    "120" -> Team("120", "/football/dumbarton", "Dumbarton", "Dumbarton"),
-    "97" -> Team("97", "/football/dunfermline", "Dunfermline", "Dunfermline"),
-    "81" -> Team("81", "/football/hereford", "Hereford", "Hereford"),
-    "65" -> Team("65", "/football/swansea", "Swansea City", "Swansea"),
-    "37454" -> Team("37454", "/football/levante", "Levante", "Levante"),
-    "106" -> Team("106", "/football/clyde", "Clyde", "Clyde"),
-    "5945" -> Team("5945", "", "", "Forest Green"),
-    "6907" -> Team("6907", "", "", "Worcester"),
-    "209" -> Team("209", "", "", "Gateshead"),
-    "122" -> Team("122", "/football/eaststirling", "East Stirling", "East Stirling"),
-    "26345" -> Team("26345", "/football/lyon", "Lyon", "Lyon"),
-    "26344" -> Team("26344", "/football/marseille", "Marseille", "Marseille"),
-    "26370" -> Team("26370", "/football/napoli", "Napoli", "Napoli"),
-    "7013" -> Team("7013", "/football/panathinaikos", "Panathinaikos", "Panathinaikos"),
-    "6935" -> Team("6935", "/football/partizanbelgrade", "Partizan Belgrade", "Partizan"),
-    "19" -> Team("19", "/football/tottenham-hotspur", "Tottenham Hotspur", "Spurs"),
-    "10" -> Team("10", "/football/lutontown", "Luton Town", "Luton"),
-    "108" -> Team("108", "/football/falkirk", "Falkirk", "Falkirk"),
-    "40" -> Team("40", "/football/swindon", "Swindon", "Swindon"),
-    "110" -> Team("110", "/football/hamilton", "Hamilton", "Hamilton"),
-    "111" -> Team("111", "/football/livingston", "Livingston", "Livingston"),
-    "145" -> Team("145", "/football/macclesfield", "Macclesfield", "Macclesfield"),
-    "43" -> Team("43", "/football/westhamunited", "West Ham United", "West Ham"),
-    "38336" -> Team("38336", "/football/viktoria-plzen", "Viktoria Plzen", "Viktoria"),
-    "7558" -> Team("7558", "/football/elgin", "Elgin", "Elgin"),
-    "212" -> Team("212", "", "", "Hyde"),
-    "155" -> Team("155", "", "", "Kidderminster"),
-    "82" -> Team("82", "", "", "Lincoln"),
-    "7085" -> Team("7085", "", "", "Workington"),
-    "19337" -> Team("19337", "", "", "Newport"),
-    "124" -> Team("124", "/football/montrose", "Montrose", "Montrose"),
-    "26321" -> Team("26321", "/football/psveindhoven", "PSV Eindhoven", "PSV"),
-    "68" -> Team("68", "/football/wiganathletic", "Wigan Athletic", "Wigan"),
-    "58" -> Team("58", "/football/mansfield", "Mansfield", "Mansfield"),
-    "112" -> Team("112", "/football/morton", "Morton", "Morton"),
-    "66" -> Team("66", "/football/tranmere", "Tranmere", "Tranmere"),
-    "113" -> Team("113", "/football/partick", "Partick", "Partick"),
-    "91" -> Team("91", "/football/wrexham", "Wrexham", "Wrexham"),
-    "21" -> Team("21", "/football/barnsley", "Barnsley", "Barnsley"),
-    "26405" -> Team("26405", "/football/rapidvienna", "Rapid Vienna", "Rapid Vienna"),
-    "7596" -> Team("7596", "/football/peterhead", "Peterhead", "Peterhead"),
-    "7120" -> Team("7120", "", "", "Nuneaton"),
-    "51830" -> Team("51830", "", "", "Hornchurch"),
-    "220" -> Team("220", "", "", "Southport"),
-    "126" -> Team("126", "/football/queenspark", "Queen's Park", "Queen's Park"),
-    "26374" -> Team("26374", "/football/rosenborg", "Rosenborg", "Rosenborg"),
-    "45" -> Team("45", "/football/birminghamcityfc", "Birmingham City", "Birmingham"),
-    "93" -> Team("93", "/football/aberdeen", "Aberdeen", "Aberdeen"),
-    "114" -> Team("114", "/football/raith", "Raith Rovers", "Raith"),
-    "67" -> Team("67", "/football/walsall", "Walsall", "Walsall"),
-    "22" -> Team("22", "/football/blackburn", "Blackburn Rovers", "Blackburn"),
-    "46218" -> Team("46218", "/football/rubin-kazan", "Rubin Kazan", "Rubin Kazan"),
-    "101" -> Team("101", "/football/rangers", "Rangers", "Rangers"),
-    "89" -> Team("89", "", "", "Stockport"),
-    "7087" -> Team("7087", "", "", "Tamworth"),
-    "6889" -> Team("6889", "", "", "Basingstoke"),
-    "702" -> Team("702", "", "", "Woking"),
-    "160" -> Team("160", "", "", "Bromley"),
-    "128" -> Team("128", "/football/stirling", "Stirling", "Stirling"),
-    "7425" -> Team("7425", "/football/spartaprague", "Sparta Prague", "Sparta Prague"),
-    "46" -> Team("46", "/football/blackpool", "Blackpool", "Blackpool"),
-    "6870" -> Team("6870", "/football/yeoviltown", "Yeovil Town", "Yeovil"),
-    "47" -> Team("47", "/football/boltonwanderers", "Bolton Wanderers", "Bolton"),
-    "26268" -> Team("26268", "/football/sporting-braga", "Sporting Braga", "SC Braga"),
-    "128" -> Team("128", "/football/eaststirling", "East Stirling", "East Stirling"),
-    "186" -> Team("186", "", "", "Chelmsford"),
-    "96" -> Team("96", "", "", "Dundee Utd"),
-    "58547" -> Team("58547", "", "", ""),
-    "7808" -> Team("7808", "", "", "Bath"),
-    "875" -> Team("875", "", "", "Blyth"),
-    "1456" -> Team("1456", "", "", "Inverness"),
-    "190" -> Team("190", "", "", "Dorchester"),
-    "144" -> Team("144", "/football/kettering-town", "Kettering Town", "Kettering"),
-    "26268" -> Team("26268", "/football/sporting-lisbon", "Sporting Lisbon", "Sporting CP"),
-    "6795" -> Team("6795", "/football/brightonfootball", "Brighton & Hove Albion", "Brighton"),
-    "1204" -> Team("1204", "/football/accringtonstanley", "Accrington Stanley", "Accrington"),
-    "49" -> Team("49", "/football/bristolcity", "Bristol City", "Bristol City"),
-    "26268" -> Team("26268", "/football/sportinggijon", "Sporting Gijón", "Gijon"),
-    "9213" -> Team("9213", "/football/dagenhamandredbridge", "Dagenham & Redbridge", "Dag & Red"),
-    "191" -> Team("191", "", "", "Dover"),
-    "45938" -> Team("45938", "", "", "Airdrie"),
-    "61603" -> Team("61603", "", "", "???"),
-    "7066" -> Team("7066", "", "", "Billericay"),
-    "61650" -> Team("61650", "", "", "???"),
-    "19307" -> Team("19307", "", "", "Boreham Wood"),
-    "125" -> Team("125", "", "", "QOS FC"),
-    "13754" -> Team("13754", "", "", "Eastbourne"),
-    "26320" -> Team("26320", "/football/ajax", "Ajax", "Ajax"),
-    "26360" -> Team("26360", "/football/udinese", "Udinese", "Udinese"),
-    "26458" -> Team("26458", "/football/young-boys-berne", "Young Boys", "Young Boys"),
-    "70" -> Team("70", "/football/burnley", "Burnley", "Burnley"),
-    "45987" -> Team("45987", "/football/afc-wimbledon", "AFC Wimbledon", "Wimbledon"),
-    "52" -> Team("52", "/football/cardiffcity", "Cardiff City", "Cardiff"),
-    "27461" -> Team("27461", "", "", "Academica"),
-    "11" -> Team("11", "/football/manchestercity", "", "Man City"),
-    "12" -> Team("12", "/football/manchester-united", "", "Man Utd"),
-    "26291" -> Team("26291", "/football/anderlecht", "Anderlecht", "Anderlecht"),
-    "10894" -> Team("10894", "", "", "Eastleigh"),
-    "133" -> Team("133", "", "", "Altrincham"),
-    "12712" -> Team("12712", "", "", "East Thurrock"),
-    "6245" -> Team("6245", "", "", "Bishop's Stortford"),
-    "11667" -> Team("11667", "", "", "t"),
-    "23510" -> Team("23510", "", "", "Havant"),
-    "55986" -> Team("55986", "", "", "Hayes"),
-    "26300" -> Team("26300", "/football/barcelona", "Barcelona", "Barcelona"),
-    "42" -> Team("42", "/football/westbrom", "", "West Brom"),
-    "43483" -> Team("43483", "", "", "AEL"),
-    "3" -> Team("3", "/football/charltonathletic", "Charlton Athletic", "Charlton"),
-    "5" -> Team("5", "/football/crystalpalace", "Crystal Palace", "C Palace"),
-    "6886" -> Team("6886", "/football/aldershottownfootball", "Aldershot Town", "Aldershot"),
-    "7" -> Team("7", "/football/derbycounty", "Derby County", "Derby"),
-    "42007" -> Team("42007", "", "", "Anzhi"),
-    "26305" -> Team("26305", "", "", "Atlético"),
-    "26398" -> Team("26398", "", "", "Basle"),
-    "38272" -> Team("38272", "/football/bate-borisov", "Bate Borisov", "BATE"),
-    "26247" -> Team("26247", "/football/bayernmunich", "Bayern Munich", "Bayern"),
-    "26274" -> Team("26274", "/football/benfica", "Benfica", "Benfica"),
-    "26261" -> Team("26261", "/football/borussiadortmund", "Borussia Dortmund", "Dortmund"),
-    "26269" -> Team("26269", "/football/sporting-braga", "Sporting Braga", "SC Braga"),
-    "12679" -> Team("12679", "", "", "Maidenhead"),
-    "136" -> Team("136", "", "", "Boston"),
-    "9251" -> Team("9251", "", "", "Nantwich"),
-    "10189" -> Team("10189", "", "", "Brackley"),
-    "469" -> Team("469", "", "", "Salisbury"),
-    "32166" -> Team("32166", "/football/dinamozagreb", "Dinamo Zagreb", "D Zagreb"),
-    "26259" -> Team("26259", "", "", "M'gladbach"),
-    "26451" -> Team("26451", "/football/galatasaray", "Galatasaray", "Galatasary"),
-    "32309" -> Team("32309", "", "", "Hannover"),
-    "134" -> Team("134", "/football/barnet", "Barnet", "Barnet"),
-    "56055" -> Team("56055", "", "", "H Kiryat Shmona"),
-    "56" -> Team("56", "/football/huddersfield", "Huddersfield", "Huddersfield"),
-    "26359" -> Team("26359", "/football/juventus", "Juventus", "Juventus"),
-    "38302" -> Team("38302", "", "", "FC Metalist"),
-    "12671" -> Team("12671", "", "", "Staines"),
-    "13730" -> Team("13730", "", "", "Bradford PA"),
-    "61651" -> Team("61651", "", "", "????"),
-    "53" -> Team("53", "", "", "Chester"),
-    "150" -> Team("150", "", "", "Sutton"),
-    "26322" -> Team("26322", "", "", "Twente"),
-    "27372" -> Team("27372", "/football/lille", "Lille", "Lille"),
-    "26" -> Team("26", "/football/hullcity", "Hull City", "Hull"),
-    "6136" -> Team("6136", "", "", "Inter"),
-    "7757" -> Team("7757", "", "", "Maribor"),
-    "26267" -> Team("26267", "", "", "Maritimo"),
-    "24" -> Team("24", "/football/bradford", "Bradford", "Bradford City"),
-    "26377" -> Team("26377", "", "", "Molde"),
-    "27" -> Team("27", "/football/ipswichtown", "Ipswich Town", "Ipswich"),
-    "28" -> Team("28", "/football/leedsunited", "Leeds United", "Leeds"),
-    "26351" -> Team("26351", "/football/montpellier-football-team", "Montpellier", "Montpellier"),
-    "26449" -> Team("26449", "", "", "Fenerbahce"),
-    "10202" -> Team("10202", "", "", "Tonbridge"),
-    "884" -> Team("884", "", "", "Colwyn"),
-    "26264" -> Team("26264", "", "", "Porto"),
-    "478" -> Team("478", "", "", "Stourbridge"),
-    "61625" -> Team("61625", "", "", "????"),
-    "27826" -> Team("27826", "", "", "Malaga"),
-    "10197" -> Team("10197", "", "", "Corby"),
-    "26368" -> Team("26368", "", "", "AC Milan"),
-    "10883" -> Team("10883", "", "", "Truro"),
-    "152" -> Team("152", "", "", "Welling"),
-    "10215" -> Team("10215", "", "", "Weston-S-Mare"),
-    "10886" -> Team("10886", "", "", "Totton"),
-    "29" -> Team("29", "/football/leicestercity", "Leicester City", "Leicester"),
-    "38366" -> Team("38366", "", "", "Neftchi"),
-    "50" -> Team("50", "/football/bristolrovers", "Bristol Rovers", "Bristol Rovers"),
-    "6901" -> Team("6901", "", "", "Steaua"),
-    "30" -> Team("30", "/football/middlesbrough", "Middlesbrough", "Middlesboro"),
-    "9232" -> Team("9232", "", "", "Arlesey"),
-    "49647" -> Team("49647", "", "", "CFR Cluj"),
-    "18860" -> Team("18860", "", "", "Droylsden"),
-    "7897" -> Team("7897", "", "", "Olympiacos"),
-    "26339" -> Team("26339", "", "", "PSG"),
-    "7012" -> Team("7012", "", "", "Dynamo Kiev"),
-    "43136" -> Team("43136", "", "", "Nordsjaelland"),
-    "13" -> Team("13", "/football/millwall", "Millwall", "Millwall"),
-    "26250" -> Team("26250", "", "", "Stuttgart"),
-    "38429" -> Team("38429", "", "", "Videoton"),
-    "184" -> Team("184", "/football/burton-albion", "Burton Albion", "Albion"),
-    "26249" -> Team("26249", "", "", "Schalke"),
-    "137" -> Team("137", "/football/cheltenham", "Cheltenham", "Cheltenham"),
-    "73" -> Team("73", "/football/chesterfield", "Chesterfield", "Chesterfield"),
-    "76" -> Team("76", "/football/exetercityfc", "Exeter City", "Exeter"),
-    "11899" -> Team("11899", "/football/fleetwood-town", "Fleetwood Town", "Fleetwood"),
-    "77" -> Team("77", "/football/gillingham", "Gillingham", "Gillingham")
+  private var schedule: Option[Cancellable] = None
+
+  // teamId -> manually curated short name
+  val shortNames = Map(
+    "19" -> "Spurs",
+    "5" -> "C Palace",
+    "30" -> "Middlesboro",
+    "84" -> "Peterboro",
+    "44" -> "Wolves",
+    "20" -> "MK Dons",
+    "74" -> "Cochester",
+    "188" -> "Crawley",
+    "45987" -> "Wimbledon",
+    "24" -> "Bradford City",
+    "11899" -> "Fleetwood",
+    "1204" -> "Accrington",
+    "184" -> "Albion",
+    "49567" -> "Telford",
+    "1205" -> "Alfreton",
+    "71" -> "Cambridge",
+    "7813" -> "Ebbsfleet",
+    "82" -> "Lincoln",
+    "19337" -> "Newport",
+    "9262" -> "Braintree",
+    "89" -> "Stockport",
+    "1456" -> "Inverness",
+    "96" -> "Dundee Utd",
+    "45938" -> "Airdrie",
+    "125" -> "QOS FC",
+    "17635" -> "Annan",
+    "128" -> "East Stirling",
+    "13732" -> "Harrogate",
+    "79" -> "Halifax",
+    "136" -> "Boston",
+    "208" -> "Gainsboro",
+    "53" -> "Chester",
+    "13730" -> "Bradford PA",
+    "884" -> "Colwyn",
+    "10186" -> "Hinckley",
+    "473" -> "Solihull",
+    "24612" -> "Vauxhall",
+    "10883" -> "Truro",
+    "10202" -> "Tonbridge",
+    "7808" -> "Bath",
+    "11667" -> "t",
+    "150" -> "Sutton",
+    "12671" -> "Staines",
+    "23510" -> "Havant",
+    "13754" -> "Eastbourne",
+    "12679" -> "Maidenhead",
+    "55986" -> "Hayes",
+    "51830" -> "Hornchurch",
+    "32166" -> "D Zagreb",
+    "26264" -> "Porto",
+    "26249" -> "Schalke",
+    "38276" -> "Zenit",
+    "26261" -> "Dortmund",
+    "38299" -> "Shakhtar",
+    "43136" -> "Nordsjaelland",
+    "26247" -> "Bayern",
+    "6997" -> "Spartak",
+    "49647" -> "CFR Cluj",
+    "26451" -> "Galatasary",
+    "26269" -> "SC Braga",
+    "42007" -> "Anzhi",
+    "35999" -> "Hapoel",
+    "26305" -> "Atlético",
+    "38336" -> "Viktoria",
+    "26259" -> "M'gladbach",
+    "26250" -> "Stuttgart",
+    "6901" -> "Steaua",
+    "26412" -> "Copenhagen",
+    "38429" -> "Videoton",
+    "26268" -> "Gijon",
+    "6136" -> "Inter",
+    "6935" -> "Partizan",
+    "56055" -> "H Kiryat Shmona",
+    "26313" -> "A Bilbao",
+    "38302" -> "FC Metalist",
+    "26256" -> "Leverkusen",
+    "32309" -> "Hannover",
+    "7520" -> "Helsingborg",
+    "26322" -> "Twente"
   )
 
-  def getTeamWithName(team: String): Option[Team] = {
-    teams find { case (k, v) => v.url.endsWith(team) } map { _._2 }
+  def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
+
+  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == ("football/" + name)).map(_._1)
+
+  def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
+
+  def startup() {
+    schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+      incrementalRefresh(1) //pages are 1 based
+    })
   }
 
-  def apply(team: FootballTeam): Option[Team] = {
-    teams.get(team.id)
+  def shutdown() {
+    schedule.foreach(_.cancel())
+    teamAgent.close()
   }
 
+  private def incrementalRefresh(page: Int) {
+    log.info("Refreshing team tag mappings - page " + page)
+    teamAgent.sendOff { old =>
+      val response: TagsResponse = ContentApi.tags
+        .page(page)
+        .pageSize(50)
+        .referenceType("pa-football-team")
+        .showReferences("pa-football-team")
+        .response
+
+      if (response.pages > page) {
+        incrementalRefresh(page + 1)
+      }
+
+      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
+      old ++ tagReferences
+    }
+  }
 }
 
 object TeamUrl {
-  def apply(team: FootballTeam): String = TeamMap(team).map(_.url).getOrElse("#")
-  def apply(team: Team): String = team.url
+  def apply(team: FootballTeam): Option[String] = TeamMap(team).url
 }
 
 object TeamName {
-  def apply(team: FootballTeam): String = TeamMap(team).map(_.shortName).getOrElse(team.name)
-  def apply(team: Team): String = team.shortName
+  def apply(team: FootballTeam) = {
+    TeamMap.shortNames.get(team.id).getOrElse(team.name)
+  }
+}
+
+// if we have tags for the matches we can make a sensible url for it
+object MatchUrl {
+  def apply(theMatch: FootballMatch): String = {
+    val home = TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
+    val away = TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
+    (home, away) match {
+      case (Some(homeTeam), Some(awayTeam)) =>
+        "/football/match/%s/%s-v-%s".format(
+          theMatch.date.toString("yyyy/MMM/dd").toLowerCase,
+          homeTeam.replace("/football/", ""),
+          awayTeam.replace("/football/", "")
+        )
+      case _ => "/football/match/%s".format(theMatch.id)
+    }
+  }
 }

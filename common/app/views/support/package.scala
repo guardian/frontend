@@ -5,6 +5,7 @@ import java.net.URLEncoder._
 import model._
 import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -15,6 +16,7 @@ import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
+import conf.Configuration
 
 sealed trait Style {
   val className: String
@@ -31,6 +33,14 @@ object Thumbnail extends Style { val className = "with-thumbnail" }
  * trails only display headline
  */
 object Headline extends Style { val className = "headline-only" }
+
+object MetadataJson {
+
+  def apply(data: (String, Any)): String = data match {
+    case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
+    case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
+  }
+}
 
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
@@ -171,15 +181,6 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-// beta.guardian.co.uk goes in A group
-// test.guardian.co.uk goes in B group
-object ABTest {
-  def apply(implicit request: RequestHeader) = new {
-    val isB = request.getQueryString("host").map(_ == "test").getOrElse(request.host.contains("frontend-router-prod"))
-    val isA = !isB
-  }
-}
-
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -195,7 +196,7 @@ object ContributorLinks {
 }
 
 object OmnitureAnalyticsData {
-  def apply(page: MetaData, jsSupport: String): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
 
     val data = page.metaData.map { case (key, value) => key -> value.toString }
     val pageCode = data.get("page-code").getOrElse("")
@@ -211,8 +212,11 @@ object OmnitureAnalyticsData {
 
     val pageName = page.analyticsName
     val analyticsData = Map(
+      "g" -> path,
       "ns" -> "guardian",
       "pageName" -> pageName,
+      // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
+      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,
@@ -278,4 +282,8 @@ object cleanTrailText {
   def apply(text: String): Html = {
     `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
+}
+
+object StripHtmlTags {
+  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }

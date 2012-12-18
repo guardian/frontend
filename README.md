@@ -3,23 +3,21 @@ Frontend
 
 The Guardian website frontend.
 
+New developers quick-start
+===========================
 
-Getting started for new developers
-----------------------------------
 Frontend is a set of Play Framework 2 Scala applications.
-
-To start the play development environment, run the provided `sbt011` script
-in the source tree root. This starts the Play Framework console.
 
 Requirements
 ------------
 
- * [Node.js](http://nodejs.org) (if you're having issues, try installing it with a [package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) 
+    * A Mac or Linux pc
+    * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 Configuration
 -------------
 
-You'll need a config file in _/etc/gu/install_vars_ as follows :-
+You'll need a config file called _/etc/gu/install_vars_ with the following content :-
 
 ```
 STAGE=DEV
@@ -27,11 +25,12 @@ INT_SERVICE_DOMAIN=gudev.gnl
 EXT_SERVICE_DOMAIN=
 ```
 
-And one for each application in _~/.gu_, for example _~/.gu/frontend-article.properties_ :-
+And one called _~/.gu/frontend.properties_, ( alternatively _/gu/etc/frontend.properties_ ) with the following content :-
 
 ```
-content.api.key=xxx
-content.api.host=http://xxx.guardianapis.com/api
+content.api.key=XXXX
+content.api.host=http://XXXX
+pa.api.key=XXXX
 ```
 
 Get the correct key and host from another developer on the project.
@@ -39,21 +38,27 @@ Get the correct key and host from another developer on the project.
 Running
 -------
 
-Change to the project of interest using the `project <name>` command. Then use
-the `compile` command to compile the software, `test` to execute test suites.
+Assuming you have checked out this project, open a console and change directory into the root of the project.
 
-Start the Play application locally using `run` at the console. You can
-inspect it at `http://localhost:9000`. Play supports recompilation on browser
-refresh so you can edit the code in your IDE and F5 refresh to see your
-changes.
+Start Simple Build Tool (sbt) by running `./sbt011 --no-proxy`
+
+Once sbt is running (it may take a while first time) then compile the project by typing `compile` (also can take a while first time)
+
+Switch project by typing `project dev-build`
+
+Now start the local server by typing `run` (this too will take long the first time)
+
+Now test you are up and running by hitting the following URLs:
+   * http://localhost:9000/books
+   * http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson
+   * http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery
+
 
 To use in Eclipse, use the `eclipsify` command. This will create Eclipse
 project and settings files which can be imported using the Import Existing
 Project options in Eclipse.
 
-To use in IntelliJ, use the `gen-idea` command from the. This will create
-IntelliJ project directories. The source tree can be opened directly as 
-a project in IntelliJ.
+To use in IntelliJ, see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].
 

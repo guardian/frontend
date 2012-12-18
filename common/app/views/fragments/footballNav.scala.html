@@ -2,7 +2,7 @@
 @import common._
 
 <h3 class="article-zone type-1">
-    <a class="zone-color" href="@competitionUrl.getOrElse("/football")" data-link-name"football index">@competitionName.getOrElse("Football")</a>
+    <a class="zone-color" href="@competitionUrl.getOrElse("/football")" data-link-name="football index">@competitionName.getOrElse("Football")</a>
 </h3>
 <div class="box-indent">
     <div class="sections cf football-nav" data-link-name="football bottom nav">
@@ -26,7 +26,7 @@
                     Link(urlBase + "/results", "results", "Results")
                 )
 
-                if(!List("Scottish Cup", "Capital One Cup", "FA Cup").contains(competitionName.getOrElse(""))) {                
+                if(!competitionName.getOrElse("").contains("Cup")) {                
                     if (urlBase == "/football") {
                       linkList ::= Link(urlBase + "/tables", "tables", "Tables")
                     } else {

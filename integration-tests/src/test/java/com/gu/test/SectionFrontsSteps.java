@@ -42,13 +42,13 @@ public class SectionFrontsSteps {
 		List<WebElement> hiddenTrails = hiddenTrailblock.findElements(By.className("trail"));
 		Assert.assertTrue(hiddenTrails.size() <= numOfTopStories);
 		// make sure they're hidden
-		Assert.assertEquals("0px", hiddenTrailblock.getCssValue("max-height"));
+		Assert.assertEquals("0", hiddenTrailblock.getCssValue("max-height").replace("px", ""));
 	}
 	
 	protected WebElement findTrailblock(String name) {
 		// get the trailblock associated with this sub-section
 		return webDriver.findElement(
-			By.xpath("//section[.//h1/text()='" + name + "']/div[contains(@class, 'trailblock')]")
+			By.xpath("//section[.//h1//text()[contains(.,'" + name + "')]]/div[contains(@class, 'trailblock')]")
 		);
 	}
 	

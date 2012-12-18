@@ -44,10 +44,15 @@
     })
 
     test('JSONP', function (complete) {
+      // stub callback prefix
+      reqwest.getcallbackPrefix = function (id) {
+        return 'reqwest_' + id
+      }
       ajax({
         url: '/tests/fixtures/fixtures_jsonp.jsonp?callback=?',
         type: 'jsonp',
         success: function (resp) {
+          console.log('RESPONSE IS', resp)
           ok(resp, 'received response for unique generated callback')
           ok(resp && resp.boosh == "boosh", "correctly evaluated response for unique generated callback as JSONP")
           complete()
@@ -276,6 +281,65 @@
         }
       })
     })
+  })
+
+  sink('Cross-origin Resource Sharing', function(test, ok) {
+
+    var supportsCors = window.XMLHttpRequest && ("withCredentials" in new window.XMLHttpRequest)
+
+    test('make request to another origin', 1, function() {
+      ajax({
+        url: 'http://localhost:5678/get-value',
+        type: 'text',
+        method: 'get',
+        crossOrigin: true,
+        complete: function (resp) {
+          if (supportsCors)
+            ok(resp.responseText === 'hello', 'request made successfully')
+          else
+            ok(true, 'browser does not support Cross-Origin Resource Sharing')
+        }
+      })
+    })
+
+    test('set cookie on other origin', 2, function() {
+      ajax({
+        url: 'http://localhost:5678/set-cookie',
+        type: 'text',
+        method: 'get',
+        crossOrigin: true,
+        withCredentials: true,
+        before: function (http) {
+          if (supportsCors)
+            ok(http.withCredentials === true, 'has set withCredentials on connection object')
+          else
+            ok(true, 'browser does not support Cross-Origin Resource Sharing')
+        },
+        complete: function (resp) {
+          if (supportsCors)
+            ok(resp.status === 200, 'cookie set successfully')
+          else
+            ok(true, 'browser does not support Cross-Origin Resource Sharing')
+        }
+      })
+    })
+
+    test('get cookie from other origin', 1, function() {
+      ajax({
+          url: 'http://localhost:5678/get-cookie-value',
+          type: 'text',
+          method: 'get',
+          crossOrigin: true,
+          withCredentials: true,
+          complete: function (resp) {
+            if (supportsCors)
+              ok(resp.responseText === 'hello', 'cookie value retrieved successfully')
+            else
+              ok(true, 'browser does not support Cross-Origin Resource Sharing')
+          }
+      })
+    })
+
   })
 
   sink('Connection Object', function (test, ok) {
@@ -963,6 +1027,89 @@
 
     test('$.toQueryString alias for reqwest.toQueryString, not bound to boosh', 1, function () {
         ok(ender.toQueryString === ajax.toQueryString, '$.toQueryString is reqwest.toQueryString')
+    })
+  })
+
+
+  /**
+   * Promise tests for `then` `fail` and `always`
+   */
+  sink('Promises', function (test, ok) {
+
+    test('always callback is called', function (complete) {
+      ajax({
+        url: '/tests/fixtures/fixtures.js'
+      })
+        .always(function () {
+          ok(true, 'called complete')
+          complete()
+        })
+    })
+
+    test('success and error handlers are called', 3, function () {
+      ajax({
+        url: '/tests/fixtures/invalidJSON.json',
+        type: 'json'
+      })
+        .then(function (resp) {
+          ok(false, 'success callback fired')
+        }, function (resp, msg) {
+          ok(msg == 'Could not parse JSON in response', 'error callback fired')
+        })
+
+      ajax({
+        url: '/tests/fixtures/invalidJSON.json',
+        type: 'json'
+      })
+        .fail(function (resp, msg) {
+          ok(msg == 'Could not parse JSON in response', 'fail callback fired')
+        })
+
+      ajax({
+        url: '/tests/fixtures/fixtures.json',
+        type: 'json'
+      })
+        .then(function (resp) {
+          ok(true, 'success callback fired')
+        }, function (resp) {
+          ok(false, 'error callback fired')
+        })
+    })
+
+    test('then and always handlers can be added after a response has been received', 2, function () {
+      var a = ajax({
+        url: '/tests/fixtures/fixtures.json',
+        type: 'json'
+      })
+        .always(function () {
+          setTimeout(function () {
+            a
+              .then(function () {
+                ok(true, 'success callback called')
+              }, function () {
+                ok(false, 'error callback called')
+              })
+              .always(function () {
+                ok(true, 'complete callback called')
+              })
+          }, 1)
+        })
+    })
+
+    test('failure handlers can be added after a response has been received', function (complete) {
+      var a = ajax({
+        url: '/tests/fixtures/invalidJSON.json',
+        type: 'json'
+      })
+        .always(function () {
+          setTimeout(function () {
+            a
+              .fail(function () {
+                ok(true, 'fail callback called')
+                complete()
+              })
+          }, 1)
+        })
     })
   })
 

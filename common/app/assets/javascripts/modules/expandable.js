@@ -1,5 +1,13 @@
+/*
+    Module: expandable.js
+    Description: Used to make a list of items expand and contract
+*/
 define(['common', 'bean'], function (common, bean) {
-
+    /*
+        @param {Object} options hash of configuration options:
+            id          : {String}  Id of DOM element to convert
+            expanded    : {Boolean} Whether the component should init in an expanded state
+    */
     var Expandable = function (opts) {
 
         var dom, // root element of the trailblock
@@ -74,9 +82,6 @@ define(['common', 'bean'], function (common, bean) {
             view.renderCallToAction();
             view.renderState(expanded);
         };
-        
-        // Bindings
-        
 
         // view listeners
         common.mediator.on('modules:expandable:expandedChange:' + id, view.renderState);
