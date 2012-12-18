@@ -31,9 +31,8 @@
                 <a href="@section.href"
                     data-link-name="@section.linkName"
                     @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
-                    @if(section.newWindow){ target="_blank" }
                 >
-                    @HtmlFormat.raw(section.title)
+                    @HtmlFormat.raw(section.linkName)
                 </a>
             </li>
         }

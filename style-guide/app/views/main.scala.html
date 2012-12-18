@@ -6,7 +6,7 @@
     @fragments.metaData(metaData)
     @fragments.commonCssSetup()
     @fragments.commonJavaScriptSetup(metaData, "app", switches)
-    
+
     @head
 
 </head>
@@ -15,7 +15,6 @@
     <div id="container">
         @fragments.navigation(metaData, isFooter=false)
         @body
-
         @fragments.navigation(metaData, isFooter=true)
         @fragments.footer(metaData)
     </div>
