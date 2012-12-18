@@ -46,11 +46,13 @@ Feature: Article page
 
 	Scenario: Expand and collapse expanders on more on this story
         Given I am on an article with expanders for "More on this story"
-		Then I can expand and collapse expanders
+		Then I can expand expanders
+			And I can collapse expanders
 
  	Scenario: Expand and collapse expanders on related content
         Given I am on an article with expanders for "Related content"
-		Then I can expand and collapse expanders
+		Then I can expand expanders
+			And I can collapse expanders
 		
     Scenario: Back to top
         Given I am on an article
