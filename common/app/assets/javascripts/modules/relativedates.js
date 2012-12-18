@@ -117,9 +117,10 @@ define(['common', 'bonzo'], function (common, bonzo) {
     }
 
     // Bindings
-
-    common.mediator.on('modules:popular:render', replaceValidTimestamps);
-    common.mediator.on('modules:related:render', replaceValidTimestamps);
+    ['popular', 'related', 'autoupdate'].forEach(function(module) {
+        common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
+        
+    })
     
     function init() {
         replaceValidTimestamps();
