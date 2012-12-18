@@ -88,7 +88,7 @@ define([
             var url = host + '/most-popular' + (section ? '/' + section : ''),
                 domContainer = document.getElementById('js-popular');
             
-            if (domContainer) {                
+            if (domContainer) {
                 new Popular(domContainer).load(url);
                 common.mediator.on('modules:popular:render', function() {
                     common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
