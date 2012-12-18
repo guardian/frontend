@@ -57,6 +57,7 @@ object Frontend extends Build with Prototypes with Testing {
   val tag = application("tag").dependsOn(commonWithTests)
   val gallery = application("gallery").dependsOn(commonWithTests)
   val video = application("video").dependsOn(commonWithTests)
+  val styleGuide = application("style-guide").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
 
@@ -81,6 +82,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(video)
     .dependsOn(gallery)
     .dependsOn(football)
+    .dependsOn(styleGuide)
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
@@ -96,6 +98,7 @@ object Frontend extends Build with Prototypes with Testing {
     gallery,
     football,
     coreNavigation,
+    styleGuide,
     router,
     diagnostics,
     dev

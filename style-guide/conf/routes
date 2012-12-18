@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /pages/*path                controllers.StyleGuideController.render(path)
+GET     /style-guide                controllers.StyleGuideController.renderIndex
+GET     /style-guide/base/:path     controllers.StyleGuideController.renderBase(path)
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /*path                      controllers.StyleGuideController.render(path)
