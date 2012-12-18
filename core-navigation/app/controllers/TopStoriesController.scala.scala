@@ -26,7 +26,9 @@ object TopStoriesController extends Controller with Logging {
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
 
-    editorsPicks take 10 match {
+    val pageSize: Int = request.getQueryString("page-size").map(_.toInt).getOrElse(editorsPicks.size)
+
+    editorsPicks take pageSize match {
       case Nil => None
       case picks => Some(picks)
     }
@@ -41,7 +43,7 @@ object TopStoriesController extends Controller with Logging {
       }.getOrElse {
         val page = new Page(
           Some("http://www.guardian.co.uk/"),
-          "",
+          "top-stories",
           "top-stories",
           "Top Stories",
           "GFE:Top Stories"
