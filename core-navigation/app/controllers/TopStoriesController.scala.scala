@@ -18,6 +18,15 @@ object TopStoriesController extends Controller with Logging {
     }
   }
 
+  // pull out `page-size` query string parameter
+  private def extractPageSize(request: RequestHeader): Option[Int] = {
+    try {
+      request.getQueryString("page-size").map(_.toInt)
+    } catch {
+      case _: NumberFormatException => None
+    }
+  }
+
   private def lookup(edition: String)(implicit request: RequestHeader) = suppressApi404 {
     log.info("Fetching top stories for edition " + edition)
     val response: ItemResponse = ContentApi.item("/", edition)
@@ -26,7 +35,7 @@ object TopStoriesController extends Controller with Logging {
 
     val editorsPicks = response.editorsPicks map { new Content(_) }
 
-    val pageSize: Int = request.getQueryString("page-size").map(_.toInt).getOrElse(editorsPicks.size)
+    val pageSize = extractPageSize(request).getOrElse(editorsPicks.size)
 
     editorsPicks take pageSize match {
       case Nil => None
