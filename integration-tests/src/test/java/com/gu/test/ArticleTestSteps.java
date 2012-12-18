@@ -188,12 +188,15 @@ public class ArticleTestSteps {
 	}
 
 
-	@Then("^I can expand and collapse expanders$")
-	public void I_can_expand_and_collapse_expanders() throws Throwable {
+	@Then("^I can (expand|collapse) expanders$")
+	public void I_can_expand_and_collapse_expanders(String sectionState) throws Throwable {
 		// waits for expander to appear
 		WebElement expander = webDriver.waitForVisible(By.className("cta"));
 		expander.click();
-		Assert.assertTrue(webDriver.findElement(By.cssSelector("#related-trails.shut")) != null);
+		
+		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "9999px" : "0";
+		// sections are hidden with css max-height
+		Assert.assertTrue(webDriver.waitForCss(By.cssSelector("#related-trails .panel"), "max-height", expectedTrailblockHeight));
 	}
 
 	@When("^Back to top is selected$")
