@@ -8,13 +8,17 @@
         }
 
         .module-container .tabs-pane {
+            outline: 1px dashed #cccccc;
+            overflow: hidden;
+        }
+
+        .module-container .tabs-content {
             padding: 20px;
         }
 
         pre {
-            font-size: 15px;
-            line-height: 1.4em;
-            color: #444444;
+            font-size: 13px;
+            line-height: 1.3em;
         }
     </style>
 
@@ -24,24 +28,20 @@
             <h1 class="article-zone type-1">@metaData.webTitle</h1>
         </header>
 
-        <div class="module-container">
+        @{
+            val datelineHTML = fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
+            fragments.module("dateline", "Dateline", datelineHTML)
+        }
 
-            <h2 class="type-2 zone-color box-indent">Headlines</h2>
+        @{
+            val headlineHTML = fragments.headline(article.headline).toString()
+            fragments.module("headline", "Headline", headlineHTML)
+        }
 
-            <ol class="tabs">
-                <li class="tabs-selected"><a href="#modules-headline-output">Output</a></li>
-                <li><a href="#modules-headline-code">Source code</a></li>
-            </ol>
-
-            <div class="tabs-content">
-                 <div class="tabs-pane" id="modules-headline-output">
-                    @fragments.headline(article.headline)
-                 </div>
-                 <div class="tabs-pane initially-off" id="modules-headline-code">
-                    <pre class="prettyprint">@fragments.headline(article.headline).toString()</pre>
-                 </div>
-            </div>
-        </div>
+        @{
+            val standfirstHTML = fragments.standfirst(article).toString()
+            fragments.module("standfirst", "Standfirst", standfirstHTML)
+        }
 
     </article>
 
