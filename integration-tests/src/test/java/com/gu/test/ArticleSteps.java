@@ -15,7 +15,7 @@ import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
 
 
-public class ArticleTestSteps {
+public class ArticleSteps {
 
 	private final SharedDriver webDriver;
 	
@@ -28,7 +28,7 @@ public class ArticleTestSteps {
 	protected String articleWithRelatedExapnders = "/world/2012/oct/07/venezuela-voters-chavez";
 	protected Map<String, String> datedArticles = new HashMap<String, String>();
 	
-	public ArticleTestSteps(SharedDriver webDriver) {
+	public ArticleSteps(SharedDriver webDriver) {
 		this.webDriver = webDriver;
 		// set up a map of dated articles
 		datedArticles.put("2012-11-10", "/world/2012/nov/08/syria-arms-embargo-rebel");
@@ -89,12 +89,12 @@ public class ArticleTestSteps {
 
 	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
-		webDriver.click(By.xpath("//*[@id='js-popular-tabs']/li[2]/a"));
+		webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[2]/a")).click();
 	}
 
 	@When("^I select the pan-site \"([^\"]*)\"$")
 	public void I_select_pan_site(String arg1) throws Throwable {
-		webDriver.click(By.xpath("//*[@id='js-popular-tabs']/li[1]/a"));
+		webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[1]/a")).click();
 	}
 
 	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
@@ -114,7 +114,7 @@ public class ArticleTestSteps {
 
 	@Then("^\"([^\"]*)\" is not displayed$")
 	public void is_not_displayed(String arg1) throws Throwable {
-		Assert.assertFalse(webDriver.isElementPresent(By.id("related-trails")));
+		Assert.assertTrue(webDriver.findElements(By.id("related-trails")).size() == 0);
 	}
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
@@ -155,13 +155,13 @@ public class ArticleTestSteps {
 
 	@Then("^another click on the footer \"([^\"]*)\" closes the list.$")
 	public void another_click_on_the_footer_closes_the_list(String arg1) throws Throwable {
-		webDriver.click(By.id("topstories-control-footer"));
+		webDriver.findElement(By.id("topstories-control-footer")).click();
 		Assert.assertEquals("none", webDriver.getElementCssValue(By.id("topstories-footer"), "display"));
 	}
 
 	@When("^I select the sections navigation button$")
 	public void I_select_the_sections_navigation_button( ) throws Throwable {
-		webDriver.click(By.id("sections-control-header"));
+		webDriver.findElement(By.id("sections-control-header")).click();
 	}
 
 	@Then("^it should show me a list of sections$")
@@ -171,7 +171,7 @@ public class ArticleTestSteps {
 
 	@Then("^another click on the \"([^\"]*)\" \"([^\"]*)\" tab closes the list$")
 	public void another_click_on_the_tab_closes_the_list(String arg1, String arg2) throws Throwable {
-		webDriver.click(By.id("sections-control-" + arg1));
+		webDriver.findElement(By.id("sections-control-" + arg1)).click();
 		Assert.assertEquals("none", webDriver.getElementCssValue(By.id("sections-" + arg1), "display"));
 	}
 
@@ -208,7 +208,7 @@ public class ArticleTestSteps {
 	public void article_page_scrolls_to_the_top() throws Throwable {
 		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
 		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");
-		Assert.assertTrue(webDriver.isElementPresent(By.id(var.substring(var.indexOf("#")+1))));
+		Assert.assertTrue(webDriver.findElements(By.id(var.substring(var.indexOf("#")+1))).size() > 0);
 	}
 
 	@When("^I click footer links \\(Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy\\)$")
