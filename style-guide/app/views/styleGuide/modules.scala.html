@@ -9,31 +9,31 @@
         </header>
 
         @{
-            val datelineHTML = fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
+            val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
             fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
         }
 
         @{
-            val headlineHTML = fragments.headline(article.headline).toString()
+            val headlineHTML = views.html.fragments.headline(article.headline).toString()
             fragments.module("headline", "Headline", headlineHTML)
         }
 
         @{
-            val standfirstHTML = fragments.standfirst(article).toString()
+            val standfirstHTML = views.html.fragments.standfirst(article).toString()
             fragments.module("standfirst", "Standfirst", standfirstHTML)
         }
 
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
                 @{
-                    val mainPictureHTML = fragments.img(mainPicture, smallCrop).toString()
+                    val mainPictureHTML = views.html.fragments.img(mainPicture, smallCrop).toString()
                     fragments.module("main-picture", "Main Picture", mainPictureHTML, "Makes use of our responsive images technique &ndash; images are replaced with their 'fullsrc' version if the connection is speed is fast enough and the device width is large enough. Images can be forced to upgrade regardless of these tests by adding the 'force-upgrade' data attribute, as used here. Images will not be upgraded if the width of the 'fullsrc' image is not greater than the thumbnail width.")
                 }
             }
         }
 
         @{
-            val bylineHTML = fragments.byline(article.byline, article).toString()
+            val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
             fragments.module("byline", "Byline", bylineHTML)
         }
 

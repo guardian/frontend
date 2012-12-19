@@ -3,22 +3,22 @@
 <html class="js-off">
 <head>
     <title>@metaData.webTitle</title>
-    @fragments.metaData(metaData)
-    @fragments.commonCssSetup()
+    @views.html.fragments.metaData(metaData)
+    @views.html.fragments.commonCssSetup()
     <link rel="stylesheet" href='@Static("stylesheets/prettify.min.css")' type="text/css" />
     <link rel="stylesheet" href='@Static("stylesheets/styleguide.min.css")' type="text/css" />
     <script type="text/javascript" src="http://code-highlighter.appspot.com/js/prettify.js"></script>
-    @fragments.commonJavaScriptSetup(metaData, "app", switches)
+    @views.html.fragments.commonJavaScriptSetup(metaData, "app", switches)
     @head
 
 </head>
 <body id="top" class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage" onload="prettyPrint();">
 
     <div id="container">
-        @fragments.navigation(metaData, isFooter=false)
+        @styleGuide.fragments.navigation(metaData, isFooter=false)
         @body
-        @fragments.navigation(metaData, isFooter=true)
-        @fragments.footer(metaData)
+        @styleGuide.fragments.navigation(metaData, isFooter=true)
+        @views.html.fragments.footer(metaData)
     </div>
 </body>
 </html>

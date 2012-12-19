@@ -16,14 +16,14 @@ object StyleGuideController extends Controller with Logging {
   def renderIndex = Action { implicit request =>
     val page = Page(canonicalUrl = None, "style-guide", "style-guide", "Style guide", "GFE:Style-guide")
     Cached(60) {
-      Ok(Compressed(views.html.index(page)))
+      Ok(Compressed(views.html.styleGuide.index(page)))
     }
   }
 
   def renderTypography = Action { implicit request =>
     val page = Page(canonicalUrl = None, "typography", "style-guide", "Typography", "GFE:Style-guide")
     Cached(60) {
-      Ok(Compressed(views.html.typography(page)))
+      Ok(Compressed(views.html.styleGuide.typography(page)))
     }
   }
 
@@ -53,7 +53,7 @@ object StyleGuideController extends Controller with Logging {
   private def renderModuleOutput(model: ArticlePage)(implicit request: RequestHeader) = {
     val page = Page(canonicalUrl = None, "modules", "style-guide", "Modules", "GFE:Style-guide:modules")
     Cached(60) {
-      Ok(Compressed(views.html.modules(page, model.article, model.edition)))
+      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.edition)))
     }
   }
 
