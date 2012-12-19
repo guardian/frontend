@@ -1,3 +1,11 @@
+//Output based on body font-size being 10px
+.font (@family, @weight, @size, @line-height) {
+    font-family: @family;
+    font-size: @size*1px;
+    font-size: (@size / 10)*1rem;
+    font-weight: @weight;
+    line-height: (@line-height / 10)*1rem;
+}
 
 .transition (@args) {
     transition: @args;
