@@ -44,8 +44,6 @@ public class SharedDriver extends EventFiringWebDriver {
 		
 		// create driver
 		REAL_DRIVER = DriverFactory.createDriver(System.getProperty("driver", "firefox"), System.getProperty("http_proxy", ""));
-		// implicitly wait on 'finds'
-		REAL_DRIVER.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS);
 
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
 	}
@@ -121,10 +119,22 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * Wait for an element to appear
 	 * 
 	 * @param locator
+   * @return The element
 	 */
 	public WebElement waitForElement(By locator) {
-		return new WebDriverWait(this, WAIT_TIME)
-			.until(ExpectedConditions.presenceOfElementLocated(locator));
+	  return waitForElement(locator, WAIT_TIME);
+	}
+	
+	/**
+	 * Wait for an element to appear
+	 * 
+	 * @param locator
+	 * @param waitTime
+	 * @return The element
+	 */
+	public WebElement waitForElement(By locator, int waitTime) {
+    return new WebDriverWait(this, waitTime)
+      .until(ExpectedConditions.presenceOfElementLocated(locator));
 	}
 
 	/**
