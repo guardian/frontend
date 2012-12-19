@@ -269,8 +269,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0, style = Some(Featured)))
 
       and("I should see 1 Culture story")
-      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
-      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 3, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 3, style = Some(Thumbnail)))
 
       and("I should see 1 Business story")
       Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
@@ -280,12 +280,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
       Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
 
+      and("I should see 1 Technology story")
+      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("technology", "Technology", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("technology", "Technology", 1, style = Some(Thumbnail)))
+
       and("I should see 1 Money story")
-      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Travel story")
-      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
-      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(8) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
     }
 
     /**

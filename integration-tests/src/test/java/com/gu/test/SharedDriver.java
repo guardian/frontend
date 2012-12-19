@@ -2,22 +2,17 @@ package com.gu.test;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,6 +20,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import cucumber.annotation.Before;
 
 public class SharedDriver extends EventFiringWebDriver {
+	
+	static final int WAIT_TIME = 5;
+	
+	protected static String HOST;
 
 	private static WebDriver REAL_DRIVER;
 
@@ -38,26 +37,15 @@ public class SharedDriver extends EventFiringWebDriver {
 	protected EventListener eventListener;
 
 	static {
-		FirefoxProfile profile = new FirefoxProfile();
-		// if http_proxy system variable, set proxy in profile
-		if (System.getProperty("http_proxy") != null
-				&& !System.getProperty("http_proxy").isEmpty()) {
-			try {
-				URL proxyUrl = new URL(System.getProperty("http_proxy"));
-				profile.setPreference("network.proxy.type", 1);
-				// set the proxy's url
-				profile.setPreference("network.proxy.http", proxyUrl.getHost());
-				// extract the port, or use the default
-				int port = (proxyUrl.getPort() != -1) ? proxyUrl.getPort()
-						: proxyUrl.getDefaultPort();
-				profile.setPreference("network.proxy.http_port", port);
-			} catch (MalformedURLException e) {
-				System.out.println("Unable to parse `http_proxy`: "
-						+ e.getMessage());
-			}
-		}
 
-		REAL_DRIVER = new FirefoxDriver(profile);
+		// defaults to localhost
+		HOST = (System.getProperty("host") != null && !System.getProperty("host").isEmpty())
+			? System.getProperty("host") : "http://localhost:9000";
+		
+		// create driver
+		REAL_DRIVER = DriverFactory.createDriver(System.getProperty("driver", "firefox"), System.getProperty("http_proxy", ""));
+		// implicitly wait on 'finds'
+		REAL_DRIVER.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS);
 
 		Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
 	}
@@ -75,32 +63,18 @@ public class SharedDriver extends EventFiringWebDriver {
 		// delete cookies
 		manage().deleteAllCookies();
 		// clear local storage
-		clearLocalStorag();
-		// change size (iphone)
-		// manage().window().setSize(new Dimension(320, 480));
+		clearLocalStorage();
 	}
 
-	public void deleteCookieNamed(String cookieName) {
-		manage().deleteCookieNamed(cookieName);
-	}
-
-	public void clearLocalStorag() {
-		executeScript("window.localStorage.clear();");
+	public void clearLocalStorage() {
+		// only execute on a page
+		if (!getCurrentUrl().equals("about:blank")) {
+			executeScript("window.localStorage.clear();");						
+		}
 	}
 
 	public void open(String url) {
-		get(this.getHost() + url);
-	}
-
-	public String getHost() {
-		// defaults to localhost
-		String host = "http://localhost:9000";
-
-		if (System.getProperty("host") != null
-				&& !System.getProperty("host").isEmpty()) {
-			host = System.getProperty("host");
-		}
-		return host;
+		get(HOST + url);
 	}
 
 	public boolean isElementPresent(By elementName) {
@@ -115,67 +89,9 @@ public class SharedDriver extends EventFiringWebDriver {
 		return exists;
 	}
 
-	public void clickButton(By buttonName) {
-		findElement(buttonName).click();
-		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}
-
-	public boolean isTextPresent(String textToSearch) {
-		return findElement(By.tagName("body")).getText().contains(textToSearch);
-	}
-
-	public void waitForTextPresent(String textToSearch) {
-		for (int second = 0;; second++) {
-			if (second >= 30) {
-				System.out.println("could not find " + textToSearch);
-				break;
-			}
-			try {
-				if (isTextPresent(textToSearch))
-					break;
-			} catch (Exception e) {
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (Exception e) {
-			}
-		}
-	}
-
-	public void refresh() {
-		navigate().refresh();
-	}
-
-	public void waitForElementPresent(By elementName) {
-		for (int second = 0;; second++) {
-			if (second >= 30) {
-				System.out.println("could not find element " + elementName);
-				break;
-			}
-			try {
-				if (isElementPresent(elementName))
-					break;
-			} catch (Exception e) {
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (Exception e) {
-			}
-		}
-	}
-
-	public int getPageSource(String value) {
-		return getPageSource().indexOf(value);
-	}
-
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
 		return findElement(elementname).getText().toLowerCase()
 				.contains(textToSearch.toLowerCase());
-	}
-
-	public void clickLink(String linkName) {
-		findElement(By.linkText(linkName)).click();
-		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	public void click(By elemenName) {
@@ -197,78 +113,61 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	}
 
-	public String getelementCssValue(By elementName, String value) {
+	public String getElementCssValue(By elementName, String value) {
 		return findElement(elementName).getCssValue(value);
 	}
 
 	/**
-	 * Find an element, waiting for it to appear (5secs)
+	 * Wait for an element to appear
 	 * 
-	 * @param By
-	 *            locator
-	 * @return WebElement
+	 * @param locator
 	 */
-	public WebElement findElementWait(By locator) {
-		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
-		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-		// return element
-		return findElement(locator);
+	public WebElement waitForElement(By locator) {
+		return new WebDriverWait(this, WAIT_TIME)
+			.until(ExpectedConditions.presenceOfElementLocated(locator));
 	}
 
 	/**
 	 * Wait for an element to become visible
 	 * 
-	 * @param By
-	 *            locator
-	 * @return booelan
+	 * @param locator
 	 */
-	public boolean isVisibleWait(By locator) {
-		// wait for 10 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-		return true;
+	public WebElement waitForVisible(By locator) {
+		return new WebDriverWait(this, WAIT_TIME)
+			.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
 	/**
 	 * Wait for an element to become hidden
 	 * 
-	 * @param By
-	 *            locator
-	 * @return booelan
+	 * @param locator
 	 */
-	public boolean isHiddenWait(By locator) {
-		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
-		return true;
+	public boolean waitForHidden(By locator) {
+		return new WebDriverWait(this, WAIT_TIME)
+			.until(ExpectedConditions.invisibilityOfElementLocated(locator));
 	}
 
 	/**
 	 * Wait for an element to have some text
 	 * 
-	 * @param By locator 
-	 * @param String The text
-	 * @return booelan
+	 * @param locator 
+	 * @param The text
 	 */
-	public boolean hasTextWait(By locator, String text) {
-		// wait for 5 secs
-		WebDriverWait wait = new WebDriverWait(this, 5);
-		wait.until(ExpectedConditions.textToBePresentInElement(locator, text));
-		return true;
+	public boolean waitForText(By locator, String text) {
+		return new WebDriverWait(this, WAIT_TIME)
+			.until(ExpectedConditions.textToBePresentInElement(locator, text));
 	}
 
-	public void switchWindowFocus(String mwh, WebDriver driver) {
-		// get handle for all current windows
-		Set<String> s = driver.getWindowHandles();
-		Iterator<String> ite = s.iterator();
-
-		// basically goes the next window that is not the main (previous) window
-		while (ite.hasNext()) {
-			String newWindowHandle = ite.next().toString();
-			if (!newWindowHandle.contains(mwh))
-				driver.switchTo().window(newWindowHandle);
-		}
+	/**
+	 * Wait for an element's CSS property to have a particular value
+	 * 
+	 * @param locator The locator for the element 
+	 * @param property The CSS property
+	 * @param value The CSS property's value
+	 */
+	public boolean waitForCss(By locator, String property, String value) {
+		return new WebDriverWait(this, WAIT_TIME)
+			.until(WaitFor.cssToBe(locator, property, value));
 	}
 
 	public void selectCheckBottomOfPageLinks() throws IOException {

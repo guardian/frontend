@@ -4,7 +4,7 @@
 	@if(isLive != "live") { <h2 class="competitions-date type-4">@day.date.toString("EEEE d MMMM yyyy")</h2>}
 	<ol class="competitions unstyled" data-link-name="matches">
         @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-        	<li class="competition" data-link-name="competition | @comp.fullName">
+        	<li class="competition" data-link-name="competition | @comp.fullName" data-competition-id="@comp.id">
 	            <a class="competition-title football-table-link zone-color type-4" href="@comp.url" data-link-name="view competition">
 	                @comp.fullName
 	                <i class="i-sport-arrow"></i>
