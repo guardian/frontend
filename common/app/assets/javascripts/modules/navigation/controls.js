@@ -3,9 +3,9 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
 
     Navigation = function (opts) {
         var toggles, view, model;
-       
+
         // View
-        
+
         view = {
 
             toggle: function (state, position, elm) {
@@ -42,30 +42,33 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
                 view.showHiddenSectionControls();
                 var lastClickTime = 0;
 
-                // can't seem to get bean to bind on arrays of elements properly,
-                // and doing it inside loops does weird closure-related things. ugh.
+                var sectionsCTA = document.getElementById('sections-control-header');
+                if(sectionsCTA) {
+                    Bean.add(sectionsCTA, 'click touchstart', function (e) {
+                        var elm = this;
+                        var current = new Date().getTime();
+                        var delta = current - lastClickTime;
+                        if (delta > 400) {
+                            view.toggle('sections', 'header', elm);
+                        }
+                        e.preventDefault();
+                        lastClickTime = current;
+                    });
+                }
 
-                Bean.add(document.getElementById('sections-control-header'), 'click touchstart', function (e) {
-                    var elm = this;
-                    var current = new Date().getTime();
-                    var delta = current - lastClickTime;
-                    if (delta > 400) {
-                        view.toggle('sections', 'header', elm);
-                    }
-                    e.preventDefault();
-                    lastClickTime = current;
-                });
-                
-                Bean.add(document.getElementById('topstories-control-header'), 'click touchstart', function (e) {
-                    var elm = this;
-                    var current = new Date().getTime();
-                    var delta = current - lastClickTime;
-                    if (delta > 400) {
-                        view.toggle('topstories', 'header', elm);
-                    }
-                    e.preventDefault();
-                    lastClickTime = current;
-                });
+                var topStoriesCTA = document.getElementById('topstories-control-header');
+                if (topStoriesCTA) {
+                    Bean.add(topStoriesCTA, 'click touchstart', function (e) {
+                        var elm = this;
+                        var current = new Date().getTime();
+                        var delta = current - lastClickTime;
+                        if (delta > 400) {
+                            view.toggle('topstories', 'header', elm);
+                        }
+                        e.preventDefault();
+                        lastClickTime = current;
+                    });
+                }
             }
 
         };
@@ -74,7 +77,7 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
 
         model = {
         };
-        
+
         this.init = function () {
             view.init();
         };
@@ -82,6 +85,6 @@ define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
 
 
     return Navigation;
-   
+
 });
 
