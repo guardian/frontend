@@ -1,5 +1,6 @@
-package common
+package styleguide
 
+import common.GuardianConfiguration
 import play.api.mvc.RequestHeader
 
 case class SectionLink(id: String, linkName: String, href: String)

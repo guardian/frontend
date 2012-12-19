@@ -15,9 +15,9 @@
 <body id="top" class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage" onload="prettyPrint();">
 
     <div id="container">
-        @styleGuide.fragments.navigation(metaData, isFooter=false)
+        @fragments.navigation(metaData, isFooter=false)
         @body
-        @styleGuide.fragments.navigation(metaData, isFooter=true)
+        @fragments.navigation(metaData, isFooter=true)
         @views.html.fragments.footer(metaData)
     </div>
 </body>

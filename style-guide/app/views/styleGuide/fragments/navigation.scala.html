@@ -26,7 +26,7 @@
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
     <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
-        @Navigation(request, Configuration).map{ section =>
+        @styleguide.Navigation(request, Configuration).map{ section =>
             <li>
                 <a href="@section.href"
                     data-link-name="@section.linkName"
