@@ -25,17 +25,14 @@
 
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
-                <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                    <img class="maxed main-image" src="@smallCrop.url"
-                        data-force-upgrade="true"
-                        data-thumb-width="@smallCrop.width"
-                        data-fullsrc="@mainPicture.url"
-                        data-full-width="@mainPicture.width"
-                        itemprop="contentURL" />
-                    @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-                    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                @{
+                    var mainPictureHTML = "<figure itemprop='associatedMedia primaryImageOfPage' itemscope itemtype='http://schema.org/ImageObject'>\r\n\t<img class='maxed main-image'\r\n\t\tsrc='" + smallCrop.url.get + "'\r\n\t\tdata-force-upgrade='true'\r\n\t\tdata-thumb-width='" + smallCrop.width + "'\r\n\t\tdata-fullsrc='" + mainPicture.url.get + "'\r\n\t\tdata-full-width='" + mainPicture.width + "'\r\n\t\titemprop='contentURL' />"
+                    if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+                        mainPictureHTML += "\r\n\t<figcaption class='main-caption' itemprop='description'>\r\n\t\t" + Html(smallCrop.caption.getOrElse("")) + "\r\n\t</figcaption>"
                     }
-                </figure>
+                    mainPictureHTML += "\r\n</figure>".toString()
+                    fragments.module("main-picture", "Main Picture", mainPictureHTML)
+                }
             }
         }
 
