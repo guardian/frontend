@@ -7,7 +7,7 @@
 
 	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
-        <header>
+        <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
 
             @fragments.headline(article.headline)

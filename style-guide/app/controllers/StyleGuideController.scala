@@ -21,9 +21,16 @@ object StyleGuideController extends Controller with Logging {
   }
 
   def renderTypography = Action { implicit request =>
-    val page = Page(canonicalUrl = None, "typography", "style-guide", "Typography", "GFE:Style-guide")
+    val page = Page(canonicalUrl = None, "typography", "style-guide", "Typography", "GFE:Style-guide:typography")
     Cached(60) {
       Ok(Compressed(views.html.styleGuide.typography(page)))
+    }
+  }
+
+  def renderZones = Action { implicit request =>
+    val page = Page(canonicalUrl = None, "zones", "style-guide", "Zones", "GFE:Style-guide:zones")
+    Cached(60) {
+      Ok(Compressed(views.html.styleGuide.zones(page)))
     }
   }
 
