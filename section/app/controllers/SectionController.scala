@@ -37,8 +37,33 @@ object SectionController extends Controller with Logging {
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
+  // pull out 'paging' (int) query string params
+  private def extractPaging(request: RequestHeader, queryParam: String): Option[Int] = {
+    try {
+      request.getQueryString(queryParam).map(_.toInt)
+    } catch {
+      case _: NumberFormatException => None
+    }
+  }
+
   private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = Cached(model.section) {
-    Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
+
+    request.getQueryString("callback").map { callback =>
+      // pull out page-size, page and offset
+      val offset: Int = extractPaging(request, "offset").getOrElse(0)
+      val pageSize: Int = extractPaging(request, "page-size").getOrElse(5)
+      val page: Int = extractPaging(request, "page").getOrElse(1)
+      // limit trails based on paging
+      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(offset + (pageSize * (page - 1))).take(pageSize)
+      if (trails.size == 0) {
+        NoContent
+      } else {
+        JsonComponent(views.html.fragments.trailblocks.section(trails, numWithImages = 0, showFeatured = false))
+      }
+    }.getOrElse {
+      Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
+    }
+
   }
 
 }
