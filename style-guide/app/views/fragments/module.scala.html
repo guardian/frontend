@@ -1,0 +1,19 @@
+@(id: String, title: String, html: String)
+<div class="module-container">
+
+    <h2 class="type-2 zone-color box-indent">@title</h2>
+
+    <ol class="tabs">
+        <li class="tabs-selected"><a href="#modules-@id-output">Output</a></li>
+        <li><a href="#modules-@id-code">Source code</a></li>
+    </ol>
+
+    <div class="tabs-content">
+         <div class="tabs-pane" id="modules-@id-output">
+            @Html(html)
+         </div>
+         <div class="tabs-pane initially-off" id="modules-@id-code">
+            <pre class="prettyprint">@html.toString().trim()</pre>
+         </div>
+    </div>
+</div>
