@@ -5,6 +5,7 @@ define([
     "domReady",
     //Modules
     "modules/expandable",
+    "modules/trailblocktoggle",
     "modules/trailblock-show-more",
     "modules/footballfixtures"
 ], function (
@@ -13,20 +14,17 @@ define([
     domReady,
 
     Expandable,
+    TrailblockToggle,
     TrailblockShowMore,
     FootballFixtures
 ) {
 
     var modules = {
-
-        showFrontExpanders: function () {
-            var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
-            for (i=0, l=frontTrailblocks.length; i<l; i++) {
-                var elm = frontTrailblocks[i];
-                var id = elm.id;
-                var frontExpandable = new Expandable({ id: id, expanded: false });
-                frontExpandable.init();
-            }
+        
+        showTrailblockToggles: function (config) {      
+            var edition = config.page.edition;      
+            var tt = new TrailblockToggle();      
+            tt.go(edition);
         },
 
         showTrailblockShowMore: function () {
@@ -69,7 +67,7 @@ define([
 
     // All methods placed inside here will exec after DOMReady
     var ready = function(req, config) {
-        modules.showFrontExpanders();
+        modules.showTrailblockToggles(config);
         modules.showTrailblockShowMore();
         if(config.page.edition === "UK") {
             modules.showFootballFixtures(req.url);
