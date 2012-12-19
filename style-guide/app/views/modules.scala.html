@@ -2,26 +2,6 @@
 
 @main(metaData, Switches.all){  }{
 
-    <style>
-        .module-container {
-            margin-bottom: 20px;
-        }
-
-        .module-container .tabs-pane {
-            outline: 1px dashed #cccccc;
-            overflow: hidden;
-        }
-
-        .module-container .tabs-content {
-            padding: 20px;
-        }
-
-        pre {
-            font-size: 13px;
-            line-height: 1.3em;
-        }
-    </style>
-
     <article>
 
         <header>
@@ -41,6 +21,22 @@
         @{
             val standfirstHTML = fragments.standfirst(article).toString()
             fragments.module("standfirst", "Standfirst", standfirstHTML)
+        }
+
+        @article.mainPicture.map{ mainPicture =>
+            @article.mainPicture(width=220).map{ smallCrop =>
+                <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                    <img class="maxed main-image" src="@smallCrop.url"
+                        data-force-upgrade="true"
+                        data-thumb-width="@smallCrop.width"
+                        data-fullsrc="@mainPicture.url"
+                        data-full-width="@mainPicture.width"
+                        itemprop="contentURL" />
+                    @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+                    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+                    }
+                </figure>
+            }
         }
 
     </article>
