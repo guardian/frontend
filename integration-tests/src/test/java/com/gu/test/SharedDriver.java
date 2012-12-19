@@ -32,8 +32,6 @@ public class SharedDriver extends EventFiringWebDriver {
 		}
 	};
 
-	protected EventListener eventListener;
-
 	static {
 
 		// defaults to localhost
@@ -48,10 +46,6 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public SharedDriver() {
 		super(REAL_DRIVER);
-
-		// add an event listener to the driver
-		eventListener = new EventListener();
-		register(eventListener);
 	}
 
 	@Before

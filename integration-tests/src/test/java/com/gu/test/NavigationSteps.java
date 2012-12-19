@@ -64,14 +64,6 @@ public class NavigationSteps {
     	webDriver.findElement(By.cssSelector("#topstories-header li a")).click();
     }
     
-    @Then("^I'm taken to that article$")
-    public void Im_taken_to_that_article() throws Throwable {
-    	// get last clicked element's href
-    	String expectedUrl = webDriver.eventListener.lastClickedElementsHref;
-    	// confirm its href is the same as current page's
-    	Assert.assertEquals(expectedUrl, webDriver.getCurrentUrl());
-    }
-    
     @Then("^the top story link should have a (.*) of (.*)$")
     public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
         // confirm it has the correct css color
