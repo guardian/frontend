@@ -59,8 +59,9 @@ object StyleGuideController extends Controller with Logging {
 
   private def renderModuleOutput(model: ArticlePage)(implicit request: RequestHeader) = {
     val page = Page(canonicalUrl = None, "modules", "style-guide", "Modules", "GFE:Style-guide:modules")
+
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.edition)))
+      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.edition, model.storyPackage)))
     }
   }
 

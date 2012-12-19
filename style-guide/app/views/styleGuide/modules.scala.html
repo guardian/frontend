@@ -1,6 +1,6 @@
-@(metaData:Page, article: Article, edition: String)(implicit request: RequestHeader)
+@(metaData:Page, article: Article, edition: String, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-@main(metaData, Switches.all){  }{
+@main(article, Switches.all){  }{
 
     <article>
 
@@ -13,6 +13,11 @@
         @{
             val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
             fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
+        }
+
+        @{
+            val relativeDateHTML = views.html.fragments.relativeDate(article.webPublicationDate, article.isLive, isFront=false).toString()
+            fragments.module("relative-date", "Relative dateline", relativeDateHTML, "Updated using JavaScript to be relative to the client's current locale")
         }
 
         @{
@@ -38,6 +43,7 @@
             val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
             fragments.module("byline", "Byline", bylineHTML)
         }
+
 
 
     </article>
