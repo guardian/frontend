@@ -5,12 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -75,44 +73,13 @@ public class SharedDriver extends EventFiringWebDriver {
 		get(HOST + url);
 	}
 
-	public boolean isElementPresent(By elementName) {
-		manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		boolean exists = false;
-		try {
-			exists = findElements(elementName).size() != 0;
-		} catch (NoSuchElementException e) {
-		}
-
-		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		return exists;
-	}
-
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
 		return findElement(elementname).getText().toLowerCase()
 				.contains(textToSearch.toLowerCase());
 	}
 
-	public void click(By elemenName) {
-
-		if (findElements(elemenName).size() != 0) {
-			findElement(elemenName).click();
-			waitFor(1000);
-		} else
-			System.out.println(elemenName
-					+ " the button does not exist or visible");
-	}
-
-	public void waitFor(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			System.out.println("Interrupted Exception error " + e);
-		}
-
-	}
-
-	public String getElementCssValue(By elementName, String value) {
-		return findElement(elementName).getCssValue(value);
+	public String getElementCssValue(By elementName, String property) {
+		return findElement(elementName).getCssValue(property);
 	}
 
 	/**
@@ -181,12 +148,12 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public void selectCheckBottomOfPageLinks() throws IOException {
-		//located all footer links
-		List<WebElement> urlL = findElements(By.cssSelector("footer a"));
+		// get all footer links
+		List<WebElement> footerLinks = findElements(By.cssSelector("footer a"));
 
-		for (int i = 0; i < urlL.size(); i++) {
+		for (WebElement footerLink : footerLinks) {
 			// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-			Assert.assertEquals(200, checkURLReturns(urlL.get(i).getAttribute("href")));
+			Assert.assertEquals(200, checkURLReturns(footerLink.getAttribute("href")));
 		}
 	}
 
