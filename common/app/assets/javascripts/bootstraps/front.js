@@ -5,7 +5,7 @@ define([
     "domReady",
     //Modules
     "modules/expandable",
-    "modules/trailblocktoggle",
+    "modules/trailblock-show-more",
     "modules/footballfixtures"
 ], function (
     common,
@@ -13,7 +13,7 @@ define([
     domReady,
 
     Expandable,
-    TrailblockToggle,
+    TrailblockShowMore,
     FootballFixtures
 ) {
 
@@ -29,10 +29,9 @@ define([
             }
         },
 
-        showTrailblockToggles: function (config) {
-            var edition = config.page.edition;
-            var tt = new TrailblockToggle();
-            tt.go(edition);
+        showTrailblockShowMore: function () {
+            trailblockShowMore = new TrailblockShowMore();
+            trailblockShowMore.init();
         },
 
         showFootballFixtures: function(path) {
@@ -71,7 +70,7 @@ define([
     // All methods placed inside here will exec after DOMReady
     var ready = function(req, config) {
         modules.showFrontExpanders();
-        modules.showTrailblockToggles(config);
+        modules.showTrailblockShowMore();
         if(config.page.edition === "UK") {
             modules.showFootballFixtures(req.url);
         }
