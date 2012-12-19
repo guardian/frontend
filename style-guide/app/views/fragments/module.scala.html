@@ -1,7 +1,10 @@
-@(id: String, title: String, html: String)
+@(id: String, title: String, html: String, notes: String = "")
 <div class="module-container">
 
     <h2 class="type-2 zone-color box-indent">@title</h2>
+    @if(notes != "") {
+        <p class="box-indent type-5">@Html(notes)</p>
+    }
 
     <ol class="tabs">
         <li class="tabs-selected"><a href="#modules-@id-output">Output</a></li>

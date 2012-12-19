@@ -10,7 +10,7 @@
 
         @{
             val datelineHTML = fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
-            fragments.module("dateline", "Dateline", datelineHTML)
+            fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
         }
 
         @{
@@ -31,7 +31,7 @@
                         mainPictureHTML += "\r\n\t<figcaption class='main-caption' itemprop='description'>\r\n\t\t" + Html(smallCrop.caption.getOrElse("")) + "\r\n\t</figcaption>"
                     }
                     mainPictureHTML += "\r\n</figure>".toString()
-                    fragments.module("main-picture", "Main Picture", mainPictureHTML)
+                    fragments.module("main-picture", "Main Picture", mainPictureHTML, "Makes use of our responsive images technique &ndash; images are replaced with their 'fullsrc' version if the connection is speed is fast enough and the device width is large enough. Images can be forced to upgrade regardless of these tests by adding the 'force-upgrade' data attribute, as used here. Images will not be upgraded if the width of the 'fullsrc' image is not greater than the thumbnail width.")
                 }
             }
         }
