@@ -1,4 +1,4 @@
-reqwest_0({
-    html: '<span>foo</span>',
-    more: '/football/results/2012/oct/19'
+moreMatches({
+    "html": "<span>foo</span>",
+    "more": "/football/results/2012/oct/19"
 })
