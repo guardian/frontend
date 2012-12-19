@@ -7,12 +7,12 @@ import org.openqa.selenium.By;
 import cucumber.annotation.en.Then;
 
 
-public class DisplayAdvertsTestSteps {
+public class DisplayAdvertsSteps {
 
 
     private final SharedDriver webDriver;
 
-    public DisplayAdvertsTestSteps(SharedDriver webDriver) {
+    public DisplayAdvertsSteps(SharedDriver webDriver) {
         this.webDriver = webDriver;
     }
 	

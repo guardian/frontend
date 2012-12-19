@@ -15,7 +15,7 @@ import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
 
 
-public class ArticleTestSteps {
+public class ArticleSteps {
 
 	private final SharedDriver webDriver;
 	
@@ -28,7 +28,7 @@ public class ArticleTestSteps {
 	protected String articleWithRelatedExapnders = "/world/2012/oct/07/venezuela-voters-chavez";
 	protected Map<String, String> datedArticles = new HashMap<String, String>();
 	
-	public ArticleTestSteps(SharedDriver webDriver) {
+	public ArticleSteps(SharedDriver webDriver) {
 		this.webDriver = webDriver;
 		// set up a map of dated articles
 		datedArticles.put("2012-11-10", "/world/2012/nov/08/syria-arms-embargo-rebel");
