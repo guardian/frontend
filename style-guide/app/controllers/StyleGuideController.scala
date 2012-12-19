@@ -20,6 +20,13 @@ object StyleGuideController extends Controller with Logging {
     }
   }
 
+  def rederType = Action { implicit request =>
+    val page = Page(canonicalUrl = None, "typography", "style-guide", "Typography", "GFE:Style-guide")
+    Cached(60) {
+      Ok(Compressed(views.html.type(page)))
+    }
+  }
+
   def renderModules() = Action { implicit request =>
     val path = "politics/2012/dec/18/andrew-mitchell-deputy-chief-whip"
     val promiseOfArticle = Akka.future(lookupSingleArticle(path))
