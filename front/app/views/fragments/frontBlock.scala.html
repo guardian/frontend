@@ -20,7 +20,7 @@
         }
 	}
 
-    <div class="trailblock js-front-trailblock rolled-out@if(block.description.showMore){ show-more }"
+    <div class="trailblock @if(block.description.showMore){ js-show-more}"
         id="front-trailblock-@SafeName(block.description)"
         data-count="@block.description.numItemsVisible">
 
