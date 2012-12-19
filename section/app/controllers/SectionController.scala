@@ -53,12 +53,15 @@ object SectionController extends Controller with Logging {
       val offset: Int = extractPaging(request, "offset").getOrElse(0)
       val pageSize: Int = extractPaging(request, "page-size").getOrElse(5)
       val page: Int = extractPaging(request, "page").getOrElse(1)
-      // limit trails based on paging
-      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(offset + (pageSize * (page - 1))).take(pageSize)
+      // offest the trails
+      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(offset + (pageSize * (page - 1)))
       if (trails.size == 0) {
         NoContent
       } else {
-        JsonComponent(views.html.fragments.trailblocks.section(trails, numWithImages = 0, showFeatured = false))
+        JsonComponent(
+          "html" -> views.html.fragments.trailblocks.section(trails.take(pageSize), numWithImages = 0, showFeatured = false),
+          "hasMore" -> (trails.size > pageSize)
+        )
       }
     }.getOrElse {
       Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
