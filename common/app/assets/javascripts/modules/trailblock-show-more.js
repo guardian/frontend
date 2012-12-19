@@ -53,7 +53,7 @@ define([
             bean.on(qwery('#front-container')[0], 'click', '.trailblock .cta', function(e) {
                 var cta = e.srcElement;
                 // what's the section
-                var section = bonzo(bonzo(cta).parent()).attr('id').replace('front-trailblock-', '')
+                var section = bonzo(bonzo(cta).parent()).attr('id').replace('front-trailblock-', '');
                 // what's the offset?
                 var offset = qwery('.trail', bonzo(cta).parent()[0]).length;
                 reqwest({
@@ -64,10 +64,9 @@ define([
                     timeout: 5000,
                     success: function (response) {
                         common.mediator.emit('module:trailblock-show-more:loaded');
-                        // if no response, remove cta
-                        if (response) {
-                            that.view.render(cta, response);                            
-                        } else {
+                        that.view.render(cta, response);
+                        // if no more, remove cta
+                        if (!response.hasMore) {
                             that.view.removeCta(cta);
                         }
                     },
