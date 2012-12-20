@@ -60,18 +60,18 @@ define([
                 var offset = qwery('.trail', cta.parent()[0]).length;
                 reqwest({
                     url: '/' + section + '?offset=' + offset,
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'trails',
-                    success: function (response) {
+                    type: 'json',
+                    // 5 sec timeout
+                    timeout: 5000,
+                    success: function (resp) {
                         common.mediator.emit('module:trailblock-show-more:loaded');
-                        that.view.render(cta, response);
+                        that.view.render(cta, resp);
                         // if no more, remove cta
                         if (!response.hasMore) {
                             that.view.removeCta(cta);
                         }
                     },
-                    error: function () {
+                    error: function (err) {
                         common.mediator.emit(
                             'module:error', 'Failed to load more trails for `' + section + '`', 'modules/trailblock-show-more.js'
                         );
