@@ -56,7 +56,7 @@ public class NetworkFrontSteps {
 		WebElement trailblockToggle = webDriver.waitForVisible(
 			By.xpath(sectionXpath + "//button[contains(@class, 'toggle-trailblock')]")
 		);
-		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "9999px" : "0";
+		String expectedTrailblockHeight = (sectionState.equals("show")) ? "9999px" : "0";
 		// only click if not in correct state
 		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
 		if (actualTrailblockHeight != expectedTrailblockHeight) {
