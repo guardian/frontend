@@ -32,12 +32,12 @@ define([
            },
            
            removeCta: function(cta) {  
-               bonzo(cta).remove();
+               cta.remove();
            },
            
            render: function(cta, response) {
                // put the trails before the cta
-               bonzo(cta).before(response.html);
+               cta.before(response.html);
                common.mediator.emit('module:trailblock-show-more:render');
            }
         
@@ -51,17 +51,18 @@ define([
             var that = this;
             // event delegation for clicking of cta
             bean.on(qwery('#front-container')[0], 'click', '.trailblock .cta', function(e) {
-                var cta = e.srcElement;
+                var cta = bonzo(e.srcElement);
+                // disable button
+                cta.attr('disabled', 'disabled');
                 // what's the section
-                var section = bonzo(bonzo(cta).parent()).attr('id').replace('front-trailblock-', '');
+                var section = bonzo(cta.parent()).attr('id').replace('front-trailblock-', '');
                 // what's the offset?
-                var offset = qwery('.trail', bonzo(cta).parent()[0]).length;
+                var offset = qwery('.trail', cta.parent()[0]).length;
                 reqwest({
                     url: '/' + section + '?offset=' + offset,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'trails',
-                    timeout: 5000,
                     success: function (response) {
                         common.mediator.emit('module:trailblock-show-more:loaded');
                         that.view.render(cta, response);
@@ -74,6 +75,9 @@ define([
                         common.mediator.emit(
                             'module:error', 'Failed to load more trails for `' + section + '`', 'modules/trailblock-show-more.js'
                         );
+                    },
+                    complete: function() {
+                        cta.removeAttr('disabled');
                     }
                 });
             });
