@@ -58,8 +58,8 @@
       <h3 class="type-2 section-divider">Stats</h3>
 
 
-    <h5 class="home-header type-6">@homeTeam.name</h5>
-    <h5 class="away-header type-6">@awayTeam.name</h5>
+    <h5 class="home-header type-5">@homeTeam.name</h5>
+    <h5 class="away-header type-5">@awayTeam.name</h5>
 
     @defining((page.lineUp.homeTeam, page.lineUp.awayTeam)){ case (homeStats, awayStats) =>
       @stat("Possession", page.lineUp.homeTeamPossession, page.lineUp.awayTeamPossession, firstItem = true)
