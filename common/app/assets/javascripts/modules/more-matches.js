@@ -29,7 +29,6 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'moreMatches',
                     success: function (response) {
-                        console.log(response);
                         // place html before nav
                         bonzo(nav).before(response.html);
                         // update more link (if there is more)
