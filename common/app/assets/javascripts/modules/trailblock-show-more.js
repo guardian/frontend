@@ -28,7 +28,7 @@ define([
         this.view = {
                 
            appendCta: function(trailblock) {  
-               bonzo(trailblock).append('<span class="cta">Show more</span>');
+               bonzo(trailblock).append('<button class="cta">Show more</button>');
            },
            
            removeCta: function(cta) {  
@@ -72,7 +72,7 @@ define([
                     },
                     error: function () {
                         common.mediator.emit(
-                            'module:error', 'Failed to load more trails for:' + options.path, 'modules/trailblock-show-more.js'
+                            'module:error', 'Failed to load more trails for `' + section + '`', 'modules/trailblock-show-more.js'
                         );
                     }
                 });
