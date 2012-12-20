@@ -17,13 +17,6 @@ GET     /core-navigation/top-stories/*edition                           controll
 
 GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
-#Style-guide
-GET     /style-guide                controllers.StyleGuideController.renderIndex
-GET     /style-guide/zones          controllers.StyleGuideController.renderZones
-GET     /style-guide/typography     controllers.StyleGuideController.renderTypography
-GET     /style-guide/modules        controllers.StyleGuideController.renderModules
-
-
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()
