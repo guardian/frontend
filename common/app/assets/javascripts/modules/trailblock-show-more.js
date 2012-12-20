@@ -59,7 +59,7 @@ define([
                 // what's the offset?
                 var offset = qwery('.trail', cta.parent()[0]).length;
                 reqwest({
-                    url: '/' + section + '?offset=' + offset,
+                    url: '/' + section + '.json?offset=' + offset,
                     type: 'json',
                     // 5 sec timeout
                     timeout: 5000,
@@ -67,7 +67,7 @@ define([
                         common.mediator.emit('module:trailblock-show-more:loaded');
                         that.view.render(cta, resp);
                         // if no more, remove cta
-                        if (!response.hasMore) {
+                        if (!resp.hasMore) {
                             that.view.removeCta(cta);
                         }
                     },
