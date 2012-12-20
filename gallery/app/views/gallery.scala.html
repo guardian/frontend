@@ -13,9 +13,9 @@
             @fragments.headline(gallery.headline)
             @fragments.standfirst(gallery)
         </header>
-        
+
         @fragments.byline(gallery.byline, gallery)
-        
+
         <p class="box-indent gallery-nav type-8" id="js-gallery-nav">
             @if(index > 1) {
                 <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true" href="?index=@(index - 1)" class="gallery-prev">Previous</a>
@@ -25,7 +25,7 @@
 
             Image <span id="js-gallery-index">@index</span> of @gallery.size
 
-            <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible initially-off">Fullscreen <i class="i-fullscreen-toggle"></i></span>
+            <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible initially-off">Fullscreen <i class="i i-fullscreen-toggle"></i></span>
 
             @if(index < gallery.size) {
                 <a id="js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true" href="?index=@(index + 1)" class="gallery-next">Next</a>
@@ -45,7 +45,7 @@
                     }
 
                         <div class="gallery-caption">
-                            <p class="caption type-7"><i class="i-image"></i> @Html(image.caption.getOrElse(""))</p>
+                            <p class="caption type-7"><i class="i i-image"></i> @Html(image.caption.getOrElse(""))</p>
                             <p class="caption-credit type-7">@image.credit</p>
                         </div>
                     </li>

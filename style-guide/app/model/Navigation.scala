@@ -13,7 +13,8 @@ object Navigation {
     SectionLink("typography", "Typography", "/style-guide/typography"),
     SectionLink("grid", "Grid", "/style-guide/grid"),
     SectionLink("modules", "Modules", "/style-guide/modules"),
-    SectionLink("coding-standards", "Coding standards", "/style-guide/coding-standards")
+    SectionLink("coding-standards", "Coding standards", "/style-guide/coding-standards"),
+    SectionLink("sprites", "CSS sprites", "/style-guide/sprites")
   )
 
   def apply(request: RequestHeader, config: GuardianConfiguration) = {

@@ -3,7 +3,7 @@
     margin-bottom: 20px;
 }
 
-    .module-container .tabs-pane {
+    .module-container .tabs-pane{
         outline: 1px dashed #E7E7E7;
         overflow: hidden;
     }
@@ -17,13 +17,18 @@ pre {
     line-height: 1.3em;
 }
 
+code {
+    background: #e7e7e7;
+    padding: 2px 4px;
+}
+
 //Typography
-.type-table {
+.styleguide-table {
     width: 96%;
     margin:0 2% 8px 2%;
 }
 
-    .type-table th {
+    .styleguide-table th {
         padding: 4px 8px;
         background-color: #E3E3DB;
         border-right: 1px solid #ffffff;
@@ -31,21 +36,31 @@ pre {
         color: #777777;
     }
 
-    .type-table tr {
+    .styleguide-table tr {
         border-bottom: 1px solid #f4f4ee;
     }
 
-        .type-table tr:last-child { border-bottom: none; }
+        .styleguide-table tr:last-child { border-bottom: none; }
 
-    .type-table td {
+    .styleguide-table td {
         padding: 8px;
         border-right: 2px solid #ffffff;
     }
 
-        .type-table td:first-child { width: 20%; }
-        .type-table td:last-child { width: 80%; }
+        .styleguide-table td:first-child { width: 20%; }
+        .styleguide-table td:last-child { width: 80%; }
 
 
-    .type-table-meta { 
-        color: #B8B8B8; 
+    .styleguide-table-meta {
+        color: #B8B8B8;
     }
+
+
+// sprite table
+
+.sprite-table .i {
+    outline: 1px dashed #cccccc;
+}
+.sprite-cell {
+    background-color: #ededed;
+}

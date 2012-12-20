@@ -34,6 +34,13 @@ object StyleGuideController extends Controller with Logging {
     }
   }
 
+  def renderSprites = Action { implicit request =>
+    val page = Page(canonicalUrl = None, "sprites", "style-guide", "CSS sprites", "GFE:Style-guide:sprites")
+    Cached(60) {
+      Ok(Compressed(views.html.styleGuide.sprites(page)))
+    }
+  }
+
   def renderModules() = Action { implicit request =>
     val path = "politics/2012/dec/18/andrew-mitchell-deputy-chief-whip"
     val promiseOfArticle = Akka.future(lookupSingleArticle(path))
