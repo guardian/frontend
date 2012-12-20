@@ -20,6 +20,16 @@ define([
 ) {
 
     var modules = {
+            
+        showFrontExpanders: function () {
+            var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
+            for (i=0, l=frontTrailblocks.length; i<l; i++) {
+                var elm = frontTrailblocks[i];
+                var id = elm.id;
+                var frontExpandable = new Expandable({ id: id, expanded: false });
+                frontExpandable.init();
+            }
+        },
         
         showTrailblockToggles: function (config) {      
             var edition = config.page.edition;      
