@@ -10,11 +10,14 @@ import play.api.libs.concurrent.Akka
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
-object SectionController extends Controller with Logging {
-  def render(path: String) = Action { implicit request =>
+object SectionController extends Controller with Logging with Paging {
+
+  val validFormats: Seq[String] = Seq("html", "json")
+
+  def render(path: String, format: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
     Async {
-      promiseOfSection.map(_.map { renderSectionFront(_) } getOrElse { NotFound })
+      promiseOfSection.map(_.map { renderSectionFront(_, validFormats.find(_ == format).getOrElse("html")) } getOrElse { NotFound })
     }
   }
 
@@ -37,33 +40,27 @@ object SectionController extends Controller with Logging {
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
 
-  // pull out 'paging' (int) query string params
-  private def extractPaging(request: RequestHeader, queryParam: String): Option[Int] = {
-    try {
-      request.getQueryString(queryParam).map(_.toInt)
-    } catch {
-      case _: NumberFormatException => None
-    }
-  }
+  private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
 
-  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = Cached(model.section) {
-
-    request.getQueryString("callback").map { callback =>
-      // pull out page-size, page and offset
-      val offset: Int = extractPaging(request, "offset").getOrElse(0)
-      val pageSize: Int = extractPaging(request, "page-size").getOrElse(5)
-      val page: Int = extractPaging(request, "page").getOrElse(1)
+    if (format == "json") {
+      // pull out the paging params
+      val pagingParams = extractPaging(request)
+      val actualOffset = pagingParams("offset") + (pagingParams("page-size") * (pagingParams("page") - 1))
       // offest the trails
-      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(offset + (pageSize * (page - 1)))
+      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(actualOffset)
       if (trails.size == 0) {
         NoContent
       } else {
         JsonComponent(
-          "html" -> views.html.fragments.trailblocks.section(trails.take(pageSize), numWithImages = 0, showFeatured = false),
-          "hasMore" -> (trails.size > pageSize)
+          request.getQueryString("callback"),
+          "html" -> views.html.fragments.trailblocks.section(
+            trails.take(pagingParams("page-size")), numWithImages = 0, showFeatured = false
+          ),
+          "hasMore" -> (trails.size > pagingParams("page-size"))
         )
       }
-    }.getOrElse {
+
+    } else {
       Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
     }
 
