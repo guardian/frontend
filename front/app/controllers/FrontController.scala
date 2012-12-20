@@ -34,6 +34,15 @@ class FrontController extends Controller with Logging {
 
   def isUp() = Action { Ok("Ok") }
 
+  // pull out 'paging' (int) query string params
+  private def extractPaging(request: RequestHeader, queryParam: String): Option[Int] = {
+    try {
+      request.getQueryString(queryParam).map(_.toInt)
+    } catch {
+      case _: NumberFormatException => None
+    }
+  }
+
   def render(path: String) = Action { implicit request =>
     val edition = Edition(request, Configuration)
 
@@ -49,7 +58,27 @@ class FrontController extends Controller with Logging {
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
       if (trailblocks.isEmpty) InternalServerError
-      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks, FrontCharity()))) }
+      else Cached(page) {
+        request.getQueryString("callback").map { callback =>
+          // pull out page-size, page and offset
+          val offset: Int = extractPaging(request, "offset").getOrElse(0)
+          val pageSize: Int = extractPaging(request, "page-size").getOrElse(5)
+          val page: Int = extractPaging(request, "page").getOrElse(1)
+          // assumtion - first trailblock is for this section
+          val trails: Seq[Trail] = (trailblocks.head.trails).drop(offset + (pageSize * (page - 1)))
+          if (trails.size == 0) {
+            NoContent
+          } else {
+            JsonComponent(
+              "html" -> views.html.fragments.trailblocks.section(trails.take(pageSize), numWithImages = 0, showFeatured = false),
+              "hasMore" -> (trails.size > pageSize)
+            )
+          }
+        }.getOrElse {
+          Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
+        }
+
+      }
     } getOrElse (InternalServerError)
   }
 
