@@ -1,5 +1,7 @@
 package test
 
+import play.api.test._
+import play.api.test.Helpers._
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
 
@@ -45,6 +47,11 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
         $(".table-football-body td").getTexts should contain("Arsenal")
       }
 
+    }
+
+    scenario("Should redirect when no competition table data found") {
+      val result = controllers.LeagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
+      status(result) should be(303)
     }
   }
 }

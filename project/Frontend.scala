@@ -62,8 +62,11 @@ object Frontend extends Build with Prototypes with Testing {
   val router = application("router").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "2.7",
-    templatesImport ++= Seq("pa._")
+    libraryDependencies += "com.gu" %% "pa-client" % "2.9",
+    templatesImport ++= Seq(
+      "pa._",
+      "feed._"
+    )
   )
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(

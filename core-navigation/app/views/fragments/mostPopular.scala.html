@@ -10,7 +10,7 @@
             <ol class="tabs" id="js-popular-tabs">
                 @popular.zipWithRowInfo.map{ case (section, info) =>
                     <li@if(info.isFirst){ class="tabs-selected"}>
-                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
+                        <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
                     </li>
                 }
             </ol>

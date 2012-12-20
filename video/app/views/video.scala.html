@@ -1,13 +1,13 @@
 @(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
 @main(video, Switches.all){ }{
-    <h2 class="article-zone type-1">
+    <h2 class="article-zone type-2">
         <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
     </h2>
     
     <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType">
 
-        <header>
+        <header class="article-head">
             @fragments.dateline(video.webPublicationDate, video.isLive, edition)
             @fragments.headline(video.headline)
         </header>

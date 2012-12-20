@@ -34,10 +34,10 @@ define([
         }, config);
 
         this.template =
-            '<p class="update-text type-4">Auto update</p>' +
+            '<p class="update-text type-6">Auto update</p>' +
             '<i class="i '+ options.iconClass + '"/></i>' +
-            '<button class="update-btn type-6" data-action="off" data-link-name="autoupdate off">Off</button>' +
-            '<button class="update-btn type-6" data-action="on" data-link-name="autoupdate on">On</button>';
+            '<button class="update-btn type-8" data-action="off" data-link-name="autoupdate off">Off</button>' +
+            '<button class="update-btn type-8" data-action="on" data-link-name="autoupdate on">On</button>';
 
         // View
         this.view = {
@@ -102,8 +102,6 @@ define([
                         that.view.destroy();
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', response);
-                        // relativise dates
-                        common.mediator.emit('modules:relativedates:relativise');
                     }
                 },
                 error: function () {

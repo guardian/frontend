@@ -1,90 +1,82 @@
-define(['common', 'bean', 'bonzo'], function (common, Bean, bonzo) {
-    var Navigation;
+define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
-    Navigation = function (opts) {
-        var toggles, view, model;
-
-        // View
-
-        view = {
-
-            toggle: function (state, position, elm) {
-                var item, altItem, altButton;
-
-                item = bonzo(document.getElementById(((state === "sections") ? "sections-" + position : "topstories-" + position)));
-                altItem = bonzo(document.getElementById(((state === "sections") ?  "topstories-" + position : "sections-" + position)));
-                altButton = bonzo(document.getElementById(((state === "sections") ?  "topstories-control-" + position : "sections-control-" + position)));
-
-                if (altItem.hasClass('on')) { // the "other" panel is visible, so hide it then show current
-                    altItem.toggleClass('on initially-off');
-                    altButton.toggleClass('is-active');
-                }
-
-                item.toggleClass('on initially-off');
-                elm = bonzo(elm).toggleClass('is-active');
-
-                return (state);
+    var Controls = function (opts) {
+       
+        var state = false,
+            id = opts.id,
+            delay = opts.delay || 400,
+            lastClickTime = 0,
+            activeClass = 'is-active',
+            dom;
+         
+        var view = {
+           
+            bindEventToButton: function() {
+                bean.add(dom[0], 'click touchstart', function (e) {
+                    var current = new Date().getTime();
+                    var delta = current - lastClickTime;
+                    if (delta >= delay) {
+                        view.renderState();
+                        lastClickTime = current;
+                    }
+                    e.preventDefault();
+                });
             },
 
-            // we don't show the bottom section icon unless JS is enabled,
-            // since it doesn't do anything at the footer
-            // so we show it here since JS is on
-            showHiddenSectionControls: function () {
-                var navItems = common.$g('.sections-control'), i, l, elm;
-                 for (i = 0, l = navItems.length; i < l; i++) {
-                    elm = navItems[i];
-                    bonzo(elm).removeClass('initially-off');
-                }
+            isActive: function () {
+                return dom.hasClass('is-active');
+            },
+    
+            deactivate: function () {
+                dom.removeClass(activeClass);
+            },
+            
+            show: function () {
+                dom.removeClass('initially-off');
             },
 
-            init: function () {
-
-                view.showHiddenSectionControls();
-                var lastClickTime = 0;
-
-                var sectionsCTA = document.getElementById('sections-control-header');
-                if(sectionsCTA) {
-                    Bean.add(sectionsCTA, 'click touchstart', function (e) {
-                        var elm = this;
-                        var current = new Date().getTime();
-                        var delta = current - lastClickTime;
-                        if (delta > 400) {
-                            view.toggle('sections', 'header', elm);
-                        }
-                        e.preventDefault();
-                        lastClickTime = current;
-                    });
+            activate: function () {
+                dom.addClass(activeClass);
+            },
+            
+            renderState: function() {
+                
+                var isActive = view.isActive();
+                
+                if (isActive) {
+                    view.deactivate();
+                } else {
+                    view.activate();
                 }
+                
+                common.mediator.emit('modules:control:change', [id, !isActive]);
+                common.mediator.emit('modules:control:change:' + id + ':' + !isActive);
+            }
+        };
 
-                var topStoriesCTA = document.getElementById('topstories-control-header');
-                if (topStoriesCTA) {
-                    Bean.add(topStoriesCTA, 'click touchstart', function (e) {
-                        var elm = this;
-                        var current = new Date().getTime();
-                        var delta = current - lastClickTime;
-                        if (delta > 400) {
-                            view.toggle('topstories', 'header', elm);
-                        }
-                        e.preventDefault();
-                        lastClickTime = current;
-                    });
-                }
+        // deactivate this button if another button has been activated
+        common.mediator.on('modules:control:change', function(args) {
+            
+            var control = args[0],
+                state = args[1];
+            
+            if (id !== control) {
+                view.deactivate();
             }
 
+        });
+
+        this.show = function() {
+            view.show();
         };
 
-        // Model
-
-        model = {
+        this.init = function() {
+            dom = common.$g('#' + id);
+            view.bindEventToButton();
         };
-
-        this.init = function () {
-            view.init();
-        };
+    
     };
 
-
-    return Navigation;
-
+    return Controls;
+   
 });
-

@@ -104,26 +104,25 @@ define(['common', 'bonzo'], function (common, bonzo) {
 
     function replaceValidTimestamps() {
         findValidTimestamps().each(function(e, i) {
-            e = bonzo(e);
-            e.removeClass('js-timestamp'); // don't check this again
-            var datetime = new Date(e.attr('datetime'));
-            // convert to milliseconds since epoch
-            // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-            var relativeDate = makeRelativeDate(datetime.getTime(), bonzo(e.parent()).hasClass('block-time'));
+            var el = bonzo(e),
+                datetime = new Date(el.attr('datetime')),
+                // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
+                relativeDate = makeRelativeDate(datetime.getTime(), bonzo(el.parent()).hasClass('block-time'));
 
+            el.removeClass('js-timestamp');
             if (relativeDate) {
-                e.html('<span title="' + e.text() + '">' + relativeDate + '</span>');
+                el.html('<span title="' + el.text() + '">' + relativeDate + '</span>');
             }
         });
     }
 
-    // bind to pubsub
-    common.mediator.on('modules:relativedates:relativise', replaceValidTimestamps);
-    common.mediator.on('modules:popular:render', replaceValidTimestamps);
-    common.mediator.on('modules:related:render', replaceValidTimestamps);
+    // Bindings
+    ['popular', 'related', 'autoupdate'].forEach(function(module) {
+        common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
+    });
     
     function init() {
-        common.mediator.emit('modules:relativedates:relativise');
+        replaceValidTimestamps();
     }
 
     return {

@@ -1,13 +1,24 @@
 package feed
 
-import pa.{ MatchDay, Result, Fixture, FootballMatch }
+import pa._
 import org.joda.time.DateMidnight
+import pa.Result
+import pa.MatchDay
+import pa.Fixture
 
 object `package` {
 
   implicit def match2rich(m: FootballMatch) = new {
 
     def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+
+    //results and fixtures do not actually have a status field in the API
+    lazy val matchStatus = m match {
+      case f: Fixture => "Fixture"
+      case l: LiveMatch => l.status
+      case r: Result => "FT"
+      case m: MatchDay => m.matchStatus
+    }
 
     lazy val isFixture = m match {
       case f: Fixture => true
