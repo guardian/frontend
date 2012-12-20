@@ -1,15 +1,48 @@
 package test
 
-import conf.Configuration
+import conf.{ ContentApi, Configuration }
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.net.{ HttpURLConnection, URL }
+import java.io.File
+import com.gu.openplatform.contentapi.connection.{ HttpResponse, Http }
+import recorder.{ FilePersistence, HashedNames, HttpRecorder }
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
 class EditionalisedHtmlUnit {
+
+  val recorder = new HttpRecorder[HttpResponse] with HashedNames with FilePersistence {
+
+    override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
+
+    override def toResponse(str: String) = {
+      if (str.startsWith("Error:")) {
+        HttpResponse("", str.replace("Error:", "").toInt, "")
+      } else {
+        HttpResponse(str, 200, "")
+      }
+    }
+    override def fromResponse(response: HttpResponse) = {
+      if (response.statusCode == 200) {
+        response.body
+      } else {
+        "Error:" + response.statusCode
+      }
+    }
+  }
+
+  val originalHttp = ContentApi.http
+
+  ContentApi.http = new Http {
+    override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
+      recorder.load(url, headers.toMap) {
+        originalHttp.GET(url, headers)
+      }
+    }
+  }
 
   import Configuration.edition._
 
@@ -56,7 +89,6 @@ class EditionalisedHtmlUnit {
       case Port(p) => p.toInt
       case _ => 9000
     }
-
     running(TestServer(port, FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins)), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
