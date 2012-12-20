@@ -1,4 +1,4 @@
-define(['common', 'modules/detect'], function (common, detect) {
+define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
 
     function Images() {
     
@@ -15,21 +15,23 @@ define(['common', 'modules/detect'], function (common, detect) {
                     common.$g('body').addClass('svg');
                 }
 
-                //upgrade other images
-                var images = document.querySelectorAll('img[data-fullsrc]'); // Leave old browsers.
-                for (var i = 0, j = images.length; i < j; ++i) {
-                    var image = images[i];
-                    var thumbWidth = parseFloat(image.getAttribute('data-thumb-width'));
-                    var fullWidth = parseFloat(image.getAttribute('data-full-width'));
-                    var fullsrc = image.getAttribute('data-fullsrc');
-                    var forceUpgrade = image.getAttribute('data-force-upgrade');
+                //upgrade other images;
+                common.$g('img').each(function(image, index) {
+                    image = bonzo(image);
+                    if (!image.attr('data-fullsrc')) {
+                        return;
+                    }
+                    var thumbWidth = parseFloat(image.attr('data-thumb-width'));
+                    var fullWidth = parseFloat(image.attr('data-full-width'));
+                    var fullsrc = image.attr('data-fullsrc');
+                    var forceUpgrade = image.attr('data-force-upgrade');
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
                         if(forceUpgrade || layoutMode === 'extended') {
-                            image.src = fullsrc;
-                            image.className += ' image-high';
+                            image.attr('src', fullsrc);
+                            image.addClass('image-high');
                         }
                     }
-                }
+                });
             }
         };
 

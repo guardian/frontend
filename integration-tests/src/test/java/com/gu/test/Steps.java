@@ -21,6 +21,12 @@ public class Steps {
     public Steps(SharedDriver webDriver) {
         this.webDriver = webDriver;
     }
+    
+    @Given("^I visit a page$")
+	public void I_visit_a_page() throws Throwable {
+		//a guardian page
+		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
+	}
 	
 	@Given("^I visit the network front")
 	public void i_visit_the_network_front() throws Throwable {

@@ -102,8 +102,6 @@ define([
                         that.view.destroy();
                     } else {
                         common.mediator.emit('modules:autoupdate:loaded', response);
-                        // relativise dates
-                        common.mediator.emit('modules:relativedates:relativise');
                     }
                 },
                 error: function () {

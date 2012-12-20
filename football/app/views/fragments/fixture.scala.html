@@ -1,8 +1,9 @@
 @(fixture: pa.Fixture)
 
 <li class="match">
-    <a href="@MatchUrl(fixture)" data-link-name="fixture stats">
+    <a href="@MatchUrl(fixture)" data-link-name="fixture stats" data-match-id="@fixture.id">
         <p class="match-desc type-10">
+
             <span class="match-home match-team">@fixture.homeTeam.name</span>
             <span class="match-result">v</span>
             <span class="match-away match-team">@fixture.awayTeam.name</span>

@@ -13,4 +13,5 @@
   } else {
     <h2 class="type-3">@homeTeam.name v @awayTeam.name</h2>
   }
+    @page.theMatch.comments.map{ comments => <h5 class="match-comment type-5">@comments.replace("(", "").replace(")", "")</h5>}
 }

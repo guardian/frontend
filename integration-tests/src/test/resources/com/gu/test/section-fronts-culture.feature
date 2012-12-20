@@ -1,4 +1,4 @@
-@front @section-fronts
+@front @section-fronts @section-fronts-culture
 Feature: Section Fronts - Culture
     As a Guardian user
     I want to get a further break-down of sections on the culture section front
@@ -16,7 +16,7 @@ Feature: Section Fronts - Culture
        
     @scala-test
     Scenario Outline: Sub-sections show a number of top stories, and be of the correct visual 'level'
-        Give I am on the 'culture' section front
+        Given I am on the 'culture' section front
         Then there should be a '<sub-section>' section
             And the '<sub-section>' sub-section should contain up to <num-of-stories> stories
             And the '<sub-section>' sub-section should be a visual level <level>
@@ -30,9 +30,15 @@ Feature: Section Fronts - Culture
             | Books        | 1              | 3     |
             | Art & Design | 1              | 3     |
             | Games        | 1              | 3     |
-       
-    Scenario: User can hide and show the sections
+         
+    Scenario: Users can hide sections
+        Given I am on the 'culture' section front 
+        When I hide a section
+        Then the section will be hidden
+    
+    Scenario: Users can show hidden sections
         Given I am on the 'culture' section front
-        Then I can click "Hide" to collapse a section
-            And I can click "Show" to expand a section
+            And a section is hidden 
+        When I show a section
+        Then the section will be shown
             
