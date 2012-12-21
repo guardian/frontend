@@ -48,7 +48,7 @@ var styleguidepath = phantom.args[11];
 var styleguidefilename = phantom.args[12];
 
 var sprite = require( "webpage" ).create();
-    sprite.viewportSize = { width: 600, height: 'auto' };
+    sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
 var tableOpeningHTML = '<table class="styleguide-table sprite-table"><thead><tr><th class="type-11">CSS selector</th><th class="type-11">Output</th></tr></thead><tbody>';
@@ -123,6 +123,7 @@ function processFile() {
                     datacssrules.push( ".svg-" + cssprefix + filenamenoext +", .svg ." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; background-position: 0 0; }" );
                 }
 
+                // build HTML table for style guide
                 tableRowHTML = '<tr><td class="type-9">.' + cssprefix + filenamenoext + '</td><td class="sprite-cell"><i class="i ' + cssprefix + filenamenoext + '"></i></td></tr>';
                 outputHTML.push(tableRowHTML);
 
