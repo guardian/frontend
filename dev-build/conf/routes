@@ -12,7 +12,8 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Core nav
 GET     /most-popular                                       controllers.MostPopularController.renderGlobal
 GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
-GET     /top-stories                                        controllers.TopStoriesController.render
+GET     /top-stories                                        controllers.TopStoriesController.render(format = "html")
+GET     /top-stories.:format                                controllers.TopStoriesController.render(format)
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 
