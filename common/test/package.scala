@@ -6,32 +6,16 @@ import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.net.{ HttpURLConnection, URL }
 import java.io.File
-import com.gu.openplatform.contentapi.connection.{ HttpResponse, Http }
-import recorder.{ FilePersistence, HashedNames, HttpRecorder }
+import com.gu.openplatform.contentapi.connection.Http
+import recorder.HttpRecorder
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
 class EditionalisedHtmlUnit {
 
-  val recorder = new HttpRecorder[HttpResponse] with HashedNames with FilePersistence {
-
+  val recorder = new HttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
-
-    override def toResponse(str: String) = {
-      if (str.startsWith("Error:")) {
-        HttpResponse("", str.replace("Error:", "").toInt, "")
-      } else {
-        HttpResponse(str, 200, "")
-      }
-    }
-    override def fromResponse(response: HttpResponse) = {
-      if (response.statusCode == 200) {
-        response.body
-      } else {
-        "Error:" + response.statusCode
-      }
-    }
   }
 
   val originalHttp = ContentApi.http
