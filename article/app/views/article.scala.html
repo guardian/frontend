@@ -30,9 +30,9 @@
             @fragments.autoUpdate()
         }
 
-        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-		  @fragments.articleBody(article)
-
+        <div class="article-body from-content-api @if(article.isLive) {live-blog}" 
+            itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+		      @fragments.articleBody(article)
         </div>
     </article>
 

@@ -1,23 +1,31 @@
-.article-body h2 {
+//Module: from-content-api
+//Desc: This file contains all styles for in 
+//artilce content returned from content api
+
+//This is the onlly place where direct element selectors are allowed!
+
+//Core elements
+//---------------------------------------------
+.from-content-api h2 {
     .type-4;
     color: #333333;
     margin-bottom: @baseline;
     clear: both;
 }
 
-.article-body h3 {
+.from-content-api h3 {
     .type-5;
     margin: 0;
     font-family: georgia;
 }
 
-.article-body > p,
-.article-body .block-elements > p,
-.article-body ul,
-.article-body ol,
-.article-body address,
-.article-body blockquote,
-.article-body blockquote p {
+.from-content-api > p,
+.from-content-api .block-elements > p,
+.from-content-api ul,
+.from-content-api ol,
+.from-content-api address,
+.from-content-api blockquote,
+.from-content-api blockquote p {
     .type-6;
     margin: 0px 0px @baseline*2 0px;
     padding: 0px;
@@ -32,17 +40,20 @@
     border-left: none;
 }
 
-.article-body .caption,
-figcaption {
+//Captions
+//---------------------------------------------
+.from-content-api .caption,
+.from-content-api figcaption,
+.main-caption {
     .type-12;
 }
 
-figcaption.main-caption {
+.main-caption {
     padding: @baseline*3 @gutter;
 }
 
-.article-body .caption:before,
-figcaption:before {
+.from-content-api .caption:before,
+.from-content-api figcaption:before {
     .i;
     .i-image;
     display: inline-block;
@@ -50,35 +61,39 @@ figcaption:before {
     margin-right: 4px;
 }
 
-.svg .article-body .caption:before,
-.svg figcaption:before {
+.svg .from-content-api .caption:before,
+.svg .from-content-api figcaption:before {
     .svg-i-image;
 }
 
-figure {
+//Figures
+//---------------------------------------------
+.from-content-api figure {
     margin: 0px;
 }
 
-figure img {
-    display: block;
-    margin-bottom: @baseline*2;
-}
+    .from-content-api figure img {
+        display: block;
+        margin-bottom: @baseline*2;
+    }
 
-cite {
+//Citations
+//---------------------------------------------
+.from-content-api cite {
     .type-7
 }
 
-cite a {
-    color: #666666;
-}
+    .from-content-api cite a {
+        color: #666666;
+    }
 
-cite a:hover,
-cite a:visited:hover {
-    color: #4d4d4d;
-    border-bottom: 1px dotted #4d4d4d;
-}
+    .from-content-api cite a:hover,
+    .from-content-api cite a:visited:hover {
+        color: #4d4d4d;
+        border-bottom: 1px dotted #4d4d4d;
+    }
 
-cite a:visited {
-    color: #808080;
-    border-bottom: 1px dotted #808080;
-}
+    .from-content-api cite a:visited {
+        color: #808080;
+        border-bottom: 1px dotted #808080;
+    }
