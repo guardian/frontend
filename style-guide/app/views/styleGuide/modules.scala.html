@@ -8,9 +8,9 @@
             <h1 class="article-zone type-1">@metaData.webTitle</h1>
         </header>
 
-        <section id="article-elements" class="cf">
+        <section id="article-header" class="cf">
 
-            <h2 class="article-zone type-2 margin-bottom cf">Article elements</h2>
+            <h2 class="article-zone type-2 margin-bottom cf">Article header</h2>
 
             @{
                 val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
@@ -45,6 +45,88 @@
                 val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
                 fragments.module("byline", "Byline", bylineHTML, "Linked to the author's contributor tag page (if found).")
             }
+
+        </section>
+
+        <section id="article-elements" class="cf">
+
+            <h2 class="article-zone type-2 margin-bottom cf">Quotes</h2>
+
+            <div class="module-container cf">
+
+                <h2 class="type-5 zone-color box-indent">Tweet</h2>
+                <p class="box-indent type-7">A tweet block</p>
+
+                <ol class="tabs">
+                    <li class="tabs-selected"><a href="#modules-tweet-output">Output</a></li>
+                    <li><a href="#modules-tweet-code">Source code</a></li>
+                </ol>
+
+                <div class="tabs-content">
+                     <div class="tabs-pane" id="modules-tweet-output">
+                        <blockquote class="tweet">
+                                <span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))</span>
+                                <a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00" 
+                                    data-link-name="in body link" class="tweet-date">December 21, 2012</a>
+                                <p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
+                                    <a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach</a>
+                                    <a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld</a>
+                                </p>
+                            </blockquote>
+                     </div>
+                     <div class="tabs-pane initially-off" id="modules-tweet-code">
+                        <pre class="prettyprint">
+                            <blockquote class="tweet">
+                                <span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))</span>
+                                <a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00" 
+                                    data-link-name="in body link" class="tweet-date">December 21, 2012</a>
+                                <p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
+                                    <a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach</a>
+                                    <a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld</a>
+                                </p>
+                            </blockquote>
+                        </pre>
+                     </div>
+                </div>
+            </div>
+
+            <div class="module-container cf">
+
+                <h2 class="type-5 zone-color box-indent">Quote</h2>
+                <p class="box-indent type-7">A quote</p>
+
+                <ol class="tabs">
+                    <li class="tabs-selected"><a href="#modules-quote-output">Output</a></li>
+                    <li><a href="#modules-quote-code">Source code</a></li>
+                </ol>
+
+                <div class="tabs-content">
+                     <div class="tabs-pane" id="modules-quote-output">
+                        <blockquote class="quoted"> 
+                            <p>In all the excitement over the discovery of a 
+                            <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
+                            Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about 
+                            the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part 
+                            and which describes fundamental particles and forces of nature – hides a terrifying secret: a 
+                            theoretical composite particle that is so stable it can transform any other particle of matter 
+                            into a copy of itself.</p> 
+                        </blockquote>
+                     </div>
+                     <div class="tabs-pane initially-off" id="modules-quote-code">
+                        <pre class="prettyprint">
+                            <blockquote class="quoted"> 
+                            <p>In all the excitement over the discovery of a 
+                            <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
+                            Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about 
+                            the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part 
+                            and which describes fundamental particles and forces of nature – hides a terrifying secret: a 
+                            theoretical composite particle that is so stable it can transform any other particle of matter 
+                            into a copy of itself.</p> 
+                        </blockquote>
+                        </pre>
+                     </div>
+                </div>
+            </div>
 
         </section>
 
