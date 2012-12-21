@@ -1,16 +1,47 @@
 //Modules
 .module-container {
+    position: relative;
     margin-bottom: 20px;
 }
+
+    .module-container .tabs-content {
+        padding: 20px;
+    }
 
     .module-container .tabs-pane{
         outline: 1px dashed #E7E7E7;
         overflow: hidden;
     }
 
+    .module-container .tabs,
     .module-container .tabs-content {
-        padding: 20px;
+        @media (min-width: 641px) {
+            position: relative;
+            box-sizing: border-box;
+            width: 65%;
+            float: right;
+        }
     }
+
+    .module-container > p {
+        @media (min-width: 641px) {
+            position: absolute;
+            top: 40px;
+            left: 0px;
+            box-sizing: border-box;
+            width: 32.5%;
+            margin-bottom: 0px;
+        }
+    }
+
+    .module-container > h2 {
+        @media (min-width: 641px) {
+            padding: bottom 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f4f4ee;
+        }
+    }
+
 
 pre {
     font-size: 13px;

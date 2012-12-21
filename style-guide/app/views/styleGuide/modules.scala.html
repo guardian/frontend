@@ -8,59 +8,64 @@
             <h1 class="article-zone type-1">@metaData.webTitle</h1>
         </header>
 
-        <h2 class="article-zone type-2 margin-bottom">Article elements</h2>
+        <section id="article-elements" class="cf">
 
-        @{
-            val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
-            fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
-        }
+            <h2 class="article-zone type-2 margin-bottom cf">Article elements</h2>
 
-        @{
-            val relativeDateHTML = views.html.fragments.relativeDate(article.webPublicationDate, article.isLive, isFront=false).toString()
-            fragments.module("relative-date", "Relative dateline", relativeDateHTML, "Updated using JavaScript to be relative to the client's current locale")
-        }
+            @{
+                val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
+                fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
+            }
 
-        @{
-            val headlineHTML = views.html.fragments.headline(article.headline).toString()
-            fragments.module("headline", "Headline", headlineHTML)
-        }
+            @{
+                val relativeDateHTML = views.html.fragments.relativeDate(article.webPublicationDate, article.isLive, isFront=false).toString()
+                fragments.module("relative-date", "Relative dateline", relativeDateHTML, "Updated using JavaScript to be relative to the client's current locale")
+            }
 
-        @{
-            val standfirstHTML = views.html.fragments.standfirst(article).toString()
-            fragments.module("standfirst", "Standfirst", standfirstHTML)
-        }
+            @{
+                val headlineHTML = views.html.fragments.headline(article.headline).toString()
+                fragments.module("headline", "Headline", headlineHTML)
+            }
 
-        @article.mainPicture.map{ mainPicture =>
-            @article.mainPicture(width=220).map{ smallCrop =>
-                @{
-                    val mainPictureHTML = views.html.fragments.img(mainPicture, smallCrop).toString()
-                    fragments.module("main-picture", "Main Picture", mainPictureHTML, "Makes use of our responsive images technique &ndash; images are replaced with their 'fullsrc' version if the connection is speed is fast enough and the device width is large enough. Images can be forced to upgrade regardless of these tests by adding the 'force-upgrade' data attribute, as used here. Images will not be upgraded if the width of the 'fullsrc' image is not greater than the thumbnail width.")
+            @{
+                val standfirstHTML = views.html.fragments.standfirst(article).toString()
+                fragments.module("standfirst", "Standfirst", standfirstHTML)
+            }
+
+            @article.mainPicture.map{ mainPicture =>
+                @article.mainPicture(width=220).map{ smallCrop =>
+                    @{
+                        val mainPictureHTML = views.html.fragments.img(mainPicture, smallCrop).toString()
+                        fragments.module("main-picture", "Main Picture", mainPictureHTML, "Makes use of our responsive images technique &ndash; images are replaced with their 'fullsrc' version if the connection is speed is fast enough and the device width is large enough. Images can be forced to upgrade regardless of these tests by adding the 'force-upgrade' data attribute, as used here. Images will not be upgraded if the width of the 'fullsrc' image is not greater than the thumbnail width.")
+                    }
                 }
             }
-        }
 
-        @{
-            val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
-            fragments.module("byline", "Byline", bylineHTML)
-        }
+            @{
+                val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
+                fragments.module("byline", "Byline", bylineHTML)
+            }
 
-        <h2 class="article-zone type-2 margin-bottom">Trailblocks</h2>
+        </section>
 
-        @{
-            val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, true).toString()
-            fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML)
-        }
+        <section id="trailblocks" class="cf">
+            <h2 class="article-zone type-2 margin-bottom cf">Trailblocks</h2>
 
-        @{
-            val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 1, false, false).toString()
-            fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML)
-        }
+            @{
+                val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, true).toString()
+                fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML)
+            }
 
-        @{
-            val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, false).toString()
-            fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML)
-        }
+            @{
+                val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 1, false, false).toString()
+                fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML)
+            }
 
+            @{
+                val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, false).toString()
+                fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML)
+            }
+        <section>
     </article>
 
 }
