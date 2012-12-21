@@ -16,10 +16,10 @@ object SectionController extends Controller with Logging with Paging with Format
 
   def render(path: String, format: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
-    checkFormat(format) match {
-      case Some(format) => Async(promiseOfSection.map(_.map { renderSectionFront(_, format) } getOrElse { NotFound }))
-      case None => BadRequest
-    }
+    // make sure a valid format has been requested
+    checkFormat(format).map { validFormat => 
+      Async(promiseOfSection.map(_.map { renderSectionFront(_, validFormat) } getOrElse { NotFound }))
+    } getOrElse (BadRequest)
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Option[SectionFrontPage] = suppressApi404 {
@@ -45,19 +45,18 @@ object SectionController extends Controller with Logging with Paging with Format
 
     if (format == "json") {
       // pull out the paging params
-      val pagingParams = extractPaging(request)
-      val actualOffset = pagingParams("offset") + (pagingParams("page-size") * (pagingParams("page") - 1))
+      val paging = extractPaging(request)
       // offest the trails
-      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(actualOffset)
+      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(paging("actual-offset"))
       if (trails.size == 0) {
         NoContent
       } else {
         JsonComponent(
           request.getQueryString("callback"),
           "html" -> views.html.fragments.trailblocks.section(
-            trails.take(pagingParams("page-size")), numWithImages = 0, showFeatured = false
+            trails.take(paging("page-size")), numWithImages = 0, showFeatured = false
           ),
-          "hasMore" -> (trails.size > pagingParams("page-size"))
+          "hasMore" -> (trails.size > paging("page-size"))
         )
       }
 
