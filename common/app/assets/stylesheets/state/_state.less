@@ -29,6 +29,19 @@
     width: 100%;
 }
 
+.collapsible {
+    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
+    padding: 9px @gutter*2 9px @baseline*2; // double space on right to avoid icon
+    position: relative;
+    cursor: pointer;
+}
+
+.collapsible i {
+    position: absolute;
+    right: 14px;
+    display: inline-block;
+    top: 40%;
+}
 
 .placeholder,
 .initially-off {

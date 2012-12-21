@@ -1,0 +1,87 @@
+.i-live {
+    padding: @baseline;
+    margin-right: 5px;
+    font-size: 10px;
+    font-style: normal;
+    line-height: 1em;
+    color: #ffffff;
+    background-color: #ec1c1c;
+}
+
+.top .i-arrow-small-up {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.i-arrow-small-down {
+    display: inline-block;
+    margin-left: @baseline;
+}
+
+.i-sport-arrow-small {
+    display:inline-block;
+    margin: 0 0 -1px @baseline;
+}
+
+.i-red-card,
+.i-yellow-card {
+    display: inline-block;
+}
+
+.is-active .i-arrow-small-down {
+    .i-arrow-small-up;
+    border-color: transparent !important;
+}
+
+.svg .is-active .i-arrow-small-down {
+    .svg-i-arrow-small-up;
+}
+
+.is-active .i-menu {
+    .i-menu-active;
+}
+
+.svg .is-active .i-menu {
+    .svg-i-menu-active;
+}
+
+.i-date {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: -1px;
+}
+
+.svg .i-date {
+    background-size: 100%;
+    width: 10px;
+    height: 10px;
+}
+
+
+//Quotes
+.article blockquote:before,
+.article .block .quoted:before {
+    .i-livequote-before;
+    display: block;
+    content: '';
+    margin: 21px 0 @baseline*2 0;
+    clear: both;
+}
+
+.svg .article blockquote:before,
+.svg .article .block .quoted:before {
+    .svg-i-livequote-before;
+}
+
+.article blockquote:after,
+.article .block .quoted:after {
+    .i-livequote-after;
+    display: block;
+    content: '';
+    margin-bottom: 22px;
+}
+
+.svg .article blockquote:after,
+.svg .article .block .quoted:after {
+    .svg-i-livequote-after;
+}

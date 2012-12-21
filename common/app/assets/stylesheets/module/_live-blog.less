@@ -1,13 +1,3 @@
-.i-live {
-	padding: @baseline;
-	margin-right: 5px;
-	font-size: 10px;
-	font-style: normal;
-	line-height: 1em;
-	color: #ffffff;
-	background-color: #ec1c1c;
-}
-
 .article.is-live .block-title {
 	.type-4;
 }
@@ -32,6 +22,55 @@ span.timestamp,
 .article-body .published-time {
 	margin:0;
 	font-family:arial,sans-serif
+}
+
+
+.article-body .timestamp:first-child,
+.article-body .block:first-child .published-time time {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-body h2.block-title {
+    color: @articleOrange;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.article-body .block .block-title{
+    color: #333333;
+}
+
+.article-body .is-summary .block-title,
+.article-body .is-key-event .block-title{
+    color: @articleOrange;
+}
+
+.article .block blockquote {
+    padding-left:20px;
+    border-left:5px solid #E3E3DB;
+    margin:20px 0; 
+}
+
+.article .block .tweet,
+.article .block .quoted{
+    border-left:none;   
+}
+.article .block .quoted{
+    padding:0;  
+    margin:0 0 10px;
+}
+.article .block .tweet{
+    padding-left:10px;
+    margin:15px 0 20px 0;
+}
+
+.article .block blockquote:before,
+.article .block blockquote:after{
+    display:none
 }
 
 .article .tweet:before,
