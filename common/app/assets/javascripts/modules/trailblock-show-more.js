@@ -54,12 +54,12 @@ define([
                 var cta = bonzo(e.srcElement);
                 // disable button
                 cta.attr('disabled', 'disabled');
-                // what's the section
-                var section = bonzo(cta.parent()).attr('id').replace('front-trailblock-', '');
+                // what's the section (default to 'top-stories')
+                var section = bonzo(cta.parent()).attr('data-section-id') || 'top-stories';
                 // what's the offset?
                 var offset = qwery('.trail', cta.parent()[0]).length;
                 reqwest({
-                    url: '/' + section + '.json?offset=' + offset,
+                    url: '/' + section + '.json?view=section&offset=' + offset,
                     type: 'json',
                     // 5 sec timeout
                     timeout: 5000,
