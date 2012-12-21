@@ -35,6 +35,8 @@ object `package` {
       case matchDay: MatchDay => matchDay.liveMatch
       case _ => false
     }
+
+    def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
   }
 }
 

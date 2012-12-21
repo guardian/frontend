@@ -62,7 +62,7 @@ object MatchController extends Controller with Logging {
           Cached(60) {
             request.getQueryString("callback").map { callback =>
               JsonComponent(
-                "summary" -> views.html.fragments.matchSummary(MatchPage(theMatch, lineUp)),
+                "summary" -> views.html.fragments.matchSummary(theMatch),
                 "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))
               )
             } getOrElse {

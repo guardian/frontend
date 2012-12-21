@@ -26,7 +26,8 @@ GET     /football/api/competitiontable                      controllers.Competit
 GET     /football/api/teamtable/:teamId                     controllers.CompetitionTablesController.renderTeam(teamId)
 GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
 
-GET     /football/api/more-on-match/:year/:month/:day/:home/:away    controllers.MoreOnMatchController.render(year, month, day, home, away)
+GET     /football/api/more-on-match/:year/:month/:day/:home/:away    controllers.MoreOnMatchController.moreOn(year, month, day, home, away)
+GET     /football/api/scores/:year/:month/:day/:home/:away           controllers.MoreOnMatchController.scores(year, month, day, home, away)
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()

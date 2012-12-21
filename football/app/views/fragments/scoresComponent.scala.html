@@ -1,0 +1,19 @@
+@(component: controllers.ScoresComponent)
+
+@report(trail: Trail, text: String) = {
+    <li>
+        <a href="@trail.url">@text</a>
+    </li>
+}
+
+<div>
+    @fragments.matchSummary(component.theMatch)
+    @if(component.hasReports){
+        <ul>
+            @component.squadSheet.map{ squadSheet => @report(squadSheet, "Squad sheet") }
+            @component.minByMin.map{ minByMin => @report(minByMin, "Live blog") }
+            @component.matchReport.map{ matchReport => @report(matchReport, "Match report") }
+        </ul>
+    }
+</div>
+
