@@ -23,9 +23,11 @@ object FrontPage extends MetaData {
   )
 }
 
-class FrontController extends Controller with Logging {
+class FrontController extends Controller with Logging with Paging with Formats {
 
   val front: Front = Front
+
+  val validFormats: Seq[String] = Seq("html", "json")
 
   def warmup() = Action {
     val promiseOfWarmup = Akka.future(Front.warmup())
@@ -43,7 +45,7 @@ class FrontController extends Controller with Logging {
     }
   }
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String) = Action { implicit request =>
     val edition = Edition(request, Configuration)
 
     val page: Option[MetaData] = path match {
@@ -57,27 +59,36 @@ class FrontController extends Controller with Logging {
     page map { page =>
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
-      if (trailblocks.isEmpty) InternalServerError
-      else Cached(page) {
-        request.getQueryString("callback").map { callback =>
-          // pull out page-size, page and offset
-          val offset: Int = extractPaging(request, "offset").getOrElse(0)
-          val pageSize: Int = extractPaging(request, "page-size").getOrElse(5)
-          val page: Int = extractPaging(request, "page").getOrElse(1)
-          // assumtion - first trailblock is for this section
-          val trails: Seq[Trail] = (trailblocks.head.trails).drop(offset + (pageSize * (page - 1)))
-          if (trails.size == 0) {
-            NoContent
-          } else {
-            JsonComponent(
-              "html" -> views.html.fragments.trailblocks.section(trails.take(pageSize), numWithImages = 0, showFeatured = false),
-              "hasMore" -> (trails.size > pageSize)
-            )
+      if (trailblocks.isEmpty) {
+        InternalServerError
+      } else {
+        checkFormat(format).map { format =>
+          Cached(page) {
+            if (format == "json") {
+              // pull out the paging params
+              val pagingParams = extractPaging(request)
+              // offest the trails
+              val actualOffset = pagingParams("offset") + (pagingParams("page-size") * (pagingParams("page") - 1))
+              // pull out correct trailblock
+              trailblocks.find(_.description.id == path).map { trailblock =>
+                val trails: Seq[Trail] = trailblock.trails.drop(actualOffset)
+                if (trails.size == 0) {
+                  NoContent
+                } else {
+                  JsonComponent(
+                    request.getQueryString("callback"),
+                    "html" -> views.html.fragments.trailblocks.section(
+                      trails.take(pagingParams("page-size")), numWithImages = 0, showFeatured = false
+                    ),
+                    "hasMore" -> (trails.size > pagingParams("page-size"))
+                  )
+                }
+              } getOrElse (NoContent)
+            } else {
+              Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
+            }
           }
-        }.getOrElse {
-          Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
-        }
-
+        } getOrElse (BadRequest)
       }
     } getOrElse (InternalServerError)
   }

@@ -10,14 +10,15 @@ import play.api.libs.concurrent.Akka
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
-object SectionController extends Controller with Logging with Paging {
+object SectionController extends Controller with Logging with Paging with Formats {
 
   val validFormats: Seq[String] = Seq("html", "json")
 
   def render(path: String, format: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
-    Async {
-      promiseOfSection.map(_.map { renderSectionFront(_, validFormats.find(_ == format).getOrElse("html")) } getOrElse { NotFound })
+    checkFormat(format) match {
+      case Some(format) => Async(promiseOfSection.map(_.map { renderSectionFront(_, format) } getOrElse { NotFound }))
+      case None => BadRequest
     }
   }
 

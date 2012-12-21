@@ -50,8 +50,9 @@ GET     /football/match/:matchId                            controllers.MatchCon
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()
-GET     /                                     controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>                 controllers.FrontController.render(path)
+GET     /                                     controllers.FrontController.render(path = "front", format = "html")
+GET     /$path<culture|sport>                 controllers.FrontController.render(path, format = "html")
+GET     /$path<culture|sport>.:format         controllers.FrontController.render(path, format)
 
 
 #Video
