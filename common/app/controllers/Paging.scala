@@ -17,7 +17,7 @@ trait Paging {
    * Pull out 'paging' query string params
    */
   protected def extractPaging(request: RequestHeader): Map[String, Int] = {
-    pagingParams.map {
+    val paging = pagingParams.map {
       case (name, default) =>
         try {
           (name, request.getQueryString(name).map(_.toInt).getOrElse(default))
@@ -25,7 +25,9 @@ trait Paging {
           case _: NumberFormatException => (name, default)
         }
     }
-
+    // also compute actual offset, i.e. offset plus current page position
+    val actualOffset = paging("offset") + (paging("page-size") * (paging("page") - 1))
+    paging + ("actual-offset" -> actualOffset)
   }
 
 }
