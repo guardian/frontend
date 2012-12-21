@@ -19,17 +19,17 @@
 
             @{
                 val relativeDateHTML = views.html.fragments.relativeDate(article.webPublicationDate, article.isLive, isFront=false).toString()
-                fragments.module("relative-date", "Relative dateline", relativeDateHTML, "Updated using JavaScript to be relative to the client's current locale")
+                fragments.module("relative-date", "Relative dateline", relativeDateHTML, "Updated using JavaScript to be relative to the client's current locale. <strong>Note:</strong> The 'four hours ago'-style notation only happens within the first day of publication.")
             }
 
             @{
                 val headlineHTML = views.html.fragments.headline(article.headline).toString()
-                fragments.module("headline", "Headline", headlineHTML)
+                fragments.module("headline", "Headline", headlineHTML, "This should always be an H1 for SEO purposes, so ensure this module is used sparingly and appropriately.")
             }
 
             @{
                 val standfirstHTML = views.html.fragments.standfirst(article).toString()
-                fragments.module("standfirst", "Standfirst", standfirstHTML)
+                fragments.module("standfirst", "Standfirst", standfirstHTML, "Uses a paragraph rather than a heading as they can become quite lengthy in many cases.")
             }
 
             @article.mainPicture.map{ mainPicture =>
@@ -43,7 +43,7 @@
 
             @{
                 val bylineHTML = views.html.fragments.byline(article.byline, article).toString()
-                fragments.module("byline", "Byline", bylineHTML)
+                fragments.module("byline", "Byline", bylineHTML, "Linked to the author's contributor tag page (if found).")
             }
 
         </section>
@@ -53,17 +53,17 @@
 
             @{
                 val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, true).toString()
-                fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML)
+                fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML, "Generally used for a large trail as seen on network/section fronts.")
             }
 
             @{
                 val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 1, false, false).toString()
-                fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML)
+                fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML, "Typically displayed in threes when showing multiple trails.")
             }
 
             @{
                 val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, false).toString()
-                fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML)
+                fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML, "Usually used to show underneath three 'trail: thumbnail' trails.")
             }
         <section>
     </article>
