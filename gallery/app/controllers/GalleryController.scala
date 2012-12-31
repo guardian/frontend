@@ -14,12 +14,12 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)
 
-object GalleryController extends Controller with Logging {
+object GalleryController extends Controller with Logging with implicits.Requests {
 
   def render(path: String) = Action { implicit request =>
 
-    val index = request.getQueryString("index") map (_.toInt) getOrElse 1
-    val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
+    val index = request.getParameter("index") map (_.toInt) getOrElse 1
+    val isTrail = request.getParameter("trail") map (_.toBoolean) getOrElse false
 
     val promiseOfGalleryPage = Akka.future(lookup(path, index, isTrail))
 

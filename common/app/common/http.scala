@@ -54,5 +54,7 @@ trait HttpSupport {
     Response(r.getStatusCode, r.getResponseBody("utf-8"), r.getStatusText)
   )
 
-  def close() = Client.client.close()
+  def close() {
+    Client.client.close()
+  }
 }

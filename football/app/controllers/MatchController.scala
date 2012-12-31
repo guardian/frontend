@@ -38,7 +38,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   )
 }
 
-object MatchController extends Controller with Logging {
+object MatchController extends Controller with Logging with implicits.Requests {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
@@ -60,7 +60,7 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            request.getQueryString("callback").map { callback =>
+            request.getParameter("callback").map { callback =>
               JsonComponent(
                 "summary" -> views.html.fragments.matchSummary(MatchPage(theMatch, lineUp)),
                 "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))

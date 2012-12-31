@@ -10,7 +10,7 @@ import play.api.Play.current
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
-object ArticleController extends Controller with Logging {
+object ArticleController extends Controller with Logging with implicits.Requests {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfArticle = Akka.future(lookup(path))
@@ -35,7 +35,7 @@ object ArticleController extends Controller with Logging {
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
-    request.getQueryString("callback").map { callback =>
+    request.getParameter("callback").map { callback =>
       JsonComponent(views.html.fragments.articleBody(model.article))
     } getOrElse {
       Cached(model.article)(

@@ -115,7 +115,7 @@ trait Prototypes extends Testing {
     executableName := "frontend-%s" format name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
 
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { old =>
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first

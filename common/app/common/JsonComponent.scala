@@ -28,7 +28,7 @@ object JsonComponent extends Results {
   }
 
   private def resultFor(request: RequestHeader, json: String) = {
-    request.getQueryString("callback").map {
+    request.getParameter("callback").map {
       case ValidCallback(callback) => Ok("%s(%s);" format (callback, json)).as("application/javascript")
       case badCallback => Forbidden("bad callback name")
     }
