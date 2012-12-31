@@ -10,7 +10,8 @@ define([
     "modules/footballfixtures",
     "modules/footballtables",
     "modules/more-matches",
-    "modules/autoupdate"
+    "modules/autoupdate",
+    "modules/pad"
 ], function (
     common,
     qwery,
@@ -21,28 +22,20 @@ define([
     FootballFixtures,
     FootballTable,
     MoreMatches,
-    AutoUpdate
+    AutoUpdate,
+    Pad
 ) {
 
     var modules = {
 
         related: function(match) {
 
-            // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
-            function pad(number, length) {
-                var str = '' + number;
-                while (str.length < length) {
-                    str = '0' + str;
-                }
-                return str;
-            }
-
             var date = new Date(Number(match.dateInMillis));
 
             var url = '/football/api/more-on-match/';
                 url += date.getFullYear() + '/';
-                url += pad(date.getMonth() + 1, 2) + '/';
-                url += pad(date.getDate(), 2) + '/';
+                url += Pad(date.getMonth() + 1, 2) + '/';
+                url += Pad(date.getDate(), 2) + '/';
                 url += match.homeTeam + '/';
                 url += match.awayTeam;
 

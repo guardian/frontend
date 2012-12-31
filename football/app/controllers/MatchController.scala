@@ -9,12 +9,11 @@ import play.api.libs.concurrent.Akka
 import play.api.Play._
 import org.joda.time.format.DateTimeFormat
 import feed._
-import org.joda.time._
 import pa.LineUp
 import scala.Some
-import model.Team
+import implicits.Football
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
   lazy val hasLiveMatch = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -38,7 +37,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   )
 }
 
-object MatchController extends Controller with Logging {
+object MatchController extends Controller with Football with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 

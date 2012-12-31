@@ -2,14 +2,20 @@ define([
     "common",
 
     "modules/expandable",
-    "modules/autoupdate"
+    "modules/autoupdate",
+    "modules/matchnav"
 ], function (
     common,
     Expandable,
-    AutoUpdate
+    AutoUpdate,
+    MatchNav
 ) {
 
     var modules = {
+
+        matchNav: function(config){
+            new MatchNav(config, ".after-header").navForArticle();
+        },
 
         related: function(config){
             var host = config.page.coreNavigationUrl,
@@ -40,6 +46,9 @@ define([
         if (config.page.showInRelated) {
             modules.related(config);
         }
+
+        modules.matchNav(config);
+
     };
 
     return {
@@ -47,3 +56,4 @@ define([
     };
 
 });
+

@@ -13,8 +13,9 @@
             @fragments.headline(article.headline)
 
             @fragments.standfirst(article)
-
         </header>
+
+        <div class="after-header"></div>
 
         @if(!article.isLive) {
             @article.mainPicture.map{ mainPicture =>

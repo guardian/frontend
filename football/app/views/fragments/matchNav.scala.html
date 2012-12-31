@@ -1,0 +1,20 @@
+@(component: controllers.MatchNav)
+@import implicits.Football._
+
+
+@report(trail: Trail, text: String) = {
+    @if(component.currentPage.exists(_.url == trail.url)){
+        <li class="tabs-selected">@text</li>
+    } else {
+        <li><a href="@trail.url" data-link-name="@text">@text</a></li>
+    }
+}
+
+@if(component.hasReports){
+    <ol class="fake-tabs type-4" data-link-name="Football match nav">
+        @component.squadSheet.map{ squadSheet => @report(squadSheet, "Squad") }
+        @component.minByMin.map{ minByMin => @report(minByMin, "Live") }
+        @component.matchReport.map{ matchReport => @report(matchReport, "Report") }
+        @report(component.stats, "Stats")
+    </ol>
+}

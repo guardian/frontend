@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import common.Reference
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
@@ -59,7 +60,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "page-code" -> fields("internalPageCode"),
     "isLive" -> isLive
-  )
+  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
 
   override lazy val cacheSeconds = {
     if (isLive) 5

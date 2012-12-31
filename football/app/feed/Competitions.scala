@@ -12,8 +12,9 @@ import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
 import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
+import implicits.Football
 
-trait CompetitionSupport {
+trait CompetitionSupport extends Football {
 
   private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
@@ -86,7 +87,7 @@ trait CompetitionSupport {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
