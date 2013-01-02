@@ -13,7 +13,9 @@ define(['reqwest', 'common'], function (reqwest, common) {
             try {
                 localStorage.setItem('test', 'test1');
                 localStorage.removeItem('test');
-                return (localStorage.getItem(Fonts.storagePrefix + style.getAttribute('data-cache-name')) === null);
+                var name = style.getAttribute('data-cache-name'),
+                    cacheKey = style.getAttribute('data-cache-file-woff').split('.')[2];
+                return (localStorage.getItem(Fonts.storagePrefix + name + '.' + cacheKey) === null);
             }
             catch (e) {
                 return false;
@@ -40,7 +42,12 @@ define(['reqwest', 'common'], function (reqwest, common) {
                                 if (typeof callback === 'function') {
                                     callback(style, json);
                                 }
-                                localStorage.setItem(Fonts.storagePrefix + style.getAttribute('data-cache-name'), json.css);
+
+                                var name = style.getAttribute('data-cache-name'),
+                                    cacheKey = style.getAttribute('data-cache-file-woff').split('.')[2];
+
+                                Fonts.clearFont(name);
+                                localStorage.setItem(Fonts.storagePrefix + name + '.' + cacheKey, json.css);
                                 common.mediator.emit('modules:fonts:loaded', [json.name]);
                             };
                         }(style))
@@ -63,16 +70,25 @@ define(['reqwest', 'common'], function (reqwest, common) {
 
     }
 
-    Fonts.storagePrefix = "_guFont:";
-    
-    Fonts.clearFontsFromStorage = function () {
+    Fonts.storagePrefix = "gu.fonts.";
+
+    Fonts.clearWithPrefix = function(prefix) {
         // Loop in reverse because localStorage indexes will change as you delete items.
         for (var i = localStorage.length - 1; i > -1; --i) {
             var name = localStorage.key(i);
-            if (name.indexOf(Fonts.storagePrefix) === 0) {
+            if (name.indexOf(prefix) === 0) {
                 localStorage.removeItem(name);
             }
         }
+    }
+
+    Fonts.clearFont = function(name) {
+        Fonts.clearWithPrefix(Fonts.storagePrefix + name);
+    }
+    
+    Fonts.clearAllFontsFromStorage = function() {
+        Fonts.clearWithPrefix(Fonts.storagePrefix);
+        Fonts.clearWithPrefix('_guFont:');
     };
 
     return Fonts;
