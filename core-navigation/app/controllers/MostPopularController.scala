@@ -14,9 +14,9 @@ object MostPopularController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
 
+    val edition = Edition(request, Configuration)
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", _)).toList
 
-    val edition = Edition(request, Configuration)
     val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
 
     Async {
