@@ -1,7 +1,6 @@
 @(content: model.Content)
-
 @content.standfirst.map { s =>
-    <p class="standfirst" itemprop="description" data-link-name="standfirst">
+    <p class="article-standfirst type-7" itemprop="description" data-link-name="standfirst">
         @withJsoup(BulletCleaner(s))(
             InBodyLinkCleaner("in standfirst link")
         )
