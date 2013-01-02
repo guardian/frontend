@@ -100,13 +100,16 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular/' + edition + (section ? '/' + section : ''),
-                domContainer = document.getElementById('js-popular'),
-                p = new Popular(domContainer).load(url);
+            var url = host + '/most-popular' + (section ? '/' + section : ''),
+                domContainer = document.getElementById('js-popular');
+            
+            if (domContainer) {
+                new Popular(domContainer).load(url);
+                common.mediator.on('modules:popular:render', function() {
+                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                });
+            }
 
-            common.mediator.on('modules:popular:render', function() {
-                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-            });
         },
 
         showTabs: function() {

@@ -16,7 +16,7 @@ define([
                 pageId = config.page.pageId,
                 edition = config.page.edition;
 
-            var url =  host + '/related/' + edition + '/' + pageId;
+            var url =  host + '/related/' + pageId;
             common.mediator.emit("modules:related:load", [url]);
         },
 

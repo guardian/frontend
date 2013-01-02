@@ -12,7 +12,8 @@ case class Related(heading: String, trails: Seq[Trail])
 
 object RelatedController extends Controller with Logging {
 
-  def render(edition: String, path: String) = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
+    val edition = Edition(request, Configuration)
     val promiseOfRelated = Akka.future(lookup(edition, path))
     Async {
       promiseOfRelated.map(_.map {
