@@ -80,4 +80,3 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     return Controls;
    
 });
-

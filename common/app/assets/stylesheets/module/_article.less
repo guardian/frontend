@@ -11,21 +11,24 @@
     border-bottom: none;
 }
 
-.article header {
+.article-head {
     padding: @baseline*3 @gutter @baseline*4 @gutter;
 }
+
+    .article-headline {
+        margin-bottom: @baseline*2;
+    }
+
+    .article-standfirst {
+        margin-bottom: 0;
+    }
 
 aside {
     padding: 0px 0px 15px 0px;
     list-style: none;
 }
 
-.article h1 {
-    font-weight: bold;
-}
-
 .byline {
-    .type-5;
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     margin: 0 @gutter @baseline*2 @gutter;
@@ -38,7 +41,7 @@ aside {
 
 .article-body h2 {
     color: #333333;
-    .type-3;
+    .type-4;
     margin-bottom: @baseline;
     clear: both;
 }
@@ -61,7 +64,7 @@ aside {
 .article-body h3 {
     margin: 0;
     font-family: georgia;
-    .type-3;
+    .type-5;
 }
 
 .article-body > p,
@@ -71,7 +74,7 @@ aside {
 .article-body address,
 .article-body blockquote,
 .article-body blockquote p {
-    .type-4;
+    .type-6;
     margin: 0px 0px @baseline*2 0px;
     padding: 0px;
     color: #333333;
@@ -79,7 +82,7 @@ aside {
 
 .article blockquote,
 .article blockquote p {
-    .type-4;
+    .type-6;
     color: #333333;
     font-weight: normal;
     border-left: none;
@@ -145,11 +148,11 @@ aside {
 
 .article-body .caption,
 figcaption {
-    .type-7;
+    .type-12;
 }
 
 figcaption.main-caption {
-    padding: @baseline*2 @gutter;
+    padding: @baseline*3 @gutter;
 }
 
 .article-body .caption:before,
@@ -166,7 +169,7 @@ figcaption:before {
 }
 
 figure {
-    margin: 0px 0px @baseline*1 0px;
+    margin: 0px;
 }
 
 figure img {

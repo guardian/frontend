@@ -15,7 +15,6 @@ GET     /most-popular/*path                                 controllers.MostPopu
 GET     /top-stories                                        controllers.TopStoriesController.render
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
-
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()
