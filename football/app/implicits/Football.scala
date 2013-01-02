@@ -76,6 +76,10 @@ trait Football {
     lazy val webPublicationDate: DateTime = m.date
     lazy val sectionName: String = "Football"
   }
+
+  implicit def match2hasStarted(m: FootballMatch) = new {
+    lazy val hasStarted = m.isLive || m.isResult
+  }
 }
 
 object Football extends Football

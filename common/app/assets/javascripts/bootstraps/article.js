@@ -13,8 +13,8 @@ define([
 
     var modules = {
 
-        matchNav: function(config){
-            new MatchNav(config, ".after-header").navForArticle();
+        matchNav: function(){
+            new MatchNav().load();
         },
 
         related: function(config){
@@ -47,7 +47,7 @@ define([
             modules.related(config);
         }
 
-        modules.matchNav(config);
+        modules.matchNav();
 
     };
 

@@ -11,7 +11,9 @@ define([
     "modules/footballtables",
     "modules/more-matches",
     "modules/autoupdate",
-    "modules/pad"
+    "modules/pageconfig",
+    "modules/pad",
+    "modules/matchnav"
 ], function (
     common,
     qwery,
@@ -23,23 +25,15 @@ define([
     FootballTable,
     MoreMatches,
     AutoUpdate,
-    Pad
+    PageConfig,
+    Pad,
+    MatchNav
 ) {
 
     var modules = {
 
-        related: function(match) {
-
-            var date = new Date(Number(match.dateInMillis));
-
-            var url = '/football/api/more-on-match/';
-                url += date.getFullYear() + '/';
-                url += Pad(date.getMonth() + 1, 2) + '/';
-                url += Pad(date.getDate(), 2) + '/';
-                url += match.homeTeam + '/';
-                url += match.awayTeam;
-
-            common.mediator.emit("modules:related:load", [url]);
+        matchNav: function(){
+            new MatchNav().load();
         },
 
         initTogglePanels: function () {
@@ -145,8 +139,8 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var comp = config.page.paFootballCompetition,
-                    team = config.page.paFootballTeam;
+                var comp = PageConfig.referenceOfType('paFootballCompetition'),
+                    team = PageConfig.referenceOfType('paFootballTeam');
 
                 if(comp) {
                     modules.showCompetitionData(comp);
@@ -156,16 +150,22 @@ define([
                 }
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
-                    modules.related(match);
+
+                    modules.matchNav();
+
                     if(match.isLive) {
-                        modules.initAutoUpdate({
+                        modules.initAutoUpdate(
+                            {
                                 "summary"   : qwery('.match-summary')[0],
                                 "stats"     : qwery('.match-stats')[0]
                             },
                             config.switches,
-                            true);
+                            true
+                        );
                     }
                 }
+
+
 
                 break;
         }

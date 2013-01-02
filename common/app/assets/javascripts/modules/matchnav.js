@@ -1,68 +1,64 @@
-define(['common', 'reqwest', 'modules/pad'], function (common, reqwest, Pad) {
+define(['common', 'reqwest', 'modules/pad', 'modules/pageconfig'], function (common, reqwest, Pad, PageConfig) {
 
-    function MatchNav(config, appendTo) {
+    function MatchNav() {
         
         // View
         
         this.view = {
+            render: function (json) {
 
-            appendTo: appendTo,
+                document.querySelector(".after-header").innerHTML = json[0].nav;
+                if (json[0].related) {
+                    document.querySelector("#js-related").innerHTML = json[0].related;
+                }
 
-            render: function (html) {
-                var location = document.querySelector(appendTo);
-                location.innerHTML = html;
                 common.mediator.emit('modules:matchnav:render');
             }
         };
 
         // Bindings
-        
         common.mediator.on('modules:matchnav:loaded', this.view.render);
         
         // Model
-        this.navForArticle = function(){
-
-            var references = (config.page.references || []).filter(function(reference){
-                return reference.paFootballTeam;
-            });
-
-            if(config.page.section === "football"
-                && references.length == 2
-                && (
-                (config.page.tones || "").indexOf("Match reports") > -1
-                    || (config.page.tones || "").indexOf("Minute by minutes") > -1
-                    || (config.page.series || "").indexOf("Squad sheets") > -1
-                )
-                ){
-
-                var date = new Date(Date.parse(config.page.webPublicationDate));
-                var year = date.getFullYear();
-                var month = Pad(date.getMonth() + 1, 2);
-                var day = Pad(date.getDate(), 2);
-                var pageId = config.page.pageId;
-
-                var url = "/football/api/match-nav/" +
-                    year + "/" + month + "/" + day + "/" +
-                    references[0].paFootballTeam + "/" + references[1].paFootballTeam +
-                    "?currentPage=" + encodeURIComponent(pageId);
-
-                this.load(url);
+        this.urlForMatchPage = function(){
+            if (PageConfig.page.footballMatch) {
+                return "/football/api/match-nav/" + PageConfig.page.footballMatch.id +
+                    "?currentPage=" + encodeURIComponent(PageConfig.page.pageId);
             }
         };
-        
-        this.load = function (url) {
-            reqwest({
-                url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'showMatchNav',
-                success: function (json) {
-                    common.mediator.emit('modules:matchnav:loaded', [json.html]);
-                },
-                error: function () {
-                    common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
-                }
-            });
+
+        this.urlForContent = function(){
+
+            var teamIds = PageConfig.referencesOfType('paFootballTeam');
+            var isRightTypeOfContent = PageConfig.hasTone("Match reports") ||
+                                       PageConfig.hasTone("Minute by minutes") ||
+                                       PageConfig.hasSeries("Squad sheets");
+
+            if(PageConfig.page.section === "football" && teamIds.length == 2 && isRightTypeOfContent){
+
+                return url = "/football/api/match-nav/" +
+                    PageConfig.webPublicationDateAsUrlPart() + "/" +
+                    teamIds[0] + "/" + teamIds[1] +
+                    "?currentPage=" + encodeURIComponent(PageConfig.page.pageId);
+            }
+        };
+
+        this.load = function () {
+            var url = this.urlForMatchPage() || this.urlForContent();
+            if (url) {
+                reqwest({
+                    url: url,
+                    type: 'jsonp',
+                    jsonpCallback: 'callback',
+                    jsonpCallbackName: 'showMatchNav',
+                    success: function (json) {
+                        common.mediator.emit('modules:matchnav:loaded', [json]);
+                    },
+                    error: function () {
+                        common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
+                    }
+                });
+            }
         };
     }
     

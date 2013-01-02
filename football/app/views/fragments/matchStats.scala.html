@@ -54,9 +54,7 @@
 
 @defining((page.theMatch, page.theMatch.homeTeam, page.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
 
-  @if(page.hasLiveMatch){
-      <h3 class="type-2 section-divider">Stats</h3>
-
+  @if(page.matchStarted){
 
     <h5 class="home-header type-5">@homeTeam.name</h5>
     <h5 class="away-header type-5">@awayTeam.name</h5>
