@@ -1,60 +1,95 @@
-@(metaData:Page)(implicit request: RequestHeader)
+@(metaData:Page, zoneList: Seq[ZoneColour])(implicit request: RequestHeader)
 
 @main(metaData, Switches.all){  }{
 
     <article>
 
         <header>
-            <h1 class="article-zone type-1">@metaData.webTitle</h1>
+            <h1 class="article-zone type-1 margin-bottom">@metaData.webTitle</h1>
         </header>
 
-        <h2 class="article-zone type-2 margin-bottom">Headlines</h2>
+        <div class="box-indent">
+            <p class="type-7">Zones are areas of the site that are identified by a particular colour. These can be used by applying the class value shown below to a containing element of the area of the page you want to styled as a particular zone. This is typically on the <code>&lt;body&gt;</code> element of the page, eg. <code>&lt;body class="zone-culture"&gt;</code></p>
+        </div>
 
-        <table class="type-table">
+
+        <div class="module-container cf">
+
+            <h2 class="type-5 zone-color box-indent">Zone colours</h2>
+
+            <p class="box-indent type-7">Change the text colour of the text in any element to the appropriate zone colour, by adding a class value of <code>.zone-color</code>.</p>
+
+            <ol class="tabs">
+                <li class="tabs-selected"><a href="#zone-colour-output">Output</a></li>
+                <li><a href="#zone-colour-code">Source code</a></li>
+            </ol>
+
+            <div class="tabs-content">
+                 <div class="tabs-pane" id="zone-colour-output">
+                    <div class="zone-environment">
+                        <p class="zone-color">I'm an environmental paragraph</p>
+                    </div>
+                 </div>
+                 <div class="tabs-pane initially-off" id="zone-colour-code">
+                    <pre class="prettyprint">
+&lt;div class="zone-environment"&gt;
+    &lt;p class="zone-color"&gt;I'm an environmental paragraph&lt;/p&gt;
+&lt;/div&gt;
+                    </pre>
+                 </div>
+            </div>
+        </div>
+
+
+        <div class="module-container cf">
+
+            <h2 class="type-5 zone-color box-indent">Zone backgrounds</h2>
+
+            <p class="box-indent type-7">Change the background colour of any element to the appropriate zone colour, by adding a class value of <code>.zone-background</code>.</p>
+
+            <ol class="tabs">
+                <li class="tabs-selected"><a href="#zone-bg-output">Output</a></li>
+                <li><a href="#zone-bg-code">Source code</a></li>
+            </ol>
+
+            <div class="tabs-content">
+                 <div class="tabs-pane" id="zone-bg-output">
+                    <div class="zone-lifeandstyle">
+                        <p class="zone-background">I have a life and style background</p>
+                    </div>
+                 </div>
+                 <div class="tabs-pane initially-off" id="zone-bg-code">
+                    <pre class="prettyprint">
+&lt;div class="zone-lifeandstyle"&gt;
+    &lt;p class="zone-background"&gt;I have a life and style background&lt;/p&gt;
+&lt;/div&gt;
+                    </pre>
+                 </div>
+            </div>
+        </div>
+
+        <h2 class="type-4 zone-color box-indent">Zone choices</h2>
+        <p class="box-indent type-7">Below are all of the current zone colours, plus their CSS aliases. Many sections and tags of the site are grouped into related zones (eg. Music, Art and Film are all part of the Culture zone). These zones aren't linked in any technical sense (no API representation etc) so we alias them together using CSS to group related sections.</p>
+
+        <table class="styleguide-table">
             <thead>
                 <tr>
-                    <th class="type-11">CSS selector</th>
-                    <th class="type-11">Output</th>
+                    <th class="type-11 zone-hue">Hue</th>
+                    <th class="type-11 zone-name">Zone name</th>
+                    <th class="type-11 zone-selector">CSS selector(s)</th>
+                    <th class="type-11 zone-hex">Hex code</th>
                 </tr>
             </thead>
             <tbody>
-                @fragments.typeRow("type-0", "DE5 semi bold 22px", "32px line-height (2.2 / 3.2 rem)")
-                @fragments.typeRow("type-1", "DE5 semi bold 20px", "28px line-height (2 / 2.8 rem)")
-                @fragments.typeRow("type-2", "DE5 semi bold 18px", "28px line-height (1.8 / 2.8 rem)")
-        </table>
-
-        <h2 class="article-zone type-2 margin-bottom">Body copy</h2>
-
-        <table class="type-table">
-            <thead>
-                <tr>
-                    <th class="type-11">CSS selector</th>
-                    <th class="type-11">Output</th>
-                </tr>
-            </thead>
-            <tbody>
-                @fragments.typeRow("type-3", "Webtext bold 20px", "28px line-height (2 / 2.8 rem)")
-                @fragments.typeRow("type-4", "Webtext bold 18px", "24px line-height (1.8 / 2.4 rem)")
-                @fragments.typeRow("type-5", "Webtext bold 16px", "22px line-height (1.6 / 2.2 rem)")
-                @fragments.typeRow("type-6", "Webtext reqular 16px", "24px line-height (1.6 / 2.4 rem)")
-                @fragments.typeRow("type-7", "Webtext reqular 14px", "20px line-height (1.4 / 2.0 rem)")
-        </table>
-
-        <h2 class="article-zone type-2 margin-bottom">Sub copy &amp; meta data</h2>
-
-        <table class="type-table">
-            <thead>
-                <tr>
-                    <th class="type-11">CSS selector</th>
-                    <th class="type-11">Output</th>
-                </tr>
-            </thead>
-            <tbody>
-                @fragments.typeRow("type-8",  "Helvetica regular 14px", "20px line-height (1.4 / 2 rem)")
-                @fragments.typeRow("type-9",  "Helvetica bold 13px", "20px line-height (1.3 / 2 rem)")
-                @fragments.typeRow("type-10", "Helvetica regular 13px", "20px line-height (1.3 / 2 rem)")
-                @fragments.typeRow("type-11", "Helvetica regular 12px", "16px line-height (1.2 / 1.6 rem)")
-                @fragments.typeRow("type-12", "Helvetica regular 11px", "16px line-height (1.1 / 1.6 rem)")
+                @zoneList.map{ zone =>
+                    <tr>
+                        <td class="@zone.className zone-hue"><span class="hue zone-background" title="@zone.hexCode"></span></td>
+                        <td class="zone-name">@zone.zoneName</td>
+                        <td class="zone-selector"><code>@Html(zone.selectors.mkString("</code>, <code>"))</code></td>
+                        <td class="zone-hex">@zone.hexCode</td>
+                    </tr>
+                }
+            </tbody>
         </table>
 
     </article>

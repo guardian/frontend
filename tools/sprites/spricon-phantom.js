@@ -51,7 +51,7 @@ var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
-var tableOpeningHTML = '<table class="styleguide-table sprite-table"><thead><tr><th class="type-11">CSS selector</th><th class="type-11">Output</th></tr></thead><tbody>';
+var tableOpeningHTML = '<table class="styleguide-table styleguide-table-two-col sprite-table"><thead><tr><th class="type-11">CSS selector</th><th class="type-11">Output</th></tr></thead><tbody>';
 var outputHTML = [];
 var tableClosingHTML = '</tbody></table>';
 

@@ -11,6 +11,8 @@ import play.api.Play.current
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
+case class ZoneColour(className: String, selectors: List[String], zoneName: String, hexCode: String)
+
 object StyleGuideController extends Controller with Logging {
 
   def renderIndex = Action { implicit request =>
@@ -29,8 +31,21 @@ object StyleGuideController extends Controller with Logging {
 
   def renderZones = Action { implicit request =>
     val page = Page(canonicalUrl = None, "zones", "style-guide", "Zones", "GFE:Style-guide:zones")
+
+    val zoneList = Seq(
+      ZoneColour("zone-news", List(".zone-news", ".zone-journalismcompetition", ".zone-global-development", ".zone-law", ".zone-theobserver", ".zone-science", ".zone-theguardian", ".zone-education", ".zone-technology", ".zone-society", ".zone-politics", ".zone-uk", ".zone-media", ".zone-world"), "News (default)", "#D61D00"),
+      ZoneColour("zone-environment", List(".zone-environment"), "Environment", "#4A7801"),
+      ZoneColour("zone-culture", List(".zone-childrens-books-site", ".zone-tv-and-radio", ".zone-artanddesign", ".zone-stage", ".zone-culture", ".zone-film", ".zone-books", ".zone-music"), "Culture", "#D1008B"),
+      ZoneColour("zone-lifeandstyle", List(".zone-lifeandstyle", ".zone-fashion"), "Life and style", "#EA721E"),
+      ZoneColour("zone-sport", List(".zone-sport", ".zone-football"), "Sport", "#20A111"),
+      ZoneColour("zone-travel", List(".zone-travel"), "Travel", "#066EC9"),
+      ZoneColour("zone-business", List(".zone-business"), "Business", "#004179"),
+      ZoneColour("zone-commentisfree", List(".zone-commentisfree"), "Comment is Free", "#004179"),
+      ZoneColour("zone-money", List(".zone-money"), "Money", "#7D0068")
+    )
+
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.zones(page)))
+      Ok(Compressed(views.html.styleGuide.zones(page, zoneList)))
     }
   }
 
