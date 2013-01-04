@@ -16,7 +16,7 @@ case class ZoneColour(className: String, selectors: List[String], zoneName: Stri
 object StyleGuideController extends Controller with Logging {
 
   def renderIndex = Action { implicit request =>
-    val page = Page(canonicalUrl = None, "style-guide", "style-guide", "Style guide", "GFE:Style-guide")
+    val page = Page(canonicalUrl = None, "style-guide", "style-guide", "Style guide: home", "GFE:Style-guide")
     Cached(60) {
       Ok(Compressed(views.html.styleGuide.index(page)))
     }
