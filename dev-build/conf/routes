@@ -17,7 +17,6 @@ GET     /core-navigation/top-stories/*edition                           controll
 
 GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
-
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()
