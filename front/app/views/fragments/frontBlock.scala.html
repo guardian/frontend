@@ -4,7 +4,7 @@
 
     @if(block.description.id != "") {
 	    @if("/" + block.description.id == request.path) {
-	        @fragments.headline(block.description.name, List("article-zone", "zone-color", "type-0"))
+	        @fragments.headline(block.description.name, List("section-head", "zone-color"))
 	    } else {
 	        <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
                 <h1 itemprop="headline" class="type-2 ">
