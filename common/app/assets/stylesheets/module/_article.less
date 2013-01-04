@@ -1,10 +1,13 @@
 @articleOrange: #e47a39;
 
 .article-zone {
-    padding: @baseline*3 @gutter;
+    padding: 13px @gutter 14px @gutter;
     line-height: 1em;
     border-top: 4px solid @mushroom;
     border-bottom: 1px solid @mushroom;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 #js-popular .article-zone {
@@ -32,7 +35,7 @@ aside {
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     margin: 0 @gutter @baseline*2 @gutter;
-    padding: @baseline 0 @baseline*3 0;
+    padding: @baseline 0 @baseline*4 0;
 }
 
 .article-body {
@@ -149,6 +152,7 @@ aside {
 .article-body .caption,
 figcaption {
     .type-12;
+    color: #666666;
 }
 
 figcaption.main-caption {
