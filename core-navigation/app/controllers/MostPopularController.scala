@@ -35,11 +35,12 @@ object MostPopularController extends Controller with Logging {
     log.info("Fetching most popular: " + path + " for edition " + edition)
 
     val response: ItemResponse = ContentApi.item(path, edition)
+      .tag(None)
       .showMostViewed(true)
       .response
 
     val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-    val popular = response.mostViewed map { new Content(_) } take (10)
+    val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
 
     if (popular.isEmpty) None else Some(MostPopular(heading, popular))
   }
