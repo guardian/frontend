@@ -22,17 +22,19 @@ object SectionController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching front: " + path + "for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .tag(None)
       .showEditorsPicks(true)
-      .showMostViewed(true)
       .response
 
     val section = response.section map { Section(_) }
 
-    val editorsPicks = response.editorsPicks map { new Content(_) }
+    val editorsPicks = SupportedContentFilter(response.editorsPicks map { new Content(_) })
 
     val editorsPicksIds = editorsPicks map { _.id }
 
-    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+    val latestContent = SupportedContentFilter(
+      response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+    )
 
     section map { SectionFrontPage(_, editorsPicks, latestContent) }
   }
