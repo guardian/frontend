@@ -4,7 +4,7 @@
 <header id="header" class="cf">
 } else {
 <div id="navigation-footer">
-    <a class="top type-6" data-link-name="back to top" href="#top">Back to top <i class="i-arrow-small-up"></i></a>
+    <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i-arrow-small-up"></i></a>
 }
 
 <a href="/" data-link-name="site logo" id="logo" class="i-guardian-logo">
@@ -13,11 +13,11 @@
 
 @if(!isFooter){
     <div id="navigation-header" data-link-name="global navigation: header">
-        <a href="#topstories-footer" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header" 
-        class="topstories-control initially-off">
+        <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header" 
+        class="topstories-control">
             <i class="i-nav-divider"></i>
             <span>Top stories</span>
-            <i class="i-arrow-small-down"></i>
+            <i class="i-arrow-small-down js-visible"></i>
         </a>
         
         <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" class="sections-control">
@@ -31,7 +31,8 @@
 <div id="topstories-header" class="nav-popup top-stories initially-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}" 
+    data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
     @fragments.sections(page, isFooter)
 </div>
 
