@@ -30,10 +30,11 @@ object TopStoriesController extends Controller with Logging {
   private def lookup(edition: String)(implicit request: RequestHeader) = suppressApi404 {
     log.info("Fetching top stories for edition " + edition)
     val response: ItemResponse = ContentApi.item("/", edition)
+      .tag(None)
       .showEditorsPicks(true)
       .response
 
-    val editorsPicks = response.editorsPicks map { new Content(_) }
+    val editorsPicks = SupportedContentFilter(response.editorsPicks map { new Content(_) })
 
     val pageSize = extractPageSize(request).getOrElse(editorsPicks.size)
 
