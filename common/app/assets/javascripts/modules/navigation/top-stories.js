@@ -32,7 +32,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         // Model
         
         this.load = function (config) {
-            var latestUrl = config.page.coreNavigationUrl + '/top-stories.json?page-size=10';
+            var latestUrl = config.page.coreNavigationUrl + '/top-stories.json?page-size=10&view=link';
             
             return reqwest({
                     url: latestUrl,

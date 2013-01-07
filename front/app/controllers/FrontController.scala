@@ -36,15 +36,6 @@ class FrontController extends Controller with Logging with Formats {
 
   def isUp() = Action { Ok("Ok") }
 
-  // pull out 'paging' (int) query string params
-  private def extractPaging(request: RequestHeader, queryParam: String): Option[Int] = {
-    try {
-      request.getQueryString(queryParam).map(_.toInt)
-    } catch {
-      case _: NumberFormatException => None
-    }
-  }
-
   def render(path: String, format: String) = Action { implicit request =>
     val edition = Edition(request, Configuration)
 

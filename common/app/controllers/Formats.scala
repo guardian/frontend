@@ -2,8 +2,8 @@ package controllers
 
 import model._
 import common._
-
 import play.api.mvc.{ RequestHeader, Results }
+import play.api.templates.Html
 
 trait Formats extends Paging with Results {
 
@@ -30,9 +30,17 @@ trait Formats extends Paging with Results {
     if (offsetTrails.size == 0) {
       NoContent
     } else {
+
+      // option to use 'link' view mainly used for top-stories tab view
+      val html: Html = if (request.getQueryString("view").getOrElse("") == "link") {
+        views.html.fragments.trailblocks.link(offsetTrails, numItemsVisible = paging("page-size"))
+      } else {
+        views.html.fragments.trailblocks.headline(offsetTrails, numItemsVisible = paging("page-size"))
+      }
+
       JsonComponent(
         request.getQueryString("callback"),
-        "html" -> views.html.fragments.trailblocks.headline(offsetTrails, numItemsVisible = paging("page-size")),
+        "html" -> html,
         "hasMore" -> (offsetTrails.size > paging("page-size"))
       )
     }
