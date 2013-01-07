@@ -26,7 +26,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         });
 
         it("should request css files and cache in localStorage", function() {
-        	
+            
             common.mediator.on('modules:fonts:loaded', callbackSpy);
 
             runs(function() {
@@ -34,19 +34,19 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-            	return (callbackSpy.calledTwice);
+                return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
                 expect(callbackSpy.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                	expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
+                    expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                 }
             });
         });
 
         it("should request css files, cache in localStorage and apply the styles", function() {
-        	
+            
             common.mediator.on('modules:fonts:loaded', callbackSpy);
 
             runs(function() {
@@ -54,35 +54,35 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-            	return (callbackSpy.calledTwice);
+                return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                	expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
-                	expect(styleNodes[i].innerHTML).toBe('@font-face{');
+                    expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
+                    expect(styleNodes[i].innerHTML).toBe('@font-face{');
                 }
             });
         });
 
         it("should request the TTF version of css files when requested", function() {
-        	
+            
             common.mediator.on('modules:fonts:loaded', callbackSpy);
 
-        	fileFormat = 'ttf';
+            fileFormat = 'ttf';
 
             runs(function() {
                 new Fonts(styleNodes, fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
-            	return (callbackSpy.calledTwice);
+                return (callbackSpy.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                	expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{android');
-                	expect(styleNodes[i].innerHTML).toBe('@font-face{android');
+                    expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{android');
+                    expect(styleNodes[i].innerHTML).toBe('@font-face{android');
                 }
             });
         });
@@ -169,7 +169,6 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
                 }
                 replaceCacheKeysInDOM('123456789', '12345');
             });
-
 
         });
 
