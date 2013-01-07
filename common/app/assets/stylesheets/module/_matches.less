@@ -44,13 +44,12 @@ a.competition-title {
 .competition-title i,
 .football-table-link i {
     position: absolute;
-    top: 14px;
+    top: 12px;
     right: @baseline*2;
 }
 
-.match,
 .competition {
-    list-style: none;
+    margin-bottom: @baseline*2;
 }
 
 .match {
@@ -108,8 +107,7 @@ a.competition-title {
     position: absolute;
     display: block;
     width: 40px;
-    top: 0;
-    left: 50%;
+    left: 50.5%;
     margin-left: -20px;
     text-align: center;
     font-weight: bold;
@@ -119,7 +117,7 @@ a.competition-title {
 .match-status {
     position: absolute;
     right: @baseline*2;
-    top: 13px;
+    top: 10px;
     color: #777777;
 }
 
@@ -267,7 +265,7 @@ a.competition-title {
 // football-filters is the dropdown list
 
 .football-filters {
-    margin-bottom: 0px;
+    margin-bottom: @baseline*2;
 }
 
 .football-filters > li {
@@ -326,8 +324,8 @@ a.competition-title {
 
 .football-filter {
     background: @sportBright;
-    margin: 0 @gutter;
-    color: #ffffff;
+    margin: 0 @gutter @baseline*2 @gutter;
+    color: #ffffff; 
     border-bottom: none;
 }
 
@@ -345,7 +343,6 @@ a.competition-title {
     top: 0;
 }
 
-.matches-container,
 .football-table-container {
     margin-top: @baseline*2;
 }

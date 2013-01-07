@@ -26,7 +26,11 @@ Running on a different host (i.e. not `http://localhost:9000`)
 Running through a proxy
 
  	$ mvn test -Dhttp_proxy=http://proxy.co.uk:1234
- 	
+
+Running on a different driver (e.g. `htmlUnit`, `firefox` (default))
+
+    $ mvn test -Ddriver=htmlUnit
+     	
 To run the jasmine tests
 
 	$ mvn test -Dtags="--tags @jasmine"
