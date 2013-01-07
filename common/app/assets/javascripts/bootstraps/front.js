@@ -31,14 +31,14 @@ define([
             }
         },
         
-        showTrailblockToggles: function (config) {      
-            var edition = config.page.edition;      
-            var tt = new TrailblockToggle();      
+        showTrailblockToggles: function (config) {
+            var edition = config.page.edition;
+            var tt = new TrailblockToggle();
             tt.go(edition);
         },
 
         showTrailblockShowMore: function () {
-            trailblockShowMore = new TrailblockShowMore();
+            var trailblockShowMore = new TrailblockShowMore();
             trailblockShowMore.init();
         },
 

@@ -15,10 +15,7 @@ define([
     bean,
     qwery
 ) {
-    
-    /**
-     * 
-     */
+
     function TrailblockShowMore(options) {
         
         var opts = options || {},
@@ -27,11 +24,11 @@ define([
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
                 
-           appendCta: function(trailblock) {  
+           appendCta: function(trailblock) {
                bonzo(trailblock).append('<button class="cta">Show more</button>');
            },
            
-           removeCta: function(cta) {  
+           removeCta: function(cta) {
                cta.remove();
            },
            
@@ -44,7 +41,7 @@ define([
         };
 
         // initialise
-        this.init = function() { 
+        this.init = function() {
             var trailblocks = common.$g('.' + className);
             // append the cta
             trailblocks.each(this.view.appendCta);
