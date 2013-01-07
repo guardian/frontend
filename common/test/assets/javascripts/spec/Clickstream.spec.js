@@ -36,7 +36,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | the button', false, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | the button', false, false, true])).toHaveBeenCalledOnce();
             });
 
         });
@@ -71,7 +71,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | xhr link', true, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | xhr link', true, false, false])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
@@ -90,7 +90,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | paragraph', false, true])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | paragraph', false, true, false])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
