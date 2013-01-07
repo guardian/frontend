@@ -10,12 +10,6 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET     /core-navigation/most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /core-navigation/most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
-
-GET     /core-navigation/top-stories/*edition                           controllers.TopStoriesController.render(edition)
-
-GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
 
 #Style-guide
 GET     /style-guide                controllers.StyleGuideController.renderIndex
@@ -26,6 +20,11 @@ GET     /style-guide/sprites        controllers.StyleGuideController.renderSprit
 GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
 GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
 
+
+GET     /most-popular                                       controllers.MostPopularController.renderGlobal
+GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
+GET     /top-stories                                        controllers.TopStoriesController.render
+GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)

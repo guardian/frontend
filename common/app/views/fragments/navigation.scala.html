@@ -31,7 +31,8 @@
 <div id="topstories-header" class="nav-popup top-stories initially-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}"
+    data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
     @fragments.sections(page, isFooter)
 </div>
 

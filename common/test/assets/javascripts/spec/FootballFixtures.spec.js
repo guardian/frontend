@@ -60,7 +60,7 @@ define(['common', 'qwery', 'modules/footballfixtures'], function(common, qwery, 
 
             runs(function(){
                 mockReqwest.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
-                expect(expandCall).toHaveBeenCalledWith('front-competition-table');
+                expect(expandCall).toHaveBeenCalledWith('front-competition-fixtures');
             });
         });
     

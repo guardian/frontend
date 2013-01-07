@@ -20,8 +20,7 @@
             @popular.zipWithRowInfo.map{ case (section, info) =>
                 <div id="tabs-popular-@info.rowNum" 
                     class="@if(isTabbed){tabs-pane @if(!info.isFirst){ initially-off}} headline-list"
-                    data-link-name="@section.heading"
-                >
+                    data-link-name="@section.heading">
 
                     <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
