@@ -19,7 +19,7 @@ define([
 
     var config = {
         page: {
-            'keywords': 'keyword,go,here',
+            'keywords': 'keyword,go here,there',
             'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
             'oasSiteId':"m.guardian.co.uk/oas.html",
             'contentType': 'contentType',
@@ -42,7 +42,7 @@ define([
 
         it("Construct an OAS request using page metadata", function() {
             var d = DocumentWrite.generateUrl(config.page, slots),
-                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype&cat=section&a=E012390&a=E012782';
+                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go-here&k=there&pt=contenttype&ct=contenttype&cat=section&a=E012390&a=E012782';
             expect(d).toBe(url);
         });
 
