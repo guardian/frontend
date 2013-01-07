@@ -6,8 +6,9 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         var fileFormat;
         var storagePrefix = 'gu.fonts.';
 
-        function getNameAndCacheKey(style) {
-            return style.getAttribute('data-cache-name') + '.' + style.getAttribute('data-cache-file-woff').split('.')[2];
+        function getNameAndCacheKey(style) {       
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/);
+            return nameAndCacheKey[1] + '.' + nameAndCacheKey[2];
         }
 
         function replaceCacheKeysInDOM(from, to) {
@@ -122,7 +123,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
             expect(localStorage.length).toEqual(styleNodes.length + 1);
 
-            Fonts.clearAllFontsFromStorage();
+            new Fonts(styleNodes, fileFormat).clearAllFontsFromStorage();
 
             // localStorage should be empty.
             expect(localStorage.length).toEqual(1);

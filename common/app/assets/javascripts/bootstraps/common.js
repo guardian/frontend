@@ -123,10 +123,11 @@ define([
             }
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                var f = new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
             if (showFonts) {
-                new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                f.loadFromServerAndApply();
             } else {
-                Fonts.clearFontsFromStorage();
+                f.clearFontsFromStorage();
             }
         },
 
