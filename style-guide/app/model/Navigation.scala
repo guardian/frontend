@@ -11,9 +11,10 @@ object Navigation {
     SectionLink("home", "Home", "/style-guide"),
     SectionLink("zones", "Zones", "/style-guide/zones"),
     SectionLink("typography", "Typography", "/style-guide/typography"),
-    SectionLink("grid", "Grid", "/style-guide/grid"),
+    //SectionLink("grid", "Grid", "/style-guide/grid"),
+    SectionLink("helpers", "CSS helpers", "/style-guide/csshelpers"),
     SectionLink("modules", "Modules", "/style-guide/modules"),
-    SectionLink("coding-standards", "Coding standards", "/style-guide/coding-standards"),
+    SectionLink("coding-standards", "Coding standards", "/style-guide/codingstandards"),
     SectionLink("sprites", "CSS sprites", "/style-guide/sprites")
   )
 

@@ -87,4 +87,18 @@ object StyleGuideController extends Controller with Logging {
     }
   }
 
+  def cssHelpers = Action { implicit request =>
+    val page = Page(canonicalUrl = None, "css-helpers", "style-guide", "CSS helpers", "GFE:Style-guide:css-helpers")
+    Cached(60) {
+      Ok(Compressed(views.html.styleGuide.csshelpers(page)))
+    }
+  }
+
+  def codingStandards = Action { implicit request =>
+    val page = Page(canonicalUrl = None, "coding-standards", "style-guide", "Coding standards", "GFE:Style-guide:coding-standards")
+    Cached(60) {
+      Ok(Compressed(views.html.styleGuide.codingstandards(page)))
+    }
+  }
+
 }
