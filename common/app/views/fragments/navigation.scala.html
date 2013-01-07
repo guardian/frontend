@@ -4,7 +4,7 @@
 <header id="header" class="cf">
 } else {
 <div id="navigation-footer">
-    <a class="top type-6" data-link-name="back to top" href="#top">Back to top <i class="i-arrow-small-up"></i></a>
+    <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i-arrow-small-up"></i></a>
 }
 
 <a href="/" data-link-name="site logo" id="logo" class="i-guardian-logo">
@@ -31,7 +31,8 @@
 <div id="topstories-header" class="nav-popup top-stories initially-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}">
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}" 
+    data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
     @fragments.sections(page, isFooter)
 </div>
 

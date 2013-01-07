@@ -6,23 +6,24 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Akka
+import feed.MostPopularAgent
 
 object MostPopularController extends Controller with Logging {
 
   import play.api.Play.current
 
   def render(path: String) = Action { implicit request =>
+
     val edition = Edition(request, Configuration)
-    val promiseOfGlobalPopular = Akka.future(lookup(edition, "/").toList)
+    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", _)).toList
+
     val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
 
     Async {
-      promiseOfSectionPopular.flatMap { sectionPopular =>
-        promiseOfGlobalPopular.map { globalPopular =>
-          (sectionPopular ++ globalPopular) match {
-            case Nil => NotFound
-            case popular => renderMostPopular(popular)
-          }
+      promiseOfSectionPopular.map { sectionPopular =>
+        (sectionPopular ++ globalPopular) match {
+          case Nil => NotFound
+          case popular => renderMostPopular(popular)
         }
       }
     }

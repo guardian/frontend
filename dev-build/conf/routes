@@ -16,7 +16,6 @@ GET     /top-stories                                        controllers.TopStori
 GET     /top-stories.:format                                controllers.TopStoriesController.render(format)
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
-
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()

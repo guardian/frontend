@@ -1,4 +1,4 @@
-@football
+@football @football-teams
 Feature: Football Team tag pages
 
 As a Guardian news reader
