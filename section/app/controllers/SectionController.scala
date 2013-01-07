@@ -14,7 +14,7 @@ object SectionController extends Controller with Logging with Paging with Format
 
   val validFormats: Seq[String] = Seq("html", "json")
 
-  def render(path: String, format: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
     // make sure a valid format has been requested
     checkFormat(format).map { validFormat =>

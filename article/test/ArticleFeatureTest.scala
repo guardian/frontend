@@ -250,7 +250,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be > (5)
+        $("[itemprop=relatedLink]").size() should be <= (5)
       }
     }
 

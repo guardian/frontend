@@ -34,7 +34,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the related links")
-        $("li") should have length 10
+        $("li") should have length 5
 
       }
     }
@@ -62,11 +62,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         // FIXME - need consistent data, as image can go missing
         //article.findFirst("img").getAttribute("src").length should be > 0
 
-        and("I should see no images beyond first three trails")
-
-        val trailWithImage = find("li", 7)
-        trailWithImage.find("img") should have length 0
-
       }
     }
 
@@ -78,7 +73,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I see each trail block displays the published date of the corresponding article")
 
-        $(".relative-timestamp") should have length 10
+        $(".relative-timestamp") should have length 5
 
       }
     }

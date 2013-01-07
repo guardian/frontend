@@ -16,7 +16,7 @@ object TagController extends Controller with Logging with Formats {
 
   val validFormats = Seq("html", "json")
 
-  def render(path: String, format: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfTag = Akka.future(lookup(path))
     Async {
       promiseOfTag.map(_.map { renderTag(_, format) } getOrElse { NotFound })

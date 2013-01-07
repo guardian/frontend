@@ -36,7 +36,7 @@ class FrontController extends Controller with Logging with Formats {
 
   def isUp() = Action { Ok("Ok") }
 
-  def render(path: String, format: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val edition = Edition(request, Configuration)
 
     val page: Option[MetaData] = path match {
