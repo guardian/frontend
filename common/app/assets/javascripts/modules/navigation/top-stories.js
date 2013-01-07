@@ -41,7 +41,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         // Model
         
         this.load = function (config) {
-            var url = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
+            var url = config.page.coreNavigationUrl + '/top-stories?page-size=10';
             return reqwest({
                     url: url,
                     type: 'jsonp',

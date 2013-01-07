@@ -91,8 +91,8 @@ trait Prototypes extends Testing {
 
   def library(name: String) = base(name).settings(
     libraryDependencies ++= Seq(
-      "com.gu" % "management-play_2.9.1" % "5.13",
-      "com.gu" % "management-logback_2.9.1" % "5.13",
+      "com.gu" % "management-play_2.9.1" % "5.21",
+      "com.gu" % "management-logback_2.9.1" % "5.21",
       "com.gu" % "configuration_2.9.1" % "3.6",
       "com.gu.openplatform" % "content-api-client_2.9.1" % "1.17",
 

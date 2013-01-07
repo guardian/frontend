@@ -1,3 +1,3 @@
 @(byline: Option[String], tags: Tags)
 
-@byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, tags.contributors)</p> }
+@byline.map { text => <p class="byline type-7" data-link-name="byline">@ContributorLinks(text, tags.contributors)</p> }
