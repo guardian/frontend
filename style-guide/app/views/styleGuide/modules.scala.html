@@ -178,6 +178,15 @@
                 fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML, "Usually used to show underneath three 'trail: thumbnail' trails.")
             }
         <section>
+
+        <section id="trailblocks" class="cf">
+            <h2 class="article-zone type-2 margin-bottom cf">Headers</h2>
+
+            @{
+                val trailFeaturedHTML = views.html.fragments.headers.sectionHead("Life & Style").toString()
+                fragments.module("header-section", "Section head", trailFeaturedHTML, "Usually used as page head on section & tag pages.")
+            }
+        <section>
     </article>
 
 }
