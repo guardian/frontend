@@ -39,7 +39,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
                 isXhr = (dataIsXhr) ? true : false;
                 isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
-                isUiControl = ('BUTTON' === target.nodeName);
+                isUiControl = ('button' === target.nodeName.toLowerCase());
 
                 common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isXhr, isInternalAnchor, isUiControl]);
             } else {
