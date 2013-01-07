@@ -17,7 +17,7 @@ object SectionController extends Controller with Logging with Paging with Format
   def render(path: String, format: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
     // make sure a valid format has been requested
-    checkFormat(format).map { validFormat => 
+    checkFormat(format).map { validFormat =>
       Async(promiseOfSection.map(_.map { renderSectionFront(_, validFormat) } getOrElse { NotFound }))
     } getOrElse (BadRequest)
   }
