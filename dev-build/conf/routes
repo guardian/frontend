@@ -10,6 +10,10 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
+GET     /most-popular                                       controllers.MostPopularController.renderGlobal
+GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
+GET     /top-stories                                        controllers.TopStoriesController.render
+GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Style-guide
 GET     /style-guide                controllers.StyleGuideController.renderIndex
@@ -19,12 +23,6 @@ GET     /style-guide/modules        controllers.StyleGuideController.renderModul
 GET     /style-guide/sprites        controllers.StyleGuideController.renderSprites
 GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
 GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
-
-
-GET     /most-popular                                       controllers.MostPopularController.renderGlobal
-GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
-GET     /top-stories                                        controllers.TopStoriesController.render
-GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
@@ -73,7 +71,7 @@ GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(p
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
 
 #Section
-GET		/sections							  controllers.SectionsController.render()
+GET     /sections                             controllers.SectionsController.render()
 GET     /$path<[\w\d-]*>                      controllers.SectionController.render(path)
 
 #Articles
