@@ -12,7 +12,9 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 topstoriesHeader = document.getElementById('topstories-header');
                 topstoriesNav = common.$g('.topstories-control');
 
-                topstoriesHeader.innerHTML = html;
+                topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
+                    + html
+                    + '</div>';
 
                 //  show the initially-hidden top stories nav link
                 for (i = 0, l = topstoriesNav.length; i < l; i++) {
