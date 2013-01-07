@@ -183,18 +183,8 @@
             <h2 class="article-zone type-2 margin-bottom cf">Headers</h2>
 
             @{
-                val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, true).toString()
-                fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML, "Generally used for a large trail as seen on network/section fronts.")
-            }
-
-            @{
-                val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 1, false, false).toString()
-                fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML, "Typically displayed in threes when showing multiple trails.")
-            }
-
-            @{
-                val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, false).toString()
-                fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML, "Usually used to show underneath three 'trail: thumbnail' trails.")
+                val trailFeaturedHTML = views.html.fragments.headers.sectionHead("Life & Style").toString()
+                fragments.module("header-section", "Section head", trailFeaturedHTML, "Usually used as page head on section & tag pages.")
             }
         <section>
     </article>
