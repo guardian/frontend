@@ -2,9 +2,10 @@ package controllers
 
 import model._
 import common._
+
 import play.api.mvc.{ RequestHeader, Results }
 
-trait Formats extends Paging {
+trait Formats extends Paging with Results {
 
   /*
    * Key/value of paging param name to default value
@@ -25,14 +26,14 @@ trait Formats extends Paging {
     // pull out the paging params
     val paging = extractPaging(request)
     // offest the trails
-    val trails: Seq[Trail] = trails.drop(paging("actual-offset"))
-    if (trails.size == 0) {
+    val offsetTrails: Seq[Trail] = trails.drop(paging("actual-offset"))
+    if (offsetTrails.size == 0) {
       NoContent
     } else {
       JsonComponent(
         request.getQueryString("callback"),
-        "html" -> views.html.fragments.trailblocks.headline(trails, numItemsVisible = paging("page-size")),
-        "hasMore" -> (trails.size > paging("page-size"))
+        "html" -> views.html.fragments.trailblocks.headline(offsetTrails, numItemsVisible = paging("page-size")),
+        "hasMore" -> (offsetTrails.size > paging("page-size"))
       )
     }
   }

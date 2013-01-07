@@ -42,28 +42,13 @@ object SectionController extends Controller with Logging with Paging with Format
   }
 
   private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
-
-    if (format == "json") {
-      // pull out the paging params
-      val paging = extractPaging(request)
-      // offest the trails
-      val trails: Seq[Trail] = (model.editorsPicks ++ model.latestContent).drop(paging("actual-offset"))
-      if (trails.size == 0) {
-        NoContent
+    checkFormat(format).map { format =>
+      if (format == "json") {
+        renderJsonTrails(model.editorsPicks ++ model.latestContent)
       } else {
-        JsonComponent(
-          request.getQueryString("callback"),
-          "html" -> views.html.fragments.trailblocks.section(
-            trails.take(paging("page-size")), numWithImages = 0, showFeatured = false
-          ),
-          "hasMore" -> (trails.size > paging("page-size"))
-        )
+        Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
       }
-
-    } else {
-      Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
-    }
-
+    } getOrElse (BadRequest)
   }
 
 }

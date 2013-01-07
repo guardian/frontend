@@ -23,7 +23,7 @@ object FrontPage extends MetaData {
   )
 }
 
-class FrontController extends Controller with Logging with Paging with Formats {
+class FrontController extends Controller with Logging with Formats {
 
   val front: Front = Front
 
@@ -65,25 +65,10 @@ class FrontController extends Controller with Logging with Paging with Formats {
         checkFormat(format).map { format =>
           Cached(page) {
             if (format == "json") {
-              // pull out the paging params
-              val pagingParams = extractPaging(request)
-              // offest the trails
-              val actualOffset = pagingParams("offset") + (pagingParams("page-size") * (pagingParams("page") - 1))
               // pull out correct trailblock
               trailblocks.find(_.description.id == path).map { trailblock =>
-                val trails: Seq[Trail] = trailblock.trails.drop(actualOffset)
-                if (trails.size == 0) {
-                  NoContent
-                } else {
-                  JsonComponent(
-                    request.getQueryString("callback"),
-                    "html" -> views.html.fragments.trailblocks.section(
-                      trails.take(pagingParams("page-size")), numWithImages = 0, showFeatured = false
-                    ),
-                    "hasMore" -> (trails.size > pagingParams("page-size"))
-                  )
-                }
-              } getOrElse (NoContent)
+                renderJsonTrails(trailblock.trails)
+              }.getOrElse(InternalServerError)
             } else {
               Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
             }

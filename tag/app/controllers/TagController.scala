@@ -12,7 +12,7 @@ import play.api.libs.concurrent.Akka
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
-object TagController extends Controller with Logging with Paging with Formats {
+object TagController extends Controller with Logging with Formats {
 
   val validFormats = Seq("html", "json")
 
@@ -41,24 +41,13 @@ object TagController extends Controller with Logging with Paging with Formats {
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {
-    checkFormat(format).map { validFormat =>
-      if (validFormat == "json") {
-        // pull out the paging params
-        val paging = extractPaging(request)
-        // offest the trails
-        val trails: Seq[Trail] = model.trails.drop(paging("actual-offset"))
-        if (trails.size == 0) {
-          NoContent
-        } else {
-          JsonComponent(
-            request.getQueryString("callback"),
-            "html" -> views.html.fragments.trailblocks.headline(trails, numItemsVisible = paging("page-size")),
-            "hasMore" -> (trails.size > paging("page-size"))
-          )
-        }
+    checkFormat(format).map { format =>
+      if (format == "json") {
+        renderJsonTrails(model.trails)
       } else {
         Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
       }
     } getOrElse (BadRequest)
   }
+
 }
