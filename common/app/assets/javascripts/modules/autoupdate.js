@@ -30,12 +30,12 @@ define([
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
             'prefName': 'auto-update',
-            'iconClass' : 'i-update'
+            'iconClass' : 'is-updating'
         }, config);
 
         this.template =
             '<p class="update-text type-6">Auto update</p>' +
-            '<i class="i '+ options.iconClass + '"/></i>' +
+            '<i class="'+ options.iconClass + '"/></i>' +
             '<button class="update-btn type-8" data-action="off" data-link-name="autoupdate off">Off</button>' +
             '<button class="update-btn type-8" data-action="on" data-link-name="autoupdate on">On</button>';
 
@@ -85,7 +85,7 @@ define([
                 common.mediator.emit('modules:autoupdate:destroyed');
             }
         };
-        
+
         // Model
         this.load = function (url) {
             var path = options.path,
@@ -139,13 +139,13 @@ define([
             if (options.switches && options.switches.autoRefresh !== true) {
                 return;
             }
-            
+
             var that = this,
                 pref = this.getPref();
-            
+
             // add the component to the page, and show it
             common.$g('.update').html(this.template).removeClass('hidden');
-            
+
             this.icon = common.$g('.' + options.iconClass);
             this.btns = common.$g(options.btnClass);
 
@@ -168,7 +168,7 @@ define([
         };
 
     }
-    
+
     return Autoupdate;
 
 });
