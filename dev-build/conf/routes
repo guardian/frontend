@@ -61,13 +61,15 @@ GET     /$path<.*/video/.*>                   controllers.VideoController.render
 GET     /$path<.*/gallery/.*>                 controllers.GalleryController.render(path)
 
 #Tag
-GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>                     controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*>.:format             controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>            controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format    controllers.TagController.render(path, format)
 
 #Section
 GET		/sections							         controllers.SectionsController.render()
 # culture and sport sections now live in front
-GET     /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path, format = "")
+GET     /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path, format = "html")
 GET     /$path<(?!culture|sport)[\w\d-]*>.:format    controllers.SectionController.render(path, format)
 
 #Articles

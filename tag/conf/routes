@@ -7,4 +7,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
 GET     /*path                      controllers.TagController.render(path, format = "html")
-GET     /*path.format               controllers.TagController.render(path, format)
+GET     /*path.:format              controllers.TagController.render(path, format)
