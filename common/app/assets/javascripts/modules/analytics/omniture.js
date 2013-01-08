@@ -27,10 +27,11 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             var element = params[0],
                 tag = params[1],
                 isXhr = params[2],
-                isInternalAnchor = params[3];
+                isInternalAnchor = params[3],
+                isUiControl = params[4];
 
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            var delay = (isXhr || isInternalAnchor) ? true : element;
+            var delay = (isXhr || isInternalAnchor || isUiControl) ? true : element;
             that.populateEventProperties(tag);
 
             s.tl(delay, 'o', tag);

@@ -43,20 +43,25 @@
 .trailblock .panel,
 .rolled-out {
      height: auto;
-     max-height: 9999px;
-     overflow: hidden;
-     .transition(max-height 1s ease-in-out);
      margin-bottom: 0px;
+}
+
+.trailblock .panel {
+     .transition(max-height 1s ease-in-out);
 }
 
 .trailblock.shut > .panel,
 .competition-table.shut > .panel,
 .rolled-up {
-    .transition(max-height .5s ease-in-out);
     overflow: hidden;
     position: relative;
     max-height: 0;
     padding-top: 0;
+}
+
+.trailblock.shut > .panel,
+.competition-table.shut > .panel {
+    .transition(max-height .5s ease-in-out);
 }
 
 .trail-headline a:visited {
