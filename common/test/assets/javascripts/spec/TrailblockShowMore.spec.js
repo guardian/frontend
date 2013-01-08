@@ -40,8 +40,7 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
         
         it("should emit 'module:error' on error", function(){
             var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();
-            console.log(server);
+            trailblockShowMore.init();;
             server.respondWith('GET', '/top-stories.json?view=section&offset=2', [500, {}, '']);
             // click container
             bean.fire(common.$g('#front-container .trailblock .cta')[0], 'click');
