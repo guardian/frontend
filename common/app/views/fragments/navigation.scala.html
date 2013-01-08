@@ -14,7 +14,7 @@
 @if(!isFooter){
     <div id="navigation-header" data-link-name="global navigation: header">
         <a href="#topstories-footer" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
-        class="topstories-control initially-off">
+        class="topstories-control is-off">
             <i class="i i-nav-divider"></i>
             <span>Top stories</span>
             <i class="i i-arrow-small-down"></i>
@@ -28,10 +28,10 @@
 
 </header>
 
-<div id="topstories-header" class="nav-popup top-stories initially-off"></div>
+<div id="topstories-header" class="nav-popup top-stories is-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ initially-off}"
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}"
     data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
     @fragments.sections(page, isFooter)
 </div>
