@@ -6,7 +6,9 @@
         data-thumb-width="@smallCrop.width"
         data-fullsrc="@mainPicture.url"
         data-full-width="@mainPicture.width"
-        itemprop="contentURL" />
+        itemprop="contentURL"
+        alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"
+        title="@StripHtmlTags(mainPicture.caption.getOrElse(""))" />
     @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
     <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
     }
