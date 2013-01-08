@@ -95,15 +95,15 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
 
+    CompetitionAgent(Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
+
+    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
+
     CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true)),
 
     CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true)),
 
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
-
-    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
 
     CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English")),
 
