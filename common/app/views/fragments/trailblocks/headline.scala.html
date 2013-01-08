@@ -1,6 +1,6 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false)
 
-<ul class="unstyled">
+<ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         <li class="trail" data-link-name="trail">
             @fragments.trails.headline(trail, info.rowNum, related)
