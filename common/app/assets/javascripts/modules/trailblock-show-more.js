@@ -48,7 +48,7 @@ define([
             var that = this;
             // event delegation for clicking of cta
             bean.on(qwery('#front-container')[0], 'click', '.trailblock .cta', function(e) {
-                var cta = bonzo(e.srcElement);
+                var cta = bonzo(e.target);
                 // disable button
                 cta.attr('disabled', 'disabled');
                 // what's the section (default to 'top-stories')
