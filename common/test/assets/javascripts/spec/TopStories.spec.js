@@ -6,7 +6,7 @@ define([ 'common',
 
         var conf = {
                     id: 'topstories',
-                    fixtures: ['<div id="control" class="topstories-control" class="initially-off">' +
+                    fixtures: ['<div id="control" class="topstories-control" class="is-off">' +
                                '</div>' +
                                '<div id="topstories-header">' +
                                '</div>']
@@ -36,7 +36,7 @@ define([ 'common',
 
                 expect(callback).toHaveBeenCalledOnce();
                 expect(container.innerHTML).toBe('<b>top stories</b>');
-                expect(button.className).not.toContain('initially-off');
+                expect(button.className).not.toContain('is-off');
            })
         });
     });
