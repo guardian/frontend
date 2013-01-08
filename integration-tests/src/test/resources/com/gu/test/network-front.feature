@@ -1,9 +1,9 @@
 @front  @network-front
 Feature: Network front
 
-    Scenario: A maximum of 5 stories are hidden in the expander
+    Scenario: Users can view more top stories for a section
         Given I visit the network front
-        Then expanders for each block should show a maximum of 5 stories
+        Then each section should have a 'Show more' cta that loads in more top stories
          
     Scenario: Users can hide sections
         Given I visit the network front 
