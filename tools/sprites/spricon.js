@@ -79,7 +79,11 @@
 
         // css class prefix
         var cssprefix = config.cssprefix || "i-";
-        
+
+        // location of styleguide HTML fragment
+        var styleguidepath = config.styleguidepath || "/";
+        var styleguidefilename = config.styleguidefilename || "sprites.scala.html";
+
         // create the output directory
         fs.mkdir( config.imgDest );
 
@@ -102,7 +106,9 @@
             spritepath,
             cssprefix,
             cssbasepath,
-            generatesvg
+            generatesvg,
+            styleguidepath,
+            styleguidefilename
           ],
           fallback: ''
         }, function(err, result, code) {
@@ -131,7 +137,7 @@
 
                 });
 
-                console.info("Spicon complete..");
+                console.info("Spricon complete...");
             } else {
                 console.error("\nSomething went wrong with phantomjs...");
             }

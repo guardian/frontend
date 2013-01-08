@@ -3,7 +3,7 @@
 @main(section, Switches.all){  }{
     <section class="front-section zone-@section.section">
 
-    	<h1 class="section-head zone-color">@Html(section.name)</h1>
+        @fragments.headers.sectionHead(section.name)
 
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
             @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
