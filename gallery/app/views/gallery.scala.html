@@ -23,12 +23,12 @@
                 href="?index=@(index - 1)" class="gallery-prev">Previous</a>
             } else {
                 <a id="js-gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true"
-                class="gallery-prev initially-off" href="javascript://">Previous</a>
+                class="gallery-prev is-off" href="javascript://">Previous</a>
             }
 
             Image <span id="js-gallery-index">@index</span> of @gallery.size
 
-            <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible initially-off">
+            <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible is-off">
                 Fullscreen <i class="i i-fullscreen-toggle"></i>
             </span>
 
@@ -50,7 +50,7 @@
                             <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
                                 src="@image.url" data-width="@image.width" data-height="@image.height" />
                     } else {
-                        <li id="js-gallery-item-@row.rowNum" class="initially-off" data-image="false" data-index="@row.rowNum"
+                        <li id="js-gallery-item-@row.rowNum" class="is-off" data-image="false" data-index="@row.rowNum"
                         data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url'
                         data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
                         data-width="@image.width" data-height="@image.height">

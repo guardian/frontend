@@ -18,8 +18,8 @@
 
         @if(isTabbed) {<div class="tabs-content">}
             @popular.zipWithRowInfo.map{ case (section, info) =>
-                <div id="tabs-popular-@info.rowNum" 
-                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ initially-off}} headline-list"
+                <div id="tabs-popular-@info.rowNum"
+                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
                     data-link-name="@section.heading">
 
                     <ul class="unstyled">

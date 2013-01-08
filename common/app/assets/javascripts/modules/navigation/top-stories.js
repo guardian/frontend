@@ -1,11 +1,11 @@
 define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
 
     function TopStories() {
-        
+
         // View
-        
+
         this.view = {
-        
+
             render: function (html) {
 
                 var topstoriesHeader = document.getElementById('topstories-header'),
@@ -14,32 +14,32 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 topstoriesHeader.innerHTML = html;
 
                 common.mediator.emit('modules:topstories:render');
-                
+
                 common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
-                    bonzo(topstoriesHeader).removeClass('initially-off');
+                    bonzo(topstoriesHeader).removeClass('is-off');
                 });
-                
+
                 common.mediator.on('modules:control:change', function(args) {
-                    
+
                     var control = args[0],
                         state = args[1];
-                    
+
                     if (state === false || control !== 'topstories-control-header') {
-                        bonzo(topstoriesHeader).addClass('initially-off');
+                        bonzo(topstoriesHeader).addClass('is-off');
                     }
 
                 });
 
             }
-        
+
         };
 
         // Bindings
-        
+
         common.mediator.on('modules:topstories:loaded', this.view.render);
-        
+
         // Model
-        
+
         this.load = function (config) {
             var url = config.page.coreNavigationUrl + '/top-stories?page-size=10';
             return reqwest({
@@ -54,7 +54,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         };
 
     }
-    
+
     return TopStories;
 
 });
