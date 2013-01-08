@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td><code>.initially-off</code></td>
-                        <td>Similar to <code>.js-hidden</code>, but indicates content which will be hidden on pageload (via CSS) and later shown. <strong>Deprecated</strong> in favour of <code>.js-hidden</code> as this is more accessible.</td>
+                        <td>Similar to <code>.js-hidden</code>, but indicates content which will be hidden for <strong>all browsers</strong> on pageload (via CSS) and later shown via JS. In other cases, consider using <code>.js-hidden</code>, which means elements will be shown by default to non-JS users (whereas <code>.initially-off</code> content will never be seen by non-JS users).</td>
                     </tr>
                     <tr>
                         <td><code>.on</code></td>
