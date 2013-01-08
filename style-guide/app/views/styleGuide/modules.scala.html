@@ -164,17 +164,17 @@
             <h2 class="article-zone type-2 margin-bottom cf">Trailblocks</h2>
 
             @{
-                val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, true).toString()
+                val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), numWithImages = 0, related = false, showFeatured = true).toString()
                 fragments.module("trail-featured", "Trail: featured", trailFeaturedHTML, "Generally used for a large trail as seen on network/section fronts.")
             }
 
             @{
-                val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 1, false, false).toString()
+                val trailThumbnailHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), numWithImages = 1, related = false, showFeatured = false).toString()
                 fragments.module("trail-thumbnail", "Trail: thumbnail", trailThumbnailHTML, "Typically displayed in threes when showing multiple trails.")
             }
 
             @{
-                val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), 0, false, false).toString()
+                val trailHeadlineHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), numWithImages = 0, related = false, showFeatured = false).toString()
                 fragments.module("trail-headline", "Trail: headline", trailHeadlineHTML, "Usually used to show underneath three 'trail: thumbnail' trails.")
             }
         <section>
