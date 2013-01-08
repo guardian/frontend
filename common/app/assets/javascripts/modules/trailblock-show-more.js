@@ -47,7 +47,7 @@ define([
             trailblocks.each(this.view.appendCta);
             var that = this;
             // event delegation for clicking of cta
-            bean.on(qwery('#front-container')[0], 'click', '.trailblock .cta', function(e) {
+            bean.on(qwery('#front-container')[0], 'click', '.trailblock button.cta', function(e) {
                 var cta = bonzo(e.target);
                 // disable button
                 cta.attr('disabled', 'disabled');
