@@ -59,6 +59,7 @@ Feature: Article page
     	When Back to top is selected
         Then article page scrolls to the top
 
+	@ignore
     Scenario: Page footer links
         Given I am on an article     
     	When I click footer links (Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy)
