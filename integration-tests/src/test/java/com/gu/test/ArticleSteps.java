@@ -194,7 +194,7 @@ public class ArticleSteps {
 		WebElement expander = webDriver.waitForVisible(By.className("cta"));
 		expander.click();
 		
-		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "9999px" : "0";
+		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "none" : "0";
 		// sections are hidden with css max-height
 		Assert.assertTrue(webDriver.waitForCss(By.cssSelector("#related-trails .panel"), "max-height", expectedTrailblockHeight));
 	}
