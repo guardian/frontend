@@ -17,6 +17,6 @@ trait Trail extends Images with Tags {
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
 case class TrailblockDescription(
-    id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = true) {
+    id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false) {
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 }
