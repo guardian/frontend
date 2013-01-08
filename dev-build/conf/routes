@@ -16,6 +16,15 @@ GET     /top-stories                                        controllers.TopStori
 GET     /top-stories.:format                                controllers.TopStoriesController.render(format)
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
+#Style-guide
+GET     /style-guide                controllers.StyleGuideController.renderIndex
+GET     /style-guide/zones          controllers.StyleGuideController.renderZones
+GET     /style-guide/typography     controllers.StyleGuideController.renderTypography
+GET     /style-guide/modules        controllers.StyleGuideController.renderModules
+GET     /style-guide/sprites        controllers.StyleGuideController.renderSprites
+GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
+GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
+
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()

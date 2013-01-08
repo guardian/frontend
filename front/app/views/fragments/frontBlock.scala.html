@@ -4,7 +4,7 @@
 
     @if(block.description.id != "") {
 	    @if("/" + block.description.id == request.path) {
-	        @fragments.headline(block.description.name, List("section-head", "zone-color"))
+            @fragments.headers.sectionHead(block.description.name)
 	    } else {
 	        <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
                 <h1 itemprop="headline" class="type-2 ">
@@ -12,7 +12,7 @@
                      @block.description.name
                     </a>
                 </h1>
-		        <button class="initially-off js-toggle-trailblock type-8 toggle-trailblock" data-zone-name="@edition.toLowerCase()"
+		        <button class="js-visible js-toggle-trailblock type-8 toggle-trailblock" data-zone-name="@edition.toLowerCase()"
 		            data-block-name="@SafeName(block.description)"
 		            id="js-trigger-@SafeName(block.description)"
 		            data-link-name="Hide">Hide</button>
@@ -26,10 +26,10 @@
         data-section-id="@block.description.id">
 
         @block.description.style match {
-            case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) } 
-            case Some(Headline)  => { @trailblocks.headline(block.trails, block.description.numItemsVisible) } 
+            case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
+            case Some(Headline)  => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
             case _               => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
         }
     </div>
 
-</section>  
+</section>

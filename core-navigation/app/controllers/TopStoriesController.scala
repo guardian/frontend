@@ -27,7 +27,7 @@ object TopStoriesController extends Controller with Logging with Paging with For
       .showEditorsPicks(true)
       .response
 
-    response.editorsPicks map { new Content(_) } match {
+    SupportedContentFilter(response.editorsPicks map { new Content(_) }) match {
       case Nil => None
       case picks => Some(picks)
     }

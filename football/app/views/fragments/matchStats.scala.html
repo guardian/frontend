@@ -29,8 +29,8 @@
 @events(player: LineUpPlayer) = {
     @player.events.map{ event =>
         @{ event.eventType match {
-            case "booking" => <i class="i-yellow-card"></i>
-            case "dismissal" => <i class="i-red-card"></i>
+            case "booking" => <i class="i i-yellow-card"></i>
+            case "dismissal" => <i class="i i-red-card"></i>
             case "substitution" => "(s " + event.eventTime + "')"
             case _ =>  ""
         }}
@@ -76,7 +76,7 @@
 
   <h5 class="team-list-name type-5">@homeTeam.name</h5>
   <h5 class="team-list-name type-5">@awayTeam.name</h5>
-  
+
   @if(!page.hasLineUp){
     <p class="type-7 place-holder">Team lineups will be available once announced.</p>
 
