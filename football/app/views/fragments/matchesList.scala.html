@@ -8,9 +8,9 @@
         	<li class="competition" data-link-name="competition | @comp.fullName" data-competition-id="@comp.id">
 	            <a class="competition-title football-table-link zone-color type-7" href="@comp.url" data-link-name="view competition">
 	                @comp.fullName
-	                <i class="i-sport-arrow"></i>
+	                <i class="i i-sport-arrow"></i>
 	            </a>
-	            
+
 	            <ol class="matches unstyled">
 	                @* sort matches by start time, then alphabet *@
 	                @comp.matches.map{ theMatch =>

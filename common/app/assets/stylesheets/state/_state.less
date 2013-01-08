@@ -3,11 +3,18 @@
     display: none;
 }
 
-.gt-base {
+.initially-off {
     display: none;
 }
 
-.img-extended img,
+.on {
+    display: block;
+}
+
+.maxed {
+    width: 100%;
+}
+
 .gu-image {
     width: 100%;
     height: auto;
@@ -25,18 +32,18 @@
     content: '+ ';
 }
 
-.maxed {
-    width: 100%;
+.collapsible {
+    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
+    padding: 9px @gutter*2 9px @baseline*2; // double space on right to avoid icon
+    position: relative;
+    cursor: pointer;
 }
 
-
-.placeholder,
-.initially-off {
-    display: none;
-}
-
-.on {
-    display: block;
+.collapsible i {
+    position: absolute;
+    right: 14px;
+    display: inline-block;
+    top: 40%;
 }
 
 //These should be refactored to is-shut/is-open
@@ -75,6 +82,7 @@
     padding: 0 0 0 @baseline*2;
     overflow: hidden;
 }
+
 .update.hidden{
     display: none;
 }
@@ -99,7 +107,7 @@
 }
 
 .update-btn.is-active,
-.update-btn:hover { 
+.update-btn:hover {
     color: #ffffff;
     background-color: #E47A39;
 }
@@ -109,7 +117,7 @@
     background-color: @sportBright;
 }
 
-.i-update {
+.is-updating {
     display:none;
     width: 36px;
     height: 12px;
@@ -118,6 +126,16 @@
     margin-top: 18px;
 }
 
-.i-update.is-active {
+.is-updating.is-active {
     display:inline-block;
+}
+
+.is-live-icon {
+    padding: @baseline;
+    margin-right: 5px;
+    font-size: 10px;
+    font-style: normal;
+    line-height: 1em;
+    color: #ffffff;
+    background-color: #ec1c1c;
 }

@@ -1,5 +1,3 @@
-@articleOrange: #e47a39;
-
 .article-zone {
     padding: 13px @gutter 14px @gutter;
     line-height: 1em;
@@ -26,9 +24,15 @@
         margin-bottom: 0;
     }
 
-aside {
-    padding: 0px 0px 15px 0px;
-    list-style: none;
+.bullet {
+    font-size: 13px;
+    display: inline-block;
+    color: #999999;
+    margin: @baseline/2 4px 0 0;
+}
+
+.bullet:first-of-type {
+    margin-top: @baseline;
 }
 
 .byline {
@@ -38,168 +42,10 @@ aside {
     padding: @baseline 0 @baseline*4 0;
 }
 
-.article-body {
-    padding: 0 @gutter @baseline*2 @gutter;
-}
-
-.article-body h2 {
-    color: #333333;
-    .type-4;
-    margin-bottom: @baseline;
-    clear: both;
-}
-
-.article-body h2.block-title {
-    color: @articleOrange;
-    border: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 10px;
-}
-.article-body .block .block-title{
-	color: #333333;
-}
-.article-body .is-summary .block-title,
-.article-body .is-key-event .block-title{
-    color: @articleOrange;
-}
-
-.article-body h3 {
-    margin: 0;
-    font-family: georgia;
-    .type-5;
-}
-
-.article-body > p,
-.article-body .block-elements > p,
-.article-body ul,
-.article-body ol,
-.article-body address,
-.article-body blockquote,
-.article-body blockquote p {
-    .type-6;
-    margin: 0px 0px @baseline*2 0px;
-    padding: 0px;
-    color: #333333;
-}
-
-.article blockquote,
-.article blockquote p {
-    .type-6;
-    color: #333333;
-    font-weight: normal;
-    border-left: none;
-}
-
-.article .block blockquote {
-    padding-left:20px;
-    border-left:5px solid #E3E3DB;
-    margin:20px 0; 
-}
-
-.article .block .tweet,
-.article .block .quoted{
-    border-left:none;	
-}
-.article .block .quoted{
-    padding:0;	
-    margin:0 0 10px;
-}
-.article .block .tweet{
-	padding-left:10px;
-	margin:15px 0 20px 0;
-}
-
-.article .block blockquote:before,
-.article .block blockquote:after{
-    display:none
-}
-
-.article blockquote:before,
-.article .block .quoted:before {
-    .i-livequote-before;
-    display: block;
-    content: '';
-    margin: 21px 0 @baseline*2 0;
-    clear: both;
-}
-
-.svg .article blockquote:before,
-.svg .article .block .quoted:before {
-    .svg-i-livequote-before;
-}
-
-.article blockquote:after,
-.article .block .quoted:after {
-    .i-livequote-after;
-    display: block;
-    content: '';
-    margin-bottom: 22px;
-}
-
-.svg .article blockquote:after,
-.svg .article .block .quoted:after {
-    .svg-i-livequote-after;
-}
-
-.article-body .timestamp:first-child,
-.article-body .block:first-child .published-time time {
-    border-top: none;
-    margin-top: 0;
-    padding-top: 0;
-}
-
-.article-body .caption,
-figcaption {
-    .type-12;
-    color: #666666;
-}
-
-figcaption.main-caption {
-    padding: @baseline*3 @gutter;
-}
-
-.article-body .caption:before,
-figcaption:before {
-    display: inline-block;
-    content: '';
-    margin-right: 4px;
-    .i-image;
-}
-
-.svg .article-body .caption:before,
-.svg figcaption:before {
-    .svg-i-image;
-}
-
-figure {
-    margin: 0px;
-}
-
-figure img {
-    display: block;
-    margin-bottom: @baseline*2;
-}
-
 .article .main-image {
     margin-bottom: 0px;
 }
 
-cite {
-    .type-7
-}
-
-cite a {
-    color: #666666;
-}
-
-cite a:hover,
-cite a:visited:hover {
-    color: #4d4d4d;
-    border-bottom: 1px dotted #4d4d4d;
-}
-
-cite a:visited {
-    color: #808080;
-    border-bottom: 1px dotted #808080;
+.article-body {
+    padding: 0 @gutter @baseline*2 @gutter;
 }
