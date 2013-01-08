@@ -29,7 +29,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
         // delegate, emit the derived tag
         bean.add(document.body, "click", function (event) {
-            var target, dataIsXhr, href, isXhr, isInternalAnchor;
+            var target, dataIsXhr, href, isXhr, isInternalAnchor, isUiControl;
 
             if (filterSource(event.target.tagName.toLowerCase()).length > 0) {
 
@@ -39,8 +39,9 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
                 isXhr = (dataIsXhr) ? true : false;
                 isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
+                isUiControl = ('button' === target.nodeName.toLowerCase());
 
-                common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isXhr, isInternalAnchor]);
+                common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isXhr, isInternalAnchor, isUiControl]);
             } else {
                 return false;
             }
