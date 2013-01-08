@@ -24,8 +24,8 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
     val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    linkNames should contain("Big Noise orchestra's classical music proves instrumental in social change")
-    linkUrls should contain(WithHost("/music/2012/jun/24/simon-bolivar-dudamel-review"))
+    linkNames should contain("Simon Bolivar Symphony Orchestra with Gustavo Dudamel - 26 June")
+    linkUrls should contain(WithHost("/music/2012/jun/26/dudamel-simon-bolivar-orchestra-26-june-programme-notes"))
   }
 
   it should "render caption and navigation on first image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
