@@ -25,7 +25,7 @@ define([
         this.view = {
                 
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta">Show more</button>');
+               bonzo(trailblock).append('<button class="cta" data-link-name="top stories | Show more | 1">Show more</button>');
            },
            
            removeCta: function(cta) {
@@ -66,6 +66,12 @@ define([
                         // if no more, remove cta
                         if (!resp.hasMore) {
                             that.view.removeCta(cta);
+                        } else {
+                            // otherwise, increase the show more count
+                            var newDataLinkName = cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
+                                return prefix + ++count;
+                            });
+                            cta.attr('data-link-name', newDataLinkName);
                         }
                     },
                     error: function (err) {

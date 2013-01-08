@@ -1,6 +1,6 @@
 define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean, TrailblockShowMore) {
 
-    describe("Trailblock Show More", function() {
+    describe("TrailblockShowMore", function() {
         
         var fixtureTrailblock ='<div id="front-container">'
             + '<div class="js-show-more trailblock" id="trailblock-show-more-fixture">'
@@ -12,8 +12,13 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
 
         beforeEach(function() {
             common.$g('body').append(fixtureTrailblock);
-            sinon.spy(common.mediator, 'emit'); 
+            // spy on mediator
+            sinon.spy(common.mediator, 'emit');
+            // create fake server
             server = sinon.fakeServer.create();
+            // create the module
+            var trailblockShowMore = new TrailblockShowMore();
+            trailblockShowMore.init();
         });
 
         afterEach(function() {
@@ -23,31 +28,39 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
         });
 
         it("should append the 'show more' cta", function(){
-            var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();
-            expect(common.$g('#trailblock-show-more-fixture button').length).toEqual(1);
+            expect(common.$g('#front-container .trailblock .cta').length).toEqual(1);
         });
         
-        it("should emit 'module:trailblock-show-more:loaded' on success", function(){
-            var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();
-            server.respondWith('GET', '/top-stories.json?view=section&offset=2', [202, {}, '{"html": "<ul></ul>"}']);
+        var serverSetup = function(opts) {
+            var opts = opts || {};
+            var statusCode = opts.statusCode || 202;
+            var response = opts.response || '{"html": "<ul></ul>", "hasMore": true}';
+            server.respondWith('GET', '/top-stories.json?view=section&offset=2', [statusCode, {}, response]);
             // click container
             bean.fire(common.$g('#front-container .trailblock .cta')[0], 'click');
-            server.respond();
+            server.respond();   
+        }
+        
+        it("should emit 'module:trailblock-show-more:loaded' on success", function(){
+            serverSetup();
             expect(common.mediator.emit.firstCall.args[0]).toEqual('module:trailblock-show-more:loaded')
         });
         
         it("should emit 'module:error' on error", function(){
-            var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();;
-            server.respondWith('GET', '/top-stories.json?view=section&offset=2', [500, {}, '']);
-            // click container
-            bean.fire(common.$g('#front-container .trailblock .cta')[0], 'click');
-            server.respond();
+            serverSetup({statusCode: 404});
             expect(common.mediator.emit.firstCall.args).toEqual(
                 ['module:error', 'Failed to load more trails for `top-stories`', 'modules/trailblock-show-more.js']
             );
+        });
+        
+        it("should increase the omniture count by one on success", function(){
+            serverSetup();
+            expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('top stories | Show more | 2');
+        });
+        
+        it("should remove cta if no more stories", function(){
+            serverSetup({response: '{"html": "<ul></ul>", "hasMore": false}'});
+            expect(common.$g('#front-container .trailblock .cta').length).toEqual(0);
         });
        
     });
