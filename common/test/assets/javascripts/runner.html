@@ -32,8 +32,8 @@
   <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
-    .initially-off:after { content: " -- (hidden)"; }
-    .on:after { content: " -- (visible)"; }
+    .is-off:after { content: " -- (hidden)"; }
+    .is-on:after { content: " -- (visible)"; }
     .ad-slot {
         display: block;
         width: 100%;
@@ -122,7 +122,7 @@
                 <li><a href="#DocumentWrite">DocumentWrite</a></li>
                 <li><a href="#AudienceScience">AudienceScience</a>
                 <li><a href="#Adverts">Adverts</a>
-            </ul>        
+            </ul>
         </li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
@@ -225,21 +225,21 @@
           <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
           <ul>
             <li>
-                <time id="relative-date-test-item" 
-                      class="js-timestamp" 
-                      datetime="2012-08-12T18:43:00.000Z" 
+                <time id="relative-date-test-item"
+                      class="js-timestamp"
+                      datetime="2012-08-12T18:43:00.000Z"
                       data-expected-output='<span title="12th Aug, 2012">Yesterday, 7:43pm</span>'>12th Aug, 2012</time>
             </li>
             <li class="block-time">
-                <time id="relative-date-test-item-block" 
-                      class="js-timestamp" 
-                      datetime="2012-08-11T18:43:00.000Z" 
+                <time id="relative-date-test-item-block"
+                      class="js-timestamp"
+                      datetime="2012-08-11T18:43:00.000Z"
                       data-expected-output='<span title="11th Aug, 2012">Saturday 11 Aug 2012, 7:43pm</span>'>11th Aug, 2012</time>
             </li>
             <li>
-                <time id="relative-date-invalid-item" 
-                      class="js-timestamp" 
-                      datetime="last tuesday" 
+                <time id="relative-date-invalid-item"
+                      class="js-timestamp"
+                      datetime="last tuesday"
                       data-expected-output="Last Tuesday">Last Tuesday</time>
             </li>
           </ul>
@@ -256,7 +256,7 @@
 
           <div class="tabs-content">
                <div class="tabs-pane" id="tab1panel">foo</div>
-               <div class="tabs-pane initially-off" id="tab2panel">bar</div>
+               <div class="tabs-pane js-hidden" id="tab2panel">bar</div>
           </div>
 
 
@@ -268,7 +268,7 @@
 
           <div class="tabs-content">
                <div class="tabs-pane" id="tab1panel_2">foo</div>
-               <div class="tabs-pane initially-off" id="tab2panel_2">bar</div>
+               <div class="tabs-pane js-hidden" id="tab2panel_2">bar</div>
           </div>
 
         </p>
@@ -319,7 +319,7 @@
         <li></li>
       </ul>
     </div>
-    
+
 
     <!--  FootballTables.spec -->
     <div id="football-tables">
@@ -330,7 +330,7 @@
 
     <!-- Gallery.spec -->
     <div style="display: none" id="js-gallery">
-      <p class="box-indent"><a class="initially-off" data-is-ajax="true"
+      <p class="box-indent"><a class="is-off" data-is-ajax="true"
       data-link-name="Gallery Previous" href="javascript://" id="js-gallery-prev"
       name="js-gallery-prev">Previous</a> Image <span id=
       "js-gallery-index">1</span> of 16 <a data-is-ajax="true" data-link-name=
@@ -353,7 +353,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg'
               data-image="false" data-index="2" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg"
@@ -365,7 +365,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg'
               data-image="false" data-index="3" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg"
@@ -380,7 +380,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg'
               data-image="false" data-index="4" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg"
@@ -394,7 +394,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg'
               data-image="false" data-index="5" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg"
@@ -407,7 +407,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg'
               data-image="false" data-index="6" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg"
@@ -419,7 +419,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg'
               data-image="false" data-index="7" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg"
@@ -431,7 +431,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg'
               data-image="false" data-index="8" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg"
@@ -448,7 +448,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg'
               data-image="false" data-index="9" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg"
@@ -462,7 +462,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg'
               data-image="false" data-index="10" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg"
@@ -474,7 +474,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg'
               data-image="false" data-index="11" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg"
@@ -486,7 +486,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg'
               data-image="false" data-index="12" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg"
@@ -497,7 +497,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg'
               data-image="false" data-index="13" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg"
@@ -509,7 +509,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg'
               data-image="false" data-index="14" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg"
@@ -522,7 +522,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg'
               data-image="false" data-index="15" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg"
@@ -534,7 +534,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg'
               data-image="false" data-index="16" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg"
@@ -555,8 +555,8 @@
 
 <!-- Fonts.spec -->
 
-<style data-cache-name="guardian-font1" data-cache-file-woff="font1.woff.js" data-cache-file-ttf="font1.ttf.js"></style>
-<style data-cache-name="guardian-font2" data-cache-file-woff="font2.woff.js" data-cache-file-ttf="font2.ttf.js"></style>
+<style data-cache-name="font1" data-cache-file-woff="fonts/font1.woff.12345.js" data-cache-file-ttf="fonts/font1.ttf.12345.js"></style>
+<style data-cache-name="font2" data-cache-file-woff="fonts/font2.woff.12345.js" data-cache-file-ttf="fonts/font2.ttf.12345.js"></style>
 
 </body>
 </html>

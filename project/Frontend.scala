@@ -22,7 +22,7 @@ object Frontend extends Build with Prototypes with Testing {
     .settings(requireJsSettings: _*)
     .settings(
       // require js settings
-      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
+      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) =>
         (
           ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
           ("name" -> "bootstraps/app") ~
@@ -37,7 +37,7 @@ object Frontend extends Build with Prototypes with Testing {
             ("domwrite"     -> "components/dom-write/dom-write") ~
             ("swipe"        -> "components/swipe/swipe")
           ) ~
-          ("wrap" -> 
+          ("wrap" ->
             ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
             ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
           ) ~
@@ -59,6 +59,7 @@ object Frontend extends Build with Prototypes with Testing {
   val video = application("video").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
+  val styleGuide = application("style-guide").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "2.9",
@@ -87,6 +88,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
+    .dependsOn(styleGuide)
 
   val main = root().aggregate(
     jasmine,
@@ -101,6 +103,7 @@ object Frontend extends Build with Prototypes with Testing {
     coreNavigation,
     router,
     diagnostics,
-    dev
+    dev,
+    styleGuide
   ).settings(ideaSettings: _*)
 }

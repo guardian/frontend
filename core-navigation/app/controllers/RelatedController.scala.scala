@@ -12,7 +12,8 @@ case class Related(heading: String, trails: Seq[Trail])
 
 object RelatedController extends Controller with Logging {
 
-  def render(edition: String, path: String) = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
+    val edition = Edition(request, Configuration)
     val promiseOfRelated = Akka.future(lookup(edition, path))
     Async {
       promiseOfRelated.map(_.map {
@@ -25,11 +26,12 @@ object RelatedController extends Controller with Logging {
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[Related] = suppressApi404 {
     log.info("Fetching related content for : " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .tag(None)
       .showRelated(true)
       .response
 
     val heading = "Related content"
-    val related = response.relatedContent map { new Content(_) }
+    val related = SupportedContentFilter(response.relatedContent map { new Content(_) })
 
     Some(Related(heading, related))
   }

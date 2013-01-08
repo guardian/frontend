@@ -7,6 +7,6 @@ define(function () {
             str = '0' + str;
         }
         return str;
-    }
+    };
 
 });

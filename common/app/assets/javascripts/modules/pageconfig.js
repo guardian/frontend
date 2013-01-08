@@ -1,3 +1,4 @@
+/*global guardian:false */
 define(['modules/pad'], function (Pad) {
 
     var config = guardian.config;
@@ -9,7 +10,7 @@ define(['modules/pad'], function (Pad) {
         hasSeries: function(name){ return (config.page.series || "").indexOf(name) > -1; },
         referencesOfType: function(name){
             return (config.page.references || []).filter(function(reference){
-                return typeof reference[name] != 'undefined';
+                return typeof reference[name] !== 'undefined';
             }).map(function(reference){
                 return reference[name];
             });
@@ -30,8 +31,8 @@ define(['modules/pad'], function (Pad) {
         webPublicationDateAsUrlPart: function(){
             if(this.webPublicationDate()){
                 return this.webPublicationDate().getFullYear() + '/' +
-                    Pad(this.webPublicationDate().getMonth() + 1, 2) + '/' +
-                    Pad(this.webPublicationDate().getDate(), 2)
+                    new Pad(this.webPublicationDate().getMonth() + 1, 2) + '/' +
+                    new Pad(this.webPublicationDate().getDate(), 2);
             }
         }
     };

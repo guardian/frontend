@@ -10,13 +10,19 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET     /core-navigation/most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /core-navigation/most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+GET     /most-popular                                       controllers.MostPopularController.renderGlobal
+GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
+GET     /top-stories                                        controllers.TopStoriesController.render
+GET     /related/*path                                      controllers.RelatedController.render(path)
 
-GET     /core-navigation/top-stories/*edition                           controllers.TopStoriesController.render(edition)
-
-GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
-
+#Style-guide
+GET     /style-guide                controllers.StyleGuideController.renderIndex
+GET     /style-guide/zones          controllers.StyleGuideController.renderZones
+GET     /style-guide/typography     controllers.StyleGuideController.renderTypography
+GET     /style-guide/modules        controllers.StyleGuideController.renderModules
+GET     /style-guide/sprites        controllers.StyleGuideController.renderSprites
+GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
+GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
 
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
@@ -67,7 +73,7 @@ GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(p
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
 
 #Section
-GET		/sections							  controllers.SectionsController.render()
+GET     /sections                             controllers.SectionsController.render()
 GET     /$path<[\w\d-]*>                      controllers.SectionController.render(path)
 
 #Articles

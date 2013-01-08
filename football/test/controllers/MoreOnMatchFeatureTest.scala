@@ -12,7 +12,9 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
       given("I visit a match page")
 
-      HtmlUnit("/football/api/more-on-match/2012/12/01/1006/65") { browser =>
+
+
+      HtmlUnit("/football/api/match-nav/2012/12/01/1006/65") { browser =>
         import browser._
 
         then("I should see the match report")

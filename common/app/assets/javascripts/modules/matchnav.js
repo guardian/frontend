@@ -34,9 +34,9 @@ define(['common', 'reqwest', 'modules/pad', 'modules/pageconfig'], function (com
                                        PageConfig.hasTone("Minute by minutes") ||
                                        PageConfig.hasSeries("Squad sheets");
 
-            if(PageConfig.page.section === "football" && teamIds.length == 2 && isRightTypeOfContent){
+            if(PageConfig.page.section === "football" && teamIds.length === 2 && isRightTypeOfContent){
 
-                return url = "/football/api/match-nav/" +
+                return "/football/api/match-nav/" +
                     PageConfig.webPublicationDateAsUrlPart() + "/" +
                     teamIds[0] + "/" + teamIds[1] +
                     "?currentPage=" + encodeURIComponent(PageConfig.page.pageId);

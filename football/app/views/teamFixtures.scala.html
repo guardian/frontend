@@ -11,20 +11,20 @@
     @fragments.filterBar(page.webTitle)
 
     @fragments.filters(filters, page, "fixtures")
-    
+
     <div class="matches-container box-indent">
-        @fixtures.map{ fixture => 
+        @fixtures.map{ fixture =>
             <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
             <a class="competition-title football-table-link zone-color type-4" href="@fixture.competition.url" data-link-name="view competition">
-                @fixture.competition.fullName <i class="i-sport-arrow"></i>
+                @fixture.competition.fullName <i class="i i-sport-arrow"></i>
             </a>
             <ol class="matches unstyled">
                 @fragments.renderMatch(fixture.fixture)
             </ol>
         }
     </div>
- 
+
     @fragments.footballNav("/football")
 
     <div id="js-popular"></div>

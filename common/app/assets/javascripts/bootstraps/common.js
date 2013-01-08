@@ -100,13 +100,16 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular/' + edition + (section ? '/' + section : ''),
-                domContainer = document.getElementById('js-popular'),
-                p = new Popular(domContainer).load(url);
+            var url = host + '/most-popular' + (section ? '/' + section : ''),
+                domContainer = document.getElementById('js-popular');
+            
+            if (domContainer) {
+                new Popular(domContainer).load(url);
+                common.mediator.on('modules:popular:render', function() {
+                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                });
+            }
 
-            common.mediator.on('modules:popular:render', function() {
-                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-            });
         },
 
         showTabs: function() {
@@ -118,12 +121,15 @@ define([
             if(config.switches.webFonts) {
                 showFonts = true;
             }
+            
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+            
+            var f = new Fonts(fontStyleNodes, fileFormat);
             if (showFonts) {
-                new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                f.loadFromServerAndApply();
             } else {
-                Fonts.clearFontsFromStorage();
+                f.clearFontsFromStorage();
             }
         },
 

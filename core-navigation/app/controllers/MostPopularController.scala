@@ -12,9 +12,11 @@ object MostPopularController extends Controller with Logging {
 
   import play.api.Play.current
 
-  def render(edition: String, path: String) = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
 
+    val edition = Edition(request, Configuration)
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", _)).toList
+
     val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
 
     Async {
@@ -27,17 +29,18 @@ object MostPopularController extends Controller with Logging {
     }
   }
 
-  def renderGlobal(edition: String) = render(edition, "/")
+  def renderGlobal = render("/")
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
     log.info("Fetching most popular: " + path + " for edition " + edition)
 
     val response: ItemResponse = ContentApi.item(path, edition)
+      .tag(None)
       .showMostViewed(true)
       .response
 
     val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-    val popular = response.mostViewed map { new Content(_) } take (10)
+    val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
 
     if (popular.isEmpty) None else Some(MostPopular(heading, popular))
   }
