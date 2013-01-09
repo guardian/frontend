@@ -3,7 +3,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
     /*
         expects the following HTML structure
 
-        <ol class="tabs">
+        <ol class="tabs js-tabs">
             <li class="tabs-selected"><a href="#foo">Foo</a></li>
             <li><a href="#bar">Bar</a></li>
         </ol>
@@ -43,7 +43,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
         this.init = function (tabSelector) {
 
             if (!tabSelector) {
-                tabSelector = 'ol.tabs';
+                tabSelector = 'ol.js-tabs';
             }
 
             var ols = common.$g(tabSelector).each(function (tabSet) {
