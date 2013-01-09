@@ -38,9 +38,10 @@ define(['common', 'modules/detect'], function(common, detect) {
                 // Do session storage rather than an omniture track.
                 storeObj = {
                     pageName: s.pageName,
-                    tag: tag
+                    tag: tag,
+                    time: new Date().getTime()
                 };
-                sessionStorage.setItem(storagePrefix + 'linkTrackVars', JSON.stringify(storeObj));
+                localStorage.setItem(storagePrefix + 'referrerVars', JSON.stringify(storeObj));
             } else {
                 that.populateEventProperties(tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
