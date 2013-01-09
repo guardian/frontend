@@ -65,7 +65,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val matchDate = theMatch.date.toDateMidnight
     ContentApi.search(Edition(request, Configuration))
       .section("football")
-      .tag("tone/matchreports|football/series/saturday-clockwatch")
+      .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
       .reference("pa-football-team/" + theMatch.homeTeam.id + ",pa-football-team/" + theMatch.awayTeam.id)

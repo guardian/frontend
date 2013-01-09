@@ -16,15 +16,15 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
       None, None, None
     ))
 
-  Fake {
-    Competitions.setMatches("100", matches)
-  }
-
   feature("More on match") {
 
     scenario("View content related to a match") {
 
       given("I visit a match page")
+
+      Fake {
+        Competitions.setMatches("100", matches)
+      }
 
       HtmlUnit.connection("/football/api/match-nav/2012/12/01/1006/65?callback=showMatch") { connection =>
 
@@ -34,23 +34,7 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         json should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
 
         and("I should see the stats page")
-        json should include("/football/match/1234")
-      }
-    }
-
-    scenario("View content related to a match stats page") {
-
-      given("I visit a match page")
-
-      HtmlUnit.connection("/football/api/match-nav/1234?callback=showMatch") { connection =>
-
-        val json = Source.fromInputStream(connection.getInputStream).mkString
-
-        then("I should see the match report")
-        json should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
-
-        and("I should see the stats page")
-        json should include("/football/match/1234")
+        json should include("/football/match/")
       }
     }
   }
