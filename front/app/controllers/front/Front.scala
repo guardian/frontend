@@ -76,7 +76,7 @@ class Front extends AkkaSupport with Logging {
 
     "sport" -> new FrontEdition("US", Seq(
       TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3, style = Some(Featured)),
       TrailblockDescription("sport/mlb", "MLB", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/nba", "NBA", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("football/mls", "MLS", numItemsVisible = 1, style = Some(Thumbnail)),
