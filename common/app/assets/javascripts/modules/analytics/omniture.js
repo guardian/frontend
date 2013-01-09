@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
+define(['common', 'modules/detect'], function(common, detect) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -8,6 +8,8 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
     function Omniture(s, config, w) {
 
         var that = this;
+
+        var storagePrefix = "gu.analytics.";
 
         w = w || {};
 
@@ -26,15 +28,25 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
         this.logTag = function(params) {
             var element = params[0],
                 tag = params[1],
-                isXhr = params[2],
-                isInternalAnchor = params[3],
-                isUiControl = params[4];
+                isSamePage = params[2],
+                isSameHost = params[3],
+                storeObj,
+                delay;
 
-            // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            var delay = (isXhr || isInternalAnchor || isUiControl) ? true : element;
-            that.populateEventProperties(tag);
-
-            s.tl(delay, 'o', tag);
+            if (isSameHost && !isSamePage) {
+                // We came Link to a new page, on the same host.
+                // Do session storage rather than an omniture track.
+                storeObj = {
+                    pageName: s.pageName,
+                    tag: tag
+                };
+                sessionStorage.setItem(storagePrefix + 'linkTrackVars', JSON.stringify(storeObj));
+            } else {
+                that.populateEventProperties(tag);
+                // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
+                delay = isSamePage ? true : element;
+                s.tl(delay, 'o', tag);
+            }
         };
 
         this.populateEventProperties = function(tag){
@@ -61,9 +73,6 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
-
-            var prefix = 'GFE',
-                path = window.location.pathname;
 
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
