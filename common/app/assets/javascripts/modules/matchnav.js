@@ -6,9 +6,9 @@ define(['common', 'reqwest', 'modules/pad'], function (common, reqwest, Pad) {
         
         this.view = {
             render: function (json) {
-                document.querySelector(".after-header").innerHTML = json[0].nav;
-                if (json[0].related) {
-                    document.querySelector("#js-related").innerHTML = json[0].related;
+                document.querySelector(".after-header").innerHTML = json.nav;
+                if (json.related) {
+                    document.querySelector("#js-related").innerHTML = json.related;
                 }
 
                 common.mediator.emit('modules:matchnav:render');
@@ -25,7 +25,7 @@ define(['common', 'reqwest', 'modules/pad'], function (common, reqwest, Pad) {
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showMatchNav',
                 success: function (json) {
-                    common.mediator.emit('modules:matchnav:loaded', [json]);
+                    common.mediator.emit('modules:matchnav:loaded', json);
                 },
                 error: function () {
                     common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
