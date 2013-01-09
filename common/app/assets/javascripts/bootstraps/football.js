@@ -11,13 +11,11 @@ define([
     "modules/footballtables",
     "modules/more-matches",
     "modules/autoupdate",
-    "modules/pageconfig",
     "modules/pad",
     "modules/matchnav"
 ], function (
     common,
     qwery,
-
     Router,
     TogglePanel,
     Expandable,
@@ -25,15 +23,17 @@ define([
     FootballTable,
     MoreMatches,
     AutoUpdate,
-    PageConfig,
     Pad,
     MatchNav
 ) {
 
     var modules = {
-
-        matchNav: function(){
-            new MatchNav().load();
+        matchNav: function(config){
+            if (config.page.footballMatch) {
+                var url =  "/football/api/match-nav/" + config.page.footballMatch.id +
+                    "?currentPage=" + encodeURIComponent(config.page.pageId);
+                new MatchNav().load(url);
+            }
         },
 
         initTogglePanels: function () {
@@ -139,8 +139,8 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var comp = PageConfig.referenceOfType('paFootballCompetition'),
-                    team = PageConfig.referenceOfType('paFootballTeam');
+                var comp = config.referenceOfType('paFootballCompetition'),
+                    team = config.referenceOfType('paFootballTeam');
 
                 if(comp) {
                     modules.showCompetitionData(comp);
@@ -151,7 +151,7 @@ define([
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
 
-                    modules.matchNav();
+                    modules.matchNav(config);
 
                     if(match.isLive) {
                         modules.initAutoUpdate(

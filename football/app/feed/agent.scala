@@ -51,6 +51,8 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
 
   def shutdownLiveMatches() { agent.close() }
 
+  def add(theMatch: MatchDay) { agent.send(old => old :+ theMatch) }
+
   def liveMatches = agent()
 }
 
@@ -69,6 +71,8 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
       }
     }
   }
+
+  def add(theMatch: Fixture) { agent.send(old => old :+ theMatch) }
 
   def shutdownFixtures() { agent.close() }
 
@@ -123,6 +127,8 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
     }
   }
 
+  def add(theMatch: Result) { agent.send(old => old :+ theMatch) }
+
   def shutdownResults() { agent.close() }
 
   def results = agent()
@@ -158,6 +164,17 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
     awaitResults()
     awaitLeagueTable()
   }
+
+  //used for adding test data
+  def setMatches(matches: Seq[FootballMatch]) {
+    matches.foreach {
+      case fixture: Fixture => add(fixture)
+      case result: Result => add(result)
+      case live: MatchDay => add(live)
+    }
+    await()
+  }
+
 }
 
 object CompetitionAgent {

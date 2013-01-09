@@ -11,6 +11,7 @@ import feed.Competitions._
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
+import feed.Competitions
 
 case class Report(trail: Trail, name: String)
 
@@ -39,7 +40,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
         promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map {
           case Nil => NotFound
           case related =>
-            Cached(300)(JsonComponent("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, related))))
+            Cached(300)(JsonComponent(
+              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
+            )
         }
       }
     }.getOrElse(NotFound)
@@ -52,7 +55,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         promiseOfRelated.map {
           case Nil => NotFound
           case related => Cached(300)(JsonComponent(
-            ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, related))),
+            ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
             ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
           )
         }
@@ -70,6 +73,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .reference("pa-football-team/" + theMatch.homeTeam.id + ",pa-football-team/" + theMatch.awayTeam.id)
       .response.results.map(new Content(_))
   }
+
+  //for our purposes we expect exactly 2 football teams
+  private def withExactlyTwoTeams(content: Seq[Content]) = content.filter(_.tags.filter(_.isFootballTeam).size == 2)
 
   private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
     val matchDate = theMatch.date.toDateMidnight

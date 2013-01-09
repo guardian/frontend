@@ -198,6 +198,11 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
   }
+
+  //used to add test data
+  def setMatches(competitionId: String, matches: Seq[FootballMatch]) {
+    competitionAgents.find(_.competition.id == competitionId).foreach(_.setMatches(matches))
+  }
 }
 
 object Competitions extends Competitions

@@ -13,8 +13,16 @@ define([
 
     var modules = {
 
-        matchNav: function(){
-            new MatchNav().load();
+        matchNav: function(config){
+            var teamIds = config.referencesOfType('paFootballTeam');
+            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes") || config.hasSeries("Squad sheets");
+
+            if(teamIds.length === 2 && isRightTypeOfContent){
+                var url = "/football/api/match-nav/" + config.webPublicationDateAsUrlPart() + "/" +
+                            teamIds[0] + "/" + teamIds[1] +
+                            "?currentPage=" + encodeURIComponent(config.page.pageId);
+                new MatchNav().load(url);
+            }
         },
 
         related: function(config){
@@ -47,8 +55,9 @@ define([
             modules.related(config);
         }
 
-        modules.matchNav();
-
+        if(config.page.section === "football") {
+            modules.matchNav(config);
+        };
     };
 
     return {
