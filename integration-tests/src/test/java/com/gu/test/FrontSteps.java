@@ -56,16 +56,16 @@ public class FrontSteps {
     		);
   	}
   	
-    @Then("^each section should have a '([^']*)' cta that loads in more top stories$")
-    public void should_load_in_more_stories(String ctaText) throws Throwable {
-        List<WebElement> trailblocks = webDriver.findElements(By.cssSelector("#front-container section .trailblock"));
-        for(WebElement trailblock : trailblocks) {
-            WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
-            Assert.assertEquals(ctaText, cta.getText());
-            cta.click();
-            // wait for second list of top stories to load in
-            webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
-        }
+    @Then("^the '([^']*)' section should have a '([^']*)' cta that loads in more top stories$")
+    public void should_load_in_more_stories(String section, String ctaText) throws Throwable {
+        // horrible xpath to find the sections with a certain title
+        String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
+        WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
+        WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
+        Assert.assertEquals(ctaText, cta.getText());
+        cta.click();
+        // wait for second list of top stories to load in
+        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
     }
 	
 }

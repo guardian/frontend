@@ -29,10 +29,15 @@ Feature: Section Fronts - Sport
             | US Sport     | 1              | 3     |
             | Boxing       | 1              | 3     |
             | Cycling      | 1              | 3     |
-
-    Scenario: Users can view more top stories for a section
-        Given I visit the network front
-        Then each section should have a 'Show more' cta that loads in more top stories
+            
+    Scenario Outline: Users can view more top stories for a section
+        Given I am on the 'sport' section front
+        Then the '<section>' section should have a 'Show more' cta that loads in more top stories
+        
+        Examples:
+            | section  |
+            | Sport    |
+            | Football |
          
     Scenario: Users can hide sections
         Given I am on the 'sport' section front 

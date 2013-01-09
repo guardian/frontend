@@ -1,9 +1,15 @@
 @front  @network-front
 Feature: Network front
 
-    Scenario: Users can view more top stories for a section
+    Scenario Outline: Users can view more top stories for a section
         Given I visit the network front
-        Then each section should have a 'Show more' cta that loads in more top stories
+        Then the '<section>' section should have a 'Show more' cta that loads in more top stories
+        
+        Examples:
+            | section         |
+            | Sport           |
+            | Comment is free |
+            | Culture         |
          
     Scenario: Users can hide sections
         Given I visit the network front 

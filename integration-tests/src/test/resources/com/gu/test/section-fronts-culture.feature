@@ -27,8 +27,8 @@ Feature: Section Fronts - Culture
             | Games        | 1              | 3     |
             
     Scenario: Users can view more top stories for a section
-        Given I visit the network front
-        Then each section should have a 'Show more' cta that loads in more top stories
+        Given I am on the 'culture' section front
+        Then the 'Culture' section should have a 'Show more' cta that loads in more top stories
          
     Scenario: Users can hide sections
         Given I am on the 'culture' section front 
