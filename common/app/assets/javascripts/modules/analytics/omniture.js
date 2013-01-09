@@ -34,7 +34,7 @@ define(['common', 'modules/detect'], function(common, detect) {
                 delay;
 
             if (isSameHost && !isSamePage) {
-                // We came Link to a new page, on the same host.
+                // Came from a link to a new page on the same host.
                 // Do session storage rather than an omniture track.
                 storeObj = {
                     pageName: s.pageName,

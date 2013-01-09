@@ -20,7 +20,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             url = url || '';
             urlHost = url.match(/:\/\/(.[^\/]+)/);
 
-            if(urlHost && location) {
+            if(urlHost) {
                 urlHost = urlHost[1];
                 urlProtocol = url.match(/^(https?:)\/\//);
                 urlProtocol = urlProtocol ? urlProtocol[1] : undefined;
