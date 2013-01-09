@@ -16,11 +16,12 @@ import feed.Competitions
 case class Report(trail: Trail, name: String)
 
 case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
-    minByMin: Option[Trail], squadSheet: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
+    minByMin: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
 
   // do not count stats as a report (stats will always be there)
-  lazy val hasReports = matchReport.orElse(minByMin).orElse(squadSheet).isDefined
-
+  lazy val hasReports = hasReport || hasMinByMin
+  lazy val hasMinByMin = minByMin.isDefined
+  lazy val hasReport = matchReport.isDefined
 }
 
 object MoreOnMatchController extends Controller with Football with Requests with Logging {
@@ -37,12 +38,10 @@ object MoreOnMatchController extends Controller with Football with Requests with
       val promiseOfRelated = Akka.future(loadMoreOn(request, theMatch))
       Async {
         // for our purposes here, we are only interested in content with exactly 2 team tags
-        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map {
-          case Nil => NotFound
-          case related =>
-            Cached(300)(JsonComponent(
-              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
-            )
+        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).filter(_.nonEmpty).map { related =>
+          Cached(300)(JsonComponent(
+            "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
+          )
         }
       }
     }.getOrElse(NotFound)
@@ -52,9 +51,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
     findMatch(matchId).map { theMatch =>
       val promiseOfRelated = Akka.future(loadMoreOn(request, theMatch))
       Async {
-        promiseOfRelated.map {
-          case Nil => NotFound
-          case related => Cached(300)(JsonComponent(
+        promiseOfRelated.filter(_.nonEmpty).map { related =>
+          Cached(300)(JsonComponent(
             ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
             ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
           )
@@ -67,7 +65,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val matchDate = theMatch.date.toDateMidnight
     ContentApi.search(Edition(request, Configuration))
       .section("football")
-      .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
+      .tag("tone/matchreports|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
       .reference("pa-football-team/" + theMatch.homeTeam.id + ",pa-football-team/" + theMatch.awayTeam.id)
@@ -81,13 +79,12 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val matchDate = theMatch.date.toDateMidnight
     val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin }
     val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin }
-    val squadSheet = related.find { c => c.webPublicationDate <= matchDate && c.squadSheet }
     val stats: Trail = theMatch
 
     val currentPage = request.getParameter("currentPage").flatMap { pageId =>
-      (stats :: List(matchReport, minByMin, squadSheet).flatten).find(_.url.endsWith(pageId))
+      (stats :: List(matchReport, minByMin).flatten).find(_.url.endsWith(pageId))
     }
 
-    MatchNav(theMatch, matchReport, minByMin, squadSheet, stats, currentPage)
+    MatchNav(theMatch, matchReport, minByMin, stats, currentPage)
   }
 }
