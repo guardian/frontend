@@ -183,8 +183,13 @@
             <h2 class="article-zone type-2 margin-bottom cf">Headers</h2>
 
             @{
-                val trailFeaturedHTML = views.html.fragments.headers.sectionHead("Life & Style").toString()
-                fragments.module("header-section", "Section head", trailFeaturedHTML, "Usually used as page head on section & tag pages.")
+                val sectionHeadHTML = views.html.fragments.headers.sectionHead("Life & Style").toString()
+                fragments.module("section-head", "Section head", sectionHeadHTML, "Usually used as page head on section & tag pages.")
+            }
+
+            @{
+                val frontSectionHeadHTML = views.html.fragments.headers.frontSectionHead("life-and-style", "Life & Style", "UK").toString()
+                fragments.module("front-section-head", "Front section head", frontSectionHeadHTML, "Usually used as section head on network front")
             }
         <section>
     </article>

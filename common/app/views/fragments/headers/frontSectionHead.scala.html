@@ -1,0 +1,14 @@
+@(id: String, name: String,  edition: String = "false")(implicit request: RequestHeader)
+<div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
+    <h1>
+       <a @if(request.path != ""){class="zone-color"} data-link-name="section heading" href="/@id">
+         @name
+        </a>
+    </h1>
+    @if(edition != "false") { 
+    <button class="js-visible js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()"
+        data-block-name="@id"
+        id="js-trigger-@id"
+        data-link-name="Hide">Hide</button>
+    }
+</div>
