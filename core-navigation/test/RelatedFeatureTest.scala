@@ -34,7 +34,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         then("I should see the related links")
-        $("li") should have length 5
+        $("li") should have length 10
 
       }
     }
@@ -73,7 +73,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         then("I see each trail block displays the published date of the corresponding article")
 
-        $(".relative-timestamp") should have length 5
+        $(".relative-timestamp") should have length 10
 
       }
     }
