@@ -30,8 +30,8 @@ define([
     var modules = {
         matchNav: function(config){
             if (config.page.footballMatch) {
-                var url =  "/football/api/match-nav/" + config.page.footballMatch.id +
-                    "?currentPage=" + encodeURIComponent(config.page.pageId);
+                var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
+                    url += "?currentPage=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url);
             }
         },

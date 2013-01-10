@@ -15,12 +15,13 @@ define([
 
         matchNav: function(config){
             var teamIds = config.referencesOfType('paFootballTeam');
-            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes") || config.hasSeries("Squad sheets");
+            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
 
             if(teamIds.length === 2 && isRightTypeOfContent){
-                var url = "/football/api/match-nav/" + config.webPublicationDateAsUrlPart() + "/" +
-                            teamIds[0] + "/" + teamIds[1] +
-                            "?currentPage=" + encodeURIComponent(config.page.pageId);
+                var url = "/football/api/match-nav/";
+                            url += config.webPublicationDateAsUrlPart() + "/";
+                            url += teamIds[0] + "/" + teamIds[1];
+                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url);
             }
         },
