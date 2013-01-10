@@ -126,7 +126,8 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
+case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
+
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
       fig.attr("itemprop", "associatedMedia")
@@ -135,11 +136,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
 
       fig.getElementsByTag("img").foreach { img =>
         img.attr("itemprop", "contentURL")
-        fig.attr("class", img.attr("width").toInt match {
-          case width if width <= 220 => "img-base inline-image"
-          case width if width < 460 => "img-median inline-image"
-          case width => "img-extended"
-        })
+        Option(img.attr("width")).filter(_.isInt) foreach { width =>
+          fig.attr("class", width.toInt match {
+            case width if width <= 220 => "img-base inline-image"
+            case width if width < 460 => "img-median inline-image"
+            case width => "img-extended"
+          })
+        }
       }
 
       fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
