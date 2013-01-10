@@ -15,12 +15,12 @@ define('bootstraps/app', [
     Football,
     Article,
     Gallery,
-    PageConfig
+    pageConfig
 ) {
 
     var routes = function(rawConfig) {
 
-        var config = PageConfig(rawConfig);
+        var config = pageConfig(rawConfig);
 
         domReady(function() {
             var r = new Router();

@@ -58,7 +58,7 @@ define([
 
         if(config.page.section === "football") {
             modules.matchNav(config);
-        };
+        }
     };
 
     return {

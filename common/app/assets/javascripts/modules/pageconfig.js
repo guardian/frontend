@@ -3,7 +3,7 @@
 /*
     Common functions to simplify access to page data
  */
-define(['modules/pad', "common"], function (Pad, common) {
+define(['modules/pad', "common"], function (pad, common) {
     return function(config){
         return common.extend(
             {
@@ -32,8 +32,8 @@ define(['modules/pad', "common"], function (Pad, common) {
                 webPublicationDateAsUrlPart: function(){
                     if(this.webPublicationDate()){
                         return this.webPublicationDate().getFullYear() + '/' +
-                            Pad(this.webPublicationDate().getMonth() + 1, 2) + '/' +
-                            Pad(this.webPublicationDate().getDate(), 2);
+                            pad(this.webPublicationDate().getMonth() + 1, 2) + '/' +
+                            pad(this.webPublicationDate().getDate(), 2);
                     }
                 }
             },
