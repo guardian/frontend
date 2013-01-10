@@ -15,16 +15,13 @@ define(['common', 'modules/tabs', 'bean'], function(common, Tabs, bean) {
         var fakeTab = document.getElementById('fake-tab');
 
         // only way i can think of to test if a valid URL would actually execute
-        for (var i in allTabs) {
-            tab = allTabs[i];
-            bean.add(tab, 'click', function(e){
-                var link = this.getAttribute('href');
-                if (link.substring(0,1) !== '#') {
-                    e.stop(); // have to override us from leaving page
-                    this.setAttribute('data-valid-link', '1');
-                }
-            });
-        }
+        bean.add(fakeTab, 'click', function(e){
+            var link = this.getAttribute('href');
+            if (link.substring(0,1) !== '#') {
+                e.stop(); // have to override us from leaving page
+                this.setAttribute('data-valid-link', '1');
+            }
+        });
 
         it("should add a CSS class to the selected tab when clicked", function(){
             var li = tab2.parentNode;
