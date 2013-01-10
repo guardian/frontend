@@ -11,7 +11,9 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
                 var topstoriesHeader = document.getElementById('topstories-header'),
                     topstoriesNav = common.$g('.topstories-control');
 
-                topstoriesHeader.innerHTML = html;
+                topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
+                    + html
+                    + '</div>';
 
                 common.mediator.emit('modules:topstories:render');
 
@@ -41,7 +43,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
         // Model
 
         this.load = function (config) {
-            var url = config.page.coreNavigationUrl + '/top-stories?page-size=10';
+            var url = config.page.coreNavigationUrl + '/top-stories.json?page-size=10&view=link';
             return reqwest({
                     url: url,
                     type: 'jsonp',

@@ -14,15 +14,26 @@ object JsonComponent extends Results {
     resultFor(request, json) getOrElse (Ok(html))
   }
 
-  def apply(items: (String, Html)*)(implicit request: RequestHeader) = {
+  def apply(items: (String, Any)*)(implicit request: RequestHeader) = {
     val json = jsonFor(items: _*)
     resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
   }
 
-  private def jsonFor(items: (String, Html)*)(implicit request: RequestHeader) = {
+  def apply(callback: Option[String], items: (String, Any)*) = {
+    var json = jsonFor(items: _*)
+    callback.map {
+      case ValidCallback(callback) => json = "%s(%s);" format (callback, json)
+      case badCallback => Forbidden("bad callback name")
+    }
+    Ok(json).as("application/javascript")
+  }
+
+  def jsonFor(items: (String, Any)*) = {
     JsonParser.generate(
       (items.toMap).map {
-        case (name, html) => (name -> Compressed(html).body)
+        // compress and take the body if value is Html
+        case (name, html: Html) => (name -> Compressed(html).body)
+        case (name, value) => (name -> value)
       } ++ Map("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)
     )
   }
