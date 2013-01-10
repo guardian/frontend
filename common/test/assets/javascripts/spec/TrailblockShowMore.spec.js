@@ -55,7 +55,7 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
         
         it("should increase the omniture count by one on success", function(){
             serverSetup();
-            expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('top stories | Show more | 2');
+            expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
         });
         
         it("should remove cta if no more stories", function(){
