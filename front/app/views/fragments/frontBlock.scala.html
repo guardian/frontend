@@ -10,9 +10,10 @@
         }
 	}
 
-    <div class="trailblock js-front-trailblock rolled-out"
+    <div class="trailblock @if(block.description.showMore){ js-show-more}"
         id="front-trailblock-@SafeName(block.description)"
-        data-count="@{block.trails.length - block.description.numItemsVisible}">
+        data-count="@block.description.numItemsVisible"
+        data-section-id="@block.description.id">
 
         @block.description.style match {
             case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }

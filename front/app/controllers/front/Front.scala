@@ -23,10 +23,10 @@ class Front extends AkkaSupport with Logging {
   val ukEditions = Map(
 
     "front" -> new ConfiguredEdition("UK", Seq(
-      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
-      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)),
+      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -35,8 +35,8 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "sport" -> new FrontEdition("UK", Seq(
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured)),
-      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured)),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
       TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -50,7 +50,7 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "culture" -> new FrontEdition("UK", Seq(
-      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -64,10 +64,10 @@ class Front extends AkkaSupport with Logging {
   val usEditions = Map(
 
     "front" -> new ConfiguredEdition("US", Seq(
-      TrailblockDescription("", "News", numItemsVisible = 5, numLargeImages = 2, style = Some(Featured)),
-      TrailblockDescription("sport", "Sports", numItemsVisible = 5, numLargeImages = 1, style = Some(Featured)),
-      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)),
+      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -75,7 +75,7 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "sport" -> new FrontEdition("US", Seq(
-      TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("sport", "Sports", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("sport/nfl", "NFL", numItemsVisible = 3, style = Some(Featured)),
       TrailblockDescription("sport/mlb", "MLB", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/nba", "NBA", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -84,7 +84,7 @@ class Front extends AkkaSupport with Logging {
     )),
 
     "culture" -> new FrontEdition("US", Seq(
-      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured)),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),

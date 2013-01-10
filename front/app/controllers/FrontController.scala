@@ -23,9 +23,11 @@ object FrontPage extends MetaData {
   )
 }
 
-class FrontController extends Controller with Logging {
+class FrontController extends Controller with Logging with Formats {
 
   val front: Front = Front
+
+  val validFormats: Seq[String] = Seq("html", "json")
 
   def warmup() = Action {
     val promiseOfWarmup = Akka.future(Front.warmup())
@@ -34,7 +36,7 @@ class FrontController extends Controller with Logging {
 
   def isUp() = Action { Ok("Ok") }
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val edition = Edition(request, Configuration)
 
     val page: Option[MetaData] = path match {
@@ -48,8 +50,22 @@ class FrontController extends Controller with Logging {
     page map { page =>
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
-      if (trailblocks.isEmpty) InternalServerError
-      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks, FrontCharity()))) }
+      if (trailblocks.isEmpty) {
+        InternalServerError
+      } else {
+        checkFormat(format).map { format =>
+          Cached(page) {
+            if (format == "json") {
+              // pull out correct trailblock
+              trailblocks.find(_.description.id == path).map { trailblock =>
+                renderJsonTrails(trailblock.trails)
+              }.getOrElse(InternalServerError)
+            } else {
+              Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
+            }
+          }
+        } getOrElse (BadRequest)
+      }
     } getOrElse (InternalServerError)
   }
 
