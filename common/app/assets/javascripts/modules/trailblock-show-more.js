@@ -25,7 +25,7 @@ define([
         this.view = {
                 
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta" data-link-name="top stories | Show more | 1">Show more</button>');
+               bonzo(trailblock).append('<button class="cta" data-link-name="Show more | 1">Show more</button>');
            },
            
            removeCta: function(cta) {
