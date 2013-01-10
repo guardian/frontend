@@ -38,6 +38,7 @@ object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
     case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
+    case (key, value: Seq[(String, Any)]) => "'%s': [%s]".format(key, value.map("{" + MetadataJson(_) + "}").mkString(","))
     case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
   }
 }

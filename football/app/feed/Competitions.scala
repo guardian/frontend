@@ -12,8 +12,9 @@ import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
 import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
+import implicits.Football
 
-trait CompetitionSupport {
+trait CompetitionSupport extends Football {
 
   private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
@@ -71,15 +72,22 @@ trait CompetitionSupport {
     MatchDayTeam(teamId, unclean.name, None, None, None, None)
   }
 
-  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).competitions
-    .flatMap(_.matches).find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).matches
+    .find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = matches
+    .filter(m => interval.contains(m.date))
+    .find(m => m.hasTeam(team1) && m.hasTeam(team2))
+
+  def matches = competitions.flatMap(_.matches).sortBy(_.date.millis)
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -189,6 +197,11 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   def shutDown() {
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
+  }
+
+  //used to add test data
+  def setMatches(competitionId: String, matches: Seq[FootballMatch]) {
+    competitionAgents.find(_.competition.id == competitionId).foreach(_.setMatches(matches))
   }
 }
 

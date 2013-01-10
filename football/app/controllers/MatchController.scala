@@ -9,13 +9,12 @@ import play.api.libs.concurrent.Akka
 import play.api.Play._
 import org.joda.time.format.DateTimeFormat
 import feed._
-import org.joda.time._
 import pa.LineUp
 import scala.Some
-import model.Team
+import implicits.{ Requests, Football }
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
-  lazy val hasLiveMatch = theMatch.isLive || theMatch.isResult
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
+  lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
   override lazy val canonicalUrl = None
@@ -38,7 +37,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData {
   )
 }
 
-object MatchController extends Controller with Logging {
+object MatchController extends Controller with Football with Requests with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
@@ -60,15 +59,14 @@ object MatchController extends Controller with Logging {
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
-            request.getQueryString("callback").map { callback =>
+            request.getParameter("callback").map { callback =>
               JsonComponent(
-                "summary" -> views.html.fragments.matchSummary(MatchPage(theMatch, lineUp)),
+                "summary" -> views.html.fragments.matchSummary(theMatch),
                 "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))
               )
             } getOrElse {
               Cached(60) {
-                //Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
-                Ok(views.html.footballMatch(MatchPage(theMatch, lineUp)))
+                Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
               }
             }
           }

@@ -169,7 +169,6 @@ define([
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
 
-
         modules.showRelativeDates();
     };
 
