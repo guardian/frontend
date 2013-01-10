@@ -62,11 +62,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         // FIXME - need consistent data, as image can go missing
         //article.findFirst("img").getAttribute("src").length should be > 0
 
-        and("I should see no images beyond first three trails")
-
-        val trailWithImage = find("li", 7)
-        trailWithImage.find("img") should have length 0
-
       }
     }
 

@@ -12,7 +12,8 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Core nav
 GET     /most-popular                                       controllers.MostPopularController.renderGlobal
 GET     /most-popular/*path                                 controllers.MostPopularController.render(path)
-GET     /top-stories                                        controllers.TopStoriesController.render
+GET     /top-stories                                        controllers.TopStoriesController.render(format = "html")
+GET     /top-stories.:format                                controllers.TopStoriesController.render(format)
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Style-guide
@@ -58,8 +59,9 @@ GET     /football/match/:matchId                            controllers.MatchCon
 #Front
 GET     /_warmup                              controllers.FrontController.warmup()
 GET     /_up                                  controllers.FrontController.isUp()
-GET     /                                     controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>                 controllers.FrontController.render(path)
+GET     /                                     controllers.FrontController.render(path = "front", format = "html")
+GET     /$path<culture|sport>                 controllers.FrontController.render(path, format = "html")
+GET     /$path<culture|sport>.:format         controllers.FrontController.render(path, format)
 
 
 #Video
@@ -69,12 +71,16 @@ GET     /$path<.*/video/.*>                   controllers.VideoController.render
 GET     /$path<.*/gallery/.*>                 controllers.GalleryController.render(path)
 
 #Tag
-GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>                     controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*>.:format             controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>            controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format    controllers.TagController.render(path, format)
 
 #Section
-GET     /sections                             controllers.SectionsController.render()
-GET     /$path<[\w\d-]*>                      controllers.SectionController.render(path)
+GET		/sections							         controllers.SectionsController.render()
+# culture and sport sections now live in front
+GET     /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path, format = "html")
+GET     /$path<(?!culture|sport)[\w\d-]*>.:format    controllers.SectionController.render(path, format)
 
 #Articles
 GET     /*path                                controllers.ArticleController.render(path)
