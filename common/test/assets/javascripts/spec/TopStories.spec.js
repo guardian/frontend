@@ -35,7 +35,7 @@ define([ 'common',
                   , button = document.getElementById('control');
 
                 expect(callback).toHaveBeenCalledOnce();
-                expect(container.innerHTML).toBe('<b>top stories</b>');
+                expect(container.innerHTML).toBe('<div class="headline-list box-indent" data-link-name="top-stories"><b>top stories</b></div>');
                 expect(button.className).not.toContain('is-off');
            })
         });
