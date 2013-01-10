@@ -10,7 +10,7 @@ trait ApiQueryDefaults { self: Api =>
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,showInRelatedContent"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,showInRelatedContent,wordcount"
 
   val references = "pa-football-competition,pa-football-team"
 
