@@ -2,14 +2,29 @@ define([
     "common",
 
     "modules/expandable",
-    "modules/autoupdate"
+    "modules/autoupdate",
+    "modules/matchnav"
 ], function (
     common,
     Expandable,
-    AutoUpdate
+    AutoUpdate,
+    MatchNav
 ) {
 
     var modules = {
+
+        matchNav: function(config){
+            var teamIds = config.referencesOfType('paFootballTeam');
+            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+
+            if(teamIds.length === 2 && isRightTypeOfContent){
+                var url = "/football/api/match-nav/";
+                            url += config.webPublicationDateAsUrlPart() + "/";
+                            url += teamIds[0] + "/" + teamIds[1];
+                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                new MatchNav().load(url);
+            }
+        },
 
         related: function(config){
             var host = config.page.coreNavigationUrl,
@@ -40,6 +55,10 @@ define([
         if (config.page.showInRelated) {
             modules.related(config);
         }
+
+        if(config.page.section === "football") {
+            modules.matchNav(config);
+        };
     };
 
     return {
@@ -47,3 +66,4 @@ define([
     };
 
 });
+

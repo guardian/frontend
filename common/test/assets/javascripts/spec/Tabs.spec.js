@@ -11,7 +11,7 @@ define(['common', 'modules/tabs', 'bean'], function(common, Tabs, bean) {
         var tab2panel = document.getElementById('tab2panel');
 
         var independentTabPanel = document.getElementById('tab2panel_2');
-        var allTabs = document.querySelectorAll('ol.tabs a');
+        var allTabs = document.querySelectorAll('ol.js-tabs a');
         var fakeTab = document.getElementById('fake-tab');
 
         // only way i can think of to test if a valid URL would actually execute
