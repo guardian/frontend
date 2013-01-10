@@ -69,7 +69,7 @@ define([
                         } else {
                             // otherwise, increase the show more count
                             var newDataLinkName = cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
-                                return prefix + (count + 1);
+                                return prefix + (parseInt(count) + 1);
                             });
                             cta.attr('data-link-name', newDataLinkName);
                         }
