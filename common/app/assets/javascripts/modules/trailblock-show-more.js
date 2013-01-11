@@ -69,7 +69,8 @@ define([
                         } else {
                             // otherwise, increase the show more count
                             var newDataLinkName = cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
-                                return prefix + (parseInt(count) + 1);
+                                // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
+                                return prefix + (parseInt(count, 10) + 1);
                             });
                             cta.attr('data-link-name', newDataLinkName);
                         }
