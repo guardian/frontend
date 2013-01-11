@@ -29,6 +29,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val webUrl: String = delegate.webUrl
   lazy val headline: String = fields("headline")
   lazy val webTitle: String = delegate.webTitle
+  lazy val wordCount: String = fields.get("wordcount").getOrElse("")
 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
@@ -58,7 +59,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "page-code" -> fields("internalPageCode"),
-    "isLive" -> isLive
+    "isLive" -> isLive,
+    "wordCount" -> wordCount
   ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
 
   override lazy val cacheSeconds = {
