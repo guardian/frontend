@@ -87,9 +87,6 @@ define(function () {
         if (ua.indexOf('android') > -1) {
             format = 'ttf';
         }
-        if (ua.indexOf('iphone os') > -1 && ua.indexOf('iphone os 5') < 0) {
-            format = 'ttf';
-        }
         return format;
     }
 
