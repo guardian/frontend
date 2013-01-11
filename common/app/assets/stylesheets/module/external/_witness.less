@@ -1,0 +1,71 @@
+//Module: witness
+//Desc: This file contains all styles for Guardian Witness
+//Allow direct element selectors as we have no direct control over the html
+
+.element-witness {
+    border: 2px solid @darkMushroom;
+}
+
+.element-witness h3 {
+    .type-5;
+    margin-bottom: @baseline*2;
+ }
+
+.element-witness a, a:hover, a:link {
+    color: #333333;
+}
+
+.element-witness a:visited {
+    color: #7CA6BE;
+}
+
+.element-witness p {
+    .type-7;
+}
+
+.element-witness .main {
+    padding: @baseline 5px @baseline 5px;
+}
+
+.element-witness .source {
+    .type-11;
+    display: inline-block;
+}
+
+.element-witness .author {
+    .type-9;
+    display: inline-block;
+}
+
+.element-witness .metadata {
+    border-top: 2px solid @darkMushroom;
+    background: @mushroom;
+    padding: @baseline 5px @baseline 5px;
+}
+
+.guardian-witness-brand {
+    position: relative;
+    top: @baseline;
+}
+
+/* TODO replace with video icon */
+.element-witness-video figcaption:before{
+    display:none;
+}
+
+.element-witness-video iframe {
+    max-width: 100%;
+}
+
+/* TODO this is just temp till I see more test data
+   and can figure out what I can expect images to look like
+ */
+.element-witness-image {
+    .main{
+        img {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
