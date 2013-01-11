@@ -3,12 +3,14 @@ define([
 
     "modules/expandable",
     "modules/autoupdate",
-    "modules/matchnav"
+    "modules/matchnav",
+    "modules/analytics/reading"
 ], function (
     common,
     Expandable,
     AutoUpdate,
-    MatchNav
+    MatchNav,
+    Reading
 ) {
 
     var modules = {
@@ -42,11 +44,24 @@ define([
                 attachTo: document.querySelector(".article-body"),
                 switches: switches
             }).init();
+        },
+
+        logReading: function(config) {
+            var wordCount = config.page.wordCount;
+            if(wordCount !== "") {
+                
+                var reader = new Reading({
+                    id: config.page.pageId,
+                    wordCount: parseInt(config.page.wordCount, 10),
+                    el: document.querySelector('.article-body')
+                });
+
+                reader.init();
+            }
         }
     };
 
-
-    var ready = function(req, config) {
+    var ready = function(config) {
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -61,8 +76,21 @@ define([
         }
     };
 
+    // If you can wait for load event, do so.
+    var defer = function(config) {
+        common.deferToLoadEvent(function() {
+            modules.logReading(config);
+        });
+    };
+
+    var init = function (req, config) {
+        ready(config);
+        defer(config);
+    };
+
+
     return {
-        init: ready
+        init: init
     };
 
 });
