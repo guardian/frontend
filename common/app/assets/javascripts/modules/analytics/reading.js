@@ -1,7 +1,7 @@
-define(function () {
+define(['common'], function (common) {
 
     /**
-     * Readbale constructor
+     * Readable constructor
      * @param {Object} config Global config options hash
      */
     function Readable(config) {
@@ -108,6 +108,12 @@ define(function () {
             this.createImage(url);
         };
 
+        common.mediator.on('module:clickstream:click', function(params) {
+            if (params[0].nodeName.toLowerCase() === 'a') {
+                that.log.call(that);
+            }
+        });
+
         this.init = function() {
             // Check every second if page has scrolled
             var currentScroll = window.pageYOffset;
@@ -119,9 +125,6 @@ define(function () {
                     //If the element is now in viewport and timer not started
                     if(that.articleIsInViewport.call(that, el) && !that.timer.started) {
                         that.timer.start();
-                        window.onbeforeunload = function(e) {
-                            that.log.call(that);
-                        };
                     }
 
                     that.logElementPosition(el);
