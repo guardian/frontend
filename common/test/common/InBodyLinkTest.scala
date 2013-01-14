@@ -99,4 +99,9 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
     InBodyLink("http://www.guardian.co.uk/football/feedarticle/10541078") should
       be("http://www.guardian.co.uk/football/feedarticle/10541078")
   }
+
+  it should "not resolve comment links" in {
+    InBodyLink("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999") should
+      be("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999")
+  }
 }
