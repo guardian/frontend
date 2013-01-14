@@ -106,28 +106,6 @@ trait HtmlCleaner {
   def clean(d: Document): Document
 }
 
-object WitnessCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-    val witnessEmbeds = document.getElementsByClass("element-witness")
-
-    witnessEmbeds.foreach { embed: Element =>
-
-      embed.getElementsByClass("guardian-witness-brand").foreach { brand: Element =>
-        val icon = document.createElement("i")
-        icon.attr("class", "i i-witness-logo")
-        brand.children().foreach(_.remove)
-        brand.text("")
-        brand.appendChild(icon)
-      }
-
-      embed.getElementsByTag("time").foreach { time: Element =>
-        time.addClass("js-timestamp")
-      }
-    }
-    document
-  }
-}
-
 object BlockNumberCleaner extends HtmlCleaner {
 
   private val Block = """<!-- Block (\d*) -->""".r

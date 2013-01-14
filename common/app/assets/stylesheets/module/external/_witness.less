@@ -3,7 +3,8 @@
 //Allow direct element selectors as we have no direct control over the html
 
 .element-witness {
-    border: 2px solid @darkMushroom;
+    border: 1px solid @darkMushroom;
+    margin-bottom: @baseline*5;
 }
 
 .element-witness h3 {
@@ -24,7 +25,7 @@
 }
 
 .element-witness .main {
-    padding: @baseline 5px @baseline 5px;
+    padding: 0px @baseline*2 @baseline*5 @baseline*2;
 }
 
 .element-witness .source {
@@ -33,19 +34,27 @@
 }
 
 .element-witness .author {
-    .type-9;
+    .type-11;
     display: inline-block;
+    margin-bottom: 0px;
+}
+
+.element-witness .author-name {
+    font-weight: bold;
 }
 
 .element-witness .metadata {
-    border-top: 2px solid @darkMushroom;
+    border-top: 1px solid @darkMushroom;
     background: @mushroom;
-    padding: @baseline 5px @baseline 5px;
+    padding: @baseline*4 @baseline*2 @baseline*4 @baseline*2;
+}
+
+.i-witness-logo {
+    margin: @baseline*4 @baseline @baseline*5 @baseline;
 }
 
 .guardian-witness-brand {
-    position: relative;
-    top: @baseline;
+    padding-left: 4px;
 }
 
 /* TODO replace with video icon */
@@ -63,9 +72,18 @@
 .element-witness-image {
     .main{
         img {
+            width: 100%;
             max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
         }
     }
 }
+
+.author time {
+    display: block;
+}
+
+.i-default-witness-avatar {
+    float: left;
+    padding: @baseline @baseline 0 @baseline;
+}
+
