@@ -40,7 +40,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         front.warmup()
 
         then("I should see the configured feature trailblock")
-        front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("world/iraq", "Iraq", 3)))
+        front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("world/iraq", "Iraq", 3, showMore = true)))
       }
     }
 
