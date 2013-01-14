@@ -188,7 +188,7 @@
             }
 
             @{
-                val frontSectionHeadHTML = views.html.fragments.headers.frontSectionHead("life-and-style", "Life & Style", "UK").toString()
+                val frontSectionHeadHTML = views.html.fragments.headers.frontSectionHead(TrailblockDescription("lifeandstyle", "Life & Style", 5), "UK").toString()
                 fragments.module("front-section-head", "Front section head", frontSectionHeadHTML, "Usually used as section head on network front")
             }
         <section>
