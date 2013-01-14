@@ -48,7 +48,19 @@ object InBodyLink extends Logging {
       .orElse(contentTypes(urlWithoutHash))
       .orElse(unknownUrl(urlWithoutHash))(urlWithoutHash)
 
-    reslovedUrl + queryParams + hash
+    val result = reslovedUrl + queryParams + hash
+
+    if (paramsOk(queryParams, result)) result else url
+
+  }
+
+  private def paramsOk(queryString: String, url: String) = {
+    if (queryString.contains("mobile-redirect=false")) {
+      log.debug("unsupported: url %s was a mobile redirect" format (url))
+      false
+    } else {
+      true
+    }
   }
 
   private def unknownUrl(url: String): PartialFunction[String, String] = {
