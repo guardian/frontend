@@ -78,7 +78,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
         toId((block \ "id").as[String]),
         (block \ "title").as[String],
         (block \ "numItems").as[Int],
-        showMore = (block \ "showMore").as[Boolean]
+        showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
       )
     }
   }
