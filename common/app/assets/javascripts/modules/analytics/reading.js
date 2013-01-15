@@ -109,7 +109,8 @@ define(['common'], function (common) {
         };
 
         common.mediator.on('module:clickstream:click', function(params) {
-            if (params[0].nodeName.toLowerCase() === 'a') {
+            var isSamePage = params[2];
+            if (!isSamePage && params[0].nodeName.toLowerCase() === 'a') {
                 that.log.call(that);
             }
         });
