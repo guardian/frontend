@@ -100,6 +100,7 @@ define(['common'], function (common) {
                 "timeOnPage"        : this.timeOnPage(),
                 "timeReading"       : this.timer.time,
                 "wordsRead"         : this.wordsRead(),
+                "wordCount"         : WORDCOUNT,
                 "percentageRead"    : this.percentageRead(),
                 "percentageViewport": this.viewportPercentage
             };
