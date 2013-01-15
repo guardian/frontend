@@ -100,6 +100,7 @@ define(['common'], function (common) {
                 "timeOnPage"        : this.timeOnPage(),
                 "timeReading"       : this.timer.time,
                 "wordsRead"         : this.wordsRead(),
+                "wordCount"         : WORDCOUNT,
                 "percentageRead"    : this.percentageRead(),
                 "percentageViewport": this.viewportPercentage
             };
@@ -109,7 +110,8 @@ define(['common'], function (common) {
         };
 
         common.mediator.on('module:clickstream:click', function(params) {
-            if (params[0].nodeName.toLowerCase() === 'a') {
+            var isSamePage = params[2];
+            if (!isSamePage && params[0].nodeName.toLowerCase() === 'a') {
                 that.log.call(that);
             }
         });
