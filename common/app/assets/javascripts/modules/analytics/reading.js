@@ -12,8 +12,10 @@ define(['common'], function (common) {
             PATH = "/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
-            WPM = 200; //Average words onsole.log(config);per minute
-
+            WPM = 200,
+            READ_THRESHOLD = 80; // Ie. 80% 
+            logCount = 0; // Average words 
+ 
         this.viewportPercentage = 0;
 
         this.timer = {
@@ -49,7 +51,10 @@ define(['common'], function (common) {
 
         this.logElementPosition = function(el) {
             var current = parseInt(this.getPercentageInViewPort(el), 10);
-            return this.viewportPercentage = (current > this.viewportPercentage) ? current : this.viewportPercentage;
+            this.viewportPercentage = (current > this.viewportPercentage) ? current : this.viewportPercentage;
+            if (this.viewportPercentage > READ_THRESHOLD) {
+                this.log();    
+            }
         };
 
         this.articleIsInViewport = function(el) {
@@ -95,6 +100,12 @@ define(['common'], function (common) {
         },
 
         this.log = function() {
+           
+            // Prevent multiple entries p/page 
+            if (logCount >= 1) {
+                return false;
+            }
+
             var data = {
                 "id" : id,
                 "timeOnPage"        : this.timeOnPage(),
@@ -105,6 +116,7 @@ define(['common'], function (common) {
                 "percentageViewport": this.viewportPercentage
             };
 
+            logCount++;
             var url = this.makeUrl(data);
             this.createImage(url);
         };
