@@ -13,8 +13,8 @@ define(['common'], function (common) {
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
             WPM = 200,
-            READ_THRESHOLD = 80; // Ie. 80% 
-            logCount = 0; // Average words 
+            READ_THRESHOLD = 80, // Ie. 80%
+            logCount = 0; // Average words
  
         this.viewportPercentage = 0;
 
@@ -53,7 +53,7 @@ define(['common'], function (common) {
             var current = parseInt(this.getPercentageInViewPort(el), 10);
             this.viewportPercentage = (current > this.viewportPercentage) ? current : this.viewportPercentage;
             if (this.viewportPercentage > READ_THRESHOLD) {
-                this.log();    
+                this.log();
             }
         };
 
@@ -101,7 +101,7 @@ define(['common'], function (common) {
 
         this.log = function() {
            
-            // Prevent multiple entries p/page 
+            // Prevent multiple entries p/page
             if (logCount >= 1) {
                 return false;
             }
