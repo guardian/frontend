@@ -5,6 +5,7 @@
 .element-witness {
     border: 1px solid @darkMushroom;
     margin-bottom: @baseline*5;
+    padding-top: @baseline*3;
 }
 
 .element-witness h3 {
@@ -25,7 +26,7 @@
 }
 
 .element-witness .main {
-    padding: 0px @baseline*2 @baseline*5 @baseline*2;
+    padding: @baseline*3 @baseline*2 @baseline*4 @baseline*2;
 }
 
 .element-witness .source {
@@ -37,6 +38,7 @@
     .type-11;
     display: inline-block;
     margin-bottom: 0px;
+    width: 100%;
 }
 
 .element-witness .author-name {
@@ -46,20 +48,25 @@
 .element-witness .metadata {
     border-top: 1px solid @darkMushroom;
     background: @mushroom;
-    padding: @baseline*4 @baseline*2 @baseline*4 @baseline*2;
+    padding: @baseline*3 @baseline*2 @baseline*3 @baseline*2;
+    line-height: 1.0em;
 }
 
-.i-witness-logo {
-    margin: @baseline*4 @baseline @baseline*5 @baseline;
+.element-witness .metadata img{
+    margin-bottom: 0px;
 }
 
 .guardian-witness-brand {
-    padding-left: 4px;
+    padding: 0 @baseline*2 0 @baseline*2;
 }
 
 /* TODO replace with video icon */
-.element-witness-video figcaption:before{
+.element-witness figcaption:before{
     display:none;
+}
+
+.element-witness figcaption {
+    margin: @baseline*4 0 0 0;
 }
 
 .element-witness-video iframe {
@@ -74,6 +81,7 @@
         img {
             width: 100%;
             max-width: 100%;
+            margin-bottom: 0px;
         }
     }
 }
@@ -82,8 +90,8 @@
     display: block;
 }
 
-.i-default-witness-avatar {
+.witness-avatar {
     float: left;
-    padding: @baseline @baseline 0 @baseline;
+    padding: 0 @baseline*2 0 0;
 }
 
