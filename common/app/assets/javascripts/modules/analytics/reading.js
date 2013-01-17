@@ -1,7 +1,7 @@
-define(function () {
+define(['common'], function (common) {
 
     /**
-     * Readbale constructor
+     * Readable constructor
      * @param {Object} config Global config options hash
      */
     function Readable(config) {
@@ -12,8 +12,10 @@ define(function () {
             PATH = "/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
-            WPM = 200; //Average words onsole.log(config);per minute
-
+            WPM = 200,
+            READ_THRESHOLD = 80, // Ie. 80%
+            logCount = 0; // Average words
+ 
         this.viewportPercentage = 0;
 
         this.timer = {
@@ -49,7 +51,10 @@ define(function () {
 
         this.logElementPosition = function(el) {
             var current = parseInt(this.getPercentageInViewPort(el), 10);
-            return this.viewportPercentage = (current > this.viewportPercentage) ? current : this.viewportPercentage;
+            this.viewportPercentage = (current > this.viewportPercentage) ? current : this.viewportPercentage;
+            if (this.viewportPercentage > READ_THRESHOLD) {
+                this.log();
+            }
         };
 
         this.articleIsInViewport = function(el) {
@@ -95,18 +100,33 @@ define(function () {
         },
 
         this.log = function() {
+           
+            // Prevent multiple entries p/page
+            if (logCount >= 1) {
+                return false;
+            }
+
             var data = {
                 "id" : id,
                 "timeOnPage"        : this.timeOnPage(),
                 "timeReading"       : this.timer.time,
                 "wordsRead"         : this.wordsRead(),
+                "wordCount"         : WORDCOUNT,
                 "percentageRead"    : this.percentageRead(),
                 "percentageViewport": this.viewportPercentage
             };
 
+            logCount++;
             var url = this.makeUrl(data);
             this.createImage(url);
         };
+
+        common.mediator.on('module:clickstream:click', function(params) {
+            var isSamePage = params[2];
+            if (!isSamePage && params[0].nodeName.toLowerCase() === 'a') {
+                that.log.call(that);
+            }
+        });
 
         this.init = function() {
             // Check every second if page has scrolled
@@ -119,9 +139,6 @@ define(function () {
                     //If the element is now in viewport and timer not started
                     if(that.articleIsInViewport.call(that, el) && !that.timer.started) {
                         that.timer.start();
-                        window.onbeforeunload = function(e) {
-                            that.log.call(that);
-                        };
                     }
 
                     that.logElementPosition(el);

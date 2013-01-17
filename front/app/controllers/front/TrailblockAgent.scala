@@ -18,7 +18,22 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.send { old => Some(Trailblock(description, loadTrails(description.id))) }
+  def refresh() = agent.send { old =>
+    val newTrails = loadTrails(description.id)
+
+    val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
+    val newUrls = newTrails.map(_.url).toList
+
+    newUrls.diff(oldUrls).foreach { url =>
+      log.info("added item: " + url)
+    }
+
+    oldUrls.diff(newUrls).foreach { url =>
+      log.info("removed item: " + url)
+    }
+
+    Some(Trailblock(description, newTrails))
+  }
 
   def close() = agent.close()
 
