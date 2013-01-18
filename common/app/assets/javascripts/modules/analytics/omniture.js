@@ -34,7 +34,7 @@ define(['common', 'modules/detect'], function(common, detect) {
                 delay;
 
             // Remove the 'false' clause once Omniture guys support the localStorage approach...
-            if (false || isSameHost && !isSamePage) {
+            if (false && isSameHost && !isSamePage) {
                 // Came from a link to a new page on the same host.
                 // Do session storage rather than an omniture track.
                 storeObj = {
