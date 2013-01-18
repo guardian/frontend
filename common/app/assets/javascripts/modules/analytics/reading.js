@@ -9,7 +9,7 @@ define(['common'], function (common) {
         var that = this,
             el = config.el,
             id = config.id,
-            PATH = "/px.gif",
+            PATH = "http://requestb.in/1betsw41/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
             WPM = 200; //Average words onsole.log(config);per minute
