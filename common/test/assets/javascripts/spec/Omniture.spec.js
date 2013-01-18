@@ -126,7 +126,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             runs(function() {
                 common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);   // same-page  (non-delayed s.tl call)
                 common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // other-host (delayed s.tl call)
-                common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]);  // same-host  (no s.tl call; use session storage)
+                /* Uncomment when Omnitute have implemented localStorage for same-host clicks: */
+                //common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]);  // same-host  (no s.tl call; use session storage)
                 expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
                 expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
             });
