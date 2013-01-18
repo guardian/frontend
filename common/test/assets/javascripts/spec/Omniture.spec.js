@@ -11,7 +11,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
         beforeEach(function(){
 
-            config.page = { omnitureAccount: 'the_account' }
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' }
 
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");
@@ -116,7 +116,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             });
         });
 
-        it("should not introduce an artificial delay in to internal anchor or XmlHttpRequest links", function(){
+        it("should not introduce an artificial delay for same-page links or same-host links", function(){
 
             var o = new Omniture(s, config),
                 el = document.createElement("a");
@@ -124,11 +124,12 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             o.init();
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]); // xhr
-                common.mediator.emit('module:clickstream:click', [el, 'tag', true, false]); // internal anchor
-                common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);  // xhr + internal anchor
-                common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // neither
-                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledThrice(); // todo check this
+                common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);   // same-page  (non-delayed s.tl call)
+                common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // other-host (delayed s.tl call)
+                /* Uncomment when Omnitute have implemented localStorage for same-host clicks: */
+                //common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]);  // same-host  (no s.tl call; use session storage)
+                expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
+                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
             });
 
         });
