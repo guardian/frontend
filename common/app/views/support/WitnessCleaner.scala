@@ -2,6 +2,7 @@ package views.support
 
 import org.jsoup.nodes.{ Element, Document }
 import scala.collection.JavaConversions._
+import conf.CommonSwitches._
 
 object WitnessCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
@@ -9,10 +10,15 @@ object WitnessCleaner extends HtmlCleaner {
 
     witnessEmbeds.foreach { embed: Element =>
 
-      //remove height from video iframe
       if (embed.hasClass("element-witness-video")) {
-        embed.getElementsByClass("element-witness--main").foreach { main =>
-          main.getElementsByTag("iframe").foreach(_.attr("height", ""))
+        if (WitnessVideoSwitch.isSwitchedOff) {
+          //video embeds rely on 3rd party plugins, so we want to be able to kill them off
+          embed.remove()
+        } else {
+          //remove height from video iframe
+          embed.getElementsByClass("element-witness--main").foreach { main =>
+            main.getElementsByTag("iframe").foreach(_.attr("height", ""))
+          }
         }
       }
 
