@@ -1,4 +1,10 @@
-define(['common'], function (common) {
+define([
+    'common',
+    'modules/analytics/ophan'
+], function (
+    common,
+    ophan
+) {
 
     /**
      * Readable constructor
@@ -117,8 +123,10 @@ define(['common'], function (common) {
             };
 
             logCount++;
-            var url = this.makeUrl(data);
-            this.createImage(url);
+
+            //ophan.additionalClickData(data);
+            // var url = this.makeUrl(data);
+            // this.createImage(url);
         };
 
         common.mediator.on('module:clickstream:click', function(params) {
