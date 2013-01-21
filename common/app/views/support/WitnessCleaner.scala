@@ -11,13 +11,13 @@ object WitnessCleaner extends HtmlCleaner {
 
       //remove height from video iframe
       if (embed.hasClass("element-witness-video")) {
-        embed.getElementsByClass("main").foreach { main =>
+        embed.getElementsByClass("element-witness--main").foreach { main =>
           main.getElementsByTag("iframe").foreach(_.attr("height", ""))
         }
       }
 
       // remove witness brand and replace it with an icon at the top of the embed
-      embed.getElementsByClass("guardian-witness-brand").foreach { brand: Element =>
+      embed.getElementsByClass("element-witness--brand").foreach { brand: Element =>
         val icon = document.createElement("i")
         icon.attr("class", "i i-witness-logo")
         icon.attr("title", "Guardian Witness")
@@ -30,15 +30,15 @@ object WitnessCleaner extends HtmlCleaner {
       }
 
       //clean source and time
-      embed.getElementsByClass("metadata").foreach { metaData: Element =>
-        metaData.getElementsByClass("source").foreach { source: Element =>
+      embed.getElementsByClass("element-witness--metadata").foreach { metaData: Element =>
+        metaData.getElementsByClass("element-witness--source").foreach { source: Element =>
 
           source.getElementsByTag("time").foreach { time: Element =>
             time.addClass("js-timestamp")
 
             source.remove()
 
-            metaData.getElementsByClass("author").foreach { author: Element =>
+            metaData.getElementsByClass("element-witness--author").foreach { author: Element =>
 
               author.appendChild(time)
 
@@ -47,8 +47,6 @@ object WitnessCleaner extends HtmlCleaner {
                 img.attr("width", "32px")
                 img.attr("height", "32px")
                 img.addClass("witness-avatar")
-                //img.remove()
-                //metaData.prependChild(img)
               }
 
               if (!avatar.isDefined) {

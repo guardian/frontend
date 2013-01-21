@@ -1,17 +1,11 @@
 //Module: witness
 //Desc: This file contains all styles for Guardian Witness
-//Allow direct element selectors as we have no direct control over the html
 
 .element-witness {
     border: 1px solid @darkMushroom;
     margin-bottom: @baseline*5;
     padding-top: @baseline*3;
 }
-
-.element-witness h3 {
-    .type-5;
-    margin-bottom: @baseline*2;
- }
 
 .element-witness a, a:hover, a:link {
     color: #333333;
@@ -25,42 +19,19 @@
     .type-7;
 }
 
-.element-witness .main {
+.element-witness--title {
+    .type-5;
+    margin-bottom: @baseline*2;
+ }
+
+.element-witness--main {
     padding: @baseline*3 @baseline*2 @baseline*4 @baseline*2;
 }
 
-.element-witness .source {
-    .type-11;
-    display: inline-block;
-}
-
-.element-witness .author {
-    .type-11;
-    display: inline-block;
-    margin-bottom: 0px;
-    width: 100%;
-}
-
-.element-witness .author-name {
-    font-weight: bold;
-}
-
-.element-witness .metadata {
-    border-top: 1px solid @darkMushroom;
-    background: @mushroom;
-    padding: @baseline*3 @baseline*2 @baseline*3 @baseline*2;
-    line-height: 1.0em;
-}
-
-.element-witness .metadata img{
-    margin-bottom: 0px;
-}
-
-.guardian-witness-brand {
+.element-witness--brand {
     padding: 0 @baseline*2 0 @baseline*2;
 }
 
-/* TODO replace with video icon */
 .element-witness figcaption:before{
     display:none;
 }
@@ -73,20 +44,38 @@
     max-width: 100%;
 }
 
-/* TODO this is just temp till I see more test data
-   and can figure out what I can expect images to look like
- */
-.element-witness-image {
-    .main{
-        img {
-            width: 100%;
-            max-width: 100%;
-            margin-bottom: 0px;
-        }
-    }
+.element-witness--main img {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0px;
 }
 
-.author time {
+.element-witness--metadata {
+    border-top: 1px solid @darkMushroom;
+    background: @mushroom;
+    padding: @baseline*3 @baseline*2 @baseline*3 @baseline*2;
+    line-height: 1.0em;
+}
+
+.element-witness--metadata img{
+    margin-bottom: 0px;
+}
+
+.element-witness--author {
+    .type-11;
+    display: inline-block;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.element-witness--author-name {
+    .type-11;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.element-witness--author time {
+    .type-11;
     display: block;
 }
 
