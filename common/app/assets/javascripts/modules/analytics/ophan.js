@@ -38,7 +38,7 @@ define(function() {
     if (isModernBrowser) {
 
       // Add data from localStorage if it's there.
-      url += getLocalStorageItems(['ophan_follow', 'ophan_extra']);
+      url += getLocalStorageItems(['ophan_follow']);
 
       // Set up event listener to capture next click.
       body.addEventListener('click', function(e) {
@@ -50,7 +50,8 @@ define(function() {
             sel: getPath(target),
             hash: makeHash(e.target.innerHTML)
           };
-          storage.setItem('ophan_follow', JSON.stringify(info));
+          //Set in localStorage
+          additionalClickData(info) ;
         }
       }, false);
     }
@@ -194,11 +195,16 @@ define(function() {
 
   function additionalClickData(data) {
     if(isModernBrowser) {
-      var oldData = JSON.parse(storage.getItem('ophan_extra')),
-          newData = JSON.stringify(data);
+      var oldData = JSON.parse(storage.getItem('ophan_follow')),
+          newData = data;
 
-      newData = (oldData !== null) ? oldData.push(newData) : [newData];
-      storage.setItem('ophan_extra', newData);
+      if(oldData !== null) {
+        for (var key in oldData) {
+            newData[key] = oldData[key];
+        }
+      }
+
+      storage.setItem('ophan_follow', JSON.stringify(newData));
     }
   }
 

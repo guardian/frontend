@@ -15,7 +15,7 @@ define([
         var that = this,
             el = config.el,
             id = config.id,
-            PATH = "http://requestb.in/1betsw41/px.gif",
+            PATH = "/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
             WPM = 200,

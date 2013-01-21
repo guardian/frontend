@@ -1,15 +1,18 @@
 define(["modules/analytics/video"], function(Videostream) {
 
     var modules = {
-        initAnalytics: function (pageName) {
-            var v = new Videostream(pageName);
+        initAnalytics: function (config) {
+            var v = new Videostream({
+                id: config.page.id,
+                el: document.querySelector('#player video')
+            });
 
             v.init();
         }
     };
 
     var init = function(req, config) {
-        modules.initAnalytics(config.page.analyticsName);
+        modules.initAnalytics(config);
     };
 
     return {
