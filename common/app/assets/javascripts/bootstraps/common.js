@@ -143,8 +143,8 @@ define([
         },
 
         loadOphanAnalytics: function () {
-            require(['modules/analytics/ophan'], function (ophan) {
-                ophan.startLog();
+            require(['modules/analytics/ophan'], function (Ophan) {
+                Ophan.startLog();
             });
         },
 

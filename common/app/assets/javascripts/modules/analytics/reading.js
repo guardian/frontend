@@ -3,7 +3,7 @@ define([
     'modules/analytics/ophan'
 ], function (
     common,
-    ophan
+    Ophan
 ) {
 
     /**
@@ -124,9 +124,7 @@ define([
 
             logCount++;
 
-            //ophan.additionalClickData(data);
-            // var url = this.makeUrl(data);
-            // this.createImage(url);
+            Ophan.additionalClickData(data);
         };
 
         common.mediator.on('module:clickstream:click', function(params) {

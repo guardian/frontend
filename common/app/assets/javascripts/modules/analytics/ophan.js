@@ -34,8 +34,6 @@ define(function() {
       url += 'perf=' + getPerformanceData() + '&';
     }
 
-    console.log(isModernBrowser);
-
     // Add last page data if browser has it in localstorage. We lose IE 8 here.
     if (isModernBrowser) {
 
@@ -180,12 +178,11 @@ define(function() {
 
   function getLocalStorageItems(items) {
     var url = '';
-    for(var i = 0, l=items.length; i < length; i++) {
+    for(var i = 0, l=items.length; i < l; i++) {
       var item = storage.getItem(items[i]);
       if (item !== null) {
         storage.removeItem(items[i]);
         url += toQueryString(JSON.parse(item));
-        if(i !== l) url += '&';
       }
     }
     return  url;
@@ -196,7 +193,6 @@ define(function() {
   }
 
   function additionalClickData(data) {
-    console.log(data);
     if(isModernBrowser) {
       var oldData = JSON.parse(storage.getItem('ophan_extra')),
           newData = JSON.stringify(data);
