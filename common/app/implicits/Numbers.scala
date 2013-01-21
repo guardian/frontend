@@ -6,9 +6,7 @@ trait Numbers {
   }
 
   // yeah I know it might be too long to be an int
-  private val IntPattern = """$[\d]+^""".r
-
   implicit def string2isInt(s: String) = new {
-    lazy val isInt = IntPattern.findFirstIn(s).isDefined
+    lazy val isInt = s.matches("\\d+")
   }
 }
