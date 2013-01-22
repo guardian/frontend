@@ -1,13 +1,7 @@
 package com.gu.test;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-import java.util.Properties;
-
+import cucumber.annotation.Before;
 import junit.framework.Assert;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +9,11 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import cucumber.annotation.Before;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.Properties;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
@@ -58,8 +56,10 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void clearLocalStorage() {
 		// only execute on a page
-		if (!getCurrentUrl().equals("about:blank")) {
-			executeScript("window.localStorage.clear();");						
+		if (!getCurrentUrl().equals("about:blank") && System.getProperty("driver")==("firefox")) {
+            //this doesn't work in Chrome (throws an exception see http://code.google.com/p/chromedriver/issues/detail?id=153)
+	executeScript("window.localStorage.clear();");
+
 		}
 	}
 
