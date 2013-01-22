@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -56,9 +57,11 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void clearLocalStorage() {
 		// only execute on a page
-		if (!getCurrentUrl().equals("about:blank") && System.getProperty("driver")==("firefox")) {
+        String driver = System.getProperty("driver");
+        System.out.println(driver);
+        if (!getCurrentUrl().equals("about:blank") && REAL_DRIVER instanceof FirefoxDriver) {
             //this doesn't work in Chrome (throws an exception see http://code.google.com/p/chromedriver/issues/detail?id=153)
-	executeScript("window.localStorage.clear();");
+		executeScript("window.localStorage.clear();");
 
 		}
 	}
