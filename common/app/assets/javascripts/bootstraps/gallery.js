@@ -12,7 +12,6 @@ define([
         },
         initOphanTracking:  function(config) {
             var gallerySize = config.page.gallerySize;
-            console.log(gallerySize);
             if(gallerySize !== "") {
                 var t = new Tracking({
                     id: config.page.id,

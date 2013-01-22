@@ -11,10 +11,10 @@ define([
         var that = this,
             id = config.id,
             el = config.el,
-            logCount = 0; // Average words
+            logCount = 0, // Average words
             START = new Date().getTime(),
             IMAGECOUNT = config.imageCount,
-            VIEW_THRESHOLD = 80, // Ie. 80%
+            VIEW_THRESHOLD = 80; // Ie. 80%
  
         this.imagesViewed = 0;
 
