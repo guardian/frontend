@@ -52,7 +52,7 @@ define('bootstraps/app', [
             }
 
             if (config.page.contentType === "Gallery") {
-                Gallery.init();
+                Gallery.init({url: window.location.pathName}, config);
             }
 
             //Kick it all off

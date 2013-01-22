@@ -15,7 +15,6 @@ define([
             id= config.id,
             video = config.el,
             logCount = 0,
-            PATH = "/px.gif",
             START = new Date().getTime(),
             WATCH_THRESHOLD = 80; // Ie. 80%
 
@@ -64,7 +63,7 @@ define([
         this.logProgress = function(el) {
             var current = this.getProgress();
             this.progress = (current > this.progress) ? current : this.progress;
-            if (this.progress > WATCH_THRESHOLD) {
+            if ((this.progress/(this.getDuration()/100)) > WATCH_THRESHOLD) {
                 this.log();
             }
         };
