@@ -1,0 +1,15 @@
+@(page: MetaData, isFooter: Boolean=true)(implicit request: RequestHeader)
+
+
+<div id="navigation-footer" class="navigation-footer brand-bar">
+    <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i i-arrow-small-up"></i></a>
+    
+    <a href="/" data-link-name="site logo" class="i i-guardian-logo logo">
+        The Guardian
+    </a>
+
+    <div id="sections-footer" class="sections-footer nav-popup sections" data-link-name="global navigation: footer: sections">
+        @fragments.sections(page, isFooter)
+    </div>
+</div>
+

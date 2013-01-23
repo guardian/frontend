@@ -14,10 +14,10 @@
 
     <div id="container">
         @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
-        @fragments.navigation(metaData, isFooter=false)
+        @fragments.headerNavigation(metaData)
         @body
         @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
-        @fragments.navigation(metaData, isFooter=true)
+        @fragments.footerNavigation(metaData)
         @fragments.footer(metaData)
     </div>
 

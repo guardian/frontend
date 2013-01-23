@@ -1,0 +1,29 @@
+@(page: MetaData)(implicit request: RequestHeader)
+
+<header id="header" class="brand-bar cf">
+    <a href="/" data-link-name="site logo" class="i i-guardian-logo logo">
+        The Guardian
+    </a>
+
+    <div id="navigation-header" class="brand-bar-navigation" data-link-name="global navigation: header">
+        <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
+        class="brand-bar-topstories-control">
+            <i class="i i-nav-divider"></i>
+            <span>Top stories</span>
+            <i class="i i-arrow-small-down"></i>
+        </a>
+
+        <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" class="brand-bar-sections-control">
+            <i class="i i-nav-divider"></i>
+            <span class="i i-menu">Sections</span>
+        </a>
+    </div>
+
+</header>
+
+<div id="topstories-header" class="nav-popup top-stories is-off"></div>
+
+<div id="sections-header" class="nav-popup is-off sections"
+    data-link-name="global navigation: header: sections">
+    @fragments.sections(page)
+</div>
