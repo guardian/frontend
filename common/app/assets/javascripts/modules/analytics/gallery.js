@@ -1,9 +1,7 @@
 define([
-    'common',
-    'modules/analytics/ophan'
+    'common'
 ], function (
-    common,
-    Ophan
+    common
 ) {
 
     function Gallerystream(config) {
@@ -71,7 +69,9 @@ define([
 
             logCount++;
 
-            Ophan.additionalClickData(data);
+            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+                Ophan.additionalClickData(data);
+            });
         };
 
         this.bindings = function() {

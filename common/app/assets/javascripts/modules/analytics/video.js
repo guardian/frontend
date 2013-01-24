@@ -1,12 +1,10 @@
 define([
         'common',
-        'bean',
-        'modules/analytics/ophan'
+        'bean'
     ],
     function (
         common,
-        Bean,
-        Ophan
+        Bean
     ) {
 
     var Videostream = function(config) {
@@ -86,7 +84,9 @@ define([
 
             logCount++;
 
-            Ophan.additionalClickData(data);
+            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+                Ophan.additionalClickData(data);
+            });
         };
 
         this.bindings = function() {

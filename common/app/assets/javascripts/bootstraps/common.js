@@ -143,7 +143,7 @@ define([
         },
 
         loadOphanAnalytics: function () {
-            require(['modules/analytics/ophan'], function (Ophan) {
+            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
                 Ophan.startLog();
             });
         },

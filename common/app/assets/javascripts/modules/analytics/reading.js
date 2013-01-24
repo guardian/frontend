@@ -1,9 +1,7 @@
 define([
-    'common',
-    'modules/analytics/ophan'
+    'common'
 ], function (
-    common,
-    Ophan
+    common
 ) {
 
     /**
@@ -81,30 +79,6 @@ define([
             return Math.round(this.wordsRead()/(WORDCOUNT/100));
         };
 
-        this.makeUrl = function(data) {
-            return PATH + '?reading=' + this.encode(JSON.stringify(data));
-        };
-
-        this.createImage = function(url) {
-            var image = new Image();
-            image.className = 'h';
-            image.src = url;
-            document.body.appendChild(image);
-        };
-
-        this.encode = function(str) { // https://gist.github.com/3912229
-            var encodedStr = encodeURIComponent(str),
-                table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-            for (var bits = '', i = 0; i < str.length; i++) {
-                bits += ('000' + str.charCodeAt(i).toString(4)).slice(-4);
-            }
-            bits += '000'.slice(bits.length % 3 || 3);
-            for (var data = '', j = 0; j < bits.length; ) {
-                data += table.charAt(parseInt(bits.slice(j, j += 3), 4));
-            }
-            return data += '===='.slice(data.length % 4 || 4);
-        },
-
         this.log = function() {
            
             // Prevent multiple entries p/page
@@ -124,7 +98,9 @@ define([
 
             logCount++;
 
-            Ophan.additionalClickData(data);
+            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+                Ophan.additionalClickData(data);
+            });
         };
 
         common.mediator.on('module:clickstream:click', function(params) {
