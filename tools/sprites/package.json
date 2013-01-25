@@ -1,0 +1,11 @@
+{
+  "name": "Spricon",
+  "version" : "0.1.0",
+  "description": "A CSS icon and sprite generator for the Guardian's Frontend project",
+  "author": "Patrick Hamann <patrick.hamann@guardian.co.uk>",
+  "author": "Matt Andrews <matt.andrew@guardian.co.uk@guardian.co.uk>",
+  "dependencies": {
+    "svg-cleaner": "0.x.x"
+  },
+  "engine": "node >= 0.6.x"
+}
