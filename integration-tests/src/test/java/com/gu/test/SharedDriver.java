@@ -57,8 +57,6 @@ public class SharedDriver extends EventFiringWebDriver {
 
 	public void clearLocalStorage() {
 		// only execute on a page
-        String driver = System.getProperty("driver");
-        System.out.println(driver);
         if (!getCurrentUrl().equals("about:blank") && REAL_DRIVER instanceof FirefoxDriver) {
             //this doesn't work in Chrome (throws an exception see http://code.google.com/p/chromedriver/issues/detail?id=153)
 		executeScript("window.localStorage.clear();");
