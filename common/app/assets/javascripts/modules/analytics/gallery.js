@@ -59,12 +59,12 @@ define([
             }
 
             var data = {
-                "id" : id,
-                "timeOnPage"        : this.timeOnPage(),
-                "timeViewing"       : this.timer.time,
-                "imagesViewed"      : this.imagesViewed,
-                "totalImages"       : IMAGECOUNT,
-                "percentageViewed"  : this.percentageViewed()
+                "prev-id" : id,
+                "prev-timeOnPage"        : this.timeOnPage(),
+                "prev-timeViewing"       : this.timer.time,
+                "prev-imagesViewed"      : this.imagesViewed,
+                "prev-totalImages"       : IMAGECOUNT,
+                "prev-percentageViewed"  : this.percentageViewed()
             };
 
             logCount++;

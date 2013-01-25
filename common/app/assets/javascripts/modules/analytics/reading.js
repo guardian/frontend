@@ -87,13 +87,13 @@ define([
             }
 
             var data = {
-                "id" : id,
-                "timeOnPage"        : this.timeOnPage(),
-                "timeReading"       : this.timer.time,
-                "wordsRead"         : this.wordsRead(),
-                "wordCount"         : WORDCOUNT,
-                "percentageRead"    : this.percentageRead(),
-                "percentageViewport": this.viewportPercentage
+                "prev-id" : id,
+                "prev-timeOnPage"        : this.timeOnPage(),
+                "prev-timeReading"       : this.timer.time,
+                "prev-wordsRead"         : this.wordsRead(),
+                "prev-wordCount"         : WORDCOUNT,
+                "prev-percentageRead"    : this.percentageRead(),
+                "prev-percentageViewport": this.viewportPercentage
             };
 
             logCount++;

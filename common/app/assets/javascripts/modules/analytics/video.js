@@ -74,12 +74,12 @@ define([
             }
 
             var data = {
-                "id" : id,
-                "timeOnPage"            : this.timeOnPage(),
-                "timeConsuming"         : this.timer.time,
-                "duration"              : this.getDuration(),
-                "durationConsumed"      : this.progress,
-                "percentageConsumed"    : Math.round(this.progress/(this.getDuration()/100))
+                "prev-id" : id,
+                "prev-timeOnPage"            : this.timeOnPage(),
+                "prev-timeConsuming"         : this.timer.time,
+                "prev-duration"              : this.getDuration(),
+                "prev-durationConsumed"      : this.progress,
+                "prev-percentageConsumed"    : Math.round(this.progress/(this.getDuration()/100))
             };
 
             logCount++;
