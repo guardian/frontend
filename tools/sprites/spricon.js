@@ -41,11 +41,19 @@
 
     function cleanSVG(src) {
         var files = fs.readdirSync(src);
+        var options = {
+            shortenIDs: true,
+            removeComments: true,
+            repairStyles: true,
+            removeNSElements: true,
+            removeNSAttributes: true,
+            removeUnreferencedElements: true
+        };
 
         for(var i = 0, l = files.length; i < l; i++) {
             var file = src + files[i];
             if( file.match( /\.svg$/i ) ){
-                var svg = SVGCleaner.cleanFile(file, file);
+                var svg = SVGCleaner.cleanFile(file, file, options);
             }
         }
     }
