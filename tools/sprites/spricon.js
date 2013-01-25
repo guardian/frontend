@@ -10,6 +10,7 @@
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
+    var SVGCleaner = require('svg-cleaner');
     var utils = {};
     var config;
 
@@ -38,12 +39,23 @@
       return child;
     };
 
+    function cleanSVG(src) {
+        var files = fs.readdirSync(src);
+
+        for(var i = 0, l = files.length; i < l; i++) {
+            var file = src + files[i];
+            if( file.match( /\.svg$/i ) ){
+                var svg = SVGCleaner.cleanFile(file, file);
+            }
+        }
+    }
+
     //Load config from json file
     fs.readFile(process.argv[2], 'utf-8', function (err, data) {
         if (err) { throw err; }
 
         // just a quick starting message
-        console.info( "Starting spricon\n" );
+        console.info( "\nStarting Spricon" );
 
         //Parse the config file back into object
         config = JSON.parse(data);
@@ -87,10 +99,16 @@
         // create the output directory
         fs.mkdir( config.imgDest );
 
-        console.info( "\nOuput css file created." );
+        console.info( "\nOuput CSS file created." );
+
+        //Run the svg's through cleaner first
+        if(generatesvg) {
+            console.log("\nCleaning SVG's");
+            cleanSVG(config.src);
+        }
 
         // take it to phantomjs to do the rest
-        console.info( "\nNow spawning phantomjs..." );
+        console.info( "\nNow spawning PhantomJS..." );
 
         utils.spawn({
           cmd: 'phantomjs',
@@ -137,9 +155,9 @@
 
                 });
 
-                console.info("Spricon complete...");
+                console.info("\nSpricon complete...\n");
             } else {
-                console.error("\nSomething went wrong with phantomjs...");
+                console.error("\nSomething went wrong with PhantomJS...\n");
             }
         });
 
