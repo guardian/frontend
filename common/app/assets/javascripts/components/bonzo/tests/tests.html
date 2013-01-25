@@ -26,28 +26,6 @@
         display: none;
       }
     </style>
-    <script src="../node_modules/sink-test/src/sink.js"></script>
-    <script src="../node_modules/qwery/qwery.js"></script>
-    <script src="../node_modules/bowser/bowser.js"></script>
-    <script src="../src/bonzo.js"></script>
-    <script type="text/javascript">
-      var dom = bonzo
-      var Q = qwery
-      dom.setQueryEngine(Q)
-      function $(s) {
-        return dom(Q(s))
-      }
-      dom.aug(dom, $)
-    </script>
-    <script src="ender-js.js"></script>
-    <script type="text/javascript">
-      var ender = $.noConflict()
-      dom.setQueryEngine = function() {}
-      provide('bonzo', dom)
-      ender._select = Q
-    </script>
-    <script src="../src/ender.js"></script>
-    <!-- we now have an 'ender' object to test on that has Bonzo integrated via the bridge -->
   </head>
   <body>
     <div id="fixtures">
@@ -152,13 +130,46 @@
     <h1>Bonzo Tests</h1>
     <ol id="tests"></ol>
 
+    <script src="../node_modules/sink-test/src/sink.js"></script>
+    <script src="../node_modules/qwery/qwery.js"></script>
+    <script src="../node_modules/bowser/bowser.js"></script>
+    <script src="../src/bonzo.js"></script>
+    <script type="text/javascript">
+      bonzo._setQueryEngine = bonzo.setQueryEngine
+      bonzo.setQueryEngine = function() {}
+    </script>
+    <script src="ender-js.js"></script>
+    <script type="text/javascript">
+      window.ender = $.noConflict()
+      window.Q = qwery
+    </script>
+
+    <!-- NOTE: selector engine tests go before we mess with the default engine and the rest of the environment-->
+    <script src="selectorengine-test.js"></script>
+    <script type="text/javascript">
+    sink('Post-init', function (test, ok) {
+      test('set up test environment', 1, function () {
+        window.dom = bonzo
+        window.$ = function $(s) {
+          return dom(Q(s))
+        }
+        //dom.setQueryEngine(Q)
+        dom.aug(dom, $)
+        provide('bonzo', dom)
+        ender._select = Q
+        ok(true)
+      })
+    })
+    </script>
+    <script src="../src/ender.js"></script>
+    <!-- we now have an 'ender' object to test on that has Bonzo integrated via the bridge -->
+
     <script src="misc-test.js"></script>
     <script src="traversal-test.js"></script>
     <script src="layout-test.js"></script>
     <script src="dommanip-test.js"></script>
     <script src="dommanip_insertions-test.js"></script>
     <script src="attributes-test.js"></script>
-    <script src="selectorengine-test.js"></script>
     <script src="emptycollection-test.js"></script>
     <script src="bridge-test.js"></script>
     <script>

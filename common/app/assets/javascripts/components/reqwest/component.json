@@ -1,7 +1,6 @@
 {
   "name": "reqwest",
-  "version": "0.0.0",
-  "commit": "a845dfd8322e5e9c918304e9e2c2ee9cb6c2b3c9",
+  "version": "0.6.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/ded/reqwest.git"
