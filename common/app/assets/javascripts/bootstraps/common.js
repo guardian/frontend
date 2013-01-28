@@ -143,7 +143,9 @@ define([
         },
 
         loadOphanAnalytics: function () {
-            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
+            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+                Ophan.startLog();
+            });
         },
 
         loadAdverts: function (config) {

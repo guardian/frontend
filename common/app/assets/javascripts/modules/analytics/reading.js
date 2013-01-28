@@ -1,4 +1,8 @@
-define(['common'], function (common) {
+define([
+    'common'
+], function (
+    common
+) {
 
     /**
      * Readable constructor
@@ -9,6 +13,7 @@ define(['common'], function (common) {
         var that = this,
             el = config.el,
             id = config.id,
+            ophanUrl = config.ophanUrl,
             PATH = "/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
@@ -75,30 +80,6 @@ define(['common'], function (common) {
             return Math.round(this.wordsRead()/(WORDCOUNT/100));
         };
 
-        this.makeUrl = function(data) {
-            return PATH + '?reading=' + this.encode(JSON.stringify(data));
-        };
-
-        this.createImage = function(url) {
-            var image = new Image();
-            image.className = 'h';
-            image.src = url;
-            document.body.appendChild(image);
-        };
-
-        this.encode = function(str) { // https://gist.github.com/3912229
-            var encodedStr = encodeURIComponent(str),
-                table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-            for (var bits = '', i = 0; i < str.length; i++) {
-                bits += ('000' + str.charCodeAt(i).toString(4)).slice(-4);
-            }
-            bits += '000'.slice(bits.length % 3 || 3);
-            for (var data = '', j = 0; j < bits.length; ) {
-                data += table.charAt(parseInt(bits.slice(j, j += 3), 4));
-            }
-            return data += '===='.slice(data.length % 4 || 4);
-        },
-
         this.log = function() {
            
             // Prevent multiple entries p/page
@@ -107,18 +88,20 @@ define(['common'], function (common) {
             }
 
             var data = {
-                "id" : id,
-                "timeOnPage"        : this.timeOnPage(),
-                "timeReading"       : this.timer.time,
-                "wordsRead"         : this.wordsRead(),
-                "wordCount"         : WORDCOUNT,
-                "percentageRead"    : this.percentageRead(),
-                "percentageViewport": this.viewportPercentage
+                "prev-id" : id,
+                "prev-timeOnPage"        : this.timeOnPage(),
+                "prev-timeReading"       : this.timer.time,
+                "prev-wordsRead"         : this.wordsRead(),
+                "prev-wordCount"         : WORDCOUNT,
+                "prev-percentageRead"    : this.percentageRead(),
+                "prev-percentageViewport": this.viewportPercentage
             };
 
             logCount++;
-            var url = this.makeUrl(data);
-            this.createImage(url);
+
+            require([ophanUrl], function (Ophan) {
+                Ophan.additionalClickData(data);
+            });
         };
 
         common.mediator.on('module:clickstream:click', function(params) {
