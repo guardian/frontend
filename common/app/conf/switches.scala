@@ -40,6 +40,10 @@ object CommonSwitches {
     "Switch to show the appeal trailblock on the network front.",
     initiallyOn = false)
 
+  val WitnessVideoSwitch = DefaultSwitch("witness-video",
+    "Switch this switch off to disable witness video embeds.",
+    initiallyOn = true)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch
