@@ -13,6 +13,7 @@ define([
         var that = this,
             el = config.el,
             id = config.id,
+            ophanUrl = config.ophanUrl,
             PATH = "/px.gif",
             START = new Date().getTime(),
             WORDCOUNT = config.wordCount,
@@ -98,7 +99,7 @@ define([
 
             logCount++;
 
-            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+            require([ophanUrl], function (Ophan) {
                 Ophan.additionalClickData(data);
             });
         };

@@ -4,7 +4,8 @@ define(["modules/analytics/video"], function(Videostream) {
         initAnalytics: function (config) {
             var v = new Videostream({
                 id: config.page.id,
-                el: document.querySelector('#player video')
+                el: document.querySelector('#player video'),
+                ophanUrl: config.ophanUrl
             });
 
             v.init();

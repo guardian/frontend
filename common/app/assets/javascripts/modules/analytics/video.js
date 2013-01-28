@@ -12,6 +12,7 @@ define([
         var that = this,
             id= config.id,
             video = config.el,
+            ophanUrl = config.ophanUrl,
             logCount = 0,
             START = new Date().getTime(),
             WATCH_THRESHOLD = 80; // Ie. 80%
@@ -84,7 +85,7 @@ define([
 
             logCount++;
 
-            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+            require([ophanUrl], function (Ophan) {
                 Ophan.additionalClickData(data);
             });
         };

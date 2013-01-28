@@ -9,6 +9,7 @@ define([
         var that = this,
             id = config.id,
             el = config.el,
+            ophanUrl = config.ophanUrl,
             logCount = 0, // Average words
             START = new Date().getTime(),
             IMAGECOUNT = config.imageCount,
@@ -69,7 +70,7 @@ define([
 
             logCount++;
 
-            require(['http://s.ophan.co.uk/js/ophan'], function (Ophan) {
+            require([ophanUrl], function (Ophan) {
                 Ophan.additionalClickData(data);
             });
         };

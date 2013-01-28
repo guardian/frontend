@@ -16,7 +16,8 @@ define([
                 var t = new Tracking({
                     id: config.page.id,
                     el : document.getElementById('js-gallery-holder'),
-                    imageCount: parseInt(gallerySize, 10)
+                    imageCount: parseInt(gallerySize, 10),
+                    ophanUrl: config.page.ophanUrl
                 });
 
                 t.init();
