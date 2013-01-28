@@ -60,7 +60,9 @@ object Frontend extends Build with Prototypes with Testing {
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
-  val event = application("event").dependsOn(commonWithTests)
+  val event = application("event").dependsOn(commonWithTests).settings(
+    libraryDependencies += "com.novus" %% "salat" % "1.9.1"
+  )
 
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "2.9",

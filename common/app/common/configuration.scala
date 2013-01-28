@@ -44,6 +44,10 @@ class GuardianConfiguration(
     }
   }
 
+  object mongo {
+    lazy val connection = configuration.getStringProperty("mongo.connection.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
+  }
+
   object proxy {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
