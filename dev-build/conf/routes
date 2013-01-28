@@ -16,6 +16,9 @@ GET     /top-stories                                        controllers.TopStori
 GET     /top-stories.:format                                controllers.TopStoriesController.render(format)
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
+#Events
+GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)
+
 #Style-guide
 GET     /style-guide                controllers.StyleGuideController.renderIndex
 GET     /style-guide/zones          controllers.StyleGuideController.renderZones

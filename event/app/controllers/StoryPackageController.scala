@@ -10,7 +10,16 @@ object StoryPackageController extends Controller with Logging {
 
     val events = Event.mongo.withContent(contentId)
 
-    Ok("foooooo")
+    Cached(60) {
+      val html = views.html.fragments.storyPackage(events)
+      request.getQueryString("callback").map { callback =>
+        JsonComponent(html)
+      } getOrElse {
+        Cached(60) {
+          Ok(Compressed(html))
+        }
+      }
+    }
 
   }
 }
