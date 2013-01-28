@@ -4,13 +4,15 @@ define([
     "modules/expandable",
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading"
+    "modules/analytics/reading",
+    "modules/story-package"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
-    Reading
+    Reading,
+    StoryPackage
 ) {
 
     var modules = {
@@ -59,18 +61,31 @@ define([
 
                 reader.init();
             }
+        },
+
+        loadStoryPackage: function() {
+
+            console.log('load');
+
+            var story = new StoryPackage({
+                id: window.location.pathname
+            });
+
+            story.load();
         }
     };
 
     var ready = function(config) {
 
+        modules.loadStoryPackage();
+
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
         }
 
-        if (config.page.showInRelated) {
-            modules.related(config);
-        }
+        // if (config.page.showInRelated) {
+        //     modules.related(config);
+        // }
 
         if(config.page.section === "football") {
             modules.matchNav(config);
