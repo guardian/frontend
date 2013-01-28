@@ -62,6 +62,10 @@
 
                 @item.metaData.map{ data => @MetadataJson(data) }.mkString(","),
 
+                @Configuration.javascript.config.map{ case (key, value) =>
+                    '@{JavaScriptVariableName(key.split('.').last)}': '@value'
+                }.mkString(","),
+
                 @Configuration.javascript.pageData.map{ case (key, value) =>
                     '@{JavaScriptVariableName(key.split('.').last)}': '@value'
                 }.mkString(","),

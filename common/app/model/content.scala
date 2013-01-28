@@ -95,5 +95,5 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   lazy val size = images.size
   lazy val contentType = "Gallery"
   override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }

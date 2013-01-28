@@ -53,7 +53,8 @@ define([
                 var reader = new Reading({
                     id: config.page.pageId,
                     wordCount: parseInt(config.page.wordCount, 10),
-                    el: document.querySelector('.article-body')
+                    el: document.querySelector('.article-body'),
+                    ophanUrl: config.page.ophanUrl
                 });
 
                 reader.init();
