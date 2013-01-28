@@ -3,5 +3,6 @@
 # ~~~~
 
 # For dev machines
-GET    /assets/*file           controllers.Assets.at(path="/public", file)
-GET    /event                  controllers.StoryPackageController.render
+GET    /assets/*file                              controllers.Assets.at(path="/public", file)
+
+GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)

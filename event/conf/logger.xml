@@ -1,6 +1,6 @@
 <configuration>
 
-    <contextName>frontend-tag</contextName>
+    <contextName>frontend-event</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/frontend-event.log</file>

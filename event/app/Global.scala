@@ -1,27 +1,8 @@
 import com.gu.management.play.{ RequestTimer, StatusCounters }
 import common.RequestMetrics
-import feed.MostPopularAgent
-import play.api.{ Application => PlayApp, Play, GlobalSettings }
-import play.api.Play.current
+import play.api.{ Application => PlayApp, GlobalSettings }
 
-trait MostPopularLifecycle extends GlobalSettings {
-  override def onStart(app: PlayApp) {
-    super.onStart(app)
-    MostPopularAgent.startup()
-
-    if (Play.isTest) {
-      MostPopularAgent.refresh()
-      MostPopularAgent.await()
-    }
-  }
-
-  override def onStop(app: PlayApp) {
-    MostPopularAgent.shutdown()
-    super.onStop(app)
-  }
-}
-
-object Global extends GlobalSettings with RequestTimer with StatusCounters with MostPopularLifecycle {
+object Global extends GlobalSettings with RequestTimer with StatusCounters {
 
   import RequestMetrics._
 

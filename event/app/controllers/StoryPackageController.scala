@@ -6,24 +6,11 @@ import model._
 
 object StoryPackageController extends Controller with Logging {
 
-  def render() = Action { implicit request =>
-    Ok("Ok")
+  def forContent(contentId: String) = Action { implicit request =>
 
-    // val articleId = request.queryString("id").headOption
+    val events = Event.mongo.withContent(contentId)
 
-    // articleId.map { id =>
-
-    //val html = views.html.fragments.storyPackage()
-    // val foo = "bar"
-    // request.getQueryString("callback").map { callback =>
-    //   JsonComponent(foo)
-    // } getOrElse {
-    //   Cached(60) {
-    //     Ok(Compressed(foo))
-    //   }
-    // }
-
-    //} getOrElse (BadRequest("need a article id"))
+    Ok("foooooo")
 
   }
 }
