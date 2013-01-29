@@ -22,10 +22,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      //TODO fix me
-      "/event/all?callback=event"
-    ),
+    new UrlPagesHealthcheckManagementPage(Nil: _*), // TODO add healthcheck
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
