@@ -1,8 +1,8 @@
 {
   "name": "qwery",
-  "version": "1.0.2",
+  "version": "3.4.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/guardian/qwery.git"
+    "url": "git://github.com/ded/qwery.git"
   }
 }

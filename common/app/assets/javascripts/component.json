@@ -9,7 +9,7 @@
     "dom-write": "git://github.com/guardian/dom-write",
     "eventEmitter": "3.1",
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
-    "qwery": "git://github.com/guardian/qwery.git#1.0",
+    "qwery": "3.4",
     "reqwest": "0.6",
     "swipe": "git://github.com/guardian/Swipe.git"
   }
