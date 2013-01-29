@@ -35,7 +35,7 @@
 			}
 		},
 		function (ex) {
-			write('FAILED: ', + ex.message);
+			write('FAILED: ' + ex.message);
 		}
 	).then(
 		function (three, one) {
@@ -81,7 +81,7 @@
 			write('SUCCESS: js! plugin.');
 		},
 		function (ex) {
-			write('FAILED: js! plugin. ' + ex && ex.message);
+			write('FAILED: js! plugin. ' + ex.message);
 		}
 	);
 

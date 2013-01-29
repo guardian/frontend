@@ -1,8 +1,11 @@
 var page = new WebPage()
   , url = "http://localhost:3000/tests/index.html"
 
+var fs = require("fs");
+
+
 function waitFor(testFx, onReady, timeOutMillis) {
-  var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 5000
+  var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 10000
     , start = new Date().getTime()
     , condition = false
     , interval = setInterval(function() {
@@ -28,15 +31,13 @@ page.open(url, function (status) {
     var result = page.evaluate(function () {
       return document.querySelectorAll('.sink-pass').length
     })
-      , result2 = page.evaluate(function () {
+    var result2 = page.evaluate(function () {
         return document.querySelectorAll('.pass').length
       })
-    console.log('-----------------------------------------')
-    console.log(result2)
     return !!result
   }
 , function() {
-    console.log("qwery is loaded")
-    phantom.exit()
+    console.log("qwery tests have passed")
+    phantom.exit(0)
   })
 })

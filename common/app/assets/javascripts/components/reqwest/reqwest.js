@@ -5,7 +5,7 @@
   * license MIT
   */
 !function (name, definition) {
-  if (typeof module != 'undefined') module.exports = definition()
+  if (typeof module != 'undefined' && module.exports) module.exports = definition()
   else if (typeof define == 'function' && define.amd) define(definition)
   else this[name] = definition()
 }('reqwest', function () {
@@ -22,6 +22,7 @@
     , callbackPrefix = 'reqwest_' + (+new Date())
     , lastValue // data stored by the most recent JSONP callback
     , xmlHttpRequest = 'XMLHttpRequest'
+    , noop = function () {}
 
   var isArray = typeof Array.isArray == 'function' ? Array.isArray : function (a) {
     return a instanceof Array
@@ -49,6 +50,7 @@
   function handleReadyState(o, success, error) {
     return function () {
       if (o && o[readyState] == 4) {
+        o.onreadystatechange = noop;
         if (twoHundo.test(o.status)) {
           success(o)
         } else {
@@ -121,7 +123,7 @@
 
     script.onload = script.onreadystatechange = function () {
       if ((script[readyState] && script[readyState] !== 'complete' && script[readyState] !== 'loaded') || loaded) {
-        return false;
+        return false
       }
       script.onload = script.onreadystatechange = null
       script.onclick && script.onclick()
