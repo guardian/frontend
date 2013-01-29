@@ -28,17 +28,27 @@ object Event {
 
   object mongo {
 
+    private implicit def dbObj2paredEvent(dbo: DBObject): ParsedEvent = grater[ParsedEvent].asObject(dbo)
+
     def withContent(contentId: String) = {
 
-      val rawEvents = Events.find(Map("content.id" -> contentId)).map { dbObj => grater[ParsedEvent].asObject(dbObj) }.map(Event(_)).toList
+      // assume there is just one for now, that is not necessarily true
+      val entryEvent = Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_))
 
-      val query = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
+      val rawEvents = entryEvent.flatMap(_._rootEvent.map(_.id)).flatMap { rootId =>
+        Events.find(Map("_rootEvent.id" -> rootId)).$orderby(Map("startDate" -> 1)).map(Event(_))
+      }.toList
 
-      val apiContent: Seq[Content] = ContentApi.search("UK").ids(query).response.results.map(new Content(_))
+      val apiContent: Seq[Content] = {
+        val idList = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
+
+        //todo proper edition
+        ContentApi.search("UK").ids(idList).response.results.map(new Content(_))
+      }
 
       rawEvents.map { raw =>
         raw.copy(
-          content = apiContent.filter(c => raw.contentIds.contains(c.id))
+          content = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
         )
       }
     }
@@ -62,4 +72,5 @@ private case class ParsedEvent(
   importance: Option[Int] = None,
   content: Seq[ParsedContent] = Nil,
   parent: Option[ParsedParent] = None,
-  ancestor: Option[ParsedParent] = None)
+  ancestor: Option[ParsedParent] = None,
+  _rootEvent: Option[ParsedParent] = None)
