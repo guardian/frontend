@@ -2265,4 +2265,32 @@ sink('DOM Manipulation - insertions', function(test, ok, before, after, assert) 
     , verify       : [ verifyExistingElementSourceEmpty, verifySingleToMultiPrepended, verifyReturnType('#insertiontastic > p') ]
   })
 
+
+  /**
+   * test $.create with html that contains trailing text nodes
+   */
+  test('nodes with text nodes being appended with $.create', function (complete) {
+    var tree = $.create('<span>hey</span> there')
+    ok(tree.length == 2, 'created two nodes')
+    ok(tree[0] && tree[0].nodeType == 1, 'first node is an element')
+    ok(tree[1] && tree[1].nodeType == 3, 'second node is a text node')
+    complete()
+  })
+
+
+  /*********************************
+   * $.create script tags
+   */
+
+  test('$.create with script tags will execute scripts', function (complete) {
+    $($.create('<script src="./sample-fixture.js?' + (+new Date) + '"></script>')).appendTo(document.body)
+    var intervalTimer = setInterval(function () {
+      if (typeof window.externalFunction == 'function') {
+        clearInterval(intervalTimer)
+        ok(true, 'loaded external script file')
+        complete()
+      }
+    }, 50)
+  })
+
 })
