@@ -2,7 +2,7 @@
     Module: footballfixtures.js
     Description: Used to load a list of football fixtures of a given competition and append to DOM
 */
-define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
+define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
     /*
         @param {Object} options hash of configuration options:
             prependTo   : {DOMElement}  DOM element to prepend component to
@@ -12,7 +12,6 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             numVisible  : {Number}  Number of items to show when contracted
     */
     function FootballFixtures(options) {
-        var reqwest = Reqwest;
 
         //Full list of competitions from CM, in priority order.
         //Mappings can be found here: http://cms.guprod.gnl/tools/mappings/pafootballtournament
@@ -34,7 +33,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
             var path = query,
                 that = this;
 
-            return reqwest({
+            return ajax({
                 url: path,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
@@ -77,7 +76,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         //Initalise
         this.init = function(opts) {
             opts = opts || {};
-            reqwest = opts.reqwest || Reqwest; //For unit testing
+            ajax = opts.reqwest || ajax; //For unit testing
 
             var query = (options.path) ? options.path : this.generateQuery();
 

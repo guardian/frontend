@@ -1,7 +1,7 @@
 define(["reqwest"], function (reqwest) {
 
     function makeAbsolute(url) {
-        return url;
+        return guardian.config.page.absoluteMobileUrl + url;
     }
 
     function ajax(params) {
