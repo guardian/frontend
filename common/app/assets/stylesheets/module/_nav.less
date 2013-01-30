@@ -267,9 +267,13 @@ a.topstories-control,
 
 
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 960px) {
     #sections-header {
         display: block !important;
+    }
+    .sections .nav {
+        padding-left: 0;
+        padding-right: 0;
     }
     .nav-columns li,
     .nav-columns li:nth-child(2n) {
@@ -277,6 +281,14 @@ a.topstories-control,
         width: auto;
         margin-left: 0;
         margin-right: 0;
+    }
+    .nav-columns li a {
+        padding: @baseline 5px !important;
+        border-right: 1px solid #bebebe;
+        border-top: 0;
+    }
+    .nav-columns li:last-child a {
+        border-right: 0;
     }
 
 }
