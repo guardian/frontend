@@ -10,6 +10,10 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             common.mediator.on('modules:related:loaded', callback);
         });
 
+        afterEach(function() {
+            if (appendTo) appendTo.innerHTML = "";
+        });
+
         // json test needs to be run asynchronously 
         it("should request the related links and graft them on to the dom", function(){
             
@@ -30,8 +34,6 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
         // json test needs to be run asynchronously
         it("should not request related links if switched off", function(){
 
-            appendTo.innerHTML = "";
-
             appendTo = document.getElementById('related-1');
 
             runs(function() {
@@ -41,7 +43,6 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             waits(500);
 
             runs(function(){
-
                 expect(appendTo.innerHTML).toBe('');
             });
         });
