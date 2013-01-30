@@ -1,4 +1,4 @@
-define(["reqwest"], function (reqwest) {
+define(["components/reqwest"], function (reqwest) {
 
     function makeAbsolute(url) {
         return url;
