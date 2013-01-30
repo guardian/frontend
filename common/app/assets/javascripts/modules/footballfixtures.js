@@ -23,7 +23,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         // View
         this.view = {
             render: function (html) {
-                var el = bonzo(options.prependTo).after(html);
+                bonzo(options.prependTo).after(html);
                 common.mediator.emit('modules:footballfixtures:render');
             }
         };
@@ -76,7 +76,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         //Initalise
         this.init = function(opts) {
             opts = opts || {};
-            ajax = opts.reqwest || ajax; //For unit testing
+            ajax = opts.ajax || ajax; //For unit testing
 
             var query = (options.path) ? options.path : this.generateQuery();
 
