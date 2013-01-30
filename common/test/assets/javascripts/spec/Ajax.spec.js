@@ -1,18 +1,19 @@
-define(['common', 'ajax'], function(common, ajax) {
+define(['common', 'ajax'], function (common, ajax) {
 
-    describe("AJAX Wrapper", function() {
+    describe("AJAX Wrapper", function () {
 
-        beforeEach(function() {
+        beforeEach(function () {
             ajax.reqwest = sinon.stub()
         });
 
-        it("should proxy calls to reqwest", function() {
+        it("should proxy calls to reqwest", function () {
+            ajax.init("http://m.guardian.co.uk");
             expect(ajax.reqwest.callCount).toBe(0);
             ajax({
                 url: "/foo"
             });
             expect(ajax.reqwest.callCount).toBe(1);
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("/foo");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://m.guardian.co.uk/foo");
         });
 
     });

@@ -1,7 +1,9 @@
 define(["reqwest"], function (reqwest) {
 
+    var absoluteUrl = undefined;
+
     function makeAbsolute(url) {
-        return guardian.config.page.absoluteMobileUrl + url;
+        return absoluteUrl + url;
     }
 
     function ajax(params) {
@@ -10,6 +12,10 @@ define(["reqwest"], function (reqwest) {
     }
 
     ajax.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
+
+    ajax.init = function(url) {
+       absoluteUrl = url;
+    };
 
     return ajax;
 
