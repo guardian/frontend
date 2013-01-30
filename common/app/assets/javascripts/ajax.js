@@ -1,10 +1,8 @@
 define(["reqwest"], function (reqwest) {
 
-    var absoluteUrl = undefined;
-
-    function makeAbsolute(url) {
-        return absoluteUrl + url;
-    }
+    var makeAbsolute = function () {
+        throw new Error("AJAX has not been initialised yet")
+    };
 
     function ajax(params) {
         params.url = makeAbsolute(params.url);
@@ -13,8 +11,10 @@ define(["reqwest"], function (reqwest) {
 
     ajax.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
 
-    ajax.init = function(url) {
-       absoluteUrl = url;
+    ajax.init = function (absoluteUrl) {
+        makeAbsolute = function (url) {
+            return absoluteUrl + url;
+        }
     };
 
     return ajax;
