@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
+define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     function TopStories() {
 
@@ -44,7 +44,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
 
         this.load = function (config) {
             var url = config.page.coreNavigationUrl + '/top-stories.json?page-size=10&view=link';
-            return reqwest({
+            return ajax({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
