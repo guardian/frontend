@@ -1,7 +1,7 @@
 /*global sink:true start:true Q:true dom:true $:true bowser:true ender:true*/
 
 sink('Layout', function (test, ok) {
-  test('offsets', 6, function () {
+  test('offsets', 10, function () {
     var $el = $(dom.create('<div/>')).css({
           position: 'absolute',
           left: '50px',
@@ -18,6 +18,15 @@ sink('Layout', function (test, ok) {
     $el.offset(0, 0)
     ok($el.offset().top === 0, 'setting "0" doesnt become falsy')
     ok($el.offset().left === 0, 'setting "0" doesnt become falsy')
+
+    $el.offset({ left: 100 })
+    $el.offset({ top: -100 })
+    ok($el.offset().left == 100, 'after offset({ left: 100 })')
+    ok($el.offset().top == -100, 'after offset({ top: -100 })')
+
+    $el.offset({ left: -200, top: 200 })
+    ok($el.offset().left == -200, 'after offset({ left: -200, top: 200 })')
+    ok($el.offset().top == 200, 'after offset({ left: -200, top: 200 })')
   })
 
   test('offset + scroll', 2, function () {
@@ -52,7 +61,7 @@ sink('Layout', function (test, ok) {
     ok(!nullSet.height, 'no offset().height')
   })
 
-  test('dimensions', 5, function () {
+  test('dimensions', 7, function () {
     var $el = $(dom.create('<div/>')).css({
             position: 'absolute'
           , left: '50px'
@@ -73,6 +82,9 @@ sink('Layout', function (test, ok) {
     ok($hidden.dim().height > 0 && $hidden.dim().height < 100, 'hidden element dim().height is reasonable non-zero')
     ok($hidden.dim().width > 0 && $hidden.dim().width < 10000, 'hidden element dim().width is reasonable non-zero')
     ok($hidden[0].style.display == 'none', 'hidden element is still hidden after dim() call')
+
+    ok($(document).dim().height > 0, 'document has a height > 0: ' + $(document).dim().height)
+    ok($(document).dim().width > 0, 'document has a width > 0: ' + $(document).dim().width)
   })
 
   test('viewport width & height', 2, function () {

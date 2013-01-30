@@ -55,12 +55,21 @@ sink('Element attributes', function (test, ok) {
 
   })
 
-  test('toggleClass', 3, function () {
-    ok($('#toggle-class').hasClass('toggle-me'), 'has class toggle-me')
-    $('#toggle-class').toggleClass('toggle-me')
-    ok(!$('#toggle-class').hasClass('toggle-me'), 'removed class toggle-me')
-    $('#toggle-class').toggleClass('toggle-me')
-    ok($('#toggle-class').hasClass('toggle-me'), 'has class toggle-me')
+  test('toggleClass', function (complete) {
+    var $toggleElement = $('#toggle-class')
+    ok($toggleElement.hasClass('toggle-me'), 'has class toggle-me')
+    $toggleElement.toggleClass('toggle-me')
+    ok(!$toggleElement.hasClass('toggle-me'), 'removed class toggle-me')
+    $toggleElement.toggleClass('toggle-me')
+    ok($toggleElement.hasClass('toggle-me'), 'has class toggle-me')
+
+    // add several duplicate classnames. toggleClass should be smart
+    // enough not to add them all
+    $toggleElement.toggleClass('toggle-me', true)
+    $toggleElement.toggleClass('toggle-me', true)
+
+    ok($toggleElement[0].className == 'toggle-me', 'should only have one classname')
+    complete()
   })
 
 
