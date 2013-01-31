@@ -1,7 +1,11 @@
-define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'modules/detect'], function(common, Adverts, IframeAdSlot, detect) {
+define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'modules/detect'], function(common, ajax, Adverts, IframeAdSlot, detect) {
 
     //Ignore audience science for these tests.
     localStorage.removeItem("gu.ads.audsci");
+
+    beforeEach(function(){
+        ajax.init("");
+    });
 
     var config = {
         page: {
