@@ -15,13 +15,13 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
         switches: {
             'audienceScience': true
         }
-    }
+    };
 
     window.guardian = {
         userPrefs: {
             isOff: function() { return false; }
         }
-    }
+    };
     
     describe("Iframe advert slots", function() {
 
@@ -36,7 +36,7 @@ define(['common', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'mo
 
         afterEach(function() {
             IframeAdSlot.prototype.createIframe = createIframe;
-        })
+        });
 
         it("should generate the correct iframe URL for slow connection", function() {
             detect.getConnectionSpeed = function() { return 'low'; };
