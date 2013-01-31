@@ -16,6 +16,14 @@ define(['common', 'ajax'], function (common, ajax) {
             expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://m.guardian.co.uk/foo");
         });
 
+        it("should tolerate being initialised with undefined", function () {
+            ajax.init(undefined);
+            ajax({
+                url: "/foo"
+            });
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("/foo");
+        });
+
     });
 
 });

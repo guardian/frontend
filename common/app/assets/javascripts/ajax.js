@@ -12,6 +12,7 @@ define(["reqwest"], function (reqwest) {
     ajax.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
 
     ajax.init = function (absoluteUrl) {
+        absoluteUrl = absoluteUrl || "";
         makeAbsolute = function (url) {
             return absoluteUrl + url;
         }
