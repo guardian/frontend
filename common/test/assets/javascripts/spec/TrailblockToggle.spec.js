@@ -21,7 +21,7 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
         });
 
         afterEach(function() {
-            common.mediator.removeAllListeners('modules:trailblockToggle:toggle');
+            common.mediator.removeEvent('modules:trailblockToggle:toggle');
             tt = null;
             edition = null;
         });
