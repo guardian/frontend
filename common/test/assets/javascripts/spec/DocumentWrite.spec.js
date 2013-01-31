@@ -32,7 +32,7 @@ define([
    
     beforeEach(function(){
         localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
-        common.mediator.removeAllListeners();
+        common.mediator.removeEvent();
     });
  
     // deterministic 'randomness' - http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html 
