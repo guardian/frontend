@@ -54,7 +54,7 @@ define([
     var modules = {
 
         initialiseAjax: function(config) {
-            ajax.init(config.page.absoluteMobileUrl)
+            ajax.init(config.page.absoluteMobileUrl);
         },
 
         attachGlobalErrorHandler: function () {
