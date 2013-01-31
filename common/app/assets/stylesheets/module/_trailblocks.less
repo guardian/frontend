@@ -26,11 +26,6 @@
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 400px) {
-    .trail-headline {
-        font-size: 17px;
-    }
-}
 
 .trailblock-topstories .trail-headline {
     .type-3;
@@ -39,6 +34,11 @@
 .media .trail-headline {
     padding: 0;
     margin-bottom: @baseline;
+}
+
+.trail-headline { 
+    // @media screen and (min-width: 400px) { .type-6; }
+    @media screen and (min-width: 1024px) { .type-8; }
 }
 
 .trail-text {

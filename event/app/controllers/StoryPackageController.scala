@@ -11,7 +11,8 @@ object StoryPackageController extends Controller with Logging {
     val events = Event.mongo.withContent(contentId)
 
     events.sortBy(_.startDate.getMillis)
-    events.foreach(_.content.sortBy(_.webPublicationDate.getMillis))
+    //Now doing this in admin tool
+    //events.foreach(_.content.sortBy(_.importance))
 
     Cached(60) {
       val html = views.html.fragments.storyPackage(events)

@@ -2,7 +2,7 @@
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail" data-link-name="trail">
+        <li class="trail@if(trail.importance.getOrElse(0) > 50) { is-important}" data-link-name="trail">
             @fragments.trails.headline(trail, info.rowNum, related)
         </li>
     }
