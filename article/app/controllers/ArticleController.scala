@@ -15,11 +15,14 @@ object ArticleController extends Controller with Logging {
   def render(path: String) = Action { implicit request =>
     val promiseOfArticle = Akka.future(lookup(path))
     Async {
-      promiseOfArticle.map(_.map { renderArticle }.getOrElse { NotFound })
+      promiseOfArticle.map {
+        case Left(model) => renderArticle(model)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Option[ArticlePage] = suppressApi404 {
+  private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
@@ -30,7 +33,8 @@ object ArticleController extends Controller with Logging {
     val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+    val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+    ModelOrNotFound(model, response)
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
