@@ -8,8 +8,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
             render: function (html) {
 
-                var topstoriesHeader = document.getElementById('topstories-header'),
-                    topstoriesNav = common.$g('.topstories-control');
+                var topstoriesHeader = document.getElementById('topstories-header');
 
                 topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
                     + html
