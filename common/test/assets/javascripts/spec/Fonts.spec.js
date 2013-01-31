@@ -177,14 +177,15 @@ define(['common', 'ajax', 'modules/fonts'], function(common, ajax, Fonts) {
         it("should not request css files if localStorage is full or disabled", function() {
             
             common.mediator.on('modules:fonts:notloaded', callback);
+            var ajaxSpy;
 
             // Force localStorage to throw error.
-            localStorage.setItem = null;
+            localStorage.setItem = sinon.stub.throws();
 
             runs(function() {
                 var f = new Fonts(styleNodes, fileFormat);
                 f.loadFromServer('fixtures/');
-                reqwestSpy = sinon.spy(f.reqwest);
+                ajaxSpy = sinon.spy(f.ajax);
             });
 
             waitsFor(function() {
@@ -193,7 +194,7 @@ define(['common', 'ajax', 'modules/fonts'], function(common, ajax, Fonts) {
 
             runs(function() {
 
-                expect(reqwestSpy.callCount).toBe(0);
+                expect(ajaxSpy.callCount).toBe(0);
 
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe(null);
