@@ -12,6 +12,8 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 case class Event(
   id: String,
   title: String,
+  startDate: DateTime,
+  importance: Option[Int] = None,
   contentIds: Seq[String] = Nil,
   content: Seq[Content] = Nil)
 
@@ -51,12 +53,15 @@ object Event {
           content = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
         )
       }
+
     }
   }
 
   def apply(parsedEvent: ParsedEvent): Event = Event(
     id = parsedEvent.id,
     title = parsedEvent.title,
+    startDate = parsedEvent.startDate,
+    importance = parsedEvent.importance,
     contentIds = parsedEvent.content.map(_.id)
   )
 }

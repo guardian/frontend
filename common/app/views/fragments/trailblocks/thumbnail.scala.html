@@ -1,4 +1,5 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2)
+@(trails: Seq[Trail], numItemsVisible: Int = 6
+, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2)
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
