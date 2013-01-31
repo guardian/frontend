@@ -1,0 +1,8 @@
+@(page: Page, popular: Seq[MostPopular])(implicit request: RequestHeader)
+
+@main(page, Switches.all){
+}{
+    @defining(popular.size > 1){ isTabbed =>
+        @fragments.mostPopular(popular, 5)
+    }
+}

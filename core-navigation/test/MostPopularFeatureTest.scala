@@ -23,7 +23,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     scenario("Most popular for a section") {
 
       given("I am on a page in the 'World' section")
-      HtmlUnit("/most-popular/world") { browser =>
+      HtmlUnit("/most-viewed/world") { browser =>
         import browser._
 
         then("The 'World News' tab should be selected by default")
@@ -37,7 +37,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     scenario("Viewing site-wide most popular") {
 
       given("I am on a page in the 'World' section")
-      HtmlUnit("/most-popular/world") { browser =>
+      HtmlUnit("/most-viewed/world") { browser =>
         import browser._
 
         then("I should see a tab containing site-wide popular news")
@@ -50,7 +50,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     scenario("Most popular for a US edition section") {
 
       given("I am on a page in the 'Comment is free' section in the US edition")
-      HtmlUnit.US("/most-popular/commentisfree") { browser =>
+      HtmlUnit.US("/most-viewed/commentisfree") { browser =>
         import browser._
 
         then("The 'Comment is free' tab should be selected by default")
@@ -62,7 +62,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
     scenario("Most popular caching") {
       given("I load most popular")
-      HtmlUnit.connection("/most-popular") { connection =>
+      HtmlUnit.connection("/most-viewed") { connection =>
         then("the requested should be cached for 15 minutes")
         connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900")
       }
