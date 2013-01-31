@@ -15,7 +15,7 @@ define(["reqwest"], function (reqwest) {
         absoluteUrl = absoluteUrl || "";
         makeAbsolute = function (url) {
             return absoluteUrl + url;
-        }
+        };
     };
 
     return ajax;
