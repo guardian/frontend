@@ -20,8 +20,8 @@
   }
 
   function checkNthExpr(el, nodes, a, b) {
-    if (!a) return (nodes[b-1] == el)
-    for (i = b, l = nodes.length; ((a > 0) ? (i <= l) : (i >= 1)); i += a) if (el == nodes[i-1]) return true
+    if (!a) return (nodes[b - 1] == el)
+    for (i = b, l = nodes.length; ((a > 0) ? (i <= l) : (i >= 1)); i += a) if (el == nodes[i - 1]) return true
     return false
   }
 
@@ -47,9 +47,9 @@
   }
 
   // *was* going to be in CSS3, didn't quite make it
-  pseudos.contains = function(el, val) { return text(el).indexOf(val) != -1 }
+  pseudos.contains = function (el, val) { return text(el).indexOf(val) != -1 }
 
-  pseudos.not = function(el, val) { return !q.is(el, val) }
+  pseudos.not = function (el, val) { return !q.is(el, val) }
 
   pseudos['nth-child'] = function (el, val) {
     if (!val || !(p = el.parentNode)) return false

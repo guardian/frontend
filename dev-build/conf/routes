@@ -28,6 +28,9 @@ GET     /style-guide/sprites        controllers.StyleGuideController.renderSprit
 GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
 GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
 
+#Event
+GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)
+
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
 GET     /football/fixtures                                  controllers.FixturesController.render()

@@ -551,7 +551,7 @@
         }
 
         type = isTypeStr && typeSpec.replace(nameRegex, '')
-        if (type && customEvents[type]) type = customEvents[type].type
+        if (type && customEvents[type]) type = customEvents[type].base
 
         if (!typeSpec || isTypeStr) {
           // off(el) or off(el, t1.ns) or off(el, .ns) or off(el, .ns1.ns2.ns3)
