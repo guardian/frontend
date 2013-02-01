@@ -5,4 +5,5 @@
 # For dev machines
 GET    /assets/*file                              controllers.Assets.at(path="/public", file)
 
-GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)
+GET    /story-package/list/*contentId             controllers.StoryPackageController.simpleList(contentId)
+GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)

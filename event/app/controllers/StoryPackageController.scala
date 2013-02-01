@@ -1,29 +1,39 @@
 package controllers
 
 import common._
-import play.api.mvc.{ Action, Controller }
+import play.api.mvc.{ Result, RequestHeader, Action, Controller }
 import model._
+import play.api.templates.Html
+
+case class GroupedByContent(event: Event, content: Map[String, Seq[Content]])
 
 object StoryPackageController extends Controller with Logging {
 
-  def forContent(contentId: String) = Action { implicit request =>
+  def toneGroupList(contentId: String) = Action { implicit request =>
 
+    val events = Event.mongo.withContent(contentId).map { event =>
+      val groupedContent = event.content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
+      GroupedByContent(event, groupedContent)
+    }
+    renderGroup(views.html.fragments.toneGroupPackage(events))
+  }
+
+  def simpleList(contentId: String) = Action { implicit request =>
     val events = Event.mongo.withContent(contentId)
-
     events.sortBy(_.startDate.getMillis)
-    //Now doing this in admin tool
-    //events.foreach(_.content.sortBy(_.importance))
+    renderGroup(views.html.fragments.storyPackage(events))
+  }
 
+  private def renderGroup(html: Html)(implicit request: RequestHeader): Result = {
     Cached(60) {
-      val html = views.html.fragments.storyPackage(events)
-      request.getQueryString("callback").map { callback =>
-        JsonComponent(html)
+      request.getQueryString("callback").map {
+        callback =>
+          JsonComponent(html)
       } getOrElse {
         Cached(60) {
           Ok(Compressed(html))
         }
       }
     }
-
   }
 }

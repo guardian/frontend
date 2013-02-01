@@ -1,0 +1,20 @@
+@(groups: Seq[GroupedByContent])
+
+@groups.map { group =>
+    <div>
+    <h2>@group.event.title</h2>
+
+    @group.content.map{ case (tone, content) =>
+
+        <h1>@content.length</h1>
+        <ul>
+        @content.map{ c =>
+            <li>@c.linkText</li>
+        }
+        </ul>
+    }
+
+    </div>
+
+
+}
