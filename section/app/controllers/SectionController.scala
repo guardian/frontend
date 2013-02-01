@@ -56,7 +56,7 @@ object SectionController extends Controller with Logging with Paging with Format
     )
 
     val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
-    ModelOrNotFound(model, response)
+    ModelOrResult(model, response)
   }
 
   private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {

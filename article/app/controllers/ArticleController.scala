@@ -34,7 +34,7 @@ object ArticleController extends Controller with Logging {
     val storyPackage = response.storyPackage map { new Content(_) }
 
     val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
-    ModelOrNotFound(model, response)
+    ModelOrResult(model, response)
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =

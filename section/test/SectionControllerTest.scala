@@ -12,8 +12,9 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
-  it should "404 when content type is not front" in Fake {
+  it should "internal redirect when content type is not front" in Fake {
     val result = controllers.SectionController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(FakeRequest())
-    status(result) should be(404)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 }

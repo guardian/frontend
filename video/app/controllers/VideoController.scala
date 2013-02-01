@@ -34,7 +34,7 @@ object VideoController extends Controller with Logging {
     val storyPackage = response.storyPackage map { new Content(_) }
 
     val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
-    ModelOrNotFound(model, response)
+    ModelOrResult(model, response)
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
