@@ -4,7 +4,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{ Result, RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.Play.current
@@ -19,11 +19,14 @@ object TagController extends Controller with Logging with Formats {
   def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfTag = Akka.future(lookup(path))
     Async {
-      promiseOfTag.map(_.map { renderTag(_, format) } getOrElse { NotFound })
+      promiseOfTag.map {
+        case Left(model) => renderTag(model, format)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Option[TagAndTrails] = suppressApi404 {
+  private def lookup(path: String)(implicit request: RequestHeader): Either[TagAndTrails, Result] = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching tag: " + path + " for edition " + edition)
 
@@ -35,12 +38,13 @@ object TagController extends Controller with Logging with Formats {
 
     val leadContentCutOff = DateTime.now - 7.days
 
-    val leadContent = response.leadContent.take(1).map { new Content(_) }
-      .filter(_.webPublicationDate > leadContentCutOff)
+    val leadContent = response.leadContent.take(1).map { new Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
 
     val leadContentIds = leadContent map (_.id)
 
-    tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
+    val model = tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
+
+    ModelOrNotFound(model, response)
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {
