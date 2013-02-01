@@ -44,7 +44,7 @@ object TagController extends Controller with Logging with Formats {
 
     val model = tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
 
-    ModelOrNotFound(model, response)
+    ModelOrResult(model, response)
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {

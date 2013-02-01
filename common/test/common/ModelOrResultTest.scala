@@ -9,7 +9,7 @@ import play.api.test.Helpers._
 
 private object TestModel
 
-class ModelOrNotFoundTest extends FlatSpec with ShouldMatchers {
+class ModelOrResultTest extends FlatSpec with ShouldMatchers {
 
   val testContent = new Content("the/id", None, None, new DateTime(), "the title", "http://foo.bar", "http://foo.bar")
 
@@ -27,7 +27,7 @@ class ModelOrNotFoundTest extends FlatSpec with ShouldMatchers {
   val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
 
   "ModelOrNotFound" should "return the model if it exists" in {
-    ModelOrNotFound(
+    ModelOrResult(
       item = Some(TestModel),
       response = stubResponse
     ) should be(Left(TestModel))
@@ -35,40 +35,40 @@ class ModelOrNotFoundTest extends FlatSpec with ShouldMatchers {
 
   it should "internal redirect to an article if it has shown up at the wrong server" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(content = Some(testArticle))
     ).right.get
 
-    status(notFound) should be(404)
+    status(notFound) should be(200)
     headers(notFound)("X-Accel-Redirect") should be("/type/article/the/id")
   }
 
   it should "internal redirect to a video if it has shown up at the wrong server" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(content = Some(testVideo))
     ).right.get
 
-    status(notFound) should be(404)
+    status(notFound) should be(200)
     headers(notFound)("X-Accel-Redirect") should be("/type/video/the/id")
   }
 
   it should "internal redirect to a gallery if it has shown up at the wrong server" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(content = Some(testGallery))
     ).right.get
 
-    status(notFound) should be(404)
+    status(notFound) should be(200)
     headers(notFound)("X-Accel-Redirect") should be("/type/gallery/the/id")
   }
 
   it should "404 if it is an unsupported content type" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(content = Some(testContent))
     ).right.get
@@ -79,23 +79,23 @@ class ModelOrNotFoundTest extends FlatSpec with ShouldMatchers {
 
   it should "internal redirect to a tag if it has shown up at the wrong server" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(tag = Some(articleTag))
     ).right.get
 
-    status(notFound) should be(404)
+    status(notFound) should be(200)
     headers(notFound)("X-Accel-Redirect") should be("/type/tag/type/article")
   }
 
   it should "internal redirect to a section if it has shown up at the wrong server" in {
 
-    val notFound = ModelOrNotFound(
+    val notFound = ModelOrResult(
       item = None,
       response = stubResponse.copy(section = Some(testSection))
     ).right.get
 
-    status(notFound) should be(404)
+    status(notFound) should be(200)
     headers(notFound)("X-Accel-Redirect") should be("/type/section/water")
   }
 }

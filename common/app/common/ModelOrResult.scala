@@ -5,7 +5,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import model._
 
 // http://wiki.nginx.org/X-accel
-object ModelOrNotFound extends Results {
+object ModelOrResult extends Results {
   def apply[T](item: Option[T], response: ItemResponse): Either[T, Result] =
     item.map(Left(_)).orElse {
       response.content.map {
@@ -22,5 +22,5 @@ object ModelOrNotFound extends Results {
     }.getOrElse(Right(NotFound))
 
   private def internalRedirect(base: String, id: String) =
-    Right(NotFound.withHeaders("X-Accel-Redirect" -> "/%s/%s".format(base, id)))
+    Right(Ok.withHeaders("X-Accel-Redirect" -> "/%s/%s".format(base, id)))
 }
