@@ -12,8 +12,9 @@ class VideoControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
-  it should "404 when content type is not video" in Fake {
+  it should "internal redirect when content type is not video" in Fake {
     val result = controllers.VideoController.render("uk/2012/jun/27/queen-martin-mcguinness-shake-hands")(FakeRequest())
-    status(result) should be(404)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result).get should be("/type/article/uk/2012/jun/27/queen-martin-mcguinness-shake-hands")
   }
 }
