@@ -94,7 +94,7 @@ trait Prototypes extends Testing {
       "com.gu" % "management-play_2.9.1" % "5.21",
       "com.gu" % "management-logback_2.9.1" % "5.21",
       "com.gu" % "configuration_2.9.1" % "3.6",
-      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.17",
+      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.18",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "commons-io" % "commons-io" % "2.4",

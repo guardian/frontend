@@ -25,6 +25,7 @@ object GalleryController extends Controller with Logging {
 
     Async {
       promiseOfGalleryPage.map {
+        case Left(model) if model.gallery.isExpired => Gone(Compressed(views.html.expired(model.gallery)))
         case Left(model) => renderGallery(model)
         case Right(notFound) => notFound
       }
@@ -35,6 +36,7 @@ object GalleryController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching gallery: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showExpired(true)
       .showFields("all")
       .response
 

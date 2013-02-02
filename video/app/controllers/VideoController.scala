@@ -16,6 +16,7 @@ object VideoController extends Controller with Logging {
     val promiseOfVideo = Akka.future(lookup(path))
     Async {
       promiseOfVideo.map {
+        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
         case Left(model) => renderVideo(model)
         case Right(notFound) => notFound
       }
@@ -26,6 +27,7 @@ object VideoController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching video: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showExpired(true)
       .showTags("all")
       .showFields("all")
       .response

@@ -61,7 +61,7 @@ class FrontController extends Controller with Logging with Formats {
                 renderJsonTrails(trailblock.trails)
               }.getOrElse(InternalServerError)
             } else {
-              Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
+              Ok(Compressed(views.html.front(page, trailblocks)))
             }
           }
         } getOrElse (BadRequest)
