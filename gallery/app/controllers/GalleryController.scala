@@ -24,11 +24,14 @@ object GalleryController extends Controller with Logging {
     val promiseOfGalleryPage = Akka.future(lookup(path, index, isTrail))
 
     Async {
-      promiseOfGalleryPage.map(_.map { renderGallery } getOrElse { NotFound })
+      promiseOfGalleryPage.map {
+        case Left(model) => renderGallery(model)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader): Option[GalleryPage] = suppressApi404 {
+  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching gallery: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
@@ -38,7 +41,8 @@ object GalleryController extends Controller with Logging {
     val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
+    val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
+    ModelOrResult(model, response)
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =

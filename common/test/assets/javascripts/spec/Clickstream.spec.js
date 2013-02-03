@@ -25,7 +25,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.remove(document.body, 'click');
 
             // clean listeners before each test
-            var a = common.mediator.removeAllListeners('module:clickstream:click');
+            var a = common.mediator.removeEvent('module:clickstream:click');
 
         });
 
