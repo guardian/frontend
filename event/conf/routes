@@ -7,3 +7,5 @@ GET    /assets/*file                              controllers.Assets.at(path="/p
 
 GET    /story-package/list/*contentId             controllers.StoryPackageController.simpleList(contentId)
 GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
+
+GET    /event/timeline/*eventId                   controllers.EventController.timeline(eventId)
