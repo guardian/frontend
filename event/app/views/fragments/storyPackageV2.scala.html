@@ -1,6 +1,6 @@
 @(events: Seq[Event])
 
-@large(content: Seq[model.Content]) = { 
+@large(content: Seq[model.Content]) = {
     @defining(content.length){ numTrails =>
         @fragments.trailblocks.thumbnail(content, numItemsVisible = numTrails, numThumbnails = 3, headingLevel = 3)
     }
