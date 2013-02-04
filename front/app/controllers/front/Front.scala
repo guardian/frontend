@@ -127,42 +127,4 @@ class Front extends AkkaSupport with Logging {
 
 object Front extends Front
 
-object FrontCharity {
-
-  def apply(): Option[Trailblock] = {
-
-    if (NetworkFrontAppealSwitch.isSwitchedOn) {
-
-      val donateContent = ApiContent(
-        "https://guardian.paythru.com", None, None, new DateTime,
-        "SocietyGuardian - news, comment and analysis on the public and voluntary sectors | Society | guardian.co.uk",
-        "https://guardian.paythru.com",
-        "https://guardian.paythru.com", fields = Option(
-          Map(
-            "liveBloggingNow" -> "false",
-            "headline" -> "Donate now"
-          )
-        )
-      )
-      val appealContent = ApiContent(
-        "society/christmas-charity-appeal-2012", None, None, new DateTime,
-        "Christmas charity appeal 2012", "/society/christmas-charity-appeal-2012",
-        "http://content.guardianapis.com/society/christmas-charity-appeal-2012", fields = Option(Map(
-          "liveBloggingNow" -> "false",
-          "headline" -> "Read more about our Christmas charity appeal"
-        ))
-      )
-      val description = new TrailblockDescription(
-        "society/christmas-charity-appeal-2012", "Christmas charity appeal", 2, style = Some(Thumbnail)
-      )
-      Option(new Trailblock(description, Seq(new model.Content(donateContent), new model.Content(appealContent))))
-
-    } else {
-      None
-    }
-
-  }
-
-}
-
 case class FrontStats(nukUkTrails: Int, numUsTrails: Int)
