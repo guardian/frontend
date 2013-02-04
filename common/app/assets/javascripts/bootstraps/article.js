@@ -86,7 +86,8 @@ define([
         // if (config.page.showInRelated) {
         //     modules.related(config);
         // }
-
+        
+        
         if(config.page.section === "football") {
             modules.matchNav(config);
         }

@@ -33,6 +33,19 @@ object StoryPackageController extends Controller with Logging {
     renderGroup(views.html.fragments.storyPackage(events))
   }
 
+  def version1List(contentId: String) = Action { implicit request =>
+    val events = Event.mongo.withContent(contentId)
+    events.sortBy(_.startDate.getMillis)
+
+    renderGroup(views.html.fragments.storyPackageV1(events))
+  }
+
+  def version2List(contentId: String) = Action { implicit request =>
+    val events = Event.mongo.withContent(contentId)
+    events.sortBy(_.startDate.getMillis)
+    renderGroup(views.html.fragments.storyPackageV2(events))
+  }
+
   private def renderGroup(html: Html)(implicit request: RequestHeader): Result = {
     Cached(60) {
       request.getQueryString("callback").map {

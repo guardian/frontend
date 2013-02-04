@@ -9,7 +9,7 @@ define([
 
     function StoryPackage(config) {
         //Config
-        var path = '/story-package/tone-group',
+        var path = '/story-package/list-version/1',
             id = config.id;
 
         // View
