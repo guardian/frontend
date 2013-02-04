@@ -5,12 +5,13 @@
  * https://github.com/filamentgroup/unicon
  *
  */
+/*jshint loopfunc: true */
  /*global node:true, console:true, process:true */
 
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
-    var SVGCleaner = require('svg-cleaner');
+    var SVGO = require('svgo');
     var utils = {};
     var config;
 
@@ -39,21 +40,28 @@
       return child;
     };
 
-    function cleanSVG(src) {
+    function cleanFiles(src) {
         var files = fs.readdirSync(src);
-        var options = {
-            shortenIDs: true,
-            removeComments: true,
-            repairStyles: true,
-            removeNSElements: true,
-            removeNSAttributes: true,
-            removeUnreferencedElements: true
-        };
+        cleanSVG(src, files, 0);
+    }
 
-        for(var i = 0, l = files.length; i < l; i++) {
+    function cleanSVG(src, files, i) {
+        if(files[i]) {
             var file = src + files[i];
             if( file.match( /\.svg$/i ) ){
-                var svg = SVGCleaner.cleanFile(file, file, options);
+                var cleaner = new SVGO(/*{ custom config object }*/);
+                // optimize SVG file
+                cleaner.fromFile(file)
+                // get optimized result
+                .then(function(result) {
+                    //Overrite result back to file
+                    fs.writeFileSync(file, result.data);
+                    var saved = result.info.inBytes - result.info.outBytes;
+                    console.log(files[i] + " cleaned, " + saved + " bytes saved");
+                    cleanSVG(src, files, i+1);
+                }).done();
+            } else {
+                cleanSVG(src, files, i+1);
             }
         }
     }
@@ -112,7 +120,7 @@
         //Run the svg's through cleaner first
         if(generatesvg) {
             console.log("\nCleaning SVG's");
-            cleanSVG(config.src);
+            cleanFiles(config.src);
         }
 
         // take it to phantomjs to do the rest
