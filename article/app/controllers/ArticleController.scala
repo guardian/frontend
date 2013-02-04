@@ -16,6 +16,7 @@ object ArticleController extends Controller with Logging {
     val promiseOfArticle = Akka.future(lookup(path))
     Async {
       promiseOfArticle.map {
+        case Left(model) if model.article.isExpired => Gone(Compressed(views.html.expired(model.article)))
         case Left(model) => renderArticle(model)
         case Right(notFound) => notFound
       }
@@ -26,6 +27,7 @@ object ArticleController extends Controller with Logging {
     val edition = Edition(request, Configuration)
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showExpired(true)
       .showTags("all")
       .showFields("all")
       .response
