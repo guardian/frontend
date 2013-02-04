@@ -28,8 +28,7 @@ object StoryPackageController extends Controller with Logging {
   }
 
   def simpleList(contentId: String) = Action { implicit request =>
-    val events = Event.mongo.withContent(contentId)
-    events.sortBy(_.startDate.getMillis)
+    val events = Event.mongo.withContent(contentId).sortBy(_.startDate.getMillis)
     renderGroup(views.html.fragments.storyPackage(events))
   }
 
@@ -39,8 +38,7 @@ object StoryPackageController extends Controller with Logging {
   }
 
   def version2List(contentId: String) = Action { implicit request =>
-    val events = Event.mongo.withContent(contentId)
-    events.sortBy(_.startDate.getMillis)
+    val events = Event.mongo.withContent(contentId).sortBy(_.startDate.getMillis).reverse
     renderGroup(views.html.fragments.storyPackageV2(events))
   }
 
