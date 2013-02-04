@@ -84,8 +84,8 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format    controllers.TagController.
 #Section
 GET		/sections							         controllers.SectionsController.render()
 # culture and sport sections now live in front
-GET     /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path, format = "html")
-GET     /$path<(?!culture|sport)[\w\d-]*>.:format    controllers.SectionController.render(path, format)
+GET    /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path)
+GET    /$path<(?!culture|sport)[\w\d-]*>.json       controllers.SectionController.renderJson(path)
 
 #Articles
 GET     /*path                                controllers.ArticleController.render(path)

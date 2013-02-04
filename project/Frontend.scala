@@ -31,7 +31,7 @@ object Frontend extends Build with Prototypes with Testing {
             ("bean"         -> "components/bean/bean") ~
             ("bonzo"        -> "components/bonzo/src/bonzo") ~
             ("domReady"     -> "components/domready/ready") ~
-            ("EventEmitter" -> "components/eventEmitter/src/EventEmitter") ~
+            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
             ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
             ("reqwest"      -> "components/reqwest/src/reqwest") ~
             ("domwrite"     -> "components/dom-write/dom-write") ~
