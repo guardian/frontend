@@ -15,14 +15,19 @@ object VideoController extends Controller with Logging {
   def render(path: String) = Action { implicit request =>
     val promiseOfVideo = Akka.future(lookup(path))
     Async {
-      promiseOfVideo.map(_.map { renderVideo }.getOrElse { NotFound })
+      promiseOfVideo.map {
+        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
+        case Left(model) => renderVideo(model)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Option[VideoPage] = suppressApi404 {
+  private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching video: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
+      .showExpired(true)
       .showTags("all")
       .showFields("all")
       .response
@@ -30,7 +35,8 @@ object VideoController extends Controller with Logging {
     val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
     val storyPackage = response.storyPackage map { new Content(_) }
 
-    videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+    val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+    ModelOrResult(model, response)
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =

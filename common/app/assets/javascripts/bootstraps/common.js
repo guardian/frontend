@@ -142,8 +142,10 @@ define([
                 o = new Omniture(null, config).init();
         },
 
-        loadOphanAnalytics: function () {
-            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
+        loadOphanAnalytics: function (config) {
+            require([config.page.ophanUrl], function (Ophan) {
+                Ophan.startLog();
+            });
         },
 
         loadAdverts: function (config) {
@@ -176,7 +178,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics();
+            modules.loadOphanAnalytics(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
         });

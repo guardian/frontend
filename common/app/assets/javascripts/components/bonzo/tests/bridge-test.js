@@ -28,6 +28,11 @@ sink('Ender bridge', function (test, ok, before, after, assert) {
     $el.remove()
   })
 
+  test('height & width of `document`', 2, function () {
+    ok(ender(document).height() > 0)
+    ok(ender(document).width() > 0)
+  })
+
   test('no-arg parents()', 5, function () {
     try {
       var parents = ender('#parent-test').parents()

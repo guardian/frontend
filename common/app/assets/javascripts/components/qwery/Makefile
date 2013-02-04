@@ -1,9 +1,6 @@
 boosh:
-	smoosh make ./config/smoosh.json
+	node_modules/smoosh/bin/smoosh make ./config/smoosh.json
 	cp src/ender.js mobile/ender.js
 
-install:
-	npm install smoosh -g
-
 test:
-	serve . && phantomjs tests/phantom.js
+	node tests/test-env.js
