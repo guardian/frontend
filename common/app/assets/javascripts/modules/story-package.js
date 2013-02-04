@@ -9,7 +9,7 @@ define([
 
     function StoryPackage(config) {
         //Config
-        var path = '/story-package',
+        var path = '/story-package/tone-group',
             id = config.id;
 
         // View
@@ -24,7 +24,10 @@ define([
 
         // Bindings
         common.mediator.on('modules:story-package:loaded', this.view.render);
-        
+        common.mediator.on('modules:story-package:render', function() {
+            common.mediator.emit('modules:tabs:render');
+        });
+
         this.load = function () {
             var url = path + id;
             reqwest({

@@ -1,20 +1,31 @@
 @(groups: Seq[GroupedByContent])
 
-@groups.map { group =>
-    <div>
-    <h2>@group.event.title</h2>
 
-    @group.content.map{ case (tone, content) =>
+@tabs(group: GroupedByContent) = {
+    <h2 class="type-2 article-zone">@group.event.title</h2>
 
-        <h1>@content.length</h1>
-        <ul>
-        @content.map{ c =>
-            <li>@c.linkText</li>
-        }
-        </ul>
-    }
-
+    <div style="padding:16px 16px 0px 16px;">
+        <ol class="tabs js-tabs tabs-multiple" style="margin-bottom:0px;">
+            @group.content.toList.reverse.zipWithRowInfo.map{ case ((tone, content), info) =>
+                <li@if(info.isFirst){ class="tabs-selected"}>
+                    <a href="#tab-@tone.hashCode">@tone</a>
+                </li>
+            }
+        </ol>
     </div>
 
+    @group.content.toList.reverse.zipWithRowInfo.map{ case ((tone, content), info) =>
+        <div id="tab-@tone.hashCode" class="tabs-content tabs-pane@if(!info.isFirst){ js-hidden}" style="padding:16px;">
+            @defining(content.length){ numTrails =>
+                @fragments.trailblocks.thumbnail(content)
+            }
+        </div>
+    }
+}
 
+
+@groups.map { group =>
+    @if(group.content.size > 1) {
+        @tabs(group)
+    }
 }

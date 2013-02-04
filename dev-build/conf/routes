@@ -17,7 +17,9 @@ GET     /top-stories.:format                                controllers.TopStori
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Events
-GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)
+GET    /story-package/list/*contentId             controllers.StoryPackageController.simpleList(contentId)
+GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
+
 
 #Style-guide
 GET     /style-guide                controllers.StyleGuideController.renderIndex
@@ -27,9 +29,6 @@ GET     /style-guide/modules        controllers.StyleGuideController.renderModul
 GET     /style-guide/sprites        controllers.StyleGuideController.renderSprites
 GET     /style-guide/csshelpers     controllers.StyleGuideController.cssHelpers
 GET     /style-guide/codingstandards        controllers.StyleGuideController.codingStandards
-
-#Event
-GET    /story-package/*contentId                  controllers.StoryPackageController.forContent(contentId)
 
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)

@@ -9,6 +9,15 @@ case class GroupedByContent(event: Event, content: Map[String, Seq[Content]])
 
 object StoryPackageController extends Controller with Logging {
 
+  // def dateGroupList(contentId: String) = Action { implicit request =>
+
+  //   val events = Event.mongo.withContent(contentId).map { event =>
+  //     val groupedContent = event.content.groupBy(_.webPublicationDate.toDateMidnight)
+  //     GroupedByContent(event, groupedContent)
+  //   }
+  //   renderGroup(views.html.fragments.toneGroupPackage(events))
+  // }
+
   def toneGroupList(contentId: String) = Action { implicit request =>
 
     val events = Event.mongo.withContent(contentId).map { event =>

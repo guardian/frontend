@@ -35,9 +35,12 @@
             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 		      @fragments.articleBody(article)
         </div>
+
+        <footer id="js-story-package" style="margin-bottom:16px;">
+        </footer>
     </article>
 
-    <aside id="js-story-package" class="story-package"></aside>
+    <aside class="story-package"></aside>
 
     <!-- 
     @if(storyPackage.nonEmpty) {
