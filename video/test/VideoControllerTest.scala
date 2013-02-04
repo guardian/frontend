@@ -17,4 +17,12 @@ class VideoControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/type/article/uk/2012/jun/27/queen-martin-mcguinness-shake-hands")
   }
+
+  it should "display an expired message for expired content" in Fake {
+    val result = controllers.VideoController.render("world/video/2008/dec/11/guantanamo-bay")(FakeRequest())
+    status(result) should be(410)
+    contentAsString(result) should include("Inside Guant&amp;aacute;namo")
+    contentAsString(result) should include("This content has been removed as our copyright has expired.")
+  }
+
 }

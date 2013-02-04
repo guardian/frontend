@@ -11,7 +11,7 @@ private object TestModel
 
 class ModelOrResultTest extends FlatSpec with ShouldMatchers {
 
-  val testContent = new Content("the/id", None, None, new DateTime(), "the title", "http://foo.bar", "http://foo.bar")
+  val testContent = new Content("the/id", None, None, new DateTime(), "the title", "http://foo.bar", "http://foo.bar", elements = None)
 
   val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
   val galleryTag = articleTag.copy(id = "type/gallery")

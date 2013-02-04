@@ -20,7 +20,8 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       mediaAssets = media,
-      tags = List(tag("type/article"))
+      tags = List(tag("type/article")),
+      elements = None
     )
 
     val trail: Trail = new Content(content)
@@ -60,7 +61,8 @@ class ContentTest extends FlatSpec with ShouldMatchers {
   "Canonical urls" should "point back to guardian.co.uk" in {
     val apiContent = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar"
+      "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      elements = None
     )
 
     val apiTag = tag(url = "http://www.guardian.co.uk/sport/cycling")
