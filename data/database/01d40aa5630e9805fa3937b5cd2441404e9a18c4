@@ -1,0 +1,3943 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5558,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":278,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/blog/2013/feb/04/super-league-set-of-six-david-oates",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-04T14:02:33Z",
+      "webTitle":"Super League Set of Six: A tribute to David Oates and the game he loved | Andy Wilson",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/feb/04/super-league-set-of-six-david-oates",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/feb/04/super-league-set-of-six-david-oates",
+      "fields":{
+        "trailText":"<strong>Andy Wilson: </strong>Rugby league held Oatesy in the highest regard; Aussie coaches struggling in England; and World Cup buildup begins in earnest",
+        "headline":"Super League Set of Six: A tribute to David Oates and the game he loved",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/4/1359986177390/Stuart-Fielden-R-and-Jaso-003.jpg",
+        "wordcount":"1474",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/super-league-set-of-six",
+        "type":"series",
+        "webTitle":"Set of Six",
+        "webUrl":"http://www.guardian.co.uk/sport/series/super-league-set-of-six",
+        "apiUrl":"http://content.guardianapis.com/sport/series/super-league-set-of-six",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/bradfordbulls",
+        "type":"keyword",
+        "webTitle":"Bradford Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/bradfordbulls",
+        "apiUrl":"http://content.guardianapis.com/sport/bradfordbulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/4/1359986183289/Stuart-Fielden-R-and-Jaso-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/4/1359986183289/Stuart-Fielden-R-and-Jaso-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Stuart Fielden (R) and Jason Chan",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Stuart Fielden, right, who would have been among David Oates's finest rugby league memories, reached 350 career appearances over the weekend. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/feb/03/widnes-london-broncos-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-03T20:34:36Z",
+      "webTitle":"Winning start for Widnes after Stefan Marsh surprises London Broncos",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/03/widnes-london-broncos-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/03/widnes-london-broncos-super-league",
+      "fields":{
+        "trailText":"The returning London Broncos coach Tony Rea suffered defeat to Widnes in the opening game of the season",
+        "headline":"Winning start for Widnes after Stefan Marsh surprises London Broncos",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918463746/Stefan-Marsh-of-Widnes-Vi-003.jpg",
+        "wordcount":"332",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/widnes-vikings",
+        "type":"keyword",
+        "webTitle":"Widnes Vikings",
+        "webUrl":"http://www.guardian.co.uk/sport/widnes-vikings",
+        "apiUrl":"http://content.guardianapis.com/sport/widnes-vikings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/london-broncos",
+        "type":"keyword",
+        "webTitle":"London Broncos",
+        "webUrl":"http://www.guardian.co.uk/sport/london-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/london-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.guardian.co.uk/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/castleford",
+        "type":"keyword",
+        "webTitle":"Castleford",
+        "webUrl":"http://www.guardian.co.uk/sport/castleford",
+        "apiUrl":"http://content.guardianapis.com/sport/castleford",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/catalans",
+        "type":"keyword",
+        "webTitle":"Catalan Dragons",
+        "webUrl":"http://www.guardian.co.uk/sport/catalans",
+        "apiUrl":"http://content.guardianapis.com/sport/catalans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hullkr",
+        "type":"keyword",
+        "webTitle":"Hull KR",
+        "webUrl":"http://www.guardian.co.uk/sport/hullkr",
+        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918460570/Stefan-Marsh-of-Widnes-Vi-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918460570/Stefan-Marsh-of-Widnes-Vi-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"54",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918462282/Stefan-Marsh-of-Widnes-Vi-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918462282/Stefan-Marsh-of-Widnes-Vi-002.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"130",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918463746/Stefan-Marsh-of-Widnes-Vi-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918463746/Stefan-Marsh-of-Widnes-Vi-003.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"84",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918465076/Stefan-Marsh-of-Widnes-Vi-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918465076/Stefan-Marsh-of-Widnes-Vi-004.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"132",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918466613/Stefan-Marsh-of-Widnes-Vi-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918466613/Stefan-Marsh-of-Widnes-Vi-005.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"168",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918468059/Stefan-Marsh-of-Widnes-Vi-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918468059/Stefan-Marsh-of-Widnes-Vi-006.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"180",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918469470/Stefan-Marsh-of-Widnes-Vi-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918469470/Stefan-Marsh-of-Widnes-Vi-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"228",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918471005/Stefan-Marsh-of-Widnes-Vi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918471005/Stefan-Marsh-of-Widnes-Vi-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"276",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in the Super League clash at the Twickenham Stoop. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918471005/Stefan-Marsh-of-Widnes-Vi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359918471005/Stefan-Marsh-of-Widnes-Vi-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Charlie Crowhurst",
+          "altText":"Stefan Marsh of Widnes Vikings",
+          "height":"276",
+          "credit":"Charlie Crowhurst/Getty Images",
+          "caption":"Stefan Marsh breaks through the London Broncos tackles to score a try for Widnes in their opening Super League game. Photograph: Charlie Crowhurst/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/feb/03/bradford-bulls-wakefield-trinity-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-03T18:22:30Z",
+      "webTitle":"Bradford Bulls 40-6 Wakefield Trinity | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/03/bradford-bulls-wakefield-trinity-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/03/bradford-bulls-wakefield-trinity-super-league",
+      "fields":{
+        "trailText":"Bradford Bulls' new era began in emphatic fashion as they swept aside a Wakefield team who fell alarmingly short of the standards they set last year",
+        "headline":"Bradford Bulls kick-start new era by trampling all over Wakefield",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915649743/Jarrod-Sammut-Bradford-Bu-003.jpg",
+        "wordcount":"634",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/bradfordbulls",
+        "type":"keyword",
+        "webTitle":"Bradford Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/bradfordbulls",
+        "apiUrl":"http://content.guardianapis.com/sport/bradfordbulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wakefieldtrinity",
+        "type":"keyword",
+        "webTitle":"Wakefield Trinity",
+        "webUrl":"http://www.guardian.co.uk/sport/wakefieldtrinity",
+        "apiUrl":"http://content.guardianapis.com/sport/wakefieldtrinity",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915646992/Jarrod-Sammut-Bradford-Bu-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915646992/Jarrod-Sammut-Bradford-Bu-001.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"54",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915648532/Jarrod-Sammut-Bradford-Bu-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915648532/Jarrod-Sammut-Bradford-Bu-002.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"130",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915649743/Jarrod-Sammut-Bradford-Bu-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915649743/Jarrod-Sammut-Bradford-Bu-003.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"84",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915650945/Jarrod-Sammut-Bradford-Bu-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915650945/Jarrod-Sammut-Bradford-Bu-004.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"132",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915652160/Jarrod-Sammut-Bradford-Bu-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915652160/Jarrod-Sammut-Bradford-Bu-005.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"168",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915653479/Jarrod-Sammut-Bradford-Bu-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915653479/Jarrod-Sammut-Bradford-Bu-006.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"180",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915654764/Jarrod-Sammut-Bradford-Bu-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915654764/Jarrod-Sammut-Bradford-Bu-007.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"228",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915657176/Jarrod-Sammut-Bradford-Bu-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915657176/Jarrod-Sammut-Bradford-Bu-009.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"276",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915657176/Jarrod-Sammut-Bradford-Bu-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/3/1359915657176/Jarrod-Sammut-Bradford-Bu-009.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Jarrod Sammut Bradford Bulls v Wakefield Trinity ",
+          "height":"276",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Jarrod Sammut powers over for the fourth Bradford Bulls try in their heavy defeat of Wakefield Trinity at Odsal. Photograph: Craig Brough/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/feb/02/st-helens-huddersfield-giants-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-02T20:42:06Z",
+      "webTitle":"St Helens 4-40 Huddersfield Giants | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/02/st-helens-huddersfield-giants-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/02/st-helens-huddersfield-giants-super-league",
+      "fields":{
+        "trailText":"Nathan Brown's St Helens were humbled 40-4 at home by Huddersfield, led by his former assistant Paul Anderson",
+        "headline":"Huddersfield inflict first game misery on St Helens coach Nathan Brown",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837601710/eorl-crabtree-001.jpg",
+        "wordcount":"635",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theobserver/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theobserver/sport",
+        "type":"newspaper-book",
+        "webTitle":"Observer Sport",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.guardian.co.uk/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837601710/eorl-crabtree-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837601710/eorl-crabtree-001.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"84",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837603195/eorl-crabtree-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837603195/eorl-crabtree-002.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"132",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837604464/eorl-crabtree-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837604464/eorl-crabtree-003.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"168",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837605596/eorl-crabtree-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837605596/eorl-crabtree-004.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"180",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837606770/eorl-crabtree-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837606770/eorl-crabtree-005.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"228",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837608024/eorl-crabtree-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837608024/eorl-crabtree-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837608024/eorl-crabtree-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/2/1359837608024/eorl-crabtree-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"eorl crabtree",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Eorl Crabtree of Huddersfield Giants, right, does everything he can to bring down Josh Perry of St Helens. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/feb/02/kieran-dixon-london-broncos-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-02T16:15:26Z",
+      "webTitle":"Eyes on Kieran Dixon's development at dawn of new Super League season | Andy Wilson",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/feb/02/kieran-dixon-london-broncos-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/feb/02/kieran-dixon-london-broncos-super-league",
+      "fields":{
+        "trailText":"Kieran Dixon, the London Broncos wing, looks to be the stand-out talent among all the genuinely exciting young players across Super League",
+        "headline":"Eyes on Kieran Dixon's development at dawn of new Super League season",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744053694/The-London-Broncos-winger-003.jpg",
+        "wordcount":"635",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/london-broncos",
+        "type":"keyword",
+        "webTitle":"London Broncos",
+        "webUrl":"http://www.guardian.co.uk/sport/london-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/london-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.guardian.co.uk/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.guardian.co.uk/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theobserver/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theobserver/sport",
+        "type":"newspaper-book",
+        "webTitle":"Observer Sport",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.guardian.co.uk/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744050523/The-London-Broncos-winger-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744050523/The-London-Broncos-winger-001.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"54",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744052275/The-London-Broncos-winger-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744052275/The-London-Broncos-winger-002.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"130",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744053694/The-London-Broncos-winger-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744053694/The-London-Broncos-winger-003.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"84",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744055194/The-London-Broncos-winger-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744055194/The-London-Broncos-winger-004.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"132",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744056645/The-London-Broncos-winger-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744056645/The-London-Broncos-winger-005.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"168",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744058077/The-London-Broncos-winger-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744058077/The-London-Broncos-winger-006.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"180",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744059592/The-London-Broncos-winger-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744059592/The-London-Broncos-winger-007.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"228",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744061055/The-London-Broncos-winger-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744061055/The-London-Broncos-winger-008.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"276",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season, and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744061055/The-London-Broncos-winger-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359744061055/The-London-Broncos-winger-008.jpg",
+          "source":"Action Images",
+          "photographer":"Jed Leicester",
+          "altText":"The London Broncos winger Kieran Dixon",
+          "height":"276",
+          "credit":"Jed Leicester/Action Images",
+          "caption":"Kieran Dixon shone for London Broncos last season and could experience further success in an improved side this year. Photograph: Jed Leicester/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/feb/01/leeds-rhinos-hull-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-01T23:21:00Z",
+      "webTitle":"Leeds 36-6 Hull | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/01/leeds-rhinos-hull-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/01/leeds-rhinos-hull-super-league",
+      "fields":{
+        "trailText":"Leeds got their Super League campaign off to a flying start with a convincing win against a Hull side missing their new signing Gareth Ellis",
+        "headline":"Leeds off to Super League flyer against Hull side missing Gareth Ellis",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755071279/Kevin-Sinfield-scores-the-003.jpg",
+        "wordcount":"560",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hull-fc",
+        "type":"keyword",
+        "webTitle":"Hull FC",
+        "webUrl":"http://www.guardian.co.uk/sport/hull-fc",
+        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755068554/Kevin-Sinfield-scores-the-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755068554/Kevin-Sinfield-scores-the-001.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"54",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755070060/Kevin-Sinfield-scores-the-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755070060/Kevin-Sinfield-scores-the-002.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"130",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755071279/Kevin-Sinfield-scores-the-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755071279/Kevin-Sinfield-scores-the-003.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"84",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755072620/Kevin-Sinfield-scores-the-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755072620/Kevin-Sinfield-scores-the-004.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"132",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755073764/Kevin-Sinfield-scores-the-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755073764/Kevin-Sinfield-scores-the-005.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"168",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755074847/Kevin-Sinfield-scores-the-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755074847/Kevin-Sinfield-scores-the-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"180",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755075981/Kevin-Sinfield-scores-the-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755075981/Kevin-Sinfield-scores-the-007.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"228",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755077172/Kevin-Sinfield-scores-the-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755077172/Kevin-Sinfield-scores-the-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755077172/Kevin-Sinfield-scores-the-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359755077172/Kevin-Sinfield-scores-the-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull at Headingley.",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Kevin Sinfield scores the first try for Leeds Rhinos against Hull in the Super League at Headingley. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/feb/01/huddersfield-paul-anderson-home-grown-coaches",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-01T15:18:24Z",
+      "webTitle":"Huddersfield's Paul Anderson leads charge of home-grown coaches",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/01/huddersfield-paul-anderson-home-grown-coaches",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/01/huddersfield-paul-anderson-home-grown-coaches",
+      "fields":{
+        "trailText":"Huddersfield Giants' Paul Anderson faces his predecessor, Nathan Brown, now at St Helens, on Super League's opening weekend",
+        "headline":"Huddersfield's Paul Anderson leads charge of home-grown coaches",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359731518327/Paul-Anderson-003.jpg",
+        "wordcount":"669",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359731524083/Paul-Anderson-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/1/1359731524083/Paul-Anderson-008.jpg",
+          "source":"Sportsphoto Ltd.",
+          "photographer":"Mike Mayhew/Sportsphoto",
+          "altText":"Paul Anderson",
+          "height":"276",
+          "credit":"Mike Mayhew/Sportsphoto/Sportsphoto Ltd.",
+          "caption":"The Huddersfield Giants coach, Paul Anderson, a tough prop forward in his playing days, opens the Super League season against St Helens. Photograph: Mike Mayhew/Sportsphoto.",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jan/31/hull-leeds-super-league-xviii",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-31T17:35:06Z",
+      "webTitle":"Hull raise the bar to tackle Leeds as serious Super League contenders | Andy Wilson",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jan/31/hull-leeds-super-league-xviii",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jan/31/hull-leeds-super-league-xviii",
+      "fields":{
+        "trailText":"<strong>Andy Wilson:</strong> Super League XVIII kicks off at Headingley on Friday but the long season could ruin England's World Cup hopes",
+        "headline":"Hull raise the bar to tackle Leeds as serious Super League contenders",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650693835/Hull-FC-v-Castleford-Tige-003.jpg",
+        "wordcount":"850",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hull-fc",
+        "type":"keyword",
+        "webTitle":"Hull FC",
+        "webUrl":"http://www.guardian.co.uk/sport/hull-fc",
+        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.guardian.co.uk/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.guardian.co.uk/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650690879/Hull-FC-v-Castleford-Tige-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650690879/Hull-FC-v-Castleford-Tige-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"54",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650692535/Hull-FC-v-Castleford-Tige-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650692535/Hull-FC-v-Castleford-Tige-002.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"130",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650693835/Hull-FC-v-Castleford-Tige-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650693835/Hull-FC-v-Castleford-Tige-003.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"84",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650695269/Hull-FC-v-Castleford-Tige-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650695269/Hull-FC-v-Castleford-Tige-004.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"132",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650696884/Hull-FC-v-Castleford-Tige-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650696884/Hull-FC-v-Castleford-Tige-005.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"168",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650698487/Hull-FC-v-Castleford-Tige-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650698487/Hull-FC-v-Castleford-Tige-006.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"180",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650700020/Hull-FC-v-Castleford-Tige-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650700020/Hull-FC-v-Castleford-Tige-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"228",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650701513/Hull-FC-v-Castleford-Tige-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650701513/Hull-FC-v-Castleford-Tige-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"276",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650701513/Hull-FC-v-Castleford-Tige-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/31/1359650701513/Hull-FC-v-Castleford-Tige-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Hull FC v Castleford Tigers",
+          "height":"276",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Gareth Ellis spearheaded Hull's winter recruitment drive when he joined the ambitious club from the Wests Tigers. Photograph: Gareth Copley/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/30/brian-barwick-rugby-league-chairman",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-30T13:44:18Z",
+      "webTitle":"Brian Barwick named Rugby Football League's new non-executive chairman",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/30/brian-barwick-rugby-league-chairman",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/30/brian-barwick-rugby-league-chairman",
+      "fields":{
+        "trailText":"<p>The former FA chief executive Brian Barwick is the new non-executive chairman of the Rugby Football League</p>",
+        "headline":"Brian Barwick named Rugby Football League's new non-executive chairman",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553405901/Brian-Barwick-003.jpg",
+        "wordcount":"500",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553402384/Brian-Barwick-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553402384/Brian-Barwick-001.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"54",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553404143/Brian-Barwick-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553404143/Brian-Barwick-002.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"130",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553405901/Brian-Barwick-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553405901/Brian-Barwick-003.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"84",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553407805/Brian-Barwick-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553407805/Brian-Barwick-004.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"132",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553409408/Brian-Barwick-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553409408/Brian-Barwick-005.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"168",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553411283/Brian-Barwick-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553411283/Brian-Barwick-006.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"180",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553413048/Brian-Barwick-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553413048/Brian-Barwick-007.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"228",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553414979/Brian-Barwick-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553414979/Brian-Barwick-008.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"276",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553414979/Brian-Barwick-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/30/1359553414979/Brian-Barwick-008.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "altText":"Brian Barwick",
+          "height":"276",
+          "credit":"Martin Rickett/PA",
+          "caption":"Brian Barwick is the new non-executive chairman of the Rugby Football League. Photograph: Martin Rickett/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"theguardian/2013/jan/29/rugby-football-sudan-1932-archive",
+      "sectionId":"theguardian",
+      "sectionName":"From the Guardian",
+      "webPublicationDate":"2013-01-29T07:30:00Z",
+      "webTitle":"Playing rugby between palms and a cotton patch: from the archive, 29 Jan 1932",
+      "webUrl":"http://www.guardian.co.uk/theguardian/2013/jan/29/rugby-football-sudan-1932-archive",
+      "apiUrl":"http://content.guardianapis.com/theguardian/2013/jan/29/rugby-football-sudan-1932-archive",
+      "fields":{
+        "trailText":"<p><strong>Originally published in the Manchester Guardian on 29 January 1932:</strong> Mud, heron and locusts are just some of the hazards faced by rugby football players in Sudan</p>",
+        "headline":"From the archive, 29 January 1932: Playing rugby between palms and a cotton patch",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359393257424/Cattle-herding-in-Thonyor-003.jpg",
+        "wordcount":"652",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"theguardian/series/from-the-archive",
+        "type":"series",
+        "webTitle":"From the Guardian archive",
+        "webUrl":"http://www.guardian.co.uk/theguardian/series/from-the-archive",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/from-the-archive",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.guardian.co.uk/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/sudan",
+        "type":"keyword",
+        "webTitle":"Sudan",
+        "webUrl":"http://www.guardian.co.uk/world/sudan",
+        "apiUrl":"http://content.guardianapis.com/world/sudan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359393263489/Cattle-herding-in-Thonyor-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359393263489/Cattle-herding-in-Thonyor-008.jpg",
+          "source":"Guardian",
+          "photographer":"David Levene",
+          "altText":"Cattle herding in Thonyor, Western Upper Nile, South Sudan",
+          "height":"276",
+          "credit":"David Levene/Guardian",
+          "caption":"Thonyor, Western Upper Nile, South Sudan - British rugby players met with some curious incidents in Khartoum in the 1930s. Photograph: David Levene for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/shortcuts/2013/jan/28/american-football-rugby-more-dangerous",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-28T16:50:13Z",
+      "webTitle":"American football or rugby: which is more dangerous?",
+      "webUrl":"http://www.guardian.co.uk/sport/shortcuts/2013/jan/28/american-football-rugby-more-dangerous",
+      "apiUrl":"http://content.guardianapis.com/sport/shortcuts/2013/jan/28/american-football-rugby-more-dangerous",
+      "fields":{
+        "trailText":"Barack Obama has said he thinks the sport may be too violent. But, in terms or risk, how does it measure up against the British equivalent?",
+        "headline":"American football or rugby: which is more dangerous?",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391330964/Rough-stuff---last-years--007.jpg",
+        "wordcount":"500",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nfl",
+        "type":"keyword",
+        "webTitle":"NFL",
+        "webUrl":"http://www.guardian.co.uk/sport/nfl",
+        "apiUrl":"http://content.guardianapis.com/sport/nfl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.guardian.co.uk/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.guardian.co.uk/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugby-union",
+        "type":"keyword",
+        "webTitle":"Rugby union",
+        "webUrl":"http://www.guardian.co.uk/sport/rugby-union",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.guardian.co.uk/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/homa-khaleeli",
+        "type":"contributor",
+        "webTitle":"Homa Khaleeli",
+        "webUrl":"http://www.guardian.co.uk/profile/homa-khaleeli",
+        "apiUrl":"http://content.guardianapis.com/profile/homa-khaleeli",
+        "bio":"<p>Homa Khaleeli is a staff feature writer for the Guardian</p>",
+        "r2ContributorId":"33522",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/13/1344873899281/Homa-Khaleeli-byline-pict-003.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391310933/Rough-stuff---last-years--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391310933/Rough-stuff---last-years--002.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"54",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391328152/Rough-stuff---last-years--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391328152/Rough-stuff---last-years--003.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"340",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391329631/Rough-stuff---last-years--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391329631/Rough-stuff---last-years--006.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"130",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391330964/Rough-stuff---last-years--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391330964/Rough-stuff---last-years--007.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"84",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391332599/Rough-stuff---last-years--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391332599/Rough-stuff---last-years--008.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"132",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391334000/Rough-stuff---last-years--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391334000/Rough-stuff---last-years--009.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"168",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391335460/Rough-stuff---last-years--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391335460/Rough-stuff---last-years--010.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"180",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391336926/Rough-stuff---last-years--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391336926/Rough-stuff---last-years--011.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"228",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391412569/Rough-stuff---last-years--014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/1/28/1359391412569/Rough-stuff---last-years--014.jpg",
+          "source":"EPA",
+          "altText":"Rough stuff \u2026 last year's super bowl betweem the New England Patriots and New York Giants.",
+          "height":"276",
+          "credit":"EPA",
+          "caption":"Rough stuff \u2026 last year's super bowl between the New England Patriots and New York Giants. Photograph: EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/28/super-league-financial-abyss",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-28T10:45:28Z",
+      "webTitle":"Super League clubs on brink of financial abyss, says finance expert",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/28/super-league-financial-abyss",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/28/super-league-financial-abyss",
+      "fields":{
+        "trailText":"<p>Super League clubs have combined debts of more than £60m, according to a sports finance specialist</p>",
+        "headline":"Super League clubs on brink of financial abyss, says finance expert",
+        "showInRelatedContent":"true",
+        "wordcount":"599",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"276",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League is being launched on Monday, alongside claims it is facing a 'financial abyss'. Photograph: Tom Jenkins for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/26/salford-salvation-super-league-2013",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-26T22:00:00Z",
+      "webTitle":"Salford's salvation is a timely boost for Super League's 2013 kick-off",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/26/salford-salvation-super-league-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/26/salford-salvation-super-league-2013",
+      "fields":{
+        "trailText":"<p>The rescue of Super League strugglers Salford is a shot in the arm for northern hemisphere rugby league in World Cup year</p>",
+        "headline":"Salford's salvation is a timely boost for Super League's 2013 kick-off",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214418584/Sam-Tomkins-003.jpg",
+        "wordcount":"610",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/salford-city-reds",
+        "type":"keyword",
+        "webTitle":"Salford City Reds",
+        "webUrl":"http://www.guardian.co.uk/sport/salford-city-reds",
+        "apiUrl":"http://content.guardianapis.com/sport/salford-city-reds",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theobserver/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theobserver/sport",
+        "type":"newspaper-book",
+        "webTitle":"Observer Sport",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.guardian.co.uk/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214414234/Sam-Tomkins-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214414234/Sam-Tomkins-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"54",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214417190/Sam-Tomkins-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214417190/Sam-Tomkins-002.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"130",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214418584/Sam-Tomkins-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214418584/Sam-Tomkins-003.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"84",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214419874/Sam-Tomkins-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214419874/Sam-Tomkins-004.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"132",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214421314/Sam-Tomkins-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214421314/Sam-Tomkins-005.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"168",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214422977/Sam-Tomkins-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214422977/Sam-Tomkins-006.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"180",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214424359/Sam-Tomkins-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214424359/Sam-Tomkins-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"228",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214425762/Sam-Tomkins-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214425762/Sam-Tomkins-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"276",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214425762/Sam-Tomkins-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/26/1359214425762/Sam-Tomkins-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Gareth Copley",
+          "altText":"Sam Tomkins",
+          "height":"276",
+          "credit":"Gareth Copley/Getty Images",
+          "caption":"Wigan's Sam Tomkins was joined by Super League fan Bradley Wiggins in the adverts promoting this year's competition. Photograph: Gareth Copley/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/24/wakefield-lee-smith-thumb-injury",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-24T21:39:00Z",
+      "webTitle":"Wakefield centre Lee Smith ruled out of start of Super League season",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/24/wakefield-lee-smith-thumb-injury",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/24/wakefield-lee-smith-thumb-injury",
+      "fields":{
+        "trailText":"The Wakefield centre Lee Smith will miss the start of the Super League season after suffering a nasty injury in training",
+        "headline":"Wakefield centre Lee Smith ruled out of start of Super League season",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057583245/Lee-Smith-003.jpg",
+        "wordcount":"146",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/wakefieldtrinity",
+        "type":"keyword",
+        "webTitle":"Wakefield Trinity",
+        "webUrl":"http://www.guardian.co.uk/sport/wakefieldtrinity",
+        "apiUrl":"http://content.guardianapis.com/sport/wakefieldtrinity",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057580446/Lee-Smith-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057580446/Lee-Smith-001.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"54",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057581910/Lee-Smith-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057581910/Lee-Smith-002.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"130",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057583245/Lee-Smith-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057583245/Lee-Smith-003.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"84",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057584688/Lee-Smith-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057584688/Lee-Smith-004.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"132",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057586131/Lee-Smith-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057586131/Lee-Smith-005.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"168",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057587622/Lee-Smith-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057587622/Lee-Smith-006.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"180",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057589007/Lee-Smith-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057589007/Lee-Smith-007.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"228",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057590487/Lee-Smith-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057590487/Lee-Smith-008.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"276",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057590487/Lee-Smith-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/24/1359057590487/Lee-Smith-008.jpg",
+          "source":"Getty Images",
+          "photographer":"David Rogers",
+          "altText":"Lee Smith",
+          "height":"276",
+          "credit":"David Rogers/Getty Images",
+          "caption":"Lee Smith, pictured playing for Leeds last season, suffered a gruesome training-ground injury. Photograph: David Rogers/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/23/rugby-football-league-sponsorship",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-23T17:26:28Z",
+      "webTitle":"Rugby Football League attempt to ease fears of sponsorless season",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/23/rugby-football-league-sponsorship",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/23/rugby-football-league-sponsorship",
+      "fields":{
+        "trailText":"<p>The RFL's chief executive has admitted the new season is likely to kick off next week without a sponsor for either of its domestic leagues</p>",
+        "headline":"Rugby Football League attempt to ease fears of sponsorless season",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961208687/2013-Super-League-003.jpg",
+        "wordcount":"146",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961205403/2013-Super-League-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961205403/2013-Super-League-001.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"54",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961207069/2013-Super-League-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961207069/2013-Super-League-002.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"130",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961208687/2013-Super-League-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961208687/2013-Super-League-003.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"84",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961210057/2013-Super-League-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961210057/2013-Super-League-004.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"132",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961211628/2013-Super-League-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961211628/2013-Super-League-005.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"168",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961213000/2013-Super-League-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961213000/2013-Super-League-006.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"180",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961214412/2013-Super-League-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961214412/2013-Super-League-007.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"228",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"276",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/23/1358961215874/2013-Super-League-008.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"2013 Super League",
+          "height":"276",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"The 2013 Super League will kick off this season without a title sponsor after the cashless deal with Stobart was cancelled. Photograph: Tom Jenkins/The Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/22/gareth-hock-widnes-wigan",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-22T17:51:56Z",
+      "webTitle":"Gareth Hock joins Widnes on loan amid fierce criticism from Wigan",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/22/gareth-hock-widnes-wigan",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/22/gareth-hock-widnes-wigan",
+      "fields":{
+        "trailText":"<p>The England forward has joined Widnes from Wigan, with his parent club saying he had refused to train with them in order to facilitate a move</p>",
+        "headline":"Gareth Hock joins Widnes on loan amid fierce criticism from Wigan",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876560477/Gareth-Hock--003.jpg",
+        "wordcount":"315",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/widnes-vikings",
+        "type":"keyword",
+        "webTitle":"Widnes Vikings",
+        "webUrl":"http://www.guardian.co.uk/sport/widnes-vikings",
+        "apiUrl":"http://content.guardianapis.com/sport/widnes-vikings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.guardian.co.uk/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876557706/Gareth-Hock--001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876557706/Gareth-Hock--001.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"54",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876559367/Gareth-Hock--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876559367/Gareth-Hock--002.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"130",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876560477/Gareth-Hock--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876560477/Gareth-Hock--003.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"84",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876561702/Gareth-Hock--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876561702/Gareth-Hock--004.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"132",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876562821/Gareth-Hock--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876562821/Gareth-Hock--005.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"168",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876564033/Gareth-Hock--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876564033/Gareth-Hock--006.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"180",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876565187/Gareth-Hock--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876565187/Gareth-Hock--007.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"228",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876566362/Gareth-Hock--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876566362/Gareth-Hock--008.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"276",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan. Photograph: Dave Howarth/Press Association Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876566362/Gareth-Hock--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/22/1358876566362/Gareth-Hock--008.jpg",
+          "source":"Press Association Images",
+          "photographer":"Dave Howarth",
+          "altText":"Gareth Hock ",
+          "height":"276",
+          "credit":"Dave Howarth/Press Association Images",
+          "caption":"Gareth Hock will join his brother-in-law, Kevin Brown, and former team-mate Denis Betts at Widnes after leaving Wigan on loan. Photograph: Dave Howarth/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/15/st-helens-sean-long-bailed",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-15T17:06:49Z",
+      "webTitle":"Sean Long bailed on charge of assaulting a female former tenant",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/15/st-helens-sean-long-bailed",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/15/st-helens-sean-long-bailed",
+      "fields":{
+        "trailText":"The former Great Britain and St Helens half-back Sean Long has been bailed on a charge of assaulting a female former tenant",
+        "headline":"Sean Long bailed on charge of assaulting a female former tenant",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/4/27/1303940654197/Sean-Long-003.jpg",
+        "wordcount":"120",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/4/27/1303940657994/Sean-Long-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2011/4/27/1303940657994/Sean-Long-007.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Sean Long",
+          "height":"276",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Sean Long celebrates victory in the Good Friday Hull derby in which he played on after breaking his right thumb. Photograph: Anna Gowthorpe/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/11/dave-chisnall-warrington-dies",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-11T19:48:18Z",
+      "webTitle":"Dave Chisnall,  Challenge Cup final captain for Warrington, dies at 64",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/11/dave-chisnall-warrington-dies",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/11/dave-chisnall-warrington-dies",
+      "fields":{
+        "trailText":"<p>Dave Chisnall, one of the great characters of British rugby league, has died of cancer aged 64</p>",
+        "headline":"Dave Chisnall, Challenge Cup final captain for Warrington, dies at 64",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/11/1357933477575/Warrington-at-the-Super-L-003.jpg",
+        "wordcount":"205",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.guardian.co.uk/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/11/1357933485162/Warrington-at-the-Super-L-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/11/1357933485162/Warrington-at-the-Super-L-008.jpg",
+          "source":"Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Warrington at the Super League Grand Final",
+          "height":"276",
+          "credit":"Tom Jenkins/Guardian",
+          "caption":"Warrington, pictured walking out at Super League's Grand Final in October, are mourning the death of Dave Chisnall. Photograph: Tom Jenkins for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/11/hull-kr-kris-welham-returns",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-11T17:46:17Z",
+      "webTitle":"Hull KR's Kris Welham makes return from broken ankle against Wigan",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/11/hull-kr-kris-welham-returns",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/11/hull-kr-kris-welham-returns",
+      "fields":{
+        "trailText":"The Hull KR centre Kris Welham will make his comeback from a broken ankle in Sunday's pre-season friendly against Wigan",
+        "headline":"Hull KR's Kris Welham makes return from broken ankle against Wigan",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/11/1357925097502/Greg-Eden-now-at-Hull-KR-003.jpg",
+        "wordcount":"121",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/hullkr",
+        "type":"keyword",
+        "webTitle":"Hull KR",
+        "webUrl":"http://www.guardian.co.uk/sport/hullkr",
+        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.guardian.co.uk/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/11/1357925104912/Greg-Eden-now-at-Hull-KR-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/11/1357925104912/Greg-Eden-now-at-Hull-KR-008.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":"Greg Eden, now at Hull KR",
+          "height":"276",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Greg Eden, who played for Huddersfield last season, is one of four new Hull KR signings to face Wigan in the pre-season friendly at Craven Park. Photograph: Craig Brough/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/07/salford-city-reds-stay-of-execution",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-07T19:33:00Z",
+      "webTitle":"Salford granted a month's stay of execution by the high court",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/07/salford-city-reds-stay-of-execution",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/07/salford-city-reds-stay-of-execution",
+      "fields":{
+        "trailText":"Salford have been granted a month's stay of execution by the high court after a potential investor held talks with the club and RFL",
+        "headline":"Salford granted a month's stay of execution by the high court",
+        "showInRelatedContent":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/7/1357581968272/Salford-city-stadium-003.jpg",
+        "wordcount":"511",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/salford-city-reds",
+        "type":"keyword",
+        "webTitle":"Salford City Reds",
+        "webUrl":"http://www.guardian.co.uk/sport/salford-city-reds",
+        "apiUrl":"http://content.guardianapis.com/sport/salford-city-reds",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.guardian.co.uk/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "r2ContributorId":"49942",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/7/1357581975568/Salford-city-stadium-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/1/7/1357581975568/Salford-city-stadium-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Paul Thomas",
+          "altText":"Salford city stadium",
+          "height":"276",
+          "credit":"Paul Thomas/Getty Images",
+          "caption":"The Salford City Stadium has been Salford's ground for only a season after playing at their former home, The Willows, since 1901. They share the new stadium with Sale Sharks. Photograph: Paul Thomas/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[]
+  }
+}
