@@ -40,20 +40,19 @@ object SectionController extends Controller with Logging with Paging with Format
   private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Edition(request, Configuration)
     log.info("Fetching front: " + path + "for edition " + edition)
+
     val response: ItemResponse = ContentApi.item(path, edition)
-      .tag(None)
+      .pageSize(20)
       .showEditorsPicks(true)
       .response
 
     val section = response.section map { Section(_) }
 
-    val editorsPicks = SupportedContentFilter(response.editorsPicks map { new Content(_) })
+    val editorsPicks = response.editorsPicks map { new Content(_) }
 
     val editorsPicksIds = editorsPicks map { _.id }
 
-    val latestContent = SupportedContentFilter(
-      response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-    )
+    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
 
     val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
     ModelOrResult(model, response)
