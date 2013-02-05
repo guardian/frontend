@@ -45,7 +45,7 @@ object CommonSwitches {
     initiallyOn = true)
 
   val StoryPackageSwitch = DefaultSwitch("story-package",
-    "Switch this switch off to experimental story-packages.",
+    "Switch this switch off to disable experimental story-packages.",
     initiallyOn = true)
 
   val all: Seq[Switchable] = Seq(
