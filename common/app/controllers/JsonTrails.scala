@@ -5,19 +5,7 @@ import common._
 import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
 
-trait Formats extends Paging with Results {
-
-  /*
-   * Key/value of paging param name to default value
-   */
-  def validFormats: Seq[String]
-
-  /**
-   * Confirm it's a valid format
-   */
-  protected def checkFormat(format: String): Option[String] = {
-    validFormats.find(_ == format)
-  }
+trait JsonTrails extends Paging with Results {
 
   /**
    * Render the trails as json

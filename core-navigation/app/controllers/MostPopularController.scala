@@ -8,30 +8,37 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Akka
 import feed.MostPopularAgent
 
-object MostPopularController extends Controller with Logging with Formats {
+object MostPopularController extends Controller with Logging {
 
   import play.api.Play.current
 
-  val validFormats: Seq[String] = Seq("html", "json")
+  def renderGlobalJson() = renderJson("/")
 
-  def render(path: String, format: String) = Action { implicit request =>
+  def renderJson(path: String) = Action { implicit request =>
+    mostPopular(path, "json")
+  }
 
+  def renderGlobal() = render("/")
+
+  def render(path: String) = Action { implicit request =>
+    mostPopular(path, "html")
+  }
+
+  private def mostPopular(path: String, format: String)(implicit request: RequestHeader) = {
     val edition = Edition(request, Configuration)
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", _)).toList
-
     val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
 
     Async {
-      promiseOfSectionPopular.map { sectionPopular =>
-        (sectionPopular ++ globalPopular) match {
-          case Nil => NotFound
-          case popular => renderMostPopular(popular, format)
-        }
+      promiseOfSectionPopular.map {
+        sectionPopular =>
+          (sectionPopular ++ globalPopular) match {
+            case Nil => NotFound
+            case popular => renderMostPopular(popular, format)
+          }
       }
     }
   }
-
-  def renderGlobal(format: String) = render("/", format)
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
     log.info("Fetching most popular: " + path + " for edition " + edition)
@@ -48,23 +55,20 @@ object MostPopularController extends Controller with Logging with Formats {
   }
 
   private def renderMostPopular(popular: Seq[MostPopular], format: String)(implicit request: RequestHeader) = {
-
-    checkFormat(format).map { validFormat =>
-      Cached(900) {
-        if (validFormat == "json") {
-          JsonComponent(views.html.fragments.mostPopular(popular, 5))
-        } else {
-          val page = new Page(
-            Some("http://www.guardian.co.uk/"),
-            "most-popular",
-            "most-popular",
-            "Most viewed", // yep, bit inconsistent... URLs say "most-viewed", too
-            "GFE:Most Popular"
-          )
-          Ok(Compressed(views.html.mostPopular(page, popular)))
-        }
+    Cached(900) {
+      if (format == "json") {
+        JsonComponent(views.html.fragments.mostPopular(popular, 5))
+      } else {
+        val page = new Page(
+          Some("http://www.guardian.co.uk/"),
+          "most-popular",
+          "most-popular",
+          "Most viewed", // yep, bit inconsistent... URLs say "most-viewed", too
+          "GFE:Most Popular"
+        )
+        Ok(Compressed(views.html.mostPopular(page, popular)))
       }
-    } getOrElse (BadRequest)
+    }
   }
 
 }

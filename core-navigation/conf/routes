@@ -4,10 +4,10 @@
 
 # For dev machines
 GET    /assets/*file                    controllers.Assets.at(path="/public", file)
-GET    /most-viewed                     controllers.MostPopularController.renderGlobal(format = "html")
-GET    /most-viewed.:format             controllers.MostPopularController.renderGlobal(format)
-GET    /most-viewed/*path.:format       controllers.MostPopularController.render(path, format)
-GET    /most-viewed/*path               controllers.MostPopularController.render(path, format = "html")
-GET    /top-stories                     controllers.TopStoriesController.render(format = "html")
-GET    /top-stories.:format             controllers.TopStoriesController.render(format)
+GET    /most-viewed                     controllers.MostPopularController.renderGlobal()
+GET    /most-viewed.json                controllers.MostPopularController.renderGlobalJson()
+GET    /most-viewed/*path.json          controllers.MostPopularController.renderJson(path)
+GET    /most-viewed/*path               controllers.MostPopularController.render(path)
+GET    /top-stories                     controllers.TopStoriesController.render()
+GET    /top-stories.json                controllers.TopStoriesController.renderJson()
 GET    /related/*path                   controllers.RelatedController.render(path)

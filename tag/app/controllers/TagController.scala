@@ -12,15 +12,23 @@ import play.api.libs.concurrent.Akka
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
-object TagController extends Controller with Logging with Formats {
+object TagController extends Controller with Logging with JsonTrails {
 
-  val validFormats = Seq("html", "json")
-
-  def render(path: String, format: String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
     val promiseOfTag = Akka.future(lookup(path))
     Async {
       promiseOfTag.map {
-        case Left(model) => renderTag(model, format)
+        case Left(model) => renderTag(model, "html")
+        case Right(notFound) => notFound
+      }
+    }
+  }
+
+  def renderJson(path: String) = Action { implicit request =>
+    val promiseOfTag = Akka.future(lookup(path))
+    Async {
+      promiseOfTag.map {
+        case Left(model) => renderTag(model, "json")
         case Right(notFound) => notFound
       }
     }
@@ -48,13 +56,10 @@ object TagController extends Controller with Logging with Formats {
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {
-    checkFormat(format).map { format =>
-      if (format == "json") {
-        renderJsonTrails(model.trails)
-      } else {
-        Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
-      }
-    } getOrElse (BadRequest)
+    if (format == "json") {
+      renderJsonTrails(model.trails)
+    } else {
+      Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
+    }
   }
-
 }

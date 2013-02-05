@@ -10,14 +10,10 @@ import play.api.libs.concurrent.Akka
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
-object SectionController extends Controller with Logging with Paging with Formats {
-
-  val validFormats: Seq[String] = Seq("html", "json")
+object SectionController extends Controller with Logging with Paging with JsonTrails {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
-
-    // make sure a valid format has been requested
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "html")
@@ -28,7 +24,6 @@ object SectionController extends Controller with Logging with Paging with Format
 
   def renderJson(path: String) = Action { implicit request =>
     val promiseOfSection = Akka.future(lookup(path))
-    // make sure a valid format has been requested
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "json")
@@ -59,13 +54,10 @@ object SectionController extends Controller with Logging with Paging with Format
   }
 
   private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
-    checkFormat(format).map { format =>
-      if (format == "json") {
-        renderJsonTrails(model.editorsPicks ++ model.latestContent)
-      } else {
-        Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
-      }
-    } getOrElse (BadRequest)
+    if (format == "json") {
+      renderJsonTrails(model.editorsPicks ++ model.latestContent)
+    } else {
+      Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
+    }
   }
-
 }
