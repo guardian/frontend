@@ -9,12 +9,37 @@ define([
 
     function StoryPackage(config) {
         //Config
-        var numPackages = 2, 
-            package = parseInt(common.queryParams.package, 10) || 0;
-            path = '/story-package/version/' + package,
-            id = config.page.pageId;
+        var that = this,
+            showPrototypes = Math.random() > 0.5,
+            numPackages = 2, 
+            id = config.page.pageId
+            prototypeUrl,
+            relatedUrl;
 
-        package = package || Math.floor(1 + Math.random()*numPackages);
+
+        this.init = function (){
+            var package, 
+                path;
+
+            if (showPrototypes) {
+                package = parseInt(common.queryParams.package, 10) || 0;
+                package = package || Math.floor(1 + Math.random()*numPackages);
+                prototypeUrl = '/story-package/version/' + package;
+            } else if (config.page.showInRelated) {
+                relatedUrl = config.page.coreNavigationUrl + '/related/' + config.page.pageId;
+            }
+        };
+
+        this.loadPrototype = function (path){
+            common.mediator.on('modules:story-package:failed', function(){
+                that.loadRelated(relatedUrl);
+            });
+            this.load(prototypeUrl);
+        }
+
+        this.loadRelated = function (){
+            this.load(relatedUrl);
+        }
 
         // View        
         this.view = {
@@ -31,18 +56,15 @@ define([
             common.mediator.emit('modules:tabs:render');
         });
 
-        this.load = function () {
-            var url = path + id;
+        this.load = function (path) {
+            var url = path;
             reqwest({
                 url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'StoryPackage',
                 success: function (json) {
                     if (json.html !== '') {
                         common.mediator.emit('modules:story-package:loaded', json);
                     } else {
-                        
+                        common.mediator.emit('modules:story-package:failed');
                     }
                 },
                 error: function () {

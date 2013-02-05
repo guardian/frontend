@@ -71,7 +71,7 @@ define([
             */
             var story = new StoryPackage(config);
 
-            story.load();
+            story.init();
         }
     };
 
