@@ -13,7 +13,7 @@ trait HttpRecorder {
     val fileName = name(url, headers)
     get(fileName).map { toResponse }.getOrElse {
       val response = fetch
-      put(name(url, headers), fromResponse(response))
+      put(fileName, fromResponse(response))
       response
     }
   }

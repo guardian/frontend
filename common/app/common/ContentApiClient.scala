@@ -14,8 +14,7 @@ trait ApiQueryDefaults { self: Api =>
 
   val references = "pa-football-competition,pa-football-team"
 
-  //todo change to 'picture,embed' once embeds are live in content api
-  val inlineElements = "picture"
+  val inlineElements = "picture,witness"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
@@ -42,11 +41,11 @@ trait ApiQueryDefaults { self: Api =>
 trait DelegateHttp extends Http {
 
   private val dispatch = new DispatchHttp with Logging {
-    import Configuration.{ proxy => proxyConfig, _ }
+    import Configuration.{ proxy => proxyConfig, contentApi => apiConfig, _ }
 
     override lazy val maxConnections = 100
     override lazy val connectionTimeoutInMs = 200
-    override lazy val requestTimeoutInMs = 2000
+    override lazy val requestTimeoutInMs = apiConfig.timeout
     override lazy val compressionEnabled = true
 
     override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
