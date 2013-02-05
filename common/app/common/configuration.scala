@@ -42,6 +42,8 @@ class GuardianConfiguration(
     lazy val key = configuration.getStringProperty("content.api.key") getOrElse {
       throw new IllegalStateException("Content Api Key not configured")
     }
+
+    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object proxy {
