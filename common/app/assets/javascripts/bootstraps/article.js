@@ -63,13 +63,13 @@ define([
             }
         },
 
-        loadStoryPackage: function() {
-
-            console.log('load');
-
-            var story = new StoryPackage({
-                id: window.location.pathname
-            });
+        loadStoryPackage: function(config) {
+            /*
+            var host = config.page.coreNavigationUrl,
+                pageId = config.page.pageId,
+                edition = config.page.edition;
+            */
+            var story = new StoryPackage(config);
 
             story.load();
         }
@@ -77,16 +77,16 @@ define([
 
     var ready = function(config) {
 
-        modules.loadStoryPackage();
-
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
         }
 
         // if (config.page.showInRelated) {
         //     modules.related(config);
+        // } else {
+        //    modules.loadStoryPackage();
         // }
-        
+        modules.loadStoryPackage(config);
         
         if(config.page.section === "football") {
             modules.matchNav(config);

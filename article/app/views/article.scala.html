@@ -36,18 +36,15 @@
 		      @fragments.articleBody(article)
         </div>
 
-        <footer id="js-story-package" style="margin-bottom:16px;">
-        </footer>
     </article>
 
-    <aside class="story-package"></aside>
-
-    <!-- 
     @if(storyPackage.nonEmpty) {
-        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
+        <aside id="story-package">
+            @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
+        </aside>
     } else {
-        <div id="js-related"></div>
+        <aside id="js-related"></aside>
     }
-    -->
+
     <div id="js-popular"></div>
 }

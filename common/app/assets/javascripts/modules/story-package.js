@@ -9,15 +9,18 @@ define([
 
     function StoryPackage(config) {
         //Config
-        var path = '/story-package/list-version/2',
-            id = config.id;
+        var numPackages = 2, 
+            package = parseInt(common.queryParams.package, 10) || 0;
+            path = '/story-package/version/' + package,
+            id = config.page.pageId;
 
-        // View
-        
+        package = package || Math.floor(1 + Math.random()*numPackages);
+
+        // View        
         this.view = {
             render: function (response) {
                 console.log(response);
-                document.getElementById('js-story-package').innerHTML = response.html;
+                document.getElementById('story-package').innerHTML = response.html;
                 common.mediator.emit('modules:story-package:render');
             }
         };
@@ -36,7 +39,11 @@ define([
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'StoryPackage',
                 success: function (json) {
-                    common.mediator.emit('modules:story-package:loaded', json);
+                    if (json.html !== '') {
+                        common.mediator.emit('modules:story-package:loaded', json);
+                    } else {
+                        
+                    }
                 },
                 error: function () {
                     common.mediator('module:error', 'Failed to load story-package', 'story-package.js');

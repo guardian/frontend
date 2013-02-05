@@ -17,9 +17,9 @@ GET     /top-stories.:format                                controllers.TopStori
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Events
-GET    /story-package/list/*contentId             controllers.StoryPackageController.simpleList(contentId)
-GET    /story-package/list-version/1/*contentId             controllers.StoryPackageController.version1List(contentId)
-GET    /story-package/list-version/2/*contentId             controllers.StoryPackageController.version2List(contentId)
+GET    /story-package/version/0/*contentId        controllers.StoryPackageController.simpleList(contentId)
+GET    /story-package/version/1/*contentId        controllers.StoryPackageController.version1List(contentId)
+GET    /story-package/version/2/*contentId       controllers.StoryPackageController.version2List(contentId)
 
 GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
 GET    /event/timeline/*eventId                   controllers.EventController.timeline(eventId)

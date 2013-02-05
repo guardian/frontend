@@ -1,6 +1,6 @@
 @(events: Seq[Event])
 
-@events.map { event =>
+@events.toList.zipWithRowInfo.map{ case (event, info) =>
 
     <div class="event-block">
         <h2 class="type-2 article-zone">@event.title</h2>
