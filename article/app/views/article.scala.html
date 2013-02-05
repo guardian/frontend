@@ -7,29 +7,20 @@
 
 	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
-        <header>
+        <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
 
             @fragments.headline(article.headline)
 
             @fragments.standfirst(article)
-
         </header>
+
+        <div class="after-header"></div>
 
         @if(!article.isLive) {
             @article.mainPicture.map{ mainPicture =>
                 @article.mainPicture(width=220).map{ smallCrop =>
-                <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                    <img class="maxed main-image" src="@smallCrop.url"
-                        data-force-upgrade="true"
-                        data-thumb-width="@smallCrop.width"
-                        data-fullsrc="@mainPicture.url"
-                        data-full-width="@mainPicture.width"
-                        itemprop="contentURL" />
-                    @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-                    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
-                    }
-                </figure>
+                    @fragments.img(mainPicture, smallCrop)
                 }
             }
         }
@@ -40,9 +31,9 @@
             @fragments.autoUpdate()
         }
 
-        <div class="article-body" itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-		  @fragments.articleBody(article)
-
+        <div class="article-body from-content-api @if(article.isLive) {live-blog}" 
+            itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+		      @fragments.articleBody(article)
         </div>
     </article>
 

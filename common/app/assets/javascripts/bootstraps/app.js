@@ -5,7 +5,9 @@ define('bootstraps/app', [
     "bootstraps/front",
     "bootstraps/football",
     "bootstraps/article",
-    "bootstraps/gallery"
+    "bootstraps/video",
+    "bootstraps/gallery",
+    "modules/pageconfig"
 ], function (
     domReady,
     Router,
@@ -13,10 +15,15 @@ define('bootstraps/app', [
     Front,
     Football,
     Article,
-    Gallery
+    Video,
+    Gallery,
+    pageConfig
 ) {
 
-    var routes = function(config) {
+    var routes = function(rawConfig) {
+
+        var config = pageConfig(rawConfig);
+
         domReady(function() {
             var r = new Router();
 
@@ -40,8 +47,12 @@ define('bootstraps/app', [
                 Article.init({url: window.location.pathName}, config);
             }
 
+            if (config.page.contentType === "Video") {
+                Video.init({url: window.location.pathName}, config);
+            }
+
             if (config.page.contentType === "Gallery") {
-                Gallery.init();
+                Gallery.init({url: window.location.pathName}, config);
             }
 
             //Kick it all off

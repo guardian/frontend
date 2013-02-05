@@ -1,12 +1,12 @@
-@(trails: Seq[Trail], numWithImages: Int = 5, related: Boolean = false)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, numWithImages: Int = 5, related: Boolean = false, showFeatured: Boolean = true)
 
 <ul class="unstyled">
-    @trails.zipWithRowInfo.map{ case (trail, info) =>
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         <li class="trail t@info.rowNum @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }" data-link-name="trail">
             @info.rowNum match {
-                case 1                            => { @fragments.trails.featured(trail, info.rowNum, related) }
-                case row if row <= numWithImages  => { @fragments.trails.thumbnail(trail, info.rowNum, related) }
-                case _                            => { @fragments.trails.headline(trail, info.rowNum, related) }
+                case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
+                case thumbnailRow if thumbnailRow <= numWithImages  => { @fragments.trails.thumbnail(trail, thumbnailRow, related) }
+                case headlineRow                                    => { @fragments.trails.headline(trail, headlineRow, related) }
             }
         </li>
     }

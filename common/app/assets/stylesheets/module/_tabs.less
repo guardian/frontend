@@ -18,7 +18,6 @@
 }
 
 .tabs a {
-    .type-4;
     text-align: center;
     color: #545454;
     padding: @baseline*2;
@@ -41,7 +40,7 @@
 .tabs .tabs-selected a {
     background: #ffffff;
     color: #333333;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .tabs a:active {
@@ -53,4 +52,26 @@
     margin: 0px @gutter;
     border: @tabBorderWidth solid @mushroom;
     border-top: none;
+}
+
+// used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
+
+.tabs-multiple {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.tabs-multiple li {
+    display: table-cell;
+    border-left: 2px solid #ffffff;
+    width: auto;
+    float: none;
+}
+
+.tabs-multiple li:first-child,
+.tabs-multiple li:last-child {
+    border-left: none;
 }

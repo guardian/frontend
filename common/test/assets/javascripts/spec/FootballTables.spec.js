@@ -28,7 +28,7 @@ define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, Fo
 
             runs(function(){
                 expect(mockReqwest.wasCalled).toBeTruthy();
-                expect(mockReqwest.mostRecentCall.args[0].url.indexOf('/football/api/fronttables?&competitionId=100')).toEqual(0);
+                expect(mockReqwest.mostRecentCall.args[0].url.indexOf('/football/api/competitiontable?&competitionId=100')).toEqual(0);
             });
         });
 

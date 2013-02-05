@@ -3,8 +3,9 @@ package views.support
 import common._
 import java.net.URLEncoder._
 import model._
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -15,6 +16,7 @@ import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
+import conf.Configuration
 
 sealed trait Style {
   val className: String
@@ -36,6 +38,7 @@ object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
     case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
+    case (key, value: Seq[(String, Any)]) => "'%s': [%s]".format(key, value.map("{" + MetadataJson(_) + "}").mkString(","))
     case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
   }
 }
@@ -123,7 +126,8 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
+case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
+
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
       fig.attr("itemprop", "associatedMedia")
@@ -132,11 +136,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner {
 
       fig.getElementsByTag("img").foreach { img =>
         img.attr("itemprop", "contentURL")
-        fig.attr("class", img.attr("width").toInt match {
-          case width if width <= 220 => "img-base inline-image"
-          case width if width < 460 => "img-median inline-image"
-          case width => "img-extended"
-        })
+        Option(img.attr("width")).filter(_.isInt) foreach { width =>
+          fig.attr("class", width.toInt match {
+            case width if width <= 220 => "img-base inline-image"
+            case width if width < 460 => "img-median inline-image"
+            case width => "img-extended"
+          })
+        }
       }
 
       fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
@@ -194,7 +200,7 @@ object ContributorLinks {
 }
 
 object OmnitureAnalyticsData {
-  def apply(page: MetaData, jsSupport: String, path: String): Html = {
+  def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
 
     val data = page.metaData.map { case (key, value) => key -> value.toString }
     val pageCode = data.get("page-code").getOrElse("")
@@ -213,6 +219,8 @@ object OmnitureAnalyticsData {
       "g" -> path,
       "ns" -> "guardian",
       "pageName" -> pageName,
+      // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
+      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,
@@ -278,4 +286,8 @@ object cleanTrailText {
   def apply(text: String): Html = {
     `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
+}
+
+object StripHtmlTags {
+  def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }

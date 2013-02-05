@@ -1,5 +1,15 @@
-@(image: Image, images: Images)
+@(mainPicture: Image, smallCrop: Image)
 
-<img src=""
-     data-mediansrc=""
-     data-fullsrc=""/>
+<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+    <img class="maxed main-image" src="@smallCrop.url"
+        data-force-upgrade="true"
+        data-thumb-width="@smallCrop.width"
+        data-fullsrc="@mainPicture.url"
+        data-full-width="@mainPicture.width"
+        itemprop="contentURL"
+        alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"
+        title="@StripHtmlTags(mainPicture.caption.getOrElse(""))" />
+    @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
+    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+    }
+</figure>

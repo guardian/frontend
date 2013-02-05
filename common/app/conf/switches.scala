@@ -36,9 +36,17 @@ object CommonSwitches {
     "If this switch is turned on then a separate call to Omniture will be made to help verify our tracking.",
     initiallyOn = false)
 
+  val NetworkFrontAppealSwitch = DefaultSwitch("network-front-appeal",
+    "Switch to show the appeal trailblock on the network front.",
+    initiallyOn = false)
+
+  val WitnessVideoSwitch = DefaultSwitch("witness-video",
+    "Switch this switch off to disable witness video embeds.",
+    initiallyOn = true)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch
+    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch
   )
 }
 

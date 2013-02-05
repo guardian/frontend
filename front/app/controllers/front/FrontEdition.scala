@@ -32,12 +32,7 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
         //only dedupe on visible trails
         usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.url)
 
-        val trailSize = trailblock.description.numItemsVisible match {
-          case 1 => 1
-          case other => other * 2
-        }
-
-        Trailblock(trailblock.description, deDupedTrails take (trailSize))
+        Trailblock(trailblock.description, deDupedTrails)
     }
   }
 

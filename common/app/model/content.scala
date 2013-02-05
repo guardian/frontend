@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import common.Reference
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
@@ -14,10 +15,9 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val images: Seq[Image] = delegate.mediaAssets.filter { _.`type` == "picture" } map { Image(_) }
 
-  lazy val videoImages: Seq[Image] = delegate.mediaAssets.filter { _.`type` == "video" } map { videoAsset =>
-    val imageAsset = videoAsset.copy(file = Option(videoAsset.fields.get("stillImageUrl")))
-    Image(imageAsset)
-  }
+  lazy val videoImages: Seq[Image] = delegate.mediaAssets.filter(_.`type` == "video")
+    .filter(_.safeFields.isDefinedAt("stillImageUrl"))
+    .map { videoAsset => Image(videoAsset.copy(file = videoAsset.safeFields.get("stillImageUrl"))) }
 
   lazy val id: String = delegate.id
   lazy val sectionName: String = delegate.sectionName.getOrElse("")
@@ -29,6 +29,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val webUrl: String = delegate.webUrl
   lazy val headline: String = fields("headline")
   lazy val webTitle: String = delegate.webTitle
+  lazy val wordCount: String = fields.get("wordcount").getOrElse("")
 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
@@ -44,6 +45,8 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
 
+  lazy val isExpired = delegate.isExpired.getOrElse(false)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -58,8 +61,9 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
     "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
     "page-code" -> fields("internalPageCode"),
-    "isLive" -> isLive
-  )
+    "isLive" -> isLive,
+    "wordCount" -> wordCount
+  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
 
   override lazy val cacheSeconds = {
     if (isLive) 5
@@ -93,5 +97,5 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   lazy val size = images.size
   lazy val contentType = "Gallery"
   override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }

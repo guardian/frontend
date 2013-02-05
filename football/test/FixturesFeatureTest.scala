@@ -53,22 +53,6 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       }
     }
 
-    scenario("Competition fixtures filter") {
-
-      given("I am on the the fixtures page")
-      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
-        import browser._
-
-        when("I click the filter to premier league link")
-
-        findFirst("[data-link-name='Premier League']").click()
-        browser.await()
-
-        then("I should navigate to the premier league fixtures page")
-        find(".match-desc").map(_.getText) should contain("QPR v Norwich")
-      }
-    }
-
     scenario("Link tracking") {
       given("I visit the fixtures page")
       HtmlUnit("/football/fixtures/2012/oct/20") { browser =>

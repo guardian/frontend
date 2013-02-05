@@ -41,7 +41,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
           then("I should see the news trailblock")
           val news = $(".zone-news")
-          news.find(".trail-headline") should have length (9)
+          news.find(".trail-headline") should have length (4)
       }
     }
 
@@ -257,20 +257,20 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I visit the network front")
 
       then("I should see 10 (5 of whch are hidden) Top stories")
-      Front.ukEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2, style = Some(Featured)))
-      Front.usEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, 2, style = Some(Featured)))
+      Front.ukEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, style = Some(Featured), showMore = true))
+      Front.usEditions("front").descriptions(0) should be(TrailblockDescription("", "News", 5, style = Some(Featured), showMore = true))
 
       and("I should see 10 (5 of which are hidden) Sport (Sports in US) stories")
-      Front.ukEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, 1, style = Some(Featured)))
-      Front.usEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, 1, style = Some(Featured)))
+      Front.ukEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sport", 5, style = Some(Featured), showMore = true))
+      Front.usEditions("front").descriptions(1) should be(TrailblockDescription("sport", "Sports", 5, style = Some(Featured), showMore = true))
 
       and("I should see 6 (3 of which are hidden) Comment is Free stories")
-      Front.ukEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0, style = Some(Featured)))
-      Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, 0, style = Some(Featured)))
+      Front.ukEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, style = Some(Featured), showMore = true))
+      Front.usEditions("front").descriptions(2) should be(TrailblockDescription("commentisfree", "Comment is free", 3, style = Some(Featured), showMore = true))
 
       and("I should see 1 Culture story")
-      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
-      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 3, style = Some(Thumbnail), showMore = true))
+      Front.usEditions("front").descriptions(3) should be(TrailblockDescription("culture", "Culture", 3, style = Some(Thumbnail), showMore = true))
 
       and("I should see 1 Business story")
       Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
@@ -280,12 +280,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
       Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
 
+      and("I should see 1 Technology story")
+      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("technology", "Technology", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("technology", "Technology", 1, style = Some(Thumbnail)))
+
       and("I should see 1 Money story")
-      Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("money", "Money", 1, style = Some(Thumbnail)))
 
       and("I should see 1 Travel story")
-      Front.ukEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
-      Front.usEditions("front").descriptions(6) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
+      Front.ukEditions("front").descriptions(8) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(7) should be(TrailblockDescription("travel", "Travel", 1, style = Some(Thumbnail)))
     }
 
     /**
@@ -296,8 +300,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'sport' section front")
 
       then("I should see the top 10 stories across sport")
-      Front.ukEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sport", 5, style = Some(Featured)))
-      Front.usEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sports", 5, style = Some(Featured)))
+      Front.ukEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sport", 5, style = Some(Featured), showMore = true))
+      Front.usEditions("sport").descriptions(0) should be(TrailblockDescription("sport", "Sports", 5, style = Some(Featured), showMore = true))
     }
 
     scenario("Sub-sections on the Sport section front show a number of top stories") {
@@ -305,7 +309,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'sport' section front")
 
       then("the 'Football' sub-section should contain up to 6 stories")
-      Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3, style = Some(Featured)))
+      Front.ukEditions("sport").descriptions(1) should be(TrailblockDescription("football", "Football", 3, style = Some(Featured), showMore = true))
 
       and("the 'Cricket' sub-section should contain up to 1 story")
       Front.ukEditions("sport").descriptions(2) should be(TrailblockDescription("sport/cricket", "Cricket", 1, style = Some(Thumbnail)))
@@ -361,8 +365,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       given("I am on the 'culture' section front")
 
       then("I should see the top 10 stories across culture")
-      Front.ukEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured)))
-      Front.usEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured)))
+      Front.ukEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured), showMore = true))
+      Front.usEditions("culture").descriptions(0) should be(TrailblockDescription("culture", "Culture", 5, style = Some(Featured), showMore = true))
     }
 
     scenario("Sub-sections on the Culture section front show a number of top stories") {

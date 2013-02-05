@@ -1,17 +1,29 @@
 @front  @network-front
 Feature: Network front
 
-    Scenario: Trailblock exapnders
+    Scenario Outline: Users can view more top stories for a section
         Given I visit the network front
-        Then expanders for each block should show a maximum of 5 stories
+        Then the '<section>' section should have a 'Show more' cta that loads in more top stories
         
-    Scenario: Click show and hide to expand and collapse each section
+        Examples:
+            | section         |
+            | Sport           |
+            | Comment is free |
+            | Culture         |
+         
+    Scenario: Users can hide sections
         Given I visit the network front 
-        Then I can click "Hide" to collapse a section
-        	And I can click "Show" to expand a section
-
-    Scenario: Collapsed section will remain collapsed on refresh
+        When I hide a section
+        Then the section will be hidden
+    
+    Scenario: Users can show hidden sections
         Given I visit the network front
-            And I hide a section
+            And a section is hidden 
+        When I show a section
+        Then the section will be shown
+
+    Scenario: Hidden section will remain hidden on refresh
+        Given I visit the network front
+            And a section is hidden
         When I refresh the page
-        Then the collapsed section will stay collapsed
+        Then the section will be hidden

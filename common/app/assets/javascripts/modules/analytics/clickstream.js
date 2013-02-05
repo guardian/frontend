@@ -2,8 +2,8 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
     var Clickstream = function (opts) {
 
-            opts = opts || {};
-            var filters = opts.filter || [];
+        opts = opts || {};
+        var filters = opts.filter || [];
 
         var filterSource = function (element) {
             return filters.filter(function (f) {
@@ -11,10 +11,31 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             });
         };
 
+        var hasSameHost = function(url) {
+            var urlHost,
+                urlProtocol,
+                host,
+                protocol;
+
+            url = url || '';
+            urlHost = url.match(/:\/\/(.[^\/]+)/);
+
+            if(urlHost) {
+                urlHost = urlHost[1];
+                urlProtocol = url.match(/^(https?:)\/\//);
+                urlProtocol = urlProtocol ? urlProtocol[1] : undefined;
+                host = window.location.hostname;
+                protocol = window.location.protocol;
+            }
+
+            // Lack of a urlHost implies a relative url
+            return !urlHost || (urlHost === host && urlProtocol === protocol);
+        };
+
         var getTag = function (element, tag) {
 
             var elementName = element.tagName.toLowerCase(),
-                dataLinkName = element.getAttribute("data-link-name");
+                dataLinkName = element.getAttribute('data-link-name');
 
             if (elementName === 'body') {
                 return tag.reverse().join(' | ');
@@ -28,19 +49,24 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
         };
 
         // delegate, emit the derived tag
-        bean.add(document.body, "click", function (event) {
-            var target, dataIsXhr, href, isXhr, isInternalAnchor;
+        bean.add(document.body, 'click', function (event) {
+            var target, dataIsXhr, href, isSamePage, isSameHost;
 
             if (filterSource(event.target.tagName.toLowerCase()).length > 0) {
 
                 target = event.target;
-                dataIsXhr = target.getAttribute("data-is-ajax");
-                href = target.getAttribute("href");
+                dataIsXhr = target.getAttribute('data-is-ajax');
+                href = target.getAttribute('href');
 
-                isXhr = (dataIsXhr) ? true : false;
-                isInternalAnchor = (href && (href.indexOf('#') === 0)) ? true : false;
+                isSamePage = (
+                    !!dataIsXhr ||                             // xhr
+                    (href && (href.indexOf('#') === 0)) ||     // internal anchor
+                    'button' === target.nodeName.toLowerCase() // UI button
+                );
+                isSameHost = hasSameHost(href);
 
-                common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isXhr, isInternalAnchor]);
+                common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isSamePage, isSameHost]);
+
             } else {
                 return false;
             }

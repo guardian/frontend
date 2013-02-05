@@ -1,7 +1,7 @@
 @(urlBase: String, competitionName: Option[String] = None, competitionUrl: Option[String] = None)(implicit request: RequestHeader)
 @import common._
 
-<h3 class="article-zone type-1">
+<h3 class="article-zone type-2">
     <a class="zone-color" href="@competitionUrl.getOrElse("/football")" data-link-name="football index">@competitionName.getOrElse("Football")</a>
 </h3>
 <div class="box-indent">

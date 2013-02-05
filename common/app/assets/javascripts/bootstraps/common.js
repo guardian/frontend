@@ -12,7 +12,8 @@ define([
     'modules/images',
     'modules/navigation/controls',
     'modules/navigation/top-stories',
-    "modules/related",
+    'modules/navigation/sections',
+    'modules/related',
     'modules/popular',
     'modules/expandable',
     'modules/fonts',
@@ -33,8 +34,9 @@ define([
     Router,
     Errors,
     Images,
-    NavigationControls,
+    Control,
     TopStories,
+    Sections,
     Related,
     Popular,
     Expandable,
@@ -59,8 +61,21 @@ define([
             new Images().upgrade();
         },
 
-        transcludeNavigation: function (config) {
-            new NavigationControls().init();
+        initialiseNavigation: function (config) {
+           
+            // the section panel
+            new Sections().init();
+
+            // the toolbar
+            var t = new Control({id: 'topstories-control-header'}),
+                s = new Control({id: 'sections-control-header'});
+
+            t.init();
+            s.init();
+
+            common.mediator.on('modules:topstories:render', function(args) {
+                t.show();
+            });
         },
 
         transcludeTopStories: function (config) {
@@ -85,13 +100,16 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular/' + edition + (section ? '/' + section : ''),
-                domContainer = document.getElementById('js-popular'),
-                p = new Popular(domContainer).load(url);
+            var url = host + '/most-popular' + (section ? '/' + section : ''),
+                domContainer = document.getElementById('js-popular');
+            
+            if (domContainer) {
+                new Popular(domContainer).load(url);
+                common.mediator.on('modules:popular:render', function() {
+                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                });
+            }
 
-            common.mediator.on('modules:popular:render', function() {
-                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-            });
         },
 
         showTabs: function() {
@@ -103,12 +121,15 @@ define([
             if(config.switches.webFonts) {
                 showFonts = true;
             }
+            
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+            
+            var f = new Fonts(fontStyleNodes, fileFormat);
             if (showFonts) {
-                new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                f.loadFromServerAndApply();
             } else {
-                Fonts.clearFontsFromStorage();
+                f.clearFontsFromStorage();
             }
         },
 
@@ -121,8 +142,10 @@ define([
                 o = new Omniture(null, config).init();
         },
 
-        loadOphanAnalytics: function () {
-            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
+        loadOphanAnalytics: function (config) {
+            require([config.page.ophanUrl], function (Ophan) {
+                Ophan.startLog();
+            });
         },
 
         loadAdverts: function (config) {
@@ -142,12 +165,11 @@ define([
         modules.upgradeImages();
         modules.showTabs();
 
-        modules.transcludeNavigation(config);
+        modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
 
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
-
 
         modules.showRelativeDates();
     };
@@ -156,7 +178,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics();
+            modules.loadOphanAnalytics(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
         });

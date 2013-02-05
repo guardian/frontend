@@ -3,7 +3,9 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                 controllers.Assets.at(path="/public", file)
 
-
-GET     /*path                      controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>                     controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*>.:format             controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>            controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format    controllers.TagController.render(path, format)

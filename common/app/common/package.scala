@@ -2,8 +2,9 @@ package common
 
 import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
+import play.api.mvc.Result
 
-object `package` extends implicits.Strings with implicits.Requests {
+object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
     try {
@@ -12,6 +13,16 @@ object `package` extends implicits.Strings with implicits.Requests {
       case ApiError(404, message) =>
         log.info("Got a 404 while calling content api: " + message)
         None
+    }
+  }
+
+  def suppressApi404[T](block: => Either[T, Result])(implicit log: Logger): Either[T, Result] = {
+    try {
+      block
+    } catch {
+      case ApiError(404, message) =>
+        log.info("Got a 404 while calling content api: " + message)
+        Right(NotFound)
     }
   }
 

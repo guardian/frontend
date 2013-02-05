@@ -7,8 +7,8 @@ import sbtassembly.Plugin.MergeStrategy
 import templemore.xsbt.cucumber.CucumberPlugin
 import RequireJsPlugin._
 import RequireJsPlugin.RequireJsKeys._
-
 import net.liftweb.json.JsonDSL._
+import org.sbtidea.SbtIdeaPlugin._
 
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
@@ -22,7 +22,7 @@ object Frontend extends Build with Prototypes with Testing {
     .settings(requireJsSettings: _*)
     .settings(
       // require js settings
-      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) => 
+      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) =>
         (
           ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
           ("name" -> "bootstraps/app") ~
@@ -31,13 +31,13 @@ object Frontend extends Build with Prototypes with Testing {
             ("bean"         -> "components/bean/bean") ~
             ("bonzo"        -> "components/bonzo/src/bonzo") ~
             ("domReady"     -> "components/domready/ready") ~
-            ("EventEmitter" -> "components/eventEmitter/src/EventEmitter") ~
+            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
             ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
             ("reqwest"      -> "components/reqwest/src/reqwest") ~
             ("domwrite"     -> "components/dom-write/dom-write") ~
             ("swipe"        -> "components/swipe/swipe")
           ) ~
-          ("wrap" -> 
+          ("wrap" ->
             ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
             ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
           ) ~
@@ -59,25 +59,21 @@ object Frontend extends Build with Prototypes with Testing {
   val video = application("video").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
+  val styleGuide = application("style-guide").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "2.7",
-    templatesImport ++= Seq("pa._")
+    libraryDependencies += "com.gu" %% "pa-client" % "2.9",
+    templatesImport ++= Seq(
+      "pa._",
+      "feed._"
+    )
   )
 
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests)
-    .settings(
-      libraryDependencies ++= Seq(
-        "net.sf.uadetector" % "uadetector-resources" % "2012.08",
-        "net.sf.opencsv" % "opencsv" % "2.3"
-      ),
-
-      mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
-        {
-          case s: String if s.endsWith("DEV.properties") => MergeStrategy.first
-          case x => old(x)
-        }
-      }
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.opencsv" % "opencsv" % "2.3"
+    )
   )
 
   val dev = application("dev-build")
@@ -92,6 +88,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
+    .dependsOn(styleGuide)
 
   val main = root().aggregate(
     jasmine,
@@ -106,6 +103,7 @@ object Frontend extends Build with Prototypes with Testing {
     coreNavigation,
     router,
     diagnostics,
-    dev
-  )
+    dev,
+    styleGuide
+  ).settings(ideaSettings: _*)
 }

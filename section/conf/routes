@@ -8,5 +8,6 @@ GET     /assets/*file                     controllers.Assets.at(path="/public", 
 
 GET		/sections					      controllers.SectionsController.render()
 
-# culture and sport sections now life in front
-GET     /$path<(?!culture|sport)[\w\d-]*> controllers.SectionController.render(path)
+# culture and sport sections now live in front
+GET    /$path<(?!culture|sport)[\w\d-]*>            controllers.SectionController.render(path)
+GET    /$path<(?!culture|sport)[\w\d-]*>.json       controllers.SectionController.renderJson(path)

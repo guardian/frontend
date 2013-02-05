@@ -1,73 +1,120 @@
-.i-live {
-	padding: 5px 5px;
-	margin-right: 5px;
-	font-size: 10px;
-	font-style: normal;
-	line-height: 1em;
-	color: #ffffff;
-	background-color: #ec1c1c;
-}
-
-.article.is-live .block-title {
-	font-size: 19px;
-	font-weight: bold;
-}
-
-span.timestamp,
-.published-time time {
-	font-size: 14px;
-	font-weight: bold;
-    border-top: 2px solid #E3E3DB;
+//Timestamps
+//---------------------------------------------
+.timestamp,
+.published-time {
+	.type-9;
+    border-top: 2px solid @darkMushroom;
     display: block;
     padding: @baseline*4 0px @baseline*1 0px;
     margin-top: @baseline*2;
     color:#333333;
 }
-.is-summary .published-time time{
-	border-color:@articleOrange
-}
 
-.article-body .block-time{
+    .is-summary .published-time{
+    	border-color: @articleOrange;
+    }
+
+.block-time {
 	line-height:15px;
 }
 
-.article-body .published-time {
-	margin:0;
-	font-family:arial,sans-serif
+    .block-time.published-time {
+    	margin:0;
+    	font-family:arial,sans-serif
+    }
+
+    .block-time.updated-time {
+       .type-7;
+    }
+
+.timestamp:first-child,
+.block:first-child .published-time {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
 }
 
-.article .tweet:before,
-.article .tweet:after {
-    display:none;
-    width: 0px;
-    height: 0px;
-    background-image: none;
+//Block titles
+//---------------------------------------------
+.block-title,
+.live-blog .block-title {
+    .type-4;
+    color: @articleOrange;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
-.article .tweet {
+    .block .block-title{
+        color: #333333;
+    }
+
+    .is-summary .block-title,
+    .is-key-event .block-title{
+        color: @articleOrange;
+    }
+
+//Block quotes
+//---------------------------------------------
+.block blockquote {
+    padding-left:20px;
+    border-left:5px solid @darkMushroom;
+    margin:20px 0; 
+}
+
+    .block blockquote:before,
+    .block blockquote:after{
+        display:none !important;
+    }
+
+    .block .quoted {
+        border-left:none; 
+        padding:0;  
+        margin:0 0 10px;
+    }
+
+    .block .quoted:before,
+    .block .quoted:after {
+        display:inline-block !important; 
+    }
+
+
+//Tweets
+//---------------------------------------------
+.tweet,
+.from-content-api blockquote.tweet  { //has to be over qualified :(
     background-color: #f4f4f4;
-    background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png);
-    background-position: @baseline*2 @baseline*2;
+    background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png) !important;
+    background-position: @baseline*2 @baseline*2 !important;
     background-repeat: no-repeat;
+    border-left-width: 0px; 
     border-top: 4px solid #3299d0;
-    padding: 10px @baseline*2 @baseline*2 @baseline*2;
+    padding: @baseline*2;
     margin: @baseline*3 0 @baseline*4 0;
 }
 
-.svg .article .tweet {
-    background-image: url(../images/twitter/bird.893619ff5dd44b934f6a49225978b926.svg)
-}
+    .tweet:before,
+    .live-blog .tweet:before,
+    .tweet:after,
+    .live-blog .tweet:after {
+        display:none !important;
+    }
 
-.tweet-user {
-    display: inline-block;
-    font-weight: bold !important;
-    padding-left: 40px;
-    margin-bottom: 0px;
-}
+    .svg .tweet {
+        background-image: url(../images/twitter/bird.893619ff5dd44b934f6a49225978b926.svg) !important;
+    }
 
-.tweet-date {
-    display: block;
-    color: #28acdb;
-    padding-left: 40px;
-    margin-bottom: @baseline*2;
-}
+    .tweet-user {
+        display: inline-block;
+        font-weight: 500 !important;
+        padding-left: 40px;
+        margin-bottom: 0px;
+    }
+
+    .tweet-date {
+        display: block;
+        color: #28acdb;
+        padding-left: 40px;
+        margin-bottom: @baseline*2;
+    }

@@ -1,19 +1,9 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2)
 
 <ul class="unstyled">
-    @trails.slice( 0, numItemsVisible ).zipWithRowInfo.map{ case (trail, info) =>
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         <li class="trail" data-link-name="trail">
             @fragments.trails.thumbnail(trail, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
         </li>
     }
 </ul>
-
-@if( trails.length > numItemsVisible) {
-    <ul class="unstyled panel">
-        @trails.slice( numItemsVisible, trails.length ).zipWithRowInfo.map{ case (trail, info) =>
-            <li class="trail" data-link-name="trail">
-                @fragments.trails.headline(trail, info.rowNum + numItemsVisible, related, headingLevel = headingLevel) 
-            </li>
-        }
-    </ul>
-}

@@ -12,8 +12,9 @@ import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
 import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
+import implicits.Football
 
-trait CompetitionSupport {
+trait CompetitionSupport extends Football {
 
   private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
@@ -31,6 +32,8 @@ trait CompetitionSupport {
   )
 
   def withTag(tag: String) = competitions.find(_.url.endsWith(tag))
+
+  def withId(compId: String) = competitions.find(_.id == compId)
 
   def withTodaysMatchesAndFutureFixtures = competitionSupportWith {
     val today = new DateMidnight
@@ -69,15 +72,22 @@ trait CompetitionSupport {
     MatchDayTeam(teamId, unclean.name, None, None, None, None)
   }
 
-  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).competitions
-    .flatMap(_.matches).find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).matches
+    .find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = matches
+    .filter(m => interval.contains(m.date))
+    .find(m => m.hasTeam(team1) && m.hasTeam(team2))
+
+  def matches = competitions.flatMap(_.matches).sortBy(_.date.millis)
 
   private def competitionSupportWith(comps: Seq[Competition]) = new CompetitionSupport {
     def competitions = comps
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections {
+trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -87,31 +97,31 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
   val competitionAgents = Seq(
 
-    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English")),
+    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true)),
 
     CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
 
     CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
 
-    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English")),
-
-    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English")),
-
-    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English")),
-
-    CompetitionAgent(Competition("127", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
+    CompetitionAgent(Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
 
     CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
 
+    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true)),
+
+    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true)),
+
+    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true)),
+
     CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English")),
 
-    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish")),
+    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true)),
 
-    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish")),
+    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish", showInTeamsList = true)),
 
-    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish")),
+    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish", showInTeamsList = true)),
 
-    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish")),
+    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish", showInTeamsList = true)),
 
     CompetitionAgent(Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish")),
 
@@ -119,7 +129,13 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
 
-    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "Rest of world"))
+    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true)),
+
+    CompetitionAgent(Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true)),
+
+    CompetitionAgent(Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true)),
+
+    CompetitionAgent(Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true))
 
   )
 
@@ -181,6 +197,11 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   def shutDown() {
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
+  }
+
+  //used to add test data
+  def setMatches(competitionId: String, matches: Seq[FootballMatch]) {
+    competitionAgents.find(_.competition.id == competitionId).foreach(_.setMatches(matches))
   }
 }
 

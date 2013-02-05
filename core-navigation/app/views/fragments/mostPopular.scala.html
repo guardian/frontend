@@ -4,13 +4,13 @@
 
     <div class="" id="popular-trails" data-link-name="most popular">
 
-        <h2 class="type-1 article-zone">Most read</h2>
+        <h2 class="type-2 article-zone">Most read</h2>
 
         @if(isTabbed) {
-            <ol class="tabs" id="js-popular-tabs">
+            <ol class="tabs js-tabs" id="js-popular-tabs">
                 @popular.zipWithRowInfo.map{ case (section, info) =>
                     <li@if(info.isFirst){ class="tabs-selected"}>
-                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
+                        <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
                     </li>
                 }
             </ol>
@@ -18,10 +18,9 @@
 
         @if(isTabbed) {<div class="tabs-content">}
             @popular.zipWithRowInfo.map{ case (section, info) =>
-                <div id="tabs-popular-@info.rowNum" 
-                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ initially-off}} headline-list"
-                    data-link-name="@section.heading"
-                >
+                <div id="tabs-popular-@info.rowNum"
+                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
+                    data-link-name="@section.heading">
 
                     <ul class="unstyled">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>

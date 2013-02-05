@@ -58,8 +58,10 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       table.copy(groups = table.groups)
     }
 
+    val comps = Competitions.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
+
     Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), TeamCompetitions.competitions)))
+      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)))
     }
   }
 
@@ -77,6 +79,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       Cached(page) {
         Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
       }
-    }.getOrElse(NotFound("Not found"))
+    }.getOrElse(Redirect("/football/tables"))
   }
 }

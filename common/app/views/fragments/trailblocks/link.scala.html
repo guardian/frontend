@@ -1,0 +1,9 @@
+@(trails: Seq[Trail], numItemsVisible: Int = 5)
+
+<ul class="unstyled">
+     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
+         <li>
+            @fragments.trails.link(trail, info.rowNum)
+         </li>
+     }
+</ul>
