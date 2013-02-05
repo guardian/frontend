@@ -10,7 +10,7 @@ trait HttpRecorder {
   def baseDir: File
 
   def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => HttpResponse): HttpResponse = {
-    val fileName = name(url.replace("code-mq", "prod-mq"), headers)
+    val fileName = name(url, headers)
     get(fileName).map { toResponse }.getOrElse {
       val response = fetch
       put(fileName, fromResponse(response))
