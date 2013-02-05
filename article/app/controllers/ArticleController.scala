@@ -28,7 +28,6 @@ object ArticleController extends Controller with Logging {
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
       .showExpired(true)
-      .showTags("all")
       .showFields("all")
       .response
 
