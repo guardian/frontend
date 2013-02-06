@@ -62,7 +62,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-           
+
             // the section panel
             new Sections().init();
 
@@ -100,9 +100,9 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular' + (section ? '/' + section : ''),
+            var url = host + '/most-read' + (section ? '/' + section : '') + '.json',
                 domContainer = document.getElementById('js-popular');
-            
+
             if (domContainer) {
                 new Popular(domContainer).load(url);
                 common.mediator.on('modules:popular:render', function() {
@@ -121,10 +121,10 @@ define([
             if(config.switches.webFonts) {
                 showFonts = true;
             }
-            
+
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-            
+
             var f = new Fonts(fontStyleNodes, fileFormat);
             if (showFonts) {
                 f.loadFromServerAndApply();
