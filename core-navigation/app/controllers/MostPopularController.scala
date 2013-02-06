@@ -12,10 +12,10 @@ object MostPopularController extends Controller with Logging {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/"),
-    "most-popular",
-    "most-popular",
-    "Most read", // yep, bit inconsistent... URLs say "most-viewed", too
-    "GFE:Most Popular"
+    "most-read",
+    "most-read",
+    "Most read",
+    "GFE:Most Read"
   )
 
   import play.api.Play.current
