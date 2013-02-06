@@ -10,31 +10,41 @@ import feed.MostPopularAgent
 
 object MostPopularController extends Controller with Logging {
 
+  val page = new Page(
+    Some("http://www.guardian.co.uk/"),
+    "most-popular",
+    "most-popular",
+    "Most read", // yep, bit inconsistent... URLs say "most-viewed", too
+    "GFE:Most Popular"
+  )
+
   import play.api.Play.current
 
-  def renderGlobalJson() = renderJson("/")
-
   def renderJson(path: String) = Action { implicit request =>
-    mostPopular(path, "json")
-  }
-
-  def renderGlobal() = render("/")
-
-  def render(path: String) = Action { implicit request =>
-    mostPopular(path, "html")
-  }
-
-  private def mostPopular(path: String, format: String)(implicit request: RequestHeader) = {
     val edition = Edition(request, Configuration)
-    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", _)).toList
-    val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
-
+    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
+    val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
           (sectionPopular ++ globalPopular) match {
             case Nil => NotFound
-            case popular => renderMostPopular(popular, format)
+            case popular => Cached(900)(JsonComponent(views.html.fragments.mostPopular(popular, 5)))
+          }
+      }
+    }
+  }
+
+  def renderNoJavascript(path: String) = Action { implicit request =>
+    val edition = Edition(request, Configuration)
+    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
+    val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    Async {
+      promiseOfSectionPopular.map {
+        sectionPopular =>
+          (sectionPopular ++ globalPopular) match {
+            case Nil => NotFound
+            case popular => Cached(900)(Ok(Compressed(views.html.mostPopular(page, popular))))
           }
       }
     }
@@ -51,24 +61,6 @@ object MostPopularController extends Controller with Logging {
     val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
     val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
 
-    if (popular.isEmpty) None else Some(MostPopular(heading, popular))
+    if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
   }
-
-  private def renderMostPopular(popular: Seq[MostPopular], format: String)(implicit request: RequestHeader) = {
-    Cached(900) {
-      if (format == "json") {
-        JsonComponent(views.html.fragments.mostPopular(popular, 5))
-      } else {
-        val page = new Page(
-          Some("http://www.guardian.co.uk/"),
-          "most-popular",
-          "most-popular",
-          "Most viewed", // yep, bit inconsistent... URLs say "most-viewed", too
-          "GFE:Most Popular"
-        )
-        Ok(Compressed(views.html.mostPopular(page, popular)))
-      }
-    }
-  }
-
 }

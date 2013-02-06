@@ -24,7 +24,7 @@ object Management extends GuManagement {
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
       "/top-stories?callback=navigation",
-      "/most-viewed/society.json?callback=showMostPopular",
+      "/most-read/society.json?callback=showMostPopular",
       "/related/theobserver/2012/nov/18/the-big-issue-cyclists-versus-motorists?callback=showRelated"
     ),
     StatusPage(applicationName, Metrics.all),

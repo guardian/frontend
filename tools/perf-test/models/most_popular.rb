@@ -8,7 +8,7 @@ class MostPopular
     end
 
     def to_www
-        "%s/%s/%s?%s" %  ['most-viewed', @params.edition, path, 'callback=showMostPopular']
+        "%s/%s/%s?%s" %  ['most-read', @params.edition, path, 'callback=showMostPopular']
     end
 
 end

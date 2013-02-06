@@ -100,7 +100,7 @@ define([
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-viewed' + (section ? '/' + section : '') + '.json',
+            var url = host + '/most-read' + (section ? '/' + section : '') + '.json',
                 domContainer = document.getElementById('js-popular');
 
             if (domContainer) {
