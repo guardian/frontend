@@ -5,11 +5,13 @@
  * https://github.com/filamentgroup/unicon
  *
  */
+/*jshint loopfunc: true */
  /*global node:true, console:true, process:true */
 
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
+    var SVGO = require('svgo');
     var utils = {};
     var config;
 
@@ -38,12 +40,38 @@
       return child;
     };
 
+    function cleanFiles(src) {
+        var files = fs.readdirSync(src);
+        cleanSVG(src, files, 0);
+    }
+
+    function cleanSVG(src, files, i) {
+        if(files[i]) {
+            var file = src + files[i];
+            if( file.match( /\.svg$/i ) ){
+                var cleaner = new SVGO(/*{ custom config object }*/);
+                // optimize SVG file
+                cleaner.fromFile(file)
+                // get optimized result
+                .then(function(result) {
+                    //Overrite result back to file
+                    fs.writeFileSync(file, result.data);
+                    var saved = result.info.inBytes - result.info.outBytes;
+                    console.log(files[i] + " cleaned, " + saved + " bytes saved");
+                    cleanSVG(src, files, i+1);
+                }).done();
+            } else {
+                cleanSVG(src, files, i+1);
+            }
+        }
+    }
+
     //Load config from json file
     fs.readFile(process.argv[2], 'utf-8', function (err, data) {
         if (err) { throw err; }
 
         // just a quick starting message
-        console.info( "Starting spricon\n" );
+        console.info( "\nStarting Spricon" );
 
         //Parse the config file back into object
         config = JSON.parse(data);
@@ -87,10 +115,16 @@
         // create the output directory
         fs.mkdir( config.imgDest );
 
-        console.info( "\nOuput css file created." );
+        console.info( "\nOuput CSS file created." );
+
+        //Run the svg's through cleaner first
+        if(generatesvg) {
+            console.log("\nCleaning SVG's");
+            cleanFiles(config.src);
+        }
 
         // take it to phantomjs to do the rest
-        console.info( "\nNow spawning phantomjs..." );
+        console.info( "\nNow spawning PhantomJS..." );
 
         utils.spawn({
           cmd: 'phantomjs',
@@ -137,9 +171,9 @@
 
                 });
 
-                console.info("Spricon complete...");
+                console.info("\nSpricon complete...\n");
             } else {
-                console.error("\nSomething went wrong with phantomjs...");
+                console.error("\nSomething went wrong with PhantomJS...\n");
             }
         });
 
