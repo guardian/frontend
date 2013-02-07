@@ -77,6 +77,11 @@ class GuardianConfiguration(
       usHost -> "US"
     )
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
+
+    def ajaxUrlFor(edition: String): String = edition match {
+      case "US" => "http://" + usHost
+      case _ => "http://" + ukHost
+    }
   }
 
   object javascript {

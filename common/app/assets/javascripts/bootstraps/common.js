@@ -54,7 +54,7 @@ define([
     var modules = {
 
         initialiseAjax: function(config) {
-            ajax.init(config.page.ajaxApiEndpoint);
+            ajax.init(config.page.ajaxUrl);
         },
 
         attachGlobalErrorHandler: function () {
