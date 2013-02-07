@@ -4,7 +4,7 @@
     <h2 class="article-zone type-1">
         <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
     </h2>
-    
+
     <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType">
 
         <header class="article-head">
@@ -36,5 +36,6 @@
     } else {
         <div id="js-related"></div>
     }
-    <div id="js-popular"></div>
+    @fragments.mostPopularPlaceholder(video.section)
+
 }
