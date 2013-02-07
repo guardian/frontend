@@ -1,0 +1,89 @@
+.brand-bar {
+	background-color: @blue;
+}
+
+.brand-bar .logo {
+	display: block;
+    float: left;
+    margin: 20px 0 @baseline*2 @gutter;
+    text-indent: -9999px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .brand-bar .logo {
+        background-size: 100%;
+        background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
+    }
+}
+
+.brand-bar-navigation {
+	float: right;
+}
+.brand-bar-sections-control {
+	float: left;
+    width: 34px;
+    padding: 15px 16px 15px 0px;
+}
+.brand-bar-sections-control span {
+    float: right;
+    margin-top: 8px;
+    display: inline-block;
+    text-indent: -1000em;
+}
+
+
+
+.brand-bar-topstories-control {
+    float: left;
+    height: 28px;
+    color: #ffffff;
+    font-family: @serif !important;
+    font-size: 13px;
+    margin: 0;
+    padding: 15px 0;
+}
+
+.brand-bar-topstories-control:link,
+.brand-bar-topstories-control:visited,
+.brand-bar-topstories-control:hover {
+    color: #ffffff;
+}
+
+.brand-bar-topstories-control span {
+    display: inline-block;
+    height: 28px;
+    vertical-align: top;
+    line-height: 28px;
+    margin-right:8px;
+}
+
+.brand-bar-topstories-control .i-arrow-small-down {
+    margin: 12px 10px 8px 5px;
+}
+
+.brand-bar-topstories-control.is-active span {
+    background: none !important;
+    border-color: transparent !important;
+}
+
+.brand-bar-sections-control:active,
+.brand-bar-topstories-control:hover {
+    text-decoration: none !important;
+}
+
+.brand-bar-topstories-control,
+.brand-bar-sections-control {
+    color: #ffffff;
+    background-color: transparent;
+    vertical-align: top;
+}
+
+.brand-bar-sections-control.is-active,
+.brand-bar-topstories-control.is-active {
+    background-color: #ffffff;
+    color: @blue;
+}
+
+.brand-bar-sections-control:hover,
+.brand-bar-topstories-control:hover {
+    text-decoration: none !important;
+}

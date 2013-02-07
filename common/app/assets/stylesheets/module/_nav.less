@@ -1,21 +1,3 @@
-#header {
-    background-color: @blue;
-}
-
-#logo {
-    display: block;
-    float: left;
-    margin: 20px 0 @baseline*2 @gutter;
-    text-indent: -9999px;
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    #logo {
-        background-size: 100%;
-        background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
-    }
-}
-
 /* Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction */
 .nav {
     list-style: none;
@@ -41,12 +23,6 @@
     color: #666666;
 }
 
-.sections-control {
-    float: left;
-    width: 34px;
-    padding: 15px 16px 15px 0px;
-}
-
 .i-nav-divider {
     float: left;
     height: 28px;
@@ -59,13 +35,6 @@
 .is-active .i-nav-divider {
     border-color: #ffffff;
     background-color: #ffffff;
-}
-
-.sections-control span {
-    float: right;
-    margin-top: 8px;
-    display: inline-block;
-    text-indent: -1000em;
 }
 
 .sections .nav {
@@ -119,23 +88,17 @@
     border-top: 2px solid @darkMushroom;
 }
 
-#topstories-header,
-#sections-header {
-    padding: @baseline*2 0;
-    border-bottom: @baseline solid @blue;
-}
-
 .nav-footer li a {
     color: #ffffff;
     border-top: 1px solid #2B528B;
 }
 
-#sections-footer .nav-section-divider {
+.sections-footer .nav-section-divider {
     color: #ffffff !important;
     border-top: 2px solid #2B528B;
 }
 
-#sections-footer .nav-section-divider a {
+.sections-footer .nav-section-divider a {
     color: #ffffff;
 }
 
@@ -143,48 +106,12 @@
     -webkit-transform: translate3d(0,0,0);
     position: relative;
     z-index: 100;
-    padding: 0;
+    padding: 8px 0;
+    border-bottom: 4px solid #214583;
     list-style: none;
     clear: both;
     position: relative;
     margin-bottom: -4px;
-}
-
-#section-footer .nav-popup {
-    background-color: @blue;
-}
-
-.topstories-control {
-    float: left;
-    height: 28px;
-    color: #ffffff;
-    font-family: @serif !important;
-    font-size: 13px;
-    margin: 0;
-    padding: 15px 0;
-}
-
-.topstories-control:link,
-.topstories-control:visited,
-.topstories-control:hover {
-    color: #ffffff;
-}
-
-.topstories-control span {
-    display: inline-block;
-    height: 28px;
-    vertical-align: top;
-    line-height: 28px;
-    margin-right:8px;
-}
-
-.topstories-control .i-arrow-small-down {
-    margin: 12px 10px 8px 5px;
-}
-
-.topstories-control.is-active span {
-    background: none !important;
-    border-color: transparent !important;
 }
 
 .top-stories ul {
@@ -196,40 +123,20 @@
     margin-top: 0;
 }
 
-.sections-control:active,
-.topstories-control:hover {
-    text-decoration: none !important;
-}
-
-a.topstories-control,
-.sections-control {
-    color: #ffffff;
-    background-color: transparent;
-    vertical-align: top;
-}
-
-.sections-control.is-active,
-.topstories-control.is-active {
-    background-color: #ffffff;
-    color: @blue;
-}
-
-.sections-control:hover,
-.topstories-control:hover {
-    text-decoration: none !important;
-}
-
-#navigation-header,
-#navigation-footer {
+.navigation-header,
+.navigation-footer {
     float: right;
 }
 
-#navigation-footer {
-    width: 100%;
-    background-color: @blue;
+.nav-single-column {
+    float: none;
+}
+.nav-single-column li a {
+    border-top: none;
+    padding-top: 0;
 }
 
-#sections-footer {
+.sections-footer {
     border-top: 1px solid #2B528B;
 }
 
