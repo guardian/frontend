@@ -1,15 +1,15 @@
 /*!
   * @preserve Qwery - A Blazing Fast query selector engine
   * https://github.com/ded/qwery
-  * copyright Dustin Diaz & Jacob Thornton 2012
+  * copyright Dustin Diaz 2012
   * MIT License
   */
 
-(function (name, definition, context) {
+(function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (typeof context['define'] == 'function' && context['define']['amd']) define(definition)
+  else if (typeof define == 'function' && define.amd) define(definition)
   else context[name] = definition()
-})('qwery', function () {
+})('qwery', this, function () {
 
   var classOnly = /^\.([\w\-]+)$/
     , doc = document
@@ -35,7 +35,8 @@
 
   function uniq(ar) {
     var a = [], i, j
-    label: for (i = 0; i < ar.length; i++) {
+    label:
+    for (i = 0; i < ar.length; i++) {
       for (j = 0; j < a.length; j++) {
         if (a[j] == ar[i]) {
           continue label

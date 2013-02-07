@@ -23,52 +23,63 @@ object FrontPage extends MetaData {
   )
 }
 
-class FrontController extends Controller with Logging with Formats {
+class FrontController extends Controller with Logging with JsonTrails {
 
   val front: Front = Front
 
-  val validFormats: Seq[String] = Seq("html", "json")
-
   def warmup() = Action {
     val promiseOfWarmup = Akka.future(Front.warmup())
-    Async { promiseOfWarmup.map(warm => Ok("warm")) }
+    Async {
+      promiseOfWarmup.map(warm => Ok("warm"))
+    }
   }
 
-  def isUp() = Action { Ok("Ok") }
+  def isUp() = Action {
+    Ok("Ok")
+  }
 
-  def render(path: String, format: String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
+    renderFront(path, "html")
+  }
+
+  def renderJson(path: String) = Action { implicit request =>
+    renderFront(path, "json")
+  }
+
+  private def renderFront(path: String, format: String)(implicit request: RequestHeader) = {
+
     val edition = Edition(request, Configuration)
 
     val page: Option[MetaData] = path match {
       case "front" => Some(FrontPage)
-      case _ => ContentApi.item(path, edition)
+      case section => ContentApi.item(section, edition)
         .showEditorsPicks(true)
         .showMostViewed(true)
-        .response.section map { Section(_) }
+        .response.section map {
+          Section(_)
+        }
     }
 
-    page map { page =>
+    page.map { frontPage =>
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
       if (trailblocks.isEmpty) {
         InternalServerError
       } else {
-        checkFormat(format).map { format =>
-          Cached(page) {
-            if (format == "json") {
-              // pull out correct trailblock
-              trailblocks.find(_.description.id == path).map { trailblock =>
+        Cached(frontPage) {
+          if (format == "json") {
+            // pull out correct trailblock
+            trailblocks.find(_.description.id == path).map {
+              trailblock =>
                 renderJsonTrails(trailblock.trails)
-              }.getOrElse(InternalServerError)
-            } else {
-              Ok(Compressed(views.html.front(page, trailblocks, FrontCharity())))
-            }
+            }.getOrElse(InternalServerError)
+          } else {
+            Ok(Compressed(views.html.front(frontPage, trailblocks)))
           }
-        } getOrElse (BadRequest)
+        }
       }
-    } getOrElse (InternalServerError)
+    }.getOrElse(NotFound)
   }
-
 }
 
 object FrontController extends FrontController

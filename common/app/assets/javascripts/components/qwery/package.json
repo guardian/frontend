@@ -1,7 +1,7 @@
 {
     "name": "qwery"
   , "description": "blazing fast CSS3 query selector engine"
-  , "version": "3.3.11"
+  , "version": "3.4.1"
   , "homepage": "https://github.com/ded/qwery"
   , "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)"
   , "contributors": [
@@ -19,8 +19,7 @@
   , "devDependencies": {
         "sink-test": ">= 1.0.1"
       , "serve": "*"
-    }
-  , "scripts": {
-      "test": "phantomjs tests/phantom.js"
+      , "smoosh": "0.4.0"
+      , "phantomjs": "0.2.3"
     }
 }

@@ -1,4 +1,4 @@
-/*global bean:true, buster:true, Syn:true, assert:true, SpyTrigger:true, defer:true, features:true, globalSetUp:true, globalTearDown:true*/
+/*global bean:true, buster:true, Syn:true, assert:true, defer:true, features:true, globalSetUp:true, globalTearDown:true*/
 
 buster.testCase('add', {
     'setUp': globalSetUp
@@ -15,7 +15,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function () { this.runTest('on') }
-      , 'add()': function () { this.runTest('on') }
+      , 'add()': function () { this.runTest('add') }
     }
 
   , 'should be able to add single events to elements': {
@@ -37,7 +37,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should be able to add single events to objects': {
@@ -60,7 +60,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'scope should be equal to element': {
@@ -83,7 +83,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should recieve an event method': {
@@ -107,7 +107,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should be able to pass x amount of additional arguments': {
@@ -133,7 +133,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should be able to add multiple events by space seperating them': {
@@ -155,7 +155,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should be able to add multiple events of the same type': {
@@ -183,7 +183,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should be able to add multiple events simultaneously with an object literal': {
@@ -207,7 +207,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should bubble up dom': {
@@ -230,7 +230,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'shouldn\'t trigger event when adding additional custom event listeners': {
@@ -250,7 +250,7 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'should bind onmessage to window': {
@@ -287,13 +287,13 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'one: should only trigger handler once': {
         'setUp': function () {
           var self = this
-          this.runTest = function (done, method) {
+          this.runTest = function (done) {
             var el      = self.byId('input')
               , trigger = self.trigger()
               , spy     = self.spy()
@@ -310,13 +310,13 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 
   , 'one: should be removable': {
         'setUp': function () {
           var self = this
-          this.runTest = function (done, method) {
+          this.runTest = function (done) {
             var el  = self.byId('input')
               , spy = self.spy()
 
@@ -332,6 +332,6 @@ buster.testCase('add', {
           }
         }
       , 'on()': function (done) { this.runTest(done, 'on') }
-      , 'add()': function (done) { this.runTest(done, 'on') }
+      , 'add()': function (done) { this.runTest(done, 'add') }
     }
 })

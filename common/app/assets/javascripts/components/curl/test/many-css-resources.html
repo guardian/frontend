@@ -57,7 +57,7 @@
 	);
 
 	// test cascade and comma-separated resource Ids
-	curl(['css!stuff/cascade-start.css,stuff/cascade-middle.css,stuff/cascade-end.css']).then(
+	curl(['css!stuff/cascade-start.css,stuff/cascade-middle.css,stuff/cascade-end.css', 'domReady!']).then(
 		function (sheets) {
 			var testEl = document.getElementById('test-cascade'), i, sheet;
 			write((testEl.offsetTop == 33 ? 'SUCCESS' : 'FAILED') + ': css cascaded correctly through three levels.');

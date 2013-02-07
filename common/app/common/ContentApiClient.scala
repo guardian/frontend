@@ -14,12 +14,14 @@ trait ApiQueryDefaults { self: Api =>
 
   val references = "pa-football-competition,pa-football-team"
 
+  val inlineElements = "picture,witness"
+
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
     .edition(edition)
     .showTags("all")
     .showFields(trailFields)
-    .showInlineElements("picture")
+    .showInlineElements(inlineElements)
     .showMedia("all")
     .showReferences(references)
     .showStoryPackage(true)
@@ -29,7 +31,7 @@ trait ApiQueryDefaults { self: Api =>
   def search(edition: String): SearchQuery = search
     .edition(edition)
     .showTags("all")
-    .showInlineElements("picture")
+    .showInlineElements(inlineElements)
     .showReferences(references)
     .showFields(trailFields)
     .showMedia("all")
@@ -39,11 +41,11 @@ trait ApiQueryDefaults { self: Api =>
 trait DelegateHttp extends Http {
 
   private val dispatch = new DispatchHttp with Logging {
-    import Configuration.{ proxy => proxyConfig, _ }
+    import Configuration.{ proxy => proxyConfig, contentApi => apiConfig, _ }
 
     override lazy val maxConnections = 100
     override lazy val connectionTimeoutInMs = 200
-    override lazy val requestTimeoutInMs = 2000
+    override lazy val requestTimeoutInMs = apiConfig.timeout
     override lazy val compressionEnabled = true
 
     override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {

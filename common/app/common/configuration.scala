@@ -42,6 +42,8 @@ class GuardianConfiguration(
     lazy val key = configuration.getStringProperty("content.api.key") getOrElse {
       throw new IllegalStateException("Content Api Key not configured")
     }
+
+    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object proxy {
@@ -80,6 +82,13 @@ class GuardianConfiguration(
   }
 
   object javascript {
+    // This is config that is avaliable to both Javascript and Scala
+    // But does not change accross environments
+    lazy val config: Map[String, String] = Map(
+      "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
+      "oasSiteId" -> "beta.guardian.co.uk/oas.html",
+      "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min"
+    )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {
