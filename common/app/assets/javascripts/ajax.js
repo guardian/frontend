@@ -5,7 +5,9 @@ define(["reqwest"], function (reqwest) {
     };
 
     function ajax(params) {
-        params.url = makeAbsolute(params.url);
+        if(!(params.url.lastIndexOf("http://", 0)===0)){
+            params.url = makeAbsolute(params.url);
+        }
         return ajax.reqwest(params);
     }
 
