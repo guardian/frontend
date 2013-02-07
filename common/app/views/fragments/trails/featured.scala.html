@@ -8,7 +8,7 @@
     </a>
 </h@headingLevel>
 
-@trail.trailText.map { text => <div class="trail-text type-7">@cleanTrailText(text)</div> }
+@trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
 
 @trail.mainPicture(width=220).map{ smallCrop =>
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
