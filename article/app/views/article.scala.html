@@ -38,10 +38,10 @@
 
     </article>
 
+    <aside id="story-package"></aside>
+
     @if(storyPackage.nonEmpty) {
-        <aside id="story-package">
-            @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
-        </aside>
+        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     } else {
         <aside id="js-related"></aside>
     }

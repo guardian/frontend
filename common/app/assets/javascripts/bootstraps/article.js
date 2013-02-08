@@ -64,19 +64,12 @@ define([
         },
 
         loadStoryPackage: function(config) {
-            /*
-            var host = config.page.coreNavigationUrl,
-                pageId = config.page.pageId,
-                edition = config.page.edition;
-            */
             var story = new StoryPackage(config);
-
             story.init();
         }
     };
 
     var ready = function(config) {
-
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
         }

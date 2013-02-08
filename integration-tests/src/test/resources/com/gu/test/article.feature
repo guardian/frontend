@@ -9,7 +9,7 @@ Feature: Article page
 	Scenario: More on this story
 		Given I am on an article with a story package
 		Then "More on this story" is displayed 
-
+    @ignore
 	Scenario: Article has no story package
 	    Given I am on an article without a story package
         Then "Related content" is displayed
