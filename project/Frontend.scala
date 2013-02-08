@@ -35,7 +35,8 @@ object Frontend extends Build with Prototypes with Testing {
             ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
             ("reqwest"      -> "components/reqwest/src/reqwest") ~
             ("domwrite"     -> "components/dom-write/dom-write") ~
-            ("swipe"        -> "components/swipe/swipe")
+            ("swipe"        -> "components/swipe/swipe") ~
+            ("fastclick"    -> "components/fastclick/lib/fastclick")
           ) ~
           ("wrap" ->
             ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~

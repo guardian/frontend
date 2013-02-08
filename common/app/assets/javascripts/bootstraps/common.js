@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'qwery',
+    'fastclick',
     //Modules
     'modules/router',
     'modules/errors',
@@ -30,6 +31,7 @@ define([
 
     domReady,
     qwery,
+    FastClick,
 
     Router,
     Errors,
@@ -156,6 +158,10 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initFastClick: function() {
+            new FastClick(document.body);
         }
     };
 
@@ -172,6 +178,7 @@ define([
         modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
 
         modules.showRelativeDates();
+        modules.initFastClick();
     };
 
     // If you can wait for load event, do so.
