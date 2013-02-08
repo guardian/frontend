@@ -37,6 +37,8 @@ class Content(delegate: ApiContent, override val importance: Option[Int] = None)
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
+  lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
+
   override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean

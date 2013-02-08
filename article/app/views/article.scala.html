@@ -31,20 +31,18 @@
             @fragments.autoUpdate()
         }
 
-        <div class="article-body from-content-api @if(article.isLive) {live-blog}" 
+        <div class="article-body from-content-api @if(article.isLive) {live-blog}"
             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 		      @fragments.articleBody(article)
         </div>
 
     </article>
 
-    <aside id="story-package"></aside>
-
     @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
-    } else {
-        <aside id="js-related"></aside>
     }
+    
+    <aside id="js-related"></aside>
 
     <div id="js-popular"></div>
 }

@@ -14,8 +14,7 @@ trait ApiQueryDefaults { self: Api =>
 
   val references = "pa-football-competition,pa-football-team"
 
-  //todo change to 'picture,embed' once embeds are live in content api
-  val inlineElements = "picture"
+  val inlineElements = "picture,witness"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
