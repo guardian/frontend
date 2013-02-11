@@ -4,13 +4,15 @@ define([
     "modules/expandable",
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading"
+    "modules/analytics/reading",
+    "modules/story-package"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
-    Reading
+    Reading,
+    StoryPackage
 ) {
 
     var modules = {
@@ -26,15 +28,6 @@ define([
                             url += "?currentPage=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url);
             }
-        },
-
-        related: function(config){
-            var host = config.page.coreNavigationUrl,
-                pageId = config.page.pageId,
-                edition = config.page.edition;
-
-            var url =  host + '/related/' + pageId;
-            common.mediator.emit("modules:related:load", [url]);
         },
 
         initLiveBlogging: function(switches) {
@@ -60,16 +53,30 @@ define([
                 reader.init();
             }
         }
+
     };
 
     var ready = function(config) {
+        var storyPackageName = localStorage.getItem('gu.storypackage') || '';
+
+        if (!storyPackageName) {
+            for (var key in config.switches) {
+                if (config.switches[key] && key.match(/storytelling(\w+)/)) {
+                    storyPackageName = key.match(/storytelling(\w+)/)[1];
+                    break;
+                }
+            }
+        }
+        storyPackageName = storyPackageName.toLowerCase();
+
+        if (storyPackageName) {
+            var story = new StoryPackage(config, storyPackageName).init();
+        } else if (!config.page.hasStoryPackage) {
+            common.mediator.emit("modules:related:load");
+        }
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
-        }
-
-        if (config.page.showInRelated) {
-            modules.related(config);
         }
 
         if(config.page.section === "football") {
