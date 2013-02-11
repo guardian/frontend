@@ -1,5 +1,5 @@
 class MostPopular
-    
+
     include ContentApi
 
     def initialize(path)
@@ -8,7 +8,7 @@ class MostPopular
     end
 
     def to_www
-        "%s/%s/%s?%s" %  ['most-popular', @params.edition, path, 'callback=showMostPopular']
+        "%s/%s/%s?%s" %  ['most-read', @params.edition, path, 'callback=showMostPopular']
     end
 
 end

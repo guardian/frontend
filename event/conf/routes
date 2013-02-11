@@ -5,9 +5,8 @@
 # For dev machines
 GET    /assets/*file                              controllers.Assets.at(path="/public", file)
 
-GET    /story-package/list/*contentId             controllers.StoryPackageController.simpleList(contentId)
-GET    /story-package/list-version/1/*contentId             controllers.StoryPackageController.version1List(contentId)
-GET    /story-package/list-version/2/*contentId             controllers.StoryPackageController.version2List(contentId)
+GET    /story-package/chronological01/*contentId  controllers.StoryPackageController.version1List(contentId)
+GET    /story-package/chronological02/*contentId  controllers.StoryPackageController.version2List(contentId)
 GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
 GET    /story-package/timeline/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
 

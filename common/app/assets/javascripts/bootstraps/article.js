@@ -30,15 +30,6 @@ define([
             }
         },
 
-        related: function(config){
-            var host = config.page.coreNavigationUrl,
-                pageId = config.page.pageId,
-                edition = config.page.edition;
-
-            var url =  host + '/related/' + pageId;
-            common.mediator.emit("modules:related:load", [url]);
-        },
-
         initLiveBlogging: function(switches) {
             var a = new AutoUpdate({
                 path: window.location.pathname,
@@ -63,31 +54,32 @@ define([
             }
         },
 
-        loadStoryPackage: function(config) {
-            /*
-            var host = config.page.coreNavigationUrl,
-                pageId = config.page.pageId,
-                edition = config.page.edition;
-            */
-            var story = new StoryPackage(config);
-
-            story.init();
-        }
     };
 
     var ready = function(config) {
+        var storyPackageName = localStorage.getItem('gu.storypackage') || '';
+
+        if (!storyPackageName) {
+            for (var key in config.switches) {
+                if (config.switches[key] && key.match(/storytelling(\w+)/)) {
+                    storyPackageName = key.match(/storytelling(\w+)/)[1];
+                    break;
+                }
+            }
+        }
+        storyPackageName = storyPackageName.toLowerCase();
+
+        if (storyPackageName) {
+            var story = new StoryPackage(config, storyPackageName).init();
+        } else if (common.$g('#related-trails').length === 0) {
+            // TODO: config.page.showInRelated should express this condition - but seems be be incorrect
+            common.mediator.emit("modules:related:load");
+        }
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
         }
 
-        // if (config.page.showInRelated) {
-        //     modules.related(config);
-        // } else {
-        //    modules.loadStoryPackage();
-        // }
-        modules.loadStoryPackage(config);
-        
         if(config.page.section === "football") {
             modules.matchNav(config);
         }

@@ -23,13 +23,13 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     scenario("Most popular for a section") {
 
       given("I am on a page in the 'World' section")
-      HtmlUnit("/most-popular/world") { browser =>
+      HtmlUnit("/most-read/world") { browser =>
         import browser._
 
-        then("The 'World News' tab should be selected by default")
-        findFirst(".tabs .tabs-selected").getText should include("World news")
+        then("I should see a list of 'world' content")
+        findFirst(".zone-world").findFirst("h1").getText should be("Most read: World news")
         and("it should contain world news")
-        $("#tabs-popular-1 li").size should be > (0)
+        $(".zone-world li").size should be > (0)
 
       }
     }
@@ -37,32 +37,17 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     scenario("Viewing site-wide most popular") {
 
       given("I am on a page in the 'World' section")
-      HtmlUnit("/most-popular/world") { browser =>
+      HtmlUnit("/most-read/world") { browser =>
         import browser._
 
-        then("I should see a tab containing site-wide popular news")
-        $(".tabs li")(1).getText should include("The Guardian")
-        $("#tabs-popular-2 li").size should be > (0)
-
-      }
-    }
-
-    scenario("Most popular for a US edition section") {
-
-      given("I am on a page in the 'Comment is free' section in the US edition")
-      HtmlUnit.US("/most-popular/commentisfree") { browser =>
-        import browser._
-
-        then("The 'Comment is free' tab should be selected by default")
-        findFirst(".tabs .tabs-selected").getText should include("Comment is free")
-        and("it should contain popular 'Comment is free' articles")
-        $("#tabs-popular-1 li").size should be > (0)
+        then("I should see the site wide most read")
+        $("h1")(1).getText should be("Most read: The Guardian")
       }
     }
 
     scenario("Most popular caching") {
       given("I load most popular")
-      HtmlUnit.connection("/most-popular") { connection =>
+      HtmlUnit.connection("/most-read") { connection =>
         then("the requested should be cached for 15 minutes")
         connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900")
       }

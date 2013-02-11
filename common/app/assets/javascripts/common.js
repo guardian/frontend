@@ -26,7 +26,7 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
             var params = {},
                 qStr = window.location.search,
                 p,
-                i;  
+                i;
             if (qStr) {
                 qStr = qStr.slice(1).split('&');
                 for (i = 0; i < qStr.length; i += 1) {

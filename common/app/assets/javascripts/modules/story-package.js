@@ -1,51 +1,27 @@
 define([
+    'modules/expandable',
     'common',
     'reqwest'
 ], function (
+    Expandable,
     common,
     reqwest,
     Pad
 ) {
 
-    function StoryPackage(config) {
-        //Config
-        var that = this,
-            showPrototypes = Math.random() > 0.5,
-            numPackages = 2, 
-            id = config.page.pageId
-            prototypeUrl,
-            relatedUrl;
+    function StoryPackage(config, storyPackageName) {
 
+        var that = this;
 
-        this.init = function (){
-            var package, 
-                path;
-
-            if (showPrototypes) {
-                package = parseInt(common.queryParams.package, 10) || 0;
-                package = package || Math.floor(1 + Math.random()*numPackages);
-                prototypeUrl = '/story-package/version/' + package;
-            } else if (config.page.showInRelated) {
-                relatedUrl = config.page.coreNavigationUrl + '/related/' + config.page.pageId;
-            }
+        this.init = function () {
+            this.load('/story-package/' + storyPackageName + '/' + config.page.pageId);
         };
 
-        this.loadPrototype = function (path){
-            common.mediator.on('modules:story-package:failed', function(){
-                that.loadRelated(relatedUrl);
-            });
-            this.load(prototypeUrl);
-        }
-
-        this.loadRelated = function (){
-            this.load(relatedUrl);
-        }
-
-        // View        
+        // View
         this.view = {
-            render: function (response) {
-                console.log(response);
-                document.getElementById('story-package').innerHTML = response.html;
+            render: function (html) {
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+                document.getElementById('js-related').innerHTML = html;
                 common.mediator.emit('modules:story-package:render');
             }
         };
@@ -56,15 +32,17 @@ define([
             common.mediator.emit('modules:tabs:render');
         });
 
-        this.load = function (path) {
-            var url = path;
+        this.load = function (url) {
             reqwest({
                 url: url,
+                type: 'jsonp',
+                jsonpCallback: 'callback',
+                jsonpCallbackName: 'lazyLoad',
                 success: function (json) {
                     if (json.html !== '') {
-                        common.mediator.emit('modules:story-package:loaded', json);
-                    } else {
-                        common.mediator.emit('modules:story-package:failed');
+                        that.view.render(json.html);
+                    } else if (common.$g('#related-trails').length === 0) {
+                        common.mediator.emit("modules:related:load");
                     }
                 },
                 error: function () {
