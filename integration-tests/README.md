@@ -21,13 +21,13 @@ To run a particular tagged feature (e.g.`@network-front`, but not `@ignore` or `
 
 Running on a different host (i.e. not `http://localhost:9000`)
 
- 	$ mvn test -Dhost=http://beta.gucode.co.uk
+ 	$ mvn test -Dhost=http://m.gucode.co.uk
 
 Running through a proxy
 
  	$ mvn test -Dhttp_proxy=http://proxy.co.uk:1234
 
-Running on a different driver (e.g. `htmlUnit`, `firefox` (default))
+Running on a different driver (e.g. `htmlUnit`, `chrome`, `firefox` (default))
 
     $ mvn test -Ddriver=htmlUnit
      	
