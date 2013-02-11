@@ -9,19 +9,19 @@ define([
     Pad
 ) {
 
-    function StoryPackage(config, storyPackageName) {
+    function Experiment(config, experimentName) {
 
         var that = this;
 
         this.init = function () {
-            this.load('/story-package/' + storyPackageName + '/' + config.page.pageId);
+            this.load('/experiment/' + experimentName + '/' + config.page.pageId);
         };
 
         // View
         this.view = {
             render: function (html) {
                 document.getElementById('js-related').innerHTML = html;
-                common.mediator.emit('modules:story-package:render');
+                common.mediator.emit('modules:experiment:render');
                 // Remove the existing story package and its title
                 common.$g('#related-trails, h3.type-2.article-zone').remove();
             },
@@ -31,8 +31,8 @@ define([
         };
 
         // Bindings
-        common.mediator.on('modules:story-package:loaded', this.view.render);
-        common.mediator.on('modules:story-package:render', function() {
+        common.mediator.on('modules:experiment:loaded', this.view.render);
+        common.mediator.on('modules:experiment:render', function() {
             common.mediator.emit('modules:tabs:render');
         });
 
@@ -56,6 +56,6 @@ define([
         };
     }
     
-    return StoryPackage;
+    return Experiment;
 
 });

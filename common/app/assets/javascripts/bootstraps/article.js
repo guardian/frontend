@@ -5,14 +5,14 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/story-package"
+    "modules/experiment"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
     Reading,
-    StoryPackage
+    Experiment
 ) {
 
     var modules = {
@@ -57,21 +57,22 @@ define([
     };
 
     var ready = function(config) {
-        var storyPackageName = localStorage.getItem('gu.storypackage') || '';
+        var experimentName = localStorage.getItem('gu.experiment') || '',
+            experiment;
 
-        if (!storyPackageName) {
+        if (!experimentName) {
             for (var key in config.switches) {
-                if (config.switches[key] && key.match(/storytelling(\w+)/)) {
-                    storyPackageName = key.match(/storytelling(\w+)/)[1];
+                if (config.switches[key] && key.match(/experiment(\w+)/)) {
+                    experimentName = key.match(/experiment(\w+)/)[1];
                     break;
                 }
             }
         }
-        storyPackageName = storyPackageName.toLowerCase();
+        experimentName = experimentName.toLowerCase();
 
-        if (storyPackageName) {
-            var story = new StoryPackage(config, storyPackageName).init();
-        } else if (!config.page.hasStoryPackage) {
+        if (experimentName) {
+            experiment = new Experiment(config, experimentName).init();
+        } else {
             common.mediator.emit("modules:related:load");
         }
 
