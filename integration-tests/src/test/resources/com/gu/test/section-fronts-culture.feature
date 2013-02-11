@@ -34,7 +34,8 @@ Feature: Section Fronts - Culture
         Given I am on the 'culture' section front 
         When I hide a section
         Then the section will be hidden
-    
+
+    @brokeninchrome
     Scenario: Users can show hidden sections
         Given I am on the 'culture' section front
             And a section is hidden 

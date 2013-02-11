@@ -33,7 +33,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             </activation>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <tags>--tags ~@nothing --tags ~@requireslocalstorage</tags>
+                <tags>--tags ~@brokeninchrome</tags>
                 <cucumber.version>1.0.14</cucumber.version>
                 <cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
             </properties>
