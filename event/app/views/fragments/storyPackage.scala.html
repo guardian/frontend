@@ -2,6 +2,10 @@
 
 @events.map { event =>
 
+<h2>@event.title - @event.content.size - @event.contentIds.mkString(", ")</h2><br/>
+
+
+<!--
     <div class="event-block">
         <h2 class="type-2 article-zone">@event.title</h2>
         <div class="trailblock">
@@ -11,4 +15,5 @@
             }
         </div>
     </div>
+-->
 }

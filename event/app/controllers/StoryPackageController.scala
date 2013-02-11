@@ -7,26 +7,21 @@ import play.api.templates.Html
 
 case class GroupedByContent(event: Event, content: Map[String, Seq[Content]])
 
-case class Event(event) {
-  lazy val contentByDate: Map[String, Seq[Content]] = event.content.groupBy(_.webPublicationDate.toDateMidnight.toString())
-  lazy val contentByTone: Map[String, Seq[Content]] = event.content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
-}
-
 object StoryPackageController extends Controller with Logging {
 
   def dateGroupList(contentId: String) = Action { implicit request =>
 
     val events = Event.mongo.withContent(contentId).map { event =>
-      val groupedContent = event.content.groupBy(_.webPublicationDate.toDateMidnight.toString())
+      val groupedContent = event.contentByDate
       GroupedByContent(event, groupedContent)
     }
-    renderGroup(views.html.fragments.toneGroupPackage(events))
+    renderGroup(views.html.fragments.timelineGroupPackage(events))
   }
 
   def toneGroupList(contentId: String) = Action { implicit request =>
 
     val events = Event.mongo.withContent(contentId).map { event =>
-      val groupedContent = event.content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
+      val groupedContent = event.contentByTone
       GroupedByContent(event, groupedContent)
     }
     renderGroup(views.html.fragments.toneGroupPackage(events))
