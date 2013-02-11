@@ -71,8 +71,7 @@ define([
 
         if (storyPackageName) {
             var story = new StoryPackage(config, storyPackageName).init();
-        } else if (common.$g('#related-trails').length === 0) {
-            // TODO: config.page.showInRelated should express this condition - but seems be be incorrect
+        } else if (!config.page.hasStoryPackage) {
             common.mediator.emit("modules:related:load");
         }
 

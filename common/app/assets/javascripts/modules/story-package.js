@@ -20,9 +20,15 @@ define([
         // View
         this.view = {
             render: function (html) {
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
                 document.getElementById('js-related').innerHTML = html;
                 common.mediator.emit('modules:story-package:render');
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+            },
+            fallback: function () {
+                if (!config.page.hasStoryPackage) {
+                    common.mediator.emit("modules:related:load");
+                }
             }
         };
 
@@ -35,18 +41,18 @@ define([
         this.load = function (url) {
             reqwest({
                 url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'lazyLoad',
-                success: function (json) {
-                    if (json.html !== '') {
-                        that.view.render(json.html);
-                    } else if (common.$g('#related-trails').length === 0) {
-                        common.mediator.emit("modules:related:load");
+                type: 'html',
+                success: function (resp) {
+                    // 200: resp = body as a string 
+                    // 404: resp = XHR object (the error callback isn't called, weirdly)
+                    if (typeof resp === 'string') {
+                        that.view.render(resp);
+                    } else {
+                        that.view.fallback();
                     }
                 },
                 error: function () {
-                    common.mediator('module:error', 'Failed to load story-package', 'story-package.js');
+                    that.view.fallback();
                 }
             });
         };
