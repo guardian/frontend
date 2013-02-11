@@ -46,6 +46,10 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
+  object mongo {
+    lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
+  }
+
   object proxy {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 

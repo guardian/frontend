@@ -1,7 +1,6 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-
 <div class="media">
     @if(showThumbnail) {
         @trail.thumbnail.map{ thumbnailUrl =>

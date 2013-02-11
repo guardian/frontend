@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 
-class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content(delegate: ApiContent, override val importance: Option[Int] = None) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -61,7 +61,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     "series" -> series.map { _.name }.mkString(","),
     "blogs" -> blogs.map { _.name }.mkString(","),
     "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "show-in-related" -> fields.get("showInRelatedContent").map(_.toBoolean).getOrElse(true),
+    "has-story-package" -> fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false),
     "page-code" -> fields("internalPageCode"),
     "isLive" -> isLive,
     "wordCount" -> wordCount

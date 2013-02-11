@@ -21,6 +21,20 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 destination[property] = source[property];
             }
             return destination;
-        }
+        },
+        queryParams : (function(){
+            var params = {},
+                qStr = window.location.search,
+                p,
+                i;
+            if (qStr) {
+                qStr = qStr.slice(1).split('&');
+                for (i = 0; i < qStr.length; i += 1) {
+                    p = qStr[i].split('=');
+                    params[p[0]] = p[1] || '';
+                }
+            }
+            return params;
+        }())
     };
 });

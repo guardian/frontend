@@ -18,6 +18,14 @@ GET    /top-stories                                         controllers.TopStori
 GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
+#Events
+GET    /story-package/chronological01/*contentId  controllers.StoryPackageController.version1List(contentId)
+GET    /story-package/chronological02/*contentId  controllers.StoryPackageController.version2List(contentId)
+
+GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
+GET    /event/timeline/*eventId                   controllers.EventController.timeline(eventId)
+
+
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex
 GET     /style-guide/zones                                  controllers.StyleGuideController.renderZones
