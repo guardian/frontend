@@ -26,9 +26,7 @@ define([
                 common.$g('#related-trails, h3.type-2.article-zone').remove();
             },
             fallback: function () {
-                if (!config.page.hasStoryPackage) {
-                    common.mediator.emit("modules:related:load");
-                }
+                common.mediator.emit("modules:related:load");
             }
         };
 
@@ -43,7 +41,7 @@ define([
                 url: url,
                 type: 'html',
                 success: function (resp) {
-                    // 200: resp = body as a string 
+                    // 200: resp = body as a string
                     // 404: resp = XHR object (the error callback isn't called, weirdly)
                     if (typeof resp === 'string') {
                         that.view.render(resp);
