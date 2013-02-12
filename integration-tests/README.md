@@ -30,6 +30,10 @@ Running through a proxy
 Running on a different driver (e.g. `htmlUnit`, `chrome`, `firefox` (default))
 
     $ mvn test -Ddriver=htmlUnit
+
+Running in Chrome will trigger a profile ignoring all tests tagged `@brokeninchrome`. [ChromeDriver](http://code.google.com/p/selenium/wiki/ChromeDriver) must be installed in your PATH.
+
+    $ mvn test -Ddriver=chrome
      	
 To run the jasmine tests
 
