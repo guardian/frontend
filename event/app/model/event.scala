@@ -8,6 +8,10 @@ import tools.Mongo
 import org.joda.time.format.ISODateTimeFormat
 import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
+import common.{ Logging, AkkaSupport }
+import akka.util.Duration
+import java.util.concurrent.TimeUnit._
+import akka.actor.Cancellable
 
 case class Event(
     id: String,
@@ -38,10 +42,14 @@ object Event {
       allEventsFor(entryEvent)
     }
 
-    def withContent(contentId: String) = {
-      // assume there is just one for now, that is not necessarily true
-      val entryEvent = measure(Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
-      allEventsFor(entryEvent)
+    def withContent(contentId: String): Seq[Event] = {
+      if (ContentListAgent.eventExistsFor(contentId)) {
+        // assume there is just one for now, that is not necessarily true
+        val entryEvent = measure(Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
+        allEventsFor(entryEvent)
+      } else {
+        Nil
+      }
     }
 
     private def allEventsFor(entryEvent: Iterator[ParsedEvent]): Seq[Event] = {
@@ -106,3 +114,50 @@ private case class ParsedEvent(
   parent: Option[ParsedParent] = None,
   ancestor: Option[ParsedParent] = None,
   _rootEvent: Option[ParsedParent] = None)
+
+
+// while this is a prototype and we have no real way of knowing which content is
+// related to an event we want to limit the number of calls to the DB.
+// Just keep a list in memory to check against.
+object ContentListAgent extends AkkaSupport with Logging {
+
+  import Mongo.Events
+
+  private implicit val ctx = new Context {
+    val name = "ISODateTimeFormat context"
+
+    override val jsonConfig = JSONConfig(dateStrategy =
+      StringDateStrategy(dateFormatter = ISODateTimeFormat.dateTime))
+  }
+
+  private val agent = play_akka.agent[Seq[String]](Nil)
+
+  private var schedule: Option[Cancellable] = None
+
+  def refresh() {
+    log.info("updating content list")
+    agent.sendOff { old =>
+      val ids = Events.find().flatMap { dbo =>
+        grater[ParsedEvent].asObject(dbo).content.map(_.id)
+      }
+      val newIds = ids.toList
+      log.info("Updated Content List with %s ids".format(ids.length))
+      newIds
+    }
+  }
+
+  def startup() {
+    schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+      refresh()
+    })
+  }
+
+  def shutdown() {
+    agent.close()
+    schedule.foreach(_.cancel())
+  }
+
+  def eventExistsFor(id: String) = agent().contains {
+    if (id.startsWith("/")) id.drop(1) else id
+  }
+}
