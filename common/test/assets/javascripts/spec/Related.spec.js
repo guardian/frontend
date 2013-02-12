@@ -1,12 +1,17 @@
-define(['common', 'modules/related'], function(common, Related) {
+define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
 
     describe("Related", function() {
        
-        var callback;
+        var callback, appendTo;
 
         beforeEach(function() {
-            callback = sinon.spy(function(){});
+            ajax.init("");
+            callback = sinon.stub();
             common.mediator.on('modules:related:loaded', callback);
+        });
+
+        afterEach(function() {
+            if (appendTo) appendTo.innerHTML = "";
         });
 
         // json test needs to be run asynchronously 
@@ -15,7 +20,7 @@ define(['common', 'modules/related'], function(common, Related) {
             appendTo = document.getElementById('related-1');
             
             runs(function() {
-                var r = new Related(appendTo, { relatedContent : true }).load('fixtures/json');
+                new Related(appendTo, { relatedContent : true }).load('fixtures/json');
             });
 
             waits(500);
@@ -29,18 +34,15 @@ define(['common', 'modules/related'], function(common, Related) {
         // json test needs to be run asynchronously
         it("should not request related links if switched off", function(){
 
-            appendTo.innerHTML = ""
-
             appendTo = document.getElementById('related-1');
 
             runs(function() {
-                var r = new Related(appendTo, { relatedContent : false }).load('fixtures/json');
+                new Related(appendTo, { relatedContent : false }).load('fixtures/json');
             });
 
             waits(500);
 
             runs(function(){
-
                 expect(appendTo.innerHTML).toBe('');
             });
         });
@@ -50,4 +52,4 @@ define(['common', 'modules/related'], function(common, Related) {
         });
     
     });
-})
+});

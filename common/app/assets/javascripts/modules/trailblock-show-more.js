@@ -2,19 +2,7 @@
     Module: autoupdate.js
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
-define([
-    'common',
-    'reqwest',
-    'bonzo',
-    'bean',
-    'qwery'
-], function (
-    common,
-    reqwest,
-    bonzo,
-    bean,
-    qwery
-) {
+define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
     function TrailblockShowMore(options) {
         
@@ -55,7 +43,7 @@ define([
                 var section = bonzo(cta.parent()).attr('data-section-id') || 'top-stories';
                 // what's the offset?
                 var offset = qwery('.trail', cta.parent()[0]).length;
-                reqwest({
+                ajax({
                     url: '/' + section + '.json?view=section&offset=' + offset,
                     type: 'json',
                     // 5 sec timeout
