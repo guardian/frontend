@@ -85,13 +85,12 @@ define([
         transcludeRelated: function (config){
             common.mediator.on("modules:related:load", function(){
 
-                var hasStoryPackage = document.getElementById("related-trails") !== null,
-                    relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
+                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
                     host,
                     pageId,
                     url;
 
-                if (hasStoryPackage) {
+                if (config.page.hasStoryPackage) {
                     relatedExpandable.init();
                 } else {
                     host = config.page.coreNavigationUrl;
