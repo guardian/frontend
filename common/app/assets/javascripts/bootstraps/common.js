@@ -1,6 +1,7 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
@@ -25,6 +26,7 @@ define([
     'modules/cookies'
 ], function (
     common,
+    ajax,
     detect,
     userPrefs,
 
@@ -50,6 +52,10 @@ define([
 ) {
 
     var modules = {
+
+        initialiseAjax: function(config) {
+            ajax.init(config.page.ajaxUrl);
+        },
 
         attachGlobalErrorHandler: function () {
             var e = new Errors(window);
@@ -163,6 +169,7 @@ define([
     };
 
     var ready = function(config) {
+        modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler();
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.upgradeImages();

@@ -1,4 +1,4 @@
-define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupdate) {
+define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, bean, Autoupdate) {
 
     describe("Auto update", function() {
 
@@ -7,20 +7,21 @@ define(['common', 'bean', 'modules/autoupdate'], function(common, bean, Autoupda
             path,
             attachTo;
 
-        //Have to stub the global guardian object
+        // Have to stub the global guardian object
         window.guardian = {
             userPrefs : {
                 set : function() { return true; },
-                get : sinon.spy(function(){})
+                get : sinon.stub()
             }
         };
 
         beforeEach(function() {
+            ajax.init("");
             window.localStorage['gu.prefs.auto-update'] = 'on';
-            path = 'fixtures/autoupdate',
-            delay = 1000,
+            path = 'fixtures/autoupdate';
+            delay = 1000;
             attachTo = document.getElementById('update-area');
-            callback = sinon.spy(function(){});
+            callback = sinon.stub();
         });
 
         afterEach(function() { callback = null });

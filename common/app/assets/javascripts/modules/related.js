@@ -1,4 +1,4 @@
-define(['common', 'reqwest'], function (common, reqwest) {
+define(['common', 'ajax'], function (common, ajax) {
 
     function Related(attachTo, switches) {
         
@@ -18,7 +18,7 @@ define(['common', 'reqwest'], function (common, reqwest) {
         this.load = function (url) {
 
             if (switches.relatedContent) {
-                return reqwest({
+                return ajax({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',

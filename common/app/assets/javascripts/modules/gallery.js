@@ -1,6 +1,6 @@
-define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], function (reqwest, bean, Swipe, common, detect, url, bonzo) {
+define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], function (bean, Swipe, common, detect, url, bonzo) {
 
-    var Gallery = function () {
+    function Gallery() {
 
         var urlParams = url.getUrlVars();
 
@@ -33,7 +33,6 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
 
                     var nextSlide = currentSlide.nextElementSibling;
                     var prevSlide = currentSlide.previousElementSibling;
-                    var totalSlides = currentSlide.getAttribute('data-total');
 
                     // preload the slides ahead/behind the current one
                     // (we only do this for swipe, to allow seamless swiping)
@@ -323,7 +322,7 @@ define(["reqwest", "bean", "swipe", "common", "modules/detect", "modules/url", "
             view.bindGallery();
         };
 
-    };
+    }
 
     return Gallery;
 

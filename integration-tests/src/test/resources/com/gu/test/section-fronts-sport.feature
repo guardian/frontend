@@ -43,7 +43,8 @@ Feature: Section Fronts - Sport
         Given I am on the 'sport' section front 
         When I hide a section
         Then the section will be hidden
-    
+
+    @brokeninchrome
     Scenario: Users can show hidden sections
         Given I am on the 'sport' section front
             And a section is hidden 
