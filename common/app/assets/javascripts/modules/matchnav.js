@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'modules/pad'], function (common, reqwest, Pad) {
+define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
 
     function MatchNav() {
 
@@ -19,7 +19,7 @@ define(['common', 'reqwest', 'modules/pad'], function (common, reqwest, Pad) {
         common.mediator.on('modules:matchnav:loaded', this.view.render);
         
         this.load = function (url) {
-            reqwest({
+            ajax({
                 url: url,
                 type: 'jsonp',
                 jsonpCallback: 'callback',

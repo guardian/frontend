@@ -1,11 +1,11 @@
 /*jshint loopfunc: true */
-define(['reqwest', 'common'], function (reqwest, common) {
+define(['ajax', 'common'], function (ajax, common) {
 
     function Fonts(styleNodes, fileFormat) {
 
         var storagePrefix = "gu.fonts.";
 
-        this.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
+        this.ajax = ajax; // expose publicly so we can inspect it in unit tests
 
         this.view = {
             showFont: function(style, json) {
@@ -26,7 +26,7 @@ define(['reqwest', 'common'], function (reqwest, common) {
                 var style = styleNodes[i];
                 if (fontIsRequired(style)) {
                     var that = this;
-                    this.reqwest({
+                    this.ajax({
                         url: url + style.getAttribute('data-cache-file-' + fileFormat),
                         type: 'jsonp',
                         jsonpCallbackName: 'guFont',
