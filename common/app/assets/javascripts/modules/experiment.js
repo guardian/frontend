@@ -1,9 +1,9 @@
 define([
     'common',
-    'reqwest'
+    'ajax'
 ], function (
     common,
-    reqwest
+    ajax
 ) {
 
     function Experiment(config, experimentName) {
@@ -34,7 +34,7 @@ define([
         });
 
         this.load = function (url) {
-            reqwest({
+            return ajax({
                 url: url,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
