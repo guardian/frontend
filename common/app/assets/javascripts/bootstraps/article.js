@@ -62,8 +62,8 @@ define([
 
         if (!experimentName) {
             for (var key in config.switches) {
-                if (config.switches[key] && key.match(/experiment(\w+)/)) {
-                    experimentName = key.match(/experiment(\w+)/)[1];
+                if (config.switches[key] && key.match(/^experiment(\w+)/)) {
+                    experimentName = key.match(/^experiment(\w+)/)[1];
                     break;
                 }
             }

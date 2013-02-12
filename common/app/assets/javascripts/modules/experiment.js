@@ -1,12 +1,9 @@
 define([
-    'modules/expandable',
     'common',
     'reqwest'
 ], function (
-    Expandable,
     common,
-    reqwest,
-    Pad
+    reqwest
 ) {
 
     function Experiment(config, experimentName) {
@@ -39,12 +36,12 @@ define([
         this.load = function (url) {
             reqwest({
                 url: url,
-                type: 'html',
-                success: function (resp) {
-                    // 200: resp = body as a string
-                    // 404: resp = XHR object (the error callback isn't called, weirdly)
-                    if (typeof resp === 'string') {
-                        that.view.render(resp);
+                type: 'jsonp',
+                jsonpCallback: 'callback',
+                jsonpCallbackName: 'showExperiment',
+                success: function (json) {
+                    if (json.html) {
+                        that.view.render(json.html);
                     } else {
                         that.view.fallback();
                     }
