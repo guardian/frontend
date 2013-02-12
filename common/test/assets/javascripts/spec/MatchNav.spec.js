@@ -1,4 +1,4 @@
-define(['common', 'modules/matchnav', 'modules/pageconfig'], function(common, MatchNav, PageConfig) {
+define(['common', 'ajax', 'modules/matchnav', 'modules/pageconfig'], function(common, ajax, MatchNav, PageConfig) {
 
     var config = PageConfig({
         page: {
@@ -13,16 +13,16 @@ define(['common', 'modules/matchnav', 'modules/pageconfig'], function(common, Ma
         var callback;
 
         beforeEach(function() {
+            ajax.init("");
             callback = sinon.spy(function(){});
             common.mediator.on('modules:matchnav:loaded', callback);
         });
 
         // json test needs to be run asynchronously 
         it("should request the related links and graft them on to the dom", function(){
-            
 
             runs(function() {
-                var r = new MatchNav().load("fixtures/match-stats-nav");
+                new MatchNav().load("fixtures/match-stats-nav");
             });
 
             waits(500);
@@ -34,9 +34,5 @@ define(['common', 'modules/matchnav', 'modules/pageconfig'], function(common, Ma
             });
         });
 
-        xit("should request the related links per edition", function(){
-            expect(0).toBeTruthy();
-        });
-    
     });
-})
+});

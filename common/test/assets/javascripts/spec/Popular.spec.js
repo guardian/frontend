@@ -1,12 +1,13 @@
-define(['common', 'modules/popular'], function(common, Popular) {
+define(['common', 'ajax', 'modules/popular'], function(common, ajax, Popular) {
 
     describe("Popular", function() {
        
-        var callback;
+        var popularLoadedCallback;
 
         beforeEach(function() {
-            callback = sinon.spy(function(){});
-            common.mediator.on('modules:popular:loaded', callback);
+            ajax.init("");
+            popularLoadedCallback = sinon.stub();
+            common.mediator.on('modules:popular:loaded', popularLoadedCallback);
         });
 
         // json test needs to be run asynchronously 
@@ -15,16 +16,16 @@ define(['common', 'modules/popular'], function(common, Popular) {
             appendTo = document.getElementById('popular-1');
             
             runs(function() {
-                var r = new Popular(appendTo).load('fixtures/popular');
+                new Popular(appendTo).load('fixtures/popular');
             });
 
             waits(500);
 
             runs(function(){
-                expect(callback).toHaveBeenCalledOnce();
+                expect(popularLoadedCallback).toHaveBeenCalledOnce();
                 expect(appendTo.innerHTML).toBe('<b>popular</b>');
             });
         });
     
     });
-})
+});

@@ -4,14 +4,14 @@
 */
 define([
     'common',
-    'reqwest',
+    'ajax',
     'bonzo',
     'bean',
     'qwery',
     'modules/userPrefs'
 ], function (
     common,
-    reqwest,
+    ajax,
     bonzo,
     bean,
     qwery,
@@ -91,7 +91,7 @@ define([
             var path = options.path,
                 that = this;
 
-            return reqwest({
+            return ajax({
                 url: path,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
@@ -134,7 +134,7 @@ define([
         // Bindings
         common.mediator.on('modules:autoupdate:loaded', this.view.render);
 
-        //Initalise
+        // Initialise
         this.init = function () {
             if (options.switches && options.switches.autoRefresh !== true) {
                 return;

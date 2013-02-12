@@ -40,8 +40,7 @@ define([
 
         this.getPercentageInViewPort = function(el) {
             var rect = el.getBoundingClientRect(),
-                height = (window.innerHeight || document.body.clientHeight),
-                percent = 0;
+                height = (window.innerHeight || document.body.clientHeight);
 
             if(rect.bottom < 0 || rect.bottom < height) {
                 return 100;

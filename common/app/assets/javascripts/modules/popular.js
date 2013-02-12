@@ -1,4 +1,4 @@
-define(['common', 'reqwest'], function (common, reqwest) {
+define(['common', 'ajax'], function (common, ajax) {
 
     function Popular(attachTo) {
 
@@ -22,7 +22,7 @@ define(['common', 'reqwest'], function (common, reqwest) {
         // Model
 
         this.load = function (url) {
-            return reqwest({
+            return ajax({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
