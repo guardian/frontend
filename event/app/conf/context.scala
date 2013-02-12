@@ -1,8 +1,8 @@
 package conf
 
-import play.api.{ Application => PlayApp }
+import _root_.play.api.{ Application => PlayApp }
 import common._
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, Switchable, Metric }
+import com.gu.management._
 import com.gu.management.play.{ Management => GuManagement }
 
 import com.gu.management.logback.LogbackLevelPage
@@ -13,8 +13,12 @@ object Switches {
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
+object MongoTimingMetric extends TimingMetric("performance", "database", "Mongo request", "outgoing Mongo calls")
+object MongoOkCount extends CountMetric("database-status", "ok", "Ok", "number of mongo requests successfully completed")
+object MongoErrorCount extends CountMetric("database-status", "error", "Error", "number of mongo requests that error")
+
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
+  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
 }
 
 object Management extends GuManagement {

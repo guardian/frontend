@@ -6,7 +6,7 @@ import com.novus.salat._
 import json.{ StringDateStrategy, JSONConfig }
 import tools.Mongo
 import org.joda.time.format.ISODateTimeFormat
-import conf.ContentApi
+import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 
 case class Event(
@@ -34,20 +34,20 @@ object Event {
   object mongo {
 
     def eventChainFor(eventId: String) = {
-      val entryEvent = Events.find(Map("id" -> eventId)).map(grater[ParsedEvent].asObject(_))
+      val entryEvent = measure(Events.find(Map("id" -> eventId)).map(grater[ParsedEvent].asObject(_)))
       allEventsFor(entryEvent)
     }
 
     def withContent(contentId: String) = {
       // assume there is just one for now, that is not necessarily true
-      val entryEvent = Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_))
+      val entryEvent = measure(Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
       allEventsFor(entryEvent)
     }
 
     private def allEventsFor(entryEvent: Iterator[ParsedEvent]): Seq[Event] = {
 
       val parsedEvents = entryEvent.flatMap(_._rootEvent.map(_.id)).flatMap { rootId =>
-        Events.find(Map("_rootEvent.id" -> rootId)).$orderby(Map("startDate" -> 1)).map(grater[ParsedEvent].asObject(_))
+        measure(Events.find(Map("_rootEvent.id" -> rootId)).$orderby(Map("startDate" -> 1)).map(grater[ParsedEvent].asObject(_)))
       }.toList
 
       val rawEvents = parsedEvents.map(Event(_))
@@ -79,6 +79,18 @@ object Event {
     importance = parsedEvent.importance,
     contentIds = parsedEvent.content.map(_.id)
   )
+
+  private def measure[T](block: => T): T = MongoTimingMetric.measure {
+    try {
+      val result = block
+      MongoOkCount.increment()
+      result
+    } catch {
+      case e =>
+        MongoErrorCount.increment()
+        throw e
+    }
+  }
 }
 
 // just used for parsing from Json
