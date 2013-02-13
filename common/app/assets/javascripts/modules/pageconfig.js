@@ -9,7 +9,7 @@ define(['modules/pad', "common"], function (pad, common) {
     // http://stackoverflow.com/questions/5802461/javascript-which-browsers-support-parsing-of-iso-8601-date-string-with-date-par#answer-5805595
     function parseDate(d) {
         var diso= Date.parse('2011-04-26T13:16:50Z');
-        if(diso === 1303823810000 && false){
+        if(diso === 1303823810000){
             return new Date(Date.parse(d));
         } else {
             var day, tz,
