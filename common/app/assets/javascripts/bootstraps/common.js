@@ -89,20 +89,23 @@ define([
         },
 
         transcludeRelated: function (config){
+            common.mediator.on("modules:related:load", function(){
 
-          common.mediator.on("modules:related:load", function(url){
+                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
+                    host,
+                    pageId,
+                    url;
 
-              var hasStoryPackage = document.getElementById("related-trails") !== null;
-
-              var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-
-              if (hasStoryPackage) {
-                  relatedExpandable.init();
-              } else {
-                  common.mediator.on('modules:related:render', relatedExpandable.init);
-                  new Related(document.getElementById('js-related'), config.switches).load(url[0]);
-              }
-          });
+                if (config.page.hasStoryPackage) {
+                    relatedExpandable.init();
+                } else {
+                    host = config.page.coreNavigationUrl;
+                    pageId = config.page.pageId;
+                    url =  host + '/related/' + pageId;
+                    common.mediator.on('modules:related:render', relatedExpandable.init);
+                    new Related(document.getElementById('js-related'), config.switches).load(url);
+                }
+            });
         },
 
         transcludeMostPopular: function (host, section, edition) {
