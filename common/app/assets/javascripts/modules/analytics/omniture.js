@@ -57,7 +57,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tag;
+            s.eVar37 = config.page.contentType + ':' + tag;
         };
 
         // used where we don't have an element to pass as a tag
@@ -66,7 +66,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tagStr;
+            s.eVar37 = config.page.contentType + ':' + tagStr;
             s.tl(true, 'o', tagStr);
         };
 
