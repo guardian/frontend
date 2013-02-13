@@ -20,11 +20,11 @@ GET     /related/*path                                      controllers.RelatedC
 
 #Events
 
-GET    /story-package/timeline/*contentId       controllers.StoryPackageController.dateGroupList(contentId)
-GET    /story-package/chronological01/*contentId  controllers.StoryPackageController.version1List(contentId)
-GET    /story-package/chronological02/*contentId  controllers.StoryPackageController.version2List(contentId)
+GET    /experiment/timeline/*contentId          controllers.StoryPackageController.dateGroupList(contentId)
+GET    /experiment/chronological01/*contentId   controllers.StoryPackageController.version1List(contentId)
+GET    /experiment/chronological02/*contentId   controllers.StoryPackageController.version2List(contentId)
+GET    /experiment/tone-group/*contentId        controllers.StoryPackageController.toneGroupList(contentId)
 
-GET    /story-package/tone-group/*contentId       controllers.StoryPackageController.toneGroupList(contentId)
 GET    /event/timeline/*eventId                   controllers.EventController.timeline(eventId)
 
 

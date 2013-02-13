@@ -20,15 +20,17 @@
 
 
 @events.map { event =>
-    <div class="event-block">
-        <h2 class="type-2 article-zone">@event.title</h2>
-        <div class="trailblock">
-            @{(events.size) match {
-                case (1) => large(event.content)
-                case (2) => medium(event.content)
-                case (3) => medium(event.content)
-                case _ => small(event.content)
-            }}
+    @if(event.content.size > 0) {
+        <div class="event-block">
+            <h2 class="type-2 article-zone">@event.title</h2>
+            <div class="trailblock">
+                @{(events.size) match {
+                    case (1) => large(event.content)
+                    case (2) => medium(event.content)
+                    case (3) => medium(event.content)
+                    case _ => small(event.content)
+                }}
+            </div>
         </div>
-    </div>
+    }
 }
