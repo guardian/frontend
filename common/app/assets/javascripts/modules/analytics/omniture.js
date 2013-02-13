@@ -55,7 +55,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tag;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
         };
 
         // used where we don't have an element to pass as a tag
@@ -64,7 +64,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tagStr;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
             s.tl(true, 'o', tagStr);
         };
 
@@ -83,7 +83,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
-            s.channel   = config.page.section || '';
+            s.channel   = (config.page.contentType === "Network Front") ? "Network Front" : config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
