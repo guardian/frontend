@@ -35,13 +35,14 @@
             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 		      @fragments.articleBody(article)
         </div>
+
     </article>
 
     @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
-    } else {
-        <div id="js-related"></div>
     }
+    
+    <aside id="js-related"></aside>
 
-    @fragments.mostPopularPlaceholder(article.section)
+    <div id="js-popular"></div>
 }
