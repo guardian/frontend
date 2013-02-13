@@ -64,7 +64,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
             s.tl(true, 'o', tagStr);
         };
 
