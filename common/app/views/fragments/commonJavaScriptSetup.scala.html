@@ -70,7 +70,8 @@
                     '@{JavaScriptVariableName(key.split('.').last)}': '@value'
                 }.mkString(","),
 
-                'edition': '@Edition(request, Configuration)'
+                'edition': '@Edition(request, Configuration)',
+                'ajaxUrl': '@Configuration.edition.ajaxUrlFor(Edition(request, Configuration))'
             },
             switches : { @switches.map{ switch =>
                     '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}

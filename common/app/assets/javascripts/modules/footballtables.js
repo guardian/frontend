@@ -1,7 +1,6 @@
-define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
+define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     function FootballTables(options) {
-        var reqwest = Reqwest;
 
         this.path =  "/football/api/competitiontable?";
         this.queryString = "&competitionId=";
@@ -9,7 +8,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         // View
         this.view = {
             render: function (html) {
-                var el = bonzo(options.prependTo).before(html);
+                bonzo(options.prependTo).before(html);
                 common.mediator.emit('modules:footballtables:render');
             }
         };
@@ -18,7 +17,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         this.load = function (query) {
             var that = this;
 
-            return reqwest({
+            return ajax({
                 url: query,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
@@ -46,7 +45,7 @@ define(['common', 'reqwest', 'bonzo'], function (common, Reqwest, bonzo) {
         //Initalise
         this.init = function(opts) {
             opts = opts || {};
-            reqwest = opts.reqwest || Reqwest; //For unit testing
+            ajax = opts.ajax || ajax; //For unit testing
 
             var query = (options.path) ? options.path : this.generateQuery();
 
