@@ -36,7 +36,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.linkTrackVars).toBe('eVar37,events');
             expect(s.linkTrackEvents).toBe('event37');
             expect(s.events).toBe('event37');
-            expect(s.eVar37).toBe("article:outer:link");
+            expect(s.eVar37).toBe("Article:outer:link");
 
         });
 
