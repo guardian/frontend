@@ -33,8 +33,6 @@ define(['common', 'modules/detect'], function(common, detect) {
                 storeObj,
                 delay;
 
-                console.log(params);
-
             // Remove the 'false' clause once Omniture guys support the localStorage approach...
             if (false && isSameHost && !isSamePage) {
                 // Came from a link to a new page on the same host.
@@ -57,7 +55,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = config.page.contentType + ':' + tag;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
         };
 
         // used where we don't have an element to pass as a tag
@@ -66,7 +64,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = config.page.contentType + ':' + tagStr;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
             s.tl(true, 'o', tagStr);
         };
 
