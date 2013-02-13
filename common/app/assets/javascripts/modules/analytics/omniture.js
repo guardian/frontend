@@ -33,6 +33,8 @@ define(['common', 'modules/detect'], function(common, detect) {
                 storeObj,
                 delay;
 
+                console.log(params);
+
             // Remove the 'false' clause once Omniture guys support the localStorage approach...
             if (false && isSameHost && !isSamePage) {
                 // Came from a link to a new page on the same host.
@@ -83,7 +85,7 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
-            s.channel   = config.page.section || '';
+            s.channel   = (config.page.contentType === "Network Front") ? "Network Front" : config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
