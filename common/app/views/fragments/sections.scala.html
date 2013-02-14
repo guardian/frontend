@@ -5,8 +5,8 @@
     <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
 
         @Navigation(request, Configuration).map{ section =>
-            <li>
-                <a href="@section.href"
+            <li class="zone-@section.zone">
+                <a href="@section.href" class="nav-zone-color"
                     data-link-name="@section.linkName"
                     @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
                     @if(section.newWindow){ target="_blank" }
