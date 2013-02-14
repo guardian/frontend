@@ -5,13 +5,5 @@
 # For dev machines
 GET    /assets/*file                              controllers.Assets.at(path="/public", file)
 
-#GET    /experiment/timeline/*contentId          controllers.StoryPackageController.dateGroupList(contentId)
-#GET    /experiment/chronological01/*contentId   controllers.StoryPackageController.version1List(contentId)
-#GET    /experiment/chronological02/*contentId   controllers.StoryPackageController.version2List(contentId)
-#GET    /experiment/tone-group/*contentId        controllers.StoryPackageController.toneGroupList(contentId)
-
-GET    /story/with-content/*contentId           controllers.StoryController.withContent(contentId)
+#GET    /story/with-content/*contentId           controllers.StoryController.withContent(contentId)
 GET    /story/id/*id                            controllers.StoryController.byId(id)
-
-
-#GET    /event/timeline/*eventId                   controllers.EventController.timeline(eventId)

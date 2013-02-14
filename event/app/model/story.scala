@@ -46,21 +46,21 @@ object Story {
 
   object mongo {
 
-    def withContent(contentId: String): Seq[Story] = {
+    //    def withContent(contentId: String): Seq[Story] = {
+    //
+    //      Stories.find(Map("events.content.id" -> contentId)).toSeq.head.map(grater[Story].asObject(_))
+    //
+    //      //if (ContentListAgent.eventExistsFor(contentId)) {
+    //      // assume there is just one for now, that is not necessarily true
+    //      // val entryEvent = measure(Stories.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
+    //      // allEventsFor(entryEvent)
+    //      // } else {
+    //      //   Nil
+    //      // }
+    //    }
 
-      Stories.find(Map("content.id" -> contentId)).toSeq.head.map(grater[Story].asObject(_))
-
-      //if (ContentListAgent.eventExistsFor(contentId)) {
-      // assume there is just one for now, that is not necessarily true
-      // val entryEvent = measure(Stories.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
-      // allEventsFor(entryEvent)
-      // } else {
-      //   Nil
-      // }
-    }
-
-    def byId(id: String): Story = {
-      Stories.find(Map("id" -> id)).toSeq.head.map(grater[Story].asObject(_))
+    def byId(id: String): Option[Story] = {
+      Stories.findOne(Map("id" -> id)).map(grater[Story].asObject(_))
     }
 
     // private def allEventsFor(entryEvent: Iterator[ParsedEvent]): Seq[Event] = {
