@@ -1,0 +1,36 @@
+@(events: Seq[Event])
+
+@large(content: Seq[model.Content]) = {
+    @defining(content.length){ numTrails =>
+        @fragments.trailblocks.thumbnail(content, numItemsVisible = numTrails, numThumbnails = 3, headingLevel = 3)
+    }
+}
+
+@medium(content: Seq[model.Content]) = { 
+    @defining(content.length){ numTrails =>
+        @fragments.trailblocks.thumbnail(content, numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
+    }
+}
+
+@small(content: Seq[model.Content]) = { 
+    @defining(content.length){ numTrails =>
+        @fragments.trailblocks.thumbnail(content, numItemsVisible = 1, numThumbnails = 1, headingLevel = 3)
+    }
+}
+
+
+@events.map { event =>
+    @if(event.content.size > 0) {
+        <div class="event-block">
+            <h2 class="type-2 article-zone">@event.title</h2>
+            <div class="trailblock">
+                @{(events.size) match {
+                    case (1) => large(event.content)
+                    case (2) => medium(event.content)
+                    case (3) => medium(event.content)
+                    case _ => small(event.content)
+                }}
+            </div>
+        </div>
+    }
+}

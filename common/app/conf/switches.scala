@@ -44,9 +44,18 @@ object CommonSwitches {
     "Switch this switch off to disable witness video embeds.",
     initiallyOn = true)
 
+  val ExperimentChronological01Switch = DefaultSwitch("experiment-chronological01",
+    "Switch this switch off to disable experimental chronological story-packages v1.",
+    initiallyOn = false)
+
+  val ExperimentChronological02Switch = DefaultSwitch("experiment-chronological02",
+    "Switch this switch off to disable experimental chronological story-packages v2.",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch
+    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
+    ExperimentChronological01Switch, ExperimentChronological02Switch
   )
 }
 

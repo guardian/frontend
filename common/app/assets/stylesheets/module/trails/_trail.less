@@ -21,10 +21,9 @@
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 400px) {
-    .trail-headline {
-        font-size: 17px;
-    }
+.trail-headline { 
+    @media screen and (min-width: 400px) { .type-4; }
+    @media screen and (min-width: 1024px) { .type-5; }
 }
 
 .media .trail-headline {
