@@ -9,19 +9,20 @@ case class Zone(name: SectionLink, sections: Seq[SectionLink])
 object Navigation {
 
   private val ukSections = Seq(
-    SectionLink("home", "Home", "/", "Home"),
-    SectionLink("uk", "UK News", "/uk", "UK news"),
-    SectionLink("world", "World News", "/world", "World news"),
+    SectionLink("news", "News", "/", "News"),
     SectionLink("sport", "Sport", "/sport", "Sport"),
-    SectionLink("football", "Football", "/football", "Football"),
-    SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
-    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("commentisfree", "Comment is fee", "/commentisfree", "Comment"),
     SectionLink("culture", "Culture", "/culture", "Culture"),
     SectionLink("business", "Business", "/business", "Business"),
-    SectionLink("technology", "Technology", "/technology", "Technology"),
+    SectionLink("money", "Money", "/money", "Money"),
+    SectionLink("lifeandstyle", "Life &amp; Style", "/lifeandstyle", "Life &amp; style"),
+    SectionLink("travel", "Travel", "/travel", "Travel"),
     SectionLink("environment", "Environment", "/environment", "Environment"),
-    SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates", newWindow = true),
-    SectionLink("jobs", "Jobs", "http://m.jobs.guardian.co.uk/", "Jobs", newWindow = true)
+    SectionLink("technology", "Technology", "/technology", "Tech"),
+    SectionLink("tv", "TV", "/technology", "TV"),
+    SectionLink("video", "Video", "/video", "Video"),
+    SectionLink("dating", "Dating", "https://soulmates.guardian.co.uk/?INTCMP=ILCSOULTXT947I2", "Dating"),
+    SectionLink("jobs", "Jobs", "http://jobs.guardian.co.uk/", "Jobs")
   )
 
   private val usSections = Seq(
