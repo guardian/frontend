@@ -267,9 +267,13 @@ a.topstories-control,
 
 
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width: @desktopBreakpoint) {
+    #header {
+        background-color: #fff;
+    }
+
     #sections-header {
-        display: block !important;
+        display: block;
     }
     .sections .nav {
         padding-left: 0;
