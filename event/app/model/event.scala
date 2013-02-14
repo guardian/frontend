@@ -13,6 +13,15 @@ import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import akka.actor.Cancellable
 
+case class Story(
+  id: String,
+  title: String,
+  events: Seq[Event] = Nil,
+  createdBy: Option[Modified] = None,
+  modifiedBy: Seq[Modified] = Nil,
+  explainer: Option[String] = None
+)
+
 case class Event(
     id: String,
     title: String,
@@ -25,7 +34,7 @@ case class Event(
   lazy val contentByTone: Map[String, Seq[Content]] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
 }
 
-object Event {
+object Story {
 
   implicit val ctx = new Context {
     val name = "ISODateTimeFormat context"
@@ -34,19 +43,14 @@ object Event {
       StringDateStrategy(dateFormatter = ISODateTimeFormat.dateTime))
   }
 
-  import Mongo.Events
+  import Mongo.Stories
 
   object mongo {
 
-    def eventChainFor(eventId: String) = {
-      val entryEvent = measure(Events.find(Map("id" -> eventId)).map(grater[ParsedEvent].asObject(_)))
-      allEventsFor(entryEvent)
-    }
-
-    def withContent(contentId: String): Seq[Event] = {
+    def withContent(contentId: String): Seq[Story] = {
       if (ContentListAgent.eventExistsFor(contentId)) {
         // assume there is just one for now, that is not necessarily true
-        val entryEvent = measure(Events.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
+        val entryEvent = measure(Stories.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
         allEventsFor(entryEvent)
       } else {
         Nil
@@ -103,7 +107,6 @@ object Event {
 }
 
 // just used for parsing from Json
-private case class ParsedParent(id: String, title: Option[String] = None)
 private case class ParsedContent(id: String, importance: Int)
 
 private case class ParsedEvent(
@@ -112,16 +115,14 @@ private case class ParsedEvent(
   title: String,
   importance: Option[Int] = None,
   content: Seq[ParsedContent] = Nil,
-  parent: Option[ParsedParent] = None,
-  ancestor: Option[ParsedParent] = None,
-  _rootEvent: Option[ParsedParent] = None)
+  )
 
 // while this is a prototype and we have no real way of knowing which content is
 // related to an event we want to limit the number of calls to the DB.
 // Just keep a list in memory to check against.
 object ContentListAgent extends AkkaSupport with Logging {
 
-  import Mongo.Events
+  import Mongo.Stories
 
   private implicit val ctx = new Context {
     val name = "ISODateTimeFormat context"
@@ -137,7 +138,7 @@ object ContentListAgent extends AkkaSupport with Logging {
   def refresh() {
     log.info("updating content list")
     agent.sendOff { old =>
-      val ids = Events.find().flatMap { dbo =>
+      val ids = Stories.find().flatMap { dbo =>
         grater[ParsedEvent].asObject(dbo).content.map(_.id)
       }
       val newIds = ids.toList
@@ -157,7 +158,7 @@ object ContentListAgent extends AkkaSupport with Logging {
     schedule.foreach(_.cancel())
   }
 
-  def eventExistsFor(id: String) = agent().contains {
+  def storyExistsFor(id: String) = agent().contains {
     if (id.startsWith("/")) id.drop(1) else id
   }
 }
