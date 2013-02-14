@@ -1,8 +1,8 @@
-define(function () {
+define((function () {
 
     if (!Date.parse || Date.parse("2012-01-01T01:01:01") !== 1325379661000) {
        
-        // fix inconsistent Date.parse implementations 
+        // fix inconsistent Date.parse implementations
         Date.prototype.parse = function (s) {
             var day, tz,
                 rx= /^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/,
@@ -26,4 +26,4 @@ define(function () {
         };
 
     }
-}());
+}()));
