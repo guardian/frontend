@@ -1,41 +1,44 @@
-@(events: Seq[Event])
+@(allEvents: Seq[Event])
 
-<h2 class="type-2 article-zone" style="color: #63004C;">Story timeline</h2>
-<div class="trailblock">
-    <ul class="unstyled">
+@block(events: Seq[Event], isPanel: Boolean = false) = { 
+    <ul class="unstyled@if(isPanel){ panel}">
     @events.map { event =>
-        @if(event.content.size > 0) {
-            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
-                <li class="trail event-block@if(trail.importance.getOrElse(0) > 50) { is-important}" data-link-name="trail" style="border-bottom:none;">
-                    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-                    <div class="date-line">
-                        <h3 class="type-5">@event.title</h3>
-                        <div class="media">
-                                @trail.thumbnail.map{ thumbnailUrl =>
-                                    <a href="@trail.url" class="media-img" data-link-name="@info.rowNum | image">
-                                        <img class="maxed" src="@thumbnailUrl"
-                                            data-thumb-width="140"
-                                            @trail.mainPicture(width=220).map { largeCrop =>
-                                                data-fullsrc="@largeCrop.url"
-                                                data-full-width="@largeCrop.width"
-                                                alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
-                                                title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
-                                            }
-                                            itemprop="contentURL"
-                                        />
-                                    </a>
-                                }
-
-                            <p class="media-body type-7">
-                                <a href="@trail.url" itemprop="relatedLink" data-link-name="@info.rowNum | text" style="color: #555;">
-                                    @trail.trailText.map { text => @cleanTrailText(text) }
+        @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+            <li class="trail event-block" data-link-name="trail">
+                @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                <div class="date-line">
+                    <h3 class="type-5">@event.title</h3>
+                    <div class="media">
+                            @trail.thumbnail.map{ thumbnailUrl =>
+                                <a href="@trail.url" class="media-img" data-link-name="@info.rowNum | image">
+                                    <img class="maxed" src="@thumbnailUrl"
+                                        data-thumb-width="140"
+                                        @trail.mainPicture(width=220).map { largeCrop =>
+                                            data-fullsrc="@largeCrop.url"
+                                            data-full-width="@largeCrop.width"
+                                            alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
+                                            title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                                        }
+                                        itemprop="contentURL"
+                                    />
                                 </a>
-                            </p>
-                         </div>
-                    </div>
-                </li>
-            }
+                            }
+
+                        <p class="media-body type-7">
+                            <a href="@trail.url" itemprop="relatedLink" data-link-name="@info.rowNum | text" style="color: #555;">
+                                @trail.trailText.map { text => @cleanTrailText(text) }
+                            </a>
+                        </p>
+                     </div>
+                </div>
+            </li>
         }
     }
     </ul>
+}
+
+<h2 class="type-2 article-zone" style="color: #63004C;">Event timeline</h2>
+<div id="experiment" class="trailblock timeline" data-count="@{allEvents.length - 4}" data-link-name="Event timeline">
+    @block(allEvents.take(4))
+    @block(allEvents.drop(3), true)
 </div>

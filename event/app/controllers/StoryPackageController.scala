@@ -13,7 +13,7 @@ object StoryPackageController extends Controller with Logging {
 
   def dateGroupList(contentId: String) = Action { implicit request =>
 
-    val promiseOfEvents = Akka.future(Event.mongo.withContent(contentId).map { event =>
+    val promiseOfEvents = Akka.future(Event.mongo.withContent(contentId).filter(_.hasContent).map { event =>
       val groupedContent = event.contentByDate
       GroupedByContent(event, groupedContent)
     })

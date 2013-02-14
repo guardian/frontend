@@ -20,6 +20,7 @@ case class Event(
     importance: Option[Int] = None,
     contentIds: Seq[String] = Nil,
     content: Seq[Content] = Nil) {
+  lazy val hasContent: Boolean = content.nonEmpty
   lazy val contentByDate: Map[String, Seq[Content]] = content.groupBy(_.webPublicationDate.toDateMidnight.toString())
   lazy val contentByTone: Map[String, Seq[Content]] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
 }
@@ -114,7 +115,6 @@ private case class ParsedEvent(
   parent: Option[ParsedParent] = None,
   ancestor: Option[ParsedParent] = None,
   _rootEvent: Option[ParsedParent] = None)
-
 
 // while this is a prototype and we have no real way of knowing which content is
 // related to an event we want to limit the number of calls to the DB.
