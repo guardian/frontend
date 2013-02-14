@@ -1,7 +1,7 @@
 define(function () {
 
     if (!Date.parse || Date.parse("2012-01-01T01:01:01") !== 1325379661000) {
-        
+       
         // fix inconsistent Date.parse implementations 
         Date.prototype.parse = function (s) {
             var day, tz,
@@ -22,8 +22,8 @@ define(function () {
                 }
                 return day;
             }
-            return NaN;
+            return ""; // best to fail silently here
         };
 
     }
-});
+}());

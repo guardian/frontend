@@ -24,7 +24,7 @@ define(['modules/pad', "common"], function (pad, common) {
                     // assumes an 'internet' date such as 2012-12-23T22:30:00.000Z
                     // http://www.ietf.org/rfc/rfc3339.txt
                     if(config.page.webPublicationDate){
-                        return Date.parse(config.page.webPublicationDate);
+                        return (new Date().parse(config.page.webPublicationDate));
                     }
                 },
 
