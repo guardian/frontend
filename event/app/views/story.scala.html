@@ -1,14 +1,47 @@
-@(story: Story)(implicit request: RequestHeader)
+@(page: Page, story: Story, content: List[(String, Seq[model.Content])])(implicit request: RequestHeader)
 
-<h2>@story.title</h2>
-<ul>
-@story.events.map{ e =>
-    <li>@e.title
-        <ul>
-            @e.content.map{ c =>
-                <li>@c.headline</li>
-            }
-        </ul>
+@block(events: Seq[Event], isPanel: Boolean) = {
+<ul class="unstyled@if(isPanel){ panel}">
+    @events.map { event =>
+    @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+    <li class="trail event-block" data-link-name="trail">
+        @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+        <div class="date-line">
+            <h3 class="type-5">@event.title</h3>
+        </div>
     </li>
-}
+    }
+    }
 </ul>
+}
+
+@main(page, Switches.all){ }{
+
+<h2 class="article-zone type-1">
+    <span class="zone-color">@story.title</span>
+</h2>
+
+<section>
+    <h2 class="page-head">Overview</h2>
+    <p class="story-explainer box-indent type-7" itemprop="description" data-link-name="explainer">
+        @story.explainer
+    </p>
+</section>
+
+
+<ul class="accordion">
+    @content.toList.reverse.zipWithRowInfo.map{ case ((tone, c), info) =>
+    <li><a href="#">@tone <i class="i i-filter-arrow-right"></i></a>
+        <section>
+            @fragments.trailblocks.thumbnail(c.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
+        </section>
+    </li>
+    }
+</ul>
+
+<h2 class="type-2 article-zone" style="color: #63004C;">Timeline</h2>
+<div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+    @block(story.events.take(4), false)
+    @block(story.events.drop(3), true)
+</div>
+}

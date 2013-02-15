@@ -7,6 +7,7 @@ define('bootstraps/app', [
     "bootstraps/article",
     "bootstraps/video",
     "bootstraps/gallery",
+    "bootstraps/story",
     "modules/pageconfig"
 ], function (
     domReady,
@@ -17,6 +18,7 @@ define('bootstraps/app', [
     Article,
     Video,
     Gallery,
+    Story,
     pageConfig
 ) {
 
@@ -54,6 +56,8 @@ define('bootstraps/app', [
             if (config.page.contentType === "Gallery") {
                 Gallery.init({url: window.location.pathName}, config);
             }
+
+            r.get('/story/:id', function(req) { Story.init(req, config);});
 
             //Kick it all off
             r.init();

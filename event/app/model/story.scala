@@ -38,10 +38,12 @@ object Event {
 }
 
 case class Story(
-  id: String,
-  title: String,
-  events: Seq[Event] = Nil,
-  explainer: Option[String] = None)
+    id: String,
+    title: String,
+    events: Seq[Event] = Nil,
+    explainer: Option[String] = None) {
+  lazy val contentByTone: List[(String, Seq[Content])] = events.flatMap(_.content).groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
+}
 
 object Story {
 
@@ -63,18 +65,10 @@ object Story {
 
   object mongo {
 
-    //    def withContent(contentId: String): Seq[Story] = {
-    //
-    //      Stories.find(Map("events.content.id" -> contentId)).toSeq.head.map(grater[Story].asObject(_))
-    //
-    //      //if (ContentListAgent.eventExistsFor(contentId)) {
-    //      // assume there is just one for now, that is not necessarily true
-    //      // val entryEvent = measure(Stories.find(Map("content.id" -> contentId)).map(grater[ParsedEvent].asObject(_)))
-    //      // allEventsFor(entryEvent)
-    //      // } else {
-    //      //   Nil
-    //      // }
-    //    }
+    def withContent(contentId: String): Option[Story] = {
+      val parsedStory = Stories.findOne(Map("events.content.id" -> contentId)).map(grater[ParsedStory].asObject(_))
+      loadContentFor(parsedStory)
+    }
 
     def byId(id: String): Option[Story] = {
       val parsedStory = Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_))
