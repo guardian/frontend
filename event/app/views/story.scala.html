@@ -1,33 +1,17 @@
 @(page: Page, story: Story, content: List[(String, Seq[model.Content])])(implicit request: RequestHeader)
 
-@block(events: Seq[Event], isPanel: Boolean) = {
-<ul class="unstyled@if(isPanel){ panel}">
-    @events.map { event =>
-    @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
-    <li class="trail event-block" data-link-name="trail">
-        @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
-        <div class="date-line">
-            <h3 class="type-5">@event.title</h3>
-        </div>
-    </li>
-    }
-    }
-</ul>
-}
-
 @main(page, Switches.all){ }{
 
 <h2 class="article-zone type-1">
     <span class="zone-color">@story.title</span>
 </h2>
 
-<section>
+<section class="story-overview">
     <h2 class="page-head">Overview</h2>
     <p class="story-explainer box-indent type-7" itemprop="description" data-link-name="explainer">
         @story.explainer
     </p>
 </section>
-
 
 <ul class="accordion">
     @content.toList.reverse.zipWithRowInfo.map{ case ((tone, c), info) =>
@@ -41,7 +25,17 @@
 
 <h2 class="type-2 article-zone" style="color: #63004C;">Timeline</h2>
 <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
-    @block(story.events.take(4), false)
-    @block(story.events.drop(3), true)
+    <ul class="unstyled">
+        @story.events.map { event =>
+            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+                <li class="trail event-block" data-link-name="trail">
+                    @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                    <div class="date-line">
+                        <h3 class="type-5">@event.title</h3>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
 </div>
 }
