@@ -5,9 +5,10 @@
 @story.events.map{ e =>
     <li>@e.title
         <ul>
-            @e.contentIds.map{ id =>
-                <li>@id</li>
+            @e.content.map{ c =>
+                <li>@c.headline</li>
             }
+        </ul>
     </li>
 }
 </ul>

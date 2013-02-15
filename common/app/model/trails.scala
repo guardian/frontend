@@ -14,6 +14,7 @@ trait Trail extends Images with Tags {
   def thumbnail: Option[String] = None
   def isLive: Boolean
   def importance: Option[Int] = None
+  def colour: Option[Int] = None
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])

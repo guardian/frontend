@@ -5,7 +5,10 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 
-class Content(delegate: ApiContent, override val importance: Option[Int] = None) extends Trail with Tags with MetaData {
+class Content(
+    delegate: ApiContent,
+    override val importance: Option[Int] = None,
+    override val colour: Option[Int] = None) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 

@@ -5,5 +5,7 @@
 # For dev machines
 GET    /assets/*file                              controllers.Assets.at(path="/public", file)
 
-#GET    /story/with-content/*contentId           controllers.StoryController.withContent(contentId)
-GET    /story/id/*id                            controllers.StoryController.byId(id)
+#GET    /story/package/*contentId                 controllers.StoryController.withContent(contentId)
+
+GET    /story/timeline/*id                        controllers.StoryController.byId(id)
+GET    /story/*id                                 controllers.StoryController.byId(id)
