@@ -59,7 +59,8 @@ object Story {
 
     def byId(id: String): Option[Story] = {
       val story = Stories.findOne(Map("id" -> id)).map(grater[Story].asObject(_))
-      
+      println(story)
+      story
     }
 
     // private def allEventsFor(entryEvent: Iterator[ParsedEvent]): Seq[Event] = {
@@ -68,32 +69,32 @@ object Story {
     //     measure(Events.find(Map("_rootEvent.id" -> rootId)).$orderby(Map("startDate" -> 1)).map(grater[ParsedEvent].asObject(_)))
     //   }.toList
     //   
-    private def allContentFor(story: Story): Story = {
-
-      story.events.map { event =>
-        event.contentIds = event.content.map(_.id)
-      }
-
-    // val rawEvents = parsedEvents.map(Event(_))
-
-    // val apiContent: Seq[ApiContent] = {
-    //   val idList = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
-    //   //todo proper edition
-    //   ContentApi.search("UK").ids(idList).pageSize(50).response.results.toSeq
-    // }
-
-    // rawEvents.map {
-    //   raw =>
-    //     val eventContent = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
-
-    //     val contentWithImportance = eventContent.map { content =>
-    //       val contentImportance = parsedEvents.find(_.id == raw.id).flatMap(_.content.find(_.id == content.id).map(_.importance))
-
-    //       new Content(content, contentImportance)
-    //     }
-    //     raw.copy(content = contentWithImportance)
-    // }
-    }
+    //    private def allContentFor(story: Story): Story = {
+    //
+    //      story.events.map { event =>
+    //        event.contentIds -> event.content.map(_.id)
+    //      }
+    //
+    //    // val rawEvents = parsedEvents.map(Event(_))
+    //
+    //    val apiContent: Seq[ApiContent] = {
+    //       val idList = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
+    //       //todo proper edition
+    //       ContentApi.search("UK").ids(idList).pageSize(50).response.results.toSeq
+    //    }
+    //
+    //    rawEvents.map {
+    //       raw =>
+    //         val eventContent = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
+    //
+    //         val contentWithImportance = eventContent.map { content =>
+    //           val contentImportance = parsedEvents.find(_.id == raw.id).flatMap(_.content.find(_.id == content.id).map(_.importance))
+    //
+    //           new Content(content, contentImportance)
+    //         }
+    //         raw.copy(content = contentWithImportance)
+    //    }
+    //    }
   }
 
   def apply(parsedEvent: ParsedEvent): Event = Event(
