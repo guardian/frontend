@@ -17,8 +17,6 @@ case class Story(
   id: String,
   title: String,
   events: Seq[Event] = Nil,
-  // createdBy: Option[Modified] = None,
-  // modifiedBy: Seq[Modified] = Nil,
   explainer: Option[String] = None)
 
 case class Event(
@@ -60,7 +58,8 @@ object Story {
     //    }
 
     def byId(id: String): Option[Story] = {
-      Stories.findOne(Map("id" -> id)).map(grater[Story].asObject(_))
+      val story = Stories.findOne(Map("id" -> id)).map(grater[Story].asObject(_))
+      
     }
 
     // private def allEventsFor(entryEvent: Iterator[ParsedEvent]): Seq[Event] = {
@@ -68,27 +67,33 @@ object Story {
     //   val parsedEvents = entryEvent.flatMap(_._rootEvent.map(_.id)).flatMap { rootId =>
     //     measure(Events.find(Map("_rootEvent.id" -> rootId)).$orderby(Map("startDate" -> 1)).map(grater[ParsedEvent].asObject(_)))
     //   }.toList
+    //   
+    private def allContentFor(story: Story): Story = {
 
-    //   val rawEvents = parsedEvents.map(Event(_))
+      story.events.map { event =>
+        event.contentIds = event.content.map(_.id)
+      }
 
-    //   val apiContent: Seq[ApiContent] = {
-    //     val idList = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
-    //     //todo proper edition
-    //     ContentApi.search("UK").ids(idList).pageSize(50).response.results.toSeq
-    //   }
+    // val rawEvents = parsedEvents.map(Event(_))
 
-    //   rawEvents.map {
-    //     raw =>
-    //       val eventContent = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
-
-    //       val contentWithImportance = eventContent.map { content =>
-    //         val contentImportance = parsedEvents.find(_.id == raw.id).flatMap(_.content.find(_.id == content.id).map(_.importance))
-
-    //         new Content(content, contentImportance)
-    //       }
-    //       raw.copy(content = contentWithImportance)
-    //   }
+    // val apiContent: Seq[ApiContent] = {
+    //   val idList = rawEvents.flatMap(_.contentIds).distinct.mkString(",")
+    //   //todo proper edition
+    //   ContentApi.search("UK").ids(idList).pageSize(50).response.results.toSeq
     // }
+
+    // rawEvents.map {
+    //   raw =>
+    //     val eventContent = raw.contentIds.flatMap(id => apiContent.find(_.id == id))
+
+    //     val contentWithImportance = eventContent.map { content =>
+    //       val contentImportance = parsedEvents.find(_.id == raw.id).flatMap(_.content.find(_.id == content.id).map(_.importance))
+
+    //       new Content(content, contentImportance)
+    //     }
+    //     raw.copy(content = contentWithImportance)
+    // }
+    }
   }
 
   def apply(parsedEvent: ParsedEvent): Event = Event(

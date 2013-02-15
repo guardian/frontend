@@ -23,6 +23,6 @@ object Mongo {
     db
   }
 
-  lazy val Stories = client("stories")
+  lazy val Stories = client("Stories")
 
 }

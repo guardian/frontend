@@ -1,3 +1,13 @@
 @(story: Story)(implicit request: RequestHeader)
 
 <h2>@story.title</h2>
+<ul>
+@story.events.map{ e =>
+    <li>@e.title
+        <ul>
+            @e.contentIds.map{ id =>
+                <li>@id</li>
+            }
+    </li>
+}
+</ul>
