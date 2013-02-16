@@ -2,8 +2,8 @@ import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 
-import com.gu.deploy.PlayArtifact._
-import com.gu.deploy.PlayAssetHash._
+import PlayArtifact._
+import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 import com.typesafe.sbtscalariform.ScalariformPlugin._

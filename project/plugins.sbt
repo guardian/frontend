@@ -13,3 +13,5 @@ addSbtPlugin("play" % "sbt-plugin" % "2.1-06142012")
 addSbtPlugin("com.typesafe.sbtscalariform" % "sbtscalariform" % "0.4.0")
 
 addSbtPlugin("templemore" % "xsbt-cucumber-plugin" % "0.5.0")
+
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.8.1")
