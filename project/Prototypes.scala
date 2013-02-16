@@ -6,7 +6,7 @@ import PlayArtifact._
 import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-import com.typesafe.sbtscalariform.ScalariformPlugin._
+//import com.typesafe.sbtscalariform.ScalariformPlugin._
 import com.gu.SbtJshintPlugin._
 
 
@@ -14,18 +14,17 @@ trait Prototypes extends Testing {
   val version: String
 
   def root() = Project("root", base = file("."))
-    .settings(org.sbtidea.SbtIdeaPlugin.ideaSettings: _*)
+    //.settings(org.sbtidea.SbtIdeaPlugin.ideaSettings: _*)
     .settings(
+      scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
       parallelExecution in Global := false
     )
 
-  def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
+  def base(name: String) =   play.Project(name, version, path = file(name))
     .settings(jshintSettings: _*)
-    .settings(scalariformSettings: _*)
+    //.settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
-      scalaVersion := "2.9.1",
-
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
       scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
@@ -47,7 +46,7 @@ trait Prototypes extends Testing {
       ),
 
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.8" % "test"
+        "org.scalatest" %% "scalatest" % "1.9.1" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -91,14 +90,14 @@ trait Prototypes extends Testing {
 
   def library(name: String) = base(name).settings(
     libraryDependencies ++= Seq(
-      "com.gu" % "management-play_2.9.1" % "5.21",
-      "com.gu" % "management-logback_2.9.1" % "5.21",
-      "com.gu" % "configuration_2.9.1" % "3.6",
-      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.18",
+//      "com.gu" % "management-play_2.9.1" % "5.21",
+//      "com.gu" % "management-logback_2.9.1" % "5.21",
+//      "com.gu" % "configuration_2.9.1" % "3.6",
+//      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.18",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "commons-io" % "commons-io" % "2.4",
-      "org.scala-tools.time" % "time_2.9.1" % "0.5",
+//      "org.scalaj" %% "scalaj-time" % "0.6",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 
@@ -110,7 +109,7 @@ trait Prototypes extends Testing {
   )
 
   def application(name: String) = base(name).settings(
-    features <<= featuresTask,
+    //features <<= featuresTask,
 
     executableName := "frontend-%s" format name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },

@@ -4,49 +4,49 @@ import sbt.PlayProject._
 
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-import templemore.xsbt.cucumber.CucumberPlugin
-import RequireJsPlugin._
-import RequireJsPlugin.RequireJsKeys._
-import net.liftweb.json.JsonDSL._
-import org.sbtidea.SbtIdeaPlugin._
+//import templemore.xsbt.cucumber.CucumberPlugin
+//import RequireJsPlugin._
+//import RequireJsPlugin.RequireJsKeys._
+//import net.liftweb.json.JsonDSL._
+//import org.sbtidea.SbtIdeaPlugin._
 
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
 
-  val jasmine = integrationTests("jasmine", "integration-tests")
-    .settings(
-      CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
-    )
+  //val jasmine = integrationTests("jasmine", "integration-tests")
+//    .settings(
+//      CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
+//    )
 
   val common = library("common")
-    .settings(requireJsSettings: _*)
-    .settings(
-      // require js settings
-      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) =>
-        (
-          ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
-          ("name" -> "bootstraps/app") ~
-          ("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
-          ("paths" ->
-            ("bean"         -> "components/bean/bean") ~
-            ("bonzo"        -> "components/bonzo/src/bonzo") ~
-            ("domReady"     -> "components/domready/ready") ~
-            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
-            ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
-            ("reqwest"      -> "components/reqwest/src/reqwest") ~
-            ("domwrite"     -> "components/dom-write/dom-write") ~
-            ("swipe"        -> "components/swipe/swipe")
-          ) ~
-          ("wrap" ->
-            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
-            ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
-          ) ~
-          ("optimize" -> "uglify2") ~
-          ("preserveLicenseComments" -> false)
-        )
-      },
-      resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
-    )
+//    .settings(requireJsSettings: _*)
+//    .settings(
+//      // require js settings
+//      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) =>
+//        (
+//          ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
+//          ("name" -> "bootstraps/app") ~
+//          ("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
+//          ("paths" ->
+//            ("bean"         -> "components/bean/bean") ~
+//            ("bonzo"        -> "components/bonzo/src/bonzo") ~
+//            ("domReady"     -> "components/domready/ready") ~
+//            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
+//            ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
+//            ("reqwest"      -> "components/reqwest/src/reqwest") ~
+//            ("domwrite"     -> "components/dom-write/dom-write") ~
+//            ("swipe"        -> "components/swipe/swipe")
+//          ) ~
+//          ("wrap" ->
+//            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
+//            ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
+//          ) ~
+//          ("optimize" -> "uglify2") ~
+//          ("preserveLicenseComments" -> false)
+//        )
+//      },
+//      resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
+//    )
     //.dependsOn(jasmine % "test->test")
 
   val commonWithTests = common % "test->test;compile->compile"
@@ -62,7 +62,7 @@ object Frontend extends Build with Prototypes with Testing {
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "2.9",
+    //libraryDependencies += "com.gu" %% "pa-client" % "2.9",
     templatesImport ++= Seq(
       "pa._",
       "feed._"
@@ -91,7 +91,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(styleGuide)
 
   val main = root().aggregate(
-    jasmine,
+    //jasmine,
     common,
     front,
     article,
@@ -105,5 +105,5 @@ object Frontend extends Build with Prototypes with Testing {
     diagnostics,
     dev,
     styleGuide
-  ).settings(ideaSettings: _*)
+  )//.settings(ideaSettings: _*)
 }
