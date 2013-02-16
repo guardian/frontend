@@ -32,6 +32,15 @@
                     @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
                     <div class="date-line">
                         <h3 class="type-5">@event.title</h3>
+                        <!-- Nb. event.explainers could go here? -->
+                        @event.content.map{ case (c) =>
+                        @if(c.importance.getOrElse(0) > 50) {
+                            <p>@c.headline <small>(@c.importance, @c.colour)</small><p>
+                            <blockquote>@cleanTrailText(c.trailText.getOrElse(""))</blockquote>
+                        } else {
+                            <p>@c.headline <small>(@c.importance, @c.colour)</small></p>
+                        }
+                        }
                     </div>
                 </li>
             }
