@@ -9,6 +9,7 @@ import akka.actor.Cancellable
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
+import com.gu.management.play.RequestMetrics
 
 object CommonSwitches {
 

@@ -3,7 +3,7 @@ package common
 import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.{ Proxy => ContentApiProxy, Http, DispatchHttp }
 import com.gu.management.{ Metric, TimingMetric }
-import conf.Configuration
+import conf.{RequestMeasurementMetrics, Configuration}
 
 trait ApiQueryDefaults { self: Api =>
 
@@ -81,8 +81,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
       "performance",
       "content-api-calls",
       "Content API calls",
-      "outgoing requests to content api",
-      Some(RequestMetrics.RequestTimingMetric)
+      "outgoing requests to content api"
     ) with TimingMetricLogging
 
     val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric)

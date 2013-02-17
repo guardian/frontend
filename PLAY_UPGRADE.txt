@@ -1,0 +1,2 @@
+1. RequireJS plugin does not work.
+2. Dashboard may not work as metrics have changed a bit
