@@ -2,11 +2,12 @@ package common
 
 import akka.actor.{ ActorSystem, Cancellable }
 import akka.agent.Agent
-import akka.util.Duration
-import akka.util.duration._
+import scala.concurrent.duration.{FiniteDuration => Duration}
 import play.api.libs.concurrent.{ Akka => PlayAkka }
+import scala.concurrent.duration._
 import play.api.Play
 import java.util.concurrent.{ Executors, TimeUnit }
+import play.api.libs.concurrent.Execution.Implicits._
 
 trait AkkaSupport {
   object play_akka {
@@ -21,7 +22,7 @@ trait AkkaSupport {
     }
 
     object scheduler {
-      def every(duration: Duration, initialDelay: Duration = 0 seconds)(block: => Unit): Cancellable = {
+      def every(duration: Duration, initialDelay: Duration = new Duration(0, SECONDS))(block: => Unit): Cancellable = {
         system().scheduler.schedule(initialDelay, duration) { block }
       }
 

@@ -29,13 +29,13 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def quietly[A](block: => A)(implicit log: Logger) = try {
     block
   } catch {
-    case e => log.error("Failing quietly on: " + e.getMessage, e)
+    case e: Throwable => log.error("Failing quietly on: " + e.getMessage, e)
   }
 
   def quietlyWithDefault[A](default: A)(block: => A)(implicit log: Logger) = try {
     block
   } catch {
-    case e =>
+    case e: Throwable =>
       log.error("Failing quietly on: " + e.getMessage, e)
       default
   }

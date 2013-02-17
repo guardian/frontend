@@ -1,9 +1,14 @@
 package common
 
-import com.codahale.jerkson.{ Json => JsonParser }
+
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Writes._
+import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
 import play.api.mvc.{ RequestHeader, Results }
 import play.api.templates.Html
+
 
 object JsonComponent extends Results {
 
@@ -29,13 +34,13 @@ object JsonComponent extends Results {
   }
 
   def jsonFor(items: (String, Any)*) = {
-    JsonParser.generate(
+    Json.stringify(toJson(
       (items.toMap).map {
         // compress and take the body if value is Html
-        case (name, html: Html) => (name -> Compressed(html).body)
-        case (name, value) => (name -> value)
-      } ++ Map("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)
-    )
+        case (name, html: Html) => (name -> toJson(Compressed(html).body))
+        case (name, value) => (name -> toJson(value.toString))
+      } ++ Map("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))
+    ))
   }
 
   private def resultFor(request: RequestHeader, json: String) = {

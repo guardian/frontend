@@ -1,6 +1,8 @@
 import sbt._
+
 import sbt.Keys._
-import sbt.PlayProject._
+
+import play.Project.{ requireJs => requireJsDoNotUse, _}
 
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
@@ -8,12 +10,12 @@ import sbtassembly.Plugin.MergeStrategy
 //import RequireJsPlugin._
 //import RequireJsPlugin.RequireJsKeys._
 //import net.liftweb.json.JsonDSL._
-//import org.sbtidea.SbtIdeaPlugin._
+import org.sbtidea.SbtIdeaPlugin._
 
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
 
-  //val jasmine = integrationTests("jasmine", "integration-tests")
+//  val jasmine = integrationTests("jasmine", "integration-tests")
 //    .settings(
 //      CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
 //    )

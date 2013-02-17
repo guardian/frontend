@@ -90,14 +90,14 @@ trait Prototypes extends Testing {
 
   def library(name: String) = base(name).settings(
     libraryDependencies ++= Seq(
-//      "com.gu" % "management-play_2.9.1" % "5.21",
+        "com.gu" %% "management-play" % "5.26",
 //      "com.gu" % "management-logback_2.9.1" % "5.21",
-//      "com.gu" % "configuration_2.9.1" % "3.6",
-//      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.18",
+      "com.gu" %% "configuration" % "3.9",
+      "com.gu.openplatform" %% "content-api-client" % "1.21",
 
       "com.typesafe.akka" % "akka-agent" % "2.0.2",
       "commons-io" % "commons-io" % "2.4",
-//      "org.scalaj" %% "scalaj-time" % "0.6",
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 

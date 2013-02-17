@@ -196,7 +196,7 @@ object ContributorLinks {
           <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a></span>.toString)
     }
   }
-  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.text, tags)
+  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
 }
 
 object OmnitureAnalyticsData {

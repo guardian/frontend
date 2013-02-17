@@ -2,8 +2,8 @@ import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 
-import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin.MergeStrategy
+//import sbtassembly.Plugin.AssemblyKeys._
+//import sbtassembly.Plugin.MergeStrategy
 //import templemore.xsbt.cucumber.CucumberPlugin
 //import templemore.xsbt.cucumber.CucumberPlugin._
 
