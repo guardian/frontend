@@ -11,6 +11,7 @@
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
     "qwery": "3.4",
     "reqwest": "0.6",
-    "swipe": "git://github.com/guardian/Swipe.git"
+    "swipe": "git://github.com/guardian/Swipe.git",
+    "fastclick": "git://github.com/ftlabs/fastclick.git"
   }
 }
