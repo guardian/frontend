@@ -9,8 +9,20 @@
 <section class="story-overview">
     <h2 class="page-head">Overview</h2>
     <p class="story-explainer box-indent type-7" itemprop="description" data-link-name="explainer">
-        @story.explainer
+        @cleanTrailText(story.explainer.getOrElse(""))
     </p>
+</section>
+
+
+<section class="story-players">
+    <h2 class="page-head">Key players</h2>
+    @story.events.map { event => 
+      @event.agents.map { agent => 
+        <h3 class="box-indent"><a href="#">@agent.name</a></h3>
+        <p class="box-indent type-7">@agent.role</p>
+        <p class="box-indent type-7">@agent.explainer</p>
+      }
+    }
 </section>
 
 <ul class="accordion">
@@ -35,8 +47,8 @@
                         <!-- Nb. event.explainers could go here? -->
                         @event.content.map{ case (c) =>
                         @if(c.importance.getOrElse(0) > 50) {
-                            <p>@c.headline <small>(@c.importance, @c.colour)</small><p>
-                            <blockquote>@cleanTrailText(c.trailText.getOrElse(""))</blockquote>
+                        <!-- <p>@c.headline <small>(@c.importance, @c.colour)</small><p>-->
+                            <p>@cleanTrailText(c.trailText.getOrElse("")) <small>(@c.importance, @c.colour)</small></p>
                         } else {
                             <p>@c.headline <small>(@c.importance, @c.colour)</small></p>
                         }

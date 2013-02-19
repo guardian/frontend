@@ -13,11 +13,24 @@ import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import akka.actor.Cancellable
 
+// model :- Story -> Event -> Articles|Agents|Places
+
+case class Place(id: String) {}
+
+case class Agent(
+  id: String,
+  name: Option[String] = None,
+  explainer: Option[String] = None,
+  importance: Int = 0,
+  role: Option[String] = None,
+  picture: Option[String] = None) {}
+
 case class Event(
-    id: String,
     title: String,
     startDate: DateTime,
     importance: Option[Int] = None,
+    agents: Seq[Agent] = Nil,
+    places: Seq[Place] = Nil,
     contentIds: Seq[String] = Nil,
     content: Seq[Content] = Nil) {
   lazy val hasContent: Boolean = content.nonEmpty
@@ -27,10 +40,11 @@ case class Event(
 
 object Event {
   def apply(e: ParsedEvent, content: Seq[ApiContent]): Event = Event(
-    id = e.id,
     title = e.title,
     startDate = e.startDate,
     importance = e.importance,
+    agents = e.agents,
+    places = e.places,
     content = e.content.flatMap { c =>
       content.find(_.id == c.id).map(new Content(_, Some(c.importance), Some(c.colour)))
     }
@@ -78,20 +92,12 @@ object Story {
     private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
       parsedStory.map { parsed =>
         val contentIds = parsed.events.flatMap(_.content.map(_.id)).distinct
-        //todo proper edition
+        // TODO proper edition
         val content = ContentApi.search("UK").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
         Story(parsed, content)
       }
     }
   }
-
-  def apply(parsedEvent: ParsedEvent): Event = Event(
-    id = parsedEvent.id,
-    title = parsedEvent.title,
-    startDate = parsedEvent.startDate,
-    importance = parsedEvent.importance,
-    contentIds = parsedEvent.content.map(_.id)
-  )
 
   private def measure[T](block: => T): T = MongoTimingMetric.measure {
     try {
@@ -108,6 +114,8 @@ object Story {
 
 // just used for parsing from Json
 private case class ParsedContent(id: String, importance: Int, colour: Int)
+//private case class ParsedAgent(id: String)
+private case class ParsedPlace(id: String)
 
 private case class ParsedStory(
   id: String,
@@ -116,55 +124,10 @@ private case class ParsedStory(
   explainer: Option[String] = None)
 
 private case class ParsedEvent(
-    id: String,
     title: String,
     startDate: DateTime,
     importance: Option[Int] = None,
+    agents: Seq[Agent] = Nil,
+    places: Seq[Place] = Nil,
     content: Seq[ParsedContent] = Nil) {
 }
-
-// while this is a prototype and we have no real way of knowing which content is
-// related to an event we want to limit the number of calls to the DB.
-// Just keep a list in memory to check against.
-// object ContentListAgent extends AkkaSupport with Logging {
-
-//   import Mongo.Stories
-
-//   private implicit val ctx = new Context {
-//     val name = "ISODateTimeFormat context"
-
-//     override val jsonConfig = JSONConfig(dateStrategy =
-//       StringDateStrategy(dateFormatter = ISODateTimeFormat.dateTime))
-//   }
-
-//   private val agent = play_akka.agent[Seq[String]](Nil)
-
-//   private var schedule: Option[Cancellable] = None
-
-//   def refresh() {
-//     log.info("updating content list")
-//     agent.sendOff { old =>
-//       val ids = Stories.find().flatMap { dbo =>
-//         grater[ParsedEvent].asObject(dbo).content.map(_.id)
-//       }
-//       val newIds = ids.toList
-//       log.info("Updated Content List with %s ids".format(ids.length))
-//       newIds
-//     }
-//   }
-
-//   def startup() {
-//     schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
-//       refresh()
-//     })
-//   }
-
-//   def shutdown() {
-//     agent.close()
-//     schedule.foreach(_.cancel())
-//   }
-
-//   def storyExistsFor(id: String) = agent().contains {
-//     if (id.startsWith("/")) id.drop(1) else id
-//   }
-// }
