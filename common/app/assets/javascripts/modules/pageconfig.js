@@ -4,6 +4,7 @@
     Common functions to simplify access to page data
  */
 define(['modules/pad', "common"], function (pad, common) {
+
     return function(config){
         return common.extend(
             {
@@ -23,7 +24,7 @@ define(['modules/pad', "common"], function (pad, common) {
                     // assumes an 'internet' date such as 2012-12-23T22:30:00.000Z
                     // http://www.ietf.org/rfc/rfc3339.txt
                     if(config.page.webPublicationDate){
-                        return new Date(Date.parse(config.page.webPublicationDate));
+                        return (new Date().parse(config.page.webPublicationDate));
                     }
                 },
 
