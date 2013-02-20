@@ -1,9 +1,20 @@
 @(page: StoryPage)(implicit request: RequestHeader)
 
+
 @section(title: String, content: Seq[model.Content]) = {
     <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
         <section class="story-@title.toLowerCase">
-            @fragments.trailblocks.thumbnail(content.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
+            @*@fragments.trailblocks.thumbnail(content.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)*@
+
+            @content.map{
+                case a: Article => {
+                    <div>foo</div>
+                    <p>@a.body</p>
+                }
+                case b: model.Content => { waaaaaaat }
+            }
+
+
         </section>
     </li>
 }

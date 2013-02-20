@@ -50,7 +50,7 @@ object Event {
     places = e.places,
     explainer = e.explainer,
     content = e.content.flatMap { c =>
-      content.find(_.id == c.id).map(new Content(_, Some(c.importance), Some(c.colour)))
+      content.find(_.id == c.id).map(Content(_, Some(c.importance), Some(c.colour)))
     }
   )
 }
@@ -116,7 +116,7 @@ object Story {
       parsedStory.map { parsed =>
         val contentIds = parsed.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
-        val content = ContentApi.search("UK").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
+        val content = ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
         Story(parsed, content)
       }
     }
