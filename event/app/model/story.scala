@@ -89,8 +89,12 @@ object Story {
     }
 
     def byId(id: String): Option[Story] = {
-      val parsedStory = Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_))
-      loadContentFor(parsedStory)
+      if (StoryList.exists(id)) {
+        val parsedStory = Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_))
+        loadContentFor(parsedStory)
+      } else {
+        None
+      }
     }
 
     private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
