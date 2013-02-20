@@ -31,9 +31,11 @@
 <div id="topstories-header" class="nav-popup top-stories is-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}"
-    data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
-    @fragments.sections(page, isFooter)
+<div class="zone-@page.section">
+    <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off} zone-border"
+        data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
+        @fragments.sections(page, isFooter)
+    </div>
 </div>
 
 @if(isFooter){

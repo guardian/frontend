@@ -21,3 +21,27 @@
     color: @blue;
     text-decoration: underline;
 }
+
+#footer-container {
+  display: none;
+}
+
+@media screen and (min-width: @desktopBreakpoint) {
+  #footer-container {
+    display: block;
+  }
+
+  #footer-container #footer {
+    background-color: white;
+    border-top-style: solid;
+  }
+
+  #footer-container li {
+    display: inline;
+    font-size: 11px;
+  }
+
+  footer.footer, #navigation-footer {
+    display: none;
+  }
+}
