@@ -22,7 +22,9 @@ case class Agent(
   explainer: Option[String] = None,
   importance: Int = 0,
   role: Option[String] = None,
-  picture: Option[String] = None) {}
+  picture: Option[String] = None,
+  rdfType: Option[String] = None // Eg, http://schema.org/Person
+  ) {}
 
 case class Event(
     title: String,
@@ -31,6 +33,7 @@ case class Event(
     agents: Seq[Agent] = Nil,
     places: Seq[Place] = Nil,
     contentIds: Seq[String] = Nil,
+    explainer: Option[String] = None,
     content: Seq[Content] = Nil) {
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val contentByDate: Map[String, Seq[Content]] = content.groupBy(_.webPublicationDate.toDateMidnight.toString())
@@ -44,6 +47,7 @@ object Event {
     importance = e.importance,
     agents = e.agents,
     places = e.places,
+    explainer = e.explainer,
     content = e.content.flatMap { c =>
       content.find(_.id == c.id).map(new Content(_, Some(c.importance), Some(c.colour)))
     }
@@ -128,5 +132,6 @@ private case class ParsedEvent(
     importance: Option[Int] = None,
     agents: Seq[Agent] = Nil,
     places: Seq[Place] = Nil,
+    explainer: Option[String] = None,
     content: Seq[ParsedContent] = Nil) {
 }

@@ -13,17 +13,16 @@
     </p>
 </section>
 
-
 <section class="story-players">
     <h2 class="page-head">Key players</h2>
-    @story.events.map { event => 
-      @event.agents.map { agent => 
-        <h3 class="box-indent"><a href="#">@agent.name</a></h3>
-        <p class="box-indent type-7">@agent.role</p>
-        <p class="box-indent type-7">@agent.explainer</p>
+      @{story.events.map { event => event.agents }.flatten.map { agent =>
+          <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
+          <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
+          <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
       }
     }
 </section>
+
 
 <ul class="accordion">
     @content.toList.reverse.zipWithRowInfo.map{ case ((tone, c), info) =>
@@ -44,18 +43,29 @@
                     @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
                     <div class="date-line">
                         <h3 class="type-5">@event.title</h3>
-                        <!-- Nb. event.explainers could go here? -->
+
+                        <!-- Explainer -->
+                        <p class="type-7">
+                            @event.explainer
+                        </p>
+
+                        <!-- Articles -->
                         @event.content.map{ case (c) =>
-                        @if(c.importance.getOrElse(0) > 50) {
-                        <!-- <p>@c.headline <small>(@c.importance, @c.colour)</small><p>-->
-                            <p>@cleanTrailText(c.trailText.getOrElse("")) <small>(@c.importance, @c.colour)</small></p>
-                        } else {
-                            <p>@c.headline <small>(@c.importance, @c.colour)</small></p>
+                            @if(c.importance.getOrElse(0) > 50) {
+                            <!-- <p>@c.headline <small>(@c.importance, @c.colour)</small><p>-->
+                                <p>@cleanTrailText(c.trailText.getOrElse("")) <small>(@c.importance, @c.colour)</small></p>
+                            } else {
+                                <p>@c.headline <small>(@c.importance, @c.colour)</small></p>
+                            }
+
+                        <!-- People -->
+                        @event.agents.filter(_.rdfType == "http://schema.org/People").map { agent =>  
+                            <img src="@agent.picture" alt="@agent.name, @agent.role"/>
                         }
-                        }
-                    </div>
+                     }
+                  </div>
                 </li>
-            }
+              }
         }
     </ul>
 </div>
