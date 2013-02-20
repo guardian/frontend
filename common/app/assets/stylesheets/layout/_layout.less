@@ -31,3 +31,17 @@
     width: auto;
     max-width: @inArticleInlineImgWidth;
 }
+
+
+
+@media screen and (min-width: @desktopBreakpoint) {
+    .one-third {
+        width: percentage(1/3);
+        float: right;
+    }
+    .two-thirds {
+        width: percentage((1/3)*2);
+        float: left;
+    }
+
+}
