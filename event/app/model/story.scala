@@ -18,7 +18,6 @@ import akka.actor.Cancellable
 case class Place(id: String) {}
 
 case class Agent(
-  id: String,
   name: Option[String] = None,
   explainer: Option[String] = None,
   importance: Int = 0,
