@@ -7,6 +7,10 @@ import play.api.templates.Html
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
 
+case class StoryPage(story: Story) extends Page(canonicalUrl = None, "story", "news", story.title, "GFE:story:" + story.title) {
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
+}
+
 object StoryController extends Controller with Logging {
 
   def byId(id: String) = Action {
@@ -17,9 +21,8 @@ object StoryController extends Controller with Logging {
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
-            val page = Page(canonicalUrl = None, "story", "news", story.title, "GFE:story:" + story.title)
             val groupedContent = story.contentByTone
-            Ok(Compressed(views.html.story(page, story, groupedContent)))
+            Ok(Compressed(views.html.story(StoryPage(story), groupedContent)))
           }.getOrElse(NotFound)
         }
       }
