@@ -18,7 +18,6 @@ import akka.actor.Cancellable
 case class Place(id: String) {}
 
 case class Agent(
-  id: String,
   name: Option[String] = None,
   explainer: Option[String] = None,
   importance: Int = 0,
@@ -84,12 +83,16 @@ object Story {
   object mongo {
 
     def withContent(contentId: String): Option[Story] = {
-      val parsedStory = Stories.findOne(Map("events.content.id" -> contentId)).map(grater[ParsedStory].asObject(_))
-      loadContentFor(parsedStory)
+      if (StoryList.storyExistsForContent(contentId)) {
+        val parsedStory = Stories.findOne(Map("events.content.id" -> contentId)).map(grater[ParsedStory].asObject(_))
+        loadContentFor(parsedStory)
+      } else {
+        None
+      }
     }
 
     def byId(id: String): Option[Story] = {
-      if (StoryList.exists(id)) {
+      if (StoryList.storyExists(id)) {
         val parsedStory = Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_))
         loadContentFor(parsedStory)
       } else {
