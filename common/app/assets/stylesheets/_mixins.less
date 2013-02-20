@@ -38,7 +38,19 @@
     -ms-transform: rotate(@args);
     -webkit-transform: rotate(@args);
     -o-transform: rotate(@args);
-    -moz-transform: rotate(@args); 
+    -moz-transform: rotate(@args);
+}
+
+.zone-colours (@color) {
+    .zone-color {
+        color: @color;
+    }
+    .zone-background {
+        background-color: @color;
+    }
+    .zone-border {
+        border-color: @color;
+    }
 }
 
 /* taken from ClearLeft's ClearLess library */

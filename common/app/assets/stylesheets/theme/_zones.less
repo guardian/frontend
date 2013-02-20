@@ -1,70 +1,7 @@
 // be sure to update the styleguide when changing these
 
-.zone-news {
-    .zone-color {
-       color: @newsRed;     
-    }
-}
-
-.zone-environment {
-     .zone-color{
-       color: @environmentGreen; 
-    }
- }
-
-.zone-news {
-    .zone-background,
-    .zone-background-hover:hover,
-    .zone-background-hover:focus,
-    .zone-background-hover:active {
-       background-color: @newsRed;     
-    }
-    .zone-border {
-        border-color: @newsRed;
-    }
-}
-
-.zone-environment {
-    .zone-background,
-    .zone-background-hover:hover,
-    .zone-background-hover:focus,
-    .zone-background-hover:active {
-        background-color: @environmentGreen;     
-    }
-    .zone-border {
-        border-color: @environmentGreen;
-    }
-}
-
-// culture zone sections 
-.zone-childrens-books-site,
-.zone-tv-and-radio,
-.zone-artanddesign,
-.zone-stage,
-.zone-culture,
-.zone-film,
-.zone-books,
-.zone-music {
-    .zone-color {
-        color: @culturePink;
-    }
-    .zone-background {
-        background-color: @culturePink;
-    }
-    .zone-border {
-        border-color: @culturePink;
-    }
-}
-
-.zone-background {
-    background-color: @newsRed;
-}
-
-.zone-border {
-    border-color: @newsRed;
-}
-
 // news zone sections
+.zone-news,
 .zone-journalismcompetition,
 .zone-global-development,
 .zone-law,
@@ -78,88 +15,71 @@
 .zone-uk,
 .zone-media,
 .zone-world {
-    .zone-color {
-       color: @newsRed;    
+    .zone-colours(@newsRed);
+ }
+
+
+.zone-news {
+    .zone-background,
+    .zone-background-hover:hover,
+    .zone-background-hover:focus,
+    .zone-background-hover:active {
+       background-color: @newsRed;
     }
-    .zone-background {
-        background-color: @newsRed;    
+}
+
+.zone-environment {
+    .zone-color{
+       color: @environmentGreen;
+    }
+    .zone-background,
+    .zone-background-hover:hover,
+    .zone-background-hover:focus,
+    .zone-background-hover:active {
+        background-color: @environmentGreen;
     }
     .zone-border {
-        border-color: @newsRed;
+        border-color: @environmentGreen;
     }
- }
+
+    .zone-colours(@environmentGreen)
+}
+
+// culture zone sections
+.zone-childrens-books-site,
+.zone-tv-and-radio,
+.zone-artanddesign,
+.zone-stage,
+.zone-culture,
+.zone-film,
+.zone-books,
+.zone-music {
+    .zone-colours(@culturePink);
+}
 
 .zone-fashion,
 .zone-lifeandstyle {
-    .zone-color {
-       color: @lifeandstyleOrange;
-    } 
-    .zone-background {
-        background-color: @sportBright;
-    }
-    .zone-border {
-        border-color: @lifeandstyleOrange;
-    }
+    .zone-colours(@lifeandstyleOrange);
 }
 
 
 .zone-sport,
 .zone-football {
-    .zone-color {
-        color: @sportBright;    
-    }
-    .zone-background {
-        background-color: @sportBright;
-    }
-    .zone-border {
-        border-color: @sportBright;
-    }
+    .zone-colours(@sportBright);
 }
 
 .zone-travel {
-    .zone-color {
-        color: @travelBlue    
-    }
-    .zone-background {
-        background-color: @travelBlue;    
-    }
-    .zone-border {
-        border-color: @travelBlue;
-    }
+    .zone-colours(@travelBlue);
 }
 
 .zone-business {
-    .zone-color {
-       color: @businessBlue;
-    } 
-    .zone-background {
-        background-color: @businessBlue;    
-    }
-    .zone-border {
-       border-color: @businessBlue;
-    }
+    .zone-colours(@businessBlue);
 }
 
 .zone-commentisfree {
-    .zone-color {
-       color: @commentBlue;
-    } 
-    .zone-background {
-        background-color: @commentBlue;    
-    }
-    .zone-border {
-        border-color: @commentBlue;
-    }
+    .zone-colours(@commentBlue);
 }
 
 .zone-money {
-    .zone-color {
-       color: @moneyPurple;
-    } 
-    .zone-background {
-        background-color: @moneyPurple;    
-    }
-    .zone-border {
-        border-color: @moneyPurple;
-    }
+    .zone-colours(@moneyPurple);
 }
