@@ -21,8 +21,7 @@ object StoryController extends Controller with Logging {
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
-            val groupedContent = story.contentByColour
-            Ok(Compressed(views.html.story(StoryPage(story), groupedContent)))
+            Ok(Compressed(views.html.story(StoryPage(story))))
           }.getOrElse(NotFound)
         }
       }

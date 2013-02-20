@@ -1,4 +1,12 @@
-@(page: StoryPage, content: List[(Option[Int], Seq[model.Content])])(implicit request: RequestHeader)
+@(page: StoryPage)(implicit request: RequestHeader)
+
+@section(title: String, content: Seq[model.Content]) = {
+    <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
+        <section class="story-@title.toLowerCase">
+            @fragments.trailblocks.thumbnail(content.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
+        </section>
+    </li>
+}
 
 @main(page, Switches.all){ }{
 
@@ -24,60 +32,48 @@
     </section>
 
     <ul class="accordion">
-        @content.toList.zipWithRowInfo.map{ case ((colour, c), info) =>
-            @defining(
-                colour.get match {
-                    case 1 => "Overview"
-                    case 2 => "Background"
-                    case 3 => "Analysis"
-                    case 4 => "Reaction"
-                    case _ => 0
+
+        @story.contentByColour.get("Background").map{ content => @section("Background", content) }
+        @story.contentByColour.get("Analysis").map{ content => @section("Analysis", content) }
+        @story.contentByColour.get("Reaction").map{ content => @section("Reaction", content) }
+
+        <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
+            <section class="story-players">
+                @{
+                    story.events.map { event => event.agents }.flatten.map { agent =>
+                        <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
+                        <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
+                        <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
+                    }
                 }
-            ){  tone =>
-                @if(tone != 0) {
-                    <li><a href="#">@tone <i class="i i-filter-arrow-right"></i></a>
-                        <section>
-                            @fragments.trailblocks.thumbnail(c.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
-                        </section>
-                    </li>
-                }
-            }
-        }
-    </ul>
+            </section>
+        </li>
+        <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+            <section class="story-timeline">
+                <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+                    <ul class="unstyled">
+                        @story.events.map { event =>
+                            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+                            <li class="trail event-block" data-link-name="trail">
+                                @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                                <div class="date-line">
+                                    <h3 class="type-5">@event.title</h3>
+                                    <!-- Articles -->
+                                    @event.content.map{ case (c) =>
 
-    <section class="story-players">
-        <h2 class="page-head">Key players</h2>
-        @{
-            story.events.map { event => event.agents }.flatten.map { agent =>
-                <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
-                <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
-                <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
-            }
-        }
-    </section>
-
-    <h2 class="type-2 article-zone" style="color: #63004C;">Timeline</h2>
-    <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
-        <ul class="unstyled">
-            @story.events.map { event =>
-                @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="trail event-block" data-link-name="trail">
-                        @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
-                        <div class="date-line">
-                            <h3 class="type-5">@event.title</h3>
-                            <!-- Articles -->
-                            @event.content.map{ case (c) =>
-
-                                <!-- People -->
-                                @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
+                                    <!-- People -->
+                                    @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
                                     <img src="@agent.picture" alt="@agent.name, @agent.role"/>
-                                }
-                             }
-                      </div>
-                    </li>
-                }
-            }
-        </ul>
-    </div>
+                                    }
+                                    }
+                                </div>
+                            </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </section>
+        </li>
+    </ul>
  }
 }
