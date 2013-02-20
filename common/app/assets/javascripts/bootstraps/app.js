@@ -57,7 +57,7 @@ define('bootstraps/app', [
                 Gallery.init({url: window.location.pathName}, config);
             }
 
-            r.get('/story/:id', function(req) { Story.init(req, config);});
+            r.get('/stories/:id', function(req) { Story.init(req, config);});
 
             //Kick it all off
             r.init();
