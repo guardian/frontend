@@ -12,24 +12,34 @@ object StoryList extends AkkaSupport {
 
   private var schedule: Option[Cancellable] = None
 
-  private val agent = play_akka.agent[Seq[String]](Nil)
+  private val storyIdAgent = play_akka.agent[Seq[String]](Nil)
+  private val contentIdAgent = play_akka.agent[Seq[String]](Nil)
 
   def refresh() {
-    agent.sendOff { old =>
-      Mongo.Stories.find(MongoDBObject.empty, Map("id" -> 1)).map(_.as[String]("id")).toSeq.distinct
+    storyIdAgent.sendOff { old =>
+      Mongo.Stories.find(MongoDBObject.empty, Map("id" -> 1)).map(_.as[String]("id")).toList.distinct
+    }
+    contentIdAgent.sendOff { old =>
+      Mongo.Stories.find(MongoDBObject.empty, Map("events.content.id" -> 1)).flatMap { dbo =>
+        val events = dbo.as[MongoDBList]("events")
+        val content = events.map(_.asInstanceOf[DBObject].as[MongoDBList]("content"))
+        content.flatMap(_.map(_.asInstanceOf[DBObject].as[String]("id")))
+      }.toList.distinct
     }
   }
 
   def shutdown() {
     schedule.foreach(_.cancel())
-    agent.close()
+    storyIdAgent.close()
+    contentIdAgent.close()
   }
 
-  def startup() = {
+  def startup() {
     schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
       refresh()
     })
   }
 
-  def exists(id: String) = agent().contains(id)
+  def storyExists(id: String) = storyIdAgent().contains(id)
+  def storyExistsForContent(id: String) = contentIdAgent().contains(id)
 }

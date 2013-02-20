@@ -1,6 +1,8 @@
-@(page: Page, story: Story, content: List[(Option[Int], Seq[model.Content])])(implicit request: RequestHeader)
+@(page: StoryPage, content: List[(String, Seq[model.Content])])(implicit request: RequestHeader)
 
 @main(page, Switches.all){ }{
+
+@defining(page.story){ story =>
 
 <h1 class="article-zone type-1">
     <span class="zone-color">@story.title</span>
@@ -52,11 +54,16 @@
                     <div class="date-line">
                         <h3 class="type-5">@event.title</h3>
 
-                        <!-- Explainer -->
-                        <p class="type-7">
-                            @event.explainer
-                        </p>
 
+    <h2 class="type-2 article-zone" style="color: #63004C;">Timeline</h2>
+    <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+        <ul class="unstyled">
+            @story.events.map { event =>
+                @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+                    <li class="trail event-block" data-link-name="trail">
+                        @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                        <div class="date-line">
+                            <h3 class="type-5">@event.title</h3>
                         <!-- Articles -->
                         @event.content.map{ case (c) =>
 
@@ -72,4 +79,5 @@
         }
     </ul>
 </div>
+
 }
