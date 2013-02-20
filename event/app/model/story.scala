@@ -38,6 +38,7 @@ case class Event(
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val contentByDate: Map[String, Seq[Content]] = content.groupBy(_.webPublicationDate.toDateMidnight.toString())
   lazy val contentByTone: Map[String, Seq[Content]] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
+  lazy val contentByColour: Map[Option[Int], Seq[Content]] = content.groupBy(_.colour)
 }
 
 object Event {
@@ -58,8 +59,10 @@ case class Story(
     id: String,
     title: String,
     events: Seq[Event] = Nil,
-    explainer: Option[String] = None) {
+    explainer: Option[String] = None,
+    hero: Option[String] = None) {
   lazy val contentByTone: List[(String, Seq[Content])] = events.flatMap(_.content).groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
+  lazy val contentByColour: List[(Option[Int], Seq[Content])] = events.flatMap(_.content).groupBy(_.colour).toList
 }
 
 object Story {
@@ -75,6 +78,7 @@ object Story {
     id = s.id,
     title = s.title,
     explainer = s.explainer,
+    hero = s.hero,
     events = s.events.map(Event(_, content))
   )
 
@@ -128,6 +132,7 @@ private case class ParsedStory(
   id: String,
   title: String,
   events: Seq[ParsedEvent] = Nil,
+  hero: Option[String] = None,
   explainer: Option[String] = None)
 
 private case class ParsedEvent(

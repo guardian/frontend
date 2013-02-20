@@ -18,7 +18,7 @@ object StoryController extends Controller with Logging {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
             val page = Page(canonicalUrl = None, "story", "news", story.title, "GFE:story:" + story.title)
-            val groupedContent = story.contentByTone
+            val groupedContent = story.contentByColour
             Ok(Compressed(views.html.story(page, story, groupedContent)))
           }.getOrElse(NotFound)
         }

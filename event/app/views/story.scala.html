@@ -1,31 +1,29 @@
-@(page: Page, story: Story, content: List[(String, Seq[model.Content])])(implicit request: RequestHeader)
+@(page: Page, story: Story, content: List[(Option[Int], Seq[model.Content])])(implicit request: RequestHeader)
 
 @main(page, Switches.all){ }{
 
-<h2 class="article-zone type-1">
+<h1 class="article-zone type-1">
     <span class="zone-color">@story.title</span>
-</h2>
+</h1>
 
 <section class="story-overview">
+    @story.hero.map{ img =>
+        <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+            <img class="maxed main-image" src="@story.hero"
+                 itemprop="contentURL"
+                 alt="@StripHtmlTags(story.title)"
+                 title="@StripHtmlTags(story.title)" />
+        </figure>
+    }
     <h2 class="page-head">Overview</h2>
     <p class="story-explainer box-indent type-7" itemprop="description" data-link-name="explainer">
         @cleanTrailText(story.explainer.getOrElse(""))
     </p>
 </section>
 
-<section class="story-players">
-    <h2 class="page-head">Key players</h2>
-      @{story.events.map { event => event.agents }.flatten.map { agent =>
-          <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
-          <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
-          <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
-      }
-    }
-</section>
-
-
 <ul class="accordion">
     @content.toList.reverse.zipWithRowInfo.map{ case ((tone, c), info) =>
+    @
     <li><a href="#">@tone <i class="i i-filter-arrow-right"></i></a>
         <section>
             @fragments.trailblocks.thumbnail(c.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)
@@ -33,6 +31,16 @@
     </li>
     }
 </ul>
+
+<section class="story-players">
+    <h2 class="page-head">Key players</h2>
+    @{story.events.map { event => event.agents }.flatten.map { agent =>
+    <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
+    <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
+    <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
+    }
+    }
+</section>
 
 <h2 class="type-2 article-zone" style="color: #63004C;">Timeline</h2>
 <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
@@ -51,15 +59,10 @@
 
                         <!-- Articles -->
                         @event.content.map{ case (c) =>
-                            @if(c.importance.getOrElse(0) > 50) {
-                            <!-- <p>@c.headline <small>(@c.importance, @c.colour)</small><p>-->
-                                <p>@cleanTrailText(c.trailText.getOrElse("")) <small>(@c.importance, @c.colour)</small></p>
-                            } else {
-                                <p>@c.headline <small>(@c.importance, @c.colour)</small></p>
-                            }
+
 
                         <!-- People -->
-                        @event.agents.filter(_.rdfType == "http://schema.org/People").map { agent =>  
+                        @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
                             <img src="@agent.picture" alt="@agent.name, @agent.role"/>
                         }
                      }
