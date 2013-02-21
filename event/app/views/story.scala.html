@@ -1,28 +1,8 @@
 @(page: StoryPage)(implicit request: RequestHeader)
 
-
 @section(title: String, content: Seq[model.Content]) = {
     <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
-        <section class="story-section story-@title.toLowerCase">
-            @content.take(1).map{
-                case a: Article => {
-                    <article class="from-content-api">
-                        @withJsoup(BulletCleaner(a.body))(
-                            PictureCleaner(a),
-                            InBodyLinkCleaner("in body link"),
-                            BlockNumberCleaner,
-                            TweetCleaner,
-                            WitnessCleaner,
-                            Summary
-                        )
-                        <footer>
-                            @fragments.dateline(a.webPublicationDate, a.isLive, "UK")
-                            <p><a href="@a.url">Read more...</a></p>
-                        </footer>
-                    </article>
-                }
-            }
-        </section>
+        @fragments.section(title, content)
     </li>
 }
 
@@ -58,47 +38,15 @@
         <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
             <section class="story-players">
                 <ul class="unstyled">
-                @{
-                    story.events.map { event => event.agents }.flatten.map { agent =>
-                        <li class="agent">
-                            <div class="agent-head">
-                                <img class="agent-img" src={agent.picture.get} />
-                                <h3 class="agent-name"><a href="#">{agent.name.getOrElse("")}</a></h3>
-                                <p class="agent-role">{agent.role.getOrElse("")}</p>
-                            </div>
-                            <div class="agent-body">
-                                <p>{agent.explainer.getOrElse("")}</p>
-                            </div>
-                        </li>
-                    }
+                @story.events.flatMap(_.agents).map { agent =>
+                    @fragments.agent(agent)
                 }
                 </ul>
             </section>
         </li>
         <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
             <section class="story-timeline">
-                <div id="experiment" class="timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
-                    <ul class="unstyled">
-                        @story.events.map { event =>
-                            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
-                            <li class="trail event-block" data-link-name="trail">
-                                @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
-                                <div class="date-line">
-                                    <h3 class="type-5">@event.title</h3>
-                                    <!-- Articles -->
-                                    @event.content.map{ case (c) =>
-
-                                    <!-- People -->
-                                    @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
-                                    <img src="@agent.picture" alt="@agent.name, @agent.role"/>
-                                    }
-                                    }
-                                </div>
-                            </li>
-                            }
-                        }
-                    </ul>
-                </div>
+                @fragments.timeline(story)
             </section>
         </li>
     </ul>

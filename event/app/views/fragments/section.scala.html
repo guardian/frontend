@@ -1,0 +1,21 @@
+@(title: String, content: Seq[model.Content])
+<section class="story-section story-@title.toLowerCase">
+    @content.take(1).map{
+    case a: Article => {
+    <article class="from-content-api">
+        @withJsoup(BulletCleaner(a.body))(
+        PictureCleaner(a),
+        InBodyLinkCleaner("in body link"),
+        BlockNumberCleaner,
+        TweetCleaner,
+        WitnessCleaner,
+        Summary
+        )
+        <footer>
+            @fragments.dateline(a.webPublicationDate, a.isLive, "UK")
+            <p><a href="@a.url">Read more...</a></p>
+        </footer>
+    </article>
+    }
+    }
+</section>

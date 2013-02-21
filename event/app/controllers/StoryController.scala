@@ -26,4 +26,30 @@ object StoryController extends Controller with Logging {
         }
       }
   }
+
+  def withContent(id: String) = Action {
+    implicit request =>
+
+      val promiseOfStory = Akka.future(Story.mongo.withContent(id))
+
+      Async {
+        promiseOfStory.map { storyOption =>
+
+          storyOption.map { story =>
+
+            Cached(60) {
+              val html = views.html.fragments.story(story)
+              request.getQueryString("callback").map { callback =>
+                JsonComponent(html)
+              } getOrElse {
+                Cached(60) {
+                  Ok(Compressed(html))
+                }
+              }
+            }
+
+          }.getOrElse(NotFound)
+        }
+      }
+  }
 }

@@ -62,7 +62,7 @@ case class Story(
     explainer: Option[String] = None,
     hero: Option[String] = None) {
   lazy val contentByTone: List[(String, Seq[Content])] = events.flatMap(_.content).groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
-  // This is hear as a hack, colours should eventunally be tones from the content API
+  // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = events.flatMap(_.content).groupBy(_.colour.getOrElse(0)).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
 
   private def toColour(i: Int) = i match {

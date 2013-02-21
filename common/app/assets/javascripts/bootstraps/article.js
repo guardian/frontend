@@ -71,7 +71,6 @@ define([
 
             if (experimentName) {
                 common.mediator.on('modules:experiment:render', function() {
-                    console.log('rendered');
                     new Expandable({id: 'experiment', expanded: false}).init();
                 });
                 experiment = new Experiment(config, experimentName).init();
