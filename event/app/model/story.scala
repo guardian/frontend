@@ -70,6 +70,7 @@ case class Story(
     case 2 => "Background"
     case 3 => "Analysis"
     case 4 => "Reaction"
+    case 5 => "Light"
   }
 }
 

@@ -4,17 +4,22 @@
 @section(title: String, content: Seq[model.Content]) = {
     <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
         <section class="story-@title.toLowerCase">
-            @*@fragments.trailblocks.thumbnail(content.sortBy(_.importance).take(2), numItemsVisible = 2, numThumbnails = 2, headingLevel = 3)*@
-
-            @content.map{
+            @content.take(1).map{
                 case a: Article => {
-                    <div>foo</div>
-                    <p>@a.body</p>
+                    @fragments.dateline(a.webPublicationDate, a.isLive, "UK")
+                    <article class="from-content-api">
+                        @withJsoup(BulletCleaner(a.body))(
+                            PictureCleaner(a),
+                            InBodyLinkCleaner("in body link"),
+                            BlockNumberCleaner,
+                            TweetCleaner,
+                            WitnessCleaner,
+                            Summary
+                        )
+                        <p><a href="@a.url">Read more...</a></p>
+                    </article>
                 }
-                case b: model.Content => { waaaaaaat }
             }
-
-
         </section>
     </li>
 }
@@ -50,18 +55,27 @@
 
         <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
             <section class="story-players">
+                <ul class="unstyled">
                 @{
                     story.events.map { event => event.agents }.flatten.map { agent =>
-                        <h3 class="box-indent"><a href="#">{agent.name.getOrElse("")}</a></h3>
-                        <p class="box-indent type-7">{agent.role.getOrElse("")}</p>
-                        <p class="box-indent type-7">{agent.explainer.getOrElse("")}</p>
+                        <li class="agent">
+                            <div class="agent-head">
+                                <img class="agent-img" src={agent.picture.get} />
+                                <h3 class="agent-name"><a href="#">{agent.name.getOrElse("")}</a></h3>
+                                <p class="agent-role">{agent.role.getOrElse("")}</p>
+                            </div>
+                            <div class="agent-body">
+                                <p>{agent.explainer.getOrElse("")}</p>
+                            </div>
+                        </li>
                     }
                 }
+                </ul>
             </section>
         </li>
         <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
             <section class="story-timeline">
-                <div id="experiment" class="trailblock timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+                <div id="experiment" class="timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
                     <ul class="unstyled">
                         @story.events.map { event =>
                             @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
