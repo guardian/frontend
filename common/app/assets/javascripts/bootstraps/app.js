@@ -1,5 +1,4 @@
 define('bootstraps/app', [
-    "modules/dateUtilities",
     "domReady",
     "modules/router",
     "bootstraps/common",
@@ -10,7 +9,6 @@ define('bootstraps/app', [
     "bootstraps/gallery",
     "modules/pageconfig"
 ], function (
-    DateUtilities,
     domReady,
     Router,
     Common,
