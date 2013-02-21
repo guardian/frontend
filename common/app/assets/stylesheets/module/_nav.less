@@ -271,12 +271,17 @@ a.topstories-control,
 }
 
 @media screen and (min-width: @desktopBreakpoint) {
+    #logo {
+        margin: 10px 0 0 0;
+    }
+
     #header {
         background-color: #fff;
     }
 
     #sections-header {
         display: block;
+        padding: 0;
     }
     .sections .nav {
         padding-left: 0;
@@ -305,8 +310,13 @@ a.topstories-control,
     }
     #navigation-header,
     .nav-columns .zone-home,
-    #navigation-footer {
+    #navigation-footer,
+    .sections .nav-section-divider {
       display: none;
+    }
+
+    .nav > li > a {
+        font-family: @desktopSerif;
     }
 
 }
