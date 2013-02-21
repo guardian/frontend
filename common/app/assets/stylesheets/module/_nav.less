@@ -266,7 +266,9 @@ a.topstories-control,
     border-top: 1px solid #DDDDDD;
 }
 
-
+#searchform {
+  display: none;
+}
 
 @media screen and (min-width: @desktopBreakpoint) {
     #header {
@@ -296,4 +298,12 @@ a.topstories-control,
         border-right: 0;
     }
 
+    #searchform {
+      display: block;
+      float: right;
+      margin-top: 20px;
+    }
+    #navigation-header {
+      display: none;
+    }
 }
