@@ -325,9 +325,20 @@ a.competition-title {
 .football-filter {
     background: @sportBright;
     margin: 0 @gutter @baseline*2 @gutter;
-    color: #ffffff; 
+    color: #ffffff;
     border-bottom: none;
 }
+
+@media screen and (min-width: @desktopBreakpoint) {
+    .football-filter.collapsible,
+    .matches-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
 
 //For omniture tracking
 .football-filter > span {

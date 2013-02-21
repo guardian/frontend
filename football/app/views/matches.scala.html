@@ -4,11 +4,11 @@
 
 @main(model.page, Switches.all){
 }{
-    
+
     <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
-    
+
     @if(model.pageType == "live") {
         <div class="live-matches-dateline">
            @fragments.dateline(new DateTime, true)
@@ -22,8 +22,8 @@
     @fragments.filterBar(model.page.webTitle)
 
     @fragments.filters(model.filters, model.page, model.pageType)
-    
-    <div class="matches-container box-indent">
+
+    <div class="matches-container box-indent two-thirds">
         @fragments.matchesList(model, model.pageType)
 
         @if(model.previousPage.isDefined || model.nextPage.isDefined) {
@@ -32,11 +32,11 @@
                 @model.nextPage.map{url => <a href="@url" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
             </div>
         }
-        
+
     </div>
 
     @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
-    
-    <div id="js-popular"></div>
+
+    <div id="js-popular" class="one-third"></div>
 
 }
