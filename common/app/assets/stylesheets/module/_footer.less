@@ -22,26 +22,59 @@
     text-decoration: underline;
 }
 
-#footer-container {
-  display: none;
-}
-
 @media screen and (min-width: @desktopBreakpoint) {
-  #footer-container {
-    display: block;
-  }
-
-  #footer-container #footer {
+  .footer {
     background-color: white;
     border-top-style: solid;
-  }
-
-  #footer-container li {
-    display: inline;
     font-size: 11px;
-  }
+    padding-left: 0;
+    padding-right: 0;
 
-  footer.footer, #navigation-footer {
-    display: none;
+    ul li:last-child {
+      border-right: 0px;
+    }
+
+    p {
+      clear: none;
+    }
+
+    li {
+      display: inline-block;
+      border-right: 1px solid silver;
+      padding-right: 10px;
+      margin-right: 10px;
+      float: left;
+    }
+
+    li a {
+      .type-11;
+      line-height: 1rem;
+      border: none;
+    }
+
+    .nav {
+      padding-top: 3px;
+    }
+
+    .copyright {
+      float:right;
+      width: 45%;
+      text-align: right;
+    }
+
+    .termsconditions {
+      float: none;
+      padding-left: 0;
+
+        a {
+          text-decoration: none;
+          float: left;
+          margin-right: 8px;
+        }
+    }
+
+    .desktop-link {
+      display: none;
+    }
   }
 }
