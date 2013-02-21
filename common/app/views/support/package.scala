@@ -172,14 +172,15 @@ object TweetCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByClass("twitter-tweet").foreach { element =>
       val el = element.clone()
-      val body = el.child(0).attr("class", "tweet-body")
-      val date = el.child(1).attr("class", "tweet-date")
-      val user = el.ownText()
-      val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+      if (el.children.size > 1) {
+        val body = el.child(0).attr("class", "tweet-body")
+        val date = el.child(1).attr("class", "tweet-date")
+        val user = el.ownText()
+        val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
 
-      element.empty().attr("class", "tweet")
-      element.appendChild(userEl).appendChild(date).appendChild(body)
-
+        element.empty().attr("class", "tweet")
+        element.appendChild(userEl).appendChild(date).appendChild(body)
+      }
     }
     document
   }
