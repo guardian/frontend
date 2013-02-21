@@ -35,9 +35,11 @@
 
     </article>
 
-    <div id="js-related"></div>
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
-  @fragments.footballNav("/football", None, None)
+    <div id="js-related" class="one-third"></div>
 
-  <div id="js-popular"></div>
+    @fragments.footballNav("/football", None, None)
+
+    <div id="js-popular" class="one-third"></div>
 }

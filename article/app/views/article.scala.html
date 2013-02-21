@@ -37,7 +37,8 @@
         </div>
     </article>
 
-    @if(storyPackage.nonEmpty) {
+        @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="middle1")
+        @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     } else {
         <div id="js-related" class="one-third"></div>
