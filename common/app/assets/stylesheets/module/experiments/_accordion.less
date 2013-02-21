@@ -14,13 +14,13 @@
   zoom: 1;
 }
 .accordion .is-open {
-  border-top: 2px solid @mushroom;
+  border-bottom: 2px solid @mushroom;
   display: block !important;
 }
 
 .accordion {
   margin: @baseline*2 auto @baseline*4 auto;
-  border: 2px solid @mushroom;
+  //border: 2px solid @mushroom;
   width: 95%;
 }
 
@@ -33,14 +33,15 @@ ul.accordion {
   overflow: auto;
 }
 .accordion > li > a {
-  .type-6;
+  .type-4;
   display: block;
   padding: 10px 15px;
-  background: @mushroom;
-  border-bottom: 2px solid #ffffff;
+  border-bottom: 2px solid @mushroom;
   text-decoration: none;
-  color: #545454;
+  color: #333;
 }
+
+.accordion > li:first-child > a { border-top: 2px solid @mushroom; }
 
 .accordion > li > a i {
   float: right;
@@ -52,18 +53,9 @@ ul.accordion {
   .rotate(270deg);
 }
 
-.accordion > li:last-child a {
-  border-bottom: none;
-}
-
 .accordion > li  > a:hover, .accordion > li > a.active {
   background: #ffffff;
   color: #333333;
-}
-
-.accordion > li > a.active {
-  margin-top: -2px;
-  border-top: 2px solid @mushroom;
 }
 
 .accordion section {
@@ -71,7 +63,7 @@ ul.accordion {
   float: left;
   background-color: #ffffff;
   overflow: hidden;
-  padding: 1% 3% 0 3%;
+  padding: @baseline*3 3% 0 3%;
 }
 
 .no-js .accordion section {

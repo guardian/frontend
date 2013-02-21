@@ -3,10 +3,9 @@
 
 @section(title: String, content: Seq[model.Content]) = {
     <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
-        <section class="story-@title.toLowerCase">
+        <section class="story-section story-@title.toLowerCase">
             @content.take(1).map{
                 case a: Article => {
-                    @fragments.dateline(a.webPublicationDate, a.isLive, "UK")
                     <article class="from-content-api">
                         @withJsoup(BulletCleaner(a.body))(
                             PictureCleaner(a),
@@ -16,7 +15,10 @@
                             WitnessCleaner,
                             Summary
                         )
-                        <p><a href="@a.url">Read more...</a></p>
+                        <footer>
+                            @fragments.dateline(a.webPublicationDate, a.isLive, "UK")
+                            <p><a href="@a.url">Read more...</a></p>
+                        </footer>
                     </article>
                 }
             }
@@ -42,7 +44,7 @@
             </figure>
         }
         <h2 class="page-head">Overview</h2>
-        <p class="story-explainer box-indent type-7" itemprop="description" data-link-name="explainer">
+        <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
             @cleanTrailText(story.explainer.getOrElse(""))
         </p>
     </section>
