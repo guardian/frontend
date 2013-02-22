@@ -1,7 +1,8 @@
 @(page: StoryPage)(implicit request: RequestHeader)
 
 @section(title: String, content: Seq[model.Content]) = {
-    <li><a href="#">@title <i class="i i-filter-arrow-right"></i></a>
+    <li class="accordion-item">
+        <a href="#" class="accordion-btn">@title <i class="i i-filter-arrow-right"></i></a>
         @fragments.section(title, content)
     </li>
 }
@@ -38,7 +39,9 @@
         @story.contentByColour.get("Analysis").map{ content => @section("Analysis", content) }
         @story.contentByColour.get("Reaction").map{ content => @section("Reaction", content) }
 
-        <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
+
             <section class="story-players">
                 <ul class="unstyled">
                 @story.events.flatMap(_.agents).map { agent =>
@@ -47,7 +50,9 @@
                 </ul>
             </section>
         </li>
-        <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+
             <section class="story-timeline">
                 @fragments.timeline(story)
             </section>

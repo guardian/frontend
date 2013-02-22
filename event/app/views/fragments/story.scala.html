@@ -9,13 +9,17 @@
 
 <ul class="accordion">
 
-    <li><a href="#">Latest <i class="i i-filter-arrow-right"></i></a>
+    <li class="accordion-item">
+        <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
+
         <section class="story-latest">
             @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
         </section>
     </li>
 
-    <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
+    <li class="accordion-item">
+        <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
+
         <section class="story-players">
             <ul class="unstyled">
                 @story.events.flatMap(_.agents).map { agent =>
@@ -24,7 +28,8 @@
             </ul>
         </section>
     </li>
-    <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+    <li class="accordion-item">
+        <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
         <section class="story-timeline">
             @fragments.timeline(story)
         </section>
