@@ -2,10 +2,14 @@
 
 @import java.net.URI
 
-@item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
-@defining(if(item.id == "") "/fullsite" else "?mobile-redirect=false") { redirectPath =>
-        @defining(if(Edition(request, Configuration) == "US") "guardiannews.com" else "guardian.co.uk") { host =>
-	        <a id="main-site" href="http://www.@host@url@redirectPath" data-link-name="@Edition(request, Configuration)">Desktop version</a>
-	    }
+@defining(Site(request)){ site =>
+    @item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
+        @if(item.id == ""){
+            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}/fullsite" data-link-name="desktop version @site.edition full site">Desktop version</a>
+        } else {
+            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}@url?mobile-redirect=false" data-link-name="desktop version @site.edition">Desktop version</a>
+        }
     }
 }
+
+

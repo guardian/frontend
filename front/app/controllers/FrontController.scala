@@ -48,7 +48,7 @@ class FrontController extends Controller with Logging with JsonTrails {
 
   private def renderFront(path: String, format: String)(implicit request: RequestHeader) = {
 
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
 
     val page: Option[MetaData] = path match {
       case "front" => Some(FrontPage)

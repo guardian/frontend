@@ -221,7 +221,7 @@ object OmnitureAnalyticsData {
       "ns" -> "guardian",
       "pageName" -> pageName,
       // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
+      "cdp" -> (if (Site(request).isUsEdition) "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,
