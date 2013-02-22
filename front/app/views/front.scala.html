@@ -1,4 +1,4 @@
-@(front: MetaData, trailblocks: Seq[Trailblock], charity: Option[Trailblock] = None)(implicit request: RequestHeader)
+@(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
 @main(front, Switches.all){
 }{
@@ -6,9 +6,7 @@
         @trailblocks.map{ block =>
             @fragments.frontBlock(block, Edition(request, Configuration))
         }
-        @charity.map { block =>
-	        @fragments.frontBlock(block, Edition(request, Configuration))
-        }
     </div>
-    <div id="js-popular"></div>
+
+    @fragments.mostPopularPlaceholder(front.section)
 }

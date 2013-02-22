@@ -1,4 +1,4 @@
-define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean, TrailblockShowMore) {
+define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(common, ajax, bean, TrailblockShowMore) {
 
     describe("TrailblockShowMore", function() {
         
@@ -11,6 +11,7 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
             server;
 
         beforeEach(function() {
+            ajax.init("");
             common.$g('body').append(fixtureTrailblock);
             // spy on mediator
             sinon.spy(common.mediator, 'emit');
@@ -39,7 +40,7 @@ define(['common', 'bean', 'modules/trailblock-show-more'], function(common, bean
             // click container
             bean.fire(common.$g('#front-container .trailblock .cta')[0], 'click');
             server.respond();   
-        }
+        };
         
         it("should emit 'module:trailblock-show-more:loaded' on success", function(){
             serverSetup();

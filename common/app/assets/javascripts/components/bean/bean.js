@@ -3,7 +3,11 @@
   * https://github.com/fat/bean
   * MIT license
   */
-define('bean', function (name, context) {
+!(function (name, context, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports = definition(name, context);
+  else if (typeof define == 'function' && typeof define.amd  == 'object') define(definition);
+  else context[name] = definition(name, context);
+}('bean', this, function (name, context) {
   var win            = window
     , old            = context[name]
     , namespaceRegex = /[^\.]*(?=\..*)\.|.*/
@@ -552,7 +556,7 @@ define('bean', function (name, context) {
         }
 
         type = isTypeStr && typeSpec.replace(nameRegex, '')
-        if (type && customEvents[type]) type = customEvents[type].type
+        if (type && customEvents[type]) type = customEvents[type].base
 
         if (!typeSpec || isTypeStr) {
           // off(el) or off(el, t1.ns) or off(el, .ns) or off(el, .ns1.ns2.ns3)
@@ -730,4 +734,4 @@ define('bean', function (name, context) {
   setSelectorEngine()
 
   return bean
-});
+}));

@@ -21,7 +21,6 @@ define('bootstraps/app', [
 ) {
 
     var routes = function(rawConfig) {
-
         var config = pageConfig(rawConfig);
 
         domReady(function() {

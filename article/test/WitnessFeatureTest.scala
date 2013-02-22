@@ -37,7 +37,7 @@ class WitnessFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         metadata.findFirst("img").getAttribute("src") should be("http://n0tice-dev-static.s3.amazonaws.com/images/profile/tiny/903e5544e2c18866f5ed8aeb71dd77fd.jpg")
 
         and("I should see the author name")
-        metadata.findFirst("[itemprop=name]").getText should be("TESTUSER1358502552586updated")
+        metadata.findFirst("[itemprop=name]").getText should be("TESTUSER1358983460190updated")
 
         and("I should see the embed date")
         metadata.findFirst("time").getText should be("12 January 2013, 17:19")
@@ -83,18 +83,18 @@ class WitnessFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         imageEmbed.findFirst("i").getAttribute("title") should be("Guardian Witness")
 
         and("I should see the image")
-        imageEmbed.findFirst(".element-witness--main img").getAttribute("src") should be("http://n0tice-dev-static.s3.amazonaws.com/images/reports/microblogs/medium/2823888465bf19c077fb8b84a7e40fdc.jpg")
+        imageEmbed.findFirst(".element-witness--main img").getAttribute("src") should be("http://n0tice-dev-static.s3.amazonaws.com/images/reports/microblogs/mediumoriginalaspectdouble/3fd548ff05a2f4fd85e5d78b0c136947.jpg")
 
         val metadata = imageEmbed.findFirst(".element-witness--metadata")
 
         and("I should see the author avatar")
-        metadata.findFirst("img").getAttribute("src") should be("http://n0tice-dev-static.s3.amazonaws.com/images/profile/tiny/17ba723ff5e7889b.jpg")
+        metadata.findFirst("img").getAttribute("src") should be("http://n0tice-dev-static.s3.amazonaws.com/images/profile/tiny/903e5544e2c18866f5ed8aeb71dd77fd.jpg")
 
         and("I should see the author name")
-        metadata.findFirst("[itemprop=name]").getText should be("james")
+        metadata.findFirst("[itemprop=name]").getText should be("TESTUSER1358983460190updated")
 
         and("I should see the embed date")
-        metadata.findFirst("time").getText should be("7 January 2013, 22:16")
+        metadata.findFirst("time").getText should be("21 January 2013, 23:46")
       }
     }
   }

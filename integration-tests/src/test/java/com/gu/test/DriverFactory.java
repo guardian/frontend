@@ -1,14 +1,17 @@
 package com.gu.test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
 
 public class DriverFactory {
 	
@@ -23,7 +26,22 @@ public class DriverFactory {
 			capabilities.setJavascriptEnabled(true);
 			
 			driver = new HtmlUnitDriver(capabilities);
-		} else {
+		}
+        else if (type.equals("chrome")){
+            if (!httpProxy.isEmpty()){
+                Proxy proxy = new Proxy();
+            proxy.setHttpProxy(httpProxy);
+                DesiredCapabilities dc = DesiredCapabilities.chrome();
+                dc.setCapability(CapabilityType.PROXY,proxy);
+                driver = new ChromeDriver(dc);
+            }
+            else{
+            driver = new ChromeDriver();
+            }
+            return driver;
+
+        }
+        else {
 
 			FirefoxProfile profile = new FirefoxProfile();
 			

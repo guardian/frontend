@@ -24,6 +24,7 @@
     @fragments.filters(model.filters, model.page, model.pageType)
 
     <div class="matches-container box-indent two-thirds">
+
         @fragments.matchesList(model, model.pageType)
 
         @if(model.previousPage.isDefined || model.nextPage.isDefined) {
@@ -39,6 +40,6 @@
 
     @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
-    <div id="js-popular" class="one-third"></div>
+    @fragments.mostPopularPlaceholder("sport")
 
 }

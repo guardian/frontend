@@ -42,6 +42,8 @@ class GuardianConfiguration(
     lazy val key = configuration.getStringProperty("content.api.key") getOrElse {
       throw new IllegalStateException("Content Api Key not configured")
     }
+
+    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object proxy {
@@ -77,6 +79,11 @@ class GuardianConfiguration(
       usHost -> "US"
     )
     def apply(origin: Option[String]): String = origin flatMap { editionsForHosts.get(_) } getOrElse "UK"
+
+    def ajaxUrlFor(edition: String): String = edition match {
+      case "US" => "http://" + usHost
+      case _ => "http://" + ukHost
+    }
   }
 
   object javascript {

@@ -15,13 +15,15 @@ Feature: Network front
         Given I visit the network front 
         When I hide a section
         Then the section will be hidden
-    
+
+    @brokeninchrome
     Scenario: Users can show hidden sections
         Given I visit the network front
             And a section is hidden 
         When I show a section
         Then the section will be shown
 
+    @brokeninchrome
     Scenario: Hidden section will remain hidden on refresh
         Given I visit the network front
             And a section is hidden

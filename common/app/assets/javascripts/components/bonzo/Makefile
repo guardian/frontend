@@ -1,2 +1,2 @@
 boosh:
-	smoosh make make/build.js
+	node_modules/smoosh/bin/smoosh make make/build.js

@@ -1,10 +1,11 @@
-define(['common', 'modules/fonts'], function(common, Fonts) {
+define(['common', 'ajax', 'modules/fonts'], function(common, ajax, Fonts) {
     
     describe("Web Font Loader", function() {
-        
-        var styleNodes;
-        var fileFormat;
-        var storagePrefix = 'gu.fonts.';
+
+        var styleNodes,
+            fileFormat,
+            callback,
+            storagePrefix = 'gu.fonts.';
 
         function getNameAndCacheKey(style) {       
             var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/);
@@ -19,26 +20,27 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
         }
 
         beforeEach(function() {
+            ajax.init("");
             localStorage.clear();
             styleNodes = document.querySelectorAll('[data-cache-name]');
             fileFormat = 'woff';
-            callbackSpy = sinon.spy(function(){});
+            callback = sinon.stub();
         });
 
         it("should request css files and cache in localStorage", function() {
             
-            common.mediator.on('modules:fonts:loaded', callbackSpy);
+            common.mediator.on('modules:fonts:loaded', callback);
 
             runs(function() {
                 new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
-                expect(callbackSpy.calledTwice).toBeTruthy();
+                expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                 }
@@ -47,14 +49,14 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
         it("should request css files, cache in localStorage and apply the styles", function() {
             
-            common.mediator.on('modules:fonts:loaded', callbackSpy);
+            common.mediator.on('modules:fonts:loaded', callback);
 
             runs(function() {
                 new Fonts(styleNodes, fileFormat).loadFromServerAndApply('fixtures/');
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
@@ -67,7 +69,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
         it("should request the TTF version of css files when requested", function() {
             
-            common.mediator.on('modules:fonts:loaded', callbackSpy);
+            common.mediator.on('modules:fonts:loaded', callback);
 
             fileFormat = 'ttf';
 
@@ -76,7 +78,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "loaded callback never ran", 1000);
 
             runs(function() {
@@ -89,7 +91,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
         it("should not request css files if localStorage already has them", function() {
             
-            common.mediator.on('modules:fonts:notloaded', callbackSpy);
+            common.mediator.on('modules:fonts:notloaded', callback);
 
             // Pretend data was already in localStorage
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
@@ -101,7 +103,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
@@ -119,7 +121,7 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
                 localStorage.setItem(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
             }
             // Plus one non-font storage.
-            localStorage.setItem('guUserPref:myPref', 'myprefvalue')
+            localStorage.setItem('guUserPref:myPref', 'myprefvalue');
 
             expect(localStorage.length).toEqual(styleNodes.length + 1);
 
@@ -133,18 +135,18 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
         it("should replace fonts in localStorage if a new cacheKey is found", function() {
              
-            common.mediator.on('modules:fonts:loaded', callbackSpy);
+            common.mediator.on('modules:fonts:loaded', callback);
 
             runs(function() {
                 new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "initial loaded callback never ran", 1000);
 
             runs(function() {
-                expect(callbackSpy.calledTwice).toBeTruthy();
+                expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                 }
@@ -153,17 +155,17 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
             runs(function() {
                 replaceCacheKeysInDOM('12345', '123456789');
                 var styleNodes = document.querySelectorAll('[data-cache-name]');
-                callbackSpy.reset();
+                callback.reset();
                 new Fonts(styleNodes, fileFormat).loadFromServer('fixtures/');
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "cache busting loaded callback never ran", 1000);
 
             runs(function() {
                 var styleNodes = document.querySelectorAll('[data-cache-name]');
-                expect(callbackSpy.calledTwice).toBeTruthy();
+                expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{-cachebusted');
                 }
@@ -174,24 +176,25 @@ define(['common', 'modules/fonts'], function(common, Fonts) {
 
         it("should not request css files if localStorage is full or disabled", function() {
             
-            common.mediator.on('modules:fonts:notloaded', callbackSpy);
+            common.mediator.on('modules:fonts:notloaded', callback);
+            var ajaxSpy;
 
             // Force localStorage to throw error.
-            localStorage.setItem = null;
+            localStorage.setItem = sinon.stub.throws();
 
             runs(function() {
-                f = new Fonts(styleNodes, fileFormat)
+                var f = new Fonts(styleNodes, fileFormat);
                 f.loadFromServer('fixtures/');
-                reqwestSpy = sinon.spy(f.reqwest);
+                ajaxSpy = sinon.spy(f.ajax);
             });
 
             waitsFor(function() {
-                return (callbackSpy.calledTwice);
+                return (callback.calledTwice);
             }, "notloaded callback never ran", 1000);
 
             runs(function() {
 
-                expect(reqwestSpy.callCount).toBe(0);
+                expect(ajaxSpy.callCount).toBe(0);
 
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
                     expect(localStorage.getItem(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe(null);

@@ -334,7 +334,7 @@
 			// stylesheet has been successfully loaded in old FF
 			// Opera throws before the sheet is loaded (and before onload
 			// in some cases, so we have to test for it here)
-			ready = window.opera.toString() != '[object Opera]'
+			ready = Object.prototype.toString.call(window.opera) != '[object Opera]'
 				&& /security|denied/i.test(ex.message);
 		}
 

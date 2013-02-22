@@ -14,7 +14,7 @@
                 @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z", Edition(request, Configuration))
             </time>
         </p>
-      
+
         <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
             @fragments.matchSummary(page.theMatch)
         </div>
@@ -37,9 +37,10 @@
 
     @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
+
     <div id="js-related" class="one-third"></div>
 
     @fragments.footballNav("/football", None, None)
 
-    <div id="js-popular" class="one-third"></div>
+    @fragments.mostPopularPlaceholder("sport")
 }

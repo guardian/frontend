@@ -151,7 +151,7 @@ buster.testCase('delegate', {
         }
       , 'on()': function (done) {
           this.runTest(done, function (el1, wrappedSpy) {
-            bean.add(el1, '.bar', 'click', wrappedSpy)
+            bean.on(el1, 'click', '.bar', wrappedSpy)
           })
         }
       , 'add()': function (done) {
@@ -192,7 +192,7 @@ buster.testCase('delegate', {
         }
       , 'on()': function (done) {
           this.runTest(done, function (el1, wrappedSpy) {
-            bean.add(el1, '.bar', 'click', wrappedSpy)
+            bean.on(el1, 'click', '.bar', wrappedSpy)
           })
         }
       , 'add()': function (done) {
@@ -233,7 +233,7 @@ buster.testCase('delegate', {
         }
       , 'on()': function (done) {
           this.runTest(done, function (el1, wrappedSpy) {
-            bean.add(el1, '.bar', 'click', wrappedSpy)
+            bean.on(el1, 'click', '.bar', wrappedSpy)
           })
         }
       , 'add()': function (done) {
@@ -280,7 +280,7 @@ buster.testCase('delegate', {
         }
       , 'on()': function (done) {
           this.runTest(done, function (el1, selector, wrappedSpy) {
-            bean.add(el1, selector, 'click', wrappedSpy)
+            bean.on(el1, 'click', selector, wrappedSpy)
           })
         }
       , 'add()': function (done) {

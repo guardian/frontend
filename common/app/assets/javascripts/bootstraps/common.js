@@ -1,6 +1,7 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
@@ -25,6 +26,7 @@ define([
     'modules/cookies'
 ], function (
     common,
+    ajax,
     detect,
     userPrefs,
 
@@ -51,6 +53,10 @@ define([
 
     var modules = {
 
+        initialiseAjax: function(config) {
+            ajax.init(config.page.ajaxUrl);
+        },
+
         attachGlobalErrorHandler: function () {
             var e = new Errors(window);
                 e.init();
@@ -62,7 +68,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-           
+
             // the section panel
             new Sections().init();
 
@@ -83,26 +89,29 @@ define([
         },
 
         transcludeRelated: function (config){
+            common.mediator.on("modules:related:load", function(){
 
-          common.mediator.on("modules:related:load", function(url){
+                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
+                    host,
+                    pageId,
+                    url;
 
-              var hasStoryPackage = document.getElementById("related-trails") !== null;
-
-              var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-
-              if (hasStoryPackage) {
-                  relatedExpandable.init();
-              } else {
-                  common.mediator.on('modules:related:render', relatedExpandable.init);
-                  new Related(document.getElementById('js-related'), config.switches).load(url[0]);
-              }
-          });
+                if (config.page.hasStoryPackage) {
+                    relatedExpandable.init();
+                } else {
+                    host = config.page.coreNavigationUrl;
+                    pageId = config.page.pageId;
+                    url =  host + '/related/' + pageId;
+                    common.mediator.on('modules:related:render', relatedExpandable.init);
+                    new Related(document.getElementById('js-related'), config.switches).load(url);
+                }
+            });
         },
 
         transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular' + (section ? '/' + section : ''),
+            var url = host + '/most-read' + (section ? '/' + section : '') + '.json',
                 domContainer = document.getElementById('js-popular');
-            
+
             if (domContainer) {
                 new Popular(domContainer).load(url);
                 common.mediator.on('modules:popular:render', function() {
@@ -121,10 +130,10 @@ define([
             if(config.switches.webFonts) {
                 showFonts = true;
             }
-            
+
             var fileFormat = detect.getFontFormatSupport(ua),
                 fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-            
+
             var f = new Fonts(fontStyleNodes, fileFormat);
             if (showFonts) {
                 f.loadFromServerAndApply();
@@ -160,6 +169,7 @@ define([
     };
 
     var ready = function(config) {
+        modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler();
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.upgradeImages();
