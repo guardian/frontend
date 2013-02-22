@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":120061,
+    "total":120065,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,858 @@
       "apiUrl":"http://content.guardianapis.com/football"
     },
     "results":[{
+      "id":"football/2013/feb/22/norwich-city-everton-squad-sheets",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-02-22T15:25:16Z",
+      "webTitle":"Norwich City v Everton: Squad&nbsp;sheets",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/norwich-city-everton-squad-sheets",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/norwich-city-everton-squad-sheets",
+      "fields":{
+        "trailText":"The Norwich captain, Grant Holt, is expected to return from injury in time to face Everton at Carrow Road",
+        "headline":"Norwich City v Everton: Squad&nbsp;sheets",
+        "hasStoryPackage":"false",
+        "wordcount":"289",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/series/squad-sheets",
+        "type":"series",
+        "webTitle":"Squad sheets",
+        "webUrl":"http://www.guardian.co.uk/football/series/squad-sheets",
+        "apiUrl":"http://content.guardianapis.com/football/series/squad-sheets",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/norwichcity",
+        "type":"keyword",
+        "webTitle":"Norwich City",
+        "webUrl":"http://www.guardian.co.uk/football/norwichcity",
+        "apiUrl":"http://content.guardianapis.com/football/norwichcity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/14"
+        }]
+      },{
+        "id":"football/everton",
+        "type":"keyword",
+        "webTitle":"Everton",
+        "webUrl":"http://www.guardian.co.uk/football/everton",
+        "apiUrl":"http://content.guardianapis.com/football/everton",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/8"
+        }]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.guardian.co.uk/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361546639363/Norwich-City-v-Everton-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361546639363/Norwich-City-v-Everton-001.jpg",
+          "source":"Graphic",
+          "altText":"Norwich City v Everton",
+          "height":"650",
+          "credit":"Graphic",
+          "caption":"Norwich City v Everton: Probable starters in bold, contenders in light. Illustration: Graphic",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361546639363/Norwich-City-v-Everton-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361546639363/Norwich-City-v-Everton-001.jpg",
+          "source":"Graphic",
+          "altText":"Norwich City v Everton",
+          "height":"650",
+          "credit":"Graphic",
+          "caption":"Norwich City v Everton: Probable starters in bold, contenders in light. Illustration: Graphic",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/8"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/14"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-02-22T15:10:00Z",
+      "webTitle":"Luis Suárez and Edinson Cavani on City radar, admits Roberto Mancini",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
+      "fields":{
+        "trailText":"Roberto Mancini has confirmed his admiration for Luis Suárez and Edinson Cavani as he starts planning a summer of potential rebuilding at Manchester City",
+        "headline":"Luis Suárez and Edinson Cavani on City radar, admits Roberto Mancini",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544154828/Luis-Suarez-and-Edinson-C-003.jpg",
+        "wordcount":"570",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/roberto-mancini",
+        "type":"keyword",
+        "webTitle":"Roberto Mancini",
+        "webUrl":"http://www.guardian.co.uk/football/roberto-mancini",
+        "apiUrl":"http://content.guardianapis.com/football/roberto-mancini",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/luis-suarez",
+        "type":"keyword",
+        "webTitle":"Luis Suárez",
+        "webUrl":"http://www.guardian.co.uk/football/luis-suarez",
+        "apiUrl":"http://content.guardianapis.com/football/luis-suarez",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.guardian.co.uk/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.guardian.co.uk/football/liverpool",
+        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/9"
+        }]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/danieltaylor",
+        "type":"contributor",
+        "webTitle":"Daniel Taylor",
+        "webUrl":"http://www.guardian.co.uk/profile/danieltaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/danieltaylor",
+        "bio":"<p>Daniel Taylor is chief football writer for the Guardian and Observer. He was previously the Guardian's man in Manchester He has written books on Manchester United and Nottingham Forest</p>",
+        "rcsId":"GNL004624",
+        "r2ContributorId":"15529",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/12/1350056540611/Daniel-Taylor-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544161351/Luis-Suarez-and-Edinson-C-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544161351/Luis-Suarez-and-Edinson-C-008.jpg",
+          "source":"Getty",
+          "altText":"Luis Suarez and Edinson Cavani",
+          "height":"276",
+          "credit":"Getty",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. As for Cavani: 'I like him, but all the world wants him.' Photographs: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532878089/Luis-Su-rez-in-action-for-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532878089/Luis-Su-rez-in-action-for-001.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"54",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532880235/Luis-Su-rez-in-action-for-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532880235/Luis-Su-rez-in-action-for-002.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"130",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532881575/Luis-Su-rez-in-action-for-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532881575/Luis-Su-rez-in-action-for-003.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"84",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532883028/Luis-Su-rez-in-action-for-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532883028/Luis-Su-rez-in-action-for-004.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"132",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532884426/Luis-Su-rez-in-action-for-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532884426/Luis-Su-rez-in-action-for-005.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"168",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532885885/Luis-Su-rez-in-action-for-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532885885/Luis-Su-rez-in-action-for-006.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"180",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532887319/Luis-Su-rez-in-action-for-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532887319/Luis-Su-rez-in-action-for-007.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"228",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532888902/Luis-Su-rez-in-action-for-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532888902/Luis-Su-rez-in-action-for-008.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
+          "height":"276",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/9"
+      }]
+    },{
+      "id":"football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-02-22T14:59:01Z",
+      "webTitle":"Roberto Mancini: 'I like being a manager. I like being angry every day'",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "fields":{
+        "trailText":"Manchester City manager tells Daniel Taylor about his future plans \u2013 working as a football director and managing England \u2013 and his long bike rides around Cheshire",
+        "headline":"Roberto Mancini: 'I like being a manager. I like being angry every day'",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
+        "wordcount":"2420",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/roberto-mancini",
+        "type":"keyword",
+        "webTitle":"Roberto Mancini",
+        "webUrl":"http://www.guardian.co.uk/football/roberto-mancini",
+        "apiUrl":"http://content.guardianapis.com/football/roberto-mancini",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.guardian.co.uk/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.guardian.co.uk/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"profile/danieltaylor",
+        "type":"contributor",
+        "webTitle":"Daniel Taylor",
+        "webUrl":"http://www.guardian.co.uk/profile/danieltaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/danieltaylor",
+        "bio":"<p>Daniel Taylor is chief football writer for the Guardian and Observer. He was previously the Guardian's man in Manchester He has written books on Manchester United and Nottingham Forest</p>",
+        "rcsId":"GNL004624",
+        "r2ContributorId":"15529",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/12/1350056540611/Daniel-Taylor-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"276",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photographs: Christopher Thomond for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361542224986/Roberto-Mancini-was-talki-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361542224986/Roberto-Mancini-was-talki-004.jpg",
+          "source":"Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini was talking in the Etihad lounge at Manchester airport",
+          "height":"132",
+          "credit":"Christopher Thomond/Guardian",
+          "caption":"Roberto Mancini was talking in the Etihad lounge at Manchester airport",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539688000/Roberto-Mancini-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539688000/Roberto-Mancini-001.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"54",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539689713/Roberto-Mancini-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539689713/Roberto-Mancini-002.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"130",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"84",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539692496/Roberto-Mancini-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539692496/Roberto-Mancini-004.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"132",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539693903/Roberto-Mancini-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539693903/Roberto-Mancini-005.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"168",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539695410/Roberto-Mancini-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539695410/Roberto-Mancini-006.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"180",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539696904/Roberto-Mancini-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539696904/Roberto-Mancini-007.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"228",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
+          "height":"276",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      }]
+    },{
+      "id":"football/2013/feb/22/manchester-city-chelsea-squad-sheets",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-02-22T14:56:28Z",
+      "webTitle":"Manchester City v Chelsea: Squad&nbsp;sheets",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/manchester-city-chelsea-squad-sheets",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/manchester-city-chelsea-squad-sheets",
+      "fields":{
+        "trailText":"Gareth Barry and Vincent Kompany are both injury doubts for Manchester City ahead of the visit of Chelsea",
+        "headline":"Manchester City v Chelsea: Squad&nbsp;sheets",
+        "hasStoryPackage":"false",
+        "wordcount":"310",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/series/squad-sheets",
+        "type":"series",
+        "webTitle":"Squad sheets",
+        "webUrl":"http://www.guardian.co.uk/football/series/squad-sheets",
+        "apiUrl":"http://content.guardianapis.com/football/series/squad-sheets",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.guardian.co.uk/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.guardian.co.uk/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.guardian.co.uk/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361544918326/Manchester-City-v-Chelsea-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361544918326/Manchester-City-v-Chelsea-001.jpg",
+          "source":"Graphic",
+          "altText":"Manchester City v Chelsea",
+          "height":"650",
+          "credit":"Graphic",
+          "caption":"Manchester City v Chelsea: Probable starters in bold, contenders in light. Illustration: Graphic",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361544918326/Manchester-City-v-Chelsea-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361544918326/Manchester-City-v-Chelsea-001.jpg",
+          "source":"Graphic",
+          "altText":"Manchester City v Chelsea",
+          "height":"650",
+          "credit":"Graphic",
+          "caption":"Manchester City v Chelsea: Probable starters in bold, contenders in light. Illustration: Graphic",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
       "id":"football/2013/feb/22/german-couple-borussia-dortmund-flag",
       "sectionId":"football",
       "sectionName":"Football",
@@ -3936,33 +4788,70 @@
         "type":"pa-football-competition",
         "id":"pa-football-competition/510"
       }]
-    },{
-      "id":"football/2013/feb/21/liverpool-zenit-st-petersburg-europa-league",
+    }],
+    "editorsPicks":[{
+      "id":"football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T00:26:00Z",
-      "webTitle":"Liverpool 3-1 Zenit (3-3; Zenit win on away goals) | Europa League",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/21/liverpool-zenit-st-petersburg-europa-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/21/liverpool-zenit-st-petersburg-europa-league",
+      "webPublicationDate":"2013-02-22T15:10:00Z",
+      "webTitle":"Luis Suárez and Edinson Cavani on City radar, admits Roberto Mancini",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/luis-suarez-roberto-mancini-edinson-cavani",
       "fields":{
-        "trailText":"Two free-kicks by Luis Suárez gave Liverpool a 3-1 victory on the night but Zenit St Petersburg progressed to the last 16 of the Europa League on away goals",
-        "headline":"Liverpool fall short against Zenit despite Luis Suárez free-kick goals",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483380947/Luis-Suarez-Liverpool-Zen-003.jpg",
-        "wordcount":"820",
+        "trailText":"Roberto Mancini has confirmed his admiration for Luis Suárez and Edinson Cavani as he starts planning a summer of potential rebuilding at Manchester City",
+        "headline":"Luis Suárez and Edinson Cavani on City radar, admits Roberto Mancini",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544154828/Luis-Suarez-and-Edinson-C-003.jpg",
+        "wordcount":"570",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/uefa-europa-league",
+        "id":"football/roberto-mancini",
         "type":"keyword",
-        "webTitle":"Europa League",
-        "webUrl":"http://www.guardian.co.uk/football/uefa-europa-league",
-        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
+        "webTitle":"Roberto Mancini",
+        "webUrl":"http://www.guardian.co.uk/football/roberto-mancini",
+        "apiUrl":"http://content.guardianapis.com/football/roberto-mancini",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/luis-suarez",
+        "type":"keyword",
+        "webTitle":"Luis Suárez",
+        "webUrl":"http://www.guardian.co.uk/football/luis-suarez",
+        "apiUrl":"http://content.guardianapis.com/football/luis-suarez",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.guardian.co.uk/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/510"
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
         }]
       },{
         "id":"football/liverpool",
@@ -3977,310 +4866,6 @@
           "id":"pa-football-team/9"
         }]
       },{
-        "id":"football/zenitstpetersburg",
-        "type":"keyword",
-        "webTitle":"Zenit St Petersburg",
-        "webUrl":"http://www.guardian.co.uk/football/zenitstpetersburg",
-        "apiUrl":"http://content.guardianapis.com/football/zenitstpetersburg",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/38276"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"profile/andyhunter",
-        "type":"contributor",
-        "webTitle":"Andy Hunter",
-        "webUrl":"http://www.guardian.co.uk/profile/andyhunter",
-        "apiUrl":"http://content.guardianapis.com/profile/andyhunter",
-        "bio":"<p>Andy Hunter is a football correspondent for the Guardian based in Liverpool</p>",
-        "r2ContributorId":"22565",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2010/7/26/1280168367302/Andy-Hunter-002.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483377543/Luis-Suarez-Liverpool-Zen-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483377543/Luis-Suarez-Liverpool-Zen-001.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"54",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483379644/Luis-Suarez-Liverpool-Zen-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483379644/Luis-Suarez-Liverpool-Zen-002.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"130",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483380947/Luis-Suarez-Liverpool-Zen-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483380947/Luis-Suarez-Liverpool-Zen-003.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"84",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483382205/Luis-Suarez-Liverpool-Zen-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483382205/Luis-Suarez-Liverpool-Zen-004.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"132",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483383366/Luis-Suarez-Liverpool-Zen-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483383366/Luis-Suarez-Liverpool-Zen-005.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"168",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483384616/Luis-Suarez-Liverpool-Zen-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483384616/Luis-Suarez-Liverpool-Zen-006.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"180",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483385823/Luis-Suarez-Liverpool-Zen-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483385823/Luis-Suarez-Liverpool-Zen-007.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"228",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483387075/Luis-Suarez-Liverpool-Zen-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483387075/Luis-Suarez-Liverpool-Zen-008.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"276",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483387075/Luis-Suarez-Liverpool-Zen-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361483387075/Luis-Suarez-Liverpool-Zen-008.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"Luis Suarez Liverpool Zenit",
-          "height":"276",
-          "credit":"Darren Staples/Reuters",
-          "caption":"Liverpool's Luis Suárez scores the first of his free-kick goals against Zenit St Petersburg at Anfield. Photograph: Darren Staples/Reuters",
-          "width":"460"
-        }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/38276"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/9"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/510"
-      }]
-    },{
-      "id":"football/2013/feb/22/rafael-benitez-fernando-torres-hazard-chelsea",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T00:02:36Z",
-      "webTitle":"Rafael Benítez defends Fernando Torres after Hazard rescues Chelsea",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/rafael-benitez-fernando-torres-hazard-chelsea",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/rafael-benitez-fernando-torres-hazard-chelsea",
-      "fields":{
-        "trailText":"<p>Rafael Benítez launched a defence of Fernando Torres's spluttering form after Chelsea squeezed beyond Sparta Prague into the last 16 of the Europa League with a goal by Eden Hazard</p>",
-        "headline":"Rafael Benítez defends Fernando Torres after Hazard rescues Chelsea",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490956469/Chelseas-Fernando-Torres--003.jpg",
-        "wordcount":"476",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/fernando-torres",
-        "type":"keyword",
-        "webTitle":"Fernando Torres",
-        "webUrl":"http://www.guardian.co.uk/football/fernando-torres",
-        "apiUrl":"http://content.guardianapis.com/football/fernando-torres",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/chelsea",
-        "type":"keyword",
-        "webTitle":"Chelsea",
-        "webUrl":"http://www.guardian.co.uk/football/chelsea",
-        "apiUrl":"http://content.guardianapis.com/football/chelsea",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/4"
-        }]
-      },{
-        "id":"football/rafael-benitez",
-        "type":"keyword",
-        "webTitle":"Rafael Benítez",
-        "webUrl":"http://www.guardian.co.uk/football/rafael-benitez",
-        "apiUrl":"http://content.guardianapis.com/football/rafael-benitez",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/uefa-europa-league",
-        "type":"keyword",
-        "webTitle":"Europa League",
-        "webUrl":"http://www.guardian.co.uk/football/uefa-europa-league",
-        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/510"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
         "id":"tone/news",
         "type":"tone",
         "webTitle":"News",
@@ -4288,762 +4873,33 @@
         "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
-        "id":"profile/dominicfifield",
+        "id":"profile/danieltaylor",
         "type":"contributor",
-        "webTitle":"Dominic Fifield",
-        "webUrl":"http://www.guardian.co.uk/profile/dominicfifield",
-        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
-        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
-        "rcsId":"GNL004637",
-        "r2ContributorId":"15597",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "webTitle":"Daniel Taylor",
+        "webUrl":"http://www.guardian.co.uk/profile/danieltaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/danieltaylor",
+        "bio":"<p>Daniel Taylor is chief football writer for the Guardian and Observer. He was previously the Guardian's man in Manchester He has written books on Manchester United and Nottingham Forest</p>",
+        "rcsId":"GNL004624",
+        "r2ContributorId":"15529",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/12/1350056540611/Daniel-Taylor-003.jpg",
         "references":[]
       },{
-        "id":"theguardian/mainsection/sport",
+        "id":"theguardian/sport/news",
         "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"theguardian/mainsection",
+        "id":"theguardian/sport",
         "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"video",
-        "rel":"body",
-        "index":2,
-        "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/22/220213Benitez-16x9.mp4",
-        "fields":{
-          "source":"Reuters",
-          "embeddable":"true",
-          "blockAds":"false",
-          "height":"360",
-          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/22/220213Benitez_7281849.jpg",
-          "durationMinutes":"1",
-          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/22/220213Benitez_7281849.jpg",
-          "width":"480",
-          "durationSeconds":"10"
-        },
-        "encodings":[{
-          "format":"video/mp4:720",
-          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/22/220213Benitez-720.mp4"
-        },{
-          "format":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/22/220213Benitez-16x9.mp4"
-        },{
-          "format":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/220213Benitez/220213Benitez.m3u8"
-        },{
-          "format":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/22/220213Benitez_3gpLg16x9.3gp"
-        }]
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490952217/Chelseas-Fernando-Torres--001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490952217/Chelseas-Fernando-Torres--001.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"54",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490954450/Chelseas-Fernando-Torres--002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490954450/Chelseas-Fernando-Torres--002.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"130",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490956469/Chelseas-Fernando-Torres--003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490956469/Chelseas-Fernando-Torres--003.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"84",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490958037/Chelseas-Fernando-Torres--004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490958037/Chelseas-Fernando-Torres--004.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"132",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490960085/Chelseas-Fernando-Torres--005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490960085/Chelseas-Fernando-Torres--005.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"168",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490962322/Chelseas-Fernando-Torres--006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490962322/Chelseas-Fernando-Torres--006.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"180",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490963942/Chelseas-Fernando-Torres--007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490963942/Chelseas-Fernando-Torres--007.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"228",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490966147/Chelseas-Fernando-Torres--008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361490966147/Chelseas-Fernando-Torres--008.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Chelsea's Fernando Torres fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League",
-          "height":"276",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Chelsea's Fernando Torres, left, tries and fails to scorer past Sparta Prague's Tomas Vaclik in the Europa League. Photograph: Gerry Penny/EPA",
-          "width":"460"
-        }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/4"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/510"
-      }]
-    },{
-      "id":"football/video/2013/feb/22/james-richardson-european-football-paper-review-video",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T00:01:00Z",
-      "webTitle":"Raphael Honigstein's European football paper review - video",
-      "webUrl":"http://www.guardian.co.uk/football/video/2013/feb/22/james-richardson-european-football-paper-review-video",
-      "apiUrl":"http://content.guardianapis.com/football/video/2013/feb/22/james-richardson-european-football-paper-review-video",
-      "fields":{
-        "trailText":"<p>With James Richardson on his mid-season break, German football expert Raphael Honigstein is substituted to fill the breach</p>",
-        "headline":"Raphael Honigstein's European football paper review - video",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476936424/Raphael-Honigstein-009.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/series/james-richardson-european-newspaper-review",
-        "type":"series",
-        "webTitle":"James Richardson's European football papers review",
-        "webUrl":"http://www.guardian.co.uk/football/series/james-richardson-european-newspaper-review",
-        "apiUrl":"http://content.guardianapis.com/football/series/james-richardson-european-newspaper-review",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/championsleague",
-        "type":"keyword",
-        "webTitle":"Champions League",
-        "webUrl":"http://www.guardian.co.uk/football/championsleague",
-        "apiUrl":"http://content.guardianapis.com/football/championsleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/500"
-        }]
-      },{
-        "id":"football/bayernmunich",
-        "type":"keyword",
-        "webTitle":"Bayern Munich",
-        "webUrl":"http://www.guardian.co.uk/football/bayernmunich",
-        "apiUrl":"http://content.guardianapis.com/football/bayernmunich",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26247"
-        }]
-      },{
-        "id":"football/arsenal",
-        "type":"keyword",
-        "webTitle":"Arsenal",
-        "webUrl":"http://www.guardian.co.uk/football/arsenal",
-        "apiUrl":"http://content.guardianapis.com/football/arsenal",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/1006"
-        }]
-      },{
-        "id":"football/acmilan",
-        "type":"keyword",
-        "webTitle":"Milan",
-        "webUrl":"http://www.guardian.co.uk/football/acmilan",
-        "apiUrl":"http://content.guardianapis.com/football/acmilan",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26368"
-        }]
-      },{
-        "id":"football/barcelona",
-        "type":"keyword",
-        "webTitle":"Barcelona",
-        "webUrl":"http://www.guardian.co.uk/football/barcelona",
-        "apiUrl":"http://content.guardianapis.com/football/barcelona",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26300"
-        }]
-      },{
-        "id":"football/schalke",
-        "type":"keyword",
-        "webTitle":"Schalke",
-        "webUrl":"http://www.guardian.co.uk/football/schalke",
-        "apiUrl":"http://content.guardianapis.com/football/schalke",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26249"
-        }]
-      },{
-        "id":"football/david-beckham",
-        "type":"keyword",
-        "webTitle":"David Beckham",
-        "webUrl":"http://www.guardian.co.uk/football/david-beckham",
-        "apiUrl":"http://content.guardianapis.com/football/david-beckham",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
         "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/analysis",
-        "type":"tone",
-        "webTitle":"Analysis",
-        "webUrl":"http://www.guardian.co.uk/tone/analysis",
-        "apiUrl":"http://content.guardianapis.com/tone/analysis",
-        "references":[]
-      },{
-        "id":"profile/raphaelhonigstein",
-        "type":"contributor",
-        "webTitle":"Raphael Honigstein",
-        "webUrl":"http://www.guardian.co.uk/profile/raphaelhonigstein",
-        "apiUrl":"http://content.guardianapis.com/profile/raphaelhonigstein",
-        "bio":"<p>Raphael Honigstein is guardian.co.uk's German football correspondent. A native Bavarian, he also writes for Süddeutsche Zeitung and is Talksport's German expert. A long time ago, when the Bundesliga was still fashionable, he was Alan McInally's sidekick on Sky. <a href=\"http://www.zavvi.co.uk/books-Sport-Football-10+to+14.99-Harder-Better-Faster-Stronger-Raphael-Honigstein/9780224080132/cccr33.r10.1/p.jsf\">Harder, Better, Faster, Stronger</a>, his book on the peculiar narrative of English football, is out now</p>",
-        "r2ContributorId":"19394",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/16/honigstein.jpg",
-        "references":[]
-      },{
-        "id":"profile/bengreen",
-        "type":"contributor",
-        "webTitle":"Ben Green",
-        "webUrl":"http://www.guardian.co.uk/profile/bengreen",
-        "apiUrl":"http://content.guardianapis.com/profile/bengreen",
-        "bio":"<p>Ben is guardian.co.uk's senior sports producer, looking after the <a href=\"http://www.guardian.co.uk/footballweekly\">Football Weekly</a> podcast.  He joined the Guardian in 2006, having previously worked for Channel 4 News and LBC radio in London.  He's won two Sony awards for the <a href=\"http://www.guardian.co.uk/mediatalk\">Media Talk </a>podcast, none for Football Weekly, and still hasn't written his best-selling book about an overweight cat</p>",
-        "r2ContributorId":"19151",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2012/4/23/1335194441398/Ben-Green-003.jpg",
-        "references":[]
-      },{
-        "id":"profile/andy-gallagher",
-        "type":"contributor",
-        "webTitle":"Andy Gallagher",
-        "webUrl":"http://www.guardian.co.uk/profile/andy-gallagher",
-        "apiUrl":"http://content.guardianapis.com/profile/andy-gallagher",
-        "r2ContributorId":"34368",
-        "references":[]
-      },{
-        "id":"profile/richard-sprenger",
-        "type":"contributor",
-        "webTitle":"Richard Sprenger",
-        "webUrl":"http://www.guardian.co.uk/profile/richard-sprenger",
-        "apiUrl":"http://content.guardianapis.com/profile/richard-sprenger",
-        "bio":"<p>Richard Sprenger is a freelance video producer</p>",
-        "r2ContributorId":"40242",
-        "references":[]
-      },{
-        "id":"type/video",
-        "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.guardian.co.uk/video",
-        "apiUrl":"http://content.guardianapis.com/video",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"video",
-        "rel":"body",
-        "index":1,
-        "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/21/120221PaperReview-16x9.mp4",
-        "fields":{
-          "source":"guardian.co.uk",
-          "embeddable":"true",
-          "blockAds":"false",
-          "height":"360",
-          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/21/120221PaperReview_7280311.jpg",
-          "durationMinutes":"6",
-          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/21/120221PaperReview_7280311.jpg",
-          "width":"480",
-          "durationSeconds":"14"
-        },
-        "encodings":[{
-          "format":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/21/120221PaperReview_3gpLg16x9.3gp"
-        },{
-          "format":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/21/120221PaperReview-16x9.mp4"
-        },{
-          "format":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/120221PaperReview/120221PaperReview.m3u8"
-        },{
-          "format":"video/mp4:720",
-          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/21/120221PaperReview-720.mp4"
-        },{
-          "format":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/21/120221PaperReview_3gpSml16x9.3gp"
-        }]
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476924832/Raphael-Honigstein-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476924832/Raphael-Honigstein-001.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"230",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476926934/Raphael-Honigstein-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476926934/Raphael-Honigstein-002.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"90",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"120"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476928318/Raphael-Honigstein-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476928318/Raphael-Honigstein-003.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"225",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476929636/Raphael-Honigstein-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476929636/Raphael-Honigstein-004.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"360",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"480"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476932678/Raphael-Honigstein-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476932678/Raphael-Honigstein-006.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"54",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476933909/Raphael-Honigstein-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476933909/Raphael-Honigstein-007.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"340",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"480"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476935249/Raphael-Honigstein-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476935249/Raphael-Honigstein-008.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"130",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476936424/Raphael-Honigstein-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476936424/Raphael-Honigstein-009.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"84",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476937983/Raphael-Honigstein-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476937983/Raphael-Honigstein-010.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"132",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":10,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476939396/Raphael-Honigstein-011.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476939396/Raphael-Honigstein-011.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"168",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":11,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476940635/Raphael-Honigstein-012.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476940635/Raphael-Honigstein-012.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"180",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":12,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476941917/Raphael-Honigstein-013.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476941917/Raphael-Honigstein-013.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"228",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":13,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476943240/Raphael-Honigstein-014.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476943240/Raphael-Honigstein-014.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"276",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":14,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476944429/Raphael-Honigstein-015.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476944429/Raphael-Honigstein-015.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"372",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":15,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476945775/Raphael-Honigstein-016.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/21/1361476945775/Raphael-Honigstein-016.jpg",
-          "source":"guardian.co.uk",
-          "photographer":"guardian.co.uk",
-          "altText":"Raphael Honigstein",
-          "height":"360",
-          "credit":"guardian.co.uk/guardian.co.uk",
-          "caption":"Raphael Honigstein\n Photograph: guardian.co.uk",
-          "width":"640"
-        }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26249"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26300"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26368"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/500"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/1006"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26247"
-      }]
-    },{
-      "id":"football/2013/feb/21/chelsea-sparta-prague-europa-league",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T00:00:00Z",
-      "webTitle":"Chelsea 1-1 Sparta Prague (Chelsea win 2-1 on agg) | Europa League",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/21/chelsea-sparta-prague-europa-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/21/chelsea-sparta-prague-europa-league",
-      "fields":{
-        "trailText":"Chelsea left it late before Eden Hazard struck a dramatic late goal to send them through 2-1 on aggregate against Sparta Prague in the Europa League",
-        "headline":"Chelsea sneak past Sparta Prague with dramatic late goal by Eden Hazard",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
-        "wordcount":"788",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/uefa-europa-league",
-        "type":"keyword",
-        "webTitle":"Europa League",
-        "webUrl":"http://www.guardian.co.uk/football/uefa-europa-league",
-        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/510"
-        }]
-      },{
-        "id":"football/chelsea",
-        "type":"keyword",
-        "webTitle":"Chelsea",
-        "webUrl":"http://www.guardian.co.uk/football/chelsea",
-        "apiUrl":"http://content.guardianapis.com/football/chelsea",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/4"
-        }]
-      },{
-        "id":"football/spartaprague",
-        "type":"keyword",
-        "webTitle":"Sparta Prague",
-        "webUrl":"http://www.guardian.co.uk/football/spartaprague",
-        "apiUrl":"http://content.guardianapis.com/football/spartaprague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"profile/dominicfifield",
-        "type":"contributor",
-        "webTitle":"Dominic Fifield",
-        "webUrl":"http://www.guardian.co.uk/profile/dominicfifield",
-        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
-        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
-        "rcsId":"GNL004637",
-        "r2ContributorId":"15597",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
         "references":[]
       },{
         "id":"type/article",
@@ -5064,149 +4920,147 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544161351/Luis-Suarez-and-Edinson-C-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361544161351/Luis-Suarez-and-Edinson-C-008.jpg",
+          "source":"Getty",
+          "altText":"Luis Suarez and Edinson Cavani",
+          "height":"276",
+          "credit":"Getty",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. As for Cavani: 'I like him, but all the world wants him.' Photographs: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482505384/Sparta-Pragues-David-Lafa-001.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532878089/Luis-Su-rez-in-action-for-001.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482505384/Sparta-Pragues-David-Lafa-001.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532878089/Luis-Su-rez-in-action-for-001.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"54",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"54"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482507269/Sparta-Pragues-David-Lafa-002.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532880235/Luis-Su-rez-in-action-for-002.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482507269/Sparta-Pragues-David-Lafa-002.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532880235/Luis-Su-rez-in-action-for-002.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"130",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532881575/Luis-Su-rez-in-action-for-003.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532881575/Luis-Su-rez-in-action-for-003.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"84",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482510165/Sparta-Pragues-David-Lafa-004.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532883028/Luis-Su-rez-in-action-for-004.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482510165/Sparta-Pragues-David-Lafa-004.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532883028/Luis-Su-rez-in-action-for-004.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"132",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"220"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482511699/Sparta-Pragues-David-Lafa-005.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532884426/Luis-Su-rez-in-action-for-005.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482511699/Sparta-Pragues-David-Lafa-005.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532884426/Luis-Su-rez-in-action-for-005.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"168",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"280"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482513190/Sparta-Pragues-David-Lafa-006.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532885885/Luis-Su-rez-in-action-for-006.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482513190/Sparta-Pragues-David-Lafa-006.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532885885/Luis-Su-rez-in-action-for-006.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"180",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"300"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482514713/Sparta-Pragues-David-Lafa-007.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532887319/Luis-Su-rez-in-action-for-007.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482514713/Sparta-Pragues-David-Lafa-007.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532887319/Luis-Su-rez-in-action-for-007.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"228",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"380"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532888902/Luis-Su-rez-in-action-for-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361532888902/Luis-Su-rez-in-action-for-008.jpg",
+          "source":"Liverpool FC via Getty Images",
+          "photographer":"John Powell",
+          "altText":"Luis Suárez in action for Liverpool",
           "height":"276",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"276",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round-of-32 second leg at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"John Powell/Liverpool FC via Getty Images",
+          "caption":"The Manchester City manager, Roberto Mancini, has admitted an interest in Luis Suárez, but added he 'plays for a top team like Liverpool'. Photograph: John Powell/Liverpool FC via Getty Images",
           "width":"460"
         }
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/4"
+        "id":"pa-football-team/11"
       },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/510"
+        "type":"pa-football-team",
+        "id":"pa-football-team/9"
       }]
-    }],
-    "editorsPicks":[{
+    },{
       "id":"football/2013/feb/22/arsene-wenger-arsenal-manager",
       "sectionId":"football",
       "sectionName":"Football",
@@ -5559,54 +5413,54 @@
         "id":"pa-football-competition/510"
       }]
     },{
-      "id":"football/2013/feb/21/chelsea-sparta-prague-europa-league",
+      "id":"football/2013/feb/22/paolo-di-canio-swindon-raid",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T00:00:00Z",
-      "webTitle":"Chelsea 1-1 Sparta Prague (Chelsea win 2-1 on agg) | Europa League",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/21/chelsea-sparta-prague-europa-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/21/chelsea-sparta-prague-europa-league",
+      "webPublicationDate":"2013-02-22T11:43:24Z",
+      "webTitle":"Paolo Di Canio accused of midnight raid on old office at Swindon Town",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/paolo-di-canio-swindon-raid",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/paolo-di-canio-swindon-raid",
       "fields":{
-        "trailText":"Chelsea left it late before Eden Hazard struck a dramatic late goal to send them through 2-1 on aggregate against Sparta Prague in the Europa League",
-        "headline":"Chelsea sneak past Sparta Prague with dramatic late goal by Eden Hazard",
+        "trailText":"Paolo Di Canio is reported to have been caught on CCTV taking down pictures of his time in charge at the County Ground",
+        "headline":"Paolo Di Canio accused of midnight raid on old office at Swindon Town",
         "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
-        "wordcount":"788",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217873299/Paolo-Di-Canio-Swindon-Ci-003.jpg",
+        "wordcount":"388",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/uefa-europa-league",
+        "id":"football/paolo-di-canio",
         "type":"keyword",
-        "webTitle":"Europa League",
-        "webUrl":"http://www.guardian.co.uk/football/uefa-europa-league",
-        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
+        "webTitle":"Paolo Di Canio",
+        "webUrl":"http://www.guardian.co.uk/football/paolo-di-canio",
+        "apiUrl":"http://content.guardianapis.com/football/paolo-di-canio",
         "sectionId":"football",
         "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/510"
-        }]
+        "references":[]
       },{
-        "id":"football/chelsea",
+        "id":"football/swindon",
         "type":"keyword",
-        "webTitle":"Chelsea",
-        "webUrl":"http://www.guardian.co.uk/football/chelsea",
-        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "webTitle":"Swindon",
+        "webUrl":"http://www.guardian.co.uk/football/swindon",
+        "apiUrl":"http://content.guardianapis.com/football/swindon",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/4"
+          "id":"pa-football-team/40"
         }]
       },{
-        "id":"football/spartaprague",
+        "id":"football/leagueonefootball",
         "type":"keyword",
-        "webTitle":"Sparta Prague",
-        "webUrl":"http://www.guardian.co.uk/football/spartaprague",
-        "apiUrl":"http://content.guardianapis.com/football/spartaprague",
+        "webTitle":"League One",
+        "webUrl":"http://www.guardian.co.uk/football/leagueonefootball",
+        "apiUrl":"http://content.guardianapis.com/football/leagueonefootball",
         "sectionId":"football",
         "sectionName":"Football",
-        "references":[]
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/102"
+        }]
       },{
         "id":"football/football",
         "type":"keyword",
@@ -5626,40 +5480,142 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"profile/dominicfifield",
+        "id":"profile/katymurrells",
         "type":"contributor",
-        "webTitle":"Dominic Fifield",
-        "webUrl":"http://www.guardian.co.uk/profile/dominicfifield",
-        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
-        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
-        "rcsId":"GNL004637",
-        "r2ContributorId":"15597",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "webTitle":"Katy Murrells",
+        "webUrl":"http://www.guardian.co.uk/profile/katymurrells",
+        "apiUrl":"http://content.guardianapis.com/profile/katymurrells",
+        "bio":"<p>Katy Murrells specialises in tennis and is deputy production editor for sport</p>",
+        "r2ContributorId":"27812",
         "references":[]
       },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217880257/Paolo-Di-Canio-Swindon-Ci-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217880257/Paolo-Di-Canio-Swindon-Ci-008.jpg",
+          "source":"Action Images",
+          "photographer":"Carl Recine",
+          "altText":"Paolo Di Canio Swindon City",
+          "height":"276",
+          "credit":"Carl Recine/Action Images",
+          "caption":"Paolo Di Canio allegedly carried out the midnight raid three days after resigning as Swindon manager. Photograph: Carl Recine/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/40"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/102"
+      }]
+    },{
+      "id":"football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-02-22T14:59:01Z",
+      "webTitle":"Roberto Mancini: 'I like being a manager. I like being angry every day'",
+      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/roberto-mancini-interview-angry-every-day",
+      "fields":{
+        "trailText":"Manchester City manager tells Daniel Taylor about his future plans \u2013 working as a football director and managing England \u2013 and his long bike rides around Cheshire",
+        "headline":"Roberto Mancini: 'I like being a manager. I like being angry every day'",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
+        "wordcount":"2420",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/roberto-mancini",
+        "type":"keyword",
+        "webTitle":"Roberto Mancini",
+        "webUrl":"http://www.guardian.co.uk/football/roberto-mancini",
+        "apiUrl":"http://content.guardianapis.com/football/roberto-mancini",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.guardian.co.uk/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
         "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"theguardian/mainsection",
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.guardian.co.uk/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"profile/danieltaylor",
+        "type":"contributor",
+        "webTitle":"Daniel Taylor",
+        "webUrl":"http://www.guardian.co.uk/profile/danieltaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/danieltaylor",
+        "bio":"<p>Daniel Taylor is chief football writer for the Guardian and Observer. He was previously the Guardian's man in Manchester He has written books on Manchester United and Nottingham Forest</p>",
+        "rcsId":"GNL004624",
+        "r2ContributorId":"15529",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/12/1350056540611/Daniel-Taylor-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
         "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"type/article",
@@ -5680,399 +5636,158 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"alt-size",
+        "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482505384/Sparta-Pragues-David-Lafa-001.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482505384/Sparta-Pragues-David-Lafa-001.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"54",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482507269/Sparta-Pragues-David-Lafa-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482507269/Sparta-Pragues-David-Lafa-002.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"130",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482508730/Sparta-Pragues-David-Lafa-003.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"84",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482510165/Sparta-Pragues-David-Lafa-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482510165/Sparta-Pragues-David-Lafa-004.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"132",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482511699/Sparta-Pragues-David-Lafa-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482511699/Sparta-Pragues-David-Lafa-005.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"168",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482513190/Sparta-Pragues-David-Lafa-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482513190/Sparta-Pragues-David-Lafa-006.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"180",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482514713/Sparta-Pragues-David-Lafa-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482514713/Sparta-Pragues-David-Lafa-007.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"228",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"276",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round of 32 second leg match at Stamford Bridge. Photograph: Gerry Penny/EPA",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photographs: Christopher Thomond for the Guardian",
           "width":"460"
         }
       },{
         "type":"picture",
         "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361542224986/Roberto-Mancini-was-talki-004.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/21/1361482516227/Sparta-Pragues-David-Lafa-008.jpg",
-          "source":"EPA",
-          "photographer":"Gerry Penny",
-          "altText":"Sparta Prague's David Lafata scores against Chelsea in the Europa League at Stamford Bridge.",
-          "height":"276",
-          "credit":"Gerry Penny/EPA",
-          "caption":"Sparta Prague's David Lafata scores against Chelsea in the Europa League round-of-32 second leg at Stamford Bridge. Photograph: Gerry Penny/EPA",
-          "width":"460"
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361542224986/Roberto-Mancini-was-talki-004.jpg",
+          "source":"Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini was talking in the Etihad lounge at Manchester airport",
+          "height":"132",
+          "credit":"Christopher Thomond/Guardian",
+          "caption":"Roberto Mancini was talking in the Etihad lounge at Manchester airport",
+          "width":"220"
         }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/4"
       },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/510"
-      }]
-    },{
-      "id":"football/2013/feb/21/lyon-tottenham-hotspur-europa-league",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-02-21T22:03:00Z",
-      "webTitle":"Lyon 1-1 Tottenham Hotspur (Tottenham win 3-2 on agg) | Europa League",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/21/lyon-tottenham-hotspur-europa-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/21/lyon-tottenham-hotspur-europa-league",
-      "fields":{
-        "trailText":"<p>A stunning last-minute strike from Mousa Dembélé put Tottenham into the last 16 of the Europa League 3-2 on aggregate with a 1-1 draw in Lyon</p>",
-        "headline":"Mousa Dembélé's late strike sends Tottenham through at expense of Lyon",
-        "hasStoryPackage":"true",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476779314/Tottenham-Hotspur-players-003.jpg",
-        "wordcount":"832",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/uefa-europa-league",
-        "type":"keyword",
-        "webTitle":"Europa League",
-        "webUrl":"http://www.guardian.co.uk/football/uefa-europa-league",
-        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/510"
-        }]
-      },{
-        "id":"football/lyon",
-        "type":"keyword",
-        "webTitle":"Lyon",
-        "webUrl":"http://www.guardian.co.uk/football/lyon",
-        "apiUrl":"http://content.guardianapis.com/football/lyon",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26345"
-        }]
-      },{
-        "id":"football/tottenham-hotspur",
-        "type":"keyword",
-        "webTitle":"Tottenham Hotspur",
-        "webUrl":"http://www.guardian.co.uk/football/tottenham-hotspur",
-        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/19"
-        }]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"profile/davidhytner",
-        "type":"contributor",
-        "webTitle":"David Hytner",
-        "webUrl":"http://www.guardian.co.uk/profile/davidhytner",
-        "apiUrl":"http://content.guardianapis.com/profile/davidhytner",
-        "bio":"<p>David Hytner is a <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent for the Guardian</p>",
-        "r2ContributorId":"22566",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/10/07/hytner.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "mediaAssets":[{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476775016/Tottenham-Hotspur-players-001.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539688000/Roberto-Mancini-001.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476775016/Tottenham-Hotspur-players-001.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539688000/Roberto-Mancini-001.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"54",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"54"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476778116/Tottenham-Hotspur-players-002.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539689713/Roberto-Mancini-002.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476778116/Tottenham-Hotspur-players-002.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539689713/Roberto-Mancini-002.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"130",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476779314/Tottenham-Hotspur-players-003.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476779314/Tottenham-Hotspur-players-003.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539691094/Roberto-Mancini-003.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"84",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476780417/Tottenham-Hotspur-players-004.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539692496/Roberto-Mancini-004.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476780417/Tottenham-Hotspur-players-004.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539692496/Roberto-Mancini-004.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"132",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"220"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476781556/Tottenham-Hotspur-players-005.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539693903/Roberto-Mancini-005.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476781556/Tottenham-Hotspur-players-005.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539693903/Roberto-Mancini-005.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"168",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"280"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476782767/Tottenham-Hotspur-players-006.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539695410/Roberto-Mancini-006.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476782767/Tottenham-Hotspur-players-006.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539695410/Roberto-Mancini-006.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"180",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"300"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476783960/Tottenham-Hotspur-players-007.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539696904/Roberto-Mancini-007.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476783960/Tottenham-Hotspur-players-007.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539696904/Roberto-Mancini-007.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"228",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"380"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476785211/Tottenham-Hotspur-players-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/21/1361476785211/Tottenham-Hotspur-players-008.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philippe Merle",
-          "altText":"Tottenham Hotspur players show their dejection after Lyon scored in the Europa League",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361539698415/Roberto-Mancini-008.jpg",
+          "source":"for the Guardian",
+          "photographer":"Christopher Thomond",
+          "altText":"Roberto Mancini",
           "height":"276",
-          "credit":"Philippe Merle/AFP/Getty Images",
-          "caption":"Tottenham Hotspur players show their dejection after Lyon scored, but the London club won their Europa League tie. Photograph: Philippe Merle/AFP/Getty Images",
+          "credit":"Christopher Thomond/for the Guardian",
+          "caption":"The Manchester City manager, Roberto Mancini, says 'it is always more difficult to retain the league than win it.' Photograph: Christopher Thomond/for the Guardian",
           "width":"460"
         }
       }],
       "references":[{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/510"
-      },{
         "type":"pa-football-team",
-        "id":"pa-football-team/19"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26345"
+        "id":"pa-football-team/11"
       }]
     },{
       "id":"football/blog/2013/feb/22/football-10-things-to-watch-weekend",
@@ -6288,120 +6003,6 @@
         }
       }],
       "references":[]
-    },{
-      "id":"football/2013/feb/22/paolo-di-canio-swindon-raid",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-02-22T11:43:24Z",
-      "webTitle":"Paolo Di Canio accused of midnight raid on old office at Swindon Town",
-      "webUrl":"http://www.guardian.co.uk/football/2013/feb/22/paolo-di-canio-swindon-raid",
-      "apiUrl":"http://content.guardianapis.com/football/2013/feb/22/paolo-di-canio-swindon-raid",
-      "fields":{
-        "trailText":"Paolo Di Canio is reported to have been caught on CCTV taking down pictures of his time in charge at the County Ground",
-        "headline":"Paolo Di Canio accused of midnight raid on old office at Swindon Town",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217873299/Paolo-Di-Canio-Swindon-Ci-003.jpg",
-        "wordcount":"388",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/paolo-di-canio",
-        "type":"keyword",
-        "webTitle":"Paolo Di Canio",
-        "webUrl":"http://www.guardian.co.uk/football/paolo-di-canio",
-        "apiUrl":"http://content.guardianapis.com/football/paolo-di-canio",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/swindon",
-        "type":"keyword",
-        "webTitle":"Swindon",
-        "webUrl":"http://www.guardian.co.uk/football/swindon",
-        "apiUrl":"http://content.guardianapis.com/football/swindon",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/40"
-        }]
-      },{
-        "id":"football/leagueonefootball",
-        "type":"keyword",
-        "webTitle":"League One",
-        "webUrl":"http://www.guardian.co.uk/football/leagueonefootball",
-        "apiUrl":"http://content.guardianapis.com/football/leagueonefootball",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/102"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/katymurrells",
-        "type":"contributor",
-        "webTitle":"Katy Murrells",
-        "webUrl":"http://www.guardian.co.uk/profile/katymurrells",
-        "apiUrl":"http://content.guardianapis.com/profile/katymurrells",
-        "bio":"<p>Katy Murrells specialises in tennis and is deputy production editor for sport</p>",
-        "r2ContributorId":"27812",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217880257/Paolo-Di-Canio-Swindon-Ci-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/18/1361217880257/Paolo-Di-Canio-Swindon-Ci-008.jpg",
-          "source":"Action Images",
-          "photographer":"Carl Recine",
-          "altText":"Paolo Di Canio Swindon City",
-          "height":"276",
-          "credit":"Carl Recine/Action Images",
-          "caption":"Paolo Di Canio allegedly carried out the midnight raid three days after resigning as Swindon manager. Photograph: Carl Recine/Action Images",
-          "width":"460"
-        }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/40"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/102"
-      }]
     },{
       "id":"football/2013/feb/21/wayne-rooney-manchester-united-qpr",
       "sectionId":"football",

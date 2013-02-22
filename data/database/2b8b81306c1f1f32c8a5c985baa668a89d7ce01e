@@ -189,21 +189,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/15/1360939007793/Judy-Finnigan-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/15/1360939007793/Judy-Finnigan-008.jpg",
-          "source":"Guardian",
-          "photographer":"David Levene",
-          "altText":"Judy Finnigan",
-          "height":"276",
-          "credit":"David Levene/Guardian",
-          "caption":"Judy Finnigan: 'My mother never praised us - she expected us to do well. I thought that was a little joyless.' Photograph: David Levene for the Guardian",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/15/1360938998952/Judy-Finnigan-002.jpg",
@@ -305,6 +290,21 @@
           "height":"276",
           "credit":"David Levene/Guardian",
           "caption":"Judy Finnigan: 'My mother never praised us \u2013 she expected us to do well. I thought that was a little joyless.' Photograph: David Levene for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/15/1360939007793/Judy-Finnigan-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/15/1360939007793/Judy-Finnigan-008.jpg",
+          "source":"Guardian",
+          "photographer":"David Levene",
+          "altText":"Judy Finnigan",
+          "height":"276",
+          "credit":"David Levene/Guardian",
+          "caption":"Judy Finnigan: 'My mother never praised us - she expected us to do well. I thought that was a little joyless.' Photograph: David Levene for the Guardian",
           "width":"460"
         }
       }],

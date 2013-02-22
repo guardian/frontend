@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":549,
+    "total":550,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -19,6 +19,137 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-22T15:03:54Z",
+      "webTitle":"Miami Heat rout Chicago Bulls after quiet NBA trade deadline day",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "fields":{
+        "trailText":"<p><strong>NBA round-up:</strong> Miami Heat defeat Chicago Bulls 86-67; San Antonio Spurs beat LA Clippers 116-90; Orlando Magic and Milwaukee Bucks multi-player deal is biggest move of trade deadline</p>",
+        "headline":"Miami Heat rout Chicago Bulls after quiet NBA trade deadline day",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545200123/4c02db42-6860-401c-9a94-a462574524e5-140x84.jpeg",
+        "wordcount":"776",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nba",
+        "type":"keyword",
+        "webTitle":"NBA",
+        "webUrl":"http://www.guardian.co.uk/sport/nba",
+        "apiUrl":"http://content.guardianapis.com/sport/nba",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/miami-heat",
+        "type":"keyword",
+        "webTitle":"Miami Heat",
+        "webUrl":"http://www.guardian.co.uk/sport/miami-heat",
+        "apiUrl":"http://content.guardianapis.com/sport/miami-heat",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-bulls",
+        "type":"keyword",
+        "webTitle":"Chicago Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-bulls",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-bulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/orlando-magic",
+        "type":"keyword",
+        "webTitle":"Orlando Magic",
+        "webUrl":"http://www.guardian.co.uk/sport/orlando-magic",
+        "apiUrl":"http://content.guardianapis.com/sport/orlando-magic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-raptors",
+        "type":"keyword",
+        "webTitle":"Toronto Raptors",
+        "webUrl":"http://www.guardian.co.uk/sport/toronto-raptors",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-raptors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-antonio-spurs",
+        "type":"keyword",
+        "webTitle":"San Antonio Spurs",
+        "webUrl":"http://www.guardian.co.uk/sport/san-antonio-spurs",
+        "apiUrl":"http://content.guardianapis.com/sport/san-antonio-spurs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-clippers",
+        "type":"keyword",
+        "webTitle":"Los Angeles Clippers",
+        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-clippers",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-clippers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/milwaukee-bucks",
+        "type":"keyword",
+        "webTitle":"Milwaukee Bucks",
+        "webUrl":"http://www.guardian.co.uk/sport/milwaukee-bucks",
+        "apiUrl":"http://content.guardianapis.com/sport/milwaukee-bucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545201700/4c02db42-6860-401c-9a94-a462574524e5-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545201700/4c02db42-6860-401c-9a94-a462574524e5-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Nam Y. Huh",
+          "altText":"LeBron James and Dwyane Wade",
+          "height":"276",
+          "credit":"Nam Y. Huh/AP",
+          "caption":"Miami Heat's LeBron James and Dwyane Wade celebrate against the Chicago Bulls  in Chicago, Thursday, Feb. 21, 2013. Photograph: Nam Y. Huh/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"sport/2013/feb/21/la-lakers-boston-celtics-jerry-buss",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -2754,137 +2885,6 @@
           "height":"276",
           "credit":"Rhona Wise/Reuters",
           "caption":"Miami Heat's LeBron James is defended by Houston Rockets' James Harden. Photograph: Rhona Wise/Reuters",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/feb/06/alicia-keys-nba-all-star-halftime",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-02-06T16:14:00Z",
-      "webTitle":"Alicia Keys moves from Super Bowl anthem to NBA All-Star half-time",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/06/alicia-keys-nba-all-star-halftime",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/06/alicia-keys-nba-all-star-halftime",
-      "fields":{
-        "trailText":"<p><strong>NBA round-up:</strong> Alicia Keys, fresh from her Super Bowl Star Spangled Banner performance, is set for the NBA All-Star half-time show</p>",
-        "headline":"Alicia Keys moves from Super Bowl anthem to NBA All-Star half-time",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/4/1359970286720/Alicia-Keys-Super-Bowl-XL-003.jpg",
-        "wordcount":"480",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nba",
-        "type":"keyword",
-        "webTitle":"NBA",
-        "webUrl":"http://www.guardian.co.uk/sport/nba",
-        "apiUrl":"http://content.guardianapis.com/sport/nba",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/brooklyn-nets",
-        "type":"keyword",
-        "webTitle":"Brooklyn Nets",
-        "webUrl":"http://www.guardian.co.uk/sport/brooklyn-nets",
-        "apiUrl":"http://content.guardianapis.com/sport/brooklyn-nets",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/los-angeles-lakers",
-        "type":"keyword",
-        "webTitle":"Los Angeles Lakers",
-        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-lakers",
-        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-lakers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"music/aliciakeys",
-        "type":"keyword",
-        "webTitle":"Alicia Keys",
-        "webUrl":"http://www.guardian.co.uk/music/aliciakeys",
-        "apiUrl":"http://content.guardianapis.com/music/aliciakeys",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"music/music",
-        "type":"keyword",
-        "webTitle":"Music",
-        "webUrl":"http://www.guardian.co.uk/music/music",
-        "apiUrl":"http://content.guardianapis.com/music/music",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"sport/houston-rockets",
-        "type":"keyword",
-        "webTitle":"Houston Rockets",
-        "webUrl":"http://www.guardian.co.uk/sport/houston-rockets",
-        "apiUrl":"http://content.guardianapis.com/sport/houston-rockets",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/jeremy-lin",
-        "type":"keyword",
-        "webTitle":"Jeremy Lin",
-        "webUrl":"http://www.guardian.co.uk/sport/jeremy-lin",
-        "apiUrl":"http://content.guardianapis.com/sport/jeremy-lin",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/golden-state-warriors",
-        "type":"keyword",
-        "webTitle":"Golden State Warriors",
-        "webUrl":"http://www.guardian.co.uk/sport/golden-state-warriors",
-        "apiUrl":"http://content.guardianapis.com/sport/golden-state-warriors",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/4/1359970292625/Alicia-Keys-Super-Bowl-XL-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/4/1359970292625/Alicia-Keys-Super-Bowl-XL-008.jpg",
-          "source":"PictureGroup / Rex Features",
-          "photographer":"PictureGroup / Rex Features",
-          "altText":"Alicia Keys Super Bowl XLVII American Football",
-          "height":"276",
-          "credit":"PictureGroup / Rex Features/PictureGroup / Rex Features",
-          "caption":"Alicia Keys sings the Star Spangled Banner at Super Bowl XLVII. Now she will perform at half-time in the NBA All-Star game. Photograph: PictureGroup/Rex Features",
           "width":"460"
         }
       }],

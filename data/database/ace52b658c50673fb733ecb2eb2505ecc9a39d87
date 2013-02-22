@@ -116,51 +116,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361458933981/PlayStation-4-launch-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361458933981/PlayStation-4-launch-008.jpg",
-          "source":"Reuters",
-          "photographer":"Brendan Mcdermid",
-          "altText":"PlayStation 4 launch",
-          "height":"276",
-          "credit":"Brendan Mcdermid/Reuters",
-          "caption":"The PlayStation 4 launch showed off a redesigned controller. Photograph: Brendan Mcdermid/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459129209/Mark-Cerny-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459129209/Mark-Cerny-008.jpg",
-          "source":"AP",
-          "photographer":"Frank Franklin Ii",
-          "altText":"Mark Cerny",
-          "height":"276",
-          "credit":"Frank Franklin Ii/AP",
-          "caption":"Mark Cerny, lead system architect for the Sony Playstation. Photograph: Frank Franklin II/AP Photo",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459517522/PlayStation-4-launch-even-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459517522/PlayStation-4-launch-even-008.jpg",
-          "source":"Reuters",
-          "photographer":"Brendan Mcdermid",
-          "altText":"PlayStation 4 launch event in New York",
-          "height":"276",
-          "credit":"Brendan Mcdermid/Reuters",
-          "caption":"Expectant journos wait for the launch event to get under way. Photograph: Brendan Mcdermid/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361458924985/PlayStation-4-launch-001.jpg",
@@ -277,6 +232,51 @@
           "height":"276",
           "credit":"Brendan Mcdermid/Reuters",
           "caption":"The PlayStation 4 launch showed off a redesigned controller. Photograph: Brendan Mcdermid/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361458933981/PlayStation-4-launch-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361458933981/PlayStation-4-launch-008.jpg",
+          "source":"Reuters",
+          "photographer":"Brendan Mcdermid",
+          "altText":"PlayStation 4 launch",
+          "height":"276",
+          "credit":"Brendan Mcdermid/Reuters",
+          "caption":"The PlayStation 4 launch showed off a redesigned controller. Photograph: Brendan Mcdermid/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459129209/Mark-Cerny-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459129209/Mark-Cerny-008.jpg",
+          "source":"AP",
+          "photographer":"Frank Franklin Ii",
+          "altText":"Mark Cerny",
+          "height":"276",
+          "credit":"Frank Franklin Ii/AP",
+          "caption":"Mark Cerny, lead system architect for the Sony Playstation. Photograph: Frank Franklin II/AP Photo",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459517522/PlayStation-4-launch-even-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361459517522/PlayStation-4-launch-even-008.jpg",
+          "source":"Reuters",
+          "photographer":"Brendan Mcdermid",
+          "altText":"PlayStation 4 launch event in New York",
+          "height":"276",
+          "credit":"Brendan Mcdermid/Reuters",
+          "caption":"Expectant journos wait for the launch event to get under way. Photograph: Brendan Mcdermid/Reuters",
           "width":"460"
         }
       }],

@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":4160,
+    "total":4161,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
-    "pages":208,
+    "pages":209,
     "orderBy":"newest",
     "tag":{
       "id":"sport/us-sport",
@@ -19,6 +19,137 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-22T15:03:54Z",
+      "webTitle":"Miami Heat rout Chicago Bulls after quiet NBA trade deadline day",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/22/miami-heat-chicago-bulls-nba-trade-deadline",
+      "fields":{
+        "trailText":"<p><strong>NBA round-up:</strong> Miami Heat defeat Chicago Bulls 86-67; San Antonio Spurs beat LA Clippers 116-90; Orlando Magic and Milwaukee Bucks multi-player deal is biggest move of trade deadline</p>",
+        "headline":"Miami Heat rout Chicago Bulls after quiet NBA trade deadline day",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545200123/4c02db42-6860-401c-9a94-a462574524e5-140x84.jpeg",
+        "wordcount":"776",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nba",
+        "type":"keyword",
+        "webTitle":"NBA",
+        "webUrl":"http://www.guardian.co.uk/sport/nba",
+        "apiUrl":"http://content.guardianapis.com/sport/nba",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/miami-heat",
+        "type":"keyword",
+        "webTitle":"Miami Heat",
+        "webUrl":"http://www.guardian.co.uk/sport/miami-heat",
+        "apiUrl":"http://content.guardianapis.com/sport/miami-heat",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-bulls",
+        "type":"keyword",
+        "webTitle":"Chicago Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-bulls",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-bulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/orlando-magic",
+        "type":"keyword",
+        "webTitle":"Orlando Magic",
+        "webUrl":"http://www.guardian.co.uk/sport/orlando-magic",
+        "apiUrl":"http://content.guardianapis.com/sport/orlando-magic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/toronto-raptors",
+        "type":"keyword",
+        "webTitle":"Toronto Raptors",
+        "webUrl":"http://www.guardian.co.uk/sport/toronto-raptors",
+        "apiUrl":"http://content.guardianapis.com/sport/toronto-raptors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-antonio-spurs",
+        "type":"keyword",
+        "webTitle":"San Antonio Spurs",
+        "webUrl":"http://www.guardian.co.uk/sport/san-antonio-spurs",
+        "apiUrl":"http://content.guardianapis.com/sport/san-antonio-spurs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-clippers",
+        "type":"keyword",
+        "webTitle":"Los Angeles Clippers",
+        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-clippers",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-clippers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/milwaukee-bucks",
+        "type":"keyword",
+        "webTitle":"Milwaukee Bucks",
+        "webUrl":"http://www.guardian.co.uk/sport/milwaukee-bucks",
+        "apiUrl":"http://content.guardianapis.com/sport/milwaukee-bucks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545201700/4c02db42-6860-401c-9a94-a462574524e5-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361545201700/4c02db42-6860-401c-9a94-a462574524e5-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Nam Y. Huh",
+          "altText":"LeBron James and Dwyane Wade",
+          "height":"276",
+          "credit":"Nam Y. Huh/AP",
+          "caption":"Miami Heat's LeBron James and Dwyane Wade celebrate against the Chicago Bulls  in Chicago, Thursday, Feb. 21, 2013. Photograph: Nam Y. Huh/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"sport/2013/feb/22/nfl-offseason-free-agency-draft",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -3202,108 +3333,6 @@
           "height":"276",
           "credit":"Mike Blake/Reuters",
           "caption":"Los Angeles Lakers owner Jerry Buss has died at the age of 80. Photograph: Mike Blake/Reuters",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/feb/18/chicago-blackhawks-streak-los-angeles-kings",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-02-18T15:22:39Z",
-      "webTitle":"Chicago Blackhawks' streak continues with win over Los Angeles Kings",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/feb/18/chicago-blackhawks-streak-los-angeles-kings",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/feb/18/chicago-blackhawks-streak-los-angeles-kings",
-      "fields":{
-        "trailText":"<p><strong>NHL round-up:</strong> Seabrook and Toews help leaders to joint-second-best opening run; Blues beat Canucks; Penguins parry Sabres</p>",
-        "headline":"Chicago Blackhawks' streak continues with win over Los Angeles Kings",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/18/1361200683798/Brent-Seabrook-005.jpg",
-        "wordcount":"544",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nhl",
-        "type":"keyword",
-        "webTitle":"NHL",
-        "webUrl":"http://www.guardian.co.uk/sport/nhl",
-        "apiUrl":"http://content.guardianapis.com/sport/nhl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/st-louis-blues",
-        "type":"keyword",
-        "webTitle":"St Louis Blues",
-        "webUrl":"http://www.guardian.co.uk/sport/st-louis-blues",
-        "apiUrl":"http://content.guardianapis.com/sport/st-louis-blues",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/vancouver-canucks",
-        "type":"keyword",
-        "webTitle":"Vancouver Canucks",
-        "webUrl":"http://www.guardian.co.uk/sport/vancouver-canucks",
-        "apiUrl":"http://content.guardianapis.com/sport/vancouver-canucks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/buffalo-sabres",
-        "type":"keyword",
-        "webTitle":"Buffalo Sabres",
-        "webUrl":"http://www.guardian.co.uk/sport/buffalo-sabres",
-        "apiUrl":"http://content.guardianapis.com/sport/buffalo-sabres",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/18/1361200693171/Brent-Seabrook-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/18/1361200693171/Brent-Seabrook-010.jpg",
-          "source":"Reuters",
-          "photographer":"Jim Young",
-          "altText":"Brent Seabrook",
-          "height":"276",
-          "credit":"Jim Young/Reuters",
-          "caption":"Brent Seabrook, left, here in action against Anaheim, scored a goal and had an assist as the Chicago Blackhawks beat the Los Angeles Kings. Photograph: Jim Young/Reuters",
           "width":"460"
         }
       }],

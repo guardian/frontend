@@ -681,6 +681,129 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
+          "source":"Alamy",
+          "photographer":"Peter Schickert",
+          "altText":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles",
+          "height":"276",
+          "credit":"Peter Schickert/Alamy",
+          "caption":"Downtown LA ... 30ft up on the Walt Disney Concert Hall is a tiny peaceful public garden with fantastic views. Photograph: Peter Schickert/Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
+          "source":"PR",
+          "altText":"Grand Park, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
+          "source":"PR",
+          "altText":"Electric Dusk Drive-In, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
+          "source":"PR",
+          "altText":"French dip sandwich at Phillipe The Original, LA",
+          "height":"276",
+          "credit":"PR",
+          "caption":"A French dipped sandwich at Phillipe The Original",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
+          "source":"PR",
+          "altText":"The Last Bookstore, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
+          "source":"PR",
+          "altText":"Mo-Chica Peruvian restaurant, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
+          "source":"Alamy",
+          "photographer":"Robert Rosenblum",
+          "altText":"St Vincent Court, Los Angeles, California",
+          "height":"276",
+          "credit":"Robert Rosenblum/Alamy",
+          "caption":"Photograph: Robert Rosenblum/Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
+          "source":"Alamy",
+          "altText":"Pinatas for sale, Los Angeles ",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"Photograph: Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
+          "source":"PR",
+          "altText":"Bonaventure Hotel, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356470026/Frank-Gehry-Walt-Disney-C-002.jpg",
@@ -828,129 +951,6 @@
           "credit":"Peter Schickert/Alamy",
           "caption":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles Photograph: Peter Schickert/Alamy",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
-          "source":"Alamy",
-          "photographer":"Peter Schickert",
-          "altText":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles",
-          "height":"276",
-          "credit":"Peter Schickert/Alamy",
-          "caption":"Downtown LA ... 30ft up on the Walt Disney Concert Hall is a tiny peaceful public garden with fantastic views. Photograph: Peter Schickert/Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
-          "source":"PR",
-          "altText":"Grand Park, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
-          "source":"PR",
-          "altText":"Electric Dusk Drive-In, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
-          "source":"PR",
-          "altText":"French dip sandwich at Phillipe The Original, LA",
-          "height":"276",
-          "credit":"PR",
-          "caption":"A French dipped sandwich at Phillipe The Original",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
-          "source":"PR",
-          "altText":"The Last Bookstore, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
-          "source":"PR",
-          "altText":"Mo-Chica Peruvian restaurant, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
-          "source":"Alamy",
-          "photographer":"Robert Rosenblum",
-          "altText":"St Vincent Court, Los Angeles, California",
-          "height":"276",
-          "credit":"Robert Rosenblum/Alamy",
-          "caption":"Photograph: Robert Rosenblum/Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
-          "source":"Alamy",
-          "altText":"Pinatas for sale, Los Angeles ",
-          "height":"276",
-          "credit":"Alamy",
-          "caption":"Photograph: Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
-          "source":"PR",
-          "altText":"Bonaventure Hotel, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
         }
       }],
       "references":[]
@@ -6895,6 +6895,129 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
+          "source":"Alamy",
+          "photographer":"Peter Schickert",
+          "altText":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles",
+          "height":"276",
+          "credit":"Peter Schickert/Alamy",
+          "caption":"Downtown LA ... 30ft up on the Walt Disney Concert Hall is a tiny peaceful public garden with fantastic views. Photograph: Peter Schickert/Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
+          "source":"PR",
+          "altText":"Grand Park, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
+          "source":"PR",
+          "altText":"Electric Dusk Drive-In, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
+          "source":"PR",
+          "altText":"French dip sandwich at Phillipe The Original, LA",
+          "height":"276",
+          "credit":"PR",
+          "caption":"A French dipped sandwich at Phillipe The Original",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
+          "source":"PR",
+          "altText":"The Last Bookstore, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
+          "source":"PR",
+          "altText":"Mo-Chica Peruvian restaurant, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
+          "source":"Alamy",
+          "photographer":"Robert Rosenblum",
+          "altText":"St Vincent Court, Los Angeles, California",
+          "height":"276",
+          "credit":"Robert Rosenblum/Alamy",
+          "caption":"Photograph: Robert Rosenblum/Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
+          "source":"Alamy",
+          "altText":"Pinatas for sale, Los Angeles ",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"Photograph: Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
+          "source":"PR",
+          "altText":"Bonaventure Hotel, LA",
+          "height":"276",
+          "credit":"PR",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356470026/Frank-Gehry-Walt-Disney-C-002.jpg",
@@ -7042,129 +7165,6 @@
           "credit":"Peter Schickert/Alamy",
           "caption":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles Photograph: Peter Schickert/Alamy",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361356479755/Frank-Gehry-Walt-Disney-C-010.jpg",
-          "source":"Alamy",
-          "photographer":"Peter Schickert",
-          "altText":"Frank Gehry, Walt Disney Concert Hall, Downtown Los Angeles",
-          "height":"276",
-          "credit":"Peter Schickert/Alamy",
-          "caption":"Downtown LA ... 30ft up on the Walt Disney Concert Hall is a tiny peaceful public garden with fantastic views. Photograph: Peter Schickert/Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289468693/Grand-Park-LA-010.jpg",
-          "source":"PR",
-          "altText":"Grand Park, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355879395/Electric-Dusk-Drive-In-LA-010.jpg",
-          "source":"PR",
-          "altText":"Electric Dusk Drive-In, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289364766/French-dip-sandwich-at-Ph-008.jpg",
-          "source":"PR",
-          "altText":"French dip sandwich at Phillipe The Original, LA",
-          "height":"276",
-          "credit":"PR",
-          "caption":"A French dipped sandwich at Phillipe The Original",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289154987/The-Last-Bookstore-LA-008.jpg",
-          "source":"PR",
-          "altText":"The Last Bookstore, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289660264/Mo-Chica-Peruvian-restaur-010.jpg",
-          "source":"PR",
-          "altText":"Mo-Chica Peruvian restaurant, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361289060098/St-Vincent-Court-Los-Ange-008.jpg",
-          "source":"Alamy",
-          "photographer":"Robert Rosenblum",
-          "altText":"St Vincent Court, Los Angeles, California",
-          "height":"276",
-          "credit":"Robert Rosenblum/Alamy",
-          "caption":"Photograph: Robert Rosenblum/Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/20/1361355786300/Pinatas-for-sale-Los-Ange-010.jpg",
-          "source":"Alamy",
-          "altText":"Pinatas for sale, Los Angeles ",
-          "height":"276",
-          "credit":"Alamy",
-          "caption":"Photograph: Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/19/1361286200708/Bonaventure-Hotel-LA-010.jpg",
-          "source":"PR",
-          "altText":"Bonaventure Hotel, LA",
-          "height":"276",
-          "credit":"PR",
-          "width":"460"
         }
       }],
       "references":[]

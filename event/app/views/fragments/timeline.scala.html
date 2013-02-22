@@ -1,0 +1,23 @@
+@(story: Story)
+<div id="experiment" class="timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+    <ul class="unstyled">
+        @story.events.map { event =>
+        @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+        <li class="trail event-block" data-link-name="trail">
+            @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+            <div class="date-line">
+                <h3 class="type-5">@event.title</h3>
+                <!-- Articles -->
+                @event.content.map{ case (c) =>
+
+                <!-- People -->
+                @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
+                <img src="@agent.picture" alt="@agent.name, @agent.role"/>
+                }
+                }
+            </div>
+        </li>
+        }
+        }
+    </ul>
+</div>

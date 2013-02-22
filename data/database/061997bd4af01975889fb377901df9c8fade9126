@@ -2171,46 +2171,29 @@
       "mediaAssets":[],
       "references":[]
     },{
-      "id":"commentisfree/libertycentral/2009/jun/30/shell-oil-niger-delta",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2009-06-30T22:30:00Z",
-      "webTitle":"Let's see this new Shell | Kate Allen",
-      "webUrl":"http://www.guardian.co.uk/commentisfree/libertycentral/2009/jun/30/shell-oil-niger-delta",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/libertycentral/2009/jun/30/shell-oil-niger-delta",
+      "id":"environment/blog/2013/jan/29/shell-oil-spills-niger-delta",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-01-29T16:37:32Z",
+      "webTitle":"Shell verdict will determine whether other firms could be tried for oil spills | John Vidal",
+      "webUrl":"http://www.guardian.co.uk/environment/blog/2013/jan/29/shell-oil-spills-niger-delta",
+      "apiUrl":"http://content.guardianapis.com/environment/blog/2013/jan/29/shell-oil-spills-niger-delta",
       "fields":{
-        "trailText":"<p><strong>Kate Allen:</strong> If the oil giant truly wants reconciliation in the Niger Delta, its incoming CEO must take concrete action</p>",
-        "headline":"Let's see this new Shell",
+        "trailText":"<p><strong>John Vidal: </strong>People affected in the Niger delta have come to Europe to ask for justice as multinationals dismiss their claims with impunity</p>",
+        "headline":"Shell verdict will determine whether other firms could be tried for oil spills",
         "hasStoryPackage":"false",
-        "wordcount":"627",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2010/12/8/1291830003096/MDG-Shell-in-Nigeria-003.jpg",
+        "wordcount":"707",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"commentisfree/libertycentral",
+        "id":"environment/blog",
         "type":"blog",
-        "webTitle":"liberty central",
-        "webUrl":"http://www.guardian.co.uk/commentisfree/libertycentral",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/libertycentral",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.guardian.co.uk/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/nigeria",
-        "type":"keyword",
-        "webTitle":"Nigeria",
-        "webUrl":"http://www.guardian.co.uk/world/nigeria",
-        "apiUrl":"http://content.guardianapis.com/world/nigeria",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Environment blog",
+        "webUrl":"http://www.guardian.co.uk/environment/blog",
+        "apiUrl":"http://content.guardianapis.com/environment/blog",
+        "sectionId":"environment",
+        "sectionName":"Environment",
         "references":[]
       },{
         "id":"environment/oil-spills",
@@ -2231,31 +2214,22 @@
         "sectionName":"Environment",
         "references":[]
       },{
-        "id":"business/oil",
+        "id":"environment/energy",
         "type":"keyword",
-        "webTitle":"Oil",
-        "webUrl":"http://www.guardian.co.uk/business/oil",
-        "apiUrl":"http://content.guardianapis.com/business/oil",
-        "sectionId":"business",
-        "sectionName":"Business",
+        "webTitle":"Energy",
+        "webUrl":"http://www.guardian.co.uk/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
         "references":[]
       },{
-        "id":"business/oilandgascompanies",
+        "id":"environment/fossil-fuels",
         "type":"keyword",
-        "webTitle":"Oil and gas companies",
-        "webUrl":"http://www.guardian.co.uk/business/oilandgascompanies",
-        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.guardian.co.uk/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Fossil fuels",
+        "webUrl":"http://www.guardian.co.uk/environment/fossil-fuels",
+        "apiUrl":"http://content.guardianapis.com/environment/fossil-fuels",
+        "sectionId":"environment",
+        "sectionName":"Environment",
         "references":[]
       },{
         "id":"environment/environment",
@@ -2267,75 +2241,49 @@
         "sectionName":"Environment",
         "references":[]
       },{
-        "id":"profile/kateallen",
-        "type":"contributor",
-        "webTitle":"Kate Allen",
-        "webUrl":"http://www.guardian.co.uk/profile/kateallen",
-        "apiUrl":"http://content.guardianapis.com/profile/kateallen",
-        "bio":"<p>Kate Allen is the director of Amnesty International UK</p>",
-        "r2ContributorId":"22944",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/27/kate_Allen_140x140.jpg",
-        "references":[]
-      },{
-        "id":"society/society",
+        "id":"business/oilandgascompanies",
         "type":"keyword",
-        "webTitle":"Society",
-        "webUrl":"http://www.guardian.co.uk/society/society",
-        "apiUrl":"http://content.guardianapis.com/society/society",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"law/law",
-        "type":"keyword",
-        "webTitle":"Law",
-        "webUrl":"http://www.guardian.co.uk/law/law",
-        "apiUrl":"http://content.guardianapis.com/law/law",
-        "sectionId":"law",
-        "sectionName":"Law",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.guardian.co.uk/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"business/royaldutchshell",
-        "type":"keyword",
-        "webTitle":"Royal Dutch Shell",
-        "webUrl":"http://www.guardian.co.uk/business/royaldutchshell",
-        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.guardian.co.uk/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
         "sectionId":"business",
         "sectionName":"Business",
         "references":[]
       },{
-        "id":"theguardian/mainsection/commentanddebate",
-        "type":"newspaper-book-section",
-        "webTitle":"Comment & debate",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/commentanddebate",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.guardian.co.uk/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
         "references":[]
       },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
         "references":[]
       },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.guardian.co.uk/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.guardian.co.uk/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
         "references":[]
       },{
         "id":"world/africa",
@@ -2347,6 +2295,60 @@
         "sectionName":"World news",
         "references":[]
       },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.guardian.co.uk/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.guardian.co.uk/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"global-development/natural-resources-and-development",
+        "type":"keyword",
+        "webTitle":"Natural resources and development",
+        "webUrl":"http://www.guardian.co.uk/global-development/natural-resources-and-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/natural-resources-and-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.guardian.co.uk/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -2354,7 +2356,22 @@
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
       }],
-      "mediaAssets":[],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2010/12/8/1291830007402/MDG-Shell-in-Nigeria-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Environment/Pix/columnists/2010/12/8/1291830007402/MDG-Shell-in-Nigeria-007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Pius Utomi Ekpei",
+          "altText":"MDG: Shell in Nigeria",
+          "height":"276",
+          "credit":"Pius Utomi Ekpei/AFP/Getty Images",
+          "caption":"A man walks on slippery spilled crude oil on the shores and in the waters of the Niger delta swamps of Bodo, a village in the famous Nigerian oil-producing Ogoniland, which hosts the Shell oil company.  Photograph: Pius Utomi Ekpei/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
       "references":[]
     }],
     "storyPackage":[]

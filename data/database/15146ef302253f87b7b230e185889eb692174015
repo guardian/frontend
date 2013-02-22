@@ -1130,6 +1130,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/21/1361452230082/Wild-Arabia-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/21/1361452230082/Wild-Arabia-010.jpg",
+          "source":"BBC NHU/Susan Gibson",
+          "altText":"Wild Arabia",
+          "height":"276",
+          "credit":"BBC NHU/Susan Gibson",
+          "caption":"All ears: a Rüppell's desert fox in Wild Arabia. Photograph: BBC NHU/Susan Gibson",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/21/1361452219820/Wild-Arabia-002.jpg",
@@ -1267,20 +1281,6 @@
           "credit":"BBC NHU/Susan Gibson",
           "caption":"All ears: a Rüppell's desert fox in Wild Arabia. Photograph: BBC NHU/Susan Gibson",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/21/1361452230082/Wild-Arabia-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/21/1361452230082/Wild-Arabia-010.jpg",
-          "source":"BBC NHU/Susan Gibson",
-          "altText":"Wild Arabia",
-          "height":"276",
-          "credit":"BBC NHU/Susan Gibson",
-          "caption":"All ears: a Rüppell's desert fox in Wild Arabia. Photograph: BBC NHU/Susan Gibson",
-          "width":"460"
         }
       }],
       "references":[]

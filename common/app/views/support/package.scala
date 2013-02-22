@@ -186,6 +186,14 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
+object Summary extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val paras = document.getElementsByTag("p").drop(3)
+    paras.foreach(_.remove())
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
