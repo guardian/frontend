@@ -7,7 +7,11 @@ import play.api.templates.Html
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
 
-case class StoryPage(story: Story) extends Page(canonicalUrl = None, "story", "news", story.title, "GFE:story:" + story.title) {
+case class StoryPage(story: Story) extends Page(
+  canonicalUrl = None,
+  "stories/" + story.id,
+  "news", story.title,
+  "GFE:story:" + story.title) {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
