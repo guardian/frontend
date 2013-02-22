@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit.{ MINUTES, SECONDS }
 import tools.Mongo
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
+import conf.{ MongoErrorCount, MongoOkCount, MongoTimingMetric }
 
 object StoryList extends AkkaSupport {
 
@@ -17,14 +18,14 @@ object StoryList extends AkkaSupport {
 
   def refresh() {
     storyIdAgent.sendOff { old =>
-      Mongo.Stories.find(MongoDBObject.empty, Map("id" -> 1)).map(_.as[String]("id")).toList.distinct
+      measure(Mongo.Stories.find(MongoDBObject.empty, Map("id" -> 1)).map(_.as[String]("id")).toList.distinct)
     }
     contentIdAgent.sendOff { old =>
-      Mongo.Stories.find(MongoDBObject.empty, Map("events.content.id" -> 1)).flatMap { dbo =>
+      measure(Mongo.Stories.find(MongoDBObject.empty, Map("events.content.id" -> 1)).flatMap { dbo =>
         val events = dbo.as[MongoDBList]("events")
         val content = events.map(_.asInstanceOf[DBObject].as[MongoDBList]("content"))
         content.flatMap(_.map(_.asInstanceOf[DBObject].as[String]("id")))
-      }.toList.distinct
+      }.toList.distinct)
     }
   }
 
@@ -42,4 +43,16 @@ object StoryList extends AkkaSupport {
 
   def storyExists(id: String) = storyIdAgent().contains(id)
   def storyExistsForContent(id: String) = contentIdAgent().contains(id)
+
+  private def measure[T](block: => T): T = MongoTimingMetric.measure {
+    try {
+      val result = block
+      MongoOkCount.increment()
+      result
+    } catch {
+      case e =>
+        MongoErrorCount.increment()
+        throw e
+    }
+  }
 }

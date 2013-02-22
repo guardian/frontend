@@ -104,8 +104,10 @@ object Story {
 
     def withContent(contentId: String): Option[Story] = {
       if (StoryList.storyExistsForContent(contentId)) {
-        val parsedStory = Stories.findOne(Map("events.content.id" -> contentId)).map(grater[ParsedStory].asObject(_))
+
+        val parsedStory = measure(Stories.findOne(Map("events.content.id" -> contentId)).map(grater[ParsedStory].asObject(_)))
         loadContentFor(parsedStory)
+
       } else {
         None
       }
@@ -113,7 +115,7 @@ object Story {
 
     def byId(id: String): Option[Story] = {
       if (StoryList.storyExists(id)) {
-        val parsedStory = Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_))
+        val parsedStory = measure(Stories.findOne(Map("id" -> id)).map(grater[ParsedStory].asObject(_)))
         loadContentFor(parsedStory)
       } else {
         None
