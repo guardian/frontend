@@ -61,13 +61,16 @@ case class Story(
     events: Seq[Event] = Nil,
     explainer: Option[String] = None,
     hero: Option[String] = None) {
-  lazy val hasAgents: Boolean = events.flatMap(_.agents).size > 0
-  lazy val hasEvents: Boolean = events.size > 0
-  lazy val hasContent: Boolean = events.flatMap(_.content).size > 0
-  lazy val contentByImportance: Seq[Content] = events.flatMap(_.content).sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance)
-  lazy val contentByTone: List[(String, Seq[Content])] = events.flatMap(_.content).groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
+
+  lazy val hasEvents: Boolean = events.nonEmpty
+  lazy val content = events.flatMap(_.content)
+  lazy val hasContent: Boolean = content.nonEmpty
+  lazy val agents = events.flatMap(_.agents)
+  lazy val hasAgents: Boolean = agents.nonEmpty
+  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance)
+  lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
-  lazy val contentByColour: Map[String, Seq[Content]] = events.flatMap(_.content).groupBy(_.colour.getOrElse(0)).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
+  lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour.getOrElse(0)).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
 
   private def toColour(i: Int) = i match {
     case 1 => "Overview"
