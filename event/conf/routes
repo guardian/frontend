@@ -6,3 +6,4 @@
 GET    /assets/*file                              controllers.Assets.at(path="/public", file)
 
 GET    /stories/*id                                 controllers.StoryController.byId(id)
+GET    /experiment/story-module-01/*id                      controllers.StoryController.withContent(id)

@@ -27,20 +27,6 @@ object StoryController extends Controller with Logging {
       }
   }
 
-  def byIdV2(id: String) = Action {
-    implicit request =>
-
-      val promiseOfStory = Akka.future(Story.mongo.byId(id))
-
-      Async {
-        promiseOfStory.map { storyOption =>
-          storyOption.map { story =>
-            Ok(Compressed(views.html.storyV2(StoryPage(story))))
-          }.getOrElse(NotFound)
-        }
-      }
-  }
-
   def withContent(id: String) = Action {
     implicit request =>
 

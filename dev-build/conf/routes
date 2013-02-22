@@ -20,7 +20,6 @@ GET     /related/*path                                      controllers.RelatedC
 
 #Stories
 GET    /stories/*id                                         controllers.StoryController.byId(id)
-GET    /stories/v2/*id                                      controllers.StoryController.byIdV2(id)
 GET    /experiment/story-module-01/*id                      controllers.StoryController.withContent(id)
 
 #Style-guide
