@@ -5,14 +5,16 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/experiment"
+    "modules/experiment",
+    "modules/accordion"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
     Reading,
-    Experiment
+    Experiment,
+    Accordion
 ) {
 
     var modules = {
@@ -52,29 +54,40 @@ define([
 
                 reader.init();
             }
+        },
+
+        initExperiments: function(config) {
+            var experimentName = localStorage.getItem('gu.experiment') || '',
+                experiment;
+
+            if (!experimentName) {
+                for (var key in config.switches) {
+                    if (config.switches[key] && key.match(/^experiment(\w+)/)) {
+                        experimentName = key.match(/^experiment(\w+)/)[1];
+                        break;
+                    }
+                }
+            }
+
+            experimentName = experimentName.toLowerCase();
+
+            if (experimentName) {
+                common.mediator.on('modules:experiment:render', function() {
+                    if(document.querySelector('.accordion')) {
+                        var a = new Accordion();
+                    }
+                });
+                experiment = new Experiment(config, experimentName).init();
+            } else {
+                common.mediator.emit("modules:related:load");
+            }
         }
 
     };
 
     var ready = function(config) {
-        var experimentName = localStorage.getItem('gu.experiment') || '',
-            experiment;
 
-        if (!experimentName) {
-            for (var key in config.switches) {
-                if (config.switches[key] && key.match(/^experiment(\w+)/)) {
-                    experimentName = key.match(/^experiment(\w+)/)[1];
-                    break;
-                }
-            }
-        }
-        experimentName = experimentName.toLowerCase();
-
-        if (experimentName) {
-            experiment = new Experiment(config, experimentName).init();
-        } else {
-            common.mediator.emit("modules:related:load");
-        }
+        modules.initExperiments(config);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
