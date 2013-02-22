@@ -5,14 +5,16 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/experiment"
+    "modules/experiment",
+    "modules/accordion"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
     Reading,
-    Experiment
+    Experiment,
+    Accordion
 ) {
 
     var modules = {
@@ -71,7 +73,9 @@ define([
 
             if (experimentName) {
                 common.mediator.on('modules:experiment:render', function() {
-                    new Expandable({id: 'experiment', expanded: false}).init();
+                    if(document.querySelector('.accordion')) {
+                        var a = new Accordion();
+                    }
                 });
                 experiment = new Experiment(config, experimentName).init();
             } else {

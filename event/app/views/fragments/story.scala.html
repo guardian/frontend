@@ -1,3 +1,32 @@
 @(story: model.Story)
+<h3 class="type-2 article-zone zone-color">@story.title</h3>
 
-<h2>@story.title</h2>
+@story.explainer.map{ explainer =>
+    <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+        @cleanTrailText(story.explainer.getOrElse(""))
+    </p>
+}
+
+<ul class="accordion">
+
+    <li><a href="#">Latest <i class="i i-filter-arrow-right"></i></a>
+        <section class="story-latest">
+            @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
+        </section>
+    </li>
+
+    <li><a href="#">Key players <i class="i i-filter-arrow-right"></i></a>
+        <section class="story-players">
+            <ul class="unstyled">
+                @story.events.flatMap(_.agents).map { agent =>
+                @fragments.agent(agent)
+                }
+            </ul>
+        </section>
+    </li>
+    <li><a href="#">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+        <section class="story-timeline">
+            @fragments.timeline(story)
+        </section>
+    </li>
+</ul>

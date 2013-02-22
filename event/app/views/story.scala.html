@@ -23,10 +23,13 @@
                      title="@StripHtmlTags(story.title)" />
             </figure>
         }
-        <h2 class="page-head">Overview</h2>
-        <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-            @cleanTrailText(story.explainer.getOrElse(""))
-        </p>
+
+        @story.explainer.map{ explainer =>
+            <h2 class="page-head">Overview</h2>
+            <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                @cleanTrailText(explainer)
+            </p>
+        }
     </section>
 
     <ul class="accordion">
