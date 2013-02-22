@@ -9,29 +9,36 @@
 
 <ul class="accordion">
 
-    <li class="accordion-item">
-        <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
+    @if(story.hasContent) {
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
 
-        <section class="story-latest">
-            @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
-        </section>
-    </li>
+            <section class="story-latest">
+                @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
+            </section>
+        </li>
+    }
 
-    <li class="accordion-item">
-        <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
+    @if(story.hasAgents) {
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
 
-        <section class="story-players">
-            <ul class="unstyled">
-                @story.events.flatMap(_.agents).map { agent =>
-                @fragments.agent(agent)
-                }
-            </ul>
-        </section>
-    </li>
-    <li class="accordion-item">
-        <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
-        <section class="story-timeline">
-            @fragments.timeline(story)
-        </section>
-    </li>
+            <section class="story-players">
+                <ul class="unstyled">
+                    @story.events.flatMap(_.agents).map { agent =>
+                    @fragments.agent(agent)
+                    }
+                </ul>
+            </section>
+        </li>
+    }
+
+    @if(story.hasEvents) {
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
+            <section class="story-timeline">
+                @fragments.timeline(story)
+            </section>
+        </li>
+    }
 </ul>
