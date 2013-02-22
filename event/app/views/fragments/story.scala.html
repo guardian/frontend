@@ -25,8 +25,8 @@
 
             <section class="story-players">
                 <ul class="unstyled">
-                    @story.events.flatMap(_.agents).map { agent =>
-                    @fragments.agent(agent)
+                    @story.agents.map { agent =>
+                        @fragments.agent(agent)
                     }
                 </ul>
             </section>
