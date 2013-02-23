@@ -21,8 +21,9 @@ case class Site(
 
 object Site extends Logging {
 
-  private val sites = Seq(
+  private lazy val sites = Seq(
 
+    // ---------------------------------------------------------------------------
     // Sites with different desktop and mobile domains
     // ---------------------------------------------------------------------------
     Site(ukHost = "m.guardian.co.uk", usHost = "m.guardiannews.com",
@@ -40,24 +41,35 @@ object Site extends Logging {
       ukAjaxHost = "localhost:9000", usAjaxHost = "127.0.0.1:9000"
     ),
 
-    // sites with the same desktop and mobile domain
     // ---------------------------------------------------------------------------
+    // Sites with the same desktop and mobile domain
+    // The ajax host should not be the same as the standard host for these sites
+    // ---------------------------------------------------------------------------
+    Site(ukHost = "www.guardian.co.uk", usHost = "www.guardiannews.com",
+      ukDesktopHost = "www.guardian.co.uk", usDesktopHost = "wwww.guardiannews.com",
+      ukAjaxHost = "m.guardian.co.uk", usAjaxHost = "m.guardiannews.com"
+    ),
+
+    Site(ukHost = "www.gucode.co.uk", usHost = "www.gucode.com",
+      ukDesktopHost = "www.gucode.co.uk", usDesktopHost = "www.gucode.com",
+      ukAjaxHost = "m.gucode.co.uk", usAjaxHost = "m.gucode.com"
+    ),
+
     Site(ukHost = "beta.guardian.co.uk", usHost = "beta.guardiannews.com",
       ukDesktopHost = "beta.guardian.co.uk", usDesktopHost = "beta.guardiannews.com",
-      ukAjaxHost = "beta.guardian.co.uk", usAjaxHost = "beta.guardiannews.com"
+      ukAjaxHost = "m.guardian.co.uk", usAjaxHost = "m.guardiannews.com"
     )
-  )
+  ).flatMap(site => Seq(
+      site.ukHost -> site.copy(edition = "UK"),
+      site.usHost -> site.copy(edition = "US")
+    )).toMap
 
   def apply(implicit request: RequestHeader): Site = {
-
     val host = request.headers("host").toLowerCase
-
-    sites.find(site => site.ukHost == host || site.usHost == host)
-      .map(site => if (site.usHost == host) site.copy(edition = "US") else site)
-      .getOrElse {
-        // allows working through things like proxylocal during dev
-        log.info("Using dynamic domain for site " + host)
-        Site(host, host, host, host, host, host, "UK")
-      }
+    sites.get(host).getOrElse {
+      // allows working through things like proxylocal during dev
+      log.info("Using dynamic domain for site " + host)
+      Site(host, host, host, host, host, host, "UK")
+    }
   }
 }
