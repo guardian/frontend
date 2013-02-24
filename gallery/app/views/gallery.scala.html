@@ -6,7 +6,8 @@
         <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
     </h2>
 
-    <article class="article gallery-page" itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" id="js-gallery">
+    <article class="article gallery-page" itemprop="mainContentOfPage"
+             itemscope itemtype="@gallery.schemaType" id="js-gallery" role="main">
 
         <header class="article-head">
             @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
