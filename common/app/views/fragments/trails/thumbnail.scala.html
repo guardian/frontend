@@ -1,7 +1,6 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-
 <div class="media">
     @if(showThumbnail) {
         @trail.thumbnail.map{ thumbnailUrl =>
@@ -11,8 +10,8 @@
                     @trail.mainPicture(width=220).map { largeCrop =>
                         data-fullsrc="@largeCrop.url"
                         data-full-width="@largeCrop.width"
-	                    alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
-	                    title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                        alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
+                        title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
                     }
                     itemprop="contentURL"
                 />

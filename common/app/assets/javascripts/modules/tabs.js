@@ -47,6 +47,10 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             }
 
             var ols = common.$g(tabSelector).each(function (tabSet) {
+                if(tabSet.getAttribute('data-is-bound') === true) {
+                    return false;
+                }
+                
                 bean.add(tabSet, 'click', function (e) {
                     var targetElm = e.target;
                     // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
@@ -56,11 +60,11 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                         view.showTab(tabContainer, targetElm, e);
                     }
                 });
+                tabSet.setAttribute('data-is-bound', true);
             });
         };
 
         // Bindings
-
         common.mediator.on('modules:tabs:render', this.init);
 
     };
