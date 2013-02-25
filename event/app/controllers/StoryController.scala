@@ -43,16 +43,11 @@ object StoryController extends Controller with Logging {
 
             Cached(60) {
               val html = views.html.fragments.story(story)
-              request.getQueryString("callback").map { callback =>
-                JsonComponent(html)
-              } getOrElse {
-                Cached(60) {
-                  Ok(Compressed(html))
-                }
-              }
+
+              JsonComponent(html)
             }
 
-          }.getOrElse(NotFound)
+          }.getOrElse(JsonNotFound())
         }
       }
   }
