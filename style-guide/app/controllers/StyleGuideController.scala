@@ -65,7 +65,7 @@ object StyleGuideController extends Controller with Logging {
   }
 
   private def lookupSingleArticle(path: String)(implicit request: RequestHeader): Option[ArticlePage] = suppressApi404 {
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     log.info("Fetching article: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
       .showInlineElements("picture")

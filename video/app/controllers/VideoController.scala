@@ -24,7 +24,7 @@ object VideoController extends Controller with Logging {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     log.info("Fetching video: " + path + " for edition " + edition)
     val response: ItemResponse = ContentApi.item(path, edition)
       .showExpired(true)
@@ -41,6 +41,6 @@ object VideoController extends Controller with Logging {
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
     Cached(model.video) {
-      Ok(Compressed(views.html.video(model.video, model.storyPackage, Edition(request, Configuration))))
+      Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
     }
 }

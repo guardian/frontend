@@ -10,13 +10,17 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET    /most-read.json                controllers.MostPopularController.renderJson(path = "")
-GET    /most-read/*path.json          controllers.MostPopularController.renderJson(path)
-GET    /most-read                     controllers.MostPopularController.renderNoJavascript(path = "")
-GET    /most-read/*path               controllers.MostPopularController.renderNoJavascript(path)
+GET    /most-read.json                                      controllers.MostPopularController.renderJson(path = "")
+GET    /most-read/*path.json                                controllers.MostPopularController.renderJson(path)
+GET    /most-read                                           controllers.MostPopularController.renderNoJavascript(path = "")
+GET    /most-read/*path                                     controllers.MostPopularController.renderNoJavascript(path)
 GET    /top-stories                                         controllers.TopStoriesController.render()
 GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
 GET     /related/*path                                      controllers.RelatedController.render(path)
+
+#Stories
+GET    /stories/*id                                         controllers.StoryController.byId(id)
+GET    /experiment/story-module-01/*id                      controllers.StoryController.withContent(id)
 
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex

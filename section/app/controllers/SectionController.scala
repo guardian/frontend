@@ -33,7 +33,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     log.info("Fetching front: " + path + "for edition " + edition)
 
     val response: ItemResponse = ContentApi.item(path, edition)

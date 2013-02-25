@@ -7,7 +7,8 @@ import play.api.GlobalSettings
 
 object Global extends GlobalSettings with RequestTimer with StatusCounters
     with MostPopularLifecycle
-    with FrontLifecycle {
+    with FrontLifecycle
+    with StoryLifecycle {
 
   import RequestMetrics._
 

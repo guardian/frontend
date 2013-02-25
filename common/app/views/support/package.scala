@@ -186,6 +186,14 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
+object Summary extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val paras = document.getElementsByTag("p").drop(3)
+    paras.foreach(_.remove())
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -221,7 +229,7 @@ object OmnitureAnalyticsData {
       "ns" -> "guardian",
       "pageName" -> pageName,
       // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
+      "cdp" -> (if (Site(request).isUsEdition) "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,

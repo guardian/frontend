@@ -90,7 +90,6 @@ define([
 
         transcludeRelated: function (config){
             common.mediator.on("modules:related:load", function(){
-
                 var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
                     host,
                     pageId,
@@ -99,17 +98,16 @@ define([
                 if (config.page.hasStoryPackage) {
                     relatedExpandable.init();
                 } else {
-                    host = config.page.coreNavigationUrl;
                     pageId = config.page.pageId;
-                    url =  host + '/related/' + pageId;
+                    url =  '/related/' + pageId;
                     common.mediator.on('modules:related:render', relatedExpandable.init);
                     new Related(document.getElementById('js-related'), config.switches).load(url);
                 }
             });
         },
 
-        transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-read' + (section ? '/' + section : '') + '.json',
+        transcludeMostPopular: function (section, edition) {
+            var url = '/most-read' + (section ? '/' + section : '') + '.json',
                 domContainer = document.getElementById('js-popular');
 
             if (domContainer) {
@@ -179,7 +177,7 @@ define([
         modules.transcludeTopStories(config);
 
         modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.transcludeMostPopular(config.page.section, config.page.edition);
 
         modules.showRelativeDates();
     };

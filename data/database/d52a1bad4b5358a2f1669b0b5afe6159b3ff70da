@@ -1,0 +1,298 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk/2012/aug/29/eva-rausing-information-murder-olaf-palme",
+      "sectionId":"uk",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-08-28T23:28:44Z",
+      "webTitle":"Eva Rausing 'had information' on murder of Swedish PM",
+      "webUrl":"http://www.guardian.co.uk/uk/2012/aug/29/eva-rausing-information-murder-olaf-palme",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/aug/29/eva-rausing-information-murder-olaf-palme",
+      "fields":{
+        "trailText":"Metropolitan police passes information to authorities in Sweden about killing of Olof Palme in 1986",
+        "headline":"Eva Rausing 'had information' on murder of Swedish PM",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196558429/Eva-Rausing--005.jpg",
+        "wordcount":"464",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/eva-rausing",
+        "type":"keyword",
+        "webTitle":"Eva Rausing",
+        "webUrl":"http://www.guardian.co.uk/uk/eva-rausing",
+        "apiUrl":"http://content.guardianapis.com/uk/eva-rausing",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/hans-kristian-rausing",
+        "type":"keyword",
+        "webTitle":"Hans Kristian Rausing",
+        "webUrl":"http://www.guardian.co.uk/uk/hans-kristian-rausing",
+        "apiUrl":"http://content.guardianapis.com/uk/hans-kristian-rausing",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/sweden",
+        "type":"keyword",
+        "webTitle":"Sweden",
+        "webUrl":"http://www.guardian.co.uk/world/sweden",
+        "apiUrl":"http://content.guardianapis.com/world/sweden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.guardian.co.uk/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/benquinn",
+        "type":"contributor",
+        "webTitle":"Ben Quinn",
+        "webUrl":"http://www.guardian.co.uk/profile/benquinn",
+        "apiUrl":"http://content.guardianapis.com/profile/benquinn",
+        "bio":"<p>Ben Quinn is a news reporter for the Guardian</p>",
+        "r2ContributorId":"25906",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196554477/Eva-Rausing--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196554477/Eva-Rausing--002.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"54",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196555792/Eva-Rausing--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196555792/Eva-Rausing--003.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"340",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196557150/Eva-Rausing--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196557150/Eva-Rausing--004.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"130",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196558429/Eva-Rausing--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196558429/Eva-Rausing--005.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"84",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196559659/Eva-Rausing--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196559659/Eva-Rausing--006.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"132",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196561334/Eva-Rausing--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196561334/Eva-Rausing--007.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"168",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196562544/Eva-Rausing--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196562544/Eva-Rausing--008.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"180",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196563778/Eva-Rausing--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196563778/Eva-Rausing--009.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"228",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196565049/Eva-Rausing--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196565049/Eva-Rausing--010.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"276",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196566342/Eva-Rausing--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196566342/Eva-Rausing--011.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"372",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olaf Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196565049/Eva-Rausing--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/29/1346196565049/Eva-Rausing--010.jpg",
+          "source":"WireImage",
+          "photographer":"Alan Davidson",
+          "altText":"Eva Rausing ",
+          "height":"276",
+          "credit":"Alan Davidson/WireImage",
+          "caption":"Eva Rausing had made contact with a Swedish author who has written two books on the Olof Palme killing.  Photograph: Alan Davidson/WireImage",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },
+    "relatedContent":[],
+    "storyPackage":[]
+  }
+}

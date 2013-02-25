@@ -35,7 +35,7 @@ object TagController extends Controller with Logging with JsonTrails {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader): Either[TagAndTrails, Result] = suppressApi404 {
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     log.info("Fetching tag: " + path + " for edition " + edition)
 
     val response: ItemResponse = ContentApi.item(path, edition).pageSize(20).response
