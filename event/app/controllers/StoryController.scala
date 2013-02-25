@@ -42,7 +42,7 @@ object StoryController extends Controller with Logging {
           storyOption.map { story =>
 
             Cached(60) {
-              val html = views.html.fragments.story(story)
+              val html = views.html.fragments.story(story, id)
 
               JsonComponent(html)
             }
