@@ -8,6 +8,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.templates.Html
+import play.api.libs.concurrent.Execution.Implicits._
 
 object TopStoriesController extends Controller with Logging with Paging with JsonTrails {
 

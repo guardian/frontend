@@ -9,6 +9,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 

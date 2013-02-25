@@ -7,6 +7,7 @@ import model._
 import org.joda.time.DateMidnight
 import model.Page
 import conf.Configuration
+import play.api.libs.concurrent.Execution.Implicits._
 
 object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging {
 

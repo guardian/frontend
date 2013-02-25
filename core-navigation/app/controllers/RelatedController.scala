@@ -7,6 +7,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class Related(heading: String, trails: Seq[Trail])
 

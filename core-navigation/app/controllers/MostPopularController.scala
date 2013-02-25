@@ -7,6 +7,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Akka
 import feed.MostPopularAgent
+import play.api.libs.concurrent.Execution.Implicits._
 
 object MostPopularController extends Controller with Logging {
 

@@ -10,6 +10,7 @@ import org.scala_tools.time.Imports._
 import model.Page
 import scala.Some
 import play.api.templates.Html
+import play.api.libs.concurrent.Execution.Implicits._
 
 trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 

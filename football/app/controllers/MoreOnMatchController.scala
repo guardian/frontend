@@ -12,6 +12,7 @@ import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
 import feed.Competitions
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class Report(trail: Trail, name: String)
 

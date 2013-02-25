@@ -8,6 +8,8 @@ import play.api.mvc.{ Controller, Action }
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits._
+
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 

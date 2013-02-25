@@ -7,6 +7,7 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 import common.TeamCompetitions
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class TablesPage(
     page: Page,

@@ -12,6 +12,7 @@ import feed._
 import pa.LineUp
 import scala.Some
 import implicits.{ Requests, Football }
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult

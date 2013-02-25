@@ -11,6 +11,7 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
+import play.api.libs.concurrent.Execution.Implicits._
 sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters {
 
   val daysToDisplay = 3

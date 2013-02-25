@@ -3,6 +3,7 @@ package controllers
 import common._
 import model._
 import play.api.mvc.{ Controller, Action }
+import play.api.libs.concurrent.Execution.Implicits._
 
 object CompetitionListController extends Controller with CompetitionListFilters with Logging {
 

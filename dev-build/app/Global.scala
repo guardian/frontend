@@ -1,20 +1,4 @@
-import common.{ AkkaSupport, RequestMetrics }
-import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.front.{ ConfiguredEdition, Front }
-import feed.{ MostPopularAgent, Competitions }
-import model.TeamMap
-import play.api.GlobalSettings
+import conf.RequestMeasurementMetrics
+import play.api.mvc.WithFilters
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters
-    with MostPopularLifecycle
-    with FrontLifecycle {
-
-  import RequestMetrics._
-
-  override val requestTimer = RequestTimingMetric
-  override val okCounter = Request200s
-  override val errorCounter = Request50xs
-  override val notFoundCounter = Request404s
-  override val redirectCounter = Request30xs
-
-}
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with MostPopularLifecycle with FrontLifecycle
