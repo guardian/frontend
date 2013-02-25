@@ -1,4 +1,4 @@
-@(story: model.Story)
+@(story: model.Story, articleId: String)
 <h3 class="type-2 article-zone">
     <a href="/stories/@story.id" class="zone-color">@story.title</a>
 </h3>
@@ -16,7 +16,9 @@
             <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
 
             <section class="story-latest">
-                @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
+                @defining(story.contentByImportance.filter(_.id != articleId)){ content =>
+                    @fragments.trailblocks.thumbnail(content, 3, true, 3)
+                }
             </section>
         </li>
     }
@@ -25,8 +27,8 @@
         <li class="accordion-item">
             <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
 
-            <section class="story-players">
-                <ul class="unstyled">
+            <section class="story-section story-agents">
+                <ul class="unstyled agents">
                     @story.agents.map { agent =>
                         @fragments.agent(agent)
                     }
