@@ -40,6 +40,7 @@
                 <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
                     @cleanTrailText(explainer)
                 </p>
+                <p class="box-indent from-content-api"><a href="#top">Back to top</a></p>
             </section>
         }
 
@@ -47,6 +48,7 @@
             <section class="story-agents" data-link-name="story-agents">
                 <h2 class="article-headline box-indent">People, places & organisations</h2>
                  @fragments.agents(story.agents)
+                <p class="box-indent from-content-api"><a href="#top">Back to top</a></p>
             </section>
         }
 
@@ -57,7 +59,8 @@
                 <div class="box-indent">
                     @fragments.timeline(story)
                 </div>
-            </li>
+                <p class="box-indent from-content-api"><a href="#top">Back to top</a></p>
+            </section>
         }
 
     }
