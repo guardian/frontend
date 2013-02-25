@@ -30,7 +30,7 @@
       "webUrl":"http://www.guardian.co.uk/football/2013/jan/27/st-mirren-celtic-scottish-league-cup",
       "apiUrl":"http://content.guardianapis.com/football/2013/jan/27/st-mirren-celtic-scottish-league-cup",
       "fields":{
-        "trailText":"Goals from Esmaël Gonçalves, Paul McGowan and Steven Thompson ensured St Mirren play Hearts in the final of the Scottish League Cup",
+        "trailText":"Goals from Esma√´l Gon√ßalves, Paul McGowan and Steven Thompson ensured St Mirren play Hearts in the final of the Scottish League Cup",
         "headline":"St Mirren stun Celtic to reach the final of the Scottish League Cup",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/27/1359305725020/St-Mirren-players-celebra-003.jpg",
@@ -97,7 +97,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -371,7 +371,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -534,10 +534,11 @@
       "webUrl":"http://www.guardian.co.uk/football/2012/oct/31/inverness-rangers-league-cup",
       "apiUrl":"http://content.guardianapis.com/football/2012/oct/31/inverness-rangers-league-cup",
       "fields":{
-        "headline":"Inverness swat Rangers aside in League Cup thanks to Shinnie brothers",
         "trailText":"Inverness beat Rangers 3-0 at Ibrox to reach the semi-finals of the Scottish Communities League Cup",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Inverness swat Rangers aside in League Cup thanks to Shinnie brothers",
+        "hasStoryPackage":"false",
+        "wordcount":"375",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"football/rangers",
@@ -640,6 +641,12 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1456"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       }]
@@ -656,6 +663,7 @@
         "headline":"Kris Commons scores three times as Celtic hammer St Johnstone",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/10/30/1351632717537/Soccer---Scottish-Communi-003.jpg",
+        "wordcount":"519",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -725,7 +733,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -900,8 +908,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/115"
       }]
     },{
       "id":"football/2012/apr/19/neil-lennon-ban-celtic",
@@ -916,6 +930,7 @@
         "headline":"Neil Lennon gets two-game ban for comments after Celtic's Killie loss",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/4/19/1334863961398/Neil-Lennon-clashes-with--001.jpg",
+        "wordcount":"210",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1003,7 +1018,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -1121,6 +1136,9 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       },{
@@ -1140,6 +1158,7 @@
         "headline":"Kilmarnock's cup final joy cut short by death of Liam Kelly's father",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2012/3/19/1332179207759/Deat-of-Liam-Kellys-fathe-003.jpg",
+        "wordcount":"500",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1206,7 +1225,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -1366,6 +1385,9 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       }]
@@ -1382,6 +1404,7 @@
         "headline":"Kilmarnock glory overshadowed by death of Liam Kelly's father",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/3/19/1332146879257/Paramedics-attend-to-Jack-002.jpg",
+        "wordcount":"361",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1463,8 +1486,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/2012/mar/18/celtic-kilmarnock-scottish-league-cup",
@@ -1479,6 +1508,7 @@
         "headline":"Kilmarnock joy at Cup success over Celtic quickly followed by anguish",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2012/3/18/1332092114982/Celtic-v-Kilmarnock-003.jpg",
+        "wordcount":"407",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1548,7 +1578,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -1708,8 +1738,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/2012/mar/17/kenny-shiels-kilmarnock-celtic-league-cup",
@@ -1724,6 +1760,7 @@
         "headline":"Kenny Shiels bangs drum for Kilmarnock's bold approach to Celtic",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/16/1331924758161/Celtics-Scott-Brown-003.jpg",
+        "wordcount":"666",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1793,7 +1830,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -1953,8 +1990,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/2012/jan/29/falkirk-celtic-scottish-league-cup",
@@ -1969,6 +2012,7 @@
         "headline":"Celtic reach final after Anthony Stokes scores twice against Falkirk",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/1/29/1327866620743/Anthony-Stokes-Celtic-Fal-003.jpg",
+        "wordcount":"567",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2031,7 +2075,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -2198,8 +2242,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/108"
       }]
     },{
       "id":"football/2012/jan/28/ayr-kilmarnock-scottish-league-cup",
@@ -2214,6 +2264,7 @@
         "headline":"Kilmarnock's Dean Shiels goes the extra mile to see off Ayr United",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/1/28/1327761762260/Ayr-Uniteds-Jamie-McKerno-001.jpg",
+        "wordcount":"575",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2283,7 +2334,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -2413,8 +2464,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/105"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/blog/2012/jan/27/ayr-kilmarnock-league-cup-semi-final",
@@ -2429,6 +2486,7 @@
         "headline":"Ayr and Kilmarnock enjoy rare coming together in semi-final derby",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/1/27/1327664840027/George-Burley-003.jpg",
+        "wordcount":"725",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2507,7 +2565,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -2553,8 +2611,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/105"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/2011/oct/26/hibernian-celtic-scottish-league-cup",
@@ -2569,6 +2633,7 @@
         "headline":"James Forrest strikes twice as Celtic come back to beat Hibernian",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2011/10/26/1319659764813/Celtics-James-Forrest-cel-003.jpg",
+        "wordcount":"350",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2638,7 +2703,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -2768,8 +2833,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/99"
       }]
     },{
       "id":"football/blog/2011/sep/23/rangers-ally-mccoist-league-cup",
@@ -2784,6 +2855,7 @@
         "headline":"Losing to Falkirk upset Rangers \u2013 but beating Celtic still means more",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2011/9/23/1316772659852/Ally-McCoist-001.jpg",
+        "wordcount":"742",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2901,7 +2973,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -2929,6 +3001,12 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       },{
@@ -2948,6 +3026,7 @@
         "headline":"El Allagui double helps Falkirk dump Rangers out of Scottish League Cup",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2011/9/21/1316640437066/Falkirks-Mark-Millar-003.jpg",
+        "wordcount":"473",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3111,8 +3190,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/108"
       }]
     },{
       "id":"football/2011/sep/21/ross-county-celtic-scottish-league-cup",
@@ -3127,6 +3212,7 @@
         "headline":"Gary Hooper strikes to ensure Celtic don't slip up against Ross County",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2011/9/21/1316636898666/Ross-County-v-Celtic-003.jpg",
+        "wordcount":"447",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3196,7 +3282,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -3326,8 +3412,14 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/848"
       }]
     },{
       "id":"football/2011/mar/20/celtic-rangers-scottish-league-cup",
@@ -3342,6 +3434,7 @@
         "headline":"Nikica Jelavic carries Rangers to victory over Celtic in extra time",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Admin/BkFill/Default_image_group/2011/3/20/1300644068383/Nikica-Jelavic-Rangers-Ce-003.jpg",
+        "wordcount":"739",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3404,7 +3497,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -3550,6 +3643,12 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       }]
@@ -3566,6 +3665,7 @@
         "headline":"Takeover tribulations force Ally McCoist to plan for uncertain future",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2011/3/19/1300539347956/Ally-McCoist-003.jpg",
+        "wordcount":"700",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3616,7 +3716,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -3773,6 +3873,9 @@
       "references":[{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
       }]
     },{
       "id":"football/2011/mar/18/rangers-celtic-league-cup-final",
@@ -3787,6 +3890,7 @@
         "headline":"Police speak to Rangers and Celtic ahead of League Cup final",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/3/18/1300467131267/El-Hadji-Diouf-left-and-C-008.jpg",
+        "wordcount":"478",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3884,6 +3988,12 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       }]
@@ -3900,6 +4010,7 @@
         "headline":"League Cup is full of Old Firm spirit but its future seems half-empty",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/3/18/1300452641039/CIS-cup-003.jpg",
+        "wordcount":"621",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3971,7 +4082,7 @@
         "webTitle":"Ewan Murray",
         "webUrl":"http://www.guardian.co.uk/profile/ewanmurray",
         "apiUrl":"http://content.guardianapis.com/profile/ewanmurray",
-        "bio":"<p>Ewan Murray covers Scottish football for the Guardian and is occasionally also let loose on golf tournaments. He spends the remainder of his time seeking new shades of pink shirt and pursuing an unhealthy interest in all matters Vladimir Romanov. Ewan lives in Glasgow</p>",
+        "bio":"<p>Ewan Murray is the Guardian and Observer's golf correspondent, with added responsibility for overseeing coverage of Scottish football. Ewan's outside interests, fittingly, revolve around his own substandard golf game and Vladimir Romanov's stewardship of Heart of Midlothian</p>",
         "r2ContributorId":"22562",
         "references":[]
       },{
@@ -4015,6 +4126,12 @@
         }
       }],
       "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/94"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/101"
+      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
       }]

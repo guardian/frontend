@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":1520,
+    "total":1528,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
-    "pages":76,
+    "pages":77,
     "orderBy":"newest",
     "tag":{
       "id":"technology/askjack",
@@ -19,6 +19,239 @@
       "references":[]
     },
     "results":[{
+      "id":"technology/askjack/2013/feb/21/phone-mobile-wi-fi-hotspot",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-02-21T15:52:21Z",
+      "webTitle":"Can I use a phone as a mobile Wi-Fi hotspot?",
+      "webUrl":"http://www.guardian.co.uk/technology/askjack/2013/feb/21/phone-mobile-wi-fi-hotspot",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/feb/21/phone-mobile-wi-fi-hotspot",
+      "fields":{
+        "trailText":"<p><strong>Ask Jack: </strong>Robert wants to buy a phone to use as a mobile hotspot to get online with his tablet and other devices. Which phone should he choose, or is there a better answer?</p>",
+        "headline":"Can I use a phone as a mobile Wi-Fi hotspot?",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/2/21/1361461520990/The-MiFi-liberate-003.jpg",
+        "wordcount":"828",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.guardian.co.uk/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.guardian.co.uk/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.guardian.co.uk/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/wifi",
+        "type":"keyword",
+        "webTitle":"Wi-Fi",
+        "webUrl":"http://www.guardian.co.uk/technology/wifi",
+        "apiUrl":"http://content.guardianapis.com/technology/wifi",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/4g",
+        "type":"keyword",
+        "webTitle":"4G",
+        "webUrl":"http://www.guardian.co.uk/technology/4g",
+        "apiUrl":"http://content.guardianapis.com/technology/4g",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/2/21/1361461528459/The-MiFi-liberate-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/gallery/2013/2/21/1361461528459/The-MiFi-liberate-008.jpg",
+          "source":"Novatel",
+          "altText":"The MiFi liberate",
+          "height":"276",
+          "credit":"Novatel",
+          "caption":"The MiFi Liberate works with 4G networks and is the first mobile hotspot to feature a touch screen. Photograph: Novatel",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"technology/askjack/2013/feb/14/computing-apple",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-02-14T15:51:00Z",
+      "webTitle":"What's the best tablet for a photographer with a DSLR?",
+      "webUrl":"http://www.guardian.co.uk/technology/askjack/2013/feb/14/computing-apple",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/feb/14/computing-apple",
+      "fields":{
+        "trailText":"<p><strong>Ask Jack:</strong> Tim Locke edits photos on a laptop and would like to show them on a tablet. Should he use an iPad or a Windows 8 convertible?</p>",
+        "headline":"What's the best tablet for a photographer with a DSLR?",
+        "hasStoryPackage":"false",
+        "wordcount":"1527",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.guardian.co.uk/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.guardian.co.uk/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.guardian.co.uk/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.guardian.co.uk/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.guardian.co.uk/technology/photography",
+        "apiUrl":"http://content.guardianapis.com/technology/photography",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ipad",
+        "type":"keyword",
+        "webTitle":"iPad",
+        "webUrl":"http://www.guardian.co.uk/technology/ipad",
+        "apiUrl":"http://content.guardianapis.com/technology/ipad",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/windows-8",
+        "type":"keyword",
+        "webTitle":"Windows 8",
+        "webUrl":"http://www.guardian.co.uk/technology/windows-8",
+        "apiUrl":"http://content.guardianapis.com/technology/windows-8",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/adobe",
+        "type":"keyword",
+        "webTitle":"Adobe",
+        "webUrl":"http://www.guardian.co.uk/technology/adobe",
+        "apiUrl":"http://content.guardianapis.com/technology/adobe",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/2/14/1329216555252/Apple-iPad-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2012/2/14/1329216555252/Apple-iPad-007.jpg",
+          "source":"EPA",
+          "photographer":"John G Mabanglo",
+          "altText":"Apple iPad",
+          "height":"276",
+          "credit":"John G Mabanglo/EPA",
+          "caption":"Installing Adobe Photoshop Elements can make displaying photos on an iPad more amenable. Photograph: John G Mabanglo/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"technology/askjack/2013/feb/08/java-remove-ask-jack-technology",
       "sectionId":"technology",
       "sectionName":"Technology",
@@ -1261,10 +1494,11 @@
       "webUrl":"http://www.guardian.co.uk/technology/askjack/2012/dec/06/gadgets-photography",
       "apiUrl":"http://content.guardianapis.com/technology/askjack/2012/dec/06/gadgets-photography",
       "fields":{
-        "trailText":"<p><strong>Jack Schofield: </strong>Su Butcher's son is interested in making videos and she wants a video camera for around £100. What are the options?</p>",
+        "trailText":"<p><strong>Jack Schofield: </strong>Su Butcher's son is interested in making videos and she wants a video camera for around Â£100. What are the options?</p>",
         "headline":"Wanted: a camcorder for a child's Lego animation/video project",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2012/12/6/1354807201514/JVC-Everio-GZ-E200-003.jpg",
+        "wordcount":"859",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1535,6 +1769,7 @@
         "headline":"Mini-laptops versus netbooks, and other queries",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/11/30/1354285644448/Memory-stick-003.jpg",
+        "wordcount":"918",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1620,6 +1855,7 @@
         "headline":"Running Windows 8 on old or new hardware?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/11/22/1353601416407/Lenova-Yoga-005.jpg",
+        "wordcount":"1229",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1713,6 +1949,7 @@
         "headline":"Should I upgrade to Windows 8?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/11/15/1352996397103/Steve-Ballmer--005.jpg",
+        "wordcount":"1092",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1980,10 +2217,11 @@
       "webUrl":"http://www.guardian.co.uk/technology/askjack/2012/nov/08/ask-jack-touchscreen-windows-8",
       "apiUrl":"http://content.guardianapis.com/technology/askjack/2012/nov/08/ask-jack-touchscreen-windows-8",
       "fields":{
-        "trailText":"Greg wants a £750 all-in-one PC with a touch-sensitive screen to run Windows 8. This is still an emerging market, but several products fit the bill",
+        "trailText":"Greg wants a Â£750 all-in-one PC with a touch-sensitive screen to run Windows 8. This is still an emerging market, but several products fit the bill",
         "headline":"Wanted: an all-in-one PC to run Windows 8",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/11/8/1352397968478/Dell-Inspiron-One-23-003.jpg",
+        "wordcount":"1201",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2166,6 +2404,7 @@
         "headline":"A smartphone for Christmas: Samsung or Apple?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/11/1/1351776346901/Samsung-Galaxy-S-III-003.jpg",
+        "wordcount":"911",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2259,6 +2498,7 @@
         "headline":"How to back up a blog",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/10/25/1351177386030/Mot-Mess-Mom-blog-003.jpg",
+        "wordcount":"1085",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2379,6 +2619,7 @@
         "headline":"Portable Wi-Fi hotspots and the Windows XP 'no certificate' problem",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/10/18/1350569556025/TP-Link-Wireless-N-Nano-R-003.jpg",
+        "wordcount":"1044",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2490,6 +2731,7 @@
         "headline":"What to do when your backup drive goes missing",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/10/11/1349955505871/Wheelie-bin-dustbin-003.jpg",
+        "wordcount":"1066",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2574,6 +2816,7 @@
         "headline":"Wanted: a high-end Windows 7 portable",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/10/4/1349359841210/Sony-S-Series-13P-003.jpg",
+        "wordcount":"1477",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2641,242 +2884,6 @@
           "height":"276",
           "credit":"PR",
           "caption":"Sony S Series 13P: fills the 'hero' niche",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2012/sep/27/wi-fi-health-risks",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2012-09-27T13:34:00Z",
-      "webTitle":"Wi-Fi: are there any health risks?",
-      "webUrl":"http://www.guardian.co.uk/technology/askjack/2012/sep/27/wi-fi-health-risks",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2012/sep/27/wi-fi-health-risks",
-      "fields":{
-        "trailText":"<p><strong>Ask Jack: </strong>Hermie's Wi-Fi uses the same radio frequency as his microwave oven. Does that mean Wi-Fi is dangerous to his health?</p>",
-        "headline":"Wi-Fi: are there any health risks?",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/9/27/1348755453298/Tinfoil-hat-003.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.guardian.co.uk/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/wifi",
-        "type":"keyword",
-        "webTitle":"Wi-Fi",
-        "webUrl":"http://www.guardian.co.uk/technology/wifi",
-        "apiUrl":"http://content.guardianapis.com/technology/wifi",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/internet",
-        "type":"keyword",
-        "webTitle":"Internet",
-        "webUrl":"http://www.guardian.co.uk/technology/internet",
-        "apiUrl":"http://content.guardianapis.com/technology/internet",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.guardian.co.uk/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.guardian.co.uk/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/blog",
-        "type":"blog",
-        "webTitle":"Technology blog",
-        "webUrl":"http://www.guardian.co.uk/technology/blog",
-        "apiUrl":"http://content.guardianapis.com/technology/blog",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/9/27/1348755461206/Tinfoil-hat-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2012/9/27/1348755461206/Tinfoil-hat-008.jpg",
-          "source":"Flickr/ardenswayoflife",
-          "altText":"Tinfoil hat",
-          "height":"276",
-          "credit":"Flickr/ardenswayoflife",
-          "caption":"A tinfoil hat could protect you from radio waves \u2013 and telepaths. Photograph: Flickr/ardenswayoflife",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2012/sep/20/windows-7-laptop-upgrade",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2012-09-20T14:29:53Z",
-      "webTitle":"My dad wants a Windows XP laptop | Ask Jack",
-      "webUrl":"http://www.guardian.co.uk/technology/askjack/2012/sep/20/windows-7-laptop-upgrade",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2012/sep/20/windows-7-laptop-upgrade",
-      "fields":{
-        "trailText":"<p><strong>Ask Jack:</strong> Dad's old laptop is falling apart, but he doesn't want to upgrade to Windows 7. What can Sotires do?</p>",
-        "headline":"My dad wants a Windows XP laptop",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/9/20/1348150891434/Broken-laptop-005.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.guardian.co.uk/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.guardian.co.uk/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.guardian.co.uk/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows-7",
-        "type":"keyword",
-        "webTitle":"Windows 7",
-        "webUrl":"http://www.guardian.co.uk/technology/windows-7",
-        "apiUrl":"http://content.guardianapis.com/technology/windows-7",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows",
-        "type":"keyword",
-        "webTitle":"Windows",
-        "webUrl":"http://www.guardian.co.uk/technology/windows",
-        "apiUrl":"http://content.guardianapis.com/technology/windows",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/internet",
-        "type":"keyword",
-        "webTitle":"Internet",
-        "webUrl":"http://www.guardian.co.uk/technology/internet",
-        "apiUrl":"http://content.guardianapis.com/technology/internet",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/9/20/1348150898313/Broken-laptop-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Technology/Pix/pictures/2012/9/20/1348150898313/Broken-laptop-010.jpg",
-          "source":"Getty Images",
-          "photographer":"Seth Joel",
-          "altText":"Broken laptop",
-          "height":"276",
-          "credit":"Seth Joel/Getty Images",
-          "caption":"Sometimes, the bin is the best option. Photograph: Seth Joel/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/9/20/1348150462032/Windows-7-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Technology/Pix/pictures/2012/9/20/1348150462032/Windows-7-001.jpg",
-          "source":"PR",
-          "altText":"Windows 7",
-          "height":"276",
-          "credit":"PR",
           "width":"460"
         }
       }],
@@ -3466,6 +3473,7 @@
         "headline":"Should I upgrade to Windows 8?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2012/11/15/1352996397103/Steve-Ballmer--005.jpg",
+        "wordcount":"1092",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3737,6 +3745,7 @@
         "headline":"Wanted: an appliance to replace an Amstrad Emailer",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/4/28/1304010346644/Amstrad-emailer-001.jpg",
+        "wordcount":"1070",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3866,6 +3875,7 @@
         "headline":"Changing file associations in Vista and Windows 7",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2011/3/10/1299762784100/Unzip-file-003.jpg",
+        "wordcount":"995",
         "liveBloggingNow":"false"
       },
       "tags":[{

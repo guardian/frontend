@@ -8,15 +8,13 @@ object `package` {
 
   object HtmlUnit extends EditionalisedHtmlUnit {
 
-    import Configuration.edition._
-
     override def UK[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + ukHost)(browser => Unit)
+      goTo("/_warmup", ukHost)(browser => Unit)
       super.UK(path)(block)
     }
 
     override def US[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + usHost)(browser => Unit)
+      goTo("/_warmup", usHost)(browser => Unit)
       super.US(path)(block)
     }
   }

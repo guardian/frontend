@@ -14,6 +14,9 @@ import recorder.HttpRecorder
  */
 class EditionalisedHtmlUnit {
 
+  val ukHost = "http://localhost:9000"
+  val usHost = "http://127.0.0.1:9000"
+
   val recorder = new HttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
@@ -28,8 +31,6 @@ class EditionalisedHtmlUnit {
     }
   }
 
-  import Configuration.edition._
-
   val testPlugins: Seq[String] = Nil
   val disabledPlugins: Seq[String] = Nil
 
@@ -37,20 +38,20 @@ class EditionalisedHtmlUnit {
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
-  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, "http://" + ukHost)(block)
+  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, ukHost)(block)
 
-  def US[T](path: String)(block: TestBrowser => T): T = goTo(path, "http://" + usHost)(block)
+  def US[T](path: String)(block: TestBrowser => T): T = goTo(path, usHost)(block)
 
   def connection[T](path: String)(block: HttpURLConnection => T): T = {
     connectionUK(path)(block)
   }
 
   def connectionUK[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection("http://" + ukHost, path)(block)
+    testConnection(ukHost, path)(block)
   }
 
   def connectionUS[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection("http://" + usHost, path)(block)
+    testConnection(usHost, path)(block)
   }
 
   protected def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
@@ -86,8 +87,8 @@ class EditionalisedHtmlUnit {
 
 object WithHost {
   def apply(path: String): String = UK(path)
-  def UK(path: String): String = "http://" + Configuration.edition.ukHost + path
-  def US(path: String): String = "http://" + Configuration.edition.usHost + path
+  def UK(path: String): String = "http://localhost:9000" + path
+  def US(path: String): String = "http://127.0.0.1:9000" + path
 }
 
 /**
@@ -95,4 +96,14 @@ object WithHost {
  */
 object Fake {
   def apply[T](block: => T): T = running(FakeApplication()) { block }
+}
+
+object TestRequest {
+  def apply(): FakeRequest[play.api.mvc.AnyContent] = {
+    TestRequest("localhost:9000")
+  }
+
+  def apply(host: String): FakeRequest[play.api.mvc.AnyContent] = {
+    FakeRequest().withHeaders("host" -> host)
+  }
 }

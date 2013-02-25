@@ -31,6 +31,7 @@
         "headline":"Foraging: 'tis the season. Or is it?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/22/1337675149007/A-basket-of-assorted-wild-003.jpg",
+        "wordcount":"821",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -133,6 +134,7 @@
         "headline":"Do you know Alphonso mango?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/4/24/1335287729291/Alphonso-mangoes-003.jpg",
+        "wordcount":"531",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -244,6 +246,7 @@
         "headline":"Season's eatings: wild garlic",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/17/1334678543609/Wild-garlic-or-ramsons-003.jpg",
+        "wordcount":"543",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -337,6 +340,7 @@
         "headline":"Seasonal eating: reason and treason",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/17/1326795469321/Hot-cross-buns-003.jpg",
+        "wordcount":"780",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -426,10 +430,11 @@
       "webUrl":"http://www.guardian.co.uk/commentisfree/2011/dec/18/in-praise-of-porridge",
       "apiUrl":"http://content.guardianapis.com/commentisfree/2011/dec/18/in-praise-of-porridge",
       "fields":{
-        "headline":"In praise of \u2026 porridge",
         "trailText":"<p><strong>Editorial: </strong>F Marian McNeill, in her 1929 classic The Scots Kitchen (still in print) advises a cupful of water, a pinch of salt and a handful of oatmeal per person</p>",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"In praise of \u2026 porridge",
+        "hasStoryPackage":"false",
+        "wordcount":"278",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"commentisfree/commentisfree",
@@ -551,6 +556,7 @@
         "headline":"Internet recipe search: seasons' eatings",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/19/1319037487918/Wheel-of-hunger-003.jpg",
+        "wordcount":"667",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -661,6 +667,7 @@
         "headline":"Autumn in full fig",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/11/1318347552899/Fresh-green-figs-003.jpg",
+        "wordcount":"890",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -796,7 +803,7 @@
           "altText":"Fig sorbet",
           "height":"347",
           "credit":"Sandra Haurant",
-          "caption":"Fig sorbet at the fig festival in le Mas d'Azil, Ari�ge, France. Photograph: Sandra Haurant",
+          "caption":"Fig sorbet at the fig festival in le Mas d'Azil, Ariège, France. Photograph: Sandra Haurant",
           "width":"220"
         }
       }],
@@ -814,6 +821,7 @@
         "headline":"'Reverse season' asparagus",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/12/1315819650219/British-autumn-asparagus-003.jpg",
+        "wordcount":"603",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -906,6 +914,7 @@
         "headline":"Too much fruit and veg? Get your pickling jars at the ready",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/6/30/1309451694214/Summer-fruit-and-veg-003.jpg",
+        "wordcount":"1298",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1033,6 +1042,7 @@
         "headline":"Nigel Slater: Slow-cooked autumn stews and casseroles",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/10/13/1286982869518/Baked-squid-with-chilli-t-002.jpg",
+        "wordcount":"1397",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1320,7 +1330,7 @@
           "height":"502",
           "credit":"Neil Fletcher/Getty Images/Dorling Kindersley",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/15/1284569868229/Mushrooms-cep-001-thumb-5852.jpg",
-          "caption":"<strong>NICE <br></br>Cep (AKA penny bun, porcino)<br></br>\n</strong>Sometimes called the king of mushrooms. Expensive to buy, easy to dry. Brown dome-shaped cap, white to ?olive-yellow tubes, off-white and ?exceptionally thick stem. Common in woods, often near fly agaric (see Nasty).\n",
+          "caption":"<strong>NICE <br></br>Cep (AKA penny bun, porcino)<br></br>\n</strong>Sometimes called the king of mushrooms. Expensive to buy, easy to dry. Brown dome-shaped cap, white to ­olive-yellow tubes, off-white and ­exceptionally thick stem. Common in woods, often near fly agaric (see Nasty).\n",
           "width":"400"
         }
       },{
@@ -1352,7 +1362,7 @@
           "height":"600",
           "credit":"Alamy",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/15/1284569874058/Mushroom---cauliflower-fu-006-thumb-3759.jpg",
-          "caption":"<strong>NICE <br></br>Cauliflower fungus (AKA brain fungus)<br></br>\n</strong>A roundish mass of ?convoluted \u201cleaves\u201d, starting out cream but eventually becoming brown (by which time it is inedible). Good eating and drying, but needs thorough cleaning. Found on roots and stumps of pines and spruces.\n",
+          "caption":"<strong>NICE <br></br>Cauliflower fungus (AKA brain fungus)<br></br>\n</strong>A roundish mass of ­convoluted \u201cleaves\u201d, starting out cream but eventually becoming brown (by which time it is inedible). Good eating and drying, but needs thorough cleaning. Found on roots and stumps of pines and spruces.\n",
           "width":"400"
         }
       },{
@@ -1368,7 +1378,7 @@
           "height":"480",
           "credit":"Alamy",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/15/1284569875153/Mushroom---giant-puffball-007-thumb-3059.jpg",
-          "caption":"<strong>NICE <br></br>Giant puffball<br></br>\n</strong>It\u2019s big, white and shaped like a ball! Commonest in open woodland and grassland, often among nettles. Stick to the larger ?specimens, which are hard to mistake for anything else. Avoid once brownish and mature.",
+          "caption":"<strong>NICE <br></br>Giant puffball<br></br>\n</strong>It\u2019s big, white and shaped like a ball! Commonest in open woodland and grassland, often among nettles. Stick to the larger ­specimens, which are hard to mistake for anything else. Avoid once brownish and mature.",
           "width":"717"
         }
       },{
@@ -1385,7 +1395,7 @@
           "height":"480",
           "credit":"Maximilian Weinzierl / Alamy/Alamy",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/15/1284569873009/Mushroom---common-morel-005-thumb-446.jpg",
-          "caption":"<strong>NICE <br></br>Common morel <br></br>\n</strong>The most prized of the springtime fungi. Tall cap, covered in deep pits like a honeycomb built by drunken bees. ?Hollow inside \u2013 just one chamber, unlike the false morel (see Nasty). Commonest under deciduous trees and hedges, on chalky soils. Old specimens can be poisonous.",
+          "caption":"<strong>NICE <br></br>Common morel <br></br>\n</strong>The most prized of the springtime fungi. Tall cap, covered in deep pits like a honeycomb built by drunken bees. ­Hollow inside \u2013 just one chamber, unlike the false morel (see Nasty). Commonest under deciduous trees and hedges, on chalky soils. Old specimens can be poisonous.",
           "width":"732"
         }
       },{
@@ -1401,7 +1411,7 @@
           "height":"600",
           "credit":"George McCarthy/CORBIS",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/16/1284645724878/Death-cap-mushroom-001-thumb-5479.jpg",
-          "caption":"<strong>NASTY <br></br>Death cap<br></br>\n</strong>The cause of most mushroom-related fatalities. ?Often mistaken for a field mushroom. Olive-yellow to greenish-bronze cap, white gills. Stem with obvious ring rises from a bag-like \u201cvolva\u201d.",
+          "caption":"<strong>NASTY <br></br>Death cap<br></br>\n</strong>The cause of most mushroom-related fatalities. ­Often mistaken for a field mushroom. Olive-yellow to greenish-bronze cap, white gills. Stem with obvious ring rises from a bag-like \u201cvolva\u201d.",
           "width":"396"
         }
       },{
@@ -1418,7 +1428,7 @@
           "height":"600",
           "credit":"blickwinkel / Alamy/Alamy",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/15/1284569876209/Mushroom---deadly-webcap-008-thumb-1200.jpg",
-          "caption":"<strong>NASTY <br></br>Deadly webcap <br></br>\n</strong>Rare but potentially lethal. Reddish-brown cap, widely spaced gills, long stem often bearing ?remains of ?yellow cobweb-like veil that covered gills when younger. Commonest among conifers. Smells faintly of radishes.\n",
+          "caption":"<strong>NASTY <br></br>Deadly webcap <br></br>\n</strong>Rare but potentially lethal. Reddish-brown cap, widely spaced gills, long stem often bearing ­remains of ­yellow cobweb-like veil that covered gills when younger. Commonest among conifers. Smells faintly of radishes.\n",
           "width":"399"
         }
       },{
@@ -1468,7 +1478,7 @@
           "height":"480",
           "credit":"Alamy",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/17/1284731762571/False-morel-001-thumb-2608.jpg",
-          "caption":"<strong>NASTY <br></br>False morel (AKA turban fungus) <br></br>\n</strong>Certainly poisonous, ?possibly carcinogenic. Deeply convoluted, reddish-brown to browny-black cap and paler stem. Hollow like the common morel (see Nice), but divided into multiple chambers.",
+          "caption":"<strong>NASTY <br></br>False morel (AKA turban fungus) <br></br>\n</strong>Certainly poisonous, ­possibly carcinogenic. Deeply convoluted, reddish-brown to browny-black cap and paler stem. Hollow like the common morel (see Nice), but divided into multiple chambers.",
           "width":"734"
         }
       }],
@@ -1486,6 +1496,7 @@
         "headline":"Seasonal food: blackberries",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/9/1284021680094/Blackberries-on-white-002.jpg",
+        "wordcount":"719",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1583,6 +1594,7 @@
         "headline":"Seasonal food: green peas",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/6/29/1277811435462/Peas-in-pods-002.jpg",
+        "wordcount":"605",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1681,6 +1693,7 @@
         "headline":"Seasonal food: strawberries",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/6/17/1276765194394/Strawberries-002.jpg",
+        "wordcount":"800",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1793,6 +1806,7 @@
         "headline":"Nigel Slater's 10 simple summer recipes",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2010/5/15/1273939286928/green-panzanella-002.jpg",
+        "wordcount":"2257",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2007,10 +2021,10 @@
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2010/5/15/1273939821023/Chicken-with-mustard-and--001.jpg",
           "source":"Jonathan Lovekin",
-          "altText":"Chicken with mustard and cr�me fraiche",
+          "altText":"Chicken with mustard and crème fraiche",
           "height":"246",
           "credit":"Jonathan Lovekin",
-          "caption":"Chicken with mustard and cr�me fraiche. Photograph: Jonathan Lovekin",
+          "caption":"Chicken with mustard and crème fraiche. Photograph: Jonathan Lovekin",
           "width":"220"
         }
       },{
@@ -2084,6 +2098,7 @@
         "headline":"Seasonal food: broad beans",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/5/7/1273229270225/Broad-beans-002.jpg",
+        "wordcount":"721",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2137,6 +2152,24 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":3,
+        "file":"http://cdn.theguardian.tv/bc/281851582/281851582_29015494001_Sonya-Kidney-Broad-Beans-16x9.flv",
+        "fields":{
+          "source":"guardian.co.uk",
+          "embeddable":"false",
+          "blockAds":"false",
+          "height":"360",
+          "durationMinutes":"11",
+          "width":"480",
+          "durationSeconds":"21"
+        },
+        "encodings":[{
+          "format":"video/x-flv",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_29015494001_Sonya-Kidney-Broad-Beans-16x9.flv"
+        }]
+      },{
         "type":"picture",
         "rel":"body",
         "index":1,
@@ -2165,24 +2198,6 @@
           "caption":"UK broad bean season. Photograph: guardian.co.uk",
           "width":"460"
         }
-      },{
-        "type":"video",
-        "rel":"body",
-        "index":1,
-        "file":"http://cdn.theguardian.tv/bc/281851582/281851582_29015494001_Sonya-Kidney-Broad-Beans-16x9.flv",
-        "fields":{
-          "source":"guardian.co.uk",
-          "embeddable":"false",
-          "blockAds":"false",
-          "height":"360",
-          "durationMinutes":"11",
-          "width":"480",
-          "durationSeconds":"21"
-        },
-        "encodings":[{
-          "format":"video/x-flv",
-          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_29015494001_Sonya-Kidney-Broad-Beans-16x9.flv"
-        }]
       }],
       "references":[]
     },{
@@ -2198,6 +2213,7 @@
         "headline":"Closing the hungry gap",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/4/27/1272377771481/Lunch-park-002.jpg",
+        "wordcount":"1464",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2333,6 +2349,7 @@
         "headline":"Seasonal food: asparagus",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/4/13/1271152053951/Asparagus-spears-006.jpg",
+        "wordcount":"812",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2379,6 +2396,24 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":3,
+        "file":"http://cdn.theguardian.tv/bc/281851582/281851582_26176188001_kidney-s-law-corrected-16x9.flv",
+        "fields":{
+          "source":"guardian.co.uk",
+          "embeddable":"false",
+          "blockAds":"false",
+          "height":"360",
+          "durationMinutes":"6",
+          "width":"480",
+          "durationSeconds":"9"
+        },
+        "encodings":[{
+          "format":"video/x-flv",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_26176188001_kidney-s-law-corrected-16x9.flv"
+        }]
+      },{
         "type":"picture",
         "rel":"body",
         "index":1,
@@ -2407,24 +2442,6 @@
           "caption":"UK asparagus season Photograph: guardian.co.uk",
           "width":"460"
         }
-      },{
-        "type":"video",
-        "rel":"body",
-        "index":1,
-        "file":"http://cdn.theguardian.tv/bc/281851582/281851582_26176188001_kidney-s-law-corrected-16x9.flv",
-        "fields":{
-          "source":"guardian.co.uk",
-          "embeddable":"false",
-          "blockAds":"false",
-          "height":"360",
-          "durationMinutes":"6",
-          "width":"480",
-          "durationSeconds":"9"
-        },
-        "encodings":[{
-          "format":"video/x-flv",
-          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_26176188001_kidney-s-law-corrected-16x9.flv"
-        }]
       }],
       "references":[]
     },{
@@ -2440,6 +2457,7 @@
         "headline":"Seasonal food: cauliflower",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/4/1267702101931/Cauliflower-004.jpg",
+        "wordcount":"457",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2538,6 +2556,7 @@
         "headline":"Seasonal food: watercress",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/24/1269435166596/Watercress-005.jpg",
+        "wordcount":"684",
         "liveBloggingNow":"false"
       },
       "tags":[{

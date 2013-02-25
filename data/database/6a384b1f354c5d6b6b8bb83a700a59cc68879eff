@@ -12,10 +12,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey",
       "apiUrl":"http://content.guardianapis.com/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey",
       "fields":{
-        "headline":"Woman tortured during burglary tells of waterboarding ordeal",
         "trailText":"<p>Francoise Jansen, 73, suffered multiple injuries during robbery at Surrey home in which raiders doused her with boiling water</p>",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Woman tortured during burglary tells of waterboarding ordeal",
+        "hasStoryPackage":"false",
+        "wordcount":"502",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/ukcrime",
@@ -67,8 +68,8 @@
           "durationSeconds":"18"
         },
         "encodings":[{
-          "format":"video/mp4:720",
-          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/8/7/120807WomanTortured-720.mp4"
+          "format":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/8/7/120807WomanTortured-16x9.mp4"
         },{
           "format":"video/m3u8",
           "file":"http://cdn.theguardian.tv/ad/120807WomanTortured/120807WomanTortured.m3u8"
@@ -76,11 +77,11 @@
           "format":"video/3gpp:large",
           "file":"http://cdn.theguardian.tv/3gp/large/2012/8/7/120807WomanTortured_3gpLg16x9.3gp"
         },{
-          "format":"mp4",
-          "file":"http://cdn.theguardian.tv/brightcove/2012/8/7/120807WomanTortured-16x9.mp4"
-        },{
           "format":"video/3gpp:small",
           "file":"http://cdn.theguardian.tv/3gp/small/2012/8/7/120807WomanTortured_3gpSml16x9.3gp"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/8/7/120807WomanTortured-720.mp4"
         }]
       }],
       "references":[]
@@ -129,7 +130,7 @@
       "mediaAssets":[{
         "type":"video",
         "rel":"body",
-        "index":2,
+        "index":1,
         "file":"http://cdn.theguardian.tv/brightcove/2012/8/7/120807WomanTortured-16x9.mp4",
         "fields":{
           "source":"ITN",
@@ -143,20 +144,20 @@
           "durationSeconds":"18"
         },
         "encodings":[{
-          "format":"video/mp4:720",
-          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/8/7/120807WomanTortured-720.mp4"
-        },{
-          "format":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/120807WomanTortured/120807WomanTortured.m3u8"
-        },{
-          "format":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2012/8/7/120807WomanTortured_3gpLg16x9.3gp"
-        },{
           "format":"mp4",
           "file":"http://cdn.theguardian.tv/brightcove/2012/8/7/120807WomanTortured-16x9.mp4"
         },{
           "format":"video/3gpp:small",
           "file":"http://cdn.theguardian.tv/3gp/small/2012/8/7/120807WomanTortured_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120807WomanTortured/120807WomanTortured.m3u8"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/8/7/120807WomanTortured-720.mp4"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/8/7/120807WomanTortured_3gpLg16x9.3gp"
         }]
       }],
       "references":[]
@@ -169,10 +170,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2012/aug/08/arrest-burglary-waterboard-surrey",
       "apiUrl":"http://content.guardianapis.com/uk/2012/aug/08/arrest-burglary-waterboard-surrey",
       "fields":{
-        "headline":"Arrest made following burglary in which woman, 73, was 'waterboarded'",
         "trailText":"Surrey police say 31-year-old man held in connection with robbery in which woman says she was tortured in her home",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Arrest made following burglary in which woman, 73, was 'waterboarded'",
+        "hasStoryPackage":"false",
+        "wordcount":"325",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/ukcrime",
@@ -222,6 +224,7 @@
         "headline":"Crime falls by 4%, latest figures show",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2007/09/26/Burglar84.jpg",
+        "wordcount":"726",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -334,6 +337,7 @@
         "headline":"Belfast pipe  bomb attack injures three police",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/6/1289040066912/A-police-Land-Rover-block-005.jpg",
+        "wordcount":"226",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -424,10 +428,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2001/jul/19/ukcrime.alantravis",
       "apiUrl":"http://content.guardianapis.com/uk/2001/jul/19/ukcrime.alantravis",
       "fields":{
-        "headline":"Police crime detection rates fall to new low",
         "trailText":"Home Office figures show street robberies help maintain violent crime's upward spiral while burglaries and car offences decline.",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Police crime detection rates fall to new low",
+        "hasStoryPackage":"false",
+        "wordcount":"818",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/uk",
@@ -482,14 +487,15 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2010-06-25T11:25:35Z",
-      "webTitle":"Man convicted of £40m Graff jewellery heist",
+      "webTitle":"Man convicted of Â£40m Graff jewellery heist",
       "webUrl":"http://www.guardian.co.uk/uk/2010/jun/25/man-convicted-graff-jewellery-heist",
       "apiUrl":"http://content.guardianapis.com/uk/2010/jun/25/man-convicted-graff-jewellery-heist",
       "fields":{
         "trailText":"Aman Kassaye held 'petrified' woman at gunpoint during Britain's biggest jewellery robbery",
-        "headline":"Man convicted of £40m Graff jewellery heist",
+        "headline":"Man convicted of Â£40m Graff jewellery heist",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/6/25/1277464959540/Graff-Diamonds-jewellery--002.jpg",
+        "wordcount":"380",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -557,7 +563,7 @@
           "altText":"Graff Diamonds jewellery heist case",
           "height":"276",
           "credit":"Clive Gee/PA",
-          "caption":"The £40m of jewellery stolen from Graff Diamonds in London has never been recovered. Photograph: Clive Gee/PA",
+          "caption":"The Â£40m of jewellery stolen from Graff Diamonds in London has never been recovered. Photograph: Clive Gee/PA",
           "width":"460"
         }
       }],
@@ -567,14 +573,15 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2005-07-01T01:47:55Z",
-      "webTitle":"Street shooting highlights £36bn cost of crime",
+      "webTitle":"Street shooting highlights Â£36bn cost of crime",
       "webUrl":"http://www.guardian.co.uk/uk/2005/jul/01/ukguns.ukcrime",
       "apiUrl":"http://content.guardianapis.com/uk/2005/jul/01/ukguns.ukcrime",
       "fields":{
-        "headline":"Street shooting highlights £36bn cost of crime",
         "trailText":"Police were yesterday investigating the shooting of a woman in a busy Manchester street during an apparently bungled robbery. ",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Street shooting highlights Â£36bn cost of crime",
+        "hasStoryPackage":"false",
+        "wordcount":"423",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/uk",
@@ -650,10 +657,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2005/sep/16/soham.childprotection",
       "apiUrl":"http://content.guardianapis.com/uk/2005/sep/16/soham.childprotection",
       "fields":{
-        "headline":"Soham killer Huntley scalded in prison attack",
         "trailText":"The Soham double murderer Ian Huntley is being treated for scalding injuries at Wakefield prison in West Yorkshire after another inmate attacked him with boiling water. ",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Soham killer Huntley scalded in prison attack",
+        "hasStoryPackage":"false",
+        "wordcount":"91",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/uk",
@@ -766,10 +774,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2009/jan/28/court-father-death-wine-lichfield",
       "apiUrl":"http://content.guardianapis.com/uk/2009/jan/28/court-father-death-wine-lichfield",
       "fields":{
-        "headline":"Two remanded in custody over murder of father-of-five",
         "trailText":"Michael Eccles died from multiple injuries after being assaulted as he was returning home from shops",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"Two remanded in custody over murder of father-of-five",
+        "hasStoryPackage":"false",
+        "wordcount":"166",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"uk/ukcrime",
@@ -815,10 +824,11 @@
       "webUrl":"http://www.guardian.co.uk/world/2007/may/24/usa.ukcrime",
       "apiUrl":"http://content.guardianapis.com/world/2007/may/24/usa.ukcrime",
       "fields":{
-        "headline":"New York millionaires face slavery charges",
         "trailText":"Prosecutors said today two Indonesian women kept by a wealthy couple were beaten, doused with scalding water and forced to repeatedly climb stairs as punishment.",
-        "liveBloggingNow":"false",
-        "hasStoryPackage":"false"
+        "headline":"New York millionaires face slavery charges",
+        "hasStoryPackage":"false",
+        "wordcount":"274",
+        "liveBloggingNow":"false"
       },
       "tags":[{
         "id":"world/world",

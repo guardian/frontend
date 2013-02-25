@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":468,
+    "total":469,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -27,7 +27,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
       "apiUrl":"http://content.guardianapis.com/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
       "fields":{
-        "trailText":"<p>Miami New Times list of players linked to clinic also includes Melky Cabrera, Gio Gonz‡lez, Bartolo Col—n and Nelson Cruz</p>",
+        "trailText":"<p>Miami New Times list of players linked to clinic also includes Melky Cabrera, Gio GonzÃ¡lez, Bartolo ColÃ³n and Nelson Cruz</p>",
         "headline":"MLB acknowledges report linking Yankees' Alex Rodriguez to steroids",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651151204/Alex-Rodriguez-002.jpg",
@@ -406,7 +406,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/2013/jan/10/clemens-bonds-sosa-baseball-hall-of-fame",
       "apiUrl":"http://content.guardianapis.com/sport/2013/jan/10/clemens-bonds-sosa-baseball-hall-of-fame",
       "fields":{
-        "trailText":"<p><strong>MLB:</strong> Controversial Hall of Fame vote yields no player inductees;ÊRoger Clemens and Barry Bonds are amongst several high profile players denied a place in Cooperstown</p>",
+        "trailText":"<p><strong>MLB:</strong> Controversial Hall of Fame vote yields no player inductees;Â Roger Clemens and Barry Bonds are amongst several high profile players denied a place in Cooperstown</p>",
         "headline":"Bonds, Clemens and Sosa denied as 'Steroids Era' stains the Hall of Fame",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/12/16/1324059948310/Barry-Bonds-San-Francisco-003.jpg",
@@ -1277,6 +1277,7 @@
         "headline":"Hip injury means Alex Rodriguez could miss start of 2013 season",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/8/4/1280945127144/Alex-Rodriguez-002.jpg",
+        "wordcount":"275",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1369,6 +1370,7 @@
         "headline":"Mike Napoli and Boston Red Sox 'agree three-year, $39m deal'",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/10/25/1319515172175/Texas-Rangers-Mike-Napoli-003.jpg",
+        "wordcount":"157",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1479,6 +1481,7 @@
         "headline":"David Wright agrees $138m deal to stay with New York Mets, says source",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/1/1338567662346/New-York-Mets-David-Wrigh-003.jpg",
+        "wordcount":"361",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1765,6 +1768,7 @@
         "headline":"Philadelphia Phillies' Carlos Ruiz gets 25-game ban for amphetamine use",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2008/12/3/1228292505097/Philadelphia-Phillies-clo-003.jpg",
+        "wordcount":"342",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1848,6 +1852,7 @@
         "headline":"Marvin Miller, union leader who changed baseball, dies at 95",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/27/1354045146803/552bd2ae-ddba-4c78-bb60-1dd5d6bc0c86-140.jpeg",
+        "wordcount":"381",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1931,6 +1936,7 @@
         "headline":"Evan Longoria signs $100m deal to stay with Tampa Bay Rays until 2023",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/28/1348860779587/Tampa-Bay-Rays-Evan-Longo-003.jpg",
+        "wordcount":"361",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2023,6 +2029,7 @@
         "headline":"Nate Silver: it's the numbers, stupid",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/guardian/About/General/2012/11/15/1352994921416/Nate-Silver-New-York-Time-005.jpg",
+        "wordcount":"2554",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2362,6 +2369,7 @@
         "headline":"Melky Cabrera close to two-year deal with Toronto Blue Jays",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/15/1345060052574/Melky-Cabrera-has-been-su-005.jpg",
+        "wordcount":"203",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2463,6 +2471,7 @@
         "headline":"Miguel Cabrera of Detroit beats Mike Trout to be American League MVP",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/6/1349547436956/9156683b-6358-46f6-86c6-68f6011fdda8-140.jpeg",
+        "wordcount":"434",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2573,6 +2582,7 @@
         "headline":"RA Dickey of New York Mets is first knuckleballer to win Cy Young Award",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/15/1353002193195/RA-Dickey-of-the-New-York-005.jpg",
+        "wordcount":"553",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2898,6 +2908,7 @@
         "headline":"New York Yankees: the end of an era?",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350623814159/bd1875eb-2fbb-42a8-a471-8504fbef061d-140.jpeg",
+        "wordcount":"1087",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2999,6 +3010,7 @@
         "headline":"Detroit Tigers reach World Series after sweeping New York Yankees",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604800318/d057ccf5-5a3b-4ed6-b79e-fc8cac7fe2c7-140.jpeg",
+        "wordcount":"499",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3101,6 +3113,7 @@
         "headline":"Detroit Tigers 8 - New York Yankees 1 \u2014 as it happened",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604298338/1eeae587-249b-4862-b914-93b4ae30a6bd-140.jpeg",
+        "wordcount":"3722",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3229,10 +3242,11 @@
       "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
       "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
       "fields":{
-        "trailText":"<p><strong>David Lengel:</strong>ÊPostseason begins on Friday with the wild-card games;Ê10 team format makes its debut;ÊFollow the action all October with The Guardian - live!</p>",
+        "trailText":"<p><strong>David Lengel:</strong>Â Postseason begins on Friday with the wild-card games;Â 10 team format makes its debut;Â Follow the action all October with The Guardian - live!</p>",
         "headline":"MLB Playoffs 2012 preview",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/25/1348590928573/New-York-Yankees-v-Oaklan-003.jpg",
+        "wordcount":"3779",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3415,6 +3429,7 @@
         "headline":"MLB: five things we learned in week 24",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/17/1347847877818/09f2185b-7866-493c-be91-b13654d5cc74-140.jpeg",
+        "wordcount":"2915",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3525,6 +3540,7 @@
         "headline":"MLB: Who will reach the playoffs?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/9/1339264995227/Cincinnati-Reds-vs-Detroi-003.jpg",
+        "wordcount":"3931",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3662,6 +3678,7 @@
         "headline":"Roger Clemens back on the mound: 'I don't know exactly what's next'",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987675848/Roger-Clemens-Skeeters-005.jpg",
+        "wordcount":"1553",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3771,14 +3788,15 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2012-08-22T19:34:00Z",
-      "webTitle":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+      "webTitle":"Oakland Athletics' Bartolo ColÃ³n gets 50-game ban for testosterone use",
       "webUrl":"http://www.guardian.co.uk/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
       "apiUrl":"http://content.guardianapis.com/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
       "fields":{
-        "trailText":"<p>The Oakland Athletics starting pitcher Bartolo Col—n has been suspended for 50 games without pay after testing positive for testosterone</p>",
-        "headline":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+        "trailText":"<p>The Oakland Athletics starting pitcher Bartolo ColÃ³n has been suspended for 50 games without pay after testing positive for testosterone</p>",
+        "headline":"Oakland Athletics' Bartolo ColÃ³n gets 50-game ban for testosterone use",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/22/1345663998952/Oakland-Athletics-pitcher-005.jpg",
+        "wordcount":"289",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3853,7 +3871,7 @@
           "altText":"Oakland Athletics pitcher Bartolo Colon delivers a pitch against the Toronto Blue Jays",
           "height":"276",
           "credit":"Beck Diefenbach/Reuters",
-          "caption":"Oakland Athletics pitcher Bartolo Col—n delivers a pitch against the Toronto Blue Jays. Photograph: Beck Diefenbach/Reuters",
+          "caption":"Oakland Athletics pitcher Bartolo ColÃ³n delivers a pitch against the Toronto Blue Jays. Photograph: Beck Diefenbach/Reuters",
           "width":"460"
         }
       }],
@@ -3871,6 +3889,7 @@
         "headline":"Pedroia denies rift between Red Sox players and manager Bobby Valentine",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/15/1345035111903/Dustin-Pedroia-Bobby-Vale-003.jpg",
+        "wordcount":"361",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3972,6 +3991,7 @@
         "headline":"Johnny Pesky, Red Sox legend who spent six decades with club, dies at 92",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956309340/Johnny-Pesky-at-Fenway-Pa-003.jpg",
+        "wordcount":"252",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4351,6 +4371,7 @@
         "headline":"All-Star Game: NL makes it three in a row as AL's big hitters fail to shine",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342008777365/Melky-Cabrera-and-Matt-Ho-003.jpg",
+        "wordcount":"1017",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4466,6 +4487,7 @@
         "headline":"Prince Fielder goes big at the Home Run Derby as Cano swings and squirms",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923110996/Prince-Fielder-and-kids-w-003.jpg",
+        "wordcount":"1249",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4567,6 +4589,7 @@
         "headline":"The Miami Marlins go south, Kevin Youkilis goes west",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/5/1333584804682/The-Miami-Marlins-003.jpg",
+        "wordcount":"2182",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4713,6 +4736,7 @@
         "headline":"MLB: Five things we learned in week 11",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/19/1340069149265/Roger-Clemens-003.jpg",
+        "wordcount":"2702",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4856,6 +4880,7 @@
         "headline":"Roger Clemens acquitted on perjury charges: 'It has been a hard five years'",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/18/1340055387499/Roger-Clemens-faces-the-m-003.jpg",
+        "wordcount":"484",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -4957,6 +4982,7 @@
         "headline":"Why Cubs shouldn't win World Series and Pittsburgh's best for 19 years?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/12/1339468706443/Pittsburgh-Pirates-Andrew-003.jpg",
+        "wordcount":"2141",
         "liveBloggingNow":"false"
       },
       "tags":[{
