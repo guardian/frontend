@@ -11,7 +11,7 @@ define([
         var that = this;
 
         this.init = function () {
-            this.load('/experiment/' + experimentName + '/' + config.page.pageId);
+            this.load('/stories/' + experimentName + '/' + config.page.pageId);
         };
 
         // View
