@@ -3,8 +3,8 @@
     case a: Article => {
         <article id="article" class="article @if(a.isLive){is-live}">
             <header class="article-head">
-                @fragments.byline(a.byline, a)
                 @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+                <h2 class="article-headline">Latest Developments</h2>
             </header>
 
             @if(!a.isLive) {
@@ -15,6 +15,8 @@
                 }
             }
 
+            @fragments.byline(a.byline, a)
+
             <div class="article-body from-content-api @if(a.isLive) {live-blog}">
                 @withJsoup(BulletCleaner(a.body))(
                     PictureCleaner(a),
@@ -24,6 +26,7 @@
                     WitnessCleaner,
                     Summary
                 )
+                <p><a href="#top">Back to top</a></p>
             </div>
         </article>
     }

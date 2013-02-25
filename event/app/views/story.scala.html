@@ -16,31 +16,32 @@
     </h1>
 
     <section class="story-latest">
-        <h2>Latest Developments</h2>
-        @story.contentByColour.get("Background").map{ content =>
+        @story.contentByColour.get("Overview").map{ content =>
             @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
                 @fragments.latest(article, edition)
             }
        }
     </section>
 
-    <section class="story-overview">
-        @story.hero.map{ img =>
-            <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                <img class="maxed main-image" src="@story.hero"
-                     itemprop="contentURL"
-                     alt="@StripHtmlTags(story.title)"
-                     title="@StripHtmlTags(story.title)" />
-            </figure>
-        }
+    @story.explainer.map{ explainer =>
+        <section class="story-overview">
 
-        @story.explainer.map{ explainer =>
-            <h2 class="page-head">Overview</h2>
+            <h2 class="article-headline box-indent">Background</h2>
+
+            @story.hero.map{ img =>
+                <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                    <img class="maxed main-image" src="@story.hero"
+                         itemprop="contentURL"
+                         alt="@StripHtmlTags(story.title)"
+                         title="@StripHtmlTags(story.title)" />
+                </figure>
+            }
+
             <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
                 @cleanTrailText(explainer)
             </p>
-        }
-    </section>
+        </section>
+    }
 
     <ul class="accordion">
 
