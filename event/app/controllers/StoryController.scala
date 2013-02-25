@@ -25,7 +25,9 @@ object StoryController extends Controller with Logging {
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
-            Ok(Compressed(views.html.story(StoryPage(story))))
+            Cached(60) {
+              Ok(Compressed(views.html.story(StoryPage(story))))
+            }
           }.getOrElse(NotFound)
         }
       }
