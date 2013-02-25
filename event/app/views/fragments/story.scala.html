@@ -1,6 +1,6 @@
 @(story: model.Story, articleId: String)
 <h3 class="type-2 article-zone">
-    <a href="/stories/@story.id" class="zone-color">@story.title</a>
+    <a href="/stories/@story.id" class="zone-color" data-link-name="story title">@story.title</a>
 </h3>
 
 @story.explainer.map{ explainer =>
@@ -9,13 +9,13 @@
     </p>
 }
 
-<ul class="accordion">
+<ul class="accordion" data-link-name="story package">
 
     @if(story.hasContent) {
         <li class="accordion-item">
             <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
 
-            <section class="story-latest">
+            <section class="story-latest" data-link-name="latest">
                 @defining(story.contentByImportance.filter(_.id != articleId)){ content =>
                     @fragments.trailblocks.thumbnail(content, 3, true, 3)
                 }
