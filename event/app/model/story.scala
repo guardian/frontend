@@ -60,10 +60,10 @@ case class Story(
     title: String,
     events: Seq[Event] = Nil,
     explainer: Option[String] = None,
-    hero: Option[String] = None) {
+    hero: Option[String] = None) extends implicits.Collections {
 
   lazy val hasEvents: Boolean = events.nonEmpty
-  lazy val content = events.flatMap(_.content)
+  lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
