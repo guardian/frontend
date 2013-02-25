@@ -14,7 +14,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
   val validFormats: Seq[String] = Seq("html", "json")
 
   def render() = Action { implicit request =>
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     val promiseOfTopStories = Akka.future(lookup(edition))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories(_, "html") } getOrElse { NotFound })
@@ -22,7 +22,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
   }
 
   def renderJson() = Action { implicit request =>
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     val promiseOfTopStories = Akka.future(lookup(edition))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories(_, "json") } getOrElse { NotFound })

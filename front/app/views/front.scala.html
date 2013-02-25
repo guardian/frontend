@@ -4,7 +4,7 @@
 }{
     <div id="front-container" class="cf" data-link-name="Front">
         @trailblocks.map{ block =>
-            @fragments.frontBlock(block, Edition(request, Configuration))
+            @fragments.frontBlock(block, Site(request).edition)
         }
     </div>
 

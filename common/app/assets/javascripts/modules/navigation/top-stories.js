@@ -28,11 +28,8 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     if (state === false || control !== 'topstories-control-header') {
                         bonzo(topstoriesHeader).addClass('is-off');
                     }
-
                 });
-
             }
-
         };
 
         // Bindings
@@ -42,7 +39,13 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         // Model
 
         this.load = function (config) {
-            var url = config.page.coreNavigationUrl + '/top-stories.json?page-size=10&view=link';
+
+            var url = '/top-stories.json?page-size=10&view=link';
+
+            if (config.pathPrefix) {
+                url = config.pathPrefix + url;
+            }
+
             return ajax({
                     url: url,
                     type: 'jsonp',

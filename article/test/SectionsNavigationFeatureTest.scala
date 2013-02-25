@@ -39,7 +39,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         then("I should see a link to the US edition")
 
-        val editionLink = findFirst("[data-link-name=us-edition]")
+        val editionLink = findFirst("[data-link-name='switch to us edition']")
 
         editionLink.getAttribute("href") should be("http://127.0.0.1:9000/world/2012/aug/23/australia-mining-boom-end")
       }
@@ -52,7 +52,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         then("I should see a link to the UK edition")
 
-        val editionLink = findFirst("[data-link-name=uk-edition]")
+        val editionLink = findFirst("[data-link-name='switch to uk edition']")
 
         editionLink.getAttribute("href") should be("http://localhost:9000/world/2012/aug/23/australia-mining-boom-end")
       }
