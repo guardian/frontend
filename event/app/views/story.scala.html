@@ -1,4 +1,4 @@
-@(page: StoryPage)(implicit request: RequestHeader)
+@(page: StoryPage, edition: String)(implicit request: RequestHeader)
 
 @section(title: String, content: Seq[model.Content]) = {
     <li class="accordion-item">
@@ -18,8 +18,8 @@
     <section class="story-latest">
         <h2>Latest Developments</h2>
         @story.contentByColour.get("Background").map{ content =>
-            @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).head){ article =>
-                @fragments.latest(article)
+            @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
+                @fragments.latest(article, edition)
             }
        }
     </section>

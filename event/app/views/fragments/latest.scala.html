@@ -1,4 +1,4 @@
-@(content: model.Content)
+@(content: Seq[model.Content], edition: String)
 @content.map{
     case a: Article => {
         <article id="article" class="article @if(a.isLive){is-live}">
@@ -15,7 +15,7 @@
                 }
             }
 
-            <div class="article-body from-content-api @if(article.isLive) {live-blog}">
+            <div class="article-body from-content-api @if(a.isLive) {live-blog}">
                 @withJsoup(BulletCleaner(a.body))(
                     PictureCleaner(a),
                     InBodyLinkCleaner("in body link"),
