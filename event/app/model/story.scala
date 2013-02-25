@@ -63,11 +63,11 @@ case class Story(
     hero: Option[String] = None) extends implicits.Collections {
 
   lazy val hasEvents: Boolean = events.nonEmpty
-  lazy val content = events.flatMap(_.content)
+  lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
-  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).sortBy(_.importance).reverse.distinctBy(_.id)
+  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).sortBy(_.importance).reverse
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour.getOrElse(0)).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
