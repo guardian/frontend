@@ -3,8 +3,8 @@ package controllers.front
 import common._
 import play.api.libs.json.JsValue
 import play.api.libs.json.Json.parse
-import akka.util.duration._
-import akka.util.Timeout
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 import conf.Configuration
 import common.Response
 import model.Trailblock
@@ -67,7 +67,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def warmup() = {
     super.warmup()
-    quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
+    quietly(configAgent.await(5.seconds).foreach(_.warmup()))
   }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList

@@ -1,7 +1,7 @@
-import common.RequestMetrics
-import com.gu.management.play.{ RequestTimer, StatusCounters }
-import controllers.front.{ ConfiguredEdition, Front }
+import conf.RequestMeasurementMetrics
+import controllers.front.Front
 import play.api.GlobalSettings
+import play.api.mvc.WithFilters
 
 trait FrontLifecycle extends GlobalSettings {
 
@@ -16,14 +16,5 @@ trait FrontLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters with FrontLifecycle {
 
-  import RequestMetrics._
-
-  override val requestTimer = RequestTimingMetric
-  override val okCounter = Request200s
-  override val errorCounter = Request50xs
-  override val notFoundCounter = Request404s
-  override val redirectCounter = Request30xs
-
-}
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*)  with FrontLifecycle

@@ -1,14 +1,12 @@
 package controllers.front
 
-import java.util.concurrent.TimeUnit._
-import controllers.FrontPage
 import model.TrailblockDescription
 import model.Trailblock
 import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
-import conf.CommonSwitches._
-import akka.util.Duration
-import org.joda.time.DateTime
+
+import scala.concurrent.duration._
+
 import views.support.{ Featured, Thumbnail, Headline }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 
@@ -16,11 +14,11 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 //and bootstrapping the front (setting up the refresh schedule)
 class Front extends AkkaSupport with Logging {
 
-  val refreshDuration = Duration(60, SECONDS)
+  val refreshDuration = 60.seconds
 
   private var refreshSchedule: Option[Cancellable] = None
 
-  val ukEditions = Map(
+  lazy val ukEditions = Map(
 
     "front" -> new ConfiguredEdition("UK", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
@@ -61,7 +59,7 @@ class Front extends AkkaSupport with Logging {
     ))
   )
 
-  val usEditions = Map(
+  lazy val usEditions = Map(
 
     "front" -> new ConfiguredEdition("US", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
@@ -108,7 +106,7 @@ class Front extends AkkaSupport with Logging {
   }
 
   def startup() {
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = Duration(5, SECONDS)) {
+    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
       log.info("Refreshing Front")
       Front.refresh()
     })

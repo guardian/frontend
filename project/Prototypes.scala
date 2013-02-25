@@ -95,7 +95,7 @@ trait Prototypes extends Testing {
       "com.gu" %% "configuration" % "3.9",
       "com.gu.openplatform" %% "content-api-client" % "1.21",
 
-      "com.typesafe.akka" % "akka-agent" % "2.0.2",
+      "com.typesafe.akka" %% "akka-agent" % "2.1.0",
       "commons-io" % "commons-io" % "2.4",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",

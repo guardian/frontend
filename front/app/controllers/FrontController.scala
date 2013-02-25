@@ -10,6 +10,7 @@ import play.api.Play.current
 import model.Trailblock
 import scala.Some
 import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
 
 object FrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk")
