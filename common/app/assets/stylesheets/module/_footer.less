@@ -3,6 +3,7 @@
     margin: 0;
     padding: @baseline*2 @gutter @baseline*4 @gutter;
     background-color: @darkMushroom;
+    border-top-width: 0;
 }
 
 .footer p {
@@ -27,22 +28,17 @@
     background-color: white;
     border-top-style: solid;
     font-size: 11px;
-    padding-left: 0;
-    padding-right: 0;
-
-    ul li:last-child {
-      border-right: 0px;
-    }
+    padding: 0;
+    border-top-width: 3px;
 
     p {
       clear: none;
+      color: @neutralSable;
     }
 
     li {
-      display: inline-block;
-      border-right: 1px solid silver;
-      padding-right: 10px;
-      margin-right: 10px;
+      display: inline-block;      
+      margin-right: 4px;
       float: left;
     }
 
@@ -52,8 +48,18 @@
       border: none;
     }
 
+    li a:after {
+      content: "\0000a0|";
+    }
+
+    li:last-child a:after {
+      content: "";
+    }
+
+
     .nav {
       padding-top: 3px;
+      padding-bottom: 0;
     }
 
     .copyright {
@@ -69,7 +75,15 @@
         a {
           text-decoration: none;
           float: left;
-          margin-right: 8px;
+          margin-right: 4px;
+        }
+
+        a:after {
+          content: "\0000a0|";
+        } 
+
+        a:last-child:after {
+          content: "";
         }
     }
 
