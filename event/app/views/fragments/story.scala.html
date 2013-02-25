@@ -1,5 +1,5 @@
 @(story: model.Story)
-<h3 class="type-2 article-zone zone-color">@story.title</h3>
+<h3 class="type-2 article-zone zone-color"><a href="/stories/@story.id">@story.title</a></h3>
 
 @story.explainer.map{ explainer =>
     <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
