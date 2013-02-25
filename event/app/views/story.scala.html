@@ -15,10 +15,14 @@
         <span class="zone-color">@story.title</span>
     </h1>
 
-   <section class="story-latest">
-       <h2>Latest Developments</h2>
-
-   </section>
+    <section class="story-latest">
+        <h2>Latest Developments</h2>
+        @story.contentByColour.get("Background").map{ content =>
+            @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).head){ article =>
+                @fragments.latest(article)
+            }
+       }
+    </section>
 
     <section class="story-overview">
         @story.hero.map{ img =>

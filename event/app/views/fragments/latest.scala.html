@@ -1,0 +1,30 @@
+@(content: model.Content)
+@content.map{
+    case a: Article => {
+        <article id="article" class="article @if(a.isLive){is-live}">
+            <header class="article-head">
+                @fragments.byline(a.byline, a)
+                @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+            </header>
+
+            @if(!a.isLive) {
+                @a.mainPicture.map{ mainPicture =>
+                    @a.mainPicture(width=220).map{ smallCrop =>
+                        @fragments.img(mainPicture, smallCrop)
+                    }
+                }
+            }
+
+            <div class="article-body from-content-api @if(article.isLive) {live-blog}">
+                @withJsoup(BulletCleaner(a.body))(
+                    PictureCleaner(a),
+                    InBodyLinkCleaner("in body link"),
+                    BlockNumberCleaner,
+                    TweetCleaner,
+                    WitnessCleaner,
+                    Summary
+                )
+            </div>
+        </article>
+    }
+}
