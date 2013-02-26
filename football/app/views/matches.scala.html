@@ -9,6 +9,8 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+
     @if(model.pageType == "live") {
         <div class="live-matches-dateline">
            @fragments.dateline(new DateTime, true)
