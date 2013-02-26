@@ -58,6 +58,8 @@ GET     /football/teams                                     controllers.LeagueTa
 GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
 GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
 
+GET     /football/microapp/scores                           controllers.microapp.LiveMatchesController.render()
+
 #Front
 GET     /_warmup                                            controllers.FrontController.warmup()
 GET     /_up                                                controllers.FrontController.isUp()
