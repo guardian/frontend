@@ -2,7 +2,7 @@
 
 @main(tag, Switches.all){  }{
 
-    <section class="front-section zone-@tag.section" data-link-name="@tag.section">
+    <section class="front-section zone-@tag.section two-thirds" data-link-name="@tag.section">
 
         @fragments.headers.sectionHead(tag.name)
 
@@ -46,5 +46,5 @@
         }
     }
 
-    @fragments.mostPopularPlaceholder(tag.section)
+    @fragments.mostPopularPlaceholder(tag.section, Seq("one-third"))
 }
