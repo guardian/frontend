@@ -329,16 +329,6 @@ a.competition-title {
     border-bottom: none;
 }
 
-@media screen and (min-width: @desktopBreakpoint) {
-    .football-filter.collapsible,
-    .matches-container {
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
 
 //For omniture tracking
 .football-filter > span {
@@ -361,4 +351,26 @@ a.competition-title {
 .live-matches-dateline {
     display:block;
     margin-bottom: @baseline*3 ;
+}
+
+
+@media screen and (min-width: @desktopBreakpoint) {
+    .football-table-container,
+    .football-filters {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .football-filter.collapsible,
+    .matches-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .football-nav-bottom,
+    .football-header-bottom {
+        display: none;
+    }
+
 }
