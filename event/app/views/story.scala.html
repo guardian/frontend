@@ -52,15 +52,13 @@
             </section>
         }
 
-        @story.hasQuotes
-
         @if(story.hasQuotes) {
-            @story.quotes.take(1).map{ c =>
+            @story.contentWithQuotes.headOption.map{ c =>
                 @c.quote.map{ quote =>
                     <blockquote>
                         @quote.text.map{ text =>
                             <a href="@quote.url.getOrElse(c.url)">
-                                <p>&Prime;cleanTrailText(text)&Prime;</p>
+                                <p>&Prime;@cleanTrailText(text)&Prime;</p>
                             </a>
                         }
                         <cite>@quote.by.getOrElse(c.byline) @quote.subject</cite>
