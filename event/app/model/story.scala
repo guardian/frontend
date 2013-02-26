@@ -62,6 +62,8 @@ case class Story(
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
+  lazy val quotes = contentByImportance.filter(_.quote.isDefined)
+  lazy val hasQuotes: Boolean = quotes.nonEmpty
   lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).distinctBy(_.id)
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
