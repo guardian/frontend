@@ -2,6 +2,7 @@ define([
     "common",
 
     "modules/expandable",
+    "modules/trailblocktoggle",
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
@@ -10,6 +11,7 @@ define([
 ], function (
     common,
     Expandable,
+    TrailblockToggle,
     AutoUpdate,
     MatchNav,
     Reading,
@@ -75,14 +77,20 @@ define([
                 common.mediator.on('modules:experiment:render', function() {
                     if(document.querySelector('.accordion')) {
                         var a = new Accordion();
+                        modules.showTrailblockToggles(config);
                     }
                 });
                 experiment = new Experiment(config, experimentName).init();
             } else {
                 common.mediator.emit("modules:related:load");
             }
-        }
+        },
 
+        showTrailblockToggles: function (config) {
+            var edition = config.page.edition;
+            var tt = new TrailblockToggle();
+            tt.go(edition);
+        }
     };
 
     var ready = function(config) {
@@ -96,6 +104,7 @@ define([
         if(config.page.section === "football") {
             modules.matchNav(config);
         }
+
     };
 
     // If you can wait for load event, do so.

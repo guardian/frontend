@@ -1,12 +1,13 @@
 @(story: model.Story)
-<h3 class="type-2 article-zone zone-color">@story.title</h3>
 
-@story.explainer.map{ explainer =>
-    <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-        @cleanTrailText(story.explainer.getOrElse(""))
-    </p>
-}
+<div class="front-section-head zone-background">
+    <h1>
+        <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.title</a> 
+    </h1>
+    <button class="js-visible js-toggle-trailblock toggle-trailblock" data-block-name="story" data-link-name="Show">Full Story</button>
+</div>
 
+<div class="rolled-out rolled-up" id="front-trailblock-story">
 <ul class="accordion">
 
     @if(story.hasContent) {
@@ -15,6 +16,18 @@
 
             <section class="story-latest">
                 @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
+            </section>
+        </li>
+    }
+
+    @story.explainer.map{ explainer =>
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Summary <i class="i i-filter-arrow-right"></i></a>
+
+            <section class="story-latest">
+                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                    @cleanTrailText(story.explainer.getOrElse(""))
+                </p>
             </section>
         </li>
     }
@@ -42,3 +55,4 @@
         </li>
     }
 </ul>
+</div>
