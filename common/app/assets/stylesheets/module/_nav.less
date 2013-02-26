@@ -282,7 +282,7 @@ a.topstories-control,
 /* overriding the section colours of the desktop for the mob nav */
 
 .nav li .zone-color {
-    color: @neutralSable;
+    color: @darkGrey;
 }
 
 .nav.nav-footer li .zone-color {
@@ -344,5 +344,13 @@ a.topstories-control,
     .nav {
         @import "theme/_zones";
     }
+   
+
+    .nav .zone-color:hover {
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+    }
+
 }
 
