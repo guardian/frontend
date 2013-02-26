@@ -2,8 +2,8 @@ package model
 import pa._
 import common.{ Logging, AkkaSupport }
 import conf.ContentApi
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 import com.gu.openplatform.contentapi.model.TagsResponse
 import scala.Some
 import akka.actor.Cancellable
@@ -110,7 +110,7 @@ object TeamMap extends AkkaSupport with Logging {
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(1.minute, initialDelay = 5.seconds) {
       incrementalRefresh(1) //pages are 1 based
     })
   }

@@ -3,9 +3,10 @@ package model
 import common.{ AkkaSupport, Logging }
 import conf.ContentApi
 import akka.actor.Cancellable
-import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 
 trait LiveBlogAgent extends AkkaSupport with Logging {
 
@@ -57,7 +58,7 @@ object LiveBlog extends LiveBlogAgent {
   private var schedule: Option[Cancellable] = None
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(2.minutes, initialDelay = 10.seconds) {
       refreshLiveBlogs()
     })
   }

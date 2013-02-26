@@ -10,7 +10,7 @@ import sbtassembly.Plugin.MergeStrategy
 //import RequireJsPlugin._
 //import RequireJsPlugin.RequireJsKeys._
 //import net.liftweb.json.JsonDSL._
-import org.sbtidea.SbtIdeaPlugin._
+//import org.sbtidea.SbtIdeaPlugin._
 
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
@@ -64,7 +64,7 @@ object Frontend extends Build with Prototypes with Testing {
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
 
   val football = application("football").dependsOn(commonWithTests).settings(
-    //libraryDependencies += "com.gu" %% "pa-client" % "2.9",
+    libraryDependencies += "com.gu" %% "pa-client" % "3.0",
     templatesImport ++= Seq(
       "pa._",
       "feed._"
