@@ -151,21 +151,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361820769071/michael-laudrup-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361820769071/michael-laudrup-001.jpg",
-          "source":"Getty Images",
-          "photographer":"Michael Regan",
-          "altText":"michael laudrup",
-          "height":"54",
-          "credit":"Michael Regan/Getty Images",
-          "caption":"Swansea City's players lift manager Michael Laudrup into the air after beating Bradford City 5-0 in Sunday's Capital One Cup final at Wembley. Photograph: Michael Regan/Getty Images",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
         "rel":"body",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361820781414/michael-laudrup-008.jpg",
@@ -178,6 +163,21 @@
           "credit":"Michael Regan/Getty Images",
           "caption":"Swansea's players lift their manager, Michael Laudrup, into the air after beating Bradford in Sunday's Capital One Cup final. Photograph: Michael Regan/Getty Images",
           "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361820769071/michael-laudrup-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361820769071/michael-laudrup-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Michael Regan",
+          "altText":"michael laudrup",
+          "height":"54",
+          "credit":"Michael Regan/Getty Images",
+          "caption":"Swansea City's players lift manager Michael Laudrup into the air after beating Bradford City 5-0 in Sunday's Capital One Cup final at Wembley. Photograph: Michael Regan/Getty Images",
+          "width":"54"
         }
       }],
       "references":[{
@@ -1371,6 +1371,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/24/1361722363208/Enthusiastic-Bradford-fan-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/24/1361722363208/Enthusiastic-Bradford-fan-002.jpg",
+          "source":"Tom Jenkins",
+          "altText":"Enthusiastic Bradford fans",
+          "height":"276",
+          "credit":"Tom Jenkins",
+          "caption":"Bradford City supporters knew their trip to Wembley was an experience to enjoy, regardless of the result. Photograph: Tom Jenkins for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/24/1361737160450/Bradford-City-v-Swansea-C-001.jpg",
@@ -1487,20 +1501,6 @@
           "height":"276",
           "credit":"Anna Gowthorpe/PA",
           "caption":"Bradford City supporters knew their trip to Wembley was an experience to enjoy, regardless of the result. Photograph: Anna Gowthorpe/PA",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/24/1361722363208/Enthusiastic-Bradford-fan-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/24/1361722363208/Enthusiastic-Bradford-fan-002.jpg",
-          "source":"Tom Jenkins",
-          "altText":"Enthusiastic Bradford fans",
-          "height":"276",
-          "credit":"Tom Jenkins",
-          "caption":"Bradford City supporters knew their trip to Wembley was an experience to enjoy, regardless of the result. Photograph: Tom Jenkins for the Guardian",
           "width":"460"
         }
       }],
@@ -2484,6 +2484,150 @@
       "mediaAssets":[{
         "type":"picture",
         "rel":"gallery",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007-thumb-2897.jpg",
+          "altText":"Capital One Final 7: Swansea's players warm up",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007-thumb-2897.jpg",
+          "caption":"Swansea's players warm up in front of their fans",
+          "width":"721"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006-thumb-5704.jpg",
+          "altText":"Capital One Final 7: The Bantams and their mascots line up before kick-off",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006-thumb-5704.jpg",
+          "caption":"The Bantams and their mascots line up before kick-off in front of a 82,597 crowd ",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":28,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001-thumb-7268.jpg",
+          "altText":"Capital One Final 7: Nathan Dyer is enraged",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001-thumb-7268.jpg",
+          "caption":"Whilst Bradford sort out a replacement keeper, there's a bit of an argy-bargy going on in the Swansea ranks over who will take the spot kick.  Nathan Dyer is enraged that Jonathan De Guzman will not let him take the penalty and complete his hat-trick. To quote Barry Davies \"Look at his face, just look at his face\"",
+          "width":"654"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":33,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002-thumb-735.jpg",
+          "altText":"Capital One Final 7: Stephen Darby and Nahki Wells close the door on Swansea's Roland Lamah",
+          "height":"477",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002-thumb-735.jpg",
+          "caption":"Dyer's replacement Roland Lamah soon finds himself crowded out by two Bradford players, Stephen Darby and Nahki Wells",
+          "width":"400"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":35,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009-thumb-73.jpg",
+          "altText":"Capital One Final 7: Dejected Bradford City players",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009-thumb-73.jpg",
+          "caption":"During injury time De Guzman slides in Angel Rangel's cross to notch his second and Swansea's fifth.  The final whistle goes and Bradford's dream has ended and some of their players are in tears",
+          "width":"653"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":38,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008-thumb-8955.jpg",
+          "altText":"Capital One Final 7: Nathan Dyer with his man-of-the-match award and winner's medal",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008-thumb-8955.jpg",
+          "caption":"Nathan Dyer collects his man-of-the-match award and shows off his winner's medal",
+          "width":"706"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":39,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004-thumb-7571.jpg",
+          "altText":"Capital One Final 7: The guard of honour is returned to Swansea by the Bradford players ",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004-thumb-7571.jpg",
+          "caption":"The guard of honour is returned as Bradford's players congratulate Swansea's",
+          "width":"723"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":41,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005-thumb-967.jpg",
+          "altText":"Capital One Final 7: Bradford's players applaud their fans after the match",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005-thumb-967.jpg",
+          "caption":"Whilst the Bradford's players applaud their fans ",
+          "width":"757"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":42,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003-thumb-5541.jpg",
+          "altText":"Capital One Final 7: Michael Laudrup gets a hand on the trophy",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003-thumb-5541.jpg",
+          "caption":"Michael Laudrup hailed his team's League Cup final victory over Bradford City, which marked the Welsh club's centenary year with the first major trophy in their history, as the greatest achievement in his managerial career and \"up there with the best things\" he has experienced in football",
+          "width":"696"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361718412975/Bradford-City-v-Swansea-C-001.jpg",
         "fields":{
@@ -2660,22 +2804,6 @@
       },{
         "type":"picture",
         "rel":"gallery",
-        "index":12,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007-thumb-2897.jpg",
-          "altText":"Capital One Final 7: Swansea's players warm up",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741046588/Swanseas-players-warm-up-007-thumb-2897.jpg",
-          "caption":"Swansea's players warm up in front of their fans",
-          "width":"721"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
         "index":13,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361724181317/Bradford-City-mascots-003.jpg",
         "fields":{
@@ -2688,22 +2816,6 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361724181317/Bradford-City-mascots-003-thumb-1425.jpg",
           "caption":"Bradford received special permission from the Football League to have two mascots for the final after a facebook campaign aimed at bringing their semi-final mascot Jake Turton, left, to the final.  \nBrave cancer survivor Jake, 9, is accompanied by Ryan Siddall, 12, who won a gold medal in table tennis at last year's British Transplant Games after his dad donated him a kidney.  The final will be the first time Ryan has led his City heroes out",
           "width":"702"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":14,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006-thumb-5704.jpg",
-          "altText":"Capital One Final 7: The Bantams and their mascots line up before kick-off",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741043130/The-Bantams-and-their-mas-006-thumb-5704.jpg",
-          "caption":"The Bantams and their mascots line up before kick-off in front of a 82,597 crowd ",
-          "width":"722"
         }
       },{
         "type":"picture",
@@ -2916,22 +3028,6 @@
       },{
         "type":"picture",
         "rel":"gallery",
-        "index":28,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001-thumb-7268.jpg",
-          "altText":"Capital One Final 7: Nathan Dyer is enraged",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741025821/Nathan-Dyer-is-enraged-001-thumb-7268.jpg",
-          "caption":"Whilst Bradford sort out a replacement keeper, there's a bit of an argy-bargy going on in the Swansea ranks over who will take the spot kick.  Nathan Dyer is enraged that Jonathan De Guzman will not let him take the penalty and complete his hat-trick. To quote Barry Davies \"Look at his face, just look at his face\"",
-          "width":"654"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
         "index":29,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361729230710/Bradford-City-replacement-004.jpg",
         "fields":{
@@ -2996,22 +3092,6 @@
       },{
         "type":"picture",
         "rel":"gallery",
-        "index":33,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002-thumb-735.jpg",
-          "altText":"Capital One Final 7: Stephen Darby and Nahki Wells close the door on Swansea's Roland Lamah",
-          "height":"477",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741029619/Stephen-Darby-and-Nahki-W-002-thumb-735.jpg",
-          "caption":"Dyer's replacement Roland Lamah soon finds himself crowded out by two Bradford players, Stephen Darby and Nahki Wells",
-          "width":"400"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
         "index":34,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361729429140/Bradford-fans-007.jpg",
         "fields":{
@@ -3024,22 +3104,6 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361729429140/Bradford-fans-007-thumb-8534.jpg",
           "caption":"In the 86th minute Bradford get their first corner of the game, the Bradford's fans aren't giving up hope of a consolation goal yet.  Unfortunatley for them Ashley Williams heads clear",
           "width":"722"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":35,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009-thumb-73.jpg",
-          "altText":"Capital One Final 7: Dejected Bradford City players",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361743270986/Dejected-Bradford-City-pl-009-thumb-73.jpg",
-          "caption":"During injury time De Guzman slides in Angel Rangel's cross to notch his second and Swansea's fifth.  The final whistle goes and Bradford's dream has ended and some of their players are in tears",
-          "width":"653"
         }
       },{
         "type":"picture",
@@ -3076,38 +3140,6 @@
       },{
         "type":"picture",
         "rel":"gallery",
-        "index":38,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008-thumb-8955.jpg",
-          "altText":"Capital One Final 7: Nathan Dyer with his man-of-the-match award and winner's medal",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741050151/Nathan-Dyer-with-his-man--008-thumb-8955.jpg",
-          "caption":"Nathan Dyer collects his man-of-the-match award and shows off his winner's medal",
-          "width":"706"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":39,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004-thumb-7571.jpg",
-          "altText":"Capital One Final 7: The guard of honour is returned to Swansea by the Bradford players ",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741036319/The-guard-of-honour-is-re-004-thumb-7571.jpg",
-          "caption":"The guard of honour is returned as Bradford's players congratulate Swansea's",
-          "width":"723"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
         "index":40,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361732801613/Swansea-bring-the-trophy--003.jpg",
         "fields":{
@@ -3120,38 +3152,6 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361732801613/Swansea-bring-the-trophy--003-thumb-6758.jpg",
           "caption":"Swansea bring the trophy down to the pitch and the champagne flows",
           "width":"744"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":41,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005-thumb-967.jpg",
-          "altText":"Capital One Final 7: Bradford's players applaud their fans after the match",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741039990/Bradfords-players-applaud-005-thumb-967.jpg",
-          "caption":"Whilst the Bradford's players applaud their fans ",
-          "width":"757"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":42,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003-thumb-5541.jpg",
-          "altText":"Capital One Final 7: Michael Laudrup gets a hand on the trophy",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361741032755/Michael-Laudrup-gets-a-ha-003-thumb-5541.jpg",
-          "caption":"Michael Laudrup hailed his team's League Cup final victory over Bradford City, which marked the Welsh club's centenary year with the first major trophy in their history, as the greatest achievement in his managerial career and \"up there with the best things\" he has experienced in football",
-          "width":"696"
         }
       },{
         "type":"picture",
@@ -4269,6 +4269,21 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361572124507/-Swansea-Citys-Garry-Monk-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361572124507/-Swansea-Citys-Garry-Monk-008.jpg",
+          "source":"Action Images",
+          "photographer":"Craig Brough",
+          "altText":" Swansea City's Garry Monk",
+          "height":"276",
+          "credit":"Craig Brough/Action Images",
+          "caption":"Swansea City captain Garry Monk's nicknames are Skip, Monks, Old Man, Gerhard or Bradley off EastEnders.  Photograph: Craig Brough/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/22/1361560152159/Garry-Monk-001.jpg",
@@ -4387,21 +4402,6 @@
           "caption":"Swansea City captain Garry Monk's nicknames are Skip, Monks, Old Man, Gerhard or Bradley off EastEnder Photograph: Nick Potts/PA",
           "width":"460"
         }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361572124507/-Swansea-Citys-Garry-Monk-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/2/22/1361572124507/-Swansea-Citys-Garry-Monk-008.jpg",
-          "source":"Action Images",
-          "photographer":"Craig Brough",
-          "altText":" Swansea City's Garry Monk",
-          "height":"276",
-          "credit":"Craig Brough/Action Images",
-          "caption":"Swansea City captain Garry Monk's nicknames are Skip, Monks, Old Man, Gerhard or Bradley off EastEnders.  Photograph: Craig Brough/Action Images",
-          "width":"460"
-        }
       }],
       "references":[{
         "type":"pa-football-competition",
@@ -4493,6 +4493,150 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"gallery",
+        "index":30,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003-thumb-8187.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003-thumb-8187.jpg",
+          "caption":"Bradford will be in the home dressing room for the final ...",
+          "width":"715"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":31,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004-thumb-6749.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004-thumb-6749.jpg",
+          "caption":"Which is England's dressing room when they play at Wembley. Midfielders Ricky Ravenhill (left) and captain Gary Jones share a joke as they take make themselves at home",
+          "width":"633"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":32,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002-thumb-9916.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002-thumb-9916.jpg",
+          "caption":"Players Matt Duke (left), Rory McArdle and Alan Connell try out the hairdryers ",
+          "width":"702"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":33,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005-thumb-5175.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005-thumb-5175.jpg",
+          "caption":"Whilst Zavon Hines finds his special personalised vest for the game in the kit bags in the dressing room",
+          "width":"705"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":34,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007-thumb-1318.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007-thumb-1318.jpg",
+          "caption":"Rory McArdle poses next to a photo of himself in the tunnel area",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":35,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006-thumb-3194.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006-thumb-3194.jpg",
+          "caption":"There's people on the pitch, they are taking photos ",
+          "width":"738"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":36,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001-thumb-1656.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001-thumb-1656.jpg",
+          "caption":"The squad, management, physios and coach driver pose for a team photo on the pitch in front of the end where the Bradford fans will be",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":37,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009-thumb-9608.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009-thumb-9608.jpg",
+          "caption":"The players visit the Royal Box. Stephen Darby takes a picture as a replica of the F.A. Cup stands behind him ...",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":38,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008.jpg",
+          "source":"Tom Jenkins",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008-thumb-3110.jpg",
+          "altText":"bradford: Bradford City visit Wembley",
+          "height":"480",
+          "credit":"Tom Jenkins",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008-thumb-3110.jpg",
+          "caption":"Whilst Zavon Hines (left), Ricky Ravenhill and Alan Connell savour the view from the balcony in front of the Royal Box ",
+          "width":"722"
+        }
+      },{
         "type":"picture",
         "rel":"gallery",
         "index":1,
@@ -4955,150 +5099,6 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361556316596/Bradford-training-027-thumb-6193.jpg",
           "caption":"All the players have been given free embroidered boots for the final to celebrate their remarkable achievment",
           "width":"726"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":30,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003-thumb-8187.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716168331/Bradford-City-visit-Wembl-003-thumb-8187.jpg",
-          "caption":"Bradford will be in the home dressing room for the final ...",
-          "width":"715"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":31,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004-thumb-6749.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716171324/Bradford-City-visit-Wembl-004-thumb-6749.jpg",
-          "caption":"Which is England's dressing room when they play at Wembley. Midfielders Ricky Ravenhill (left) and captain Gary Jones share a joke as they take make themselves at home",
-          "width":"633"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":32,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002-thumb-9916.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716165324/Bradford-City-visit-Wembl-002-thumb-9916.jpg",
-          "caption":"Players Matt Duke (left), Rory McArdle and Alan Connell try out the hairdryers ",
-          "width":"702"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":33,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005-thumb-5175.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716174827/Bradford-City-visit-Wembl-005-thumb-5175.jpg",
-          "caption":"Whilst Zavon Hines finds his special personalised vest for the game in the kit bags in the dressing room",
-          "width":"705"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":34,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007-thumb-1318.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716180891/Bradford-City-visit-Wembl-007-thumb-1318.jpg",
-          "caption":"Rory McArdle poses next to a photo of himself in the tunnel area",
-          "width":"722"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":35,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006-thumb-3194.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716177978/Bradford-City-visit-Wembl-006-thumb-3194.jpg",
-          "caption":"There's people on the pitch, they are taking photos ",
-          "width":"738"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":36,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001-thumb-1656.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716160657/Bradford-City-visit-Wembl-001-thumb-1656.jpg",
-          "caption":"The squad, management, physios and coach driver pose for a team photo on the pitch in front of the end where the Bradford fans will be",
-          "width":"722"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":37,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009-thumb-9608.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716187216/Bradford-City-visit-Wembl-009-thumb-9608.jpg",
-          "caption":"The players visit the Royal Box. Stephen Darby takes a picture as a replica of the F.A. Cup stands behind him ...",
-          "width":"722"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":38,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008.jpg",
-          "source":"Tom Jenkins",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008-thumb-3110.jpg",
-          "altText":"bradford: Bradford City visit Wembley",
-          "height":"480",
-          "credit":"Tom Jenkins",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/24/1361716184063/Bradford-City-visit-Wembl-008-thumb-3110.jpg",
-          "caption":"Whilst Zavon Hines (left), Ricky Ravenhill and Alan Connell savour the view from the balcony in front of the Royal Box ",
-          "width":"722"
         }
       }],
       "references":[{

@@ -2957,6 +2957,35 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563194954/alison-brooks-newhall-har-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563194954/alison-brooks-newhall-har-010.jpg",
+          "source":"PR",
+          "photographer":"Paul Riddle",
+          "altText":"alison brooks newhall harlow homes",
+          "height":"276",
+          "credit":"Paul Riddle/PR",
+          "caption":"The houses designed by Alison Brooks for the Newhall estate in Harlow, Essex are \u2018faceted and angled, partly so that people don't have to stare at their neighbours walls and partly to make a more dynamic ensemble\u2019. Photograph: Paul Riddle",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563388983/alison-brooks-newhall-str-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563388983/alison-brooks-newhall-str-010.jpg",
+          "source":"PR",
+          "altText":"alison brooks newhall street",
+          "height":"276",
+          "credit":"PR",
+          "caption":"The aim, says Brooks, is \u2018to change the suburban street from a desolate place into a little working community\u2019.",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/2/20/1361382363557/Contemporary-housing-on-t-002.jpg",
@@ -3094,35 +3123,6 @@
           "credit":"Alamy",
           "caption":"Alison Brooks's housing on the Newhall development in Harlow, Essex. Photograph: Alamy",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563194954/alison-brooks-newhall-har-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563194954/alison-brooks-newhall-har-010.jpg",
-          "source":"PR",
-          "photographer":"Paul Riddle",
-          "altText":"alison brooks newhall harlow homes",
-          "height":"276",
-          "credit":"Paul Riddle/PR",
-          "caption":"The houses designed by Alison Brooks for the Newhall estate in Harlow, Essex are \u2018faceted and angled, partly so that people don't have to stare at their neighbours walls and partly to make a more dynamic ensemble\u2019. Photograph: Paul Riddle",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563388983/alison-brooks-newhall-str-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/2/22/1361563388983/alison-brooks-newhall-str-010.jpg",
-          "source":"PR",
-          "altText":"alison brooks newhall street",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The aim, says Brooks, is \u2018to change the suburban street from a desolate place into a little working community\u2019.",
-          "width":"460"
         }
       }],
       "references":[]

@@ -944,7 +944,7 @@
       "fields":{
         "trailText":"<p>With his tired frat-boy opening number, I Saw Your Boobs, Oscars host Seth MacFarlane reveals how little he thinks of women, writes Sarah Hughes</p>",
         "headline":"What was Seth MacFarlane thinking with his Oscars boob?",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361810556626/Seth-MacFarlane-hosts-the-001.jpg",
         "wordcount":"577",
         "liveBloggingNow":"false"
@@ -1744,6 +1744,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361791689401/Excellent-at-avoiding-inj-012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361791689401/Excellent-at-avoiding-inj-012.jpg",
+          "source":"Getty Images",
+          "altText":"Excellent at avoiding injury \u2026 runners training in Kenya for the London Olympics.",
+          "height":"276",
+          "credit":"Getty Images",
+          "caption":"Excellent at avoiding injury \u2026 runners training in Kenya for the London Olympics. Photograph: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361791679889/Excellent-at-avoiding-inj-004.jpg",
@@ -1881,20 +1895,6 @@
           "credit":"Getty Images",
           "caption":"Excellent at avoiding injury \u2026 runners training in Kenya for the London Olympics. Photograph: Getty Images",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361791689401/Excellent-at-avoiding-inj-012.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361791689401/Excellent-at-avoiding-inj-012.jpg",
-          "source":"Getty Images",
-          "altText":"Excellent at avoiding injury \u2026 runners training in Kenya for the London Olympics.",
-          "height":"276",
-          "credit":"Getty Images",
-          "caption":"Excellent at avoiding injury \u2026 runners training in Kenya for the London Olympics. Photograph: Getty Images",
-          "width":"460"
         }
       }],
       "references":[]
@@ -3416,36 +3416,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/22/1361557309076/Brett-Riches-at-Winstons--010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/22/1361557309076/Brett-Riches-at-Winstons--010.jpg",
-          "source":"Guardian",
-          "photographer":"Linda Nylind",
-          "altText":"Brett Riches at Winston's Wish",
-          "height":"276",
-          "credit":"Linda Nylind/Guardian",
-          "caption":"Brett Riches leads a music therapy group at Winston's Wish in Cheltenham for children dealing with bereavement. Photograph: Linda Nylind for the Guardian",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361792428251/Gaby-Eirew-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361792428251/Gaby-Eirew-001.jpg",
-          "source":"Guardian",
-          "photographer":"Frank Baron",
-          "altText":"Gaby Eirew",
-          "height":"380",
-          "credit":"Frank Baron/Guardian",
-          "caption":"Gaby Eirew, creator of the app <a href=\"http://www.recordmenow.org/\">RecordMeNow.org</a>, which allows dying parents to leave messages for their children. Photograph: Frank Baron for the Guardian",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/22/1361557297682/Brett-Riches-at-Winstons--002.jpg",
@@ -3593,6 +3563,36 @@
           "credit":"Linda Nylind/Guardian",
           "caption":"Brett Riches leads a music therapy group at Winston's Wish in Cheltenham for children dealing with bereavement. Photograph: Linda Nylind for the Guardian",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/22/1361557309076/Brett-Riches-at-Winstons--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/22/1361557309076/Brett-Riches-at-Winstons--010.jpg",
+          "source":"Guardian",
+          "photographer":"Linda Nylind",
+          "altText":"Brett Riches at Winston's Wish",
+          "height":"276",
+          "credit":"Linda Nylind/Guardian",
+          "caption":"Brett Riches leads a music therapy group at Winston's Wish in Cheltenham for children dealing with bereavement. Photograph: Linda Nylind for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361792428251/Gaby-Eirew-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/2/25/1361792428251/Gaby-Eirew-001.jpg",
+          "source":"Guardian",
+          "photographer":"Frank Baron",
+          "altText":"Gaby Eirew",
+          "height":"380",
+          "credit":"Frank Baron/Guardian",
+          "caption":"Gaby Eirew, creator of the app <a href=\"http://www.recordmenow.org/\">RecordMeNow.org</a>, which allows dying parents to leave messages for their children. Photograph: Frank Baron for the Guardian",
+          "width":"220"
         }
       }],
       "references":[]
@@ -5195,7 +5195,7 @@
       "fields":{
         "trailText":"<p>With his tired frat-boy opening number, I Saw Your Boobs, Oscars host Seth MacFarlane reveals how little he thinks of women, writes Sarah Hughes</p>",
         "headline":"What was Seth MacFarlane thinking with his Oscars boob?",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361810556626/Seth-MacFarlane-hosts-the-001.jpg",
         "wordcount":"577",
         "liveBloggingNow":"false"
@@ -5770,6 +5770,13 @@
         "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
         "sectionId":"news",
         "sectionName":"News",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
         "id":"type/article",

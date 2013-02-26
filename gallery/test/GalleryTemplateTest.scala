@@ -3,13 +3,8 @@ package test
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
 import org.scalatest.FlatSpec
-import conf.Configuration
 
 class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
-
-  implicit val config = Configuration
-
-  private val host = "http://" + Configuration.edition.ukHost
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
     browser =>

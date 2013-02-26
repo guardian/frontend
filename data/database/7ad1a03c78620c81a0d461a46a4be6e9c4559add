@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":50119,
+    "total":50120,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,220 @@
       "apiUrl":"http://content.guardianapis.com/books"
     },
     "results":[{
+      "id":"books/2013/feb/26/thomas-pynchon-new-novel-911",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-02-26T11:32:18Z",
+      "webTitle":"Thomas Pynchon's new novel set in New York just before 9/11",
+      "webUrl":"http://www.guardian.co.uk/books/2013/feb/26/thomas-pynchon-new-novel-911",
+      "apiUrl":"http://content.guardianapis.com/books/2013/feb/26/thomas-pynchon-new-novel-911",
+      "fields":{
+        "trailText":"Bleeding Edge, due in September, takes place in the city's failing 'Silicon Alley'",
+        "headline":"Thomas Pynchon's new novel set in New York just before 9/11",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877920013/Tribeca-003.jpg",
+        "wordcount":"346",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/thomaspynchon",
+        "type":"keyword",
+        "webTitle":"Thomas Pynchon",
+        "webUrl":"http://www.guardian.co.uk/books/thomaspynchon",
+        "apiUrl":"http://content.guardianapis.com/books/thomaspynchon",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.guardian.co.uk/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.guardian.co.uk/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/publishing",
+        "type":"keyword",
+        "webTitle":"Publishing",
+        "webUrl":"http://www.guardian.co.uk/books/publishing",
+        "apiUrl":"http://content.guardianapis.com/books/publishing",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alisonflood",
+        "type":"contributor",
+        "webTitle":"Alison Flood",
+        "webUrl":"http://www.guardian.co.uk/profile/alisonflood",
+        "apiUrl":"http://content.guardianapis.com/profile/alisonflood",
+        "bio":"<p>Alison Flood is a writer on guardian.co.uk/books and former news editor of The Bookseller</p>",
+        "r2ContributorId":"27440",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/3/14/1300117336779/Alison.jpg",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.guardian.co.uk/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877908604/Tribeca-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877908604/Tribeca-001.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"54",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877918598/Tribeca-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877918598/Tribeca-002.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"130",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877920013/Tribeca-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877920013/Tribeca-003.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"84",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877921133/Tribeca-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877921133/Tribeca-004.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"132",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877922254/Tribeca-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877922254/Tribeca-005.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"168",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877923467/Tribeca-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877923467/Tribeca-006.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"180",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877924547/Tribeca-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877924547/Tribeca-007.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"228",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877925752/Tribeca-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877925752/Tribeca-008.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"276",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877925752/Tribeca-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/26/1361877925752/Tribeca-008.jpg",
+          "source":"Getty",
+          "altText":"Tribeca",
+          "height":"276",
+          "credit":"Getty",
+          "caption":"'Silicon Valley' in the Tribeca district of downtown Manhattan, where Thomas Pynchon's Bleeding Edge is set. Photograph: Getty",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"books/2013/feb/25/picture-books-older-children",
       "sectionId":"books",
       "sectionName":"Books",
@@ -993,20 +1207,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
-          "source":"Adam Burton / Alamy",
-          "altText":"Dawn in the Brecon Beacons",
-          "height":"276",
-          "credit":"Adam Burton / Alamy",
-          "caption":"\"Older far / Than oldest yew, -/ As our hills are\" ... dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789307632/Dawn-in-the-Brecon-Beacon-001.jpg",
@@ -1115,6 +1315,20 @@
           "height":"276",
           "credit":"Adam Burton / Alamy",
           "caption":"dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
+          "source":"Adam Burton / Alamy",
+          "altText":"Dawn in the Brecon Beacons",
+          "height":"276",
+          "credit":"Adam Burton / Alamy",
+          "caption":"\"Older far / Than oldest yew, -/ As our hills are\" ... dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
           "width":"460"
         }
       }],
@@ -4586,263 +4800,6 @@
         }
       }],
       "references":[]
-    },{
-      "id":"books/2013/feb/23/aspergers-novel-1m-debut",
-      "sectionId":"books",
-      "sectionName":"Books",
-      "webPublicationDate":"2013-02-23T22:26:29Z",
-      "webTitle":"Asperger's bestseller earns £1.2m advance for debut novelist",
-      "webUrl":"http://www.guardian.co.uk/books/2013/feb/23/aspergers-novel-1m-debut",
-      "apiUrl":"http://content.guardianapis.com/books/2013/feb/23/aspergers-novel-1m-debut",
-      "fields":{
-        "trailText":"<p>International publishers and movie producers rush to sign up Graeme Simsion's The Rosie Project</p>",
-        "headline":"Asperger's bestseller earns £1.2m advance for debut novelist",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575456670/The-Rosie-Project-by-Aust-003.jpg",
-        "wordcount":"739",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"books/publishing",
-        "type":"keyword",
-        "webTitle":"Publishing",
-        "webUrl":"http://www.guardian.co.uk/books/publishing",
-        "apiUrl":"http://content.guardianapis.com/books/publishing",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/fiction",
-        "type":"keyword",
-        "webTitle":"Fiction",
-        "webUrl":"http://www.guardian.co.uk/books/fiction",
-        "apiUrl":"http://content.guardianapis.com/books/fiction",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"society/autism",
-        "type":"keyword",
-        "webTitle":"Autism",
-        "webUrl":"http://www.guardian.co.uk/society/autism",
-        "apiUrl":"http://content.guardianapis.com/society/autism",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"society/society",
-        "type":"keyword",
-        "webTitle":"Society",
-        "webUrl":"http://www.guardian.co.uk/society/society",
-        "apiUrl":"http://content.guardianapis.com/society/society",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"books/books",
-        "type":"keyword",
-        "webTitle":"Books",
-        "webUrl":"http://www.guardian.co.uk/books/books",
-        "apiUrl":"http://content.guardianapis.com/books/books",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"society/health",
-        "type":"keyword",
-        "webTitle":"Health",
-        "webUrl":"http://www.guardian.co.uk/society/health",
-        "apiUrl":"http://content.guardianapis.com/society/health",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.guardian.co.uk/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"theobserver/news/uknews",
-        "type":"newspaper-book-section",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/theobserver/news/uknews",
-        "apiUrl":"http://content.guardianapis.com/theobserver/news/uknews",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      },{
-        "id":"theobserver/news",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theobserver/news",
-        "apiUrl":"http://content.guardianapis.com/theobserver/news",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/dalya-alberge",
-        "type":"contributor",
-        "webTitle":"Dalya Alberge",
-        "webUrl":"http://www.guardian.co.uk/profile/dalya-alberge",
-        "apiUrl":"http://content.guardianapis.com/profile/dalya-alberge",
-        "r2ContributorId":"38875",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theobserver",
-        "type":"publication",
-        "webTitle":"The Observer",
-        "webUrl":"http://www.guardian.co.uk/theobserver/all",
-        "apiUrl":"http://content.guardianapis.com/theobserver/all",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575463653/The-Rosie-Project-by-Aust-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575463653/The-Rosie-Project-by-Aust-008.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575453254/The-Rosie-Project-by-Aust-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575453254/The-Rosie-Project-by-Aust-001.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"54",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575454963/The-Rosie-Project-by-Aust-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575454963/The-Rosie-Project-by-Aust-002.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"130",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575456670/The-Rosie-Project-by-Aust-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575456670/The-Rosie-Project-by-Aust-003.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"84",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575458043/The-Rosie-Project-by-Aust-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575458043/The-Rosie-Project-by-Aust-004.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"132",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575459352/The-Rosie-Project-by-Aust-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575459352/The-Rosie-Project-by-Aust-005.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"168",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575460765/The-Rosie-Project-by-Aust-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575460765/The-Rosie-Project-by-Aust-006.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"180",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575462200/The-Rosie-Project-by-Aust-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575462200/The-Rosie-Project-by-Aust-007.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"228",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575463653/The-Rosie-Project-by-Aust-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2013/2/22/1361575463653/The-Rosie-Project-by-Aust-008.jpg",
-          "source":"PR",
-          "altText":"The Rosie Project by Australian Graeme Simsion",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The Rosie Project by Australian Graeme Simsion tells the story of a genetics professor with undiagnosed Asperger\u2019s.",
-          "width":"460"
-        }
-      }],
-      "references":[]
     }],
     "editorsPicks":[{
       "id":"books/2013/feb/24/five-star-billionaire-tash-review",
@@ -5781,20 +5738,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
-          "source":"Adam Burton / Alamy",
-          "altText":"Dawn in the Brecon Beacons",
-          "height":"276",
-          "credit":"Adam Burton / Alamy",
-          "caption":"\"Older far / Than oldest yew, -/ As our hills are\" ... dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789307632/Dawn-in-the-Brecon-Beacon-001.jpg",
@@ -5903,6 +5846,20 @@
           "height":"276",
           "credit":"Adam Burton / Alamy",
           "caption":"dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/2/25/1361789322507/Dawn-in-the-Brecon-Beacon-008.jpg",
+          "source":"Adam Burton / Alamy",
+          "altText":"Dawn in the Brecon Beacons",
+          "height":"276",
+          "credit":"Adam Burton / Alamy",
+          "caption":"\"Older far / Than oldest yew, -/ As our hills are\" ... dawn in the Brecon Beacons. Photograph: Adam Burton / Alamy",
           "width":"460"
         }
       }],

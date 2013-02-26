@@ -62,6 +62,9 @@ object Frontend extends Build with Prototypes with Testing {
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
+  val event = application("event").dependsOn(commonWithTests).settings(
+    libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
+  )
 
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "3.0",
@@ -91,6 +94,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(router)
     .dependsOn(diagnostics)
     .dependsOn(styleGuide)
+    .dependsOn(event)
 
   val main = root().aggregate(
     //jasmine,
@@ -106,6 +110,7 @@ object Frontend extends Build with Prototypes with Testing {
     router,
     diagnostics,
     dev,
-    styleGuide
-  )//.settings(ideaSettings: _*)
+    styleGuide,
+    event
+  )
 }

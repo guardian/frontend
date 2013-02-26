@@ -58,14 +58,18 @@
         if (!isModern) { return false; }
 
         guardian.config = {
+            @item match {
+                case content: model.Content => {'webPublicationDate' : new Date(@content.webPublicationDate.getMillis),}
+                case other => {@None}
+            }
             page: {
                 @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
 
                 @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
                     "'%s':'%s'".format(JavaScriptVariableName(key.split('.').last), value)}.mkString(",")
                 )},
-                'edition': '@Edition(request, Configuration)',
-                'ajaxUrl': '@Configuration.edition.ajaxUrlFor(Edition(request, Configuration))'
+                'edition': '@Site(request).edition',
+                'ajaxUrl': 'http://@Site(request).ajaxHost'
             },
             switches : { @{Html(switches.map{ switch =>
                     "'%s':%s".format(JavaScriptVariableName(switch.name), switch.isSwitchedOn)

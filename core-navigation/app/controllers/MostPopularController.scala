@@ -22,7 +22,7 @@ object MostPopularController extends Controller with Logging {
   import play.api.Play.current
 
   def renderJson(path: String) = Action { implicit request =>
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
     val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {
@@ -37,7 +37,7 @@ object MostPopularController extends Controller with Logging {
   }
 
   def renderNoJavascript(path: String) = Action { implicit request =>
-    val edition = Edition(request, Configuration)
+    val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
     val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {

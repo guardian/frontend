@@ -45,6 +45,9 @@ trait Prototypes extends Testing {
         "Akka" at "http://repo.akka.io/releases"
       ),
 
+      // No released version of Salat for 2.10.0
+      resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.9.1" % "test"
       ),

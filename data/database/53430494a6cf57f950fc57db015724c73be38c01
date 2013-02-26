@@ -5250,21 +5250,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361822349440/Simon-Chinn-with-Oscar-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361822349440/Simon-Chinn-with-Oscar-009.jpg",
-          "source":"Barcroft Media",
-          "photographer":"Xinhua/Landov",
-          "altText":"Simon Chinn with Oscar",
-          "height":"276",
-          "credit":"Xinhua/Landov/Barcroft Media",
-          "caption":"Simon Chinn, left, and Searching for Sugar Man's director Malik Bendjelloul with their Oscars. Photograph: Xinhua/Landov/Barcroft Media",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361822339683/Simon-Chinn-with-Oscar-001.jpg",
@@ -5412,6 +5397,21 @@
           "credit":"Xinhua/Landov/Barcroft Media",
           "caption":"Simon Chinn, left, and Searching for Sugarman's director Malik Bendjelloul with their Oscars. Photograph: Xinhua/Landov/Barcroft Media",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361822349440/Simon-Chinn-with-Oscar-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361822349440/Simon-Chinn-with-Oscar-009.jpg",
+          "source":"Barcroft Media",
+          "photographer":"Xinhua/Landov",
+          "altText":"Simon Chinn with Oscar",
+          "height":"276",
+          "credit":"Xinhua/Landov/Barcroft Media",
+          "caption":"Simon Chinn, left, and Searching for Sugar Man's director Malik Bendjelloul with their Oscars. Photograph: Xinhua/Landov/Barcroft Media",
+          "width":"460"
         }
       }],
       "references":[]

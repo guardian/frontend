@@ -1870,6 +1870,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361533564672/karla-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361533564672/karla-008.jpg",
+          "source":"PR ",
+          "altText":"karla",
+          "height":"276",
+          "credit":"PR ",
+          "caption":"Karla Crome's top telly picks. Photograph: PR ",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/20/1361381217088/utopia-001.jpg",
@@ -1950,20 +1964,6 @@
           "height":"276",
           "credit":"PR",
           "caption":"Utopia: one of Karla's top telly picks.",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361533564672/karla-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/22/1361533564672/karla-008.jpg",
-          "source":"PR ",
-          "altText":"karla",
-          "height":"276",
-          "credit":"PR ",
-          "caption":"Karla Crome's top telly picks. Photograph: PR ",
           "width":"460"
         }
       }],

@@ -4,6 +4,7 @@
     Common functions to simplify access to page data
  */
 define(['modules/pad', "common"], function (pad, common) {
+
     return function(config){
         return common.extend(
             {
@@ -19,21 +20,14 @@ define(['modules/pad', "common"], function (pad, common) {
                 referenceOfType: function(name){
                     return this.referencesOfType(name)[0];
                 },
-                webPublicationDate: function(){
-                    // assumes an 'internet' date such as 2012-12-23T22:30:00.000Z
-                    // http://www.ietf.org/rfc/rfc3339.txt
-                    if(config.page.webPublicationDate){
-                        return new Date(Date.parse(config.page.webPublicationDate));
-                    }
-                },
 
                 // the date nicely formatted and padded for use as part of a url
                 // looks like    2012/04/31
                 webPublicationDateAsUrlPart: function(){
-                    if(this.webPublicationDate()){
-                        return this.webPublicationDate().getFullYear() + '/' +
-                            pad(this.webPublicationDate().getMonth() + 1, 2) + '/' +
-                            pad(this.webPublicationDate().getDate(), 2);
+                    if(this.webPublicationDate){
+                        return this.webPublicationDate.getFullYear() + '/' +
+                            pad(this.webPublicationDate.getMonth() + 1, 2) + '/' +
+                            pad(this.webPublicationDate.getDate(), 2);
                     }
                 }
             },

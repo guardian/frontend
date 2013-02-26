@@ -172,15 +172,24 @@ object TweetCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByClass("twitter-tweet").foreach { element =>
       val el = element.clone()
-      val body = el.child(0).attr("class", "tweet-body")
-      val date = el.child(1).attr("class", "tweet-date")
-      val user = el.ownText()
-      val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+      if (el.children.size > 1) {
+        val body = el.child(0).attr("class", "tweet-body")
+        val date = el.child(1).attr("class", "tweet-date")
+        val user = el.ownText()
+        val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
 
-      element.empty().attr("class", "tweet")
-      element.appendChild(userEl).appendChild(date).appendChild(body)
-
+        element.empty().attr("class", "tweet")
+        element.appendChild(userEl).appendChild(date).appendChild(body)
+      }
     }
+    document
+  }
+}
+
+object Summary extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val paras = document.getElementsByTag("p").drop(3)
+    paras.foreach(_.remove())
     document
   }
 }
@@ -220,7 +229,7 @@ object OmnitureAnalyticsData {
       "ns" -> "guardian",
       "pageName" -> pageName,
       // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-      "cdp" -> (if (Edition(request, Configuration) == "US") "2" else "3"),
+      "cdp" -> (if (Site(request).isUsEdition) "2" else "3"),
       "v7" -> pageName,
       "c3" -> publication,
       "ch" -> section,

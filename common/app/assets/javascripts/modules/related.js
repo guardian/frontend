@@ -16,7 +16,6 @@ define(['common', 'ajax'], function (common, ajax) {
         
         // Model
         this.load = function (url) {
-
             if (switches.relatedContent) {
                 return ajax({
                     url: url,

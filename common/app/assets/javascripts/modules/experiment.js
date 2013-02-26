@@ -11,16 +11,17 @@ define([
         var that = this;
 
         this.init = function () {
-            this.load('/experiment/' + experimentName + '/' + config.page.pageId);
+            this.load('/stories/' + experimentName + '/' + config.page.pageId);
         };
 
         // View
         this.view = {
             render: function (html) {
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
                 document.getElementById('js-related').innerHTML = html;
                 common.mediator.emit('modules:experiment:render');
                 // Remove the existing story package and its title
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
+
             },
             fallback: function () {
                 common.mediator.emit("modules:related:load");

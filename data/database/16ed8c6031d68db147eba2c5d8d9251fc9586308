@@ -443,7 +443,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/blog/2013/feb/26/nrl-super-league-resources",
       "apiUrl":"http://content.guardianapis.com/sport/blog/2013/feb/26/nrl-super-league-resources",
       "fields":{
-        "trailText":"<p><strong>Andy Wilson:</strong> Drumming up support for an expanded World Club Challenge is one thing, making Super League more competitive is another</p>",
+        "trailText":"<strong>Andy Wilson:</strong> Drumming up support for an expanded World Club Challenge is one thing, making Super League more competitive is another",
         "headline":"Super League Set of Six: Australian financial clout is opening a gap",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/25/1361822417231/Craig-McDermott-the-Leeds-003.jpg",

@@ -39,20 +39,17 @@ object Navigation {
     SectionLink("media", "Media", "/media", "Media")
   )
 
-  def apply(request: RequestHeader, config: GuardianConfiguration) = {
-    val host = request.headers.get("host")
-    config.edition(host) match {
-      case "US" => usSections
-      case _ => ukSections
-    }
+  def apply(request: RequestHeader) = Site(request).edition match {
+    case "US" => usSections
+    case _ => ukSections
   }
 }
 
 object Zones {
-  def apply(request: RequestHeader, config: GuardianConfiguration) = {
+  def apply(request: RequestHeader) = {
 
-    val host = request.headers.get("host")
-    val edition = config.edition(host)
+    val site = Site(request)
+    val edition = site.edition
 
     var sportSections = List(
       SectionLink("football", "Football", "/football", "Football"),
@@ -105,7 +102,7 @@ object Zones {
       Zone(
         SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
         Seq(
-          SectionLink("commentisfree", "Cif America", "http://" + config.edition.usHost + "/commentisfree", "Cif America"),
+          SectionLink("commentisfree", "Cif America", "http://" + site.usHost + "/commentisfree", "Cif America"),
           SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief"),
           SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
         )), // end comment is free
