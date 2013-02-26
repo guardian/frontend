@@ -353,21 +353,30 @@ a.competition-title {
     margin-bottom: @baseline*3 ;
 }
 
-.article-zone.type-2{
+.football-top-nav {
     display: none;
 }
 
-
 @media screen and (min-width: @desktopBreakpoint) {
 
-    .article-zone.type-1,
-    .football-nav {
+    .type-2.football-top-nav,
+    .football-nav-bottom,
+    .sport-header {
+        display: none;
+    }
+
+    .football-top-nav {
+        display: block;
+        padding: 0;
+    }
+
+    .football-top-nav .nav {
         float: left;
     }
 
-    .live-matches-dateline,
-    .page-head {
-        clear: both;
+    .zone-football .article-zone.type-1,
+    .zone-football .section-head {
+        float: left;
     }
 
     .football-table-container,
@@ -375,7 +384,7 @@ a.competition-title {
         padding-left: 0;
         padding-right: 0;
     }
-    .football-filter.collapsible,
+
     .matches-container {
         margin-left: 0;
         margin-right: 0;
@@ -383,9 +392,9 @@ a.competition-title {
         padding-right: 0;
     }
 
-    .football-nav-bottom,
-    .football-header-bottom {
-        display: none;
+    .football-filter.collapsible {
+        padding: 9px 8px;
+        margin: 0 0 8px 0;
     }
 
 }

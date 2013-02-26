@@ -9,7 +9,7 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-top-nav")
 
     <div class="live-matches-dateline">
         <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
@@ -61,7 +61,7 @@
         }
     </ol>
 
-    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-nav-bottom")
 
     @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 

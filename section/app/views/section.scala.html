@@ -5,6 +5,9 @@
 
         @fragments.headers.sectionHead(section.name)
 
+        @if(section.name == "Football") {
+            @fragments.footballNav("/football", None, None, "football-top-nav")
+        }
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
             @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
 	    	    <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
@@ -16,7 +19,7 @@
     </section>
 
     @if(section.name == "Football") {
-        @fragments.footballNav("/football")
+        @fragments.footballNav("/football", None, None, "football-nav-bottom")
     }
 
     @fragments.mostPopularPlaceholder(section.section)

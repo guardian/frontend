@@ -5,6 +5,13 @@
     <section class="front-section zone-@tag.section two-thirds" data-link-name="@tag.section">
 
         @fragments.headers.sectionHead(tag.name)
+        @if(tag.section == "football") {
+            @if(tag.isFootballCompetition) {
+                @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-top-nav")
+            } else {
+                @fragments.footballNav("/football", None, None, "football-top-nav")
+            }
+        }
 
         @if(tag.isContributor) {
             <div class="profile media">
@@ -40,9 +47,9 @@
 
     @if(tag.section == "football") {
         @if(tag.isFootballCompetition) {
-            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-nav-bottom")
         } else {
-            @fragments.footballNav("/football")
+            @fragments.footballNav("/football", None, None, "football-nav-bottom")
         }
     }
 

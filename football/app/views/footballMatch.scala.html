@@ -7,7 +7,7 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    @fragments.footballNav("/football", None, None)
+    @fragments.footballNav("/football", None, None, "football-top-nav")
 
     <article class="article two-thirds">
         <p class="dateline box-indent">
@@ -42,7 +42,7 @@
 
     <div id="js-related" class="one-third"></div>
 
-    @fragments.footballNav("/football", None, None)
+    @fragments.footballNav("/football", None, None,  "football-top-bottom")
 
     @fragments.mostPopularPlaceholder("sport", Seq("one-third"))
 }

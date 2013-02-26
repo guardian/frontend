@@ -8,7 +8,7 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    @fragments.footballNav("/football")
+    @fragments.footballNav("/football", None, None, "football-top-nav")
 
     @fragments.filterBar(page.webTitle)
 
@@ -27,7 +27,7 @@
         }
     </div>
 
-    @fragments.footballNav("/football")
+    @fragments.footballNav("/football", None, None, "football-nav-bottom")
 
     @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
