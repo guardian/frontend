@@ -243,22 +243,22 @@ a.competition-title {
 	background-color: @sportBright;
 }
 
-.football-nav {
+.football-nav .sections {
     clear: left;
     padding: 0 0 16px 0;
     margin: 0;
     color: #064951;
 }
 
-.football-nav a {
+.football-nav  .sections a {
     color: #064951;
 }
 
-.football-nav .nav {
+.football-nav .sections  .nav {
     padding: @baseline*2 0;
 }
 
-.football-nav .nav-stacked > li > a {
+.football-nav .sections .nav-stacked > li > a {
     border-color: #a1c391;
 }
 
@@ -361,4 +361,23 @@ a.competition-title {
 .live-matches-dateline {
     display:block;
     margin-bottom: @baseline*3 ;
+}
+
+.article-zone.type-2{
+    display: none;
+}
+
+
+@media screen and (min-width: @desktopBreakpoint) {
+
+    .article-zone.type-1,
+    .football-nav {
+        float: left;
+    }
+
+    .live-matches-dateline,
+    .page-head {
+        clear: both;
+    }
+
 }
