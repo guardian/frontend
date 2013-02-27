@@ -7,8 +7,8 @@
 <div class="box-indent football-nav @navClassName">
     <div class="sections cf" data-link-name="@navClassName.replace("-"," ")">
         <ul class="crumbtrail  nav nav-columns nav-top-border-off cf">
-            <li><a href="/sport">Sport</a></li>
-            <li><a href="/football">Football</a></li>
+            <li><a href="/sport" class="zone-background">Sport</a></li>
+            <li><a href="/football" class="football-second-crumb">Football</a></li>
         </ul>
         <ul class="nav nav-columns nav-top-border-off cf">
             @defining({
@@ -42,7 +42,7 @@
 
             }) { links =>
                 @links.map{ l =>
-                    <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
+                    <li><a href="@l.url" data-link-name="@l.linkName" class="football-crumb-hover">@l.linkText</a></li>
                 }
             }
         </ul>
