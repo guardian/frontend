@@ -2,8 +2,9 @@ package common
 
 import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.{ Proxy => ContentApiProxy, Http, DispatchHttp }
-import com.gu.management.{ Metric, TimingMetric }
+import com.gu.management.{ CountMetric, Metric, TimingMetric }
 import conf.Configuration
+import java.util.concurrent.TimeoutException
 
 trait ApiQueryDefaults { self: Api =>
 
@@ -72,9 +73,13 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
     checkQueryIsEditionalized(url, parameters)
 
     metrics.ContentApiHttpTimingMetric.measure {
-      super.fetch(url, parameters + ("user-tier" -> "internal"))
+      try { super.fetch(url, parameters + ("user-tier" -> "internal")) } catch {
+        case e: Throwable if e.getCause.getClass == classOf[TimeoutException] =>
+          metrics.ContentApiHttpTimeoutCountMetric.increment()
+          throw e
+      }
     }
-  }
+  } //java.net.ConnectException
 
   object metrics {
     object ContentApiHttpTimingMetric extends TimingMetric(
@@ -85,7 +90,14 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
       Some(RequestMetrics.RequestTimingMetric)
     ) with TimingMetricLogging
 
-    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric)
+    object ContentApiHttpTimeoutCountMetric extends CountMetric(
+      "timeout",
+      "content-api-timeouts",
+      "Content API timeouts",
+      "Content api calls that timeout"
+    )
+
+    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpTimeoutCountMetric)
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
