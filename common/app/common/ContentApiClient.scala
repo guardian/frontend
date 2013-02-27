@@ -79,7 +79,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
           throw e
       }
     }
-  } //java.net.ConnectException
+  }
 
   object metrics {
     object ContentApiHttpTimingMetric extends TimingMetric(
