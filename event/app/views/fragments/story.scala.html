@@ -1,13 +1,14 @@
 @(story: model.Story)
 
-<div class="front-section-head zone-background">
-    <h1>
-        <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
-    </h1>
-    <button class="js-visible js-toggle-trailblock toggle-trailblock" data-block-name="story" data-link-name="Show">Full Story</button>
+<div class="margin-bottom border-top border-bottom">
+    <div class="margin-top">
+        <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.title:</a>
+    </div>
+    <div class="margin-bottom">
+        <a class="type-2 zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
+    </div>
 </div>
 
-<div class="rolled-out rolled-up" id="front-trailblock-story">
 <ul class="accordion">
 
     @if(story.hasContent) {
@@ -55,4 +56,3 @@
         </li>
     }
 </ul>
-</div>
