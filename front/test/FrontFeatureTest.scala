@@ -63,7 +63,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           then("I should see the link for the desktop site")
-          findFirst("[data-link-name=UK]").href should endWith("http://www.guardian.co.uk/fullsite")
+          findFirst("[data-link-name='desktop version UK full site']").href should endWith("http://www.guardian.co.uk/fullsite")
       }
     }
 
@@ -74,7 +74,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           then("I should see the link for the desktop site")
-          findFirst("[data-link-name=US]").href should endWith("http://www.guardiannews.com/fullsite")
+          findFirst("[data-link-name='desktop version US full site']").href should endWith("http://www.guardiannews.com/fullsite")
       }
     }
 
@@ -416,7 +416,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         }
 
         then("I should see an internal server error")
-        controller.render("front")(FakeRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+        controller.render("front")(TestRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
       }
     }
   }

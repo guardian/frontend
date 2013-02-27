@@ -1,0 +1,10 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET    /assets/*file                              controllers.Assets.at(path="/public", file)
+
+GET    /stories/storymodule01/*id               controllers.StoryController.withContent(id)
+GET    /stories/*id                               controllers.StoryController.byId(id)
+

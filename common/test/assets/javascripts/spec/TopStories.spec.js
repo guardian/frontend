@@ -11,7 +11,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     '</div>'
                 ]
             },
-            page = { page: { coreNavigationUrl: 'fixtures/', edition: 'uk' }};
+            page = { pathPrefix: "fixtures", page: { edition: 'uk' }};
 
         beforeEach(function () {
             ajax.init("");

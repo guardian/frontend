@@ -44,9 +44,14 @@ object CommonSwitches {
     "Switch this switch off to disable witness video embeds.",
     initiallyOn = true)
 
+  val ExperimentStoryModule01Switch = DefaultSwitch("experiment-story-module-01",
+    "Switch this switch off to disable experimental v01 of the article story module.",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch
+    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
+    ExperimentStoryModule01Switch
   )
 }
 
