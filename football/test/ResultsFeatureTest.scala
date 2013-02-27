@@ -3,6 +3,7 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
+import org.fluentlenium.core.domain.FluentWebElement
 
 class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -70,7 +71,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/football/results/2012/oct/20") { browser =>
         import browser._
         then("any links I click should be tracked")
-        $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
+        $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link: FluentWebElement =>
           fail("Link with text %s has no data-link-name".format(link.getText))
         }
       }
