@@ -11,7 +11,8 @@ import model.{ TeamMap, LiveBlog }
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
   object dispatchHttp extends DispatchHttp {
-    override lazy val maxConnections = 50
+    override lazy val maxConnections = 200
+    override lazy val connectionTimeoutInMs = 1000
     override lazy val requestTimeoutInMs = 5000
     override lazy val proxy = if (Configuration.proxy.isDefined)
       Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
