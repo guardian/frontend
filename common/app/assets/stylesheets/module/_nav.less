@@ -301,6 +301,8 @@ a.topstories-control,
     #sections-header {
         display: block;
         padding: 0;
+        border: none;
+        margin-bottom: 10px;
     }
     .sections .nav {
         padding-left: 0;
@@ -345,12 +347,34 @@ a.topstories-control,
         @import "theme/_zones";
     }
    
-
-    .nav .zone-color:hover {
-        background-color: #000;
+    .nav .zone-background-hover:active,
+    .nav .zone-background-hover:focus,
+    .nav .zone-background-hover:hover,
+    .football-nav .crumbtrail .zone-background{
         color: #fff;
+    }
+     
+    //temporarily apes the current r2 local nav
+    .zone-football .crumbtrail .zone-background:hover,
+    .football-nav .sections .football-second-crumb:hover,
+    .football-nav .sections .football-crumb-hover:hover {
+        background-color: @darkGrey;
+        color: @plainWhite;
         text-decoration: none;
     }
 
+    .football-nav .sections .football-second-crumb {
+        background-color: #0D3D00;
+        color: @plainWhite;
+    }
+    
+    .zone-football .football-nav .sections {
+        background-color:#ededed;
+    }
+
+    .zone-football .football-nav .sections,
+    .zone-football .football-nav .sections .nav {
+        padding: 0;
+    }
 }
 
