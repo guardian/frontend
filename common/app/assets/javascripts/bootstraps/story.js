@@ -29,17 +29,10 @@ define([
             var timeline = document.querySelector('.timeline');
 
             if(timeline) {
-                common.$g('.event-articles').hide();
+                common.$g('.event-articles').addClass('h');
                 bean.on(timeline, 'click', '.date-line', function(e) {
                     var block = common.$g(this).parent();
-
-                    common.$g('.event-articles').hide();
-
-                    if(common.$g('.event-articles', block).css('display') === "none") {
-                        common.$g('.event-articles', block).show();
-                    } else {
-                        common.$g('.event-articles', block).hide();
-                    }
+                    common.$g('.event-articles', block).toggleClass('h');
                 });
             }
         }

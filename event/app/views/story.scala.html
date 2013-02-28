@@ -16,11 +16,15 @@
         </h1>
 
         <section class="story-latest">
-            @story.contentByColour.get("Overview").map{ content =>
-                @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
-                    @fragments.latest(article, edition)
+            @if(story.contentByColour.get("Overview").nonEmpty) {
+                @story.contentByColour.get("Overview").map{ content =>
+                    @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
+                        @fragments.latest(article, edition)
+                    }
                 }
-           }
+            } else {
+                @fragments.latest(story.contentByImportance.take(1), edition)
+            }
         </section>
 
         @story.explainer.map{ explainer =>
