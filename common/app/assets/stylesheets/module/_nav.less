@@ -304,23 +304,27 @@ a.topstories-control,
         border: none;
         margin-bottom: 10px;
     }
-    .sections .nav {
-        padding-left: 0;
-        padding-right: 0;
+
+    .team-list .nav-columns,
+    .nav-columns.no-columns {
+        .flush
     }
-    .nav-columns li,
-    .nav-columns li:nth-child(2n) {
+
+    .no-columns  li,
+    .no-columns  li:nth-child(2n) {
         float: left;
         width: auto;
         margin-left: 0;
         margin-right: 0;
     }
-    .nav-columns li a {
+    
+    .no-columns  li a {
         padding: @baseline 5px !important;
         border-right: 1px solid #bebebe;
         border-top: 0;
     }
-    .nav-columns li:last-child a {
+
+    .no-columns  li:last-child a {
         border-right: 0;
     }
 
