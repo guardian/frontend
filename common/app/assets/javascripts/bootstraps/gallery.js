@@ -1,9 +1,16 @@
 define([
+    "common",
+
     "modules/gallery",
-    "modules/analytics/gallery"
+    "modules/analytics/gallery",
+    "modules/accordion",
+    "modules/experiment"
 ], function(
+    common,
     Gallery,
-    Tracking
+    Tracking,
+    Accordion,
+    Experiment
 ) {
 
     var modules = {
@@ -22,11 +29,39 @@ define([
 
                 t.init();
             }
+        },
+
+        initExperiments: function(config) {
+            var experimentName = localStorage.getItem('gu.experiment') || '',
+                experiment;
+
+            if (!experimentName) {
+                for (var key in config.switches) {
+                    if (config.switches[key] && key.match(/^experiment(\w+)/)) {
+                        experimentName = key.match(/^experiment(\w+)/)[1];
+                        break;
+                    }
+                }
+            }
+
+            experimentName = experimentName.toLowerCase();
+
+            if (experimentName) {
+                common.mediator.on('modules:experiment:render', function() {
+                    if(document.querySelector('.accordion')) {
+                        var a = new Accordion();
+                    }
+                });
+                experiment = new Experiment(config, experimentName).init();
+            } else {
+                common.mediator.emit("modules:related:load");
+            }
         }
     };
 
     var init = function(req, config) {
         modules.augmentGallery();
+        modules.initExperiments(config);
         modules.initOphanTracking(config);
     };
 
