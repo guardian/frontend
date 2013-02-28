@@ -87,7 +87,7 @@ object Story {
       StringDateStrategy(dateFormatter = ISODateTimeFormat.dateTime))
   }
 
-  def apply(s: ParsedStory, content: Seq[ApiContent]): Story = Story(
+  def apply(s: ParsedStory, content: Seq[ApiContent] = Nil): Story = Story(
     id = s.id,
     title = s.title,
     explainer = s.explainer,
@@ -117,6 +117,12 @@ object Story {
       } else {
         None
       }
+    }
+
+    def latest(): Seq[Story] = {
+      val stories = measure(Stories.find(DBObject.empty, Map("id" -> 1, "title" -> 1, "hero" -> 1)).map(grater[ParsedStory].asObject(_))).toSeq.map(Story(_))
+      println(stories)
+      stories
     }
 
     private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {

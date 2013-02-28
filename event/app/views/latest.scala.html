@@ -1,0 +1,9 @@
+@(page: StoriesPage)(implicit request: RequestHeader)
+
+@main(page, Switches.all){ }{
+    @defining(page.stories){ stories =>
+        @stories.map{ story =>
+            <h3>@story.title</h3>
+        }
+    }
+}
