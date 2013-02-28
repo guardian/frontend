@@ -74,12 +74,16 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
 
     metrics.ContentApiHttpTimingMetric.measure {
       try { super.fetch(url, parameters + ("user-tier" -> "internal")) } catch {
-        case e: Throwable if e.getCause.getClass == classOf[TimeoutException] =>
+        case e: Throwable if isTimeout(e) =>
           metrics.ContentApiHttpTimeoutCountMetric.increment()
           throw e
       }
     }
   }
+
+  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
+    .map(_.getClass == classOf[TimeoutException])
+    .getOrElse(false)
 
   object metrics {
     object ContentApiHttpTimingMetric extends TimingMetric(
