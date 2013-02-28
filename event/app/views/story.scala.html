@@ -57,7 +57,13 @@
         @if(story.hasAgents) {
             <section class="story-agents" data-link-name="story-agents">
                 <h2 class="article-zone type-2">People, places & organisations</h2>
-                 @fragments.agents(story.agents)
+                <div class="box-indent">
+                    <ul class="unstyled agents">
+                         @story.agents.map{ agent =>
+                            @fragments.agent(agent)
+                        }
+                    </ul>
+                </div>
                 <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
             </section>
         }

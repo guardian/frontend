@@ -57,6 +57,7 @@ case class Story(
     explainer: Option[String] = None,
     hero: Option[String] = None) extends implicits.Collections {
 
+  lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
   lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
@@ -117,6 +118,12 @@ object Story {
       } else {
         None
       }
+    }
+
+    def latest(): Seq[Story] = {
+      val fields = Map("id" -> 1, "title" -> 1, "hero" -> 1, "explainer" -> 1)
+      val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.map(Story(_, Nil))
+      stories
     }
 
     private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {

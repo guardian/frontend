@@ -30,7 +30,7 @@ define([
 
             if(timeline) {
                 common.$g('.event-articles').addClass('h');
-                bean.on(timeline, 'click', '.date-line', function(e) {
+                bean.on(timeline, 'click touchstart', '.date-line', function(e) {
                     var block = common.$g(this).parent();
                     common.$g('.event-articles', block).toggleClass('h');
                 });
