@@ -17,6 +17,18 @@ define([
         // View
         this.view = {
             render: function (html) {
+                switch (experimentName) {
+                    case 'storymodule01':
+                        this.renderStoryModule01(html);
+                        break;
+                    case 'storymodule02':
+                        this.renderStoryModule02(html);
+                        break;
+                }
+                common.mediator.emit('modules:experiment:render');
+            },
+
+            renderStoryModule01: function(html) {
                 // Remove the existing story package and its title
                 common.$g('#related-trails, h3.type-2.article-zone').remove();
 
@@ -31,9 +43,25 @@ define([
                     common.$g('.accordion', el).remove();
                     common.$g(paras[0]).after(el);
                 }
-                common.mediator.emit('modules:experiment:render');
-
             },
+
+            renderStoryModule02: function(html) {
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+
+                // Add into article body
+                var paras = common.$g('.article-body > p:not(:empty)');
+                if (paras.length) {
+                    // after last para
+                    common.$g(paras[paras.length - 1]).after(html);
+                    // after first para, minus accordion
+                    var el = document.createElement('div');
+                    common.$g(el).html(html);
+                    common.$g('.accordion', el).remove();
+                    common.$g(paras[0]).before(el);
+                }
+            },
+
             fallback: function () {
                 common.mediator.emit("modules:related:load");
             }
