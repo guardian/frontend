@@ -30,16 +30,20 @@ object StoryController extends Controller with Logging {
 
     Async {
       promiseOfStories.map { stories =>
-        Cached(60) {
-          request.getQueryString("callback").map { callback =>
-            val html = views.html.fragments.latestStories(stories)
-            JsonComponent(html)
-          } getOrElse {
-            Cached(60) {
-              val html = views.html.latest(StoriesPage(stories))
-              Ok(Compressed(html))
+        if (stories.nonEmpty) {
+          Cached(60) {
+            request.getQueryString("callback").map { callback =>
+              val html = views.html.fragments.latestStories(stories)
+              JsonComponent(html)
+            } getOrElse {
+              Cached(60) {
+                val html = views.html.latest(StoriesPage(stories))
+                Ok(Compressed(html))
+              }
             }
           }
+        } else {
+          JsonNotFound()
         }
       }
     }
