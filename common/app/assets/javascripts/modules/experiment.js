@@ -6,12 +6,30 @@ define([
     ajax
 ) {
 
-    function Experiment(config, experimentName) {
+    function Experiment() {
 
         var that = this;
 
-        this.init = function () {
-            this.load('/stories/' + experimentName + '/' + config.page.pageId);
+        this.init = function (config) {
+            var experimentName = localStorage.getItem('gu.experiment') || '',
+                experiment;
+
+            if (!experimentName) {
+                for (var key in config.switches) {
+                    if (config.switches[key] && key.match(/^experiment(\w+)/)) {
+                        experimentName = key.match(/^experiment(\w+)/)[1];
+                        break;
+                    }
+                }
+            }
+
+            experimentName = experimentName.toLowerCase();
+
+            if (experimentName) {
+                this.load('/stories/' + experimentName + '/' + config.page.pageId);
+            } else {
+                common.mediator.emit("modules:related:load");
+            }
         };
 
         // View
