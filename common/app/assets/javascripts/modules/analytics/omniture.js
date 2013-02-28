@@ -108,6 +108,8 @@ define(['common', 'modules/detect'], function(common, detect) {
 
             s.prop56    = 'Javascript';
 
+            s.prop65    = config.page.headline || '';
+
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
             } else {
