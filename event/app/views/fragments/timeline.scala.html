@@ -1,23 +1,31 @@
 @(story: Story)
-<div id="experiment" class="timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
+<div class="timeline" data-count="@{story.events.size - 4}" data-link-name="Event timeline">
     <ul class="unstyled">
         @story.events.map { event =>
-        @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail event-block" data-link-name="trail">
-            @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
-            <div class="date-line">
-                <h3 class="type-5">@event.title</h3>
-                <!-- Articles -->
-                @event.content.map{ case (c) =>
-
-                <!-- People -->
-                @event.agents.filter(_.rdfType == "http://schema.org/Person").map { agent =>
-                <img src="@agent.picture" alt="@agent.name, @agent.role"/>
+            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
+            <li class="trail event-block" data-link-name="trail">
+                @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                <div class="date-line"><h3 class="type-5">@event.title</h3></div>
+                @if(event.hasContent) {
+                    <ul class="unstyled event-articles">
+                        @event.content.map{ c =>
+                            <li class="event-articles--item">
+                                @fragments.relativeDate(c.webPublicationDate, false, false)
+                                <p class="type-7">
+                                    <a href="@c.url">
+                                    @c.standfirst.map { s =>
+                                        @withJsoup(BulletCleaner(s))(
+                                            InBodyLinkCleaner("in standfirst link")
+                                        )
+                                    }
+                                    </a>
+                                </p>
+                            </li>
+                        }
+                    </ul>
                 }
-                }
-            </div>
-        </li>
-        }
+            </li>
+            }
         }
     </ul>
 </div>

@@ -1,4 +1,4 @@
-@(page: StoryPage)(implicit request: RequestHeader)
+@(page: StoryPage, edition: String)(implicit request: RequestHeader)
 
 @section(title: String, content: Seq[model.Content]) = {
     <li class="accordion-item">
@@ -9,59 +9,71 @@
 
 @main(page, Switches.all){ }{
 
-@defining(page.story){ story =>
+    @defining(page.story){ story =>
 
-    <h1 class="article-zone type-1">
-        <span class="zone-color">@story.title</span>
-    </h1>
+        <h1 class="article-zone type-1">
+            <span class="zone-color">@story.title</span>
+        </h1>
 
-    <section class="story-overview">
-        @story.hero.map{ img =>
-            <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                <img class="maxed main-image" src="@story.hero"
-                     itemprop="contentURL"
-                     alt="@StripHtmlTags(story.title)"
-                     title="@StripHtmlTags(story.title)" />
-            </figure>
-        }
+        <section class="story-latest">
+            @if(story.contentByColour.get("Overview").nonEmpty) {
+                @story.contentByColour.get("Overview").map{ content =>
+                    @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
+                        @fragments.latest(article, edition)
+                    }
+                }
+            } else {
+                @fragments.latest(story.contentByImportance.take(1), edition)
+            }
+        </section>
 
         @story.explainer.map{ explainer =>
-            <h2 class="page-head">Overview</h2>
-            <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-                @cleanTrailText(explainer)
-            </p>
+            <section class="story-overview">
+
+                <h2 class="article-zone type-2">Background</h2>
+
+                @story.hero.map{ img =>
+                    <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                        <img class="maxed main-image" src="@story.hero"
+                             itemprop="contentURL"
+                             alt="@StripHtmlTags(story.title)"
+                             title="@StripHtmlTags(story.title)" />
+                    </figure>
+                }
+
+                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                    @cleanTrailText(explainer)
+                </p>
+                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+            </section>
         }
-    </section>
 
-    <ul class="accordion">
-
-        @story.contentByColour.get("Background").map{ content => @section("Background", content) }
-        @story.contentByColour.get("Analysis").map{ content => @section("Analysis", content) }
-        @story.contentByColour.get("Reaction").map{ content => @section("Reaction", content) }
+        @if(story.hasQuotes) {
+            @story.contentWithQuotes.headOption.map{ c =>
+                 @fragments.quote(c)
+            }
+        }
 
         @if(story.hasAgents) {
-            <li class="accordion-item">
-                <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
-
-                <section class="story-players">
-                    <ul class="unstyled">
-                    @story.agents.map { agent =>
-                        @fragments.agent(agent)
-                    }
-                    </ul>
-                </section>
-            </li>
+            <section class="story-agents" data-link-name="story-agents">
+                <h2 class="article-zone type-2">People, places & organisations</h2>
+                 @fragments.agents(story.agents)
+                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+            </section>
         }
 
         @if(story.hasEvents) {
-            <li class="accordion-item">
-                <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
-
-                <section class="story-timeline">
+            <section class="story-timeline" data-link-name="story-timeline">
+                <h2 class="article-zone type-2">Timeline of events</h2>
+                <div class="box-indent">
                     @fragments.timeline(story)
-                </section>
-            </li>
+                </div>
+                <p class="box-indent from-content-api">
+                    <a href="#top" class="back-to-top">Back to top</a>
+                </p>
+            </section>
         }
-    </ul>
- }
+
+    }
+
 }
