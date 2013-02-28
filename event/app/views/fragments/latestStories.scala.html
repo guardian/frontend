@@ -1,0 +1,15 @@
+@(stories: Seq[Story])
+
+ @stories.map{ story =>
+    <ul class="unstyled box-indent">
+        @stories.take(10).zipWithRowInfo.map{ case (story, info) =>
+            @if(story.hasHero) {
+                @fragments.storyThumbnailTrail(story, info)
+            } else {
+                @fragments.storyHeadlineTrail(story, info)
+            }
+        }
+</ul>
+}
+
+

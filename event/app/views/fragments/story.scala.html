@@ -1,4 +1,4 @@
-@(story: model.Story)
+@(story: model.Story, articleId: String)
 
 <div class="margin-bottom border-top border-bottom">
     <div class="margin-top">
@@ -9,14 +9,16 @@
     </div>
 </div>
 
-<ul class="accordion">
+<ul class="accordion" data-link-name="story package">
 
     @if(story.hasContent) {
         <li class="accordion-item">
             <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
 
-            <section class="story-latest">
-                @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
+            <section class="story-latest" data-link-name="latest">
+                @defining(story.contentByImportance.filter(_.id != articleId)){ content =>
+                    @fragments.trailblocks.thumbnail(content, 3, true, 3)
+                }
             </section>
         </li>
     }
@@ -37,8 +39,8 @@
         <li class="accordion-item">
             <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
 
-            <section class="story-players">
-                <ul class="unstyled">
+            <section class="story-section story-agents">
+                <ul class="unstyled agents">
                     @story.agents.map { agent =>
                         @fragments.agent(agent)
                     }
