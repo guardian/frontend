@@ -13,8 +13,12 @@ trait Trail extends Images with Tags {
   def sectionName: String
   def thumbnail: Option[String] = None
   def isLive: Boolean
-  def importance: Option[Int] = None
-  def colour: Option[Int] = None
+  def storyItems: Option[StoryItems] = None
+
+  def importance = storyItems.map(_.importance).getOrElse(0)
+  def colour = storyItems.map(_.colour).getOrElse(0)
+  def quote = storyItems.flatMap(_.quote)
+
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])

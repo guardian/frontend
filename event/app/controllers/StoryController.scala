@@ -19,14 +19,14 @@ object StoryController extends Controller with Logging {
 
   def byId(id: String) = Action {
     implicit request =>
-
+      val edition = Site(request).edition
       val promiseOfStory = Akka.future(Story.mongo.byId(id))
 
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
             Cached(60) {
-              Ok(Compressed(views.html.story(StoryPage(story))))
+              Ok(Compressed(views.html.story(StoryPage(story), edition)))
             }
           }.getOrElse(NotFound)
         }

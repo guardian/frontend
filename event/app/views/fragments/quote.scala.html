@@ -1,0 +1,13 @@
+@(content: model.Content)
+<div class="box-indent border-top from-content-api">
+    @content.quote.map{ quote =>
+    <blockquote class="story-quote quoted">
+        @quote.text.map{ text =>
+        <a href="@quote.url.getOrElse(content.url)">
+            <p>&Prime;@cleanTrailText(text)&Prime;</p>
+        </a>
+        }
+        <cite>@quote.by.getOrElse(content.byline) on @quote.subject</cite>
+    </blockquote>
+    }
+</div>

@@ -9,9 +9,6 @@ import org.joda.time.format.ISODateTimeFormat
 import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import common.{ Logging, AkkaSupport }
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
-import akka.actor.Cancellable
 
 // model :- Story -> Event -> Articles|Agents|Places
 
@@ -36,9 +33,6 @@ case class Event(
     explainer: Option[String] = None,
     content: Seq[Content] = Nil) {
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val contentByDate: Map[String, Seq[Content]] = content.groupBy(_.webPublicationDate.toDateMidnight.toString())
-  lazy val contentByTone: Map[String, Seq[Content]] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News"))
-  lazy val contentByColour: Map[Option[Int], Seq[Content]] = content.groupBy(_.colour)
 }
 
 object Event {
@@ -50,7 +44,8 @@ object Event {
     places = e.places,
     explainer = e.explainer,
     content = e.content.flatMap { c =>
-      content.find(_.id == c.id).map(Content(_, Some(c.importance), Some(c.colour)))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.quote))
+      content.find(_.id == c.id).map(Content(_, storyItems))
     }
   )
 }
@@ -67,10 +62,12 @@ case class Story(
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
-  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).sortBy(_.importance).reverse
+  lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
+  lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
+  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).distinctBy(_.id)
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
-  lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour.getOrElse(0)).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
+  lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
 
   private def toColour(i: Int) = i match {
     case 1 => "Overview"
@@ -146,8 +143,12 @@ object Story {
 }
 
 // just used for parsing from Json
-private case class ParsedContent(id: String, importance: Int, colour: Int)
-//private case class ParsedAgent(id: String)
+private case class ParsedContent(
+  id: String,
+  importance: Int,
+  colour: Int,
+  quote: Option[Quote] = None)
+
 private case class ParsedPlace(id: String)
 
 private case class ParsedStory(
