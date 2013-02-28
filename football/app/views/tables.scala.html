@@ -30,11 +30,6 @@
             </a>
 
             <table class="table-football">
-                @if(!table.multiGroup) {
-                    <thead class="table-football-header">
-                        @fragments.tableColumnHeaders()
-                    </thead>
-                }
 
                 @table.groups.map{ group =>
                 <tbody class="table-football-body">
