@@ -2,7 +2,7 @@
 
 @defining(Site(request)) { site =>
 
-    <ul class="nav nav-columns nav-top-border-off no-columns @if(isFooter){nav-footer} cf">
+    <ul class="nav nav-columns no-columns-extended nav-top-border-off @if(isFooter){nav-footer} cf">
         @Navigation(request).map{ section =>
         <li class="zone-@section.zone">
             <a href="@section.href" class="zone-color zone-background-hover"

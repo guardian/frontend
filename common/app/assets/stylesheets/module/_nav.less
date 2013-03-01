@@ -308,25 +308,25 @@ a.topstories-control,
     }
 
     .team-list .nav-columns,
-    .nav-columns.no-columns {
+    .nav-columns.no-columns-extended {
         .flush
     }
 
-    .no-columns  li,
-    .no-columns  li:nth-child(2n) {
+    .no-columns-extended li,
+    .no-columns-extended li:nth-child(2n) {
         float: left;
         width: auto;
         margin-left: 0;
         margin-right: 0;
     }
-    
-    .no-columns  li a {
+
+    .no-columns-extended li a {
         padding: @baseline 5px !important;
         border-right: 1px solid #bebebe;
         border-top: 0;
     }
 
-    .no-columns  li:last-child a {
+    .no-columns-extended li:last-child a {
         border-right: 0;
     }
 
@@ -341,7 +341,8 @@ a.topstories-control,
     #navigation-footer,
     .nav-columns .zone-soulmates,
     .nav-columns .zone-jobs,
-    .sections .nav-section-divider {
+    .sections .nav-section-divider,
+    .football-bottom-nav .crumbtrail {
       display: none;
     }
 
@@ -370,6 +371,11 @@ a.topstories-control,
         background-color: @darkGrey;
         color: @plainWhite;
         text-decoration: none;
+    }
+
+    .football-top-nav .sections .football-first-crumb {
+        background-color: @sportBright;
+        color: @plainWhite;
     }
 
     .football-nav .sections .football-second-crumb {
