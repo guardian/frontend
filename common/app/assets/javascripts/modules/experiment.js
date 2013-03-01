@@ -29,37 +29,39 @@ define([
             },
 
             renderStoryModule01: function(html) {
-                // Remove the existing story package and its title
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
+                // Instead of main title
+                var top = common.$g('.article-zone.type-1');
+                var el = document.createElement('div');
+                common.$g(el).html(html);
+                common.$g('.story-package-detail', el).remove();
+                top.after(el);
+                top.remove();
 
-                // Add into article body
+                // Add after last para
                 var paras = common.$g('.article-body > p:not(:empty)');
                 if (paras.length) {
-                    // after last para
                     common.$g(paras[paras.length - 1]).after(html);
-                    // after first para, minus accordion
-                    var el = document.createElement('div');
-                    common.$g(el).html(html);
-                    common.$g('.accordion', el).remove();
-                    common.$g(paras[0]).after(el);
                 }
+
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
             },
 
             renderStoryModule02: function(html) {
-                // Remove the existing story package and its title
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
-
                 // Add into article body
                 var paras = common.$g('.article-body > p:not(:empty)');
                 if (paras.length) {
                     // after last para
                     common.$g(paras[paras.length - 1]).after(html);
-                    // after first para, minus accordion
+                    // after first para, minus detail (eg. trailblock)
                     var el = document.createElement('div');
                     common.$g(el).html(html);
-                    common.$g('.accordion', el).remove();
-                    common.$g(paras[0]).before(el);
+                    common.$g('.story-package-detail', el).remove();
+                    common.$g(paras[0]).after(el);
                 }
+
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
             },
 
             fallback: function () {

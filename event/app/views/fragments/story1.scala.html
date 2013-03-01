@@ -7,52 +7,12 @@
     <div class="margin-bottom">
         <a class="type-2 zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
     </div>
-</div>
-
-<ul class="accordion">
-
-    @if(story.hasContent) {
-        <li class="accordion-item">
-            <a href="#" class="accordion-btn">Latest <i class="i i-filter-arrow-right"></i></a>
-
+    <div class="story-package-detail">
+        @if(story.hasContent) {
+            <p class="type-2">Latest</p>
             <section class="story-latest">
                 @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
             </section>
-        </li>
-    }
-
-    @story.explainer.map{ explainer =>
-        <li class="accordion-item">
-            <a href="#" class="accordion-btn">Summary <i class="i i-filter-arrow-right"></i></a>
-
-            <section class="story-latest">
-                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-                    @cleanTrailText(story.explainer.getOrElse(""))
-                </p>
-            </section>
-        </li>
-    }
-
-    @if(story.hasAgents) {
-        <li class="accordion-item">
-            <a href="#" class="accordion-btn">Key players <i class="i i-filter-arrow-right"></i></a>
-
-            <section class="story-players">
-                <ul class="unstyled">
-                    @story.agents.map { agent =>
-                        @fragments.agent(agent)
-                    }
-                </ul>
-            </section>
-        </li>
-    }
-
-    @if(story.hasEvents) {
-        <li class="accordion-item">
-            <a href="#" class="accordion-btn">Timeline of events <i class="i i-filter-arrow-right"></i></a>
-            <section class="story-timeline">
-                @fragments.timeline(story)
-            </section>
-        </li>
-    }
-</ul>
+        }
+    </div>
+</div>
