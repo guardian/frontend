@@ -12,7 +12,7 @@ import conf.Configuration
 trait AkkaSupport {
 
   // slows down scheduling e.g. 1 = normal speed, 5 = 5 times slower
-  private val slowdown = Configuration.scheduling.slowdown
+  lazy val slowdown = Configuration.scheduling.slowdown
 
   object play_akka {
     def system(): ActorSystem = PlayAkka.system(Play.current)
