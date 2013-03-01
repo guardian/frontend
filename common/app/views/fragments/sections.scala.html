@@ -5,7 +5,7 @@
     <ul class="nav nav-columns no-columns-extended nav-top-border-off @if(isFooter){nav-footer} cf">
         @Navigation(request).map{ section =>
         <li class="zone-@section.zone">
-            <a href="@section.href" class="zone-color zone-background-hover"
+            <a href="@section.href" class="zone-color"
                     data-link-name="@section.linkName"
                     @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
                     @if(section.newWindow){ target="_blank" }
