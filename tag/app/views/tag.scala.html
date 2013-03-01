@@ -47,9 +47,9 @@
 
     @if(tag.section == "football") {
         @if(tag.isFootballCompetition) {
-            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-nav-bottom")
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-bottom-nav")
         } else {
-            @fragments.footballNav("/football", None, None, "football-nav-bottom")
+            @fragments.footballNav("/football", None, None, "football-bottom-nav")
         }
     }
 

@@ -6,11 +6,6 @@
     <p class="dateline type-11"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
 
     <table class="table-football type-6a" data-link-name="Table component">
-        @if(!table.multiGroup) {
-            <thead class="table-football-header">
-                @fragments.tableColumnHeaders()
-            </thead>
-        }
 
         @table.groups.map{ group =>
         <tbody class="table-football-body">
