@@ -25,7 +25,7 @@ object JsonComponent extends Results {
       case ValidCallback(callback) => json = "%s(%s);" format (callback, json)
       case badCallback => Forbidden("bad callback name")
     }
-    Ok(json).as("application/javascript")
+    Ok(json).as("application/json")
   }
 
   def jsonFor(items: (String, Any)*) = {
