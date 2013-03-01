@@ -7,8 +7,13 @@ import akka.util.duration._
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
 import java.util.concurrent.{ Executors, TimeUnit }
+import conf.Configuration
 
 trait AkkaSupport {
+
+  // slows down scheduling e.g. 1 = normal speed, 5 = 5 times slower
+  private val slowdown = Configuration.scheduling.slowdown
+
   object play_akka {
     def system(): ActorSystem = PlayAkka.system(Play.current)
     def uptime(): Long = system().uptime
@@ -22,7 +27,7 @@ trait AkkaSupport {
 
     object scheduler {
       def every(duration: Duration, initialDelay: Duration = 0 seconds)(block: => Unit): Cancellable = {
-        system().scheduler.schedule(initialDelay, duration) { block }
+        system().scheduler.schedule(initialDelay, duration * slowdown) { block }
       }
 
       def once(block: => Unit): Cancellable = {
