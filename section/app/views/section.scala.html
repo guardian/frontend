@@ -1,13 +1,14 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Switches.all){  }{
+    @if(section.name == "Football") {
+        @fragments.footballNav("/football", None, None, "football-top-nav")
+    }
+
     <section class="front-section zone-@section.section">
 
         @fragments.headers.sectionHead(section.name)
 
-        @if(section.name == "Football") {
-            @fragments.footballNav("/football", None, None, "football-top-nav")
-        }
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
             @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
 	    	    <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
