@@ -17,7 +17,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
   def renderFor(competitionName: String) = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
-      renderLive(Competitions.withCompetitionFilter(competitionName), Some(competition))
+      renderLive(Competitions.withCompetitionFilter("/football/" + competitionName), Some(competition))
     }.getOrElse(NotFound)
   }
 
