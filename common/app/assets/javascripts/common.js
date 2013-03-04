@@ -21,17 +21,6 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 destination[property] = source[property];
             }
             return destination;
-        },
-        rateLimit : (function() {
-            var delay = 500,
-                then = 0;
-            return function(fn) {
-                var now = new Date().getTime();
-                if ((now - then) >= delay) {
-                    then = now;
-                    fn();
-                }
-            };
-        }())
+        }
     };
 });
