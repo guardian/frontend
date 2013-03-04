@@ -28,11 +28,12 @@ define([
         },
 
         initTimeline: function() {
-            var timeline = document.querySelector('.timeline');
+            var timeline = document.querySelector('.timeline'),
+                eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
 
             if(timeline) {
                 common.$g('.event-articles').addClass('h');
-                bean.on(timeline, 'click touchstart', '.date-line', function(e) {
+                bean.on(timeline, eventType, '.date-line', function(e) {
                     var block = common.$g(this).parent();
                     common.$g('.event-articles', block).toggleClass('h');
                 });
