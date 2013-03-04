@@ -1,13 +1,18 @@
 @(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
 @main(article, Switches.all){ }{
+
 	<h2 class="article-zone type-1">
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
-	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+    @defining(Site(request)){ site =>
+        @fragments.social("http://www.guardian.co.uk/" + article.id, article.headline, article.standfirst)
+    }  
 
-        <header class="article-head">
+    <article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+
+        <header class="article-ead">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
 
             @fragments.headline(article.headline)
