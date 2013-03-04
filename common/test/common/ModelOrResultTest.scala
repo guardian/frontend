@@ -6,10 +6,14 @@ import com.gu.openplatform.contentapi.model.{ Section, ItemResponse, Tag, Conten
 import org.joda.time.DateTime
 import play.api.test._
 import play.api.test.Helpers._
+import play.api.mvc.RequestHeader
+import test.TestRequest
 
 private object TestModel
 
 class ModelOrResultTest extends FlatSpec with ShouldMatchers {
+
+  implicit val request: RequestHeader = TestRequest()
 
   val testContent = new Content("the/id", None, None, new DateTime(), "the title", "http://foo.bar", "http://foo.bar", elements = None)
 
@@ -66,15 +70,15 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
     headers(notFound)("X-Accel-Redirect") should be("/type/gallery/the/id")
   }
 
-  it should "404 if it is an unsupported content type" in {
+  it should "Redirect to desktop if it is an unsupported content type" in {
 
-    val notFound = ModelOrResult(
+    val redirectedToDesktop = ModelOrResult(
       item = None,
       response = stubResponse.copy(content = Some(testContent))
     ).right.get
 
-    status(notFound) should be(404)
-    headers(notFound).get("X-Accel-Redirect") should be(None)
+    status(redirectedToDesktop) should be(303)
+    headers(redirectedToDesktop).get("Location").get should be("http://www.guardian.co.uk/the/id?mobile-redirect=false")
   }
 
   it should "internal redirect to a tag if it has shown up at the wrong server" in {
