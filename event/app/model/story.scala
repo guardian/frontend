@@ -61,7 +61,7 @@ case class Story(
   lazy val hasEvents: Boolean = events.nonEmpty
   lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val agents = events.flatMap(_.agents)
+  lazy val agents = events.flatMap(_.agents).sortBy(_.importance)
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
@@ -122,7 +122,7 @@ object Story {
 
     def latest(): Seq[Story] = {
       val fields = Map("id" -> 1, "title" -> 1, "hero" -> 1, "explainer" -> 1)
-      val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.map(Story(_, Nil))
+      val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(Story(_, Nil))
       stories
     }
 
