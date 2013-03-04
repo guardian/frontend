@@ -5,6 +5,10 @@
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
+        @if(article.section == "football") {
+            @fragments.footballNav("/football", None, None, "football-top-nav")
+        }
+
 	<article id="article" class="article @if(article.isLive){is-live} two-thirds" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header class="article-head">
