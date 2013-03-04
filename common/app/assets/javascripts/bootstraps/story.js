@@ -1,12 +1,14 @@
 define([
     "common",
     "bean",
+    "ajax",
 
     "modules/accordion",
     "modules/gallery"
 ], function(
     common,
     bean,
+    ajax,
 
     Accordion,
     Gallery
@@ -36,6 +38,27 @@ define([
                     common.$g('.event-articles', block).toggleClass('h');
                 });
             }
+        },
+
+        loadMoreStories: function() {
+            var aside = document.getElementById('js-latest-stories');
+
+            if(aside) {
+                ajax({
+                    url: '/stories',
+                    type: 'jsonp',
+                    jsonpCallback: 'callback',
+                    jsonpCallbackName: 'showLatestStories',
+                    success: function (json) {
+                        if(json && json.html) {
+                            aside.innerHTML = json.html;
+                        }
+                    },
+                    error: function () {
+                        common.mediator('module:error', 'Failed to load latest stories', 'story.js');
+                    }
+                });
+            }
         }
     };
 
@@ -43,6 +66,7 @@ define([
         modules.initAccordion();
         modules.initGallery();
         modules.initTimeline();
+        modules.loadMoreStories();
     };
 
     return {
