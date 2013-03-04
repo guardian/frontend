@@ -1,15 +1,17 @@
 @(story: model.Story)
 
-<div class="margin-bottom border-top border-bottom">
-    <div class="margin-top">
-        <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.title:</a>
-    </div>
-    <div class="margin-bottom">
-        <a class="type-2 zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
+<div class="margin-top margin-bottom">
+    <div class="story-package-title">
+        <div class="article-zone-sub">
+            <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.title:</a>
+        </div>
+        <div>
+            <a class="type-2 zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
+        </div>
     </div>
     <div class="story-package-detail">
         @if(story.hasContent) {
-            <p class="type-2">Latest</p>
+            <p class="type-6">Latest</p>
             <section class="story-latest">
                 @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
             </section>

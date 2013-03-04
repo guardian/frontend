@@ -30,12 +30,10 @@ define([
 
             renderStoryModule01: function(html) {
                 // Instead of main title
-                var top = common.$g('.article-zone.type-1');
+                var top = common.$g('h2.article-zone.type-1');
                 var el = document.createElement('div');
                 common.$g(el).html(html);
-                common.$g('.story-package-detail', el).remove();
-                top.after(el);
-                top.remove();
+                top.html(common.$g('.story-package-title', el));
 
                 // Add after last para
                 var paras = common.$g('.article-body > p:not(:empty)');
@@ -53,11 +51,13 @@ define([
                 if (paras.length) {
                     // after last para
                     common.$g(paras[paras.length - 1]).after(html);
+
                     // after first para, minus detail (eg. trailblock)
                     var el = document.createElement('div');
                     common.$g(el).html(html);
-                    common.$g('.story-package-detail', el).remove();
-                    common.$g(paras[0]).after(el);
+                    var bq = document.createElement('h2');
+                    common.$g(bq).html(common.$g('.story-package-title', el));
+                    common.$g(paras[1]).after(bq);
                 }
 
                 // Remove the existing story package and its title
