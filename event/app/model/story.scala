@@ -12,7 +12,7 @@ import common.{ Logging, AkkaSupport }
 
 // model :- Story -> Event -> Articles|Agents|Places
 
-case class Place(id: String) {}
+case class Place(id: Option[String] = None)
 
 case class Agent(
   name: Option[String] = None,

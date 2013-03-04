@@ -1,7 +1,7 @@
 @(page: StoryPage, edition: String)(implicit request: RequestHeader)
 
 @section(title: String, content: Seq[model.Content]) = {
-    <li class="accordion-item">
+<li class="accordion-item" xmlns="http://www.w3.org/1999/html">
         <a href="#" class="accordion-btn">@title <i class="i i-filter-arrow-right"></i></a>
         @fragments.section(title, content)
     </li>
@@ -79,6 +79,12 @@
                 </p>
             </section>
         }
+
+        <aside id="js-latest-stories">
+            <h3 class="article-zone type-2">
+                <a href="/stories" data-link-name="latest stories">Latest stories</a>
+            </h3>
+        </aside>
 
     }
 
