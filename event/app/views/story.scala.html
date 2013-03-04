@@ -27,6 +27,12 @@
             }
         </section>
 
+        @if(story.hasQuotes) {
+            @story.contentWithQuotes.headOption.map{ c =>
+                @fragments.quote(c)
+            }
+        }
+
         @story.explainer.map{ explainer =>
             <section class="story-overview">
 
@@ -49,8 +55,8 @@
         }
 
         @if(story.hasQuotes) {
-            @story.contentWithQuotes.headOption.map{ c =>
-                 @fragments.quote(c)
+            @story.contentWithQuotes.drop(1).headOption.map{ story =>
+                @fragments.quote(story)
             }
         }
 
