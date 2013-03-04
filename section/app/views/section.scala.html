@@ -5,7 +5,7 @@
         @fragments.footballNav("/football", None, None, "football-top-nav")
     }
 
-    <section class="front-section zone-@section.section">
+    <section class="front-section zone-@section.section two-thirds">
 
         @fragments.headers.sectionHead(section.name)
 
@@ -23,6 +23,6 @@
         @fragments.footballNav("/football", None, None, "football-bottom-nav")
     }
 
-    @fragments.mostPopularPlaceholder(section.section)
+    @fragments.mostPopularPlaceholder(section.section, Seq("one-third"))
 
 }
