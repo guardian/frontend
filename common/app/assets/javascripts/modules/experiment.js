@@ -35,10 +35,21 @@ define([
         // View
         this.view = {
             render: function (html) {
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
-                document.getElementById('js-related').innerHTML = html;
-                common.mediator.emit('modules:experiment:render');
                 // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+
+                // Add into article body
+                var paras = common.$g('.article-body > p:not(:empty)');
+                if (paras.length) {
+                    // after last para
+                    common.$g(paras[paras.length - 1]).after(html);
+                    // after first para, minus accordion
+                    var el = document.createElement('div');
+                    common.$g(el).html(html);
+                    common.$g('.accordion', el).remove();
+                    common.$g(paras[0]).after(el);
+                }
+                common.mediator.emit('modules:experiment:render');
 
             },
             fallback: function () {

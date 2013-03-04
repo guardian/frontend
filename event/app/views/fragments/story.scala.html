@@ -1,13 +1,13 @@
 @(story: model.Story, articleId: String)
-<h3 class="type-2 article-zone">
-    <a href="/stories/@story.id" class="zone-color" data-link-name="story title">@story.title</a>
-</h3>
 
-@story.explainer.map{ explainer =>
-    <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-        @cleanTrailText(story.explainer.getOrElse(""))
-    </p>
-}
+<div class="margin-bottom border-top border-bottom">
+    <div class="margin-top">
+        <a class="zone-color" data-link-name="section heading" href="/stories/@story.id">@story.title:</a>
+    </div>
+    <div class="margin-bottom">
+        <a class="type-2 zone-color" data-link-name="section heading" href="/stories/@story.id">@story.events(0).title</a> 
+    </div>
+</div>
 
 <ul class="accordion" data-link-name="story package">
 
@@ -19,6 +19,18 @@
                 @defining(story.contentByImportance.filter(_.id != articleId)){ content =>
                     @fragments.trailblocks.thumbnail(content, 3, true, 3)
                 }
+            </section>
+        </li>
+    }
+
+    @story.explainer.map{ explainer =>
+        <li class="accordion-item">
+            <a href="#" class="accordion-btn">Summary <i class="i i-filter-arrow-right"></i></a>
+
+            <section class="story-latest">
+                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                    @cleanTrailText(story.explainer.getOrElse(""))
+                </p>
             </section>
         </li>
     }
