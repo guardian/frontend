@@ -6,6 +6,8 @@
         <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
     </h2>
 
+    @fragments.social(gallery.canonicalUrl.get, gallery.headline, gallery.standfirst)
+
     <article class="article gallery-page" itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" id="js-gallery">
 
         <header class="article-head">

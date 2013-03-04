@@ -6,9 +6,7 @@
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
-    @defining(Site(request)){ site =>
-        @fragments.social("http://www.guardian.co.uk/" + article.id, article.headline, article.standfirst)
-    }  
+    @fragments.social(article.canonicalUrl.get, article.headline, article.standfirst)
 
     <article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 

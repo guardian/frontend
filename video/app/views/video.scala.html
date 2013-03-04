@@ -5,6 +5,8 @@
         <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
     </h2>
 
+    @fragments.social(video.canonicalUrl.get, video.headline, video.standfirst)
+
     <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType">
 
         <header class="article-head">
