@@ -4,26 +4,20 @@ define([
     "ajax",
 
     "modules/accordion",
-    "modules/gallery"
+    "modules/expandable"
 ], function(
     common,
     bean,
     ajax,
 
     Accordion,
-    Gallery
+    Expandable
 ) {
 
     var modules = {
         initAccordion: function () {
             if(document.querySelector('.accordion')) {
                 var a = new Accordion();
-            }
-        },
-
-        initGallery: function () {
-            if(document.getElementById('js-gallery-holder')) {
-                var g = new Gallery().init();
             }
         },
 
@@ -38,6 +32,11 @@ define([
                     common.$g('.event-articles', block).toggleClass('h');
                 });
             }
+        },
+
+        initAgents: function() {
+            var agentsExpandable = new Expandable({ id: 'js-agents', expanded: false });
+            agentsExpandable.init();
         },
 
         loadMoreStories: function() {
@@ -64,8 +63,8 @@ define([
 
     var init = function(req, config) {
         modules.initAccordion();
-        modules.initGallery();
         modules.initTimeline();
+        modules.initAgents();
         modules.loadMoreStories();
     };
 
