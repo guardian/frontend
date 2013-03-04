@@ -289,6 +289,10 @@ a.topstories-control,
     color: @plainWhite;
 }
 
+.football-bottom-nav .crumbtrail {
+      display: none;
+}
+
 @media screen and (min-width: @desktopBreakpoint) {
     #logo {
         margin: 10px 0 0 0;
@@ -341,8 +345,7 @@ a.topstories-control,
     #navigation-footer,
     .nav-columns .zone-soulmates,
     .nav-columns .zone-jobs,
-    .sections .nav-section-divider,
-    .football-bottom-nav .crumbtrail {
+    .sections .nav-section-divider {
       display: none;
     }
 
@@ -366,21 +369,37 @@ a.topstories-control,
 
     //temporarily apes the current r2 local nav
     .zone-football .crumbtrail .zone-background:hover,
-    .football-nav .sections .football-second-crumb:hover,
-    .football-nav .sections .football-crumb-hover:hover {
-        background-color: @darkGrey;
+    .football-nav .sections .football-first-crumb a:hover,
+    .football-nav .sections .football-second-crumb a:hover {
+        background: transparent url('../images/crumbs/crumb-over.dd195f2c2029b4605da752ae14f5f6cf.png') right center;
         color: @plainWhite;
         text-decoration: none;
     }
 
-    .football-top-nav .sections .football-first-crumb {
-        background-color: @sportBright;
+    .football-top-nav .sections .football-first-crumb a {
+        background: transparent url('../images/crumbs/crumb-1.fc8809f94618e2c66e936d17a4b351e4.png') right center;
+        padding: 4px 15px 4px 5px !important;
         color: @plainWhite;
+        border-right: 0;
+        position: relative;
+        z-index: 3;
     }
 
-    .football-nav .sections .football-second-crumb {
-        background-color: #0D3D00;
+    .football-top-nav .nav > li > a {
+        line-height: 1.6rem;
+    }
+
+    .football-top-nav .sections .football-second-crumb {
+        margin-left: -20px !important;
+    }
+
+    .football-nav .sections .football-second-crumb a {
+        background: transparent url('../images/crumbs/crumb-2.5cb9cc72df78dbfbec553a7754062ead.png') right center;
+        padding: 4px 15px 4px 25px !important;
         color: @plainWhite;
+        border-right: 0;
+        position: relative;
+        z-index: 2;
     }
 
     .zone-football .football-nav .sections {
