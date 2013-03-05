@@ -1,0 +1,34 @@
+@(content: Seq[model.Content], edition: String)
+@content.map{
+    case a: Article => {
+        <article id="article" class="article @if(a.isLive){is-live}">
+            <header class="article-head">
+                @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+                <h2 class="article-headline">Latest Developments</h2>
+            </header>
+
+            @if(!a.isLive) {
+                @a.mainPicture.map{ mainPicture =>
+                    @a.mainPicture(width=220).map{ smallCrop =>
+                        @fragments.img(mainPicture, smallCrop)
+                    }
+                }
+            }
+
+            @fragments.byline(a.byline, a)
+
+            <div class="article-body from-content-api @if(a.isLive) {live-blog}">
+                @withJsoup(BulletCleaner(a.body))(
+                    PictureCleaner(a),
+                    InBodyLinkCleaner("in body link"),
+                    BlockNumberCleaner,
+                    TweetCleaner,
+                    WitnessCleaner,
+                    Summary
+                )
+                <p><a href="@a.url">Continue reading...</a></p>
+                <p><a class="back-to-top" href="#top">Back to top</a></p>
+            </div>
+        </article>
+    }
+}

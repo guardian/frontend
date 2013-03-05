@@ -57,30 +57,14 @@ define([
         },
 
         initExperiments: function(config) {
-            var experimentName = localStorage.getItem('gu.experiment') || '',
-                experiment;
-
-            if (!experimentName) {
-                for (var key in config.switches) {
-                    if (config.switches[key] && key.match(/^experiment(\w+)/)) {
-                        experimentName = key.match(/^experiment(\w+)/)[1];
-                        break;
-                    }
+            common.mediator.on('modules:experiment:render', function() {
+                if(document.querySelector('.accordion')) {
+                    var a = new Accordion();
                 }
-            }
+            });
+            var e = new Experiment();
 
-            experimentName = experimentName.toLowerCase();
-
-            if (experimentName) {
-                common.mediator.on('modules:experiment:render', function() {
-                    if(document.querySelector('.accordion')) {
-                        var a = new Accordion();
-                    }
-                });
-                experiment = new Experiment(config, experimentName).init();
-            } else {
-                common.mediator.emit("modules:related:load");
-            }
+            e.init(config);
         }
 
     };
