@@ -66,7 +66,6 @@ define([
 
             e.init(config);
         }
-
     };
 
     var ready = function(config) {
@@ -80,6 +79,7 @@ define([
         if(config.page.section === "football") {
             modules.matchNav(config);
         }
+
     };
 
     // If you can wait for load event, do so.
