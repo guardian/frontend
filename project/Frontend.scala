@@ -3,12 +3,11 @@ import sbt._
 import sbt.Keys._
 
 import play.Project.{ requireJs => requireJsDoNotUse, _}
+import SbtGruntPlugin._
 
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 //import templemore.xsbt.cucumber.CucumberPlugin
-//import RequireJsPlugin._
-//import RequireJsPlugin.RequireJsKeys._
 //import net.liftweb.json.JsonDSL._
 //import org.sbtidea.SbtIdeaPlugin._
 
@@ -21,34 +20,10 @@ object Frontend extends Build with Prototypes with Testing {
 //    )
 
   val common = library("common")
-//    .settings(requireJsSettings: _*)
-//    .settings(
-//      // require js settings
-//      buildProfile in (Compile, requireJs) <<= (baseDirectory, resourceManaged) { (base, resources) =>
-//        (
-//          ("baseUrl" -> (base.getAbsolutePath + "/app/assets/javascripts")) ~
-//          ("name" -> "bootstraps/app") ~
-//          ("out" -> (resources.getAbsolutePath + "/main/public/javascripts/bootstraps/app.js")) ~
-//          ("paths" ->
-//            ("bean"         -> "components/bean/bean") ~
-//            ("bonzo"        -> "components/bonzo/src/bonzo") ~
-//            ("domReady"     -> "components/domready/ready") ~
-//            ("EventEmitter" -> "components/eventEmitter/EventEmitter") ~
-//            ("qwery"        -> "components/qwery/mobile/qwery-mobile") ~
-//            ("reqwest"      -> "components/reqwest/src/reqwest") ~
-//            ("domwrite"     -> "components/dom-write/dom-write") ~
-//            ("swipe"        -> "components/swipe/swipe")
-//          ) ~
-//          ("wrap" ->
-//            ("startFile" -> (base.getAbsolutePath + "/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")) ~
-//            ("endFile" -> (base.getAbsolutePath + "/app/assets/javascripts/bootstraps/go.js"))
-//          ) ~
-//          ("optimize" -> "uglify2") ~
-//          ("preserveLicenseComments" -> false)
-//        )
-//      },
-//      resourceGenerators in Compile <+=  requireJs in (Compile, requireJs)
-//    )
+      .settings(
+        (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
+        resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile"))
+      )
     //.dependsOn(jasmine % "test->test")
 
   val commonWithTests = common % "test->test;compile->compile"

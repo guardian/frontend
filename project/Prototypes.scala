@@ -7,7 +7,6 @@ import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
 //import com.typesafe.sbtscalariform.ScalariformPlugin._
-import com.gu.SbtJshintPlugin._
 
 
 trait Prototypes extends Testing {
@@ -21,7 +20,6 @@ trait Prototypes extends Testing {
     )
 
   def base(name: String) =   play.Project(name, version, path = file(name))
-    .settings(jshintSettings: _*)
     //.settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
@@ -57,16 +55,6 @@ trait Prototypes extends Testing {
 
       // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
-
-      jshintFiles <+= baseDirectory { base =>
-        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "components" ** "*.js")
-      },
-
-      jshintOptions <+= (baseDirectory) { base =>
-        (base.getParentFile / "resources" / "jshint_conf.json")
-      },
-
-      (test in Test) <<= (test in Test) dependsOn (jshint),
 
       //effectively disables built in Play javascript compiler
       javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
