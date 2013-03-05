@@ -188,7 +188,7 @@ object TweetCleaner extends HtmlCleaner {
 
 object Summary extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    val paras = document.getElementsByTag("p").drop(3)
+    val paras = document.body().children().toList.drop(4)
     paras.foreach(_.remove())
     document
   }

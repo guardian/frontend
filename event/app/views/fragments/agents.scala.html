@@ -1,0 +1,44 @@
+@(agents: Seq[Agent])
+
+<p class="box-indent gallery-nav type-11" id="js-gallery-nav">
+
+    <a id="js-gallery-prev" data-link-name="Agent Previous" data-is-ajax="true"
+       class="gallery-prev is-off" href="javascript://">Previous</a>
+
+        Agent <span id="js-gallery-index">1</span> of @agents.size
+
+    <a id="js-gallery-next" data-link-name="Agent Next" data-is-ajax="true"
+       href="?index=2" class="gallery-next">Next</a>
+
+</p>
+
+<div class="gallery-container" id="js-gallery-holder">
+    <ul class="unstyled">
+        @agents.zipWithRowInfo.map{ case(agent, row) =>
+            @if(row.rowNum == 1) {
+                <li id="js-gallery-item-@row.rowNum" class="js-current-gallery-slide" data-image="true"
+                    data-index="@row.rowNum" data-total="@agents.size">
+                    @agent.picture.map { image =>
+                        <img class="js-gallery-img maxed landscape"
+                            src="@image" />
+                    }
+            } else {
+                <li id="js-gallery-item-@row.rowNum" class="is-off" data-image="false" data-index="@row.rowNum"
+                    data-total="@agents.size" data-orientation="landscape"
+                    @agent.picture.map { image => data-src="@image" }>
+            }
+
+            <div class="gallery-caption">
+                <div class="agent-head">
+                    @agent.name.map{ name => <h3 class="agent-name">@name</h3> }
+                    @agent.role.map{ role => <p class="agent-role">@role</p> }
+                </div>
+                <div class="agent-body">
+                    @agent.explainer.map{ explainer => <p>@explainer</p> }
+                </div>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+

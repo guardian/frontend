@@ -2,7 +2,8 @@
     border-bottom: none;
 }
 
-.event-block:not(:first-of-type) {
+.event-block:not(:first-child),
+.panel .event-block:first-child{
     margin-top: -24px;
 }
 
@@ -10,4 +11,14 @@
     margin:-10px 0 0 4px;
     padding:@baseline*2 0 @baseline*2 @gutter;
     border-left: 1px solid #777;
+    cursor: pointer;
 }
+
+.event-articles {
+  border-left: 1px solid #777;
+  margin-left: 4px !important;
+  padding-left: 25px;
+}
+
+.event-articles--item .i-date { display: none; }
+.event-articles--item a { color: #444; }
