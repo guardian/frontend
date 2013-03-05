@@ -2,9 +2,33 @@
   margin-top: @baseline*2;
 }
 
+.story-section {
+  width: 100%;
+}
+
 .story-section .i-date { display: none; }
 .story-section time {
   color: #666;
   font-size: 12px;
   font-size: 1.2rem;
  }
+
+.story-quote {
+  background-color: @mushroom;
+  display: inline-block;
+  margin-top: 16px !important;
+  padding: 0px 16px 4px 16px !important;
+}
+
+.back-to-top,
+.from-content-api .back-to-top {
+  .type-10;
+  color: #444;
+}
+
+.back-to-top::before {
+  .type-10;
+  display: inline-block;
+  margin-right: 4px;
+  content: "↑";
+}

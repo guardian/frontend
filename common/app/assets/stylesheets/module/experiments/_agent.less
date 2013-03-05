@@ -1,11 +1,18 @@
+.agents, .agent {
+  display: block;
+  width: 100%;
+}
+
 .agent {
   margin-bottom: @baseline*2;
 }
 
 .agent-head {
   border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
   margin: 0 0 @baseline*2 0;
   padding: @baseline*3 0 @baseline*3 0;
+  overflow: auto;
 }
 
 .agent:first-child .agent-head { border-top: none; }
@@ -18,7 +25,7 @@
 }
 
 .agent-name {
-  .type-6;
+  .type-5;
   margin-bottom: @baseline;
 }
 
@@ -29,5 +36,5 @@
 }
 
 .agent-body {
-  .type-7;
+  .type-6;
 }

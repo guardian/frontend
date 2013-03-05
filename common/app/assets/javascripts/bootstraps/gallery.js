@@ -1,9 +1,16 @@
 define([
+    "common",
+
     "modules/gallery",
-    "modules/analytics/gallery"
+    "modules/analytics/gallery",
+    "modules/accordion",
+    "modules/experiment"
 ], function(
+    common,
     Gallery,
-    Tracking
+    Tracking,
+    Accordion,
+    Experiment
 ) {
 
     var modules = {
@@ -22,11 +29,23 @@ define([
 
                 t.init();
             }
+        },
+
+        initExperiments: function(config) {
+            common.mediator.on('modules:experiment:render', function() {
+                if(document.querySelector('.accordion')) {
+                    var a = new Accordion();
+                }
+            });
+            var e = new Experiment();
+
+            e.init(config);
         }
     };
 
     var init = function(req, config) {
         modules.augmentGallery();
+        modules.initExperiments(config);
         modules.initOphanTracking(config);
     };
 

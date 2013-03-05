@@ -45,3 +45,15 @@ object JsonComponent extends Results {
     }
   }
 }
+
+// you cannot simply return a 404 for JsonP see
+// http://stackoverflow.com/questions/2493974/how-to-callback-a-function-on-404-in-json-ajax-request-with-jquery#answer-2537559
+object JsonNotFound {
+
+  private val ValidCallback = """([a-zA-Z0-9_]+)""".r
+
+  def apply()(implicit request: RequestHeader) = request.getQueryString("callback").map {
+    case ValidCallback(callback) => Ok("""%s({"status":404});""" format (callback)).as("application/javascript")
+    case badCallback => Forbidden("bad callback name")
+  }.getOrElse(NotFound)
+}
