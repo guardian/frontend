@@ -22,21 +22,28 @@ define([
         },
 
         initTimeline: function() {
-            var timeline = document.querySelector('.timeline'),
+            var $ = common.$g,
+                timeline = document.querySelector('.timeline'),
                 eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
 
             if(timeline) {
-                common.$g('.event-articles').addClass('h');
+                $('.event-articles').addClass('h');
+                $('.event-articles').first().removeClass('h');
                 bean.on(timeline, eventType, '.date-line', function(e) {
-                    var block = common.$g(this).parent();
-                    common.$g('.event-articles', block).toggleClass('h');
+                    var block = $(this).parent();
+                    $('.event-articles', block).toggleClass('h');
                 });
             }
         },
 
-        initAgents: function() {
-            var agentsExpandable = new Expandable({ id: 'js-agents', expanded: false });
-            agentsExpandable.init();
+        initExpandables: function() {
+            var els = document.querySelectorAll('.expandable');
+
+            for(var i = 0, l = els.length; i < l; i++) {
+                var id = els[i].id;
+                var e = new Expandable({id: id, expanded: false});
+                e.init();
+            }
         },
 
         loadMoreStories: function() {
@@ -64,7 +71,7 @@ define([
     var init = function(req, config) {
         modules.initAccordion();
         modules.initTimeline();
-        modules.initAgents();
+        modules.initExpandables();
         modules.loadMoreStories();
     };
 
