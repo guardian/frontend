@@ -8,12 +8,10 @@ define([
 
     function Experiment() {
 
-        var that = this;
+        var experimentName = localStorage.getItem('gu.experiment') || '';
+            that = this;
 
         this.init = function (config) {
-            var experimentName = localStorage.getItem('gu.experiment') || '',
-                experiment;
-
             if (!experimentName) {
                 for (var key in config.switches) {
                     if (config.switches[key] && key.match(/^experiment(\w+)/)) {
