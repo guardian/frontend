@@ -2,7 +2,8 @@
     border-bottom: none;
 }
 
-.event-block:not(:first-of-type) {
+.event-block:not(:first-child),
+.panel .event-block:first-child{
     margin-top: -24px;
 }
 
@@ -11,6 +12,11 @@
     padding:@baseline*2 0 @baseline*2 @gutter;
     border-left: 1px solid #777;
     cursor: pointer;
+}
+
+.date-line button {
+  background: none;
+  border: none;
 }
 
 .event-articles {
