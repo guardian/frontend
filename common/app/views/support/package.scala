@@ -83,7 +83,7 @@ object JavaScriptValue {
 object JavaScriptVariableName {
   def apply(s: String): String = {
     val parts = s.split("-").toList
-    (parts.headOption.toList ::: parts.tail.map { firstLetterUppercase }) mkString
+    (parts.headOption.toList ::: parts.tail.map(firstLetterUppercase )).mkString
   }
   private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
 }
