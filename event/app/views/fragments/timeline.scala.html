@@ -3,9 +3,10 @@
 @eventList(events: Seq[Event], isPanel: Boolean) = {
     <ul class="unstyled @if(isPanel){ panel}">
         @events.map { event =>
-            @event.content.take(1).zipWithRowInfo.map{ case (trail, info) =>
             <li class="trail event-block" data-link-name="trail">
-                @fragments.relativeDate(event.startDate, trail.isLive, isFront=true)
+                @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
+                    @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
+                }
                 <div class="date-line">
                     <h3 class="type-5">@event.title</h3>
                 </div>
@@ -17,9 +18,9 @@
                         <p class="type-7">
                             <a href="@c.url">
                                 @c.standfirst.map { s =>
-                                @withJsoup(BulletCleaner(s))(
-                                InBodyLinkCleaner("in standfirst link")
-                                )
+                                    @withJsoup(BulletCleaner(s))(
+                                        InBodyLinkCleaner("in standfirst link")
+                                    )
                                 }
                             </a>
                         </p>
@@ -28,7 +29,6 @@
                 </ul>
                 }
             </li>
-            }
         }
     </ul>
 }
