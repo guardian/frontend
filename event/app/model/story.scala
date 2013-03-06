@@ -44,7 +44,11 @@ object Event {
     places = e.places,
     explainer = e.explainer,
     content = e.content.flatMap { c =>
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.quote))
+
+      val cleanQuote = c.quote.map { q =>
+        Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
+      }
+      val storyItems = Some(StoryItems(c.importance, c.colour, cleanQuote))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   )
@@ -91,8 +95,8 @@ object Story {
   def apply(s: ParsedStory, content: Seq[ApiContent]): Story = Story(
     id = s.id,
     title = s.title,
-    explainer = s.explainer,
-    hero = s.hero,
+    explainer = s.explainer.filter(_.nonEmpty),
+    hero = s.hero.filter(_.nonEmpty),
     events = s.events.map(Event(_, content))
   )
 

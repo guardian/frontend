@@ -33,7 +33,8 @@ object StoryController extends Controller with Logging {
         if (stories.nonEmpty) {
           Cached(60) {
             request.getQueryString("callback").map { callback =>
-              val html = views.html.fragments.latestStories(stories)
+              val storyId = request.getQueryString("storyId").getOrElse("0")
+              val html = views.html.fragments.latestStories(stories.filterNot(_.id.equals(storyId)))
               JsonComponent(html)
             } getOrElse {
               Cached(60) {
