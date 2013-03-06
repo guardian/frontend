@@ -37,9 +37,13 @@ object Headline extends Style { val className = "headline-only" }
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
-    case (key, value: Map[String, Any]) => "'%s': {%s}".format(key, value.map(MetadataJson(_)).mkString(","))
-    case (key, value: Seq[(String, Any)]) => "'%s': [%s]".format(key, value.map("{" + MetadataJson(_) + "}").mkString(","))
-    case (key, value) => "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
+    // thank you erasure
+    case (key, value) if value.isInstanceOf[Map[_, _]] =>
+      "'%s': {%s}".format(key, value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(","))
+    case (key, value) if value.isInstanceOf[Seq[_]] =>
+      "'%s': [%s]".format(key, value.asInstanceOf[Seq[(String, Any)]].map("{" + MetadataJson(_) + "}").mkString(","))
+    case (key, value) =>
+      "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
   }
 }
 

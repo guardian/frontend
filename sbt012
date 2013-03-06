@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #Node package management for Grunt build steps
+
 npm install
 
 NPM_EXIT=$?

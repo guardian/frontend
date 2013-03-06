@@ -24,8 +24,9 @@ trait Prototypes extends Testing {
     .settings(playAssetHashDistSettings: _*)
     .settings(
       maxErrors := 20,
-      javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
-      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
+      javacOptions := Seq("-g", "-source", "1.7", "-target", "1.7", "-encoding", "utf8"),
+      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature",
+        "-language:reflectiveCalls", "-language:implicitConversions", "-language:higherKinds", "-language:postfixOps"),
 
       ivyXML :=
         <dependencies>
@@ -75,14 +76,15 @@ trait Prototypes extends Testing {
         "model._",
         "views._",
         "views.support._",
-        "conf._"
+        "conf._",
+        "play.api.Play",
+        "play.api.Play.current"
       )
     )
 
   def library(name: String) = base(name).settings(
     libraryDependencies ++= Seq(
         "com.gu" %% "management-play" % "5.26",
-//      "com.gu" % "management-logback_2.9.1" % "5.21",
       "com.gu" %% "configuration" % "3.9",
       "com.gu.openplatform" %% "content-api-client" % "1.21",
 
