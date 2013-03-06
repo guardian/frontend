@@ -5,7 +5,7 @@ import common.Logging
 import play.api.templates.Html
 
 object FootballHelpers {
-  implicit def lineUpPlayer2rich(t: LineUpPlayer) = new {
+  implicit class lineUpPlayer2rich(t: LineUpPlayer) {
     lazy val isUnusedSub = t.substitute && !t.events.exists(_.eventType == "substitution")
   }
 }

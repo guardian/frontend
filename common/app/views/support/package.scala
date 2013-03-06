@@ -269,16 +269,16 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  implicit def tags2tagUtils(t: Tags) = new {
+  implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
 
-  implicit def tags2inflector(t: Tag) = new {
+  implicit class Tags2inflector(t: Tag) {
     lazy val singularName: String = inflector.singularize(t.name)
     lazy val pluralName: String = inflector.pluralize(t.name)
   }
 
-  implicit def seq2zipWithRowInfo[A](seq: Seq[A]) = new {
+  implicit class Seq2zipWithRowInfo[A](seq: Seq[A]) {
     def zipWithRowInfo = seq.zipWithIndex.map {
       case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
     }

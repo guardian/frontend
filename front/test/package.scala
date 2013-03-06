@@ -19,7 +19,7 @@ object `package` {
     }
   }
 
-  implicit def webElement2rich(element: FluentWebElement) = new {
+  implicit class WebElement2rich(element: FluentWebElement) {
     lazy val href = element.getAttribute("href")
     def hasAttribute(name: String) = element.getAttribute(name) != null
   }
