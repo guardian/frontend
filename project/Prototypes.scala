@@ -26,7 +26,7 @@ trait Prototypes extends Testing {
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.7", "-target", "1.7", "-encoding", "utf8"),
       scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature",
-        "-language:reflectiveCalls", "-language:implicitConversions", "-language:higherKinds"),
+        "-language:reflectiveCalls", "-language:implicitConversions"),
 
       ivyXML :=
         <dependencies>

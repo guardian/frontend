@@ -1,5 +1,7 @@
 package implicits
 
+import language.higherKinds
+
 trait Collections {
 
   // thanks https://gist.github.com/1189097
