@@ -3,6 +3,7 @@ package implicits
 import java.io.{ ByteArrayOutputStream, InputStream }
 import java.awt.image.BufferedImage
 import javax.imageio.{ ImageWriter, IIOImage, ImageWriteParam, ImageIO }
+import scala.language.reflectiveCalls
 
 trait Images extends Numbers with AutomaticResourceManagement {
 

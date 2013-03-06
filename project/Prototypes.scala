@@ -6,8 +6,6 @@ import PlayArtifact._
 import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-//import com.typesafe.sbtscalariform.ScalariformPlugin._
-
 
 trait Prototypes extends Testing {
   val version: String
@@ -20,13 +18,11 @@ trait Prototypes extends Testing {
     )
 
   def base(name: String) =   play.Project(name, version, path = file(name))
-    //.settings(scalariformSettings: _*)
     .settings(playAssetHashDistSettings: _*)
     .settings(
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.7", "-target", "1.7", "-encoding", "utf8"),
-      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature",
-         "-language:implicitConversions"),
+      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature"),
 
       ivyXML :=
         <dependencies>
