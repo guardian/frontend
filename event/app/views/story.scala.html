@@ -27,8 +27,6 @@
             }
         </section>
 
-        <p>Quotes size: @story.contentWithQuotes.size</p>
-
         @if(story.hasQuotes) {
             @story.contentWithQuotes.headOption.map{ c =>
                 @fragments.quote(c)
