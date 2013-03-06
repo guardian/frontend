@@ -1,4 +1,14 @@
-define(["modules/analytics/video"], function(Videostream) {
+define([
+    "common",
+    "modules/analytics/video",
+    "modules/accordion",
+    "modules/experiment"
+], function(
+    common,
+    Videostream,
+    Accordion,
+    Experiment
+) {
 
     var modules = {
         initAnalytics: function (config) {
@@ -9,10 +19,22 @@ define(["modules/analytics/video"], function(Videostream) {
             });
 
             v.init();
+        },
+
+        initExperiments: function(config) {
+            common.mediator.on('modules:experiment:render', function() {
+                if(document.querySelector('.accordion')) {
+                    var a = new Accordion();
+                }
+            });
+            var e = new Experiment();
+
+            e.init(config);
         }
     };
 
     var init = function(req, config) {
+        modules.initExperiments(config);
         modules.initAnalytics(config);
     };
 

@@ -14,7 +14,7 @@ trait Prototypes extends Testing {
     //.settings(org.sbtidea.SbtIdeaPlugin.ideaSettings: _*)
     .settings(
       scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
-      parallelExecution in Global := false
+      parallelExecution in ThisBuild := false
     )
 
   def base(name: String) =   play.Project(name, version, path = file(name))

@@ -1,0 +1,18 @@
+@(page: StoriesPage)(implicit request: RequestHeader)
+
+@main(page, Switches.all){ }{
+
+    <h1 class="section-head zone-color ">Latest stories</h1>
+
+    @defining(page.stories){ stories =>
+        <ul class="unstyled box-indent">
+            @stories.take(10).zipWithRowInfo.map{ case (story, info) =>
+                @if(story.hasHero) {
+                    @fragments.storyThumbnailTrail(story, info)
+                } else {
+                   @fragments.storyHeadlineTrail(story, info)
+                }
+            }
+        </ul>
+    }
+}

@@ -8,6 +8,8 @@ import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
 import recorder.HttpRecorder
+import com.gu.management.play.InternalManagementPlugin
+import play.api.Play
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
@@ -32,7 +34,10 @@ class EditionalisedHtmlUnit {
   }
 
   val testPlugins: Seq[String] = Nil
-  val disabledPlugins: Seq[String] = Nil
+  val disabledPlugins: Seq[String] = Seq(
+    classOf[InternalManagementPlugin].getName,
+    "conf.SwitchBoardPlugin"
+  )
 
   val Port = """.*:(\d*)$""".r
 

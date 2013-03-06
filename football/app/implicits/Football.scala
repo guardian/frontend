@@ -45,7 +45,14 @@ trait Football {
       case m: MatchDay => m.result
       case _ => false
     }
+  }
 
+  implicit class Match2nations(m: FootballMatch) {
+    // England, Scotland, Wales, N. Ireland or Rep. Ireland
+    lazy val isHomeNationGame = {
+      val homeNations = Seq("497", "630", "964", "494", "499")
+      homeNations.contains(m.homeTeam.id) || homeNations.contains(m.awayTeam.id)
+    }
   }
 
   implicit class Match2hasTeam(m: FootballMatch) {

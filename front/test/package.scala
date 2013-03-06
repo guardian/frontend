@@ -6,7 +6,8 @@ import play.api.test.TestBrowser
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit {
+  object HtmlUnit extends EditionalisedHtmlUnit
+  {
 
     override def UK[T](path: String)(block: TestBrowser => T): T = {
       goTo("/_warmup", ukHost)(browser => Unit)

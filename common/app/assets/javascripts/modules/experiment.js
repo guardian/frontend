@@ -6,23 +6,80 @@ define([
     ajax
 ) {
 
-    function Experiment(config, experimentName) {
+    function Experiment() {
 
-        var that = this;
+        var experimentName = localStorage.getItem('gu.experiment') || '',
+            that = this;
 
-        this.init = function () {
-            this.load('/stories/' + experimentName + '/' + config.page.pageId);
+        this.init = function (config) {
+            if (!experimentName) {
+                for (var key in config.switches) {
+                    if (config.switches[key] && key.match(/^experiment(\w+)/)) {
+                        experimentName = key.match(/^experiment(\w+)/)[1];
+                        break;
+                    }
+                }
+            }
+
+            experimentName = experimentName.toLowerCase();
+
+            if (experimentName) {
+                this.load('/stories/' + experimentName + '/' + config.page.pageId);
+            } else {
+                common.mediator.emit("modules:related:load");
+            }
         };
 
         // View
         this.view = {
             render: function (html) {
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
-                document.getElementById('js-related').innerHTML = html;
+                switch (experimentName) {
+                    case 'storymodule01':
+                        this.renderStoryModule01(html);
+                        break;
+                    case 'storymodule02':
+                        this.renderStoryModule02(html);
+                        break;
+                }
                 common.mediator.emit('modules:experiment:render');
-                // Remove the existing story package and its title
-
             },
+
+            renderStoryModule01: function(html) {
+                // Instead of main title
+                var top = common.$g('h2.article-zone.type-1');
+                var el = document.createElement('div');
+                common.$g(el).html(html);
+                top.html(common.$g('.story-package-title', el));
+
+                // Add after last para
+                var paras = common.$g('.article-body > p:not(:empty)');
+                if (paras.length) {
+                    common.$g(paras[paras.length - 1]).after(html);
+                }
+
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+            },
+
+            renderStoryModule02: function(html) {
+                // Add into article body
+                var paras = common.$g('.article-body > p:not(:empty)');
+                if (paras.length) {
+                    // after last para
+                    common.$g(paras[paras.length - 1]).after(html);
+
+                    // after first para, minus detail (eg. trailblock)
+                    var el = document.createElement('div');
+                    common.$g(el).html(html);
+                    var bq = document.createElement('h2');
+                    common.$g(bq).html(common.$g('.story-package-title', el));
+                    common.$g(paras[1]).after(bq);
+                }
+
+                // Remove the existing story package and its title
+                common.$g('#related-trails, h3.type-2.article-zone').remove();
+            },
+
             fallback: function () {
                 common.mediator.emit("modules:related:load");
             }
@@ -41,7 +98,7 @@ define([
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showExperiment',
                 success: function (json) {
-                    if (json.html) {
+                    if (json && json.html) {
                         that.view.render(json.html);
                     } else {
                         that.view.fallback();

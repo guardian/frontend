@@ -28,7 +28,7 @@ object Frontend extends Build with Prototypes with Testing {
 
   val commonWithTests = common % "test->test;compile->compile"
 
-  val front = application("front").dependsOn(commonWithTests)
+  val front = application("front").dependsOn(commonWithTests).settings(parallelExecution in ThisBuild := false)
   val article = application("article").dependsOn(commonWithTests)
   val section = application("section").dependsOn(commonWithTests)
   val tag = application("tag").dependsOn(commonWithTests)
