@@ -8,7 +8,7 @@ define([
 
     function Experiment() {
 
-        var experimentName = localStorage.getItem('gu.experiment') || '';
+        var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
 
         this.init = function (config) {
