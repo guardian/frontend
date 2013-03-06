@@ -46,13 +46,15 @@ define([
             }
         },
 
-        loadMoreStories: function() {
+        loadMoreStories: function(config) {
             var aside = document.getElementById('js-latest-stories');
 
             if(aside) {
+                var storyId = config.page.pageId.replace("stories/", "");
                 ajax({
                     url: '/stories',
                     type: 'jsonp',
+                    data: { storyId: storyId},
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'showLatestStories',
                     success: function (json) {
@@ -72,7 +74,7 @@ define([
         modules.initAccordion();
         modules.initTimeline();
         modules.initExpandables();
-        modules.loadMoreStories();
+        modules.loadMoreStories(config);
     };
 
     return {
