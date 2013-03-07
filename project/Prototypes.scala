@@ -21,7 +21,7 @@ trait Prototypes extends Testing {
     .settings(playAssetHashDistSettings: _*)
     .settings(
       maxErrors := 20,
-      javacOptions := Seq("-g", "-source", "1.7", "-target", "1.7", "-encoding", "utf8"),
+      javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
       scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature"),
 
       ivyXML :=

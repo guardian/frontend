@@ -14,6 +14,8 @@ import sbtassembly.Plugin.MergeStrategy
 object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
 
+  val javascriptFiles = SettingKey[PathFinder]("javascript-files", "All javascript")
+
 //  val jasmine = integrationTests("jasmine", "integration-tests")
 //    .settings(
 //      CucumberPlugin.cucumberFeaturesDir := new File("./integration-tests/src/test/resources/com/gu/test/common.feature")
@@ -21,14 +23,15 @@ object Frontend extends Build with Prototypes with Testing {
 
   val common = library("common")
       .settings(
+        javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
         (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
-        resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile"))
+        resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile", javascriptFiles))
       )
     //.dependsOn(jasmine % "test->test")
 
   val commonWithTests = common % "test->test;compile->compile"
 
-  val front = application("front").dependsOn(commonWithTests).settings(parallelExecution in ThisBuild := false)
+  val front = application("front").dependsOn(commonWithTests)
   val article = application("article").dependsOn(commonWithTests)
   val section = application("section").dependsOn(commonWithTests)
   val tag = application("tag").dependsOn(commonWithTests)
