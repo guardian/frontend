@@ -186,9 +186,9 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-object Summary extends HtmlCleaner {
+case class Summary(ammount: Int) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    val paras = document.body().children().toList.drop(4)
+    val paras = document.body().children().toList.drop(ammount)
     paras.foreach(_.remove())
     document
   }
