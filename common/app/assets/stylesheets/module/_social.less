@@ -1,0 +1,48 @@
+.social {
+    clear: both;
+}
+
+.social ul {
+   margin: 0 auto 30px;  
+   list-style: none;
+   padding: @baseline*3 @gutter @baseline*4 @gutter;
+}
+ 
+.fb a, .twitter a, .gplus a, .linkedin a {
+    text-align: center;
+    display: block;
+    padding: 8px 0px;
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+@media (min-width: 320px) {
+    
+    .social li {
+        float: left;
+        width: 22%;
+        max-width: 80px;
+        }
+
+    .fb a, .twitter a, .gplus a, .linkedin a {
+        border-right: 2px solid #ffffff;
+        border-bottom-width: 0px;
+        }
+        
+    }
+
+.fb {
+    background-color: #3b5998;
+}
+
+.twitter {
+    background-color: #00aced;
+}
+
+.gplus {
+    background-color: #dd4b39; 
+}
+
+.linkedin {
+    background-color: #007bb6;
+}
