@@ -19,5 +19,5 @@ Feature: Story page
 
   Scenario: Back to top
     Given I am on an story
-    When Back to top is clicked
-    Then story page scrolls to the top
+    When Back to top is selected
+    Then page scrolls to the top

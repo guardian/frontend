@@ -57,7 +57,7 @@ Feature: Article page
     Scenario: Back to top
         Given I am on an article
     	When Back to top is selected
-        Then article page scrolls to the top
+        Then page scrolls to the top
 
 	@ignore
     Scenario: Page footer links
