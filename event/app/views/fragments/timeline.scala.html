@@ -9,7 +9,7 @@
                     @withJsoup(BulletCleaner(s))(
                         InBodyLinkCleaner("in standfirst link")
                     )
-                }
+                }.getOrElse(a.headline)
             </a>
         </p>
     </li>
