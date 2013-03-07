@@ -18,6 +18,13 @@
 @gallery(g: model.Gallery) = {
     <li class="event-articles--item event-articles--media">
         @fragments.relativeDate(g.webPublicationDate, false, false)
+        <p class="type-7">
+            @g.standfirst.map { s =>
+                @withJsoup(BulletCleaner(s))(
+                InBodyLinkCleaner("in standfirst link")
+                )
+            }.getOrElse(g.headline)
+        </p>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
             <a href="@g.url?index=@info.rowNum"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
         }
@@ -27,6 +34,13 @@
 @video(v: model.Video) = {
 <li class="event-articles--item event-articles--media">
     @fragments.relativeDate(v.webPublicationDate, false, false)
+    <p class="type-7">
+        @v.standfirst.map { s =>
+        @withJsoup(BulletCleaner(s))(
+        InBodyLinkCleaner("in standfirst link")
+        )
+        }.getOrElse(v.headline)
+    </p>
     <div class="player">
         <video controls="controls" poster="@v.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
         @v.encodings.map{ encoding =>
