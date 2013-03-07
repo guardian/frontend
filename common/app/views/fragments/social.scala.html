@@ -1,4 +1,4 @@
-@(url: String, headline: String, standfirst: Option[String])
+@(url: String, headline: String)
 
 <div class="social"> 
     <ul>
@@ -22,7 +22,7 @@
             <a
                 class="type-12"
                 data-link-name="social-linkedin"
-                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(headline)&summary=@helper.urlEncode(standfirst.get)&source=The+Guardian">
+                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(headline)&source=The+Guardian">
                 <span>LinkedIn</span>
             </a>
         </li>

@@ -68,7 +68,7 @@
 
     </article>
     
-    @fragments.social(gallery.canonicalUrl.get, gallery.headline, gallery.standfirst)
+    @fragments.social(gallery.canonicalUrl.get, gallery.headline)
 
     @if(storyPackage nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

@@ -31,7 +31,7 @@
         @fragments.standfirst(video)
     </div>
     
-    @fragments.social(video.canonicalUrl.get, video.headline, video.standfirst)
+    @fragments.social(video.canonicalUrl.get, video.headline)
 
     @if(storyPackage nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

@@ -39,7 +39,7 @@
         
     </article>
 
-    @fragments.social(article.canonicalUrl.get, article.headline, article.standfirst)
+    @fragments.social(article.canonicalUrl.get, article.headline)
     
     @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
