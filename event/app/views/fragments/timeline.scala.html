@@ -1,14 +1,16 @@
 @(story: Story)
 
+@standfirst(s: String) = {
+    @withJsoup(BulletCleaner(StripHtmlTags(s)))()
+}
+
 @article(a: model.Article) = {
     <li class="event-articles--item">
         @fragments.relativeDate(a.webPublicationDate, false, false)
         <p class="type-7">
             <a href="@a.url">
                 @a.standfirst.map { s =>
-                    @withJsoup(BulletCleaner(s))(
-                        InBodyLinkCleaner("in standfirst link")
-                    )
+                    @standfirst(s)
                 }.getOrElse(a.headline)
             </a>
         </p>
@@ -19,11 +21,11 @@
     <li class="event-articles--item event-articles--media">
         @fragments.relativeDate(g.webPublicationDate, false, false)
         <p class="type-7">
+            <a href="@g.url">
             @g.standfirst.map { s =>
-                @withJsoup(BulletCleaner(s))(
-                InBodyLinkCleaner("in standfirst link")
-                )
+                @standfirst(s)
             }.getOrElse(g.headline)
+            </a>
         </p>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
             <a href="@g.url?index=@info.rowNum"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
@@ -35,11 +37,11 @@
 <li class="event-articles--item event-articles--media">
     @fragments.relativeDate(v.webPublicationDate, false, false)
     <p class="type-7">
+        <a href="v.url">
         @v.standfirst.map { s =>
-        @withJsoup(BulletCleaner(s))(
-        InBodyLinkCleaner("in standfirst link")
-        )
+            @standfirst(s)
         }.getOrElse(v.headline)
+        </a>
     </p>
     <div class="player">
         <video controls="controls" poster="@v.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
