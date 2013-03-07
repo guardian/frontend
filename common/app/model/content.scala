@@ -96,6 +96,7 @@ class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
+  lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 }
 
