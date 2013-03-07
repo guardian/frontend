@@ -48,14 +48,19 @@
                 <div class="date-line">
                     <h3 class="type-5">@event.title</h3>
                 </div>
-                @if(event.hasContent) {
-                <ul class="unstyled event-articles">
-                    @event.content.map{
-                        case a: Article => { @article(a) }
-                        case g: Gallery => { @gallery(g) }
-                        case v: Video   => { @video(v) }
-                    }
-                </ul>
+
+                <div class="event-children">
+                    @if(event.hasExplainer) { <p class="event-summary">@event.explainer.get</p> }
+
+                    @if(event.hasContent) {
+                    <ul class="unstyled event-articles">
+                        @event.content.map{
+                            case a: Article => { @article(a) }
+                            case g: Gallery => { @gallery(g) }
+                            case v: Video   => { @video(v) }
+                        }
+                    </ul>
+                </div>
                 }
             </li>
         }
