@@ -1,0 +1,1102 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/interactive/2013/mar/04/choose-a-pope-interactive-guide",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-03-04T15:00:00Z",
+      "webTitle":"How to choose a Pope: an interactive guide",
+      "webUrl":"http://www.guardian.co.uk/world/interactive/2013/mar/04/choose-a-pope-interactive-guide",
+      "apiUrl":"http://content.guardianapis.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide",
+      "fields":{
+        "trailText":"<p>To elect the successor to Pope Benedict XVI, the cardinal-electors will be housed in a guesthouse within the Vatican. The prelates will travel by bus to and from the Sistine Chapel, where the voting takes place beneath Michelangelo's fresco of the Last Judgment</p>",
+        "headline":"How to choose a Pope: an interactive guide",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-03-04T15:05:00Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/4/1362395178477/Popes-mitre-and-cross-003.jpg",
+        "standfirst":"To elect the successor to Pope Benedict XVI, the cardinal-electors will be housed in a guesthouse within the Vatican. The prelates will travel by bus to and from the Sistine Chapel, where the voting takes place beneath Michelangelo's fresco of the Last Judgment. The full process is explained in this interactive guide created by Italian newspaper <a href=\"http://www.lastampa.it\">La Stampa</a>",
+        "shortUrl":"http://gu.com/p/3e7bh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/4/1362395178477/Popes-mitre-and-cross-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"404972058",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"La Stampa/<a href=\"http://vaticaninsider.com\">VaticanInsider.com</a>",
+        "publication":"guardian.co.uk",
+        "internalPageCode":"1875302",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-07T15:00:13Z"
+      },
+      "tags":[{
+        "id":"world/vatican",
+        "type":"keyword",
+        "webTitle":"Vatican",
+        "webUrl":"http://www.guardian.co.uk/world/vatican",
+        "apiUrl":"http://content.guardianapis.com/world/vatican",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pope-benedict-xvi",
+        "type":"keyword",
+        "webTitle":"Pope Benedict XVI",
+        "webUrl":"http://www.guardian.co.uk/world/pope-benedict-xvi",
+        "apiUrl":"http://content.guardianapis.com/world/pope-benedict-xvi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.guardian.co.uk/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/interactive",
+        "type":"type",
+        "webTitle":"Interactive",
+        "webUrl":"http://www.guardian.co.uk/interactive",
+        "apiUrl":"http://content.guardianapis.com/interactive",
+        "references":[]
+      }],
+      "mediaAssets":[],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/feb/28/three-challenges-new-pope",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-02-28T13:00:13Z",
+      "webTitle":"The new pope's three key challenges | Andrew Brown",
+      "webUrl":"http://www.guardian.co.uk/commentisfree/2013/feb/28/three-challenges-new-pope",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/feb/28/three-challenges-new-pope",
+      "fields":{
+        "trailText":"<strong>Andrew Brown:</strong> An obstructionist Vatican, a chronic shortage of priests and a shrinking worldwide congregation: the list is daunting",
+        "headline":"The new pope's three key challenges",
+        "body":"<p>When 117 cardinals gather in Rome <a href=\"http://www.guardian.co.uk/world/2013/feb/12/pope-ability-tackle-church-problem\" title=\"\">to choose the next pope</a> this month, the first thing that will determine their choice is what job they are hiring the man for. Catholicism is in a crisis: the historian <a href=\"http://www.guardian.co.uk/commentisfree/video/2013/feb/28/pope-benedict-diarmaid-macculloch-video\" title=\"\">Diarmaid MacCulloch</a> compares it to the great changes of the Reformation and the medieval reforms, 400 years earlier, under Pope Innocent VII.</p><p>The convulsions that started with the <a href=\"http://www.guardian.co.uk/commentisfree/andrewbrown/2012/oct/11/second-vatical-council-50-years-catholicism\" title=\"\">second Vatican council</a> of the 1960s have still not played themselves out. On the other hand, the pope will still be a Catholic. There are not going to be female priests, and only what absolutely has to change will change. The ban on contraception will remain: the best \u2013 and the least \u2013 that can happen is that it is quietly ignored, even by the hierarchy, and no longer used as the shibboleth of orthodoxy in any priest who wants promotion. Some things can't change, and we shouldn't assume that the new leader will take up the agenda of the Guardian or the New York Times.</p><p>But it's clear from <a href=\"http://www.guardian.co.uk/world/2013/feb/11/pope-resigns-live-reaction\" title=\"\">the pope's resignation</a> that he knows things can't go on as they are. So what does the crisis look like from Rome?</p><p>It seems to me that there are three interlocking difficulties for the church. There is crisis in the curia, the Vatican itself. There is a crisis in the clergy. And in the developed world, there is a crisis in the laity.</p><p>There is also a strategic problem in that the church must deal with the increasing militancy of Islam in the Middle East, and, beyond that, the rise of China and India. But that doesn't require new thinking, just the application of well-practised principles.</p><p>The problems of the laity and clergy are intertwined, and in the developed world their symptom is obvious: there are not enough of either, and both are ageing rapidly and sustained only by immigration from the south.</p><p>There is little that a pope can do directly about the problem of the shrinking laity, even in an age of global travel. Wherever he goes, he can draw vast crowds, but the interest and excitement subside when he has gone. The congregations continue to drain away.</p><p>The effect has been most marked in places where Catholicism was part of the national or regional identity \u2013 Ireland, Quebec, Boston and France come to mind. But it has happened almost everywhere in the developed world. And in the countries where churchgoing has shrunk, the clergy have also got older and \u2013 by report \u2013 more gay. Seminaries have closed. More and more priests are imported from Africa, from Latin America, and from the Philippines or Vietnam.</p><p>That is something the new pope could do something about, but only by relaxing the mandatory celibacy rule. To allow the ordination of already married men on a much wider scale than already happens with Anglican converts would transform the priesthood and bind it much more closely to the laity. From the outside, such a development looks inevitable.</p><p>Whether it seems so simple inside the Sistine chapel is another question. But, if it does, the electors will choose accordingly. Paradoxically, they are more likely then to choose a cardinal from Latin America or Asia, where the celibacy rules are already widely ignored, than from Europe or North America, where they are followed in the letter, if not in spirit.</p><p>Changing the rules on celibacy would still be a convulsive step that would bring fresh problems of its own. But it may appear to the cardinals a necessary and unavoidable adjustment to a reality that can no longer be denied.</p><p>The problem of the curia is different in nature. The central administration of the Vatican is plagued by corruption allegations and obstructionism. It functions too much like the rest of Italy. A pope of enormous energy and willpower and administrative experience would be needed to clean it out. Yet this, too, may be inevitable, as <a href=\"http://www.guardian.co.uk/world/2012/jun/03/vatican-leaks-pope-benedict-documents\" title=\"\">the VatiLeaks scandal</a> showed. The Italian model of politics doesn't even work in Italy. You can't run a global organisation on those principles.</p><p>Any loosening of central control would also be fraught with dangers for the church's coherence. A liberal reformer might suffer the fate of a Gorbachev and be swept aside by the forces he unleashed. I suspect that the reform of the curia would be the priority of any non-Italian European, such as <a href=\"http://ncronline.org/blogs/ncr-today/interview-cardinal-christoph-sch%C3%B6nborn\" title=\"\">Cardinal Christoph Sch&ouml;nborn</a> of Austria. But I doubt the electors have any great enthusiasm for the task.</p><!-- Guardian Watermark: internal-code/content/404782207|2013-03-04T17:19:44Z|36ffcdfdd25a1a45f60d5ab90e1270ad11c2e909 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-02-28T13:00:13Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054042862/Pope-Benedicts-final-audi-006.jpg",
+        "standfirst":"An obstructionist Vatican, a chronic shortage of priests and a shrinking worldwide congregation: the list is daunting",
+        "shortUrl":"http://gu.com/p/3e5ch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054042862/Pope-Benedicts-final-audi-006.jpg",
+        "wordcount":"737",
+        "commentable":"true",
+        "internalContentCode":"404782207",
+        "allowUgc":"false",
+        "internalOctopusCode":"7303909",
+        "isPremoderated":"false",
+        "byline":"Andrew Brown",
+        "publication":"guardian.co.uk",
+        "internalPageCode":"1873871",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-03T13:00:13Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.guardian.co.uk/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.guardian.co.uk/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"commentisfree/andrewbrown",
+        "type":"blog",
+        "webTitle":"Andrew Brown's blog",
+        "webUrl":"http://www.guardian.co.uk/commentisfree/andrewbrown",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/andrewbrown",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/pope-benedict-xvi",
+        "type":"keyword",
+        "webTitle":"Pope Benedict XVI",
+        "webUrl":"http://www.guardian.co.uk/world/pope-benedict-xvi",
+        "apiUrl":"http://content.guardianapis.com/world/pope-benedict-xvi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/vatican",
+        "type":"keyword",
+        "webTitle":"Vatican",
+        "webUrl":"http://www.guardian.co.uk/world/vatican",
+        "apiUrl":"http://content.guardianapis.com/world/vatican",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.guardian.co.uk/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.guardian.co.uk/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.guardian.co.uk/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/andrewbrown",
+        "type":"contributor",
+        "webTitle":"Andrew Brown",
+        "webUrl":"http://www.guardian.co.uk/profile/andrewbrown",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewbrown",
+        "bio":"<p>Andrew Brown is the editor of Cif belief. His most recent book is <a href=\"http://www.theorwellprize.co.uk/the-award/short-books/fishinginutopia.aspx\">Fishing in Utopia</a>, which won the 2009 Orwell prize</p>",
+        "rcsId":"GNL302224",
+        "r2ContributorId":"15354",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/12/1318438106802/Andrew-Brown.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.guardian.co.uk/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054036814/Pope-Benedicts-final-audi-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054036814/Pope-Benedicts-final-audi-002.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"130",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054039801/Pope-Benedicts-final-audi-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054039801/Pope-Benedicts-final-audi-004.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"54",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054041332/Pope-Benedicts-final-audi-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054041332/Pope-Benedicts-final-audi-005.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"340",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054042862/Pope-Benedicts-final-audi-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054042862/Pope-Benedicts-final-audi-006.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"84",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054044534/Pope-Benedicts-final-audi-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054044534/Pope-Benedicts-final-audi-007.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"132",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054045989/Pope-Benedicts-final-audi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054045989/Pope-Benedicts-final-audi-008.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"168",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054047855/Pope-Benedicts-final-audi-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054047855/Pope-Benedicts-final-audi-009.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"180",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054049264/Pope-Benedicts-final-audi-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054049264/Pope-Benedicts-final-audi-010.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"228",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054050738/Pope-Benedicts-final-audi-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054050738/Pope-Benedicts-final-audi-011.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"276",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054052213/Pope-Benedicts-final-audi-012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054052213/Pope-Benedicts-final-audi-012.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"372",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience at the Vatican before his resignation.  Photograph: Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054050738/Pope-Benedicts-final-audi-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362054050738/Pope-Benedicts-final-audi-011.jpg",
+          "source":"  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "photographer":"Alessandra Benedetti",
+          "altText":"Pope Benedict's final audience",
+          "height":"276",
+          "credit":"Alessandra Benedetti/  Alessandra Benedetti/Alessandra Benedetti/Corbis",
+          "caption":"Cardinals, including Tarcisio Bertone, the Vatican state secretary, attend Pope Benedict's final audience. Photograph: Alessandra Benedetti/Corbis",
+          "width":"460"
+        }
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/gallery/2013/feb/28/pope-benedict-last-day-in-pictures",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-02-28T18:32:00Z",
+      "webTitle":"Pope Benedict XVI's last day in office - in pictures",
+      "webUrl":"http://www.guardian.co.uk/world/gallery/2013/feb/28/pope-benedict-last-day-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/world/gallery/2013/feb/28/pope-benedict-last-day-in-pictures",
+      "fields":{
+        "trailText":"<p>Pope Benedict XVI boarded a helicopter to fly to the papal summer residence, Castel Gandolfo</p>",
+        "headline":"Pope Benedict XVI's last day in office - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-02-28T22:00:26Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/online/2013/2/28/1362073997387/Pope-Benedict-XVI-waves-t-003.jpg",
+        "standfirst":"Pope Benedict XVI boarded a helicopter to fly to the papal summer residence, Castel Gandolfo. He will stay there until renovations are complete at a monastery in the grounds of the Vatican",
+        "shortUrl":"http://gu.com/p/3e5zq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/2/28/1362073997387/Pope-Benedict-XVI-waves-t-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"404810017",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"guardian.co.uk",
+        "internalPageCode":"1874204",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-03T18:32:45Z"
+      },
+      "tags":[{
+        "id":"world/pope-benedict-xvi",
+        "type":"keyword",
+        "webTitle":"Pope Benedict XVI",
+        "webUrl":"http://www.guardian.co.uk/world/pope-benedict-xvi",
+        "apiUrl":"http://content.guardianapis.com/world/pope-benedict-xvi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.guardian.co.uk/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.guardian.co.uk/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.guardian.co.uk/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/vatican",
+        "type":"keyword",
+        "webTitle":"Vatican",
+        "webUrl":"http://www.guardian.co.uk/world/vatican",
+        "apiUrl":"http://content.guardianapis.com/world/vatican",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.guardian.co.uk/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.guardian.co.uk/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"gallery",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073587314/A-nun-walks-past-posters--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073587314/A-nun-walks-past-posters--002.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073587314/A-nun-walks-past-posters--002-thumb-6754.jpg",
+          "altText":"The Pope's last day: A nun walks past posters of Pope Benedict XVI ",
+          "height":"480",
+          "credit":"Gregorio Borgia/AP",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073587314/A-nun-walks-past-posters--002-thumb-6754.jpg",
+          "caption":"A nun walks past posters of Pope Benedict XVI on a street in Rome. The posters read in Italian: \"You will stay always with us. Thank you\"",
+          "width":"720"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073584395/Pope-Benedict-XVI-deliver-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073584395/Pope-Benedict-XVI-deliver-001.jpg",
+          "source":"AP",
+          "photographer":"L'Osservatore Romano",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073584395/Pope-Benedict-XVI-deliver-001-thumb-3279.jpg",
+          "altText":"The Pope's last day: Pope Benedict XVI delivers his message at his farewell meeting to cardinals",
+          "height":"480",
+          "credit":"L'Osservatore Romano/AP",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073584395/Pope-Benedict-XVI-deliver-001-thumb-3279.jpg",
+          "caption":"The pope speaks to his cardinals during a farewell meeting at the Vatican",
+          "width":"703"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073591860/Pope-Benedict-XVI-attends-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073591860/Pope-Benedict-XVI-attends-004.jpg",
+          "source":"Getty Images",
+          "photographer":"L'Osservatore Romano",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073591860/Pope-Benedict-XVI-attends-004-thumb-812.jpg",
+          "altText":"The Pope's last day: Pope Benedict XVI attends a meeting with his cardinals ",
+          "height":"480",
+          "credit":"L'Osservatore Romano/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073591860/Pope-Benedict-XVI-attends-004-thumb-812.jpg",
+          "caption":"The pope speaks to his cardinals in the Clementine Hall of the Vatican's Apostolic Palace ",
+          "width":"720"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073594362/A-group-of-nuns-watch-a-s-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073594362/A-group-of-nuns-watch-a-s-005.jpg",
+          "source":"EPA",
+          "photographer":"Guido Montani",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073594362/A-group-of-nuns-watch-a-s-005-thumb-3417.jpg",
+          "altText":"The Pope's last day: A group of nuns watch a screen in St Peter's square",
+          "height":"480",
+          "credit":"Guido Montani/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073594362/A-group-of-nuns-watch-a-s-005-thumb-3417.jpg",
+          "caption":"A group of nuns watch a screen in St Peter's Square showing Pope Benedict XVI leaving the balcony in Castel Gandolfo",
+          "width":"720"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073605130/The-helicopter-with-Pope--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073605130/The-helicopter-with-Pope--009.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Alberto Pizzoli",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073605130/The-helicopter-with-Pope--009-thumb-115.jpg",
+          "altText":"The Pope's last day: The helicopter with Pope Benedict XVI ab",
+          "height":"480",
+          "credit":"Alberto Pizzoli/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073605130/The-helicopter-with-Pope--009-thumb-115.jpg",
+          "caption":"The helicopter with Pope Benedict XVI aboard flies over St Peter's Square at the Vatican",
+          "width":"721"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074559069/A-woman-reacts-near-a-gia-013.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074559069/A-woman-reacts-near-a-gia-013.jpg",
+          "source":"Reuters",
+          "photographer":"Stefano Rellandini",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074559069/A-woman-reacts-near-a-gia-013-thumb-9905.jpg",
+          "altText":"The Pope's last day: A woman reacts near a giant screen",
+          "height":"480",
+          "credit":"Stefano Rellandini/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074559069/A-woman-reacts-near-a-gia-013-thumb-9905.jpg",
+          "caption":"A woman watches a giant screen showing the departure of Pope Benedict XVI from the Vatican",
+          "width":"700"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073599815/Priests-wave-as-the-helic-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073599815/Priests-wave-as-the-helic-007.jpg",
+          "source":"Reuters",
+          "photographer":"Alessandro Bianchi",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073599815/Priests-wave-as-the-helic-007-thumb-7295.jpg",
+          "altText":"The Pope's last day: Priests wave as the helicopter carrying Pope Benedict XVI takes off",
+          "height":"480",
+          "credit":"Alessandro Bianchi/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073599815/Priests-wave-as-the-helic-007-thumb-7295.jpg",
+          "caption":"Priests wave from a rooftop as the helicopter carrying Pope Benedict XVI takes off from inside the Vatican ",
+          "width":"756"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073602894/People-crowd-into-the-gal-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073602894/People-crowd-into-the-gal-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Giorgio Cosulich",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073602894/People-crowd-into-the-gal-008-thumb-6743.jpg",
+          "altText":"The Pope's last day: People crowd into the gallery on top of St Peter's Basilica",
+          "height":"600",
+          "credit":"Giorgio Cosulich/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073602894/People-crowd-into-the-gal-008-thumb-6743.jpg",
+          "caption":"People crowd into the gallery on top of St Peter's Basilica as a helicopter carrying the pope passes by",
+          "width":"398"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073589644/Nuns-stand-in-front-of-th-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073589644/Nuns-stand-in-front-of-th-003.jpg",
+          "source":"Reuters",
+          "photographer":"Max Rossi",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073589644/Nuns-stand-in-front-of-th-003-thumb-3030.jpg",
+          "altText":"The Pope's last day: Nuns stand in front of the summer residence ",
+          "height":"480",
+          "credit":"Max Rossi/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073589644/Nuns-stand-in-front-of-th-003-thumb-3030.jpg",
+          "caption":"Nuns stand in front of the pope's summer residence in Castel Gandolfo",
+          "width":"745"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073848005/Pope-Benedict-XVI-stands--012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073848005/Pope-Benedict-XVI-stands--012.jpg",
+          "source":"EPA",
+          "photographer":"Ettore Ferrari",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073848005/Pope-Benedict-XVI-stands--012-thumb-7482.jpg",
+          "altText":"The Pope's last day: Pope Benedict XVI stands on a balcony of Castel Gandolfo",
+          "height":"480",
+          "credit":"Ettore Ferrari/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073848005/Pope-Benedict-XVI-stands--012-thumb-7482.jpg",
+          "caption":"Pope Benedict XVI stands on a balcony in Castel Gandolfo as he waves to the faithful in Freedom's Square ",
+          "width":"731"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":11,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073845361/A-nun-waves-her-handkerch-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073845361/A-nun-waves-her-handkerch-011.jpg",
+          "source":"Getty Images",
+          "photographer":"Christopher Furlong",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073845361/A-nun-waves-her-handkerch-011-thumb-111.jpg",
+          "altText":"The Pope's last day: A nun waves her handkerchief as she waits for the Pope ",
+          "height":"480",
+          "credit":"Christopher Furlong/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073845361/A-nun-waves-her-handkerch-011-thumb-111.jpg",
+          "caption":"A nun waves her handkerchief as she waits for the pope to address pilgrims in Castel Gandolfo",
+          "width":"715"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073842297/Pope-Benedict-XVI-waves-t-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073842297/Pope-Benedict-XVI-waves-t-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vincenzo Pinto",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073842297/Pope-Benedict-XVI-waves-t-010-thumb-602.jpg",
+          "altText":"The Pope's last day: Pope Benedict XVI waves to faithful from a balcony in Castel Gandolfo",
+          "height":"480",
+          "credit":"Vincenzo Pinto/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073842297/Pope-Benedict-XVI-waves-t-010-thumb-602.jpg",
+          "caption":"Pope Benedict XVI waves to faithful from a balcony upon his arrival in Castel Gandolfo",
+          "width":"721"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":13,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074763389/A-nun-becomes-emotional--014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074763389/A-nun-becomes-emotional--014.jpg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074763389/A-nun-becomes-emotional--014-thumb-7427.jpg",
+          "altText":"The Pope's last day: A nun becomes emotional ",
+          "height":"480",
+          "credit":"Oli Scarff/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362074763389/A-nun-becomes-emotional--014-thumb-7427.jpg",
+          "caption":"A nun becomes emotional as Pope Benedict XVI waves to pilgrims for the last time as head of the Catholic Church",
+          "width":"719"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073597094/Pope-Benedict-XVI-waves-t-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073597094/Pope-Benedict-XVI-waves-t-006.jpg",
+          "source":"Reuters",
+          "photographer":"Tony Gentile",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073597094/Pope-Benedict-XVI-waves-t-006-thumb-4442.jpg",
+          "altText":"The Pope's last day: Pope Benedict XVI waves to the faithful for the last time",
+          "height":"574",
+          "credit":"Tony Gentile/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362073597094/Pope-Benedict-XVI-waves-t-006-thumb-4442.jpg",
+          "caption":"The pope addresses the faithful for the last time",
+          "width":"400"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":15,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084625296/Popes-Last-Day-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084625296/Popes-Last-Day-003.jpg",
+          "source":"EPA",
+          "photographer":"Claudio Peri",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084625296/Popes-Last-Day-003-thumb-2025.jpg",
+          "altText":"Pope's Last Day: Pope's Last Day",
+          "height":"479",
+          "credit":"Claudio Peri/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084625296/Popes-Last-Day-003-thumb-2025.jpg",
+          "caption":"The faithful pray in front of St Peter's basilica as the clock rings 8pm, the moment Pope Benedict XVI ceased to be pontiff",
+          "width":"760"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":16,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084622655/Popes-Last-Day-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084622655/Popes-Last-Day-002.jpg",
+          "source":"EPA",
+          "photographer":"Claudio Peri",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084622655/Popes-Last-Day-002-thumb-3991.jpg",
+          "altText":"Pope's Last Day: Pope's Last Day",
+          "height":"480",
+          "credit":"Claudio Peri/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084622655/Popes-Last-Day-002-thumb-3991.jpg",
+          "caption":"The clock on the facade of St Peter's basilica",
+          "width":"744"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":17,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084619659/Popes-Last-Day-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084619659/Popes-Last-Day-001.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vincenzo Pinto",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084619659/Popes-Last-Day-001-thumb-5679.jpg",
+          "altText":"Pope's Last Day: Pope's Last Day",
+          "height":"600",
+          "credit":"Vincenzo Pinto/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362084619659/Popes-Last-Day-001-thumb-5679.jpg",
+          "caption":"A Swiss Guard closes the entrance door of the papal summer residence at Castel Gandolfo as Benedict XVI officially ceased to be the official Pope",
+          "width":"400"
+        }
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/mar/04/catholic-cardinals-pope-benedict",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-03-04T07:00:35Z",
+      "webTitle":"Catholic cardinals start search for pope to clean up Benedict's messy legacy",
+      "webUrl":"http://www.guardian.co.uk/world/2013/mar/04/catholic-cardinals-pope-benedict",
+      "apiUrl":"http://content.guardianapis.com/world/2013/mar/04/catholic-cardinals-pope-benedict",
+      "fields":{
+        "newspaperPageNumber":"20",
+        "trailText":"'Princes of the church' gather in Rome to begin process of choosing a successor in wake of abdication",
+        "headline":"Catholic cardinals start search for pope to clean up Benedict's messy legacy",
+        "body":"<p>Italians fatigued by politics may have switched on the television on Sunday night for a spot of escapism. Showing in all its licentious glory was the first episode of historical drama The Borgias, in which Jeremy Irons stars as dastardly Pope Alexander VI and the Roman Catholic church is depicted as a hotbed of rivalry and intrigue.</p><p>If it had been up to Aiart, an association of Catholic TV viewers, however, the programme would not have been shown. \"It would be fitting for the broadcast \u2026 to be postponed. This is in fact a delicate period for the church, for the papacy,\" said Luca Borgomeo, Aiart's chairman. \"Believers are able to make the appropriate distinctions [between the show] and the current situation, but can non-believers \u2026 do the same?\"</p><p>Borgomeo's question was puzzling in many respects, not least because, until then, not even the most critical of observers had thought to compare the admittedly troubled Vatican of today to its almost implausibly corrupt Renaissance equivalent.</p><p>But the sensitivity was telling. In the wake of Benedict XVI's abdication and in the runup to conclave, the church is indeed going through a delicate period with the spotlight turned on its own scandals and conspiracies. On Monday, as the previous pope settles into retirement 15 miles away, cardinals from all over the world will meet in Rome to begin the process of choosing his successor. Top of the list for many will be a leader who will clean up the mess left by Benedict's crisis-hit papacy.</p><p>Through a series of meetings known as general congregations \u2013 the first two of which will be held on Monday morning and Monday afternoon \u2013 the so-called \"princes of the church\" will begin discussions on church and conclave matters, meeting, mingling and sizing each other up. One of the first things they will need to agree on is when the 115 cardinal electors \u2013 all those under the age of 80 \u2013 will enter the Sistine chapel for the beginning of conclave. The Vatican is keen for a new pope to be in office by Palm Sunday on 24 March and Easter Sunday on 31 March, making a conclave a likelihood for next Monday. But this still needs to be made official.</p><p>And timing is far from the only thing they will be discussing. Observers say that this conclave will be open, with no obvious frontrunner and about a dozen or so names tipped by various sources as <em>papabile</em> (literally, pope-able). The fluidity of the situation means that this week of formal and not so formal gatherings will be a crucial stage of lobbying. While key issues for the church are discussed \u2013 such as the future of its relationship with Islam \u2013 cardinals will be keeping a sharp eye out for who says what. Remarks will be noted; positions detailed; candidate profiles built up and, quite possibly, chances destroyed.</p><p>At the moment the big names circulating include the Canadian Marc Ouellet, Italian Angelo Scola, Austrian Christoph Schoenborn and Argentina's Leonardo Sandri, who on Sunday told Reuters the church should open up more leadership positions to women. According to Italian daily La Stampa, a faction led by the powerful dean of the college of cardinals is mobilising behind the Brazilian Odilo Scherer, archbishop of Sao Paulo.</p><p>All the candidates will, however, be aware of the old adage that warns against putting too much faith in the pre-conclave whisperings. \"He who goes into conclave a pope,\" it says, \"comes out a cardinal.\"</p><!-- Guardian Watermark: internal-code/content/404949388|2013-03-04T17:19:44Z|2650aeb6750884e3f884d11c429062941d5ae32c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-03-04T07:00:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340023694/A-poster-in-Rome-reading--005.jpg",
+        "standfirst":"'Princes of the church' gather in Rome to begin process of choosing a successor in wake of abdication",
+        "shortUrl":"http://gu.com/p/3e776",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340023694/A-poster-in-Rome-reading--005.jpg",
+        "wordcount":"577",
+        "commentable":"false",
+        "internalContentCode":"404949388",
+        "allowUgc":"false",
+        "internalOctopusCode":"7316793",
+        "isPremoderated":"false",
+        "byline":"Lizzy Davies in Rome",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-03-04",
+        "internalPageCode":"1875183",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-07T07:00:35Z"
+      },
+      "tags":[{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.guardian.co.uk/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.guardian.co.uk/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.guardian.co.uk/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pope-benedict-xvi",
+        "type":"keyword",
+        "webTitle":"Pope Benedict XVI",
+        "webUrl":"http://www.guardian.co.uk/world/pope-benedict-xvi",
+        "apiUrl":"http://content.guardianapis.com/world/pope-benedict-xvi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/vatican",
+        "type":"keyword",
+        "webTitle":"Vatican",
+        "webUrl":"http://www.guardian.co.uk/world/vatican",
+        "apiUrl":"http://content.guardianapis.com/world/vatican",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/italy",
+        "type":"keyword",
+        "webTitle":"Italy",
+        "webUrl":"http://www.guardian.co.uk/world/italy",
+        "apiUrl":"http://content.guardianapis.com/world/italy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/lizzydavies",
+        "type":"contributor",
+        "webTitle":"Lizzy Davies",
+        "webUrl":"http://www.guardian.co.uk/profile/lizzydavies",
+        "apiUrl":"http://content.guardianapis.com/profile/lizzydavies",
+        "bio":"<p>Lizzy Davies is Rome correspondent for the Guardian. She previously worked for the paper in Paris, and for the Observer and Independent as a news editor</p>",
+        "r2ContributorId":"25822",
+        "references":[]
+      },{
+        "id":"tone/analysis",
+        "type":"tone",
+        "webTitle":"Analysis",
+        "webUrl":"http://www.guardian.co.uk/tone/analysis",
+        "apiUrl":"http://content.guardianapis.com/tone/analysis",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340019814/A-poster-in-Rome-reading--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340019814/A-poster-in-Rome-reading--002.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"54",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340021025/A-poster-in-Rome-reading--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340021025/A-poster-in-Rome-reading--003.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"340",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340022310/A-poster-in-Rome-reading--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340022310/A-poster-in-Rome-reading--004.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"130",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340023694/A-poster-in-Rome-reading--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340023694/A-poster-in-Rome-reading--005.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"84",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340025223/A-poster-in-Rome-reading--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340025223/A-poster-in-Rome-reading--006.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"132",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340026783/A-poster-in-Rome-reading--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340026783/A-poster-in-Rome-reading--007.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"168",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340028355/A-poster-in-Rome-reading--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340028355/A-poster-in-Rome-reading--008.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"180",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340030297/A-poster-in-Rome-reading--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340030297/A-poster-in-Rome-reading--009.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"228",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340031512/A-poster-in-Rome-reading--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340031512/A-poster-in-Rome-reading--010.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"276",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340032704/A-poster-in-Rome-reading--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340032704/A-poster-in-Rome-reading--011.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"372",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340031512/A-poster-in-Rome-reading--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362340031512/A-poster-in-Rome-reading--010.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\" ",
+          "height":"276",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"A poster in Rome reading \"At the conclave vote for Peter Kodwo Appiah Turkson\", one of the cardinals tipped as a potential pope.  Photograph: Gregorio Borgia/AP",
+          "width":"460"
+        }
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}

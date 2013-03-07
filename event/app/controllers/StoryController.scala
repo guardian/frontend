@@ -33,7 +33,8 @@ object StoryController extends Controller with Logging {
         if (stories.nonEmpty) {
           Cached(60) {
             request.getQueryString("callback").map { callback =>
-              val html = views.html.fragments.latestStories(stories)
+              val storyId = request.getQueryString("storyId").getOrElse("0")
+              val html = views.html.fragments.latestStories(stories.filterNot(_.id.equals(storyId)))
               JsonComponent(html)
             } getOrElse {
               Cached(60) {
@@ -65,7 +66,10 @@ object StoryController extends Controller with Logging {
       }
   }
 
-  def withContent(id: String) = Action {
+  def withContent1(id: String) = withContent(id, 1)
+  def withContent2(id: String) = withContent(id, 2)
+
+  def withContent(id: String, version: Int) = Action {
     implicit request =>
 
       val promiseOfStory = Akka.future(Story.mongo.withContent(id))
@@ -76,7 +80,10 @@ object StoryController extends Controller with Logging {
           storyOption.map { story =>
 
             Cached(60) {
-              val html = views.html.fragments.story(story, id)
+              val html = version match {
+                case 1 => views.html.fragments.story1(story)
+                case 2 => views.html.fragments.story2(story)
+              }
 
               JsonComponent(html)
             }
