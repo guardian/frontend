@@ -34,6 +34,7 @@ case class Event(
     contentIds: Seq[String] = Nil,
     explainer: Option[String] = None,
     content: Seq[Content] = Nil) {
+  lazy val hasExplainer: Boolean = explainer.isDefined
   lazy val hasContent: Boolean = content.nonEmpty
 }
 
@@ -44,7 +45,7 @@ object Event {
     importance = e.importance,
     agents = e.agents,
     places = e.places,
-    explainer = e.explainer,
+    explainer = e.explainer.filter(_.nonEmpty),
     content = e.content.flatMap { c =>
 
       val cleanQuote = c.quote.map { q =>

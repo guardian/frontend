@@ -27,11 +27,11 @@ define([
                 eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
 
             if(timeline) {
-                $('.event-articles').addClass('h');
-                $('.event-articles').first().removeClass('h');
+                $('.event-children').addClass('h');
+                $('.event-childen').first().removeClass('h');
                 bean.on(timeline, eventType, '.date-line', function(e) {
                     var block = $(this).parent();
-                    $('.event-articles', block).toggleClass('h');
+                    $('.event-children', block).toggleClass('h');
                 });
             }
         },
