@@ -11,17 +11,28 @@
                     "/management/healthcheck"
                 ]
             }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"aws-frontend-static",
+                "cacheControl":"public, max-age=315360000"
+            }
         }
     },
     "recipes":{
         "default":{
-            "depends" : ["artifactUpload", "deploy"]
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
             "actionsBeforeApp": ["frontend-event.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["frontend-event.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }
