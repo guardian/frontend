@@ -36,7 +36,13 @@ function (
         generateMiddleSlot(config);
 
         var slotHolders = document.querySelectorAll('.ad-slot'),
-            size = (window.innerWidth > 810) ? 'median' : 'base';
+            size = 'base';
+
+        if(window.innerWidth > 1024) {
+            size = 'extended';
+        } else if(window.innerWidth > 810) {
+            size = 'median';
+        }
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
 

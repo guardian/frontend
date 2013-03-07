@@ -122,7 +122,8 @@
 #topstories-header,
 #sections-header {
     padding: @baseline*2 0;
-    border-bottom: @baseline solid @blue;
+    border-bottom-width: @baseline;
+    border-bottom-style: solid;
 }
 
 .nav-footer li a {
@@ -265,6 +266,10 @@ a.topstories-control,
     border-top: 1px solid #DDDDDD;
 }
 
+#searchform {
+  display: none;
+}
+
 .most-viewed-no-js {
     display: block;
 }
@@ -272,3 +277,146 @@ a.topstories-control,
 .most-viewed-no-js i {
     float: right;
 }
+
+
+/* overriding the section colours of the desktop for the mob nav */
+
+.nav li .zone-color {
+    color: @darkGrey;
+}
+
+.nav.nav-footer li .zone-color {
+    color: @plainWhite;
+}
+
+.football-bottom-nav .crumbtrail {
+      display: none;
+}
+
+@media screen and (min-width: @desktopBreakpoint) {
+
+    #logo {
+        margin: 10px 0 0 0;
+        width: 115px;
+        height: 22px;
+        .i-guardian-logo-gray;
+    }
+    .svg #logo {
+        background-position: 0 0;
+        .svg-i-guardian-logo-gray;
+    }
+
+    #header {
+        background-color: #fff;
+    }
+
+    #sections-header {
+        display: block;
+        padding: 0;
+        border: none;
+        margin-bottom: 4px;
+    }
+
+    .team-list .nav-columns,
+    .nav-columns.no-columns-extended {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .no-columns-extended li,
+    .no-columns-extended li:nth-child(2n) {
+        float: left;
+        width: auto;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .no-columns-extended li a {
+        padding: @baseline 5px !important;
+        border-right: 1px solid #bebebe;
+        border-top: 0;
+    }
+
+    .no-columns-extended li:last-child a {
+        border-right: 0;
+    }
+
+    #searchform {
+      display: block;
+      float: right;
+      margin-top: 10px;
+      .type-8;
+    }
+
+    .nav-columns .zone-soulmates,
+    .nav-columns .zone-jobs {
+      display: none;
+    }
+
+    .nav > li > a,
+    .navigation-container {
+        .type-6;
+        font-family: @desktopSerif;
+    }
+
+    .nav {
+        @import "theme/_zones";
+    }
+
+    .nav .zone-background-hover:active,
+    .nav .zone-background-hover:focus,
+    .nav .zone-background-hover:hover,
+    .football-nav .crumbtrail .zone-background{
+        color: #fff;
+        text-decoration: none;
+    }
+
+    //temporarily apes the current r2 local nav
+    .zone-football .crumbtrail .zone-background:hover,
+    .football-nav .sections .football-first-crumb a:hover,
+    .football-nav .sections .football-second-crumb a:hover {
+        background: transparent url('../images/crumbs/crumb-over.dd195f2c2029b4605da752ae14f5f6cf.png') right center;
+        color: @plainWhite;
+        text-decoration: none;
+    }
+
+    .football-top-nav .sections .football-first-crumb a {
+        background: transparent url('../images/crumbs/crumb-1.fc8809f94618e2c66e936d17a4b351e4.png') right center;
+        padding: 4px 15px 4px 5px !important;
+        color: @plainWhite;
+        border-right: 0;
+        position: relative;
+        z-index: 3;
+    }
+
+    .football-top-nav .nav > li > a {
+        line-height: 1.6rem;
+    }
+
+    .football-top-nav .sections .football-second-crumb {
+        margin-left: -20px !important;
+    }
+
+    .football-nav .sections .football-second-crumb a {
+        background: transparent url('../images/crumbs/crumb-2.5cb9cc72df78dbfbec553a7754062ead.png') right center;
+        padding: 4px 15px 4px 25px !important;
+        color: @plainWhite;
+        border-right: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .zone-football .football-nav .sections {
+        background-color:#ededed;
+    }
+
+    .zone-football .football-nav .sections,
+    .zone-football .football-nav .sections .nav {
+        padding: 0;
+    }
+
+    .nav .zone-environment a {
+        border-right: 0;
+    }
+}
+

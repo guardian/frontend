@@ -2,11 +2,13 @@
 
 @main(front, Switches.all){
 }{
-    <div id="front-container" class="cf" data-link-name="Front">
+    <div id="front-container" class="two-thirds cf" data-link-name="Front">
         @trailblocks.map{ block =>
             @fragments.frontBlock(block, Site(request).edition)
         }
     </div>
 
-    @fragments.mostPopularPlaceholder(front.section)
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+
+    @fragments.mostPopularPlaceholder(front.section, Seq("one-third"))
 }
