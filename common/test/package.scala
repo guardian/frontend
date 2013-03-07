@@ -18,15 +18,6 @@ trait TestSettings {
     classOf[InternalManagementPlugin].getName,
     "conf.SwitchBoardPlugin"
   )
-}
-
-/**
- * Executes a block of code in a running server, with a test HtmlUnit browser.
- */
-class EditionalisedHtmlUnit extends TestSettings {
-
-  val ukHost = "http://localhost:9000"
-  val usHost = "http://127.0.0.1:9000"
 
   val recorder = new HttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -41,8 +32,15 @@ class EditionalisedHtmlUnit extends TestSettings {
       }
     }
   }
+}
 
+/**
+ * Executes a block of code in a running server, with a test HtmlUnit browser.
+ */
+class EditionalisedHtmlUnit extends TestSettings {
 
+  val ukHost = "http://localhost:9000"
+  val usHost = "http://127.0.0.1:9000"
 
   val Port = """.*:(\d*)$""".r
 
