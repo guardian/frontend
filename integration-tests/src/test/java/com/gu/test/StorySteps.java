@@ -41,8 +41,8 @@ public class StorySteps {
 
     @Then("^the first (\\d+) blocks from article is shown$")
     public void the_first_blocks_from_article_is_shown(int stories) throws Throwable {
-        List<WebElement> s = webDriver.findElements(By.cssSelector(".story-latest .article-body"));
-        Assert.assertTrue(s.size() == stories);
+        List<WebElement> s = webDriver.findElements(By.cssSelector(".story-latest .article-body > *"));
+        Assert.assertEquals((s.size() - 2), stories);
     }
 
     @Then("^a \"([^\"]*)\" of events is displayed$")
