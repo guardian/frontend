@@ -1,23 +1,29 @@
 package test
 
-import conf.Configuration
 import org.fluentlenium.core.domain.FluentWebElement
-import play.api.test.TestBrowser
+import play.api.GlobalSettings
+import controllers.front.{Front, FrontLifecycle}
+
+object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
+
+  override def onStart(app: play.api.Application) {
+    Front.startup()
+    Front.warmup
+  }
+
+  override def onStop(app: play.api.Application) {
+    // do not stop the agents
+  }
+}
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit
-  {
+  object Fake extends Fake {
+    override val globalSettingsOverride = Some(FrontTestGlobal)
+  }
 
-    override def UK[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", ukHost)(browser => Unit)
-      super.UK(path)(block)
-    }
-
-    override def US[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", usHost)(browser => Unit)
-      super.US(path)(block)
-    }
+  object HtmlUnit extends EditionalisedHtmlUnit {
+    override val globalSettingsOverride = Some(FrontTestGlobal)
   }
 
   implicit class WebElement2rich(element: FluentWebElement) {

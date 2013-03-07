@@ -29,7 +29,7 @@ class FrontController extends Controller with Logging with JsonTrails {
   val front: Front = Front
 
   def warmup() = Action {
-    val promiseOfWarmup = Akka.future(Front.warmup())
+    val promiseOfWarmup = Akka.future(Front.warmup)
     Async {
       promiseOfWarmup.map(warm => Ok("warm"))
     }

@@ -40,7 +40,7 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   def trailblock: Option[Trailblock] = agent()
 
-  def warmup() = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
+  lazy val warmup = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
 
   private def loadTrails(id: String): Seq[Trail] = {
     val response: ItemResponse = ContentApi.item(id, edition)

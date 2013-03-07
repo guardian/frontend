@@ -16,7 +16,10 @@ class Front extends AkkaSupport with Logging {
 
   val refreshDuration = 60.seconds
 
-  private var refreshSchedule: Option[Cancellable] = None
+  private lazy val refreshSchedule = play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
+    log.info("Refreshing Front")
+    Front.refresh()
+  }
 
   lazy val ukEditions = Map(
 
@@ -101,15 +104,12 @@ class Front extends AkkaSupport with Logging {
   }
 
   def shutdown() {
-    refreshSchedule foreach { _.cancel() }
+    refreshSchedule.cancel()
     allFronts.foreach { case (name, front) => front.shutDown() }
   }
 
   def startup() {
-    refreshSchedule = Some(play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
-      log.info("Refreshing Front")
-      Front.refresh()
-    })
+    refreshSchedule
   }
 
   def apply(path: String, edition: String): Seq[Trailblock] = edition match {
@@ -117,9 +117,9 @@ class Front extends AkkaSupport with Logging {
     case anythingElse => ukEditions(path)()
   }
 
-  def warmup() {
+  lazy val warmup = {
     refresh()
-    allFronts.foreach { case (name, front) => front.warmup() }
+    allFronts.foreach { case (name, front) => front.warmup }
   }
 }
 

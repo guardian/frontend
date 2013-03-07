@@ -49,7 +49,9 @@ object TestHttp extends Http {
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit {
-    override val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
-    override val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
+    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
+    override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
+
+  object Fake extends Fake
 }

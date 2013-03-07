@@ -67,7 +67,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def warmup() = {
     super.warmup()
-    quietly(configAgent.await(5.seconds).foreach(_.warmup()))
+    quietly(configAgent.await(5.seconds).foreach(_.warmup))
   }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
