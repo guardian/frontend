@@ -1,0 +1,45 @@
+.social {
+   margin: 0;  
+   list-style: none;
+   padding: @baseline*3 @gutter @baseline*4 @gutter;
+   min-height: 40px;
+}
+ 
+.social-network a {
+    text-align: center;
+    display: block;
+    padding: 8px 0px;
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+@media (min-width: 320px) {
+    
+    .social .social-network {
+        float: left;
+        width: 24%;
+        max-width: 80px;
+        }
+
+    .social-network a {
+        border-right: 2px solid #ffffff;
+        border-bottom-width: 0px;
+        }
+        
+    }
+
+.fb {
+    background-color: #3b5998;
+}
+
+.twitter {
+    background-color: #00aced;
+}
+
+.gplus {
+    background-color: #dd4b39; 
+}
+
+.linkedin {
+    background-color: #007bb6;
+}

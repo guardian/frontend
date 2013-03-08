@@ -28,7 +28,7 @@ define([
 
             if(timeline) {
                 $('.event-children').addClass('h');
-                $('.event-childen').first().removeClass('h');
+                $('.event-children').first().removeClass('h');
                 bean.on(timeline, eventType, '.date-line', function(e) {
                     var block = $(this).parent();
                     $('.event-children', block).toggleClass('h');
