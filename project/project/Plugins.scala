@@ -2,9 +2,8 @@ import sbt._
 
 object Plugins extends Build {
 
-  val teamcityReportingPluginVersion = "1.2"
-
-  //TODO get rid of all source dependencies
-  lazy val plugins = sbt.Project("build", file(".")).
-    dependsOn(uri("git://github.com/guardian/sbt-teamcity-test-reporting-plugin.git#" + teamcityReportingPluginVersion))
+  // NOTE - NO source dependency plugins allowed in this project
+  // either use a properly packaged dependency, or copy 'n paste the code
+  // into the project.
+  lazy val plugins = sbt.Project("build", file("."))
 }
