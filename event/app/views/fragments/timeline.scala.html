@@ -8,6 +8,7 @@
     <li class="event-articles--item">
         @fragments.relativeDate(a.webPublicationDate, false, false)
         <p class="type-7">
+            @a.shares
             <a href="@a.url">
                 @a.standfirst.map { s =>
                     @standfirst(s)

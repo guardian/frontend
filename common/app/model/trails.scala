@@ -24,6 +24,8 @@ trait Trail extends Images with Tags {
   def comments = storyItems.flatMap(_.comments).getOrElse(0)
   def commentsTakenAt = storyItems.flatMap(_.commentsTakenAt)
 
+  def performance = shares
+
   //def performance = shares/((sharesTakenAt - new DateTime)/3600000 + 24)
   // Or 0 if sharesTakenAt not set
 }
