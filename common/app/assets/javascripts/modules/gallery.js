@@ -9,7 +9,6 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
             galleryConfig: {
                 nextLink: document.getElementById('js-gallery-next'),
                 prevLink: document.getElementById('js-gallery-prev'),
-                image: document.getElementById('js-gallery-img'),
                 currentIndex: urlParams.index || 0,
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
@@ -80,10 +79,11 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                     });
 
                     // bind an image tap/click to advance the gallery
-                    bean.add(view.galleryConfig.image, 'click', function(e) {
+                    bean.add(view.galleryConfig.container, 'click', function(e) {
                         view.galleryConfig.gallerySwipe.next();
                         e.preventDefault();
                     });
+
 
                 } else { // non-touch version
 
