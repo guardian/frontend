@@ -2,7 +2,8 @@
     border-bottom: none;
 }
 
-.event-block:not(:first-of-type) {
+.event-block:not(:first-child),
+.panel .event-block:first-child{
     margin-top: -24px;
 }
 
@@ -13,6 +14,13 @@
     cursor: pointer;
 }
 
+.event-summary {
+  .type-6;
+  border-left: 1px solid #777;
+  margin:-8px 0 0 4px;
+  padding: 0 0 @baseline 25px;
+}
+
 .event-articles {
   border-left: 1px solid #777;
   margin-left: 4px !important;
@@ -21,3 +29,14 @@
 
 .event-articles--item .i-date { display: none; }
 .event-articles--item a { color: #444; }
+
+.event-articles--media {
+  overflow: auto;
+  margin-bottom: @baseline;
+}
+
+.event-articles--media img {
+  float: left;
+  width: 22.5%;
+  margin: 0 2.5% 5px 0;
+}

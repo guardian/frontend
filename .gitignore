@@ -32,3 +32,6 @@ frontend.sublime-project
 tags
 
 local.sbt
+
+node_modules
+

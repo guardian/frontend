@@ -204,7 +204,7 @@ public class ArticleSteps {
 
 	}
 
-	@Then("^article page scrolls to the top$")
+	@Then("^page scrolls to the top$")
 	public void article_page_scrolls_to_the_top() throws Throwable {
 		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
 		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");

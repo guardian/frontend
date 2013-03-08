@@ -12,7 +12,7 @@ import common.{ Logging, AkkaSupport }
 
 // model :- Story -> Event -> Articles|Agents|Places
 
-case class Place(id: String) {}
+case class Place(id: Option[String] = None) {}
 
 case class Agent(
   name: Option[String] = None,
@@ -32,6 +32,7 @@ case class Event(
     contentIds: Seq[String] = Nil,
     explainer: Option[String] = None,
     content: Seq[Content] = Nil) {
+  lazy val hasExplainer: Boolean = explainer.isDefined
   lazy val hasContent: Boolean = content.nonEmpty
 }
 
@@ -42,9 +43,13 @@ object Event {
     importance = e.importance,
     agents = e.agents,
     places = e.places,
-    explainer = e.explainer,
+    explainer = e.explainer.filter(_.nonEmpty),
     content = e.content.flatMap { c =>
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.quote))
+
+      val cleanQuote = c.quote.map { q =>
+        Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
+      }
+      val storyItems = Some(StoryItems(c.importance, c.colour, cleanQuote))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   )
@@ -61,7 +66,7 @@ case class Story(
   lazy val hasEvents: Boolean = events.nonEmpty
   lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val agents = events.flatMap(_.agents)
+  lazy val agents = events.flatMap(_.agents).sortBy(_.importance)
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
@@ -91,8 +96,8 @@ object Story {
   def apply(s: ParsedStory, content: Seq[ApiContent]): Story = Story(
     id = s.id,
     title = s.title,
-    explainer = s.explainer,
-    hero = s.hero,
+    explainer = s.explainer.filter(_.nonEmpty),
+    hero = s.hero.filter(_.nonEmpty),
     events = s.events.map(Event(_, content))
   )
 
@@ -122,7 +127,7 @@ object Story {
 
     def latest(): Seq[Story] = {
       val fields = Map("id" -> 1, "title" -> 1, "hero" -> 1, "explainer" -> 1)
-      val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.map(Story(_, Nil))
+      val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(Story(_, Nil))
       stories
     }
 

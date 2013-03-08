@@ -4,7 +4,7 @@
         <article id="article" class="article @if(a.isLive){is-live}">
             <header class="article-head">
                 @fragments.dateline(a.webPublicationDate, a.isLive, edition)
-                <h2 class="article-headline">Latest Developments</h2>
+                <h2 class="article-headline">Latest developments</h2>
             </header>
 
             @if(!a.isLive) {
@@ -24,7 +24,7 @@
                     BlockNumberCleaner,
                     TweetCleaner,
                     WitnessCleaner,
-                    Summary
+                    Summary(if(a.isLiveBlog){2}else{4})
                 )
                 <p><a href="@a.url">Continue reading...</a></p>
                 <p><a class="back-to-top" href="#top">Back to top</a></p>

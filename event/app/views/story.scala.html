@@ -1,12 +1,5 @@
 @(page: StoryPage, edition: String)(implicit request: RequestHeader)
 
-@section(title: String, content: Seq[model.Content]) = {
-    <li class="accordion-item">
-        <a href="#" class="accordion-btn">@title <i class="i i-filter-arrow-right"></i></a>
-        @fragments.section(title, content)
-    </li>
-}
-
 @main(page, Switches.all){ }{
 
     @defining(page.story){ story =>
@@ -26,6 +19,12 @@
                 @fragments.latest(story.contentByImportance.take(1), edition)
             }
         </section>
+
+        @if(story.hasQuotes) {
+            @story.contentWithQuotes.headOption.map{ c =>
+                @fragments.quote(c)
+            }
+        }
 
         @story.explainer.map{ explainer =>
             <section class="story-overview">
@@ -49,21 +48,30 @@
         }
 
         @if(story.hasQuotes) {
-            @story.contentWithQuotes.headOption.map{ c =>
-                 @fragments.quote(c)
+            @story.contentWithQuotes.drop(1).headOption.map{ story =>
+                @fragments.quote(story)
             }
         }
 
         @if(story.hasAgents) {
             <section class="story-agents" data-link-name="story-agents">
                 <h2 class="article-zone type-2">People, places & organisations</h2>
-                <div class="box-indent">
-                    <ul class="unstyled agents">
-                         @story.agents.map{ agent =>
-                            @fragments.agent(agent)
+                @defining(story.agents.length){ numAgents =>
+                    <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
+                        <ul class="unstyled agents">
+                            @story.agents.take(3).map{ agent =>
+                                @fragments.agent(agent)
+                            }
+                        </ul>
+                        @if(numAgents > 3) {
+                            <ul class="unstyled agents panel">
+                                @story.agents.drop(3).map{ agent =>
+                                    @fragments.agent(agent)
+                                }
+                            </ul>
                         }
-                    </ul>
-                </div>
+                    </div>
+                }
                 <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
             </section>
         }
@@ -71,14 +79,20 @@
         @if(story.hasEvents) {
             <section class="story-timeline" data-link-name="story-timeline">
                 <h2 class="article-zone type-2">Timeline of events</h2>
-                <div class="box-indent">
-                    @fragments.timeline(story)
-                </div>
+
+                @fragments.timeline(story)
+
                 <p class="box-indent from-content-api">
                     <a href="#top" class="back-to-top">Back to top</a>
                 </p>
             </section>
         }
+
+        <aside id="js-latest-stories">
+            <h3 class="article-zone type-2">
+                <a href="/stories" data-link-name="latest stories">Latest stories</a>
+            </h3>
+        </aside>
 
     }
 

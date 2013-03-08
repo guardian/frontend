@@ -19,7 +19,9 @@ GET    /top-stories.json                                    controllers.TopStori
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Stories
-GET    /stories/storymodule01/*id                           controllers.StoryController.withContent(id)
+GET    /stories                                             controllers.StoryController.latest()
+GET    /stories/storymodule01/*id                           controllers.StoryController.withContent1(id)
+GET    /stories/storymodule02/*id                           controllers.StoryController.withContent2(id)
 GET    /stories/*id                                         controllers.StoryController.byId(id)
 
 #Style-guide
