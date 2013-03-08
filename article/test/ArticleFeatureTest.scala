@@ -4,7 +4,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import org.fluentlenium.core.domain.FluentWebElement
-import conf.Configuration
+import conf.{Configuration, CommonSwitches}
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -296,6 +296,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("Easily share an article via popular social media sites") {
 
+      CommonSwitches.SocialSwitch.switchOn
+          
       given("I read an aricle and want to share it with my friends")
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
