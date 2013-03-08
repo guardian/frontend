@@ -294,6 +294,25 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Easily share an article via popular social media sites") {
+
+      given("I read an aricle and want to share it with my friends")
+      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+        import browser._
+
+        val fbShareUrl = "http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
+        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
+        val linkedinShareUrl = "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&title=Mark+Kermode%27s+DVD+round-up&source=The+Guardian"
+        val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
+
+        then("I should see buttons for my favourite social network")
+        findFirst(".social .fb a").getAttribute("href") should be(fbShareUrl)
+        findFirst(".social .twitter a").getAttribute("href") should be(twitterShareUrl)
+        findFirst(".social .linkedin a").getAttribute("href") should be(linkedinShareUrl)
+        findFirst(".social .gplus a").getAttribute("href") should be(gplusShareUrl)
+      }
+    }
+
   }
 
   private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name
