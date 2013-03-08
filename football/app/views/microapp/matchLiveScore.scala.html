@@ -1,6 +1,7 @@
-@(fMatch: pa.FootballMatch, comp: model.Competition)
+@(matchNav: controllers.MatchNav, comp: model.Competition)
 @import implicits.Football._
 
+@defining(matchNav.theMatch){fMatch =>
 <div class="m-sport">
     <style>
         #content > .six-col {
@@ -41,16 +42,15 @@
         }
     </style>
 
-    <div id="tabs">
-        <ul class="tabs fake">
-            <li>
-                <a href="{microapp-href:/sport-microapp/resource/football/match/2012/aug/18/crewealexandra-v-nottscounty}" class="inactive">Match facts</a>
-            </li>
-            <li>
-                <a href="http://www.guardian.co.uk/sport/playerratings/2012/aug/18/crewealexandra-v-nottscounty" class="inactive">Ratings</a>
-            </li>
-        </ul>
+  @if(matchNav.hasReports){
+    <div id="tabs" >
+        <ol class="tabs fake" >
+            @matchNav.matchReport.map{ matchReport => @report(matchReport, "Guardian report") }
+            @matchNav.minByMin.map{ minByMin => @report(minByMin, "Min-by-min") }
+            @report(matchNav.stats, "Match facts")
+        </ol>
     </div>
+  }
 
     <div id="match-stats-summary" data="@fMatch.id" >
         <h2 data="@comp.id">@comp.fullName</h2>
@@ -72,6 +72,15 @@
         </table>
     </div>
 </div>
+}
+
+@report(trail: Trail, text: String) = {
+  @if(matchNav.currentPage.exists(_.url == trail.url)){
+    <li><a class="active" href="#">@text</a></li>
+  } else {
+    <li><a class="inactive" href="@trail.url">@text</a></li>
+  }
+}
 
 @scorers(scorers: Option[String]) = {
   <ul>

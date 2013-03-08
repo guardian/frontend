@@ -2,75 +2,82 @@ package controllers.microapp
 
 import model.{ Cached, TeamMap }
 import feed.{ CompetitionSupport, Competitions }
-import pa.FootballMatch
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateMidnight
 import common.{ JsonComponent, Logging, Compressed }
 import play.api.mvc._
 import model.Competition
 import implicits.{ Requests, Football }
+import controllers.{ MoreOnMatchController, MatchNav }
+import play.api.libs.concurrent.Promise
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.DateMidnight
 
 trait LiveScoresComponentController extends Controller with Football with Requests with Logging {
+  type Renderer = (MatchNav, Competition, RequestHeader) => Result
+
+  def renderScores() = renderMatchNav { (nav, comp, request) =>
+    Ok(Compressed(views.html.microapp.matchLiveScore(nav, comp)))
+  }
+
+  def renderJson() = renderMatchNav { (nav, comp, request) =>
+    JsonComponent(
+      request.getParameter("callback"),
+      "scores" -> views.html.microapp.matchLiveScore(nav, comp)
+    )
+  }
+
+  protected def renderMatchNav(renderer: Renderer) = Action { implicit request =>
+    val teamsAndPath = request.getParameter("teams") map { _.split(",") filter { teamExists } } match {
+      case Some(Array(team1, team2)) =>
+        request.getParameter("currentPage") map { (team1, team2, _) }
+
+      case _ => None
+    }
+
+    teamsAndPath foreach { case (team1, team2, path) => println("**** CurrentPage; " + path + " and teams: " + team1 + ", " + team2) }
+
+    teamsAndPath map {
+      case (team1, team2, path) =>
+        val date = extractDate(path)
+        println("*** Date: " + date)
+        val promise = promiseMatchNav(date, team1, team2)
+        Async {
+          promise map { optNav: Option[MatchNav] =>
+            optNav map { nav =>
+              val comp = competitions.withMatch(nav.theMatch.id).get
+              Cached(60) {
+                renderer(nav, comp, request)
+              }
+            } getOrElse NotFound
+          }
+        }
+    } getOrElse NotFound
+  }
+
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
-  def renderScores(year: String, month: String, day: String) = Action { implicit request =>
-    getMatchAndCompetition(year, month, day) map {
-      case (m, c) =>
-        Cached(60) {
-          Ok(Compressed(views.html.microapp.matchLiveScore(m, c)))
-        }
-    } getOrElse NotFound
-  }
+  protected def extractDate(path: String): DateMidnight = {
+    path.split("/").toList match {
+      case "football" :: year :: month :: day :: _ =>
+        dateFormat.parseDateTime(year + month + day).toDateMidnight
 
-  def renderJson(year: String, month: String, day: String) = Action { implicit request =>
-    getMatchAndCompetition(year, month, day) map {
-      case (m, c) =>
-        Cached(60) {
-          JsonComponent(
-            request.getParameter("callback"),
-            "scores" -> views.html.microapp.matchLiveScore(m, c)
-          )
-        }
-    } getOrElse NotFound
-  }
-
-  def getMatchAndCompetition(year: String, month: String, day: String)(implicit request: Request[_]): Option[(FootballMatch, Competition)] =
-    request.getParameter("teams") flatMap { teamStr =>
-      val allTeams = teamStr.split(",") filter { teamExists }
-      println("*** Teams: " + allTeams.mkString(","))
-      if (allTeams.size == 2) {
-        val date = makeDate(year, month, day)
-        date flatMap { getMatchAndCompetition(_, allTeams(0), allTeams(1)) }
-      } else
-        None
-    }
-
-  def getMatchAndCompetition(date: DateMidnight, team1: String, team2: String): Option[(FootballMatch, Competition)] = {
-    val theMatch = competitions.matches find { m =>
-      m.isOn(date) &&
-        ((m.homeTeam.id == team1 && m.awayTeam.id == team2) || (m.homeTeam.id == team2 && m.awayTeam.id == team1))
-    }
-    println("*** Request Date: " + date)
-    println("*** Match Date: " + (theMatch map { _.date.toString() } getOrElse ""))
-    theMatch flatMap { m => competitions.withMatch(m.id) map { c => (m, c) } }
-  }
-
-  private def makeDate(year: String, month: String, day: String): Option[DateMidnight] = {
-    try {
-      Some(dateFormat.parseDateTime(year + month + day).toDateMidnight)
-    } catch {
-      case e: Throwable => None
+      case _ => throw new IllegalArgumentException("Invalid path for currentPage")
     }
   }
 
   protected def teamExists(id: String): Boolean
 
   protected def competitions: CompetitionSupport
+
+  protected def promiseMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Promise[Option[MatchNav]]
 }
 
 object LiveScoresComponentController extends LiveScoresComponentController {
 
-  def teamExists(id: String): Boolean = TeamMap.findUrlNameFor(id).isDefined
+  protected def teamExists(id: String): Boolean = TeamMap.findUrlNameFor(id).isDefined
 
-  def competitions = Competitions
+  protected def competitions = Competitions
+
+  protected def promiseMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Promise[Option[MatchNav]] = {
+    MoreOnMatchController.promiseOfMatchNav(date, team1, team2)
+  }
 }

@@ -35,5 +35,5 @@ GET     /football/teams                                     controllers.LeagueTa
 GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
 GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
 
-GET     /football/microapp/scores/:year/:month/:day                           controllers.microapp.LiveScoresComponentController.renderScores(year, month, day)
-GET     /football/api/microapp/scores/:year/:month/:day                       controllers.microapp.LiveScoresComponentController.renderJson(year, month, day)
+GET     /football/microapp/scores                           controllers.microapp.LiveScoresComponentController.renderScores()
+GET     /football/api/microapp/scores                       controllers.microapp.LiveScoresComponentController.renderJson()
