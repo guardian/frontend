@@ -54,7 +54,7 @@ object CommonSwitches {
 
   val SocialSwitch = DefaultSwitch("social-icons",
     "If this switch is enabled the icons to popular social media sites will be displayed",
-    initiallyOn = true)
+    initiallyOn = false)
 
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
