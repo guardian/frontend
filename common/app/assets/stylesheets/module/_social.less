@@ -1,14 +1,11 @@
 .social {
-    clear: both;
-}
-
-.social ul {
-   margin: 0 auto 30px;  
+   margin: 0;  
    list-style: none;
    padding: @baseline*3 @gutter @baseline*4 @gutter;
+   min-height: 40px;
 }
  
-.fb a, .twitter a, .gplus a, .linkedin a {
+.social-network a {
     text-align: center;
     display: block;
     padding: 8px 0px;
@@ -18,13 +15,13 @@
 
 @media (min-width: 320px) {
     
-    .social li {
+    .social .social-network {
         float: left;
         width: 24%;
         max-width: 80px;
         }
 
-    .fb a, .twitter a, .gplus a, .linkedin a {
+    .social-network a {
         border-right: 2px solid #ffffff;
         border-bottom-width: 0px;
         }
