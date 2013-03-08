@@ -1,12 +1,11 @@
 import io.Source
-import java.io.{FileReader, FileWriter}
+import java.io.FileWriter
 import sbt._
 import Keys._
-import sun.java2d.pipe.BufferedMaskFill
 
 object SbtGruntPlugin extends Plugin {
 
-  val dateStampCache = {
+  val dateStampCache: File = {
     val t = IO.createTemporaryDirectory
     t.mkdirs()
     t.mkdir()
@@ -67,7 +66,7 @@ object SbtGruntPlugin extends Plugin {
   // Expose plugin
   override lazy val settings = Seq(
     commands += gruntCommand,
-    clean ~= { unit => (dateStampCache ***).get.foreach(_.delete()) }
+    clean ~= { unit => dateStampCache.listFiles.foreach(_.delete()) }
   )
 
   private def readLastCache(lastUpdated: File): (Long, Long) = {

@@ -22,12 +22,14 @@ trait Prototypes extends Testing {
     .settings(
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
-      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature"),
+      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
+        "-Xcheckinit", "-encoding", "utf8", "-feature"),
 
       ivyXML :=
         <dependencies>
           <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
           <exclude org="org.springframework"><!-- Because I don't like it. --></exclude>
+          <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
         </dependencies>,
 
       organization := "com.gu",
@@ -99,7 +101,7 @@ trait Prototypes extends Testing {
 
   def application(name: String) = base(name).settings(
     //features <<= featuresTask,
-
+    test in assembly := {},
     executableName := "frontend-%s" format name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
 
@@ -107,9 +109,12 @@ trait Prototypes extends Testing {
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
+        case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
+        case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
         case "README" => MergeStrategy.first
         case "CHANGELOG" => MergeStrategy.first
-        case x => old(x)
+        case x => println(x)
+          old(x)
       }
     }
   )
