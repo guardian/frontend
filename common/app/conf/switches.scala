@@ -67,8 +67,6 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
 
   val configUrl = config.switches.configurationUrl
 
-  println(configUrl)
-
   override val proxy = Proxy(config)
 
   private var schedule: Option[Cancellable] = None
