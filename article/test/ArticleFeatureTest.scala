@@ -297,8 +297,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     scenario("Easily share an article via popular social media sites") {
 
-      Given("I read an aricle and want to share it with my friends")
-
+      Given("I read an article and want to share it with my friends")
       SocialSwitch.switchOn()
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -315,8 +314,5 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".social .gplus a").getAttribute("href") should be(gplusShareUrl)
       }
     }
-
   }
-
-  private def hasLinkName(e: FluentWebElement, name: String) = e.getAttribute("data-link-name") == name
 }
