@@ -19,6 +19,8 @@
                 @fragments.latest(story.contentByImportance.take(1), edition)
             }
         </section>
+        
+        @fragments.social("http://%s%s".format(request.host, request.uri), story.title)
 
         @if(story.hasQuotes) {
             @story.contentWithQuotes.headOption.map{ c =>
