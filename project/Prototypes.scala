@@ -1,3 +1,4 @@
+import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
@@ -99,8 +100,9 @@ trait Prototypes extends Testing {
     )
   )
 
-  def application(name: String) = base(name).settings(
-    //features <<= featuresTask,
+  def application(name: String) = base(name)
+    .settings(VersionInfo.settings:_*)
+    .settings(
     test in assembly := {},
     executableName := "frontend-%s" format name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
