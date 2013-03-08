@@ -19,6 +19,13 @@ trait Trail extends Images with Tags {
   def colour = storyItems.map(_.colour).getOrElse(0)
   def quote = storyItems.flatMap(_.quote)
 
+  def shares = storyItems.flatMap(_.shares).getOrElse(0)
+  def sharesTakenAt = storyItems.flatMap(_.sharesTakenAt)
+  def comments = storyItems.flatMap(_.comments).getOrElse(0)
+  def commentsTakenAt = storyItems.flatMap(_.commentsTakenAt)
+
+  //def performance = shares/((sharesTakenAt - new DateTime)/3600000 + 24)
+  // Or 0 if sharesTakenAt not set
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
