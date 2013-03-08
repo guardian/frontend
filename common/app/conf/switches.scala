@@ -48,16 +48,22 @@ object CommonSwitches {
     "Switch this switch off to disable experimental v01 of the article story module.",
     initiallyOn = false)
 
+  val SocialSwitch = DefaultSwitch("social-icons",
+    "If this switch is enabled the icons to popular social media sites will be displayed",
+    initiallyOn = true)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch
+    ExperimentStoryModule01Switch, SocialSwitch
   )
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
 
   val configUrl = config.switches.configurationUrl
+
+  println(configUrl)
 
   override val proxy = Proxy(config)
 
