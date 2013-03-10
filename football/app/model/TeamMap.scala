@@ -157,12 +157,8 @@ object MatchUrl {
     val away = TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
     (home, away) match {
       case (Some(homeTeam), Some(awayTeam)) =>
-        "/football/match/%s/%s-v-%s".format(
-          theMatch.date.toString("yyyy/MMM/dd").toLowerCase,
-          homeTeam.replace("/football/", ""),
-          awayTeam.replace("/football/", "")
-        )
-      case _ => "/football/match/%s".format(theMatch.id)
+        s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
+      case _ => s"/football/match/${theMatch.id}"
     }
   }
 }

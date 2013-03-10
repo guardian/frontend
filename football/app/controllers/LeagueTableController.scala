@@ -70,7 +70,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
 
       val page = new Page(
-        Some("http://www.guardian.co.uk/football/%s/tables".format(competition)),
+        Some(s"http://www.guardian.co.uk/football/$competition/tables"),
         "football/tables",
         "football",
         table.competition.fullName + " table",

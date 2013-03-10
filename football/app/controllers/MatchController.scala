@@ -20,11 +20,9 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   override lazy val canonicalUrl = None
   override lazy val id = MatchUrl(theMatch)
   override lazy val section = "football"
-  override lazy val webTitle = "%s %s - %s %s ".format(theMatch.homeTeam.name, theMatch.homeTeam.score.getOrElse(""),
-    theMatch.awayTeam.score.getOrElse(""), theMatch.awayTeam.name)
+  override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}"
 
-  override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
-    theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
+  override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
 
   override lazy val metaData: Map[String, Any] = super.metaData + (
     "footballMatch" -> Map(

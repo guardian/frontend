@@ -64,7 +64,7 @@ trait Football {
     private def text = if (m.isFixture) {
       m.homeTeam.name + " v " + m.awayTeam.name
     } else {
-      "%s %s - %s %s".format(m.homeTeam.name, m.homeTeam.score.getOrElse(0), m.awayTeam.score.getOrElse(0), m.awayTeam.name)
+      s"${m.homeTeam.name} ${m.homeTeam.score.getOrElse(0)} - ${m.awayTeam.score.getOrElse(0)} ${m.awayTeam.name}"
     }
 
     def linkText: String = text

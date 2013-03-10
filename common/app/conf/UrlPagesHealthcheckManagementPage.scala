@@ -42,8 +42,8 @@ class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPag
       case failures =>
         val message = failures map {
           case (url, response) =>
-            log.info("Healthcheck FAIL: %s (%s)".format(url, response.status))
-            "FAIL: %s (%s)".format(url, response.status)
+            log.info(s"Healthcheck FAIL: $response (${response.status}})")
+            s"FAIL: $url (${response.status}})"
         }
         ErrorResponse(503, message mkString "\n")
     }

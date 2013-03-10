@@ -177,7 +177,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
       //update the live matches of the competition
       val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-      log.info("found %s live matches for competition %s".format(competitionLiveMatches.size, agent.competition.fullName))
+      log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
       agent.updateLiveMatches(competitionLiveMatches)
 
       //update the results of the competition
