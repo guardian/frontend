@@ -5,9 +5,8 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
 import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class Related(heading: String, trails: Seq[Trail])
 
@@ -15,7 +14,7 @@ object RelatedController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfRelated = Akka.future(lookup(edition, path))
+    val promiseOfRelated = Future(lookup(edition, path))
     Async {
       promiseOfRelated.map(_.map {
         case Related(_, Nil) => NotFound

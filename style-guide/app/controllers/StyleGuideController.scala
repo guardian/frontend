@@ -4,11 +4,9 @@ import common._
 import model._
 import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import play.api.mvc.{ Controller, Action }
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
@@ -60,7 +58,7 @@ object StyleGuideController extends Controller with Logging {
 
   def renderModules() = Action { implicit request =>
     val path = "politics/2012/dec/18/andrew-mitchell-deputy-chief-whip"
-    val promiseOfArticle = Akka.future(lookupSingleArticle(path))
+    val promiseOfArticle = Future(lookupSingleArticle(path))
     Async {
       promiseOfArticle.map(_.map { renderModuleOutput }.getOrElse { NotFound })
     }

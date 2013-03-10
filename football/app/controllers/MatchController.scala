@@ -5,14 +5,13 @@ import model._
 import play.api.mvc.{ Controller, Action }
 import conf.FootballClient
 import pa.FootballMatch
-import play.api.libs.concurrent.Akka
-import play.api.Play._
 import org.joda.time.format.DateTimeFormat
 import feed._
 import pa.LineUp
 import scala.Some
 import implicits.{ Requests, Football }
 import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
@@ -56,7 +55,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
     maybeMatch.map { theMatch =>
-      val promiseOfLineup = Akka.future(FootballClient.lineUp(theMatch.id))
+      val promiseOfLineup = Future(FootballClient.lineUp(theMatch.id))
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {
