@@ -67,7 +67,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
-      .reference("pa-football-team/" + theMatch.homeTeam.id + ",pa-football-team/" + theMatch.awayTeam.id)
+      .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
       .response.results.map(new Content(_))
   }
 

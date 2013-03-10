@@ -42,7 +42,7 @@ object MetadataJson {
       val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
       s"'$key': {$valueJson}"
     case (key, value) if value.isInstanceOf[Seq[_]] =>
-      val valueJson = value.asInstanceOf[Seq[(String, Any)]].map("{" + MetadataJson(_) + "}").mkString(",")
+      val valueJson = value.asInstanceOf[Seq[(String, Any)]].map(v => s"{${MetadataJson(v)}}").mkString(",")
       s"'$key': [${valueJson}]".format(key, valueJson)
     case (key, value) =>
       s"'${JavaScriptVariableName(key)}': ${JavaScriptValue(value)}"
@@ -78,7 +78,7 @@ object SafeName {
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
-    case s => "'" + s.toString.replace("'", "\\'") + "'"
+    case s => s"'${s.toString.replace("'", "\\'")}'"
   }
 }
 
@@ -95,8 +95,8 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
   lazy val isEven = rowNum % 2 == 0
   lazy val isOdd = !isEven
   lazy val rowClass = rowNum match {
-    case 1 => "first " + _rowClass
-    case _ if isLast => "last " + _rowClass
+    case 1 => s"first ${_rowClass}"
+    case _ if isLast => s"last ${_rowClass}"
     case _ => _rowClass
   }
   private lazy val _rowClass = if (isEven) "even" else "odd"
@@ -121,7 +121,7 @@ object BlockNumberCleaner extends HtmlCleaner {
       val blockComments = element.childNodes.flatMap { node =>
         node.toString.trim match {
           case Block(num) =>
-            Option(node.nextSibling).foreach(_.attr("id", "block-" + num))
+            Option(node.nextSibling).foreach(_.attr("id", s"block-$num"))
             Some(node)
           case _ => None
         }
@@ -208,7 +208,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ "/" + tag.id }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
@@ -256,7 +256,7 @@ object OmnitureAnalyticsData {
       "c56" -> jsSupport
     )
 
-    Html(analyticsData map { case (key, value) => key + "=" + encode(value, "UTF-8") } mkString ("&"))
+    Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }
 }
 

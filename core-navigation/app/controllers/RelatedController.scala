@@ -24,7 +24,7 @@ object RelatedController extends Controller with Logging {
   }
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[Related] = suppressApi404 {
-    log.info("Fetching related content for : " + path + " for edition " + edition)
+    log.info(s"Fetching related content for : $path for edition $edition")
     val response: ItemResponse = ContentApi.item(path, edition)
       .tag(None)
       .showRelated(true)

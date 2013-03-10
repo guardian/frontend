@@ -100,8 +100,8 @@ class EditionalisedHtmlUnit extends TestSettings {
 
 object WithHost {
   def apply(path: String): String = UK(path)
-  def UK(path: String): String = "http://localhost:9000" + path
-  def US(path: String): String = "http://127.0.0.1:9000" + path
+  def UK(path: String): String = s"http://localhost:9000$path"
+  def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
 /**

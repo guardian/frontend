@@ -33,7 +33,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
   override def refresh() = {
     super.refresh()
     configAgent.sendOff { oldAgents =>
-      log.info("loading front configuration from: " + configUrl)
+      log.info(s"loading front configuration from: $configUrl")
       http.GET(configUrl) match {
         case Response(200, json, _) => refreshAgents(json, oldAgents)
         case Response(errorCode, _, errorMessage) =>
@@ -56,7 +56,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
     oldAgents.filterNot(old => newAgents.exists(_.description == old.description)).foreach(_.close())
 
     newAgents.foreach(_.refresh())
-    newAgents.foreach(a => log.info("Front configuration loaded: " + a.description))
+    newAgents.foreach(a => log.info(s"Front configuration loaded: ${a.description}"))
     newAgents
   }
 

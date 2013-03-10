@@ -108,7 +108,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
       Some("http://www.guardian.co.uk/football/matches"),
       "football/fixtures",
       "football",
-      competition.fullName + " fixtures",
+      s"${competition.fullName} fixtures",
       "GFE:Football:automatic:competition fixtures"
     )
 
@@ -138,10 +138,10 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate)
 
       val page = new Page(
-        Some("http://www.guardian.co.uk/football/" + teamName + "/fixtures"),
-        "football/" + teamName + "/fixtures",
+        Some(s"http://www.guardian.co.uk/football/$teamName/fixtures"),
+        s"football/$teamName/fixtures",
         "football",
-        team.name + " fixtures",
+        s"${team.name} fixtures",
         "GFE:Football:automatic:team fixtures"
       )
 

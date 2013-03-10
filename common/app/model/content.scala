@@ -47,7 +47,7 @@ class Content(
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
 
-  override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
 
@@ -92,7 +92,7 @@ object Content {
 class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
@@ -105,7 +105,7 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
 
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
@@ -114,7 +114,7 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
 

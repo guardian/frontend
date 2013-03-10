@@ -26,11 +26,11 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
     val newUrls = newTrails.map(_.url).toList
 
     newUrls.diff(oldUrls).foreach { url =>
-      log.info("added item: " + url)
+      log.info(s"added item: $url")
     }
 
     oldUrls.diff(newUrls).foreach { url =>
-      log.info("removed item: " + url)
+      log.info(s"removed item: $url")
     }
 
     Some(Trailblock(description, newTrails))

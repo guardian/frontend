@@ -422,7 +422,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
   }
 
   private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
-    i => StubTrail("http://gu.com/" + section + "/" + i)
+    i => StubTrail(s"http://gu.com/$section/$i")
   }
 }
 

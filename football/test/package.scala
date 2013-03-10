@@ -28,7 +28,7 @@ object TestHttp extends Http {
 
   val today = new DateMidnight()
 
-  val base = getClass.getClassLoader.getResource("testdata").getFile + "/"
+  val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 
   def GET(url: String) = {
     val fileName = {

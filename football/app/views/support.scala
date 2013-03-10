@@ -57,7 +57,7 @@ object MatchStatus extends Logging {
   )
   // if we get a status we do not expect just take the first 2 letters
   def apply(status: String): Html = Html(statuses.get(status).getOrElse {
-    log.info("unknown match status " + status)
+    log.info(s"unknown match status $status")
     status.take(2)
   })
 

@@ -16,9 +16,9 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
 
 case class StoryPage(story: Story) extends Page(
   canonicalUrl = None,
-  "stories/" + story.id,
+  s"stories/${story.id}",
   "news", story.title,
-  "GFE:story:" + story.title) {
+  s"GFE:story:${story.title}") {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 

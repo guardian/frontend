@@ -22,7 +22,7 @@ class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPag
 
   def get(req: HttpRequest) = {
     val checks = urls map { base + _ } map { url =>
-      log.info("Healthcheck: Checking " + url)
+      log.info(s"Healthcheck: Checking $url")
 
       // IF this is failing on your local box, then you need to run as ./sbt011 --no-proxy
       WS.url(url).get().map{ response => url -> response }

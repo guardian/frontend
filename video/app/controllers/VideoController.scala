@@ -25,7 +25,7 @@ object VideoController extends Controller with Logging {
 
   private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Site(request).edition
-    log.info("Fetching video: " + path + " for edition " + edition)
+    log.info(s"Fetching video: $path for edition $edition")
     val response: ItemResponse = ContentApi.item(path, edition)
       .showExpired(true)
       .showTags("all")

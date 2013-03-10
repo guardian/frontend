@@ -62,9 +62,11 @@ trait Football {
   implicit class Match2trail(m: FootballMatch) extends Trail {
 
     private def text = if (m.isFixture) {
-      m.homeTeam.name + " v " + m.awayTeam.name
+      s"${m.homeTeam.name} v ${m.awayTeam.name}"
     } else {
-      s"${m.homeTeam.name} ${m.homeTeam.score.getOrElse(0)} - ${m.awayTeam.score.getOrElse(0)} ${m.awayTeam.name}"
+      val homeScore = m.homeTeam.score.getOrElse(0)
+      val awayScore = m.awayTeam.score.getOrElse(0)
+      s"${m.homeTeam.name} $homeScore - $awayScore ${m.awayTeam.name}"
     }
 
     def linkText: String = text

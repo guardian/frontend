@@ -29,7 +29,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
   }
 
   private def lookup(edition: String)(implicit request: RequestHeader) = suppressApi404 {
-    log.info("Fetching top stories for edition " + edition)
+    log.info(s"Fetching top stories for edition $edition")
     val response: ItemResponse = ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response

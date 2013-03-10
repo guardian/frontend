@@ -105,7 +105,7 @@ object TeamMap extends AkkaSupport with Logging {
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
-  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == ("football/" + name)).map(_._1)
+  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == (s"football/$name")).map(_._1)
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
@@ -121,7 +121,7 @@ object TeamMap extends AkkaSupport with Logging {
   }
 
   private def incrementalRefresh(page: Int) {
-    log.info("Refreshing team tag mappings - page " + page)
+    log.info(s"Refreshing team tag mappings - page $page")
     teamAgent.sendOff { old =>
       val response: TagsResponse = ContentApi.tags
         .page(page)

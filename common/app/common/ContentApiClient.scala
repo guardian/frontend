@@ -106,7 +106,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
     //you cannot editionalize tag queries
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      "You should never, Never, NEVER create a query that does not include the edition. EVER: " + url
+      s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
