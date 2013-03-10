@@ -231,29 +231,28 @@ object OmnitureAnalyticsData {
 
     val pageName = page.analyticsName
     val analyticsData = Map(
-      "g" -> path,
-      "ns" -> "guardian",
-      "pageName" -> pageName,
-      // cookieDomainPeriods http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-      "cdp" -> (if (Site(request).isUsEdition) "2" else "3"),
-      "v7" -> pageName,
-      "c3" -> publication,
-      "ch" -> section,
-      "c9" -> section,
-      "c4" -> data.get("keywords").getOrElse(""),
-      "c6" -> data.get("author").getOrElse(""),
-      "c8" -> pageCode,
-      "v8" -> pageCode,
-      "c9" -> contentType,
-      "c10" -> data.get("tones").getOrElse(""),
-      "c11" -> section,
-      "c13" -> data.get("series").getOrElse(""),
-      "c25" -> data.get("blogs").getOrElse(""),
-      "c14" -> data("build-number"),
-      "c19" -> platform,
-      "v19" -> platform,
-      "c30" -> (if (isContent) "content" else "non-content"),
-      "c56" -> jsSupport
+      ("g", path),
+      ("ns", "guardian"),
+      ("pageName", pageName),
+      ("cdp", (if (Site(request).isUsEdition) "2" else "3")),
+      ("v7", pageName),
+      ("c3", publication),
+      ("ch", section),
+      ("c9", section),
+      ("c4", data.get("keywords").getOrElse("")),
+      ("c6", data.get("author").getOrElse("")),
+      ("c8", pageCode),
+      ("v8", pageCode),
+      ("c9", contentType),
+      ("c10", data.get("tones").getOrElse("")),
+      ("c11", section),
+      ("c13", data.get("series").getOrElse("")),
+      ("c25", data.get("blogs").getOrElse("")),
+      ("c14", data("build-number")),
+      ("c19", platform),
+      ("v19", platform),
+      ("c30", (if (isContent) "content" else "non-content")),
+      ("c56", jsSupport)
     )
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))

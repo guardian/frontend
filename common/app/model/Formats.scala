@@ -9,15 +9,15 @@ trait Formats {
   implicit val imageFormat: Writes[Image] = new Writes[Image] {
     def writes(image: Image): JsValue = toJson(
       Map(
-        "index" -> toJson(image.index),
-        "url" -> toJson(image.url),
-        "thumbnail" -> toJson(image.thumbnail),
-        "width" -> toJson(image.width),
-        "caption" -> toJson(image.caption),
-        "altText" -> toJson(image.altText),
-        "source" -> toJson(image.source),
-        "photographer" -> toJson(image.photographer),
-        "credit" -> toJson(image.credit)
+        ("index", toJson(image.index)),
+        ("url", toJson(image.url)),
+        ("thumbnail", toJson(image.thumbnail)),
+        ("width", toJson(image.width)),
+        ("caption", toJson(image.caption)),
+        ("altText", toJson(image.altText)),
+        ("source", toJson(image.source)),
+        ("photographer", toJson(image.photographer)),
+        ("credit", toJson(image.credit))
       )
     )
   }

@@ -54,20 +54,20 @@ class Content(
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> keywords.map { _.name }.mkString(","),
-    "publication" -> publication,
-    "headline" -> headline,
-    "web-publication-date" -> webPublicationDate,
-    "author" -> contributors.map(_.name).mkString(","),
-    "tones" -> tones.map(_.name).mkString(","),
-    "series" -> series.map { _.name }.mkString(","),
-    "blogs" -> blogs.map { _.name }.mkString(","),
-    "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "has-story-package" -> fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false),
-    "page-code" -> fields("internalPageCode"),
-    "isLive" -> isLive,
-    "wordCount" -> wordCount
-  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
+    ("keywords", keywords.map { _.name }.mkString(",")),
+    ("publication", publication),
+    ("headline", headline),
+    ("web-publication-date", webPublicationDate),
+    ("author", contributors.map(_.name).mkString(",")),
+    ("tones", tones.map(_.name).mkString(",")),
+    ("series", series.map { _.name }.mkString(",")),
+    ("blogs", blogs.map { _.name }.mkString(",")),
+    ("commentable", fields.get("commentable").map(_ == "true").getOrElse(false)),
+    ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
+    ("page-code", fields("internalPageCode")),
+    ("isLive", isLive),
+    ("wordCount", wordCount)
+  ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
     if (isLive) 5
