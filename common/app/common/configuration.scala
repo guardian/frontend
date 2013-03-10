@@ -94,6 +94,10 @@ class GuardianConfiguration(
       .getOrElse(throw new RuntimeException("Front config url not set"))
   }
 
+  object google {
+    lazy val googlePlusApiKey: Option[String] = configuration.getStringProperty("google.plus.api.key")
+  }
+
   object pa {
     lazy val apiKey = configuration.getStringProperty("pa.api.key")
       .getOrElse(throw new RuntimeException("unable to load pa api key"))
