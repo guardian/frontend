@@ -50,7 +50,7 @@ trait DelegateHttp extends Http {
     override lazy val compressionEnabled = true
 
     override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
-      log.info("Setting HTTP proxy to: %s:%s".format(proxyConfig.host, proxyConfig.port))
+      log.info(s"Setting HTTP proxy to: ${proxyConfig.host}:${proxyConfig.port}")
       Some(ContentApiProxy(proxyConfig.host, proxyConfig.port))
     } else None
   }

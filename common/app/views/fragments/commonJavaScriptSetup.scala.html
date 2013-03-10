@@ -66,13 +66,13 @@
                 @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
 
                 @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
-                    "'%s':'%s'".format(JavaScriptVariableName(key.split('.').last), value)}.mkString(",")
+                    s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
                 )},
                 'edition': '@Site(request).edition',
                 'ajaxUrl': 'http://@Site(request).ajaxHost'
             },
             switches : { @{Html(switches.map{ switch =>
-                    "'%s':%s".format(JavaScriptVariableName(switch.name), switch.isSwitchedOn)
+                    s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
                 }.mkString(","))}
             }
         };

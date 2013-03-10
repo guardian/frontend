@@ -59,7 +59,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         import browser._
         Then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
-          fail("Link with text %s has no data-link-name".format(link.getText))
+          fail(s"Link with text ${link.getText} has no data-link-name")
         }
       }
     }

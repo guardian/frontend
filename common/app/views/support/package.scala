@@ -39,11 +39,13 @@ object MetadataJson {
   def apply(data: (String, Any)): String = data match {
     // thank you erasure
     case (key, value) if value.isInstanceOf[Map[_, _]] =>
-      "'%s': {%s}".format(key, value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(","))
+      val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
+      s"'$key': {$valueJson}"
     case (key, value) if value.isInstanceOf[Seq[_]] =>
-      "'%s': [%s]".format(key, value.asInstanceOf[Seq[(String, Any)]].map("{" + MetadataJson(_) + "}").mkString(","))
+      val valueJson = value.asInstanceOf[Seq[(String, Any)]].map("{" + MetadataJson(_) + "}").mkString(",")
+      s"'$key': [${valueJson}]".format(key, valueJson)
     case (key, value) =>
-      "'%s': %s".format(JavaScriptVariableName(key), JavaScriptValue(value))
+      s"'${JavaScriptVariableName(key)}': ${JavaScriptValue(value)}"
   }
 }
 
