@@ -1,11 +1,10 @@
 package controllers
 
 import common._
-import play.api.mvc.{ Result, RequestHeader, Action, Controller }
+import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.templates.Html
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class StoriesPage(stories: Seq[Story]) extends Page(
   canonicalUrl = None,
@@ -17,16 +16,16 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
 
 case class StoryPage(story: Story) extends Page(
   canonicalUrl = None,
-  "stories/" + story.id,
+  s"stories/${story.id}",
   "news", story.title,
-  "GFE:story:" + story.title) {
+  s"GFE:story:${story.title}") {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
 object StoryController extends Controller with Logging {
 
   def latest() = Action { implicit request =>
-    val promiseOfStories = Akka.future(Story.mongo.latest())
+    val promiseOfStories = Future(Story.mongo.latest())
 
     Async {
       promiseOfStories.map { stories =>
@@ -53,7 +52,7 @@ object StoryController extends Controller with Logging {
   def byId(id: String) = Action {
     implicit request =>
       val edition = Site(request).edition
-      val promiseOfStory = Akka.future(Story.mongo.byId(id))
+      val promiseOfStory = Future(Story.mongo.byId(id))
 
       Async {
         promiseOfStory.map { storyOption =>
@@ -72,7 +71,7 @@ object StoryController extends Controller with Logging {
   def withContent(id: String, version: Int) = Action {
     implicit request =>
 
-      val promiseOfStory = Akka.future(Story.mongo.withContent(id))
+      val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {
         promiseOfStory.map { storyOption =>

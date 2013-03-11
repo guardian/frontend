@@ -5,15 +5,16 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
+
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 object SectionController extends Controller with Logging with Paging with JsonTrails {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfSection = Akka.future(lookup(path))
+    val promiseOfSection = Future(lookup(path))
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "html")
@@ -23,7 +24,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   def renderJson(path: String) = Action { implicit request =>
-    val promiseOfSection = Akka.future(lookup(path))
+    val promiseOfSection = Future(lookup(path))
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "json")
@@ -34,7 +35,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
 
   private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
     val edition = Site(request).edition
-    log.info("Fetching front: " + path + "for edition " + edition)
+    log.info(s"Fetching front: $path for edition $edition")
 
     val response: ItemResponse = ContentApi.item(path, edition)
       .pageSize(20)

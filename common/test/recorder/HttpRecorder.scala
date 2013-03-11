@@ -50,7 +50,7 @@ trait HttpRecorder {
     if (response.statusCode == 200) {
       response.body
     } else {
-      "Error:" + response.statusCode
+      s"Error:${response.statusCode}"
     }
   }
 

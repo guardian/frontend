@@ -42,7 +42,7 @@ trait ApiQueryDefaults { self: Api =>
 trait DelegateHttp extends Http {
 
   private val dispatch = new DispatchHttp with Logging {
-    import Configuration.{ proxy => proxyConfig, contentApi => apiConfig, _ }
+    import Configuration.{ proxy => proxyConfig, contentApi => apiConfig }
 
     override lazy val maxConnections = 100
     override lazy val connectionTimeoutInMs = 200
@@ -50,7 +50,7 @@ trait DelegateHttp extends Http {
     override lazy val compressionEnabled = true
 
     override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
-      log.info("Setting HTTP proxy to: %s:%s".format(proxyConfig.host, proxyConfig.port))
+      log.info(s"Setting HTTP proxy to: ${proxyConfig.host}:${proxyConfig.port}")
       Some(ContentApiProxy(proxyConfig.host, proxyConfig.port))
     } else None
   }
@@ -90,8 +90,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
       "performance",
       "content-api-calls",
       "Content API calls",
-      "outgoing requests to content api",
-      Some(RequestMetrics.RequestTimingMetric)
+      "outgoing requests to content api"
     ) with TimingMetricLogging
 
     object ContentApiHttpTimeoutCountMetric extends CountMetric(
@@ -107,7 +106,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api with Ap
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
     //you cannot editionalize tag queries
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      "You should never, Never, NEVER create a query that does not include the edition. EVER: " + url
+      s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
