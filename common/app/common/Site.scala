@@ -17,6 +17,10 @@ case class Site(
   lazy val ajaxHost = if (isUsEdition) usAjaxHost else ukAjaxHost
   lazy val host = if (isUsEdition) usHost else ukHost
   lazy val desktopHost = if (isUsEdition) usDesktopHost else ukDesktopHost
+
+  // both mobile and desktop are on same host
+  lazy val isSingleDomain = ukDesktopHost == ukHost && usDesktopHost == usHost
+
 }
 
 object Site extends Logging {
