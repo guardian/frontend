@@ -32,30 +32,26 @@ define([
 
         // View
         this.view = {
-            render: function (html) {
+            render: function (json) {
                 switch (experimentName) {
                     case 'storymodule01':
-                        this.renderStoryModule01(html);
+                        this.renderStoryModule01(json);
                         break;
                     case 'storymodule02':
-                        this.renderStoryModule02(html);
+                        this.renderStoryModule02(json);
                         break;
                 }
                 common.mediator.emit('modules:experiment:render');
             },
 
-            renderStoryModule01: function(html) {
+            renderStoryModule01: function(json) {
                 // Instead of main title
                 var top = common.$g('h2.article-zone.type-1');
-                var el = document.createElement('div');
-                common.$g(el).html(html);
-                top.html(common.$g('.story-package-title', el));
+                top.html(json.title);
 
                 // Add after last para
-                var paras = common.$g('.article-body > p:not(:empty)');
-                if (paras.length) {
-                    common.$g(paras[paras.length - 1]).after(html);
-                }
+                var related = common.$g('#js-related');
+                related.html(json.block)
 
                 // Remove the existing story package and its title
                 common.$g('#related-trails, h3.type-2.article-zone').remove();
@@ -98,8 +94,8 @@ define([
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showExperiment',
                 success: function (json) {
-                    if (json && json.html) {
-                        that.view.render(json.html);
+                    if (json) {
+                        that.view.render(json);
                     } else {
                         that.view.fallback();
                     }
