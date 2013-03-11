@@ -37,6 +37,13 @@ pa.api.key=XXXX
 
 Get the correct key and host from another developer on the project.
 
+To set up a proxy
+
+```
+export proxy_host=proxy.somewhere.com
+export proxy_port=1234
+```
+
 Running
 -------
 
