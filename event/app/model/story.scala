@@ -49,7 +49,7 @@ object Event {
       val cleanQuote = c.quote.map { q =>
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.sharesTakenAt, c.comments, c.commentsTakenAt, cleanQuote))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   )
@@ -71,7 +71,7 @@ case class Story(
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
   lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).distinctBy(_.id)
-  lazy val contentByShares: Seq[Content] = content.sortBy(_.performance).reverse.distinctBy(_.id)
+  lazy val contentByPerformance: Seq[Content] = content.sortBy(_.performance).reverse.distinctBy(_.id)
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
@@ -161,9 +161,7 @@ private case class ParsedContent(
   importance: Int,
   colour: Int,
   shares: Option[Int] = None,
-  sharesTakenAt: Option[DateTime] = None,
   comments: Option[Int] = None,
-  commentsTakenAt: Option[DateTime] = None,
   quote: Option[Quote] = None)
 
 private case class ParsedPlace(id: String)

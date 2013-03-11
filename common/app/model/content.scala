@@ -128,7 +128,5 @@ case class StoryItems(
   importance: Int,
   colour: Int,
   shares: Option[Int] = None,
-  sharesTakenAt: Option[DateTime] = None,
   comments: Option[Int] = None,
-  commentsTakenAt: Option[DateTime] = None,
   quote: Option[Quote] = None)

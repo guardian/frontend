@@ -2,6 +2,7 @@ package model
 
 import org.joda.time.DateTime
 import views.support.Style
+import scala.math
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -20,14 +21,10 @@ trait Trail extends Images with Tags {
   def quote = storyItems.flatMap(_.quote)
 
   def shares = storyItems.flatMap(_.shares).getOrElse(0)
-  def sharesTakenAt = storyItems.flatMap(_.sharesTakenAt)
   def comments = storyItems.flatMap(_.comments).getOrElse(0)
-  def commentsTakenAt = storyItems.flatMap(_.commentsTakenAt)
 
-  def performance = shares
-
-  //def performance = shares/((sharesTakenAt - new DateTime)/3600000 + 24)
-  // Or 0 if sharesTakenAt not set
+  // Decayed performance, calculated as: ( shares + comments/2 ) / Days^1.5 (with days minimum = 1)
+  lazy val performance = if (shares > 0 || comments > 0) (shares + comments / 2) / math.pow(math.max(1, ((new DateTime).getMillis - webPublicationDate.getMillis) / 86400000), 1.5).toFloat else 0
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
