@@ -5,8 +5,9 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Akka
 import feed.MostPopularAgent
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 object MostPopularController extends Controller with Logging {
 
@@ -18,12 +19,11 @@ object MostPopularController extends Controller with Logging {
     "GFE:Most Read"
   )
 
-  import play.api.Play.current
 
   def renderJson(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
-    val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -38,7 +38,7 @@ object MostPopularController extends Controller with Logging {
   def renderNoJavascript(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
-    val promiseOfSectionPopular = Akka.future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -51,7 +51,7 @@ object MostPopularController extends Controller with Logging {
   }
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
-    log.info("Fetching most popular: " + path + " for edition " + edition)
+    log.info(s"Fetching most popular: $path for edition $edition")
 
     val response: ItemResponse = ContentApi.item(path, edition)
       .tag(None)

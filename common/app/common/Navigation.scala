@@ -102,7 +102,7 @@ object Zones {
       Zone(
         SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free"),
         Seq(
-          SectionLink("commentisfree", "Cif America", "http://" + site.usHost + "/commentisfree", "Cif America"),
+          SectionLink("commentisfree", "Cif America", s"http://${site.usHost}/commentisfree", "Cif America"),
           SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief"),
           SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
         )), // end comment is free

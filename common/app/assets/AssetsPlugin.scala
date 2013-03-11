@@ -7,9 +7,11 @@ import java.util.Properties
 import java.util.jar.JarFile
 import play.api.{ Mode, Play, Plugin, Application }
 import scala.collection.JavaConversions._
+import scala.language.reflectiveCalls
 
 object `package` {
-  implicit def listOfMaps2DuplicateKeys[K, V](maps: List[Map[K, V]]) = new {
+
+  implicit class ListOfMaps2DuplicateKeys[K, V](maps: List[Map[K, V]]) {
     def duplicateKeys: Set[K] = {
       val keys = (maps flatMap { _.keySet })
       val keyInstances = keys groupBy { k => k }

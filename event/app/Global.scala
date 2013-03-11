@@ -1,9 +1,7 @@
-import com.gu.management.play.{ RequestTimer, StatusCounters }
-import common.RequestMetrics
+import conf.RequestMeasurementMetrics
 import model.StoryList
-
-//import model.ContentListAgent
-import play.api.{ Application => PlayApp, GlobalSettings }
+import play.api.GlobalSettings
+import play.api.mvc.WithFilters
 
 trait StoryLifecycle extends GlobalSettings {
 
@@ -18,13 +16,4 @@ trait StoryLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends GlobalSettings with StoryLifecycle with RequestTimer with StatusCounters {
-
-  import RequestMetrics._
-
-  override val requestTimer = RequestTimingMetric
-  override val okCounter = Request200s
-  override val errorCounter = Request50xs
-  override val notFoundCounter = Request404s
-  override val redirectCounter = Request30xs
-}
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with StoryLifecycle

@@ -36,7 +36,7 @@ trait HttpSupport {
   }
 
   object Client extends dispatch.Http {
-    override lazy val client = {
+    override val client = {
       val connectionPool = new NettyConnectionsPool(new NettyAsyncHttpProvider(config))
       new AsyncHttpClient(new AsyncHttpClientConfig.Builder(config).setConnectionsPool(connectionPool).build)
     }

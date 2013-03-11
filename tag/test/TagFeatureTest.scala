@@ -10,7 +10,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
     scenario("Tag pages should show 20 trails") {
 
-      given("I visit a tag page")
+      Given("I visit a tag page")
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
@@ -26,7 +26,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
     scenario("Tags that are football compeitions that have teams, link to that place on the teams page") {
 
-      given("I visit the 'Premier League' tag page")
+      Given("I visit the 'Premier League' tag page")
 
       HtmlUnit("/football/premierleague") { browser =>
         import browser._
@@ -38,7 +38,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
     scenario("Tags that are football compeitions but don't have teams don't link to the teams page") {
 
-      given("I visit the 'Capital One Cup' tag page")
+      Given("I visit the 'Capital One Cup' tag page")
 
       HtmlUnit("/football/capital-one-cup") { browser =>
         import browser._
@@ -46,7 +46,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
         teamsPageLinks.length should be(0)
       }
 
-      given("I visit the 'Scottish League Cup' tag page")
+      Given("I visit the 'Scottish League Cup' tag page")
 
       HtmlUnit("/football/cis-insurance-cup") { browser =>
         import browser._
