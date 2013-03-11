@@ -47,27 +47,27 @@ class Content(
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
 
-  override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> keywords.map { _.name }.mkString(","),
-    "publication" -> publication,
-    "headline" -> headline,
-    "web-publication-date" -> webPublicationDate,
-    "author" -> contributors.map(_.name).mkString(","),
-    "tones" -> tones.map(_.name).mkString(","),
-    "series" -> series.map { _.name }.mkString(","),
-    "blogs" -> blogs.map { _.name }.mkString(","),
-    "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "has-story-package" -> fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false),
-    "page-code" -> fields("internalPageCode"),
-    "isLive" -> isLive,
-    "wordCount" -> wordCount
-  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
+    ("keywords", keywords.map { _.name }.mkString(",")),
+    ("publication", publication),
+    ("headline", headline),
+    ("web-publication-date", webPublicationDate),
+    ("author", contributors.map(_.name).mkString(",")),
+    ("tones", tones.map(_.name).mkString(",")),
+    ("series", series.map { _.name }.mkString(",")),
+    ("blogs", blogs.map { _.name }.mkString(",")),
+    ("commentable", fields.get("commentable").map(_ == "true").getOrElse(false)),
+    ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
+    ("page-code", fields("internalPageCode")),
+    ("isLive", isLive),
+    ("wordCount", wordCount)
+  ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
     if (isLive) 5
@@ -92,7 +92,7 @@ object Content {
 class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
@@ -105,7 +105,7 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
 
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
@@ -114,7 +114,7 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
 
@@ -127,4 +127,6 @@ case class Quote(
 case class StoryItems(
   importance: Int,
   colour: Int,
+  shares: Option[Int] = None,
+  comments: Option[Int] = None,
   quote: Option[Quote] = None)

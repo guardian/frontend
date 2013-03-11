@@ -8,14 +8,16 @@ import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
 import recorder.HttpRecorder
+import com.gu.management.play.InternalManagementPlugin
+import play.api.{GlobalSettings, Play}
 
-/**
- * Executes a block of code in a running server, with a test HtmlUnit browser.
- */
-class EditionalisedHtmlUnit {
-
-  val ukHost = "http://localhost:9000"
-  val usHost = "http://127.0.0.1:9000"
+trait TestSettings {
+  def globalSettingsOverride: Option[GlobalSettings] = None
+  def testPlugins: Seq[String] = Nil
+  def disabledPlugins: Seq[String] = Seq(
+    classOf[InternalManagementPlugin].getName,
+    "conf.SwitchBoardPlugin"
+  )
 
   val recorder = new HttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -30,9 +32,15 @@ class EditionalisedHtmlUnit {
       }
     }
   }
+}
 
-  val testPlugins: Seq[String] = Nil
-  val disabledPlugins: Seq[String] = Nil
+/**
+ * Executes a block of code in a running server, with a test HtmlUnit browser.
+ */
+class EditionalisedHtmlUnit extends TestSettings {
+
+  val ukHost = "http://localhost:9000"
+  val usHost = "http://127.0.0.1:9000"
 
   val Port = """.*:(\d*)$""".r
 
@@ -60,9 +68,12 @@ class EditionalisedHtmlUnit {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port, FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins)), HTMLUNIT) { browser =>
+    running(TestServer(port,
+      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
+        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+      browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
+
       val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
       block(connection)
     }
@@ -74,10 +85,12 @@ class EditionalisedHtmlUnit {
       case Port(p) => p.toInt
       case _ => 9000
     }
-    running(TestServer(port, FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins)), HTMLUNIT) { browser =>
+    running(TestServer(port,
+      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
+        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      browser.webDriver.asInstanceOf[HtmlUnitDriver] setJavascriptEnabled false
+      browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
 
       browser.goTo(host + path)
       block(browser)
@@ -87,23 +100,31 @@ class EditionalisedHtmlUnit {
 
 object WithHost {
   def apply(path: String): String = UK(path)
-  def UK(path: String): String = "http://localhost:9000" + path
-  def US(path: String): String = "http://127.0.0.1:9000" + path
+  def UK(path: String): String = s"http://localhost:9000$path"
+  def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
 /**
  * Executes a block of code in a FakeApplication.
  */
-object Fake {
-  def apply[T](block: => T): T = running(FakeApplication()) { block }
+class Fake extends TestSettings {
+
+  def apply[T](block: => T): T = running(
+    FakeApplication(
+      withoutPlugins = disabledPlugins,
+      withGlobal = globalSettingsOverride,
+      additionalPlugins = testPlugins
+    )
+  ) { block }
 }
 
+
 object TestRequest {
-  def apply(): FakeRequest[play.api.mvc.AnyContent] = {
+  def apply(): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     TestRequest("localhost:9000")
   }
 
-  def apply(host: String): FakeRequest[play.api.mvc.AnyContent] = {
+  def apply(host: String): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     FakeRequest().withHeaders("host" -> host)
   }
 }

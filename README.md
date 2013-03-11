@@ -13,6 +13,8 @@ Requirements
 
     * A Mac or Linux pc
     * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+    * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
+    * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 
 Configuration
 -------------
@@ -34,6 +36,13 @@ pa.api.key=XXXX
 ```
 
 Get the correct key and host from another developer on the project.
+
+To set up a proxy
+
+```
+export proxy_host=proxy.somewhere.com
+export proxy_port=1234
+```
 
 Running
 -------

@@ -6,9 +6,10 @@ import org.apache.commons.io.IOUtils
 import java.util.Properties
 import play.api.Plugin
 import akka.actor.Cancellable
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
+import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
+import com.gu.management.play.RequestMetrics
 
 object CommonSwitches {
 
@@ -52,10 +53,14 @@ object CommonSwitches {
     "Switch on to enable experimental v02 of the article story module.",
     initiallyOn = false)
 
+  val SocialSwitch = DefaultSwitch("social-icons",
+    "If this switch is enabled the icons to popular social media sites will be displayed",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, ExperimentStoryModule02Switch
+    ExperimentStoryModule01Switch, ExperimentStoryModule02Switch, SocialSwitch
   )
 }
 

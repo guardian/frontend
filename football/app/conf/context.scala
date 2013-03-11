@@ -11,8 +11,9 @@ import model.{ TeamMap, LiveBlog }
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
   object dispatchHttp extends DispatchHttp {
-    override lazy val maxConnections = 50
+    override lazy val maxConnections = 100
     override lazy val requestTimeoutInMs = 5000
+    override lazy val connectionTimeoutInMs = 500
     override lazy val proxy = if (Configuration.proxy.isDefined)
       Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
     else
@@ -71,7 +72,7 @@ object PaApiHttpTimingMetric extends TimingMetric(
   "pa-api-calls",
   "PA API calls",
   "outgoing requests to pa api",
-  Some(RequestMetrics.RequestTimingMetric)
+  None
 ) with TimingMetricLogging
 
 object PaApiHttpOkMetric extends CountMetric(
