@@ -69,7 +69,7 @@ object StoryController extends Controller with Logging {
     implicit request =>
 
       val edition = Site(request).edition
-      val promiseOfStory = Akka.future(Story.mongo.byId(id))
+      val promiseOfStory = Future(Story.mongo.byId(id))
 
       Async {
         promiseOfStory.map { storyOption =>
