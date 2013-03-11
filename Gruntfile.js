@@ -52,25 +52,25 @@ module.exports = function (grunt) {
               "fonts": [
                 {
                   "font-family": "EgyptianText",
-                  "file": "resources/fonts/latin1/EgyptianText-Regular.woff",
+                  "file": "resources/fonts/EgyptianText-Regular.woff",
                   "format": "woff"
                 },
                 {
                   "font-family": "EgyptianText",
                   "font-weight": "500", 
-                  "file": "resources/fonts/latin1/EgyptianText-Medium.woff",
+                  "file": "resources/fonts/EgyptianText-Medium.woff",
                   "format": "woff"
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-style:": "italic",
-                  "file": "resources/fonts/latin1/EgyptianText-RegularItalic.woff",
+                  "font-style": "italic",
+                  "file": "resources/fonts/EgyptianText-RegularItalic.woff",
                   "format": "woff"
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight:": "600",
-                  "file": "resources/fonts/latin1/EgyptianHeadline-Semibold.woff",
+                  "font-weight": "600",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold.woff",
                   "format": "woff"
                 }
               ]
@@ -83,25 +83,25 @@ module.exports = function (grunt) {
               "fonts": [
                 {
                   "font-family": "EgyptianText",
-                  "file": "resources/fonts/latin1/EgyptianText-Regular.ttf",
+                  "file": "resources/fonts/EgyptianText-Regular.ttf",
                   "format": "ttf"
                 },
                 {
                   "font-family": "EgyptianText",
                   "font-weight": "500", 
-                  "file": "resources/fonts/latin1/EgyptianText-Medium.ttf",
+                  "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-style:": "italic",
-                  "file": "resources/fonts/latin1/EgyptianText-RegularItalic.ttf",
+                  "font-style": "italic",
+                  "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
                   "format": "ttf"
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight:": "600",
-                  "file": "resources/fonts/latin1/EgyptianHeadline-Semibold.ttf",
+                  "font-weight": "600",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
                   "format": "ttf"
                 }
               ]
