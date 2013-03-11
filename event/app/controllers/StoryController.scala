@@ -65,6 +65,30 @@ object StoryController extends Controller with Logging {
       }
   }
 
+  def contentType(id: String, contentType: String) = Action {
+    implicit request =>
+
+      val edition = Site(request).edition
+      val promiseOfStory = Future(Story.mongo.byId(id))
+
+      Async {
+        promiseOfStory.map { storyOption =>
+          storyOption.map { story =>
+
+            Cached(60) {
+              val analysis = story.contentByColour.get("Analysis").getOrElse(Nil)
+                .sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
+
+              val html = contentType match {
+                case "analysis" => views.html.fragments.analysis(story, edition, analysis)
+              }
+              JsonComponent(html)
+            }
+          }.getOrElse(JsonNotFound())
+        }
+      }
+  }
+
   def withContent1(id: String) = withContent(id, 1)
   def withContent2(id: String) = withContent(id, 2)
 

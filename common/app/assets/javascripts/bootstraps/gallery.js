@@ -4,7 +4,7 @@ define([
     "modules/gallery",
     "modules/analytics/gallery",
     "modules/accordion",
-    "modules/experiment"
+    "modules/story/experiment"
 ], function(
     common,
     Gallery,
