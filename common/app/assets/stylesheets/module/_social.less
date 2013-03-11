@@ -10,7 +10,7 @@
     display: block;
     padding: 8px 0px;
     color: #ffffff;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 8px solid #ffffff;
 }
 
 @media (min-width: 320px) {
@@ -22,10 +22,18 @@
         }
 
     .social-network a {
-        border-right: 2px solid #ffffff;
+        border-right: 8px solid #ffffff;
         border-bottom-width: 0px;
         }
-        
+   
+    .social-network:last-child a {
+        border-right-width: 0px;
+        }
+    
+    .social {
+        padding: @baseline*3 0px @baseline*4 @gutter;
+        }
+
     }
 
 .fb {
