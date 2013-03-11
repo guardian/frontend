@@ -37,10 +37,13 @@ object MoreOnMatchController extends Controller with Football with Requests with
       val promiseOfRelated = Future(loadMoreOn(request, theMatch))
       Async {
         // for our purposes here, we are only interested in content with exactly 2 team tags
-        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).filter(_.nonEmpty).map { related =>
-          Cached(300)(JsonComponent(
-            "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
-          )
+        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map { related =>
+          related match {
+            case Nil => NotFound
+            case _ => Cached(300)(JsonComponent(
+              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
+            )
+          }
         }
       }
     }.getOrElse(NotFound)
@@ -50,11 +53,14 @@ object MoreOnMatchController extends Controller with Football with Requests with
     findMatch(matchId).map { theMatch =>
       val promiseOfRelated = Future(loadMoreOn(request, theMatch))
       Async {
-        promiseOfRelated.filter(_.nonEmpty).map { related =>
-          Cached(300)(JsonComponent(
-            ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
-            ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
-          )
+        promiseOfRelated.map { related =>
+          related match {
+            case Nil => NotFound
+            case _ => Cached(300)(JsonComponent(
+              ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
+              ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
+            )
+          }
         }
       }
     }.getOrElse(NotFound)
