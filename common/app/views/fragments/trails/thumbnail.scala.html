@@ -26,10 +26,4 @@
     </h@headingLevel>
 
     @trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
-
-    @if(trail.shares > 0) {
-         <div class="type-10">
-            @trail.shares share@if(trail.shares > 1){s}
-        </div>
-    }
 </div>
