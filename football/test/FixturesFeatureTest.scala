@@ -11,7 +11,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
     scenario("Visit the fixtures page") {
 
-      given("I visit the fixtures page")
+      Given("I visit the fixtures page")
 
       //the url /football/fixtures is based on the current day
       //this just checks it loads
@@ -24,7 +24,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
       HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
 
-        then("I should see fixtures for today")
+        Then("I should see fixtures for today")
 
         findFirst(".competitions-date").getText should be("Sunday 21 October 2012")
 
@@ -33,20 +33,20 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         fixture.findFirst(".match-away").getText should be("Newcastle")
         findFirst(".match-status").getText should include("13:30")
 
-        and("I should see fixtures for tomorrow")
+        And("I should see fixtures for tomorrow")
         $(".competitions-date").getTexts should contain("Monday 22 October 2012")
 
-        and("I should see fixtures for the next day")
+        And("I should see fixtures for the next day")
         $(".competitions-date").getTexts should contain("Tuesday 23 October 2012")
       }
     }
 
     scenario("Next fixtures") {
-      given("I am on the fixtures page")
+      Given("I am on the fixtures page")
       HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
 
-        when("I should see a link to the next fixtures")
+        When("I should see a link to the next fixtures")
 
         findFirst("[data-link-name=next]").getAttribute("href") should endWith("/football/fixtures/2012/oct/24")
 
@@ -54,33 +54,33 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
     }
 
     scenario("Link tracking") {
-      given("I visit the fixtures page")
+      Given("I visit the fixtures page")
       HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
         import browser._
-        then("any links I click should be tracked")
+        Then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
-          fail("Link with text %s has no data-link-name".format(link.getText))
+          fail(s"Link with text ${link.getText} has no data-link-name")
         }
       }
     }
 
     scenario("The 'Desktop version' link points to the correct, equivalent desktop page") {
 
-      given("I visit the fixtures page")
-      and("I am on the 'UK' edition")
+      Given("I visit the fixtures page")
+      And("I am on the 'UK' edition")
       HtmlUnit("/football/fixtures") { browser =>
         import browser._
 
-        then("the 'Desktop version' link should point to 'http://www.guardian.co.uk/football/matches?mobile-redirect=false'")
+        Then("the 'Desktop version' link should point to 'http://www.guardian.co.uk/football/matches?mobile-redirect=false'")
         findFirst("#main-site").getAttribute("href") should be("http://www.guardian.co.uk/football/matches?mobile-redirect=false")
       }
 
-      given("I visit the fixtures page")
-      and("I am on the 'US' edition")
+      Given("I visit the fixtures page")
+      And("I am on the 'US' edition")
       HtmlUnit.US("/football/fixtures") { browser =>
         import browser._
 
-        then("the 'Desktop version' link should point to 'http://www.guardiannews.com/football/matches?mobile-redirect=false'")
+        Then("the 'Desktop version' link should point to 'http://www.guardiannews.com/football/matches?mobile-redirect=false'")
         findFirst("#main-site").getAttribute("href") should be("http://www.guardiannews.com/football/matches?mobile-redirect=false")
       }
 

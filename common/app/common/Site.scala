@@ -72,7 +72,7 @@ object Site extends Logging {
     val host = request.headers("host").toLowerCase
     sites.get(host).getOrElse {
       // allows working through things like proxylocal during dev
-      log.info("Using dynamic domain for site " + host)
+      log.info(s"Using dynamic domain for site $host")
       Site(host, host, host, host, host, host, "UK")
     }
   }

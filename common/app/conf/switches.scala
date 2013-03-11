@@ -6,9 +6,10 @@ import org.apache.commons.io.IOUtils
 import java.util.Properties
 import play.api.Plugin
 import akka.actor.Cancellable
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
+import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
+import com.gu.management.play.RequestMetrics
 
 object CommonSwitches {
 
