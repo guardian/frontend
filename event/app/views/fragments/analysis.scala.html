@@ -1,0 +1,112 @@
+@(story: Story, edition: String, analysis: Seq[model.Content])
+
+@article(a: model.Article) = {
+    <li class="story-article">
+        <article class="article @if(a.isLive){is-live}">
+            <header class="article-head">
+                @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+                <h2 class="article-headline">@a.headline</h2>
+            </header>
+
+            @fragments.byline(a.byline, a)
+
+            @if(!a.isLive) {
+                @a.mainPicture.map{ mainPicture =>
+                    @a.mainPicture(width=220).map{ smallCrop =>
+                        @fragments.img(mainPicture, smallCrop)
+                    }
+                }
+            }
+
+            <div class="article-body from-content-api @if(a.isLive) {live-blog}">
+                @withJsoup(BulletCleaner(a.body))(
+                    PictureCleaner(a),
+                    InBodyLinkCleaner("in body link"),
+                    BlockNumberCleaner,
+                    TweetCleaner,
+                    WitnessCleaner,
+                    Summary(2)
+                )
+                <p><a href="@a.url">Continue reading...</a></p>
+            </div>
+        </article>
+    </li>
+}
+
+
+<ol class="tabs js-tabs" id="js-story-tabs">
+    <li class="tabs-selected"><a href="#tabs-story-1" class="type-6" data-link-name="tab 1 analysis">Analysis</a></li>
+    <li><a href="#tabs-story-2" class="type-6" data-link-name="tab 2 background">Background</a></li>
+</ol>
+
+<div class="tabs-content">
+
+    <div id="tabs-story-1" class="tabs-pane" data-link-name="analysis">
+        <ul class="unstyled">
+            @analysis.zipWithRowInfo.map{ case(c, info) =>
+                @{
+                    c match {
+                        case a: Article => {
+                            article(a)
+                        }
+                    }
+                }
+
+                @if(story.hasQuotes) {
+                    @story.contentWithQuotes.drop(info.rowNum-1).headOption.map{ story =>
+                        <li class="story-article">@fragments.quote(story)</li>
+                    }
+                }
+
+            }
+        </ul>
+        <p class="box-indent"><a class="back-to-top" href="#top">Back to top</a></p>
+    </div>
+
+    <div id="tabs-story-2" class="tabs-pane js-hidden" data-link-name="background">
+        @story.explainer.map{ explainer =>
+        <section class="story-overview">
+
+            <h2 class="type-2 box-indent">Background</h2>
+
+            @story.hero.map{ img =>
+            <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                <img class="maxed main-image" src="@story.hero"
+                     itemprop="contentURL"
+                     alt="@StripHtmlTags(story.title)"
+                     title="@StripHtmlTags(story.title)" />
+            </figure>
+            }
+
+            <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                @cleanTrailText(explainer)
+            </p>
+        </section>
+        }
+
+        @if(story.hasAgents) {
+        <section class="story-agents" data-link-name="story-agents">
+            <h2 class="type-2 box-indent">People, places & organisations</h2>
+            @defining(story.agents.length){ numAgents =>
+            <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
+                <ul class="unstyled agents">
+                    @story.agents.take(3).map{ agent =>
+                    @fragments.agent(agent)
+                    }
+                </ul>
+                @if(numAgents > 3) {
+                <ul class="unstyled agents panel">
+                    @story.agents.drop(3).map{ agent =>
+                    @fragments.agent(agent)
+                    }
+                </ul>
+                }
+            </div>
+            }
+        </section>
+        }
+
+        <p class="box-indent"><a class="back-to-top" href="#top">Back to top</a></p>
+
+    </div>
+</div>

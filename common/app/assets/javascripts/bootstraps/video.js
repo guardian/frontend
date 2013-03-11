@@ -2,7 +2,7 @@ define([
     "common",
     "modules/analytics/video",
     "modules/accordion",
-    "modules/experiment"
+    "modules/story/experiment"
 ], function(
     common,
     Videostream,

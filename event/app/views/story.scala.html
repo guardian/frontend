@@ -20,61 +20,64 @@
             }
         </section>
 
-        @if(story.hasQuotes) {
-            @story.contentWithQuotes.headOption.map{ c =>
-                @fragments.quote(c)
-            }
-        }
-
-        @story.explainer.map{ explainer =>
-            <section class="story-overview">
-
-                <h2 class="article-zone type-2">Background</h2>
-
-                @story.hero.map{ img =>
-                    <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                        <img class="maxed main-image" src="@story.hero"
-                             itemprop="contentURL"
-                             alt="@StripHtmlTags(story.title)"
-                             title="@StripHtmlTags(story.title)" />
-                    </figure>
+        <div class="story-content">
+            @if(story.hasQuotes) {
+                @story.contentWithQuotes.headOption.map{ c =>
+                    @fragments.quote(c)
                 }
-
-                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-                    @cleanTrailText(explainer)
-                </p>
-                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
-            </section>
-        }
-
-        @if(story.hasQuotes) {
-            @story.contentWithQuotes.drop(1).headOption.map{ story =>
-                @fragments.quote(story)
             }
-        }
 
-        @if(story.hasAgents) {
-            <section class="story-agents" data-link-name="story-agents">
-                <h2 class="article-zone type-2">People, places & organisations</h2>
-                @defining(story.agents.length){ numAgents =>
-                    <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
-                        <ul class="unstyled agents">
-                            @story.agents.take(3).map{ agent =>
-                                @fragments.agent(agent)
-                            }
-                        </ul>
-                        @if(numAgents > 3) {
-                            <ul class="unstyled agents panel">
-                                @story.agents.drop(3).map{ agent =>
+            @story.explainer.map{ explainer =>
+                <section class="story-overview">
+
+                    <h2 class="article-zone type-2">Background</h2>
+
+                    @story.hero.map{ img =>
+                        <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                            <img class="maxed main-image" src="@story.hero"
+                                 itemprop="contentURL"
+                                 alt="@StripHtmlTags(story.title)"
+                                 title="@StripHtmlTags(story.title)" />
+                        </figure>
+                    }
+
+                    <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+                        @cleanTrailText(explainer)
+                    </p>
+                    <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+                </section>
+            }
+
+            @if(story.hasQuotes) {
+                @story.contentWithQuotes.drop(1).headOption.map{ story =>
+                    @fragments.quote(story)
+                }
+            }
+
+            @if(story.hasAgents) {
+                <section class="story-agents" data-link-name="story-agents">
+                    <h2 class="article-zone type-2">People, places & organisations</h2>
+                    @defining(story.agents.length){ numAgents =>
+                        <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
+                            <ul class="unstyled agents">
+                                @story.agents.take(3).map{ agent =>
                                     @fragments.agent(agent)
                                 }
                             </ul>
-                        }
-                    </div>
-                }
-                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
-            </section>
-        }
+                            @if(numAgents > 3) {
+                                <ul class="unstyled agents panel">
+                                    @story.agents.drop(3).map{ agent =>
+                                        @fragments.agent(agent)
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    }
+                    <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+                </section>
+            }
+
+        </div>
 
         @if(story.hasEvents) {
             <section class="story-timeline" data-link-name="story-timeline">
