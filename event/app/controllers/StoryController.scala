@@ -70,7 +70,7 @@ object StoryController extends Controller with Logging {
 
   def withContent(id: String, version: Int) = Action {
     implicit request =>
-
+      val edition = Site(request).edition
       val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {
@@ -80,8 +80,8 @@ object StoryController extends Controller with Logging {
 
             Cached(60) {
               val html = version match {
-                case 1 => views.html.fragments.story1(story)
-                case 2 => views.html.fragments.story2(story)
+                case 1 => views.html.fragments.story1(story, edition)
+                case 2 => views.html.fragments.story2(story, edition)
               }
 
               JsonComponent(html)
