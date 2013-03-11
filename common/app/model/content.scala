@@ -127,4 +127,6 @@ case class Quote(
 case class StoryItems(
   importance: Int,
   colour: Int,
+  shares: Option[Int] = None,
+  comments: Option[Int] = None,
   quote: Option[Quote] = None)
