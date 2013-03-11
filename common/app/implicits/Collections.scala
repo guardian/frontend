@@ -1,9 +1,11 @@
 package implicits
 
+import language.higherKinds
+
 trait Collections {
 
   // thanks https://gist.github.com/1189097
-  implicit def seq2Distinct[T, C[T] <: Seq[T]](tees: C[T]) = new {
+  implicit class Seq2Distinct[T, C[T] <: Seq[T]](tees: C[T]) {
     import collection.generic.CanBuildFrom
     import collection.mutable.{ HashSet => MutableHashSet }
 

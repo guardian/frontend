@@ -28,7 +28,7 @@ class ContentApiSanityTest extends FlatSpec with ShouldMatchers {
 
     connection.getHeaderField("cache-control") match {
       case MaxAge(num) => Unit //do nothing this is cached for less than 100 seconds
-      case _ => fail("did not like cache control header: " + connection.getHeaderField("cache-control"))
+      case _ => fail(s"did not like cache control header: ${connection.getHeaderField("cache-control")}")
     }
 
     connection.getHeaderField("Vary") should include("Accept-Encoding")

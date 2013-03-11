@@ -5,13 +5,13 @@ import model._
 import play.api.mvc.{ Controller, Action }
 import conf.FootballClient
 import pa.FootballMatch
-import play.api.libs.concurrent.Akka
-import play.api.Play._
 import org.joda.time.format.DateTimeFormat
 import feed._
 import pa.LineUp
 import scala.Some
 import implicits.{ Requests, Football }
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
@@ -20,11 +20,9 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   override lazy val canonicalUrl = None
   override lazy val id = MatchUrl(theMatch)
   override lazy val section = "football"
-  override lazy val webTitle = "%s %s - %s %s ".format(theMatch.homeTeam.name, theMatch.homeTeam.score.getOrElse(""),
-    theMatch.awayTeam.score.getOrElse(""), theMatch.awayTeam.name)
+  override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}"
 
-  override lazy val analyticsName = "GFE:Football:automatic:match:%s:%s v %s".format(
-    theMatch.date.toString("dd MMM YYYY"), theMatch.homeTeam.name, theMatch.awayTeam.name)
+  override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
 
   override lazy val metaData: Map[String, Any] = super.metaData + (
     "footballMatch" -> Map(
@@ -55,7 +53,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
     maybeMatch.map { theMatch =>
-      val promiseOfLineup = Akka.future(FootballClient.lineUp(theMatch.id))
+      val promiseOfLineup = Future(FootballClient.lineUp(theMatch.id))
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {

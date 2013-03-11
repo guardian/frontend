@@ -9,6 +9,8 @@ import common._
 import model.Competition
 import pa.Fixture
 import org.scala_tools.time.Imports._
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 
 trait HasCompetition {
   def competition: Competition
@@ -21,7 +23,7 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
   def refreshLeagueTable() {
     agent.sendOff { old =>
       val table = FootballClient.leagueTable(competition.id, new DateMidnight)
-      log.info("found %s league table entries for competition %s".format(table.size, competition.fullName))
+      log.info(s"found ${table.size} league table entries for competition ${competition.fullName}")
       table.map { t =>
         val team = t.team.copy(name = TeamName(t.team))
         t.copy(team = team)
@@ -63,7 +65,7 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   def refreshFixtures() {
     agent.sendOff { old =>
       val fixtures = FootballClient.fixtures(competition.id)
-      log.info("found %s fixtures for competition %s".format(fixtures.size, competition.fullName))
+      log.info(s"found ${fixtures.size} fixtures for competition ${competition.fullName}")
       fixtures.map { f =>
         val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
         val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
@@ -108,7 +110,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
         val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
-      log.info("found %s results for competition %s".format(results.size, competition.fullName))
+      log.info(s"found ${results.size} results for competition ${competition.fullName}")
 
       (results ++ resultsToKeep).distinctBy(_.id)
     }
