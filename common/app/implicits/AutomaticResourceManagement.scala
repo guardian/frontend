@@ -1,5 +1,7 @@
 package implicits
 
+import language.reflectiveCalls
+
 trait AutomaticResourceManagement {
   def withCloseable[T <: { def close() }](closeable: T) = new {
     def apply[S](body: T => S) = try {

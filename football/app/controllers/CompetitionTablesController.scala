@@ -4,6 +4,7 @@ import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
+import play.api.libs.concurrent.Execution.Implicits._
 
 object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters {
 

@@ -9,6 +9,8 @@ import org.joda.time.format.ISODateTimeFormat
 import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import common.{ Logging, AkkaSupport }
+import java.util.concurrent.TimeUnit._
+import akka.actor.Cancellable
 
 // model :- Story -> Event -> Articles|Agents|Places
 
@@ -147,7 +149,7 @@ object Story {
       MongoOkCount.increment()
       result
     } catch {
-      case e =>
+      case e: Throwable =>
         MongoErrorCount.increment()
         throw e
     }

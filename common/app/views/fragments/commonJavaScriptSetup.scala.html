@@ -63,22 +63,17 @@
                 case other => {@None}
             }
             page: {
-                @item.metaData.map{ data => @MetadataJson(data) }.mkString(","),
+                @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
 
-                @Configuration.javascript.config.map{ case (key, value) =>
-                    '@{JavaScriptVariableName(key.split('.').last)}': '@value'
-                }.mkString(","),
-
-                @Configuration.javascript.pageData.map{ case (key, value) =>
-                    '@{JavaScriptVariableName(key.split('.').last)}': '@value'
-                }.mkString(","),
-
+                @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
+                    s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
+                )},
                 'edition': '@Site(request).edition',
                 'ajaxUrl': 'http://@Site(request).ajaxHost'
             },
-            switches : { @switches.map{ switch =>
-                    '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
-                }.mkString(",")
+            switches : { @{Html(switches.map{ switch =>
+                    s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
+                }.mkString(","))}
             }
         };
 

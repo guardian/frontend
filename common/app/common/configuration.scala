@@ -83,7 +83,7 @@ class GuardianConfiguration(
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {
         case (map, key) => map + (key -> configuration.getStringProperty(key).getOrElse {
-          throw new IllegalStateException("no value for key " + key)
+          throw new IllegalStateException(s"no value for key $key")
         })
       }
     }

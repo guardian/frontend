@@ -11,6 +11,7 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
+import play.api.libs.concurrent.Execution.Implicits._
 sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters {
 
   val daysToDisplay = 3
@@ -108,7 +109,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
       Some("http://www.guardian.co.uk/football/matches"),
       "football/results",
       "football",
-      competition.fullName + " results",
+      s"${competition.fullName} results",
       "GFE:Football:automatic:competition results"
     )
     renderResults(
@@ -137,10 +138,10 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
       val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
 
       val page = new Page(
-        Some("http://www.guardian.co.uk/" + teamName + "/results"),
-        "/football/" + teamName + "/results",
+        Some(s"http://www.guardian.co.uk/$teamName/results"),
+        s"/football/$teamName/results",
         "football",
-        team.name + " results",
+        s"${team.name} results",
         "GFE:Football:automatic:team results"
       )
 

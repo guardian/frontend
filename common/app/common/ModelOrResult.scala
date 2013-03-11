@@ -14,12 +14,12 @@ object ModelOrResult extends Results {
         case g if g.isGallery => internalRedirect("type/gallery", g.id)
         case unsupportedContent =>
           val host = Site(request).desktopHost
-          Right(Redirect("http://%s/%s".format(host, unsupportedContent.id), Map("mobile-redirect" -> Seq("false"))))
+          Right(Redirect(s"http://$host/${unsupportedContent.id}", Map("mobile-redirect" -> Seq("false"))))
       }
         .orElse(response.tag.map(t => internalRedirect("type/tag", t.id)))
         .orElse(response.section.map(s => internalRedirect("type/section", s.id)))
     }.getOrElse(Right(NotFound))
 
   private def internalRedirect(base: String, id: String) =
-    Right(Ok.withHeaders("X-Accel-Redirect" -> "/%s/%s".format(base, id)))
+    Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id"))
 }
