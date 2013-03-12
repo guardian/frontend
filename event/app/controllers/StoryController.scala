@@ -51,7 +51,7 @@ object StoryController extends Controller with Logging {
 
   def latestWithArticle() = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfStories = Future(Story.mongo.latest())
+    val promiseOfStories = Future(Story.mongo.latestWithContent())
 
     Async {
       promiseOfStories.map { stories =>

@@ -25,7 +25,6 @@
 
 <ul class="unstyled box-indent">
     @stories.take(2).zipWithRowInfo.map{ case (story, info) =>
-        <p>@story.title</p>
         @if(story.contentByColour.get("Overview").nonEmpty) {
             @story.contentByColour.get("Overview").map{ content =>
                 @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
