@@ -83,8 +83,18 @@
     </ul>
 }
 
-<div id="js-timeline" class="timeline box-indent expandable"
-     data-count="@{story.events.size - 3}" data-link-name="Event timeline">
-    @eventList(story.events.take(3), false)
-    @eventList(story.events.drop(3), true)
-</div>
+@if(story.hasEvents) {
+    <section class="story-timeline" data-link-name="story-timeline">
+        <h2 class="article-zone type-2">Timeline of events</h2>
+
+        <div id="js-timeline" class="timeline box-indent expandable"
+             data-count="@{story.events.size - 3}" data-link-name="Event timeline">
+            @eventList(story.events.take(3), false)
+            @eventList(story.events.drop(3), true)
+        </div>
+        
+        <p class="box-indent from-content-api">
+            <a href="#top" class="back-to-top">Back to top</a>
+        </p>
+    </section>
+}

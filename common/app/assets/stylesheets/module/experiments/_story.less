@@ -13,15 +13,27 @@
   font-size: 1.2rem;
  }
 
-.story-quote {
+.story-quote,
+.from-content-api blockquote.story-quote {
   background-color: @mushroom;
   display: inline-block;
-  margin-top: 16px !important;
-  padding: 0px 16px 4px 16px !important;
+  margin-top: 16px;
+  padding: 0px 16px 4px 16px;
 }
 
+.story-content .article figure {
+  margin: 0 @gutter;
+}
+
+.story-content .tabs-content {
+  margin-bottom: @baseline*4;
+}
+
+.story-article { border-bottom: 1px solid #EDEDE7; }
+.story-article:last-child { border-bottom: none; }
+
 .back-to-top,
-.from-content-api .back-to-top {
+.from-content-api a.back-to-top {
   .type-10;
   color: #444;
 }

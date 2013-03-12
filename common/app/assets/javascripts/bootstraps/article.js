@@ -5,7 +5,7 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/experiment",
+    "modules/story/experiment",
     "modules/accordion"
 ], function (
     common,
