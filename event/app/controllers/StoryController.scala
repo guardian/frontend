@@ -89,7 +89,7 @@ object StoryController extends Controller with Logging {
       }
   }
 
-  def withContent1(id: String) = Action {
+  def headerAndBlock(id: String) = Action {
     implicit request =>
       val edition = Site(request).edition
       val promiseOfStory = Future(Story.mongo.withContent(id))
@@ -104,32 +104,6 @@ object StoryController extends Controller with Logging {
                 "title" -> views.html.fragments.storyArticleHeader(story),
                 "block" -> views.html.fragments.storyArticleBlock(story, edition)
               )
-            }
-
-          }.getOrElse(JsonNotFound())
-        }
-      }
-  }
-
-  def withContent2(id: String) = withContent(id, 2)
-
-  def withContent(id: String, version: Int) = Action {
-    implicit request =>
-      val edition = Site(request).edition
-      val promiseOfStory = Future(Story.mongo.withContent(id))
-
-      Async {
-        promiseOfStory.map { storyOption =>
-
-          storyOption.map { story =>
-
-            Cached(60) {
-              val html = version match {
-                case 1 => views.html.fragments.story1(story, edition)
-                case 2 => views.html.fragments.story2(story, edition)
-              }
-
-              JsonComponent(html)
             }
 
           }.getOrElse(JsonNotFound())

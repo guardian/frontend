@@ -1,15 +1,58 @@
 define([
-    'common',
-    'ajax'
-], function (
+    "common",
+    "bean",
+    "ajax",
+
+    "modules/accordion",
+    "modules/expandable",
+    "modules/story/storytype"
+], function(
     common,
-    ajax
+    bean,
+    ajax,
+
+    Accordion,
+    Expandable,
+    StoryType
 ) {
 
     function Experiment() {
 
         var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
+
+        var modules = {
+            initAccordion: function () {
+                if(document.querySelector('.accordion')) {
+                    var a = new Accordion();
+                }
+            },
+
+            initTimeline: function() {
+                var $ = common.$g,
+                    timeline = document.querySelector('.timeline'),
+                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+
+                if(timeline) {
+                    $('.event-children').addClass('h');
+                    $('.event-children').first().removeClass('h');
+                    bean.on(timeline, eventType, '.date-line', function(e) {
+                        var block = $(this).parent();
+                        $('.event-children', block).toggleClass('h');
+                    });
+                }
+            },
+
+            initExpandables: function() {
+                var els = document.querySelectorAll('.expandable');
+
+                for(var i = 0, l = els.length; i < l; i++) {
+                    var id = els[i].id;
+                    var e = new Expandable({id: id, expanded: false});
+                    e.init();
+                }
+            }
+        };
 
         this.init = function (config) {
             if (!experimentName) {
@@ -37,43 +80,18 @@ define([
                     case 'storymodule01':
                         this.renderStoryModule01(json);
                         break;
-                    case 'storymodule02':
-                        this.renderStoryModule02(json);
-                        break;
                 }
                 common.mediator.emit('modules:experiment:render');
             },
 
             renderStoryModule01: function(json) {
-                // Instead of main title
-                var top = common.$g('h2.article-zone.type-1');
-                top.html(json.title);
-
-                // Add after last para
-                var related = common.$g('#js-related');
-                related.html(json.block)
-
-                // Remove the existing story package and its title
+                common.$g('h2.article-zone.type-1').html(json.title);
+                common.$g('#js-related').html(json.block)
                 common.$g('#related-trails, h3.type-2.article-zone').remove();
-            },
 
-            renderStoryModule02: function(html) {
-                // Add into article body
-                var paras = common.$g('.article-body > p:not(:empty)');
-                if (paras.length) {
-                    // after last para
-                    common.$g(paras[paras.length - 1]).after(html);
-
-                    // after first para, minus detail (eg. trailblock)
-                    var el = document.createElement('div');
-                    common.$g(el).html(html);
-                    var bq = document.createElement('h2');
-                    common.$g(bq).html(common.$g('.story-package-title', el));
-                    common.$g(paras[1]).after(bq);
-                }
-
-                // Remove the existing story package and its title
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
+                modules.initAccordion();
+                modules.initTimeline();
+                modules.initExpandables();
             },
 
             fallback: function () {
