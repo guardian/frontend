@@ -14,7 +14,7 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
-case class StoryPage(story: Story) extends Page(
+case class StoryPage(story: Story, edition: String) extends Page(
   canonicalUrl = None,
   s"stories/${story.id}",
   "news", story.title,
@@ -73,16 +73,13 @@ object StoryController extends Controller with Logging {
       val promiseOfStory = Future(Story.mongo.byId(id))
       val version = conf.CommonSwitches.StoryVersionBSwitch.isSwitchedOn
 
-      println("------------------------------------------------------------------------------")
-      println(version)
-
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
             Cached(60) {
               val html = version match {
-                case false  => views.html.story(StoryPage(story), edition)
-                case true   => views.html.storyVersionB(StoryPage(story), edition)
+                case false  => views.html.story(StoryPage(story, edition))
+                case true   => views.html.storyVersionB(StoryPage(story, edition))
               }
               Ok(Compressed(html))
             }

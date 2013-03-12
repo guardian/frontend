@@ -1,4 +1,4 @@
-@(page: StoryPage, edition: String)(implicit request: RequestHeader)
+@(page: StoryPage)(implicit request: RequestHeader)
 
 @main(page, Switches.all){ }{
 
@@ -7,7 +7,7 @@
             <span class="zone-color">@story.title</span>
         </h1>
 
-        @fragments.latest(story, edition, 2)
+        @fragments.latest(story, page.edition, 2)
 
         <ol class="tabs js-tabs" id="js-story-tabs">
             <li class="tabs-selected"><a href="#tabs-story-1" class="type-6" data-link-name="tab 1 analysis">Analysis</a></li>
@@ -22,7 +22,7 @@
                         @{
                             c match {
                                 case a: Article => {
-                                    fragments.storyArticle(a, edition)
+                                    fragments.storyArticle(a, page.edition)
                                 }
                             }
                         }
