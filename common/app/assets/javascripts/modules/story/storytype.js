@@ -12,7 +12,7 @@ define([
 
         this.types = [];
 
-        this.types['analysis'] = function(data) {
+        this.types.analysis = function(data) {
             var el = document.querySelector('.story-content'),
                 latest = document.querySelector('.story-latest');
 
@@ -44,9 +44,9 @@ define([
          this.init = function(){
              var url = path + config.id + '/' + config.type;
              this.load(url);
-         }
+         };
 
-    };
+    }
 
     return StoryType;
 
