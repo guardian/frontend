@@ -356,6 +356,7 @@ a.topstories-control,
     .nav > li > a,
     .navigation-container {
         .type-6;
+        line-height: 2rem;
         font-family: @desktopSerif;
     }
 
@@ -372,39 +373,57 @@ a.topstories-control,
     }
 
     //temporarily apes the current r2 local nav
-    .zone-football .crumbtrail .zone-background:hover,
-    .football-nav .sections .football-first-crumb a:hover,
-    .football-nav .sections .football-second-crumb a:hover {
-        background: transparent url('../images/crumbs/crumb-over.dd195f2c2029b4605da752ae14f5f6cf.png') right center;
-        color: @plainWhite;
+    .football-nav .crumbtrail {
+        overflow: hidden;
+        padding-right: 18px !important;
+    }
+    .football-nav .crumbtrail li a {
+        color: white;
         text-decoration: none;
-    }
-
-    .football-top-nav .sections .football-first-crumb a {
-        background: transparent url('../images/crumbs/crumb-1.fc8809f94618e2c66e936d17a4b351e4.png') right center;
-        padding: 4px 15px 4px 5px !important;
-        color: @plainWhite;
-        border-right: 0;
+        padding-left: 20px !important;
+        background: @sportMid;
         position: relative;
-        z-index: 3;
+        display: block;
+        float: left;
     }
-
-    .football-top-nav .nav > li > a {
-        line-height: 1.6rem;
-    }
-
-    .football-top-nav .sections .football-second-crumb {
-        margin-left: -20px !important;
-    }
-
-    .football-nav .sections .football-second-crumb a {
-        background: transparent url('../images/crumbs/crumb-2.5cb9cc72df78dbfbec553a7754062ead.png') right center;
-        padding: 4px 15px 4px 25px !important;
-        color: @plainWhite;
-        border-right: 0;
-        position: relative;
+    .football-nav .crumbtrail li a:after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 25px solid transparent;
+        border-bottom: 25px solid transparent;
+        border-left: 15px solid @sportMid;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        left: 100%;
         z-index: 2;
     }
+    .football-nav .crumbtrail li a:before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 25px solid transparent;
+        border-bottom: 25px solid transparent;
+        border-left: 15px solid white;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        margin-left: 1px;
+        left: 100%;
+        z-index: 1;
+    }
+    .football-nav .crumbtrail li:first-child a {
+        padding-left: 10px !important;
+    }
+    .football-nav .crumbtrail li:nth-child(2) a { background: @sportDark; }
+    .football-nav .crumbtrail li:nth-child(2) a:after { border-left-color: @sportDark; }
+
+    .football-nav .crumbtrail li a:hover { background: #000; }
+    .football-nav .crumbtrail li a:hover:after { border-left-color: #000 !important; }
+
 
     .zone-football .football-nav .sections {
         background-color:#ededed;
