@@ -1,8 +1,6 @@
 package com.gu.test;
 
-import java.util.List;
-
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -51,7 +49,7 @@ public class FrontSteps {
   	public void the_section_will_be_toggled(String sectionState) throws Throwable {
     		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "none" : "0";
     		// sections are hidden with css max-height
-    		Assert.assertTrue(webDriver.waitForCss(
+    		assertTrue(webDriver.waitForCss(
     		    By.xpath(trailblockXpath), "max-height", expectedTrailblockHeight)
     		);
   	}
@@ -62,10 +60,30 @@ public class FrontSteps {
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
         WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
-        Assert.assertEquals(ctaText, cta.getText());
+        assertEquals(ctaText, cta.getText());
         cta.click();
         // wait for second list of top stories to load in
         webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
+    }
+    
+    @When("^there are no more trails to show$")
+    public void there_are_no_more_trails_to_show() throws Throwable {
+      // get the first cta
+      WebElement showMoreCta = webDriver.waitForElement(By.cssSelector("section .trailblock button.cta"));
+      // NOTE: assuming there won't be more that 10 clicks
+      int counter = 10;
+      while(counter-- > 0) {
+        showMoreCta.click();
+      }
+      if (showMoreCta.isDisplayed()) {
+        fail("CTA still visible");
+      }
+    }
+
+    @Then("^the '([^']*)' CTA should disappear$")
+    public void the_CTA_should_disappear(String ctaText) throws Throwable {
+      WebElement section = webDriver.findElement(By.cssSelector("section"));
+      assertEquals(0, section.findElements(By.xpath("div[contains(@class, 'trailblock')]/button[text()='" + ctaText + "']")).size());
     }
 	
 }
