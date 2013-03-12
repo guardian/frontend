@@ -80,14 +80,23 @@ define([
                     case 'storymodule01':
                         this.renderStoryModule01(json);
                         break;
+                    case 'somethingElse':
+                        break;
                 }
                 common.mediator.emit('modules:experiment:render');
             },
 
             renderStoryModule01: function(json) {
-                common.$g('h2.article-zone.type-1').html(json.title);
-                common.$g('#js-related').html(json.block)
-                common.$g('#related-trails, h3.type-2.article-zone').remove();
+                var el;
+
+                document.querySelector('h2.article-zone.type-1').innerHTML = json.title;
+                document.querySelector('#js-related').innerHTML = json.block;
+                
+                el = document.querySelector('#related-trails');
+                el.parentNode.removeChild(el);
+
+                el = document.querySelector('h3.type-2.article-zone');
+                el.parentNode.removeChild(el);
 
                 modules.initAccordion();
                 modules.initTimeline();
