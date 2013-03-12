@@ -2,7 +2,7 @@ package com.gu.test;
 
 import org.junit.runner.RunWith;
 
-import cucumber.junit.Cucumber;
+import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 
