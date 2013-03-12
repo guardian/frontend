@@ -38,7 +38,6 @@ trait LiveScoresComponentController extends Controller with Football with Reques
     teamsAndPath map {
       case (team1, team2, path) =>
         val date = extractDate(path)
-        println("*** Date: " + date)
         val promise = promiseMatchNav(date, team1, team2)
         Async {
           promise map { optNav: Option[MatchNav] =>
