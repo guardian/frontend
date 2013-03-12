@@ -4,14 +4,16 @@ define([
     "ajax",
 
     "modules/accordion",
-    "modules/expandable"
+    "modules/expandable",
+    "modules/story/storytype"
 ], function(
     common,
     bean,
     ajax,
 
     Accordion,
-    Expandable
+    Expandable,
+    StoryType
 ) {
 
     var modules = {
@@ -46,11 +48,10 @@ define([
             }
         },
 
-        loadMoreStories: function(config) {
+        loadMoreStories: function(storyId) {
             var aside = document.getElementById('js-latest-stories');
 
             if(aside) {
-                var storyId = config.page.pageId.replace("stories/", "");
                 ajax({
                     url: '/stories',
                     type: 'jsonp',
@@ -67,14 +68,44 @@ define([
                     }
                 });
             }
+        },
+
+        loadPageType: function(storyId, config) {
+            var pageType = localStorage.getItem('gu.storypage') || '';
+
+            if (!pageType) {
+                for (var key in config.switches) {
+                    if (config.switches[key] && key.match(/^storypage(\w+)/)) {
+                        pageType = key.match(/^storypage(\w+)/)[1];
+                        break;
+                    }
+                }
+            }
+
+            pageType = pageType.toLowerCase();
+
+            if (pageType) {
+                common.mediator.on('module:storytype:loaded', function() {
+                    common.mediator.emit('modules:tabs:render', '#js-story-tabs');
+                    new Expandable({id: "js-agents", expanded: false}).init();
+                });
+
+                new StoryType({
+                    id: storyId,
+                    type: pageType
+                }).init();
+            }
         }
     };
 
     var init = function(req, config) {
+        var storyId = config.page.pageId.replace("stories/", "");
+
         modules.initAccordion();
         modules.initTimeline();
         modules.initExpandables();
-        modules.loadMoreStories(config);
+        modules.loadMoreStories(storyId);
+        modules.loadPageType(storyId, config);
     };
 
     return {
