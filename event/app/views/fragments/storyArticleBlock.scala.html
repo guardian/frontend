@@ -1,0 +1,10 @@
+@(story: model.Story, edition: String)
+
+<div class="margin-top margin-bottom">
+    @fragments.quote(story, 0)
+    @fragments.explainer(story)
+    @fragments.quote(story, 1)
+    @fragments.agents(story)
+    @fragments.popular(story)
+    @fragments.timeline(story)
+</div>

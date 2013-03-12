@@ -49,6 +49,24 @@ object StoryController extends Controller with Logging {
     }
   }
 
+  def latestWithArticle() = Action { implicit request =>
+    val edition = Site(request).edition
+    val promiseOfStories = Future(Story.mongo.latest())
+
+    Async {
+      promiseOfStories.map { stories =>
+        if (stories.nonEmpty) {
+          Cached(60) {
+            val html = views.html.fragments.latestWithArticle(stories, edition)
+            JsonComponent(html)
+          }
+        } else {
+          JsonNotFound()
+        }
+      }
+    }
+  }
+
   def byId(id: String) = Action {
     implicit request =>
       val edition = Site(request).edition
@@ -65,12 +83,33 @@ object StoryController extends Controller with Logging {
       }
   }
 
-  def withContent1(id: String) = withContent(id, 1)
-  def withContent2(id: String) = withContent(id, 2)
-
-  def withContent(id: String, version: Int) = Action {
+  def contentType(id: String, contentType: String) = Action {
     implicit request =>
 
+      val edition = Site(request).edition
+      val promiseOfStory = Future(Story.mongo.byId(id))
+
+      Async {
+        promiseOfStory.map { storyOption =>
+          storyOption.map { story =>
+
+            Cached(60) {
+              val analysis = story.contentByColour.get("Analysis").getOrElse(Nil)
+                .sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
+
+              val html = contentType match {
+                case "analysis" => views.html.fragments.analysis(story, edition, analysis)
+              }
+              JsonComponent(html)
+            }
+          }.getOrElse(JsonNotFound())
+        }
+      }
+  }
+
+  def headerAndBlock(id: String) = Action {
+    implicit request =>
+      val edition = Site(request).edition
       val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {
@@ -79,12 +118,10 @@ object StoryController extends Controller with Logging {
           storyOption.map { story =>
 
             Cached(60) {
-              val html = version match {
-                case 1 => views.html.fragments.story1(story)
-                case 2 => views.html.fragments.story2(story)
-              }
-
-              JsonComponent(html)
+              JsonComponent(
+                "title" -> views.html.fragments.storyArticleHeader(story),
+                "block" -> views.html.fragments.storyArticleBlock(story, edition)
+              )
             }
 
           }.getOrElse(JsonNotFound())
