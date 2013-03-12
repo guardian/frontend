@@ -49,9 +49,9 @@ object CommonSwitches {
     "Switch on to enable experimental v01 of the article story module.",
     initiallyOn = false)
 
-  val ExperimentStoryModule02Switch = DefaultSwitch("experiment-story-module-02",
-    "Switch on to enable experimental v02 of the article story module.",
-    initiallyOn = false)
+  val StoryVersionBSwitch = DefaultSwitch("story-version-b",
+    "Switch to enable version B of story page.",
+    initiallyOn = true)
 
   val SocialSwitch = DefaultSwitch("social-icons",
     "If this switch is enabled the icons to popular social media sites will be displayed",
@@ -60,7 +60,7 @@ object CommonSwitches {
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, ExperimentStoryModule02Switch, SocialSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, SocialSwitch
   )
 }
 
