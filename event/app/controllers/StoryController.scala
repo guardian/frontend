@@ -49,15 +49,15 @@ object StoryController extends Controller with Logging {
     }
   }
 
-  def latestWithArticle() = Action { implicit request =>
+  def latestWithContent() = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfStories = Future(Story.mongo.latest())
+    val promiseOfStories = Future(Story.mongo.latestWithContent())
 
     Async {
       promiseOfStories.map { stories =>
         if (stories.nonEmpty) {
           Cached(60) {
-            val html = views.html.fragments.latestWithArticle(stories, edition)
+            val html = views.html.fragments.latestWithContent(stories)
             JsonComponent(html)
           }
         } else {
