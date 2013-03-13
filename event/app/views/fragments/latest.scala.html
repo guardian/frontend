@@ -37,14 +37,6 @@
 }
 
 <section class="story-latest">
-    @if(story.contentByColour.get("Overview").nonEmpty) {
-        @story.contentByColour.get("Overview").map{ content =>
-            @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
-                @renderLatest(article, edition)
-            }
-        }
-    } else {
-        @renderLatest(story.contentByImportance.take(1), edition)
-    }
+    @renderLatest(story.contentByImportance.take(1), edition)
 </section>
 
