@@ -129,18 +129,26 @@ object Story {
       }
     }
 
+    def latestWithContent(): Seq[Story] = {
+      measure(Stories.find(DBObject.empty).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+    }
+
     def latest(): Seq[Story] = {
       val fields = Map("id" -> 1, "title" -> 1, "hero" -> 1, "explainer" -> 1)
       val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(Story(_, Nil))
       stories
     }
 
-    private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
-      parsedStory.map { parsed =>
-        val contentIds = parsed.events.flatMap(_.content.map(_.id)).distinct
+    private def loadContent(parsedStory: ParsedStory): Story = {
+        val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
         val content = ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
-        Story(parsed, content)
+        Story(parsedStory, content)
+    }
+
+    private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
+      parsedStory.map { parsed =>
+        loadContent(parsed)
       }
     }
   }

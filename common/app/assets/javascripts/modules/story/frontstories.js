@@ -20,7 +20,8 @@ define([
         // View
         this.view = {
             render: function (json) {
-                common.$g('#front-container').prepend(json.html);
+                var trail = document.querySelectorAll('.trail')[0];
+                common.$g(trail).after(json.html);
             }
         };
 
