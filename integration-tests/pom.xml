@@ -72,6 +72,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<artifactId>selenium-java</artifactId>
 			<version>2.30.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>xerces</groupId>
+		    <artifactId>xercesImpl</artifactId>
+		    <version>2.10.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
