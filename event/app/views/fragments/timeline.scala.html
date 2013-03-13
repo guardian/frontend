@@ -58,7 +58,11 @@
     <ul class="unstyled @if(isPanel){ panel}">
         @events.map { event =>
             <li class="trail event-block" data-link-name="trail">
-                <h3 class="type-5">@event.title</h3>
+
+                <h3 class="event-title">
+                    <span>@event.title</span>
+                    <i class="i i-arrow-large-down"></i>
+                </h3>
 
                 @if(event.hasExplainer) { <p class="event-summary">@event.explainer.get</p> }
 
