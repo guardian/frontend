@@ -121,7 +121,7 @@ define([
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showExperiment',
                 success: function (json) {
-                    if (json) {
+                    if (json && json.title && json.block) {
                         that.view.render(json);
                     } else {
                         that.view.fallback();
