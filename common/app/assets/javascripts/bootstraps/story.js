@@ -30,9 +30,11 @@ define([
 
             if(timeline) {
                 $('.event-children').addClass('h');
+                $('.event-summary').addClass('h');
                 $('.event-children').first().removeClass('h');
-                bean.on(timeline, eventType, '.date-line', function(e) {
+                bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
+                    $('.event-summary', block).toggleClass('h');
                     $('.event-children', block).toggleClass('h');
                 });
             }
