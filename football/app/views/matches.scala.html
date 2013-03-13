@@ -9,6 +9,8 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-top-nav")
+
     @if(model.pageType == "live") {
         <div class="live-matches-dateline">
            @fragments.dateline(new DateTime, true)
@@ -19,24 +21,29 @@
         <div class="update update-live-matches" data-link-name="autoupdate"></div>
     }
 
-    @fragments.filterBar(model.page.webTitle)
+    <div class="two-thirds">
+        @fragments.filterBar(model.page.webTitle)
 
-    @fragments.filters(model.filters, model.page, model.pageType)
+        @fragments.filters(model.filters, model.page, model.pageType)
 
-    <div class="matches-container box-indent">
-        @fragments.matchesList(model, model.pageType)
+        <div class="matches-container box-indent">
 
-        @if(model.previousPage.isDefined || model.nextPage.isDefined) {
-            <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
-                @model.previousPage.map{url => <a href="@url" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
-                @model.nextPage.map{url => <a href="@url" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
-            </div>
-        }
+            @fragments.matchesList(model, model.pageType)
 
+            @if(model.previousPage.isDefined || model.nextPage.isDefined) {
+                <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
+                    @model.previousPage.map{url => <a href="@url" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+                    @model.nextPage.map{url => <a href="@url" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+                </div>
+            }
+
+        </div>
     </div>
 
-    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-bottom-nav")
 
-    @fragments.mostPopularPlaceholder("sport")
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+
+    @fragments.mostPopularPlaceholder("sport", Seq("one-third"))
 
 }

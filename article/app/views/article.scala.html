@@ -5,7 +5,11 @@
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
-	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+        @if(article.section == "football") {
+            @fragments.footballNav("/football", None, None, "football-top-nav")
+        }
+
+	<article id="article" class="article @if(article.isLive){is-live} two-thirds" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
@@ -38,11 +42,13 @@
 
     </article>
 
-    @if(storyPackage.nonEmpty) {
-        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
+        @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+        @if(storyPackage.nonEmpty) {
+        <div class="one-third">
+            @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
+        </div>
     }
-    
-    <aside id="js-related"></aside>
+    <aside id="js-related" class="one-third"></aside>
+    <div id="js-popular" class="one-third"></div>
 
-    <div id="js-popular"></div>
 }

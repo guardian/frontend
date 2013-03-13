@@ -243,22 +243,22 @@ a.competition-title {
 	background-color: @sportBright;
 }
 
-.football-nav {
+.football-nav .sections {
     clear: left;
     padding: 0 0 16px 0;
     margin: 0;
     color: #064951;
 }
 
-.football-nav a {
+.football-nav  .sections a {
     color: #064951;
 }
 
-.football-nav .nav {
+.football-nav .sections  .nav {
     padding: @baseline*2 0;
 }
 
-.football-nav .nav-stacked > li > a {
+.football-nav .sections .nav-stacked > li > a {
     border-color: #a1c391;
 }
 
@@ -325,9 +325,10 @@ a.competition-title {
 .football-filter {
     background: @sportBright;
     margin: 0 @gutter @baseline*2 @gutter;
-    color: #ffffff; 
+    color: #ffffff;
     border-bottom: none;
 }
+
 
 //For omniture tracking
 .football-filter > span {
@@ -350,4 +351,59 @@ a.competition-title {
 .live-matches-dateline {
     display:block;
     margin-bottom: @baseline*3 ;
+}
+
+.football-top-nav {
+    display: none;
+}
+
+@media screen and (min-width: @desktopBreakpoint) {
+
+    .type-2.football-top-nav,
+    .football-bottom-nav,
+    .sport-header {
+        display: none;
+    }
+
+    .football-top-nav {
+        display: block;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .football-top-nav .nav {
+        float: left;
+    }
+
+    .zone-football .article-zone.type-1,
+    .zone-football .section-head {
+        display: none;
+    }
+
+    .football-table-container,
+    .football-filters {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .matches-container,
+    .live-matches-dateline,
+    .dateline,
+    .page-head,
+    .article-zone.type-5 {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .football-filter.collapsible {
+        padding: 9px 8px;
+        margin: 0 0 8px 0;
+    }
+
+    .team-list li span {
+        .type-6;
+        font-family: @desktopSerif;
+    }
 }

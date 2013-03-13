@@ -2,7 +2,15 @@
 
 @main(tag, Switches.all){  }{
 
-    <section class="front-section zone-@tag.section" data-link-name="@tag.section">
+    @if(tag.section == "football") {
+        @if(tag.isFootballCompetition) {
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-top-nav")
+        } else {
+            @fragments.footballNav("/football", None, None, "football-top-nav")
+        }
+    }
+
+    <section class="front-section zone-@tag.section two-thirds" data-link-name="@tag.section">
 
         @fragments.headers.sectionHead(tag.name)
 
@@ -40,11 +48,13 @@
 
     @if(tag.section == "football") {
         @if(tag.isFootballCompetition) {
-            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id), "football-bottom-nav")
         } else {
-            @fragments.footballNav("/football")
+            @fragments.footballNav("/football", None, None, "football-bottom-nav")
         }
     }
 
-    @fragments.mostPopularPlaceholder(tag.section)
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+
+    @fragments.mostPopularPlaceholder(tag.section, Seq("one-third"))
 }

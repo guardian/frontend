@@ -7,7 +7,9 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <article class="article">
+    @fragments.footballNav("/football", None, None, "football-top-nav")
+
+    <article class="article two-thirds">
         <p class="dateline box-indent">
             @fragments.status(page.theMatch)
             <time data-timestamp="@page.theMatch.date.getMillis">
@@ -35,9 +37,12 @@
 
     </article>
 
-    <div id="js-related"></div>
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
-    @fragments.footballNav("/football", None, None)
 
-    @fragments.mostPopularPlaceholder("sport")
+    <div id="js-related" class="one-third"></div>
+
+    @fragments.footballNav("/football", None, None,  "football-bottom-nav")
+
+    @fragments.mostPopularPlaceholder("sport", Seq("one-third"))
 }

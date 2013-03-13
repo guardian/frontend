@@ -34,6 +34,11 @@ class GuardianConfiguration(
   override val webappConfDirectory: String = "env")
     extends BaseGuardianConfiguration(application, webappConfDirectory) {
 
+  object scheduling {
+    // slows down scheduling e.g. 1 = normal speed, 5 = 5 times slower
+    lazy val slowdown = configuration.getIntegerProperty("scheduling.slowdown").getOrElse(1)
+  }
+
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
       throw new IllegalStateException("Content Api Host not configured")
