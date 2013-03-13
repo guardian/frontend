@@ -44,6 +44,7 @@ module.exports = function (grunt) {
         },
 
         // Create JSON web font files from fonts.
+        // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
           woff: {
             options: {
