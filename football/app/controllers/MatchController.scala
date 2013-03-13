@@ -53,7 +53,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
     maybeMatch.map { theMatch =>
-      val promiseOfLineup = Future(FootballClient.lineUp(theMatch.id))
+      val promiseOfLineup = FootballClient.lineUp(theMatch.id)
       Async {
         promiseOfLineup.map { lineUp =>
           Cached(60) {

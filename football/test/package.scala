@@ -8,6 +8,7 @@ import io.Source
 import play.api.Plugin
 import org.joda.time.DateMidnight
 import common._
+import concurrent.Future
 
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
   override def onStart() = {
@@ -31,6 +32,7 @@ object TestHttp extends Http {
   val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 
   def GET(url: String) = {
+    import play.api.libs.concurrent.Execution.Implicits._
     val fileName = {
       val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
         .replace("http://pads6.pa-sport.com/", "")
@@ -43,7 +45,7 @@ object TestHttp extends Http {
     // spoof todays date
     val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
 
-    pa.Response(200, xml, "ok")
+    Future(pa.Response(200, xml, "ok"))
   }
 }
 
