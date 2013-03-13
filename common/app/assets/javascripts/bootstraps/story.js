@@ -38,6 +38,19 @@ define([
             }
         },
 
+        initAgents: function() {
+          var eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
+              agents = document.querySelector('.story-agents');
+
+          common.$g('.agent-body', agents).addClass('h');
+          common.$g('button', agents).removeClass('h');
+
+          bean.on(agents, eventType, 'button', function() {
+             var agent = this.parentNode;
+             common.$g('.agent-body', agent).toggleClass('h');
+          });
+        },
+
         initExpandables: function() {
             var els = document.querySelectorAll('.expandable');
 
@@ -103,6 +116,7 @@ define([
 
         modules.initAccordion();
         modules.initTimeline();
+        modules.initAgents();
         modules.initExpandables();
         modules.loadMoreStories(storyId);
         modules.loadPageType(storyId, config);

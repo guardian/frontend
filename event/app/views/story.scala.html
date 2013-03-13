@@ -4,9 +4,7 @@
 
     @defining(page.story){ story =>
 
-        <h1 class="article-zone type-1">
-            <span class="zone-color">@story.title</span>
-        </h1>
+        <h1 class="story-title">@story.title</h1>
 
         @fragments.latest(story, page.edition, 2)
 
@@ -20,7 +18,5 @@
 
         @fragments.popular(story)
         @fragments.timeline(story)
-
-        @fragments.latestStoriesJS()
     }
 }

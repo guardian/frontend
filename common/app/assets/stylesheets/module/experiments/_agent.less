@@ -9,32 +9,41 @@
 
 .agent-head {
   border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
   margin: 0 0 @baseline*2 0;
-  padding: @baseline*3 0 @baseline*3 0;
+  padding: @baseline*3 0 @baseline*2 0;
   overflow: auto;
 }
 
+.agent .i-arrow-large-down {
+  clear: bloth;
+  background-color: transparent;
+  border: none;
+  margin: 0 45%;
+  text-indent: -9999px;
+}
+
 .agent:first-child .agent-head { border-top: none; }
+.panel .agent:first-child .agent-head { border-top: 1px solid #cccccc; }
 
 .agent-img {
   float: left;
-  width: 20%;
+  width: 30%;
   max-width: 115px;
   margin-right: @baseline*2;
 }
 
 .agent-name {
-  .type-5;
+  .type-4;
   margin-bottom: @baseline;
 }
 
 .agent-role {
-  .type-7;
-  font-style: italic;
+  .type-5;
   margin-bottom: none;
+  color: #84837E;
 }
 
 .agent-body {
   .type-6;
+  margin-top: @baseline*2;
 }

@@ -5,17 +5,18 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
+                    <h3 class="story-sub-head">Latest</h3>
                     @fragments.dateline(a.webPublicationDate, a.isLive, edition)
-                    <h2 class="article-headline">Latest developments</h2>
-                </header>
+                    <h2 class="article-headline">@a.headline</h2>
 
-                @if(!a.isLive) {
-                    @a.mainPicture.map{ mainPicture =>
-                        @a.mainPicture(width=220).map{ smallCrop =>
-                            @fragments.img(mainPicture, smallCrop)
+                    @if(!a.isLive) {
+                        @a.mainPicture.map{ mainPicture =>
+                            @a.mainPicture(width=220).map{ smallCrop =>
+                                @fragments.img(mainPicture, smallCrop)
+                            }
                         }
                     }
-                }
+                </header>
 
                 @fragments.byline(a.byline, a)
 
@@ -28,7 +29,7 @@
                         WitnessCleaner,
                         Summary(paras)
                     )
-                    <p><a href="@a.url">Continue reading...</a></p>
+                    <p><a class="continue" href="@a.url">Continue reading...</a></p>
                     <p><a class="back-to-top" href="#top">Back to top</a></p>
                 </div>
             </article>
