@@ -1,4 +1,4 @@
-@(story: Story, edition: String)
+@(story: Story, edition: String, paras: Int)
 
 @renderLatest(content: Seq[model.Content], edition: String) = {
     @content.map{
@@ -26,7 +26,7 @@
                         BlockNumberCleaner,
                         TweetCleaner,
                         WitnessCleaner,
-                        Summary(if(a.isLiveBlog){2}else{4})
+                        Summary(paras)
                     )
                     <p><a href="@a.url">Continue reading...</a></p>
                     <p><a class="back-to-top" href="#top">Back to top</a></p>
