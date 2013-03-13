@@ -20,7 +20,7 @@ define([
         // View
         this.view = {
             render: function (json) {
-                common.$g('#front-container').prepend(json.html);
+                common.$g('.trail').first().after(json.html);
             }
         };
 
