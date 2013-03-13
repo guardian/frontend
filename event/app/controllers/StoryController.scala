@@ -14,7 +14,7 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
-case class StoryPage(story: Story) extends Page(
+case class StoryPage(story: Story, edition: String) extends Page(
   canonicalUrl = None,
   s"stories/${story.id}",
   "news", story.title,
@@ -71,38 +71,19 @@ object StoryController extends Controller with Logging {
     implicit request =>
       val edition = Site(request).edition
       val promiseOfStory = Future(Story.mongo.byId(id))
+      val version = conf.CommonSwitches.StoryVersionBSwitch.isSwitchedOn
 
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
             Cached(60) {
-              Ok(Compressed(views.html.story(StoryPage(story), edition)))
+              val html = version match {
+                case false  => views.html.story(StoryPage(story, edition))
+                case true   => views.html.storyVersionB(StoryPage(story, edition))
+              }
+              Ok(Compressed(html))
             }
           }.getOrElse(NotFound)
-        }
-      }
-  }
-
-  def contentType(id: String, contentType: String) = Action {
-    implicit request =>
-
-      val edition = Site(request).edition
-      val promiseOfStory = Future(Story.mongo.byId(id))
-
-      Async {
-        promiseOfStory.map { storyOption =>
-          storyOption.map { story =>
-
-            Cached(60) {
-              val analysis = story.contentByColour.get("Analysis").getOrElse(Nil)
-                .sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
-
-              val html = contentType match {
-                case "analysis" => views.html.fragments.analysis(story, edition, analysis)
-              }
-              JsonComponent(html)
-            }
-          }.getOrElse(JsonNotFound())
         }
       }
   }

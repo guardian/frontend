@@ -22,7 +22,6 @@ GET     /related/*path                                      controllers.RelatedC
 GET    /stories                                             controllers.StoryController.latest()
 GET    /stories/articles                                    controllers.StoryController.latestWithContent()
 GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
-GET    /stories/:id/:contentType                            controllers.StoryController.contentType(id, contentType)
 GET    /stories/*id                                         controllers.StoryController.byId(id)
 
 #Style-guide

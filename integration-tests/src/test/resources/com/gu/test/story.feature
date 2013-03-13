@@ -7,7 +7,7 @@ Feature: Story page
   Scenario: Latest developments
     Given I am on an story
     Then Latest developments is displayed
-    And the first 4 blocks from article is shown
+    And the first 2 blocks from article is shown
 
   Scenario: Timeline
     Given I am on an story

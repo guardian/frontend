@@ -1,4 +1,4 @@
-@(page: StoryPage, edition: String)(implicit request: RequestHeader)
+@(page: StoryPage)(implicit request: RequestHeader)
 
 @main(page, Switches.all){ }{
 
@@ -8,7 +8,7 @@
             <span class="zone-color">@story.title</span>
         </h1>
 
-        @fragments.latest(story, edition)
+        @fragments.latest(story, page.edition, 2)
 
         <div class="story-content">
             @fragments.quote(story, 0)
@@ -17,8 +17,10 @@
             @fragments.agents(story)
         </div>
 
+
         @fragments.popular(story)
         @fragments.timeline(story)
+
         @fragments.latestStoriesJS()
     }
 }
