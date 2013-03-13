@@ -95,10 +95,14 @@ define([
                 document.querySelector('#js-related').innerHTML = json.block;
                 
                 el = document.querySelector('#related-trails');
-                el.parentNode.removeChild(el);
+                if (el) {
+                    el.parentNode.removeChild(el);
+                }
 
                 el = document.querySelector('h3.type-2.article-zone');
-                el.parentNode.removeChild(el);
+                if (el) {
+                    el.parentNode.removeChild(el);
+                }
 
                 modules.initAccordion();
                 modules.initTimeline();
