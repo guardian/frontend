@@ -5,11 +5,10 @@ import conf._
 import front._
 import model._
 import play.api.mvc._
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
 import model.Trailblock
 import scala.Some
-import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 object FrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk")
@@ -28,7 +27,7 @@ class FrontController extends Controller with Logging with JsonTrails {
   val front: Front = Front
 
   def warmup() = Action {
-    val promiseOfWarmup = Akka.future(Front.warmup())
+    val promiseOfWarmup = Future(Front.warmup)
     Async {
       promiseOfWarmup.map(warm => Ok("warm"))
     }

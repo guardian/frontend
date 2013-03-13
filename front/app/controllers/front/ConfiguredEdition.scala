@@ -3,8 +3,8 @@ package controllers.front
 import common._
 import play.api.libs.json.JsValue
 import play.api.libs.json.Json.parse
-import akka.util.duration._
-import akka.util.Timeout
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 import conf.Configuration
 import common.Response
 import model.Trailblock
@@ -33,7 +33,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
   override def refresh() = {
     super.refresh()
     configAgent.sendOff { oldAgents =>
-      log.info("loading front configuration from: " + configUrl)
+      log.info(s"loading front configuration from: $configUrl")
       http.GET(configUrl) match {
         case Response(200, json, _) => refreshAgents(json, oldAgents)
         case Response(errorCode, _, errorMessage) =>
@@ -56,7 +56,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
     oldAgents.filterNot(old => newAgents.exists(_.description == old.description)).foreach(_.close())
 
     newAgents.foreach(_.refresh())
-    newAgents.foreach(a => log.info("Front configuration loaded: " + a.description))
+    newAgents.foreach(a => log.info(s"Front configuration loaded: ${a.description}"))
     newAgents
   }
 
@@ -67,7 +67,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def warmup() = {
     super.warmup()
-    quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
+    quietly(configAgent.await(5.seconds).foreach(_.warmup))
   }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList

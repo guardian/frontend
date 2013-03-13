@@ -1,6 +1,6 @@
 @(section: String, htmlRootClasses: Seq[String] = Seq())
 
-@defining(Some(section).filter(_.nonEmpty).map{ section => "/most-read/"+section }.getOrElse("/most-read")){ url =>
+@defining(Some(section).filter(_.nonEmpty).map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
     <div id="js-popular"
         @if(htmlRootClasses.nonEmpty) {
             class="@htmlRootClasses.mkString(" ")"

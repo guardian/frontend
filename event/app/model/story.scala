@@ -9,6 +9,8 @@ import org.joda.time.format.ISODateTimeFormat
 import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import common.{ Logging, AkkaSupport }
+import java.util.concurrent.TimeUnit._
+import akka.actor.Cancellable
 
 // model :- Story -> Event -> Articles|Agents|Places
 
@@ -32,6 +34,7 @@ case class Event(
     contentIds: Seq[String] = Nil,
     explainer: Option[String] = None,
     content: Seq[Content] = Nil) {
+  lazy val hasExplainer: Boolean = explainer.isDefined
   lazy val hasContent: Boolean = content.nonEmpty
 }
 
@@ -42,13 +45,13 @@ object Event {
     importance = e.importance,
     agents = e.agents,
     places = e.places,
-    explainer = e.explainer,
+    explainer = e.explainer.filter(_.nonEmpty),
     content = e.content.flatMap { c =>
 
       val cleanQuote = c.quote.map { q =>
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
-      val storyItems = Some(StoryItems(c.importance, c.colour, cleanQuote))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   )
@@ -65,11 +68,12 @@ case class Story(
   lazy val hasEvents: Boolean = events.nonEmpty
   lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val agents = events.flatMap(_.agents).sortBy(_.importance)
+  lazy val agents = events.flatMap(_.agents).sortBy(_.importance).reverse
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
   lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).distinctBy(_.id)
+  lazy val contentByPerformance: Seq[Content] = content.sortBy(_.performance).reverse.distinctBy(_.id)
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
@@ -146,7 +150,7 @@ object Story {
       MongoOkCount.increment()
       result
     } catch {
-      case e =>
+      case e: Throwable =>
         MongoErrorCount.increment()
         throw e
     }
@@ -158,6 +162,8 @@ private case class ParsedContent(
   id: String,
   importance: Int,
   colour: Int,
+  shares: Option[Int] = None,
+  comments: Option[Int] = None,
   quote: Option[Quote] = None)
 
 private case class ParsedPlace(id: String)

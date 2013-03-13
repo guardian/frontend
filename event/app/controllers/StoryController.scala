@@ -1,11 +1,10 @@
 package controllers
 
 import common._
-import play.api.mvc.{ Result, RequestHeader, Action, Controller }
+import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.templates.Html
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class StoriesPage(stories: Seq[Story]) extends Page(
   canonicalUrl = None,
@@ -17,16 +16,16 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
 
 case class StoryPage(story: Story) extends Page(
   canonicalUrl = None,
-  "stories/" + story.id,
+  s"stories/${story.id}",
   "news", story.title,
-  "GFE:story:" + story.title) {
+  s"GFE:story:${story.title}") {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
 object StoryController extends Controller with Logging {
 
   def latest() = Action { implicit request =>
-    val promiseOfStories = Akka.future(Story.mongo.latest())
+    val promiseOfStories = Future(Story.mongo.latest())
 
     Async {
       promiseOfStories.map { stories =>
@@ -50,10 +49,28 @@ object StoryController extends Controller with Logging {
     }
   }
 
+  def latestWithArticle() = Action { implicit request =>
+    val edition = Site(request).edition
+    val promiseOfStories = Future(Story.mongo.latest())
+
+    Async {
+      promiseOfStories.map { stories =>
+        if (stories.nonEmpty) {
+          Cached(60) {
+            val html = views.html.fragments.latestWithArticle(stories, edition)
+            JsonComponent(html)
+          }
+        } else {
+          JsonNotFound()
+        }
+      }
+    }
+  }
+
   def byId(id: String) = Action {
     implicit request =>
       val edition = Site(request).edition
-      val promiseOfStory = Akka.future(Story.mongo.byId(id))
+      val promiseOfStory = Future(Story.mongo.byId(id))
 
       Async {
         promiseOfStory.map { storyOption =>
@@ -66,13 +83,34 @@ object StoryController extends Controller with Logging {
       }
   }
 
-  def withContent1(id: String) = withContent(id, 1)
-  def withContent2(id: String) = withContent(id, 2)
-
-  def withContent(id: String, version: Int) = Action {
+  def contentType(id: String, contentType: String) = Action {
     implicit request =>
 
-      val promiseOfStory = Akka.future(Story.mongo.withContent(id))
+      val edition = Site(request).edition
+      val promiseOfStory = Future(Story.mongo.byId(id))
+
+      Async {
+        promiseOfStory.map { storyOption =>
+          storyOption.map { story =>
+
+            Cached(60) {
+              val analysis = story.contentByColour.get("Analysis").getOrElse(Nil)
+                .sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
+
+              val html = contentType match {
+                case "analysis" => views.html.fragments.analysis(story, edition, analysis)
+              }
+              JsonComponent(html)
+            }
+          }.getOrElse(JsonNotFound())
+        }
+      }
+  }
+
+  def headerAndBlock(id: String) = Action {
+    implicit request =>
+      val edition = Site(request).edition
+      val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {
         promiseOfStory.map { storyOption =>
@@ -80,12 +118,10 @@ object StoryController extends Controller with Logging {
           storyOption.map { story =>
 
             Cached(60) {
-              val html = version match {
-                case 1 => views.html.fragments.story1(story)
-                case 2 => views.html.fragments.story2(story)
-              }
-
-              JsonComponent(html)
+              JsonComponent(
+                "title" -> views.html.fragments.storyArticleHeader(story),
+                "block" -> views.html.fragments.storyArticleBlock(story, edition)
+              )
             }
 
           }.getOrElse(JsonNotFound())

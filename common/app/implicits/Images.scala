@@ -3,13 +3,15 @@ package implicits
 import java.io.{ ByteArrayOutputStream, InputStream }
 import java.awt.image.BufferedImage
 import javax.imageio.{ ImageWriter, IIOImage, ImageWriteParam, ImageIO }
+import scala.language.reflectiveCalls
 
 trait Images extends Numbers with AutomaticResourceManagement {
-  implicit def inputstream2ToBufferedImage(is: InputStream) = new {
-    lazy val toBufferedImage: BufferedImage = withCloseable(is) { ImageIO read _ }
+
+  implicit class Inputstream2ToBufferedImage(is: InputStream) {
+    lazy val toBufferedImage: BufferedImage = withCloseable(is){ ImageIO read _ }
   }
 
-  implicit def imageWriteParam2SetCompression(parameters: ImageWriteParam) = new {
+  implicit class ImageWriteParam2SetCompression(parameters: ImageWriteParam) {
     def setCompression(percent: Int) {
       val compression = (percent / 100.0).constrain(0, 1)
       parameters setCompressionMode ImageWriteParam.MODE_EXPLICIT
@@ -17,13 +19,13 @@ trait Images extends Numbers with AutomaticResourceManagement {
     }
   }
 
-  implicit def imageWriter2Write(writer: ImageWriter) = new {
+  implicit class ImageWriter2Write(writer: ImageWriter) {
     def write(image: BufferedImage, parameters: ImageWriteParam) {
       writer.write(null, new IIOImage(image, null, null), parameters)
     }
   }
 
-  implicit def image2Bytes(image: BufferedImage) = new {
+  implicit class Image2Bytes(image: BufferedImage) {
     def apply(format: String) = new {
       def compress(percent: Int) = {
         withDisposable(ImageIO.getImageWritersByFormatName(format).next) { writer =>

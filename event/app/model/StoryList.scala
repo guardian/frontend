@@ -2,12 +2,12 @@ package model
 
 import common.AkkaSupport
 import akka.actor.Cancellable
-import akka.util.Duration
-import java.util.concurrent.TimeUnit.{ MINUTES, SECONDS }
 import tools.Mongo
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import conf.{ MongoErrorCount, MongoOkCount, MongoTimingMetric }
+import scala.concurrent.duration._
+import play.api.libs.concurrent.Execution.Implicits._
 
 object StoryList extends AkkaSupport {
 
@@ -36,7 +36,7 @@ object StoryList extends AkkaSupport {
   }
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(1.minute, initialDelay = 5.seconds) {
       refresh()
     })
   }
@@ -50,7 +50,7 @@ object StoryList extends AkkaSupport {
       MongoOkCount.increment()
       result
     } catch {
-      case e =>
+      case e: Throwable =>
         MongoErrorCount.increment()
         throw e
     }

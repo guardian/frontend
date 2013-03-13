@@ -1,6 +1,6 @@
-import com.gu.management.play.{ RequestTimer, StatusCounters }
-import common.RequestMetrics
+import conf.RequestMeasurementMetrics
 import feed.MostPopularAgent
+import play.api.mvc.WithFilters
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
 import play.api.Play.current
 
@@ -21,13 +21,4 @@ trait MostPopularLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends GlobalSettings with RequestTimer with StatusCounters with MostPopularLifecycle {
-
-  import RequestMetrics._
-
-  override val requestTimer = RequestTimingMetric
-  override val okCounter = Request200s
-  override val errorCounter = Request50xs
-  override val notFoundCounter = Request404s
-  override val redirectCounter = Request30xs
-}
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with MostPopularLifecycle

@@ -5,9 +5,8 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
-import play.api.templates.Html
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 object TopStoriesController extends Controller with Logging with Paging with JsonTrails {
 
@@ -15,7 +14,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
 
   def render() = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfTopStories = Akka.future(lookup(edition))
+    val promiseOfTopStories = Future(lookup(edition))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories(_, "html") } getOrElse { NotFound })
     }
@@ -23,14 +22,14 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
 
   def renderJson() = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfTopStories = Akka.future(lookup(edition))
+    val promiseOfTopStories = Future(lookup(edition))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories(_, "json") } getOrElse { NotFound })
     }
   }
 
   private def lookup(edition: String)(implicit request: RequestHeader) = suppressApi404 {
-    log.info("Fetching top stories for edition " + edition)
+    log.info(s"Fetching top stories for edition $edition")
     val response: ItemResponse = ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response

@@ -31,7 +31,7 @@
         "headline":"NFL offseason: what will free agency and the draft mean for all 32 teams?",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/21/1361467598854/Joe-Flacco-005.jpg",
-        "wordcount":"7437",
+        "wordcount":"7853",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -507,6 +507,21 @@
           "height":"276",
           "credit":"Damon Tarver/Corbis",
           "caption":"One way or another, Alex Smith will leave the 49ers this offseason. Photograph: Damon Tarver/Corbis",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/27/1335501540011/Andrew-Luck-2012-NFL-Draf-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/27/1335501540011/Andrew-Luck-2012-NFL-Draf-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Chris Chambers",
+          "altText":"Andrew Luck, 2012 NFL Draft",
+          "height":"276",
+          "credit":"Chris Chambers/Getty Images",
+          "caption":"Andrew Luck celebrates his status as the No1 pick of the 2012 NFL Draft \u2013 for the Indianapolis Colts \u2013 with commissioner Roger Goodell. Photograph: Chris Chambers/Getty Images",
           "width":"460"
         }
       }],

@@ -2,20 +2,20 @@ package common
 
 import akka.actor.{ ActorSystem, Cancellable }
 import akka.agent.Agent
-import akka.util.Duration
-import akka.util.duration._
+
+//import akka.agent.Agent
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
-import java.util.concurrent.{ Executors, TimeUnit }
-import conf.Configuration
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
+
 
 trait AkkaSupport {
 
-  // slows down scheduling e.g. 1 = normal speed, 5 = 5 times slower
-  lazy val slowdown = Configuration.scheduling.slowdown
-
   object play_akka {
+
     def system(): ActorSystem = PlayAkka.system(Play.current)
+
     def uptime(): Long = system().uptime
 
     object dispatcher {
@@ -26,15 +26,16 @@ trait AkkaSupport {
     }
 
     object scheduler {
-      def every(duration: Duration, initialDelay: Duration = 0 seconds)(block: => Unit): Cancellable = {
-        system().scheduler.schedule(initialDelay, duration * slowdown) { block }
+
+      def every(duration: FiniteDuration, initialDelay: FiniteDuration = 5.seconds)(block: => Unit): Cancellable = {
+        system().scheduler.schedule(initialDelay, duration) { block }
       }
 
       def once(block: => Unit): Cancellable = {
-        system().scheduler.scheduleOnce(0 seconds) { block }
+        system().scheduler.scheduleOnce(0.seconds) { block }
       }
     }
 
-    def agent[T](value: T): Agent[T] = Agent(value)(play_akka.system())
+    def agent[T](value: T) = Agent(value)(system())
   }
 }

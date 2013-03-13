@@ -3,9 +3,10 @@ package model
 import common.{ AkkaSupport, Logging }
 import conf.ContentApi
 import akka.actor.Cancellable
-import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 
 trait LiveBlogAgent extends AkkaSupport with Logging {
 
@@ -18,8 +19,8 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
   }
 
   private def findBlogFor(edition: String) = {
-    val tag = "football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")"
-    log.info("Fetching football blogs with tag: " + tag)
+    val tag = s"football/series/saturday-clockwatch|tone/minutebyminute,(${ContentApi.supportedTypes})"
+    log.info(s"Fetching football blogs with tag: $tag")
     val response: ItemResponse = ContentApi.item("/football", edition)
       .tag(tag)
       .showEditorsPicks(true)
@@ -57,7 +58,7 @@ object LiveBlog extends LiveBlogAgent {
   private var schedule: Option[Cancellable] = None
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(2.minutes, initialDelay = 10.seconds) {
       refreshLiveBlogs()
     })
   }
