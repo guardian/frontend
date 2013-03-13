@@ -1,22 +1,11 @@
 @(stories: Seq[Story])
 
-@meta(webPublicationDate: org.joda.time.DateTime, isLive: Boolean = false, story: Story) = {    
-    <p class="relative-timestamp type-11 front-timestamp">
-        <a href="/stories/@story.id" class="type-7 trail-story-title">@story.title</a>
-        @if(isLive){ <i class="is-live-icon">LIVE</i> } else { <i class="i i-date"></i> }
-        <time class="js-timestamp" itemprop="datePublished" datetime='@webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")' data-timestamp="@webPublicationDate.getMillis">
-            @* Anything inside here will be replaced by JS *@
-            @Format(webPublicationDate, "d MMM y")
-        </time>
-    </p>    
-}
-
 @trail(content: Seq[model.Content], story: Story) = {
     @content.map{
         case trail: Article => {
             <li class="trail">
 
-                @meta(trail.webPublicationDate, trail.isLive, story)
+                @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
                 <div class="media">
                     @trail.thumbnail.map{ thumbnailUrl =>
@@ -33,6 +22,8 @@
                             />
                         </a>
                     }
+
+                    <a href="/stories/@story.id" class="type-7 trail-story-title">@story.title</a>
 
                     <h2 class="media-body trail-headline type-5">
                         <a href="/stories/@story.id" data-link-name="story | text">
