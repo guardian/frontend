@@ -1,10 +1,23 @@
 @(story: Story, index: Int)
 
 @if(story.hasQuotes) {
-    @story.contentWithQuotes.drop(index).headOption.map{ article =>
-        <div class="box-indent border-top from-content-api">
+    @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
+        <div class="story-quote">
+
+            <h3 class="story-sub-head story-sub-head--quote">
+                @{
+                    article.colour match {
+                        case 1 => "Overview"
+                        case 2 => "Background"
+                        case 3 => "Analysis"
+                        case 4 => "Reaction"
+                        case 5 => "Commentary"
+                    }
+                }
+            </h3>
+
             @article.quote.map{ quote =>
-            <blockquote class="story-quote quoted" data-link-name="story quote">
+            <blockquote class="quoted" data-link-name="story quote">
                 @quote.text.map{ text =>
                     <p><a href="@article.url">@cleanTrailText(text)</a></p>
                 }

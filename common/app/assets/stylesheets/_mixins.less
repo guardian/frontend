@@ -33,12 +33,20 @@
     -moz-box-shadow: @args;
 }
 
-.rotate (@args) {
-    transform: rotate(@args);
-    -ms-transform: rotate(@args);
-    -webkit-transform: rotate(@args);
-    -o-transform: rotate(@args);
-    -moz-transform: rotate(@args); 
+.rotate(@val) {
+  -moz-transform: rotate(@val);  /* FF3.5+ */
+  -o-transform: rotate(@val);  /* Opera 10.5 */
+  -webkit-transform: rotate(@val);  /* Saf3.1+, Chrome */
+  -ms-transform: rotate(@val);  /* IE9 */
+  transform: rotate(@val);
+
+/* IE6-IE8 */
+  @radians: ~`parseInt("@{val}") * Math.PI * 2 / 360`;
+  @costheta: ~`Math.cos("@{radians}")`;
+  @sintheta: ~`Math.sin("@{radians}")`;
+  @negsintheta: ~`"@{sintheta}" * -1`;
+  filter: ~"progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=@{costheta}, M12=@{negsintheta}, M21=@{sintheta}, M22=@{costheta})";
+  zoom: 1;
 }
 
 /* taken from ClearLeft's ClearLess library */
