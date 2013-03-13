@@ -32,10 +32,12 @@ define([
                 $('.event-children').addClass('h');
                 $('.event-summary').addClass('h');
                 $('.event-children').first().removeClass('h');
+                $('i', '.event-block').first().toggleClass('is-open');
                 bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
                     $('.event-summary', block).toggleClass('h');
                     $('.event-children', block).toggleClass('h');
+                    $('i', block).toggleClass('is-open');
                 });
             }
         },
@@ -50,6 +52,7 @@ define([
           bean.on(agents, eventType, 'button', function() {
              var agent = this.parentNode;
              common.$g('.agent-body', agent).toggleClass('h');
+             common.$g('i', agent).toggleClass('is-open');
           });
         },
 
