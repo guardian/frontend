@@ -18,10 +18,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <tags>--tags ~@nothing</tags>
-		        <cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
-	        </properties>
         </profile>
         <profile>
             <id>chrome</id>
@@ -33,8 +29,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 </property>
             </activation>
             <properties>
-                <tags>--tags ~@brokeninchrome</tags>
-                <cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
+                <tags>--tags ~@nothing</tags>
+                <cucumber.options>${tags} --tags ~@brokeninchrome --tags ~@ignore --tags ~@scala-test</cucumber.options>
             </properties>
         </profile>
     </profiles>

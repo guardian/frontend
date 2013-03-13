@@ -20,6 +20,11 @@ public class StorySteps {
     public StorySteps(SharedDriver webDriver) {
         this.webDriver = webDriver;
     }
+    
+    @Given("^I am on an story$")
+    public void I_am_on_an_article() throws Throwable {
+        webDriver.open(story);
+    }
 
     @Then("^Latest developments is displayed$")
     public void Latest_developments_is_displayed() throws Throwable {

@@ -65,25 +65,5 @@ public class FrontSteps {
         // wait for second list of top stories to load in
         webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
     }
-    
-    @When("^there are no more trails to show$")
-    public void there_are_no_more_trails_to_show() throws Throwable {
-      // get the first cta
-      WebElement showMoreCta = webDriver.waitForElement(By.cssSelector("section .trailblock button.cta"));
-      // NOTE: assuming there won't be more that 10 clicks
-      int counter = 10;
-      while(counter-- > 0) {
-        showMoreCta.click();
-      }
-      if (showMoreCta.isDisplayed()) {
-        fail("CTA still visible");
-      }
-    }
-
-    @Then("^the '([^']*)' CTA should disappear$")
-    public void the_CTA_should_disappear(String ctaText) throws Throwable {
-      WebElement section = webDriver.findElement(By.cssSelector("section"));
-      assertEquals(0, section.findElements(By.xpath("div[contains(@class, 'trailblock')]/button[text()='" + ctaText + "']")).size());
-    }
 	
 }

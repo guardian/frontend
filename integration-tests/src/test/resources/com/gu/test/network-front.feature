@@ -10,12 +10,6 @@ Feature: Network front
             | Sport           |
             | Comment is free |
             | Culture         |
-        
-    @foo    
-    Scenario: The 'Show more' CTA disappears if there are no more trails to show
-        Given I visit the network front
-        When there are no more trails to show
-        Then the 'Show more' CTA should disappear
          
     Scenario: Users can hide sections
         Given I visit the network front 
