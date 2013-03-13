@@ -1,0 +1,52 @@
+@(page: StoryPage)(implicit request: RequestHeader)
+
+@main(page, Switches.all){ }{
+
+    @defining(page.story){ story =>
+        <h1 class="article-zone type-1">
+            <span class="zone-color">@story.title</span>
+        </h1>
+
+        @fragments.latest(story, page.edition, 2)
+
+        <ol class="tabs js-tabs" id="js-story-tabs">
+            <li class="tabs-selected"><a href="#tabs-story-1" class="type-6" data-link-name="tab 1 analysis">Analysis</a></li>
+            <li><a href="#tabs-story-2" class="type-6" data-link-name="tab 2 background">Background</a></li>
+        </ol>
+
+        <div class="tabs-content">
+
+            <div id="tabs-story-1" class="tabs-pane" data-link-name="analysis">
+                <ul class="unstyled">
+                    @story.contentByAnalysis.zipWithRowInfo.map{ case(c, info) =>
+                        @{
+                            c match {
+                                case a: Article => {
+                                    fragments.storyArticle(a, page.edition)
+                                }
+                            }
+                        }
+
+                        @if(story.hasQuotes) {
+                            @story.contentWithQuotes.drop(info.rowNum-1).headOption.map{ quote =>
+                                <li class="story-article">@fragments.quote(story, info.rowNum-1)</li>
+                            }
+                        }
+
+                    }
+                </ul>
+                <p class="box-indent"><a class="back-to-top" href="#top">Back to top</a></p>
+            </div>
+
+            <div id="tabs-story-2" class="tabs-pane js-hidden" data-link-name="background">
+                @fragments.explainer(story)
+
+                @fragments.agents(story)
+            </div>
+        </div>
+
+        @fragments.popular(story)
+        @fragments.timeline(story)
+        @fragments.latestStoriesJS()
+    }
+}
