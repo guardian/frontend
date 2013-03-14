@@ -9,11 +9,11 @@
         @fragments.byline(a.byline, a)
 
         @if(!a.isLive) {
-        @a.mainPicture.map{ mainPicture =>
-        @a.mainPicture(width=220).map{ smallCrop =>
-        @fragments.img(mainPicture, smallCrop)
-        }
-        }
+            @a.mainPicture.map{ mainPicture =>
+                @a.mainPicture(width=220).map{ smallCrop =>
+                    <div class="box-indent">@fragments.img(mainPicture, smallCrop)</div>
+                }
+            }
         }
 
         <div class="article-body from-content-api @if(a.isLive) {live-blog}">
