@@ -31,8 +31,6 @@ define([
             if(timeline) {
                 $('.event-children').addClass('h');
                 $('.event-summary').addClass('h');
-                $('.event-children').first().removeClass('h');
-                $('i', '.event-block').first().toggleClass('is-open');
                 bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
                     $('.event-summary', block).toggleClass('h');
@@ -48,6 +46,9 @@ define([
 
           common.$g('.agent-body', agents).addClass('h');
           common.$g('button', agents).removeClass('h');
+
+          common.$g('.agent-body', agents).first().removeClass('h');
+          common.$g('i', agents).first().toggleClass('is-open');
 
           bean.on(agents, eventType, 'button', function() {
              var agent = this.parentNode;
