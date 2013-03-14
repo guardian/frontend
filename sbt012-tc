@@ -54,8 +54,8 @@ java -Xmx4096M -XX:MaxPermSize=2048m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Dhttp.proxyHost=devproxy.gul3.gnl\
   -Dhttp.proxyPort=3128 \
-  -Dhttp.proxy_host=devproxy.gul3.gnl\
-  -Dhttp.proxy_port=3128 \
+  -Dproxy_host=devproxy.gul3.gnl\
+  -Dproxy_port=3128 \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
