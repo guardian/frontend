@@ -17,10 +17,7 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
     Competitions.refreshMatchDay()
     Competitions.competitionAgents.filter(_.competition.id != "127").foreach { agent =>
       agent.refresh()
-      agent.await()
     }
-
-    Competitions.shutDown()
   }
 }
 
@@ -42,10 +39,14 @@ object TestHttp extends Http {
       file.replace(today.toString("yyyyMMdd"), "20121020")
     }
 
-    // spoof todays date
-    val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
+    try {
+      // spoof todays date
+      val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
 
-    Future(pa.Response(200, xml, "ok"))
+      Future(pa.Response(200, xml, "ok"))
+    } catch {
+      case t: Throwable => Future(pa.Response(404, "not found", "not found"))
+    }
   }
 }
 
