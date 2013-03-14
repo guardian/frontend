@@ -20,12 +20,11 @@ object JsonComponent extends Results {
   }
 
   def apply(callback: Option[String], items: (String, Any)*) = {
-    var json = jsonFor(items: _*)
-    callback.map {
-      case ValidCallback(callback) => json = "%s(%s);" format (callback, json)
+    val json = jsonFor(items: _*)
+    callback map {
+      case ValidCallback(callback) => Ok("%s(%s);" format (callback, json)).as("application/javascript; charset=utf-8")
       case badCallback => Forbidden("bad callback name")
-    }
-    Ok(json).as("application/javascript")
+    } getOrElse Ok(json).as("application/json; charset=utf-8")
   }
 
   def jsonFor(items: (String, Any)*) = {
