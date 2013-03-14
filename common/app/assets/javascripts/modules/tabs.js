@@ -47,6 +47,10 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             }
 
             var ols = common.$g(tabSelector).each(function (tabSet) {
+
+                var vPos = bonzo(tabSet).offset().top,
+                    vFixed = false;
+
                 if(tabSet.getAttribute('data-is-bound') === true) {
                     return false;
                 }
@@ -59,7 +63,21 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                     if (targetElm.nodeName.toLowerCase() === "a") {
                         view.showTab(tabContainer, targetElm, e);
                     }
+                    window.scrollTo(0, vPos);
                 });
+
+                bean.add(window, 'scroll', function (e) {
+                    var vScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                    if( !vFixed && vScroll > vPos) {
+                        bonzo(tabSet).addClass('fixTop');
+                        vFixed = true;
+                    } else if( vFixed && vScroll <= vPos) {
+                        bonzo(tabSet).removeClass('fixTop');
+                        vFixed = false;
+                    }
+                });
+
                 tabSet.setAttribute('data-is-bound', true);
             });
         };
