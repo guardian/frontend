@@ -89,7 +89,7 @@ define([
             },
 
             renderStoryModule01: function(json) {
-                var el;
+                var el, story;
 
                 document.querySelector('h2.article-zone.type-1').innerHTML = json.title;
                 document.querySelector('#js-related').innerHTML = json.block;
@@ -104,7 +104,7 @@ define([
                     el.parentNode.removeChild(el);
                 }
 
-                new Story.init({}, config);
+                story = new Story.init({}, config);
             },
 
             fallback: function () {
