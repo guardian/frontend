@@ -98,7 +98,7 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
       None
   }
 
-  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(5, SECONDS), initialDelay = Duration(5, SECONDS)) {
     refresh()
   })
 
