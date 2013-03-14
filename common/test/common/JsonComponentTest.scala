@@ -30,6 +30,14 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com","refreshStatus":true});""")
   }
 
+  it should "render booleans properly" in {
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
+    val result = JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request)
+    contentType(result) should be(Some("application/javascript"))
+    status(result) should be(200)
+    contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com","refresh":false,"refreshStatus":true});""")
+  }
+
   it should "disable refreshing if auto refresh switch is off" in {
     AutoRefreshSwitch.switchOff()
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success")

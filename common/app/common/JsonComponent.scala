@@ -34,10 +34,12 @@ object JsonComponent extends Results {
   }
 
   def jsonFor(items: (String, Any)*) = {
+    import play.api.libs.json.Writes._
     Json.stringify(toJson(
       (items.toMap).map {
         // compress and take the body if value is Html
         case (name, html: Html) => (name -> toJson(Compressed(html).body))
+        case (name, value: Boolean) => (name -> toJson(value))
         case (name, value) => (name -> toJson(value.toString))
       } ++ Map("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))
     ))
