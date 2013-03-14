@@ -2,8 +2,6 @@ package common
 
 
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Writes._
 import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
 import play.api.mvc.{ RequestHeader, Results }
@@ -36,12 +34,15 @@ object JsonComponent extends Results {
   def jsonFor(items: (String, Any)*) = {
     import play.api.libs.json.Writes._
     Json.stringify(toJson(
-      (items.toMap).map {
+      (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
         // compress and take the body if value is Html
         case (name, html: Html) => (name -> toJson(Compressed(html).body))
+        case (name, value: String) => (name -> toJson(value))
         case (name, value: Boolean) => (name -> toJson(value))
-        case (name, value) => (name -> toJson(value.toString))
-      } ++ Map("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))
+        case (name, value: Int) => (name -> toJson(value))
+        case (name, value: Double) => (name -> toJson(value))
+        case (name, value: Float) => (name -> toJson(value))
+      }
     ))
   }
 
