@@ -23,7 +23,8 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies'
+    'modules/cookies',
+    'modules/analytics/omnitureMedia'
 ], function (
     common,
     ajax,
@@ -48,7 +49,8 @@ define([
     Clickstream,
     Omniture,
     Adverts,
-    Cookies
+    Cookies,
+    Video
 ) {
 
     var modules = {
@@ -147,6 +149,21 @@ define([
         loadOmnitureAnalytics: function (config) {
             var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                 o = new Omniture(null, config).init();
+
+            var videos = document.getElementsByTagName("video");
+
+            if(videos) {
+                if (typeof(s_loadMediaModule) != 'undefined') {
+                    s_loadMediaModule(s);
+                }
+
+                for(var i = 0, l = videos.length; i < l; i++) {
+                    var v = new Video({
+                        el: videos[i],
+                        config: config
+                    }).init();
+                }
+            }
         },
 
         loadOphanAnalytics: function (config) {
