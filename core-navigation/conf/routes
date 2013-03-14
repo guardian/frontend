@@ -2,23 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-##########################################################################################
-# the extra routes (without '/core-navigation') are temporary till we own our own stack
-##########################################################################################
-
-GET     /most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /core-navigation/most-popular/*edition/*path    controllers.MostPopularController.render(edition, path)
-
-GET     /most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
-GET     /core-navigation/most-popular/*edition          controllers.MostPopularController.renderGlobal(edition)
-
-GET     /top-stories/*edition                           controllers.TopStoriesController.render(edition)
-GET     /core-navigation/top-stories/*edition           controllers.TopStoriesController.render(edition)
-
-GET     /related/:edition/*path                         controllers.RelatedController.render(edition, path)
-GET     /core-navigation/related/:edition/*path         controllers.RelatedController.render(edition, path)
-
-
 # For dev machines
-#GET     /assets/*file                                  controllers.Assets.at(path="/public", file)
-
+GET    /assets/*file                    controllers.Assets.at(path="/public", file)
+GET    /most-read.json                controllers.MostPopularController.renderJson(path = "")
+GET    /most-read/*path.json          controllers.MostPopularController.renderJson(path)
+GET    /most-read                     controllers.MostPopularController.renderNoJavascript(path = "")
+GET    /most-read/*path               controllers.MostPopularController.renderNoJavascript(path)
+GET    /top-stories                     controllers.TopStoriesController.render()
+GET    /top-stories.json                controllers.TopStoriesController.renderJson()
+GET    /related/*path                   controllers.RelatedController.render(path)

@@ -10,7 +10,7 @@
     </h2>
 
     <div class="live-matches-dateline">
-        <p class="dateline"><i class="i-date"></i> <span>Last updated: a minute ago</span></p>
+        <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
     </div>
 
     @fragments.filterBar(model.page.webTitle)
@@ -22,12 +22,12 @@
 
         <li class="league-table">
 
-            <a class="competition-title football-table-header football-table-link type-4 zone-color" href="@table.competition.url" data-link-name="competition">
+            <a class="competition-title football-table-header football-table-link type-7 zone-color" href="@table.competition.url" data-link-name="competition">
                 @table.competition.fullName
-                <i class="i-sport-arrow"></i>
+                <i class="i i-sport-arrow"></i>
             </a>
 
-            <table class="table-football type-6a">
+            <table class="table-football">
                 @if(!table.multiGroup) {
                     <thead class="table-football-header">
                         @fragments.tableColumnHeaders()
@@ -39,7 +39,7 @@
                     @group.round.map { round =>
                         @round.name.map { name =>
                             <tr>
-                                <th colspan="20" class="type-6a table-football-leftaligned">@name</th>
+                                <th colspan="20" class="table-football-leftaligned">@name</th>
                             </tr>
                             @* we repeat this nav for group tables *@
                             @fragments.tableColumnHeaders()
@@ -52,15 +52,15 @@
             </table>
 
             @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-6 zone-color">View full @table.competition.fullName table <i class="i-sport-arrow-small"></i></a>
+                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table <i class="i i-sport-arrow-small"></i></a>
             }
-        
+
         </li>
         }
     </ol>
-    
+
     @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
 
-    <div id="js-popular"></div> 
+    @fragments.mostPopularPlaceholder("sport")
 
 }

@@ -15,7 +15,7 @@ case class Section(private val delegate: ApiSection) extends MetaData {
   lazy val url: String = SupportedUrl(delegate)
   lazy val linkText: String = webTitle
 
-  override lazy val analyticsName = "GFE:" + section
+  override lazy val analyticsName = s"GFE:$section"
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,

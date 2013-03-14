@@ -11,7 +11,7 @@ class SwitchboardFeatureTest extends FeatureSpec with ShouldMatchers with GivenW
 
     scenario("load switch values from config") {
 
-      given("I have configured switches")
+      Given("I have configured switches")
 
       val switches = Seq(
         new DefaultSwitch("switch-a", "Switch A", initiallyOn = true),
@@ -21,14 +21,14 @@ class SwitchboardFeatureTest extends FeatureSpec with ShouldMatchers with GivenW
 
       val switchboard = new SwitchBoardAgent(new GuardianConfiguration("test"), switches)
 
-      when("I refresh the switchboard")
+      When("I refresh the switchboard")
       switchboard.refresh()
 
-      then("The switches should be set to the correct value")
+      Then("The switches should be set to the correct value")
       switches.find(_.name == "switch-a").get.isSwitchedOn should be(true)
       switches.find(_.name == "switch-b").get.isSwitchedOn should be(false)
 
-      and("Non configured switches should be unchanged")
+      And("Non configured switches should be unchanged")
       switches.find(_.name == "switch-c").get.isSwitchedOn should be(true)
     }
   }

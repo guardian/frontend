@@ -1,0 +1,84 @@
+//Output based on body font-size being 10px
+.font (@family, @weight, @size, @line-height) {
+    font-family: @family;
+    font-size: @size*1px;
+    font-size: (@size / 10)*1rem;
+    font-weight: @weight;
+    line-height: (@line-height / 10)*1rem;
+}
+
+.box-sizing (@box) {
+    -ms-box-sizing: @box;
+    -o-box-sizing: @box;
+    -webkit-box-sizing: @box;
+    -moz-box-sizing: @box;
+    box-sizing: @box;
+}
+
+.transition (@args) {
+    transition: @args;
+    -webkit-transition: @args;
+    -moz-transition: @args;
+}
+
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.box-shadow (@args) {
+    box-shadow: @args;
+    -webkit-box-shadow: @args;
+    -moz-box-shadow: @args;
+}
+
+.rotate(@val) {
+  -moz-transform: rotate(@val);  /* FF3.5+ */
+  -o-transform: rotate(@val);  /* Opera 10.5 */
+  -webkit-transform: rotate(@val);  /* Saf3.1+, Chrome */
+  -ms-transform: rotate(@val);  /* IE9 */
+  transform: rotate(@val);
+
+/* IE6-IE8 */
+  @radians: ~`parseInt("@{val}") * Math.PI * 2 / 360`;
+  @costheta: ~`Math.cos("@{radians}")`;
+  @sintheta: ~`Math.sin("@{radians}")`;
+  @negsintheta: ~`"@{sintheta}" * -1`;
+  filter: ~"progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=@{costheta}, M12=@{negsintheta}, M21=@{sintheta}, M22=@{costheta})";
+  zoom: 1;
+}
+
+/* taken from ClearLeft's ClearLess library */
+#gradient {
+
+    .horizontal (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(left, @start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color); /* IE8+ */
+    }
+
+    .vertical (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(@start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+    }
+}

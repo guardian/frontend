@@ -1,49 +1,36 @@
-@(model: TablesPage, competitionList: List[String])(implicit request: RequestHeader)
-@import support._
-@import model._
+@(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader)
 
-@renderTeamList(name: String) = {
-    @model.tables.filter(_.competition.fullName == name).map{ table =>
-        <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(table.competition.fullName)" id="@table.competition.url.split("/")(2)">
-            <h1 class="article-zone">@table.competition.fullName</h1>
+@renderTeamList(comp: model.Competition) = {
+    <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
+        <h1 class="article-zone type-5">@comp.fullName</h1>
 
-            @table.groups.map{ group =>
+        <ul class="nav nav-columns nav-top-border-off cf">
+            @comp.teams.map{ team =>
+            <li data-team-id="@team.id">
+                @TeamUrl(team).map{ url => <a href="@url" data-link-name="@team.name">
+                    @team.name
+                </a> }.getOrElse{ <span class="no-link-team">@team.name</span> }
 
-                @group.round.map { round =>
-                    @round.name.map { name =>
-                        <h3>@name</h3>
-                    }
-                }
-
-                <ul class="nav nav-columns nav-top-border-off cf">
-                    @group.entries.map(e => TeamMap(e.team)).sortBy{ _.name }.zipWithRowInfo.map{ case (team, row) =>
-                    <li data-team-id="@team.id">
-                        @team.url.map{ url => <a href="@url" data-link-name="@team.name">
-                            @team.name
-                        </a> }.getOrElse{ <span class="no-link-team">@team.name</span> }
-
-                    </li>
-                    }   
-                </ul>
+            </li>
             }
-        </section>
-    }
+        </ul>
+    </section>
 }
 
-@main(model.page, Switches.all){ } {
+@main(pageModel.page, Switches.all){ } {
 
     <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <h1 class="type-1a box-indent">@model.page.webTitle</h1>
+    <h1 class="page-head">@pageModel.page.webTitle</h1>
 
 
-    @competitionList.map{ comp =>
+    @comps.map{ comp =>
         @renderTeamList(comp)
     }
 
     @fragments.footballNav("/football")
 
-    <div id="js-popular"></div> 
+    @fragments.mostPopularPlaceholder("sport")
 }

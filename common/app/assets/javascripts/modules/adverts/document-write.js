@@ -1,13 +1,13 @@
 define([
     'common',
-    'reqwest',
+    'ajax',
     'domwrite',
 
     'modules/detect',
     'modules/adverts/audience-science'
 ], function (
     common,
-    reqwest,
+    ajax,
     domwrite,
 
     detect,
@@ -27,7 +27,7 @@ define([
 
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.toLowerCase());
+            return 'k=' + encodeURIComponent(keyword.replace(" ", "-").toLowerCase());
         }).join('&');
     }
 
@@ -79,7 +79,7 @@ define([
 
         var oasUrl = options.url || generateUrl(options.config.page, options.slots);
 
-        reqwest({
+        ajax({
             url: oasUrl,
             type: 'jsonp',
             success: function (js) {

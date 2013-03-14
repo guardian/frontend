@@ -1,0 +1,44 @@
+@(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
+
+@if(!isFooter){
+<header id="header" class="cf">
+} else {
+<div id="navigation-footer">
+    <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i i-arrow-small-up"></i></a>
+}
+
+<a href="/" data-link-name="site logo" id="logo" class="i i-guardian-logo">
+    The Guardian
+</a>
+
+@if(!isFooter){
+    <div id="navigation-header" data-link-name="global navigation: header">
+        <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" class="sections-control">
+            <i class="i i-nav-divider"></i>
+            <span class="i i-menu">Sections</span>
+        </a>
+    </div>
+
+</header>
+
+<div id="topstories-header" class="nav-popup top-stories is-off"></div>
+}
+
+<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}">
+    <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
+        @styleguide.Navigation(request, Configuration).map{ section =>
+            <li>
+                <a href="@section.href"
+                    data-link-name="@section.linkName"
+                    @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
+                >
+                    @HtmlFormat.raw(section.linkName)
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+@if(isFooter){
+</div>
+}

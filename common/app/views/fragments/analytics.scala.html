@@ -4,9 +4,8 @@
 @defining(request.host + request.path) { path =>
 
     @defining(
-    ("http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
-        OmnitureAnalyticsData(page, "No Javascript", path)), Configuration.javascript.pageData("guardian.page.omnitureAccount"))
+    (s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
+    Configuration.javascript.pageData("guardian.page.omnitureAccount"))
     ){ case (omnitureCall, omnitureAccount) =>
             <noscript id="omnitureNoScript">
                 <div>
@@ -22,9 +21,7 @@
     }
 
     @defining(
-        "http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
-        OmnitureAnalyticsData(page, "Partial Javascript", path))
+        s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
     ){ omnitureCall =>
             <script>
                 @*
@@ -40,5 +37,15 @@
                 }
             </script>
     }
-
 }
+
+<script type="text/javascript">
+  (function () {
+    var d = new Image(1, 1);
+    d.src = ["//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
+  })();
+</script>
+<noscript>
+    <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript"
+    width="1" height="1" alt="" />
+</noscript>

@@ -1,11 +1,10 @@
-define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, FootballTable) {
+define(['common', 'ajax',  'qwery', 'modules/footballtables'], function(common, ajax, qwery, FootballTable) {
 
     describe("Football fixtures component", function() {
        
-        var callback;
-
         beforeEach(function() {
-            mockReqwest = jasmine.createSpy('reqwest');
+            ajax.init("");
+            mockAjax = jasmine.createSpy('ajax');
             prependTo = qwery('ul > li', '#football-tables')[0];
             competition = 100;
             
@@ -15,10 +14,10 @@ define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, Fo
             common.mediator.on('modules:footballtables:render', renderCall);
             
             runs(function() {
-                var table = new FootballTable({
+                new FootballTable({
                     prependTo: prependTo,
                     competition: competition
-                }).init({reqwest: mockReqwest});
+                }).init({ajax: mockAjax});
             });
         });
 
@@ -27,8 +26,8 @@ define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, Fo
             waits(500);
 
             runs(function(){
-                expect(mockReqwest.wasCalled).toBeTruthy();
-                expect(mockReqwest.mostRecentCall.args[0].url.indexOf('/football/api/fronttables?&competitionId=100')).toEqual(0);
+                expect(mockAjax.wasCalled).toBeTruthy();
+                expect(mockAjax.mostRecentCall.args[0].url.indexOf('/football/api/competitiontable?&competitionId=100')).toEqual(0);
             });
         });
 
@@ -37,7 +36,7 @@ define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, Fo
             waits(500);
 
             runs(function(){
-                mockReqwest.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
+                mockAjax.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
                 expect(document.getElementById('football-tables').innerHTML).toContain('<p>foo</p>');
                 expect(renderCall).toHaveBeenCalled();
             });
@@ -48,7 +47,7 @@ define(['common', 'qwery', 'modules/footballtables'], function(common, qwery, Fo
             waits(500);
 
             runs(function(){
-                mockReqwest.mostRecentCall.args[0].success.call(this);
+                mockAjax.mostRecentCall.args[0].success.call(this);
                 expect(renderCall).not.toHaveBeenCalled();
             });
         });

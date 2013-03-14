@@ -5,45 +5,62 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Akka
+import feed.MostPopularAgent
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 object MostPopularController extends Controller with Logging {
 
-  import play.api.Play.current
+  val page = new Page(
+    Some("http://www.guardian.co.uk/"),
+    "most-read",
+    "most-read",
+    "Most read",
+    "GFE:Most Read"
+  )
 
-  def render(edition: String, path: String) = Action { implicit request =>
 
-    val promiseOfGlobalPopular = Akka.future(lookup(edition, "/").toList)
-    val promiseOfSectionPopular = Akka.future(if (path != "/") lookup(edition, path).toList else Nil)
-
+  def renderJson(path: String) = Action { implicit request =>
+    val edition = Site(request).edition
+    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
+    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
     Async {
-      promiseOfSectionPopular.flatMap { sectionPopular =>
-        promiseOfGlobalPopular.map { globalPopular =>
+      promiseOfSectionPopular.map {
+        sectionPopular =>
           (sectionPopular ++ globalPopular) match {
             case Nil => NotFound
-            case popular => renderMostPopular(popular)
+            case popular => Cached(900)(JsonComponent(views.html.fragments.mostPopular(popular, 5)))
           }
-        }
       }
     }
   }
 
-  def renderGlobal(edition: String) = render(edition, "/")
+  def renderNoJavascript(path: String) = Action { implicit request =>
+    val edition = Site(request).edition
+    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
+    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    Async {
+      promiseOfSectionPopular.map {
+        sectionPopular =>
+          (sectionPopular ++ globalPopular) match {
+            case Nil => NotFound
+            case popular => Cached(900)(Ok(Compressed(views.html.mostPopular(page, popular))))
+          }
+      }
+    }
+  }
 
   private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
-    log.info("Fetching most popular: " + path + " for edition " + edition)
+    log.info(s"Fetching most popular: $path for edition $edition")
 
     val response: ItemResponse = ContentApi.item(path, edition)
+      .tag(None)
       .showMostViewed(true)
       .response
 
     val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-    val popular = response.mostViewed map { new Content(_) } take (10)
+    val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
 
-    if (popular.isEmpty) None else Some(MostPopular(heading, popular))
+    if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
   }
-
-  private def renderMostPopular(popular: Seq[MostPopular])(implicit request: RequestHeader) =
-    Cached(900)(JsonComponent(views.html.fragments.mostPopular(popular, 5)))
-
 }

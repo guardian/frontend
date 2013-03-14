@@ -1,52 +1,64 @@
-define(['common', 'reqwest', 'bonzo'], function (common, reqwest, bonzo) {
+define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
-    function Navigation() {
-        
+    function TopStories() {
+
         // View
-        
+
         this.view = {
-        
+
             render: function (html) {
-                var topstoriesHeader, topstoriesFooter, topstoriesNav, i, l, elm;
 
-                topstoriesHeader = document.getElementById('topstories-header');
-                topstoriesNav = common.$g('.topstories-control');
+                var topstoriesHeader = document.getElementById('topstories-header');
 
-                topstoriesHeader.innerHTML = html;
+                topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
+                    + html
+                    + '</div>';
 
-                //  show the initially-hidden top stories nav link
-                for (i = 0, l = topstoriesNav.length; i < l; i++) {
-                    elm = topstoriesNav[i];
-                    bonzo(elm).removeClass('initially-off');
-                }
+                common.mediator.emit('modules:topstories:render');
 
-                common.mediator.emit('modules:navigation:render');
+                common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
+                    bonzo(topstoriesHeader).removeClass('is-off');
+                });
+
+                common.mediator.on('modules:control:change', function(args) {
+
+                    var control = args[0],
+                        state = args[1];
+
+                    if (state === false || control !== 'topstories-control-header') {
+                        bonzo(topstoriesHeader).addClass('is-off');
+                    }
+                });
             }
-        
         };
 
         // Bindings
-        
-        common.mediator.on('modules:navigation:loaded', this.view.render);
-        
+
+        common.mediator.on('modules:topstories:loaded', this.view.render);
+
         // Model
-        
+
         this.load = function (config) {
-            var latestUrl = config.page.coreNavigationUrl + '/top-stories/' + config.page.edition;
-            
-            return reqwest({
-                    url: latestUrl,
+
+            var url = '/top-stories.json?page-size=10&view=link';
+
+            if (config.pathPrefix) {
+                url = config.pathPrefix + url;
+            }
+
+            return ajax({
+                    url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',
                     success: function (json) {
-                        common.mediator.emit('modules:navigation:loaded', [json.html]);
+                        common.mediator.emit('modules:topstories:loaded', [json.html]);
                     }
                 });
         };
 
     }
-    
-    return Navigation;
+
+    return TopStories;
 
 });

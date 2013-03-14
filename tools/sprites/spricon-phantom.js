@@ -23,6 +23,8 @@ phantom args sent from app.js:
   [8] - css classname prefix
   [9] - css basepath prefix
   [10] - generate svg boolean
+  [11] - styleguide HTML fragment directory path
+  [12] - styleguide HTML fragment filename
 */
 
 var fs = require( "fs" );
@@ -42,10 +44,20 @@ var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[9];
 var generatesvg = phantom.args[10];
+var styleguidepath = phantom.args[11];
+var styleguidefilename = phantom.args[12];
 
 var sprite = require( "webpage" ).create();
-    sprite.viewportSize = { width: 600, height: 'auto' };
+    sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
+
+var tableOpeningHTML = '<table class="styleguide-table styleguide-table-two-col sprite-table"><thead><tr><th class="type-11">CSS selector</th><th class="type-11">Output</th></tr></thead><tbody>';
+var outputHTML = [];
+var tableClosingHTML = '</tbody></table>';
+
+// add a single reference to the sprite background
+pngcssrules.push(".i { background-image: url(" + spritepath + "sprite.png); background-repeat: no-repeat; display: inline-block; }");
+
 
 // increment the current file index and process it
 function nextFile(){
@@ -56,7 +68,7 @@ function nextFile(){
 // files have all been processed. write the css and html files and return
 function finishUp(){
 
-    //Set viewport to containers width and hieght
+    //Set viewport to containers width and height
     sprite.viewportSize = sprite.evaluate(function() {
         //Cache container
         var container = document.getElementById('container');
@@ -70,16 +82,21 @@ function finishUp(){
     // write CSS files
     fs.write( cssOutputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
     if(generatesvg) { fs.write( cssOutputdir + datacss, datacssrules.join( "\n\n" ) ); }
+
+    // write HTML file
+    var tableHTML = tableOpeningHTML + outputHTML.join( "\n" ) + tableClosingHTML;
+    fs.write( styleguidepath + styleguidefilename,  tableHTML);
 }
 
 // process an svg file from the source directory
 function processFile() {
     var theFile = files[ currfile ];
+    var tableRowHTML = '';
 
     if( theFile ){
         // only parse svg files
         if( theFile.match( /\.svg$/i ) ){
-          
+
             (function(){
 
                 var page = require( "webpage" ).create();
@@ -106,6 +123,10 @@ function processFile() {
                     datacssrules.push( ".svg-" + cssprefix + filenamenoext +", .svg ." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; background-position: 0 0; }" );
                 }
 
+                // build HTML table for style guide
+                tableRowHTML = '<tr><td class="type-9">.' + cssprefix + filenamenoext + '</td><td class="sprite-cell"><i class="i ' + cssprefix + filenamenoext + '"></i></td></tr>';
+                outputHTML.push(tableRowHTML);
+
                 // set page viewport size to svg dimensions
                 page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
 
@@ -128,8 +149,9 @@ function processFile() {
 
                     }, svgdata);
 
-                  pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + spritepath + "sprite.png ); background-repeat: no-repeat; background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "; height: " + coords.h + "; }");
-                  
+
+                    pngcssrules.push( "." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "; height: " + coords.h + "; }");
+
                   // process the next svg
                   nextFile();
                 });

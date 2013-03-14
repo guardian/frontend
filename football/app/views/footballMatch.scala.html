@@ -1,27 +1,35 @@
 @(page: MatchPage)(implicit request: RequestHeader)
 @import feed._
+@import implicits.Football._
+
 @main(page, Switches.all){ }{
     <h2 class="article-zone type-1 sport-header">
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
-    <article class="article box-indent">
-        <p class="dateline">
+    <article class="article">
+        <p class="dateline box-indent">
             @fragments.status(page.theMatch)
             <time data-timestamp="@page.theMatch.date.getMillis">
-                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z", Edition(request, Configuration))
+                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z", Site(request).edition)
             </time>
         </p>
-      
-        <div class="match-summary">
-            @fragments.matchSummary(page)
+
+        <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
+            @fragments.matchSummary(page.theMatch)
         </div>
 
         @if(page.theMatch.isLive) {
             <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
         }
+        <div class="after-header">
+            @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
+            @if(page.matchStarted){
+                <div class="box-indent"><h3 class="type-2 section-divider">Stats</h3></div>
+            }
+        </div>
 
-        <div class="match-stats">
+        <div class="match-stats box-indent">
             @fragments.matchStats(page)
         </div>
 
@@ -29,7 +37,7 @@
 
     <div id="js-related"></div>
 
-  @fragments.footballNav("/football", None, None)
+    @fragments.footballNav("/football", None, None)
 
-  <div id="js-popular"></div>
+    @fragments.mostPopularPlaceholder("sport")
 }

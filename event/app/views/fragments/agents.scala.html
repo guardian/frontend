@@ -1,0 +1,24 @@
+@(story: Story)
+
+@if(story.hasAgents) {
+    <section class="story-agents" data-link-name="story-agents">
+        <h2 class="story-title story-title--section">People, places & organisations</h2>
+        @defining(story.agents.length){ numAgents =>
+            <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
+                <ul class="unstyled agents">
+                    @story.agents.take(3).map{ agent =>
+                        @fragments.agent(agent)
+                    }
+                </ul>
+                @if(numAgents > 3) {
+                    <ul class="unstyled agents panel">
+                        @story.agents.drop(3).map{ agent =>
+                            @fragments.agent(agent)
+                        }
+                    </ul>
+                }
+            </div>
+        }
+        <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+    </section>
+}

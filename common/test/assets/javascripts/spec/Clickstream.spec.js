@@ -11,13 +11,21 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             e.preventDefault();
         })
 
+        bean.add(document.getElementById('click-me-internal'), 'click', function(e) {
+            e.preventDefault();
+        })
+
+        bean.add(document.getElementById('click-me-external'), 'click', function(e) {
+            e.preventDefault();
+        })
+
         beforeEach(function(){
 
             // ensure each instance of Clickstream has a fresh <body>
             bean.remove(document.body, 'click');
 
             // clean listeners before each test
-            var a = common.mediator.removeAllListeners('module:clickstream:click');
+            var a = common.mediator.removeEvent('module:clickstream:click');
 
         });
 
@@ -36,7 +44,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | the button', false, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | the button', true, true])).toHaveBeenCalledOnce();
             });
 
         });
@@ -57,7 +65,7 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
 
         });
 
-        it("should indicate if a click eminates from an XmlHttpRequest source", function(){
+        it("should indicate if a click emanates from an XmlHttpRequest source", function(){
 
             var cs  = new Clickstream({ filter: ["a"] }),
                 object = { method: function (p) {} },
@@ -71,12 +79,12 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | xhr link', true, false])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | xhr link', true, true])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });
 
-        it("should indicate if a click eminates from a internal anchor", function(){
+        it("should indicate if a click emanates from a internal anchor", function(){
 
             var cs  = new Clickstream({ filter: ["p"] }),
                 object = { method: function (p) {} },
@@ -90,7 +98,45 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             bean.fire(el, 'click');
 
             runs(function(){
-                expect(spy.withArgs([el, 'outer div | paragraph', false, true])).toHaveBeenCalledOnce();
+                expect(spy.withArgs([el, 'outer div | paragraph', true, true])).toHaveBeenCalledOnce();
+                expect(spy).toHaveBeenCalledOnce();
+            });
+        });
+
+        it("should indicate if a click emanates from a same-host link", function(){
+
+            var cs  = new Clickstream({ filter: ["a"] }),
+                object = { method: function (p) {} },
+                spy = sinon.spy(object, "method"),
+                el = document.getElementById('click-me-internal');
+
+            spy.withArgs(["outer div | internal link", false, true]);
+
+            common.mediator.on('module:clickstream:click', spy);
+
+            bean.fire(el, 'click');
+
+            runs(function(){
+                expect(spy.withArgs([el, 'outer div | internal link', false, true])).toHaveBeenCalledOnce();
+                expect(spy).toHaveBeenCalledOnce();
+            });
+        });
+
+        it("should indicate if a click emanates from an other-host link", function(){
+
+            var cs  = new Clickstream({ filter: ["a"] }),
+                object = { method: function (p) {} },
+                spy = sinon.spy(object, "method"),
+                el = document.getElementById('click-me-external');
+
+            spy.withArgs(["outer div | external link", false, true]);
+
+            common.mediator.on('module:clickstream:click', spy);
+
+            bean.fire(el, 'click');
+
+            runs(function(){
+                expect(spy.withArgs([el, 'outer div | external link', false, false])).toHaveBeenCalledOnce();
                 expect(spy).toHaveBeenCalledOnce();
             });
         });

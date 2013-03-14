@@ -2,14 +2,13 @@ package controllers
 
 import common._
 import conf._
-import front.Front
+import front._
 import model._
 import play.api.mvc._
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
 import model.Trailblock
 import scala.Some
-import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 object FrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk")
@@ -23,36 +22,63 @@ object FrontPage extends MetaData {
   )
 }
 
-class FrontController extends Controller with Logging {
+class FrontController extends Controller with Logging with JsonTrails {
 
   val front: Front = Front
 
   def warmup() = Action {
-    val promiseOfWarmup = Akka.future(Front.warmup())
-    Async { promiseOfWarmup.map(warm => Ok("warm")) }
+    val promiseOfWarmup = Future(Front.warmup)
+    Async {
+      promiseOfWarmup.map(warm => Ok("warm"))
+    }
   }
 
-  def isUp() = Action { Ok("Ok") }
+  def isUp() = Action {
+    Ok("Ok")
+  }
 
   def render(path: String) = Action { implicit request =>
-    val edition = Edition(request, Configuration)
+    renderFront(path, "html")
+  }
+
+  def renderJson(path: String) = Action { implicit request =>
+    renderFront(path, "json")
+  }
+
+  private def renderFront(path: String, format: String)(implicit request: RequestHeader) = {
+
+    val edition = Site(request).edition
 
     val page: Option[MetaData] = path match {
       case "front" => Some(FrontPage)
-      case _ => ContentApi.item(path, edition)
+      case section => ContentApi.item(section, edition)
         .showEditorsPicks(true)
         .showMostViewed(true)
-        .response.section map { Section(_) }
+        .response.section map {
+          Section(_)
+        }
     }
 
-    page map { page =>
+    page.map { frontPage =>
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(path, edition)
-      if (trailblocks.isEmpty) InternalServerError
-      else Cached(page) { Ok(Compressed(views.html.front(page, trailblocks))) }
-    } getOrElse (InternalServerError)
+      if (trailblocks.isEmpty) {
+        InternalServerError
+      } else {
+        Cached(frontPage) {
+          if (format == "json") {
+            // pull out correct trailblock
+            trailblocks.find(_.description.id == path).map {
+              trailblock =>
+                renderJsonTrails(trailblock.trails)
+            }.getOrElse(InternalServerError)
+          } else {
+            Ok(Compressed(views.html.front(frontPage, trailblocks)))
+          }
+        }
+      }
+    }.getOrElse(NotFound)
   }
-
 }
 
 object FrontController extends FrontController

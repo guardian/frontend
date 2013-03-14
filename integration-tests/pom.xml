@@ -8,13 +8,37 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<packaging>jar</packaging>
 	<name>integration-tests</name>
 	<url>http://maven.apache.org</url>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tags>--tags ~@nothing</tags>
 		<cucumber.version>1.0.14</cucumber.version>
-		<tags>--tags ~@nothing</tags>
 		<cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
 	</properties>
+        </profile>
+
+        <profile>
+            <id>chrome</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>driver</name>
+                    <value>chrome</value>
+                </property>
+            </activation>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <tags>--tags ~@brokeninchrome</tags>
+                <cucumber.version>1.0.14</cucumber.version>
+                <cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
+            </properties>
+        </profile>
+    </profiles>
 
 	<dependencies>
 		<dependency>
@@ -56,7 +80,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.25.0</version>
+			<version>2.30.0</version>
 		</dependency>
 	</dependencies>
 
@@ -75,6 +99,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <name>http_proxy</name>
                             <value>${http_proxy}</value>
 	                    </property>
+                        <property>
+                            <name>driver</name>
+                            <value>${driver}</value>
+                        </property>
 	                    <property>
                             <name>cucumber.options</name>
                             <value>${cucumber.options}</value>
@@ -111,4 +139,5 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<url>http://nexus.gudev.gnl:8081/nexus/content/groups/public</url>
 		</pluginRepository>
 	</pluginRepositories>
+
 </project>

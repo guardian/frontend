@@ -1,4 +1,4 @@
-define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo, bean) {
+define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean) {
 
     return {
 
@@ -23,9 +23,11 @@ define(['common', 'reqwest', 'bonzo', 'bean'], function (common, reqwest, bonzo,
 
             common.mediator.on('ui:more-matches:clicked', function (_link) {
                 var link = bonzo(_link);
-                reqwest({
-                    url: link.attr('href') + '?callback=?',
+                ajax({
+                    url: link.attr('href'),
                     type: 'jsonp',
+                    jsonpCallback: 'callback',
+                    jsonpCallbackName: 'moreMatches',
                     success: function (response) {
                         // place html before nav
                         bonzo(nav).before(response.html);

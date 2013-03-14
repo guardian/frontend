@@ -7,8 +7,8 @@ import play.api.test.Helpers._
 
 class MostPopularControllerTest extends FlatSpec with ShouldMatchers {
 
-  "TMost Popular Controller" should "200 when content type is tag" in Fake {
-    val result = controllers.MostPopularController.render("UK", "technology")(FakeRequest())
+  "Most Popular Controller" should "200 when content type is tag" in Fake {
+    val result = controllers.MostPopularController.renderNoJavascript("technology")(TestRequest())
     status(result) should be(200)
   }
 }

@@ -1,7 +1,7 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false)
 
 <ul class="unstyled">
-    @trails.slice( 0, numItemsVisible ).zipWithRowInfo.map{ case (trail, info) =>
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         <li class="trail @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }" data-link-name="trail">
             @if(info.rowNum == 1) {
                 @fragments.trails.featured(trail, info.rowNum, related)
@@ -11,13 +11,3 @@
         </li>
     }
 </ul>
-
-@if( trails.length > numItemsVisible) {
-    <ul class="unstyled panel">
-        @trails.slice( numItemsVisible, trails.length ).zipWithRowInfo.map{ case (trail, info) =>
-            <li class="trail" data-link-name="trail">
-                @fragments.trails.headline(trail, info.rowNum + numItemsVisible, related) 
-            </li>
-        }
-    </ul>
-}

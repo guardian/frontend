@@ -28,7 +28,7 @@ object TestHttp extends Http {
 
   val today = new DateMidnight()
 
-  val base = getClass.getClassLoader.getResource("testdata").getFile + "/"
+  val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 
   def GET(url: String) = {
     val fileName = {
@@ -49,7 +49,9 @@ object TestHttp extends Http {
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit {
-    override val testPlugins = Seq(classOf[StubFootballStatsPlugin].getName)
-    override val disabledPlugins = Seq(classOf[FootballStatsPlugin].getName)
+    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
+    override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
+
+  object Fake extends Fake
 }

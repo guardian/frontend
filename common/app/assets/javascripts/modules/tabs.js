@@ -3,14 +3,14 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
     /*
         expects the following HTML structure
 
-        <ol class="tabs">
+        <ol class="tabs js-tabs">
             <li class="tabs-selected"><a href="#foo">Foo</a></li>
             <li><a href="#bar">Bar</a></li>
         </ol>
 
         <div class="tabs-content">
              <div class="tabs-pane" id="foo">foo</div>
-             <div class="tabs-pane initially-off" id="bar">bar</div>
+             <div class="tabs-pane js-hidden" id="bar">bar</div>
         </div>
 
     */
@@ -32,7 +32,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 bonzo(currentTab.parentNode).removeClass('tabs-selected');
                 bonzo(clickedTab.parentNode).addClass('tabs-selected');
                 bonzo(paneToHide).hide();
-                bonzo(paneToShow).removeClass('initially-off').show();
+                bonzo(paneToShow).removeClass('js-hidden').show();
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();
@@ -43,10 +43,14 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
         this.init = function (tabSelector) {
 
             if (!tabSelector) {
-                tabSelector = 'ol.tabs';
+                tabSelector = 'ol.js-tabs';
             }
 
             var ols = common.$g(tabSelector).each(function (tabSet) {
+                if(tabSet.getAttribute('data-is-bound') === true) {
+                    return false;
+                }
+                
                 bean.add(tabSet, 'click', function (e) {
                     var targetElm = e.target;
                     // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
@@ -56,11 +60,11 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                         view.showTab(tabContainer, targetElm, e);
                     }
                 });
+                tabSet.setAttribute('data-is-bound', true);
             });
         };
 
         // Bindings
-
         common.mediator.on('modules:tabs:render', this.init);
 
     };

@@ -1,19 +1,9 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false)
 
-<ul class="unstyled">
-    @trails.slice( 0, numItemsVisible ).zipWithRowInfo.map{ case (trail, info) =>
+<ul class="unstyled@if(isPanel){ panel}">
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         <li class="trail" data-link-name="trail">
             @fragments.trails.headline(trail, info.rowNum, related)
         </li>
     }
 </ul>
-
-@if( trails.length > numItemsVisible) {
-    <ul class="unstyled panel">
-        @trails.slice( numItemsVisible, trails.length ).zipWithRowInfo.map{ case (trail, info) =>
-            <li class="trail" data-link-name="trail">
-                @fragments.trails.headline(trail, info.rowNum + numItemsVisible, related) 
-            </li>
-        }
-    </ul>
-}

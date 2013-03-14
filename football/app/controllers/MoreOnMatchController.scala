@@ -1,40 +1,95 @@
 package controllers
 
-import model.{ Cached, Content }
+import model.{ Trail, Cached, Content }
 import play.api.mvc.{ RequestHeader, Action, Controller }
-import common.{ JsonComponent, Edition, Logging }
+import common.{ Site, JsonComponent, Logging }
 import org.joda.time.format.DateTimeFormat
-import conf.{ Configuration, ContentApi }
-import org.joda.time.DateMidnight
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
+import conf.ContentApi
+import feed.Competitions._
+import org.scala_tools.time.Imports._
+import pa.FootballMatch
+import implicits.{ Requests, Football }
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
-object MoreOnMatchController extends Controller with Logging {
+case class Report(trail: Trail, name: String)
 
-  val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
+case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
+    minByMin: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
 
-  def render(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = Action { implicit request =>
+  // do not count stats as a report (stats will always be there)
+  lazy val hasReports = hasReport || hasMinByMin
+  lazy val hasMinByMin = minByMin.isDefined
+  lazy val hasReport = matchReport.isDefined
+}
 
-    val matchDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
-    val promiseOfRelated = Akka.future(loadRelated(request, matchDate, homeTeamId, awayTeamId))
+object MoreOnMatchController extends Controller with Football with Requests with Logging {
 
-    Async {
-      promiseOfRelated.map {
-        case Nil => NotFound
-        case related => Cached(600)(JsonComponent(views.html.fragments.relatedTrails(related, "More on this match", 5)))
+  private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
+
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
+
+    val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
+    val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
+
+    matchFor(interval, team1, team2).map { theMatch =>
+      val promiseOfRelated = Future(loadMoreOn(request, theMatch))
+      Async {
+        // for our purposes here, we are only interested in content with exactly 2 team tags
+        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map { related =>
+          related match {
+            case Nil => NotFound
+            case _ => Cached(300)(JsonComponent(
+              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
+            )
+          }
+        }
       }
-    }
+    }.getOrElse(NotFound)
   }
 
-  def loadRelated(request: RequestHeader, matchDate: DateMidnight, homeTeamId: String, awayTeamId: String): Seq[Content] = {
-    ContentApi.search(Edition(request, Configuration))
+  def moreOn(matchId: String) = Action { implicit request =>
+    findMatch(matchId).map { theMatch =>
+      val promiseOfRelated = Future(loadMoreOn(request, theMatch))
+      Async {
+        promiseOfRelated.map { related =>
+          related match {
+            case Nil => NotFound
+            case _ => Cached(300)(JsonComponent(
+              ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
+              ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
+            )
+          }
+        }
+      }
+    }.getOrElse(NotFound)
+  }
+
+  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Seq[Content] = {
+    val matchDate = theMatch.date.toDateMidnight
+    ContentApi.search(Site(request).edition)
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
-      .reference("pa-football-team/" + homeTeamId + ",pa-football-team/" + awayTeamId)
-      .response.results.map {
-        new Content(_)
-      }
+      .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
+      .response.results.map(new Content(_))
+  }
+
+  //for our purposes we expect exactly 2 football teams
+  private def withExactlyTwoTeams(content: Seq[Content]) = content.filter(_.tags.filter(_.isFootballTeam).size == 2)
+
+  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
+    val matchDate = theMatch.date.toDateMidnight
+    val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin }
+    val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin }
+    val stats: Trail = theMatch
+
+    val currentPage = request.getParameter("currentPage").flatMap { pageId =>
+      (stats :: List(matchReport, minByMin).flatten).find(_.url.endsWith(pageId))
+    }
+
+    MatchNav(theMatch, matchReport, minByMin, stats, currentPage)
   }
 }

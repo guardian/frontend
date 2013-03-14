@@ -4,8 +4,8 @@
 
     <section class="front-section zone-@tag.section" data-link-name="@tag.section">
 
-        <h1 class="article-zone zone-color">@Html(tag.name)</h1>
-        
+        @fragments.headers.sectionHead(tag.name)
+
         @if(tag.isContributor) {
             <div class="profile media">
                 @if(tag.contributorImageUrl) {
@@ -19,12 +19,12 @@
                     </p>
                 }
             </div>
-        
+
             <h2 class="type-2 article-zone b1">Latest</h2>
         }
 
 
-        @if(leadContent nonEmpty) {
+        @if(leadContent.nonEmpty) {
             @leadContent.zipWithRowInfo.map{ case (trail, info) =>
 	            <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}" data-link-name="lead content">
                     @fragments.trails.featured(trail, info.rowNum)
@@ -33,9 +33,9 @@
         }
 
         <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
-            @fragments.trailblocks.section(trails)
+            @fragments.trailblocks.section(trails, trails.size)
         </div>
-        
+
     </section>
 
     @if(tag.section == "football") {
@@ -46,5 +46,5 @@
         }
     }
 
-    <div id="js-popular"></div>
+    @fragments.mostPopularPlaceholder(tag.section)
 }

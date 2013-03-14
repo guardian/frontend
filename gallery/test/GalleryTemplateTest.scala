@@ -3,13 +3,8 @@ package test
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
 import org.scalatest.FlatSpec
-import conf.Configuration
 
 class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
-
-  implicit val config = Configuration
-
-  private val host = "http://" + Configuration.edition.ukHost
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
     browser =>
@@ -24,8 +19,8 @@ class GalleryTemplateTest extends FlatSpec with ShouldMatchers {
     val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    linkNames should contain("Big Noise orchestra's classical music proves instrumental in social change")
-    linkUrls should contain(WithHost("/music/2012/jun/24/simon-bolivar-dudamel-review"))
+    linkNames should contain("Dudamel's Beethoven challenge")
+    linkUrls should contain(WithHost("/music/tomserviceblog/2012/jun/21/simon-bolivar-orchestra-dudamel-beethoven"))
   }
 
   it should "render caption and navigation on first image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>

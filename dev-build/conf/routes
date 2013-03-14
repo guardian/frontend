@@ -10,13 +10,28 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET     /core-navigation/most-popular/*edition/*path                    controllers.MostPopularController.render(edition, path)
-GET     /core-navigation/most-popular/*edition                          controllers.MostPopularController.renderGlobal(edition)
+GET    /most-read.json                                      controllers.MostPopularController.renderJson(path = "")
+GET    /most-read/*path.json                                controllers.MostPopularController.renderJson(path)
+GET    /most-read                                           controllers.MostPopularController.renderNoJavascript(path = "")
+GET    /most-read/*path                                     controllers.MostPopularController.renderNoJavascript(path)
+GET    /top-stories                                         controllers.TopStoriesController.render()
+GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
+GET     /related/*path                                      controllers.RelatedController.render(path)
 
-GET     /core-navigation/top-stories/*edition                           controllers.TopStoriesController.render(edition)
+#Stories
+GET    /stories                                             controllers.StoryController.latest()
+GET    /stories/articles                                    controllers.StoryController.latestWithContent()
+GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
+GET    /stories/*id                                         controllers.StoryController.byId(id)
 
-GET     /core-navigation/related/:edition/*path                         controllers.RelatedController.render(edition, path)
-
+#Style-guide
+GET     /style-guide                                        controllers.StyleGuideController.renderIndex
+GET     /style-guide/zones                                  controllers.StyleGuideController.renderZones
+GET     /style-guide/typography                             controllers.StyleGuideController.renderTypography
+GET     /style-guide/modules                                controllers.StyleGuideController.renderModules
+GET     /style-guide/sprites                                controllers.StyleGuideController.renderSprites
+GET     /style-guide/csshelpers                             controllers.StyleGuideController.cssHelpers
+GET     /style-guide/codingstandards                        controllers.StyleGuideController.codingStandards
 
 #Football
 GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
@@ -37,9 +52,11 @@ GET     /football/:competition/table                        controllers.LeagueTa
 
 GET     /football/api/frontscores                           controllers.FrontScoresController.render()
 GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
-GET     /football/api/teamtable/:teamId                      controllers.CompetitionTablesController.renderTeam(teamId)
+GET     /football/api/teamtable/:teamId                     controllers.CompetitionTablesController.renderTeam(teamId)
 GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
-GET     /football/api/more-on-match/:year/:month/:day/:home/:away    controllers.MoreOnMatchController.render(year, month, day, home, away)
+GET     /football/api/match-nav/:matchId                          controllers.MoreOnMatchController.moreOn(matchId)
+GET     /football/api/match-nav/:year/:month/:day/:home/:away     controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
+
 
 GET     /football/competitions                              controllers.CompetitionListController.render()
 GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
@@ -48,25 +65,29 @@ GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> 
 GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
 
 #Front
-GET     /_warmup                              controllers.FrontController.warmup()
-GET     /_up                                  controllers.FrontController.isUp()
-GET     /                                     controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>                 controllers.FrontController.render(path)
-
+GET     /_warmup                                            controllers.FrontController.warmup()
+GET     /_up                                                controllers.FrontController.isUp()
+GET     /                                                   controllers.FrontController.render(path = "front")
+GET     /$path<culture|sport>                               controllers.FrontController.render(path)
+GET     /$path<culture|sport>.json                          controllers.FrontController.renderJson(path)
 
 #Video
-GET     /$path<.*/video/.*>                   controllers.VideoController.render(path)
+GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
 
 #Gallery
-GET     /$path<.*/gallery/.*>                 controllers.GalleryController.render(path)
+GET     /$path<.*/gallery/.*>                               controllers.GalleryController.render(path)
 
 #Tag
-GET     /$path<[\w\d-]*/[\w\d-]*>             controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>    controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>                           controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>.json                      controllers.TagController.renderJson(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json             controllers.TagController.renderJson(path)
 
 #Section
-GET		/sections							  controllers.SectionsController.render()
-GET     /$path<[\w\d-]*>                      controllers.SectionController.render(path)
+GET		/sections							               controllers.SectionsController.render()
+# culture and sport sections now live in front
+GET    /$path<(?!culture|sport)[\w\d-]*>                   controllers.SectionController.render(path)
+GET    /$path<(?!culture|sport)[\w\d-]*>.json              controllers.SectionController.renderJson(path)
 
 #Articles
-GET     /*path                                controllers.ArticleController.render(path)
+GET     /*path                                             controllers.ArticleController.render(path)

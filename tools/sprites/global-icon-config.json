@@ -5,5 +5,7 @@
     "datasvgcss" : "_global-icons-svg.less",
     "urlpngcss" : "_global-icons-sprite.less",
     "spritepath" : "../images/global/",
-    "svg" : true
+    "svg" : true,
+    "styleguidepath" : "../../style-guide/app/views/styleGuide/fragments/",
+    "styleguidefilename" : "sprites.scala.html"
 }
