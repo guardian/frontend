@@ -45,8 +45,8 @@ do
 done
 
 # proxy that Play uses
-proxy_host=devproxy.gul3.gnl
-proxy_port=3128
+export proxy_host=devproxy.gul3.gnl
+export proxy_port=3128
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
