@@ -5,7 +5,7 @@ define([
 
     "modules/accordion",
     "modules/expandable",
-    "modules/story/storytype"
+    "bootstraps/story"
 ], function(
     common,
     bean,
@@ -13,10 +13,10 @@ define([
 
     Accordion,
     Expandable,
-    StoryType
+    Story
 ) {
 
-    function Experiment() {
+    function Experiment(config) {
 
         var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
@@ -54,7 +54,7 @@ define([
             }
         };
 
-        this.init = function (config) {
+        this.init = function () {
             if (!experimentName) {
                 for (var key in config.switches) {
                     if (config.switches[key] && key.match(/^experiment(\w+)/)) {
@@ -104,9 +104,7 @@ define([
                     el.parentNode.removeChild(el);
                 }
 
-                modules.initAccordion();
-                modules.initTimeline();
-                modules.initExpandables();
+                new Story.init({}, config);
             },
 
             fallback: function () {
