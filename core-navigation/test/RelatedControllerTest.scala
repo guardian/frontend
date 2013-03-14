@@ -17,7 +17,7 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
 
   it should "serve the correct headers when given a callback parameter" in Fake {
     val request = FakeRequest(GET, "/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey?callback=foo").withHeaders("host" -> "http://localhost:9000")
-    val Some(result) = routeAndCall(request)
+    val Some(result) = route(request)
 
     status(result) should be(200)
     contentType(result).get should be("application/javascript")

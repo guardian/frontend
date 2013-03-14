@@ -31,8 +31,10 @@
     <div class="box-indent video-standfirst">
         @fragments.standfirst(video)
     </div>
+    
+    @fragments.social(video.canonicalUrl.get, video.headline)
 
-    @if(storyPackage nonEmpty) {
+    @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     } else {
         <div id="js-related" role="complementary"></div>

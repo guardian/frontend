@@ -9,23 +9,23 @@ import model.{ MatchUrl, Image, Trail, Content }
 
 trait Football {
 
-  implicit def content2minByMin(c: Content) = new {
+  implicit class Content2minByMin(c: Content) {
     lazy val minByMin = c.tags.exists(_.id == "tone/minutebyminute")
   }
 
-  implicit def content2matchReport(c: Content) = new {
+  implicit class Content2matchReport(c: Content) {
     lazy val matchReport = c.tags.exists(_.id == "tone/matchreports")
   }
 
-  implicit def content2squadSheet(c: Content) = new {
+  implicit class Content2squadSheet(c: Content) {
     lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
   }
 
-  implicit def match2isOn(m: FootballMatch) = new {
+  implicit class Match2isOn(m: FootballMatch) {
     def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
   }
 
-  implicit def match2status(m: FootballMatch) = new {
+  implicit class Match2status(m: FootballMatch) {
 
     //results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
@@ -45,19 +45,28 @@ trait Football {
       case m: MatchDay => m.result
       case _ => false
     }
-
   }
 
-  implicit def match2hasTeam(m: FootballMatch) = new {
+  implicit class Match2nations(m: FootballMatch) {
+    // England, Scotland, Wales, N. Ireland or Rep. Ireland
+    lazy val isHomeNationGame = {
+      val homeNations = Seq("497", "630", "964", "494", "499")
+      homeNations.contains(m.homeTeam.id) || homeNations.contains(m.awayTeam.id)
+    }
+  }
+
+  implicit class Match2hasTeam(m: FootballMatch) {
     def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
   }
 
-  implicit def match2trail(m: FootballMatch) = new Trail {
+  implicit class Match2trail(m: FootballMatch) extends Trail {
 
     private def text = if (m.isFixture) {
-      m.homeTeam.name + " v " + m.awayTeam.name
+      s"${m.homeTeam.name} v ${m.awayTeam.name}"
     } else {
-      "%s %s - %s %s".format(m.homeTeam.name, m.homeTeam.score.getOrElse(0), m.awayTeam.score.getOrElse(0), m.awayTeam.name)
+      val homeScore = m.homeTeam.score.getOrElse(0)
+      val awayScore = m.awayTeam.score.getOrElse(0)
+      s"${m.homeTeam.name} $homeScore - $awayScore ${m.awayTeam.name}"
     }
 
     def linkText: String = text
@@ -77,7 +86,7 @@ trait Football {
     lazy val sectionName: String = "Football"
   }
 
-  implicit def match2hasStarted(m: FootballMatch) = new {
+  implicit class Match2hasStarted(m: FootballMatch) {
     lazy val hasStarted = m.isLive || m.isResult
   }
 }

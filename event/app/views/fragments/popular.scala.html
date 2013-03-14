@@ -1,0 +1,11 @@
+@(story: Story)
+
+@if(story.hasContent) {
+    <section class="story-popular" data-link-name="story-popular">
+        <h2 class="story-title story-title--section">Most Popular on @story.title</h2>
+        <div class="trailblock">
+            @fragments.trailblocks.thumbnail(story.contentByPerformance, 3, true, 3)
+        </div>
+        <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+    </section>
+}

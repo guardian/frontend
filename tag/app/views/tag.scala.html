@@ -24,7 +24,7 @@
         }
 
 
-        @if(leadContent nonEmpty) {
+        @if(leadContent.nonEmpty) {
             @leadContent.zipWithRowInfo.map{ case (trail, info) =>
 	            <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}" data-link-name="lead content">
                     @fragments.trails.featured(trail, info.rowNum)

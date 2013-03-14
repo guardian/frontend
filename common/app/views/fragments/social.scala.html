@@ -1,0 +1,37 @@
+@(url: String, headline: String)
+
+@import CommonSwitches.SocialSwitch
+
+@if(SocialSwitch.isSwitchedOn) {
+    <ul class="social">
+        <li class="fb social-network">
+            <a  class="social-btn"
+                data-link-name="social-fb"
+                href="http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=@helper.urlEncode(url)&link=@helper.urlEncode(url)">
+                <span>Facebook</span>
+            </a>
+       </li>
+       <li class="twitter social-network">
+            <a  class="social-btn"
+                data-link-name="social-twitter"
+                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(headline)&url=@helper.urlEncode(url)">
+                <span>Twitter</span>
+            </a>
+        </li>
+        <li class="linkedin social-network">
+            <a  class="social-btn"
+                data-link-name="social-linkedin"
+                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(headline)&source=The+Guardian">
+                <span>LinkedIn</span>
+            </a>
+        </li>
+        <li class="gplus social-network">
+            <a
+            class="social-btn"
+                data-link-name="social-gplus" 
+                href="https://plus.google.com/share?url=@helper.urlEncode(url)&hl=en-GB&wwc=1">
+                <span>Google+</span>
+            </a>
+        </li>
+    </ul>
+}

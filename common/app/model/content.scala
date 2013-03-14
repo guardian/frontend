@@ -7,8 +7,7 @@ import common.Reference
 
 class Content(
     delegate: ApiContent,
-    override val importance: Option[Int] = None,
-    override val colour: Option[Int] = None) extends Trail with Tags with MetaData {
+    override val storyItems: Option[StoryItems] = None) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -48,27 +47,27 @@ class Content(
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
 
-  override lazy val analyticsName = "GFE:" + section + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> keywords.map { _.name }.mkString(","),
-    "publication" -> publication,
-    "headline" -> headline,
-    "web-publication-date" -> webPublicationDate,
-    "author" -> contributors.map(_.name).mkString(","),
-    "tones" -> tones.map(_.name).mkString(","),
-    "series" -> series.map { _.name }.mkString(","),
-    "blogs" -> blogs.map { _.name }.mkString(","),
-    "commentable" -> fields.get("commentable").map(_ == "true").getOrElse(false),
-    "has-story-package" -> fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false),
-    "page-code" -> fields("internalPageCode"),
-    "isLive" -> isLive,
-    "wordCount" -> wordCount
-  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
+    ("keywords", keywords.map { _.name }.mkString(",")),
+    ("publication", publication),
+    ("headline", headline),
+    ("web-publication-date", webPublicationDate),
+    ("author", contributors.map(_.name).mkString(",")),
+    ("tones", tones.map(_.name).mkString(",")),
+    ("series", series.map { _.name }.mkString(",")),
+    ("blogs", blogs.map { _.name }.mkString(",")),
+    ("commentable", fields.get("commentable").map(_ == "true").getOrElse(false)),
+    ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
+    ("page-code", fields("internalPageCode")),
+    ("isLive", isLive),
+    ("wordCount", wordCount)
+  ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
     if (isLive) 5
@@ -79,47 +78,55 @@ class Content(
 
 object Content {
 
-  def apply(delegate: ApiContent, importance: Option[Int] = None, colour: Option[Int] = None): Content = {
+  def apply(delegate: ApiContent, storyItems: Option[StoryItems]): Content = {
     delegate match {
-      case gallery if delegate.isGallery => new Gallery(delegate, importance, colour)
-      case video if delegate.isVideo => new Video(delegate, importance, colour)
-      case article if delegate.isArticle => new Article(delegate, importance, colour)
-      case d => new Content(d, importance, colour)
+      case gallery if delegate.isGallery => new Gallery(delegate, storyItems)
+      case video if delegate.isVideo => new Video(delegate, storyItems)
+      case article if delegate.isArticle => new Article(delegate, storyItems)
+      case d => new Content(d, storyItems)
     }
   }
 
 }
 
-class Article(private val delegate: ApiContent,
-    importance: Option[Int] = None,
-    colour: Option[Int] = None) extends Content(delegate, importance, colour) {
+class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
+  lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 }
 
-class Video(private val delegate: ApiContent,
-    importance: Option[Int] = None,
-    colour: Option[Int] = None) extends Content(delegate, importance, colour) {
+class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
 
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
-class Gallery(private val delegate: ApiContent,
-    importance: Option[Int] = None,
-    colour: Option[Int] = None) extends Content(delegate, importance, colour) {
+class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
   private val lookup: Map[Int, Image] = (images map { image => (image.index, image) }).toMap
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  override lazy val analyticsName = "GFE:" + section + ":" + contentType + ":" + id.substring(id.lastIndexOf("/") + 1)
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
+
+case class Quote(
+  text: Option[String] = None,
+  by: Option[String] = None,
+  url: Option[String] = None,
+  subject: Option[String] = None)
+
+case class StoryItems(
+  importance: Int,
+  colour: Int,
+  shares: Option[Int] = None,
+  comments: Option[Int] = None,
+  quote: Option[Quote] = None)

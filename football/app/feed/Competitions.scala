@@ -4,8 +4,6 @@ import common.{ Logging, AkkaSupport }
 import akka.actor.Cancellable
 import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
 import conf.FootballClient
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
 import model.Competition
 import model.TeamFixture
 import scala.Some
@@ -13,6 +11,9 @@ import java.util.Comparator
 import org.scala_tools.time.Imports._
 import pa.{ MatchDayTeam, FootballTeam, FootballMatch }
 import implicits.Football
+
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration.{Duration => Timed, _}
 
 trait CompetitionSupport extends Football {
 
@@ -129,6 +130,8 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
 
+    CompetitionAgent(Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals")),
+
     CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true)),
 
     CompetitionAgent(Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true)),
@@ -174,7 +177,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
       //update the live matches of the competition
       val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-      log.info("found %s live matches for competition %s".format(competitionLiveMatches.size, agent.competition.fullName))
+      log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
       agent.updateLiveMatches(competitionLiveMatches)
 
       //update the results of the competition
@@ -185,12 +188,12 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Duration(10, SECONDS), initialDelay = Duration(1, SECONDS)) { refreshMatchDay() } ::
-      every(Duration(5, MINUTES), initialDelay = Duration(1, SECONDS)) { refreshCompetitionData() } ::
+    schedules = every(Timed(10, SECONDS), initialDelay = Timed(1, SECONDS)) { refreshMatchDay() } ::
+      every(Timed(5, MINUTES), initialDelay = Timed(1, SECONDS)) { refreshCompetitionData() } ::
       competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>
           //stagger fixtures and results refreshes to avoid timeouts
-          every(Duration(5, MINUTES), initialDelay = Duration(5 + index, SECONDS)) { agent.refresh() }
+          every(Timed(5, MINUTES), initialDelay = Timed(5 + index, SECONDS)) { agent.refresh() }
       }
   }
 

@@ -2,10 +2,11 @@
 <li class="agent">
     <div class="agent-head">
         @agent.picture.map{ pic => <img class="agent-img" src="@pic" /> }
-        @agent.name.map{ name => <h3 class="agent-name"><a href="#">@name</a></h3> }
+        @agent.name.map{ name => <h3 class="agent-name">@name</h3> }
         @agent.role.map{ role => <p class="agent-role">@role</p> }
     </div>
     <div class="agent-body">
         @agent.explainer.map{ explainer => <p>@explainer</p> }
     </div>
+    <button class="h"><i class="i i-arrow-large-down"></i></button>
 </li>

@@ -67,14 +67,40 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     def queryString = Map.empty[String, Seq[String]]
 
-    def headers = FakeHeaders(_headers)
+    def headers = FakeHeaders(_headers.toSeq)
 
     def body = ""
 
     def remoteAddress = ""
+
+    def id: Long = 0L
+
+    def tags: Map[String,String] = Map.empty
+
+    def version: String = ""
   }
 
   private def tag(id: String, name: String = "") = ApiTag(
     id = id, `type` = "type", webTitle = name, webUrl = "", apiUrl = ""
   )
 }
+
+/*
+
+
+
+  [error] Failed tests:
+[error] 	test.TagControllerTest
+[info] No tests to run for diagnostics/test:test
+[error] Failed tests:
+[error] 	test.FrontFeatureTest
+[info] No tests to run for router/test:test
+[error] Failed tests:
+[error] 	test.RelatedControllerTest
+
+
+
+
+
+
+*/

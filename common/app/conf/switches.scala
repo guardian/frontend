@@ -6,9 +6,10 @@ import org.apache.commons.io.IOUtils
 import java.util.Properties
 import play.api.Plugin
 import akka.actor.Cancellable
-import akka.util.Duration
-import java.util.concurrent.TimeUnit._
+import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
+import com.gu.management.play.RequestMetrics
 
 object CommonSwitches {
 
@@ -45,13 +46,25 @@ object CommonSwitches {
     initiallyOn = true)
 
   val ExperimentStoryModule01Switch = DefaultSwitch("experiment-story-module-01",
-    "Switch this switch off to disable experimental v01 of the article story module.",
+    "Enable storified articles.",
+    initiallyOn = false)
+
+  val StoryVersionBSwitch = DefaultSwitch("story-version-b",
+    "Switch to enable version B of story page.",
+    initiallyOn = false)
+
+  val StoryFrontTrails = DefaultSwitch("story-front-trails",
+    "Switch on to enable front trails for latest stories.",
+    initiallyOn = false)
+
+  val SocialSwitch = DefaultSwitch("social-icons",
+    "If this switch is enabled the icons to popular social media sites will be displayed",
     initiallyOn = false)
 
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch
   )
 }
 
@@ -85,7 +98,7 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
       None
   }
 
-  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(5, SECONDS), initialDelay = Duration(5, SECONDS)) {
     refresh()
   })
 

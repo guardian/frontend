@@ -4,9 +4,8 @@
 @defining(request.host + request.path) { path =>
 
     @defining(
-    ("http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
-        OmnitureAnalyticsData(page, "No Javascript", path)), Configuration.javascript.pageData("guardian.page.omnitureAccount"))
+    (s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
+    Configuration.javascript.pageData("guardian.page.omnitureAccount"))
     ){ case (omnitureCall, omnitureAccount) =>
             <noscript id="omnitureNoScript">
                 <div>
@@ -22,9 +21,7 @@
     }
 
     @defining(
-        "http://hits.guardian.co.uk/b/ss/%s/1/H.24.2/?%s".format(
-        Configuration.javascript.pageData("guardian.page.omnitureAccount"),
-        OmnitureAnalyticsData(page, "Partial Javascript", path))
+        s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
     ){ omnitureCall =>
             <script>
                 @*

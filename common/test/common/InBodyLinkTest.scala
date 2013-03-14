@@ -79,10 +79,10 @@ class InBodyLinkTest extends FlatSpec with ShouldMatchers {
   it should "not resolve unsupported content" in {
     val urls = unSupportedContentTypes flatMap { contentType =>
       Seq(
-        "http://www.guardian.co.uk/section/" + contentType + "/2011/jan/01/words-for-url",
-        "http://www.guardian.co.uk/section/blog/" + contentType + "/2011/jan/01/words-for-url",
-        "http://www.guardiannews.com/section/" + contentType + "/2011/jan/01/words-for-url",
-        "http://www.guardiannews.com/section/blog/" + contentType + "/2011/jan/01/words-for-url"
+        s"http://www.guardian.co.uk/section/$contentType/2011/jan/01/words-for-url",
+        s"http://www.guardian.co.uk/section/blog/$contentType/2011/jan/01/words-for-url",
+        s"http://www.guardiannews.com/section/$contentType/2011/jan/01/words-for-url",
+        s"http://www.guardiannews.com/section/blog/$contentType/2011/jan/01/words-for-url"
       )
     }
     urls foreach { url => InBodyLink(url) should be(url) }

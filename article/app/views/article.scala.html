@@ -1,12 +1,12 @@
 @(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
 @main(article, Switches.all){ }{
+
 	<h2 class="article-zone type-1">
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
-	<article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage"
-             itemscope itemtype="@article.schemaType" role="main">
+    <article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
@@ -36,9 +36,11 @@
             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 		      @fragments.articleBody(article)
         </div>
-
+        
     </article>
 
+    @fragments.social(article.canonicalUrl.get, article.headline)
+    
     @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     }

@@ -19,8 +19,10 @@ GET    /top-stories.json                                    controllers.TopStori
 GET     /related/*path                                      controllers.RelatedController.render(path)
 
 #Stories
+GET    /stories                                             controllers.StoryController.latest()
+GET    /stories/articles                                    controllers.StoryController.latestWithContent()
+GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
 GET    /stories/*id                                         controllers.StoryController.byId(id)
-GET    /experiment/story-module-01/*id                      controllers.StoryController.withContent(id)
 
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex

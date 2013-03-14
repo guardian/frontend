@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#Node package management for Grunt build steps
+
+npm install
+
+NPM_EXIT=$?
+
+if [ $NPM_EXIT == "1" ]; then
+   exit 1
+fi
+
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
@@ -39,8 +49,11 @@ done
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
 
 java -Xmx4096M -XX:MaxPermSize=2048m \
+  -XX:ReservedCodeCacheSize=128m \
 	-Dsbt.boot.directory=$SBT_BOOT_DIR \
+  -Dhttp.proxyHost=devproxy.gul3.gnl\
+  -Dhttp.proxyPort=3128 \
 	$BUILD_PARAMS \
 	$IVY_PARAMS \
 	$SBT_EXTRA_PARAMS \
-	-jar `dirname $0`/dev/sbt-launch-0.11.3.jar "$@"
+	-jar `dirname $0`/dev/sbt-launch-0.12.2.jar "$@"
