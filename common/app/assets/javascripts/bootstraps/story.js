@@ -30,12 +30,30 @@ define([
 
             if(timeline) {
                 $('.event-children').addClass('h');
+                $('.event-summary').addClass('h');
                 $('.event-children').first().removeClass('h');
-                bean.on(timeline, eventType, '.date-line', function(e) {
+                $('i', '.event-block').first().toggleClass('is-open');
+                bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
+                    $('.event-summary', block).toggleClass('h');
                     $('.event-children', block).toggleClass('h');
+                    $('i', block).toggleClass('is-open');
                 });
             }
+        },
+
+        initAgents: function() {
+          var eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
+              agents = document.querySelector('.story-agents');
+
+          common.$g('.agent-body', agents).addClass('h');
+          common.$g('button', agents).removeClass('h');
+
+          bean.on(agents, eventType, 'button', function() {
+             var agent = this.parentNode;
+             common.$g('.agent-body', agent).toggleClass('h');
+             common.$g('i', agent).toggleClass('is-open');
+          });
         },
 
         initExpandables: function() {
@@ -103,6 +121,7 @@ define([
 
         modules.initAccordion();
         modules.initTimeline();
+        modules.initAgents();
         modules.initExpandables();
         modules.loadMoreStories(storyId);
         modules.loadPageType(storyId, config);

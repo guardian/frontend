@@ -51,7 +51,7 @@ object CommonSwitches {
 
   val StoryVersionBSwitch = DefaultSwitch("story-version-b",
     "Switch to enable version B of story page.",
-    initiallyOn = true)
+    initiallyOn = false)
 
   val StoryFrontTrails = DefaultSwitch("story-front-trails",
     "Switch on to enable front trails for latest stories.",
