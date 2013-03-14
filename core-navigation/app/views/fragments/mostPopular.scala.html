@@ -23,7 +23,7 @@
                     class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
                     data-link-name="@section.heading">
 
-                    <ul class="unstyled" role="navigation" aria-labelledby="most-read-head@if(isTabbed){ section-head-@info.rowNum}">
+                    <ul class="unstyled" role="complementary" aria-labelledby="most-read-head@if(isTabbed){ section-head-@info.rowNum}">
                         @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                             <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
                         }
