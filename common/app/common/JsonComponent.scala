@@ -4,7 +4,7 @@ package common
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
-import play.api.mvc.{ RequestHeader, Results }
+import play.api.mvc.{AnyContent, Result, RequestHeader, Results}
 import play.api.templates.Html
 
 
@@ -21,6 +21,11 @@ object JsonComponent extends Results {
     val json = jsonFor(items: _*)
     resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
   }
+
+  def apply(obj: JsObject)(implicit request: RequestHeader) = resultFor(request,
+    Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
+    .getOrElse(BadRequest("parameter 'callback' is required"))
+
 
   def apply(callback: Option[String], items: (String, Any)*) = {
     var json = jsonFor(items: _*)
