@@ -1,13 +1,13 @@
 package com.gu.test;
 
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class NavigationSteps {
 
@@ -30,9 +30,9 @@ public class NavigationSteps {
     public void Im_shown_the_top_stories_from_the_Guardian_site(int numOfTopStories) throws Throwable {
     	// assert stories are displayed
     	WebElement topStories = webDriver.findElement(By.id("topstories-header"));
-    	Assert.assertTrue(topStories.isDisplayed());
+    	assertTrue(topStories.isDisplayed());
     	// assert it has the correct number of stories
-    	Assert.assertEquals(numOfTopStories, topStories.findElements(By.tagName("li")).size());
+    	assertEquals(numOfTopStories, topStories.findElements(By.tagName("li")).size());
     }
 
     @Then("^the \"(Top stories|Sections)\" menu should (open|close)$")
@@ -67,7 +67,7 @@ public class NavigationSteps {
     @Then("^the top story link should have a (.*) of (.*)$")
     public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
         // confirm it has the correct css color
-    	Assert.assertEquals(expectedColor, webDriver.getElementCssValue(By.cssSelector("#topstories-header li a"), cssProperty));
+    	assertEquals(expectedColor, webDriver.getElementCssValue(By.cssSelector("#topstories-header li a"), cssProperty));
     }
     
 }
