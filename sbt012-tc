@@ -52,9 +52,9 @@ done
 java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
-  -Dhttp.proxyHost=devproxy.gul3.gnl\
+  -Dhttp.proxyHost=devproxy.gul3.gnl \
   -Dhttp.proxyPort=3128 \
-  -Denv.proxy_host=devproxy.gul3.gnl\
+  -Denv.proxy_host=devproxy.gul3.gnl \
   -Denv.proxy_port=3128 \
   $BUILD_PARAMS \
   $IVY_PARAMS \
