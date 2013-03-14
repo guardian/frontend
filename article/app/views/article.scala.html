@@ -2,15 +2,11 @@
 
 @main(article, Switches.all){ }{
 
-	<h2 class="article-zone type-1">
-    	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
-	</h2>
+    <h2 class="article-zone type-1">
+        <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+    </h2>
 
-        @if(article.section == "football") {
-            @fragments.footballNav("/football", None, None, "football-top-nav")
-        }
-
-	<article id="article" class="article @if(article.isLive){is-live} two-thirds" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+    <article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
 
         <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
@@ -38,18 +34,18 @@
 
         <div class="article-body from-content-api @if(article.isLive) {live-blog}"
             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-		      @fragments.articleBody(article)
+              @fragments.articleBody(article)
         </div>
 
     </article>
 
-    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+    @fragments.social(article.canonicalUrl.get, article.headline)
+
     @if(storyPackage.nonEmpty) {
-        <div class="one-third">
-            @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
-            @fragments.social(article.canonicalUrl.get, article.headline)
-        </div>
+        @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     }
-    <aside id="js-related" class="one-third"></aside>
-    <div id="js-popular" class="one-third"></div>
+
+    <aside id="js-related"></aside>
+
+    <div id="js-popular"></div>
 }
