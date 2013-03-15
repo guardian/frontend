@@ -1,34 +1,45 @@
-@(content: Seq[model.Content], edition: String)
-@content.map{
-    case a: Article => {
-        <article id="article" class="article @if(a.isLive){is-live}">
-            <header class="article-head">
-                @fragments.dateline(a.webPublicationDate, a.isLive, edition)
-                <h2 class="article-headline">Latest developments</h2>
-            </header>
+@(story: Story, edition: String, paras: Int)
 
-            @if(!a.isLive) {
-                @a.mainPicture.map{ mainPicture =>
-                    @a.mainPicture(width=220).map{ smallCrop =>
-                        @fragments.img(mainPicture, smallCrop)
+@renderLatest(content: Seq[model.Content], edition: String) = {
+    @content.map{
+        case a: Article => {
+            <article id="article" class="article @if(a.isLive){is-live}">
+                <header class="article-head">
+                    <h3 class="story-sub-head">Latest</h3>
+
+                    @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+
+                    <h2 class="article-headline">@a.headline</h2>
+
+                    @if(!a.isLive) {
+                        @a.mainPicture.map{ mainPicture =>
+                            @a.mainPicture(width=220).map{ smallCrop =>
+                                @fragments.img(mainPicture, smallCrop)
+                            }
+                        }
                     }
-                }
-            }
+                </header>
 
-            @fragments.byline(a.byline, a)
+                @fragments.byline(a.byline, a)
 
-            <div class="article-body from-content-api @if(a.isLive) {live-blog}">
-                @withJsoup(BulletCleaner(a.body))(
-                    PictureCleaner(a),
-                    InBodyLinkCleaner("in body link"),
-                    BlockNumberCleaner,
-                    TweetCleaner,
-                    WitnessCleaner,
-                    Summary(if(a.isLiveBlog){2}else{4})
-                )
-                <p><a href="@a.url">Continue reading...</a></p>
-                <p><a class="back-to-top" href="#top">Back to top</a></p>
-            </div>
-        </article>
+                <div class="article-body from-content-api @if(a.isLive) {live-blog}">
+                    @withJsoup(BulletCleaner(a.body))(
+                        PictureCleaner(a),
+                        InBodyLinkCleaner("in body link"),
+                        BlockNumberCleaner,
+                        TweetCleaner,
+                        WitnessCleaner,
+                        Summary(paras)
+                    )
+                    <p><a class="continue" href="@a.url">Continue reading...</a></p>
+                    <p><a class="back-to-top" href="#top">Back to top</a></p>
+                </div>
+            </article>
+        }
     }
 }
+
+<section class="story-latest">
+    @renderLatest(story.contentByImportance.take(1), edition)
+</section>
+

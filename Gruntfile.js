@@ -41,12 +41,81 @@ module.exports = function (grunt) {
                 'common/app/assets/javascripts/modules/*.js',
                 'common/app/assets/javascripts/modules/**/*.js'
             ]
+        },
+
+        // Create JSON web font files from fonts.
+        // Docs here: https://github.com/ahume/grunt-webfontjson
+        webfontjson: {
+          woff: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptian.woff.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianText",
+                  "file": "resources/fonts/EgyptianText-Regular.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianText",
+                  "font-weight": "500", 
+                  "file": "resources/fonts/EgyptianText-Medium.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianText",
+                  "font-style": "italic",
+                  "file": "resources/fonts/EgyptianText-RegularItalic.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "600",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold.woff",
+                  "format": "woff"
+                }
+              ]
+            }
+          },
+          ttf: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianText",
+                  "file": "resources/fonts/EgyptianText-Regular.ttf",
+                  "format": "ttf"
+                },
+                {
+                  "font-family": "EgyptianText",
+                  "font-weight": "500", 
+                  "file": "resources/fonts/EgyptianText-Medium.ttf",
+                  "format": "ttf"
+                },
+                {
+                  "font-family": "EgyptianText",
+                  "font-style": "italic",
+                  "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
+                  "format": "ttf"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "600",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
+                  "format": "ttf"
+                }
+              ]
+            }
+          },
         }
+
     });
 
     // Load the plugins
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-webfontjson');
 
     // Standard tasks
     grunt.registerTask('test:common', ['jshint:common']);

@@ -20,8 +20,8 @@ GET     /related/*path                                      controllers.RelatedC
 
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
-GET    /stories/storymodule01/*id                           controllers.StoryController.withContent1(id)
-GET    /stories/storymodule02/*id                           controllers.StoryController.withContent2(id)
+GET    /stories/articles                                    controllers.StoryController.latestWithContent()
+GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
 GET    /stories/*id                                         controllers.StoryController.byId(id)
 
 #Style-guide

@@ -5,7 +5,7 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/experiment",
+    "modules/story/experiment",
     "modules/accordion"
 ], function (
     common,
@@ -62,9 +62,9 @@ define([
                     var a = new Accordion();
                 }
             });
-            var e = new Experiment();
+            var e = new Experiment(config);
 
-            e.init(config);
+            e.init();
         }
     };
 

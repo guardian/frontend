@@ -5,7 +5,9 @@
    min-height: 40px;
 }
  
-.social-network a {
+.social-btn,
+a.social-btn {
+    .type-10;
     text-align: center;
     display: block;
     padding: 8px 0px;
@@ -13,7 +15,11 @@
     border-bottom: 8px solid #ffffff;
 }
 
-@media (min-width: 320px) {
+@media (min-width: 20em) {
+
+    .social {
+      padding: @baseline*3 0px @baseline*4 @gutter;
+    }
     
     .social .social-network {
         float: left;
@@ -21,20 +27,16 @@
         max-width: 80px;
         }
 
-    .social-network a {
+    .social-btn,
+    a.social-btn{
         border-right: 8px solid #ffffff;
         border-bottom-width: 0px;
         }
    
-    .social-network:last-child a {
+    .social-network:last-child .social-btn {
         border-right-width: 0px;
         }
-    
-    .social {
-        padding: @baseline*3 0px @baseline*4 @gutter;
-        }
-
-    }
+}
 
 .fb {
     background-color: #3b5998;
