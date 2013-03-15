@@ -94,7 +94,7 @@
     <section class="story-timeline" data-link-name="story-timeline">
         <h2 class="story-title story-title--section">Timeline of events</h2>
 
-        <div id="js-timeline" class="timeline box-indent expandable"
+        <div id="js-timeline" class="timeline box-indent"
              data-count="@{story.events.size - 3}" data-link-name="Event timeline">
             @eventList(story.events.take(3), false)
             @eventList(story.events.drop(3), true)
