@@ -10,14 +10,12 @@ trait ApiQueryDefaults { self: Api =>
 
   val supportedTypes = "type/gallery|type/article|type/video"
 
-  val inlineElements = "picture,video"
-
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount"
 
   val references = "pa-football-competition,pa-football-team"
 
-  val inlineElements = "picture,witness"
+  val inlineElements = "picture,witness,video"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)

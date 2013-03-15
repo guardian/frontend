@@ -1,3 +1,4 @@
+/* global s: true */
 define([
     //Commmon libraries
     'common',
@@ -147,23 +148,20 @@ define([
         },
 
         loadOmnitureAnalytics: function (config) {
+            common.mediator.on('module:omniture:loaded', function() {
+                var videos = document.getElementsByTagName("video");
+                if(videos) {
+                    for(var i = 0, l = videos.length; i < l; i++) {
+                        var v = new Video({
+                            el: videos[i],
+                            config: config
+                        }).init();
+                    }
+                }
+            });
+
             var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                 o = new Omniture(null, config).init();
-
-            var videos = document.getElementsByTagName("video");
-
-            if(videos) {
-                if (typeof(s_loadMediaModule) != 'undefined') {
-                    s_loadMediaModule(s);
-                }
-
-                for(var i = 0, l = videos.length; i < l; i++) {
-                    var v = new Video({
-                        el: videos[i],
-                        config: config
-                    }).init();
-                }
-            }
         },
 
         loadOphanAnalytics: function (config) {
