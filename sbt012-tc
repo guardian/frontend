@@ -44,13 +44,17 @@ do
     fi
 done
 
+# proxy that Play uses
+export proxy_host=devproxy.gul3.gnl
+export proxy_port=3128
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
-
 java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
+  -Dhttp.proxyHost=devproxy.gul3.gnl \
+  -Dhttp.proxyPort=3128 \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
