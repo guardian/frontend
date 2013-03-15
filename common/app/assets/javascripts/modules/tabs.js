@@ -74,18 +74,19 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
                 if (bonzo(tabSet.parentNode).hasClass('tabs-fixable')) {
 
-                    // Assumes the first visible tab pane is associated with this tabset. Might mess up on pages with multiple tabs?
+                    // Assumes 1st visible tab pane is associated with this tabset. So doesn't yet support pages with multiple tabs
                     containerEl = document.querySelector('.tabs-pane:not(.js-hidden)');
 
                     if (containerEl) {
                         vHeight = bonzo(containerEl).offset().height;
+
                         bean.add(window, 'scroll', function (e) {
                             vScroll = window.pageYOffset || document.documentElement.scrollTop;
 
                             if( !vFixed && vScroll >= vPos && vScroll <= vPos+vHeight ) {
                                 bonzo(tabSet).addClass('tabs-fix');
                                 vFixed = true;
-                            } else if( vFixed && vScroll < vPos || vHeight && vScroll > vPos+vHeight) {
+                            } else if( vFixed && (vScroll < vPos || vScroll > vPos+vHeight)) {
                                 bonzo(tabSet).removeClass('tabs-fix');
                                 vFixed = false;
                             }
