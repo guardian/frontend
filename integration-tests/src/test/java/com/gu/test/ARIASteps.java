@@ -32,4 +32,10 @@ public class ARIASteps {
 
 
     }
+    @Then("^element with ID \"([^\"]*)\" has a role of \"([^\"]*)\"$")
+    public void tag_role_aria_label_id(String id, String label){
+        assertThat(webDriver.findElement(By.id(id)).getAttribute("role"),is(label));
+
+
+    }
 }
