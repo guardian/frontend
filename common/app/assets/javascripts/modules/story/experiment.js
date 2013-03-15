@@ -21,39 +21,6 @@ define([
         var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
 
-        var modules = {
-            initAccordion: function () {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            },
-
-            initTimeline: function() {
-                var $ = common.$g,
-                    timeline = document.querySelector('.timeline'),
-                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
-
-                if(timeline) {
-                    $('.event-children').addClass('h');
-                    $('.event-children').first().removeClass('h');
-                    bean.on(timeline, eventType, '.date-line', function(e) {
-                        var block = $(this).parent();
-                        $('.event-children', block).toggleClass('h');
-                    });
-                }
-            },
-
-            initExpandables: function() {
-                var els = document.querySelectorAll('.expandable');
-
-                for(var i = 0, l = els.length; i < l; i++) {
-                    var id = els[i].id;
-                    var e = new Expandable({id: id, expanded: false});
-                    e.init();
-                }
-            }
-        };
-
         this.init = function () {
             if (!experimentName) {
                 for (var key in config.switches) {
@@ -65,8 +32,6 @@ define([
             }
 
             experimentName = experimentName.toLowerCase();
-
-
 
             if (experimentName) {
                 this.load('/stories/' + experimentName + '/' + config.page.pageId);
