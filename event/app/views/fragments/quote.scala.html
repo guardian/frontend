@@ -4,14 +4,14 @@
     @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
         <div class="story-quote">
 
-            <h3 class="story-sub-head story-sub-head--quote">
+            <h3 class="story-sub-head story-sub-head--quote">Guardian 
                 @{
                     article.colour match {
                         case 1 => "Overview"
                         case 2 => "Background"
                         case 3 => "Analysis"
                         case 4 => "Reaction"
-                        case 5 => "Commentary"
+                        case 5 => "Comment"
                     }
                 }
             </h3>

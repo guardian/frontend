@@ -13,6 +13,7 @@ Feature: Story page
     Given I am on an story
     Then a "timeline" of events is displayed
 
+  @ignore
   Scenario: Latest stories package
     Given I am on an story
     Then Latest stories is displayed
