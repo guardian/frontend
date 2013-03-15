@@ -27,9 +27,9 @@ define([
                     var a = new Accordion();
                 }
             });
-            var e = new Experiment();
+            var e = new Experiment(config);
 
-            e.init(config);
+            e.init();
         }
     };
 

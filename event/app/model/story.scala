@@ -72,11 +72,12 @@ case class Story(
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
-  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).distinctBy(_.id)
+  lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance * -1).distinctBy(_.id)
   lazy val contentByPerformance: Seq[Content] = content.sortBy(_.performance).reverse.distinctBy(_.id)
   lazy val contentByTone: List[(String, Seq[Content])] = content.groupBy(_.tones.headOption.map(_.webTitle).getOrElse("News")).toList
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
+  lazy val contentByAnalysis: Seq[Content] = content.filter(_.colour > 2).sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
 
   private def toColour(i: Int) = i match {
     case 1 => "Overview"
@@ -128,18 +129,26 @@ object Story {
       }
     }
 
+    def latestWithContent(): Seq[Story] = {
+      measure(Stories.find(DBObject.empty).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+    }
+
     def latest(): Seq[Story] = {
       val fields = Map("id" -> 1, "title" -> 1, "hero" -> 1, "explainer" -> 1)
       val stories = measure(Stories.find(DBObject.empty, fields).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(Story(_, Nil))
       stories
     }
 
-    private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
-      parsedStory.map { parsed =>
-        val contentIds = parsed.events.flatMap(_.content.map(_.id)).distinct
+    private def loadContent(parsedStory: ParsedStory): Story = {
+        val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
         val content = ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
-        Story(parsed, content)
+        Story(parsedStory, content)
+    }
+
+    private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
+      parsedStory.map { parsed =>
+        loadContent(parsed)
       }
     }
   }

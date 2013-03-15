@@ -2,7 +2,7 @@
 
 @if(story.hasContent) {
     <section class="story-popular" data-link-name="story-popular">
-        <h2 class="article-zone type-2">Most Popular</h2>
+        <h2 class="story-title story-title--section">Most Popular on @story.title</h2>
         <div class="trailblock">
             @fragments.trailblocks.thumbnail(story.contentByPerformance, 3, true, 3)
         </div>

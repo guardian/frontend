@@ -30,8 +30,8 @@ public class StorySteps {
 
     @Then("^Latest developments is displayed$")
     public void Latest_developments_is_displayed() throws Throwable {
-        WebElement heading = webDriver.findElement(By.cssSelector(".story-latest .article-headline"));
-        Assert.assertTrue(heading.getText().equals("Latest developments"));
+        WebElement heading = webDriver.findElement(By.cssSelector(".story-latest .story-sub-head"));
+        Assert.assertTrue(heading.getText().equals("Latest"));
     }
 
     @Then("^Latest stories is displayed$")
