@@ -1,12 +1,14 @@
 @tabBorderWidth: 2px;
 
+.tabs-container {
+    padding: 0 @gutter;
+}
+
 .tabs {
-    border: @tabBorderWidth solid @mushroom;
-    margin: @baseline @gutter 0 @gutter;
+    margin: 0;
+    padding: 0;
     border-bottom: none;
-    padding: 0px;
     list-style-type: none;
-    background: @mushroom;
     overflow: hidden;
 }
 
@@ -14,12 +16,13 @@
     width: 50%;
     float: left;
     margin: 0px;
-    padding: 0px;
-}
+    background: @mushroom;
+ }
 
 .tabs a {
     text-align: center;
     color: #545454;
+    margin: @tabBorderWidth @tabBorderWidth 0 @tabBorderWidth;
     padding: @baseline*2;
     display: block;
     font-weight: normal;
@@ -49,7 +52,6 @@
 
 .tabs-content {
     clear: both;
-    margin: 0px @gutter;
     border: @tabBorderWidth solid @mushroom;
     border-top: none;
 }
@@ -76,16 +78,28 @@
     border-left: none;
 }
 
-.tabs-fixable .tabs-content {
-    margin-top: height: 42px;  
+.tabs-fixable {
+    position: relative;
 }
 
-.tabs.tabs-fixed  {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  margin: 0 0 0 -16px;
-  padding: 0 0 0 16px;
-  z-index: 2;
-  .box-shadow(0 8px 6px -6px #999);
+.tabs-fixable .tabs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 42px;
+    padding: 0px @gutter;
+}
+
+.tabs-fixable .tabs.tabs-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    .box-shadow(0 8px 6px -6px #999);
 } 
+
+.tabs-fixable .tabs-content {
+    padding-top: 42px;  
+}

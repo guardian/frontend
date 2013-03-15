@@ -7,30 +7,35 @@
         <h2 class="type-2 article-zone">Most read</h2>
 
         @if(isTabbed) {
-            <ol class="tabs js-tabs" id="js-popular-tabs">
-                @popular.zipWithRowInfo.map{ case (section, info) =>
-                    <li@if(info.isFirst){ class="tabs-selected"}>
-                        <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
-                    </li>
-                }
-            </ol>
+            <div class="tabs-container">
+                <ol class="tabs js-tabs" id="js-popular-tabs">
+                    @popular.zipWithRowInfo.map{ case (section, info) =>
+                        <li@if(info.isFirst){ class="tabs-selected"}>
+                            <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
+                        </li>
+                    }
+                </ol>
+                <div class="tabs-content">
         }
 
-        @if(isTabbed) {<div class="tabs-content">}
-            @popular.zipWithRowInfo.map{ case (section, info) =>
-                <div id="tabs-popular-@info.rowNum"
-                    class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
-                    data-link-name="@section.heading">
+        @popular.zipWithRowInfo.map{ case (section, info) =>
+            <div id="tabs-popular-@info.rowNum"
+                class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
+                data-link-name="@section.heading">
 
-                    <ul class="unstyled">
-                        @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                            <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
-                        }
-                    </ul>
+                <ul class="unstyled">
+                    @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <li><span class="count">@info.rowNum</span> @linkText(trail, info)</li>
+                    }
+                </ul>
 
+            </div>
+        }
+
+        @if(isTabbed) {
                 </div>
-            }
-        @if(isTabbed) {</div>}
+            </div>
+        }
 
     </div>
 }

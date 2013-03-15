@@ -41,11 +41,8 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             }
         };
 
-        this.init = function (tabSelector) {
-
-            if (!tabSelector) {
-                tabSelector = 'ol.js-tabs';
-            }
+        this.init = function () {
+            var tabSelector = 'ol.js-tabs';
 
             var ols = common.$g(tabSelector).each(function (tabSet) {
 
