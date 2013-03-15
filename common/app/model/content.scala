@@ -104,9 +104,11 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
   lazy val contentType = "Video"
+  lazy val blockAds: Boolean = videoAsset.map(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false))
+  lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+  override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "source" -> source)
 }
 
 class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
