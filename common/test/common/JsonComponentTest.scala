@@ -6,6 +6,8 @@ import play.api.test.FakeRequest
 import play.api.templates.Html
 import org.scalatest.matchers.ShouldMatchers
 import play.api.test.Helpers._
+import play.api.libs.json.Json._
+import play.api.libs.json.Json
 
 class JsonComponentTest extends FlatSpec with ShouldMatchers {
 
@@ -28,6 +30,24 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
     contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com","refreshStatus":true});""")
+  }
+
+  it should "render booleans properly" in {
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
+    val result = JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request)
+    contentType(result) should be(Some("application/javascript"))
+    status(result) should be(200)
+    contentAsString(result) should be("""callbackName3({"text":"hello world","url":"http://foo.bar.com","refresh":false,"refreshStatus":true});""")
+  }
+
+  it should "render a json object properly" in {
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
+
+    val result = JsonComponent(obj("name" -> "foo"))(request)
+
+    contentType(result) should be(Some("application/javascript"))
+    status(result) should be(200)
+    contentAsString(result) should be("""callbackName3({"name":"foo","refreshStatus":true});""")
   }
 
   it should "disable refreshing if auto refresh switch is off" in {
