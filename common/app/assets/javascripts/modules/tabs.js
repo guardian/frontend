@@ -62,7 +62,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 bean.add(tabSet, 'click', function (e) {
                     var targetElm = e.target;
                     // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
-                    var tabContainer = targetElm.parentNode.parentNode.parentNode; // Horrible!
+                    var tabContainer = targetElm.parentNode.parentNode;
                     // verify they clicked an <a> element
                     if (targetElm.nodeName.toLowerCase() === "a") {
                         vHeight = view.showTab(tabContainer, targetElm, e);
@@ -84,10 +84,10 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                             vScroll = window.pageYOffset || document.documentElement.scrollTop;
 
                             if( !vFixed && vScroll >= vPos && vScroll <= vPos+vHeight ) {
-                                bonzo(tabSet).addClass('tabs-fix');
+                                bonzo(tabSet).addClass('tabs-fixed');
                                 vFixed = true;
                             } else if( vFixed && (vScroll < vPos || vScroll > vPos+vHeight)) {
-                                bonzo(tabSet).removeClass('tabs-fix');
+                                bonzo(tabSet).removeClass('tabs-fixed');
                                 vFixed = false;
                             }
                         });
