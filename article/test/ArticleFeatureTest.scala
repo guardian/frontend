@@ -314,5 +314,29 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".social .gplus a").getAttribute("href") should be(gplusShareUrl)
       }
     }
+    
+    // http://www.w3.org/WAI/intro/aria
+    scenario("Make the document accessible with ARAI support") {
+
+      Given("I read an article")
+      CommonSwitches.SocialSwitch.switchOn
+      HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+        import browser._
+
+        Then("I should see the main ARAI roles described")
+        findFirst("#related-trails").getAttribute("role") should be("complementary")
+        findFirst("#js-related").getAttribute("role") should be("complementary")
+        findFirst("#js-popular").getAttribute("role") should be("complementary")
+        findFirst("header").getAttribute("role") should be("banner")
+        findFirst("footer").getAttribute("role") should be("contentinfo")
+        findFirst("nav").getAttribute("role") should be("navigation")
+        findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
+        findFirst("#article").getAttribute("role") should be("main")
+        findFirst(".trailblock").getAttribute("role") should be("complementary")
+        findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        
+      }
+    }
+
   }
 }

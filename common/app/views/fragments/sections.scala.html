@@ -1,7 +1,7 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @defining(Site(request)) { site =>
-     <nav aria-role="navigation" aria-label="Guardian sections">
+     <nav role="navigation" aria-label="Guardian sections">
         <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
 
             @Navigation(request).map{ section =>
