@@ -60,7 +60,17 @@ define(function () {
         return total_time;
     }
 
-    function getConnectionSpeed(performance) {
+    function getConnectionSpeed(performance, connection) {
+
+        var connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
+
+        var isMobileNetwork = connection.type == 3 // connection.CELL_2G 
+                  || connection.type == 4 // connection.CELL_3G
+                  || /^[23]g$/.test( connection.type ); // string value in new spec
+
+        if (isMobileNetwork) {
+            return 'low';
+        }
 
         var load_time = getPageSpeed(performance);
 
