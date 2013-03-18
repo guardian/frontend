@@ -17,7 +17,7 @@ To run all features (except `@ignore` and `@scala-test`)
 
 To run a particular tagged feature (e.g.`@network-front`)
 
-	$ mvn test -Dcucumber.options="--tags @network-front"
+	$ mvn test -Dtags="--tags @network-front"
 
 Running on a different host (i.e. not `http://localhost:9000`)
 
@@ -37,4 +37,4 @@ Running in Chrome will trigger a profile ignoring all tests tagged `@brokeninchr
      	
 To run the jasmine tests
 
-	$ mvn test -Dcucumber.options="--tags @jasmine"
+	$ mvn test -Dtags="--tags @jasmine"
