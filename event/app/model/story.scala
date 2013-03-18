@@ -8,9 +8,10 @@ import tools.Mongo
 import org.joda.time.format.ISODateTimeFormat
 import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-import common.{ Logging, AkkaSupport }
-import java.util.concurrent.TimeUnit._
-import akka.actor.Cancellable
+import concurrent.{Await, Future}
+import concurrent.duration._
+import play.api.libs.concurrent.Execution.Implicits._
+
 
 // model :- Story -> Event -> Articles|Agents|Places
 
@@ -141,9 +142,10 @@ object Story {
 
     private def loadContent(parsedStory: ParsedStory): Story = {
         val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
-        // TODO proper edition
-        val content = ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.results.toSeq
-        Story(parsedStory, content)
+        // TODO proper edition and async
+        Await.result(ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
+          Story(parsedStory, response.results.toSeq)
+        }, 2.seconds)
     }
 
     private def loadContentFor(parsedStory: Option[ParsedStory]): Option[Story] = {
