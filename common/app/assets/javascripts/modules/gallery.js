@@ -23,7 +23,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
 
                     // bind an image tap/click to advance the gallery
                     bean.add(view.galleryConfig.container, 'click', function(e) {
-                        view.galleryConfig.gallerySwipe.next();
+                        view.advanceGallery('next');
                         e.preventDefault();
                     });
 
