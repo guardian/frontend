@@ -1,0 +1,24 @@
+<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;CustomSearchEngine id=&quot;m2ealvuxh1i&quot; creator=&quot;007466294097402385199&quot; language=&quot;en&quot; encoding=&quot;UTF-8&quot; enable_suggest=&quot;true&quot;&gt;
+  &lt;Title&gt;Guardian Search&lt;/Title&gt;
+  &lt;Context&gt;
+    &lt;BackgroundLabels&gt;
+      &lt;Label name=&quot;_cse_m2ealvuxh1i&quot; mode=&quot;FILTER&quot; /&gt;
+      &lt;Label name=&quot;_cse_exclude_m2ealvuxh1i&quot; mode=&quot;ELIMINATE&quot; /&gt;
+    &lt;/BackgroundLabels&gt;
+  &lt;/Context&gt;
+  &lt;LookAndFeel code=&quot;4&quot; nonprofit=&quot;false&quot; googlebranding=&quot;watermark&quot; element_layout=&quot;1&quot; theme=&quot;7&quot; custom_theme=&quot;true&quot; text_font=&quot;Arial, sans-serif&quot; url_length=&quot;full&quot; enable_cse_thumbnail=&quot;true&quot; promotion_url_length=&quot;full&quot; ads_layout=&quot;1&quot;&gt;
+    &lt;Logo /&gt;
+    &lt;Colors url=&quot;#777777&quot; background=&quot;#FFFFFF&quot; border=&quot;#FFFFFF&quot; title=&quot;#005689&quot; text=&quot;#333333&quot; visited=&quot;#005689&quot; title_hover=&quot;#005689&quot; title_active=&quot;#005689&quot; /&gt;
+    &lt;Promotions title_color=&quot;#1155CC&quot; title_visited_color=&quot;#1155CC&quot; url_color=&quot;#009933&quot; background_color=&quot;#F6F6F6&quot; border_color=&quot;#F6F6F6&quot; snippet_color=&quot;#333333&quot; title_hover_color=&quot;#1155CC&quot; title_active_color=&quot;#1155CC&quot; /&gt;
+    &lt;SearchControls input_border_color=&quot;#D9D9D9&quot; button_border_color=&quot;#005689&quot; button_background_color=&quot;#005689&quot; tab_border_color=&quot;#CCCCCC&quot; tab_background_color=&quot;#FFFFFF&quot; tab_selected_border_color=&quot;#CCCCCC&quot; tab_selected_background_color=&quot;#FFFFFF&quot; /&gt;
+    &lt;Results border_color=&quot;#FFFFFF&quot; border_hover_color=&quot;#FFFFFF&quot; background_color=&quot;#FFFFFF&quot; background_hover_color=&quot;#FFFFFF&quot; ads_background_color=&quot;#FDF6E5&quot; ads_border_color=&quot;#FDF6E5&quot; /&gt;
+  &lt;/LookAndFeel&gt;
+  &lt;AdSense /&gt;
+  &lt;EnterpriseAccount /&gt;
+  &lt;commerce_search_security_setting /&gt;
+  &lt;autocomplete_settings /&gt;
+  &lt;sort_by_keys label=&quot;Date&quot; key=&quot;date&quot; /&gt;
+  &lt;sort_by_keys label=&quot;Relevance&quot; key=&quot;&quot; /&gt;
+&lt;/CustomSearchEngine&gt;
+</pre>

@@ -188,6 +188,8 @@ define([
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
 
+        modules.initialiseSearch(config);
+
         modules.showRelativeDates();
     };
 
@@ -198,7 +200,6 @@ define([
             modules.loadOphanAnalytics(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
-            modules.initialiseSearch(config);
         });
     };
 

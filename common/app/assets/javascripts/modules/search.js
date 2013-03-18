@@ -2,10 +2,14 @@ define([], function () {
 
     function Search(config) {
 
-        var gcsUrl = 'http://www.google.co.uk/cse/cse.js?cx=007466294097402385199:m2ealvuxh1i';
+        var gcsUrl;
+
+        if (config.page.googleSearchUrl && config.page.googleSearchId) {
+            gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
+        }
 
         this.init = function() {
-            if (config.switches.googleSearch) {
+            if (config.switches.googleSearch && gcsUrl) {
                 require(['js!' + gcsUrl], function () {});
             }
         };
