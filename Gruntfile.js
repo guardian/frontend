@@ -8,6 +8,14 @@ module.exports = function (grunt) {
                 files: {
                     //'common/target/scala-2.10/resource_managed/main/public/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
                     'common/app/public/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
+                },
+                options: {
+                    check: false,
+                    quiet: true,
+                    loadPath: [
+                        'common/app/assets/stylesheets/components/pasteup/sass/layout',
+                        'common/app/assets/stylesheets/components/normalize-scss'
+                    ]
                 }
             }
         },

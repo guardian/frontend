@@ -1,0 +1,13 @@
+<div class="site-search">
+	<form method="get" action="http://www.guardian.co.uk/search" target="_TOP">
+		<input type="text" name="q" placeholder="Your search terms&hellip;"/>
+		<select name="section">
+			<!-- A site-search form can submit to a number of endpoints. These are contained in the value attr of the option. -->
+			<option value="http://www.guardian.co.uk/search">Entire site</option>
+			<option value="http://www.guardian.co.uk/search">From the Guardian</option>
+			<option value="http://www.guardian.co.uk/discussion/search/comments/">User comments</option>
+			<option value="http://www.guardian.co.uk/websearch">Web</option>
+		</select>
+		<input type="submit" value="Search" />
+	</form>
+</div><!-- /.site-search -->

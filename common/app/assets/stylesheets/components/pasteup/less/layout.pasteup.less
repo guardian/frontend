@@ -1,0 +1,9 @@
+// Get some globally used var/mixins from somewhere
+// ADH: TODO: I'm not entirely sure they belong inside theme or base, because they aren't theme or base styles as such.
+// @import "theme/variables.less";
+// @import "base/mixins.less";
+
+// Import grids styles
+// Grids comes first. They have no dependencies on base, and can be compiled completely separately. 
+@import "layout/fixed-grid.less";
+@import "layout/fluid-grid.less";

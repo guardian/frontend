@@ -4,8 +4,11 @@
 @import "_vars";
 @import "_mixins";
 
+//External components
+@import "_normalize";
+@import "responsive-grid";
+
 //Base
-@import "base/_normalize";
 @import "base/_type";
 @import "base/_base";
 @import "base/_links";

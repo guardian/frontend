@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Pasteup | Guardian News &amp; Media</title>
+        <meta name="description" content="Pasteup is where design meets development. It is where the Guardian’s globally recognised design language is turned into code for the web, and the starting point when styling Guardian branded products for both internal teams and third parties." />
+        <meta name="author" content="the Guardian" />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>document.getElementsByTagName('html')[0].className += ' has-js';</script>
+
+        <!-- Include core base and module styles -->
+        <link rel="stylesheet" type="text/css" href="/<%= pasteupVersion %>/css/core.pasteup.min.css" />
+
+        <!-- Add layout styles for browsers over 30em or less than IE9, but not IE mobile or IE6. -->
+        <link rel="stylesheet" media="all and (min-width: 30em)" type="text/css" href="/<%= pasteupVersion %>/css/layout.pasteup.min.css" />
+        <!--[if (lt IE 9) & (!IEMobile)]>
+            <link rel="stylesheet" type="text/css" href="/css/layout.pasteup.min.css" />
+        <![endif]-->
+
+        <style>
+            .pasteup-mod {
+            	padding: 30px 0;
+            	clear: both;
+            }
+            .pasteup-title {
+            	font-size: 16px;
+            	font-weight: normal;
+            	margin-bottom: 30px;
+            	padding-bottom: 2px;
+            	border-bottom: 1px solid #666;
+            }
+            .pasteup-mod-code {
+                margin-top: 20px;
+                float: left;
+                width: 63%;
+            }
+            .pasteup-textarea {
+                margin-top: 20px;
+            	width: 35%;
+                height: 200px;
+                float: right;
+            	padding: 0.5em;
+            	border: 1px solid #999;
+            	font-family: monospace;
+            	box-sizing: border-box;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="fluid-wrap">
+
+            <div class="topbar" data-show-link="Go to documentation&hellip;">
+                <div class="topbar-menu-container">
+                    <ul class="topbar-menu pull-left">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="styleguide.html">Styleguide</a></li>
+                        <li><a href="base.html">Base CSS</a></li>
+                        <li><a href="layout.html">Layout</a></li>
+                        <li><a href="modules.html">Modules</a></li>
+                        <li><a href="zones.html">Zones</a></li>
+                    </ul>
+                    <ul class="topbar-menu pull-right">
+                        <li><a href="https://github.com/guardian/pasteup/issues">Submit a bug</a></li>
+                        <li class="dropdown-holder">
+                            <a href="#code-menu">Code</a>
+                            <ul id="code-menu" class="dropdown align-right">
+                                <li><a href="https://github.com/guardian/pasteup">Github repo</a></li>
+                                <li><a href="https://github.com/guardian/pasteup/blob/master/html/README.md">HTML styleguide</a></li>
+                                <li><a href="https://github.com/guardian/pasteup/blob/master/less/README.md">CSS/LESS styleguide</a></li>
+                                <li><a href="https://github.com/guardian/pasteup/blob/master/js/README.md">JavaScript styleguide</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <img src="http://static.guim.co.uk/static/60ed206dbccc8b808a7792d47862f9cfb7cd3d67/common/images/logos/the-guardian/titlepiece.gif">
+            <h1 class="h1">Pasteup Module Library</h1>
+
+    		<% _.each(modules, function(module) { %>
+
+    		<div class="pasteup-mod">
+                <div class="hd zone-border zone-border-medium">
+                    <h2 class="sub-heading"><%= module.name %></h2>
+                </div>
+				<div class="pasteup-mod-code">
+					<%= module.code %>
+				</div>
+				<textarea class="pasteup-textarea"><%= _.escape(module.code) %></textarea>
+			</div>
+
+			<% }); %>
+
+            <div class="footer zone-border zone-border-medium">
+                <ul class="inline with-separators">
+                    <li><a href="https://github.com/guardian/pasteup">Github repo</a></li>
+                    <li><a href="https://github.com/guardian/pasteup/issues">Github issues</a></li>
+                    <li><a href="http://www.guardian.co.uk/info/developer-blog">Guardian developer blog</a></li>
+                    <li><a href="http://www.guardian.co.uk/open-platform">Guardian Open Platform</a></li>
+                </ul>
+                <p><small>&copy; 2012 Guardian News and Media Limited or its affiliated companies. All rights reserved. Registered in England and Wales. No. 908396. Registered office: PO Box 68164, Kings Place, 90 York Way, London N1P 2AP</small></p>
+            </div>
+
+		</div><!-- /.fluid-wrap -->
+
+        <script data-main="/<%= pasteupVersion %>/js/main.min" src="/js/lib/requirejs/2.1.5/require.min.js"></script>
+	</body>
+    <!-- Pasteup docs generated by gruntjs at <%= grunt.template.today('h:MM:ss TT') %> on <%= grunt.template.today('dd-mm-yyyy') %> -->
+</html>
