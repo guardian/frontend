@@ -10,7 +10,9 @@ define([
             video = options.el,
             initialContentPlay = true,
             player = "HTML5 Video",
-            mediaName = config.page.webTitle;
+            mediaName = config.page.webTitle,
+            provider = config.page.source || "",
+            restricted = config.page.blockAds || "";
 
         this.getDuration = function() {
             return video.duration;
@@ -21,9 +23,6 @@ define([
         };
 
         this.play = function() {
-            //TODO: put provider and restricted in page metaData
-            var provider = "ITN", restricted = false;
-
             if (initialContentPlay) {
                 initialContentPlay = false;
                 s.loadMediaModule(provider, restricted);
