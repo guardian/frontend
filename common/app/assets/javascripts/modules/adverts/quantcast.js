@@ -4,7 +4,7 @@ define([], function() {
 
     function load() {
         require([quantcastUrl], function() {
-            _qevents.push({
+            window._qevents.push({
                 qacct:"p-73ktnlRTKQPTw"
             });
         });
