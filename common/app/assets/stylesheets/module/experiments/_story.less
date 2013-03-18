@@ -1,3 +1,28 @@
+@orange: #FF7F00;
+
+.story-title {
+  .type-3;
+  padding: @baseline*4 0 @baseline*5 0;
+  margin: 0 @gutter;
+  line-height: 1em;
+  border-bottom: 1px solid #CFCFCF;
+}
+
+  .story-title--section {
+    .type-3;
+    border-top: 1px solid #CFCFCF;
+    border-bottom: none;
+    margin-top: @baseline*7;
+  }
+
+.story-sub-head {
+  .type-6;
+  color: @orange;
+  margin-bottom: @baseline*2;
+}
+
+.story-latest .main-caption { padding: @baseline*4 0px;}
+
 .story-overview .page-head {
   margin-top: @baseline*2;
 }
@@ -14,21 +39,90 @@
  }
 
 .story-quote {
+  margin: @baseline*4 @gutter @baseline*4 @gutter;
+  padding: @baseline*4 @gutter @baseline*6 @gutter;
   background-color: @mushroom;
-  display: inline-block;
-  margin-top: 16px !important;
-  padding: 0px 16px 4px 16px !important;
 }
 
-.back-to-top,
-.from-content-api .back-to-top {
-  .type-10;
+.story-sub-head--quote {
+  font-size: 1.8rem;
+  padding-bottom: @baseline*6;
+  border-bottom: 1px dashed #72726B;
+}
+
+.story-quote blockquote {
+  display: inline-block;
+  margin: @baseline*5 0 @baseline*4 0;
+  padding: 0;
   color: #444;
 }
 
-.back-to-top::before {
-  .type-10;
-  display: inline-block;
-  margin-right: 4px;
-  content: "↑";
+.story-quote blockquote:before {
+  .i;
+  .i-story-quote;
+  display: block;
+  content: '';
+  margin: 0 0 @baseline*2 0;
+  clear: both;
 }
+
+  .story-quote blockquote a {
+      color: #444;
+  }
+
+  .story-quote cite {
+    color: #84837E;
+    font-style: normal;
+  }
+
+.story-popular .trail:last-child { border-bottom: none; }
+
+.story-content .article figure {
+  margin: 0 @gutter;
+}
+
+  .story-content .tabs-content {
+    margin-bottom: @baseline*4;
+  }
+
+.story-article { }
+  .story-article:last-child { border-bottom: none; }
+
+.story-article .article-body p:last-child {
+  border-bottom: 1px solid #EDEDE7;
+  padding-bottom: 8px;
+}
+
+.back-to-top,
+.from-content-api a.back-to-top {
+  .type-10;
+  color: #bbb;
+}
+
+.continue,
+.from-content-api a.continue {
+  color: #444;
+  text-decoration: underline;
+}
+
+.i.is-open {
+ .rotate(180deg);
+}
+
+a.trail-story-title {
+  color: @newsRed;
+}
+
+.tabs-fixable {
+  height: 42px;
+}
+
+.tabs.tabs-fix  {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin: 0 0 0 -16px;
+  padding: 0 0 0 16px;
+  z-index: 2;
+  .box-shadow(0 8px 6px -6px #999);
+} 

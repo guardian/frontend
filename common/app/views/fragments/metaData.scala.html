@@ -2,7 +2,19 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-    @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
+
+    @defining(Site(request)){ site =>
+        @if(site.isSingleDomain) {
+            <link rel="alternate" @if(site.isUkEdition){
+                hreflang="en_US" href="http://@{site.usHost}/@item.id"
+            } else {
+                hreflang="en" href="http://@{site.ukHost}/@item.id"
+            }/>
+        } else {
+            @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
+        }
+    }
+
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
 
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />

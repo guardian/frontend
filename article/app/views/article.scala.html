@@ -6,7 +6,8 @@
     	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 	</h2>
 
-    <article id="article" class="article @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType">
+    <article id="article" class="article @if(article.isLive){is-live}"
+        itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="article-head">
             @fragments.dateline(article.webPublicationDate, article.isLive, edition)
@@ -45,7 +46,7 @@
         @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
     }
     
-    <aside id="js-related"></aside>
+    <aside id="js-related" role="complementary"></aside>
 
-    <div id="js-popular"></div>
+    <div id="js-popular" role="complementary"></div>
 }

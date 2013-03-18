@@ -7,15 +7,15 @@ import model._
 import play.api.mvc.{ Result, RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfTag = Akka.future(lookup(path))
+    val promiseOfTag = Future(lookup(path))
     Async {
       promiseOfTag.map {
         case Left(model) => renderTag(model, "html")
@@ -25,7 +25,7 @@ object TagController extends Controller with Logging with JsonTrails {
   }
 
   def renderJson(path: String) = Action { implicit request =>
-    val promiseOfTag = Akka.future(lookup(path))
+    val promiseOfTag = Future(lookup(path))
     Async {
       promiseOfTag.map {
         case Left(model) => renderTag(model, "json")
@@ -36,7 +36,7 @@ object TagController extends Controller with Logging with JsonTrails {
 
   private def lookup(path: String)(implicit request: RequestHeader): Either[TagAndTrails, Result] = suppressApi404 {
     val edition = Site(request).edition
-    log.info("Fetching tag: " + path + " for edition " + edition)
+    log.info(s"Fetching tag: $path for edition $edition")
 
     val response: ItemResponse = ContentApi.item(path, edition).pageSize(20).response
 

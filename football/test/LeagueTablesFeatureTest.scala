@@ -11,7 +11,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
 
     scenario("User cannot filter league table by a competition which isn't a league") {
 
-      given("I visit the league tables page")
+      Given("I visit the league tables page")
 
       HtmlUnit("/football/tables") { browser =>
         import browser._
@@ -39,11 +39,12 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
     }
 
     scenario("Should show league table for competition") {
-      given("I visit the a competition league table page")
+      Given("I visit the a competition league table page")
 
       HtmlUnit("/football/premierleague/table") { browser =>
         import browser._
 
+        $("h1").getTexts should contain("Premier League table")
         $(".table-football-body td").getTexts should contain("Arsenal")
       }
 

@@ -17,6 +17,10 @@ case class Site(
   lazy val ajaxHost = if (isUsEdition) usAjaxHost else ukAjaxHost
   lazy val host = if (isUsEdition) usHost else ukHost
   lazy val desktopHost = if (isUsEdition) usDesktopHost else ukDesktopHost
+
+  // both mobile and desktop are on same host
+  lazy val isSingleDomain = ukDesktopHost == ukHost && usDesktopHost == usHost
+
 }
 
 object Site extends Logging {
@@ -68,7 +72,7 @@ object Site extends Logging {
     val host = request.headers("host").toLowerCase
     sites.get(host).getOrElse {
       // allows working through things like proxylocal during dev
-      log.info("Using dynamic domain for site " + host)
+      log.info(s"Using dynamic domain for site $host")
       Site(host, host, host, host, host, host, "UK")
     }
   }

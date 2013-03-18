@@ -8,7 +8,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
             render: function (html) {
 
-                var topstoriesHeader = document.getElementById('topstories-header');
+                var topstoriesHeader = document.getElementById('topstories-header'),
+                    $topstoriesHeader = bonzo(topstoriesHeader),
+                    className = "is-off";
 
                 topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
                     + html
@@ -17,7 +19,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 common.mediator.emit('modules:topstories:render');
 
                 common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
-                    bonzo(topstoriesHeader).removeClass('is-off');
+                    $topstoriesHeader.removeClass(className);
                 });
 
                 common.mediator.on('modules:control:change', function(args) {
@@ -26,7 +28,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         state = args[1];
 
                     if (state === false || control !== 'topstories-control-header') {
-                        bonzo(topstoriesHeader).addClass('is-off');
+                        $topstoriesHeader.addClass(className);
                     }
                 });
             }

@@ -40,6 +40,6 @@ class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescript
 
   def shutDown() = manualAgents.foreach(_.close())
 
-  def warmup() = manualAgents.foreach(_.warmup())
+  def warmup(): Unit = manualAgents.foreach(_.warmup)
 
 }

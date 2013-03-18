@@ -1,9 +1,12 @@
 package common
 
-import com.codahale.jerkson.{ Json => JsonParser }
+
+import play.api.libs.json._
+import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
-import play.api.mvc.{ RequestHeader, Results }
+import play.api.mvc.{AnyContent, Result, RequestHeader, Results}
 import play.api.templates.Html
+
 
 object JsonComponent extends Results {
 
@@ -19,6 +22,11 @@ object JsonComponent extends Results {
     resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
   }
 
+  def apply(obj: JsObject)(implicit request: RequestHeader) = resultFor(request,
+    Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
+    .getOrElse(BadRequest("parameter 'callback' is required"))
+
+
   def apply(callback: Option[String], items: (String, Any)*) = {
     var json = jsonFor(items: _*)
     callback.map {
@@ -29,13 +37,18 @@ object JsonComponent extends Results {
   }
 
   def jsonFor(items: (String, Any)*) = {
-    JsonParser.generate(
-      (items.toMap).map {
+    import play.api.libs.json.Writes._
+    Json.stringify(toJson(
+      (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
         // compress and take the body if value is Html
-        case (name, html: Html) => (name -> Compressed(html).body)
-        case (name, value) => (name -> value)
-      } ++ Map("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)
-    )
+        case (name, html: Html) => (name -> toJson(Compressed(html).body))
+        case (name, value: String) => (name -> toJson(value))
+        case (name, value: Boolean) => (name -> toJson(value))
+        case (name, value: Int) => (name -> toJson(value))
+        case (name, value: Double) => (name -> toJson(value))
+        case (name, value: Float) => (name -> toJson(value))
+      }
+    ))
   }
 
   private def resultFor(request: RequestHeader, json: String) = {

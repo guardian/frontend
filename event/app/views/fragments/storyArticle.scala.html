@@ -1,0 +1,31 @@
+@(a: model.Article, edition: String)
+<li class="story-article">
+    <article class="article @if(a.isLive){is-live}">
+        <header class="article-head">
+            @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+            <h2 class="article-headline">@a.headline</h2>
+        </header>
+
+        @fragments.byline(a.byline, a)
+
+        @if(!a.isLive) {
+            @a.mainPicture.map{ mainPicture =>
+                @a.mainPicture(width=220).map{ smallCrop =>
+                    <div class="box-indent">@fragments.img(mainPicture, smallCrop)</div>
+                }
+            }
+        }
+
+        <div class="article-body from-content-api @if(a.isLive) {live-blog}">
+            @withJsoup(BulletCleaner(a.body))(
+            PictureCleaner(a),
+            InBodyLinkCleaner("in body link"),
+            BlockNumberCleaner,
+            TweetCleaner,
+            WitnessCleaner,
+            Summary(2)
+            )
+            <p><a href="@a.url">Continue reading...</a></p>
+        </div>
+    </article>
+</li>

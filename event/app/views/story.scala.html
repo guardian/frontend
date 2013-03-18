@@ -1,99 +1,22 @@
-@(page: StoryPage, edition: String)(implicit request: RequestHeader)
+@(page: StoryPage)(implicit request: RequestHeader)
 
 @main(page, Switches.all){ }{
 
     @defining(page.story){ story =>
 
-        <h1 class="article-zone type-1">
-            <span class="zone-color">@story.title</span>
-        </h1>
+        <h1 class="story-title">@story.title</h1>
 
-        <section class="story-latest">
-            @if(story.contentByColour.get("Overview").nonEmpty) {
-                @story.contentByColour.get("Overview").map{ content =>
-                    @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
-                        @fragments.latest(article, edition)
-                    }
-                }
-            } else {
-                @fragments.latest(story.contentByImportance.take(1), edition)
-            }
-        </section>
+        @fragments.latest(story, page.edition, 2)
 
-        @if(story.hasQuotes) {
-            @story.contentWithQuotes.headOption.map{ c =>
-                @fragments.quote(c)
-            }
-        }
+        <div class="story-content">
+            @fragments.quote(story, 0)
+            @fragments.explainer(story)
+            @fragments.quote(story, 1)
+            @fragments.agents(story)
+        </div>
 
-        @story.explainer.map{ explainer =>
-            <section class="story-overview">
 
-                <h2 class="article-zone type-2">Background</h2>
-
-                @story.hero.map{ img =>
-                    <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-                        <img class="maxed main-image" src="@story.hero"
-                             itemprop="contentURL"
-                             alt="@StripHtmlTags(story.title)"
-                             title="@StripHtmlTags(story.title)" />
-                    </figure>
-                }
-
-                <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
-                    @cleanTrailText(explainer)
-                </p>
-                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
-            </section>
-        }
-
-        @if(story.hasQuotes) {
-            @story.contentWithQuotes.drop(1).headOption.map{ story =>
-                @fragments.quote(story)
-            }
-        }
-
-        @if(story.hasAgents) {
-            <section class="story-agents" data-link-name="story-agents">
-                <h2 class="article-zone type-2">People, places & organisations</h2>
-                @defining(story.agents.length){ numAgents =>
-                    <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
-                        <ul class="unstyled agents">
-                            @story.agents.take(3).map{ agent =>
-                                @fragments.agent(agent)
-                            }
-                        </ul>
-                        @if(numAgents > 3) {
-                            <ul class="unstyled agents panel">
-                                @story.agents.drop(3).map{ agent =>
-                                    @fragments.agent(agent)
-                                }
-                            </ul>
-                        }
-                    </div>
-                }
-                <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
-            </section>
-        }
-
-        @if(story.hasEvents) {
-            <section class="story-timeline" data-link-name="story-timeline">
-                <h2 class="article-zone type-2">Timeline of events</h2>
-
-                @fragments.timeline(story)
-
-                <p class="box-indent from-content-api">
-                    <a href="#top" class="back-to-top">Back to top</a>
-                </p>
-            </section>
-        }
-
-        <aside id="js-latest-stories">
-            <h3 class="article-zone type-2">
-                <a href="/stories" data-link-name="latest stories">Latest stories</a>
-            </h3>
-        </aside>
-
+        @fragments.popular(story)
+        @fragments.timeline(story)
     }
-
 }

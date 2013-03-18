@@ -5,22 +5,21 @@
 }
 
 @article(a: model.Article) = {
-    <li class="event-articles--item">
-        @fragments.relativeDate(a.webPublicationDate, false, false)
-        <p class="type-7">
+    <li class="event-article">
+        <p class="type-6">
             <a href="@a.url">
                 @a.standfirst.map { s =>
                     @standfirst(s)
                 }.getOrElse(a.headline)
             </a>
         </p>
+        @fragments.relativeDate(a.webPublicationDate, false, false)
     </li>
 }
 
 @gallery(g: model.Gallery) = {
-    <li class="event-articles--item event-articles--media">
-        @fragments.relativeDate(g.webPublicationDate, false, false)
-        <p class="type-7">
+    <li class="event-article event-article--media">
+        <p class="type-6">
             <a href="@g.url">
             @g.standfirst.map { s =>
                 @standfirst(s)
@@ -30,14 +29,14 @@
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
             <a href="@g.url?index=@info.rowNum"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
         }
+        @fragments.relativeDate(g.webPublicationDate, false, false)
     </li>
 }
 
 @video(v: model.Video) = {
-<li class="event-articles--item event-articles--media">
-    @fragments.relativeDate(v.webPublicationDate, false, false)
-    <p class="type-7">
-        <a href="v.url">
+<li class="event-article event-article--media">
+    <p class="type-6">
+        <a href="@v.url">
         @v.standfirst.map { s =>
             @standfirst(s)
         }.getOrElse(v.headline)
@@ -51,6 +50,7 @@
         Your browser does not support the video tag.
         </video>
     </div>
+    @fragments.relativeDate(v.webPublicationDate, false, false)
 </li>
 }
 
@@ -58,15 +58,21 @@
     <ul class="unstyled @if(isPanel){ panel}">
         @events.map { event =>
             <li class="trail event-block" data-link-name="trail">
+
+                <h3 class="event-title">
+                    <span>@event.title</span>
+                    <i class="i i-arrow-large-down"></i>
+                </h3>
+
+                @if(event.hasExplainer) { <p class="event-summary">@event.explainer.get</p> }
+
                 @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
                 }
-                <div class="date-line">
-                    <h3 class="type-5">@event.title</h3>
-                </div>
 
                 <div class="event-children">
-                    @if(event.hasExplainer) { <p class="event-summary">@event.explainer.get</p> }
+
+                    <h3 class="story-sub-head story-sub-head--articles">Articles</h3>
 
                     @if(event.hasContent) {
                     <ul class="unstyled event-articles">
@@ -76,15 +82,26 @@
                             case v: Video   => { @video(v) }
                         }
                     </ul>
+                    }
                 </div>
-                }
+
             </li>
         }
     </ul>
 }
 
-<div id="js-timeline" class="timeline box-indent expandable"
-     data-count="@{story.events.size - 3}" data-link-name="Event timeline">
-    @eventList(story.events.take(3), false)
-    @eventList(story.events.drop(3), true)
-</div>
+@if(story.hasEvents) {
+    <section class="story-timeline" data-link-name="story-timeline">
+        <h2 class="story-title story-title--section">Timeline of events</h2>
+
+        <div id="js-timeline" class="timeline box-indent"
+             data-count="@{story.events.size - 3}" data-link-name="Event timeline">
+            @eventList(story.events.take(3), false)
+            @eventList(story.events.drop(3), true)
+        </div>
+        
+        <p class="box-indent from-content-api">
+            <a href="#top" class="back-to-top">Back to top</a>
+        </p>
+    </section>
+}
