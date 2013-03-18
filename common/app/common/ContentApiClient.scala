@@ -8,7 +8,7 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.ws.WS
-import com.gu.openplatform.contentapi.util.Monad
+import com.gu.openplatform.contentapi.util.FutureInstances
 
 import com.gu.openplatform.contentapi.connection.Http
 
@@ -95,16 +95,8 @@ trait DelegateHttp extends Http[Future] {
 }
 
 
-// converts between Future & Monad, needed by ContentApi
-private object MonadFuture {
-  implicit val implicits: Monad[Future] = new Monad[Future] {
-    def point[A](a: A) = Future(a)
-    def bind[A, B](f: A => Future[B]) = _.flatMap(f)
-    def fail[A](error: ApiError) = Future(throw error)
-  }
-}
 
-import MonadFuture.implicits
+import FutureInstances._
 
 class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
     with Logging {
