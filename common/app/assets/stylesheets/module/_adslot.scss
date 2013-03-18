@@ -9,7 +9,7 @@
     position: relative;
     z-index: 1000;
 
-    @media screen and (min-width: 810px) {
+    @media screen and (min-width: 50.625em) {
         min-height: 90px;
     }
 }
@@ -25,7 +25,7 @@
 }
 
 [data-link-name*="bottom-banner-ad"] {
-	padding: @baseline*2 0;
+	padding: $baseline*2 0;
     background-color: #ffffff;
 }
 

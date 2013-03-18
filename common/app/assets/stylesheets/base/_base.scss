@@ -1,8 +1,8 @@
 .dateline {
-    font-family: @sans-serif;
-    margin: 0px 0px @baseline*2 0px;
+    font-family: $sans-serif;
+    margin: 0px 0px $baseline*2 0px;
     color: #666666;
-    .type-11;
+    @extend .type-11;
 }
 
 .relative-timestamp {
@@ -10,7 +10,7 @@
     height: 10px;
     color: #777777;
     margin: 0;
-    padding:0 0 @baseline*3 0;
+    padding:0 0 $baseline*3 0;
 }
 
 .relative-timestamp span {

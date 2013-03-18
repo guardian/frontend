@@ -10,13 +10,13 @@
 }
 
 .home-stat {
-    background-color: @homeColour;
+    background-color: $homeColour;
     height: 15px;
     width: 100%;
 }
 
 .away-stat {
-    background-color: @awayColour;
+    background-color: $awayColour;
     height: 15px;
 }
 
@@ -50,25 +50,25 @@
 .home-header {
     display: inline-block;
     width: 49%;
-    margin-bottom: @baseline * 3;
-    border-bottom: 5px solid @homeColour;
-    padding-bottom: @baseline;
+    margin-bottom: $baseline * 3;
+    border-bottom: 5px solid $homeColour;
+    padding-bottom: $baseline;
 }
 
 .away-header {
     display: inline-block;
     width: 49%;
     text-align: right;
-    margin-bottom: @baseline * 3;
-    border-bottom: 5px solid @awayColour;
-    padding-bottom: @baseline;
+    margin-bottom: $baseline * 3;
+    border-bottom: 5px solid $awayColour;
+    padding-bottom: $baseline;
 }
 
 .lineup{
     display: inline-block;
     width: 49%;
     vertical-align: top;
-    padding-bottom: @baseline * 2;
+    padding-bottom: $baseline * 2;
 }
 
 .i-status {
@@ -78,22 +78,22 @@
     font-style: normal;
     line-height: 1em;
     color: #ffffff;
-    background-color: @sportBright;
+    background-color: $sportBright;
 }
     .i-status abbr {
         border-bottom: none !important;
     }
 
 .item-divider {
-    border-top: 1px solid @mushroom;
-    padding-top: @baseline
+    border-top: 1px solid $mushroom;
+    padding-top: $baseline
 }
 
 .section-divider {
-    border-top: 4px solid @mushroom;
-    border-bottom: 1px solid @mushroom;
-    padding-top: @baseline * 2;
-    padding-bottom: @baseline * 3;
+    border-top: 4px solid $mushroom;
+    border-bottom: 1px solid $mushroom;
+    padding-top: $baseline * 2;
+    padding-bottom: $baseline * 3;
 }
 
 .place-holder {

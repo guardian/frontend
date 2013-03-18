@@ -1,25 +1,25 @@
 // be sure to update the styleguide when changing these
 
 .zone-news .zone-color {
-    color: @newsRed; // red
+    color: $newsRed; // red
 }
 
 .zone-environment .zone-color {
-    color: @environmentGreen; // eco green
+    color: $environmentGreen; // eco green
 }
 
 .zone-news .zone-background,
 .zone-news .zone-background-hover:hover,
 .zone-news .zone-background-hover:focus,
 .zone-news .zone-background-hover:active {
-    background-color: @newsRed; // red
+    background-color: $newsRed; // red
 }
 
 .zone-environment .zone-background,
 .zone-environment .zone-background-hover:hover,
 .zone-environment .zone-background-hover:focus,
 .zone-environment .zone-background-hover:active {
-    background-color: @environmentGreen; // eco green
+    background-color: $environmentGreen; // eco green
 }
 
 .zone-childrens-books-site .zone-color,
@@ -30,7 +30,7 @@
 .zone-film .zone-color,
 .zone-books .zone-color,
 .zone-music .zone-color {
-	color: @culturePink;
+	color: $culturePink;
 }
 
 
@@ -47,33 +47,33 @@
 .zone-uk .zone-color,
 .zone-media .zone-color,
 .zone-world .zone-color {
-	color: @newsRed;
+	color: $newsRed;
 }
 
 .zone-fashion .zone-color,
 .zone-lifeandstyle .zone-color {
-	color: @lifeandstyleOrange;
+	color: $lifeandstyleOrange;
 }
 
 .zone-sport .zone-color,
 .zone-football .zone-color {
-	color: @sportBright;
+	color: $sportBright;
 }
 
 .zone-travel .zone-color {
-    color: @travelBlue
+    color: $travelBlue
 }
 
 .zone-business .zone-color {
-    color: @businessBlue
+    color: $businessBlue
 }
 
 .zone-commentisfree .zone-color {
-    color: @commentBlue
+    color: $commentBlue
 }
 
 .zone-money .zone-color {
-    color: @moneyPurple
+    color: $moneyPurple
 }
 
 .zone-childrens-books-site .zone-background,
@@ -84,7 +84,7 @@
 .zone-film .zone-background,
 .zone-books .zone-background,
 .zone-music .zone-background {
-    background-color: @culturePink;
+    background-color: $culturePink;
 }
 
 .zone-journalismcompetition .zone-background,
@@ -100,31 +100,31 @@
 .zone-uk .zone-background,
 .zone-media .zone-background,
 .zone-world .zone-background {
-    background-color: @newsRed;
+    background-color: $newsRed;
 }
 
 .zone-fashion .zone-background,
 .zone-lifeandstyle .zone-background {
-    background-color: @lifeandstyleOrange;
+    background-color: $lifeandstyleOrange;
 }
 
 .zone-sport .zone-background,
 .zone-football .zone-background {
-    background-color: @sportBright;
+    background-color: $sportBright;
 }
 
 .zone-travel .zone-background {
-    background-color: @travelBlue
+    background-color: $travelBlue
 }
 
 .zone-business .zone-background {
-    background-color: @businessBlue
+    background-color: $businessBlue
 }
 
 .zone-commentisfree .zone-background {
-    background-color: @commentBlue
+    background-color: $commentBlue
 }
 
 .zone-money .zone-background {
-    background-color: @moneyPurple
+    background-color: $moneyPurple
 }

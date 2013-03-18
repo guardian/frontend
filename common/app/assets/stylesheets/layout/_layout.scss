@@ -1,13 +1,12 @@
 #container {
     clear: both;
     max-width: 1024px;
-}
-@media (min-width: 641px) {
-    #container {
+
+  @media (min-width: 40.0625em) {
         padding-bottom: 10%;
         width: 90%;
         margin: 0 auto;
-    }
+  }
 }
 
 .component {
@@ -15,11 +14,11 @@
 }
 
 .box-indent {
-    padding: 0 @gutter @baseline*1 @gutter;
+    padding: 0 $gutter $baseline*1 $gutter;
 }
 
 .inline-image {
-    width: @inArticleInlineImgWidth;
+    width: $inArticleInlineImgWidth;
     float: left;
     margin: 0;
     margin-right: 10px;
@@ -29,5 +28,5 @@
 
 .img-tiny.inline-image {
     width: auto;
-    max-width: @inArticleInlineImgWidth;
+    max-width: $inArticleInlineImgWidth;
 }

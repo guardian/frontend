@@ -1,11 +1,11 @@
 .cta {
-    .type-10;
+    @extend .type-10;
     line-height: 1em;
     display: block;
     color: #545454;
-    padding: @baseline*3 0 @baseline*3 0;
-    margin: @baseline*2 0;
-    background-color: @mushroom;
+    padding: $baseline*3 0 $baseline*3 0;
+    margin: $baseline*2 0;
+    background-color: $mushroom;
     text-align: center;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -35,13 +35,13 @@ button.cta{
 .top:active {
     display: block;
     color: #A1B7CF;
-    background-color: @darkBlue;
-    padding: @baseline*2 @gutter @baseline*2 @gutter;
+    background-color: $darkBlue;
+    padding: $baseline*2 $gutter $baseline*2 $gutter;
 }
 
 .cta-small {
     display: block;
-    padding: @baseline*2 0 @baseline*3 0;
+    padding: $baseline*2 0 $baseline*3 0;
 }
 
 .cta-small.cta-small-border {

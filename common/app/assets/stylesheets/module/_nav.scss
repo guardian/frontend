@@ -1,16 +1,14 @@
 #header {
-    background-color: @blue;
+    background-color: $blue;
 }
 
 #logo {
     display: block;
     float: left;
-    margin: 20px 0 @baseline*2 @gutter;
+    margin: 20px 0 $baseline*2 $gutter;
     text-indent: -9999px;
-}
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    #logo {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
         background-size: 100%;
         background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
     }
@@ -20,12 +18,12 @@
 .nav {
     list-style: none;
     margin: 0;
-    padding: @baseline *2 0 4px 0;
+    padding: $baseline *2 0 4px 0;
 }
 
 .nav > li,
 .nav > li > a {
-    .type-8;
+    @extend .type-8;
     display: inline-block;
     zoom: 1;
 }
@@ -35,7 +33,7 @@
 }
 
 .expander {
-    .type-8;
+    @extend .type-8;
     display: block;
     padding-top: 5px;
     color: #666666;
@@ -69,7 +67,7 @@
 }
 
 .sections .nav {
-    padding: @baseline*2 @gutter @baseline @gutter;
+    padding: $baseline*2 $gutter $baseline $gutter;
 }
 
 .nav-columns li {
@@ -96,8 +94,8 @@
 }
 
 .sections li a {
-    padding: @baseline*2 0;
-    border-top: 1px solid @mushroom;
+    padding: $baseline*2 0;
+    border-top: 1px solid $mushroom;
     display: block;
     height: auto;
 }
@@ -114,15 +112,15 @@
 }
 
 .nav.nav-section-divider {
-    padding: @baseline*2 0;
-    margin: 0 @gutter;
-    border-top: 2px solid @darkMushroom;
+    padding: $baseline*2 0;
+    margin: 0 $gutter;
+    border-top: 2px solid $darkMushroom;
 }
 
 #topstories-header,
 #sections-header {
-    padding: @baseline*2 0;
-    border-bottom: @baseline solid @blue;
+    padding: $baseline*2 0;
+    border-bottom: $baseline solid $blue;
 }
 
 .nav-footer li a {
@@ -151,14 +149,14 @@
 }
 
 #section-footer .nav-popup {
-    background-color: @blue;
+    background-color: $blue;
 }
 
 .topstories-control {
     float: left;
     height: 28px;
     color: #ffffff;
-    font-family: @serif !important;
+    font-family: $serif !important;
     font-size: 13px;
     margin: 0;
     padding: 15px 0;
@@ -211,7 +209,7 @@ a.topstories-control,
 .sections-control.is-active,
 .topstories-control.is-active {
     background-color: #ffffff;
-    color: @blue;
+    color: $blue;
 }
 
 .sections-control:hover,
@@ -226,7 +224,7 @@ a.topstories-control,
 
 #navigation-footer {
     width: 100%;
-    background-color: @blue;
+    background-color: $blue;
 }
 
 #sections-footer {
@@ -240,7 +238,7 @@ a.topstories-control,
 }
 
 .footer .nav-stacked li a {
-    color: @blue;
+    color: $blue;
     margin-left: 0;
     border-top-color: #C0C9CE;
 }
@@ -249,16 +247,16 @@ a.topstories-control,
     font-family: helvetica, arial, sans-serif;
     font-weight: normal;
     color: #999999;
-    margin-top: @baseline*4;
+    margin-top: $baseline*4;
     font-size: 14px;
     border-bottom: 1px solid #DDDDDD;
-    padding-bottom: @baseline;
+    padding-bottom: $baseline;
 }
 
 // bit horrible, sorry
 
 .nav-multi li:first-child h2 {
-    margin-top: @baseline*2;
+    margin-top: $baseline*2;
 }
 
 .nav-multi .sections > li a {

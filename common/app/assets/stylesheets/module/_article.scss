@@ -1,15 +1,13 @@
 .article-zone {
-    padding: 13px @gutter 14px @gutter;
+    padding: 13px $gutter 14px $gutter;
     line-height: 1em;
-    border-top: 4px solid @mushroom;
-    border-bottom: 1px solid @mushroom;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    border-top: 4px solid $mushroom;
+    border-bottom: 1px solid $mushroom;
+    @include box-sizing("border-box");
 }
 
 .article-zone-sub {
-    .type-6;
+    @extend .type-6;
 }
 
 #js-popular .article-zone {
@@ -17,12 +15,12 @@
 }
 
 .article-head {
-    padding: @baseline*3 @gutter @baseline*4 @gutter;
+    padding: $baseline*3 $gutter $baseline*4 $gutter;
 }
 
 .article-headline {
-    .type-3;
-    margin-bottom: @baseline*2;
+    @extend .type-3;
+    margin-bottom: $baseline*2;
 }
 
 .article-standfirst {
@@ -33,18 +31,18 @@
     font-size: 13px;
     display: inline-block;
     color: #999999;
-    margin: @baseline/2 4px 0 0;
+    margin: $baseline/2 4px 0 0;
 }
 
 .bullet:first-of-type {
-    margin-top: @baseline;
+    margin-top: $baseline;
 }
 
 .byline {
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
-    margin: 0 @gutter @baseline*2 @gutter;
-    padding: @baseline 0 @baseline*4 0;
+    margin: 0 $gutter $baseline*2 $gutter;
+    padding: $baseline 0 $baseline*4 0;
 }
 
 .article .main-image {
@@ -52,5 +50,5 @@
 }
 
 .article-body {
-    padding: 0 @gutter @baseline*2 @gutter;
+    padding: 0 $gutter $baseline*2 $gutter;
 }

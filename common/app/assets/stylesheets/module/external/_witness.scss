@@ -2,12 +2,14 @@
 //Desc: This file contains all styles for Guardian Witness
 
 .element-witness {
-    border: 1px solid @darkMushroom;
-    margin-bottom: @baseline*5;
-    padding-top: @baseline*3;
+    border: 1px solid $darkMushroom;
+    margin-bottom: $baseline*5;
+    padding-top: $baseline*3;
 }
 
-.element-witness a, .element-witness a:hover, .element-witness a:link {
+.element-witness a,
+.element-witness a:hover,
+.element-witness a:link {
     color: #333333;
 }
 
@@ -16,20 +18,20 @@
 }
 
 .element-witness p {
-    .type-7;
+    @extend .type-7;
 }
 
 .element-witness--title {
-    .type-5;
-    margin-bottom: @baseline*2;
+    @extend .type-5;
+    margin-bottom: $baseline*2;
  }
 
 .element-witness--main {
-    padding: @baseline*3 @baseline*2 @baseline*4 @baseline*2;
+    padding: $baseline*3 $baseline*2 $baseline*4 $baseline*2;
 }
 
 .element-witness--brand {
-    padding: 0 @baseline*2 0 @baseline*2;
+    padding: 0 $baseline*2 0 $baseline*2;
 }
 
 .element-witness figcaption:before{
@@ -37,7 +39,7 @@
 }
 
 .element-witness figcaption {
-    margin: @baseline*4 0 0 0;
+    margin: $baseline*4 0 0 0;
 }
 
 .element-witness-video iframe {
@@ -51,9 +53,9 @@
 }
 
 .element-witness--metadata {
-    border-top: 1px solid @darkMushroom;
-    background: @mushroom;
-    padding: @baseline*3 @baseline*2 @baseline*3 @baseline*2;
+    border-top: 1px solid $darkMushroom;
+    background: $mushroom;
+    padding: $baseline*3 $baseline*2 $baseline*3 $baseline*2;
     line-height: 1.0em;
 }
 
@@ -62,25 +64,25 @@
 }
 
 .element-witness--author {
-    .type-11;
+    @extend .type-11;
     display: inline-block;
     margin-bottom: 0px;
     width: 100%;
 }
 
 .element-witness--author-name {
-    .type-11;
+    @extend .type-11;
     display: inline-block;
     font-weight: bold;
 }
 
 .element-witness--author time {
-    .type-11;
+    @extend .type-11;
     display: block;
 }
 
 .witness-avatar {
     float: left;
-    padding: 0 @baseline*2 0 0;
+    padding: 0 $baseline*2 0 0;
 }
 

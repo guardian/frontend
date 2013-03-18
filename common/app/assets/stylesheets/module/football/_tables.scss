@@ -25,7 +25,7 @@
 .table-football-body th {
     background: #f4f4ee;
     font-weight: 500;
-    color: @sportMid;
+    color: $sportMid;
     border-top: 1px solid #DEDEDD;
 }
 
@@ -37,17 +37,17 @@
 .table-football td {
     border-right: none;
     text-align: right;
-    padding: @baseline*2 3% @baseline*2 3%;
+    padding: $baseline*2 3% $baseline*2 3%;
 }
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: @baseline*2 3% @baseline*2 @baseline*2;
+    padding: $baseline*2 3% $baseline*2 $baseline*2;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: @baseline*2 @baseline*2 @baseline*2 3%;
+    padding: $baseline*2 $baseline*2 $baseline*2 3%;
 }
 
 .table-football td:last-child {
@@ -68,11 +68,11 @@
     font-weight: 500;
 }
 
-@media (min-width: 641px) {
+@media (min-width: 40.0625em) {
 
     .table-football th,
     .table-football td {
-        padding: @baseline*2 3px;
+        padding: $baseline*2 3px;
     }
 
     .table-football-header th:first-child,
@@ -119,17 +119,17 @@
 .stats-1, .stats-2, .stats-3 {
     display: none;
 }
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 25em) {
     .stats-1 {
         display: table-cell;
     }
 }
-@media (min-width: 641px) {
+@media (min-width: 40.0625em) {
     .stats-2 {
         display: table-cell;
     }
 }
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 53.125em) {
     .stats-3 {
         display: table-cell;
     }

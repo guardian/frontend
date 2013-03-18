@@ -34,7 +34,7 @@
 
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
-    padding: 9px @gutter*2 9px @baseline*2; // double space on right to avoid icon
+    padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
     position: relative;
     cursor: pointer;
 }
@@ -63,9 +63,9 @@
 
 .update {
 	display:block;
-    background-color: @mushroom;
-    margin: 0 @gutter @baseline*4 @gutter;
-    padding: 0 0 0 @baseline*2;
+    background-color: $mushroom;
+    margin: 0 $gutter $baseline*4 $gutter;
+    padding: 0 0 0 $baseline*2;
     overflow: hidden;
 }
 
@@ -75,7 +75,7 @@
 
 .update-text {
     float:left;
-    margin: 0 @gutter 0 0;
+    margin: 0 $gutter 0 0;
     padding: 6px 0 0 0;
     line-height: 32px;
 }
@@ -84,7 +84,7 @@
     float:right;
     margin: 0;
     padding: 13px 12px;
-    background-color: @mushroom;
+    background-color: $mushroom;
     color: #333333;
     font-weight: normal;
     border: none;
@@ -100,7 +100,7 @@
 
 .update-live-matches .update-btn.is-active,
 .update-live-matches .update-btn:hover {
-    background-color: @sportBright;
+    background-color: $sportBright;
 }
 
 .is-updating {
@@ -117,7 +117,7 @@
 }
 
 .is-live-icon {
-    padding: @baseline;
+    padding: $baseline;
     margin-right: 5px;
     font-size: 10px;
     font-style: normal;

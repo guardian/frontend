@@ -4,13 +4,13 @@
 }
 
 .agent {
-  margin-bottom: @baseline*2;
+  margin-bottom: $baseline*2;
 }
 
 .agent-head {
   border-top: 1px solid #cccccc;
   margin: 0;
-  padding: @baseline*3 0 @baseline*2 0;
+  padding: $baseline*3 0 $baseline*2 0;
   overflow: auto;
 }
 
@@ -28,20 +28,20 @@
   float: left;
   width: 35%;
   max-width: 115px;
-  margin-right: @baseline*4;
+  margin-right: $baseline*4;
 }
 
 .agent-name {
-  .type-5;
+  @extend .type-5;
   margin-bottom: 0px;
 }
 
 .agent-role {
-  .type-6;
+  @extend .type-6;
   margin-bottom: none;
 }
 
 .agent-body {
-  .type-6;
-  margin-top: @baseline*2;
+  @extend .type-6;
+  margin-top: $baseline*2;
 }

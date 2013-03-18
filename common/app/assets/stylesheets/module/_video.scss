@@ -9,11 +9,11 @@ video {
 }
 
 .video-standfirst {
-    margin-bottom: @baseline*4;
+    margin-bottom: $baseline*4;
 }
 
 .gallery-byline {
-    margin-top: @baseline*4;
+    margin-top: $baseline*4;
 }
 
 .video h1 {

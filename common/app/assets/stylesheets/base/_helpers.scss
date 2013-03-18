@@ -7,19 +7,19 @@
     float: right;
 }
 .margin-top {
-    margin-top: @baseline*2;
+    margin-top: $baseline*2;
 }
 
 .margin-bottom {
-    margin-bottom: @baseline*2;
+    margin-bottom: $baseline*2;
 }
 
 .border-top {
-    border-top: 1px solid @mushroom;
+    border-top: 1px solid $mushroom;
 }
 
 .border-bottom {
-    border-bottom: 4px solid @mushroom;
+    border-bottom: 4px solid $mushroom;
 }
 
 // Accessible hidden content.

@@ -1,12 +1,12 @@
-@tabBorderWidth: 2px;
+$tabBorderWidth: 2px;
 
 .tabs {
-    border: @tabBorderWidth solid @mushroom;
-    margin: @baseline @gutter 0 @gutter;
+    border: $tabBorderWidth solid $mushroom;
+    margin: $baseline $gutter 0 $gutter;
     border-bottom: none;
     padding: 0px;
     list-style-type: none;
-    background: @mushroom;
+    background: $mushroom;
     overflow: hidden;
 }
 
@@ -20,13 +20,13 @@
 .tabs a {
     text-align: center;
     color: #545454;
-    padding: @baseline*2;
+    padding: $baseline*2;
     display: block;
     font-weight: normal;
     text-decoration: none;
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 18.75em) {
     .tabs li a {
         font-size: 14px;
     }
@@ -49,8 +49,8 @@
 
 .tabs-content {
     clear: both;
-    margin: 0px @gutter;
-    border: @tabBorderWidth solid @mushroom;
+    margin: 0px $gutter;
+    border: $tabBorderWidth solid $mushroom;
     border-top: none;
 }
 
