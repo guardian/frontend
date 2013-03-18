@@ -4,7 +4,6 @@ define([], function() {
 
     function load() {
         require([quantcastUrl], function() {
-            console.log('loaded quantcast');
             _qevents.push({
                 qacct:"p-73ktnlRTKQPTw"
             });
