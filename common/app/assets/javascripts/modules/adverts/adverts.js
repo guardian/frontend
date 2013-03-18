@@ -57,8 +57,10 @@ function (
                 audienceScience.load(config.page);
             }
 
-            quantcast.load();
-
+            if (config.switches.quantcast) {
+                quantcast.load();
+            }
+        
         }
 
         //Make the request to ad server
