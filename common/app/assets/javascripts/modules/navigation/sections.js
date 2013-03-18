@@ -5,10 +5,12 @@ define(['common', 'bonzo'], function (common, bonzo) {
         this.init = function () {
 
             var sectionsHeader = document.getElementById('sections-header'),
+                $sectionsHeader = bonzo(sectionsHeader),
                 className = 'is-off';
 
             common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                bonzo(sectionsHeader).removeClass(className);
+                $sectionsHeader.removeClass(className);
+                $sectionsHeader.focus();
             });
 
             common.mediator.on('modules:control:change', function(args) {
@@ -17,7 +19,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
                     state = args[1];
 
                 if (state === false || control !== 'sections-control-header') {
-                    bonzo(sectionsHeader).addClass(className);
+                    $sectionsHeader.addClass(className);
                 }
 
             });

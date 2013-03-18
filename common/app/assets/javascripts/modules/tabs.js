@@ -32,7 +32,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 bonzo(currentTab.parentNode).removeClass('tabs-selected');
                 bonzo(clickedTab.parentNode).addClass('tabs-selected');
                 bonzo(paneToHide).hide();
-                bonzo(paneToShow).removeClass('js-hidden').show();
+                bonzo(paneToShow).removeClass('js-hidden').show().focus();
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();
