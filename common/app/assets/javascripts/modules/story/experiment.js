@@ -5,7 +5,7 @@ define([
 
     "modules/accordion",
     "modules/expandable",
-    "modules/story/storytype"
+    "bootstraps/story"
 ], function(
     common,
     bean,
@@ -13,48 +13,15 @@ define([
 
     Accordion,
     Expandable,
-    StoryType
+    Story
 ) {
 
-    function Experiment() {
+    function Experiment(config) {
 
         var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
 
-        var modules = {
-            initAccordion: function () {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            },
-
-            initTimeline: function() {
-                var $ = common.$g,
-                    timeline = document.querySelector('.timeline'),
-                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
-
-                if(timeline) {
-                    $('.event-children').addClass('h');
-                    $('.event-children').first().removeClass('h');
-                    bean.on(timeline, eventType, '.date-line', function(e) {
-                        var block = $(this).parent();
-                        $('.event-children', block).toggleClass('h');
-                    });
-                }
-            },
-
-            initExpandables: function() {
-                var els = document.querySelectorAll('.expandable');
-
-                for(var i = 0, l = els.length; i < l; i++) {
-                    var id = els[i].id;
-                    var e = new Expandable({id: id, expanded: false});
-                    e.init();
-                }
-            }
-        };
-
-        this.init = function (config) {
+        this.init = function () {
             if (!experimentName) {
                 for (var key in config.switches) {
                     if (config.switches[key] && key.match(/^experiment(\w+)/)) {
@@ -65,8 +32,6 @@ define([
             }
 
             experimentName = experimentName.toLowerCase();
-
-
 
             if (experimentName) {
                 this.load('/stories/' + experimentName + '/' + config.page.pageId);
@@ -89,20 +54,22 @@ define([
             },
 
             renderStoryModule01: function(json) {
-                var el;
+                var el, story;
 
                 document.querySelector('h2.article-zone.type-1').innerHTML = json.title;
                 document.querySelector('#js-related').innerHTML = json.block;
                 
                 el = document.querySelector('#related-trails');
-                el.parentNode.removeChild(el);
+                if (el) {
+                    el.parentNode.removeChild(el);
+                }
 
                 el = document.querySelector('h3.type-2.article-zone');
-                el.parentNode.removeChild(el);
+                if (el) {
+                    el.parentNode.removeChild(el);
+                }
 
-                modules.initAccordion();
-                modules.initTimeline();
-                modules.initExpandables();
+                story = new Story.init({}, config);
             },
 
             fallback: function () {

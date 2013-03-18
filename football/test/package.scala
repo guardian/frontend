@@ -10,7 +10,7 @@ import org.joda.time.DateMidnight
 import common._
 import concurrent.Future
 
-class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
+class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicits.Football {
   override def onStart() = {
     FootballClient.http = TestHttp
     Competitions.refreshCompetitionData()
@@ -18,6 +18,21 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
     Competitions.competitionAgents.filter(_.competition.id != "127").foreach { agent =>
       agent.refresh()
     }
+    val start = System.currentTimeMillis()
+
+    while (!testDataLoaded){
+      //give the futures some time to do their thing
+
+      //ensure we are not stuck in an endless loop if we mess up a test
+      if (System.currentTimeMillis() - start > 10000) throw new RuntimeException("this is taking too long to load test data")
+    }
+  }
+
+  private def testDataLoaded = {
+    Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
+    Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
+    Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
+    Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false)
   }
 }
 
@@ -42,12 +57,12 @@ object TestHttp extends Http {
     try {
       // spoof todays date
       val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
-
       Future(pa.Response(200, xml, "ok"))
     } catch {
       case t: Throwable => Future(pa.Response(404, "not found", "not found"))
     }
   }
+
 }
 
 object `package` {

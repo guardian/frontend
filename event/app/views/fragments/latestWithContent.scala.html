@@ -1,0 +1,44 @@
+@(stories: Seq[Story])
+
+@trail(content: Seq[model.Content], story: Story) = {
+    @content.map{
+        case trail: Article => {
+            <li class="trail">
+
+                @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+                <div class="media">
+                    @trail.thumbnail.map{ thumbnailUrl =>
+                        <a href="/stories/@story.id" class="media-img" data-link-name="story | image">
+                            <img class="maxed" src="@thumbnailUrl"
+                                data-thumb-width="140"
+                                @trail.mainPicture(width=220).map { largeCrop =>
+                                    data-fullsrc="@largeCrop.url"
+                                    data-full-width="@largeCrop.width"
+                                    alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
+                                    title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                                }
+                                itemprop="contentURL"
+                            />
+                        </a>
+                    }
+
+                    <a href="/stories/@story.id" class="type-7 trail-story-title">@story.title</a>
+
+                    <h2 class="media-body trail-headline type-5">
+                        <a href="/stories/@story.id" data-link-name="story | text">
+                            @RemoveOuterParaHtml(trail.headline)
+                        </a>
+                    </h2>
+
+                    @trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
+                </div>
+
+            </li>
+        }
+    }
+}
+
+@stories.take(2).zipWithRowInfo.map{ case (story, info) =>
+    @trail(story.contentByImportance.take(1), story)
+}

@@ -5,15 +5,21 @@
    min-height: 40px;
 }
  
-.social-network a {
+.social-btn,
+a.social-btn {
+    .type-10;
     text-align: center;
     display: block;
     padding: 8px 0px;
     color: #ffffff;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 8px solid #ffffff;
 }
 
-@media (min-width: 320px) {
+@media (min-width: 20em) {
+
+    .social {
+      padding: @baseline*3 0px @baseline*4 @gutter;
+    }
     
     .social .social-network {
         float: left;
@@ -21,12 +27,16 @@
         max-width: 80px;
         }
 
-    .social-network a {
-        border-right: 2px solid #ffffff;
+    .social-btn,
+    a.social-btn{
+        border-right: 8px solid #ffffff;
         border-bottom-width: 0px;
         }
-        
-    }
+   
+    .social-network:last-child .social-btn {
+        border-right-width: 0px;
+        }
+}
 
 .fb {
     background-color: #3b5998;

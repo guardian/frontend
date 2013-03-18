@@ -298,11 +298,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an aricle and want to share it with my friends")
+      
       CommonSwitches.SocialSwitch.switchOn
+      
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val fbShareUrl = "http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
+        val fbShareUrl = "http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
         val linkedinShareUrl = "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&title=Mark+Kermode%27s+DVD+round-up&source=The+Guardian"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fwww.guardian.co.uk%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
@@ -313,6 +315,45 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".social .linkedin a").getAttribute("href") should be(linkedinShareUrl)
         findFirst(".social .gplus a").getAttribute("href") should be(gplusShareUrl)
       }
+      
+      Given("I want to track the responsive share buttons using Facebook Insights")
+      
+      CommonSwitches.SocialSwitch.switchOn
+
+      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+        import browser._
+
+        val fbShareTrackingToken = "ref=responsive"
+
+        Then("I should pass Facebook a tracking token")
+        findFirst(".social .fb a").getAttribute("href") should include(fbShareTrackingToken)
+      }
+
+
     }
+    
+    // http://www.w3.org/WAI/intro/aria
+    scenario("Make the document accessible with ARIA support") {
+
+      Given("I read an article")
+      CommonSwitches.SocialSwitch.switchOn
+      HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+        import browser._
+
+        Then("I should see the main ARIA roles described")
+        findFirst("#related-trails").getAttribute("role") should be("complementary")
+        findFirst("#js-related").getAttribute("role") should be("complementary")
+        findFirst("#js-popular").getAttribute("role") should be("complementary")
+        findFirst("header").getAttribute("role") should be("banner")
+        findFirst("footer").getAttribute("role") should be("contentinfo")
+        findFirst("nav").getAttribute("role") should be("navigation")
+        findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
+        findFirst("#article").getAttribute("role") should be("main")
+        findFirst(".trailblock").getAttribute("role") should be("complementary")
+        findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        
+      }
+    }
+
   }
 }

@@ -4,14 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class FootballSteps {
 
@@ -59,12 +59,12 @@ public class FootballSteps {
 	@Then("^the competition filter list opens$")
 	public void the_competition_filter_list_opens() throws Throwable {
 		WebElement leagueList = webDriver.waitForVisible(By.id("js-football-league-list"));
-	    Assert.assertTrue(leagueList != null);
+	    assertTrue(leagueList != null);
 	}
 
 	@Then("^the competition filter list closes$")
 	public void the_competition_filter_list_closes() throws Throwable {
-	    Assert.assertTrue(webDriver.waitForHidden(By.id("js-football-league-list")));
+	    assertTrue(webDriver.waitForHidden(By.id("js-football-league-list")));
 	}
 	
 	@When("^I click \"(.+)\"$")
@@ -76,7 +76,7 @@ public class FootballSteps {
 	public void I_should_see_the_following_days_worth_of(int numOfDays, String matchesType) throws Throwable {
 		// should now have twice as many days worth of results
 		List<WebElement> competitions = webDriver.findElements(By.className("competitions"));
-		Assert.assertEquals(numOfDays, competitions.size() - numOfDays);
+		assertEquals(numOfDays, competitions.size() - numOfDays);
 	}
 	
 	@Then("^there should be an auto-update component$")
@@ -88,7 +88,7 @@ public class FootballSteps {
 	public void auto_update_should_be_on() throws Throwable {
 		WebElement autoUpdate = webDriver.findElement(By.className("update"));
 	    WebElement selectedButton = autoUpdate.findElement(By.cssSelector("button.is-active"));
-	    Assert.assertEquals("on", selectedButton.getAttribute("data-action"));
+	    assertEquals("on", selectedButton.getAttribute("data-action"));
 	}
 
 	@Then("^the matches should update every (\\d+) seconds$")
@@ -110,7 +110,7 @@ public class FootballSteps {
 	@Then("^auto-update should be off$")
 	public void auto_update_should_be_off() throws Throwable {
 	    WebElement offButton = webDriver.findElement(By.cssSelector(".update button[data-action='off']"));
-	    Assert.assertTrue(offButton.getAttribute("class").contains("is-active"));
+	    assertTrue(offButton.getAttribute("class").contains("is-active"));
 	}
 
 	@Given("^I visit any Football league and/or Domestic competition tag page$")
@@ -126,7 +126,7 @@ public class FootballSteps {
 	@Then("^table should show the top (\\d+) teams$")
 	public void table_should_show_the_top_teams(int teams) throws Throwable {
 	    List<WebElement> rows = webDriver.findElements(By.cssSelector(".table-football-body tr"));
-		Assert.assertEquals(teams, rows.size());
+		assertEquals(teams, rows.size());
 	}
 
 	@Then("^there should be a link to \"([^\"]*)\"$")
@@ -148,21 +148,21 @@ public class FootballSteps {
 	public void the_team_s_upcoming_fixtures_are_shown(int matchCount) throws Throwable {
 	    WebElement fixturesContainer = webDriver.waitForElement(By.cssSelector(".team-fixtures"));
 	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
-	    Assert.assertEquals(matchCount, matches.size());
+	    assertEquals(matchCount, matches.size());
 	}
 
 	@Then("^the previous result is shown$")
 	public void the_previous_result_is_shown() throws Throwable {
 		WebElement fixturesContainer = webDriver.waitForElement(By.cssSelector(".team-results"));
 	    List<WebElement> matches = fixturesContainer.findElements(By.className("match"));
-	    Assert.assertEquals(1, matches.size());
+	    assertEquals(1, matches.size());
 	}
 
 	@Then("^table will show the teams current position within (\\d+) rows$")
 	public void table_will_show_the_teams_current_position_within_rows(int rowsCount) throws Throwable {
 	    WebElement table = webDriver.waitForElement(By.className("table-football"));
 	    List<WebElement> rows = table.findElements(By.cssSelector("tbody tr"));
-	    Assert.assertEquals(rowsCount, rows.size());
+	    assertEquals(rowsCount, rows.size());
 	}
 
 	@Then("^the teams row should be highlighted$")

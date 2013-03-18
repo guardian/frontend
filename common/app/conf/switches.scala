@@ -50,6 +50,10 @@ object CommonSwitches {
     "Enable storified articles.",
     initiallyOn = false)
 
+  val StoryVersionBSwitch = DefaultSwitch("story-version-b",
+    "Switch to enable version B of story page.",
+    initiallyOn = false)
+
   val StoryFrontTrails = DefaultSwitch("story-front-trails",
     "Switch on to enable front trails for latest stories.",
     initiallyOn = false)
@@ -58,10 +62,15 @@ object CommonSwitches {
     "If this switch is enabled the icons to popular social media sites will be displayed",
     initiallyOn = false)
 
+  val QuantcastSwitch = DefaultSwitch("quantcast",
+    "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryFrontTrails, SocialSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
+    QuantcastSwitch
   )
 }
 

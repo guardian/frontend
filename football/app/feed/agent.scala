@@ -92,16 +92,16 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
     val startDate = competition.startDate.getOrElse(new DateMidnight().minusDays(30))
+    val today = new DateMidnight
 
-    FootballClient.results(competition.id, startDate).map{_.map { r =>
-      val homeTeam = r.homeTeam.copy(name = TeamName(r.homeTeam))
-      val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
-      r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
-    }}.map{ competitionOption =>
-      val today = new DateMidnight
-
-      agent.send { old =>
-        //unfortunately we need to poll 2 feeds to get this data correctly
+    FootballClient.results(competition.id, startDate).map { _.map{ r =>
+        val homeTeam = r.homeTeam.copy(name = TeamName(r.homeTeam))
+        val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
+        r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+      }
+    }.map{ results =>
+      agent.send{ old =>
+      //unfortunately we need to poll 2 feeds to get this data correctly
         val resultsToKeep = old.filter(_.date >= today).filter {
           case m: MatchDay => true
           case _ => false
@@ -112,8 +112,6 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
         (results ++ resultsToKeep).distinctBy(_.id)
       }
     }
-
-
   }
 
   def addResultsFromMatchDay(matches: Seq[MatchDay]) {

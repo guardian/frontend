@@ -88,6 +88,12 @@ trait CompetitionSupport extends Football {
   }
 }
 
+
+
+
+
+
+
 trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(

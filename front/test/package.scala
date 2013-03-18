@@ -7,8 +7,23 @@ import controllers.front.{Front, FrontLifecycle}
 object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
   override def onStart(app: play.api.Application) {
-    Front.startup()
-    Front.warmup
+    //Front.startup()
+    Front.refresh()
+
+
+    //TODO
+
+
+    println("+++++++++++++++++++++++" + Front("front", "UK").size)
+    Thread.sleep(1000)
+    println("+++++++++++++++++++++++" + Front("front", "UK").size)
+    Thread.sleep(1000)
+    println("+++++++++++++++++++++++" + Front("front", "UK").size)
+    Thread.sleep(1000)
+    println("+++++++++++++++++++++++" + Front("front", "UK").size)
+    Thread.sleep(1000)
+    println("+++++++++++++++++++++++" + Front("front", "UK").size)
+
   }
 
   override def onStop(app: play.api.Application) {

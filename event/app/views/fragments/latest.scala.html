@@ -1,21 +1,24 @@
-@(story: Story, edition: String)
+@(story: Story, edition: String, paras: Int)
 
 @renderLatest(content: Seq[model.Content], edition: String) = {
     @content.map{
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    @fragments.dateline(a.webPublicationDate, a.isLive, edition)
-                    <h2 class="article-headline">Latest developments</h2>
-                </header>
+                    <h3 class="story-sub-head">Latest</h3>
 
-                @if(!a.isLive) {
-                    @a.mainPicture.map{ mainPicture =>
-                        @a.mainPicture(width=220).map{ smallCrop =>
-                            @fragments.img(mainPicture, smallCrop)
+                    @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+
+                    <h2 class="article-headline">@a.headline</h2>
+
+                    @if(!a.isLive) {
+                        @a.mainPicture.map{ mainPicture =>
+                            @a.mainPicture(width=220).map{ smallCrop =>
+                                @fragments.img(mainPicture, smallCrop)
+                            }
                         }
                     }
-                }
+                </header>
 
                 @fragments.byline(a.byline, a)
 
@@ -26,9 +29,9 @@
                         BlockNumberCleaner,
                         TweetCleaner,
                         WitnessCleaner,
-                        Summary(if(a.isLiveBlog){2}else{4})
+                        Summary(paras)
                     )
-                    <p><a href="@a.url">Continue reading...</a></p>
+                    <p><a class="continue" href="@a.url">Continue reading...</a></p>
                     <p><a class="back-to-top" href="#top">Back to top</a></p>
                 </div>
             </article>
@@ -37,14 +40,6 @@
 }
 
 <section class="story-latest">
-    @if(story.contentByColour.get("Overview").nonEmpty) {
-        @story.contentByColour.get("Overview").map{ content =>
-            @defining(content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).take(1)){ article =>
-                @renderLatest(article, edition)
-            }
-        }
-    } else {
-        @renderLatest(story.contentByImportance.take(1), edition)
-    }
+    @renderLatest(story.contentByImportance.take(1), edition)
 </section>
 
