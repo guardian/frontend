@@ -65,10 +65,15 @@ object CommonSwitches {
     "If this switch is turned on then Google search is added to the sections nav",
     initiallyOn = false)
 
+  val QuantcastSwitch = DefaultSwitch("quantcast",
+    "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, SearchSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, 
+    SearchSwitch, QuantcastSwitch
   )
 }
 

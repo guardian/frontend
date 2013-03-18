@@ -1,15 +1,13 @@
 package com.gu.test;
 
-import java.util.List;
-
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class FrontSteps {
 
@@ -51,7 +49,7 @@ public class FrontSteps {
   	public void the_section_will_be_toggled(String sectionState) throws Throwable {
     		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "none" : "0";
     		// sections are hidden with css max-height
-    		Assert.assertTrue(webDriver.waitForCss(
+    		assertTrue(webDriver.waitForCss(
     		    By.xpath(trailblockXpath), "max-height", expectedTrailblockHeight)
     		);
   	}
@@ -62,7 +60,7 @@ public class FrontSteps {
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
         WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
-        Assert.assertEquals(ctaText, cta.getText());
+        assertEquals(ctaText, cta.getText());
         cta.click();
         // wait for second list of top stories to load in
         webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));

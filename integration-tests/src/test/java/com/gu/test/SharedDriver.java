@@ -1,7 +1,7 @@
 package com.gu.test;
 
-import cucumber.annotation.Before;
-import junit.framework.Assert;
+import cucumber.api.java.Before;
+import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -148,7 +148,7 @@ public class SharedDriver extends EventFiringWebDriver {
 
 		for (WebElement footerLink : footerLinks) {
 			// checks if the page is 200 - errors if it finds another type of page eg 404, 502
-			Assert.assertEquals(200, checkURLReturns(footerLink.getAttribute("href")));
+			assertEquals(200, checkURLReturns(footerLink.getAttribute("href")));
 		}
 	}
 

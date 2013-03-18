@@ -2,14 +2,14 @@ package com.gu.test;
 
 import java.util.List;
 
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class Steps {
 
@@ -54,7 +54,7 @@ public class Steps {
 		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
 	    WebElement tab = webDriver.findElement(By.id(tabId));
 	    // confirm element is shown/hidden
-	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
+	    assertEquals(tabState.equals("shown"), tab.isDisplayed());
 	}
 	
 	@When("^I visit the (.*) jasmine test runner$")
@@ -70,7 +70,7 @@ public class Steps {
 			"file:///" + frontendRoot + "/" + project + "/test/assets/javascripts/runner.html"
 		);
 		// confirm we're on the correct page
-		Assert.assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
+		assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
 	}
 
 	@Then("^all the jasmine tests pass$")
@@ -99,7 +99,7 @@ public class Steps {
 			}
 		}
 		
-		Assert.assertFalse(testFailure);
+		assertFalse(testFailure);
 	}
 	
 }
