@@ -27,7 +27,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         Then("I should see a list of 'world' content")
-        findFirst(".zone-world").findFirst("h1").getText should be("Most read: World news")
+        findFirst(".zone-world").findFirst("h2").getText should be("Most read: World news")
         And("it should contain world news")
         $(".zone-world li").size should be > (0)
 
@@ -41,7 +41,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         Then("I should see the site wide most read")
-        $("h1")(1).getText should be("Most read: The Guardian")
+        $("h2")(1).getText should be("Most read: The Guardian")
       }
     }
 
