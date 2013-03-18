@@ -11,6 +11,7 @@ import pa.FootballMatch
 import implicits.{ Requests, Football }
 import play.api.libs.concurrent.Execution.Implicits._
 import concurrent.Future
+import org.joda.time.DateMidnight
 
 case class Report(trail: Trail, name: String)
 
@@ -37,11 +38,10 @@ object MoreOnMatchController extends Controller with Football with Requests with
       val promiseOfRelated = Future(loadMoreOn(request, theMatch))
       Async {
         // for our purposes here, we are only interested in content with exactly 2 team tags
-        promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map { related =>
-          related match {
-            case Nil => NotFound
-            case _ => Cached(300)(JsonComponent(
-              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
+        promiseOfRelated map { _ filter twoTeamsFilter match {
+          case Nil => NotFound
+          case related => Cached(300)(JsonComponent(
+              "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, related filter twoTeamsFilter)))
             )
           }
         }
@@ -53,14 +53,12 @@ object MoreOnMatchController extends Controller with Football with Requests with
     findMatch(matchId).map { theMatch =>
       val promiseOfRelated = Future(loadMoreOn(request, theMatch))
       Async {
-        promiseOfRelated.map { related =>
-          related match {
+        promiseOfRelated map {
             case Nil => NotFound
-            case _ => Cached(300)(JsonComponent(
-              ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
+            case related => Cached(300)(JsonComponent(
+              ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, related filter twoTeamsFilter))),
               ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
             )
-          }
         }
       }
     }.getOrElse(NotFound)
@@ -77,10 +75,24 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .response.results.map(new Content(_))
   }
 
-  //for our purposes we expect exactly 2 football teams
-  private def withExactlyTwoTeams(content: Seq[Content]) = content.filter(_.tags.filter(_.isFootballTeam).size == 2)
+  def futureMatchNav(contentDate: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Future[Option[MatchNav]] = {
+    val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
+    val maybeMatch = matchFor(interval, team1, team2)
 
-  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
+    Future {
+      maybeMatch flatMap { theMatch =>
+        loadMoreOn(request, theMatch) filter { twoTeamsFilter } match {
+          case Nil => None
+          case related => Some(populateNavModel(theMatch, related))
+        }
+      }
+    }
+  }
+
+  //for our purposes we expect exactly 2 football teams
+  private def twoTeamsFilter(content: Content): Boolean = content.tags.filter(_.isFootballTeam).size == 2
+
+  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader): MatchNav = {
     val matchDate = theMatch.date.toDateMidnight
     val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin }
     val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin }

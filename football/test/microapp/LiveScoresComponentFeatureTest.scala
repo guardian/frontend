@@ -8,10 +8,11 @@ import controllers.microapp.LiveScoresComponentController
 import feed.CompetitionSupport
 import org.joda.time.{ DateTime, DateMidnight }
 import play.api.mvc.RequestHeader
-import play.api.libs.concurrent.Promise
 import controllers.MatchNav
 import model.{ Content, Competition }
 import pa.{ MatchDayTeam, Result, FootballMatch }
+import concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits._
 
 class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -43,40 +44,40 @@ class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with
 
     scenario("Call from a Match Report page on load") {
 
-      given("A valid call from a match page on load")
+      Given("A valid call from a match page on load")
       val url = "/football/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham"
       val request = FakeRequest(GET, url)
       val controller = new LiveScoresForTest(comps, Some(nav))
 
-      when("I call the controller")
+      When("I call the controller")
       val result = controller.renderScores()(request)
 
-      then("The response should have an OK status")
+      Then("The response should have an OK status")
       status(result) should be(200)
 
-      and("it should be HTML")
+      And("it should be HTML")
       contentType(result) should be(Some("text/html"))
 
-      and("it should be UTF-8")
+      And("it should be UTF-8")
       charset(result) should be(Some("utf-8"))
 
-      and("it should include the match report selected tab")
+      And("it should include the match report selected tab")
       contentAsString(result) should include("""<li><a class="active" href="#">Guardian report</a></li>""")
 
-      and("it should include the minute by minute unselected tab")
+      And("it should include the minute by minute unselected tab")
       contentAsString(result) should include("""<li><a class="inactive" href="http://foo.com/minByMin">Min-by-min</a></li>""")
 
-      and("it should include the match fats unselected tab")
+      And("it should include the match fats unselected tab")
       contentAsString(result) should include("""<li><a class="inactive" href="http://foo.com/stats">Match facts</a></li>""")
 
-      and("it should include the competition name")
+      And("it should include the competition name")
       contentAsString(result) should include("""<h2 data="compId">The Competition</h2>""")
 
-      and("it should include the team scores")
+      And("it should include the team scores")
       contentAsString(result) should include("""<th data="19">West Ham 2</th>""")
       contentAsString(result) should include("""<th data="43">Spurs 3</th>""")
 
-      and("it should include the scorers")
+      And("it should include the scorers")
       contentAsString(result) should include("""<li>Andy Carroll 25 Pen, </li>""")
       contentAsString(result) should include("""<li>Joe Cole 58</li>""")
       contentAsString(result) should include("""<li>Gareth Bale 13, </li>""")
@@ -87,52 +88,52 @@ class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with
 
     scenario("A match report page doing live updates of the match scores") {
 
-      given("A valid JSONP Ajax call from a match page")
+      Given("A valid JSONP Ajax call from a match page")
       val url = "/football/api/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham&callback=cb"
       val request = FakeRequest(GET, url)
       val controller = new LiveScoresForTest(comps, Some(nav))
 
-      when("I call the controller")
+      When("I call the controller")
       val result = controller.renderJson()(request)
 
-      then("The response should have an OK status")
+      Then("The response should have an OK status")
       status(result) should be(200)
 
-      and("it should be application/javascript")
+      And("it should be application/javascript")
       contentType(result) should be(Some("application/javascript"))
 
-      and("it should be UTF-8")
+      And("it should be UTF-8")
       charset(result) should be(Some("utf-8"))
 
-      and("it should be wrapped in the callback method")
+      And("it should be wrapped in the callback method")
       contentAsString(result) should startWith("cb(")
       contentAsString(result) should endWith(");")
     }
 
     scenario("A call to the Live Scores API") {
 
-      given("A valid request to the API")
+      Given("A valid request to the API")
       val url = "/football/api/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham"
       val request = FakeRequest(GET, url)
       val controller = new LiveScoresForTest(comps, Some(nav))
 
-      when("I call the controller")
+      When("I call the controller")
       val result = controller.renderJson()(request)
 
-      then("The response should have an OK status")
+      Then("The response should have an OK status")
       status(result) should be(200)
 
-      and("it should be application/json")
+      And("it should be application/json")
       contentType(result) should be(Some("application/json"))
 
-      and("it should be UTF-8")
+      And("it should be UTF-8")
       charset(result) should be(Some("utf-8"))
     }
 
   }
 }
 
-case class MockTrail(val theUrl: String) extends Content(null) {
+case class MockTrail(theUrl: String) extends Content(null) {
   override lazy val url = theUrl
 }
 
@@ -142,6 +143,6 @@ class LiveScoresForTest(comps: CompetitionSupport, matchNav: Option[MatchNav]) e
 
   protected def competitions: CompetitionSupport = comps
 
-  protected def promiseMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Promise[Option[MatchNav]] = Promise.pure(matchNav)
+  protected def futureMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Future[Option[MatchNav]] = Future(matchNav)
 
 }

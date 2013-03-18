@@ -7,9 +7,10 @@ import play.api.mvc._
 import model.Competition
 import implicits.{ Requests, Football }
 import controllers.{ MoreOnMatchController, MatchNav }
-import play.api.libs.concurrent.Promise
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateMidnight
+import concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits._
 
 trait LiveScoresComponentController extends Controller with Football with Requests with Logging {
   type Renderer = (MatchNav, Competition, RequestHeader) => Result
@@ -33,14 +34,12 @@ trait LiveScoresComponentController extends Controller with Football with Reques
       case _ => None
     }
 
-    teamsAndPath foreach { case (team1, team2, path) => println("**** CurrentPage; " + path + " and teams: " + team1 + ", " + team2) }
-
     teamsAndPath map {
       case (team1, team2, path) =>
         val date = extractDate(path)
-        val promise = promiseMatchNav(date, team1, team2)
+        val future = futureMatchNav(date, team1, team2)
         Async {
-          promise map { optNav: Option[MatchNav] =>
+          future map { optNav: Option[MatchNav] =>
             optNav map { nav =>
               val comp = competitions.withMatch(nav.theMatch.id).get
               Cached(60) {
@@ -67,7 +66,7 @@ trait LiveScoresComponentController extends Controller with Football with Reques
 
   protected def competitions: CompetitionSupport
 
-  protected def promiseMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Promise[Option[MatchNav]]
+  protected def futureMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Future[Option[MatchNav]]
 }
 
 object LiveScoresComponentController extends LiveScoresComponentController {
@@ -76,7 +75,7 @@ object LiveScoresComponentController extends LiveScoresComponentController {
 
   protected def competitions = Competitions
 
-  protected def promiseMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Promise[Option[MatchNav]] = {
-    MoreOnMatchController.promiseOfMatchNav(date, team1, team2)
+  protected def futureMatchNav(date: DateMidnight, team1: String, team2: String)(implicit request: RequestHeader): Future[Option[MatchNav]] = {
+    MoreOnMatchController.futureMatchNav(date, team1, team2)
   }
 }
