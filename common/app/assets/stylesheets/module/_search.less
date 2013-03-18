@@ -1,13 +1,44 @@
 .search-box {
     border-top: 2px solid #e3e3db;
-    margin: 0 @gutter;
+    margin: 0 @gutter - 2;
     padding: @baseline 0 0 0;
 }
 
-.gsc-thumbnail-inside, .gsc-url-top {
-    padding-left: 0px !important; 
+.gsc-search-box .gsib_a {
+    padding-top: 2px;
 }
 
-.gsib_a {
-    padding-top: 0 !important;
+.gsc-search-box .gsc-input {
+    padding: 0;
+}
+
+.gsc-search-box .gsc-input-box {
+    height: 28px;
+}
+
+.gsc-search-box .gsc-search-button {
+    padding: 8px 14px;
+    margin: 5px 0 0 0;
+}
+
+.gsc-control-cse {
+    padding: 0 @gutter !important;
+}
+
+.gsc-results .gsc-thumbnail-inside, 
+.gsc-results .gsc-url-top {
+    padding-left: 0px; 
+}
+
+.gsc-results .gs-snippet {
+    line-height: 1.6rem;
+}
+
+.gsc-results .gs-visibleUrl-long {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.gsc-results .gsc-cursor-box {
+    margin: 0 !important;
 }
