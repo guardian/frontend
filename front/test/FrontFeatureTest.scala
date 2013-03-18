@@ -12,7 +12,7 @@ import play.api.test.FakeRequest
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
-import controllers.FrontPage
+import controllers.NetworkFrontPage
 import model.TrailblockDescription
 import views.support.{ Featured, Thumbnail, Headline }
 

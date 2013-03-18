@@ -92,7 +92,7 @@ object PaApiHttpErrorMetric extends CountMetric(
 )
 
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
 object Management extends Management {
