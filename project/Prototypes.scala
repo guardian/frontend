@@ -37,6 +37,8 @@ trait Prototypes extends Testing {
 
       resolvers := Seq(
         "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+        //TODO wait for proper release
+        "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
         Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
         "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
         "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
@@ -85,7 +87,7 @@ trait Prototypes extends Testing {
     libraryDependencies ++= Seq(
         "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "1.21",
+      "com.gu.openplatform" %% "content-api-client" % "1.22-SNAPSHOT",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
       "commons-io" % "commons-io" % "2.4",

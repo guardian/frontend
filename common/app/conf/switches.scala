@@ -10,6 +10,7 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
 import com.gu.management.play.RequestMetrics
+import play.api.libs.ws.{Response, WS}
 
 object CommonSwitches {
 
@@ -64,16 +65,24 @@ object CommonSwitches {
   )
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
+class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
 
   val configUrl = config.switches.configurationUrl
 
-  override val proxy = Proxy(config)
-
-  private var schedule: Option[Cancellable] = None
+  private lazy val schedule = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+    refresh()
+  }
 
   def refresh() {
     log.info("Refreshing switches")
+
+
+    WS.url(configUrl).get().map{ response =>
+
+    }
+
+
+
     loadConfig.foreach { config =>
       val properties = new Properties()
       properties.load(IOUtils.toInputStream(config))
@@ -94,9 +103,7 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
       None
   }
 
-  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
-    refresh()
-  })
+  override def onStart() = schedule
 
-  override def onStop() = schedule.foreach(_.cancel())
+  override def onStop() = schedule.cancel()
 }

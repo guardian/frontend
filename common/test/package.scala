@@ -10,6 +10,7 @@ import com.gu.openplatform.contentapi.connection.Http
 import recorder.HttpRecorder
 import com.gu.management.play.InternalManagementPlugin
 import play.api.{GlobalSettings, Play}
+import concurrent.Future
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -25,7 +26,7 @@ trait TestSettings {
 
   val originalHttp = ContentApi.http
 
-  ContentApi.http = new Http {
+  ContentApi.http = new Http[Future] {
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
         originalHttp.GET(url, headers)
