@@ -44,6 +44,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
       HtmlUnit("/football/premierleague/table") { browser =>
         import browser._
 
+        $("h1").getTexts should contain("Premier League table")
         $(".table-football-body td").getTexts should contain("Arsenal")
       }
 
