@@ -61,10 +61,15 @@ object CommonSwitches {
     "If this switch is enabled the icons to popular social media sites will be displayed",
     initiallyOn = false)
 
+  val QuantcastSwitch = DefaultSwitch("quantcast",
+    "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
+    QuantcastSwitch
   )
 }
 
