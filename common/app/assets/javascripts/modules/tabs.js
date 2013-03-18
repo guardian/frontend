@@ -36,8 +36,6 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();
-
-                return bonzo(paneToShow).offset().height;
             }
         };
 
@@ -46,47 +44,52 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             var ols = common.$g('.tabs-container').each(function (container) {
 
                 var tabSet = common.$g('ol.js-tabs', container)[0],
-                    vPos = bonzo(tabSet).offset().top,
-                    vFixed = false,
+                    tabSetHeight = 0,
+                    vPos = 0,
                     vHeight = 0,
-                    vScroll = 0;
+                    vScroll = 0,
+                    vFixed = false;
 
-                window.console.log(container);
-                window.console.log(tabSet);
+                if(tabSet) {
 
-                if(tabSet.getAttribute('data-is-bound') === true) {
-                    return false;
-                }
-
-                bean.add(tabSet, 'click', function (e) {
-                    var targetElm = e.target;
-                    // verify they clicked an <a> element
-                    if (targetElm.nodeName.toLowerCase() === "a") {
-                        vHeight = view.showTab(container, targetElm, e);
+                    if(tabSet.getAttribute('data-is-bound') === true) {
+                        return false;
                     }
-                    if (vScroll > vPos) {
-                        window.scrollTo(0, vPos);
-                    }
-                });
 
-                if (bonzo(container).hasClass('tabs-fixable')) {
+                    tabSetHeight = bonzo(tabSet).offset().height;
+                    vPos = bonzo(tabSet).offset().top;
 
-                    vHeight = bonzo(container).offset().height;
-
-                    bean.add(window, 'scroll', function (e) {
-                        vScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-                        if( !vFixed && vScroll >= vPos && vScroll <= vPos+vHeight ) {
-                            bonzo(tabSet).addClass('tabs-fixed');
-                            vFixed = true;
-                        } else if( vFixed && (vScroll < vPos || vScroll > vPos+vHeight)) {
-                            bonzo(tabSet).removeClass('tabs-fixed');
-                            vFixed = false;
+                    bean.add(tabSet, 'click', function (e) {
+                        var targetElm = e.target;
+                        // verify they clicked an <a> element
+                        if (targetElm.nodeName.toLowerCase() === "a") {
+                            view.showTab(container, targetElm, e);
+                            vHeight = bonzo(container).offset().height - tabSetHeight;
+                            if (vScroll > vPos) {
+                                window.scrollTo(0, vPos);
+                            }
                         }
                     });
+
+                    if (bonzo(container).hasClass('tabs-fixable')) {
+
+                        vHeight = bonzo(container).offset().height - tabSetHeight;
+
+                        bean.add(window, 'scroll', function (e) {
+                            vScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                            if( !vFixed && vScroll >= vPos && vScroll <= vPos + vHeight ) {
+                                bonzo(tabSet).addClass('tabs-fixed');
+                                vFixed = true;
+                            } else if( vFixed && (vScroll < vPos || vScroll > vPos + vHeight)) {
+                                bonzo(tabSet).removeClass('tabs-fixed');
+                                vFixed = false;
+                            }
+                        });
+                    }
+        
+                    tabSet.setAttribute('data-is-bound', true);
                 }
-    
-                tabSet.setAttribute('data-is-bound', true);
             });
         };
 
