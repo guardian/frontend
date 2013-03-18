@@ -61,10 +61,14 @@ object CommonSwitches {
     "If this switch is enabled the icons to popular social media sites will be displayed",
     initiallyOn = false)
 
+  val SearchSwitch = DefaultSwitch("google-search",
+    "If this switch is turned on then Google search is added to the sections nav",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, SearchSwitch
   )
 }
 
