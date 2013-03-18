@@ -1,4 +1,4 @@
-@(story: model.Story)
+@(story: model.Story, edition: String)
 
 <div class="margin-top margin-bottom">
     <div class="story-package-title">
@@ -10,11 +10,13 @@
         </div>
     </div>
     <div class="story-package-detail">
-        @if(story.hasContent) {
-            <p class="type-6">Latest Developments</p>
-            <section class="story-latest">
-                @fragments.trailblocks.thumbnail(story.contentByImportance, 3, true, 3)
-            </section>
-        }
+        @fragments.latest(story, edition, 2)
+        @fragments.quote(story, 0)
+        @fragments.explainer(story)
+        @fragments.quote(story, 1)
+        @fragments.agents(story)
+        @fragments.popular(story)
+        @fragments.timeline(story)
+        @fragments.latestStoriesJS()
     </div>
 </div>

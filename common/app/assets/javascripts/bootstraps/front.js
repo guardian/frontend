@@ -7,7 +7,8 @@ define([
     "modules/expandable",
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
-    "modules/footballfixtures"
+    "modules/footballfixtures",
+    "modules/story/frontstories"
 ], function (
     common,
     qwery,
@@ -16,7 +17,8 @@ define([
     Expandable,
     TrailblockToggle,
     TrailblockShowMore,
-    FootballFixtures
+    FootballFixtures,
+    FrontStories
 ) {
 
     var modules = {
@@ -72,6 +74,10 @@ define([
                     }).init();
                     break;
             }
+        },
+
+        showFrontStories: function(config) {
+            var fs = new FrontStories().init(config);
         }
     };
 
@@ -82,6 +88,7 @@ define([
         if(config.page.edition === "UK") {
             modules.showFootballFixtures(req.url);
         }
+        modules.showFrontStories(config);
     };
 
     return {

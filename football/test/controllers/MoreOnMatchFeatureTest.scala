@@ -20,7 +20,7 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
     scenario("View content related to a match") {
 
-      given("I visit a match page")
+      Given("I visit a match page")
 
       Fake {
         Competitions.setMatches("100", matches)
@@ -30,10 +30,10 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
         val json = Source.fromInputStream(connection.getInputStream).mkString
 
-        then("I should see the match report")
+        Then("I should see the match report")
         json should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
 
-        and("I should see the stats page")
+        And("I should see the stats page")
         json should include("/football/match/")
       }
     }

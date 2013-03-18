@@ -7,6 +7,7 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 import common.TeamCompetitions
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class TablesPage(
     page: Page,
@@ -66,13 +67,13 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   }
 
   def renderCompetition(competition: String) = Action { implicit request =>
-    loadTables.find(_.competition.url.endsWith("/" + competition)).map { table =>
+    loadTables.find(_.competition.url.endsWith(s"/$competition")).map { table =>
 
       val page = new Page(
-        Some("http://www.guardian.co.uk/football/%s/tables".format(competition)),
+        Some(s"http://www.guardian.co.uk/football/$competition/tables"),
         "football/tables",
         "football",
-        table.competition.fullName + " table",
+        s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
       )
 

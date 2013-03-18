@@ -1,11 +1,29 @@
-@(content: model.Content)
-<div class="box-indent border-top from-content-api">
-    @content.quote.map{ quote =>
-    <blockquote class="story-quote quoted" data-link-name="story quote">
-        @quote.text.map{ text =>
-            <p><a href="@content.url">@cleanTrailText(text)</a></p>
-        }
-        <cite>@quote.by.getOrElse(content.byline) @quote.subject.map{ subject => on @subject}</cite>
-    </blockquote>
+@(story: Story, index: Int)
+
+@if(story.hasQuotes) {
+    @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
+        <div class="story-quote">
+
+            <h3 class="story-sub-head story-sub-head--quote">Guardian 
+                @{
+                    article.colour match {
+                        case 1 => "Overview"
+                        case 2 => "Background"
+                        case 3 => "Analysis"
+                        case 4 => "Reaction"
+                        case 5 => "Comment"
+                    }
+                }
+            </h3>
+
+            @article.quote.map{ quote =>
+            <blockquote class="quoted" data-link-name="story quote">
+                @quote.text.map{ text =>
+                    <p><a href="@article.url">@cleanTrailText(text)</a></p>
+                }
+                <cite>@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
+            </blockquote>
+            }
+        </div>
     }
-</div>
+}

@@ -21,8 +21,9 @@ object Cached extends Results {
   private def cacheHeaders[A](seconds: Int, result: SimpleResult[A]) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
+    val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
     result.withHeaders(
-      "Cache-Control" -> "public, max-age=%s".format(if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds),
+      "Cache-Control" -> s"public, max-age=$maxAge",
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )

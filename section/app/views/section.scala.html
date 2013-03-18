@@ -1,7 +1,7 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Switches.all){  }{
-    <section class="front-section zone-@section.section">
+    <section class="front-section zone-@section.section" role="main">
 
         @fragments.headers.sectionHead(section.name)
 

@@ -23,7 +23,7 @@
 
     @fragments.filters(model.filters, model.page, model.pageType)
 
-    <div class="matches-container box-indent">
+    <div class="matches-container box-indent" role="main">
         @fragments.matchesList(model, model.pageType)
 
         @if(model.previousPage.isDefined || model.nextPage.isDefined) {

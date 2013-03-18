@@ -13,6 +13,31 @@ Requirements
 
     * A Mac or Linux pc
     * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+    * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
+    * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
+
+File handles
+------------
+
+On Linux machines you may run into a "too many files open" error during compilation or reloading. You can find out
+how many file handles you are allowed per process by running `ulimit -n`. This can be quite low, e.g. 1024
+
+To increase the limit do the following (instructions from Ubuntu 12.10)...
+
+In the file `/etc/security/limits.conf` add the following two lines
+```
+*  soft  nofile 20000
+*  hard  nofile 65000
+```
+
+And in the file `/etc/pam.d/common-session` add the following line.
+```
+session required pam_limits.so
+```
+
+restart the machine.
+
+For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 
 Configuration
 -------------
@@ -34,6 +59,13 @@ pa.api.key=XXXX
 ```
 
 Get the correct key and host from another developer on the project.
+
+To set up a proxy
+
+```
+export proxy_host=proxy.somewhere.com
+export proxy_port=1234
+```
 
 Running
 -------

@@ -9,32 +9,39 @@
 
 .agent-head {
   border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
-  margin: 0 0 @baseline*2 0;
-  padding: @baseline*3 0 @baseline*3 0;
+  margin: 0;
+  padding: @baseline*3 0 @baseline*2 0;
   overflow: auto;
 }
 
+.agent button {
+  clear: both;
+  background-color: transparent;
+  border: none;
+  margin: 0 45%;
+}
+
 .agent:first-child .agent-head { border-top: none; }
+.panel .agent:first-child .agent-head { border-top: 1px solid #cccccc; }
 
 .agent-img {
   float: left;
-  width: 20%;
+  width: 35%;
   max-width: 115px;
-  margin-right: @baseline*2;
+  margin-right: @baseline*4;
 }
 
 .agent-name {
   .type-5;
-  margin-bottom: @baseline;
+  margin-bottom: 0px;
 }
 
 .agent-role {
-  .type-7;
-  font-style: italic;
+  .type-6;
   margin-bottom: none;
 }
 
 .agent-body {
   .type-6;
+  margin-top: @baseline*2;
 }

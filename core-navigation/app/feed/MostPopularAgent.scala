@@ -5,9 +5,9 @@ import model.{ Content, Trail }
 import conf.ContentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 import akka.actor.Cancellable
-import akka.util.{ Timeout, Duration }
-import java.util.concurrent.TimeUnit._
 import common._
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 
 object MostPopularAgent extends AkkaSupport with Logging {
 
@@ -22,7 +22,7 @@ object MostPopularAgent extends AkkaSupport with Logging {
     refresh("US")
   }
 
-  def await() { quietly(agent.await(Timeout(2000, SECONDS))) }
+  def await() { quietly(agent.await(2.seconds)) }
 
   private def refresh(edition: String) {
     agent.sendOff { old =>
@@ -33,7 +33,7 @@ object MostPopularAgent extends AkkaSupport with Logging {
   }
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(60, SECONDS), initialDelay = Duration(1, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(60.seconds, initialDelay = 1.second) {
       refresh()
     })
   }

@@ -1,0 +1,22 @@
+@(story: Story)
+
+@story.explainer.map{ explainer =>
+    <section class="story-overview">
+
+        <h2 class="story-title story-title--section">Background</h2>
+
+        @story.hero.map{ img =>
+            <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+                <img class="maxed main-image" src="@story.hero"
+                     itemprop="contentURL"
+                     alt="@StripHtmlTags(story.title)"
+                     title="@StripHtmlTags(story.title)" />
+            </figure>
+        }
+
+        <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+            @cleanTrailText(explainer)
+        </p>
+        <p class="box-indent from-content-api"><a class="back-to-top" href="#top">Back to top</a></p>
+    </section>
+}

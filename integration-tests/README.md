@@ -15,7 +15,7 @@ To run all features (except `@ignore` and `@scala-test`)
 
 	$ mvn test
 
-To run a particular tagged feature (e.g.`@network-front`, but not `@ignore` or `@scala-test`)
+To run a particular tagged feature (e.g.`@network-front`)
 
 	$ mvn test -Dtags="--tags @network-front"
 

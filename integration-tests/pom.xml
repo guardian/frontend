@@ -8,6 +8,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<packaging>jar</packaging>
 	<name>integration-tests</name>
 	<url>http://maven.apache.org</url>
+	<properties>
+	   <cucumber.version>1.1.3</cucumber.version>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <tags>--tags ~@nothing</tags>
+	</properties>
     <profiles>
         <profile>
             <id>integration-tests</id>
@@ -15,13 +20,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tags>--tags ~@nothing</tags>
-		<cucumber.version>1.0.14</cucumber.version>
-		<cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
-	</properties>
+                <cucumber.options>${tags} --tags ~@ignore --tags ~@scala-test</cucumber.options>
+            </properties>
         </profile>
-
         <profile>
             <id>chrome</id>
             <activation>
@@ -32,10 +33,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 </property>
             </activation>
             <properties>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <tags>--tags ~@brokeninchrome</tags>
-                <cucumber.version>1.0.14</cucumber.version>
-                <cucumber.options>src/test/resources ${tags} --tags ~@ignore --tags ~@scala-test --glue com/gu/test --format pretty --format html:target/cucumber-html-report</cucumber.options>
+                <cucumber.options>${tags} --tags ~@ignore --tags ~@scala-test --tags ~@brokeninchrome</cucumber.options>
             </properties>
         </profile>
     </profiles>
@@ -44,7 +42,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -52,11 +50,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	        <artifactId>junit-addons</artifactId>
 	        <version>1.4</version>
         </dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.3</version>
-		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-core</artifactId>
@@ -81,6 +74,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>2.30.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>xerces</groupId>
+		    <artifactId>xercesImpl</artifactId>
+		    <version>2.10.0</version>
 		</dependency>
 	</dependencies>
 

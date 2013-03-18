@@ -1,16 +1,16 @@
 package implicits
 
 trait Strings {
-  implicit def string2ToOptions(s: String) = new {
-    lazy val toIntOption: Option[Int] = try { Some(s.toInt) } catch { case _ => None }
-    lazy val toBooleanOption: Option[Boolean] = try { Some(s.toBoolean) } catch { case _ => None }
+  implicit class String2ToOptions(s: String) {
+    lazy val toIntOption: Option[Int] = try { Some(s.toInt) } catch { case _: Throwable => None }
+    lazy val toBooleanOption: Option[Boolean] = try { Some(s.toBoolean) } catch { case _: Throwable => None }
   }
 
-  implicit def string2Dequote(s: String) = new {
+  implicit class String2Dequote(s: String) {
     lazy val dequote = s.replace("\"", "")
   }
 
-  implicit def string2FromLast(s: String) = new {
+  implicit class String2FromLast(s: String) {
     def fromLast(regex: String): String = s.split(regex).last
   }
 }

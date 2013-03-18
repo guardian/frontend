@@ -5,6 +5,7 @@ import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
+
 class GalleryControllerTest extends FlatSpec with ShouldMatchers {
 
   "Gallery Controller" should "200 when content type is gallery" in Fake {
