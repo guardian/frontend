@@ -23,7 +23,8 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies'
+    'modules/cookies',
+    'modules/search'
 ], function (
     common,
     ajax,
@@ -48,7 +49,8 @@ define([
     Clickstream,
     Omniture,
     Adverts,
-    Cookies
+    Cookies,
+    Search
 ) {
 
     var modules = {
@@ -163,6 +165,13 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
         }
     };
 
@@ -189,6 +198,7 @@ define([
             modules.loadOphanAnalytics(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
+            modules.initialiseSearch(config);
         });
     };
 
