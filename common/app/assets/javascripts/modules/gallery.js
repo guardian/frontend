@@ -21,7 +21,14 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
             // runs on domready
             bindGallery: function () {
 
-                if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
+                    // bind an image tap/click to advance the gallery
+                    bean.add(view.galleryConfig.container, 'click', function(e) {
+                        view.advanceGallery('next');
+                        e.preventDefault();
+                    });
+
+                    if (detect.hasTouchScreen()) {
+                    // only enable swiping for touch devices, duh.
 
                     view.galleryConfig.inSwipeMode = true;
 
