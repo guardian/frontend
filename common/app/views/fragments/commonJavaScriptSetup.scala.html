@@ -8,7 +8,7 @@
 
     var guardian = {
             isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
-            }, 
+            },
             curl = {
                 baseUrl: '@{Configuration.static.path}javascripts',
                 apiName: 'require',
@@ -81,8 +81,13 @@
         script.async = 'async';
         script.src = '@Static("javascripts/bootstraps/app.js")';
 
-        document.getElementsByTagName("head")[0].appendChild(script); 
-    
+        document.getElementsByTagName("head")[0].appendChild(script);
+
     })(guardian.isModernBrowser);
 
 </script>
+
+
+<!--[if lt IE 9]>
+    <script src="@Static("javascripts/vendor/html5shiv.js")"></script>
+<![endif]-->

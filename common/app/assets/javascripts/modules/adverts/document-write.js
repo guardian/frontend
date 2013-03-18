@@ -79,16 +79,19 @@ define([
 
         var oasUrl = options.url || generateUrl(options.config.page, options.slots);
 
-        ajax({
-            url: oasUrl,
-            type: 'jsonp',
-            success: function (js) {
-                common.mediator.emit('modules:adverts:docwrite:loaded');
-            },
-            error: function () {
-                common.mediator.emit('module:error', 'Failed to load adverts', 'document-write.js');
-            }
-        });
+        // Doing it this way, because loading the OAS file with
+        // Reqwest in IE doesn't seem to work (OAS_RICH never gets defined)
+        var script = document.createElement('script');
+        script.async = 'async';
+        script.src = oasUrl;
+        script.onload = function() {
+            common.mediator.emit('modules:adverts:docwrite:loaded');
+        };
+        script.onerror = function() {
+            common.mediator.emit('module:error', 'Failed to load adverts', 'document-write.js');
+        };
+        document.getElementsByTagName("head")[0].appendChild(script);
+
     }
 
     return {
