@@ -6,8 +6,7 @@ module.exports = function (grunt) {
         sass: {
             common: {
                 files: {
-                    //'common/target/scala-2.10/resource_managed/main/public/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
-                    'common/app/public/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
+                    'common/target/scala-2.10/resource_managed/main/public/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
                 },
                 options: {
                     check: false,
