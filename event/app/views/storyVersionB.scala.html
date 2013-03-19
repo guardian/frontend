@@ -8,41 +8,40 @@
 
         @fragments.latest(story, page.edition, 2)
 
-        <div class="tabs-fixable">
+        <div class="tabs-container tabs-fixable">
             <ol class="tabs js-tabs" id="js-story-tabs">
                 <li class="tabs-selected"><a href="#tabs-story-1" class="type-6" data-link-name="tab 1 analysis">Analysis</a></li>
                 <li><a href="#tabs-story-2" class="type-6" data-link-name="tab 2 background">Background</a></li>
             </ol>
-        </div>
+            <div class="tabs-content">
 
-        <div class="tabs-content">
-
-            <div id="tabs-story-1" class="tabs-pane" data-link-name="analysis">
-                <ul class="unstyled">
-                    @story.contentByAnalysis.zipWithRowInfo.map{ case(c, info) =>
-                        @{
-                            c match {
-                                case a: Article => {
-                                    fragments.storyArticle(a, page.edition)
+                <div id="tabs-story-1" class="tabs-pane" data-link-name="analysis">
+                    <ul class="unstyled">
+                        @story.contentByAnalysis.zipWithRowInfo.map{ case(c, info) =>
+                            @{
+                                c match {
+                                    case a: Article => {
+                                        fragments.storyArticle(a, page.edition)
+                                    }
                                 }
                             }
-                        }
 
-                        @if(story.hasQuotes) {
-                            @story.contentWithQuotes.drop(info.rowNum-1).headOption.map{ quote =>
-                                <li class="story-article">@fragments.quote(story, info.rowNum-1)</li>
+                            @if(story.hasQuotes) {
+                                @story.contentWithQuotes.drop(info.rowNum-1).headOption.map{ quote =>
+                                    <li class="story-article">@fragments.quote(story, info.rowNum-1)</li>
+                                }
                             }
+
                         }
+                    </ul>
+                    <p class="box-indent"><a class="back-to-top" href="#top">Back to top</a></p>
+                </div>
 
-                    }
-                </ul>
-                <p class="box-indent"><a class="back-to-top" href="#top">Back to top</a></p>
-            </div>
+                <div id="tabs-story-2" class="tabs-pane js-hidden" data-link-name="background">
+                    @fragments.explainer(story)
 
-            <div id="tabs-story-2" class="tabs-pane js-hidden" data-link-name="background">
-                @fragments.explainer(story)
-
-                @fragments.agents(story)
+                    @fragments.agents(story)
+                </div>
             </div>
         </div>
 
