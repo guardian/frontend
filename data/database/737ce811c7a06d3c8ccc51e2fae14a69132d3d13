@@ -128,7 +128,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"54",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"54"
         }
       },{
@@ -143,7 +143,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"130",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"140"
         }
       },{
@@ -158,7 +158,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"84",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"140"
         }
       },{
@@ -173,7 +173,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"132",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"220"
         }
       },{
@@ -188,7 +188,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"168",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"280"
         }
       },{
@@ -203,7 +203,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"180",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"300"
         }
       },{
@@ -218,7 +218,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"228",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"380"
         }
       },{
@@ -233,7 +233,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"276",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"460"
         }
       },{
@@ -248,7 +248,7 @@
           "altText":"Nigel plaice and artichoke",
           "height":"276",
           "credit":"Jonathan Lovekin/Observer",
-          "caption":"'Adding lemon juiceÊat the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
+          "caption":"'Adding lemon juiceÂ at the end, just a squeeze, will stop it cloying': Nigel Slater on his plaice with artichokes in cream recipe. Photograph: Jonathan Lovekin for the Observer",
           "width":"460"
         }
       }],
@@ -893,6 +893,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
+          "source":"Richard Saker",
+          "altText":"Lucy Worsley",
+          "height":"276",
+          "credit":"Richard Saker",
+          "caption":"Historian and BBC TV presenter Lucy Worsley: 'You must make yourselves heard.' Photograph: Richard Saker",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622130198/Lucy-Worsley-002.jpg",
@@ -1030,20 +1044,6 @@
           "credit":"Richard Saker",
           "caption":"Historian Lucy Worsley. Photograph: Richard Saker",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
-          "source":"Richard Saker",
-          "altText":"Lucy Worsley",
-          "height":"276",
-          "credit":"Richard Saker",
-          "caption":"Historian and BBC TV presenter Lucy Worsley: 'You must make yourselves heard.' Photograph: Richard Saker",
-          "width":"460"
         }
       }],
       "references":[]
@@ -1536,7 +1536,7 @@
           "altText":"Egg decorated with fabric applique flowers",
           "height":"345",
           "credit":"Katy Stoddard/Katy Stoddard",
-          "caption":"This appliquŽ egg is as fresh as a daisy. Photograph: Katy Stoddard",
+          "caption":"This appliquÃ© egg is as fresh as a daisy. Photograph: Katy Stoddard",
           "width":"460"
         }
       }],
@@ -2678,7 +2678,7 @@
       },{
         "id":"lifeandstyle/series/dr-dillner-health-dilemmas",
         "type":"series",
-        "webTitle":"Dr ?Dillner\u2019s health dilemmas",
+        "webTitle":"Dr Â­Dillner\u2019s health dilemmas",
         "webUrl":"http://www.guardian.co.uk/lifeandstyle/series/dr-dillner-health-dilemmas",
         "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/dr-dillner-health-dilemmas",
         "sectionId":"lifeandstyle",
@@ -3147,7 +3147,7 @@
           "altText":"Time  antique clock",
           "height":"54",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"54"
         }
       },{
@@ -3161,7 +3161,7 @@
           "altText":"Time  antique clock",
           "height":"130",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"140"
         }
       },{
@@ -3175,7 +3175,7 @@
           "altText":"Time  antique clock",
           "height":"84",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"140"
         }
       },{
@@ -3189,7 +3189,7 @@
           "altText":"Time  antique clock",
           "height":"132",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"220"
         }
       },{
@@ -3203,7 +3203,7 @@
           "altText":"Time  antique clock",
           "height":"168",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"280"
         }
       },{
@@ -3217,7 +3217,7 @@
           "altText":"Time  antique clock",
           "height":"180",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"300"
         }
       },{
@@ -3231,7 +3231,7 @@
           "altText":"Time  antique clock",
           "height":"228",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"380"
         }
       },{
@@ -3245,7 +3245,7 @@
           "altText":"Time  antique clock",
           "height":"276",
           "credit":"Alamy",
-          "caption":"'The other day, after a rather bruising session of physiotherapy,ÊI put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
+          "caption":"'The other day, after a rather bruising session of physiotherapy,Â I put a shot of Scotch in my coffee, though it was barely 11am, encouraged by an elderly couple at  the next table who were swigging wine': Katharine Whitehorn on breaking all the rules. Photograph: Alamy",
           "width":"460"
         }
       },{
@@ -3259,7 +3259,7 @@
           "altText":"Time  antique clock",
           "height":"276",
           "credit":"Alamy",
-          "caption":"'As for theÊcomplete fluidity of time: everyone sees it differently': Katharine Whitehorn. Photograph: Alamy",
+          "caption":"'As for theÂ complete fluidity of time: everyone sees it differently': Katharine Whitehorn. Photograph: Alamy",
           "width":"460"
         }
       }],
@@ -4628,6 +4628,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
+          "source":"Richard Saker",
+          "altText":"Lucy Worsley",
+          "height":"276",
+          "credit":"Richard Saker",
+          "caption":"Historian and BBC TV presenter Lucy Worsley: 'You must make yourselves heard.' Photograph: Richard Saker",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622130198/Lucy-Worsley-002.jpg",
@@ -4765,20 +4779,6 @@
           "credit":"Richard Saker",
           "caption":"Historian Lucy Worsley. Photograph: Richard Saker",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363622142032/Lucy-Worsley-010.jpg",
-          "source":"Richard Saker",
-          "altText":"Lucy Worsley",
-          "height":"276",
-          "credit":"Richard Saker",
-          "caption":"Historian and BBC TV presenter Lucy Worsley: 'You must make yourselves heard.' Photograph: Richard Saker",
-          "width":"460"
         }
       }],
       "references":[]
@@ -4922,7 +4922,7 @@
           "altText":"Egg decorated with fabric applique flowers",
           "height":"345",
           "credit":"Katy Stoddard/Katy Stoddard",
-          "caption":"This appliquŽ egg is as fresh as a daisy. Photograph: Katy Stoddard",
+          "caption":"This appliquÃ© egg is as fresh as a daisy. Photograph: Katy Stoddard",
           "width":"460"
         }
       }],

@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":488,
+    "total":489,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -19,6 +19,92 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-19T13:24:38Z",
+      "webTitle":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Dominican Republic beat the Netherlands 4-1 and will face Puerto Rico in Tuesday night's final</p>",
+        "headline":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698740719/3c95fceb-b44f-4479-8ef8-08623b854f75-140x84.jpeg",
+        "wordcount":"825",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"MIKE BLAKE",
+          "altText":"Dominican Republic vs Netherlands, WBC",
+          "height":"276",
+          "credit":"MIKE BLAKE/REUTERS",
+          "caption":"Dominican Republic's Miguel Tejada pops out on a bunt attempt to Netherlands catcher Dashenko Ricardo during the  semi-final round of the World Baseball Classic in San Francisco, California March 18, 2013. Photograph: Mike Blake/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -1178,7 +1264,7 @@
       },{
         "id":"world/hugo-chavez",
         "type":"keyword",
-        "webTitle":"Hugo Ch‡vez",
+        "webTitle":"Hugo ChÃ¡vez",
         "webUrl":"http://www.guardian.co.uk/world/hugo-chavez",
         "apiUrl":"http://content.guardianapis.com/world/hugo-chavez",
         "sectionId":"world",
@@ -1899,108 +1985,6 @@
         }
       }],
       "references":[]
-    },{
-      "id":"sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-01-29T19:28:21Z",
-      "webTitle":"MLB acknowledges report linking Yankees' Alex Rodriguez to steroids",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
-      "fields":{
-        "trailText":"<p>Miami New Times list of players linked to clinic also includes Melky Cabrera, Gio Gonz‡lez, Bartolo Col—n and Nelson Cruz</p>",
-        "headline":"MLB acknowledges report linking Yankees' Alex Rodriguez to steroids",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651151204/Alex-Rodriguez-002.jpg",
-        "wordcount":"155",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/mlb",
-        "type":"keyword",
-        "webTitle":"MLB",
-        "webUrl":"http://www.guardian.co.uk/sport/mlb",
-        "apiUrl":"http://content.guardianapis.com/sport/mlb",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/new-york-yankees",
-        "type":"keyword",
-        "webTitle":"New York Yankees",
-        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
-        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.guardian.co.uk/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651155151/Alex-Rodriguez-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651155151/Alex-Rodriguez-006.jpg",
-          "source":"AP",
-          "photographer":"Charles Krupa",
-          "altText":"Alex Rodriguez",
-          "height":"276",
-          "credit":"Charles Krupa/AP",
-          "caption":"Alex Rodriguez has admitted to using steroids between 2001 and 2003. Photograph: Charles Krupa/AP",
-          "width":"460"
-        }
-      }],
-      "references":[]
     }],
     "editorsPicks":[],
     "storyPackage":[],
@@ -2674,7 +2658,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
       "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
       "fields":{
-        "trailText":"<p><strong>David Lengel:</strong>ÊPostseason begins on Friday with the wild-card games;Ê10 team format makes its debut;ÊFollow the action all October with The Guardian - live!</p>",
+        "trailText":"<p><strong>David Lengel:</strong>Â Postseason begins on Friday with the wild-card games;Â 10 team format makes its debut;Â Follow the action all October with The Guardian - live!</p>",
         "headline":"MLB Playoffs 2012 preview",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/25/1348590928573/New-York-Yankees-v-Oaklan-003.jpg",
@@ -3220,12 +3204,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2012-08-22T19:34:00Z",
-      "webTitle":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+      "webTitle":"Oakland Athletics' Bartolo ColÃ³n gets 50-game ban for testosterone use",
       "webUrl":"http://www.guardian.co.uk/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
       "apiUrl":"http://content.guardianapis.com/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
       "fields":{
-        "trailText":"<p>The Oakland Athletics starting pitcher Bartolo Col—n has been suspended for 50 games without pay after testing positive for testosterone</p>",
-        "headline":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+        "trailText":"<p>The Oakland Athletics starting pitcher Bartolo ColÃ³n has been suspended for 50 games without pay after testing positive for testosterone</p>",
+        "headline":"Oakland Athletics' Bartolo ColÃ³n gets 50-game ban for testosterone use",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/22/1345663998952/Oakland-Athletics-pitcher-005.jpg",
         "wordcount":"289",
@@ -3303,7 +3287,7 @@
           "altText":"Oakland Athletics pitcher Bartolo Colon delivers a pitch against the Toronto Blue Jays",
           "height":"276",
           "credit":"Beck Diefenbach/Reuters",
-          "caption":"Oakland Athletics pitcher Bartolo Col—n delivers a pitch against the Toronto Blue Jays. Photograph: Beck Diefenbach/Reuters",
+          "caption":"Oakland Athletics pitcher Bartolo ColÃ³n delivers a pitch against the Toronto Blue Jays. Photograph: Beck Diefenbach/Reuters",
           "width":"460"
         }
       }],

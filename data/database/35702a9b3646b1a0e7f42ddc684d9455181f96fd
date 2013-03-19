@@ -2153,21 +2153,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/13/1363196566948/BalletBoyz-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/13/1363196566948/BalletBoyz-008.jpg",
-          "source":"Observer",
-          "photographer":"Mark Barrs",
-          "altText":"BalletBoyz",
-          "height":"276",
-          "credit":"Mark Barrs/Observer",
-          "caption":"\u2018An exploration of trust, sinew and nerve\u2019: the Talent performing Liam Scarlett\u2019s work Serpent. Photograph: Panayiotis Sinnos",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/13/1363196554920/BalletBoyz-001.jpg",
@@ -2284,6 +2269,21 @@
           "height":"276",
           "credit":"Mark Barrs/Observer",
           "caption":"BalletBoyz the Talent 2013 in Liam Scarlett's piece Serpent'.  Photograph: Mark Barrs for the Observer",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/13/1363196566948/BalletBoyz-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/13/1363196566948/BalletBoyz-008.jpg",
+          "source":"Observer",
+          "photographer":"Mark Barrs",
+          "altText":"BalletBoyz",
+          "height":"276",
+          "credit":"Mark Barrs/Observer",
+          "caption":"\u2018An exploration of trust, sinew and nerve\u2019: the Talent performing Liam Scarlett\u2019s work Serpent. Photograph: Panayiotis Sinnos",
           "width":"460"
         }
       }],
@@ -5435,34 +5435,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363189674537/Ben-Whishaw-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363189674537/Ben-Whishaw-008.jpg",
-          "source":"Rich Hardcastle /eyevine",
-          "altText":"Ben Whishaw",
-          "height":"276",
-          "credit":"Rich Hardcastle /eyevine",
-          "caption":"Ben Whishaw: 'You're always struggling and striving and you never quite get to where you want to be.' Photograph: Rich Hardcastle /eyevine",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363190015847/peter-and-alice-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363190015847/peter-and-alice-002.jpg",
-          "source":"Johan Persson",
-          "altText":"peter and alice",
-          "height":"276",
-          "credit":"Johan Persson",
-          "caption":"Judi Dench and Ben Whishaw in John Logan's Peter and Alice: 'What I love about Judi is her playfulness and lightness.' Photograph: Johan Persson",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363189664193/Ben-Whishaw-001.jpg",
@@ -5586,6 +5558,34 @@
           "credit":"Rich Hardcastle /eyevine",
           "caption":"Ben Whishaw: 'You're always struggling and striving and you never quite get to where you want to be.' Photograph: Rich Hardcastle /eyevine",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363189674537/Ben-Whishaw-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363189674537/Ben-Whishaw-008.jpg",
+          "source":"Rich Hardcastle /eyevine",
+          "altText":"Ben Whishaw",
+          "height":"276",
+          "credit":"Rich Hardcastle /eyevine",
+          "caption":"Ben Whishaw: 'You're always struggling and striving and you never quite get to where you want to be.' Photograph: Rich Hardcastle /eyevine",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363190015847/peter-and-alice-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363190015847/peter-and-alice-002.jpg",
+          "source":"Johan Persson",
+          "altText":"peter and alice",
+          "height":"276",
+          "credit":"Johan Persson",
+          "caption":"Judi Dench and Ben Whishaw in John Logan's Peter and Alice: 'What I love about Judi is her playfulness and lightness.' Photograph: Johan Persson",
+          "width":"460"
         }
       }],
       "references":[]

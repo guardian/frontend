@@ -882,11 +882,11 @@
       "webUrl":"http://www.guardian.co.uk/media/2013/mar/18/dave-brailsford-cyclists-doping-spread-crack-cocaine",
       "apiUrl":"http://content.guardianapis.com/media/2013/mar/18/dave-brailsford-cyclists-doping-spread-crack-cocaine",
       "fields":{
-        "trailText":"<strong>Advertising Week Europe:</strong> Architect of GB Olympics and Tour de France success makes analogy about onset of drugs in Lance Armstrong era. By <strong>Mark Sweney</strong>",
+        "trailText":"<p><strong>Advertising Week Europe:</strong> Architect of GB Olympics and Tour de France success makes analogy about onset of drugs in Lance Armstrong era. By <strong>Mark Sweney</strong></p>",
         "headline":"Sir Dave Brailsford: cyclists' doping spread like a joint to crack cocaine",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363625765313/Dave-Brailsford-005.jpg",
-        "wordcount":"550",
+        "wordcount":"577",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2254,7 +2254,7 @@
       "webUrl":"http://www.guardian.co.uk/football/gallery/2013/mar/08/middlesbrough-skiing",
       "apiUrl":"http://content.guardianapis.com/football/gallery/2013/mar/08/middlesbrough-skiing",
       "fields":{
-        "trailText":"<p>From football in the fog in Huddersfield to synchronised swimming in San Jose \u2013Êwe bring you the best pictures in sport this week</p>",
+        "trailText":"<p>From football in the fog in Huddersfield to synchronised swimming in San Jose \u2013Â we bring you the best pictures in sport this week</p>",
         "headline":"The week in sport \u2013 in pictures",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/8/1362744486785/Best-of-the-week-080313-001.jpg",
@@ -4078,7 +4078,7 @@
       "fields":{
         "trailText":"<p>BSkyB is understood to be one of several potential backers in renewed talks about a new world cycling series</p>",
         "headline":"BSkyB and other backers in talks about new world series of cycling",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/2/28/1362084076412/Bradley-Wiggins-left-of-T-003.jpg",
         "wordcount":"387",
         "liveBloggingNow":"false"

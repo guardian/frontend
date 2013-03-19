@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":15344,
+    "total":15345,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,318 @@
       "apiUrl":"http://content.guardianapis.com/artanddesign"
     },
     "results":[{
+      "id":"artanddesign/jonathanjonesblog/2013/mar/19/haroon-mirza-tv-time-1987",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-03-19T13:19:18Z",
+      "webTitle":"Haroon Mirza's unsettling TV transmission is ahead of its time",
+      "webUrl":"http://www.guardian.co.uk/artanddesign/jonathanjonesblog/2013/mar/19/haroon-mirza-tv-time-1987",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/jonathanjonesblog/2013/mar/19/haroon-mirza-tv-time-1987",
+      "fields":{
+        "trailText":"<p><strong>Jonathan Jones:</strong> The artist's late-night broadcast \u2013 in which a woman speaks to viewers in 1987 from 2013 \u2013 explores a temporal mystery and may have given some viewers uneasy dreams</p>",
+        "headline":"Haroon Mirza's unsettling TV transmission is ahead of its time",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699464354/Haroon-Mirza-003.jpg",
+        "wordcount":"468",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"artanddesign/jonathanjonesblog",
+        "type":"blog",
+        "webTitle":"Jonathan Jones on art",
+        "webUrl":"http://www.guardian.co.uk/artanddesign/jonathanjonesblog",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/jonathanjonesblog",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/video-art",
+        "type":"keyword",
+        "webTitle":"Video art",
+        "webUrl":"http://www.guardian.co.uk/artanddesign/video-art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/video-art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.guardian.co.uk/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.guardian.co.uk/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.guardian.co.uk/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/sciencefictionandfantasy",
+        "type":"keyword",
+        "webTitle":"Science fiction and fantasy",
+        "webUrl":"http://www.guardian.co.uk/film/sciencefictionandfantasy",
+        "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"media/channel4",
+        "type":"keyword",
+        "webTitle":"Channel 4",
+        "webUrl":"http://www.guardian.co.uk/media/channel4",
+        "apiUrl":"http://content.guardianapis.com/media/channel4",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.guardian.co.uk/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.guardian.co.uk/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.guardian.co.uk/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699470286/Haroon-Mirza-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699470286/Haroon-Mirza-008.jpg",
+          "source":"PR",
+          "altText":"Haroon Mirza",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Back to the future ... Still from This content was transmitted to this date in 1987, 2012",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699372382/Haroon-Mirza-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699372382/Haroon-Mirza-008.jpg",
+          "source":"PR",
+          "altText":"Haroon Mirza",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Still from This content was transmitted to this date in 1987, 2012",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693831813/Haroon-Mirzas-film-aired--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693831813/Haroon-Mirzas-film-aired--002.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"54",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693833229/Haroon-Mirzas-film-aired--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693833229/Haroon-Mirzas-film-aired--003.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"340",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693834740/Haroon-Mirzas-film-aired--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693834740/Haroon-Mirzas-film-aired--004.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"130",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693836094/Haroon-Mirzas-film-aired--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693836094/Haroon-Mirzas-film-aired--005.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"84",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693837578/Haroon-Mirzas-film-aired--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693837578/Haroon-Mirzas-film-aired--006.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"132",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693839039/Haroon-Mirzas-film-aired--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693839039/Haroon-Mirzas-film-aired--007.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"168",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693840462/Haroon-Mirzas-film-aired--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693840462/Haroon-Mirzas-film-aired--008.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"180",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693841921/Haroon-Mirzas-film-aired--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693841921/Haroon-Mirzas-film-aired--009.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"228",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693843383/Haroon-Mirzas-film-aired--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693843383/Haroon-Mirzas-film-aired--010.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"276",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693844854/Haroon-Mirzas-film-aired--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/19/1363693844854/Haroon-Mirzas-film-aired--011.jpg",
+          "source":"Eamonn McCabe",
+          "photographer":"Eamonn Mccabe",
+          "altText":"Haroon Mirza's film aired on Channel 4 ",
+          "height":"372",
+          "credit":"Eamonn Mccabe/Eamonn McCabe",
+          "caption":"Explaining the past\u2026  artist Haroon Mirza. Photograph: Eamonn Mccabe",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    },{
       "id":"artanddesign/architecture-design-blog/2013/mar/19/toyo-ito-pritzker-prize-architecture",
       "sectionId":"artanddesign",
       "sectionName":"Art and design",
@@ -1447,7 +1759,7 @@
           "altText":"Federico Barocci study for Saint John the Evangelist ",
           "height":"276",
           "credit":"courtesy National Gallery of Art, Washington\n",
-          "caption":"Religiously correct \u2026Êdetail from St John the Evangelist by Federico Barocci. Photograph: National Gallery of Art, Washington. Please click on image to enlarge",
+          "caption":"Religiously correct \u2026Â detail from St John the Evangelist by Federico Barocci. Photograph: National Gallery of Art, Washington. Please click on image to enlarge",
           "width":"460"
         }
       }],
@@ -1929,7 +2241,7 @@
       "webUrl":"http://www.guardian.co.uk/artanddesign/2013/mar/18/self-portrait-national-trust-rembrandt",
       "apiUrl":"http://content.guardianapis.com/artanddesign/2013/mar/18/self-portrait-national-trust-rembrandt",
       "fields":{
-        "trailText":"Painting of artist, worth up to £20m, was thought to be later copy",
+        "trailText":"Painting of artist, worth up to Â£20m, was thought to be later copy",
         "headline":"Self-portrait bequeathed to National Trust is identified as lost Rembrandt",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363549848418/Rembrandt-self-portrait-004.jpg",
@@ -2896,35 +3208,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"big-picture",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/15/1363377708242/george-bellows-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/15/1363377708242/george-bellows-001.jpg",
-          "source":"PR",
-          "photographer":"National Gallery of Art, Washington",
-          "altText":"george bellows",
-          "height":"655",
-          "credit":"National Gallery of Art, Washington/PR",
-          "caption":"New York, 1911 by George Bellows. Photograph: National Gallery of Art, Washington",
-          "width":"940"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/14/1363267788962/bellows-new-york-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/14/1363267788962/bellows-new-york-009.jpg",
-          "source":"National Gallery of Art, Washington",
-          "altText":"bellows new york",
-          "height":"276",
-          "credit":"National Gallery of Art, Washington",
-          "caption":"'Humanity in massed numbers': New York, 1911 by George Bellows. Photograph: National Gallery of Art, Washington",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/14/1363267778087/bellows-new-york-001.jpg",
@@ -3047,6 +3330,35 @@
           "height":"276",
           "credit":"National Gallery of Art, Washington",
           "caption":"'Humanity in massed numbers': George Bellows's 'New York', 1911.\n Photograph: National Gallery of Art, Washington",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"big-picture",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/15/1363377708242/george-bellows-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/15/1363377708242/george-bellows-001.jpg",
+          "source":"PR",
+          "photographer":"National Gallery of Art, Washington",
+          "altText":"george bellows",
+          "height":"655",
+          "credit":"National Gallery of Art, Washington/PR",
+          "caption":"New York, 1911 by George Bellows. Photograph: National Gallery of Art, Washington",
+          "width":"940"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/14/1363267788962/bellows-new-york-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/3/14/1363267788962/bellows-new-york-009.jpg",
+          "source":"National Gallery of Art, Washington",
+          "altText":"bellows new york",
+          "height":"276",
+          "credit":"National Gallery of Art, Washington",
+          "caption":"'Humanity in massed numbers': New York, 1911 by George Bellows. Photograph: National Gallery of Art, Washington",
           "width":"460"
         }
       }],
@@ -3200,6 +3512,50 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
+          "source":"ME London",
+          "photographer":"Francisco Guerrero",
+          "altText":"ME hotel",
+          "height":"276",
+          "credit":"Francisco Guerrero/ME London",
+          "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg",
+          "source":"ME London",
+          "photographer":"Francisco Guerrero",
+          "altText":"ME London",
+          "height":"276",
+          "credit":"Francisco Guerrero/ME London",
+          "caption":"The ME hotel in the Aldwych, London. Photograph: Francisco Guerrero/ME London",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg",
+          "source":"PR",
+          "altText":"me hotel",
+          "height":"247",
+          "credit":"PR",
+          "caption":"The lift lobby at the ME hotel, with the external wall of the tetrahedron visible.",
+          "width":"220"
+        }
+      },{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
@@ -3392,50 +3748,6 @@
           "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
           "width":"460"
         }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
-          "source":"ME London",
-          "photographer":"Francisco Guerrero",
-          "altText":"ME hotel",
-          "height":"276",
-          "credit":"Francisco Guerrero/ME London",
-          "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg",
-          "source":"ME London",
-          "photographer":"Francisco Guerrero",
-          "altText":"ME London",
-          "height":"276",
-          "credit":"Francisco Guerrero/ME London",
-          "caption":"The ME hotel in the Aldwych, London. Photograph: Francisco Guerrero/ME London",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg",
-          "source":"PR",
-          "altText":"me hotel",
-          "height":"247",
-          "credit":"PR",
-          "caption":"The lift lobby at the ME hotel, with the external wall of the tetrahedron visible.",
-          "width":"220"
-        }
       }],
       "references":[]
     },{
@@ -3553,23 +3865,6 @@
       },{
         "type":"picture",
         "rel":"gallery",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002.jpg",
-          "source":"Rex Features",
-          "photographer":"Ray Tang ",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002-thumb-5719.jpg",
-          "altText":"ME-Hotel: ME Hotel Entrance",
-          "height":"480",
-          "credit":"Ray Tang /Rex Features",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002-thumb-5719.jpg",
-          "caption":"\"The ME hotel (its name so strikingly shameless in its appeal to the egocentric) is an emissary from a once and probably future age, having first been conceived in 2003, in the era of the boom without end,\" says Observer architecture critic Rowan Moore. Rooms are £400 a night",
-          "width":"724"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
         "index":2,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363362453574/ME-hotel-exterior-007.jpg",
         "fields":{
@@ -3582,6 +3877,23 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363362453574/ME-hotel-exterior-007-thumb-2959.jpg",
           "caption":"The hotel\u2019s new elevations are made from solid, substantial, load-bearing Portland stone ",
           "width":"756"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002.jpg",
+          "source":"Rex Features",
+          "photographer":"Ray Tang ",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002-thumb-5719.jpg",
+          "altText":"ME-Hotel: ME Hotel Entrance",
+          "height":"480",
+          "credit":"Ray Tang /Rex Features",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363368090859/ME-Hotel-Entrance-002-thumb-5719.jpg",
+          "caption":"\"The ME hotel (its name so strikingly shameless in its appeal to the egocentric) is an emissary from a once and probably future age, having first been conceived in 2003, in the era of the boom without end,\" says Observer architecture critic Rowan Moore. Rooms are Â£400 a night",
+          "width":"724"
         }
       },{
         "type":"picture",
@@ -3911,12 +4223,12 @@
       "sectionId":"artanddesign",
       "sectionName":"Art and design",
       "webPublicationDate":"2013-03-15T19:06:43Z",
-      "webTitle":"Chinese vase sells for almost £1m",
+      "webTitle":"Chinese vase sells for almost Â£1m",
       "webUrl":"http://www.guardian.co.uk/artanddesign/2013/mar/15/chinese-vase-sells-1m",
       "apiUrl":"http://content.guardianapis.com/artanddesign/2013/mar/15/chinese-vase-sells-1m",
       "fields":{
-        "trailText":"Rare 18th-century piece valued at £10,000\u2013£15,000 generates surprise windfall at Tennants auction rooms in Yorkshire",
-        "headline":"Chinese vase sells for almost £1m",
+        "trailText":"Rare 18th-century piece valued at Â£10,000\u2013Â£15,000 generates surprise windfall at Tennants auction rooms in Yorkshire",
+        "headline":"Chinese vase sells for almost Â£1m",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363373979804/Chinese-vase-tennants-003.jpg",
         "wordcount":"325",
@@ -4012,7 +4324,7 @@
           "altText":"Chinese vase tennants",
           "height":"54",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"54"
         }
       },{
@@ -4027,7 +4339,7 @@
           "altText":"Chinese vase tennants",
           "height":"130",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"140"
         }
       },{
@@ -4042,7 +4354,7 @@
           "altText":"Chinese vase tennants",
           "height":"84",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"140"
         }
       },{
@@ -4057,7 +4369,7 @@
           "altText":"Chinese vase tennants",
           "height":"132",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"220"
         }
       },{
@@ -4072,7 +4384,7 @@
           "altText":"Chinese vase tennants",
           "height":"168",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"280"
         }
       },{
@@ -4087,7 +4399,7 @@
           "altText":"Chinese vase tennants",
           "height":"180",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"300"
         }
       },{
@@ -4102,7 +4414,7 @@
           "altText":"Chinese vase tennants",
           "height":"228",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"380"
         }
       },{
@@ -4117,7 +4429,7 @@
           "altText":"Chinese vase tennants",
           "height":"276",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"460"
         }
       },{
@@ -4132,7 +4444,7 @@
           "altText":"Chinese vase tennants",
           "height":"276",
           "credit":"Tennants Auctioneers/PA",
-          "caption":"The small Chinese vase was expected to fetch £10,000 to £15,000.  Photograph: Tennants Auctioneers/PA",
+          "caption":"The small Chinese vase was expected to fetch Â£10,000 to Â£15,000.  Photograph: Tennants Auctioneers/PA",
           "width":"460"
         }
       }],
@@ -4705,7 +5017,7 @@
           "height":"480",
           "credit":"Frieke Janssens",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361808189511/girl-dressed-in-pink-agai-001-thumb-1190.jpg",
-          "caption":"A disturbing YouTube video of aÊtubby Indonesian toddler with a 40-a-day habit \u2013 unsurprisingly, he was taken in hand by child protection services after it appeared \u2013 inspired Flemish photographer Frieke Janssens to pose young children with cigarettes. ",
+          "caption":"A disturbing YouTube video of aÂ tubby Indonesian toddler with a 40-a-day habit \u2013 unsurprisingly, he was taken in hand by child protection services after it appeared \u2013 inspired Flemish photographer Frieke Janssens to pose young children with cigarettes. ",
           "width":"480"
         }
       },{
@@ -4817,7 +5129,7 @@
           "height":"480",
           "credit":"Frieke Janssens",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361808208733/young-white-girl-with-blo-008-thumb-7603.jpg",
-          "caption":"\u201cAt the time, people were against the ban because they thought it treated smokers like children,\u201d she says. \u201cBut now we\u2019re used to it, people believe it\u2019s aÊgood thing.\u201d ",
+          "caption":"\u201cAt the time, people were against the ban because they thought it treated smokers like children,\u201d she says. \u201cBut now we\u2019re used to it, people believe it\u2019s aÂ good thing.\u201d ",
           "width":"480"
         }
       },{
@@ -4833,7 +5145,7 @@
           "height":"480",
           "credit":"Frieke Janssens",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361808211554/young-boy-with-blond-hair-009-thumb-9362.jpg",
-          "caption":"The ban has added to the sense of smoking as a bygone activity. \u201cNow the days when we could smoke in public places, officesÊor planes seem to belong to another, more glamorous era: the jazz age, Mad Men.\u201d ",
+          "caption":"The ban has added to the sense of smoking as a bygone activity. \u201cNow the days when we could smoke in public places, officesÂ or planes seem to belong to another, more glamorous era: the jazz age, Mad Men.\u201d ",
           "width":"480"
         }
       },{
@@ -4865,164 +5177,9 @@
           "height":"480",
           "credit":"Frieke Janssens",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/25/1361808217211/young-black-girl-about-to-011-thumb-9615.jpg",
-          "caption":"IfÊshe had really wanted to shock, she might perhaps have snapped the children in their school uniforms. Instead, with them dressed as retroÊadults, it\u2019s easier to say it\u2019s all make-believe. ",
+          "caption":"IfÂ she had really wanted to shock, she might perhaps have snapped the children in their school uniforms. Instead, with them dressed as retroÂ adults, it\u2019s easier to say it\u2019s all make-believe. ",
           "width":"480"
         }
-      }],
-      "references":[]
-    },{
-      "id":"artanddesign/2013/mar/15/products-through-the-ages-photography",
-      "sectionId":"artanddesign",
-      "sectionName":"Art and design",
-      "webPublicationDate":"2013-03-15T16:30:00Z",
-      "webTitle":"They don't make them like that any more: products through the ages \u2013 They don't make them like that any more: products through the ages \u2013 in pictures",
-      "webUrl":"http://www.guardian.co.uk/artanddesign/2013/mar/15/products-through-the-ages-photography",
-      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/mar/15/products-through-the-ages-photography",
-      "fields":{
-        "trailText":"<p>From bathing suits to bikinis, ear trumpets to implants: <strong>Ali Mobasser </strong>and <strong>Russell Weekes</strong>' photography project reveals how the evolution of everyday objects opens a window on our lives, says <strong>Alice Rawsthorn</strong></p>",
-        "headline":"They don't make them like that any more: products through the ages \u2013 in pictures",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363352013397/Products-through-the-ages-003.jpg",
-        "wordcount":"1009",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"artanddesign/photography",
-        "type":"keyword",
-        "webTitle":"Photography",
-        "webUrl":"http://www.guardian.co.uk/artanddesign/photography",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"artanddesign/artanddesign",
-        "type":"keyword",
-        "webTitle":"Art and design",
-        "webUrl":"http://www.guardian.co.uk/artanddesign/artanddesign",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"society/social-history",
-        "type":"keyword",
-        "webTitle":"Social history",
-        "webUrl":"http://www.guardian.co.uk/society/social-history",
-        "apiUrl":"http://content.guardianapis.com/society/social-history",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"society/society",
-        "type":"keyword",
-        "webTitle":"Society",
-        "webUrl":"http://www.guardian.co.uk/society/society",
-        "apiUrl":"http://content.guardianapis.com/society/society",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.guardian.co.uk/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.guardian.co.uk/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"theguardian/weekend/features2",
-        "type":"newspaper-book-section",
-        "webTitle":"Features",
-        "webUrl":"http://www.guardian.co.uk/theguardian/weekend/features2",
-        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/features2",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/weekend",
-        "type":"newspaper-book",
-        "webTitle":"Weekend",
-        "webUrl":"http://www.guardian.co.uk/theguardian/weekend",
-        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.guardian.co.uk/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"artanddesign/design",
-        "type":"keyword",
-        "webTitle":"Design",
-        "webUrl":"http://www.guardian.co.uk/artanddesign/design",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/design",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"video",
-        "rel":"body",
-        "index":2,
-        "file":"http://cdn.theguardian.tv/brightcove/2013/3/15/130313Products-16x9.mp4",
-        "fields":{
-          "source":"guardian.co.uk",
-          "embeddable":"true",
-          "blockAds":"false",
-          "height":"360",
-          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/13/130313Products_7357896.jpg",
-          "durationMinutes":"3",
-          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/13/130313Products_7357896.jpg",
-          "width":"480",
-          "durationSeconds":"35"
-        },
-        "encodings":[{
-          "format":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/130313Products/130313Products.m3u8"
-        },{
-          "format":"video/mp4:720",
-          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/3/15/130313Products-720.mp4"
-        },{
-          "format":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/3/15/130313Products_3gpSml16x9.3gp"
-        },{
-          "format":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/3/15/130313Products_3gpLg16x9.3gp"
-        },{
-          "format":"video/mp4",
-          "file":"http://cdn.theguardian.tv/brightcove/2013/3/15/130313Products-16x9.mp4"
-        }]
       }],
       "references":[]
     }],
@@ -6456,7 +6613,7 @@
           "altText":"Federico Barocci study for Saint John the Evangelist ",
           "height":"276",
           "credit":"courtesy National Gallery of Art, Washington\n",
-          "caption":"Religiously correct \u2026Êdetail from St John the Evangelist by Federico Barocci. Photograph: National Gallery of Art, Washington. Please click on image to enlarge",
+          "caption":"Religiously correct \u2026Â detail from St John the Evangelist by Federico Barocci. Photograph: National Gallery of Art, Washington. Please click on image to enlarge",
           "width":"460"
         }
       }],
@@ -6470,7 +6627,7 @@
       "webUrl":"http://www.guardian.co.uk/artanddesign/2013/mar/18/self-portrait-national-trust-rembrandt",
       "apiUrl":"http://content.guardianapis.com/artanddesign/2013/mar/18/self-portrait-national-trust-rembrandt",
       "fields":{
-        "trailText":"Painting of artist, worth up to £20m, was thought to be later copy",
+        "trailText":"Painting of artist, worth up to Â£20m, was thought to be later copy",
         "headline":"Self-portrait bequeathed to National Trust is identified as lost Rembrandt",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363549848418/Rembrandt-self-portrait-004.jpg",
@@ -6943,7 +7100,7 @@
           "height":"480",
           "credit":"Daniel Beltra",
           "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363277387241/Para-Brazil-11-February-2-003-thumb-3031.jpg",
-          "caption":"Daniel Beltra, Brazil 3, 2012. Aerial view south of SantarŽm and along the road BR163 of the rainforest in the Tapaj—s River",
+          "caption":"Daniel Beltra, Brazil 3, 2012. Aerial view south of SantarÃ©m and along the road BR163 of the rainforest in the TapajÃ³s River",
           "width":"720"
         }
       },{

@@ -2074,7 +2074,7 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/mar/16/god-of-war-ascension-review",
       "apiUrl":"http://content.guardianapis.com/technology/2013/mar/16/god-of-war-ascension-review",
       "fields":{
-        "trailText":"<p>Xbox 360, PS3, PC, PS Vista; PQube; £29.99-£34.99</p>",
+        "trailText":"<p>Xbox 360, PS3, PC, PS Vista; PQube; ¬£29.99-¬£34.99</p>",
         "headline":"History: Legends Of War \u2013 review",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363269083962/History-Legends-of-War-Sc-003.jpg",
@@ -2282,7 +2282,7 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/mar/16/god-of-war-ascension-review1",
       "apiUrl":"http://content.guardianapis.com/technology/2013/mar/16/god-of-war-ascension-review1",
       "fields":{
-        "trailText":"<p>PS3; Sony; £39.99-£54.99</p>",
+        "trailText":"<p>PS3; Sony; ¬£39.99-¬£54.99</p>",
         "headline":"God Of War: Ascension \u2013 review",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363269604933/God-of-War-Ascension-003.jpg",
@@ -4437,12 +4437,12 @@
       "sectionId":"technology",
       "sectionName":"Technology",
       "webPublicationDate":"2013-03-13T13:28:27Z",
-      "webTitle":"Pokémon vs Skylanders? Nintendo reveals interactive action figures for latest Poké-spinoff",
+      "webTitle":"Pok√©mon vs Skylanders? Nintendo reveals interactive action figures for latest Pok√©-spinoff",
       "webUrl":"http://www.guardian.co.uk/technology/gamesblog/2013/mar/13/pokemon-versus-skylanders-nintendo",
       "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/mar/13/pokemon-versus-skylanders-nintendo",
       "fields":{
-        "trailText":"<p><strong>Keith Stuart:</strong> Parents of Pokémon fans may as well just give all their money to Nintendo now and cut out the middle man</p>",
-        "headline":"Pokémon vs Skylanders? Nintendo reveals interactive action figures for latest Poké-spinoff",
+        "trailText":"<p><strong>Keith Stuart:</strong> Parents of Pok√©mon fans may as well just give all their money to Nintendo now and cut out the middle man</p>",
+        "headline":"Pok√©mon vs Skylanders? Nintendo reveals interactive action figures for latest Pok√©-spinoff",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/3/7/1299494551010/Pokemon-003.jpg",
         "wordcount":"406",
@@ -4478,7 +4478,7 @@
       },{
         "id":"technology/pokemon",
         "type":"keyword",
-        "webTitle":"Pokémon",
+        "webTitle":"Pok√©mon",
         "webUrl":"http://www.guardian.co.uk/technology/pokemon",
         "apiUrl":"http://content.guardianapis.com/technology/pokemon",
         "sectionId":"technology",
@@ -4546,7 +4546,7 @@
           "altText":"Pokemon",
           "height":"276",
           "credit":"PR",
-          "caption":"Pokémon: they're cute, they're popular, they're taking on Skylanders",
+          "caption":"Pok√©mon: they're cute, they're popular, they're taking on Skylanders",
           "width":"460"
         }
       }],
@@ -4647,6 +4647,62 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762679916/Star-Trek-The-Video-Game-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762679916/Star-Trek-The-Video-Game-008.jpg",
+          "source":"PR",
+          "altText":"Star Trek: The Video Game",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Star Trek: The Video Game: you too can be Spock or Kirk",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762750999/Star-Trek-The-Video-Game-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762750999/Star-Trek-The-Video-Game-008.jpg",
+          "source":"PR",
+          "altText":"Star Trek: The Video Game",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Star Trek: The Video Game: more than a rescue mission",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362761444431/Star-Trek-The-Video-Game-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362761444431/Star-Trek-The-Video-Game-008.jpg",
+          "source":"PR",
+          "altText":"Star Trek: The Video Game",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Star Trek: The Video Game: Enterprise culture",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762839539/Star-Trek-The-Video-Game-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762839539/Star-Trek-The-Video-Game-008.jpg",
+          "source":"PR",
+          "altText":"Star Trek: The Video Game",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Star Trek: The Video Game: Gorn asunder",
+          "width":"460"
+        }
+      },{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
@@ -4756,62 +4812,6 @@
           "height":"276",
           "credit":"PR",
           "caption":"Star Trek: The Video Game",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762679916/Star-Trek-The-Video-Game-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762679916/Star-Trek-The-Video-Game-008.jpg",
-          "source":"PR",
-          "altText":"Star Trek: The Video Game",
-          "height":"276",
-          "credit":"PR",
-          "caption":"Star Trek: The Video Game: you too can be Spock or Kirk",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762750999/Star-Trek-The-Video-Game-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762750999/Star-Trek-The-Video-Game-008.jpg",
-          "source":"PR",
-          "altText":"Star Trek: The Video Game",
-          "height":"276",
-          "credit":"PR",
-          "caption":"Star Trek: The Video Game: more than a rescue mission",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362761444431/Star-Trek-The-Video-Game-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362761444431/Star-Trek-The-Video-Game-008.jpg",
-          "source":"PR",
-          "altText":"Star Trek: The Video Game",
-          "height":"276",
-          "credit":"PR",
-          "caption":"Star Trek: The Video Game: Enterprise culture",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762839539/Star-Trek-The-Video-Game-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/3/8/1362762839539/Star-Trek-The-Video-Game-008.jpg",
-          "source":"PR",
-          "altText":"Star Trek: The Video Game",
-          "height":"276",
-          "credit":"PR",
-          "caption":"Star Trek: The Video Game: Gorn asunder",
           "width":"460"
         }
       }],
@@ -6674,7 +6674,7 @@
           "altText":"PlayStation 3 controller",
           "height":"276",
           "credit":"David Levene/Guardian",
-          "caption":"The PlayStation 4 will almost certainly offer a reworked controller \u2013 what would a touchpad add? Photograph: David Levene for the Guardian",
+          "caption":"The PlayStation 4 will almost certainly offer a reworked controller \u2013¬†what would a touchpad add? Photograph: David Levene for the Guardian",
           "width":"460"
         }
       }],
@@ -7443,7 +7443,7 @@
       },{
         "id":"technology/pokemon",
         "type":"keyword",
-        "webTitle":"Pokémon",
+        "webTitle":"Pok√©mon",
         "webUrl":"http://www.guardian.co.uk/technology/pokemon",
         "apiUrl":"http://content.guardianapis.com/technology/pokemon",
         "sectionId":"technology",
@@ -7680,12 +7680,12 @@
       "sectionId":"technology",
       "sectionName":"Technology",
       "webPublicationDate":"2013-01-24T10:45:00Z",
-      "webTitle":"Data watchdog fines Sony £250,000 over PlayStation ID hack",
+      "webTitle":"Data watchdog fines Sony ¬£250,000 over PlayStation ID hack",
       "webUrl":"http://www.guardian.co.uk/technology/2013/jan/24/sony-fined-over-playstation-hack",
       "apiUrl":"http://content.guardianapis.com/technology/2013/jan/24/sony-fined-over-playstation-hack",
       "fields":{
         "trailText":"Information commissioner fines company for security failures after millions of gamers' details were leaked online in 2011",
-        "headline":"Data watchdog fines Sony £250,000 over PlayStation ID hack",
+        "headline":"Data watchdog fines Sony ¬£250,000 over PlayStation ID hack",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/24/1359018868655/A-person-plays-on-a-Sony--005.jpg",
         "wordcount":"660",
@@ -8485,7 +8485,7 @@
       "webUrl":"http://www.guardian.co.uk/technology/gamesblog/2013/jan/15/final-fantasy-classical-music-paris",
       "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/jan/15/final-fantasy-classical-music-paris",
       "fields":{
-        "trailText":"Palais des Congrès de Paris the venue for musical event where orchestra plays selection of scores from video game series. By <strong>Simon Parkin</strong>",
+        "trailText":"Palais des Congr√®s de Paris the venue for musical event where orchestra plays selection of scores from video game series. By <strong>Simon Parkin</strong>",
         "headline":"Final Fantasy given classical twist",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/15/1358256424143/Final-Fantasy-003.jpg",
@@ -8582,7 +8582,7 @@
           "altText":"Final Fantasy",
           "height":"54",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"54"
         }
       },{
@@ -8596,7 +8596,7 @@
           "altText":"Final Fantasy",
           "height":"130",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"140"
         }
       },{
@@ -8610,7 +8610,7 @@
           "altText":"Final Fantasy",
           "height":"84",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"140"
         }
       },{
@@ -8624,7 +8624,7 @@
           "altText":"Final Fantasy",
           "height":"132",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"220"
         }
       },{
@@ -8638,7 +8638,7 @@
           "altText":"Final Fantasy",
           "height":"168",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"280"
         }
       },{
@@ -8652,7 +8652,7 @@
           "altText":"Final Fantasy",
           "height":"180",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"300"
         }
       },{
@@ -8666,7 +8666,7 @@
           "altText":"Final Fantasy",
           "height":"228",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"380"
         }
       },{
@@ -8680,7 +8680,7 @@
           "altText":"Final Fantasy",
           "height":"276",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"460"
         }
       },{
@@ -8694,7 +8694,7 @@
           "altText":"Final Fantasy",
           "height":"276",
           "credit":"Simon Parkin",
-          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congrès de Paris. Photograph: Simon Parkin",
+          "caption":"Scores from the Final Fantasy video game series were played by an orchestra at the Palais des Congr√®s de Paris. Photograph: Simon Parkin",
           "width":"460"
         }
       }],

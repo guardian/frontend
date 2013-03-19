@@ -2854,7 +2854,7 @@
       "webUrl":"http://www.guardian.co.uk/world/middle-east-live/2013/mar/18/syria-rebels-seize-military-compound-in-golan-heights-live-coverage",
       "apiUrl":"http://content.guardianapis.com/world/middle-east-live/2013/mar/18/syria-rebels-seize-military-compound-in-golan-heights-live-coverage",
       "fields":{
-        "trailText":"<p>\u2022ÊCompound falls to Yarmouk brigade after five-day siege<br />\u2022Ê'53 killed' across country today<br />\u2022 Asma al-Assad makes appearance in Damascus<br />\u2022 Netanyahu 'ready for compromise with Palestinians' <br />\u2022 <a href=\"http://www.guardian.co.uk/world/middle-east-live/2013/mar/18/syria-rebels-seize-military-compound-in-golan-heights-live-coverage#block-51473873b5799f28f712f8fc\">Read a summary of today's key events</a></p>",
+        "trailText":"<p>\u2022Â Compound falls to Yarmouk brigade after five-day siege<br />\u2022Â '53 killed' across country today<br />\u2022 Asma al-Assad makes appearance in Damascus<br />\u2022 Netanyahu 'ready for compromise with Palestinians' <br />\u2022 <a href=\"http://www.guardian.co.uk/world/middle-east-live/2013/mar/18/syria-rebels-seize-military-compound-in-golan-heights-live-coverage#block-51473873b5799f28f712f8fc\">Read a summary of today's key events</a></p>",
         "headline":"Syrian opposition meets to choose new PM \u2013 Monday 18 March",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363595591029/6c4e6ab1-6938-4f15-9a8f-42b0dcf34b91-140x84.jpeg",
@@ -2968,6 +2968,21 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363618941295/Students-in-Israel-make-a-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363618941295/Students-in-Israel-make-a-010.jpg",
+          "source":"AP",
+          "photographer":"Ariel Schalit",
+          "altText":"Students in Israel make an image of President Obama from chocolate.",
+          "height":"276",
+          "credit":"Ariel Schalit/AP",
+          "caption":"Students of Estella's bakery and pastry school in Givat Shmuel, Israel, work on an image of Barack Obama made from chocolate ahead of his visit to the region. Photograph: Ariel Schalit/AP",
+          "width":"460"
+        }
+      },{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
@@ -3101,21 +3116,6 @@
           "credit":"-/AFP/Getty Images",
           "caption":"This image distributed by the Syrian presidency media office on 17 March 2013 shows Asma al-Assad being greeted by young people at a 'Mother of Martyrs' event at the opera house in Damascus. Photograph: AFP/Getty Images",
           "width":"1024"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363618941295/Students-in-Israel-make-a-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363618941295/Students-in-Israel-make-a-010.jpg",
-          "source":"AP",
-          "photographer":"Ariel Schalit",
-          "altText":"Students in Israel make an image of President Obama from chocolate.",
-          "height":"276",
-          "credit":"Ariel Schalit/AP",
-          "caption":"Students of Estella's bakery and pastry school in Givat Shmuel, Israel, work on an image of Barack Obama made from chocolate ahead of his visit to the region. Photograph: Ariel Schalit/AP",
-          "width":"460"
         }
       },{
         "type":"picture",
@@ -3768,7 +3768,7 @@
       "id":"commentisfree/2013/mar/17/broken-dream-iraqi-kurdistan",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
-      "webPublicationDate":"2013-03-17T13:00:36Z",
+      "webPublicationDate":"2013-03-17T13:00:37Z",
       "webTitle":"My broken dream for Iraqi Kurdistan | Berivan Dosky",
       "webUrl":"http://www.guardian.co.uk/commentisfree/2013/mar/17/broken-dream-iraqi-kurdistan",
       "apiUrl":"http://content.guardianapis.com/commentisfree/2013/mar/17/broken-dream-iraqi-kurdistan",

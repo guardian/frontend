@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":125277,
+    "total":125279,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,281 @@
       "apiUrl":"http://content.guardianapis.com/sport"
     },
     "results":[{
+      "id":"sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-19T13:24:38Z",
+      "webTitle":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Dominican Republic beat the Netherlands 4-1 and will face Puerto Rico in Tuesday night's final</p>",
+        "headline":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698740719/3c95fceb-b44f-4479-8ef8-08623b854f75-140x84.jpeg",
+        "wordcount":"825",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"MIKE BLAKE",
+          "altText":"Dominican Republic vs Netherlands, WBC",
+          "height":"276",
+          "credit":"MIKE BLAKE/REUTERS",
+          "caption":"Dominican Republic's Miguel Tejada pops out on a bunt attempt to Netherlands catcher Dashenko Ricardo during the  semi-final round of the World Baseball Classic in San Francisco, California March 18, 2013. Photograph: Mike Blake/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/19/the-spin-brian-lara-sachin-tendulkar",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-19T13:22:21Z",
+      "webTitle":"Brian Lara v Sachin Tendulkar is a pointless debate \u2013 and a grand one | Barney Ronay",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/the-spin-brian-lara-sachin-tendulkar",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/the-spin-brian-lara-sachin-tendulkar",
+      "fields":{
+        "trailText":"<strong>Barney Ronay:</strong> The Wellington washout let Sky indulge in a comparison that is tedious yet a brilliantly insatiable topic of conversation",
+        "headline":"Brian Lara v Sachin Tendulkar is a pointless debate \u2013 and a grand one",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699072961/Brian-Lara-003.jpg",
+        "wordcount":"2215",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/thespin",
+        "type":"series",
+        "webTitle":"The Spin",
+        "webUrl":"http://www.guardian.co.uk/sport/series/thespin",
+        "apiUrl":"http://content.guardianapis.com/sport/series/thespin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cricket",
+        "type":"keyword",
+        "webTitle":"Cricket",
+        "webUrl":"http://www.guardian.co.uk/sport/cricket",
+        "apiUrl":"http://content.guardianapis.com/sport/cricket",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/barneyronay",
+        "type":"contributor",
+        "webTitle":"Barney Ronay",
+        "webUrl":"http://www.guardian.co.uk/profile/barneyronay",
+        "apiUrl":"http://content.guardianapis.com/profile/barneyronay",
+        "bio":"<p>Barney Ronay is senior sports writer for guardian.co.uk. He also writes a column on sport for the Saturday Guardian</p>",
+        "r2ContributorId":"21010",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/02/12/barney_ronay_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699070395/Brian-Lara-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699070395/Brian-Lara-001.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"54",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699071712/Brian-Lara-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699071712/Brian-Lara-002.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"130",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699072961/Brian-Lara-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699072961/Brian-Lara-003.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"84",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699074212/Brian-Lara-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699074212/Brian-Lara-004.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"132",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699075377/Brian-Lara-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699075377/Brian-Lara-005.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"168",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699076544/Brian-Lara-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699076544/Brian-Lara-006.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"180",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699077730/Brian-Lara-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699077730/Brian-Lara-007.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"228",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699078981/Brian-Lara-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699078981/Brian-Lara-008.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"276",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 led West Indies to a one-wicket win against Australia in the third Test in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699078981/Brian-Lara-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363699078981/Brian-Lara-008.jpg",
+          "source":"AP",
+          "photographer":"Willie Alleyne",
+          "altText":"Brian Lara",
+          "height":"276",
+          "credit":"Willie Alleyne/AP",
+          "caption":"Brian Lara, left, with Carl Hooper in March 1999, after his brilliant unbeaten 153 as captain led West Indies to a one-wicket win against Australia in the third Test at the Kensington Oval in Barbados. Photograph: Willie Alleyne/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"sport/99-94-cricket-blog/2013/mar/19/before-famous-watching-young-cricketers",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -879,15 +1154,15 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2013-03-19T12:02:09Z",
-      "webTitle":"Sri Lanka's Herath takes 200th wicket then batsmen see off Bangladesh",
+      "webTitle":"Sri Lanka's Rangana Herath takes 200th wicket in win over Bangladesh",
       "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/sri-lanka-herath-bangladesh",
       "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/sri-lanka-herath-bangladesh",
       "fields":{
         "trailText":"Rangana Herath celebrated his birthday by taking his 200th Test wicket to inspire Sri Lanka to a seven-wicket victory over Bangladesh",
-        "headline":"Sri Lanka's Herath takes 200th wicket then batsmen see off Bangladesh",
+        "headline":"Sri Lanka's Rangana Herath takes 200th wicket in win over Bangladesh",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Cricket/Pix/pictures/2013/3/19/1363694461708/Sri-Lankas-Rangana-Herath-003.jpg",
-        "wordcount":"481",
+        "wordcount":"455",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1240,7 +1515,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/video/2013/mar/19/ioc-spain-olympics-video",
       "apiUrl":"http://content.guardianapis.com/sport/video/2013/mar/19/ioc-spain-olympics-video",
       "fields":{
-        "trailText":"<p>Officials from the IOC evaluation committee tour the Santiago Bernabéu Stadium as they evaluate Madrid's bid for the 2020 Olympics</p>",
+        "trailText":"<p>Officials from the IOC evaluation committee tour the Santiago Bernab√©u Stadium as they evaluate Madrid's bid for the 2020 Olympics</p>",
         "headline":"IOC evaluates Spain's austerity Olympics bid - video",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625086131/Real-Madrids-Bernab-u-tou-006.jpg",
@@ -1343,10 +1618,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625078151/Real-Madrids-Bernab-u-tou-001.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"230",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"300"
         }
       },{
@@ -1358,10 +1633,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625082041/Real-Madrids-Bernab-u-tou-003.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"54",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"54"
         }
       },{
@@ -1373,10 +1648,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625083384/Real-Madrids-Bernab-u-tou-004.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"340",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"480"
         }
       },{
@@ -1388,10 +1663,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625084783/Real-Madrids-Bernab-u-tou-005.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"130",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"140"
         }
       },{
@@ -1403,10 +1678,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625086131/Real-Madrids-Bernab-u-tou-006.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"84",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"140"
         }
       },{
@@ -1418,10 +1693,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625087721/Real-Madrids-Bernab-u-tou-007.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"132",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"220"
         }
       },{
@@ -1433,10 +1708,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625088984/Real-Madrids-Bernab-u-tou-008.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"168",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"280"
         }
       },{
@@ -1448,10 +1723,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625090294/Real-Madrids-Bernab-u-tou-009.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"180",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"300"
         }
       },{
@@ -1463,10 +1738,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625091535/Real-Madrids-Bernab-u-tou-010.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"228",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"380"
         }
       },{
@@ -1478,10 +1753,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625092803/Real-Madrids-Bernab-u-tou-011.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"276",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"460"
         }
       },{
@@ -1493,10 +1768,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625094150/Real-Madrids-Bernab-u-tou-012.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"372",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"620"
         }
       },{
@@ -1508,10 +1783,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625095560/Real-Madrids-Bernab-u-tou-013.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"360",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"640"
         }
       },{
@@ -1523,10 +1798,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625096949/Real-Madrids-Bernab-u-tou-014.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"90",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"120"
         }
       },{
@@ -1538,10 +1813,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625098224/Real-Madrids-Bernab-u-tou-015.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"225",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"300"
         }
       },{
@@ -1553,10 +1828,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363625099551/Real-Madrids-Bernab-u-tou-016.jpg",
           "source":"AP",
           "photographer":"Arturo Rodriguez",
-          "altText":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video",
+          "altText":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video",
           "height":"360",
           "credit":"Arturo Rodriguez/AP",
-          "caption":"Real Madrid's Bernabéu toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
+          "caption":"Real Madrid's Bernab√©u toured as IOC evaluate Spain's austerity Olympics - video Photograph: Arturo Rodriguez/AP",
           "width":"480"
         }
       }],
@@ -3615,212 +3890,6 @@
         }
       }],
       "references":[]
-    },{
-      "id":"sport/blog/2013/mar/18/rafael-nadal-indian-wells-knee-fitness",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-03-18T17:50:16Z",
-      "webTitle":"Rafael Nadal quells fitness doubts to emerge as a genuine force again | Kevin Mitchell",
-      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/18/rafael-nadal-indian-wells-knee-fitness",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/18/rafael-nadal-indian-wells-knee-fitness",
-      "fields":{
-        "trailText":"<strong>Kevin Mitchell:</strong> Rafael Nadal's win in Indian Wells extended his best-ever start to a season and has surprised many, including himself",
-        "headline":"Rafael Nadal quells fitness doubts to emerge as a genuine force again",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/18/1363620449953/Rafael-Nadal-of-Spain-cel-003.jpg",
-        "wordcount":"859",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/rafaelnadal",
-        "type":"keyword",
-        "webTitle":"Rafael Nadal",
-        "webUrl":"http://www.guardian.co.uk/sport/rafaelnadal",
-        "apiUrl":"http://content.guardianapis.com/sport/rafaelnadal",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.guardian.co.uk/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/tennis",
-        "type":"keyword",
-        "webTitle":"Tennis",
-        "webUrl":"http://www.guardian.co.uk/sport/tennis",
-        "apiUrl":"http://content.guardianapis.com/sport/tennis",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.guardian.co.uk/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/kevinmitchell",
-        "type":"contributor",
-        "webTitle":"Kevin Mitchell",
-        "webUrl":"http://www.guardian.co.uk/profile/kevinmitchell",
-        "apiUrl":"http://content.guardianapis.com/profile/kevinmitchell",
-        "bio":"<p>Kevin Mitchell is the tennis and boxing correspondent for the Guardian and Observer. He wrote <a href=\"http://www.amazon.co.uk/War-Baby-Violence-Kevin-Mitchell/dp/0224060732\">War, Baby - The Glamour of Violence</a> in 1999, and ghosted <a href=\"http://www.amazon.co.uk/Frank-Fighting-Back-Bruno/dp/0224077767/ref=sr_1_2?ie=UTF8&amp;s=books&amp;qid=1246895478&amp;sr=1-2\">Frank</a>, the autobiography of Frank Bruno, in 2006. His third book, 'In The Garden: The Mob, The Fifties, The Fights', is published by Yellow Jersey</p>",
-        "rcsId":"GNL042083",
-        "r2ContributorId":"15957",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/kevin_mitchell_140x140.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/18/1363620457271/Rafael-Nadal-of-Spain-cel-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/18/1363620457271/Rafael-Nadal-of-Spain-cel-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Stephen Dunn",
-          "altText":"Rafael Nadal of Spain celebrates after defeating Juan Martin Del Potro of Argentina",
-          "height":"276",
-          "credit":"Stephen Dunn/Getty Images",
-          "caption":"Rafael Nadal collapses in elation after his victory over Juan Martin Del Potro in Indian Wells. Photograph: Stephen Dunn/Getty Images",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/mar/18/pittsburgh-penguins-boston-bruins-five-straight",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-03-18T17:34:43Z",
-      "webTitle":"Pittsburgh Penguins claim fifth consecutive win against Boston Bruins",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/18/pittsburgh-penguins-boston-bruins-five-straight",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/18/pittsburgh-penguins-boston-bruins-five-straight",
-      "fields":{
-        "trailText":"<p><strong>NHL round-up:</strong> Pittsburgh Penguins beat Boston Bruins 2-1; Washington Capitals defeat Buffalo Sabres 5-3</p>",
-        "headline":"Pittsburgh Penguins claim fifth consecutive win against Boston Bruins",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627385692/36227136-a824-4856-a6ea-2cd5376a537e-140x84.jpeg",
-        "wordcount":"280",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nhl",
-        "type":"keyword",
-        "webTitle":"NHL",
-        "webUrl":"http://www.guardian.co.uk/sport/nhl",
-        "apiUrl":"http://content.guardianapis.com/sport/nhl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/boston-bruins",
-        "type":"keyword",
-        "webTitle":"Boston Bruins",
-        "webUrl":"http://www.guardian.co.uk/sport/boston-bruins",
-        "apiUrl":"http://content.guardianapis.com/sport/boston-bruins",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/pittsburgh-penguins",
-        "type":"keyword",
-        "webTitle":"Pittsburgh Penguins",
-        "webUrl":"http://www.guardian.co.uk/sport/pittsburgh-penguins",
-        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-penguins",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/washington-capitals",
-        "type":"keyword",
-        "webTitle":"Washington Capitals",
-        "webUrl":"http://www.guardian.co.uk/sport/washington-capitals",
-        "apiUrl":"http://content.guardianapis.com/sport/washington-capitals",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/buffalo-sabres",
-        "type":"keyword",
-        "webTitle":"Buffalo Sabres",
-        "webUrl":"http://www.guardian.co.uk/sport/buffalo-sabres",
-        "apiUrl":"http://content.guardianapis.com/sport/buffalo-sabres",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627380808/36227136-a824-4856-a6ea-2cd5376a537e-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627380808/36227136-a824-4856-a6ea-2cd5376a537e-460x276.jpeg",
-          "source":"NHLI via Getty Images",
-          "photographer":"Gregory Shamus",
-          "altText":"Pittsburgh Penguins vs Boston Bruins",
-          "height":"276",
-          "credit":"Gregory Shamus/NHLI via Getty Images",
-          "caption":"Paul Martin of the Pittsburgh Penguins battles for the loose puck against Andrew Ference of the Boston Bruins on March 17, 2013 at Consol Energy Center in Pittsburgh, Pennsylvania. Photograph: Gregory Shamus/NHLI via Getty Images",
-          "width":"460"
-        }
-      }],
-      "references":[]
     }],
     "editorsPicks":[{
       "id":"football/2013/mar/19/michael-owen-to-retire-from-football",
@@ -3831,7 +3900,7 @@
       "webUrl":"http://www.guardian.co.uk/football/2013/mar/19/michael-owen-to-retire-from-football",
       "apiUrl":"http://content.guardianapis.com/football/2013/mar/19/michael-owen-to-retire-from-football",
       "fields":{
-        "trailText":"After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season",
+        "trailText":"<p>After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season</p>",
         "headline":"Michael Owen to retire from football at the end of the season",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690182192/Michael-Owen-001.jpg",
@@ -3902,20 +3971,34 @@
         "references":[]
       }],
       "mediaAssets":[{
-        "type":"picture",
+        "type":"video",
         "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
-          "source":"Sportsphoto Ltd./Allstar",
-          "photographer":"Paul Mcfegan/Sportsphoto",
-          "altText":"Michael Owen ",
-          "height":"276",
-          "credit":"Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "caption":"Stoke City and former England striker Michael Owen has announced that he will retire from professional football at the end of the season.  Photograph: Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "width":"460"
-        }
+          "source":"SNTV",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/19/130319owen_7379422.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/19/130319owen_7379422.jpg",
+          "width":"480",
+          "durationSeconds":"14"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130319owen/130319owen.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/3/19/130319owen_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/3/19/130319owen_3gpLg16x9.3gp"
+        }]
       },{
         "type":"picture",
         "rel":"alt-size",
@@ -4084,7 +4167,7 @@
         "headline":"Gary Cahill out of England's San Marino trip and may miss Montenegro",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363689721363/Gary-Cahill-receives-trea-003.jpg",
-        "wordcount":"284",
+        "wordcount":"285",
         "liveBloggingNow":"false"
       },
       "tags":[{

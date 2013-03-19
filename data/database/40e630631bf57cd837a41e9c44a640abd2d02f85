@@ -487,12 +487,12 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2010-06-25T11:25:35Z",
-      "webTitle":"Man convicted of £40m Graff jewellery heist",
+      "webTitle":"Man convicted of Â£40m Graff jewellery heist",
       "webUrl":"http://www.guardian.co.uk/uk/2010/jun/25/man-convicted-graff-jewellery-heist",
       "apiUrl":"http://content.guardianapis.com/uk/2010/jun/25/man-convicted-graff-jewellery-heist",
       "fields":{
         "trailText":"Aman Kassaye held 'petrified' woman at gunpoint during Britain's biggest jewellery robbery",
-        "headline":"Man convicted of £40m Graff jewellery heist",
+        "headline":"Man convicted of Â£40m Graff jewellery heist",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/6/25/1277464959540/Graff-Diamonds-jewellery--002.jpg",
         "wordcount":"380",
@@ -563,7 +563,7 @@
           "altText":"Graff Diamonds jewellery heist case",
           "height":"276",
           "credit":"Clive Gee/PA",
-          "caption":"The £40m of jewellery stolen from Graff Diamonds in London has never been recovered. Photograph: Clive Gee/PA",
+          "caption":"The Â£40m of jewellery stolen from Graff Diamonds in London has never been recovered. Photograph: Clive Gee/PA",
           "width":"460"
         }
       }],
@@ -573,12 +573,12 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2005-07-01T01:47:55Z",
-      "webTitle":"Street shooting highlights £36bn cost of crime",
+      "webTitle":"Street shooting highlights Â£36bn cost of crime",
       "webUrl":"http://www.guardian.co.uk/uk/2005/jul/01/ukguns.ukcrime",
       "apiUrl":"http://content.guardianapis.com/uk/2005/jul/01/ukguns.ukcrime",
       "fields":{
         "trailText":"Police were yesterday investigating the shooting of a woman in a busy Manchester street during an apparently bungled robbery. ",
-        "headline":"Street shooting highlights £36bn cost of crime",
+        "headline":"Street shooting highlights Â£36bn cost of crime",
         "hasStoryPackage":"false",
         "wordcount":"423",
         "liveBloggingNow":"false"

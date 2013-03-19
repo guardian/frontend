@@ -165,6 +165,171 @@
       "mediaAssets":[{
         "type":"picture",
         "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687146696/aed8cdaa-06cc-4fea-a315-97dd41e316cd-380x228.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687146696/aed8cdaa-06cc-4fea-a315-97dd41e316cd-380x228.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"228",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147059/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1020x612.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147059/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1020x612.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"612",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"1020"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147568/aed8cdaa-06cc-4fea-a315-97dd41e316cd-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147568/aed8cdaa-06cc-4fea-a315-97dd41e316cd-460x276.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"276",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147869/aed8cdaa-06cc-4fea-a315-97dd41e316cd-540x324.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147869/aed8cdaa-06cc-4fea-a315-97dd41e316cd-540x324.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"324",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"540"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687148681/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2060x1236.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687148681/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2060x1236.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"1236",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"2060"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150278/aed8cdaa-06cc-4fea-a315-97dd41e316cd-220x132.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150278/aed8cdaa-06cc-4fea-a315-97dd41e316cd-220x132.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"132",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150499/aed8cdaa-06cc-4fea-a315-97dd41e316cd-300x180.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150499/aed8cdaa-06cc-4fea-a315-97dd41e316cd-300x180.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"180",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150765/aed8cdaa-06cc-4fea-a315-97dd41e316cd-620x372.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150765/aed8cdaa-06cc-4fea-a315-97dd41e316cd-620x372.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"372",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151063/aed8cdaa-06cc-4fea-a315-97dd41e316cd-140x84.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151063/aed8cdaa-06cc-4fea-a315-97dd41e316cd-140x84.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"84",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151783/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2048x1536.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151783/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2048x1536.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"1536",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"2048"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687153572/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1024x768.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687153572/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1024x768.jpeg",
+          "source":"Getty Images",
+          "photographer":"Oli Scarff",
+          "altText":"David Cameron on a visit to a London nursery in 2010.",
+          "height":"768",
+          "credit":"Oli Scarff/Getty Images",
+          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
+          "width":"1024"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
         "index":2,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363696298493/5e553ee5-d79c-46b6-bd84-7a79fbdf6b1d-300x180.jpeg",
         "fields":{
@@ -477,171 +642,6 @@
           "caption":"Nigel Farage, the Ukip leader. Photograph: David Levene",
           "width":"1024"
         }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687146696/aed8cdaa-06cc-4fea-a315-97dd41e316cd-380x228.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687146696/aed8cdaa-06cc-4fea-a315-97dd41e316cd-380x228.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"228",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147059/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1020x612.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147059/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1020x612.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"612",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"1020"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147568/aed8cdaa-06cc-4fea-a315-97dd41e316cd-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147568/aed8cdaa-06cc-4fea-a315-97dd41e316cd-460x276.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"276",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147869/aed8cdaa-06cc-4fea-a315-97dd41e316cd-540x324.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687147869/aed8cdaa-06cc-4fea-a315-97dd41e316cd-540x324.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"324",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"540"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687148681/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2060x1236.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687148681/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2060x1236.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"1236",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"2060"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150278/aed8cdaa-06cc-4fea-a315-97dd41e316cd-220x132.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150278/aed8cdaa-06cc-4fea-a315-97dd41e316cd-220x132.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"132",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150499/aed8cdaa-06cc-4fea-a315-97dd41e316cd-300x180.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150499/aed8cdaa-06cc-4fea-a315-97dd41e316cd-300x180.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"180",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150765/aed8cdaa-06cc-4fea-a315-97dd41e316cd-620x372.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687150765/aed8cdaa-06cc-4fea-a315-97dd41e316cd-620x372.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"372",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151063/aed8cdaa-06cc-4fea-a315-97dd41e316cd-140x84.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151063/aed8cdaa-06cc-4fea-a315-97dd41e316cd-140x84.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"84",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151783/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2048x1536.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687151783/aed8cdaa-06cc-4fea-a315-97dd41e316cd-2048x1536.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"1536",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"2048"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687153572/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1024x768.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687153572/aed8cdaa-06cc-4fea-a315-97dd41e316cd-1024x768.jpeg",
-          "source":"Getty Images",
-          "photographer":"Oli Scarff",
-          "altText":"David Cameron on a visit to a London nursery in 2010.",
-          "height":"768",
-          "credit":"Oli Scarff/Getty Images",
-          "caption":"David Cameron on a visit to a London nursery in 2010. Photograph: Oli Scarff/Getty Images",
-          "width":"1024"
-        }
       }],
       "references":[]
     },{
@@ -804,7 +804,7 @@
           "altText":"Children at nursery school",
           "height":"54",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"54"
         }
       },{
@@ -819,7 +819,7 @@
           "altText":"Children at nursery school",
           "height":"130",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"140"
         }
       },{
@@ -834,7 +834,7 @@
           "altText":"Children at nursery school",
           "height":"84",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"140"
         }
       },{
@@ -849,7 +849,7 @@
           "altText":"Children at nursery school",
           "height":"132",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"220"
         }
       },{
@@ -864,7 +864,7 @@
           "altText":"Children at nursery school",
           "height":"168",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"280"
         }
       },{
@@ -879,7 +879,7 @@
           "altText":"Children at nursery school",
           "height":"180",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"300"
         }
       },{
@@ -894,7 +894,7 @@
           "altText":"Children at nursery school",
           "height":"228",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"380"
         }
       },{
@@ -909,7 +909,7 @@
           "altText":"Children at nursery school",
           "height":"276",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"460"
         }
       },{
@@ -924,7 +924,7 @@
           "altText":"Children at nursery school",
           "height":"276",
           "credit":"Olaf Doering/Alamy",
-          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to £1,200 per child in tax relief. Photograph: Olaf Doering/Alamy",
+          "caption":"Childcare deal: under the scheme, any family in which both parents are in work will be eligible to claim up to Â£1,200 a child in tax relief. Photograph: Olaf Doering/Alamy",
           "width":"460"
         }
       },{
@@ -3525,7 +3525,7 @@
       "webUrl":"http://www.guardian.co.uk/politics/2013/mar/18/mps-criticise-hmrc-woeful-customer-service",
       "apiUrl":"http://content.guardianapis.com/politics/2013/mar/18/mps-criticise-hmrc-woeful-customer-service",
       "fields":{
-        "trailText":"<p>HM Revenue &amp; Customs cost callers £136m on phone calls and left 20m calls unanswered</p>",
+        "trailText":"<p>HM Revenue &amp; Customs cost callers Â£136m on phone calls and left 20m calls unanswered</p>",
         "headline":"MPs accuse HMRC of woeful customer service",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/17/1363551961988/Computer-screen-showing-t-005.jpg",
@@ -5552,12 +5552,12 @@
       "sectionId":"politics",
       "sectionName":"Politics",
       "webPublicationDate":"2013-03-16T10:23:29Z",
-      "webTitle":"Budget 2013: £100m National Insurance tax loophole to be plugged",
+      "webTitle":"Budget 2013: Â£100m National Insurance tax loophole to be plugged",
       "webUrl":"http://www.guardian.co.uk/politics/2013/mar/16/budget-2013-national-insurance-loophole-plugged",
       "apiUrl":"http://content.guardianapis.com/politics/2013/mar/16/budget-2013-national-insurance-loophole-plugged",
       "fields":{
         "trailText":"Danny Alexander unveils crackdown on bosses dodging NI contributions and harming benefits eligibility for 100,000 staff",
-        "headline":"Budget 2013: £100m National Insurance tax loophole to be plugged",
+        "headline":"Budget 2013: Â£100m National Insurance tax loophole to be plugged",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/1/13/1358096354186/payslip-tax-pension-natio-003.jpg",
         "wordcount":"458",
@@ -6337,12 +6337,12 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2013-03-19T10:40:00Z",
-      "webTitle":"Childcare support: working parents to be given up to £1,200",
+      "webTitle":"Childcare support: working parents to be given up to Â£1,200",
       "webUrl":"http://www.guardian.co.uk/uk/2013/mar/19/working-parents-childcare",
       "apiUrl":"http://content.guardianapis.com/uk/2013/mar/19/working-parents-childcare",
       "fields":{
-        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing £200m more into universal credit system</p>",
-        "headline":"Working parents to be given up to £1,200 a year in childcare support",
+        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing Â£200m more into universal credit system</p>",
+        "headline":"Working parents to be given up to Â£1,200 a year in childcare support",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363692963339/Cameron-and-Clegg-on-smal-003.jpg",
         "wordcount":"957",
@@ -6540,7 +6540,7 @@
           "altText":"Trainee nursery worker ",
           "height":"54",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"54"
         }
       },{
@@ -6555,7 +6555,7 @@
           "altText":"Trainee nursery worker ",
           "height":"340",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"480"
         }
       },{
@@ -6570,7 +6570,7 @@
           "altText":"Trainee nursery worker ",
           "height":"130",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -6585,7 +6585,7 @@
           "altText":"Trainee nursery worker ",
           "height":"84",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -6600,7 +6600,7 @@
           "altText":"Trainee nursery worker ",
           "height":"132",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"220"
         }
       },{
@@ -6615,7 +6615,7 @@
           "altText":"Trainee nursery worker ",
           "height":"168",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"280"
         }
       },{
@@ -6630,7 +6630,7 @@
           "altText":"Trainee nursery worker ",
           "height":"180",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"300"
         }
       },{
@@ -6645,7 +6645,7 @@
           "altText":"Trainee nursery worker ",
           "height":"228",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"380"
         }
       },{
@@ -6660,7 +6660,7 @@
           "altText":"Trainee nursery worker ",
           "height":"276",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"460"
         }
       },{
@@ -6675,7 +6675,7 @@
           "altText":"Trainee nursery worker ",
           "height":"372",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"620"
         }
       },{
@@ -6704,7 +6704,7 @@
       "webUrl":"http://www.guardian.co.uk/society/2013/mar/19/labour-rush-benefit-rebates-poundland",
       "apiUrl":"http://content.guardianapis.com/society/2013/mar/19/labour-rush-benefit-rebates-poundland",
       "fields":{
-        "trailText":"Opposition likely to abstain from vote on law to prevent government having to pay £130m to jobseekers",
+        "trailText":"Opposition likely to abstain from vote on law to prevent government having to pay Â£130m to jobseekers",
         "headline":"Labour to help rush through bill to stop benefit rebates after Poundland ruling",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687301300/Cait-Reilly-005.jpg",

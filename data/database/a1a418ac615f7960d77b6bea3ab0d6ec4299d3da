@@ -91,7 +91,7 @@
       "id":"business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "sectionId":"business",
       "sectionName":"Business",
-      "webPublicationDate":"2013-03-19T12:43:35Z",
+      "webPublicationDate":"2013-03-19T13:03:00Z",
       "webTitle":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
@@ -100,7 +100,7 @@
         "headline":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-        "wordcount":"2707",
+        "wordcount":"2807",
         "liveBloggingNow":"true"
       },
       "tags":[{
@@ -1040,7 +1040,7 @@
         "trailText":"<p>Live coverage as an estimated 150,000 cram St Peter's Square in the Vatican for the official start to Pope Francis's pontificate<br />\u2022 <a href=\"http://www.guardian.co.uk/world/blog/2013/mar/19/pope-francis-inaugural-mass-live-coverage#block-51483e6495cb3037f5c82a90\">Read a summary of today's key events</a></p>",
         "headline":"Pope Francis inauguration mass - as it happened",
         "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363679528623/Pope-Francis-drives-throu-005.jpg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363681395066/Pope-Francis-waves-to-cro-005.jpg",
         "wordcount":"3518",
         "liveBloggingNow":"true"
       },
@@ -1175,6 +1175,21 @@
           "credit":"Sky News",
           "caption":"Pope Francis in St Peter's Basilica for his inaugural mass. Photograph: Sky News",
           "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363681404178/Pope-Francis-waves-to-cro-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363681404178/Pope-Francis-waves-to-cro-011.jpg",
+          "source":"AP",
+          "photographer":"Gregorio Borgia",
+          "altText":"Pope Francis waves to crowds as he arrives to his inauguration mass on 19 March 2013.",
+          "height":"372",
+          "credit":"Gregorio Borgia/AP",
+          "caption":"Pope Francis waves to the crowd as he arrives to his inauguration mass today. Photograph: Gregorio Borgia/AP",
+          "width":"620"
         }
       },{
         "type":"picture",
@@ -1628,6 +1643,156 @@
       }],
       "references":[]
     },{
+      "id":"world/2013/mar/19/cyprus-president-bailout-levy",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-03-19T12:29:17Z",
+      "webTitle":"Cypriot president faces parliament defeat on bailout levy",
+      "webUrl":"http://www.guardian.co.uk/world/2013/mar/19/cyprus-president-bailout-levy",
+      "apiUrl":"http://content.guardianapis.com/world/2013/mar/19/cyprus-president-bailout-levy",
+      "fields":{
+        "trailText":"Officials seek to modify controversial tax on savers before MPs can reject it in a vote",
+        "headline":"Cypriot president faces parliament defeat on bailout levy",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363695909287/Cypriots-protest-outside--005.jpg",
+        "wordcount":"790",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/cyprus",
+        "type":"keyword",
+        "webTitle":"Cyprus",
+        "webUrl":"http://www.guardian.co.uk/world/cyprus",
+        "apiUrl":"http://content.guardianapis.com/world/cyprus",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/debt-crisis",
+        "type":"keyword",
+        "webTitle":"Eurozone crisis",
+        "webUrl":"http://www.guardian.co.uk/business/debt-crisis",
+        "apiUrl":"http://content.guardianapis.com/business/debt-crisis",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.guardian.co.uk/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/eu",
+        "type":"keyword",
+        "webTitle":"European Union",
+        "webUrl":"http://www.guardian.co.uk/world/eu",
+        "apiUrl":"http://content.guardianapis.com/world/eu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/imf",
+        "type":"keyword",
+        "webTitle":"International Monetary Fund (IMF)",
+        "webUrl":"http://www.guardian.co.uk/business/imf",
+        "apiUrl":"http://content.guardianapis.com/business/imf",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking-reform",
+        "type":"keyword",
+        "webTitle":"Banking reform",
+        "webUrl":"http://www.guardian.co.uk/business/banking-reform",
+        "apiUrl":"http://content.guardianapis.com/business/banking-reform",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.guardian.co.uk/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.guardian.co.uk/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/simon-neville",
+        "type":"contributor",
+        "webTitle":"Simon Neville",
+        "webUrl":"http://www.guardian.co.uk/profile/simon-neville",
+        "apiUrl":"http://content.guardianapis.com/profile/simon-neville",
+        "bio":"<p>Simon Neville is a business reporter writing for the Guardian and Observer</p>",
+        "r2ContributorId":"50873",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/2/19/1361269467530/Simon-Neville-003.jpg",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363695915277/Cypriots-protest-outside--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363695915277/Cypriots-protest-outside--010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Patrick Baz",
+          "altText":"Cypriots protest outside parliament",
+          "height":"276",
+          "credit":"Patrick Baz/AFP/Getty Images",
+          "caption":"Cypriots protest outside the parliament building in Nicosia. Photograph: Patrick Baz/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"world/2013/mar/19/pakistan-arrest-over-daniel-pearl",
       "sectionId":"world",
       "sectionName":"World news",
@@ -1845,16 +2010,16 @@
       "id":"world/2013/mar/19/pope-francis-first-mass-vatican",
       "sectionId":"world",
       "sectionName":"World news",
-      "webPublicationDate":"2013-03-19T12:53:51Z",
+      "webPublicationDate":"2013-03-19T13:17:00Z",
       "webTitle":"Pope Francis sets out to defend weak, poor and the environment in first mass",
       "webUrl":"http://www.guardian.co.uk/world/2013/mar/19/pope-francis-first-mass-vatican",
       "apiUrl":"http://content.guardianapis.com/world/2013/mar/19/pope-francis-first-mass-vatican",
       "fields":{
-        "trailText":"Vatican says up to 200,000 packed into St Peter's Square to hear Pope Francis vow to urge Catholics to 'protect creation'",
+        "trailText":"Vatican says up to 200,000 packed into St Peter's Square to hear Pope Francis urge Catholics to 'protect creation'",
         "headline":"Pope Francis sets out to defend weak, poor and the environment in first mass",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697584770/Pope-Francis-005.jpg",
-        "wordcount":"415",
+        "wordcount":"414",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3454,21 +3619,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
-          "source":"Reuters",
-          "photographer":"Paul Hackett",
-          "altText":"Newspapers press regulation",
-          "height":"276",
-          "credit":"Paul Hackett/Reuters",
-          "caption":"The press regulation deal has left much of the newspaper industry dismayed. Photograph: Paul Hackett/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642450633/Newspapers-press-regulati-001.jpg",
@@ -3576,6 +3726,21 @@
         "type":"picture",
         "rel":"alt-size",
         "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
+          "source":"Reuters",
+          "photographer":"Paul Hackett",
+          "altText":"Newspapers press regulation",
+          "height":"276",
+          "credit":"Paul Hackett/Reuters",
+          "caption":"The press regulation deal has left much of the newspaper industry dismayed. Photograph: Paul Hackett/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363642459222/Newspapers-press-regulati-008.jpg",
@@ -3994,21 +4159,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627103006/Bosco-Ntaganda-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627103006/Bosco-Ntaganda-008.jpg",
-          "source":"AP",
-          "photographer":"Alain Wandimoyi",
-          "altText":"Bosco Ntaganda",
-          "height":"276",
-          "credit":"Alain Wandimoyi/AP",
-          "caption":"Bosco Ntaganda in 2010. Photograph: Alain Wandimoyi/AP",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627094377/Bosco-Ntaganda-001.jpg",
@@ -4127,96 +4277,19 @@
           "caption":"Bosco Ntaganda in 2010. Photograph: Alain Wandimoyi/AP",
           "width":"460"
         }
-      }],
-      "references":[]
-    },{
-      "id":"world/2013/mar/18/nypd-challenged-stop-and-frisk",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-03-18T22:22:17Z",
-      "webTitle":"NYPD challenged over stop-and-frisk in landmark class action suit",
-      "webUrl":"http://www.guardian.co.uk/world/2013/mar/18/nypd-challenged-stop-and-frisk",
-      "apiUrl":"http://content.guardianapis.com/world/2013/mar/18/nypd-challenged-stop-and-frisk",
-      "fields":{
-        "trailText":"<p>New York police accused of violating constitutional rights in controversial policy that has become feature of Bloomberg mayorship</p>",
-        "headline":"NYPD challenged over stop-and-frisk in landmark class action suit",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/8/4/1344091490280/NYPD-stop-and-frisks-003.jpg",
-        "wordcount":"695",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/nypd",
-        "type":"keyword",
-        "webTitle":"NYPD",
-        "webUrl":"http://www.guardian.co.uk/world/nypd",
-        "apiUrl":"http://content.guardianapis.com/world/nypd",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
       },{
-        "id":"profile/ryan-devereaux",
-        "type":"contributor",
-        "webTitle":"Ryan Devereaux",
-        "webUrl":"http://www.guardian.co.uk/profile/ryan-devereaux",
-        "apiUrl":"http://content.guardianapis.com/profile/ryan-devereaux",
-        "r2ContributorId":"47965",
-        "references":[]
-      },{
-        "id":"world/new-york",
-        "type":"keyword",
-        "webTitle":"New York",
-        "webUrl":"http://www.guardian.co.uk/world/new-york",
-        "apiUrl":"http://content.guardianapis.com/world/new-york",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.guardian.co.uk/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.guardian.co.uk/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
         "type":"picture",
         "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/9/1357746275882/NYPD-stop-and-frisk-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627103006/Bosco-Ntaganda-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/9/1357746275882/NYPD-stop-and-frisk-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Mario Tama",
-          "altText":"NYPD stop and frisk",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363627103006/Bosco-Ntaganda-008.jpg",
+          "source":"AP",
+          "photographer":"Alain Wandimoyi",
+          "altText":"Bosco Ntaganda",
           "height":"276",
-          "credit":"Mario Tama/Getty Images",
-          "caption":"In 2011, the NYPD stopped 685,724 citizens. Photograph: Mario Tama/Getty Images",
+          "credit":"Alain Wandimoyi/AP",
+          "caption":"Bosco Ntaganda in 2010. Photograph: Alain Wandimoyi/AP",
           "width":"460"
         }
       }],
