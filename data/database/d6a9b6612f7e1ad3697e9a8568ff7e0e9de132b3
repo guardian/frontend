@@ -1,0 +1,4406 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":488,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":25,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/mlb",
+      "type":"keyword",
+      "webTitle":"MLB",
+      "webUrl":"http://www.guardian.co.uk/sport/mlb",
+      "apiUrl":"http://content.guardianapis.com/sport/mlb",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-18T13:40:17Z",
+      "webTitle":"Japan knocked out of World Baseball Classic by Puerto Rico",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Puerto Rico knock reigning champions Japan out of World Baseball Classic two days after eliminating USA and will face the Netherlands or Dominican Republic in final</p>",
+        "headline":"Japan knocked out of World Baseball Classic by Puerto Rico",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612781829/347b4128-6d66-439e-928b-d75acdd2223d-140x84.jpeg",
+        "wordcount":"976",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/stevebusfield",
+        "type":"contributor",
+        "webTitle":"Steve Busfield",
+        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
+        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
+        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
+        "r2ContributorId":"23018",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612785802/347b4128-6d66-439e-928b-d75acdd2223d-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612785802/347b4128-6d66-439e-928b-d75acdd2223d-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"MIKE BLAKE",
+          "altText":"Japan vs Puerto Rico, WBC",
+          "height":"276",
+          "credit":"MIKE BLAKE/REUTERS",
+          "caption":"Japan's players bow to the fans after they were defeated by Puerto Rico in their semi-final World Baseball Classic game in San Francisco, California, March 17, 2013. Photograph: Mike Blake/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/mar/16/world-baseball-classic-usa-japan-netherlands-puerto-rico",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-16T15:03:00Z",
+      "webTitle":"USA out of World Baseball Classic as holders Japan head final four",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/16/world-baseball-classic-usa-japan-netherlands-puerto-rico",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/16/world-baseball-classic-usa-japan-netherlands-puerto-rico",
+      "fields":{
+        "trailText":"<p><strong>World Baseball Classic:</strong> The field for the Championship Round of the World Baseball Classic is set after USA were eliminated by the Dominican Republic and Puerto Rico. They join the Netherlands and Japan in San Francisco</p>",
+        "headline":"USA out of World Baseball Classic as holders Japan head final four",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363411936816/591286f7-2c01-4bc4-8f4a-a51d6d0f2443-140x84.jpeg",
+        "wordcount":"991",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363411937406/591286f7-2c01-4bc4-8f4a-a51d6d0f2443-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363411937406/591286f7-2c01-4bc4-8f4a-a51d6d0f2443-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Wilfredo Lee",
+          "altText":"Puerto Rico's players pile on after defeating Team USA 4-3 to reach the Championship Round of the World Baseball Classic on Friday. (AP Photo/Wilfredo Lee)",
+          "height":"276",
+          "credit":"Wilfredo Lee/AP",
+          "caption":"Puerto Rico's players pile on after defeating Team USA 4-3 to reach the Championship Round of the World Baseball Classic on Friday. (AP Photo/Wilfredo Lee) Photograph: Wilfredo Lee/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363413184181/114faec9-4f17-4edf-b777-6bdc8b1db49b-300x180.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363413184181/114faec9-4f17-4edf-b777-6bdc8b1db49b-300x180.jpeg",
+          "source":"REUTERS",
+          "photographer":"Toru Hanai",
+          "altText":"Netherlands' manager Hensley Meulens will need to juggle his infield after top prospect Jurickson Profar joined the team for the Championship Round of the World Baseball Classic. REUTERS/Toru Hanai",
+          "height":"180",
+          "credit":"Toru Hanai/REUTERS",
+          "caption":"Netherlands' manager Hensley Meulens will need to juggle his infield after top prospect Jurickson Profar joined the team for the Championship Round of the World Baseball Classic. Photograph: REUTERS/Toru Hanai ",
+          "width":"300"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/16/usa-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-16T14:08:37Z",
+      "webTitle":"USA eliminated from World Baseball Classic by Puerto Rico",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/16/usa-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/16/usa-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Pitcher Nelso Figueroa leads Puerto Rico to 4-3 victory as they reach the finals and knock USA out of World Baseball Classic</p>",
+        "headline":"USA eliminated from World Baseball Classic by Puerto Rico",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363442716328/f7b43270-499c-43a8-a94d-5c24897a637b-140x84.jpeg",
+        "wordcount":"567",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363442716616/f7b43270-499c-43a8-a94d-5c24897a637b-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/16/1363442716616/f7b43270-499c-43a8-a94d-5c24897a637b-460x276.jpeg",
+          "source":"AP",
+          "photographer":"David Santiago",
+          "altText":"Puerto Rico beat USA, WBC",
+          "height":"276",
+          "credit":"David Santiago/AP",
+          "caption":"Puerto Rico catcher Yadier Molina, pitching coach Rick Bones and pitcher Nelson Figueroa celebrate after defeating the USA 4-3 in the World Baseball Classic second round Pool 2 elimination game at Marlins Park in Miami on Friday, March 15, 2013. Photograph: David Santiago/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/15/usa-dominican-republic-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-15T13:43:41Z",
+      "webTitle":"USA lose to Dominican Republic and face Puerto Rico to stay in World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/15/usa-dominican-republic-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/15/usa-dominican-republic-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Dominican Republic book place in World Baseball Classic final round with 3-1 victory over USA</p>",
+        "headline":"USA lose to Dominican Republic and face Puerto Rico to stay in Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363354594617/bd97b179-2f94-4646-a90b-c226358f55d0-140x84.jpeg",
+        "wordcount":"437",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363354599204/bd97b179-2f94-4646-a90b-c226358f55d0-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/15/1363354599204/bd97b179-2f94-4646-a90b-c226358f55d0-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"JOE SKIPPER",
+          "altText":"Dominican Republic vs USA, WBC",
+          "height":"276",
+          "credit":"JOE SKIPPER/REUTERS",
+          "caption":"Dominican Republic's Miguel Tejada and Jose Reyes celebrate victory over the U.S. in the 2013 World Baseball Classic in Miami, Florida March 14, 2013. Photograph: Joe Skipper/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/14/puerto-rico-italy-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-14T14:48:12Z",
+      "webTitle":"Puerto Rico defeat Italy to advance in World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/14/puerto-rico-italy-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/14/puerto-rico-italy-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Puerto Rico overcome three-run deficit to defeat Italy 4-3 and set up a World Baseball Classic clash against USA or Dominican Republic</p>",
+        "headline":"Puerto Rico rally to beat Italy and advance in World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363271213990/8a0f56e6-8626-4fb0-937e-a17f029800ea-140x84.jpeg",
+        "wordcount":"346",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363271208555/8a0f56e6-8626-4fb0-937e-a17f029800ea-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363271208555/8a0f56e6-8626-4fb0-937e-a17f029800ea-460x276.jpeg",
+          "source":"Getty Images",
+          "photographer":"Mike Ehrmann",
+          "altText":"Puerto Rico vs Italy, WBC",
+          "height":"276",
+          "credit":"Mike Ehrmann/Getty Images",
+          "caption":"Puerto Rico celebrates winning a World Baseball Classic second round game against Italy at Marlins Park on March 13, 2013 in Miami, Florida. Photograph: Mike Ehrmann/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/13/usa-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-13T14:01:23Z",
+      "webTitle":"David Wright's hot streak leads USA to World Baseball Classic win over Puerto Rico",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/13/usa-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/13/usa-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> David Wright drives in five runs as USA beat Puerto Rico 7-1 in World Baseball Classic</p>",
+        "headline":"Wright's hot streak leads USA to World Baseball Classic win over Puerto Rico",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363181821059/4110eb47-7b76-493e-bf6c-947bc437a64f-140x84.jpeg",
+        "wordcount":"353",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/stevebusfield",
+        "type":"contributor",
+        "webTitle":"Steve Busfield",
+        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
+        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
+        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
+        "r2ContributorId":"23018",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363181817654/4110eb47-7b76-493e-bf6c-947bc437a64f-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363181817654/4110eb47-7b76-493e-bf6c-947bc437a64f-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Mike Ehrmann",
+          "altText":"USA's Gio Gonzalez vs Puerto Rico, WBC",
+          "height":"276",
+          "credit":"Mike Ehrmann/AP",
+          "caption":"United States' Gio Gonzalez during the World Baseball Classic second-round game against Puerto Rico, Tuesday, March 12, 2013, in Miami. The United States won 7-1. Photograph: Mike Ehrmann/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/11/usa-cuba-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-11T18:22:01Z",
+      "webTitle":"USA survive but Cuba depart World Baseball Classic | David Lengel",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/11/usa-cuba-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/11/usa-cuba-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>World Baseball Classic:</strong> Netherlands and Japan reach the Championship Round, Team USA scrape by to advance to the second round, Canada punch themselves out of the tournament</p>",
+        "headline":"USA survive but Cuba depart World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363019343574/3ee4a8cf-9cf1-413c-829d-5d0d5ceeccf8-140x84.jpeg",
+        "wordcount":"1749",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363019344318/3ee4a8cf-9cf1-413c-829d-5d0d5ceeccf8-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363019344318/3ee4a8cf-9cf1-413c-829d-5d0d5ceeccf8-460x276.jpeg",
+          "source":"EPA",
+          "photographer":"FRANCK ROBICHON",
+          "altText":"Cuba fail to advance to the Championship Round for the second straight World Baseball Classic after suffering an agonizing 7-6 walk-off defeat to the Netherlands in Tokyo. EPA/FRANCK ROBICHON",
+          "height":"276",
+          "credit":"FRANCK ROBICHON/EPA",
+          "caption":"Cuba failed to advance to the Championship Round for the second straight World Baseball Classic after suffering an agonizing 7-6 walk-off defeat to the Netherlands in Tokyo. Photograph: Franck Robichon/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/10/canada-mexico-mass-brawl-video-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-10T12:00:00Z",
+      "webTitle":"Canada's victory over Mexico marred by mass brawl",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/10/canada-mexico-mass-brawl-video-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/10/canada-mexico-mass-brawl-video-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Seven players ejected after mass brawl as Canada beat Mexico 10-3 at World Baseball Classic</p>",
+        "headline":"Canada's victory over Mexico marred by mass brawl",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/10/1362901393613/ee6a32bb-20c3-4e89-a904-0491188f9f5d-140x84.jpeg",
+        "wordcount":"322",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/stevebusfield",
+        "type":"contributor",
+        "webTitle":"Steve Busfield",
+        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
+        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
+        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
+        "r2ContributorId":"23018",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/10/1362901393082/ee6a32bb-20c3-4e89-a904-0491188f9f5d-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/10/1362901393082/ee6a32bb-20c3-4e89-a904-0491188f9f5d-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Matt York",
+          "altText":"Canada v Mexico fight WBC",
+          "height":"276",
+          "credit":"Matt York/AP",
+          "caption":"Canada's Jay Johnson and Mexico's Eduardo Arredondo fight during the ninth inning of their World Baseball Classic game, Saturday, March 9, 2013, in Phoenix. Photograph: Matt York/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/09/mariano-rivera-yankees-retirement",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-09T16:47:10Z",
+      "webTitle":"Mariano Rivera says 2013 season will be his last",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/09/mariano-rivera-yankees-retirement",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/09/mariano-rivera-yankees-retirement",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> New York Yankees closer and all-time saves leader Mariano Rivera will retire from baseball after the 2013 season.</p>",
+        "headline":"Mariano Rivera says 2013 season will be his last",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362811146293/3a61126b-55c4-4774-ad36-b8098dd76db7-140x84.jpeg",
+        "wordcount":"773",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362811148757/3a61126b-55c4-4774-ad36-b8098dd76db7-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362811148757/3a61126b-55c4-4774-ad36-b8098dd76db7-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Kathy Kmonicek",
+          "altText":"New York Yankees closer Mariano Rivera announced  that 2013 will be his last season in baseball. (AP Photo/Kathy Kmonicek, File)",
+          "height":"276",
+          "credit":"Kathy Kmonicek/AP",
+          "caption":"New York Yankees closer Mariano Rivera announced  that 2013 will be his last season in baseball. (AP Photo/Kathy Kmonicek, File) Photograph: Kathy Kmonicek/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/09/usa-lose-mexico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-09T15:55:38Z",
+      "webTitle":"USA beaten by Mexico in World Baseball Classic opening round",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/09/usa-lose-mexico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/09/usa-lose-mexico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Adrian Gonzalez's three-run homer helps Mexico to 5-2 win over USA; Puerto Rico beat Spain 3-0; Cuba crush Taiwan 14-0</p>",
+        "headline":"USA beaten by Mexico in World Baseball Classic opening round",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844258116/56678cb3-5c49-4fb1-8196-600d713a2b5c-140x84.jpeg",
+        "wordcount":"527",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844258418/56678cb3-5c49-4fb1-8196-600d713a2b5c-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/9/1362844258418/56678cb3-5c49-4fb1-8196-600d713a2b5c-460x276.jpeg",
+          "source":"Getty Images",
+          "photographer":"Christian Petersen",
+          "altText":"Mexico vs USA, WBC",
+          "height":"276",
+          "credit":"Christian Petersen/Getty Images",
+          "caption":"Sergio Romo and Adrian Gonzalez of Mexico celebrate after Mexico won 5-2 against the United States during the World Baseball Classic First Round Group D game at Chase Field on March 8, 2013 in Phoenix, Arizona. Photograph: Christian Petersen/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/08/japan-taiwan-extra-inning-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-08T15:53:21Z",
+      "webTitle":"Japan gets extra-inning win over Taiwan in World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/08/japan-taiwan-extra-inning-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/08/japan-taiwan-extra-inning-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Japan beat Taiwan 4-3 and will next face the Netherlands for a place in World Baseball Classic final round</p>",
+        "headline":"Japan gets extra-inning win over Taiwan in World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362757501389/5cf4bb8a-e367-4d8c-a115-254b10734c0d-140x84.jpeg",
+        "wordcount":"479",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362757503672/5cf4bb8a-e367-4d8c-a115-254b10734c0d-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362757503672/5cf4bb8a-e367-4d8c-a115-254b10734c0d-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"Toru Hanai",
+          "altText":"Japan's Sho Nakata vs Taiwan",
+          "height":"276",
+          "credit":"Toru Hanai/REUTERS",
+          "caption":"Japan's Sho Nakata hits a game-winning sacrifice fly against Taiwan in the tenth inning at the World Baseball Classic second round game in Tokyo March 8, 2013. Photograph: Toru Hanai/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/06/venezuela-hugo-chavez-flags-half-staff-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-06T16:24:28Z",
+      "webTitle":"MLB declines to fly World Baseball Classic flags at half-staff for Chavez",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/06/venezuela-hugo-chavez-flags-half-staff-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/06/venezuela-hugo-chavez-flags-half-staff-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Venezuelan team request for mark of respect for president Hugo Chavez at World Baseball Classic warm-up is declined by MLB and Miami Marlins</p>",
+        "headline":"MLB declines to fly World Baseball Classic flags at half-staff for Chavez",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362585277249/efaf0910-1074-4ccf-bf2b-56ef1e65817b-140x84.jpeg",
+        "wordcount":"385",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/venezuela",
+        "type":"keyword",
+        "webTitle":"Venezuela",
+        "webUrl":"http://www.guardian.co.uk/world/venezuela",
+        "apiUrl":"http://content.guardianapis.com/world/venezuela",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/hugo-chavez",
+        "type":"keyword",
+        "webTitle":"Hugo Ch‡vez",
+        "webUrl":"http://www.guardian.co.uk/world/hugo-chavez",
+        "apiUrl":"http://content.guardianapis.com/world/hugo-chavez",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/stevebusfield",
+        "type":"contributor",
+        "webTitle":"Steve Busfield",
+        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
+        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
+        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
+        "r2ContributorId":"23018",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362585271727/efaf0910-1074-4ccf-bf2b-56ef1e65817b-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362585271727/efaf0910-1074-4ccf-bf2b-56ef1e65817b-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Julio Cortez",
+          "altText":"Venezuela flag World Baseball Classic",
+          "height":"276",
+          "credit":"Julio Cortez/AP",
+          "caption":"Venezuela outfielder Gerardo Parra and outfielder Carlos Gonzalez as the Venezuelan national anthem is played before a World Baseball Classic warm-up game against the Miami Marlins, Tuesday, March 5, 2013, in Jupiter, Fla. Photograph: Julio Cortez/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362585212381/9d35b5e7-c9cd-4dcf-958b-2bc1a79395ec-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362585212381/9d35b5e7-c9cd-4dcf-958b-2bc1a79395ec-460x276.jpeg",
+          "source":"AP",
+          "altText":"Hugo Chavez baseball",
+          "height":"276",
+          "credit":"AP",
+          "caption":"In this March 1972 photo Hugo Chavez, bottom row, right, poses with his baseball teammates during the internal games at the Military Academy in Caracas, Venezuela. Photograph: AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/06/cuba-japan-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-06T15:35:07Z",
+      "webTitle":"Cuba beat defending champions Japan in World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/06/cuba-japan-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/06/cuba-japan-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Cuba triumph over Japan for first time in four World Baseball Classic attempts, but both still qualify for next stage</p>",
+        "headline":"Cuba beat defending champions Japan in World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362583776374/a8d54978-33f5-464d-842e-d5c939e30f8e-140x84.jpeg",
+        "wordcount":"240",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362583775906/a8d54978-33f5-464d-842e-d5c939e30f8e-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/6/1362583775906/a8d54978-33f5-464d-842e-d5c939e30f8e-460x276.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"KAZUHIRO NOGI",
+          "altText":"Cuba vs Japan, World Baseball Classic",
+          "height":"276",
+          "credit":"KAZUHIRO NOGI/AFP/Getty Images",
+          "caption":"Cuba's Erisbel Arruebarruena turns a double play as Japan's runner Sho Nakata tags out during the sixth inning of their first-round Pool A game in the World Baseball Classic tournament in Fukuoka on March 6, 2013. Photograph: Kazuhiro Nogi/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/mar/05/sporting-statues-database-baseball",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-05T19:48:00Z",
+      "webTitle":"Baseball statues database launches featuring sport's biggest stars",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/05/sporting-statues-database-baseball",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/05/sporting-statues-database-baseball",
+      "fields":{
+        "trailText":"<p>Sheffield University researchers listed statues of players, managers and famous baseball fans in over 35 US states</p><p>\u2022 <a href=\"http://www.guardian.co.uk/news/datablog/interactive/2013/mar/05/us-baseball-stars-statues-interactive-map\">Interactive map of baseball statues</a></p>",
+        "headline":"Baseball statues database launches featuring sport's biggest stars",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362511564876/Harry-Wright-baseball-sta-001.jpg",
+        "wordcount":"652",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/marksmith",
+        "type":"contributor",
+        "webTitle":"Mark Smith",
+        "webUrl":"http://www.guardian.co.uk/profile/marksmith",
+        "apiUrl":"http://content.guardianapis.com/profile/marksmith",
+        "bio":"<p>Mark Smith is a guardian.co.uk news subeditor and <a href=\"http://www.dabbersnantwich.me.uk/dabber.htm\">Dabber</a>. After attending Manchester and Sheffield universities he worked as a multimedia reporter for the Press Association and the Wigan Evening Post. He started his career on the Nantwich Chronicle. He (occasionally) tweets @marksmith174</p>",
+        "r2ContributorId":"22934",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/photobylines/2008/04/30/marksmithbyline.jpg",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"uk/sheffield",
+        "type":"keyword",
+        "webTitle":"Sheffield",
+        "webUrl":"http://www.guardian.co.uk/uk/sheffield",
+        "apiUrl":"http://content.guardianapis.com/uk/sheffield",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362511568077/Harry-Wright-baseball-sta-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362511568077/Harry-Wright-baseball-sta-002.jpg",
+          "source":"www.sportingstatues.com",
+          "altText":"Harry Wright baseball statue",
+          "height":"276",
+          "credit":"www.sportingstatues.com",
+          "caption":"Statue of Harry Wright stands in the West Laurel Hill cemetery in Philadelphia. Photograph: <a href=\"http://www.flickr.com/photos/lucindalunacy\">Jen J Walker</a> / www.sportingstatues.com ",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/05/taiwan-netherlands-south-korea-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-05T17:01:01Z",
+      "webTitle":"Netherlands and Taiwan advance in World Baseball Classic despite South Korea victory",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/05/taiwan-netherlands-south-korea-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/05/taiwan-netherlands-south-korea-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> South Korea beat Taiwan but the Netherlands and Taiwan qualify for next stage of World Baseball Classic by virtue of run differential tiebreaker</p>",
+        "headline":"Taiwan and Netherlands qualify in World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362502374684/1d8801f6-9b80-40db-a332-41cb98b10ce2-140x84.jpeg",
+        "wordcount":"351",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362502376465/1d8801f6-9b80-40db-a332-41cb98b10ce2-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362502376465/1d8801f6-9b80-40db-a332-41cb98b10ce2-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Wally Santana",
+          "altText":"South Korea vs Taiwan, World Baseball Classic",
+          "height":"276",
+          "credit":"Wally Santana/AP",
+          "caption":"South Korean fans at the first round game against Taiwan at the World Baseball Classic at the Intercontinental Baseball Stadium in Taichung, Taiwan, Tuesday, March 5, 2013. Photograph: Wally Santana/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/04/cuba-china-mercy-rule-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-04T15:29:33Z",
+      "webTitle":"Cuba beat China with mercy rule and advance to second round of World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/04/cuba-china-mercy-rule-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/04/cuba-china-mercy-rule-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Cuba defeated China 12-0 with game stopped in seventh inning under the tournament's mercy rule to join Japan in second round of 2013 World Baseball Classic</p>",
+        "headline":"Cuba beat China with mercy rule and advance in World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/4/1362410578853/c8eb23f4-d186-4fc4-bd58-3bd120d0b7d8-140x84.jpeg",
+        "wordcount":"422",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/4/1362410584602/c8eb23f4-d186-4fc4-bd58-3bd120d0b7d8-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/4/1362410584602/c8eb23f4-d186-4fc4-bd58-3bd120d0b7d8-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Koji Sasahara",
+          "altText":"Cuba beat Japan, WBC",
+          "height":"276",
+          "credit":"Koji Sasahara/AP",
+          "caption":"Cuban players celebrate after defeating China in their World Baseball Classic first round game in Fukuoka, Japan, Monday, March 4, 2013. Photograph: Koji Sasahara/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/03/japan-beats-china-world-baseball",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-03T15:50:46Z",
+      "webTitle":"Japan beats China 5-2 in second-day action at World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/03/japan-beats-china-world-baseball",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/03/japan-beats-china-world-baseball",
+      "fields":{
+        "trailText":"<p>Defending champion Japan will face Cuba, who earlier Sunday dropped Brazil to 0-2 record in tournament's first round</p>",
+        "headline":"Japan beats China 5-2 in second-day action at World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325293587/China-infielder-baseball-003.jpg",
+        "wordcount":"303",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/japan",
+        "type":"keyword",
+        "webTitle":"Japan",
+        "webUrl":"http://www.guardian.co.uk/world/japan",
+        "apiUrl":"http://content.guardianapis.com/world/japan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325302142/China-infielder-baseball-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325302142/China-infielder-baseball-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Kazuhiro Nogi",
+          "altText":"China infielder baseball",
+          "height":"276",
+          "credit":"Kazuhiro Nogi/AFP/Getty Images",
+          "caption":"China's infielder Li Lei throws the ball against Japan at the World Baseball Classic first-round game. Japan won 5-2. Photograph: Kazuhiro Nogi/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/mar/02/japan-brazil-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-02T15:40:00Z",
+      "webTitle":"Champions Japan given scare by Brazil as World Baseball Classic begins",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/02/japan-brazil-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/02/japan-brazil-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>World Baseball Classic:</strong> Two-time champions, playing without MLB stars, win 5-3, Netherlands beat South Korea 5-0 and Taiwan beat Australia 4-1</p>",
+        "headline":"Champions Japan given scare by Brazil as World Baseball Classic begins",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/2/1362238522980/Japans-Seiichi-Uchikawa-a-005.jpg",
+        "wordcount":"511",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/japan",
+        "type":"keyword",
+        "webTitle":"Japan",
+        "webUrl":"http://www.guardian.co.uk/world/japan",
+        "apiUrl":"http://content.guardianapis.com/world/japan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/2/1362238533001/Japans-Seiichi-Uchikawa-a-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/2/1362238533001/Japans-Seiichi-Uchikawa-a-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Kazuhiro Nogi",
+          "altText":"Japan's Seiichi Uchikawa arrives at the home plate in the eighth inning against Brazil in Fukuoka",
+          "height":"276",
+          "credit":"Kazuhiro Nogi/AFP/Getty Images",
+          "caption":"Japan's Seiichi Uchikawa arrives at the home plate in the eighth inning against Brazil in Fukuoka. Photograph: Kazuhiro Nogi/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/mar/01/world-baseball-classic-2013-preview",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-01T12:00:00Z",
+      "webTitle":"The World Baseball Classic is back",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/01/world-baseball-classic-2013-preview",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/01/world-baseball-classic-2013-preview",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> The third World Baseball Classic will begin on Saturday with the two-time defending Japanese team in action in Fukuoka</p>",
+        "headline":"The World Baseball Classic is back",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362025345322/ee3d08c4-7adf-48b6-8627-426d0ad923c3-140x84.jpeg",
+        "wordcount":"1369",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362025341194/ee3d08c4-7adf-48b6-8627-426d0ad923c3-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/28/1362025341194/ee3d08c4-7adf-48b6-8627-426d0ad923c3-460x276.jpeg",
+          "source":"The Asahi Shimbun via Getty Imag",
+          "photographer":"The Asahi Shimbun",
+          "altText":"The 16-team World Baseball Classic will be played for the third time beginning on Saturday with the two-time defending Japanese team seeking to defend their crown.",
+          "height":"276",
+          "credit":"The Asahi Shimbun/The Asahi Shimbun via Getty Imag",
+          "caption":"The 16-team World Baseball Classic will be played for the third time beginning on Saturday with the two-time defending Japanese team seeking to defend their crown. Photograph: The Asahi Shimbun/The Asahi Shimbun via Getty Imag",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-01-29T19:28:21Z",
+      "webTitle":"MLB acknowledges report linking Yankees' Alex Rodriguez to steroids",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jan/29/mlb-yankees-alex-rodriguez-steroids",
+      "fields":{
+        "trailText":"<p>Miami New Times list of players linked to clinic also includes Melky Cabrera, Gio Gonz‡lez, Bartolo Col—n and Nelson Cruz</p>",
+        "headline":"MLB acknowledges report linking Yankees' Alex Rodriguez to steroids",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651151204/Alex-Rodriguez-002.jpg",
+        "wordcount":"155",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651155151/Alex-Rodriguez-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2010/10/21/1287651155151/Alex-Rodriguez-006.jpg",
+          "source":"AP",
+          "photographer":"Charles Krupa",
+          "altText":"Alex Rodriguez",
+          "height":"276",
+          "credit":"Charles Krupa/AP",
+          "caption":"Alex Rodriguez has admitted to using steroids between 2001 and 2003. Photograph: Charles Krupa/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/2013/mar/03/japan-beats-china-world-baseball",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-03T15:50:46Z",
+      "webTitle":"Japan beats China 5-2 in second-day action at World Baseball Classic",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/03/japan-beats-china-world-baseball",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/03/japan-beats-china-world-baseball",
+      "fields":{
+        "trailText":"<p>Defending champion Japan will face Cuba, who earlier Sunday dropped Brazil to 0-2 record in tournament's first round</p>",
+        "headline":"Japan beats China 5-2 in second-day action at World Baseball Classic",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325293587/China-infielder-baseball-003.jpg",
+        "wordcount":"303",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/japan",
+        "type":"keyword",
+        "webTitle":"Japan",
+        "webUrl":"http://www.guardian.co.uk/world/japan",
+        "apiUrl":"http://content.guardianapis.com/world/japan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325302142/China-infielder-baseball-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/3/1362325302142/China-infielder-baseball-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Kazuhiro Nogi",
+          "altText":"China infielder baseball",
+          "height":"276",
+          "credit":"Kazuhiro Nogi/AFP/Getty Images",
+          "caption":"China's infielder Li Lei throws the ball against Japan at the World Baseball Classic first-round game. Japan won 5-2. Photograph: Kazuhiro Nogi/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/oct/29/san-francisco-giants-world-series-champions",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-29T19:40:00Z",
+      "webTitle":"How the San Francisco Giants came together to be World Series champions | David Lengel",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/29/san-francisco-giants-world-series-champions",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/29/san-francisco-giants-world-series-champions",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> The San Francisco Giants may not have come out of nowhere to win the World Series, but they came together out of nowhere</p>",
+        "headline":"How the San Francisco Giants came together to be World Series champions",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351521776077/79e4f770-f360-4e9f-863c-81ccd33942a0-140.jpeg",
+        "wordcount":"1117",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-francisco-giants",
+        "type":"keyword",
+        "webTitle":"San Francisco Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/san-francisco-giants",
+        "apiUrl":"http://content.guardianapis.com/sport/san-francisco-giants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-tigers",
+        "type":"keyword",
+        "webTitle":"Detroit Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/detroit-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351521775276/79e4f770-f360-4e9f-863c-81ccd33942a0-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351521775276/79e4f770-f360-4e9f-863c-81ccd33942a0-460.jpeg",
+          "source":"Getty Images",
+          "photographer":"Ezra Shaw",
+          "altText":"The Giants are number one. San Francisco celebrate their second title in three seasons after sweeping the Detroit Tigers in the 108th World Series.",
+          "height":"276",
+          "credit":"Ezra Shaw/Getty Images",
+          "caption":"The Giants are No1 \u2013 San Francisco celebrate their second title in three seasons after sweeping the Detroit Tigers in the 108th World Series. Photograph: Ezra Shaw/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/oct/23/world-series-tigers-giants-preview",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-23T14:00:00Z",
+      "webTitle":"World Series 2012 preview: Detroit Tigers vs San Francisco Giants",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/23/world-series-tigers-giants-preview",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/23/world-series-tigers-giants-preview",
+      "fields":{
+        "trailText":"<p><strong>MLB Playoffs:</strong> The Detroit Tigers will face the San Francisco Giants in the 108th World Series</p>",
+        "headline":"World Series 2012 preview: <br />Detroit Tigers vs San Francisco Giants",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/23/1351002478841/Miguel-Cabrera-of-the-Det-003.jpg",
+        "wordcount":"1654",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-tigers",
+        "type":"keyword",
+        "webTitle":"Detroit Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/detroit-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-francisco-giants",
+        "type":"keyword",
+        "webTitle":"San Francisco Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/san-francisco-giants",
+        "apiUrl":"http://content.guardianapis.com/sport/san-francisco-giants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/23/1350971799761/9f8ffd9d-fd44-45b4-b53e-2696e6949fd1-140.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/23/1350971799761/9f8ffd9d-fd44-45b4-b53e-2696e6949fd1-140.jpeg",
+          "source":"EPA",
+          "photographer":"MONICA M. DAVEY",
+          "altText":"Does baseball have a new team of destiny? The San Francisco Giants survived six elimination games en route the World Series.",
+          "height":"84",
+          "credit":"MONICA M. DAVEY/EPA",
+          "caption":"The Giants have survived six elimination games in the play-offs. Photograph: Monica M Davey/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/22/1350876528252/6968c228-6a60-41fd-a9f9-9d51bc33a64a-140.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/22/1350876528252/6968c228-6a60-41fd-a9f9-9d51bc33a64a-140.jpeg",
+          "source":"REUTERS",
+          "photographer":"JOHN SOMMERS II",
+          "altText":"World Series bats being made by Hillerich & Bradsby's employees for Detroit Tigers' Miguel Cabrera and Prince Fielder are seen at its Louisville Slugger plant in Louisville, Kentucky.",
+          "height":"84",
+          "credit":"JOHN SOMMERS II/REUTERS",
+          "caption":"World Series bats made in Louisville, Kentucky. Photograph: John Sommers II/Reuters",
+          "width":"140"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/oct/19/new-york-yankees-end-of-a-era",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-19T16:21:00Z",
+      "webTitle":"New York Yankees: the end of an era? | David Lengel",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/19/new-york-yankees-end-of-a-era",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/19/new-york-yankees-end-of-a-era",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> The Yankees face an offseason of unprecedented introspection after New York melted down in the playoffs</p>",
+        "headline":"New York Yankees: the end of an era?",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350623814159/bd1875eb-2fbb-42a8-a471-8504fbef061d-140.jpeg",
+        "wordcount":"1087",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350623813255/bd1875eb-2fbb-42a8-a471-8504fbef061d-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350623813255/bd1875eb-2fbb-42a8-a471-8504fbef061d-460.jpeg",
+          "source":"AP",
+          "photographer":"Paul Sancya",
+          "altText":"The New York Yankees 18-year run of success is nearing an end - they were swept by the Detroit Tigers in the ALCS, and the franchises faces major issues heading into the offseason.",
+          "height":"276",
+          "credit":"Paul Sancya/AP",
+          "caption":"The New York Yankees 18-year run of success is nearing an end - they were swept by the Detroit Tigers in the ALCS, and the franchise faces major issues heading into the offseason.  Photograph: Paul Sancya/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/oct/19/detroit-tigers-world-series-new-york-yankees",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-19T02:10:00Z",
+      "webTitle":"Detroit Tigers reach World Series after sweeping New York Yankees",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/oct/19/detroit-tigers-world-series-new-york-yankees",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/oct/19/detroit-tigers-world-series-new-york-yankees",
+      "fields":{
+        "trailText":"<p><strong>MLB playoffs:</strong> Detroit Tigers beat New York Yankees 8-1 to win ALCS 4-0 and will face St. Louis Cardinals or San Francisco Giants in the 2012 World Series</p>",
+        "headline":"Detroit Tigers reach World Series after sweeping New York Yankees",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604800318/d057ccf5-5a3b-4ed6-b79e-fc8cac7fe2c7-140.jpeg",
+        "wordcount":"499",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/detroit-tigers",
+        "type":"keyword",
+        "webTitle":"Detroit Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/detroit-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/stevebusfield",
+        "type":"contributor",
+        "webTitle":"Steve Busfield",
+        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
+        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
+        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
+        "r2ContributorId":"23018",
+        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604799241/d057ccf5-5a3b-4ed6-b79e-fc8cac7fe2c7-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604799241/d057ccf5-5a3b-4ed6-b79e-fc8cac7fe2c7-460.jpeg",
+          "source":"Getty Images",
+          "photographer":"Leon Halip",
+          "altText":"Phil Coke of Detroit Tigers celebrates going to the World Series",
+          "height":"276",
+          "credit":"Leon Halip/Getty Images",
+          "caption":"Phil Coke of the Detroit Tigers celebrates after winning game four of the American League Championship Series against the New York Yankees at Comerica Park, Detroit on October 18, 2012.  Photograph: Leon Halip/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/oct/18/new-york-yankees-detroit-tigers-live-alcs-game-4",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-19T00:06:00Z",
+      "webTitle":"Detroit Tigers 8 - New York Yankees 1 \u2014 as it happened",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/oct/18/new-york-yankees-detroit-tigers-live-alcs-game-4",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/oct/18/new-york-yankees-detroit-tigers-live-alcs-game-4",
+      "fields":{
+        "trailText":"<p>Detroit Tigers sweep the Yankees in ALCS \u2014 will head to World Series.</p>",
+        "headline":"Detroit Tigers 8 - New York Yankees 1 \u2014 as it happened",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604298338/1eeae587-249b-4862-b914-93b4ae30a6bd-140.jpeg",
+        "wordcount":"3722",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.guardian.co.uk/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/michael-solomon",
+        "type":"contributor",
+        "webTitle":"Michael Solomon",
+        "webUrl":"http://www.guardian.co.uk/profile/michael-solomon",
+        "apiUrl":"http://content.guardianapis.com/profile/michael-solomon",
+        "bio":"<p>Michael Solomon is executive editor of Byliner and the former features director of The Daily Beast. His writing has appeared in Vanity Fair, Esquire, Elle, and the Guardian, and he is the author of several books, including I Hope Like Heck: The Selected Poems of Sarah Palin. <a href=\"http://twitter.com/mister_solomon\">Click here to follow him on Twitter</a></p>",
+        "r2ContributorId":"46603",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/30/1317413618784/Michael-Solomon-Guardian--003.jpg",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-tigers",
+        "type":"keyword",
+        "webTitle":"Detroit Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/detroit-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604297546/1eeae587-249b-4862-b914-93b4ae30a6bd-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/19/1350604297546/1eeae587-249b-4862-b914-93b4ae30a6bd-460.jpeg",
+          "source":"REUTERS",
+          "photographer":"MARK BLINCH",
+          "altText":"Detroit Tigers are going to the World Series",
+          "height":"276",
+          "credit":"MARK BLINCH/REUTERS",
+          "caption":"Who's Next? The Detroit Tigers advance to the World Series after sweeping the Yankees.  Photograph: MARK BLINCH/REUTERS",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/13/1350168764257/656bbdaf-f724-4c48-b45c-36a34c8e0b36-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/13/1350168764257/656bbdaf-f724-4c48-b45c-36a34c8e0b36-460.jpeg",
+          "source":"AP",
+          "photographer":"Matt Slocum",
+          "altText":"New York Yankees third baseman Alex Rodriguez stretches during batting practice before Game 1 of the American League championship series against the Detroit Tigers on Saturday, Oct. 13, 2012, in New York. (AP Photo/Matt Slocum)",
+          "height":"276",
+          "credit":"Matt Slocum/AP",
+          "caption":"Like what you see today, A-Rod? Sorry. Didn't mean to interrupt your hitting on someone in the stands. (Photograph: Matt Slocum/AP)",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/4/1349319955700/Detroit-Tigers-Miguel-Cab-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/10/4/1349319955700/Detroit-Tigers-Miguel-Cab-007.jpg",
+          "source":"AP",
+          "photographer":"Orlin Wagner",
+          "altText":"Detroit Tigers' Miguel Cabrera",
+          "height":"276",
+          "credit":"Orlin Wagner/AP",
+          "caption":"Cabrera gives the Tigers some insurance runs with a monster home run.  Take a bow, Miguel. (Photograph: Orlin Wagner/AP)",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-10-04T14:26:00Z",
+      "webTitle":"MLB Playoffs 2012 preview: American League and National League",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/oct/04/major-league-baseball-playoffs-2012-preview",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong>ÊPostseason begins on Friday with the wild-card games;Ê10 team format makes its debut;ÊFollow the action all October with The Guardian - live!</p>",
+        "headline":"MLB Playoffs 2012 preview",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/25/1348590928573/New-York-Yankees-v-Oaklan-003.jpg",
+        "wordcount":"3779",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/oakland-athletics",
+        "type":"keyword",
+        "webTitle":"Oakland Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/oakland-athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/oakland-athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baltimore-orioles",
+        "type":"keyword",
+        "webTitle":"Baltimore Orioles",
+        "webUrl":"http://www.guardian.co.uk/sport/baltimore-orioles",
+        "apiUrl":"http://content.guardianapis.com/sport/baltimore-orioles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/texas-rangers",
+        "type":"keyword",
+        "webTitle":"Texas Rangers",
+        "webUrl":"http://www.guardian.co.uk/sport/texas-rangers",
+        "apiUrl":"http://content.guardianapis.com/sport/texas-rangers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/detroit-tigers",
+        "type":"keyword",
+        "webTitle":"Detroit Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/detroit-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/detroit-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/st-louis-cardinals",
+        "type":"keyword",
+        "webTitle":"St Louis Cardinals",
+        "webUrl":"http://www.guardian.co.uk/sport/st-louis-cardinals",
+        "apiUrl":"http://content.guardianapis.com/sport/st-louis-cardinals",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/san-francisco-giants",
+        "type":"keyword",
+        "webTitle":"San Francisco Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/san-francisco-giants",
+        "apiUrl":"http://content.guardianapis.com/sport/san-francisco-giants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/washington-nationals",
+        "type":"keyword",
+        "webTitle":"Washington Nationals",
+        "webUrl":"http://www.guardian.co.uk/sport/washington-nationals",
+        "apiUrl":"http://content.guardianapis.com/sport/washington-nationals",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/atlanta-braves",
+        "type":"keyword",
+        "webTitle":"Atlanta Braves",
+        "webUrl":"http://www.guardian.co.uk/sport/atlanta-braves",
+        "apiUrl":"http://content.guardianapis.com/sport/atlanta-braves",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cincinnati-reds",
+        "type":"keyword",
+        "webTitle":"Cincinnati Reds",
+        "webUrl":"http://www.guardian.co.uk/sport/cincinnati-reds",
+        "apiUrl":"http://content.guardianapis.com/sport/cincinnati-reds",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/25/1348590934837/New-York-Yankees-v-Oaklan-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/9/25/1348590934837/New-York-Yankees-v-Oaklan-008.jpg",
+          "source":"Reuters",
+          "photographer":"Ray Stubblebine",
+          "altText":"New York Yankees v Oakland Athletics ",
+          "height":"276",
+          "credit":"Ray Stubblebine/Reuters",
+          "caption":"The Oakland A's are the 2012 AL Western Division champions...really. Photograph: Ray Stubblebine/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/sep/19/los-angeles-dodgers-pittsburgh-pirates-philadelphia-phillies-cy-young-kris-medlen",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-09-19T14:39:00Z",
+      "webTitle":"MLB: five things we learned in week 24",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/sep/19/los-angeles-dodgers-pittsburgh-pirates-philadelphia-phillies-cy-young-kris-medlen",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/sep/19/los-angeles-dodgers-pittsburgh-pirates-philadelphia-phillies-cy-young-kris-medlen",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> Are the Los Angeles Dodgers Cruz-ing to the playoffs?; Pennsylvania's playoff hopes take a tumble; the NL Cy Young Award race; Kris Medlen is a very serious man</p>",
+        "headline":"MLB: five things we learned in week 24",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/17/1347847877818/09f2185b-7866-493c-be91-b13654d5cc74-140.jpeg",
+        "wordcount":"2915",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/los-angeles-dodgers",
+        "type":"keyword",
+        "webTitle":"Los Angeles Dodgers",
+        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-dodgers",
+        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-dodgers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/17/1347847876389/09f2185b-7866-493c-be91-b13654d5cc74-460.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/17/1347847876389/09f2185b-7866-493c-be91-b13654d5cc74-460.jpeg",
+          "source":"  Josh Thompson/ZUMA Press/Corbis",
+          "photographer":"Josh Thompson",
+          "altText":"LA Dodgers' Luis Cruz",
+          "height":"276",
+          "credit":"Josh Thompson/  Josh Thompson/ZUMA Press/Corbis",
+          "caption":"Luis Cruz isn't supposed to be the savior of the Los Angeles Dodgers lineup. Photograph: Josh Thompson/ZUMA Press/Corbis",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/sep/05/major-league-baseball-playoffs-wild-card",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-09-05T15:22:00Z",
+      "webTitle":"MLB: Who will reach the playoffs? | David Lengel",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/sep/05/major-league-baseball-playoffs-wild-card",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/sep/05/major-league-baseball-playoffs-wild-card",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> Which teams will reach the postseason? Some unlikely teams are threatening to reach the playoffs - the Baltimore Orioles, Chicago White Sox, Oakland A's and Pittsburgh Pirates - and we try to work out who will make it</p>",
+        "headline":"MLB: Who will reach the playoffs?",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/9/1339264995227/Cincinnati-Reds-vs-Detroi-003.jpg",
+        "wordcount":"3931",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baltimore-orioles",
+        "type":"keyword",
+        "webTitle":"Baltimore Orioles",
+        "webUrl":"http://www.guardian.co.uk/sport/baltimore-orioles",
+        "apiUrl":"http://content.guardianapis.com/sport/baltimore-orioles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-white-sox",
+        "type":"keyword",
+        "webTitle":"Chicago White Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-white-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-white-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/oakland-athletics",
+        "type":"keyword",
+        "webTitle":"Oakland Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/oakland-athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/oakland-athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/pittsburgh-pirates",
+        "type":"keyword",
+        "webTitle":"Pittsburgh Pirates",
+        "webUrl":"http://www.guardian.co.uk/sport/pittsburgh-pirates",
+        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-pirates",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/9/1339265004600/Cincinnati-Reds-vs-Detroi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/9/1339265004600/Cincinnati-Reds-vs-Detroi-008.jpg",
+          "source":"AP",
+          "photographer":"Al Behrman",
+          "altText":"Cincinnati Reds vs Detroit Tigers",
+          "height":"276",
+          "credit":"Al Behrman/AP",
+          "caption":"The Cincinnati Reds are tied with the Washington Nationals for the best record in baseball. (AP Photo/Al Behrman) Photograph: Al Behrman/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/aug/26/roger-clemens-pitches-sugar-land",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-08-26T14:15:00Z",
+      "webTitle":"Roger Clemens back on the mound: 'I don't know exactly what's next'",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/aug/26/roger-clemens-pitches-sugar-land",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/aug/26/roger-clemens-pitches-sugar-land",
+      "fields":{
+        "trailText":"<p><strong>Tom Dart: </strong>At 50, The Rocket was back pitching for the first time since his big win in court. Is he eying a return to the major leagues?</p>",
+        "headline":"Roger Clemens back on the mound: 'I don't know exactly what's next'",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987675848/Roger-Clemens-Skeeters-005.jpg",
+        "wordcount":"1553",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"world/texas",
+        "type":"keyword",
+        "webTitle":"Texas",
+        "webUrl":"http://www.guardian.co.uk/world/texas",
+        "apiUrl":"http://content.guardianapis.com/world/texas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/tom-dart",
+        "type":"contributor",
+        "webTitle":"Tom Dart",
+        "webUrl":"http://www.guardian.co.uk/profile/tom-dart",
+        "apiUrl":"http://content.guardianapis.com/profile/tom-dart",
+        "bio":"<p>Tom Dart is a Houston-based freelance journalist. Before moving to Texas he was a soccer reporter, editor and columnist for The Times in London, also covering MLB and the NFL. He is on Twitter <a href=\"https://twitter.com/#!/tom_dart\"> @Tom_Dart</a></p>",
+        "r2ContributorId":"50797",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/9/1336571916728/Tom-Dart-003.jpg",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/houston",
+        "type":"keyword",
+        "webTitle":"Houston",
+        "webUrl":"http://www.guardian.co.uk/world/houston",
+        "apiUrl":"http://content.guardianapis.com/world/houston",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987684073/Roger-Clemens-Skeeters-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987684073/Roger-Clemens-Skeeters-010.jpg",
+          "source":"Reuters",
+          "photographer":"Richard Carson",
+          "altText":"Roger Clemens Skeeters",
+          "height":"276",
+          "credit":"Richard Carson/Reuters",
+          "caption":"Roger Clemens waves as he leaves the field in the fourth inning after his debut as a member of the Sugar Land Skeeters. Photograph: Richard Carson/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987842995/Roger-Clemens-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/26/1345987842995/Roger-Clemens-010.jpg",
+          "source":"AP",
+          "photographer":"David Phillip",
+          "altText":"Roger Clemens",
+          "height":"276",
+          "credit":"David Phillip/AP",
+          "caption":"Sugar Land Skeeters Roger Clemens throws a pitch during a baseball game against the Bridgeport Bluefish Aug 25. Photograph: David Phillip/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-08-22T19:34:00Z",
+      "webTitle":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/aug/22/oakland-athletics-bartolo-colon-suspended-testosterone",
+      "fields":{
+        "trailText":"<p>The Oakland Athletics starting pitcher Bartolo Col—n has been suspended for 50 games without pay after testing positive for testosterone</p>",
+        "headline":"Oakland Athletics' Bartolo Col—n gets 50-game ban for testosterone use",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/22/1345663998952/Oakland-Athletics-pitcher-005.jpg",
+        "wordcount":"289",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/oakland-athletics",
+        "type":"keyword",
+        "webTitle":"Oakland Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/oakland-athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/oakland-athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/22/1345664007461/Oakland-Athletics-pitcher-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/8/22/1345664007461/Oakland-Athletics-pitcher-010.jpg",
+          "source":"Reuters",
+          "photographer":"Beck Diefenbach",
+          "altText":"Oakland Athletics pitcher Bartolo Colon delivers a pitch against the Toronto Blue Jays",
+          "height":"276",
+          "credit":"Beck Diefenbach/Reuters",
+          "caption":"Oakland Athletics pitcher Bartolo Col—n delivers a pitch against the Toronto Blue Jays. Photograph: Beck Diefenbach/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/aug/15/dustin-pedroia-red-sox-valentine",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-08-15T12:56:06Z",
+      "webTitle":"Pedroia denies rift between Red Sox players and manager Bobby Valentine",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/aug/15/dustin-pedroia-red-sox-valentine",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/aug/15/dustin-pedroia-red-sox-valentine",
+      "fields":{
+        "trailText":"<p>The second baseman and vocal critic of the under-fire manager insists that team's languishing season is fault of the players</p>",
+        "headline":"Pedroia denies rift between Red Sox players and manager Bobby Valentine",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/15/1345035111903/Dustin-Pedroia-Bobby-Vale-003.jpg",
+        "wordcount":"361",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/massachusetts",
+        "type":"keyword",
+        "webTitle":"Massachusetts",
+        "webUrl":"http://www.guardian.co.uk/world/massachusetts",
+        "apiUrl":"http://content.guardianapis.com/world/massachusetts",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-red-sox",
+        "type":"keyword",
+        "webTitle":"Boston Red Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/boston-red-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-red-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/15/1345035121442/Dustin-Pedroia-Bobby-Vale-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/15/1345035121442/Dustin-Pedroia-Bobby-Vale-008.jpg",
+          "source":"Reuters",
+          "photographer":"Adam Hunger",
+          "altText":"Dustin Pedroia Bobby Valentine Red Sox",
+          "height":"276",
+          "credit":"Adam Hunger/Reuters",
+          "caption":"Boston Red Sox manager Bobby Valentine congratulates Dustin Pedroia after scoring against the New York Yankees. Photograph: Adam Hunger/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/aug/14/johnny-pesky-dies-red-sox",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-08-14T15:05:01Z",
+      "webTitle":"Johnny Pesky, Red Sox legend who spent six decades with club, dies at 92",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/aug/14/johnny-pesky-dies-red-sox",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/aug/14/johnny-pesky-dies-red-sox",
+      "fields":{
+        "trailText":"<p>Beloved infielder nicknamed 'The Needle' spent six decades as player, manager, coach and broadcaster for Boston</p>",
+        "headline":"Johnny Pesky, Red Sox legend who spent six decades with club, dies at 92",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956309340/Johnny-Pesky-at-Fenway-Pa-003.jpg",
+        "wordcount":"252",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/massachusetts",
+        "type":"keyword",
+        "webTitle":"Massachusetts",
+        "webUrl":"http://www.guardian.co.uk/world/massachusetts",
+        "apiUrl":"http://content.guardianapis.com/world/massachusetts",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-red-sox",
+        "type":"keyword",
+        "webTitle":"Boston Red Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/boston-red-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-red-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956319971/Johnny-Pesky-at-Fenway-Pa-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956319971/Johnny-Pesky-at-Fenway-Pa-008.jpg",
+          "source":"Boston Globe via Getty Images",
+          "altText":"Johnny Pesky at Fenway Park",
+          "height":"276",
+          "credit":"Boston Globe via Getty Images",
+          "caption":"Former Red Sox player Johnny Pesky with Red Sox President Larry Lucchino at Fenway Park. Photograph: Boston Globe via Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956445502/Johnny-Pesky-Red-Sox-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/14/1344956445502/Johnny-Pesky-Red-Sox-004.jpg",
+          "source":"Diamond Images/Getty Images",
+          "photographer":"Kidwiler Collection",
+          "altText":"Johnny Pesky Red Sox",
+          "height":"132",
+          "credit":"Kidwiler Collection/Diamond Images/Getty Images",
+          "caption":"Johnny Pesky in 1951. Photograph: Kidwiler Collection/Diamond Images/Getty Images",
+          "width":"220"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jul/24/ichiro-suzuki-new-york-yankees-seattle-mariners",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-07-24T08:00:00Z",
+      "webTitle":"MLB: five things we learned in week 16",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jul/24/ichiro-suzuki-new-york-yankees-seattle-mariners",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jul/24/ichiro-suzuki-new-york-yankees-seattle-mariners",
+      "fields":{
+        "trailText":"<p>This week, Seattle's Ichiro Suzuki is traded to the New York Yankees, Ryan Dempster is still a Cub...for now, while the Oakland A's are streaking towards legitimacy and Barry Larkin and Ron Santo are inducted into the Baseball Hall of Fame.</p>",
+        "headline":"MLB: five things we learned in week 16",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/28/1332941554750/Seattle-Mariners-Ichiro-S-003.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-yankees",
+        "type":"keyword",
+        "webTitle":"New York Yankees",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-yankees",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-yankees",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/oakland-athletics",
+        "type":"keyword",
+        "webTitle":"Oakland Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/oakland-athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/oakland-athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/seattle-mariners",
+        "type":"keyword",
+        "webTitle":"Seattle Mariners",
+        "webUrl":"http://www.guardian.co.uk/sport/seattle-mariners",
+        "apiUrl":"http://content.guardianapis.com/sport/seattle-mariners",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/28/1332941561384/Seattle-Mariners-Ichiro-S-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/28/1332941561384/Seattle-Mariners-Ichiro-S-007.jpg",
+          "source":"Reuters",
+          "photographer":"Issei Kato",
+          "altText":"Seattle Mariners' Ichiro Suzuki celebrates vs Oakland A's",
+          "height":"276",
+          "credit":"Issei Kato/Reuters",
+          "caption":"Ichiro Suzuki was dealt from the Seattle Mariners to the New York Yankees on Monday. Photograph: Issei Kato/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/7/23/1343074546663/Oakland-Athletics-Seth-Sm-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/7/23/1343074546663/Oakland-Athletics-Seth-Sm-005.jpg",
+          "source":"Reuters",
+          "photographer":"Robert Galbraith",
+          "altText":"Oakland Athletics' Seth Smith vs NY Yankees",
+          "height":"180",
+          "credit":"Robert Galbraith/Reuters",
+          "caption":"Oakland have had massive mojo in July. Photograph: Robert Galbraith/Reuters",
+          "width":"300"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jul/17/mlb-5-things-joey-votto-cincinnati-reds",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-07-17T14:21:00Z",
+      "webTitle":"MLB: five things we learned in week 15 | David Lengel",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jul/17/mlb-5-things-joey-votto-cincinnati-reds",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jul/17/mlb-5-things-joey-votto-cincinnati-reds",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> Cincinnati Reds slugger Joey Votto faces knee surgery; Washington Nationals pitcher Stephen Strasburg faces innings limit; Kevin Youkilis and Carl Crawford are back in Boston; Detroit's Justin Verlander is back on track</p>",
+        "headline":"MLB: five things we learned in week 15",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/7/17/1342533245810/Josh-Hamilton-and-Joey-Vo-003.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/washington-nationals",
+        "type":"keyword",
+        "webTitle":"Washington Nationals",
+        "webUrl":"http://www.guardian.co.uk/sport/washington-nationals",
+        "apiUrl":"http://content.guardianapis.com/sport/washington-nationals",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cincinnati-reds",
+        "type":"keyword",
+        "webTitle":"Cincinnati Reds",
+        "webUrl":"http://www.guardian.co.uk/sport/cincinnati-reds",
+        "apiUrl":"http://content.guardianapis.com/sport/cincinnati-reds",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/7/17/1342533252183/Josh-Hamilton-and-Joey-Vo-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/7/17/1342533252183/Josh-Hamilton-and-Joey-Vo-007.jpg",
+          "source":"Reuters",
+          "photographer":"Jeff Haynes",
+          "altText":"Josh Hamilton and Joey Votto",
+          "height":"276",
+          "credit":"Jeff Haynes/Reuters",
+          "caption":"Joey Votto of the Cincinnati Reds during the MLB's All-Star Game in Kansas City, with Josh Hamilton of the Texas Rangers on July 10, 2012. Photograph: Jeff Haynes/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jul/11/all-star-game-nl-al",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-07-11T13:17:00Z",
+      "webTitle":"All-Star Game: NL makes it three in a row as AL's big hitters fail to shine | Tom Dart",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jul/11/all-star-game-nl-al",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jul/11/all-star-game-nl-al",
+      "fields":{
+        "trailText":"<p><strong>MLB:</strong> Melky Cabrera shimmered, Justin Verlander stank, and Kansas City enjoyed its first All-Star Game for 39 years. Just a shame it wasn't more of a contest</p>",
+        "headline":"All-Star Game: NL makes it three in a row as AL's big hitters fail to shine",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342008777365/Melky-Cabrera-and-Matt-Ho-003.jpg",
+        "wordcount":"1017",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/tom-dart",
+        "type":"contributor",
+        "webTitle":"Tom Dart",
+        "webUrl":"http://www.guardian.co.uk/profile/tom-dart",
+        "apiUrl":"http://content.guardianapis.com/profile/tom-dart",
+        "bio":"<p>Tom Dart is a Houston-based freelance journalist. Before moving to Texas he was a soccer reporter, editor and columnist for The Times in London, also covering MLB and the NFL. He is on Twitter <a href=\"https://twitter.com/#!/tom_dart\"> @Tom_Dart</a></p>",
+        "r2ContributorId":"50797",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/9/1336571916728/Tom-Dart-003.jpg",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.guardian.co.uk/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342008786218/Melky-Cabrera-and-Matt-Ho-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342008786218/Melky-Cabrera-and-Matt-Ho-008.jpg",
+          "source":"AP",
+          "photographer":"Jeff Roberson",
+          "altText":"Melky Cabrera and Matt Holliday",
+          "height":"276",
+          "credit":"Jeff Roberson/AP",
+          "caption":"San Francisco's Melky Cabrera, who hit a two-run homer in the fourth inning, was voted the night's MVP. Photograph: Jeff Roberson/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342010099073/Justin-Verlander-All-Star-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/11/1342010099073/Justin-Verlander-All-Star-001.jpg",
+          "source":"EPA",
+          "photographer":"John G Mabanglo",
+          "altText":"Justin Verlander, All-Star",
+          "height":"320",
+          "credit":"John G Mabanglo/EPA",
+          "caption":"Justin Verlander: a night to forget. Photograph: John G Mabanglo/EPA",
+          "width":"220"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jul/10/prince-fielder-home-run-derby-robinson-cano",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-07-10T12:47:00Z",
+      "webTitle":"Prince Fielder goes big at the Home Run Derby as Cano swings and squirms | Tom Dart",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jul/10/prince-fielder-home-run-derby-robinson-cano",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jul/10/prince-fielder-home-run-derby-robinson-cano",
+      "fields":{
+        "trailText":"<p><strong>MLB:</strong> Tigers star wins second title in pre-All Star bash, but home crowd jeers American League captain for snubbing Billy Butler</p>",
+        "headline":"Prince Fielder goes big at the Home Run Derby as Cano swings and squirms",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923110996/Prince-Fielder-and-kids-w-003.jpg",
+        "wordcount":"1249",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/tom-dart",
+        "type":"contributor",
+        "webTitle":"Tom Dart",
+        "webUrl":"http://www.guardian.co.uk/profile/tom-dart",
+        "apiUrl":"http://content.guardianapis.com/profile/tom-dart",
+        "bio":"<p>Tom Dart is a Houston-based freelance journalist. Before moving to Texas he was a soccer reporter, editor and columnist for The Times in London, also covering MLB and the NFL. He is on Twitter <a href=\"https://twitter.com/#!/tom_dart\"> @Tom_Dart</a></p>",
+        "r2ContributorId":"50797",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/9/1336571916728/Tom-Dart-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923119786/Prince-Fielder-and-kids-w-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923119786/Prince-Fielder-and-kids-w-008.jpg",
+          "source":"AP",
+          "photographer":"Charlie Riedel",
+          "altText":"Prince Fielder and kids with the Home Run Derby trophy",
+          "height":"276",
+          "credit":"Charlie Riedel/AP",
+          "caption":"Prince Fielder launched 28 home runs in total in Kansas City, including two at 476ft, the longest of the night. Photograph: Charlie Riedel/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923243441/Robinson-Cano-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/7/10/1341923243441/Robinson-Cano-008.jpg",
+          "source":"Reuters",
+          "photographer":"Jeff Haynes",
+          "altText":"Robinson Cano",
+          "height":"276",
+          "credit":"Jeff Haynes/Reuters",
+          "caption":"After 32 home runs last year, Robinson Cano couldn't manage a single homer this time around. Photograph: Jeff Haynes/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jun/26/miami-marlins-kevin-youkilis-boston-red-sox",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-06-26T14:02:00Z",
+      "webTitle":"The Miami Marlins go south, Kevin Youkilis goes wes",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jun/26/miami-marlins-kevin-youkilis-boston-red-sox",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jun/26/miami-marlins-kevin-youkilis-boston-red-sox",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> The latest plight of the Miami Marlins, the trade of Kevin Youkilis from the Boston Red Sox to the Chicago White Sox, Roy Oswalt's Texas Rangers debut, and the Tampa Bay Rays wild throwback uniforms.</p>",
+        "headline":"The Miami Marlins go south, Kevin Youkilis goes west",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/5/1333584804682/The-Miami-Marlins-003.jpg",
+        "wordcount":"2182",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tampa-bay-rays",
+        "type":"keyword",
+        "webTitle":"Tampa Bay Rays",
+        "webUrl":"http://www.guardian.co.uk/sport/tampa-bay-rays",
+        "apiUrl":"http://content.guardianapis.com/sport/tampa-bay-rays",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/boston-red-sox",
+        "type":"keyword",
+        "webTitle":"Boston Red Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/boston-red-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-red-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-white-sox",
+        "type":"keyword",
+        "webTitle":"Chicago White Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-white-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-white-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/texas-rangers",
+        "type":"keyword",
+        "webTitle":"Texas Rangers",
+        "webUrl":"http://www.guardian.co.uk/sport/texas-rangers",
+        "apiUrl":"http://content.guardianapis.com/sport/texas-rangers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/miami-marlins",
+        "type":"keyword",
+        "webTitle":"Miami Marlins",
+        "webUrl":"http://www.guardian.co.uk/sport/miami-marlins",
+        "apiUrl":"http://content.guardianapis.com/sport/miami-marlins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/5/1333584811292/The-Miami-Marlins-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/5/1333584811292/The-Miami-Marlins-007.jpg",
+          "source":"Reuters",
+          "photographer":"Joe Skipper",
+          "altText":"The Miami Marlins",
+          "height":"276",
+          "credit":"Joe Skipper/Reuters",
+          "caption":"Depending on the day, the new Miami Marlins ballpark is either a baseball palace or a house of horrors. Photograph: Joe Skipper/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2012/jun/19/theo-epstein-cubs-red-sox-roger-clemens",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-06-19T08:00:00Z",
+      "webTitle":"MLB: Five things we learned in week 11",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2012/jun/19/theo-epstein-cubs-red-sox-roger-clemens",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2012/jun/19/theo-epstein-cubs-red-sox-roger-clemens",
+      "fields":{
+        "trailText":"<p><strong>David Lengel:</strong> Chicago Cubs president Theo Epstein opens up about his time with the Boston Red Sox; perfect games; Roger Clemens acquitted of perjury charges</p>",
+        "headline":"MLB: Five things we learned in week 11",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/19/1340069149265/Roger-Clemens-003.jpg",
+        "wordcount":"2702",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/series/mlb-five-things-we-learned",
+        "type":"series",
+        "webTitle":"MLB: five things we learned",
+        "webUrl":"http://www.guardian.co.uk/sport/series/mlb-five-things-we-learned",
+        "apiUrl":"http://content.guardianapis.com/sport/series/mlb-five-things-we-learned",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/davidlengel",
+        "type":"contributor",
+        "webTitle":"David Lengel",
+        "webUrl":"http://www.guardian.co.uk/profile/davidlengel",
+        "apiUrl":"http://content.guardianapis.com/profile/davidlengel",
+        "bio":"<p>David Lengel is based in Brooklyn and works as a television producer when he's forced to travel into Manhattan</p>",
+        "r2ContributorId":"19397",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/boston-red-sox",
+        "type":"keyword",
+        "webTitle":"Boston Red Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/boston-red-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/boston-red-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-white-sox",
+        "type":"keyword",
+        "webTitle":"Chicago White Sox",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-white-sox",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-white-sox",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chicago-cubs",
+        "type":"keyword",
+        "webTitle":"Chicago Cubs",
+        "webUrl":"http://www.guardian.co.uk/sport/chicago-cubs",
+        "apiUrl":"http://content.guardianapis.com/sport/chicago-cubs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/19/1340069155294/Roger-Clemens-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/6/19/1340069155294/Roger-Clemens-007.jpg",
+          "source":"AP",
+          "photographer":"Manuel Balce Ceneta",
+          "altText":"Roger Clemens",
+          "height":"276",
+          "credit":"Manuel Balce Ceneta/AP",
+          "caption":"Roger Clemens holds back tears as he talks outside federal court in Washington, Monday, June 18, 2012, after he was acquitted on all charges by a jury that decided that he didn't lie to Congress when he denied using performance-enhancing drugs. Photograph: Manuel Balce Ceneta/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/22/1335110801766/Chicago-White-Sox-pitcher-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/4/22/1335110801766/Chicago-White-Sox-pitcher-005.jpg",
+          "source":"AP",
+          "photographer":"Elaine Thompson",
+          "altText":"Chicago White Sox pitcher Phil Humber",
+          "height":"180",
+          "credit":"Elaine Thompson/AP",
+          "caption":"Chicago White Sox starting pitcher Philip Humber has been getting crushed since his perfecto in April. Photograph: Elaine Thompson/AP",
+          "width":"300"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2012/jun/18/roger-clemens-acquitted-perjury",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2012-06-18T21:57:00Z",
+      "webTitle":"Roger Clemens acquitted on perjury charges: 'It has been a hard five years'",
+      "webUrl":"http://www.guardian.co.uk/sport/2012/jun/18/roger-clemens-acquitted-perjury",
+      "apiUrl":"http://content.guardianapis.com/sport/2012/jun/18/roger-clemens-acquitted-perjury",
+      "fields":{
+        "trailText":"<p>MLB pitching great acquitted after jury decides he did not lie to Congress when he denied using steroids</p>",
+        "headline":"Roger Clemens acquitted on perjury charges: 'It has been a hard five years'",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/18/1340055387499/Roger-Clemens-faces-the-m-003.jpg",
+        "wordcount":"484",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/18/1340055398519/Roger-Clemens-faces-the-m-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/18/1340055398519/Roger-Clemens-faces-the-m-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Chip Somodevilla",
+          "altText":"Roger Clemens faces the media after his acquittal in Washington",
+          "height":"276",
+          "credit":"Chip Somodevilla/Getty Images",
+          "caption":"Roger Clemens faces the media after his acquittal in Washington. He said: 'I put a lot of hard work into my career'. Photograph: Chip Somodevilla/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }]
+  }
+}
