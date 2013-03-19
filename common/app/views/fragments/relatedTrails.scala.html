@@ -1,11 +1,13 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, isShaded: Boolean = false)
 
 @defining(trails.length){ numTrails =>
-    <h3 class="type-2 article-zone">@Html(heading)</h3>
+    <h3 id="related-content-head" class="type-2 article-zone">@Html(heading)</h3>
     <div class="trailblock @if(isShaded){trailblock-shaded}"
         id="related-trails" 
         data-count="@{trails.length - visibleTrails}"
-        data-link-name="Related @heading">
+        data-link-name="Related @heading"
+        role="complementary"
+        aria-labelledby="related-content-head">
         @* order the related trails by date *@
         @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, numThumbnails = 3, related = true, headingLevel = 3)
         @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = visibleTrails, related = true, isPanel = true)

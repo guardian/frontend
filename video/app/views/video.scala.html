@@ -5,7 +5,8 @@
         <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
     </h2>
 
-    <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType">
+    <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
+             itemscope itemtype="@video.schemaType" role="main">
 
         <header class="article-head">
             @fragments.dateline(video.webPublicationDate, video.isLive, edition)
@@ -36,7 +37,7 @@
     @if(storyPackage.nonEmpty) {
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     } else {
-        <div id="js-related"></div>
+        <div id="js-related" role="complementary"></div>
     }
     @fragments.mostPopularPlaceholder(video.section)
 

@@ -19,48 +19,77 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
         var view = {
 
-            showTab: function (tabSet, clickedTab, originalEvent) {
+            showTab: function (container, clickedTab, originalEvent) {
 
                 // find the active tab in the set. returns an array of 1 item, hence [0]
-                var currentTab = common.$g('.tabs-selected a', tabSet)[0];
+                var currentTab = common.$g('.tabs-selected a', container)[0];
 
                 // trim the leading # and find the matching panel element
-                var paneToShow = document.getElementById(clickedTab.getAttribute('href').substring(1));
-                var paneToHide = document.getElementById(currentTab.getAttribute('href').substring(1));
+                var paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1));
+                var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
                 bonzo(currentTab.parentNode).removeClass('tabs-selected');
                 bonzo(clickedTab.parentNode).addClass('tabs-selected');
                 bonzo(paneToHide).hide();
-                bonzo(paneToShow).removeClass('js-hidden').show();
+                bonzo(paneToShow).removeClass('js-hidden').show().focus();
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();
-
             }
         };
 
-        this.init = function (tabSelector) {
+        this.init = function () {
 
-            if (!tabSelector) {
-                tabSelector = 'ol.js-tabs';
-            }
+            var ols = common.$g('.tabs-container').each(function (container) {
 
-            var ols = common.$g(tabSelector).each(function (tabSet) {
-                if(tabSet.getAttribute('data-is-bound') === true) {
-                    return false;
-                }
-                
-                bean.add(tabSet, 'click', function (e) {
-                    var targetElm = e.target;
-                    // if we use tabSet instead of this, it sets all tabs to use the last set in the loop
-                    var tabContainer = targetElm.parentNode.parentNode;
-                    // verify they clicked an <a> element
-                    if (targetElm.nodeName.toLowerCase() === "a") {
-                        view.showTab(tabContainer, targetElm, e);
+                var tabSet = common.$g('ol.js-tabs', container)[0],
+                    tabSetHeight = 0,
+                    vPos = 0,
+                    vHeight = 0,
+                    vScroll = 0,
+                    vFixed = false;
+
+                if(tabSet) {
+
+                    if(tabSet.getAttribute('data-is-bound') === true) {
+                        return false;
                     }
-                });
-                tabSet.setAttribute('data-is-bound', true);
+
+                    tabSetHeight = bonzo(tabSet).offset().height;
+                    vPos = bonzo(tabSet).offset().top;
+
+                    bean.add(tabSet, 'click', function (e) {
+                        var targetElm = e.target;
+                        // verify they clicked an <a> element
+                        if (targetElm.nodeName.toLowerCase() === "a") {
+                            view.showTab(container, targetElm, e);
+                            vHeight = bonzo(container).offset().height - tabSetHeight;
+                            if (vScroll > vPos) {
+                                window.scrollTo(0, vPos);
+                            }
+                        }
+                    });
+
+                    if (bonzo(container).hasClass('tabs-fixable')) {
+
+                        vHeight = bonzo(container).offset().height - tabSetHeight;
+
+                        bean.add(window, 'scroll', function (e) {
+                            vScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                            if( !vFixed && vScroll >= vPos && vScroll <= vPos + vHeight ) {
+                                bonzo(tabSet).addClass('tabs-fixed');
+                                vFixed = true;
+                            } else if( vFixed && (vScroll < vPos || vScroll > vPos + vHeight)) {
+                                bonzo(tabSet).removeClass('tabs-fixed');
+                                vFixed = false;
+                            }
+                        });
+                    }
+        
+                    tabSet.setAttribute('data-is-bound', true);
+                }
             });
         };
 
