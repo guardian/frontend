@@ -21,9 +21,9 @@ object EncodingOrdering extends Ordering[Encoding] {
   // put these in the order you want the encodings to appear
   private val precedence = Seq(
     "video/m3u8",
-    "video/3gpp:large",
     "video/mp4",
     "video/3gpp:small",
+    "video/3gpp:large",
     "video/mp4:720"
   )
 
