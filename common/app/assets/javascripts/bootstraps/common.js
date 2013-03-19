@@ -24,6 +24,7 @@ define([
     'modules/analytics/omniture',
     'modules/adverts/adverts',
     'modules/cookies',
+    'modules/search',
     'modules/analytics/omnitureMedia'
 ], function (
     common,
@@ -50,6 +51,7 @@ define([
     Omniture,
     Adverts,
     Cookies,
+    Search,
     Video
 ) {
 
@@ -177,6 +179,13 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
         }
     };
 
@@ -192,6 +201,8 @@ define([
 
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
+
+        modules.initialiseSearch(config);
 
         modules.showRelativeDates();
     };
