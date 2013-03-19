@@ -30,9 +30,10 @@
     text-decoration: none;
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 18.75em) {
     .tabs li a {
         font-size: 14px;
+        font-size: 1.4rem;
     }
 }
 
@@ -69,7 +70,7 @@
 
 .tabs-multiple li {
     display: table-cell;
-    border-left: 2px solid #ffffff;
+    border-left: @tabBorderWidth solid #ffffff;
     width: auto;
     float: none;
 }
@@ -79,7 +80,7 @@
     border-left: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
 
     .tabs-fixable {
         position: relative;
