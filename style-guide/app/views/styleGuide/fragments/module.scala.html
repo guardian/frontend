@@ -6,17 +6,19 @@
         <p class="box-indent type-7">@Html(notes)</p>
     }
 
-    <ol class="tabs js-tabs">
-        <li class="tabs-selected"><a href="#modules-@id-output">Output</a></li>
-        <li><a href="#modules-@id-code">Source code</a></li>
-    </ol>
+    <div class="tabs-container">
+        <ol class="tabs js-tabs">
+            <li class="tabs-selected"><a href="#modules-@id-output">Output</a></li>
+            <li><a href="#modules-@id-code">Source code</a></li>
+        </ol>
 
-    <div class="tabs-content">
-         <div class="tabs-pane" id="modules-@id-output">
-            @Html(html)
-         </div>
-         <div class="tabs-pane js-hidden" id="modules-@id-code">
-            <pre class="prettyprint">@html.toString().trim()</pre>
-         </div>
+        <div class="tabs-content">
+             <div class="tabs-pane" id="modules-@id-output">
+                @Html(html)
+             </div>
+             <div class="tabs-pane js-hidden" id="modules-@id-code">
+                <pre class="prettyprint">@html.toString().trim()</pre>
+             </div>
+        </div>
     </div>
 </div>

@@ -24,7 +24,8 @@ define([
     'modules/analytics/omniture',
     'modules/adverts/adverts',
     'modules/cookies',
-    'modules/search'
+    'modules/search',
+    'modules/analytics/omnitureMedia'
 ], function (
     common,
     ajax,
@@ -50,7 +51,8 @@ define([
     Omniture,
     Adverts,
     Cookies,
-    Search
+    Search,
+    Video
 ) {
 
     var modules = {
@@ -147,6 +149,18 @@ define([
         },
 
         loadOmnitureAnalytics: function (config) {
+            common.mediator.on('module:omniture:loaded', function() {
+                var videos = document.getElementsByTagName("video");
+                if(videos) {
+                    for(var i = 0, l = videos.length; i < l; i++) {
+                        var v = new Video({
+                            el: videos[i],
+                            config: config
+                        }).init();
+                    }
+                }
+            });
+
             var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                 o = new Omniture(null, config).init();
         },

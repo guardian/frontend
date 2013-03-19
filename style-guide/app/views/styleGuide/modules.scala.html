@@ -57,36 +57,38 @@
                 <h2 class="type-5 zone-color box-indent">Tweet</h2>
                 <p class="box-indent type-7">A tweet block</p>
 
-                <ol class="tabs js-tabs">
-                    <li class="tabs-selected"><a href="#modules-tweet-output">Output</a></li>
-                    <li><a href="#modules-tweet-code">Source code</a></li>
-                </ol>
+                <div class="tabs-container">
+                    <ol class="tabs js-tabs">
+                        <li class="tabs-selected"><a href="#modules-tweet-output">Output</a></li>
+                        <li><a href="#modules-tweet-code">Source code</a></li>
+                    </ol>
 
-                <div class="tabs-content">
-                     <div class="tabs-pane from-content-api" id="modules-tweet-output">
-                        <blockquote class="tweet">
-                                <span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))</span>
-                                <a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00"
-                                    data-link-name="in body link" class="tweet-date">December 21, 2012</a>
-                                <p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
-                                    <a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach</a>
-                                    <a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld</a>
-                                </p>
-                            </blockquote>
-                     </div>
-                     <div class="tabs-pane js-hidden" id="modules-tweet-code">
-                        <pre class="prettyprint">
-&lt;blockquote class="tweet">
-    &lt;span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))&lt;/span>
-    &lt;a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00"
-        data-link-name="in body link" class="tweet-date">December 21, 2012&lt;/a>
-    &lt;p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
-        &lt;a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach&lt;/a>
-        &lt;a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld&lt;/a>
-    &lt;/p>
-&lt;/blockquote>
-                        </pre>
-                     </div>
+                    <div class="tabs-content">
+                         <div class="tabs-pane from-content-api" id="modules-tweet-output">
+                            <blockquote class="tweet">
+                                    <span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))</span>
+                                    <a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00"
+                                        data-link-name="in body link" class="tweet-date">December 21, 2012</a>
+                                    <p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
+                                        <a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach</a>
+                                        <a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld</a>
+                                    </p>
+                                </blockquote>
+                         </div>
+                         <div class="tabs-pane js-hidden" id="modules-tweet-code">
+                            <pre class="prettyprint">
+    &lt;blockquote class="tweet">
+        &lt;span class="tweet-user">— Angelique Chrisafis (@Html("@achrisafis"))&lt;/span>
+        &lt;a href="https://twitter.com/achrisafis/status/282088154050203648" data-datetime="2012-12-21T11:40:31+00:00"
+            data-link-name="in body link" class="tweet-date">December 21, 2012&lt;/a>
+        &lt;p class="tweet-body">Baffled local builder said he kept getting filmed. "Workman walks down street, must be very exciting"
+            &lt;a href="https://twitter.com/search/%23bugarach" data-link-name="in body link">#bugarach&lt;/a>
+            &lt;a href="https://twitter.com/search/%23endoftheworld" data-link-name="in body link">#endoftheworld&lt;/a>
+        &lt;/p>
+    &lt;/blockquote>
+                            </pre>
+                         </div>
+                    </div>
                 </div>
             </div>
 
@@ -96,30 +98,32 @@
                 <p class="box-indent type-7">A quote.<br/><br/>
                 N.B. This currently relies on a parent HTML class of <code>.block</code></p>
 
-                <ol class="tabs js-tabs">
-                    <li class="tabs-selected"><a href="#modules-quote-output">Output</a></li>
-                    <li><a href="#modules-quote-code">Source code</a></li>
-                </ol>
+                <div class="tabs-container">
+                    <ol class="tabs js-tabs">
+                        <li class="tabs-selected"><a href="#modules-quote-output">Output</a></li>
+                        <li><a href="#modules-quote-code">Source code</a></li>
+                    </ol>
 
-                <div class="tabs-content">
-                     <div class="tabs-pane block" id="modules-quote-output">
-                        <blockquote>
-                            <p>In all the excitement over the discovery of a
-                            <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
-                            Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about
-                            the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part
-                            and which describes fundamental particles and forces of nature – hides a terrifying secret: a
-                            theoretical composite particle that is so stable it can transform any other particle of matter
-                            into a copy of itself.</p>
-                        </blockquote>
-                     </div>
-                     <div class="tabs-pane js-hidden" id="modules-quote-code">
-                        <pre class="prettyprint">
-&lt;blockquote &gt;
-    &lt;p&gt;In all the excitement over the discovery of a &lt;a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link"&gt;Higgs-like particle&lt;/a&gt; at Cern this year, physicists at the lab were probably not thinking about the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part and which describes fundamental particles and forces of nature – hides a terrifying secret: a theoretical composite particle that is so stable it can transform any other particle of matter into a copy of itself.&lt;/p&gt;
-&lt;/blockquote&gt;
-                        </pre>
-                     </div>
+                    <div class="tabs-content">
+                         <div class="tabs-pane block" id="modules-quote-output">
+                            <blockquote>
+                                <p>In all the excitement over the discovery of a
+                                <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
+                                Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about
+                                the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part
+                                and which describes fundamental particles and forces of nature – hides a terrifying secret: a
+                                theoretical composite particle that is so stable it can transform any other particle of matter
+                                into a copy of itself.</p>
+                            </blockquote>
+                         </div>
+                         <div class="tabs-pane js-hidden" id="modules-quote-code">
+                            <pre class="prettyprint">
+    &lt;blockquote &gt;
+        &lt;p&gt;In all the excitement over the discovery of a &lt;a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link"&gt;Higgs-like particle&lt;/a&gt; at Cern this year, physicists at the lab were probably not thinking about the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part and which describes fundamental particles and forces of nature – hides a terrifying secret: a theoretical composite particle that is so stable it can transform any other particle of matter into a copy of itself.&lt;/p&gt;
+    &lt;/blockquote&gt;
+                            </pre>
+                         </div>
+                    </div>
                 </div>
 
             </div>
@@ -130,32 +134,34 @@
                 <p class="box-indent type-7">A pull quote<br/><br/>
                 N.B. This currently relies on a parent HTML class of <code>.from-content-api</code></p>
 
-                <ol class="tabs js-tabs">
-                    <li class="tabs-selected"><a href="#modules-pull-quote-output">Output</a></li>
-                    <li><a href="#modules-pull-quote-code">Source code</a></li>
-                </ol>
+                <div class="tabs-container">
+                    <ol class="tabs js-tabs">
+                        <li class="tabs-selected"><a href="#modules-pull-quote-output">Output</a></li>
+                        <li><a href="#modules-pull-quote-code">Source code</a></li>
+                    </ol>
 
-                <div class="tabs-content">
-                     <div class="tabs-pane from-content-api" id="modules-pull-quote-output">
-                        <blockquote class="quoted">
-                            <p>In all the excitement over the discovery of a
-                            <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
-                            Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about
-                            the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part
-                            and which describes fundamental particles and forces of nature – hides a terrifying secret: a
-                            theoretical composite particle that is so stable it can transform any other particle of matter
-                            into a copy of itself.</p>
-                        </blockquote>
-                     </div>
-                     <div class="tabs-pane js-hidden" id="modules-pull-quote-code">
-                        <pre class="prettyprint">
-&lt;blockquote class="quoted"&gt;
-    &lt;p&gt;In all the excitement over the discovery of a &lt;a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link"&gt;Higgs-like particle&lt;/a&gt; at Cern this year, physicists at the lab were probably not thinking about the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part and which describes fundamental particles and forces of nature – hides a terrifying secret: a theoretical composite particle that is so stable it can transform any other particle of matter into a copy of itself.&lt;/p&gt;
-&lt;/blockquote&gt;
-                        </pre>
-                     </div>
+                    <div class="tabs-content">
+                         <div class="tabs-pane from-content-api" id="modules-pull-quote-output">
+                            <blockquote class="quoted">
+                                <p>In all the excitement over the discovery of a
+                                <a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link">
+                                Higgs-like particle</a> at Cern this year, physicists at the lab were probably not thinking about
+                                the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part
+                                and which describes fundamental particles and forces of nature – hides a terrifying secret: a
+                                theoretical composite particle that is so stable it can transform any other particle of matter
+                                into a copy of itself.</p>
+                            </blockquote>
+                         </div>
+                         <div class="tabs-pane js-hidden" id="modules-pull-quote-code">
+                            <pre class="prettyprint">
+    &lt;blockquote class="quoted"&gt;
+        &lt;p&gt;In all the excitement over the discovery of a &lt;a href="/science/2012/jul/04/higgs-boson-cern-scientists-discover" data-link-name="in body link"&gt;Higgs-like particle&lt;/a&gt; at Cern this year, physicists at the lab were probably not thinking about the end of the world. But the Standard Model of particle physics – of which the Higgs boson is part and which describes fundamental particles and forces of nature – hides a terrifying secret: a theoretical composite particle that is so stable it can transform any other particle of matter into a copy of itself.&lt;/p&gt;
+    &lt;/blockquote&gt;
+                            </pre>
+                         </div>
+                    </div>
                 </div>
-
+                
             </div>
 
         </section>

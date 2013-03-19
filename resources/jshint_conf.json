@@ -16,7 +16,8 @@
     "predef"        : [
         "require",
         "define",
-        "EventEmitter"
+        "EventEmitter",
+        "s"
     ],
 
     "debug"         : false,
