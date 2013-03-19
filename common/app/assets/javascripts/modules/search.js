@@ -1,4 +1,4 @@
-define([], function () {
+define(['bean'], function (bean) {
 
     function Search(config) {
 
@@ -10,8 +10,13 @@ define([], function () {
 
         this.init = function() {
             if (config.switches.googleSearch && gcsUrl) {
-                require(['js!' + gcsUrl], function () {
-                    google.search.CustomSearchControl(google.search.Search.LINK_TARGET_SELF);
+                require(['js!' + gcsUrl + '!order'], function () {
+                    bean.on(document.querySelector('.search-results'), 'click', function(e) {
+                        var targetEl = e.target;
+                        if (targetEl.nodeName.toLowerCase() === "a") {
+                            targetEl.target = "_self";
+                        }
+                    });
                 });
             }
         };
