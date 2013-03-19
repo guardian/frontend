@@ -142,7 +142,7 @@ object Story {
 
     private def loadContent(parsedStory: ParsedStory): Story = {
         val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
-        // TODO proper edition and async
+        // TODO proper edition
         Await.result(ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
           Story(parsedStory, response.results.toSeq)
         }, 2.seconds)
