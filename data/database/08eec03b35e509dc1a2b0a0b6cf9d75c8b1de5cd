@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":101941,
+    "total":101942,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,248 @@
       "apiUrl":"http://content.guardianapis.com/uk"
     },
     "results":[{
+      "id":"uk/2013/mar/19/ready-to-eat-salads-illness-outbreak",
+      "sectionId":"uk",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-03-19T13:08:07Z",
+      "webTitle":"Ready-to-eat salads blamed for illness outbreak",
+      "webUrl":"http://www.guardian.co.uk/uk/2013/mar/19/ready-to-eat-salads-illness-outbreak",
+      "apiUrl":"http://content.guardianapis.com/uk/2013/mar/19/ready-to-eat-salads-illness-outbreak",
+      "fields":{
+        "trailText":"Cryptosporidium outbreak likely to be linked to ready-to-eat salads from Morrisons and Asda spinach, says health agency",
+        "headline":"Ready-to-eat salads blamed for illness outbreak",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698236029/salad-003.jpg",
+        "wordcount":"399",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/food-safety",
+        "type":"keyword",
+        "webTitle":"Food safety",
+        "webUrl":"http://www.guardian.co.uk/world/food-safety",
+        "apiUrl":"http://content.guardianapis.com/world/food-safety",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/salad",
+        "type":"keyword",
+        "webTitle":"Salad",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/salad",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/salad",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"business/asda",
+        "type":"keyword",
+        "webTitle":"Asda",
+        "webUrl":"http://www.guardian.co.uk/business/asda",
+        "apiUrl":"http://content.guardianapis.com/business/asda",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/morrisons",
+        "type":"keyword",
+        "webTitle":"Morrisons",
+        "webUrl":"http://www.guardian.co.uk/business/morrisons",
+        "apiUrl":"http://content.guardianapis.com/business/morrisons",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/supermarkets",
+        "type":"keyword",
+        "webTitle":"Supermarkets",
+        "webUrl":"http://www.guardian.co.uk/business/supermarkets",
+        "apiUrl":"http://content.guardianapis.com/business/supermarkets",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.guardian.co.uk/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698233599/salad-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698233599/salad-001.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"54",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698234899/salad-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698234899/salad-002.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"130",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698236029/salad-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698236029/salad-003.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"84",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698237189/salad-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698237189/salad-004.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"132",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698238280/salad-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698238280/salad-005.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"168",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698239350/salad-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698239350/salad-006.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"180",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698240451/salad-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698240451/salad-007.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"228",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698241559/salad-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698241559/salad-008.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"276",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with common production lines packing for several supermarket chains at the same time.    Photograph: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698241559/salad-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698241559/salad-008.jpg",
+          "source":"Getty Images",
+          "altText":"salad",
+          "height":"276",
+          "credit":"Getty Images",
+          "caption":"Ready-to-eat salads are often sourced from the same suppliers, with production lines packing for several supermarket chains at the same time. Photograph: Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"uk/2013/mar/19/cannabis-sniff-cards-crimestoppers",
       "sectionId":"uk",
       "sectionName":"UK news",
@@ -23,11 +265,11 @@
       "webUrl":"http://www.guardian.co.uk/uk/2013/mar/19/cannabis-sniff-cards-crimestoppers",
       "apiUrl":"http://content.guardianapis.com/uk/2013/mar/19/cannabis-sniff-cards-crimestoppers",
       "fields":{
-        "trailText":"Crimestoppers want to help members of the public identify cannabis farms",
+        "trailText":"Crimestoppers wants to help members of the public identify cannabis farms",
         "headline":"Charity distributes cannabis scratch and sniff cards",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697161170/Cannabis-plant-005.jpg",
-        "wordcount":"368",
+        "wordcount":"367",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -77,6 +319,13 @@
         "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/haroon_siddique.jpg",
         "references":[]
       },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -85,6 +334,21 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697166542/Cannabis-plant-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697166542/Cannabis-plant-010.jpg",
+          "source":"PA",
+          "photographer":"Gareth Fuller",
+          "altText":"Cannabis plant",
+          "height":"276",
+          "credit":"Gareth Fuller/PA",
+          "caption":"A cannabis plant: illegal farms are increasingly found in residential areas. Photograph: Gareth Fuller/PA",
+          "width":"460"
+        }
+      },{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
@@ -233,21 +497,6 @@
           "credit":"Gareth Fuller/PA",
           "caption":"A cannabis plant in an illegal farm which are increasingly found in residential areas Photograph: Gareth Fuller/PA",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697166542/Cannabis-plant-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363697166542/Cannabis-plant-010.jpg",
-          "source":"PA",
-          "photographer":"Gareth Fuller",
-          "altText":"Cannabis plant",
-          "height":"276",
-          "credit":"Gareth Fuller/PA",
-          "caption":"A cannabis plant in an illegal farm which are increasingly found in residential areas Photograph: Gareth Fuller/PA",
-          "width":"460"
         }
       }],
       "references":[]
@@ -590,12 +839,12 @@
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2013-03-19T10:40:00Z",
-      "webTitle":"Childcare support: working parents to be given up to £1,200",
+      "webTitle":"Childcare support: working parents to be given up to Â£1,200",
       "webUrl":"http://www.guardian.co.uk/uk/2013/mar/19/working-parents-childcare",
       "apiUrl":"http://content.guardianapis.com/uk/2013/mar/19/working-parents-childcare",
       "fields":{
-        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing £200m more into universal credit system</p>",
-        "headline":"Working parents to be given up to £1,200 a year in childcare support",
+        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing Â£200m more into universal credit system</p>",
+        "headline":"Working parents to be given up to Â£1,200 a year in childcare support",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363692963339/Cameron-and-Clegg-on-smal-003.jpg",
         "wordcount":"957",
@@ -808,7 +1057,7 @@
           "altText":"Trainee nursery worker ",
           "height":"54",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"54"
         }
       },{
@@ -823,7 +1072,7 @@
           "altText":"Trainee nursery worker ",
           "height":"340",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"480"
         }
       },{
@@ -838,7 +1087,7 @@
           "altText":"Trainee nursery worker ",
           "height":"130",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -853,7 +1102,7 @@
           "altText":"Trainee nursery worker ",
           "height":"84",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -868,7 +1117,7 @@
           "altText":"Trainee nursery worker ",
           "height":"132",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"220"
         }
       },{
@@ -883,7 +1132,7 @@
           "altText":"Trainee nursery worker ",
           "height":"168",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"280"
         }
       },{
@@ -898,7 +1147,7 @@
           "altText":"Trainee nursery worker ",
           "height":"180",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"300"
         }
       },{
@@ -913,7 +1162,7 @@
           "altText":"Trainee nursery worker ",
           "height":"228",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"380"
         }
       },{
@@ -928,7 +1177,7 @@
           "altText":"Trainee nursery worker ",
           "height":"276",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"460"
         }
       },{
@@ -943,7 +1192,7 @@
           "altText":"Trainee nursery worker ",
           "height":"372",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"620"
         }
       }],
@@ -3564,7 +3813,7 @@
       "webUrl":"http://www.guardian.co.uk/uk/2013/mar/18/sixty-guilty-crash-cash-scam",
       "apiUrl":"http://content.guardianapis.com/uk/2013/mar/18/sixty-guilty-crash-cash-scam",
       "fields":{
-        "trailText":"Fraud in County Durham district was so prevalent motorists had to pay up to £100 extra on insurance, say detectives",
+        "trailText":"Fraud in County Durham district was so prevalent motorists had to pay up to Â£100 extra on insurance, say detectives",
         "headline":"Sixty guilty in crash-for-cash scams",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363619034306/Crash-for-cash-003.jpg",
@@ -4000,7 +4249,7 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/6/1317916133258/Adam-Smith-on-a--20-note-007.jpg",
           "source":"Guardian",
           "photographer":"David Levene",
-          "altText":"Adam Smith on a £20 note",
+          "altText":"Adam Smith on a Â£20 note",
           "height":"276",
           "credit":"David Levene/Guardian",
           "caption":"UK government tax receipts. Photograph: David Levene for the Guardian",
@@ -4501,226 +4750,18 @@
         }
       }],
       "references":[]
-    },{
-      "id":"news/datablog/2010/apr/25/uk-public-spending-1963",
-      "sectionId":"uk",
-      "sectionName":"UK news",
-      "webPublicationDate":"2013-03-18T10:50:00Z",
-      "webTitle":"UK public spending since 1963",
-      "webUrl":"http://www.guardian.co.uk/news/datablog/2010/apr/25/uk-public-spending-1963",
-      "apiUrl":"http://content.guardianapis.com/news/datablog/2010/apr/25/uk-public-spending-1963",
-      "fields":{
-        "trailText":"<p>Back when the Beatles were having their first number one, the government spent £12bn a year, now it's nearer £700bn. See how the numbers have changed</p>",
-        "headline":"UK public spending since 1963",
-        "hasStoryPackage":"true",
-        "wordcount":"239",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"uk/budget-2013",
-        "type":"keyword",
-        "webTitle":"Budget 2013",
-        "webUrl":"http://www.guardian.co.uk/uk/budget-2013",
-        "apiUrl":"http://content.guardianapis.com/uk/budget-2013",
-        "sectionId":"uk",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"news/datablog",
-        "type":"blog",
-        "webTitle":"Datablog",
-        "webUrl":"http://www.guardian.co.uk/news/datablog",
-        "apiUrl":"http://content.guardianapis.com/news/datablog",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"politics/taxandspending",
-        "type":"keyword",
-        "webTitle":"Tax and spending",
-        "webUrl":"http://www.guardian.co.uk/politics/taxandspending",
-        "apiUrl":"http://content.guardianapis.com/politics/taxandspending",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/economy",
-        "type":"keyword",
-        "webTitle":"Economic policy",
-        "webUrl":"http://www.guardian.co.uk/politics/economy",
-        "apiUrl":"http://content.guardianapis.com/politics/economy",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"business/economics",
-        "type":"keyword",
-        "webTitle":"Economics",
-        "webUrl":"http://www.guardian.co.uk/business/economics",
-        "apiUrl":"http://content.guardianapis.com/business/economics",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/economicgrowth",
-        "type":"keyword",
-        "webTitle":"Economic growth (GDP)",
-        "webUrl":"http://www.guardian.co.uk/business/economicgrowth",
-        "apiUrl":"http://content.guardianapis.com/business/economicgrowth",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/quantitative-easing",
-        "type":"keyword",
-        "webTitle":"Quantitative easing",
-        "webUrl":"http://www.guardian.co.uk/business/quantitative-easing",
-        "apiUrl":"http://content.guardianapis.com/business/quantitative-easing",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/financial-crisis",
-        "type":"keyword",
-        "webTitle":"Financial crisis",
-        "webUrl":"http://www.guardian.co.uk/business/financial-crisis",
-        "apiUrl":"http://content.guardianapis.com/business/financial-crisis",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/simonrogers",
-        "type":"contributor",
-        "webTitle":"Simon Rogers",
-        "webUrl":"http://www.guardian.co.uk/profile/simonrogers",
-        "apiUrl":"http://content.guardianapis.com/profile/simonrogers",
-        "bio":"<p>Simon Rogers edits the Guardian <a href=\"http://www.guardian.co.uk/datablog\">Datablog</a> and <a href=\"http://www.guardian.co.uk/data\">Datastore</a> - and is a news editor for the <a href=\"http://www.guardian.co.uk\">Guardian</a>. He is author of <a href=\"http://www.amazon.co.uk/Facts-are-Sacred-Guardian-ebook/dp/B006PI9PQG/\">Facts are Sacred, out now on Kindle</a><br />&gt;&gt;Full <a href=\"https://docs.google.com/document/d/1ifpepMPRrKWecsvcxUgn1nteC_bmZF_-tpMN0uV2IA8/edit?hl=en_US&amp;authkey=CO7Ch-AK\">biography</a><br /><strong>Contact:</strong> simon.rogers [at] guardian.co.uk, or <a href=\"http://www.twitter.com/smfrogers\">@smfrogers</a>. He also edits <a href=\"http://www.twitter.com/guardiandata\">@GuardianData</a><br />\u2022 <strong><a href=\"http://simonrogers.net\">simonrogers.net</a></strong></p>",
-        "rcsId":"GNL037943",
-        "r2ContributorId":"16462",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/photobylines/2011/10/6/1317904017228/Simon-Rogers-byline-pic-003.jpg",
-        "references":[]
-      },{
-        "id":"politics/government-data",
-        "type":"keyword",
-        "webTitle":"Government data",
-        "webUrl":"http://www.guardian.co.uk/politics/government-data",
-        "apiUrl":"http://content.guardianapis.com/politics/government-data",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"uk/budget",
-        "type":"keyword",
-        "webTitle":"Budget",
-        "webUrl":"http://www.guardian.co.uk/uk/budget",
-        "apiUrl":"http://content.guardianapis.com/uk/budget",
-        "sectionId":"uk",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"politics/alistairdarling",
-        "type":"keyword",
-        "webTitle":"Alistair Darling",
-        "webUrl":"http://www.guardian.co.uk/politics/alistairdarling",
-        "apiUrl":"http://content.guardianapis.com/politics/alistairdarling",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/general-election-2010",
-        "type":"keyword",
-        "webTitle":"General election 2010",
-        "webUrl":"http://www.guardian.co.uk/politics/general-election-2010",
-        "apiUrl":"http://content.guardianapis.com/politics/general-election-2010",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/politics",
-        "type":"keyword",
-        "webTitle":"Politics",
-        "webUrl":"http://www.guardian.co.uk/politics/politics",
-        "apiUrl":"http://content.guardianapis.com/politics/politics",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/blog",
-        "type":"blog",
-        "webTitle":"Politics blog",
-        "webUrl":"http://www.guardian.co.uk/politics/blog",
-        "apiUrl":"http://content.guardianapis.com/politics/blog",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/georgeosborne",
-        "type":"keyword",
-        "webTitle":"George Osborne",
-        "webUrl":"http://www.guardian.co.uk/politics/georgeosborne",
-        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"type/graphic",
-        "type":"type",
-        "webTitle":"Graphic",
-        "webUrl":"http://www.guardian.co.uk/graphics",
-        "apiUrl":"http://content.guardianapis.com/graphics",
-        "references":[]
-      },{
-        "id":"type/data",
-        "type":"type",
-        "webTitle":"Data",
-        "webUrl":"http://www.guardian.co.uk/data",
-        "apiUrl":"http://content.guardianapis.com/data",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/3/3/1236123158794/The-Beatles-in-1963-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/3/3/1236123158794/The-Beatles-in-1963-002.jpg",
-          "source":"PA",
-          "altText":"The Beatles in 1963",
-          "height":"276",
-          "credit":"PA",
-          "caption":"How big was government spending then. The Beatles, pictured in June 1963.&#13; Photograph: PA",
-          "width":"460"
-        }
-      }],
-      "references":[]
     }],
     "editorsPicks":[{
       "id":"uk/2013/mar/19/working-parents-childcare",
       "sectionId":"uk",
       "sectionName":"UK news",
       "webPublicationDate":"2013-03-19T10:40:00Z",
-      "webTitle":"Childcare support: working parents to be given up to £1,200",
+      "webTitle":"Childcare support: working parents to be given up to Â£1,200",
       "webUrl":"http://www.guardian.co.uk/uk/2013/mar/19/working-parents-childcare",
       "apiUrl":"http://content.guardianapis.com/uk/2013/mar/19/working-parents-childcare",
       "fields":{
-        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing £200m more into universal credit system</p>",
-        "headline":"Working parents to be given up to £1,200 a year in childcare support",
+        "trailText":"<p>Childcare minister Liz Truss says government is supporting low-income families by ploughing Â£200m more into universal credit system</p>",
+        "headline":"Working parents to be given up to Â£1,200 a year in childcare support",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363692963339/Cameron-and-Clegg-on-smal-003.jpg",
         "wordcount":"957",
@@ -4933,7 +4974,7 @@
           "altText":"Trainee nursery worker ",
           "height":"54",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"54"
         }
       },{
@@ -4948,7 +4989,7 @@
           "altText":"Trainee nursery worker ",
           "height":"340",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"480"
         }
       },{
@@ -4963,7 +5004,7 @@
           "altText":"Trainee nursery worker ",
           "height":"130",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -4978,7 +5019,7 @@
           "altText":"Trainee nursery worker ",
           "height":"84",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"140"
         }
       },{
@@ -4993,7 +5034,7 @@
           "altText":"Trainee nursery worker ",
           "height":"132",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"220"
         }
       },{
@@ -5008,7 +5049,7 @@
           "altText":"Trainee nursery worker ",
           "height":"168",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"280"
         }
       },{
@@ -5023,7 +5064,7 @@
           "altText":"Trainee nursery worker ",
           "height":"180",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"300"
         }
       },{
@@ -5038,7 +5079,7 @@
           "altText":"Trainee nursery worker ",
           "height":"228",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"380"
         }
       },{
@@ -5053,7 +5094,7 @@
           "altText":"Trainee nursery worker ",
           "height":"276",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"460"
         }
       },{
@@ -5068,7 +5109,7 @@
           "altText":"Trainee nursery worker ",
           "height":"372",
           "credit":"Photofusion Picture Library / Al/Alamy",
-          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth £1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
+          "caption":"A trainee nursery worker with children in a nursery. Under new measures parents will be entitled to childcare support worth Â£1,200 a year Photograph: Photofusion Picture Library / Al/Alamy",
           "width":"620"
         }
       }],
@@ -5082,7 +5123,7 @@
       "webUrl":"http://www.guardian.co.uk/society/2013/mar/19/labour-rush-benefit-rebates-poundland",
       "apiUrl":"http://content.guardianapis.com/society/2013/mar/19/labour-rush-benefit-rebates-poundland",
       "fields":{
-        "trailText":"Opposition likely to abstain from vote on law to prevent government having to pay £130m to jobseekers",
+        "trailText":"Opposition likely to abstain from vote on law to prevent government having to pay Â£130m to jobseekers",
         "headline":"Labour to help rush through bill to stop benefit rebates after Poundland ruling",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363687301300/Cait-Reilly-005.jpg",
@@ -5335,11 +5376,11 @@
       "webUrl":"http://www.guardian.co.uk/media/2013/mar/19/bloggers-libel-fines-press-regulation",
       "apiUrl":"http://content.guardianapis.com/media/2013/mar/19/bloggers-libel-fines-press-regulation",
       "fields":{
-        "trailText":"<p>Websites could have to pay exemplary damages if they don't sign up to new regulator, claim opponents of Leveson deal</p>",
+        "trailText":"Websites could have to pay exemplary damages if they don't sign up to new regulator, claim opponents of Leveson deal",
         "headline":"Bloggers may face libel fines under press regulation deal",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363685417116/Carla-Buzasi-005.jpg",
-        "wordcount":"644",
+        "wordcount":"684",
         "liveBloggingNow":"false"
       },
       "tags":[{

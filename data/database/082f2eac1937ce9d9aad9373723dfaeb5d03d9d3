@@ -2679,50 +2679,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
-          "source":"Getty Images",
-          "altText":"Konstantin Stanislavski as Don Juan",
-          "height":"276",
-          "credit":"Getty Images",
-          "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
-          "source":"Getty Images",
-          "photographer":"A. Jones",
-          "altText":"Maggie Smith",
-          "height":"276",
-          "credit":"A. Jones/Getty Images",
-          "caption":"A brilliant Brechtian ... Maggie Smith. Photograph: A. Jones/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Hulton Archive",
-          "altText":"Maxim Gorky",
-          "height":"276",
-          "credit":"Hulton Archive/Getty Images",
-          "caption":"Setting the standard ... left to right, Stanislavski, Maxim Gorky and Lilina Stanislavski. Photograph: Hulton Archive/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098654396/Konstantin-Stanislavski-a-002.jpg",
@@ -2860,6 +2816,50 @@
           "credit":"Getty Images",
           "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
+          "source":"Getty Images",
+          "altText":"Konstantin Stanislavski as Don Juan",
+          "height":"276",
+          "credit":"Getty Images",
+          "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
+          "source":"Getty Images",
+          "photographer":"A. Jones",
+          "altText":"Maggie Smith",
+          "height":"276",
+          "credit":"A. Jones/Getty Images",
+          "caption":"A brilliant Brechtian ... Maggie Smith. Photograph: A. Jones/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Hulton Archive",
+          "altText":"Maxim Gorky",
+          "height":"276",
+          "credit":"Hulton Archive/Getty Images",
+          "caption":"Setting the standard ... left to right, Stanislavski, Maxim Gorky and Lilina Stanislavski. Photograph: Hulton Archive/Getty Images",
+          "width":"460"
         }
       }],
       "references":[]
@@ -5684,50 +5684,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
-          "source":"Getty Images",
-          "altText":"Konstantin Stanislavski as Don Juan",
-          "height":"276",
-          "credit":"Getty Images",
-          "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
-          "source":"Getty Images",
-          "photographer":"A. Jones",
-          "altText":"Maggie Smith",
-          "height":"276",
-          "credit":"A. Jones/Getty Images",
-          "caption":"A brilliant Brechtian ... Maggie Smith. Photograph: A. Jones/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Hulton Archive",
-          "altText":"Maxim Gorky",
-          "height":"276",
-          "credit":"Hulton Archive/Getty Images",
-          "caption":"Setting the standard ... left to right, Stanislavski, Maxim Gorky and Lilina Stanislavski. Photograph: Hulton Archive/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098654396/Konstantin-Stanislavski-a-002.jpg",
@@ -5865,6 +5821,50 @@
           "credit":"Getty Images",
           "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/12/1363098663745/Konstantin-Stanislavski-a-010.jpg",
+          "source":"Getty Images",
+          "altText":"Konstantin Stanislavski as Don Juan",
+          "height":"276",
+          "credit":"Getty Images",
+          "caption":"Character-building stuff \u2026 Konstantin Stanislavski as Don Juan in 1889.  Photograph: Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186066715/Maggie-Smith-008.jpg",
+          "source":"Getty Images",
+          "photographer":"A. Jones",
+          "altText":"Maggie Smith",
+          "height":"276",
+          "credit":"A. Jones/Getty Images",
+          "caption":"A brilliant Brechtian ... Maggie Smith. Photograph: A. Jones/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/3/13/1363186718733/Maxim-Gorky-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Hulton Archive",
+          "altText":"Maxim Gorky",
+          "height":"276",
+          "credit":"Hulton Archive/Getty Images",
+          "caption":"Setting the standard ... left to right, Stanislavski, Maxim Gorky and Lilina Stanislavski. Photograph: Hulton Archive/Getty Images",
+          "width":"460"
         }
       }],
       "references":[]

@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":120833,
+    "total":120834,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,6 +15,201 @@
       "apiUrl":"http://content.guardianapis.com/football"
     },
     "results":[{
+      "id":"football/2013/mar/19/gary-neville-manchester-stock-exchange-building",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-03-19T13:25:21Z",
+      "webTitle":"Gary Neville splashes out Â£1.5m on Manchester stock exchange building",
+      "webUrl":"http://www.guardian.co.uk/football/2013/mar/19/gary-neville-manchester-stock-exchange-building",
+      "apiUrl":"http://content.guardianapis.com/football/2013/mar/19/gary-neville-manchester-stock-exchange-building",
+      "fields":{
+        "trailText":"The England coach added to his property portfolio and plans to turn the top floors into a private members' club",
+        "headline":"Gary Neville splashes out Â£1.5m on Manchester stock exchange building",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697960923/Gary-Neville-003.jpg",
+        "wordcount":"175",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/gary-neville",
+        "type":"keyword",
+        "webTitle":"Gary Neville",
+        "webUrl":"http://www.guardian.co.uk/football/gary-neville",
+        "apiUrl":"http://content.guardianapis.com/football/gary-neville",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697958745/Gary-Neville-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697958745/Gary-Neville-001.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"54",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697959798/Gary-Neville-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697959798/Gary-Neville-002.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"130",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697960923/Gary-Neville-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697960923/Gary-Neville-003.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"84",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697962057/Gary-Neville-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697962057/Gary-Neville-004.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"132",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697963148/Gary-Neville-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697963148/Gary-Neville-005.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"168",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697964317/Gary-Neville-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697964317/Gary-Neville-006.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"180",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697965486/Gary-Neville-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697965486/Gary-Neville-007.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"228",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697966624/Gary-Neville-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697966624/Gary-Neville-008.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"276",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697966624/Gary-Neville-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363697966624/Gary-Neville-008.jpg",
+          "source":"PA",
+          "photographer":"Daniel Hambury",
+          "altText":"Gary Neville",
+          "height":"276",
+          "credit":"Daniel Hambury/PA",
+          "caption":"Gary Neville's deal for the Manchester stock exchange building is the latest addition to his property portfolio.  Photograph: Daniel Hambury/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"football/video/2013/mar/19/michael-owen-retire-season-video",
       "sectionId":"football",
       "sectionName":"Football",
@@ -429,7 +624,7 @@
       "id":"football/gallery/2013/mar/19/michael-owen-career-in-pictures",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-03-19T12:13:56Z",
+      "webPublicationDate":"2013-03-19T12:13:00Z",
       "webTitle":"Michael Owen: his career in pictures",
       "webUrl":"http://www.guardian.co.uk/football/gallery/2013/mar/19/michael-owen-career-in-pictures",
       "apiUrl":"http://content.guardianapis.com/football/gallery/2013/mar/19/michael-owen-career-in-pictures",
@@ -559,6 +754,22 @@
       "mediaAssets":[{
         "type":"picture",
         "rel":"gallery",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699639340/Michael-Owen-against-Arge-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699639340/Michael-Owen-against-Arge-001.jpg",
+          "source":"Tom Jenkins for the Guardian",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699639340/Michael-Owen-against-Arge-001-thumb-136.jpg",
+          "altText":"Michael Owen: Michael Owen against Argentina at 1998 World Cup",
+          "height":"480",
+          "credit":"Tom Jenkins for the Guardian",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363699639340/Michael-Owen-against-Arge-001-thumb-136.jpg",
+          "caption":"Owen started England's next game \u2013 a 2-0 defeat of Colombia \u2013 but it was his goal against a different set of South American opponents that really brought him to the world's attention. He slalomed and sped his way past the Argentina defence ...",
+          "width":"748"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363689183873/michael-owen-gallery-001.jpg",
         "fields":{
@@ -604,23 +815,6 @@
           "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363690911768/Michael-Owen-gallery-001-thumb-9237.jpg",
           "caption":"At the 1998 World Cup in France, Owen came on as a substitute against Romania. He scored and hit the post but could not prevent his side from losing 2-1",
           "width":"700"
-        }
-      },{
-        "type":"picture",
-        "rel":"gallery",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363691317615/Michael-Owen-gallery-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363691317615/Michael-Owen-gallery-001.jpg",
-          "source":"STAR IMAGES",
-          "photographer":"Star Images",
-          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363691317615/Michael-Owen-gallery-001-thumb-8692.jpg",
-          "altText":"Michael Owen gallery",
-          "height":"400",
-          "credit":"Star Images/STAR IMAGES",
-          "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363691317615/Michael-Owen-gallery-001-thumb-8692.jpg",
-          "caption":"Owen started England's next game \u2013 a 2-0 defeat of Colombia \u2013 but it was his goal against a different set of South American opponents that really brought him to the world's attention. He slalomed and sped his way past the Argentina defence ...",
-          "width":"500"
         }
       },{
         "type":"picture",
@@ -687,7 +881,7 @@
           "height":"450",
           "credit":"Jose Luis Roca/AFP/Getty Images",
           "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363692568985/Real-Madrids-Owen-celebra-001-thumb-7185.jpg",
-          "caption":"At Madrid Owen wore the same number as club legend Alfredo di StŽfano. \"I am so proud to be wearing the number 11 shirt and I'd like to thank everyone for making me so welcome here,\" he said. That warm welcome did not last long, however, as a mixture of injuries and lack of form saw him return to England just over a year after he had left",
+          "caption":"At Madrid Owen wore the same number as club legend Alfredo di StÃ©fano. \"I am so proud to be wearing the number 11 shirt and I'd like to thank everyone for making me so welcome here,\" he said. That warm welcome did not last long, however, as a mixture of injuries and lack of form saw him return to England just over a year after he had left",
           "width":"500"
         }
       },{
@@ -704,7 +898,7 @@
           "height":"300",
           "credit":"Lee Smith/Action Images",
           "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/19/1363693051359/Michael-Owen-gallery-001-thumb-6507.jpg",
-          "caption":"From the white of Real Madrid to the black and white of Newcastle, Owen cost the Magpies £16.8m when he joined them in August 2005 \u2013 a record transfer fee for the club. In December he broke a metatarsal bone playing against Tottenham and made only one more appearance for Newcastle that season as a substitute in April",
+          "caption":"From the white of Real Madrid to the black and white of Newcastle, Owen cost the Magpies Â£16.8m when he joined them in August 2005 \u2013 a record transfer fee for the club. In December he broke a metatarsal bone playing against Tottenham and made only one more appearance for Newcastle that season as a substitute in April",
           "width":"500"
         }
       },{
@@ -1637,7 +1831,7 @@
         "headline":"Gary Cahill out of England's San Marino trip and may miss Montenegro",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363689721363/Gary-Cahill-receives-trea-003.jpg",
-        "wordcount":"284",
+        "wordcount":"285",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1958,7 +2152,7 @@
       "webUrl":"http://www.guardian.co.uk/football/2013/mar/19/michael-owen-to-retire-from-football",
       "apiUrl":"http://content.guardianapis.com/football/2013/mar/19/michael-owen-to-retire-from-football",
       "fields":{
-        "trailText":"After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season",
+        "trailText":"<p>After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season</p>",
         "headline":"Michael Owen to retire from football at the end of the season",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690182192/Michael-Owen-001.jpg",
@@ -2029,20 +2223,34 @@
         "references":[]
       }],
       "mediaAssets":[{
-        "type":"picture",
+        "type":"video",
         "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
-          "source":"Sportsphoto Ltd./Allstar",
-          "photographer":"Paul Mcfegan/Sportsphoto",
-          "altText":"Michael Owen ",
-          "height":"276",
-          "credit":"Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "caption":"Stoke City and former England striker Michael Owen has announced that he will retire from professional football at the end of the season.  Photograph: Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "width":"460"
-        }
+          "source":"SNTV",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/19/130319owen_7379422.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/19/130319owen_7379422.jpg",
+          "width":"480",
+          "durationSeconds":"14"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130319owen/130319owen.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/3/19/130319owen_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/3/19/130319owen_3gpLg16x9.3gp"
+        }]
       },{
         "type":"picture",
         "rel":"alt-size",
@@ -2471,7 +2679,7 @@
       "webUrl":"http://www.guardian.co.uk/football/2013/mar/18/tottenham-hotspur-internazionale-fulham",
       "apiUrl":"http://content.guardianapis.com/football/2013/mar/18/tottenham-hotspur-internazionale-fulham",
       "fields":{
-        "trailText":"AndrŽ Villas-Boas said Tottenham's 1-0 defeat by Fulham had nothing to do with their midweek exertions in Milan but not all his players agreed",
+        "trailText":"AndrÃ© Villas-Boas said Tottenham's 1-0 defeat by Fulham had nothing to do with their midweek exertions in Milan but not all his players agreed",
         "headline":"Villas-Boas does not blame European exertion for Premier League defeat",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/18/1363627411807/gareth-bale-003.jpg",
@@ -2493,7 +2701,7 @@
       },{
         "id":"football/andre-villas-boas",
         "type":"keyword",
-        "webTitle":"AndrŽ Villas-Boas",
+        "webTitle":"AndrÃ© Villas-Boas",
         "webUrl":"http://www.guardian.co.uk/football/andre-villas-boas",
         "apiUrl":"http://content.guardianapis.com/football/andre-villas-boas",
         "sectionId":"football",
@@ -3012,7 +3220,7 @@
           "altText":"adam johnson",
           "height":"54",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"54"
         }
       },{
@@ -3027,7 +3235,7 @@
           "altText":"adam johnson",
           "height":"130",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"140"
         }
       },{
@@ -3042,7 +3250,7 @@
           "altText":"adam johnson",
           "height":"84",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"140"
         }
       },{
@@ -3057,7 +3265,7 @@
           "altText":"adam johnson",
           "height":"132",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"220"
         }
       },{
@@ -3072,7 +3280,7 @@
           "altText":"adam johnson",
           "height":"168",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"280"
         }
       },{
@@ -3087,7 +3295,7 @@
           "altText":"adam johnson",
           "height":"180",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"300"
         }
       },{
@@ -3102,7 +3310,7 @@
           "altText":"adam johnson",
           "height":"228",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"380"
         }
       },{
@@ -3117,7 +3325,7 @@
           "altText":"adam johnson",
           "height":"276",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
           "width":"460"
         }
       },{
@@ -3132,7 +3340,7 @@
           "altText":"adam johnson",
           "height":"276",
           "credit":"Matthew Ashton/AMA/  Matthew Ashton/AMA/Matthew Ashton/AMA/AMA/Corbis",
-          "caption":"Adam Johnson, Sunderland's £10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/AMA/Corbis",
+          "caption":"Adam Johnson, Sunderland's Â£10m signing from Manchester City, has yet to have the expected impact as the club struggle. Photograph: Matthew Ashton/AMA/AMA/Corbis",
           "width":"460"
         }
       }],
@@ -3394,12 +3602,12 @@
       "sectionId":"football",
       "sectionName":"Football",
       "webPublicationDate":"2013-03-18T22:56:00Z",
-      "webTitle":"Callum McManaman expected to be charged over Massadio Ha•dara tackle",
+      "webTitle":"Callum McManaman expected to be charged over Massadio HaÃ¯dara tackle",
       "webUrl":"http://www.guardian.co.uk/football/2013/mar/18/mcmanaman-tackle-haidara-fa",
       "apiUrl":"http://content.guardianapis.com/football/2013/mar/18/mcmanaman-tackle-haidara-fa",
       "fields":{
-        "trailText":"Wigan's Callum McManaman is expected to be charged on Tuesday with violent conduct for his tackle on Newcastle's Massadio Ha•dara",
-        "headline":"Callum McManaman expected to be charged over Massadio Ha•dara tackle",
+        "trailText":"Wigan's Callum McManaman is expected to be charged on Tuesday with violent conduct for his tackle on Newcastle's Massadio HaÃ¯dara",
+        "headline":"Callum McManaman expected to be charged over Massadio HaÃ¯dara tackle",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/17/1363564334009/Callum-McManaman-of-Wigan-003.jpg",
         "wordcount":"543",
@@ -3551,7 +3759,7 @@
           "altText":"Callum McManaman of Wigan tackles Massadio Haidara",
           "height":"276",
           "credit":"Simon Stacpoole/Simon Stacpoole / Offside",
-          "caption":"Callum McManaman of Wigan tackles Massadio Ha•dara. Photograph: Simon Stacpoole/Offside",
+          "caption":"Callum McManaman of Wigan tackles Massadio HaÃ¯dara. Photograph: Simon Stacpoole/Offside",
           "width":"460"
         }
       }],
@@ -4665,280 +4873,6 @@
         "type":"pa-football-team",
         "id":"pa-football-team/43"
       }]
-    },{
-      "id":"football/blog/2013/mar/18/armin-veh-eintracht-frankfurt-schalke-bundesliga",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-03-18T17:13:26Z",
-      "webTitle":"Armin Veh ready to jump ship after sailing Eintracht into calmer waters | Raphael Honigstein",
-      "webUrl":"http://www.guardian.co.uk/football/blog/2013/mar/18/armin-veh-eintracht-frankfurt-schalke-bundesliga",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/mar/18/armin-veh-eintracht-frankfurt-schalke-bundesliga",
-      "fields":{
-        "trailText":"<p><strong>Raphael Honigstein:</strong> Eintracht Frankfurt have surprised all by climbing into the top four \u2013 but their success may cost them the man who has taken them there</p>",
-        "headline":"Armin Veh ready to jump ship after sailing Eintracht into calmer waters",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626733300/Armin-Veh-005.jpg",
-        "wordcount":"1399",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/eintrachtfrankfurt",
-        "type":"keyword",
-        "webTitle":"Eintracht Frankfurt",
-        "webUrl":"http://www.guardian.co.uk/football/eintrachtfrankfurt",
-        "apiUrl":"http://content.guardianapis.com/football/eintrachtfrankfurt",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26460"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.guardian.co.uk/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/raphaelhonigstein",
-        "type":"contributor",
-        "webTitle":"Raphael Honigstein",
-        "webUrl":"http://www.guardian.co.uk/profile/raphaelhonigstein",
-        "apiUrl":"http://content.guardianapis.com/profile/raphaelhonigstein",
-        "bio":"<p>Raphael Honigstein is guardian.co.uk's German football correspondent. A native Bavarian, he also writes for SŸddeutsche Zeitung and is Talksport's German expert. A long time ago, when the Bundesliga was still fashionable, he was Alan McInally's sidekick on Sky. <a href=\"http://www.zavvi.co.uk/books-Sport-Football-10+to+14.99-Harder-Better-Faster-Stronger-Raphael-Honigstein/9780224080132/cccr33.r10.1/p.jsf\">Harder, Better, Faster, Stronger</a>, his book on the peculiar narrative of English football, is out now</p>",
-        "r2ContributorId":"19394",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/16/honigstein.jpg",
-        "references":[]
-      },{
-        "id":"football/bundesligafootball",
-        "type":"keyword",
-        "webTitle":"Bundesliga",
-        "webUrl":"http://www.guardian.co.uk/football/bundesligafootball",
-        "apiUrl":"http://content.guardianapis.com/football/bundesligafootball",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/625"
-        }]
-      },{
-        "id":"football/europeanfootball",
-        "type":"keyword",
-        "webTitle":"European club football",
-        "webUrl":"http://www.guardian.co.uk/football/europeanfootball",
-        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626739752/Armin-Veh-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626739752/Armin-Veh-010.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"276",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626729367/Armin-Veh-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626729367/Armin-Veh-002.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"54",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626730634/Armin-Veh-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626730634/Armin-Veh-003.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"340",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"480"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626732073/Armin-Veh-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626732073/Armin-Veh-004.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"130",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626733300/Armin-Veh-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626733300/Armin-Veh-005.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"84",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626734669/Armin-Veh-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626734669/Armin-Veh-006.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"132",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626735896/Armin-Veh-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626735896/Armin-Veh-007.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"168",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626737148/Armin-Veh-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626737148/Armin-Veh-008.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"180",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626738490/Armin-Veh-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626738490/Armin-Veh-009.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"228",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626739752/Armin-Veh-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626739752/Armin-Veh-010.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"276",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":10,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626741028/Armin-Veh-011.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/3/18/1363626741028/Armin-Veh-011.jpg",
-          "source":"AFP/Getty Images",
-          "photographer":"Philipp Guelland",
-          "altText":"Armin Veh",
-          "height":"372",
-          "credit":"Philipp Guelland/AFP/Getty Images",
-          "caption":"Armin Veh is a rare thing in the Bundesliga - a head coach who is not obsessed with the small details. Photograph: Philipp Guelland/AFP/Getty Images",
-          "width":"620"
-        }
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26460"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/625"
-      }]
     }],
     "editorsPicks":[{
       "id":"football/2013/mar/19/michael-owen-to-retire-from-football",
@@ -4949,7 +4883,7 @@
       "webUrl":"http://www.guardian.co.uk/football/2013/mar/19/michael-owen-to-retire-from-football",
       "apiUrl":"http://content.guardianapis.com/football/2013/mar/19/michael-owen-to-retire-from-football",
       "fields":{
-        "trailText":"After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season",
+        "trailText":"<p>After a career spanning 89 international caps and five different clubs, Michael Owen has announced that he will retire from football at the end of the season</p>",
         "headline":"Michael Owen to retire from football at the end of the season",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690182192/Michael-Owen-001.jpg",
@@ -5020,20 +4954,34 @@
         "references":[]
       }],
       "mediaAssets":[{
-        "type":"picture",
+        "type":"video",
         "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/3/19/1363690450609/Michael-Owen--010.jpg",
-          "source":"Sportsphoto Ltd./Allstar",
-          "photographer":"Paul Mcfegan/Sportsphoto",
-          "altText":"Michael Owen ",
-          "height":"276",
-          "credit":"Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "caption":"Stoke City and former England striker Michael Owen has announced that he will retire from professional football at the end of the season.  Photograph: Paul Mcfegan/Sportsphoto/Sportsphoto Ltd./Allstar",
-          "width":"460"
-        }
+          "source":"SNTV",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/3/19/130319owen_7379422.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/3/19/130319owen_7379422.jpg",
+          "width":"480",
+          "durationSeconds":"14"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/3/19/130319owen-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130319owen/130319owen.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/3/19/130319owen_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/3/19/130319owen_3gpLg16x9.3gp"
+        }]
       },{
         "type":"picture",
         "rel":"alt-size",

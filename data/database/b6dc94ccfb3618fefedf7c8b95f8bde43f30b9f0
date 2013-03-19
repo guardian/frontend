@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":4306,
+    "total":4307,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -19,6 +19,92 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-19T13:24:38Z",
+      "webTitle":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "fields":{
+        "trailText":"<p><strong>Baseball:</strong> Dominican Republic beat the Netherlands 4-1 and will face Puerto Rico in Tuesday night's final</p>",
+        "headline":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698740719/3c95fceb-b44f-4479-8ef8-08623b854f75-140x84.jpeg",
+        "wordcount":"825",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/world-baseball-classic",
+        "type":"keyword",
+        "webTitle":"World Baseball Classic",
+        "webUrl":"http://www.guardian.co.uk/sport/world-baseball-classic",
+        "apiUrl":"http://content.guardianapis.com/sport/world-baseball-classic",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baseball",
+        "type":"keyword",
+        "webTitle":"Baseball",
+        "webUrl":"http://www.guardian.co.uk/sport/baseball",
+        "apiUrl":"http://content.guardianapis.com/sport/baseball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.guardian.co.uk/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
+          "source":"REUTERS",
+          "photographer":"MIKE BLAKE",
+          "altText":"Dominican Republic vs Netherlands, WBC",
+          "height":"276",
+          "credit":"MIKE BLAKE/REUTERS",
+          "caption":"Dominican Republic's Miguel Tejada pops out on a bunt attempt to Netherlands catcher Dashenko Ricardo during the  semi-final round of the World Baseball Classic in San Francisco, California March 18, 2013. Photograph: Mike Blake/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"sport/blog/2013/mar/19/nfl-free-agency-winners-losers",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -2229,7 +2315,7 @@
       },{
         "id":"football/jose-mourinho",
         "type":"keyword",
-        "webTitle":"José Mourinho",
+        "webTitle":"Jos√© Mourinho",
         "webUrl":"http://www.guardian.co.uk/football/jose-mourinho",
         "apiUrl":"http://content.guardianapis.com/football/jose-mourinho",
         "sectionId":"football",
@@ -2435,46 +2521,29 @@
         }
       }],
       "references":[]
-    },{
-      "id":"sport/blog/2013/mar/15/seattle-portland-new-york-dc-united",
+    }],
+    "editorsPicks":[{
+      "id":"sport/blog/2013/mar/19/nfl-free-agency-winners-losers",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-03-15T13:18:39Z",
-      "webTitle":"MLS week three: fan previews | Graham Parker",
-      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/15/seattle-portland-new-york-dc-united",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/15/seattle-portland-new-york-dc-united",
+      "webPublicationDate":"2013-03-19T09:00:00Z",
+      "webTitle":"NFL free agency: winners and losers | Paolo Bandini",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/19/nfl-free-agency-winners-losers",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/19/nfl-free-agency-winners-losers",
       "fields":{
-        "trailText":"<p><strong>MLS</strong>: MLS Rivalry week features a series of eye-catching matchups such as Seattle-Portland, NYRB-DC United and Galaxy-Chivas. Our regular cast of fan reps, beat writer, bloggers and podcasters are here all week...</p>",
-        "headline":"MLS week three: fan previews",
+        "trailText":"<p><strong>Paolo Bandini:</strong> The Denver Broncos, Seattle Seahawks and the Baltimore Ravens were among the busiest teams in NFL free agency deals. But which teams did the best business?</p>",
+        "headline":"NFL free agency: winners and losers",
         "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/5/29/1338303123779/Seattle-Sounders-fans-che-003.jpg",
-        "wordcount":"4960",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/9/1357769963567/Peyton-Manning-Denver-Bro-003.jpg",
+        "wordcount":"1957",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/series/mls-fan-views",
-        "type":"series",
-        "webTitle":"MLS fan views",
-        "webUrl":"http://www.guardian.co.uk/sport/series/mls-fan-views",
-        "apiUrl":"http://content.guardianapis.com/sport/series/mls-fan-views",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/mls",
+        "id":"sport/nfl",
         "type":"keyword",
-        "webTitle":"MLS",
-        "webUrl":"http://www.guardian.co.uk/football/mls",
-        "apiUrl":"http://content.guardianapis.com/football/mls",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "webTitle":"NFL",
+        "webUrl":"http://www.guardian.co.uk/sport/nfl",
+        "apiUrl":"http://content.guardianapis.com/sport/nfl",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -2488,57 +2557,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"football/football",
+        "id":"sport/sport",
         "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.guardian.co.uk/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"profile/graham-parker",
-        "type":"contributor",
-        "webTitle":"Graham Parker",
-        "webUrl":"http://www.guardian.co.uk/profile/graham-parker",
-        "apiUrl":"http://content.guardianapis.com/profile/graham-parker",
-        "bio":"<p>Graham Parker is a writer based in Brooklyn, New York. He is also a widely exhibited artist and author of the book <em>Fair Use (notes from spam)</em>.<br />On Twitter he is @KidWeil</p>",
-        "r2ContributorId":"48198",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/1/9/1326131325698/Graham-Parker-profile-pic-003.jpg",
-        "references":[]
-      },{
-        "id":"football/newyorkredbulls",
-        "type":"keyword",
-        "webTitle":"New York Red Bulls",
-        "webUrl":"http://www.guardian.co.uk/football/newyorkredbulls",
-        "apiUrl":"http://content.guardianapis.com/football/newyorkredbulls",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/dcunited",
-        "type":"keyword",
-        "webTitle":"DC United",
-        "webUrl":"http://www.guardian.co.uk/football/dcunited",
-        "apiUrl":"http://content.guardianapis.com/football/dcunited",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sporting-kansas-city",
-        "type":"keyword",
-        "webTitle":"Sporting Kansas City",
-        "webUrl":"http://www.guardian.co.uk/sport/sporting-kansas-city",
-        "apiUrl":"http://content.guardianapis.com/sport/sporting-kansas-city",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/chicago-fire",
-        "type":"keyword",
-        "webTitle":"Chicago Fire",
-        "webUrl":"http://www.guardian.co.uk/sport/chicago-fire",
-        "apiUrl":"http://content.guardianapis.com/sport/chicago-fire",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -2550,146 +2573,93 @@
         "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
-        "id":"sport/montreal-impact",
-        "type":"keyword",
-        "webTitle":"Montreal Impact",
-        "webUrl":"http://www.guardian.co.uk/sport/montreal-impact",
-        "apiUrl":"http://content.guardianapis.com/sport/montreal-impact",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/torontofc",
-        "type":"keyword",
-        "webTitle":"Toronto FC",
-        "webUrl":"http://www.guardian.co.uk/football/torontofc",
-        "apiUrl":"http://content.guardianapis.com/football/torontofc",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/philadelphia-union",
-        "type":"keyword",
-        "webTitle":"Philadelphia Union",
-        "webUrl":"http://www.guardian.co.uk/sport/philadelphia-union",
-        "apiUrl":"http://content.guardianapis.com/sport/philadelphia-union",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/newenglandrevolution",
-        "type":"keyword",
-        "webTitle":"New England Revolution",
-        "webUrl":"http://www.guardian.co.uk/football/newenglandrevolution",
-        "apiUrl":"http://content.guardianapis.com/football/newenglandrevolution",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/columbus-crew",
-        "type":"keyword",
-        "webTitle":"Columbus Crew",
-        "webUrl":"http://www.guardian.co.uk/sport/columbus-crew",
-        "apiUrl":"http://content.guardianapis.com/sport/columbus-crew",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/san-jose-earthquakes",
-        "type":"keyword",
-        "webTitle":"San Jose Earthquakes",
-        "webUrl":"http://www.guardian.co.uk/sport/san-jose-earthquakes",
-        "apiUrl":"http://content.guardianapis.com/sport/san-jose-earthquakes",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/realsaltlake",
-        "type":"keyword",
-        "webTitle":"Real Salt Lake",
-        "webUrl":"http://www.guardian.co.uk/football/realsaltlake",
-        "apiUrl":"http://content.guardianapis.com/football/realsaltlake",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/coloradorapids",
-        "type":"keyword",
-        "webTitle":"Colorado Rapids",
-        "webUrl":"http://www.guardian.co.uk/football/coloradorapids",
-        "apiUrl":"http://content.guardianapis.com/football/coloradorapids",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/seattle-sounders",
-        "type":"keyword",
-        "webTitle":"Seattle Sounders",
-        "webUrl":"http://www.guardian.co.uk/sport/seattle-sounders",
-        "apiUrl":"http://content.guardianapis.com/sport/seattle-sounders",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/portland-timbers",
-        "type":"keyword",
-        "webTitle":"Portland Timbers",
-        "webUrl":"http://www.guardian.co.uk/sport/portland-timbers",
-        "apiUrl":"http://content.guardianapis.com/sport/portland-timbers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"football/fcdallas",
-        "type":"keyword",
-        "webTitle":"FC Dallas",
-        "webUrl":"http://www.guardian.co.uk/football/fcdallas",
-        "apiUrl":"http://content.guardianapis.com/football/fcdallas",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/houstondynamo",
-        "type":"keyword",
-        "webTitle":"Houston Dynamo",
-        "webUrl":"http://www.guardian.co.uk/football/houstondynamo",
-        "apiUrl":"http://content.guardianapis.com/football/houstondynamo",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/losangelesgalaxy",
-        "type":"keyword",
-        "webTitle":"LA Galaxy",
-        "webUrl":"http://www.guardian.co.uk/football/losangelesgalaxy",
-        "apiUrl":"http://content.guardianapis.com/football/losangelesgalaxy",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/chivasusa",
-        "type":"keyword",
-        "webTitle":"Chivas USA",
-        "webUrl":"http://www.guardian.co.uk/football/chivasusa",
-        "apiUrl":"http://content.guardianapis.com/football/chivasusa",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"media/nbc",
-        "type":"keyword",
-        "webTitle":"NBC",
-        "webUrl":"http://www.guardian.co.uk/media/nbc",
-        "apiUrl":"http://content.guardianapis.com/media/nbc",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
         "id":"sport/blog",
         "type":"blog",
         "webTitle":"Sportblog",
         "webUrl":"http://www.guardian.co.uk/sport/blog",
         "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/paolobandini",
+        "type":"contributor",
+        "webTitle":"Paolo Bandini",
+        "webUrl":"http://www.guardian.co.uk/profile/paolobandini",
+        "apiUrl":"http://content.guardianapis.com/profile/paolobandini",
+        "bio":"<p>Paolo Bandini writes on Italian football and the NFL, and can sometimes be heard talking calcio with James Richardson on the Football Weekly podcast. <a href=\"http://twitter.com/Paolo_Bandini\">Click here to follow him on Twitter</a></p>",
+        "r2ContributorId":"19469",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/15/paolob.jpg",
+        "references":[]
+      },{
+        "id":"sport/philadelphia-eagles",
+        "type":"keyword",
+        "webTitle":"Philadelphia Eagles",
+        "webUrl":"http://www.guardian.co.uk/sport/philadelphia-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/philadelphia-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/new-york-jets",
+        "type":"keyword",
+        "webTitle":"New York Jets",
+        "webUrl":"http://www.guardian.co.uk/sport/new-york-jets",
+        "apiUrl":"http://content.guardianapis.com/sport/new-york-jets",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/baltimore-ravens",
+        "type":"keyword",
+        "webTitle":"Baltimore Ravens",
+        "webUrl":"http://www.guardian.co.uk/sport/baltimore-ravens",
+        "apiUrl":"http://content.guardianapis.com/sport/baltimore-ravens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/denver-broncos",
+        "type":"keyword",
+        "webTitle":"Denver Broncos",
+        "webUrl":"http://www.guardian.co.uk/sport/denver-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/denver-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/seattle-seahawks",
+        "type":"keyword",
+        "webTitle":"Seattle Seahawks",
+        "webUrl":"http://www.guardian.co.uk/sport/seattle-seahawks",
+        "apiUrl":"http://content.guardianapis.com/sport/seattle-seahawks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/miami-dolphins",
+        "type":"keyword",
+        "webTitle":"Miami Dolphins",
+        "webUrl":"http://www.guardian.co.uk/sport/miami-dolphins",
+        "apiUrl":"http://content.guardianapis.com/sport/miami-dolphins",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/st-louis-rams",
+        "type":"keyword",
+        "webTitle":"St Louis Rams",
+        "webUrl":"http://www.guardian.co.uk/sport/st-louis-rams",
+        "apiUrl":"http://content.guardianapis.com/sport/st-louis-rams",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cincinnati-bengals",
+        "type":"keyword",
+        "webTitle":"Cincinnati Bengals",
+        "webUrl":"http://www.guardian.co.uk/sport/cincinnati-bengals",
+        "apiUrl":"http://content.guardianapis.com/sport/cincinnati-bengals",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -2705,36 +2675,20 @@
         "type":"picture",
         "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2012/5/29/1338303131498/Seattle-Sounders-fans-che-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/9/1357769972354/Peyton-Manning-Denver-Bro-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2012/5/29/1338303131498/Seattle-Sounders-fans-che-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Otto Greule Jr",
-          "altText":"Seattle Sounders fans cheer during the 2011 Lamar Hunt US Open Cup Final against the Chicago Fire",
-          "height":"276",
-          "credit":"Otto Greule Jr/Getty Images",
-          "caption":"Seattle Sounders are preparing to welcome their Portland rivals for their Cascadia Cup clash during MLS Rivalry Week. Photograph: Otto Greule Jr/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/25/1332703672333/Toronto-FC-fans-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2012/3/25/1332703672333/Toronto-FC-fans-007.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/9/1357769972354/Peyton-Manning-Denver-Bro-008.jpg",
           "source":"Reuters",
-          "photographer":"Fred Thornhill",
-          "altText":"Toronto FC fans",
+          "photographer":"Mark Leffingwell",
+          "altText":"Peyton Manning, Denver Broncos",
           "height":"276",
-          "credit":"Fred Thornhill/Reuters",
-          "caption":"Toronto fans on the march to Montreal. Photograph: Fred Thornhill/Reuters",
+          "credit":"Mark Leffingwell/Reuters",
+          "caption":"Peyton Manning and the Denver Broncos: NFL free agency winner or loser? Photograph: Mark Leffingwell/Reuters",
           "width":"460"
         }
       }],
       "references":[]
-    }],
-    "editorsPicks":[{
+    },{
       "id":"sport/2013/mar/18/march-madness-ncaa-tournament-basketball-brackets-college",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -2859,6 +2813,135 @@
           "height":"276",
           "credit":"Darryl Webb/Reuters",
           "caption":"Rick Pitino's Louisville Cardinals, seen here in last year's NCAA Division I Men's Basketball Tournament, are the number one seeded team in this year's March Madness brackets. Photograph: Darryl Webb/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/mar/18/ncaa-march-madness-brackets-team-height",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-03-18T18:15:00Z",
+      "webTitle":"March Madness brackets: Every inch counts among college basketball's elite | Harry J Enten",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/mar/18/ncaa-march-madness-brackets-team-height",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/mar/18/ncaa-march-madness-brackets-team-height",
+      "fields":{
+        "trailText":"<p><strong>NCAA:</strong> Looking for the NCAA tournament upset which will win you your office pool? Keep in mind height is a critical factor in teams' successes</p>",
+        "headline":"March Madness brackets: Every inch counts among college basketball's elite",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363623517179/NCAA-March-Madness-003.jpg",
+        "wordcount":"725",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/march-madness",
+        "type":"keyword",
+        "webTitle":"March Madness",
+        "webUrl":"http://www.guardian.co.uk/sport/march-madness",
+        "apiUrl":"http://content.guardianapis.com/sport/march-madness",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ncaa",
+        "type":"keyword",
+        "webTitle":"NCAA",
+        "webUrl":"http://www.guardian.co.uk/sport/ncaa",
+        "apiUrl":"http://content.guardianapis.com/sport/ncaa",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/ncaa-tournament",
+        "type":"keyword",
+        "webTitle":"NCAA tournament",
+        "webUrl":"http://www.guardian.co.uk/sport/ncaa-tournament",
+        "apiUrl":"http://content.guardianapis.com/sport/ncaa-tournament",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/college-basketball",
+        "type":"keyword",
+        "webTitle":"College basketball",
+        "webUrl":"http://www.guardian.co.uk/sport/college-basketball",
+        "apiUrl":"http://content.guardianapis.com/sport/college-basketball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/basketball",
+        "type":"keyword",
+        "webTitle":"Basketball",
+        "webUrl":"http://www.guardian.co.uk/sport/basketball",
+        "apiUrl":"http://content.guardianapis.com/sport/basketball",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/harry-j-enten",
+        "type":"contributor",
+        "webTitle":"Harry J Enten",
+        "webUrl":"http://www.guardian.co.uk/profile/harry-j-enten",
+        "apiUrl":"http://content.guardianapis.com/profile/harry-j-enten",
+        "bio":"<p>Harry J Enten blogs about political and electoral statistics at <a href=\"http://marginoferror.org/\">Margin of Error</a>. A graduate in government from Dartmouth College, he has interned at the NBC political unit in Washington, DC and Pollster.com, and contributed to Taegan Goddard's Political Wire. Follow Harry on Twitter <a href=\"https://twitter.com/#!/ForecasterEnten\">@ForecasterEnten</a></p>",
+        "r2ContributorId":"48592",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/23/1332536737254/harryenten_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363623526231/NCAA-March-Madness-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/18/1363623526231/NCAA-March-Madness-008.jpg",
+          "source":"Guardian US",
+          "altText":"NCAA March Madness",
+          "height":"276",
+          "credit":"Guardian US",
+          "caption":"NCAA March Madness Photograph: Guardian US",
           "width":"460"
         }
       }],
@@ -3108,19 +3191,19 @@
         "id":"pa-football-team/37454"
       }]
     },{
-      "id":"sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
+      "id":"sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-03-18T13:40:17Z",
-      "webTitle":"Japan knocked out of World Baseball Classic by Puerto Rico",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/18/japan-puerto-rico-world-baseball-classic",
+      "webPublicationDate":"2013-03-19T13:24:38Z",
+      "webTitle":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/19/dominican-republic-puerto-rico-world-baseball-classic",
       "fields":{
-        "trailText":"<p><strong>Baseball:</strong> Puerto Rico knock reigning champions Japan out of World Baseball Classic two days after eliminating USA and will face the Netherlands or Dominican Republic in final</p>",
-        "headline":"Japan knocked out of World Baseball Classic by Puerto Rico",
+        "trailText":"<p><strong>Baseball:</strong> Dominican Republic beat the Netherlands 4-1 and will face Puerto Rico in Tuesday night's final</p>",
+        "headline":"Dominican Republic will face Puerto Rico in World Baseball Classic final",
         "hasStoryPackage":"true",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612781829/347b4128-6d66-439e-928b-d75acdd2223d-140x84.jpeg",
-        "wordcount":"976",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698740719/3c95fceb-b44f-4479-8ef8-08623b854f75-140x84.jpeg",
+        "wordcount":"825",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3169,23 +3252,6 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/stevebusfield",
-        "type":"contributor",
-        "webTitle":"Steve Busfield",
-        "webUrl":"http://www.guardian.co.uk/profile/stevebusfield",
-        "apiUrl":"http://content.guardianapis.com/profile/stevebusfield",
-        "bio":"<p>Steve Busfield is Sports Blogs Editor for Guardian US. Previous jobs include night editor of the Guardian, editor of MediaGuardian.co.uk and showbusiness reporter at the Daily Mail. He is a life member of Yorkshire County Cricket Club and editor of <a href=\"http://www.guardianbookshop.co.uk:80/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up</a>. On Twitter he is <a href=\"https://twitter.com/#!/Busfield\">@Busfield</a></p>",
-        "r2ContributorId":"23018",
-        "bylineImageUrl":"http://static.guim.co.uk/artsblog/authorpics/steve_busfield.jpg",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -3197,384 +3263,15 @@
         "type":"picture",
         "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612785802/347b4128-6d66-439e-928b-d75acdd2223d-460x276.jpeg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363612785802/347b4128-6d66-439e-928b-d75acdd2223d-460x276.jpeg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698741322/3c95fceb-b44f-4479-8ef8-08623b854f75-460x276.jpeg",
           "source":"REUTERS",
           "photographer":"MIKE BLAKE",
-          "altText":"Japan vs Puerto Rico, WBC",
+          "altText":"Dominican Republic vs Netherlands, WBC",
           "height":"276",
           "credit":"MIKE BLAKE/REUTERS",
-          "caption":"Japan's players bow to the fans after they were defeated by Puerto Rico in their semi-final World Baseball Classic game in San Francisco, California, March 17, 2013. Photograph: Mike Blake/Reuters",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/mar/14/wes-welker-denver-broncos-peyton-manning",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-03-14T16:51:50Z",
-      "webTitle":"Wes Welker's move to Denver Broncos headlines active NFL free agency",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/14/wes-welker-denver-broncos-peyton-manning",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/14/wes-welker-denver-broncos-peyton-manning",
-      "fields":{
-        "trailText":"<p><strong>Paolo Bandini:</strong> Wide receiver Wes Welker swaps Tom Brady for Peyton Manning as he joins the Denver Broncos; plus the best of the rest free agency moves</p>",
-        "headline":"Wes Welker's move to Denver Broncos headlines active NFL free agency",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363276317287/90c0e5d9-5fd4-4512-8754-e654edd671c3-140x84.jpeg",
-        "wordcount":"1490",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nfl",
-        "type":"keyword",
-        "webTitle":"NFL",
-        "webUrl":"http://www.guardian.co.uk/sport/nfl",
-        "apiUrl":"http://content.guardianapis.com/sport/nfl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/paolobandini",
-        "type":"contributor",
-        "webTitle":"Paolo Bandini",
-        "webUrl":"http://www.guardian.co.uk/profile/paolobandini",
-        "apiUrl":"http://content.guardianapis.com/profile/paolobandini",
-        "bio":"<p>Paolo Bandini writes on Italian football and the NFL, and can sometimes be heard talking calcio with James Richardson on the Football Weekly podcast. <a href=\"http://twitter.com/Paolo_Bandini\">Click here to follow him on Twitter</a></p>",
-        "r2ContributorId":"19469",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/15/paolob.jpg",
-        "references":[]
-      },{
-        "id":"sport/new-england-patriots",
-        "type":"keyword",
-        "webTitle":"New England Patriots",
-        "webUrl":"http://www.guardian.co.uk/sport/new-england-patriots",
-        "apiUrl":"http://content.guardianapis.com/sport/new-england-patriots",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/denver-broncos",
-        "type":"keyword",
-        "webTitle":"Denver Broncos",
-        "webUrl":"http://www.guardian.co.uk/sport/denver-broncos",
-        "apiUrl":"http://content.guardianapis.com/sport/denver-broncos",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/st-louis-rams",
-        "type":"keyword",
-        "webTitle":"St Louis Rams",
-        "webUrl":"http://www.guardian.co.uk/sport/st-louis-rams",
-        "apiUrl":"http://content.guardianapis.com/sport/st-louis-rams",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/miami-dolphins",
-        "type":"keyword",
-        "webTitle":"Miami Dolphins",
-        "webUrl":"http://www.guardian.co.uk/sport/miami-dolphins",
-        "apiUrl":"http://content.guardianapis.com/sport/miami-dolphins",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/pittsburgh-steelers",
-        "type":"keyword",
-        "webTitle":"Pittsburgh Steelers",
-        "webUrl":"http://www.guardian.co.uk/sport/pittsburgh-steelers",
-        "apiUrl":"http://content.guardianapis.com/sport/pittsburgh-steelers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/baltimore-ravens",
-        "type":"keyword",
-        "webTitle":"Baltimore Ravens",
-        "webUrl":"http://www.guardian.co.uk/sport/baltimore-ravens",
-        "apiUrl":"http://content.guardianapis.com/sport/baltimore-ravens",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/san-francisco-49ers",
-        "type":"keyword",
-        "webTitle":"San Francisco 49ers",
-        "webUrl":"http://www.guardian.co.uk/sport/san-francisco-49ers",
-        "apiUrl":"http://content.guardianapis.com/sport/san-francisco-49ers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/kansas-city-chiefs",
-        "type":"keyword",
-        "webTitle":"Kansas City Chiefs",
-        "webUrl":"http://www.guardian.co.uk/sport/kansas-city-chiefs",
-        "apiUrl":"http://content.guardianapis.com/sport/kansas-city-chiefs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/tampa-bay-buccaneers",
-        "type":"keyword",
-        "webTitle":"Tampa Bay Buccaneers",
-        "webUrl":"http://www.guardian.co.uk/sport/tampa-bay-buccaneers",
-        "apiUrl":"http://content.guardianapis.com/sport/tampa-bay-buccaneers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/seattle-seahawks",
-        "type":"keyword",
-        "webTitle":"Seattle Seahawks",
-        "webUrl":"http://www.guardian.co.uk/sport/seattle-seahawks",
-        "apiUrl":"http://content.guardianapis.com/sport/seattle-seahawks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/indianapolis-colts",
-        "type":"keyword",
-        "webTitle":"Indianapolis Colts",
-        "webUrl":"http://www.guardian.co.uk/sport/indianapolis-colts",
-        "apiUrl":"http://content.guardianapis.com/sport/indianapolis-colts",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/detroit-lions",
-        "type":"keyword",
-        "webTitle":"Detroit Lions",
-        "webUrl":"http://www.guardian.co.uk/sport/detroit-lions",
-        "apiUrl":"http://content.guardianapis.com/sport/detroit-lions",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/tennesee-titans",
-        "type":"keyword",
-        "webTitle":"Tennessee Titans",
-        "webUrl":"http://www.guardian.co.uk/sport/tennesee-titans",
-        "apiUrl":"http://content.guardianapis.com/sport/tennesee-titans",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363276317551/90c0e5d9-5fd4-4512-8754-e654edd671c3-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/14/1363276317551/90c0e5d9-5fd4-4512-8754-e654edd671c3-460x276.jpeg",
-          "source":"AP",
-          "photographer":"Stephan Savoia",
-          "altText":"Wes Welker, NE Patriots now Denver Broncos",
-          "height":"276",
-          "credit":"Stephan Savoia/AP",
-          "caption":"Brady to Welker. Touchdown. Wide receiver Welker scores for the New England Patriors against the Tampa Bay Buccaneers. Welker has now joined the Denver Broncos and Peyton Manning. Photograph: Stephan Savoia/AP",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/mar/13/dwight-howard-orlando-lakers-unpopular-player",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-03-13T15:45:06Z",
-      "webTitle":"Has Dwight Howard stolen LeBron James' title as Most Unpopular Player? | Hunter Felt",
-      "webUrl":"http://www.guardian.co.uk/sport/2013/mar/13/dwight-howard-orlando-lakers-unpopular-player",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/mar/13/dwight-howard-orlando-lakers-unpopular-player",
-      "fields":{
-        "trailText":"<p><strong>Hunter Felt:</strong> Dwight Howard led LA Lakers to victory on return to Orlando, but he's still not making friends; DeAndre Jordan makes the Dunk of the Year; we may not see Amar'e Stoudemire or Derrick Rose again this season</p>",
-        "headline":"Has Dwight Howard stolen LeBron James' title as Most Unpopular Player?",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363188266181/4629ec50-3b49-40bb-888a-b541511517ef-140x84.jpeg",
-        "wordcount":"1782",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/series/nba-five-things-we-learned",
-        "type":"series",
-        "webTitle":"NBA: five things we learned",
-        "webUrl":"http://www.guardian.co.uk/sport/series/nba-five-things-we-learned",
-        "apiUrl":"http://content.guardianapis.com/sport/series/nba-five-things-we-learned",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/us-sport",
-        "type":"keyword",
-        "webTitle":"US sports",
-        "webUrl":"http://www.guardian.co.uk/sport/us-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.guardian.co.uk/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nba",
-        "type":"keyword",
-        "webTitle":"NBA",
-        "webUrl":"http://www.guardian.co.uk/sport/nba",
-        "apiUrl":"http://content.guardianapis.com/sport/nba",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"sport/basketball",
-        "type":"keyword",
-        "webTitle":"Basketball",
-        "webUrl":"http://www.guardian.co.uk/sport/basketball",
-        "apiUrl":"http://content.guardianapis.com/sport/basketball",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/hunter-felt",
-        "type":"contributor",
-        "webTitle":"Hunter Felt",
-        "webUrl":"http://www.guardian.co.uk/profile/hunter-felt",
-        "apiUrl":"http://content.guardianapis.com/profile/hunter-felt",
-        "bio":"<p>Hunter Felt is a sports nut, recovering rock critic and former fake manager of the Boston Red Sox (as @NotCoachTito). Hunter has written for popmatters.com and Et tu, Mr. Destructo? and currently tweets as himself (mostly) as @HunterFelt. He has strong opinions about Steely Dan (for) and sacrifice bunting in American League baseball (against)</p>",
-        "r2ContributorId":"48244",
-        "references":[]
-      },{
-        "id":"sport/chicago-bulls",
-        "type":"keyword",
-        "webTitle":"Chicago Bulls",
-        "webUrl":"http://www.guardian.co.uk/sport/chicago-bulls",
-        "apiUrl":"http://content.guardianapis.com/sport/chicago-bulls",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/new-york-knicks",
-        "type":"keyword",
-        "webTitle":"New York Knicks",
-        "webUrl":"http://www.guardian.co.uk/sport/new-york-knicks",
-        "apiUrl":"http://content.guardianapis.com/sport/new-york-knicks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/los-angeles-clippers",
-        "type":"keyword",
-        "webTitle":"Los Angeles Clippers",
-        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-clippers",
-        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-clippers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/los-angeles-lakers",
-        "type":"keyword",
-        "webTitle":"Los Angeles Lakers",
-        "webUrl":"http://www.guardian.co.uk/sport/los-angeles-lakers",
-        "apiUrl":"http://content.guardianapis.com/sport/los-angeles-lakers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/orlando-magic",
-        "type":"keyword",
-        "webTitle":"Orlando Magic",
-        "webUrl":"http://www.guardian.co.uk/sport/orlando-magic",
-        "apiUrl":"http://content.guardianapis.com/sport/orlando-magic",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/detroit-pistons",
-        "type":"keyword",
-        "webTitle":"Detroit Pistons",
-        "webUrl":"http://www.guardian.co.uk/sport/detroit-pistons",
-        "apiUrl":"http://content.guardianapis.com/sport/detroit-pistons",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/oklahoma-city-thunder",
-        "type":"keyword",
-        "webTitle":"Oklahoma City Thunder",
-        "webUrl":"http://www.guardian.co.uk/sport/oklahoma-city-thunder",
-        "apiUrl":"http://content.guardianapis.com/sport/oklahoma-city-thunder",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.guardian.co.uk/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363188262579/4629ec50-3b49-40bb-888a-b541511517ef-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/13/1363188262579/4629ec50-3b49-40bb-888a-b541511517ef-460x276.jpeg",
-          "source":"AP",
-          "photographer":"John Raoux",
-          "altText":"Dwight Howard, LA Lakers vs Orlando Magic",
-          "height":"276",
-          "credit":"John Raoux/AP",
-          "caption":"Los Angeles Lakers' Dwight Howard takes on the Orlando Magic, Tuesday, March 12, 2013, in Orlando, Florida. Photograph: John Raoux/AP",
+          "caption":"Dominican Republic's Miguel Tejada pops out on a bunt attempt to Netherlands catcher Dashenko Ricardo during the  semi-final round of the World Baseball Classic in San Francisco, California March 18, 2013. Photograph: Mike Blake/Reuters",
           "width":"460"
         }
       }],

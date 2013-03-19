@@ -2889,12 +2889,12 @@
       "sectionId":"music",
       "sectionName":"Music",
       "webPublicationDate":"2013-02-05T17:41:00Z",
-      "webTitle":"Beyoncé at the Super Bowl: director reveals hard work behind the glitz",
+      "webTitle":"Beyonc√© at the Super Bowl: director reveals hard work behind the glitz",
       "webUrl":"http://www.guardian.co.uk/music/2013/feb/05/beyonce-superbowl-show-director-behind-the-scenes",
       "apiUrl":"http://content.guardianapis.com/music/2013/feb/05/beyonce-superbowl-show-director-behind-the-scenes",
       "fields":{
-        "trailText":"<p>Hamish Hamilton tells Matt Williams how he orchestrated a ferociously complex half-time show \u2013 and he insists the blackout was 'categorically' not Beyoncé's fault</p>",
-        "headline":"Beyoncé at the Super Bowl: director reveals hard work behind the glitz",
+        "trailText":"<p>Hamish Hamilton tells Matt Williams how he orchestrated a ferociously complex half-time show \u2013¬†and he insists the blackout was 'categorically' not Beyonc√©'s fault</p>",
+        "headline":"Beyonc√© at the Super Bowl: director reveals hard work behind the glitz",
         "hasStoryPackage":"true",
         "wordcount":"1032",
         "liveBloggingNow":"false"
@@ -2902,7 +2902,7 @@
       "tags":[{
         "id":"music/beyonce",
         "type":"keyword",
-        "webTitle":"Beyoncé",
+        "webTitle":"Beyonc√©",
         "webUrl":"http://www.guardian.co.uk/music/beyonce",
         "apiUrl":"http://content.guardianapis.com/music/beyonce",
         "sectionId":"music",
@@ -3023,7 +3023,7 @@
           "altText":"Beyonce smoke show at Super Bowl",
           "height":"276",
           "credit":"Rex Features/Rex Features",
-          "caption":"Beyoncé was 'hands-on' with the production of the show. Photograph: Rex Features",
+          "caption":"Beyonc√© was 'hands-on' with the production of the show. Photograph: Rex Features",
           "width":"460"
         }
       },{
@@ -3038,7 +3038,7 @@
           "altText":"Super Bowl Beyonce army",
           "height":"276",
           "credit":"Ezra Shaw/Getty Images",
-          "caption":"An LED army of Beyoncés at the Super Bowl. Photograph: Ezra Shaw/Getty Images",
+          "caption":"An LED army of Beyonc√©s at the Super Bowl. Photograph: Ezra Shaw/Getty Images",
           "width":"460"
         }
       },{
@@ -3053,7 +3053,7 @@
           "altText":"Beyonce show at Super Bowl XLVII",
           "height":"276",
           "credit":"Rex Features/Rex Features",
-          "caption":"Beyoncé performs with her Destiny's Child band members. Photograph: Rex Features",
+          "caption":"Beyonc√© performs with her Destiny's Child band members. Photograph: Rex Features",
           "width":"460"
         }
       },{

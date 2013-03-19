@@ -507,7 +507,7 @@
       },{
         "id":"football/jose-mourinho",
         "type":"keyword",
-        "webTitle":"José Mourinho",
+        "webTitle":"Jos√© Mourinho",
         "webUrl":"http://www.guardian.co.uk/football/jose-mourinho",
         "apiUrl":"http://content.guardianapis.com/football/jose-mourinho",
         "sectionId":"football",

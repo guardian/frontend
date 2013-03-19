@@ -125,12 +125,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2013-03-18T01:09:00Z",
-      "webTitle":"Rafael Nadal defeats Juan Mart地 Del Potro to win BNP Paribas Open",
+      "webTitle":"Rafael Nadal defeats Juan Martﾃｭn Del Potro to win BNP Paribas Open",
       "webUrl":"http://www.guardian.co.uk/sport/2013/mar/18/rafael-nadal-juan-martin-del-potro",
       "apiUrl":"http://content.guardianapis.com/sport/2013/mar/18/rafael-nadal-juan-martin-del-potro",
       "fields":{
-        "trailText":"Rafael Nadal has won his third title of the year after a fine comeback against Juan Mart地 del Potro in the final of the BNP Paribas Open in Indian Wells",
-        "headline":"Rafael Nadal defeats Juan Mart地 Del Potro to win BNP Paribas Open",
+        "trailText":"Rafael Nadal has won his third title of the year after a fine comeback against Juan Martﾃｭn del Potro in the final of the BNP Paribas Open in Indian Wells",
+        "headline":"Rafael Nadal defeats Juan Martﾃｭn Del Potro to win BNP Paribas Open",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/18/1363568519777/Rafael-Nadal-003.jpg",
         "wordcount":"265",
@@ -148,7 +148,7 @@
       },{
         "id":"sport/juan-martin-del-potro",
         "type":"keyword",
-        "webTitle":"Juan Mart地 del Potro",
+        "webTitle":"Juan Martﾃｭn del Potro",
         "webUrl":"http://www.guardian.co.uk/sport/juan-martin-del-potro",
         "apiUrl":"http://content.guardianapis.com/sport/juan-martin-del-potro",
         "sectionId":"sport",
@@ -226,7 +226,7 @@
           "altText":"Rafael Nadal",
           "height":"54",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"54"
         }
       },{
@@ -241,7 +241,7 @@
           "altText":"Rafael Nadal",
           "height":"130",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"140"
         }
       },{
@@ -256,7 +256,7 @@
           "altText":"Rafael Nadal",
           "height":"84",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"140"
         }
       },{
@@ -271,7 +271,7 @@
           "altText":"Rafael Nadal",
           "height":"132",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"220"
         }
       },{
@@ -286,7 +286,7 @@
           "altText":"Rafael Nadal",
           "height":"168",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"280"
         }
       },{
@@ -301,7 +301,7 @@
           "altText":"Rafael Nadal",
           "height":"180",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"300"
         }
       },{
@@ -316,7 +316,7 @@
           "altText":"Rafael Nadal",
           "height":"228",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"380"
         }
       },{
@@ -331,7 +331,7 @@
           "altText":"Rafael Nadal",
           "height":"276",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"460"
         }
       },{
@@ -346,7 +346,7 @@
           "altText":"Rafael Nadal",
           "height":"276",
           "credit":"Daniel Murphy/EPA",
-          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Mart地 Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
+          "caption":"Rafael Nadal of Spain celebrates after defeating Juan Martﾃｭn Del Potro in the final of the BNP Paribas Open. Photograph: Daniel Murphy/EPA",
           "width":"460"
         }
       }],
@@ -356,12 +356,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2013-03-17T09:44:15Z",
-      "webTitle":"Juan Mart地 del Potro stuns Novak Djokovic to set up Rafael Nadal final",
+      "webTitle":"Juan Martﾃｭn del Potro stuns Novak Djokovic to set up Rafael Nadal final",
       "webUrl":"http://www.guardian.co.uk/sport/2013/mar/17/juan-martin-del-potro-novak-djokovic-rafael-nadal",
       "apiUrl":"http://content.guardianapis.com/sport/2013/mar/17/juan-martin-del-potro-novak-djokovic-rafael-nadal",
       "fields":{
-        "trailText":"Juan Mart地 del Potro handed Novak Djokovic his first defeat of the season to book his place in the final against Rafael Nadal in Indian Wells",
-        "headline":"Juan Mart地 del Potro stuns Novak Djokovic to set up Rafael Nadal final",
+        "trailText":"Juan Martﾃｭn del Potro handed Novak Djokovic his first defeat of the season to book his place in the final against Rafael Nadal in Indian Wells",
+        "headline":"Juan Martﾃｭn del Potro stuns Novak Djokovic to set up Rafael Nadal final",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/17/1363513425423/Juan-Mart-n-Del-Potro-005.jpg",
         "wordcount":"357",
@@ -370,7 +370,7 @@
       "tags":[{
         "id":"sport/juan-martin-del-potro",
         "type":"keyword",
-        "webTitle":"Juan Mart地 del Potro",
+        "webTitle":"Juan Martﾃｭn del Potro",
         "webUrl":"http://www.guardian.co.uk/sport/juan-martin-del-potro",
         "apiUrl":"http://content.guardianapis.com/sport/juan-martin-del-potro",
         "sectionId":"sport",
@@ -427,10 +427,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/17/1363513433011/Juan-Mart-n-Del-Potro-010.jpg",
           "source":"Getty Images",
           "photographer":"Matthew Stockman",
-          "altText":"Juan Mart地 Del Potro",
+          "altText":"Juan Martﾃｭn Del Potro",
           "height":"276",
           "credit":"Matthew Stockman/Getty Images",
-          "caption":"Juan Mart地 del Potro beat the world No1 Novak Djokovic 4-6, 6-4, 6-4 in Indian Wells. Photograph: Matthew Stockman/Getty Images",
+          "caption":"Juan Martﾃｭn del Potro beat the world No1 Novak Djokovic 4-6, 6-4, 6-4 in Indian Wells. Photograph: Matthew Stockman/Getty Images",
           "width":"460"
         }
       }],
@@ -662,12 +662,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2013-03-16T18:43:00Z",
-      "webTitle":"Andy Murray is knocked out in Indian Wells by Juan Mart地 Del Potro",
+      "webTitle":"Andy Murray is knocked out in Indian Wells by Juan Martﾃｭn Del Potro",
       "webUrl":"http://www.guardian.co.uk/sport/2013/mar/16/andy-murray-indian-wells-del-potro",
       "apiUrl":"http://content.guardianapis.com/sport/2013/mar/16/andy-murray-indian-wells-del-potro",
       "fields":{
-        "trailText":"<p>A below-par Andy Murray was knocked out of the Indian Wells tournament by Juan Mart地 Del Potro</p>",
-        "headline":"Andy Murray is knocked out in Indian Wells by Juan Mart地 Del Potro",
+        "trailText":"<p>A below-par Andy Murray was knocked out of the Indian Wells tournament by Juan Martﾃｭn Del Potro</p>",
+        "headline":"Andy Murray is knocked out in Indian Wells by Juan Martﾃｭn Del Potro",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/16/1363431110922/BNP-Paribas-Open-tennis-t-003.jpg",
         "wordcount":"620",
@@ -754,7 +754,7 @@
           "altText":"BNP Paribas Open tennis tournament",
           "height":"276",
           "credit":"JOHN G. MABANGLO/EPA",
-          "caption":"Andy Murray, beaten by Juan Mart地 Del Potro, would have been world No2 had he reached the final in Indian Wells. Photograph: John G Mabanglo/EPA",
+          "caption":"Andy Murray, beaten by Juan Martﾃｭn Del Potro, would have been world No2 had he reached the final in Indian Wells. Photograph: John G Mabanglo/EPA",
           "width":"460"
         }
       }],
@@ -3090,7 +3090,7 @@
       "webUrl":"http://www.guardian.co.uk/football/gallery/2013/mar/08/middlesbrough-skiing",
       "apiUrl":"http://content.guardianapis.com/football/gallery/2013/mar/08/middlesbrough-skiing",
       "fields":{
-        "trailText":"<p>From football in the fog in Huddersfield to synchronised swimming in San Jose \u2013ﾊwe bring you the best pictures in sport this week</p>",
+        "trailText":"<p>From football in the fog in Huddersfield to synchronised swimming in San Jose \u2013ﾂwe bring you the best pictures in sport this week</p>",
         "headline":"The week in sport \u2013 in pictures",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/8/1362744486785/Best-of-the-week-080313-001.jpg",
@@ -5462,7 +5462,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/video/2013/mar/05/rafael-nadal-new-york-video",
       "apiUrl":"http://content.guardianapis.com/sport/video/2013/mar/05/rafael-nadal-new-york-video",
       "fields":{
-        "trailText":"<p>An all-star line up including Rafael Nadal, Juan Mart地 del Potro, Serena Williams and Victoria Azarenka play at the BNP Paribas Showdown in New York</p>",
+        "trailText":"<p>An all-star line up including Rafael Nadal, Juan Martﾃｭn del Potro, Serena Williams and Victoria Azarenka play at the BNP Paribas Showdown in New York</p>",
         "headline":"Rafael Nadal continues recovery with New York exhibition game \u2013 video",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/5/1362486048685/Nadal-continues-recovery--010.jpg",
@@ -5498,7 +5498,7 @@
       },{
         "id":"sport/juan-martin-del-potro",
         "type":"keyword",
-        "webTitle":"Juan Mart地 del Potro",
+        "webTitle":"Juan Martﾃｭn del Potro",
         "webUrl":"http://www.guardian.co.uk/sport/juan-martin-del-potro",
         "apiUrl":"http://content.guardianapis.com/sport/juan-martin-del-potro",
         "sectionId":"sport",
@@ -6345,12 +6345,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2013-01-17T08:29:00Z",
-      "webTitle":"Andy Murray shrugs off Australian heat and Jo黍 Sousa in second round",
+      "webTitle":"Andy Murray shrugs off Australian heat and Joﾃ｣o Sousa in second round",
       "webUrl":"http://www.guardian.co.uk/sport/2013/jan/17/australian-open-2013-andy-murray",
       "apiUrl":"http://content.guardianapis.com/sport/2013/jan/17/australian-open-2013-andy-murray",
       "fields":{
-        "trailText":"<p>Andy Murray played some smart heatwave tennis to beat Jo黍 Sousa 6-2, 6-2, 6-4 to reach the last 32 in Melbourne</p>",
-        "headline":"Andy Murray shrugs off Australian heat and Jo黍 Sousa in second round",
+        "trailText":"<p>Andy Murray played some smart heatwave tennis to beat Joﾃ｣o Sousa 6-2, 6-2, 6-4 to reach the last 32 in Melbourne</p>",
+        "headline":"Andy Murray shrugs off Australian heat and Joﾃ｣o Sousa in second round",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/17/1358397865781/Andy-Murray-eases-into-th-003.jpg",
         "wordcount":"780",
@@ -6690,11 +6690,11 @@
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529792223/Margaret-Osborne-duPont-001.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529792223/Margaret-Osborne-duPont-001.jpg",
-          "source":"ｩ Hulton-Deutsch Collection/CORB",
+          "source":"ﾂｩ Hulton-Deutsch Collection/CORB",
           "altText":"Margaret Osborne duPont",
           "height":"180",
-          "credit":"ｩ Hulton-Deutsch Collection/CORB",
-          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ｩ Hulton-Deutsch Collection/CORB",
+          "credit":"ﾂｩ Hulton-Deutsch Collection/CORB",
+          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ﾂｩ Hulton-Deutsch Collection/CORB",
           "width":"300"
         }
       },{
@@ -6704,11 +6704,11 @@
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529793455/Margaret-Osborne-duPont-002.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529793455/Margaret-Osborne-duPont-002.jpg",
-          "source":"ｩ Hulton-Deutsch Collection/CORB",
+          "source":"ﾂｩ Hulton-Deutsch Collection/CORB",
           "altText":"Margaret Osborne duPont",
           "height":"228",
-          "credit":"ｩ Hulton-Deutsch Collection/CORB",
-          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ｩ Hulton-Deutsch Collection/CORB",
+          "credit":"ﾂｩ Hulton-Deutsch Collection/CORB",
+          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ﾂｩ Hulton-Deutsch Collection/CORB",
           "width":"380"
         }
       },{
@@ -6718,11 +6718,11 @@
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529794735/Margaret-Osborne-duPont-003.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529794735/Margaret-Osborne-duPont-003.jpg",
-          "source":"ｩ Hulton-Deutsch Collection/CORB",
+          "source":"ﾂｩ Hulton-Deutsch Collection/CORB",
           "altText":"Margaret Osborne duPont",
           "height":"276",
-          "credit":"ｩ Hulton-Deutsch Collection/CORB",
-          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ｩ Hulton-Deutsch Collection/CORB",
+          "credit":"ﾂｩ Hulton-Deutsch Collection/CORB",
+          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ﾂｩ Hulton-Deutsch Collection/CORB",
           "width":"460"
         }
       },{
@@ -6732,11 +6732,11 @@
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529796071/Margaret-Osborne-duPont-004.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529796071/Margaret-Osborne-duPont-004.jpg",
-          "source":"ｩ Hulton-Deutsch Collection/CORB",
+          "source":"ﾂｩ Hulton-Deutsch Collection/CORB",
           "altText":"Margaret Osborne duPont",
           "height":"372",
-          "credit":"ｩ Hulton-Deutsch Collection/CORB",
-          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ｩ Hulton-Deutsch Collection/CORB",
+          "credit":"ﾂｩ Hulton-Deutsch Collection/CORB",
+          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the Ladies' Singles title there in 1947. Photograph: ﾂｩ Hulton-Deutsch Collection/CORB",
           "width":"620"
         }
       },{
@@ -6746,11 +6746,11 @@
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529794735/Margaret-Osborne-duPont-003.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/10/29/1351529794735/Margaret-Osborne-duPont-003.jpg",
-          "source":"ｩ Hulton-Deutsch Collection/CORB",
+          "source":"ﾂｩ Hulton-Deutsch Collection/CORB",
           "altText":"Margaret Osborne duPont",
           "height":"276",
-          "credit":"ｩ Hulton-Deutsch Collection/CORB",
-          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the women's singles title there in 1947. Photograph: ｩ Hulton-Deutsch Collection/Corbis",
+          "credit":"ﾂｩ Hulton-Deutsch Collection/CORB",
+          "caption":"Margaret Osborne duPont playing at Wimbledon. She won the women's singles title there in 1947. Photograph: ﾂｩ Hulton-Deutsch Collection/Corbis",
           "width":"460"
         }
       }],

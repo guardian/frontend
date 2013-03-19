@@ -1831,12 +1831,12 @@
       "sectionId":"technology",
       "sectionName":"Technology",
       "webPublicationDate":"2013-03-18T17:14:06Z",
-      "webTitle":"Internet pioneers are first winners of £1m engineering prize",
+      "webTitle":"Internet pioneers are first winners of ¬£1m engineering prize",
       "webUrl":"http://www.guardian.co.uk/technology/2013/mar/18/internet-pioneers-winners-engineering-prize",
       "apiUrl":"http://content.guardianapis.com/technology/2013/mar/18/internet-pioneers-winners-engineering-prize",
       "fields":{
         "trailText":"Tim Berners-Lee, Marc Andreessen, Vint Cerf, Robert Kahn and Louis Pouzin share prize for innovation of benefit to humanity",
-        "headline":"Internet pioneers are first winners of £1m engineering prize",
+        "headline":"Internet pioneers are first winners of ¬£1m engineering prize",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626726969/Robert-Kahn-left-and-Loui-005.jpg",
         "wordcount":"400",
@@ -2604,7 +2604,7 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/mar/18/apple-microsoft",
       "apiUrl":"http://content.guardianapis.com/technology/2013/mar/18/apple-microsoft",
       "fields":{
-        "trailText":"<p><strong>Jean-Louis Gassée:</strong> Besides its ads, Apple says very little, confident numbers will do the talking. This no longer works as others have seized the opportunity to drive the narrative</p>",
+        "trailText":"<p><strong>Jean-Louis Gass√©e:</strong> Besides its ads, Apple says very little, confident numbers will do the talking. This no longer works as others have seized the opportunity to drive the narrative</p>",
         "headline":"Apple is losing the war \u2013 of words",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363617923207/Keyboard-smashed-003.jpg",
@@ -2641,7 +2641,7 @@
       },{
         "id":"profile/jean-louis-gassee",
         "type":"contributor",
-        "webTitle":"Jean-Louis Gassée",
+        "webTitle":"Jean-Louis Gass√©e",
         "webUrl":"http://www.guardian.co.uk/profile/jean-louis-gassee",
         "apiUrl":"http://content.guardianapis.com/profile/jean-louis-gassee",
         "bio":"<p>He lives in Palo Alto, California where he is a general partner for Allegis Capital</p>",
@@ -3053,7 +3053,7 @@
       },{
         "id":"profile/frederic-filloux",
         "type":"contributor",
-        "webTitle":"Frédéric Filloux",
+        "webTitle":"Fr√©d√©ric Filloux",
         "webUrl":"http://www.guardian.co.uk/profile/frederic-filloux",
         "apiUrl":"http://content.guardianapis.com/profile/frederic-filloux",
         "bio":"<p>Based in Paris, he is the general manager of the French ePresse consortium</p>",
@@ -4533,7 +4533,7 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/mar/18/apple-microsoft",
       "apiUrl":"http://content.guardianapis.com/technology/2013/mar/18/apple-microsoft",
       "fields":{
-        "trailText":"<p><strong>Jean-Louis Gassée:</strong> Besides its ads, Apple says very little, confident numbers will do the talking. This no longer works as others have seized the opportunity to drive the narrative</p>",
+        "trailText":"<p><strong>Jean-Louis Gass√©e:</strong> Besides its ads, Apple says very little, confident numbers will do the talking. This no longer works as others have seized the opportunity to drive the narrative</p>",
         "headline":"Apple is losing the war \u2013 of words",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363617923207/Keyboard-smashed-003.jpg",
@@ -4570,7 +4570,7 @@
       },{
         "id":"profile/jean-louis-gassee",
         "type":"contributor",
-        "webTitle":"Jean-Louis Gassée",
+        "webTitle":"Jean-Louis Gass√©e",
         "webUrl":"http://www.guardian.co.uk/profile/jean-louis-gassee",
         "apiUrl":"http://content.guardianapis.com/profile/jean-louis-gassee",
         "bio":"<p>He lives in Palo Alto, California where he is a general partner for Allegis Capital</p>",
@@ -5765,21 +5765,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/14/1363262454598/Jaron-Lanier-at-home-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/14/1363262454598/Jaron-Lanier-at-home-010.jpg",
-          "source":"Portrait by Winni Wintermeyer ",
-          "photographer":"Winni Wintermeyer",
-          "altText":"Jaron Lanier at home",
-          "height":"276",
-          "credit":"Winni Wintermeyer/Portrait by Winni Wintermeyer ",
-          "caption":"Jaron Lanier at home. Portrait by Winni Wintermeyer",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/14/1363262444995/Jaron-Lanier-at-home-002.jpg",
@@ -5927,6 +5912,21 @@
           "credit":"Winni Wintermeyer/Portrait by Winni Wintermeyer ",
           "caption":"Jaron Lanier at home. Portrait by Winni Wintermeyer  Photograph: Winni Wintermeyer/Portrait by Winni Wintermeyer ",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/14/1363262454598/Jaron-Lanier-at-home-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/14/1363262454598/Jaron-Lanier-at-home-010.jpg",
+          "source":"Portrait by Winni Wintermeyer ",
+          "photographer":"Winni Wintermeyer",
+          "altText":"Jaron Lanier at home",
+          "height":"276",
+          "credit":"Winni Wintermeyer/Portrait by Winni Wintermeyer ",
+          "caption":"Jaron Lanier at home. Portrait by Winni Wintermeyer",
+          "width":"460"
         }
       }],
       "references":[]

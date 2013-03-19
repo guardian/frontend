@@ -34,7 +34,7 @@
       "tags":[{
         "id":"world/guantanamo-bay",
         "type":"keyword",
-        "webTitle":"Guantánamo Bay",
+        "webTitle":"Guant√°namo Bay",
         "webUrl":"http://www.guardian.co.uk/world/guantanamo-bay",
         "apiUrl":"http://content.guardianapis.com/world/guantanamo-bay",
         "sectionId":"world",

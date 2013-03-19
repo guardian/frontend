@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":105917,
+    "total":105918,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -15,10 +15,234 @@
       "apiUrl":"http://content.guardianapis.com/business"
     },
     "results":[{
+      "id":"business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-03-19T13:13:15Z",
+      "webTitle":"FPC must leave no room for doubt about strength of UK banking industry | Jill Treanor",
+      "webUrl":"http://www.guardian.co.uk/business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "apiUrl":"http://content.guardianapis.com/business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "fields":{
+        "trailText":"Every bank should be required to publish its capital shortfall along with a plan of action \u2013 even if that means new legislation",
+        "headline":"FPC must leave no room for doubt about strength of UK banking industry",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+        "wordcount":"435",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/financial-policy-committee",
+        "type":"keyword",
+        "webTitle":"Financial policy committee",
+        "webUrl":"http://www.guardian.co.uk/business/financial-policy-committee",
+        "apiUrl":"http://content.guardianapis.com/business/financial-policy-committee",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/blog",
+        "type":"blog",
+        "webTitle":"Business blog",
+        "webUrl":"http://www.guardian.co.uk/business/blog",
+        "apiUrl":"http://content.guardianapis.com/business/blog",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.guardian.co.uk/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking-reform",
+        "type":"keyword",
+        "webTitle":"Banking reform",
+        "webUrl":"http://www.guardian.co.uk/business/banking-reform",
+        "apiUrl":"http://content.guardianapis.com/business/banking-reform",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.guardian.co.uk/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.guardian.co.uk/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698743664/UK-banks-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698743664/UK-banks-001.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"54",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698745577/UK-banks-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698745577/UK-banks-002.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"130",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"84",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698747887/UK-banks-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698747887/UK-banks-004.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"132",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698749081/UK-banks-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698749081/UK-banks-005.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"168",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698750330/UK-banks-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698750330/UK-banks-006.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"180",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698751586/UK-banks-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698751586/UK-banks-007.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"228",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "sectionId":"business",
       "sectionName":"Business",
-      "webPublicationDate":"2013-03-19T12:43:35Z",
+      "webPublicationDate":"2013-03-19T13:03:00Z",
       "webTitle":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
@@ -27,7 +251,7 @@
         "headline":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-        "wordcount":"2707",
+        "wordcount":"2807",
         "liveBloggingNow":"true"
       },
       "tags":[{
@@ -144,6 +368,171 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"228",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"612",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"1020"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"276",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"324",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"540"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"1236",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"2060"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"132",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"180",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"372",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"84",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"1536",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"2048"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"768",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"1024"
+        }
+      },{
         "type":"picture",
         "rel":"body",
         "index":3,
@@ -637,171 +1026,6 @@
           "credit":"YORGOS KARAHALIS/REUTERS",
           "caption":"An elderly man sits in front of a closed branch of Bank of Cyprus as a youth makes a transaction at an ATM in Nicosia March 19, 2013. Photograph: YORGOS KARAHALIS/REUTERS",
           "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"228",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"612",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"1020"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"276",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"324",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"540"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"1236",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"2060"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"132",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"180",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"372",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"84",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"1536",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"2048"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"768",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"1024"
         }
       },{
         "type":"picture",
@@ -2634,6 +2858,156 @@
         }
       },{
         "type":"picture",
+        "rel":"body",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626903507/eec67cf4-0e30-4475-9fde-d822a853e68c-460x307.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626903507/eec67cf4-0e30-4475-9fde-d822a853e68c-460x307.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"307",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904056/eec67cf4-0e30-4475-9fde-d822a853e68c-540x360.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904056/eec67cf4-0e30-4475-9fde-d822a853e68c-540x360.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"360",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"540"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904440/eec67cf4-0e30-4475-9fde-d822a853e68c-140x93.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904440/eec67cf4-0e30-4475-9fde-d822a853e68c-140x93.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"93",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904790/eec67cf4-0e30-4475-9fde-d822a853e68c-1020x680.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904790/eec67cf4-0e30-4475-9fde-d822a853e68c-1020x680.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"680",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"1020"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626905756/eec67cf4-0e30-4475-9fde-d822a853e68c-2060x1373.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626905756/eec67cf4-0e30-4475-9fde-d822a853e68c-2060x1373.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"1373",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"2060"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626907354/eec67cf4-0e30-4475-9fde-d822a853e68c-620x413.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626907354/eec67cf4-0e30-4475-9fde-d822a853e68c-620x413.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"413",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908070/eec67cf4-0e30-4475-9fde-d822a853e68c-220x147.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908070/eec67cf4-0e30-4475-9fde-d822a853e68c-220x147.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"147",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908719/eec67cf4-0e30-4475-9fde-d822a853e68c-2048x1536.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908719/eec67cf4-0e30-4475-9fde-d822a853e68c-2048x1536.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"1536",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"2048"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911217/eec67cf4-0e30-4475-9fde-d822a853e68c-380x253.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911217/eec67cf4-0e30-4475-9fde-d822a853e68c-380x253.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"253",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911581/eec67cf4-0e30-4475-9fde-d822a853e68c-300x200.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911581/eec67cf4-0e30-4475-9fde-d822a853e68c-300x200.jpeg",
+          "source":"REUTERS",
+          "photographer":"YORGOS KARAHALIS",
+          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
+          "height":"200",
+          "credit":"YORGOS KARAHALIS/REUTERS",
+          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363606456851/e032826a-67c9-4863-b249-5fbbcc7a9537-2060x1236.jpeg",
@@ -2796,156 +3170,6 @@
           "credit":"FILIP SINGER/EPA",
           "caption":"A man with his child holds a banner infront of the Cypriot parliament in Nicosia today. Photograph: FILIP SINGER/EPA",
           "width":"1020"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626903507/eec67cf4-0e30-4475-9fde-d822a853e68c-460x307.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626903507/eec67cf4-0e30-4475-9fde-d822a853e68c-460x307.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"307",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904056/eec67cf4-0e30-4475-9fde-d822a853e68c-540x360.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904056/eec67cf4-0e30-4475-9fde-d822a853e68c-540x360.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"360",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"540"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904440/eec67cf4-0e30-4475-9fde-d822a853e68c-140x93.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904440/eec67cf4-0e30-4475-9fde-d822a853e68c-140x93.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"93",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904790/eec67cf4-0e30-4475-9fde-d822a853e68c-1020x680.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626904790/eec67cf4-0e30-4475-9fde-d822a853e68c-1020x680.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"680",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"1020"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626905756/eec67cf4-0e30-4475-9fde-d822a853e68c-2060x1373.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626905756/eec67cf4-0e30-4475-9fde-d822a853e68c-2060x1373.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"1373",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"2060"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626907354/eec67cf4-0e30-4475-9fde-d822a853e68c-620x413.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626907354/eec67cf4-0e30-4475-9fde-d822a853e68c-620x413.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"413",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908070/eec67cf4-0e30-4475-9fde-d822a853e68c-220x147.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908070/eec67cf4-0e30-4475-9fde-d822a853e68c-220x147.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"147",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908719/eec67cf4-0e30-4475-9fde-d822a853e68c-2048x1536.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626908719/eec67cf4-0e30-4475-9fde-d822a853e68c-2048x1536.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"1536",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"2048"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911217/eec67cf4-0e30-4475-9fde-d822a853e68c-380x253.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911217/eec67cf4-0e30-4475-9fde-d822a853e68c-380x253.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"253",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911581/eec67cf4-0e30-4475-9fde-d822a853e68c-300x200.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363626911581/eec67cf4-0e30-4475-9fde-d822a853e68c-300x200.jpeg",
-          "source":"REUTERS",
-          "photographer":"YORGOS KARAHALIS",
-          "altText":"Protesters shout slogans during an anti-bailout rally outside the parliament in Nicosia  March 18, 2013.",
-          "height":"200",
-          "credit":"YORGOS KARAHALIS/REUTERS",
-          "caption":"Photograph: YORGOS KARAHALIS/REUTERS",
-          "width":"300"
         }
       },{
         "type":"picture",
@@ -4908,7 +5132,7 @@
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/marks-and-spencers-shares-qatar",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/marks-and-spencers-shares-qatar",
       "fields":{
-        "trailText":"Rumours of £8bn takeover bid pushed retailer's shares to a 28-month high but sources have played down the speculation",
+        "trailText":"Rumours of ¬£8bn takeover bid pushed retailer's shares to a 28-month high but sources have played down the speculation",
         "headline":"Marks &amp; Spencer shares flourish after reports of Qatar takeover bid",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363640025193/Marks-and-Spencer-takeove-005.jpg",
@@ -5736,12 +5960,12 @@
       "sectionId":"business",
       "sectionName":"Business",
       "webPublicationDate":"2013-03-18T19:56:59Z",
-      "webTitle":"RBS branches to receive £700m cash injection",
+      "webTitle":"RBS branches to receive ¬£700m cash injection",
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/rbs-branches-cash-injection",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/rbs-branches-cash-injection",
       "fields":{
         "trailText":"State-backed bank says money will be spent on refurbishing its 2,066 branches and improving customer services",
-        "headline":"RBS branches to receive £700m cash injection",
+        "headline":"RBS branches to receive ¬£700m cash injection",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363636566367/RBS-003.jpg",
         "wordcount":"276",
@@ -6348,7 +6572,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"54",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"54"
         }
       },{
@@ -6363,7 +6587,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"130",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"140"
         }
       },{
@@ -6378,7 +6602,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"84",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"140"
         }
       },{
@@ -6393,7 +6617,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"132",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"220"
         }
       },{
@@ -6408,7 +6632,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"168",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"280"
         }
       },{
@@ -6423,7 +6647,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"180",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"300"
         }
       },{
@@ -6438,7 +6662,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"228",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"380"
         }
       },{
@@ -6453,7 +6677,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"276",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: Owen Humphreys/PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: Owen Humphreys/PA",
           "width":"460"
         }
       },{
@@ -6468,7 +6692,7 @@
           "altText":"Countrywide flotation fuels optimism over housing market",
           "height":"276",
           "credit":"Owen Humphreys/PA",
-          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise £200m from the flotation. Photograph: PA",
+          "caption":"Countrywide has announced its intention to return to the stock market after six years of private ownership. It hopes to raise ¬£200m from the flotation. Photograph: PA",
           "width":"460"
         }
       }],
@@ -6706,7 +6930,7 @@
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/astrazeneca-cut-jobs-george-osborne-constituency",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/astrazeneca-cut-jobs-george-osborne-constituency",
       "fields":{
-        "trailText":"Drug firm's closure of Alderley Park comes just five months after chancellor helped secure £5m grant to develop research centre",
+        "trailText":"Drug firm's closure of Alderley Park comes just five months after chancellor helped secure ¬£5m grant to develop research centre",
         "headline":"AstraZeneca to cut 2,150 jobs in George Osborne's constituency",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363634171106/More-than-7-of-Osborne-s--005.jpg",
@@ -7271,7 +7495,7 @@
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/airbus-lion-air-record-deal",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/airbus-lion-air-record-deal",
       "fields":{
-        "trailText":"Multibillion-euro order for 234 jets will secure 5,000 jobs over 10 years, says French president at Elysée Palace signing ceremony",
+        "trailText":"Multibillion-euro order for 234 jets will secure 5,000 jobs over 10 years, says French president at Elys√©e Palace signing ceremony",
         "headline":"Airbus and Lion Air strike record deal",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631203296/Airbus-deal-with-Lion-Air-003.jpg",
@@ -7308,7 +7532,7 @@
       },{
         "id":"world/francois-hollande",
         "type":"keyword",
-        "webTitle":"François Hollande",
+        "webTitle":"Fran√ßois Hollande",
         "webUrl":"http://www.guardian.co.uk/world/francois-hollande",
         "apiUrl":"http://content.guardianapis.com/world/francois-hollande",
         "sectionId":"world",
@@ -7410,10 +7634,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631200781/Airbus-deal-with-Lion-Air-001.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"54",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"54"
         }
       },{
@@ -7425,10 +7649,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631202144/Airbus-deal-with-Lion-Air-002.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"130",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"140"
         }
       },{
@@ -7440,10 +7664,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631203296/Airbus-deal-with-Lion-Air-003.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"84",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"140"
         }
       },{
@@ -7455,10 +7679,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631204402/Airbus-deal-with-Lion-Air-004.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"132",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"220"
         }
       },{
@@ -7470,10 +7694,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631205624/Airbus-deal-with-Lion-Air-005.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"168",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"280"
         }
       },{
@@ -7485,10 +7709,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631206864/Airbus-deal-with-Lion-Air-006.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"180",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"300"
         }
       },{
@@ -7500,10 +7724,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631208308/Airbus-deal-with-Lion-Air-007.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"228",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"380"
         }
       },{
@@ -7515,10 +7739,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631209418/Airbus-deal-with-Lion-Air-008.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"276",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Brégier. Photograph: Michel Euler/AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his counterpart at Airbus, Fabrice Br√©gier. Photograph: Michel Euler/AP",
           "width":"460"
         }
       },{
@@ -7530,10 +7754,10 @@
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363631209418/Airbus-deal-with-Lion-Air-008.jpg",
           "source":"AP",
           "photographer":"Michel Euler",
-          "altText":"Airbus deal with Lion Air. Fabrice Brégier, Rusdi Kirana, Francois Hollande",
+          "altText":"Airbus deal with Lion Air. Fabrice Br√©gier, Rusdi Kirana, Francois Hollande",
           "height":"276",
           "credit":"Michel Euler/AP",
-          "caption":"Airbus deal \u2013 French president François Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his Airbus counterpart, Fabrice Brégier. Photograph: AP",
+          "caption":"Airbus deal \u2013 French president Fran√ßois Hollande is flanked by Lion Air chief executive Rusdi Kirana, left, and his Airbus counterpart, Fabrice Br√©gier. Photograph: AP",
           "width":"460"
         }
       }],
@@ -7543,12 +7767,12 @@
       "sectionId":"business",
       "sectionName":"Business",
       "webPublicationDate":"2013-03-18T17:55:03Z",
-      "webTitle":"FSA fines oil services firm £2.4m over profit warnings",
+      "webTitle":"FSA fines oil services firm ¬£2.4m over profit warnings",
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/fsa-fines-oil-services-firm-profit-warnings",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/fsa-fines-oil-services-firm-profit-warnings",
       "fields":{
         "trailText":"Lamprell's earnings were falling sharply but the firm neglected to inform investors, instead it issued series of upbeat statements",
-        "headline":"FSA fines oil services firm £2.4m over profit warnings",
+        "headline":"FSA fines oil services firm ¬£2.4m over profit warnings",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/21/1332330825774/Financial-Services-Author-003.jpg",
         "wordcount":"415",
@@ -7676,254 +7900,12 @@
         }
       }],
       "references":[]
-    },{
-      "id":"business/nils-pratley-on-finance/2013/mar/18/marks-spencer-qatar-national-treasure",
-      "sectionId":"business",
-      "sectionName":"Business",
-      "webPublicationDate":"2013-03-18T17:45:56Z",
-      "webTitle":"M&amp;S \u2013 no longer a national treasure | Nils Pratley",
-      "webUrl":"http://www.guardian.co.uk/business/nils-pratley-on-finance/2013/mar/18/marks-spencer-qatar-national-treasure",
-      "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance/2013/mar/18/marks-spencer-qatar-national-treasure",
-      "fields":{
-        "trailText":"An intriguing footnote to the non-tale of Qatar Holding's non-bid for Marks &amp; Spencer is the absence of anyone arguing the store should be immune from takeover games",
-        "headline":"M&amp;S \u2013 no longer a national treasure",
-        "hasStoryPackage":"true",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628681042/MS-003.jpg",
-        "wordcount":"176",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"business/marksspencer",
-        "type":"keyword",
-        "webTitle":"Marks & Spencer",
-        "webUrl":"http://www.guardian.co.uk/business/marksspencer",
-        "apiUrl":"http://content.guardianapis.com/business/marksspencer",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/retail",
-        "type":"keyword",
-        "webTitle":"Retail industry",
-        "webUrl":"http://www.guardian.co.uk/business/retail",
-        "apiUrl":"http://content.guardianapis.com/business/retail",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.guardian.co.uk/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/nils-pratley-on-finance",
-        "type":"blog",
-        "webTitle":"Nils Pratley on finance",
-        "webUrl":"http://www.guardian.co.uk/business/nils-pratley-on-finance",
-        "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"profile/nilspratley",
-        "type":"contributor",
-        "webTitle":"Nils Pratley",
-        "webUrl":"http://www.guardian.co.uk/profile/nilspratley",
-        "apiUrl":"http://content.guardianapis.com/profile/nilspratley",
-        "bio":"<p>Nils Pratley is the Guardian's financial editor. Read his opinions on markets, boardroom winner and losers and business values on his <a href=\"http://www.guardian.co.uk/business/nils-pratley-on-finance\">Nils Pratley on Finance blog</a>. Follow him on Twitter at <a href=\"http://twitter.com/#!/@nilspratley\">www.twitter.com/@nilspratley</a></p>",
-        "rcsId":"GNL001064",
-        "r2ContributorId":"16201",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2008/02/06/nilspratleyb140140.jpg",
-        "references":[]
-      },{
-        "id":"business/mergers-and-acquisitions",
-        "type":"keyword",
-        "webTitle":"Mergers and acquisitions",
-        "webUrl":"http://www.guardian.co.uk/business/mergers-and-acquisitions",
-        "apiUrl":"http://content.guardianapis.com/business/mergers-and-acquisitions",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/financial3",
-        "type":"newspaper-book-section",
-        "webTitle":"Financial",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/financial3",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628678137/MS-001.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628678137/MS-001.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"54",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628679860/MS-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628679860/MS-002.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"130",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628681042/MS-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628681042/MS-003.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"84",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628682173/MS-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628682173/MS-004.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"132",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628683314/MS-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628683314/MS-005.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"168",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628684565/MS-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628684565/MS-006.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"180",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628685820/MS-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628685820/MS-007.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"228",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628686961/MS-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628686961/MS-008.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"276",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Darren Staples/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628686961/MS-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/18/1363628686961/MS-008.jpg",
-          "source":"Reuters",
-          "photographer":"Darren Staples",
-          "altText":"M&S",
-          "height":"276",
-          "credit":"Darren Staples/Reuters",
-          "caption":"M&S is now regarded as a company in long-term decline.  Photograph: Reuters",
-          "width":"460"
-        }
-      }],
-      "references":[]
     }],
     "editorsPicks":[{
       "id":"business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "sectionId":"business",
       "sectionName":"Business",
-      "webPublicationDate":"2013-03-19T12:43:35Z",
+      "webPublicationDate":"2013-03-19T13:03:00Z",
       "webTitle":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
       "webUrl":"http://www.guardian.co.uk/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
       "apiUrl":"http://content.guardianapis.com/business/2013/mar/19/eurozone-crisis-cyprus-bailout-government-vote",
@@ -7932,7 +7914,7 @@
         "headline":"Cyprus bailout: 'Plan B' spares small savers as government defeat looms - live",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-        "wordcount":"2707",
+        "wordcount":"2807",
         "liveBloggingNow":"true"
       },
       "tags":[{
@@ -8049,6 +8031,171 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"228",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"612",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"1020"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"276",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"324",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"540"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"1236",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"2060"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"132",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"180",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"372",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"84",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"1536",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"2048"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
+          "source":"EPA",
+          "photographer":"FILIP SINGER",
+          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
+          "height":"768",
+          "credit":"FILIP SINGER/EPA",
+          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
+          "width":"1024"
+        }
+      },{
         "type":"picture",
         "rel":"body",
         "index":3,
@@ -8542,171 +8689,6 @@
           "credit":"YORGOS KARAHALIS/REUTERS",
           "caption":"An elderly man sits in front of a closed branch of Bank of Cyprus as a youth makes a transaction at an ATM in Nicosia March 19, 2013. Photograph: YORGOS KARAHALIS/REUTERS",
           "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677481823/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-380x228.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"228",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677482270/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1020x612.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"612",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"1020"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483045/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-460x276.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"276",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677483466/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-540x324.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"324",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"540"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677484444/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2060x1236.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"1236",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"2060"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677486832/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-220x132.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"132",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487153/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-300x180.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"180",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487521/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-620x372.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"372",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677487975/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-140x84.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"84",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677488752/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-2048x1536.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"1536",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"2048"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363677490795/9c6fb4c5-44ef-4566-a408-b00ac3c9ae91-1024x768.jpeg",
-          "source":"EPA",
-          "photographer":"FILIP SINGER",
-          "altText":"Protestors are seen next to banners during the rally against ratification of a one-off tax in front of the gate of Presidential Palace in Nicosia, Cyprus, 18 march 2013.",
-          "height":"768",
-          "credit":"FILIP SINGER/EPA",
-          "caption":"Yesterday, protestors gathered at the gates of the Presidential Palace in Nicosia to demonstrate against the Cyprus savings levy. Photograph: FILIP SINGER/EPA",
-          "width":"1024"
         }
       },{
         "type":"picture",
@@ -10221,6 +10203,230 @@
       }],
       "references":[]
     },{
+      "id":"business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-03-19T13:13:15Z",
+      "webTitle":"FPC must leave no room for doubt about strength of UK banking industry | Jill Treanor",
+      "webUrl":"http://www.guardian.co.uk/business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "apiUrl":"http://content.guardianapis.com/business/blog/2013/mar/19/fpc-uk-banking-industry-capital-shortfall",
+      "fields":{
+        "trailText":"Every bank should be required to publish its capital shortfall along with a plan of action \u2013 even if that means new legislation",
+        "headline":"FPC must leave no room for doubt about strength of UK banking industry",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+        "wordcount":"435",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/financial-policy-committee",
+        "type":"keyword",
+        "webTitle":"Financial policy committee",
+        "webUrl":"http://www.guardian.co.uk/business/financial-policy-committee",
+        "apiUrl":"http://content.guardianapis.com/business/financial-policy-committee",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/blog",
+        "type":"blog",
+        "webTitle":"Business blog",
+        "webUrl":"http://www.guardian.co.uk/business/blog",
+        "apiUrl":"http://content.guardianapis.com/business/blog",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.guardian.co.uk/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking-reform",
+        "type":"keyword",
+        "webTitle":"Banking reform",
+        "webUrl":"http://www.guardian.co.uk/business/banking-reform",
+        "apiUrl":"http://content.guardianapis.com/business/banking-reform",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.guardian.co.uk/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.guardian.co.uk/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698743664/UK-banks-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698743664/UK-banks-001.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"54",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698745577/UK-banks-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698745577/UK-banks-002.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"130",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698746707/UK-banks-003.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"84",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698747887/UK-banks-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698747887/UK-banks-004.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"132",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698749081/UK-banks-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698749081/UK-banks-005.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"168",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698750330/UK-banks-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698750330/UK-banks-006.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"180",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698751586/UK-banks-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698751586/UK-banks-007.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"228",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/3/19/1363698752838/UK-banks-008.jpg",
+          "source":"Alamy",
+          "altText":"UK banks",
+          "height":"276",
+          "credit":"Alamy",
+          "caption":"A recent FSA estimate put the capital shortfall of UK banks at ¬£60bn.  Photograph: Alamy",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"world/2013/mar/19/suntech-china-solar-power-default",
       "sectionId":"world",
       "sectionName":"World news",
@@ -11310,487 +11516,6 @@
           "height":"276",
           "credit":"Michael Kemp / Alamy/Alamy",
           "caption":"Amyas Morse, the head of the National Audit Office, set up a review into tax deals between HM Revenue & Customs and major corporations. Photograph: Michael Kemp / Alamy/Alamy",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"technology/2013/mar/18/st-ericsson-loses-1600-jobs",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2013-03-18T15:59:24Z",
-      "webTitle":"ST-Ericsson to lose 1,600 jobs",
-      "webUrl":"http://www.guardian.co.uk/technology/2013/mar/18/st-ericsson-loses-1600-jobs",
-      "apiUrl":"http://content.guardianapis.com/technology/2013/mar/18/st-ericsson-loses-1600-jobs",
-      "fields":{
-        "trailText":"Mobile chip venture owned by Ericsson and STMicroelectronics to shed jobs in UK, Sweden, Germany, India and China. By <strong>Charles Arthur and agencies</strong>",
-        "headline":"ST-Ericsson to lose 1,600 jobs",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622186897/Ericsson-005.jpg",
-        "wordcount":"530",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/smartphones",
-        "type":"keyword",
-        "webTitle":"Smartphones",
-        "webUrl":"http://www.guardian.co.uk/technology/smartphones",
-        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/apple",
-        "type":"keyword",
-        "webTitle":"Apple",
-        "webUrl":"http://www.guardian.co.uk/technology/apple",
-        "apiUrl":"http://content.guardianapis.com/technology/apple",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/mobilephones",
-        "type":"keyword",
-        "webTitle":"Mobile phones",
-        "webUrl":"http://www.guardian.co.uk/technology/mobilephones",
-        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/samsung",
-        "type":"keyword",
-        "webTitle":"Samsung",
-        "webUrl":"http://www.guardian.co.uk/technology/samsung",
-        "apiUrl":"http://content.guardianapis.com/technology/samsung",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.guardian.co.uk/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/nokia",
-        "type":"keyword",
-        "webTitle":"Nokia",
-        "webUrl":"http://www.guardian.co.uk/technology/nokia",
-        "apiUrl":"http://content.guardianapis.com/technology/nokia",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/charlesarthur",
-        "type":"contributor",
-        "webTitle":"Charles Arthur",
-        "webUrl":"http://www.guardian.co.uk/profile/charlesarthur",
-        "apiUrl":"http://content.guardianapis.com/profile/charlesarthur",
-        "bio":"<p>Charles Arthur is the Guardian's<br /><a href=\"http://www.guardian.co.uk/technology\">technology</a> editor. Prior to that he covered science, technology and health at the Independent for nine years</p>",
-        "r2ContributorId":"19137",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2007/10/17/charles_arthur_140x140.jpg",
-        "references":[]
-      },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.guardian.co.uk/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/manufacturing-sector",
-        "type":"keyword",
-        "webTitle":"Manufacturing sector",
-        "webUrl":"http://www.guardian.co.uk/business/manufacturing-sector",
-        "apiUrl":"http://content.guardianapis.com/business/manufacturing-sector",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.guardian.co.uk/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/sweden",
-        "type":"keyword",
-        "webTitle":"Sweden",
-        "webUrl":"http://www.guardian.co.uk/world/sweden",
-        "apiUrl":"http://content.guardianapis.com/world/sweden",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/germany",
-        "type":"keyword",
-        "webTitle":"Germany",
-        "webUrl":"http://www.guardian.co.uk/world/germany",
-        "apiUrl":"http://content.guardianapis.com/world/germany",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/india",
-        "type":"keyword",
-        "webTitle":"India",
-        "webUrl":"http://www.guardian.co.uk/world/india",
-        "apiUrl":"http://content.guardianapis.com/world/india",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/china",
-        "type":"keyword",
-        "webTitle":"China",
-        "webUrl":"http://www.guardian.co.uk/world/china",
-        "apiUrl":"http://content.guardianapis.com/world/china",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.guardian.co.uk/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"technology/symbian",
-        "type":"keyword",
-        "webTitle":"Symbian",
-        "webUrl":"http://www.guardian.co.uk/technology/symbian",
-        "apiUrl":"http://content.guardianapis.com/technology/symbian",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622183232/Ericsson-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622183232/Ericsson-002.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"54",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622184431/Ericsson-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622184431/Ericsson-003.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"340",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"480"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622185722/Ericsson-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622185722/Ericsson-004.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"130",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622186897/Ericsson-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622186897/Ericsson-005.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"84",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622188183/Ericsson-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622188183/Ericsson-006.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"132",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622189424/Ericsson-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622189424/Ericsson-007.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"168",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622190772/Ericsson-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622190772/Ericsson-008.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"180",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622191985/Ericsson-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622191985/Ericsson-009.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"228",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622193397/Ericsson-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622193397/Ericsson-010.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"276",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":10,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622194683/Ericsson-011.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622194683/Ericsson-011.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"372",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622193397/Ericsson-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/3/18/1363622193397/Ericsson-010.jpg",
-          "source":"EPA",
-          "photographer":"Jack Mikrut",
-          "altText":"Ericsson",
-          "height":"276",
-          "credit":"Jack Mikrut/EPA",
-          "caption":"ST-Ericsson, a joint chip venture by Sweden's Ericsson and STMicroelectronics is losing jobs due to Asian competition and the collapse of Nokia's smartphone business. Photograph: Jack Mikrut/EPA",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"business/2013/mar/18/fsa-fines-oil-services-firm-profit-warnings",
-      "sectionId":"business",
-      "sectionName":"Business",
-      "webPublicationDate":"2013-03-18T17:55:03Z",
-      "webTitle":"FSA fines oil services firm £2.4m over profit warnings",
-      "webUrl":"http://www.guardian.co.uk/business/2013/mar/18/fsa-fines-oil-services-firm-profit-warnings",
-      "apiUrl":"http://content.guardianapis.com/business/2013/mar/18/fsa-fines-oil-services-firm-profit-warnings",
-      "fields":{
-        "trailText":"Lamprell's earnings were falling sharply but the firm neglected to inform investors, instead it issued series of upbeat statements",
-        "headline":"FSA fines oil services firm £2.4m over profit warnings",
-        "hasStoryPackage":"false",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/3/21/1332330825774/Financial-Services-Author-003.jpg",
-        "wordcount":"415",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"business/financial-services-authority-fsa",
-        "type":"keyword",
-        "webTitle":"Financial Services Authority (FSA)",
-        "webUrl":"http://www.guardian.co.uk/business/financial-services-authority-fsa",
-        "apiUrl":"http://content.guardianapis.com/business/financial-services-authority-fsa",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/regulators",
-        "type":"keyword",
-        "webTitle":"Regulators",
-        "webUrl":"http://www.guardian.co.uk/business/regulators",
-        "apiUrl":"http://content.guardianapis.com/business/regulators",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/financial-sector",
-        "type":"keyword",
-        "webTitle":"Financial sector",
-        "webUrl":"http://www.guardian.co.uk/business/financial-sector",
-        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.guardian.co.uk/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/profit-warnings",
-        "type":"keyword",
-        "webTitle":"Profit warnings",
-        "webUrl":"http://www.guardian.co.uk/business/profit-warnings",
-        "apiUrl":"http://content.guardianapis.com/business/profit-warnings",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/stock-markets",
-        "type":"keyword",
-        "webTitle":"Stock markets",
-        "webUrl":"http://www.guardian.co.uk/business/stock-markets",
-        "apiUrl":"http://content.guardianapis.com/business/stock-markets",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/jjbsports",
-        "type":"keyword",
-        "webTitle":"JJB Sports",
-        "webUrl":"http://www.guardian.co.uk/business/jjbsports",
-        "apiUrl":"http://content.guardianapis.com/business/jjbsports",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/financial3",
-        "type":"newspaper-book-section",
-        "webTitle":"Financial",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/financial3",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2012/8/13/1344878345459/Tracey-McDermott-the-new--010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2012/8/13/1344878345459/Tracey-McDermott-the-new--010.jpg",
-          "source":"Guardian",
-          "photographer":"Martin Argles",
-          "altText":"Tracey McDermott, the new head of enforcement at the Financial Services Authority. ",
-          "height":"276",
-          "credit":"Martin Argles/Guardian",
-          "caption":"Tracey McDermott, the head of enforcement at the Financial Services Authority, said \" integrity of our markets depends on companies making accurate disclosures.\" Photograph Martin Argles for the Guardian",
           "width":"460"
         }
       }],

@@ -7148,12 +7148,12 @@
       "sectionId":"sport",
       "sectionName":"Sport",
       "webPublicationDate":"2011-05-12T22:40:36Z",
-      "webTitle":"Sergio Garc’a finds reason to believe with his future in the balance",
+      "webTitle":"Sergio GarcÃ­a finds reason to believe with his future in the balance",
       "webUrl":"http://www.guardian.co.uk/sport/2011/may/12/sergio-garcia-future-in-balance",
       "apiUrl":"http://content.guardianapis.com/sport/2011/may/12/sergio-garcia-future-in-balance",
       "fields":{
         "trailText":"The former world No2 has come through a barren year but is still hopeful of fulfilling his vast potential",
-        "headline":"Sergio Garc’a finds reason to believe with his future in the balance",
+        "headline":"Sergio GarcÃ­a finds reason to believe with his future in the balance",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/5/12/1305235974305/Sergio-Garcia-003.jpg",
         "wordcount":"976",
@@ -7441,12 +7441,12 @@
       "sectionId":"world",
       "sectionName":"World news",
       "webPublicationDate":"2011-02-06T00:08:04Z",
-      "webTitle":"Hugo Ch‡vez's sports revolution",
+      "webTitle":"Hugo ChÃ¡vez's sports revolution",
       "webUrl":"http://www.guardian.co.uk/world/2011/feb/06/hugo-chavez-pastor-maldonado-johnny-vegas",
       "apiUrl":"http://content.guardianapis.com/world/2011/feb/06/hugo-chavez-pastor-maldonado-johnny-vegas",
       "fields":{
-        "trailText":"Venezuela's socialist president, Hugo Ch‡vez, draws new inspiration from successes by country's competitors",
-        "headline":"Hugo Ch‡vez's sports revolution",
+        "trailText":"Venezuela's socialist president, Hugo ChÃ¡vez, draws new inspiration from successes by country's competitors",
+        "headline":"Hugo ChÃ¡vez's sports revolution",
         "hasStoryPackage":"false",
         "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2011/2/5/1296947650663/Hugo-Chavez-and-Pastor-Ma-003.jpg",
         "wordcount":"505",
@@ -7455,7 +7455,7 @@
       "tags":[{
         "id":"world/hugo-chavez",
         "type":"keyword",
-        "webTitle":"Hugo Ch‡vez",
+        "webTitle":"Hugo ChÃ¡vez",
         "webUrl":"http://www.guardian.co.uk/world/hugo-chavez",
         "apiUrl":"http://content.guardianapis.com/world/hugo-chavez",
         "sectionId":"world",
@@ -7589,7 +7589,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"54",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"54"
         }
       },{
@@ -7604,7 +7604,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"130",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"140"
         }
       },{
@@ -7619,7 +7619,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"132",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"220"
         }
       },{
@@ -7634,7 +7634,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"180",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"300"
         }
       },{
@@ -7649,7 +7649,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"228",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"380"
         }
       },{
@@ -7664,7 +7664,7 @@
           "altText":"Hugo Chavez and Pastor Maldonado talk during a demonstration race in Caracas",
           "height":"276",
           "credit":"Carlos Garcia Rawlins/Reuters",
-          "caption":"Venezuela's president, Hugo Ch‡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
+          "caption":"Venezuela's president, Hugo ChÃ¡vez, and Williams Formula One driver Pastor Maldonado talk during a demonstration race in Caracas last month. Photograph: Carlos Garcia Rawlins/Reuters",
           "width":"460"
         }
       }],

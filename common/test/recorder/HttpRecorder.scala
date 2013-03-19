@@ -1,9 +1,10 @@
 package recorder
 
-import java.io.{ FileReader, FileWriter, BufferedWriter, File }
+import java.io._
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
 import com.gu.openplatform.contentapi.connection.HttpResponse
+import scala.Some
 
 trait HttpRecorder {
 
@@ -25,7 +26,7 @@ trait HttpRecorder {
 
   private def put(name: String, value: String) {
     val file = new File(baseDir, name)
-    val out = new FileWriter(file)
+    val out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")
     out.write(value)
     out.close()
   }
@@ -33,7 +34,7 @@ trait HttpRecorder {
   private def get(name: String): Option[String] = {
     val file = new File(baseDir, name)
     if (file.exists()) {
-      Some(Source.fromFile(file).getLines.mkString)
+      Some(Source.fromFile(file, "UTF-8").getLines.mkString)
     } else {
       None
     }

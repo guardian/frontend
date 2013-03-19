@@ -3551,6 +3551,21 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
+          "source":"Reuters",
+          "photographer":"Nigel Marple",
+          "altText":"Sonny Bill Williams",
+          "height":"276",
+          "credit":"Nigel Marple/Reuters",
+          "caption":"Sonny Bill Williams, seen here at the 2011 World Cup with the All Blacks, returns to rugby league this week.  Photograph: Nigel Marple/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446657577/Sonny-Bill-Williams-001.jpg",
@@ -3658,21 +3673,6 @@
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
-          "source":"Reuters",
-          "photographer":"Nigel Marple",
-          "altText":"Sonny Bill Williams",
-          "height":"276",
-          "credit":"Nigel Marple/Reuters",
-          "caption":"Sonny Bill Williams, seen here at the 2011 World Cup with the All Blacks, returns to rugby league this week.  Photograph: Nigel Marple/Reuters",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/5/1362446666100/Sonny-Bill-Williams-008.jpg",
