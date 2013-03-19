@@ -1,4 +1,3 @@
-/* global s: true */
 define([
     //Commmon libraries
     'common',

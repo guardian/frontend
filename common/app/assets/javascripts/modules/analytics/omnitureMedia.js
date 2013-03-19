@@ -12,7 +12,7 @@ define([
             player = "HTML5 Video",
             mediaName = config.page.webTitle,
             provider = config.page.source || "",
-            restricted = config.page.blockAds || "", 
+            restricted = config.page.blockAds || "",
             deBounced;
 
         this.getDuration = function() {
