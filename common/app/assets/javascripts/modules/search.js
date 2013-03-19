@@ -10,7 +10,9 @@ define([], function () {
 
         this.init = function() {
             if (config.switches.googleSearch && gcsUrl) {
-                require(['js!' + gcsUrl], function () {});
+                require(['js!' + gcsUrl], function () {
+                    google.search.CustomSearchControl(google.search.Search.LINK_TARGET_SELF);
+                });
             }
         };
     }
