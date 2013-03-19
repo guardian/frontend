@@ -74,10 +74,8 @@ trait DelegateHttp extends Http[Future] {
       val response = WS.url(url).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
 
       // record metrics
-      // TODO count timeouts
-      response.onSuccess{
-        case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
-      }
+      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
 
       response.map{ r => HttpResponse(r.body, r.status, r.statusText)}
     }
@@ -106,10 +104,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
   apiKey = Some(contentApi.key)
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
-
     checkQueryIsEditionalized(url, parameters)
-
-    //TODO measure me
     super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
 
