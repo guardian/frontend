@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomSearchEngine id="m2ealvuxh1i" creator="007466294097402385199" language="en" encoding="UTF-8" enable_suggest="true">
+  <Title>Guardian Search</Title>
+  <Context>
+    <BackgroundLabels>
+      <Label name="_cse_m2ealvuxh1i" mode="FILTER" />
+      <Label name="_cse_exclude_m2ealvuxh1i" mode="ELIMINATE" />
+    </BackgroundLabels>
+  </Context>
+  <LookAndFeel code="4" nonprofit="false" googlebranding="watermark" element_layout="1" theme="7" custom_theme="true" text_font="Arial, sans-serif" url_length="full" enable_cse_thumbnail="true" promotion_url_length="full" ads_layout="1">
+    <Logo />
+    <Colors url="#777777" background="#FFFFFF" border="#FFFFFF" title="#005689" text="#333333" visited="#005689" title_hover="#005689" title_active="#005689" />
+    <Promotions title_color="#1155CC" title_visited_color="#1155CC" url_color="#009933" background_color="#F6F6F6" border_color="#F6F6F6" snippet_color="#333333" title_hover_color="#1155CC" title_active_color="#1155CC" />
+    <SearchControls input_border_color="#D9D9D9" button_border_color="#005689" button_background_color="#005689" tab_border_color="#CCCCCC" tab_background_color="#FFFFFF" tab_selected_border_color="#CCCCCC" tab_selected_background_color="#FFFFFF" />
+    <Results border_color="#FFFFFF" border_hover_color="#FFFFFF" background_color="#FFFFFF" background_hover_color="#FFFFFF" ads_background_color="#FDF6E5" ads_border_color="#FDF6E5" />
+  </LookAndFeel>
+  <AdSense />
+  <EnterpriseAccount />
+  <commerce_search_security_setting />
+  <autocomplete_settings />
+  <sort_by_keys label="Date" key="date" />
+  <sort_by_keys label="Relevance" key="" />
+</CustomSearchEngine>
