@@ -13,13 +13,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
   feature("Article") {
 
-    // Feature 
+    // Feature
 
     info("In order to experience all the wonderful words the Guardian write")
     info("As a Guardian reader")
     info("I want to read a version of the article optimised for my mobile devices")
 
-    // Metrics 
+    // Metrics
 
     info("Page views should *not* decrease.")
     info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
@@ -210,10 +210,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
         adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("x54")
+        adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot")
+        adPlaceholder.getAttribute("class") should be("ad-slot top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")

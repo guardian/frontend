@@ -31,3 +31,22 @@
     width: auto;
     max-width: @inArticleInlineImgWidth;
 }
+
+
+@media screen and (min-width: @desktopBreakpoint) {
+    .one-third {
+        width: 33%;
+        float: right;
+        clear: right;
+    }
+    .two-thirds {
+        width: 66%;
+        float: left;
+        clear: left;
+    }
+
+    .box-indent {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

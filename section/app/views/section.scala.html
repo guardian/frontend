@@ -1,7 +1,10 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Switches.all){  }{
-    <section class="front-section zone-@section.section" role="main">
+    <section class="front-section zone-@section.section two-thirds" role="main">
+        @if(section.name == "Football") {
+            @fragments.footballNav("/football", None, None, "football-top-nav")
+        }
 
         @fragments.headers.sectionHead(section.name)
 
@@ -16,9 +19,11 @@
     </section>
 
     @if(section.name == "Football") {
-        @fragments.footballNav("/football")
+        @fragments.footballNav("/football", None, None, "football-bottom-nav")
     }
 
-    @fragments.mostPopularPlaceholder(section.section)
+   @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+
+   @fragments.mostPopularPlaceholder(section.section, Seq("one-third"))
 
 }

@@ -8,11 +8,13 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
+    @fragments.footballNav("/football", None, None, "football-top-nav")
+
     @fragments.filterBar(page.webTitle)
 
     @fragments.filters(filters, page, "fixtures")
 
-    <div class="matches-container box-indent" role="main">
+    <div class="matches-container two-thirds box-indent" role="main">
         @fixtures.map{ fixture =>
             <h2 class="competitions-date type-4">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
@@ -25,7 +27,9 @@
         }
     </div>
 
-    @fragments.footballNav("/football")
+    @fragments.footballNav("/football", None, None, "football-bottom-nav")
 
-    @fragments.mostPopularPlaceholder("sport")
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
+
+    @fragments.mostPopularPlaceholder("sport", Seq("one-third"))
 }

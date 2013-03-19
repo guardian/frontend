@@ -1,3 +1,4 @@
+
 {
   "response":{
     "status":"ok",
@@ -5145,7 +5146,7 @@
       "webUrl":"http://www.guardian.co.uk/fashion/gallery/2013/mar/05/trends-paris-fashion-week-2013",
       "apiUrl":"http://content.guardianapis.com/fashion/gallery/2013/mar/05/trends-paris-fashion-week-2013",
       "fields":{
-        "trailText":"<p>Laundry bag chic, tractor-sole shoes, mannish trousers and artist-inspired collections \u2013 autumn/winter 2013 has modern bite, writes <strong>Simon Chilvers  </strong></p>",
+        "trailText":"<p>Laundry bag chic, tractor-sole shoes, mannish trousers and artist-inspired collections \u2013 autumn/winter 2013 has modern bite, writes <strong>Simon Chilvers  </strong></p>",
         "headline":"10 trends from Paris fashion week - in pictures",
         "hasStoryPackage":"true",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/3/5/1362497802942/C-line-catwalk-show-2013-001.jpg",
@@ -5240,7 +5241,7 @@
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362488661167/Balenciaga-Paris-fashion--003.jpg",
           "source":"Balenciaga",
-          "photographer":"credit : BALENCIAGA Aurore Probst",
+          "photographer":"credit : BALENCIAGA Aurore Probst",
           "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/5/1362488661167/Balenciaga-Paris-fashion--003-thumb-3532.jpg",
           "altText":"Paris gallery: Balenciaga Paris fashion week",
           "height":"600",

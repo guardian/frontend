@@ -3,6 +3,7 @@
     margin: 0;
     padding: @baseline*2 @gutter @baseline*4 @gutter;
     background-color: @darkMushroom;
+    border-top-width: 0;
 }
 
 .footer p {
@@ -20,4 +21,74 @@
     display: block;
     color: @blue;
     text-decoration: underline;
+}
+
+@media screen and (min-width: @desktopBreakpoint) {
+  .footer {
+    background-color: white;
+    border-top-style: solid;
+    font-size: 11px;
+    padding: 0;
+    border-top-width: 3px;
+
+    .desktop-link {
+      display: none;
+    }
+    
+    .nav {
+      padding-top: 3px;
+      padding-bottom: 0;
+    }
+
+    .copyright {
+      float:right;
+      width: 45%;
+      text-align: right;
+    }
+
+  }
+
+  .footer p {
+      clear: none;
+      color: @darkGrey;
+    }
+
+  .footer li {
+      display: inline-block;      
+      margin-right: 4px;
+      float: left;
+
+      a {
+          .type-11;
+          line-height: 1rem;
+          border: none;
+        }
+
+      a:after {
+          content: "\0000a0|";
+        }
+    }
+
+  .footer li:last-child a:after {
+      content: "";
+    }
+
+  .footer .termsconditions {
+    float: none;
+    padding-left: 0;
+
+      a {
+        text-decoration: none;
+        float: left;
+        margin-right: 4px;
+      }
+
+      a:after {
+        content: "\0000a0|";
+      } 
+
+      a:last-child:after {
+        content: "";
+      }
+  }
 }

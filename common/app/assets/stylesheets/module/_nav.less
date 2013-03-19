@@ -122,7 +122,8 @@
 #topstories-header,
 #sections-header {
     padding: @baseline*2 0;
-    border-bottom: @baseline solid @blue;
+    border-bottom-width: @baseline;
+    border-bottom-style: solid;
 }
 
 .nav-footer li a {
@@ -265,6 +266,10 @@ a.topstories-control,
     border-top: 1px solid #DDDDDD;
 }
 
+#searchform {
+  display: none;
+}
+
 .most-viewed-no-js {
     display: block;
 }
@@ -272,3 +277,166 @@ a.topstories-control,
 .most-viewed-no-js i {
     float: right;
 }
+
+
+/* overriding the section colours of the desktop for the mob nav */
+
+.nav li .zone-color {
+    color: @darkGrey;
+}
+
+.nav.nav-footer li .zone-color {
+    color: @plainWhite;
+}
+
+.football-bottom-nav .crumbtrail {
+      display: none;
+}
+
+@media screen and (min-width: @desktopBreakpoint) {
+
+    #logo {
+        margin: 10px 0 0 0;
+        width: 115px;
+        height: 22px;
+        .i-guardian-logo-green;
+    }
+    .svg #logo {
+        background-position: 0 0;
+        .svg-i-guardian-logo-green;
+    }
+
+    #header {
+        background-color: #fff;
+    }
+
+    #sections-header {
+        display: block;
+        padding: 0;
+        border: none;
+        margin-bottom: 4px;
+    }
+
+    .team-list .nav-columns,
+    .nav-columns.no-columns-extended {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .no-columns-extended li,
+    .no-columns-extended li:nth-child(2n) {
+        float: left;
+        width: auto;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .no-columns-extended li a {
+        padding: @baseline 5px !important;
+        border-right: 1px solid #bebebe;
+        border-top: 0;
+    }
+
+    .no-columns-extended li:last-child a {
+        border-right: 0;
+    }
+
+    #searchform {
+      display: block;
+      float: right;
+      margin-top: 10px;
+      .type-8;
+    }
+
+    .nav-columns .zone-soulmates,
+    .nav-columns .zone-jobs,
+    .nav-columns .nav-all-sections {
+      display: none;
+    }
+
+    .nav > li > a,
+    .navigation-container {
+        .type-6;
+        line-height: 2rem;
+        font-family: @desktopSerif;
+    }
+
+    .nav {
+        @import "../theme/_zones";
+    }
+
+    .nav .zone-background-hover:active,
+    .nav .zone-background-hover:focus,
+    .nav .zone-background-hover:hover,
+    .football-nav .crumbtrail .zone-background{
+        color: #fff;
+        text-decoration: none;
+    }
+
+    //temporarily apes the current r2 local nav
+    .football-nav .crumbtrail {
+        overflow: hidden;
+        padding-right: 18px !important;
+    }
+    .football-nav .crumbtrail li a {
+        color: white;
+        text-decoration: none;
+        padding-left: 20px !important;
+        background: @sportMid;
+        position: relative;
+        display: block;
+        float: left;
+    }
+    .football-nav .crumbtrail li a:after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 25px solid transparent;
+        border-bottom: 25px solid transparent;
+        border-left: 15px solid @sportMid;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        left: 100%;
+        z-index: 2;
+    }
+    .football-nav .crumbtrail li a:before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 25px solid transparent;
+        border-bottom: 25px solid transparent;
+        border-left: 15px solid white;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        margin-left: 1px;
+        left: 100%;
+        z-index: 1;
+    }
+    .football-nav .crumbtrail li:first-child a {
+        padding-left: 10px !important;
+    }
+    .football-nav .crumbtrail li:nth-child(2) a { background: @sportDark; }
+    .football-nav .crumbtrail li:nth-child(2) a:after { border-left-color: @sportDark; }
+
+    .football-nav .crumbtrail li a:hover { background: #000; }
+    .football-nav .crumbtrail li a:hover:after { border-left-color: #000 !important; }
+
+
+    .zone-football .football-nav .sections {
+        background-color:#ededed;
+    }
+
+    .zone-football .football-nav .sections,
+    .zone-football .football-nav .sections .nav {
+        padding: 0;
+    }
+
+    .nav .zone-environment a {
+        border-right: 0;
+    }
+}
+

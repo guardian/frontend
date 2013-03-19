@@ -9,58 +9,60 @@
         <a class="zone-color" data-link-name="article section" href="/football">Football</a>
     </h2>
 
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-top-nav")
+
     <div class="live-matches-dateline">
         <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
     </div>
 
-    @fragments.filterBar(model.page.webTitle)
+    <div class="two-thirds">
 
-    @fragments.filters(model.filters, model.page, "tables")
+        @fragments.filterBar(model.page.webTitle)
 
-    <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
-        @model.tables.map{ table =>
+        @fragments.filters(model.filters, model.page, "tables")
 
-        <li class="league-table">
+        <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
+            @model.tables.map{ table =>
 
-            <a class="competition-title football-table-header football-table-link type-7 zone-color" href="@table.competition.url" data-link-name="competition">
-                @table.competition.fullName
-                <i class="i i-sport-arrow"></i>
-            </a>
+            <li class="league-table">
 
-            <table class="table-football">
-                @if(!table.multiGroup) {
-                    <thead class="table-football-header">
-                        @fragments.tableColumnHeaders()
-                    </thead>
-                }
+                <a class="competition-title football-table-header football-table-link type-7 zone-color" href="@table.competition.url" data-link-name="competition">
+                    @table.competition.fullName
+                    <i class="i i-sport-arrow"></i>
+                </a>
 
-                @table.groups.map{ group =>
-                <tbody class="table-football-body">
-                    @group.round.map { round =>
-                        @round.name.map { name =>
-                            <tr>
-                                <th colspan="20" class="table-football-leftaligned">@name</th>
-                            </tr>
-                            @* we repeat this nav for group tables *@
-                            @fragments.tableColumnHeaders()
+                <table class="table-football">
+
+                    @table.groups.map{ group =>
+                    <tbody class="table-football-body">
+                        @group.round.map { round =>
+                            @round.name.map { name =>
+                                <tr>
+                                    <th colspan="20" class="table-football-leftaligned">@name</th>
+                                </tr>
+                                @* we repeat this nav for group tables *@
+                                @fragments.tableColumnHeaders()
+                            }
                         }
+
+                        @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
+                    </tbody>
                     }
+                </table>
 
-                    @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
-                </tbody>
+                @if(!model.singleCompetition) {
+                    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table <i class="i i-sport-arrow-small"></i></a>
                 }
-            </table>
 
-            @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table <i class="i i-sport-arrow-small"></i></a>
+            </li>
             }
+        </ol>
+    </div>
 
-        </li>
-        }
-    </ol>
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url), "football-bottom-nav")
 
-    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+    @fragments.adSlot(id="rhs-top-ad", baseSlot="none", medianSlot="none", extendedSlot="Middle1")
 
-    @fragments.mostPopularPlaceholder("sport")
+    @fragments.mostPopularPlaceholder("sport", Seq("one-third"))
 
 }

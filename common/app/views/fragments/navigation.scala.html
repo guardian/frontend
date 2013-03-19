@@ -3,7 +3,7 @@
 @if(!isFooter){
 <header id="header" class="cf" role="banner">
 } else {
-<div id="navigation-footer">
+<div id="navigation-footer" class="hide-extended">
     <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i i-arrow-small-up"></i></a>
 }
 
@@ -12,7 +12,16 @@
 </a>
 
 @if(!isFooter){
-    <div id="navigation-header" data-link-name="global navigation: header">
+<div id="global-search-dropdown" class="navigation-container" role="presentation">
+    <form id="searchform" method="get" action="http://www.guardian.co.uk/search">
+        <input type="text" name="q" placeholder="Your search terms..." role="search">
+        <input type="submit" value="Search" data-link-name="search-top">
+    </form>
+</div>
+}
+
+@if(!isFooter){
+    <div id="navigation-header" class="hide-extended" data-link-name="global navigation: header">
         <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
         class="topstories-control">
             <i class="i i-nav-divider"></i>
@@ -31,9 +40,11 @@
 <div id="topstories-header" class="nav-popup top-stories is-off"></div>
 }
 
-<div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}"
-    data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
-    @fragments.sections(page, isFooter)
+<div class="zone-@page.section">
+    <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}"
+        data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
+        @fragments.sections(page, isFooter)
+    </div>
 </div>
 
 @if(isFooter){

@@ -49,6 +49,22 @@
   zoom: 1;
 }
 
+.zone-colours (@color) {
+    .zone-color {
+        color: @color;
+    }
+    .zone-background,
+    .zone-background-hover:hover,
+    .zone-background-hover:focus,
+    .zone-background-hover:active {
+        background-color: @color;
+    }
+    .zone-border {
+        border-color: @color;
+    }
+
+}
+
 /* taken from ClearLeft's ClearLess library */
 #gradient {
 
