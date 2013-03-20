@@ -103,13 +103,12 @@ define([
 
         showHomescreen: function() {
             homescreen({
-                expire: 1,
-                lifespan: 60000,
-                returningVisitor: true,
+                expire: 5, // minutes until the popup is offered again (unless they've clicked on Close)
+                returningVisitor: true, // Offre it only on a return visit
                 animationIn: 'fade',
                 animationOut: 'fade',
                 touchIcon: true,
-                message: 'Add this to your %device home screen by tapping on the %icon icon'
+                message: 'Add this to your %device by tapping %icon then <strong>Add to Home Screen</strong>'
             });
         }
     };
