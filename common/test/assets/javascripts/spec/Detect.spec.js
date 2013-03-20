@@ -16,7 +16,7 @@ define(['modules/detect'], function(detect) {
 
     });
 
-   describe("Connection speed", function() {
+    describe("Connection speed", function() {
    
         it("should default to 'high' speed", function(){
             window.performance = null; 
@@ -30,11 +30,25 @@ define(['modules/detect'], function(detect) {
             expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 3000 } })).toBe('medium');
             
             expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } })).toBe('high');
-        
-        }); 
-   });
 
-   describe("Font support", function() {
+        });
+
+        it("if mobile connection type can be determined speed should default to low", function() {
+
+            expect(detect.getConnectionSpeed(null, { type: 3} )).toBe('low'); // type 3 is CELL_2G
+
+            expect(detect.getConnectionSpeed(null, { type: 4} )).toBe('low'); // type 3 is CELL_3G
+
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } }, { type: 4} )).toBe('low');
+
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } }, { type: 6} )).toBe('low');
+
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } }, { type: 6} )).toBe('high');
+
+        });
+    });
+
+    describe("Font support", function() {
    
         var ttfUserAgents = [
             'Mozilla/5.0 (Linux; U; Android 2.2; en-us; Nexus One Build/FRF91) ...'
