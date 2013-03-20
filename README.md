@@ -16,7 +16,6 @@ Requirements
 * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
-* Typed `bundle` at the prompt
 
 File handles
 ------------
