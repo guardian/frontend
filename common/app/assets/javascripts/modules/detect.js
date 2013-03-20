@@ -78,9 +78,9 @@ define(function () {
         var speed = "high";
 
         if (load_time) {
-            if (load_time > 750) { // One second
+            if (load_time > 750) { // .75 second
                 speed = 'medium';
-                if (load_time > 3000) { // Four seconds
+                if (load_time > 3000) { // Three seconds
                     speed = 'low';
                 }
             }
