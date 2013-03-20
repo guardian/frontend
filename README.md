@@ -15,8 +15,7 @@ Requirements
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
-* Installed Ruby >= v1.9.* (You will already have this installed, but run `ruby -v` to check version number)
-* Installed Sass `sudo gem install sass`
+* Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
 
 File handles
 ------------
