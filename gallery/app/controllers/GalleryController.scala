@@ -21,7 +21,7 @@ object GalleryController extends Controller with Logging {
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
-    val promiseOfGalleryPage = Future(lookup(path, index, isTrail))
+    val promiseOfGalleryPage = lookup(path, index, isTrail)
 
     Async {
       promiseOfGalleryPage.map {
@@ -32,19 +32,21 @@ object GalleryController extends Controller with Logging {
     }
   }
 
-  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) = suppressApi404 {
+  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
     val edition = Site(request).edition
     log.info(s"Fetching gallery: $path for edition $edition")
-    val response: ItemResponse = ContentApi.item(path, edition)
+    ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
-      .response
+      .response.map{response =>
+        val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
+        val storyPackage = response.storyPackage map { new Content(_) }
 
-    val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
-    val storyPackage = response.storyPackage map { new Content(_) }
+        val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
+        ModelOrResult(model, response)
+    }.recover{suppressApiNotFound}
 
-    val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
-    ModelOrResult(model, response)
+
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =

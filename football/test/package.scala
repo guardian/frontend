@@ -18,7 +18,6 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicit
     Competitions.competitionAgents.filter(_.competition.id != "127").foreach { agent =>
       agent.refresh()
     }
-
     val start = System.currentTimeMillis()
 
     while (!testDataLoaded){
@@ -35,7 +34,6 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicit
     Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
     Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false)
   }
-
 }
 
 // Stubs data for Football stats integration tests

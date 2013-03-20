@@ -10,6 +10,7 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 import play.api.{ Application => PlayApp }
 import com.gu.management.play.RequestMetrics
+import play.api.libs.ws.{Response, WS}
 
 object CommonSwitches {
 
@@ -77,39 +78,36 @@ object CommonSwitches {
   )
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with HttpSupport with Plugin {
+class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
+
+  import play.api.libs.concurrent.Execution.Implicits._
 
   val configUrl = config.switches.configurationUrl
 
-  override val proxy = Proxy(config)
-
-  private var schedule: Option[Cancellable] = None
+  private lazy val schedule = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+    refresh()
+  }
 
   def refresh() {
     log.info("Refreshing switches")
-    loadConfig.foreach { config =>
-      val properties = new Properties()
-      properties.load(IOUtils.toInputStream(config))
-      switches.foreach { switch =>
-        Option(properties.getProperty(switch.name)).map {
-          case "on" => switch.switchOn()
-          case "off" => switch.switchOff()
-          case other => log.warn("Badly configured switch %s -> %s" format (switch.name, other))
-        }
+    WS.url(configUrl).get().foreach{ response =>
+      response.status match {
+        case 200 =>
+          val properties = new Properties()
+          properties.load(IOUtils.toInputStream(response.body))
+          switches.foreach { switch =>
+            Option(properties.getProperty(switch.name)).map {
+              case "on" => switch.switchOn()
+              case "off" => switch.switchOff()
+              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+            }
+          }
+        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
       }
     }
   }
 
-  private def loadConfig: Option[String] = http.GET(configUrl) match {
-    case Response(200, body, _) => Some(body)
-    case Response(error, _, status) =>
-      log.warn("Could not load switch config %s %s" format (error, status))
-      None
-  }
+  override def onStart() = schedule
 
-  override def onStart() = schedule = Some(play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
-    refresh()
-  })
-
-  override def onStop() = schedule.foreach(_.cancel())
+  override def onStop() = schedule.cancel()
 }

@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 
-import controllers.front.ConfiguredEdition
+import controllers.front.{TrailblockAgent, ConfiguredEdition}
 import model.TrailblockDescription
 import org.scalatest.matchers.ShouldMatchers
 
@@ -20,7 +20,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         }
 
         front.refresh()
-        front.warmup
+        loadOrTimeout(front)
 
         Then("I should see the configured feature trailblock")
         front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("politics", "Politics", 3)))
@@ -37,7 +37,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         }
 
         front.refresh()
-        front.warmup
+        loadOrTimeout(front)
 
         Then("I should see the configured feature trailblock")
         front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("world/iraq", "Iraq", 3, showMore = true)))
@@ -54,11 +54,17 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         }
 
         front.refresh()
-        front.warmup
 
-        Then("I the feature trailblock should collapse")
+        Then("the feature trailblock should collapse")
         front.configuredTrailblocks.map(_.description) should be(Nil)
       }
+    }
+  }
+
+  private def loadOrTimeout(front: ConfiguredEdition) {
+    val start = System.currentTimeMillis()
+    while (front().isEmpty) {
+      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
     }
   }
 }

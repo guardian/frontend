@@ -1,6 +1,5 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
@@ -23,7 +22,7 @@ object MostPopularController extends Controller with Logging {
   def renderJson(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
-    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -38,7 +37,7 @@ object MostPopularController extends Controller with Logging {
   def renderNoJavascript(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
-    val promiseOfSectionPopular = Future(if (path.nonEmpty) lookup(edition, path).toList else Nil)
+    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -50,17 +49,16 @@ object MostPopularController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[MostPopular] = suppressApi404 {
+  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-
-    val response: ItemResponse = ContentApi.item(path, edition)
+    ContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-      .response
+      .response.map{response =>
+      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
+          val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
 
-    val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-    val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
-
-    if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
+          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
+    }
   }
 }

@@ -121,6 +121,7 @@ class Front extends AkkaSupport with Logging {
     refresh()
     allFronts.foreach { case (name, front) => front.warmup }
   }
+
 }
 
 object Front extends Front

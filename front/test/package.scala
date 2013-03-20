@@ -7,8 +7,15 @@ import controllers.front.{Front, FrontLifecycle}
 object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
   override def onStart(app: play.api.Application) {
-    Front.startup()
-    Front.warmup
+    //Front.startup()
+    Front.refresh()
+
+    val start = System.currentTimeMillis
+
+    while (Front("front", "UK").size < 9) {
+      // ensure we don't get in an endless loop if test data changes
+      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("front should have loaded by now")
+    }
   }
 
   override def onStop(app: play.api.Application) {

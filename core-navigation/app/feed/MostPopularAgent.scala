@@ -13,7 +13,9 @@ object MostPopularAgent extends AkkaSupport with Logging {
 
   private val agent = play_akka.agent[Map[String, Seq[Trail]]](Map.empty)
 
-  private var schedule: Option[Cancellable] = None
+  private lazy val schedule = play_akka.scheduler.every(60.seconds, initialDelay = 1.second) {
+    refresh()
+  }
 
   def mostPopular(edition: String) = agent().get(edition)
 
@@ -25,21 +27,20 @@ object MostPopularAgent extends AkkaSupport with Logging {
   def await() { quietly(agent.await(2.seconds)) }
 
   private def refresh(edition: String) {
-    agent.sendOff { old =>
-      val response: ItemResponse = ContentApi.item("/", edition).showMostViewed(true).response
+    ContentApi.item("/", edition).showMostViewed(true).response.foreach{ response =>
       val mostViewed = response.mostViewed map { new Content(_) } take (10)
-      old + (edition -> mostViewed)
+      agent.send{ old =>
+        old + (edition -> mostViewed)
+      }
     }
   }
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(60.seconds, initialDelay = 1.second) {
-      refresh()
-    })
+    schedule
   }
 
   def shutdown() {
-    schedule.foreach(_.cancel())
+    schedule.cancel()
     agent.close()
   }
 

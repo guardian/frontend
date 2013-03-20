@@ -58,25 +58,24 @@ object StyleGuideController extends Controller with Logging {
 
   def renderModules() = Action { implicit request =>
     val path = "politics/2012/dec/18/andrew-mitchell-deputy-chief-whip"
-    val promiseOfArticle = Future(lookupSingleArticle(path))
+    val promiseOfArticle = lookupSingleArticle(path)
     Async {
       promiseOfArticle.map(_.map { renderModuleOutput }.getOrElse { NotFound })
     }
   }
 
-  private def lookupSingleArticle(path: String)(implicit request: RequestHeader): Option[ArticlePage] = suppressApi404 {
+  private def lookupSingleArticle(path: String)(implicit request: RequestHeader) = {
     val edition = Site(request).edition
     log.info(s"Fetching article: $path for edition $edition")
-    val response: ItemResponse = ContentApi.item(path, edition)
+    ContentApi.item(path, edition)
       .showInlineElements("picture")
       .showTags("all")
       .showFields("all")
-      .response
-
-    val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
-    val storyPackage = response.storyPackage map { new Content(_) }
-
-    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+      .response.map{response =>
+        val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
+        val storyPackage = response.storyPackage map { new Content(_) }
+        articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+    }
   }
 
   private def renderModuleOutput(model: ArticlePage)(implicit request: RequestHeader) = {

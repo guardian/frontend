@@ -4,17 +4,22 @@ import java.io._
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
 import com.gu.openplatform.contentapi.connection.HttpResponse
-import scala.Some
+import concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits._
 
 trait HttpRecorder {
 
   def baseDir: File
 
-  def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => HttpResponse): HttpResponse = {
+  // loads api call from disk. if it cannot be found on disk go get it and save to disk
+  def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[HttpResponse]):Future[HttpResponse] = {
     val fileName = name(url, headers)
-    get(fileName).map { toResponse }.getOrElse {
+    get(fileName).map { f =>
+      val response = toResponse(f)
+      Future(response)
+    }.getOrElse {
       val response = fetch
-      put(fileName, fromResponse(response))
+      response.foreach(r => put(fileName, fromResponse(r)));
       response
     }
   }

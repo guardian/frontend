@@ -13,7 +13,7 @@ object Switches {
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all
 }
 
 object Management extends Management {
