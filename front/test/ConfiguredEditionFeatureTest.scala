@@ -10,9 +10,9 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
 
   feature("Configured front") {
 
-    scenario("Load front configuration for UK edition") {
+    ignore("Load front configuration for UK edition") {
 
-      ignore("I visit the Network Front")
+      Given("I visit the Network Front")
       And("I am on the UK edition")
       Fake {
         val front = new ConfiguredEdition("UK", Nil) {
