@@ -34,3 +34,5 @@ tags
 local.sbt
 
 node_modules
+
+common/app/assets/stylesheets/main.min.css
