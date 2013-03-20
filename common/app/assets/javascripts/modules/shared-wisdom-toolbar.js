@@ -2,7 +2,32 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	
 	var hidden = true,
 		closed = true,
+		data = null,
+		url = '/top-stories.json?page-size=10&view=link',
 		sharedWisdomToolbar = {
+			
+			// init takes callback, as makes http request
+			init: function(callback) {
+				if (!data) {;
+					reqwest({
+						url: url
+					})
+					.then(
+						function(respData) {
+							data = respData;
+							callback();
+						},
+						function(resp) {
+							common.mediator.trigger(
+								'module:error', 
+								['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', 23]
+							);
+						}
+					);
+				} else {
+					callback();
+				}
+			},
 
 	    	show: function(config) {
 	    		if (hidden) {
