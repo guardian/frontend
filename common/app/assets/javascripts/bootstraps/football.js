@@ -99,17 +99,19 @@ define([
             }).init();
         },
 
-        showHomescreen: function() {
-            require(['homescreen'], function(homescreen){
-                homescreen({
-                    expire: 5, // minutes until the popup is offered again (unless they've clicked on Close)
-                    returningVisitor: true, // Offre it only on a return visit
-                    animationIn: 'fade',
-                    animationOut: 'fade',
-                    touchIcon: true,
-                    message: 'Add this to your %device by tapping %icon then <strong>Add to Home Screen</strong>'
+        showHomescreen: function(config) {
+            if (config.switches.homescreen) {
+                require(['homescreen'], function(homescreen){
+                    homescreen({
+                        expire: 5, // minutes until the popup is offered again (unless they've clicked on Close)
+                        returningVisitor: true, // Offre it only on a return visit
+                        animationIn: 'fade',
+                        animationOut: 'fade',
+                        touchIcon: true,
+                        message: 'Add this to your %device by tapping %icon then <strong>Add to Home Screen</strong>'
+                    });
                 });
-            });
+            }
         }
     };
 
@@ -183,7 +185,7 @@ define([
                 break;
         }
     
-        modules.showHomescreen();
+        modules.showHomescreen(config);
     };
 
     return {
