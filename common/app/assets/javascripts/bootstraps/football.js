@@ -17,7 +17,7 @@ define([
 ], function (
     common,
     qwery,
-    Homescreen,
+    homescreen,
     Router,
     TogglePanel,
     Expandable,
@@ -102,9 +102,10 @@ define([
         },
 
         showHomescreen: function() {
-            Homescreen({
+            homescreen({
                 expire: 1,
-                returningVisitor: true, // Only show to re
+                lifespan: 60000,
+                returningVisitor: true,
                 animationIn: 'fade',
                 animationOut: 'fade',
                 touchIcon: true,
