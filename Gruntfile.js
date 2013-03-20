@@ -18,7 +18,8 @@ module.exports = function (grunt) {
                         "qwery"        : "components/qwery/mobile/qwery-mobile",
                         "reqwest"      : "components/reqwest/src/reqwest",
                         "domwrite"     : "components/dom-write/dom-write",
-                        "swipe"        : "components/swipe/swipe"
+                        "swipe"        : "components/swipe/swipe",
+                        "homescreen"   : "components/add-to-homescreen/src/add2home"
                     },
                     "wrap" : {
                         "startFile" : "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",

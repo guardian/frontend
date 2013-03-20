@@ -3,6 +3,7 @@ define([
     //Common libraries
     "common",
     "qwery",
+    "homescreen",
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -16,6 +17,7 @@ define([
 ], function (
     common,
     qwery,
+    Homescreen,
     Router,
     TogglePanel,
     Expandable,
@@ -97,6 +99,17 @@ define([
                 attachTo: container,
                 switches: switches
             }).init();
+        },
+
+        showHomescreen: function() {
+            Homescreen({
+                expire: 1,
+                returningVisitor: true, // Only show to re
+                animationIn: 'fade',
+                animationOut: 'fade',
+                touchIcon: true,
+                message: 'Add this to your %device home screen by tapping on the %icon icon'
+            });
         }
     };
 
@@ -169,6 +182,8 @@ define([
 
                 break;
         }
+
+        modules.showHomescreen();
     };
 
     return {

@@ -2,9 +2,13 @@
  * Add to Homescreen v2.0.7 ~ Copyright (c) 2013 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
  */
-var addToHome = (function (w) {
-	var nav = w.navigator,
-		isIDevice = 'platform' in nav && (/iphone|ipod|ipad/gi).test(nav.platform),
+
+define('homescreen', [], function() {
+
+var addToHome = function (addToHomeConfig) {
+	var w = window,
+		nav = w.navigator,
+		isIDevice = true || 'platform' in nav && (/iphone|ipod|ipad/gi).test(nav.platform),
 		isIPad,
 		isRetina,
 		isSafari,
@@ -78,9 +82,9 @@ var addToHome = (function (w) {
 			i;
 
 		// Merge local with global options
-		if ( w.addToHomeConfig ) {
-			for ( i in w.addToHomeConfig ) {
-				options[i] = w.addToHomeConfig[i];
+		if ( addToHomeConfig ) {
+			for ( i in addToHomeConfig ) {
+				options[i] = addToHomeConfig[i];
 			}
 		}
 		if ( !options.autostart ) options.hookOnLoad = false;
@@ -339,4 +343,8 @@ var addToHome = (function (w) {
 		close: close,
 		reset: reset
 	};
-})(window);
+}
+
+return addToHome;
+
+});
