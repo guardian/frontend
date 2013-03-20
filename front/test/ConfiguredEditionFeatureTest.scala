@@ -63,7 +63,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
 
   private def loadOrTimeout(front: ConfiguredEdition) {
     val start = System.currentTimeMillis()
-    while (front().isEmpty) {
+    while (front.configuredTrailblocks.isEmpty) {
       if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
     }
   }
