@@ -1,0 +1,36 @@
+#shared-wisdom-toolbar{
+	color:#333333;
+	background-color:rgba(247, 247, 249, 0.5);
+	border:1px solid #e1e1e8;
+    -webkit-border-radius:0 0 4px 4px;
+	padding:5px 10px;
+	position:absolute;
+	box-sizing: border-box;
+	width:100%;
+	/* one more than ad slot */
+	z-index:1001;
+	-webkit-transition: opacity 1s;
+}
+#shared-wisdom-toolbar p,
+#shared-wisdom-toolbar button{
+    font-size:1em;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;	
+}
+#shared-wisdom-toolbar p{
+    margin:0;
+}
+#shared-wisdom-toolbar button {
+    position:absolute;
+    top:0;
+    cursor:pointer;
+    border:none;
+    background-color:transparent;
+    font-size:1.3em;
+    opacity:0.4;
+}
+#shared-wisdom-toolbar .toggle{
+    right:35px;
+}
+#shared-wisdom-toolbar .hide{
+    right:10px;
+}

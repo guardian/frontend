@@ -27,6 +27,8 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug'
+    'modules/search',
+    'modules/shared-wisdom-toolbar'
 ], function (
     common,
     ajax,
@@ -54,7 +56,9 @@ define([
     Adverts,
     Cookies,
     Video,
-    Debug
+    Debug,
+    Search,
+    sharedWisdomToolbar
 ) {
 
     var modules = {
@@ -195,6 +199,17 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
+        },
+        
+        showSharedWisdomToolbar: function() {
+        	sharedWisdomToolbar.show();
         }
     };
 
@@ -206,6 +221,7 @@ define([
             modules.loadOphanAnalytics(config, context);
             modules.loadAdverts(config, context);
             modules.cleanupCookies(context);
+            modules.showSharedWisdomToolbar();
         });
     };
 
