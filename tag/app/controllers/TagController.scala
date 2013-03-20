@@ -15,7 +15,7 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 object TagController extends Controller with Logging with JsonTrails {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfTag = Future(lookup(path))
+    val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
         case Left(model) => renderTag(model, "html")
@@ -25,7 +25,7 @@ object TagController extends Controller with Logging with JsonTrails {
   }
 
   def renderJson(path: String) = Action { implicit request =>
-    val promiseOfTag = Future(lookup(path))
+    val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
         case Left(model) => renderTag(model, "json")
@@ -34,25 +34,19 @@ object TagController extends Controller with Logging with JsonTrails {
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Either[TagAndTrails, Result] = suppressApi404 {
+  private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Site(request).edition
     log.info(s"Fetching tag: $path for edition $edition")
 
-    val response: ItemResponse = ContentApi.item(path, edition).pageSize(20).response
-
-    val tag = response.tag map { new Tag(_) }
-
-    val trails = response.results map { new Content(_) }
-
-    val leadContentCutOff = DateTime.now - 7.days
-
-    val leadContent = response.leadContent.take(1).map { new Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
-
-    val leadContentIds = leadContent map (_.id)
-
-    val model = tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
-
-    ModelOrResult(model, response)
+    ContentApi.item(path, edition).pageSize(20).response.map{response =>
+      val tag = response.tag map { new Tag(_) }
+      val trails = response.results map { new Content(_) }
+      val leadContentCutOff = DateTime.now - 7.days
+      val leadContent = response.leadContent.take(1).map { new Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
+      val leadContentIds = leadContent map (_.id)
+      val model = tag map { TagAndTrails(_, trails.filter(c => !leadContentIds.exists(_ == c.id)), leadContent) }
+      ModelOrResult(model, response)
+    }.recover{suppressApiNotFound}
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {

@@ -9,7 +9,7 @@ import model.TrailblockDescription
 import common._
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration._
-
+import concurrent.Future
 
 
 /*
@@ -19,21 +19,22 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = agent.send { old =>
-    val newTrails = loadTrails(description.id)
+  def refresh() = loadTrails(description.id).map{ newTrails =>
+    agent.send{ old =>
 
-    val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
-    val newUrls = newTrails.map(_.url).toList
+      val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
+      val newUrls = newTrails.map(_.url).toList
 
-    newUrls.diff(oldUrls).foreach { url =>
-      log.info(s"added item: $url")
+      newUrls.diff(oldUrls).foreach { url =>
+        log.info(s"added item: $url")
+      }
+
+      oldUrls.diff(newUrls).foreach { url =>
+        log.info(s"removed item: $url")
+      }
+
+      Some(Trailblock(description, newTrails))
     }
-
-    oldUrls.diff(newUrls).foreach { url =>
-      log.info(s"removed item: $url")
-    }
-
-    Some(Trailblock(description, newTrails))
   }
 
   def close() = agent.close()
@@ -42,22 +43,21 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   lazy val warmup = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
 
-  private def loadTrails(id: String): Seq[Trail] = {
-    val response: ItemResponse = ContentApi.item(id, edition)
-      .showEditorsPicks(true)
-      .pageSize(20)
-      .response
+  private def loadTrails(id: String): Future[Seq[Trail]] = ContentApi.item(id, edition)
+    .showEditorsPicks(true)
+    .pageSize(20)
+    .response
+    .map { response =>
+      val editorsPicks = response.editorsPicks map {
+        new Content(_)
+      }
+      val editorsPicksIds = editorsPicks map (_.id)
+      val latest = response.results map {
+        new Content(_)
+      } filterNot (c => editorsPicksIds contains (c.id))
 
-    val editorsPicks = response.editorsPicks map {
-      new Content(_)
+      editorsPicks ++ latest
     }
-    val editorsPicksIds = editorsPicks map (_.id)
-    val latest = response.results map {
-      new Content(_)
-    } filterNot (c => editorsPicksIds contains (c.id))
-
-    editorsPicks ++ latest
-  }
 }
 
 object TrailblockAgent {

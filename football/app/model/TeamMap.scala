@@ -122,20 +122,18 @@ object TeamMap extends AkkaSupport with Logging {
 
   private def incrementalRefresh(page: Int) {
     log.info(s"Refreshing team tag mappings - page $page")
-    teamAgent.sendOff { old =>
-      val response: TagsResponse = ContentApi.tags
-        .page(page)
-        .pageSize(50)
-        .referenceType("pa-football-team")
-        .showReferences("pa-football-team")
-        .response
-
+    ContentApi.tags
+      .page(page)
+      .pageSize(50)
+      .referenceType("pa-football-team")
+      .showReferences("pa-football-team")
+      .response.foreach{ response =>
       if (response.pages > page) {
         incrementalRefresh(page + 1)
       }
 
       val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
-      old ++ tagReferences
+      teamAgent.send(old => old ++ tagReferences)
     }
   }
 }
