@@ -101,8 +101,11 @@ class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] =
 }
 
 class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+
+  private implicit val ordering = EncodingOrdering
+
   private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
-  lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil)
+  lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val blockAds: Boolean = videoAsset.map(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false)).getOrElse(false)
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))
