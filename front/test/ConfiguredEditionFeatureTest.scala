@@ -12,7 +12,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
 
     scenario("Load front configuration for UK edition") {
 
-      Given("I visit the Network Front")
+      ignore("I visit the Network Front")
       And("I am on the UK edition")
       Fake {
         val front = new ConfiguredEdition("UK", Nil) {
@@ -27,7 +27,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       }
     }
 
-    scenario("Load front configuration for US edition") {
+    ignore("Load front configuration for US edition") {
 
       Given("I visit the Network Front")
       And("I am on the US edition")
@@ -44,7 +44,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       }
     }
 
-    scenario("Survive loading bad configuration") {
+    ignore("Survive loading bad configuration") {
 
       Given("I visit the Network Front")
       And("the feature trailblock has broken confiuration")
