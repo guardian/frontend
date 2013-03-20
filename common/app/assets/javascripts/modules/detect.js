@@ -104,11 +104,28 @@ define(function () {
         return 'pushState' in history;
     }
 
+    function getVideoFormatSupport() {
+        //https://github.com/Modernizr/Modernizr/blob/master/feature-detects/video.js
+        var elem = document.createElement('video');
+        var types = {};
+
+        try {
+            if (!!elem.canPlayType) {
+                types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,'');
+                types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
+                types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
+            }
+        } catch(e){}
+
+        return types;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
+        getVideoFormatSupport: getVideoFormatSupport,
         hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport
