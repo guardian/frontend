@@ -1,7 +1,7 @@
 .search-box {
     border-top: 2px solid #e3e3db;
-    margin: 0 @gutter - 2;
-    padding: @baseline 0 0 0;
+    margin: 0 $gutter - 2;
+    padding: $baseline 0 0 0;
     height: 58px;
 }
 
@@ -23,11 +23,11 @@
 }
 
 .search-results {
-    min-height: @gutter;
+    min-height: $gutter;
 }
 
 .gsc-control-cse {
-    padding: 0 @gutter !important;
+    padding: 0 $gutter !important;
 }
 
 .gsc-results .gsc-thumbnail-inside, 
@@ -52,7 +52,7 @@
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 @gutter 0 !important;
+    margin: 0 0 $gutter 0 !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
