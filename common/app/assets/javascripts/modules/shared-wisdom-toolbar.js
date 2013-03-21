@@ -4,6 +4,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 		closed = true,
 		data = null,
 		url = 'http://10.121.73.229/api/1.0/pageview/testme/',
+		panelHeight = null,
 		sharedWisdomToolbar = {
 			
 			// init takes callback, as makes http request
@@ -33,19 +34,35 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 
 	    	show: function(config) {
 	    		if (hidden) {
+		    		var numbersText = [];
+		    		for (var text in data.numbers) {
+		    			numbersText.push(text.replace(/_/g, ' ') + ': <strong>' + data.numbers[text] + '</strong>');
+		    		}
 		    		common.$g('body').prepend(
 	    				'<div id="shared-wisdom-toolbar" data-link-name="shared-wisdom-toolbar">' +
 	    					'<p>' + data.top_insight_sentence + '</p>' +
 	    					'<button data-link-name="open" type="button" class="toggle">▼</button>' +
 	    					'<button data-link-name="hide" type="button" class="hide">x</button>' +
+	    					'<div class="panel">' +
+			    				'<p>' + numbersText.join(' and ') + '</p>' +
+			    				'<ul>' +
+			    					data.other_insights.map(function(insight) {
+			    						return '<li>' + insight + '</li>'; 
+			    					}).join('') +
+			    				'<ul>' +
+			    			'<div>' +
 	    				'</div>'
 	    			);
+		    		var panel = common.$g('body #shared-wisdom-toolbar .panel');
+		    		// get the height of the panel, for expanding transition
+		    		panelHeight = panel.dim().height;
+		    		panel.css({'height': 0, 'display': 'block'});
 		    		common.$g('body #shared-wisdom-toolbar').css('opacity', 1);
 
-		    		bean.on(common.$g('#shared-wisdom-toolbar .toggle')[0], 'click', function(e) {
+		    		bean.on(common.$g('#shared-wisdom-toolbar')[0], 'click', '.toggle', function(e) {
 		    			sharedWisdomToolbar.toggle();
 		    		});
-		    		bean.on(common.$g('#shared-wisdom-toolbar .hide')[0], 'click', function(e) {
+		    		bean.on(common.$g('#shared-wisdom-toolbar')[0], 'click', ' .hide', function(e) {
 		    			sharedWisdomToolbar.hide();
 		    		});
 		    		hidden = false;
@@ -73,20 +90,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    		common.$g('#shared-wisdom-toolbar .toggle')
 	    			.text('▲')
 	    			.attr('data-link-name', 'close');
-	    		var numbersText = [];
-	    		for (var text in data.numbers) {
-	    			numbersText.push(text.replace(/_/g, ' ') + ': ' + data.numbers[text]);
-	    		}
-	    		common.$g('#shared-wisdom-toolbar').append(
-	    			'<div class="panel">' +
-	    				'<p>' + numbersText.join(' and ') + '</p>' +
-	    				'<ul>' +
-	    					data.other_insights.map(function(insight) {
-	    						return '<li>' + insight + '</li>'; 
-	    					}).join('') +
-	    				'<ul>' +
-	    			'<div>'
-				);
+	    		common.$g('#shared-wisdom-toolbar .panel').css('height', panelHeight + 'px');
     			closed = false;
 	    		
 	    	},
@@ -96,7 +100,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    		common.$g('#shared-wisdom-toolbar .toggle')
 	    			.text('▼')
 	    			.attr('data-link-name', 'open');
-	    		common.$g('#shared-wisdom-toolbar .panel').remove();
+	    		common.$g('#shared-wisdom-toolbar .panel').css('height', 0);
     			closed = true;
 	    	}
 	
