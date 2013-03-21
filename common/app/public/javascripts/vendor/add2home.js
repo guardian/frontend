@@ -14,7 +14,7 @@ define('homescreen', [], function() {
 var addToHome = function (addToHomeConfig) {
 	var w = window,
 		nav = w.navigator,
-		isIDevice = true || 'platform' in nav && (/iphone|ipod|ipad/gi).test(nav.platform),
+		isIDevice = 'platform' in nav && (/iphone|ipod|ipad/gi).test(nav.platform),
 		isIPad,
 		isRetina,
 		isSafari,
