@@ -25,6 +25,7 @@ define(['common'], function (common) {
                     var url = makeUrl([message, filename, lineno]);
                     createImage(url);
             	}
+            	return true;
             },
             init = function() {
                 win.onerror = log;
