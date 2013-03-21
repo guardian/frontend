@@ -2,7 +2,7 @@
 
 #Node package management for Grunt build steps
 
-bundle install --local
+bundle install --path target/gems
 npm install
 
 NPM_EXIT=$?
