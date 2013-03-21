@@ -1,13 +1,12 @@
 #addToHomeScreen {
+    .type-8;
     z-index:9999;
     -webkit-user-select:none;
     user-select:none;
-    -webkit-box-sizing:border-box;
-    box-sizing:border-box;
+    .box-sizing(border-box);
     -webkit-touch-callout:none;
     touch-callout:none;
     width:240px;
-    font-size:15px;
     padding:12px 28px 16px 14px;
     text-align:left;
     font-family:helvetica;
@@ -21,9 +20,10 @@
 }
 
 #addToHomeScreen.addToHomeIpad {
-    width:268px;
-    font-size:18px;
-    padding:14px;
+    .type-8;
+    width:240px;
+    margin-left: 14px;
+    .box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));
 }
 
 #addToHomeScreen.addToHomeWide {
@@ -32,8 +32,6 @@
 
 #addToHomeScreen.addToHomeIpad.addToHomeWide {
     width:320px;
-    font-size:18px;
-    padding:14px;
 }
 
 #addToHomeScreen .addToHomeArrow {
@@ -48,13 +46,12 @@
 
 #addToHomeScreen.addToHomeIpad .addToHomeArrow {
     -webkit-transform:rotateZ(-135deg);
-    background-image:-webkit-gradient(linear,0 0,100% 100%,color-stop(0,rgba(238,238,238,0)),color-stop(0.4,rgba(238,238,238,0)),color-stop(0.4,#eee));
-    -webkit-box-shadow:inset -1px -1px 0 #fff;
-    top:-9px; bottom:auto; left:50%;
+    background: @blue;
+    top:-8px; bottom:auto; left:50%;
 }
 
 #addToHomeScreen .addToHomeClose {
-    -webkit-box-sizing:border-box;
+    .box-sizing(border-box);
     position:absolute;
     right:8px;
     top:8px;
@@ -102,10 +99,4 @@
     margin:0 12px 0 0;
     -webkit-background-clip:padding-box;
     background-clip:padding-box;
-}
-
-@media all and (-webkit-min-device-pixel-ratio: 2) {
-    #addToHomeScreen .addToHomeShare {
-        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAPCAYAAADphp8SAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB90DFA0FDmi4VVgAAAGSSURBVDjLrZNdKMNRGMafM1ZItGJlYZtslKJM+WhLZBm5cOUGKYoLWnYhys3qn68bubCESNwp5a/Eivm6cIGrTdQis6IsDSXG7HWx/NFMPvZenZ5znl/vc857mFLPESJQot8a4mLEkQE5lrohl0n+DyIibMy0o1Kb/UlnwzObZGoq/SSu7ByhnVsAABTlyaEvyUKuOgVEgCYnFYwxEBEm5ncxNGULmgYm1+hj8TY7KfUcqQx95HR5KBAI0He1vX9CSj1H0W9d8Ot2mIb4YF4Rw/FyDxhjYIx9G7MgJw0KmQQCSCyOEg601RWHQK5v7hEgQrIkXoDYnZeo7ZgGgHeQcGkM6Goux6n7GmbLKvYcbvie/ML+ibUXjDHMLe3DbLEKeghIJk3E+aUXFS1jYSOZBhfB2xyQJMTCe/fw9fOLo0QwtI6HhegaR8HbHOCMVdDmZ4Sfo7MLLx59/rCgi6tb9HdWo75Gg2f/S2i0zPQkGBt0PxrKskJViCaA1Aop1Arpnz9t9MGhGyOzW38yO10eYf0KcSKtN2bNg2UAAAAASUVORK5CYII=);
-    }
 }

@@ -103,8 +103,8 @@ define([
             if (config.switches.homescreen) {
                 require(['homescreen'], function(homescreen){
                     homescreen({
-                        expire: 5, // minutes until the popup is offered again (unless they've clicked on Close)
-                        returningVisitor: true, // Offre it only on a return visit
+                        expire: 60, // minutes until the popup is offered again (unless they've clicked on Close)
+                        returningVisitor: true, // Offer it only on a return visit
                         animationIn: 'fade',
                         animationOut: 'fade',
                         touchIcon: true,
