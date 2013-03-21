@@ -18,7 +18,7 @@ object MongoOkCount extends CountMetric("database-status", "ok", "Ok", "number o
 object MongoErrorCount extends CountMetric("database-status", "error", "Error", "number of mongo requests that error")
 
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all ++ Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
 }
 
 object Management extends GuManagement {

@@ -1,12 +1,11 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Execution.Implicits._
-import concurrent.Future
+import com.gu.openplatform.contentapi.ApiError
 
 case class Related(heading: String, trails: Seq[Trail])
 
@@ -14,7 +13,7 @@ object RelatedController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
     val edition = Site(request).edition
-    val promiseOfRelated = Future(lookup(edition, path))
+    val promiseOfRelated = lookup(edition, path)
     Async {
       promiseOfRelated.map(_.map {
         case Related(_, Nil) => NotFound
@@ -23,17 +22,20 @@ object RelatedController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader): Option[Related] = suppressApi404 {
+  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching related content for : $path for edition $edition")
-    val response: ItemResponse = ContentApi.item(path, edition)
+    ContentApi.item(path, edition)
       .tag(None)
       .showRelated(true)
-      .response
+      .response.map {response =>
+      val heading = "Related content"
+      val related = SupportedContentFilter(response.relatedContent map { new Content(_) })
 
-    val heading = "Related content"
-    val related = SupportedContentFilter(response.relatedContent map { new Content(_) })
-
-    Some(Related(heading, related))
+      Some(Related(heading, related))
+    }.recover{ case ApiError(404, message) =>
+      log.info(s"Got a 404 while calling content api: $message")
+      None
+    }
   }
 
   private def renderRelated(model: Related)(implicit request: RequestHeader) = {

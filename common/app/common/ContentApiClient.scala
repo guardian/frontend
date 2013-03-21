@@ -1,12 +1,19 @@
 package common
 
-import com.gu.openplatform.contentapi.Api
-import com.gu.openplatform.contentapi.connection.{ Proxy => ContentApiProxy, Http, DispatchHttp }
+import com.gu.openplatform.contentapi.{ApiError, Api}
+import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, HttpResponse}
 import com.gu.management.{ CountMetric, Metric, TimingMetric }
 import conf.Configuration
 import java.util.concurrent.TimeoutException
+import scala.concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.ws.WS
+import com.gu.openplatform.contentapi.util.FutureInstances
 
-trait ApiQueryDefaults { self: Api =>
+import com.gu.openplatform.contentapi.connection.Http
+
+
+trait ApiQueryDefaults { self: Api[Future] =>
 
   val supportedTypes = "type/gallery|type/article|type/video"
 
@@ -15,7 +22,7 @@ trait ApiQueryDefaults { self: Api =>
 
   val references = "pa-football-competition,pa-football-team"
 
-  val inlineElements = "picture,witness"
+  val inlineElements = "picture,witness,video"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
@@ -39,68 +46,66 @@ trait ApiQueryDefaults { self: Api =>
     .tag(supportedTypes)
 }
 
-trait DelegateHttp extends Http {
+object ContentApiMetrics {
+  object HttpTimingMetric extends TimingMetric(
+    "performance",
+    "content-api-calls",
+    "Content API calls",
+    "outgoing requests to content api"
+  ) with TimingMetricLogging
 
-  private val dispatch = new DispatchHttp with Logging {
-    import Configuration.{ proxy => proxyConfig, contentApi => apiConfig }
+  object HttpTimeoutCountMetric extends CountMetric(
+    "timeout",
+    "content-api-timeouts",
+    "Content API timeouts",
+    "Content api calls that timeout"
+  )
 
-    override lazy val maxConnections = 100
-    override lazy val connectionTimeoutInMs = 200
-    override lazy val requestTimeoutInMs = apiConfig.timeout
-    override lazy val compressionEnabled = true
-
-    override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
-      log.info(s"Setting HTTP proxy to: ${proxyConfig.host}:${proxyConfig.port}")
-      Some(ContentApiProxy(proxyConfig.host, proxyConfig.port))
-    } else None
-  }
-
-  private var _http: Http = dispatch
-  def http = _http
-  def http_=(delegateHttp: Http) = _http = delegateHttp
-
-  def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
+  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults with DelegateHttp
+trait DelegateHttp extends Http[Future] {
+  import System.currentTimeMillis
+  import ContentApiMetrics._
+
+  private val dispatch = new Http[Future] with Logging {
+    override def GET(url: String, headers: Iterable[(String, String)]) = {
+      val start = currentTimeMillis
+      val response = WS.url(url).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+
+      // record metrics
+      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
+
+      response.map{ r => HttpResponse(r.body, r.status, r.statusText)}
+    }
+  }
+
+  private var _http: Http[Future] = dispatch
+  def http = _http
+  def http_=(delegateHttp: Http[Future]) = _http = delegateHttp
+
+  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
+
+  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
+    .map(_.getClass == classOf[TimeoutException])
+    .getOrElse(false)
+}
+
+
+
+import FutureInstances._
+
+class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
     with Logging {
+
   import Configuration.contentApi
   override val targetUrl = contentApi.host
   apiKey = Some(contentApi.key)
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
-
     checkQueryIsEditionalized(url, parameters)
-
-    metrics.ContentApiHttpTimingMetric.measure {
-      try { super.fetch(url, parameters + ("user-tier" -> "internal")) } catch {
-        case e: Throwable if isTimeout(e) =>
-          metrics.ContentApiHttpTimeoutCountMetric.increment()
-          throw e
-      }
-    }
-  }
-
-  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
-    .map(_.getClass == classOf[TimeoutException])
-    .getOrElse(false)
-
-  object metrics {
-    object ContentApiHttpTimingMetric extends TimingMetric(
-      "performance",
-      "content-api-calls",
-      "Content API calls",
-      "outgoing requests to content api"
-    ) with TimingMetricLogging
-
-    object ContentApiHttpTimeoutCountMetric extends CountMetric(
-      "timeout",
-      "content-api-timeouts",
-      "Content API timeouts",
-      "Content api calls that timeout"
-    )
-
-    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric, ContentApiHttpTimeoutCountMetric)
+    super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {

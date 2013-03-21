@@ -14,7 +14,7 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 object SectionController extends Controller with Logging with Paging with JsonTrails {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfSection = Future(lookup(path))
+    val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "html")
@@ -24,7 +24,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   def renderJson(path: String) = Action { implicit request =>
-    val promiseOfSection = Future(lookup(path))
+    val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
         case Left(model) => renderSectionFront(model, "json")
@@ -33,25 +33,21 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = suppressApi404 {
+  private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Site(request).edition
     log.info(s"Fetching front: $path for edition $edition")
 
-    val response: ItemResponse = ContentApi.item(path, edition)
+    ContentApi.item(path, edition)
       .pageSize(20)
       .showEditorsPicks(true)
-      .response
-
-    val section = response.section map { Section(_) }
-
-    val editorsPicks = response.editorsPicks map { new Content(_) }
-
-    val editorsPicksIds = editorsPicks map { _.id }
-
-    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-
-    val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
-    ModelOrResult(model, response)
+      .response.map {response =>
+        val section = response.section map { Section(_) }
+        val editorsPicks = response.editorsPicks map { new Content(_) }
+        val editorsPicksIds = editorsPicks map { _.id }
+        val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+        val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
+        ModelOrResult(model, response)
+    }.recover{suppressApiNotFound}
   }
 
   private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {

@@ -23,7 +23,9 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies'
+    'modules/cookies',
+    'modules/search',
+    'modules/analytics/omnitureMedia'
 ], function (
     common,
     ajax,
@@ -48,7 +50,9 @@ define([
     Clickstream,
     Omniture,
     Adverts,
-    Cookies
+    Cookies,
+    Search,
+    Video
 ) {
 
     var modules = {
@@ -145,6 +149,18 @@ define([
         },
 
         loadOmnitureAnalytics: function (config) {
+            common.mediator.on('module:omniture:loaded', function() {
+                var videos = document.getElementsByTagName("video");
+                if(videos) {
+                    for(var i = 0, l = videos.length; i < l; i++) {
+                        var v = new Video({
+                            el: videos[i],
+                            config: config
+                        }).init();
+                    }
+                }
+            });
+
             var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                 o = new Omniture(null, config).init();
         },
@@ -163,6 +179,13 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
         }
     };
 
@@ -178,6 +201,8 @@ define([
 
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
+
+        modules.initialiseSearch(config);
 
         modules.showRelativeDates();
     };

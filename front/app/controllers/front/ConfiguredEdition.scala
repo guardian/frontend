@@ -6,16 +6,15 @@ import play.api.libs.json.Json.parse
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration._
 import conf.Configuration
-import common.Response
 import model.Trailblock
 import model.TrailblockDescription
+import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
 class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription])
     extends FrontEdition(edition, descriptions)
-    with AkkaSupport with HttpSupport with Logging {
+    with AkkaSupport with Logging {
 
-  override lazy val proxy = Proxy(Configuration)
 
   val configUrl = Configuration.front.config
 
@@ -32,13 +31,11 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def refresh() = {
     super.refresh()
-    configAgent.sendOff { oldAgents =>
-      log.info(s"loading front configuration from: $configUrl")
-      http.GET(configUrl) match {
-        case Response(200, json, _) => refreshAgents(json, oldAgents)
-        case Response(errorCode, _, errorMessage) =>
-          log.error("error fetching config %s %s" format (errorCode, errorMessage))
-          oldAgents
+    log.info(s"loading front configuration from: $configUrl")
+    WS.url(configUrl).withTimeout(2000).get().foreach{ response =>
+      response.status match {
+        case 200 => configAgent.send(oldAgents => refreshAgents(response.body, oldAgents))
+        case _ => log.error(s"error fetching config ${response.status} ${response.statusText}")
       }
     }
   }

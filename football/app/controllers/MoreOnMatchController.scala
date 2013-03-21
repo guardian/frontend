@@ -34,7 +34,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
 
     matchFor(interval, team1, team2).map { theMatch =>
-      val promiseOfRelated = Future(loadMoreOn(request, theMatch))
+      val promiseOfRelated = loadMoreOn(request, theMatch)
       Async {
         // for our purposes here, we are only interested in content with exactly 2 team tags
         promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map { related =>
@@ -51,7 +51,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   def moreOn(matchId: String) = Action { implicit request =>
     findMatch(matchId).map { theMatch =>
-      val promiseOfRelated = Future(loadMoreOn(request, theMatch))
+      val promiseOfRelated = loadMoreOn(request, theMatch)
       Async {
         promiseOfRelated.map { related =>
           related match {
@@ -66,7 +66,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }.getOrElse(NotFound)
   }
 
-  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Seq[Content] = {
+  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
     ContentApi.search(Site(request).edition)
       .section("football")
@@ -74,7 +74,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
-      .response.results.map(new Content(_))
+      .response.map{ response =>
+        response.results.map(new Content(_))
+    }
   }
 
   //for our purposes we expect exactly 2 football teams

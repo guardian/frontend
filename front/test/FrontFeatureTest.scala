@@ -8,11 +8,9 @@ import model._
 import org.joda.time.DateTime
 import collection.JavaConversions._
 import controllers.{ FrontController }
-import play.api.test.FakeRequest
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
-import controllers.FrontPage
 import model.TrailblockDescription
 import views.support.{ Featured, Thumbnail, Headline }
 
@@ -112,7 +110,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), "UK")
 
         agent.refresh()
-        agent.warmup
+        loadOrTimeout(agent)
+
 
         val trails = agent.trailblock.get.trails
 
@@ -132,7 +131,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), "UK")
 
         agent.refresh()
-        agent.warmup
+        loadOrTimeout(agent)
 
         val trails = agent.trailblock.get.trails
 
@@ -150,7 +149,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), "UK")
 
         agent.refresh()
-        agent.warmup
+        loadOrTimeout(agent)
 
         val trails = agent.trailblock.get.trails
 
@@ -170,9 +169,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
         ukAgent.refresh()
         usAgent.refresh()
-
-        ukAgent.warmup
-        usAgent.warmup
+        loadOrTimeout(ukAgent)
+        loadOrTimeout(usAgent)
 
         val ukTrails = ukAgent.trailblock.get.trails
         val usTrails = usAgent.trailblock.get.trails
@@ -418,6 +416,13 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         Then("I should see an internal server error")
         controller.render("front")(TestRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
       }
+    }
+  }
+
+  private def loadOrTimeout(agent: TrailblockAgent) {
+    val start = System.currentTimeMillis()
+    while (!agent.trailblock.isDefined) {
+      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
     }
   }
 

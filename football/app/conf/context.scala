@@ -1,27 +1,22 @@
 package conf
 
-import _root_.play.api.{ Application => PlayApp, Plugin }
+import _root_.play.api.libs.ws.WS
+import play.api.{ Application => PlayApp, Plugin }
+import play.api.libs.concurrent.Execution.Implicits._
 import common._
 import com.gu.management._
 import com.gu.management.play._
 import feed.Competitions
 import logback.LogbackLevelPage
-import pa.{ Http, Proxy, DispatchHttp, PaClient }
+import pa.{ Http, PaClient }
 import model.{ TeamMap, LiveBlog }
+import concurrent.Future
+import System.currentTimeMillis
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
-  object dispatchHttp extends DispatchHttp {
-    override lazy val maxConnections = 100
-    override lazy val requestTimeoutInMs = 5000
-    override lazy val connectionTimeoutInMs = 500
-    override lazy val proxy = if (Configuration.proxy.isDefined)
-      Some(Proxy(Configuration.proxy.host, Configuration.proxy.port))
-    else
-      None
-  }
+
 
   override def onStart() = {
-    FootballClient.http = dispatchHttp
     Competitions.startup()
     LiveBlog.startup()
     TeamMap.startup()
@@ -31,7 +26,6 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     Competitions.shutDown()
     LiveBlog.shutdown()
     TeamMap.shutdown()
-    dispatchHttp.close()
   }
 }
 
@@ -39,25 +33,33 @@ object FootballClient extends PaClient with Http with Logging {
 
   override lazy val base = Configuration.pa.host
 
-  private var _http: Http = _
+  private var _http: Http = new Http {
+    override def GET(urlString: String): Future[pa.Response] = {
+        val start = currentTimeMillis()
+        val promiseOfResponse = WS.url(urlString).withTimeout(2000).get()
+        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(currentTimeMillis() - start))
+
+        promiseOfResponse.map{ r =>
+
+          r.status match {
+            case 200 => PaApiHttpOkMetric.recordCount(1)
+            case _ => PaApiHttpErrorMetric.recordCount(1)
+          }
+
+          //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
+          //I have reported to PA, but just trimming here so we can carry on development
+          pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
+        }
+      }
+  }
 
   def http = _http
   def http_=(delegateHttp: Http) = _http = delegateHttp
 
   lazy val apiKey = Configuration.pa.apiKey
 
-  override def GET(urlString: String): pa.Response = {
-
-    val response = PaApiHttpTimingMetric.measure(_http.GET(urlString))
-
-    response.status match {
-      case 200 => PaApiHttpOkMetric.recordCount(1)
-      case _ => PaApiHttpErrorMetric.recordCount(1)
-    }
-
-    //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
-    //I have reported to PA, but just trimming here so we can carry on development
-    response.copy(body = response.body.dropWhile(_ != '<'))
+  override def GET(urlString: String): Future[pa.Response] = {
+    _http.GET(urlString)
   }
 }
 
@@ -90,7 +92,7 @@ object PaApiHttpErrorMetric extends CountMetric(
 )
 
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
 object Management extends Management {
