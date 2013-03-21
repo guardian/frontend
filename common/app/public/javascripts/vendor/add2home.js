@@ -22,6 +22,7 @@ var addToHome = function (addToHomeConfig) {
 		isReturningVisitor,
 		balloon,
 		overrideChecks,
+		url = window.location.href,
 
 		positionInterval,
 		closeTimeout,
@@ -165,6 +166,8 @@ var addToHome = function (addToHomeConfig) {
 		var duration,
 			iPadXShift = 208;
 
+		history.replaceState({}, '', url.split('#')[0] + '#homescreen');
+
 		// Set the initial position
 		if ( isIPad ) {
 			if ( OSVersion < 5 ) {
@@ -239,6 +242,8 @@ var addToHome = function (addToHomeConfig) {
 		clearInterval( positionInterval );
 		clearTimeout( closeTimeout );
 		closeTimeout = null;
+
+		history.replaceState({}, '', url);
 
 		// check if the popup is displayed and prevent errors
 		if ( !balloon ) return;
