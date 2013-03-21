@@ -2,10 +2,14 @@
 
 #Node package management for Grunt build steps
 
-bundle install --path target/gems
+export PATH=target/gems/bin:$PATH
+
+bundle install --binstubs target/gems/bin --path target/gems
 npm install
 
 NPM_EXIT=$?
+
+
 
 if [ $NPM_EXIT == "1" ]; then
    exit 1
