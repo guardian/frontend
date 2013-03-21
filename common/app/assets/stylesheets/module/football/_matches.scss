@@ -90,7 +90,7 @@ a.competition-title {
     display: block;
     float: left;
     width: 50%;
-    @include box-sizing("border-box");
+    @include box-sizing(border-box);
 }
 
 .match-home {
