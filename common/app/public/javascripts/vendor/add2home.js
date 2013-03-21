@@ -18,7 +18,7 @@ var addToHome = function (addToHomeConfig) {
 		startY = 0,
 		lastVisit = 0,
 		isExpired,
-		isSessionActive,
+		isDisabledByUser,
 		isReturningVisitor,
 		balloon,
 		overrideChecks,
@@ -99,7 +99,7 @@ var addToHome = function (addToHomeConfig) {
 
 		lastVisit = +w.localStorage.getItem('addToHome');
 
-		isSessionActive = w.sessionStorage.getItem('addToHomeSession');
+		isDisabledByUser = w.localStorage.getItem('addToHomeDisable');
 		isReturningVisitor = options.returningVisitor ? lastVisit && lastVisit + 28*24*60*60*1000 > now : true;
 
 		if ( !lastVisit ) lastVisit = now;
@@ -117,7 +117,7 @@ var addToHome = function (addToHomeConfig) {
 		if ( !isReturningVisitor ) w.localStorage.setItem('addToHome', Date.now());
 		else if ( options.expire && isExpired ) w.localStorage.setItem('addToHome', Date.now() + options.expire * 60000);
 
-		if ( !overrideChecks && ( !isSafari || !isExpired || isSessionActive || isStandalone || !isReturningVisitor ) ) return;
+		if ( !overrideChecks && ( !isSafari || !isExpired || isDisabledByUser || isStandalone || !isReturningVisitor ) ) return;
 
 		var touchIcon = '',
 			platform = nav.platform.split(' ')[0],
@@ -297,8 +297,8 @@ var addToHome = function (addToHomeConfig) {
 
 
 	function clicked () {
-		w.sessionStorage.setItem('addToHomeSession', '1');
-		isSessionActive = true;
+		w.localStorage.setItem('addToHomeDisable', '1');
+		isDisabledByUser = true;
 		close();
 	}
 
@@ -333,7 +333,7 @@ var addToHome = function (addToHomeConfig) {
 	// Clear local and session storages (this is useful primarily in development)
 	function reset () {
 		w.localStorage.removeItem('addToHome');
-		w.sessionStorage.removeItem('addToHomeSession');
+		w.localStorage.removeItem('addToHomeDisable');
 	}
 
 	function orientationCheck () {
