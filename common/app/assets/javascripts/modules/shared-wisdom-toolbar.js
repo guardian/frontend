@@ -22,7 +22,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 						function(resp) {
 							common.mediator.trigger(
 								'module:error', 
-								['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', 23]
+								['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', x]
 							);
 						}
 					);
@@ -40,6 +40,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    					'<button data-link-name="hide" type="button" class="hide">x</button>' +
 	    				'</div>'
 	    			);
+		    		common.$g('body #shared-wisdom-toolbar').css('opacity', 1);
 
 		    		bean.on(common.$g('#shared-wisdom-toolbar .toggle')[0], 'click', function(e) {
 		    			sharedWisdomToolbar.toggle();
@@ -72,8 +73,13 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    		common.$g('#shared-wisdom-toolbar .toggle')
 	    			.text('▲')
 	    			.attr('data-link-name', 'close');
+	    		var numbersText = [];
+	    		for (var text in data.numbers) {
+	    			numbersText.push(text.replace(/_/g, ' ') + ': ' + data.numbers[text]);
+	    		}
 	    		common.$g('#shared-wisdom-toolbar').append(
 	    			'<div class="panel">' +
+	    				'<p>' + numbersText.join(' and ') + '</p>' +
 	    				'<ul>' +
 	    					data.other_insights.map(function(insight) {
 	    						return '<li>' + insight + '</li>'; 
