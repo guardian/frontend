@@ -20,6 +20,13 @@ define([
 
             loaded = true;
 
+            //Horrible UA detection for iOS
+            if(format === "mp4") {
+                if(window.navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+                    format = "m3u8";
+                }
+            }
+
             for(var i = 0, l = sources.length; i < l; i++) {
                 if(sources[i].src.search("."+format) > -1) {
                     source = sources[i].src;
@@ -55,7 +62,6 @@ define([
             if(format) {
                 bean.on(video, "play", function() {
                     if(!loaded) {
-                        console.log("source", video.src);
                         that.load(format);
                     }
                 });
