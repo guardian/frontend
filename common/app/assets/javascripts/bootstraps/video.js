@@ -2,12 +2,14 @@ define([
     "common",
     "modules/detect",
     "modules/analytics/video",
+    "modules/adverts/video",
     "modules/accordion",
     "modules/story/experiment"
 ], function(
     common,
     detect,
     Videostream,
+    Advert,
     Accordion,
     Experiment
 ) {
@@ -16,7 +18,11 @@ define([
 
         initAdverts: function(config) {
             if(!config.page.blockAds) {
-                console.log(detect.getVideoFormatSupport());
+                var support = detect.getVideoFormatSupport();
+                var a = new Advert({
+                    el: document.getElementsByTagName('video')[0],
+                    support: support
+                }).init();
             }
         },
 

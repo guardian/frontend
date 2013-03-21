@@ -111,8 +111,8 @@ define(function () {
 
         try {
             if (!!elem.canPlayType) {
-                types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,'');
                 types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
+                types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,'');
                 types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
             }
         } catch(e){}
