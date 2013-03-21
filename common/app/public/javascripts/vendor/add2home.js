@@ -1,6 +1,12 @@
 /*!
  * Add to Homescreen v2.0.7 ~ Copyright (c) 2013 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
+ *
+ * Guardian mods:
+ * - AMD wrapper
+ * - config is passed in, rather than in global scope
+ * - store isDisabledByUser in localStorage, rather than isSessionActive in sessionStorage
+ * - temporarily adds #popup:homescreen to url for duration of visible popup (for tracking)
  */
 
 define('homescreen', [], function() {
