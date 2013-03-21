@@ -77,7 +77,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    				'<ul>' +
 	    					data.other_insights.map(function(insight) {
 	    						return '<li>' + insight + '</li>'; 
-	    					}).join() +
+	    					}).join('') +
 	    				'<ul>' +
 	    			'<div>'
 				);
