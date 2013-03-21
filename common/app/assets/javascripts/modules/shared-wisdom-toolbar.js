@@ -3,14 +3,16 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	var hidden = true,
 		closed = true,
 		data = null,
-		url = '/top-stories.json?page-size=10&view=link',
+		url = 'http://10.121.73.229/api/1.0/pageview/testme/',
 		sharedWisdomToolbar = {
 			
 			// init takes callback, as makes http request
 			init: function(callback) {
 				if (!data) {;
 					reqwest({
-						url: url
+						url: url,
+						type: 'json',
+						method: 'get'
 					})
 					.then(
 						function(respData) {
@@ -33,7 +35,7 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    		if (hidden) {
 		    		common.$g('body').prepend(
 	    				'<div id="shared-wisdom-toolbar" data-link-name="shared-wisdom-toolbar">' +
-	    					'<p>Expensive page</p>' +
+	    					'<p>' + data.top_insight_sentence + '</p>' +
 	    					'<button data-link-name="open" type="button" class="toggle">▼</button>' +
 	    					'<button data-link-name="hide" type="button" class="hide">x</button>' +
 	    				'</div>'
@@ -72,7 +74,11 @@ define(['common', 'bonzo', 'bean', 'reqwest'], function (common, bonzo, bean, re
 	    			.attr('data-link-name', 'close');
 	    		common.$g('#shared-wisdom-toolbar').append(
 	    			'<div class="panel">' +
-	    				'<p>Something else</p>' +
+	    				'<ul>' +
+	    					data.other_insights.map(function(insight) {
+	    						return '<li>' + insight + '</li>'; 
+	    					}).join() +
+	    				'<ul>' +
 	    			'<div>'
 				);
     			closed = false;
