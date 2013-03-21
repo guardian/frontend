@@ -166,7 +166,7 @@ var addToHome = function (addToHomeConfig) {
 		var duration,
 			iPadXShift = 208;
 
-		history.replaceState({}, '', url.split('#')[0] + '#homescreen');
+		history.replaceState({}, '', url.split('#')[0] + '#popup:homescreen');
 
 		// Set the initial position
 		if ( isIPad ) {
