@@ -1,16 +1,16 @@
 #addToHomeScreen {
-    .type-8;
+    @extend .type-8;
     z-index:9999;
     -webkit-user-select:none;
     user-select:none;
-    .box-sizing(border-box);
+    @include box-sizing(border-box);
     -webkit-touch-callout:none;
     touch-callout:none;
     width:240px;
     padding:12px 28px 16px 14px;
     text-align:left;
     font-family:helvetica;
-    background: @blue;
+    background: $blue;
     color:#fff;
     line-height:130%;
 }
@@ -20,10 +20,10 @@
 }
 
 #addToHomeScreen.addToHomeIpad {
-    .type-8;
+    @extend .type-8;
     width:240px;
     margin-left: 14px;
-    .box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));
+    @include box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));
 }
 
 #addToHomeScreen.addToHomeWide {
@@ -36,7 +36,7 @@
 
 #addToHomeScreen .addToHomeArrow {
     position:absolute;
-    background: @blue;
+    background: $blue;
     width:16px; height:16px;
     -webkit-transform:rotateZ(45deg);
     bottom:-8px; 
@@ -46,12 +46,12 @@
 
 #addToHomeScreen.addToHomeIpad .addToHomeArrow {
     -webkit-transform:rotateZ(-135deg);
-    background: @blue;
+    background: $blue;
     top:-8px; bottom:auto; left:50%;
 }
 
 #addToHomeScreen .addToHomeClose {
-    .box-sizing(border-box);
+    @include box-sizing(border-box);
     position:absolute;
     right:8px;
     top:8px;

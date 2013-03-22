@@ -9,7 +9,7 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
                 },
                 options: {
-                    check: false,
+                    check: true,
                     quiet: true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
