@@ -6,7 +6,9 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/story/experiment",
-    "modules/accordion"
+    "modules/accordion",
+    "bonzo",
+    "bean"
 ], function (
     common,
     Expandable,
@@ -14,7 +16,9 @@ define([
     MatchNav,
     Reading,
     Experiment,
-    Accordion
+    Accordion,
+    bonzo,
+    bean
 ) {
 
     var modules = {
@@ -62,6 +66,28 @@ define([
                 require(['js!' + config.page.optimizelyUrl]);
             }
         },
+            
+        abTest: function() {
+        	var testName = 'Most Read';
+	        Abba(testName)
+	            .control('Control', function(){
+	            	console.log('Test "' + testName + '": control');
+		        	// update hrefs for test
+		            common.$g('#tabs-popular-1 a').attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1'; });
+	          	})
+	            .variant('"The Guardian" selected', function(){
+	            	console.log('Test "' + testName + '": variant');
+		        	bean.fire(common.$g('#js-popular-tabs a[data-link-name~="Guardian"]')[0], 'click');
+	                // update hrefs for test
+		            common.$g('#tabs-popular-2 a').attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1'; });
+	            })
+	            .start();
+	        
+	        if(window.location.search.indexOf('testComplete=1') !== -1) {
+	        	console.log('Test "' + testName + '": ended');
+	        	Abba(testName).complete();
+	        }
+        },
 
         initExperiments: function(config) {
             common.mediator.on('modules:experiment:render', function() {
@@ -93,6 +119,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
+            modules.abTest();
             modules.addOptimizely(config);
         });
     };

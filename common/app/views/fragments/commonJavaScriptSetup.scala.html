@@ -83,7 +83,11 @@
         script.async = 'async';
         script.src = '@Static("javascripts/bootstraps/app.js")';
 
-        document.getElementsByTagName("head")[0].appendChild(script); 
+        document.getElementsByTagName("head")[0].appendChild(script);
+        
+        var abba = document.createElement('script');
+        abba.src = 'https://intense-oasis-8128.herokuapp.com/v1/abba.js';
+        document.getElementsByTagName("head")[0].appendChild(abba);
     
     })(guardian.isModernBrowser);
 
