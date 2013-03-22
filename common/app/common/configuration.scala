@@ -2,6 +2,7 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
+import java.net.InetAddress
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -48,6 +49,10 @@ class GuardianConfiguration(
 
   object mongo {
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
+  }
+
+  object host {
+    lazy val name = InetAddress.getLocalHost.getHostName
   }
 
   object proxy {
