@@ -74,11 +74,15 @@ object CommonSwitches {
     "If this switch is enabled the add-to-homescreen popup will plague iOS users",
     initiallyOn = false)
 
+  val OptimizelySwitch = DefaultSwitch("optimizely",
+    "If this switch is on Optimizely will be enabled.",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, 
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch
   )
 }
 
