@@ -3,6 +3,21 @@ module.exports = function (grunt) {
     // Project configuration.
 
     grunt.initConfig({
+        sass: {
+            common: {
+                files: {
+                    'common/app/assets/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
+                },
+                options: {
+                    check: true,
+                    quiet: true,
+                    loadPath: [
+                        'common/app/assets/stylesheets/components/pasteup/sass/layout',
+                        'common/app/assets/stylesheets/components/normalize-scss'
+                    ]
+                }
+            }
+        },
         // Compile into single, minified Javascript files
         requirejs: {
             common: {
@@ -113,6 +128,7 @@ module.exports = function (grunt) {
     });
 
     // Load the plugins
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-webfontjson');
@@ -121,8 +137,10 @@ module.exports = function (grunt) {
     grunt.registerTask('test:common', ['jshint:common']);
     grunt.registerTask('test', ['test:common']);
 
-    grunt.registerTask('compile:common', ['requirejs:common']);
-    grunt.registerTask('compile', ['compile:common']);
+    grunt.registerTask('compile:common:css', ['sass:common']);
+    grunt.registerTask('compile:common:js', ['requirejs:common']);
+
+    grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
     grunt.registerTask('default', ['test', 'compile']);
 };

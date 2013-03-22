@@ -1,0 +1,13 @@
+a,
+a:link,
+a:visited {
+    color: $linkBlue;
+    text-decoration: none;
+}
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+a:active {
+	color: $darkBlue;
+}
