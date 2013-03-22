@@ -65,7 +65,7 @@ trait Prototypes extends Testing {
           // don't copy across svg files (they're inline)
           (sourceDirectory / "assets" / "images") ** "*.png",
           (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
-          (sourceDirectory / "assets" / "stylesheets") ** "main.min.css",
+          (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",
           (sourceDirectory / "public") ** "*"
         )
       },

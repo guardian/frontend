@@ -6,7 +6,8 @@ module.exports = function (grunt) {
         sass: {
             common: {
                 files: {
-                    'common/app/assets/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss'
+                    'common/app/assets/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss',
+                    'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
                 },
                 options: {
                     check: false,
