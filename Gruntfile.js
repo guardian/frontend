@@ -122,7 +122,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['test:common']);
 
     grunt.registerTask('compile:common', ['requirejs:common']);
-    grunt.registerTask('compile', ['compile:common']);
+    grunt.registerTask('compile', []);
 
     grunt.registerTask('default', ['test', 'compile']);
 };

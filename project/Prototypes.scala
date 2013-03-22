@@ -63,7 +63,8 @@ trait Prototypes extends Testing {
         Seq(
           // don't copy across svg files (they're inline)
           (sourceDirectory / "assets" / "images") ** "*.png",
-          (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
+//          (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
+          (sourceDirectory / "assets" / "javascripts") ** "*.js",
           (sourceDirectory / "public") ** "*"
         )
       },

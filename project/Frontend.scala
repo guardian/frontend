@@ -15,8 +15,8 @@ object Frontend extends Build with Prototypes with Testing {
 
   val common = library("common").settings(
     javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
-    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile", javascriptFiles))
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("test"))//,
+//    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile", javascriptFiles))
   )
 
   val commonWithTests = common % "test->test;compile->compile"

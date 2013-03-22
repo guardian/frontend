@@ -76,12 +76,21 @@
                 }.mkString(","))}
             }
         };
+        
+        var script = document.createElement('script');
+        script.async = 'async';
+        script.src = '@Static("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")';
+        document.getElementsByTagName("head")[0].appendChild(script);
 
         var script = document.createElement('script');
         script.async = 'async';
         script.src = '@Static("javascripts/bootstraps/app.js")';
+        document.getElementsByTagName("head")[0].appendChild(script);
 
-        document.getElementsByTagName("head")[0].appendChild(script); 
+        var script = document.createElement('script');
+        script.async = 'async';
+        script.src = '@Static("javascripts/bootstraps/go.js")';
+        document.getElementsByTagName("head")[0].appendChild(script);
     
     })(guardian.isModernBrowser);
 
