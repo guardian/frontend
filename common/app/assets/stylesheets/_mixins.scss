@@ -1,0 +1,42 @@
+//Output based on body font-size being 10px
+@mixin font($family, $weight, $size, $line-height) {
+    font-family: $family;
+    font-size: $size*1px;
+    font-size: ($size / 10)*1rem;
+    font-weight: $weight;
+    line-height: ($line-height / 10)*1rem;
+}
+
+@mixin box-sizing($box) {
+    -ms-box-sizing: $box;
+    -o-box-sizing: $box;
+    -webkit-box-sizing: $box;
+    -moz-box-sizing: $box;
+    box-sizing: $box;
+}
+
+@mixin transition($args) {
+    transition: $args;
+    -webkit-transition: $args;
+    -moz-transition: $args;
+}
+
+@mixin rounded-corners($radius: 5px) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+@mixin box-shadow($args) {
+    box-shadow: $args;
+    -webkit-box-shadow: $args;
+    -moz-box-shadow: $args;
+}
+
+@mixin rotate($val) {
+  -moz-transform: rotate($val);  /* FF3.5+ */
+  -o-transform: rotate($val);  /* Opera 10.5 */
+  -webkit-transform: rotate($val);  /* Saf3.1+, Chrome */
+  -ms-transform: rotate($val);  /* IE9 */
+  transform: rotate($val);
+}

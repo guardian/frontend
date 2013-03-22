@@ -12,11 +12,14 @@ object Frontend extends Build with Prototypes with Testing {
   val version = "1-SNAPSHOT"
 
   val javascriptFiles = SettingKey[PathFinder]("javascript-files", "All javascript")
+  val cssFiles = SettingKey[PathFinder]("css-files", "All css")
 
   val common = library("common").settings(
     javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
+    cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
-    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile", javascriptFiles))
+    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
+    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
   )
 
   val commonWithTests = common % "test->test;compile->compile"

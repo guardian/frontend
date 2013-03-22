@@ -1,0 +1,27 @@
+a,
+a:link,
+a:visited {
+	color: #005689; // blue
+	text-decoration: none;
+}
+a:hover,
+a:focus {
+	text-decoration: underline;
+}
+a:active {
+	color: white;
+	background-color: #005689; // blue
+}
+
+// From normalise:
+// Addresses outline displayed oddly in Chrome
+a:focus {
+    outline: thin dotted;
+}
+
+// Improves readability when focused and also mouse hovered in all browsers
+// people.opera.com/patrickl/experiments/keyboard/test
+a:hover,
+a:active {
+    outline: 0;
+}

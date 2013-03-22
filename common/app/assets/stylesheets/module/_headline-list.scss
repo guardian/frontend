@@ -1,0 +1,35 @@
+.headline-list ul {
+    margin: 0 $gutter;
+}
+
+.headline-list li {
+	display: block;
+	overflow: auto;
+    border-bottom: 1px solid #DDDDDD;
+    padding: $baseline*2 0;
+}
+
+.headline-list li:last-child {
+	border-bottom: none;
+}
+
+.headline-list p {
+    float: left;
+    width: 90%;
+    padding-left: $baseline*2;
+}
+
+.headline-list a {
+	color: #333333;
+}
+.headline-list a:visited{
+	color:#777777;
+}
+
+.headline-list .count {
+	@extend .type-7;
+    float:left;
+    line-height: 16px;
+    color: #777777;
+    width: 12px;
+}
