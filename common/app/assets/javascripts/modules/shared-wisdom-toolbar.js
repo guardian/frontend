@@ -42,14 +42,14 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 				    ['url', window.location.pathname], 
 				    ['omniture', cookies.s_vi], 
 				    ['ophan', cookies.OAX], 
-				    ['adslot_one', 'something'], 
-				    ['adslot_two', 'something_else']
+				    ['adslot_one', 'Google_Nexus4_Q113_RON_Mixed'], 
+				    ['adslot_two', 'Rubicon_UK_RTBTier2_BTF_NEWS_MAR13']
 			    ];
 			if (!data) {;
 				reqwest({
 					url: url + '?' + params.map(function(param) {
 						return param[0] + '=' + encodeURIComponent(param[1])
-					}).join('='),
+					}).join('&'),
 					type: 'json',
 					method: 'get',
 					crossOrigin: true
