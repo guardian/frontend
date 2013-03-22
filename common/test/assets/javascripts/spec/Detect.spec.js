@@ -29,7 +29,7 @@ define(['modules/detect'], function(detect) {
             
             expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 3000 } })).toBe('medium');
             
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } })).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } })).toBe('high');
 
         });
 
@@ -43,7 +43,7 @@ define(['modules/detect'], function(detect) {
 
             expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } }, { type: 6} )).toBe('low');
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } }, { type: 6} )).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } }, { type: 6} )).toBe('high');
 
         });
     });
