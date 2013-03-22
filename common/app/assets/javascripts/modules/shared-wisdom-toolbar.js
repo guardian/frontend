@@ -3,7 +3,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 	var hidden = true,
 		closed = true,
 		data = null,
-		url = 'http://10.121.73.229/api/1.0/pageview/testme/',
+		url = 'http://127.0.0.1:8000/api/1.0/pageview/testme/',
 		panelHeight = null,
 		id = 'shared-wisdom-toolbar';
 
@@ -13,8 +13,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 			.text('▲')
 			.attr('data-link-name', 'close');
 		common.$g('#shared-wisdom-toolbar .panel').css('height', panelHeight + 'px');
-		closed = false;
-		
+		closed = false;	
 	}
 	
 	function close() {
@@ -26,22 +25,31 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 		closed = true;
 	}
 	
-	function objectifyCookie(cookieString) {
-		var cookie = {};
+	function objectifyCookies(cookieString) {
+		var cookies = {};
 		cookieString.split(/\s*;\s*/).forEach(function(entry) {
 			var cookieBits = entry.split('=');
-			cookie[cookieBits[0]] = cookieBits[1] 
+			cookies[cookieBits[0]] = cookieBits[1] 
 		});
-		return cookie;
+		return cookies;
 	}
 	
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
 		init: function(callback) {
-			var cookie = objectifyCookie(document.cookie);
+			var cookies = objectifyCookies(document.cookie),
+				params = [
+				    ['url', window.location.pathname], 
+				    ['omniture', cookies.s_vi], 
+				    ['ophan', cookies.OAX], 
+				    ['adslot_one', 'something'], 
+				    ['adslot_two', 'something_else']
+			    ];
 			if (!data) {;
 				reqwest({
-					url: url + '?url=' + encodeURIComponent(window.location.pathname),
+					url: url + '?' + params.map(function(param) {
+						return param[0] + '=' + encodeURIComponent(param[1])
+					}).join('='),
 					type: 'json',
 					method: 'get',
 					crossOrigin: true
@@ -71,14 +79,16 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 	    		}
 	    		common.$g('body').prepend(
     				'<div id="shared-wisdom-toolbar" data-link-name="shared-wisdom-toolbar">' +
-    					'<p>' + data.top_insight_sentence + '</p>' +
+    					'<p class="top-insight">' + data.insights[0].sentence + '</p>' +
+    					data.stats.map(function(stat) {
+    						return '<abbr class="stat" title="' + stat.name + '">' + stat.value + '</abbr>'; 
+    					}).join('') +
     					'<button data-link-name="open" type="button" class="toggle">▼</button>' +
     					'<button data-link-name="hide" type="button" class="hide">x</button>' +
     					'<div class="panel">' +
-		    				'<p>' + numbersText.join(' and ') + '</p>' +
 		    				'<ul>' +
-		    					data.other_insights.map(function(insight) {
-		    						return '<li>' + insight + '</li>'; 
+		    					data.insights.slice(1).map(function(insight) {
+		    						return '<li>' + insight.sentence + '</li>'; 
 		    					}).join('') +
 		    				'<ul>' +
 		    			'<div>' +
