@@ -2,9 +2,9 @@
 
 #Node package management for Grunt build steps
 
-export PATH=target/gems/bin:$PATH
+export PATH=dev/gems/bin:$PATH
 
-bundle install --binstubs target/gems/bin --path target/gems
+bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
 NPM_EXIT=$?
