@@ -1,0 +1,102 @@
+#addToHomeScreen {
+    .type-8;
+    z-index:9999;
+    -webkit-user-select:none;
+    user-select:none;
+    .box-sizing(border-box);
+    -webkit-touch-callout:none;
+    touch-callout:none;
+    width:240px;
+    padding:12px 28px 16px 14px;
+    text-align:left;
+    font-family:helvetica;
+    background: @blue;
+    color:#fff;
+    line-height:130%;
+}
+
+#addToHomeScreen strong {
+    font-weight: bold;
+}
+
+#addToHomeScreen.addToHomeIpad {
+    .type-8;
+    width:240px;
+    margin-left: 14px;
+    .box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));
+}
+
+#addToHomeScreen.addToHomeWide {
+    width:296px;
+}
+
+#addToHomeScreen.addToHomeIpad.addToHomeWide {
+    width:320px;
+}
+
+#addToHomeScreen .addToHomeArrow {
+    position:absolute;
+    background: @blue;
+    width:16px; height:16px;
+    -webkit-transform:rotateZ(45deg);
+    bottom:-8px; 
+    left:50%;
+    margin-left:-8px;
+}
+
+#addToHomeScreen.addToHomeIpad .addToHomeArrow {
+    -webkit-transform:rotateZ(-135deg);
+    background: @blue;
+    top:-8px; bottom:auto; left:50%;
+}
+
+#addToHomeScreen .addToHomeClose {
+    .box-sizing(border-box);
+    position:absolute;
+    right:8px;
+    top:8px;
+    width:20px;
+    height:20px; 
+    line-height:14px;
+    text-align:center;
+    padding: 1px 2px 1px 2px;
+    -webkit-border-radius:9px;
+    background:rgba(254, 254, 254, 0.2);
+    color:#fff;
+    font-size:16px;
+}
+
+#addToHomeScreen .addToHomePlus {
+    font-weight:bold;
+    font-size:1.3em;
+}
+
+#addToHomeScreen .addToHomeShare {
+    display:inline-block;
+    width:18px;
+    height:15px;
+    background-repeat:no-repeat;
+    background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAeCAYAAABE4bxTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMV4ttgzAQxREDMAIjMALdoCMkG6QTlA2aTkA6Qdgg6QTJBmQD2MC5S4/WIGPOHwpPOlmyzfn5viaKZoaU8gqSRWuB/EED8romQh0+1kZIkgvTsf0CFhMYtyAJ84yjEOJuQ0gz3YLsQE81XIhBriApU/9uigycn5M+k068/An2HkDf25RJdWhMmQJrW5CTdEPfhT5k0BogtfTHbxaKgY/RHV+Dcy9g1ouGTAHDe+AcOMSDiTscXjACtaREmD0tz4z9exkef4XThhAG3wxkeq0ltjRoOTKPMfZN47POgOtvhjrUoaJS0lq7DG+huV1BhdWmUnfYe8UQ9iFlX83t4CPxknsHtVJv6imrGPQb+xibkOKuxvZto+gug6U9tQbp8qahS7BrFjfL0MyVrjsz8NJlHAcb5r7nc8Gl8OrIYAx6Z1nAzpBScJ99LBSKTEbvr8w3hkKSCRJDIZC4ZFk2Yxw5EcKP8iX/UjYLnt2OETouROZTW7eUDEj+kdCt9wZaMx4CDACviFOqJcrQWwAAAABJRU5ErkJggg==);
+    background-size:18px 15px;
+    text-indent:-9999em;
+    overflow:hidden;
+}
+
+#addToHomeScreen .addToHomeTouchIcon {
+    display:block;
+    float:left;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    -webkit-box-shadow:0 1px 8px rgba(0,0,0,0.5),
+        inset 0 0 2px rgba(255,255,255,0.9);
+    box-shadow:0 1px 8px rgba(0,0,0,0.5),
+        inset 0 0 2px rgba(255,255,255,0.9);
+    background-repeat:no-repeat;
+    width:57px;
+    height:57px;
+    -webkit-background-size:57px 57px;
+    background-size:57px 57px;
+    margin:0 12px 0 0;
+    -webkit-background-clip:padding-box;
+    background-clip:padding-box;
+}

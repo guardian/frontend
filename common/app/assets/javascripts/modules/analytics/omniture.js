@@ -116,6 +116,9 @@ define(['common', 'modules/detect'], function(common, detect) {
                 s.prop30 = 'non-content';
             }
 
+            if (window.location.hash === '#popup:homescreen') {
+                s.eVar38 = 'popup:homescreen';
+            }
         };
 
         this.init = function() {
