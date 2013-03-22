@@ -70,11 +70,15 @@ object CommonSwitches {
     "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
     initiallyOn = false)
 
+  val HomescreenSwitch = DefaultSwitch("homescreen",
+    "If this switch is enabled the add-to-homescreen popup will plague iOS users",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, 
-    SearchSwitch, QuantcastSwitch
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch
   )
 }
 
