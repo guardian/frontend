@@ -11,6 +11,7 @@ module.exports = function (grunt) {
                 options: {
                     check: false,
                     quiet: true,
+                    style: "compressed",
                     loadPath: [
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
