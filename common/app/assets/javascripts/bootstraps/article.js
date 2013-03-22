@@ -6,7 +6,8 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/story/experiment",
-    "modules/accordion"
+    "modules/accordion",
+    "bonzo"
 ], function (
     common,
     Expandable,
@@ -14,7 +15,8 @@ define([
     MatchNav,
     Reading,
     Experiment,
-    Accordion
+    Accordion,
+    bonzo
 ) {
 
     var modules = {
@@ -55,6 +57,15 @@ define([
                 reader.init();
             }
         },
+        
+        addOptimizely: function() {
+    		var $optimizely = bonzo(document.createElement('script'))
+    			.attr('type', 'text/javascript')
+            	.attr('async', 'async')
+            	.attr('src', '//cdn.optimizely.com/js/203695201.js');
+            
+            common.$g('head').append($optimizely);
+        },
 
         initExperiments: function(config) {
             common.mediator.on('modules:experiment:render', function() {
@@ -86,6 +97,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
+            modules.addOptimizely();
         });
     };
 
