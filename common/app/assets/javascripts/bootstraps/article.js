@@ -6,8 +6,7 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/story/experiment",
-    "modules/accordion",
-    "bonzo"
+    "modules/accordion"
 ], function (
     common,
     Expandable,
@@ -15,8 +14,7 @@ define([
     MatchNav,
     Reading,
     Experiment,
-    Accordion,
-    bonzo
+    Accordion
 ) {
 
     var modules = {
@@ -59,14 +57,8 @@ define([
         },
         
         addOptimizely: function(config) {
-        	if(config.switches.optimizely === true) {
-	    		var $optimizely = bonzo(document.createElement('script'))
-	    			.attr('type', 'text/javascript')
-	            	.attr('async', 'async')
-	            	.attr('src', '//cdn.optimizely.com/js/203695201.js');
-	            
-	            common.$g('head').append($optimizely);
-        	}
+            // pull in optimizely js
+            require(['js!' + config.page.optimizelyUrl]);
         },
 
         initExperiments: function(config) {

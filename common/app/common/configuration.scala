@@ -79,7 +79,8 @@ class GuardianConfiguration(
       "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
       "oasSiteId" -> "beta.guardian.co.uk/oas.html",
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js"
+      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "optimizelyUrl" -> "//cdn.optimizely.com/js/203695201.js"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
