@@ -58,13 +58,15 @@ define([
             }
         },
         
-        addOptimizely: function() {
-    		var $optimizely = bonzo(document.createElement('script'))
-    			.attr('type', 'text/javascript')
-            	.attr('async', 'async')
-            	.attr('src', '//cdn.optimizely.com/js/203695201.js');
-            
-            common.$g('head').append($optimizely);
+        addOptimizely: function(config) {
+        	if(config.switches.optimizely === true) {
+	    		var $optimizely = bonzo(document.createElement('script'))
+	    			.attr('type', 'text/javascript')
+	            	.attr('async', 'async')
+	            	.attr('src', '//cdn.optimizely.com/js/203695201.js');
+	            
+	            common.$g('head').append($optimizely);
+        	}
         },
 
         initExperiments: function(config) {
@@ -97,7 +99,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
-            modules.addOptimizely();
+            modules.addOptimizely(config);
         });
     };
 
