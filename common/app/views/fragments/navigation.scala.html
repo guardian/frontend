@@ -14,12 +14,8 @@
            data-link-name="@nav.dataLinkName">@nav.name</a>
         @if(nav.links.nonEmpty){
             <ol>
-                @nav.links.map{link =>
-                <a href="@link.url"
-                @if(link.currentFor(page)) {
-                    class="current"
-                }
-                data-link-name="@link.dataLinkName">@link.name</a>
+                @nav.links.map{ link =>
+                    <a href="@link.url" @if(link.currentFor(page)) { class="current" } data-link-name="@link.dataLinkName">@link.name</a>
                 }
             </ol>
         }
