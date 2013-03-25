@@ -1,4 +1,32 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
+@import nav.Navigation
+
+
+<ol>
+@Navigation(page).map{ nav =>
+    <li>
+        <a href="@nav.url"
+
+           @if(nav.currentFor(page)) {
+            class="current"
+           }
+
+           data-link-name="@nav.dataLinkName">@nav.name</a>
+        @if(nav.links.nonEmpty){
+            <ol>
+                @nav.links.map{link =>
+                <a href="@link.url"
+                @if(link.currentFor(page)) {
+                    class="current"
+                }
+                data-link-name="@link.dataLinkName">@link.name</a>
+                }
+            </ol>
+        }
+    </li>
+}
+</ol>
+
 
 @if(!isFooter){
 <header id="header" class="cf" role="banner">
