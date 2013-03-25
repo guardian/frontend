@@ -1,4 +1,4 @@
-define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (userPrefs, common, bonzo, bean, reqwest) {
+define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], function (userPrefs, common, bonzo, bean, reqwest, qwery) {
 	
 	var hidden = true,
 		closed = true,
@@ -41,31 +41,47 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest'], function (us
 				params = [
 				    ['url', window.location.pathname], 
 				    ['omniture', cookies.s_vi], 
-				    ['ophan', cookies.OAX], 
-				    ['adslot_one', 'Google_Nexus4_Q113_RON_Mixed'], 
-				    ['adslot_two', 'Rubicon_UK_RTBTier2_BTF_NEWS_MAR13']
+				    ['ophan', cookies.OAX]
 			    ];
-			if (!data) {;
-				reqwest({
-					url: url + '?' + params.map(function(param) {
-						return param[0] + '=' + encodeURIComponent(param[1])
-					}).join('&'),
-					type: 'json',
-					method: 'get',
-					crossOrigin: true
-				})
-				.then(
-					function(respData) {
-						data = respData;
-						callback();
-					},
-					function(resp) {
-						common.mediator.trigger(
-							'module:error', 
-							['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', x]
-						);
-					}
-				);
+
+			if (!data) {
+			    // TODO: hacky, wait 5 secs for ads to appear
+			    window.setTimeout(function() {
+	                qwery('.ad-slot').forEach(function(adSlot) {
+	                    // position of ad
+	                    var ad = ['adslot_' + bonzo(adSlot).attr('data-base')],
+	                        // get ad id (from the link, if it exists)
+	                        a = common.$g('.ad-container  > a', adSlot);
+	                    if (a.length !== 0) {
+	                        // pull out the
+	                        ad.push(/(oas.guardian.co.uk|247realmedia.com).*\/Guardian\/([^/]+)\//.exec(a.attr('href'))[2]); 
+	                    } else {
+	                        ad.push('__unkown__');
+	                    }
+	                    params.push(ad);
+	                });
+	                
+	                reqwest({
+	                    url: url + '?' + params.map(function(param) {
+	                        return param[0] + '=' + encodeURIComponent(param[1])
+	                    }).join('&'),
+	                    type: 'json',
+	                    method: 'get',
+	                    crossOrigin: true
+	                })
+	                .then(
+	                    function(respData) {
+	                        data = respData;
+	                        callback();
+	                    },
+	                    function(resp) {
+	                        common.mediator.trigger(
+	                            'module:error', 
+	                            ['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', 80]
+	                        );
+	                    }
+	                );
+			    }, 5000)
 			} else {
 				callback();
 			}
