@@ -64,7 +64,7 @@ define([
         attachGlobalErrorHandler: function (config) {
             var e = new Errors({
             	window: window,
-            	isDev: (config.page.buildNumber === 'DEV')
+            	isDev: config.page.isDev
             });
             e.init();
             common.mediator.on("module:error", e.log);
