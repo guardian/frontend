@@ -68,24 +68,29 @@ define([
         },
             
         abTest: function() {
-        	var testName = 'Most Read';
+        	var testName = 'Most Read',
+        		updateHrefs = function(selector) { 
+        			common.$g(selector).attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1' }); 
+    			};
+    			
 	        Abba(testName)
 	            .control('Control', function(){
-	            	console.log('Test "' + testName + '": control');
 		        	// update hrefs for test
-		            common.$g('#tabs-popular-1 a').attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1'; });
+	            	updateHrefs('#tabs-popular-1 a');
 	          	})
 	            .variant('"The Guardian" selected', function(){
-	            	console.log('Test "' + testName + '": variant');
 		        	bean.fire(common.$g('#js-popular-tabs a[data-link-name~="Guardian"]')[0], 'click');
 	                // update hrefs for test
-		            common.$g('#tabs-popular-2 a').attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1'; });
+	            	updateHrefs('#tabs-popular-2 a');
 	            })
 	            .start();
 	        
-	        if(window.location.search.indexOf('testComplete=1') !== -1) {
-	        	console.log('Test "' + testName + '": ended');
+	        var query = window.location.search; 
+	        if(query.indexOf('testComplete=1') !== -1) {
 	        	Abba(testName).complete();
+	        	// remove test complete flag from query 
+	        	// NOTE: causes reload. necessary? better way to do it? 
+	        	window.location.search = query.replace('testComplete=1', '');
 	        }
         },
 
