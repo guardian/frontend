@@ -36,13 +36,11 @@
     @fragments.sections(page, isFooter)
     
     @if(!isFooter){
-        <div class="search-box">
-            <gcse:searchbox></gcse:searchbox>
-        </div>
-        <div class="search-results" data-link-name="Search">
+        <div class="search-results">
             <gcse:searchresults></gcse:searchresults>
         </div>
     }
+
 </div>
 
 @if(isFooter){
