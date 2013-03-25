@@ -58,7 +58,9 @@ define([
         
         addOptimizely: function(config) {
             // pull in optimizely js
-            require(['js!' + config.page.optimizelyUrl]);
+            if(config.switches.optimizely === true) {
+                require(['js!' + config.page.optimizelyUrl]);
+            }
         },
 
         initExperiments: function(config) {
