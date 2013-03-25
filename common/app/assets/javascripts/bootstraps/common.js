@@ -61,9 +61,12 @@ define([
             ajax.init(config.page.ajaxUrl);
         },
 
-        attachGlobalErrorHandler: function () {
-            var e = new Errors(window);
-                e.init();
+        attachGlobalErrorHandler: function (config) {
+            var e = new Errors({
+            	window: window,
+            	isDev: config.page.isDev
+            });
+            e.init();
             common.mediator.on("module:error", e.log);
         },
 
@@ -191,7 +194,7 @@ define([
 
     var ready = function(config) {
         modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler();
+        modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent, userPrefs);
         modules.upgradeImages();
         modules.showTabs();
