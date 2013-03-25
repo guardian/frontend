@@ -39,9 +39,9 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		init: function(callback) {
 			var cookies = objectifyCookies(document.cookie),
 				params = [
-				    ['url', window.location.pathname], 
-				    ['omniture', cookies.s_vi], 
-				    ['ophan', cookies.OAX]
+				    ['url', window.location], 
+				    ['omniture', cookies.s_vi || ''], 
+				    ['ophan', cookies.OAX || '']
 			    ];
 
 			if (!data) {
@@ -56,7 +56,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	                        // pull out the
 	                        ad.push(/(oas.guardian.co.uk|247realmedia.com).*\/Guardian\/([^/]+)\//.exec(a.attr('href'))[2]); 
 	                    } else {
-	                        ad.push('__unkown__');
+	                        ad.push('__unknown__');
 	                    }
 	                    params.push(ad);
 	                });
