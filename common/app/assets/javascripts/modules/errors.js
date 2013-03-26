@@ -1,4 +1,4 @@
-define(['userPrefs', 'common'], function (userPrefs, common) {
+define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
     var Errors = function (config) {
 
