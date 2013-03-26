@@ -1,4 +1,4 @@
-define(['common'], function (common) {
+define(['userPrefs', 'common'], function (userPrefs, common) {
 
     var Errors = function (config) {
 
@@ -25,7 +25,7 @@ define(['common'], function (common) {
                     var url = makeUrl([message, filename, lineno]);
                     createImage(url);
                 }
-                return true;
+                return (userPrefs.isOn('showErrors')) ? false : true;
             },
             init = function() {
                 win.onerror = log;
