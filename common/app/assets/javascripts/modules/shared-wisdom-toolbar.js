@@ -3,7 +3,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var hidden = true,
 		closed = true,
 		data = null,
-		url = 'http://127.0.0.1:8000/api/1.0/pageview/testme/',
+		url = 'http://10.121.73.229/pageview/dynamic/',
 		panelHeight = null,
 		id = 'shared-wisdom-toolbar';
 
@@ -40,12 +40,12 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 			var cookies = objectifyCookies(document.cookie),
 				params = [
 				    ['url', window.location], 
-				    ['omniture', cookies.s_vi || ''], 
-				    ['ophan', cookies.OAX || '']
+				    ['omniture_s_vi', cookies.s_vi || ''], 
+				    ['ophan_browserId', cookies.OAX || '']
 			    ];
 
 			if (!data) {
-			    // TODO: hacky, wait 5 secs for ads to appear
+			    // TODO: hacky, wait 5 secs for ads to appear - need a way of knowing ads have loaded
 			    window.setTimeout(function() {
 	                qwery('.ad-slot').forEach(function(adSlot) {
 	                    // position of ad
@@ -131,8 +131,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
     	hide: function() {
     		if (!hidden) {
     			// remove on transition end
-    			// NOTE - webkit specific
-    			bean.on(common.$g('#shared-wisdom-toolbar')[0], 'webkitTransitionEnd', function() {
+    			bean.on(common.$g('#shared-wisdom-toolbar')[0], 'transitionend webkitTransitionEnd', function() {
     				bonzo(this).remove();
         			hidden = true;
         			userPrefs.switchOff(id);
