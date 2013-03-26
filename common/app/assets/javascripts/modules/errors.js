@@ -1,12 +1,9 @@
 define(['common'], function (common) {
 
-    var Errors = function (config) {
-    	
-    	var c = config || {};
-    		isDev = (c.isDev !== undefined) ? c.isDev : false,
-        	path = '/px.gif',
-        	cons = c.console || window.console,
-            win = c.window || window,
+    var Errors = function (w) {
+
+        var path = '/px.gif',
+            win = w || window,
             body = document.body,
             createImage = function(url) {
                 var image = new Image();
@@ -19,13 +16,8 @@ define(['common'], function (common) {
                 return path + '?js/' + encodeURIComponent(properties.join(','));
             },
             log = function(message, filename, lineno) {
-            	if (isDev) {
-            		cons.error({message: message.toString(), filename: filename, lineno: lineno});
-            	} else {
-                    var url = makeUrl([message, filename, lineno]);
-                    createImage(url);
-            	}
-            	return true;
+                var url = makeUrl([message, filename, lineno]);
+                createImage(url);
             },
             init = function() {
                 win.onerror = log;
