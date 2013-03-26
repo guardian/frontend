@@ -143,7 +143,7 @@ define([
             if (showFonts) {
                 f.loadFromServerAndApply();
             } else {
-                f.clearFontsFromStorage();
+                f.clearAllFontsFromStorage();
             }
         },
 
