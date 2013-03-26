@@ -130,20 +130,12 @@ define([
             var t = new Tabs().init();
         },
 
-        loadFonts: function(config, ua, prefs) {
-            var showFonts = false;
+        loadFonts: function(config, ua) {
             if(config.switches.webFonts) {
-                showFonts = true;
-            }
-
-            var fileFormat = detect.getFontFormatSupport(ua),
-                fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-
-            var f = new Fonts(fontStyleNodes, fileFormat);
-            if (showFonts) {
+                var fileFormat = detect.getFontFormatSupport(ua),
+                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                var f = new Fonts(fontStyleNodes, fileFormat);
                 f.loadFromServerAndApply();
-            } else {
-                f.clearAllFontsFromStorage();
             }
         },
 
@@ -195,7 +187,7 @@ define([
     var ready = function(config) {
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
-        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.loadFonts(config, navigator.userAgent);
         modules.upgradeImages();
         modules.showTabs();
 
