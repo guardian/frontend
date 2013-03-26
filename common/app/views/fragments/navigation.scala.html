@@ -34,13 +34,6 @@
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}"
     data-link-name="global navigation: @if(isFooter){footer} else {header} : sections">
     @fragments.sections(page, isFooter)
-    
-    @if(!isFooter){
-        <div class="search-results">
-            <gcse:searchresults></gcse:searchresults>
-        </div>
-    }
-
 </div>
 
 @if(isFooter){
