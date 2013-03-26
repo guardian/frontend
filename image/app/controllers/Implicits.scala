@@ -1,5 +1,6 @@
 package controllers
 
+import scala.language.implicitConversions
 import implicits._
 import java.awt.image.BufferedImage
 import org.imgscalr.Scalr
