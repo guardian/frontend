@@ -78,11 +78,15 @@ object CommonSwitches {
     "If this switch is on Optimizely will be enabled.",
     initiallyOn = false)
 
+  val AdvertSwitch = DefaultSwitch("adverts",
+    "If this switch is on OAS adverts will be enabled.",
+    initiallyOn = true)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch
   )
 }
 
