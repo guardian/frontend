@@ -1,12 +1,9 @@
-define(['modules/userPrefs', 'common'], function (userPrefs, common) {
+define(['common'], function (common) {
 
-    var Errors = function (config) {
+    var Errors = function (w) {
 
-        var c = config || {},
-            isDev = (c.isDev !== undefined) ? c.isDev : false,
-            path = '/px.gif',
-            cons = c.console || window.console,
-            win = c.window || window,
+        var path = '/px.gif',
+            win = w || window,
             body = document.body,
             createImage = function(url) {
                 var image = new Image();
@@ -19,24 +16,20 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 return path + '?js/' + encodeURIComponent(properties.join(','));
             },
             log = function(message, filename, lineno) {
-                if (isDev) {
-                    cons.error({message: message.toString(), filename: filename, lineno: lineno});
-                } else {
-                    var url = makeUrl([message, filename, lineno]);
-                    createImage(url);
-                }
-                return (userPrefs.isOn('showErrors')) ? false : true;
+                var url = makeUrl([message, filename, lineno]);
+                createImage(url);
             },
             init = function() {
                 win.onerror = log;
             };
-
+        
         return {
             log: log,
             init: init
         };
-
+        
     };
 
     return Errors;
 });
+

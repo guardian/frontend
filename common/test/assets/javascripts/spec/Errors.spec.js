@@ -4,11 +4,12 @@ define(['common', 'modules/errors'], function(common, Errors) {
        
         var e,
             p = 'uk/2012/oct/15/mod-military-arms-firms',
-            w = {},
-            fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
+            w = {
+                onerror: jasmine.createSpy('error')
+            };
         
         beforeEach(function() {
-            e = new Errors({window: w});
+            e = new Errors(w);
             e.init();
         });
 
@@ -17,19 +18,9 @@ define(['common', 'modules/errors'], function(common, Errors) {
         });
 
         it("should log javascript errors with the error message, line number and file", function(){
-            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
-            expect(document.getElementById('js-err').getAttribute('src')).toBe('/px.gif?js/foo%2Cfoo.js%2C1');
-        });
-
-        it("if DEV, should log to console", function(){
-        	var cons = {
-	        		error: jasmine.createSpy('error')
-	        	},
-            	e = new Errors({ isDev: true, window: w, console: cons });
-            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
-            expect(cons.error.mostRecentCall.args[0]).toEqual({
-            	message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
-        	});
+            var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
+            e.log(fakeError.message, fakeError.lineno, fakeError.filename);
+            expect(document.getElementById('js-err').getAttribute('src')).toBe('/px.gif?js/foo%2C1%2Cfoo.js');
         });
 
     });
