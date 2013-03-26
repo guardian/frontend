@@ -167,9 +167,11 @@ define([
         },
 
         loadAdverts: function (config) {
-            Adverts.init(config);
-
-            common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+           
+            if (config.switches.adverts) {
+                Adverts.init(config);
+                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+            }
         },
 
         cleanupCookies: function() {
