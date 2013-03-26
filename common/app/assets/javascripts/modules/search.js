@@ -1,4 +1,4 @@
-define(['bean'], function (bean) {
+define(function () {
 
     function Search(config) {
 
