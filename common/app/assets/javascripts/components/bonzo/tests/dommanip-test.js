@@ -204,11 +204,14 @@ sink('DOM Manipulation', function(test, ok, before, after, assert) {
     ok(Q('#empty p').length === 0, 'target has 0 {p} elements')
   })
 
-  test('should detach and return node list', 4, function () {
+  test('should detach and return node list', 5, function () {
     ok(Q('#detach div').length == 2, 'target originally has 2 nodes')
     var orphans = $('#detach div').detach()
     ok(Q('#detach div').length === 0, 'target has detached 2 nodes')
     ok(orphans.length == 2, '2 orphans were returned')
     ok(!$.isAncestor(document.body, orphans[0]), 'orphans do not exist in document')
+    try {
+      ok($(document.createElement('div')).detach(), 'can call detach on already detached elements')
+    } catch (e) { ok(false, 'error detaching detached element: ' + e); console && console.log(e,e.stack) }
   })
 })

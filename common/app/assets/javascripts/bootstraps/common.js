@@ -1,6 +1,7 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
@@ -12,7 +13,8 @@ define([
     'modules/images',
     'modules/navigation/controls',
     'modules/navigation/top-stories',
-    "modules/related",
+    'modules/navigation/sections',
+    'modules/related',
     'modules/popular',
     'modules/expandable',
     'modules/fonts',
@@ -21,9 +23,12 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies'
+    'modules/cookies',
+    'modules/search',
+    'modules/analytics/omnitureMedia'
 ], function (
     common,
+    ajax,
     detect,
     userPrefs,
 
@@ -33,8 +38,9 @@ define([
     Router,
     Errors,
     Images,
-    NavigationControls,
+    Control,
     TopStories,
+    Sections,
     Related,
     Popular,
     Expandable,
@@ -44,10 +50,16 @@ define([
     Clickstream,
     Omniture,
     Adverts,
-    Cookies
+    Cookies,
+    Search,
+    Video
 ) {
 
     var modules = {
+
+        initialiseAjax: function(config) {
+            ajax.init(config.page.ajaxUrl);
+        },
 
         attachGlobalErrorHandler: function () {
             var e = new Errors(window);
@@ -59,8 +71,21 @@ define([
             new Images().upgrade();
         },
 
-        transcludeNavigation: function (config) {
-            new NavigationControls().init();
+        initialiseNavigation: function (config) {
+
+            // the section panel
+            new Sections().init();
+
+            // the toolbar
+            var t = new Control({id: 'topstories-control-header'}),
+                s = new Control({id: 'sections-control-header'});
+
+            t.init();
+            s.init();
+
+            common.mediator.on('modules:topstories:render', function(args) {
+                t.show();
+            });
         },
 
         transcludeTopStories: function (config) {
@@ -68,47 +93,46 @@ define([
         },
 
         transcludeRelated: function (config){
+            common.mediator.on("modules:related:load", function(){
+                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
+                    host,
+                    pageId,
+                    url;
 
-          common.mediator.on("modules:related:load", function(url){
-
-              var hasStoryPackage = document.getElementById("related-trails") !== null;
-
-              var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
-
-              if (hasStoryPackage) {
-                  relatedExpandable.init();
-              } else {
-                  common.mediator.on('modules:related:render', relatedExpandable.init);
-                  new Related(document.getElementById('js-related'), config.switches).load(url[0]);
-              }
-          });
+                if (config.page.hasStoryPackage) {
+                    relatedExpandable.init();
+                } else {
+                    pageId = config.page.pageId;
+                    url =  '/related/' + pageId;
+                    common.mediator.on('modules:related:render', relatedExpandable.init);
+                    new Related(document.getElementById('js-related'), config.switches).load(url);
+                }
+            });
         },
 
-        transcludeMostPopular: function (host, section, edition) {
-            var url = host + '/most-popular/' + edition + (section ? '/' + section : ''),
-                domContainer = document.getElementById('js-popular'),
-                p = new Popular(domContainer).load(url);
+        transcludeMostPopular: function (section, edition) {
+            var url = '/most-read' + (section ? '/' + section : '') + '.json',
+                domContainer = document.getElementById('js-popular');
 
-            common.mediator.on('modules:popular:render', function() {
-                common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-            });
+            if (domContainer) {
+                new Popular(domContainer).load(url);
+                common.mediator.on('modules:popular:render', function() {
+                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                });
+            }
+
         },
 
         showTabs: function() {
             var t = new Tabs().init();
         },
 
-        loadFonts: function(config, ua, prefs) {
-            var showFonts = false;
+        loadFonts: function(config, ua) {
             if(config.switches.webFonts) {
-                showFonts = true;
-            }
-            var fileFormat = detect.getFontFormatSupport(ua),
-                fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-            if (showFonts) {
-                new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-            } else {
-                Fonts.clearFontsFromStorage();
+                var fileFormat = detect.getFontFormatSupport(ua),
+                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                var f = new Fonts(fontStyleNodes, fileFormat);
+                f.loadFromServerAndApply();
             }
         },
 
@@ -117,37 +141,62 @@ define([
         },
 
         loadOmnitureAnalytics: function (config) {
+            common.mediator.on('module:omniture:loaded', function() {
+                var videos = document.getElementsByTagName("video");
+                if(videos) {
+                    for(var i = 0, l = videos.length; i < l; i++) {
+                        var v = new Video({
+                            el: videos[i],
+                            config: config
+                        }).init();
+                    }
+                }
+            });
+
             var cs = new Clickstream({ filter: ["a", "span", "button"] }),
                 o = new Omniture(null, config).init();
         },
 
-        loadOphanAnalytics: function () {
-            require(['js!http://s.ophan.co.uk/js/t6.min.js'], function (ophan) {});
+        loadOphanAnalytics: function (config) {
+            require([config.page.ophanUrl], function (Ophan) {
+                Ophan.startLog();
+            });
         },
 
         loadAdverts: function (config) {
-            Adverts.init(config);
-
-            common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+           
+            if (config.switches.adverts) {
+                Adverts.init(config);
+                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+            }
         },
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
         }
     };
 
     var ready = function(config) {
+        modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler();
-        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.loadFonts(config, navigator.userAgent);
         modules.upgradeImages();
         modules.showTabs();
 
-        modules.transcludeNavigation(config);
+        modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
 
         modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config.page.coreNavigationUrl, config.page.section, config.page.edition);
+        modules.transcludeMostPopular(config.page.section, config.page.edition);
 
+        modules.initialiseSearch(config);
 
         modules.showRelativeDates();
     };
@@ -156,7 +205,7 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics();
+            modules.loadOphanAnalytics(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
         });

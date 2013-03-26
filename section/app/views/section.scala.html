@@ -1,14 +1,14 @@
 @(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
 
 @main(section, Switches.all){  }{
-    <section class="front-section zone-@section.section">
+    <section class="front-section zone-@section.section" role="main">
 
-    	<h1 class="article-zone zone-color">@Html(section.name)</h1>
+        @fragments.headers.sectionHead(section.name)
 
         @defining(math.max(editorsPicks.length, 15)){ numTrails =>
             @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
 	    	    <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
-	                @fragments.trailblocks.section(trails, numWithImages = 3)
+	                @fragments.trailblocks.section(trails, numWithImages = 3, numItemsVisible = numTrails)
 	            </div>
             }
         }
@@ -19,5 +19,6 @@
         @fragments.footballNav("/football")
     }
 
-    <div id="js-popular"></div>
+    @fragments.mostPopularPlaceholder(section.section)
+
 }

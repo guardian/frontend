@@ -1,13 +1,14 @@
 @(fixture: pa.Fixture)
 
 <li class="match">
-    <a href="@MatchUrl(fixture)" data-link-name="fixture stats">
-        <p class="match-desc type-6a">
+    <a href="@MatchUrl(fixture)" data-link-name="fixture stats" data-match-id="@fixture.id">
+        <p class="match-desc type-10">
+
             <span class="match-home match-team">@fixture.homeTeam.name</span>
             <span class="match-result">v</span>
             <span class="match-away match-team">@fixture.awayTeam.name</span>
         </p>
-        <p class="match-status type-7">
+        <p class="match-status type-12">
             <span class="match-status-desc">Kick-off:</span> @fixture.date.toString("HH:mm")
         </p>
     </a>

@@ -13,7 +13,8 @@
                 baseUrl: '@{Configuration.static.path}javascripts',
                 apiName: 'require',
                 paths: {
-                    omniture: '@Static("javascripts/vendor/omniture.js")'
+                    omniture: '@Static("javascripts/vendor/omniture.js")',
+                    homescreen: '@Static("javascripts/vendor/add2home.js")' // Mofified version. Do not upgrade.
                 }
             };
 
@@ -35,8 +36,8 @@
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 var style = styleNodes[i],
-                    name = style.getAttribute('data-cache-name'),
-                    cachedCss = localStorage.getItem('_guFont:' + name);
+                    nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
+                    cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                 if (cachedCss) {
                     style.innerHTML = cachedCss;
                     style.setAttribute('data-cache-full', 'true');
@@ -58,19 +59,22 @@
         if (!isModern) { return false; }
 
         guardian.config = {
+            @item match {
+                case content: model.Content => {'webPublicationDate' : new Date(@content.webPublicationDate.getMillis),}
+                case other => {@None}
+            }
             page: {
+                @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
 
-                @item.metaData.map{ data => @MetadataJson(data) }.mkString(","),
-
-                @Configuration.javascript.pageData.map{ case (key, value) =>
-                    '@{JavaScriptVariableName(key.split('.').last)}': '@value'
-                }.mkString(","),
-
-                'edition': '@Edition(request, Configuration)'
+                @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
+                    s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
+                )},
+                'edition': '@Site(request).edition',
+                'ajaxUrl': 'http://@Site(request).ajaxHost'
             },
-            switches : { @switches.map{ switch =>
-                    '@{JavaScriptVariableName(switch.name)}': @{switch.isSwitchedOn}
-                }.mkString(",")
+            switches : { @{Html(switches.map{ switch =>
+                    s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
+                }.mkString(","))}
             }
         };
 

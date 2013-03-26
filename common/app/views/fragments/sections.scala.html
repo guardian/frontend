@@ -1,25 +1,29 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
-@defining(Edition(request, Configuration)) { edition =>
+@defining(Site(request)) { site =>
+     <nav role="navigation" aria-label="Guardian sections">
+        <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
 
-    <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
-
-        @Navigation(request, Configuration).map{ section =>
+            @Navigation(request).map{ section =>
             <li>
                 <a href="@section.href"
-                    data-link-name="@section.linkName"
-                    @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
-                    @if(section.newWindow){ target="_blank" }
+                   data-link-name="@section.linkName"
+                @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
+                @if(section.newWindow){ target="_blank" }
                 >
-                    @HtmlFormat.raw(section.title)
+                @HtmlFormat.raw(section.title)
                 </a>
             </li>
-        }
-        <li><a data-link-name="all sections" href="/sections">All sections</a></li>
-    </ul>
+            }
+            <li><a data-link-name="all sections" href="/sections">All sections</a></li>
+        </ul>
 
-    <ul class="nav nav-columns nav-section-divider nav-top-border-off @if(isFooter){nav-footer} cf">
-        @if(edition == "US"){ <li><a class="edition" data-link-name="uk-edition" href="http://@Configuration.edition.ukHost/@page.id">UK edition</a></li> }
-        @if(edition == "UK"){ <li><a class="edition" data-link-name="us-edition" href="http://@Configuration.edition.usHost/@page.id">US edition</a></li> }
-    </ul>
+        <ul class="nav nav-columns nav-section-divider nav-top-border-off @if(isFooter){nav-footer} cf">
+            @if(site.isUsEdition) {
+            <li><a class="edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+            } else {
+            <li><a class="edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            }
+        </ul>
+     </nav>
 }

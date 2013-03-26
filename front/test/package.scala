@@ -1,27 +1,39 @@
 package test
 
-import conf.Configuration
 import org.fluentlenium.core.domain.FluentWebElement
-import play.api.test.TestBrowser
+import play.api.GlobalSettings
+import controllers.front.{Front, FrontLifecycle}
 
-object `package` {
+object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
-  object HtmlUnit extends EditionalisedHtmlUnit {
+  override def onStart(app: play.api.Application) {
+    //Front.startup()
+    Front.refresh()
 
-    import Configuration.edition._
+    val start = System.currentTimeMillis
 
-    override def UK[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + ukHost)(browser => Unit)
-      super.UK(path)(block)
-    }
-
-    override def US[T](path: String)(block: TestBrowser => T): T = {
-      goTo("/_warmup", "http://" + usHost)(browser => Unit)
-      super.US(path)(block)
+    while (Front("front", "UK").size < 9) {
+      // ensure we don't get in an endless loop if test data changes
+      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("front should have loaded by now")
     }
   }
 
-  implicit def webElement2rich(element: FluentWebElement) = new {
+  override def onStop(app: play.api.Application) {
+    // do not stop the agents
+  }
+}
+
+object `package` {
+
+  object Fake extends Fake {
+    override val globalSettingsOverride = Some(FrontTestGlobal)
+  }
+
+  object HtmlUnit extends EditionalisedHtmlUnit {
+    override val globalSettingsOverride = Some(FrontTestGlobal)
+  }
+
+  implicit class WebElement2rich(element: FluentWebElement) {
     lazy val href = element.getAttribute("href")
     def hasAttribute(name: String) = element.getAttribute(name) != null
   }

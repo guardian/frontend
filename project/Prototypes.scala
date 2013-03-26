@@ -1,39 +1,36 @@
+import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
 import sbt.PlayProject._
 
-import com.gu.deploy.PlayArtifact._
-import com.gu.deploy.PlayAssetHash._
+import PlayArtifact._
+import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-import com.typesafe.sbtscalariform.ScalariformPlugin._
-import com.gu.SbtJshintPlugin._
-
 
 trait Prototypes extends Testing {
   val version: String
 
   def root() = Project("root", base = file("."))
-    .settings(org.sbtidea.SbtIdeaPlugin.ideaSettings: _*)
+    //.settings(org.sbtidea.SbtIdeaPlugin.ideaSettings: _*)
     .settings(
-      parallelExecution in Global := false
+      scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
+      parallelExecution in ThisBuild := false
     )
 
-  def base(name: String) = PlayProject(name, version, path = file(name), mainLang = SCALA)
-    .settings(jshintSettings: _*)
-    .settings(scalariformSettings: _*)
+  def base(name: String) =   play.Project(name, version, path = file(name))
     .settings(playAssetHashDistSettings: _*)
     .settings(
-      scalaVersion := "2.9.1",
-
       maxErrors := 20,
       javacOptions := Seq("-g", "-source", "1.6", "-target", "1.6", "-encoding", "utf8"),
-      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
+      scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
+        "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings", "Xfatal-warnings"),
 
       ivyXML :=
         <dependencies>
           <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
           <exclude org="org.springframework"><!-- Because I don't like it. --></exclude>
+          <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
         </dependencies>,
 
       organization := "com.gu",
@@ -46,8 +43,11 @@ trait Prototypes extends Testing {
         "Akka" at "http://repo.akka.io/releases"
       ),
 
+      // No released version of Salat for 2.10.0
+      resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.8" % "test"
+        "org.scalatest" %% "scalatest" % "1.9.1" % "test"
       ),
 
       // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
@@ -56,24 +56,16 @@ trait Prototypes extends Testing {
       // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
       unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
-      jshintFiles <+= baseDirectory { base =>
-        (base / "app" / "assets" / "javascripts" ** "*.js") --- (base / "app" / "assets" / "javascripts" / "components" ** "*.js")
-      },
-
-      jshintOptions <+= (baseDirectory) { base =>
-        (base.getParentFile / "resources" / "jshint_conf.json")
-      },
-
-      (test in Test) <<= (test in Test) dependsOn (jshint),
-
       //effectively disables built in Play javascript compiler
       javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
+      lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
       
       assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
         Seq(
           // don't copy across svg files (they're inline)
           (sourceDirectory / "assets" / "images") ** "*.png",
           (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
+          (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",
           (sourceDirectory / "public") ** "*"
         )
       },
@@ -85,20 +77,21 @@ trait Prototypes extends Testing {
         "model._",
         "views._",
         "views.support._",
-        "conf._"
+        "conf._",
+        "play.api.Play",
+        "play.api.Play.current"
       )
     )
 
   def library(name: String) = base(name).settings(
     libraryDependencies ++= Seq(
-      "com.gu" % "management-play_2.9.1" % "5.13",
-      "com.gu" % "management-logback_2.9.1" % "5.13",
-      "com.gu" % "configuration_2.9.1" % "3.6",
-      "com.gu.openplatform" % "content-api-client_2.9.1" % "1.17",
+        "com.gu" %% "management-play" % "5.26",
+      "com.gu" %% "configuration" % "3.9",
+      "com.gu.openplatform" %% "content-api-client" % "1.22",
 
-      "com.typesafe.akka" % "akka-agent" % "2.0.2",
+      "com.typesafe.akka" %% "akka-agent" % "2.1.0",
       "commons-io" % "commons-io" % "2.4",
-      "org.scala-tools.time" % "time_2.9.1" % "0.5",
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 
@@ -109,9 +102,10 @@ trait Prototypes extends Testing {
     )
   )
 
-  def application(name: String) = base(name).settings(
-    features <<= featuresTask,
-
+  def application(name: String) = base(name)
+    .settings(VersionInfo.settings:_*)
+    .settings(
+    test in assembly := {},
     executableName := "frontend-%s" format name,
     jarName in assembly <<= (executableName) { "%s.jar" format _ },
 
@@ -119,9 +113,12 @@ trait Prototypes extends Testing {
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
+        case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
+        case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
         case "README" => MergeStrategy.first
         case "CHANGELOG" => MergeStrategy.first
-        case x => old(x)
+        case x => println(x)
+          old(x)
       }
     }
   )

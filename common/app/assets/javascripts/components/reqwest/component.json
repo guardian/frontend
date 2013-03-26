@@ -1,40 +1,8 @@
 {
   "name": "reqwest",
-  "description": "A wrapper for asynchronous http requests",
-  "keywords": [
-    "ender",
-    "ajax",
-    "xhr",
-    "connection",
-    "web 2.0",
-    "async"
-  ],
-  "version": "0.0.0",
-  "homepage": "https://github.com/ded/reqwest",
-  "author": {
-    "name": "Dustin Diaz",
-    "email": "dustin@dustindiaz.com",
-    "url": "http://dustindiaz.com"
-  },
+  "version": "0.6.3",
   "repository": {
     "type": "git",
-    "url": "git://github.com/guardian/reqwest.git"
-  },
-  "main": "./reqwest.js",
-  "ender": "./src/ender.js",
-  "devDependencies": {
-    "connect": "1.8.x",
-    "mime": "1.x.x",
-    "sink-test": ">=0.1.2",
-    "dispatch": "0.x.x",
-    "valentine": ">=1.4.7"
-  },
-  "scripts": {
-    "boosh": "smoosh make ./build.json",
-    "test": "node make/tests.js"
-  },
-  "readme": "# It's AJAX\n\nAll over again.\n\nThe happs\n---------\n\n    $ git clone git://github.com/ded/reqwest.git reqwest\n    $ cd !$\n    $ npm install\n    $ make\n\nAPI\n---------\n\n``` js\nreqwest('path/to/html', function (resp) {\n  qwery('#content').html(resp)\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/html'\n  , method: 'post'\n  , data: { foo: 'bar', baz: 100 }\n  , success: function (resp) {\n      qwery('#content').html(resp)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/html'\n  , method: 'get'\n  , data: { [ name: 'foo', value: 'bar' ], [ name: 'baz', value: 100 ] }\n  , success: function (resp) {\n      qwery('#content').html(resp)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/json'\n  , type: 'json'\n  , method: 'post'\n  , error: function (err) { }\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/json'\n  , type: 'json'\n  , method: 'post'\n  , contentType: 'application/json'\n  , headers: {\n      'X-My-Custom-Header': 'SomethingImportant'\n    }\n  , error: function (err) { }\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/data.jsonp?callback=?'\n  , type: 'jsonp'\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/data.jsonp?foo=bar'\n  , type: 'jsonp'\n  , jsonpCallback: 'foo'\n  , jsonpCallbackName: 'bar'\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n})\n```\n\n``` js\nreqwest({\n    url: 'path/to/data.jsonp?foo=bar'\n  , type: 'jsonp'\n  , jsonpCallback: 'foo'\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n  , complete: function (resp) {\n      qwery('#hide-this').hide()\n    }\n})\n```\n\nThe Tests\n---------\n    $ npm test\n\nBrowser support\n---------------\n  * IE6+\n  * Chrome 1+\n  * Safari 3+\n  * Firefox 1+\n  * Opera\n\nEnder Support\n-------------\nReqwest can be used as an [Ender](http://ender.no.de) module. Add it to your existing build as such:\n\n    $ ender add reqwest\n\nUse it as such:\n\n``` js\n$.ajax({ ... })\n```\n\nSerialize things:\n\n``` js\n$(form).serialize() // returns query string -> x=y&...\n$(form).serialize({type:'array'}) // returns array name/value pairs -> [ { name: x, value: y}, ... ]\n$(form).serialize({type:'map'}) // returns an object representation -> { x: y, ... }\n$(form).serializeArray()\n$.toQueryString({\n    foo: 'bar'\n  , baz: 'thunk'\n}) // returns query string -> foo=bar&baz=thunk\n```\n\nOr, get a bit fancy:\n\n``` js\n$('#myform input[name=myradios]').serialize({type:'map'})['myradios'] // get the selected value\n$('input[type=text],#specialthing').serialize() // turn any arbitrary set of form elements into a query string\n```\n\njQuery and Zepto Compatibility\n------------------------------\nThere are some differences between the *Reqwest way* and the\n*jQuery/Zepto way*.\n\n### method ###\njQuery/Zepto use `type` to specify the request method while Reqwest uses\n`method` and reserves `type` for the response data type.\n\n### dataType ###\nWhen using jQuery/Zepto you use the `dataType` option to specify the type\nof data to expect from the server, Reqwest uses `type`. jQuery also can\nalso take a space-separated list of data types to specify the request,\nresponse and response-conversion types but Reqwest uses the `type`\nparameter to infer the response type and leaves conversion up to you.\n\n### JSONP ###\nReqwest also takes optional `jsonpCallback` and `jsonpCallbackName`\noptions to specify the callback query-string key and the callback function\nname respectively while jQuery uses `jsonp` and `jsonpCallback` for\nthese same options.\n\n\nBut fear not! If you must work the jQuery/Zepto way then Reqwest has\na wrapper that will remap these options for you:\n\n```js\nreqwest.compat({\n    url: 'path/to/data.jsonp?foo=bar'\n  , dataType: 'jsonp'\n  , jsonp: 'foo'\n  , jsonpCallback: 'bar'\n  , success: function (resp) {\n      qwery('#content').html(resp.content)\n    }\n})\n\n// or from Ender:\n\n$.ajax.compat({\n  ...\n})\n```\n\nIf you want to install jQuery/Zepto compatibility mode as the default\nthen simply place this snippet at the top of your code:\n\n```js\n$.ajax.compat && $.ender({ ajax: $.ajax.compat });\n```\n\n\n**Happy Ajaxing!**\n",
-  "readmeFilename": "README.md",
-  "_id": "reqwest@0.4.5",
-  "commit": "6a4926bf247680f44dbfbbb5c0be7f50be840602"
+    "url": "git://github.com/ded/reqwest.git"
+  }
 }

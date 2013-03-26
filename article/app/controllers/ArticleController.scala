@@ -5,33 +5,41 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Akka
-import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits._
+import concurrent.Future
+import com.gu.openplatform.contentapi.ApiError
 
 case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
 
 object ArticleController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfArticle = Akka.future(lookup(path))
+    val promiseOfArticle = lookup(path)
     Async {
-      promiseOfArticle.map(_.map { renderArticle }.getOrElse { NotFound })
+      promiseOfArticle.map {
+        case Left(model) if model.article.isExpired => Gone(Compressed(views.html.expired(model.article)))
+        case Left(model) => renderArticle(model)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Option[ArticlePage] = suppressApi404 {
-    val edition = Edition(request, Configuration)
-    log.info("Fetching article: " + path + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(path, edition)
-      .showInlineElements("picture")
+  private def lookup(path: String)(implicit request: RequestHeader) = {
+    val edition = Site(request).edition
+    log.info(s"Fetching article: $path for edition $edition")
+    ContentApi.item(path, edition)
+      .showExpired(true)
       .showTags("all")
       .showFields("all")
-      .response
+      .response.map{ response =>
 
-    val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
-    val storyPackage = response.storyPackage map { new Content(_) }
+      val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
+      val storyPackage = response.storyPackage map { new Content(_) }
 
-    articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+      val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+      ModelOrResult(model, response)
+    }.recover{ suppressApiNotFound }
+
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =

@@ -2,7 +2,7 @@
 
 @main(page, Switches.all){  }{
 
-    @Zones(request, Configuration).map{ zone =>
+    @Zones(request).map{ zone =>
 
         <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
 

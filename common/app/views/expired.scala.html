@@ -1,0 +1,26 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+@main(content, CommonSwitches.all){ }{
+	<h2 class="article-zone type-1">
+    	<a class="zone-color" data-link-name="article section" href="/@content.section">@Html(content.sectionName)</a>
+	</h2>
+
+	<article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType">
+
+        <header class="article-head">
+            @fragments.dateline(content.webPublicationDate, false, Site(request).edition)
+            @fragments.headline(content.headline)
+        </header>
+
+        <div class="after-header"></div>
+
+        <div class="article-body"
+            itemprop="articleBody">
+            This content has been removed as our copyright has expired.
+        </div>
+    </article>
+
+    <div id="js-related"></div>
+
+    <div id="js-popular"></div>
+}

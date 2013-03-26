@@ -1,0 +1,112 @@
+            <h1>Base CSS</h1>
+        
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">Headings</h2>
+            </div>
+            <p>Six heading styles (potentially more) are defined which can be used on any heading element by use of the correct class value.</p>
+            <div class="example">
+                <h1>.article-heading - 24px/30px</h1>
+                <h2>.sub-heading - 18px/30px</h2>
+                <h3>.related-heading - 16px/20px</h3>
+                <h4>.trailblock-heading - 14px/20px</h4>
+                <h5>.article-base-heading - 15px/20px</h5>
+                <h6>.base-heading - 12px/15px</h6>
+            </div>
+
+            <p>Various specialised heading styles are also available.</p>
+
+            <h3 class="article-base-heading">This needs a name</h3>
+            <p><pre><code>&lt;div class="hd zone-border zone-border-medium"&gt;
+&lt;h4 class="sub-heading"&gt;Heading here&lt;/h4&gt;
+&lt;/div&gt;</code></pre></p>
+
+            <div class="example">
+                <div class="hd zone-border zone-border-medium margin-top">
+                    <h2 class="sub-heading">Heading here</h2>
+                </div>
+            </div>
+
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">Lists</h2>
+            </div>
+            <div class="fluid-row">
+                <div class="col-4 start-col dotted-border">
+                    <h3 class="article-base-heading">Unordered list</h3>
+                    <p><pre><code>&lt;ul&gt;</code></pre></p>
+                    <div class="example">
+                        <ul>
+                            <li>England</li>
+                            <li>Scotland</li>
+                            <li>Wales</li>
+                            <li>Northern Ireland</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-4 dotted-border">
+                    <h3 class="article-base-heading">Ordered list</h3>
+                    <p><pre><code>&lt;ol&gt;</code></pre></p>
+                    <div class="example">
+                        <ol>
+                            <li>England</li>
+                            <li>Scotland</li>
+                            <li>Wales</li>
+                            <li>Northern Ireland</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-4 dotted-border">
+                    <h3 class="article-base-heading">Unstyled list</h3>
+                    <p><pre><code>&lt;ul class="unstyled"&gt;</code></pre></p>
+                    <div class="example">
+                        <ul class="unstyled">
+                            <li>England</li>
+                            <li>Scotland</li>
+                            <li>Wales</li>
+                            <li>Northern Ireland</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- /.row -->
+
+            <div class="fluid-row">
+                <div class="col-4 start-col dotted-border">
+                    <h3 class="article-base-heading">Definition list</h3>
+                    <p><pre><code>&lt;dl&gt;</code></pre></p>
+                    <div class="example">
+                        <dl>
+                            <dt>A term.</dt>
+                            <dd>This is the definition of that term, which both live in a <code>dl</code>.</dd>
+                            <dt>Here is another term.</dt>
+                            <dd>And it gets a definition too, which is this line.</dd>
+                            <dt>Here is another term.</dt>
+                            <dd>And it gets a definition too, which is this line.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="col-8 dotted-border">
+                    <h3 class="article-base-heading">Horizontal definition list</h3>
+                    <p><pre><code>&lt;dl class="dl-horizontal"&gt;</code></pre></p>
+                    <div class="example">
+                        <dl class="dl-horizontal cf">
+                            <dt>A term.</dt>
+                            <dd>This is the definition of that term, which both live in a <code>dl</code>.</dd>
+                            <dt>Here is another term.</dt>
+                            <dd>And it gets a definition too, which is this line.</dd>
+                            <dt>Here is another term.</dt>
+                            <dd>And it gets a definition too, which is this line.</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">Layout helpers</h2>
+            </div>
+            <ul class="unstyled">
+                <li><b><code>.pull-right</code></b> - Adds a <code>float:right</code> value to the element.</li>
+                <li><b><code>.pull-left</code></b> - Adds a <code>float:left</code> value to the element.</li>
+                <li><b><code>.margin-top</code></b> - Adds a <code>margin-top</code> value of <code>15px</code>, the default line-height.</li>
+                <li><b><code>.margin-bottom</code></b> - Adds a <code>margin-bottom</code> value of <code>15px</code>, the default line-height.</li>
+                <li><b><code>.cf</code></b> - Adds a clearfix to the element. Specifically, the <a href="http://nicolasgallagher.com/micro-clearfix-hack/">Micro clearfix</a>.
+            </ul>

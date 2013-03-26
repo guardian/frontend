@@ -14,18 +14,18 @@ object Switches {
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object Metrics {
-  val all: Seq[Metric] = ContentApi.metrics.all ++ CommonMetrics.all
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all
 }
 
 object Management extends GuManagement {
-  val applicationName = Configuration.application
+  val applicationName = "frontend-core-navigation"
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/core-navigation/top-stories/UK?callback=navigation",
-      "/core-navigation/most-popular/UK/society?callback=showMostPopular",
-      "/core-navigation/related/UK/theobserver/2012/nov/18/the-big-issue-cyclists-versus-motorists?callback=showRelated"
+      "/top-stories?callback=navigation",
+      "/most-read/society.json?callback=showMostPopular",
+      "/related/theobserver/2012/nov/18/the-big-issue-cyclists-versus-motorists?callback=showRelated"
     ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),

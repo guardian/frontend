@@ -17,7 +17,8 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("type/article"))
+      tags = List(tag("type/article")),
+      elements = None
     )
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
@@ -30,7 +31,8 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/gallery/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
-      tags = List(tag("type/gallery"))
+      tags = List(tag("type/gallery")),
+      elements = None
     )
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
@@ -43,7 +45,8 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("type/interactive"))
+      tags = List(tag("type/interactive")),
+      elements = None
     )
 
     SupportedUrl(content) should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
@@ -64,14 +67,40 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     def queryString = Map.empty[String, Seq[String]]
 
-    def headers = FakeHeaders(_headers)
+    def headers = FakeHeaders(_headers.toSeq)
 
     def body = ""
 
     def remoteAddress = ""
+
+    def id: Long = 0L
+
+    def tags: Map[String,String] = Map.empty
+
+    def version: String = ""
   }
 
   private def tag(id: String, name: String = "") = ApiTag(
     id = id, `type` = "type", webTitle = name, webUrl = "", apiUrl = ""
   )
 }
+
+/*
+
+
+
+  [error] Failed tests:
+[error] 	test.TagControllerTest
+[info] No tests to run for diagnostics/test:test
+[error] Failed tests:
+[error] 	test.FrontFeatureTest
+[info] No tests to run for router/test:test
+[error] Failed tests:
+[error] 	test.RelatedControllerTest
+
+
+
+
+
+
+*/

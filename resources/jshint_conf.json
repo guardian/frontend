@@ -1,4 +1,4 @@
-var JSLINT_OPTIONS = {   
+{
     "passfail"      : false,
     "maxerr"        : 100,
 
@@ -16,7 +16,8 @@ var JSLINT_OPTIONS = {
     "predef"        : [
         "require",
         "define",
-        "EventEmitter"
+        "EventEmitter",
+        "s"
     ],
 
     "debug"         : false,
@@ -55,6 +56,5 @@ var JSLINT_OPTIONS = {
     "plusplus"      : false,
     "sub"           : false,
     "trailing"      : true,
-    "white"         : false,
-    "indent"        : 4
+    "white"         : false
 }

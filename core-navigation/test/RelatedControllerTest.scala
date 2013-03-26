@@ -8,7 +8,7 @@ import org.scalatest.FlatSpec
 class RelatedControllerTest extends FlatSpec with ShouldMatchers {
 
   "Related Controller" should "serve the correct headers when the article exists" in Fake {
-    val result = controllers.RelatedController.render("UK", "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")(FakeRequest())
+    val result = controllers.RelatedController.render("uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")(TestRequest())
     status(result) should be(200)
     contentType(result).get should be("text/html")
     charset(result).get should be("utf-8")
@@ -16,8 +16,8 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "serve the correct headers when given a callback parameter" in Fake {
-    val request = FakeRequest(GET, "/related/UK/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey?callback=foo")
-    val Some(result) = routeAndCall(request)
+    val request = FakeRequest(GET, "/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey?callback=foo").withHeaders("host" -> "http://localhost:9000")
+    val Some(result) = route(request)
 
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
@@ -25,12 +25,12 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "404 when article does not exist" in Fake {
-    val result = controllers.RelatedController.render("UK", "related/i/am/not/here")(FakeRequest())
+    val result = controllers.RelatedController.render("related/i/am/not/here")(TestRequest())
     status(result) should be(404)
   }
 
   it should "404 when article does not have related content" in Fake {
-    val result = controllers.RelatedController.render("UK", "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme")(FakeRequest())
+    val result = controllers.RelatedController.render("uk/2012/aug/29/eva-rausing-information-murder-olaf-palme")(TestRequest())
     status(result) should be(404)
   }
 }

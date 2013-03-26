@@ -2,14 +2,14 @@ package com.gu.test;
 
 import java.util.List;
 
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class Steps {
 
@@ -21,6 +21,12 @@ public class Steps {
     public Steps(SharedDriver webDriver) {
         this.webDriver = webDriver;
     }
+    
+    @Given("^I visit a page$")
+	public void I_visit_a_page() throws Throwable {
+		//a guardian page
+		webDriver.open("/sport/2012/oct/10/icc-suspends-umpires-corruption-claims");
+	}
 	
 	@Given("^I visit the network front")
 	public void i_visit_the_network_front() throws Throwable {
@@ -48,7 +54,7 @@ public class Steps {
 		String tabId = tabName.toLowerCase().replace(" ", "") + "-control-header";
 	    WebElement tab = webDriver.findElement(By.id(tabId));
 	    // confirm element is shown/hidden
-	    Assert.assertEquals(tabState.equals("shown"), tab.isDisplayed());
+	    assertEquals(tabState.equals("shown"), tab.isDisplayed());
 	}
 	
 	@When("^I visit the (.*) jasmine test runner$")
@@ -64,7 +70,7 @@ public class Steps {
 			"file:///" + frontendRoot + "/" + project + "/test/assets/javascripts/runner.html"
 		);
 		// confirm we're on the correct page
-		Assert.assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
+		assertTrue(webDriver.getTitle().contains("Jasmine Spec Runner"));
 	}
 
 	@Then("^all the jasmine tests pass$")
@@ -77,20 +83,23 @@ public class Steps {
 			WebElement test = webDriver.findElements(By.cssSelector("#tests a")).get(i);
 			String testName = test.getText();
 			test.click();
+			// wait for 'duration' element, i.e. end of test (up to 10secs)
+			webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
+			// get any error messages
 			List<WebElement> alertBar = webDriver.findElements(By.cssSelector("span.failingAlert.bar"));
 			if (alertBar.size() != 0) {
 				System.out.println(testName + " - " + alertBar.get(0).getText());
 				for (WebElement error : webDriver.findElements(By.className("specDetail"))) {
-					System.out.println("  " + error.findElement(By.className("description")).getText());
+					System.out.println(" > " + error.findElement(By.className("description")).getText());
 					for (WebElement errorMsg : error.findElements(By.className("resultMessage"))) {
-						System.out.println(" > " + errorMsg.getText());
+						System.out.println("    " + errorMsg.getText());
 					}
 				}
 				testFailure = true;
 			}
 		}
 		
-		Assert.assertFalse(testFailure);
+		assertFalse(testFailure);
 	}
 	
 }

@@ -1,0 +1,114 @@
+$orange: #FF7F00;
+
+.story-title {
+  @extend .type-3;
+  padding: $baseline*4 0 $baseline*5 0;
+  margin: 0 $gutter;
+  line-height: 1em;
+  border-bottom: 1px solid #CFCFCF;
+}
+
+  .story-title--section {
+    @extend .type-3;
+    border-top: 1px solid #CFCFCF;
+    border-bottom: none;
+    margin-top: $baseline*7;
+  }
+
+.story-sub-head {
+  @extend .type-6;
+  color: $orange;
+  margin-bottom: $baseline*2;
+}
+
+.story-latest .main-caption { padding: $baseline*4 0px;}
+
+.story-overview .page-head {
+  margin-top: $baseline*2;
+}
+
+.story-section {
+  width: 100%;
+}
+
+.story-section .i-date { display: none; }
+.story-section time {
+  color: #666;
+  font-size: 12px;
+  font-size: 1.2rem;
+ }
+
+.story-quote {
+  margin: $baseline*4 $gutter $baseline*4 $gutter;
+  padding: $baseline*4 $gutter $baseline*6 $gutter;
+  background-color: $mushroom;
+}
+
+.story-sub-head--quote {
+  font-size: 1.8rem;
+  padding-bottom: $baseline*6;
+  border-bottom: 1px dashed #72726B;
+}
+
+.story-quote blockquote {
+  display: inline-block;
+  margin: $baseline*5 0 $baseline*4 0;
+  padding: 0;
+  color: #444;
+}
+
+.story-quote blockquote:before {
+  @extend .i;
+  @extend .i-story-quote;
+  display: block;
+  content: '';
+  margin: 0 0 $baseline*2 0;
+  clear: both;
+}
+
+  .story-quote blockquote a {
+      color: #444;
+  }
+
+  .story-quote cite {
+    color: #84837E;
+    font-style: normal;
+  }
+
+.story-popular .trail:last-child { border-bottom: none; }
+
+.story-content .article figure {
+  margin: 0 $gutter;
+}
+
+  .story-content .tabs-content {
+    margin-bottom: $baseline*4;
+  }
+
+  .story-article:last-child { border-bottom: none; }
+
+.story-article .article-body p:last-child {
+  border-bottom: 1px solid #EDEDE7;
+  padding-bottom: 8px;
+}
+
+.back-to-top,
+.from-content-api a.back-to-top {
+  @extend .type-10;
+  color: #bbb;
+}
+
+.continue,
+.from-content-api a.continue {
+  color: #444;
+  text-decoration: underline;
+}
+
+.i.is-open {
+ @include rotate(180deg);
+}
+
+a.trail-story-title {
+  color: $newsRed;
+}
+

@@ -1,12 +1,14 @@
 define([
     'common',
     'domwrite',
+    'ajax',
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap'
     ], function(
         common,
         domwrite,
+        ajax,
         DocumentWrite,
         DocumentWriteSlot,
         dimensionMap
@@ -15,11 +17,11 @@ define([
     var slots = [
         {name:'Top2'},
         {name:'Bottom2'}
-    ]
+    ];
 
     var config = {
         page: {
-            'keywords': 'keyword,go,here',
+            'keywords': 'keyword,go here,there',
             'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
             'oasSiteId':"m.guardian.co.uk/oas.html",
             'contentType': 'contentType',
@@ -28,11 +30,12 @@ define([
             'pageId': 'environment/2012/foo',
             'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516'
         }
-    }
+    };
    
     beforeEach(function(){
+        ajax.init("");
         localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
-        common.mediator.removeAllListeners();
+        common.mediator.removeEvent();
     });
  
     // deterministic 'randomness' - http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html 
@@ -42,7 +45,7 @@ define([
 
         it("Construct an OAS request using page metadata", function() {
             var d = DocumentWrite.generateUrl(config.page, slots),
-                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go&k=here&pt=contenttype&ct=contenttype&cat=section&a=E012390&a=E012782';
+                url = 'http://oas.guardian.co.uk/RealMedia/ads/adstream_mjx.ads/m.guardian.co.uk/environment/2012/foo/oas.html/627177383@Top2,Bottom2?k=keyword&k=go-here&k=there&pt=contenttype&ct=contenttype&cat=section&a=E012390&a=E012782';
             expect(d).toBe(url);
         });
 
@@ -78,25 +81,25 @@ define([
             });
 
             waitsFor(function(){
-                return (window.admeld_url != undefined) // variable evaluated in fixtures 
-            }, "window.admeld_url never evaluated", 1000)
+                return (window.admeld_url != undefined); // variable evaluated in fixtures
+            }, "window.admeld_url never evaluated", 1000);
             
             runs(function(){ 
-                expect(window.admeld_url).toBeTruthy()
+                expect(window.admeld_url).toBeTruthy();
                 //expect(document.getElementById('advert-via-doc-write')).toBeTruthy()
             })
         });
         
         xit("Pass audience science tags to the OAS", function() {
             
-            var d = DocumentWrite.load('fixtures/oas');
+            DocumentWrite.load('fixtures/oas');
              
             waitsFor(function(){
-                return (window.admeld_url != undefined) // variable evaluated in fixtures 
-            }, "window.admeld_url never evaluated", 1000)
+                return (window.admeld_url != undefined); // variable evaluated in fixtures
+            }, "window.admeld_url never evaluated", 1000);
             
             runs(function(){ 
-                expect(window.admeld_url).toBeTruthy()
+                expect(window.admeld_url).toBeTruthy();
                 expect(document.getElementById('advert-via-doc-write')).toBeTruthy()
             })
         });

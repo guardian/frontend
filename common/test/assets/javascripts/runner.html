@@ -22,17 +22,18 @@
                 reqwest:      'components/reqwest/src/reqwest',
                 domwrite:     'components/dom-write/dom-write',
                 analytics:    'modules/analytics',
-                EventEmitter: 'components/eventEmitter/src/EventEmitter',
+                EventEmitter: 'components/eventEmitter/EventEmitter',
                 swipe:        'components/swipe/swipe',
-                omniture:     '../../../app/public/javascripts/vendor/omniture'
+                omniture:     '../../../app/public/javascripts/vendor/omniture',
+                fixtures:     '../../../test/assets/javascripts/helpers/fixtures'
             }
       });
   </script>
   <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
-    .initially-off:after { content: " -- (hidden)"; }
-    .on:after { content: " -- (visible)"; }
+    .is-off:after { content: " -- (hidden)"; }
+    .is-on:after { content: " -- (visible)"; }
     .ad-slot {
         display: block;
         width: 100%;
@@ -121,8 +122,9 @@
                 <li><a href="#DocumentWrite">DocumentWrite</a></li>
                 <li><a href="#AudienceScience">AudienceScience</a>
                 <li><a href="#Adverts">Adverts</a>
-            </ul>        
+            </ul>
         </li>
+        <li><a href="#Ajax">Ajax</a></li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
         <li><a href="#Errors">Errors</a></li>
@@ -132,8 +134,9 @@
         <li>
             Navigation
             <ul>
-                <li><a href="#Navigation">Navigation</a></li>
-                <li><a href="#NavigationControls">Navigation Controls</a></li>
+                <li><a href="#Control">Control</a></li>
+                <li><a href="#Sections">Sections</a></li>
+                <li><a href="#TopStories">Top Stories</a></li>
             </ul>
         </li>
         <li><a href="#Popular">Popular</a></li>
@@ -142,27 +145,20 @@
         <li><a href="#RelativeDates">Relative Dates</a></li>
         <li><a href="#Tabs">Tabs</a></li>
         <li><a href="#TrailblockToggle">Trailblock Toggle</a></li>
+        <li><a href="#TrailblockShowMore">Trailblock Show More</a></li>
         <li><a href="#Autoupdate">Auto update</a></li>
         <li><a href="#MoreMatches">More Matches</a></li>
+        <li><a href="#MatchNav">Football Match Nav</a></li>
+        <li><a href="#FootballTables">Football Tables</a></li>
         <li><a href="#FootballFixtures">Football Fixtures</a></li>
+        <li><a href="#FootballTables">Football Tables</a></li>
         <li><a href="#Gallery">Gallery</a></li>
         <li><a href="#GallerySwipe">Gallery (Swipe)</a></li>
-        <li><a href="#FootballTables">Football Tables</a></li>
+
         <li><a href="#Router">Router</a></li>
     </ul>
 
     <div id="test-cases">
-
-        <!-- UpgradeImages.spec -->
-        <img data-upgrade="true" 
-              data-fullsrc="http://placekitten.com/1/1"
-              src="http://placekitten.com/2/2"
-              data-thumb-width="5"
-              data-full-width="100"
-              id="upgradeImages"
-              class="visible" />
-
-        <img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/>
 
         <!-- Related.spec -->
         <div id="related-1"></div>
@@ -234,21 +230,21 @@
           <p><strong>Test dates</strong> (should be replaced with timestamps)</p>
           <ul>
             <li>
-                <time id="relative-date-test-item" 
-                      class="js-timestamp" 
-                      datetime="2012-08-12T18:43:00.000Z" 
+                <time id="relative-date-test-item"
+                      class="js-timestamp"
+                      datetime="2012-08-12T18:43:00.000Z"
                       data-expected-output='<span title="12th Aug, 2012">Yesterday, 7:43pm</span>'>12th Aug, 2012</time>
             </li>
             <li class="block-time">
-                <time id="relative-date-test-item-block" 
-                      class="js-timestamp" 
-                      datetime="2012-08-11T18:43:00.000Z" 
+                <time id="relative-date-test-item-block"
+                      class="js-timestamp"
+                      datetime="2012-08-11T18:43:00.000Z"
                       data-expected-output='<span title="11th Aug, 2012">Saturday 11 Aug 2012, 7:43pm</span>'>11th Aug, 2012</time>
             </li>
             <li>
-                <time id="relative-date-invalid-item" 
-                      class="js-timestamp" 
-                      datetime="last tuesday" 
+                <time id="relative-date-invalid-item"
+                      class="js-timestamp"
+                      datetime="last tuesday"
                       data-expected-output="Last Tuesday">Last Tuesday</time>
             </li>
           </ul>
@@ -258,26 +254,29 @@
         <!-- Tabs.spec -->
         <p id="tabs-test">
 
-          <ol class="tabs">
-              <li class="tabs-selected"><a id="tab1" href="#tab1panel">Foo</a></li>
-              <li><a id="tab2" href="#tab2panel">Bar</a></li>
-          </ol>
+          <div class="tabs-container">
+            <ol class="tabs js-tabs">
+                <li class="tabs-selected"><a id="tab1" href="#tab1panel">Foo</a></li>
+                <li><a id="tab2" href="#tab2panel">Bar</a></li>
+            </ol>
 
-          <div class="tabs-content">
-               <div class="tabs-pane" id="tab1panel">foo</div>
-               <div class="tabs-pane initially-off" id="tab2panel">bar</div>
+            <div class="tabs-content">
+                 <div class="tabs-pane" id="tab1panel">foo</div>
+                 <div class="tabs-pane js-hidden" id="tab2panel">bar</div>
+            </div>
           </div>
 
+          <div class="tabs-container">
+            <ol class="tabs">
+                <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
+                <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
+                <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
+            </ol>
 
-          <ol class="tabs">
-              <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
-              <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
-              <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
-          </ol>
-
-          <div class="tabs-content">
-               <div class="tabs-pane" id="tab1panel_2">foo</div>
-               <div class="tabs-pane initially-off" id="tab2panel_2">bar</div>
+            <div class="tabs-content">
+                 <div class="tabs-pane" id="tab1panel_2">foo</div>
+                 <div class="tabs-pane js-hidden" id="tab2panel_2">bar</div>
+            </div>
           </div>
 
         </p>
@@ -297,20 +296,9 @@
             <a href="/foo" id="click-me-quick" data-is-ajax="true" data-link-name="xhr link">Xhr Link</a>
             <button id="click-me-button" data-link-name="the button">Span Link</button>
             <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
+            <a href="/foo" id="click-me-internal" data-link-name="internal link">Same-host link</a>
+            <a href="http://google.com/foo" id="click-me-external" data-link-name="external link">Other-host link</a>
         </p>
-    </div>
-
-    <!-- Navigation.spec -->
-    <div>
-        <a id="sections-control-header" href="#">sections (header)</a>
-        <a id="topstories-control-header" href="#">top stories (header)</a>
-        <a id="sections-control-footer" href="#">sections (footer)</a>
-        <a id="topstories-control-footer" href="#">top stories (footer)</a>
-
-        <div id="sections-header" class="initially-off">sections popup (header)</div>
-        <div id="topstories-header" class="initially-off">top stories popup (header)</div>
-        <div id="sections-footer" class="">sections popup (footer)</div> <!-- should be auto-hidden -->
-        <div id="topstories-footer" class="initially-off">top stories popup (footer)</div>
     </div>
 
     <!-- TrailblockToggle.spec -->
@@ -341,7 +329,11 @@
         <li></li>
       </ul>
     </div>
-    
+
+    <!-- MatchNav.spec.js -->
+    <div id="js-related"></div>
+    <div class="after-header"></div>
+
 
     <!--  FootballTables.spec -->
     <div id="football-tables">
@@ -352,7 +344,7 @@
 
     <!-- Gallery.spec -->
     <div style="display: none" id="js-gallery">
-      <p class="box-indent"><a class="initially-off" data-is-ajax="true"
+      <p class="box-indent"><a class="is-off" data-is-ajax="true"
       data-link-name="Gallery Previous" href="javascript://" id="js-gallery-prev"
       name="js-gallery-prev">Previous</a> Image <span id=
       "js-gallery-index">1</span> of 16 <a data-is-ajax="true" data-link-name=
@@ -375,7 +367,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg'
               data-image="false" data-index="2" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352701113/Tour-of-Britain-007.jpg"
@@ -387,7 +379,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg'
               data-image="false" data-index="3" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352694197/Tour-of-Britain-001.jpg"
@@ -402,7 +394,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg'
               data-image="false" data-index="4" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352702441/Tour-of-Britain-008.jpg"
@@ -416,7 +408,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg'
               data-image="false" data-index="5" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352698761/Tour-of-Britain-005.jpg"
@@ -429,7 +421,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg'
               data-image="false" data-index="6" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352697669/Tour-of-Britain-004.jpg"
@@ -441,7 +433,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg'
               data-image="false" data-index="7" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352695566/Tour-of-Britain-002.jpg"
@@ -453,7 +445,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg'
               data-image="false" data-index="8" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316352696597/Tour-of-Britain-003.jpg"
@@ -470,7 +462,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg'
               data-image="false" data-index="9" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371064041/Tour-of-Britain-008.jpg"
@@ -484,7 +476,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg'
               data-image="false" data-index="10" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371062832/Tour-of-Britain-007.jpg"
@@ -496,7 +488,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg'
               data-image="false" data-index="11" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371061677/Tour-of-Britain-006.jpg"
@@ -508,7 +500,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg'
               data-image="false" data-index="12" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371058942/Tour-of-Britain-004.jpg"
@@ -519,7 +511,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg'
               data-image="false" data-index="13" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371060335/Tour-of-Britain-005.jpg"
@@ -531,7 +523,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg'
               data-image="false" data-index="14" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371057644/Tour-of-Britain-003.jpg"
@@ -544,7 +536,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg'
               data-image="false" data-index="15" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371055090/Tour-of-Britain-001.jpg"
@@ -556,7 +548,7 @@
                   The Guardian</strong></p>
               </li>
 
-              <li class="initially-off" data-fullsrc=
+              <li class="is-off" data-fullsrc=
               'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg'
               data-image="false" data-index="16" data-src=
               "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/18/1316371056378/Tour-of-Britain-002.jpg"
@@ -577,8 +569,8 @@
 
 <!-- Fonts.spec -->
 
-<style data-cache-name="guardian-font1" data-cache-file-woff="font1.woff.js" data-cache-file-ttf="font1.ttf.js"></style>
-<style data-cache-name="guardian-font2" data-cache-file-woff="font2.woff.js" data-cache-file-ttf="font2.ttf.js"></style>
+<style data-cache-name="font1" data-cache-file-woff="fonts/font1.woff.12345.js" data-cache-file-ttf="fonts/font1.ttf.12345.js"></style>
+<style data-cache-name="font2" data-cache-file-woff="fonts/font2.woff.12345.js" data-cache-file-ttf="fonts/font2.ttf.12345.js"></style>
 
 </body>
 </html>

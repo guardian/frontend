@@ -1,15 +1,15 @@
-(function (name, definition, context) {
+(function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (typeof context['define'] == 'function' && context['define']['amd']) define(definition)
+  else if (typeof define == 'function' && define.amd) define(definition)
   else context[name] = definition()
-})('bonzo', function() {
+})('bonzo', this, function() {
   var win = window
     , doc = win.document
     , html = doc.documentElement
     , parentNode = 'parentNode'
-    , query = null // used for setting a selector engine host
     , specialAttributes = /^(checked|value|selected|disabled)$/i
     , specialTags = /^(select|fieldset|table|tbody|tfoot|td|tr|colgroup)$/i // tags that we have trouble inserting *into*
+    , simpleScriptTagRe = /\s*<script +src=['"]([^'"]+)['"]>/
     , table = ['<table>', '</table>', 1]
     , td = ['<table><tbody><tr>', '</tr></tbody></table>', 3]
     , option = ['<select>', '</select>', 1]
@@ -59,6 +59,7 @@
     , whitespaceRegex = /\s+/
     , toString = String.prototype.toString
     , unitless = { lineHeight: 1, zoom: 1, zIndex: 1, opacity: 1, boxFlex: 1, WebkitBoxFlex: 1, MozBoxFlex: 1 }
+    , query = doc.querySelectorAll && function (selector) { return doc.querySelectorAll(selector) }
     , trim = String.prototype.trim ?
         function (s) {
           return s.trim()
@@ -66,6 +67,24 @@
         function (s) {
           return s.replace(trimReplace, '')
         }
+
+
+  function isNode(node) {
+    return node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11)
+  }
+
+
+  function normalize(node, host, clone) {
+    var i, l, ret
+    if (typeof node == 'string') return bonzo.create(node)
+    if (isNode(node)) node = [ node ]
+    if (clone) {
+      ret = [] // don't change original array
+      for (i = 0, l = node.length; i < l; i++) ret[i] = cloneNode(host, node[i])
+      return ret
+    }
+    return node
+  }
 
 
   /**
@@ -162,10 +181,6 @@
               (f = parseFloat(d)) == d ? f : d;
     } catch(e) {}
     return undefined
-  }
-
-  function isNode(node) {
-    return node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11)
   }
 
 
@@ -596,7 +611,7 @@
           each(c, function (c) {
             if (c) {
               typeof opt_condition !== 'undefined' ?
-                opt_condition ? addClass(el, c) : removeClass(el, c) :
+                opt_condition ? !hasClass(el, c) && addClass(el, c) : removeClass(el, c) :
                 hasClass(el, c) ? removeClass(el, c) : addClass(el, c)
             }
           })
@@ -776,7 +791,11 @@
        * @return {Bonzo|number}
        */
     , offset: function (opt_x, opt_y) {
-        if (typeof opt_x == 'number' || typeof opt_y == 'number') {
+        if (opt_x && typeof opt_x == 'object' && (typeof opt_x.top == 'number' || typeof opt_x.left == 'number')) {
+          return this.each(function (el) {
+            xy(el, opt_x.left, opt_x.top)
+          })
+        } else if (typeof opt_x == 'number' || typeof opt_y == 'number') {
           return this.each(function (el) {
             xy(el, opt_x, opt_y)
           })
@@ -788,19 +807,13 @@
           , width: 0
         }
         var el = this[0]
+          , de = el.ownerDocument.documentElement
+          , bcr = el.getBoundingClientRect()
+          , scroll = getWindowScroll()
           , width = el.offsetWidth
           , height = el.offsetHeight
-          , top = el.offsetTop
-          , left = el.offsetLeft
-        while (el = el.offsetParent) {
-          top = top + el.offsetTop
-          left = left + el.offsetLeft
-
-          if (el != doc.body) {
-            top -= el.scrollTop
-            left -= el.scrollLeft
-          }
-        }
+          , top = bcr.top + scroll.y - Math.max(0, de && de.clientTop, doc.body.clientTop)
+          , left = bcr.left + scroll.x - Math.max(0, de && de.clientLeft, doc.body.clientLeft)
 
         return {
             top: top
@@ -817,7 +830,8 @@
     , dim: function () {
         if (!this.length) return { height: 0, width: 0 }
         var el = this[0]
-          , orig = !el.offsetWidth && !el.offsetHeight ?
+          , de = el.nodeType == 9 && el.documentElement // document
+          , orig = !de && !!el.style && !el.offsetWidth && !el.offsetHeight ?
              // el isn't visible, can't be measured properly, so fix that
              function (t) {
                var s = {
@@ -832,8 +846,12 @@
                })
                return s
             }(this) : null
-          , width = el.offsetWidth
-          , height = el.offsetHeight
+          , width = de
+              ? Math.max(el.body.scrollWidth, el.body.offsetWidth, de.scrollWidth, de.offsetWidth, de.clientWidth)
+              : el.offsetWidth
+          , height = de
+              ? Math.max(el.body.scrollHeight, el.body.offsetHeight, de.scrollHeight, de.offsetHeight, de.clientHeight)
+              : el.offsetHeight
 
         orig && this.first().css(orig)
         return {
@@ -923,10 +941,7 @@
        */
     , remove: function () {
         this.deepEach(clearData)
-
-        return this.each(function (el) {
-          el[parentNode] && el[parentNode].removeChild(el)
-        })
+        return this.detach()
       }
 
 
@@ -949,7 +964,7 @@
        */
     , detach: function () {
         return this.each(function (el) {
-          el[parentNode].removeChild(el)
+          el[parentNode] && el[parentNode].removeChild(el)
         })
       }
 
@@ -972,17 +987,6 @@
 
   }
 
-  function normalize(node, host, clone) {
-    var i, l, ret
-    if (typeof node == 'string') return bonzo.create(node)
-    if (isNode(node)) node = [ node ]
-    if (clone) {
-      ret = [] // don't change original array
-      for (i = 0, l = node.length; i < l; i++) ret[i] = cloneNode(host, node[i])
-      return ret
-    }
-    return node
-  }
 
   function cloneNode(host, el) {
     var c = el.cloneNode(true)
@@ -1028,6 +1032,13 @@
     return { x: win.pageXOffset || html.scrollLeft, y: win.pageYOffset || html.scrollTop }
   }
 
+  function createScriptFromHtml(html) {
+    var scriptEl = document.createElement('script')
+      , matches = html.match(simpleScriptTagRe)
+    scriptEl.src = matches[1]
+    return scriptEl
+  }
+
   /**
    * @param {Array.<Element>|Element|Node|string} els
    * @return {Bonzo}
@@ -1052,7 +1063,8 @@
     // hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
     return typeof node == 'string' && node !== '' ?
       function () {
-        var tag = /^\s*<([^\s>]+)/.exec(node)
+        if (simpleScriptTagRe.test(node)) return [createScriptFromHtml(node)]
+        var tag = node.match(/^\s*<([^\s>]+)/)
           , el = doc.createElement('div')
           , els = []
           , p = tag ? tagMap[tag[1].toLowerCase()] : null
@@ -1068,7 +1080,7 @@
         do {
           // tbody special case for IE<8, creates tbody on any empty table
           // we don't want it if we're just after a <thead>, <caption>, etc.
-          if ((!tag || el.nodeType == 1) && (!tb || el.tagName.toLowerCase() != 'tbody')) {
+          if ((!tag || el.nodeType == 1) && (!tb || (el.tagName && el.tagName != 'TBODY'))) {
             els.push(el)
           }
         } while (el = el.nextSibling)
@@ -1118,4 +1130,4 @@
     }
 
   return bonzo
-}, this); // the only line we care about using a semi-colon. placed here for concatenation tools
+}); // the only line we care about using a semi-colon. placed here for concatenation tools

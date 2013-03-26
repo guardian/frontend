@@ -2,13 +2,13 @@
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-<h@headingLevel class="type-1">
+<h@headingLevel class="type-3">
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
         @RemoveOuterParaHtml(trail.headline)
     </a>
 </h@headingLevel>
 
-@trail.trailText.map { text => <div class="trail-text type-5">@cleanTrailText(text)</div> }
+@trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
 
 @trail.mainPicture(width=220).map{ smallCrop =>
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
@@ -20,8 +20,8 @@
                 data-full-width="@largeCrop.width"
             }
             itemprop="contentURL"
-            alt="@Html(smallCrop.altText.getOrElse(""))" 
-            title="@Html(smallCrop.caption.getOrElse(""))"
+            alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))" 
+            title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
         />
     </a>
 }

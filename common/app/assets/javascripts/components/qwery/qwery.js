@@ -1,15 +1,15 @@
 /*!
   * @preserve Qwery - A Blazing Fast query selector engine
   * https://github.com/ded/qwery
-  * copyright Dustin Diaz & Jacob Thornton 2012
+  * copyright Dustin Diaz 2012
   * MIT License
   */
 
-(function (name, definition, context) {
+(function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (typeof context['define'] == 'function' && context['define']['amd']) define(name, definition)
+  else if (typeof define == 'function' && define.amd) define(definition)
   else context[name] = definition()
-})('qwery', function () {
+})('qwery', this, function () {
   var doc = document
     , html = doc.documentElement
     , byClass = 'getElementsByClassName'
@@ -38,21 +38,22 @@
     , dividers = new RegExp('(' + splitters.source + ')' + splittersMore.source, 'g')
     , tokenizr = new RegExp(splitters.source + splittersMore.source)
     , chunker = new RegExp(simple.source + '(' + attr.source + ')?' + '(' + pseudo.source + ')?')
-    , walker = {
-        ' ': function (node) {
-          return node && node !== html && node.parentNode
-        }
-      , '>': function (node, contestant) {
-          return node && node.parentNode == contestant.parentNode && node.parentNode
-        }
-      , '~': function (node) {
-          return node && node.previousSibling
-        }
-      , '+': function (node, contestant, p1, p2) {
-          if (!node) return false
-          return (p1 = previous(node)) && (p2 = previous(contestant)) && p1 == p2 && p1
-        }
+
+  var walker = {
+      ' ': function (node) {
+        return node && node !== html && node.parentNode
       }
+    , '>': function (node, contestant) {
+        return node && node.parentNode == contestant.parentNode && node.parentNode
+      }
+    , '~': function (node) {
+        return node && node.previousSibling
+      }
+    , '+': function (node, contestant, p1, p2) {
+        if (!node) return false
+        return (p1 = previous(node)) && (p2 = previous(contestant)) && p1 == p2 && p1
+      }
+    }
 
   function cache() {
     this.c = {}
@@ -180,7 +181,7 @@
     if (!tokens.length) return r
 
     // filter further according to the rest of the selector (the left side)
-    each(r, function(e) { if (ancestorMatch(e, tokens, dividedTokens)) ret[ret.length] = e })
+    each(r, function (e) { if (ancestorMatch(e, tokens, dividedTokens)) ret[ret.length] = e })
     return ret
   }
 
@@ -222,8 +223,9 @@
   }
 
   function uniq(ar) {
-    var a = [], i, j
-    o: for (i = 0; i < ar.length; ++i) {
+    var a = [], i, j;
+    o:
+    for (i = 0; i < ar.length; ++i) {
       for (j = 0; j < a.length; ++j) if (a[j] == ar[i]) continue o
       a[a.length] = ar[i]
     }
@@ -270,15 +272,15 @@
   // where the root is not document and a relationship selector is first we have to
   // do some awkward adjustments to get it to work, even with qSA
   function collectSelector(root, collector) {
-    return function(s) {
+    return function (s) {
       var oid, nid
       if (splittable.test(s)) {
         if (root[nodeType] !== 9) {
-         // make sure the el has an id, rewrite the query, set root to doc and run it
-         if (!(nid = oid = root.getAttribute('id'))) root.setAttribute('id', nid = '__qwerymeupscotty')
-         s = '[id="' + nid + '"]' + s // avoid byId and allow us to match context element
-         collector(root.parentNode || root, s, true)
-         oid || root.removeAttribute('id')
+          // make sure the el has an id, rewrite the query, set root to doc and run it
+          if (!(nid = oid = root.getAttribute('id'))) root.setAttribute('id', nid = '__qwerymeupscotty')
+          s = '[id="' + nid + '"]' + s // avoid byId and allow us to match context element
+          collector(root.parentNode || root, s, true)
+          oid || root.removeAttribute('id')
         }
         return;
       }
@@ -298,16 +300,16 @@
       while (element = element.parentNode) if (element === container) return 1
       return 0
     }
-  , getAttr = function() {
+  , getAttr = function () {
       // detect buggy IE src/href getAttribute() call
       var e = doc.createElement('p')
       return ((e.innerHTML = '<a href="#x">x</a>') && e.firstChild.getAttribute('href') != '#x') ?
-        function(e, a) {
+        function (e, a) {
           return a === 'class' ? e.className : (a === 'href' || a === 'src') ?
             e.getAttribute(a, 2) : e.getAttribute(a)
         } :
-        function(e, a) { return e.getAttribute(a) }
-   }()
+        function (e, a) { return e.getAttribute(a) }
+    }()
   , hasByClass = !!doc[byClass]
     // has native qSA support
   , hasQSA = doc.querySelector && doc[qSA]
@@ -320,13 +322,13 @@
           return arrayify(root[qSA](selector))
         }
         // special case where we need the services of `collectSelector()`
-        each(ss = selector.split(','), collectSelector(root, function(ctx, s) {
+        each(ss = selector.split(','), collectSelector(root, function (ctx, s) {
           e = ctx[qSA](s)
           if (e.length == 1) result[result.length] = e.item(0)
           else if (e.length) result = result.concat(arrayify(e))
         }))
         return ss.length > 1 && result.length > 1 ? uniq(result) : result
-      } catch(ex) { }
+      } catch (ex) { }
       return selectNonNative(selector, root)
     }
     // no native selector support
@@ -342,7 +344,7 @@
         return result
       }
       // more complex selector, get `_qwery()` to do the work for us
-      each(ss = selector.split(','), collectSelector(root, function(ctx, s, rewrite) {
+      each(ss = selector.split(','), collectSelector(root, function (ctx, s, rewrite) {
         r = _qwery(s, ctx)
         for (i = 0, l = r.length; i < l; i++) {
           if (ctx[nodeType] === 9 || rewrite || isAncestor(r[i], root)) result[result.length] = r[i]
@@ -364,4 +366,4 @@
   qwery.pseudos = {}
 
   return qwery
-}, this);
+});

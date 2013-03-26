@@ -1,40 +1,44 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
+import play.api.libs.concurrent.Execution.Implicits._
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
 object VideoController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
-    val promiseOfVideo = Akka.future(lookup(path))
+    val promiseOfVideo = lookup(path)
     Async {
-      promiseOfVideo.map(_.map { renderVideo }.getOrElse { NotFound })
+      promiseOfVideo.map {
+        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
+        case Left(model) => renderVideo(model)
+        case Right(notFound) => notFound
+      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Option[VideoPage] = suppressApi404 {
-    val edition = Edition(request, Configuration)
-    log.info("Fetching video: " + path + " for edition " + edition)
-    val response: ItemResponse = ContentApi.item(path, edition)
+  private def lookup(path: String)(implicit request: RequestHeader) = {
+    val edition = Site(request).edition
+    log.info(s"Fetching video: $path for edition $edition")
+    ContentApi.item(path, edition)
+      .showExpired(true)
       .showTags("all")
       .showFields("all")
-      .response
+      .response.map{response =>
+        val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
+        val storyPackage = response.storyPackage map { new Content(_) }
 
-    val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
-    val storyPackage = response.storyPackage map { new Content(_) }
-
-    videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+        ModelOrResult(model, response)
+    }.recover{suppressApiNotFound}
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
     Cached(model.video) {
-      Ok(Compressed(views.html.video(model.video, model.storyPackage, Edition(request, Configuration))))
+      Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
     }
 }

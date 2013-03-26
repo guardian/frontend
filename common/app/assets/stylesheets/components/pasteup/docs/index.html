@@ -1,0 +1,64 @@
+            <div class="fluid-row">
+                <div class="col-8 start-col margin-bottom">
+                    <h2><strong>Pasteup</strong> is where design meets development. It is where the Guardian&rsquo;s globally recognised design language is turned into code for the web, and the starting point when styling GNM branded products for both internal teams and third parties.</h2>
+                </div>
+                <div class="col-4 zone-environment">
+                    <div class="factbox zone-border zone-border-medium">
+                        <h3 class="base-heading"><strong>Status</strong></h3>
+                        <p>Pasteup is currently in development. The base CSS and layout CSS can be used and are powering the documentation pages you are currently reading.</p>
+                        <p>You can see what modules have been implemented in the <a href="modules.html">module library</a>.</p>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+            <div class="fluid-row large-margin-top">
+                <div class="col-8 start-col article-body">
+                    <div class="hd zone-border zone-border-medium">
+                        <h2 class="sub-heading">Documentation</h2>
+                    </div>
+                    <p>Pasteup is a library of code to help you implement the Guardian&rsquo;s design and interaction patterns on the web. It can be used in various ways, most simply by linking directly to a CDN hosted version, or if necessary pulling individual modules into your own project&rsquo;s build process.</p>
+
+                    <h2 class="dotted-border">Base CSS</h2>
+                    <p>The base CSS of Pasteup should give you a generic Guardian style design for your page. This includes standard fonts and font sizes, colors, and heading styles. This is the simplest way of using Pasteup, and should go some distance to giving you a Guardian look and feel.</p>
+                    <p>You can see an example of how this might look in our <a href="base.html">styleguide</a>.</p>
+
+                    <h2 class="dotted-border margin-top">Layout styles</h2>
+                    <p class="pu-link"><a href="layout.html">grid.html</a></p>
+                    <p>Guardian web pages typically implement one of two grid systems. A <code>940px</code> fixed width grid as on <a href="http://guardian.co.uk">guardian.co.uk</a>, and a liquid and responsive layout which works across devices from mobile and tablet up to desktop (this doesn't exist yet).</p>
+
+                    <h2 class="dotted-border margin-top">Module library</h2>
+                    <p class="pu-link"><a href="modules.html">modules.html</a></p>
+                    <p>A set of stand-alone components which make up Guardian web pages. These should be entirely decoupled from any particular page or any particular layout.
+
+                    <h2 class="dotted-border margin-top">Hosting</h2>
+                    <p>Pasteup is fully hosted on <a href="http://pasteup.guim.co.uk">http://pasteup.guim.co.uk</a> which is a globally distributed and load balanced CDN. All files are minified, gzipped, and have far future Expires headers so they are aggressively cached by browsers.</p>
+                    <p>In the first instance, please link to URLs on this domain, as they are likely to be already cached by your users.</p>
+
+                    <h2 class="dotted-border margin-top">Other things</h2>
+                    <ul class="unstyled">
+                        <li>Looking for <a href="https://github.com/guardian/pasteup/blob/master/content/index.html">boilerplate <abbr title="Hypertext markup langugage">HTML</abbr></a>?</li>
+                        <li>Looking for <a href="#"><abbr title="Hypertext markup langugage">HTML</abbr> coding styleguide?</a></li>
+                        <li>Looking for <a href="#"><abbr title="Cascading stylesheets">CSS</abbr> coding styleguide?</a></li>
+                        <li>Looking for <a href="#">JavaScript coding styleguide</a>?</li>
+                    </ul>
+                </div><!-- /.col-12 -->
+
+                <div class="col-4">
+                    <div class="hd zone-border zone-border-medium">
+                        <h3 class="sub-heading">Getting started</h3>
+                    </div>
+                    <p>The quickest way to start is to add a link to the <a href="http://pasteup.guim.co.uk/<%= pasteupVersion %>/css/pasteup.min.css">main Pasteup CSS</a> file in the <code>&lt;head&gt;</code> of your document</code>. This will style your document with some standard Guardian typography and colours.</p>
+                    <img src="/img/code.jpg" class="margin-bottom" />
+                    <h3 class="base-heading">Hosting</h3>
+                    <p>Pasteup is available on <a href="http://pasteup.guim.co.uk">http://pasteup.guim.co.uk</a> which is hosted on a globally distributed and load balanced <abbr title="Content delivery network">CDN</abbr>. All files are minified, gzipped, and are served with far future Expires headers so they are aggressively cached by browsers.</p>
+                    <p>Typically you should link to URLs on this domain, as they are likely to be already cached by users.</p>
+                    <h3 class="base-heading">Current production URLs</h3>
+                    <ul class="unstyled">
+                        <li><a href="http://pasteup.guim.co.uk/<%= pasteupVersion %>/css/pasteup.min.css">http://pasteup.guim.co.uk/<%= pasteupVersion %>/css/pasteup.min.css</a></li>
+                        <li><a href="http://pasteup.guim.co.uk/<%= pasteupVersion %>/js/require.js">http://pasteup.guim.co.uk/<%= pasteupVersion %>/js/require.js</a></li>
+                        <li><a href="http://pasteup.guim.co.uk/<%= pasteupVersion %>/js/main.min.js">http://pasteup.guim.co.uk/<%= pasteupVersion %>/js/main.min.js</a></li>
+                    </ul>
+                    <h3 class="base-heading">Build</h3>
+                    <p>Pasteup is built using <a href="http://lesscss.org/">LESS</a> and the <a href="http://requirejs.org/docs/optimization.html">RequireJS optimizer</a>. If you are using these tools in your project, it should be simple to include specific modules of Pasteup, and integrate them into your build.</p>
+                </div>
+            </div><!-- /.row -->

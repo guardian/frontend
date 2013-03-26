@@ -1,24 +1,35 @@
 package common
 
-import com.gu.openplatform.contentapi.Api
-import com.gu.openplatform.contentapi.connection.{ DispatchHttp, Proxy => ContentApiProxy }
-import com.gu.management.{ Metric, TimingMetric }
+import com.gu.openplatform.contentapi.{ApiError, Api}
+import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, HttpResponse}
+import com.gu.management.{ CountMetric, Metric, TimingMetric }
+import conf.Configuration
+import java.util.concurrent.TimeoutException
+import scala.concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.ws.WS
+import com.gu.openplatform.contentapi.util.FutureInstances
 
-trait ApiQueryDefaults { self: Api =>
+import com.gu.openplatform.contentapi.connection.Http
+
+
+trait ApiQueryDefaults { self: Api[Future] =>
 
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,showInRelatedContent"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount"
 
   val references = "pa-football-competition,pa-football-team"
+
+  val inlineElements = "picture,witness,video"
 
   //common fileds that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
     .edition(edition)
     .showTags("all")
     .showFields(trailFields)
-    .showInlineElements("picture")
+    .showInlineElements(inlineElements)
     .showMedia("all")
     .showReferences(references)
     .showStoryPackage(true)
@@ -28,56 +39,79 @@ trait ApiQueryDefaults { self: Api =>
   def search(edition: String): SearchQuery = search
     .edition(edition)
     .showTags("all")
-    .showInlineElements("picture")
+    .showInlineElements(inlineElements)
     .showReferences(references)
     .showFields(trailFields)
     .showMedia("all")
     .tag(supportedTypes)
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends Api with ApiQueryDefaults with DispatchHttp
-    with Logging {
+object ContentApiMetrics {
+  object HttpTimingMetric extends TimingMetric(
+    "performance",
+    "content-api-calls",
+    "Content API calls",
+    "outgoing requests to content api"
+  ) with TimingMetricLogging
 
-  import configuration.{ proxy => proxyConfig, _ }
+  object HttpTimeoutCountMetric extends CountMetric(
+    "timeout",
+    "content-api-timeouts",
+    "Content API timeouts",
+    "Content api calls that timeout"
+  )
 
-  override val targetUrl = contentApi.host
-  apiKey = Some(contentApi.key)
+  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
+}
 
-  override lazy val maxConnections = 100
-  override lazy val connectionTimeoutInMs = 200
-  override lazy val requestTimeoutInMs = 2000
-  override lazy val compressionEnabled = true
+trait DelegateHttp extends Http[Future] {
+  import System.currentTimeMillis
+  import ContentApiMetrics._
 
-  override lazy val proxy: Option[ContentApiProxy] = if (proxyConfig.isDefined) {
-    log.info("Setting HTTP proxy to: %s:%s".format(proxyConfig.host, proxyConfig.port))
-    Some(ContentApiProxy(proxyConfig.host, proxyConfig.port))
-  } else None
+  private val dispatch = new Http[Future] with Logging {
+    override def GET(url: String, headers: Iterable[(String, String)]) = {
+      val start = currentTimeMillis
+      val response = WS.url(url).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
 
-  override protected def fetch(url: String, parameters: Map[String, Any]) = {
+      // record metrics
+      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
 
-    checkQueryIsEditionalized(url, parameters)
-
-    metrics.ContentApiHttpTimingMetric.measure {
-      super.fetch(url, parameters + ("user-tier" -> "internal"))
+      response.map{ r => HttpResponse(r.body, r.status, r.statusText)}
     }
   }
 
-  object metrics {
-    object ContentApiHttpTimingMetric extends TimingMetric(
-      "performance",
-      "content-api-calls",
-      "Content API calls",
-      "outgoing requests to content api",
-      Some(RequestMetrics.RequestTimingMetric)
-    ) with TimingMetricLogging
+  private var _http: Http[Future] = dispatch
+  def http = _http
+  def http_=(delegateHttp: Http[Future]) = _http = delegateHttp
 
-    val all: Seq[Metric] = Seq(ContentApiHttpTimingMetric)
+  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
+
+  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
+    .map(_.getClass == classOf[TimeoutException])
+    .getOrElse(false)
+}
+
+
+
+import FutureInstances._
+
+class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
+    with Logging {
+
+  import Configuration.contentApi
+  override val targetUrl = contentApi.host
+  apiKey = Some(contentApi.key)
+
+  override protected def fetch(url: String, parameters: Map[String, Any]) = {
+    checkQueryIsEditionalized(url, parameters)
+    super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
     //you cannot editionalize tag queries
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      "You should never, Never, NEVER create a query that does not include the edition. EVER: " + url
+      s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 

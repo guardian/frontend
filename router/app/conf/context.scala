@@ -12,7 +12,7 @@ object ManifestData {
 }
 
 object Management extends com.gu.management.play.Management {
-  val applicationName = RouterConfiguration.application
+  val applicationName = "frontend-router"
 
   lazy val pages = List(
     new ManifestPage,

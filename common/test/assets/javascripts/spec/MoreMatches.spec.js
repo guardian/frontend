@@ -1,6 +1,10 @@
-define(['modules/more-matches', 'bonzo', 'qwery', 'common'], function(MoreMatches, bonzo, qwery, common) {
+define(['modules/more-matches', 'bonzo', 'qwery', 'common', 'ajax'], function(MoreMatches, bonzo, qwery, common, ajax) {
 
     describe("MoreMatches", function() {
+
+        beforeEach(function () {
+            ajax.init("");
+        });
 
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;
         var matchesNav = document.getElementById('matches-nav');
@@ -36,7 +40,7 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common'], function(MoreMatche
 
         // simulated context
         with (validPath) {
-            
+
             if (window.location.pathname.match(footballIndexRegex)) {
                 spy_showMoreMatches1();
             }
@@ -48,7 +52,7 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common'], function(MoreMatche
         }
 
         with (invalidPath) {
-            
+
             if (window.location.pathname.match(footballIndexRegex)) {
                 spy_showMoreMatches2();
             }
@@ -60,7 +64,7 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common'], function(MoreMatche
         }
 
         with (validPath) {
-            
+
             if (window.location.pathname.match(footballIndexRegex)) {
                 showMoreMatches();
             }
@@ -97,8 +101,6 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common'], function(MoreMatche
             });
 
         }
-
-     
 
 
     });

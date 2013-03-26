@@ -1,0 +1,25 @@
+{
+  "name": "pasteup",
+  "version": "0.0.0",
+  "main": [
+    "./js/modules/main.js",
+    "./less/pasteup.less"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/guardian/pasteup"
+  },
+  "ignore": [
+    "build/",
+    "docs/",
+    "node_modules/",
+    "grunt.js",
+    "setup.sh"
+  ],
+  "gitHead": "3eb4ea1f45b9cd36f826cc8c80d6c8a967543261",
+  "readme": "Introduction\n============\n\nPasteup is where design meets development. It is where the Guardian’s globally recognised design language is turned into code for the web, and the starting point when styling Guardian branded products for both internal teams and third parties.\n\n**Why Pasteup?** It's a newspaper term for \"the assemblage of pages by pasting type onto page mockups, which are then photographed to be made into metal plates for the printing press\" (courtesy of John E McIntyre). This is quite a nice metaphor for how client-side development builds the Guardian's pages. Plus it sounds cool.\n\nUsing Pasteup\n========================\n\nLink to Pasteup CSS and JavaScript files directly. The current URLs can be found at http://pasteup.guim.co.uk/index.html.\n\n### Using Bower in your own build\n\nYou can install Pasteup using bower.\n\n    > npm install -g bower\n    > bower install pasteup\n\nThis will create a `components/pasteup` directory and you can reference Pasteup LESS and JS files directly in your own code. For example, in LESS:\n\n    @import \"components/pasteup/less/layout.less\";\n    @import \"components/pasteup/less/zones.less\";\n\nOr in you `requirejs` paths configuration:\n\n    paths: {\n    \tdetect: \"components/pasteup/js/modules/detect\",\n    \timages: \"components/pasteup/js/modules/images\"\n    }\n\n\nContributing to Pasteup\n=======================\n\nTo build Pasteup you need the following installed:\n\n* `nodejs`\n* `npm`\n* `grunt`\n\nOn linux you can run `> ./setup` to do this.\n\nWith these dependencies installed try the following.\n\n`> grunt # Runs the build, starts server on http://localhost:3000 and watches files for changes.`\n\n`> grunt build # Runs the build.`\n",
+  "readmeFilename": "README.md",
+  "_id": "pasteup@0.0.5",
+  "description": "Introduction ============",
+  "commit": "3eb4ea1f45b9cd36f826cc8c80d6c8a967543261"
+}

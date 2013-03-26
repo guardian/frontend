@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
+define(['common', 'modules/detect'], function(common, detect) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -8,6 +8,8 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
     function Omniture(s, config, w) {
 
         var that = this;
+
+        var storagePrefix = "gu.analytics.";
 
         w = w || {};
 
@@ -26,21 +28,34 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
         this.logTag = function(params) {
             var element = params[0],
                 tag = params[1],
-                isXhr = params[2],
-                isInternalAnchor = params[3];
+                isSamePage = params[2],
+                isSameHost = params[3],
+                storeObj,
+                delay;
 
-            // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            var delay = (isXhr || isInternalAnchor) ? true : element;
-            that.populateEventProperties(tag);
-
-            s.tl(delay, 'o', tag);
+            // Remove the 'false' clause once Omniture guys support the localStorage approach...
+            if (false && isSameHost && !isSamePage) {
+                // Came from a link to a new page on the same host.
+                // Do session storage rather than an omniture track.
+                storeObj = {
+                    pageName: s.pageName,
+                    tag: tag,
+                    time: new Date().getTime()
+                };
+                localStorage.setItem(storagePrefix + 'referrerVars', JSON.stringify(storeObj));
+            } else {
+                that.populateEventProperties(tag);
+                // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
+                delay = isSamePage ? true : element;
+                s.tl(delay, 'o', tag);
+            }
         };
 
         this.populateEventProperties = function(tag){
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tag;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
         };
 
         // used where we don't have an element to pass as a tag
@@ -49,17 +64,17 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
-            s.eVar37 = s.pageType + ':' + tagStr;
+            s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
             s.tl(true, 'o', tagStr);
         };
 
 
         this.populatePageProperties = function() {
 
-            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
+            // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
+            s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
 
-            var prefix = 'GFE',
-                path = window.location.pathname;
+            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
 
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
@@ -68,7 +83,7 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
             s.prop3     = config.page.publication || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
-            s.channel   = config.page.section || '';
+            s.channel   = (config.page.contentType === "Network Front") ? "Network Front" : config.page.section || '';
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -93,12 +108,17 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
 
             s.prop56    = 'Javascript';
 
+            s.prop65    = config.page.headline || '';
+
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
             } else {
                 s.prop30 = 'non-content';
             }
 
+            if (window.location.hash === '#popup:homescreen') {
+                s.eVar38 = 'popup:homescreen';
+            }
         };
 
         this.init = function() {
@@ -115,12 +135,14 @@ define(['common', 'modules/detect', 'bean'], function(common, detect, bean) {
                 that.populatePageProperties();
                 that.logView();
                 common.mediator.on('module:clickstream:click', that.logTag );
+                common.mediator.emit('module:omniture:loaded');
             } else {
                 require(['js!omniture'], function(placeholder){
                     s = window.s;
                     that.populatePageProperties();
                     that.logView();
                     common.mediator.on('module:clickstream:click', that.logTag );
+                    common.mediator.emit('module:omniture:loaded');
                 });
             }
 

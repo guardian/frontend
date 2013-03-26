@@ -3,19 +3,18 @@ package controllers.front
 import common._
 import play.api.libs.json.JsValue
 import play.api.libs.json.Json.parse
-import akka.util.duration._
-import akka.util.Timeout
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 import conf.Configuration
-import common.Response
 import model.Trailblock
 import model.TrailblockDescription
+import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
 class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription])
     extends FrontEdition(edition, descriptions)
-    with AkkaSupport with HttpSupport with Logging {
+    with AkkaSupport with Logging {
 
-  override lazy val proxy = Proxy(Configuration)
 
   val configUrl = Configuration.front.config
 
@@ -32,13 +31,11 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def refresh() = {
     super.refresh()
-    configAgent.sendOff { oldAgents =>
-      log.info("loading front configuration from: " + configUrl)
-      http.GET(configUrl) match {
-        case Response(200, json, _) => refreshAgents(json, oldAgents)
-        case Response(errorCode, _, errorMessage) =>
-          log.error("error fetching config %s %s" format (errorCode, errorMessage))
-          oldAgents
+    log.info(s"loading front configuration from: $configUrl")
+    WS.url(configUrl).withTimeout(2000).get().foreach{ response =>
+      response.status match {
+        case 200 => configAgent.send(oldAgents => refreshAgents(response.body, oldAgents))
+        case _ => log.error(s"error fetching config ${response.status} ${response.statusText}")
       }
     }
   }
@@ -56,7 +53,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
     oldAgents.filterNot(old => newAgents.exists(_.description == old.description)).foreach(_.close())
 
     newAgents.foreach(_.refresh())
-    newAgents.foreach(a => log.info("Front configuration loaded: " + a.description))
+    newAgents.foreach(a => log.info(s"Front configuration loaded: ${a.description}"))
     newAgents
   }
 
@@ -67,7 +64,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   override def warmup() = {
     super.warmup()
-    quietly(configAgent.await(Timeout(5 seconds)).foreach(_.warmup()))
+    quietly(configAgent.await(5.seconds).foreach(_.warmup))
   }
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
@@ -77,7 +74,8 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
       TrailblockDescription(
         toId((block \ "id").as[String]),
         (block \ "title").as[String],
-        (block \ "numItems").as[Int]
+        (block \ "numItems").as[Int],
+        showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
       )
     }
   }

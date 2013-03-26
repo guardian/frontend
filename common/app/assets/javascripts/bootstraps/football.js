@@ -10,43 +10,30 @@ define([
     "modules/footballfixtures",
     "modules/footballtables",
     "modules/more-matches",
-    "modules/autoupdate"
+    "modules/autoupdate",
+    "modules/pad",
+    "modules/matchnav"
 ], function (
     common,
     qwery,
-
     Router,
     TogglePanel,
     Expandable,
     FootballFixtures,
     FootballTable,
     MoreMatches,
-    AutoUpdate
+    AutoUpdate,
+    Pad,
+    MatchNav
 ) {
 
     var modules = {
-
-        related: function(match) {
-
-            // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
-            function pad(number, length) {
-                var str = '' + number;
-                while (str.length < length) {
-                    str = '0' + str;
-                }
-                return str;
+        matchNav: function(config){
+            if (config.page.footballMatch) {
+                var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
+                    url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                new MatchNav().load(url);
             }
-
-            var date = new Date(Number(match.dateInMillis));
-
-            var url = '/football/api/more-on-match/';
-                url += date.getFullYear() + '/';
-                url += pad(date.getMonth() + 1, 2) + '/';
-                url += pad(date.getDate(), 2) + '/';
-                url += match.homeTeam + '/';
-                url += match.awayTeam;
-
-            common.mediator.emit("modules:related:load", [url]);
         },
 
         initTogglePanels: function () {
@@ -77,7 +64,7 @@ define([
                 if(title) { title.className = "js-hidden"; }
             });
 
-            var fixtures = new FootballFixtures({
+            var todaysFixtures = new FootballFixtures({
                 prependTo: document.querySelector('.t2'),
                 competitions: [competition],
                 contextual: true,
@@ -110,6 +97,21 @@ define([
                 attachTo: container,
                 switches: switches
             }).init();
+        },
+
+        showHomescreen: function(config) {
+            if (config.switches.homescreen) {
+                require(['homescreen'], function(homescreen){
+                    homescreen({
+                        expire: 60, // minutes until the popup is offered again (unless they've clicked on Close)
+                        returningVisitor: true, // Offer it only on a return visit
+                        animationIn: 'fade',
+                        animationOut: 'fade',
+                        touchIcon: true,
+                        message: 'Add this to your %device by tapping %icon then <strong>Add to Home Screen</strong>'
+                    });
+                });
+            }
         }
     };
 
@@ -152,8 +154,8 @@ define([
                 modules.initTogglePanels();
                 break;
             default:
-                var comp = config.page.paFootballCompetition,
-                    team = config.page.paFootballTeam;
+                var comp = config.referenceOfType('paFootballCompetition'),
+                    team = config.referenceOfType('paFootballTeam');
 
                 if(comp) {
                     modules.showCompetitionData(comp);
@@ -163,19 +165,27 @@ define([
                 }
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
-                    modules.related(match);
+
+                    modules.matchNav(config);
+
                     if(match.isLive) {
-                        modules.initAutoUpdate({
+                        modules.initAutoUpdate(
+                            {
                                 "summary"   : qwery('.match-summary')[0],
                                 "stats"     : qwery('.match-stats')[0]
                             },
                             config.switches,
-                            true);
+                            true
+                        );
                     }
                 }
 
+
+
                 break;
         }
+    
+        modules.showHomescreen(config);
     };
 
     return {

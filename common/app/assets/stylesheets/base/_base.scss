@@ -1,0 +1,31 @@
+.dateline {
+    font-family: $sans-serif;
+    margin: 0px 0px $baseline*2 0px;
+    color: #666666;
+    @extend .type-11;
+}
+
+.relative-timestamp {
+    display: block;
+    height: 10px;
+    color: #777777;
+    margin: 0;
+    padding:0 0 $baseline*3 0;
+}
+
+.relative-timestamp span {
+    display: inline-block;
+}
+
+ol, ul {
+    list-style-position: inside;
+}
+
+/* pasteup overrides */
+.zone-border {
+    padding-top: 0;
+}
+
+a:active {
+    background-color: transparent;
+}

@@ -1,0 +1,9 @@
+@(page: Page, trails: Seq[Trail])(implicit request: RequestHeader)
+
+@main(page, Switches.all){
+}{
+    <h2 class="type-1 article-zone">Top stories</h2>
+    <div class="headline-list box-indent" data-link-name="top-stories" role="navigation">
+        @fragments.trailblocks.link(trails, trails.size)
+    </div>
+}

@@ -1,6 +1,5 @@
 define([
     'common',
-    'reqwest',
     'domwrite',
     'qwery',
     'bonzo',
@@ -10,11 +9,11 @@ define([
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
-    'modules/adverts/audience-science'
+    'modules/adverts/audience-science',
+    'modules/adverts/quantcast'
 ],
 function (
     common,
-    reqwest,
     domwrite,
     qwery,
     bonzo,
@@ -24,12 +23,12 @@ function (
     documentWrite,
     DocumentWriteSlot,
     dimensionMap,
-    audienceScience
+    audienceScience,
+    quantcast
 ) {
     
     var config,
         adsSwitchedOn,
-        audienceScienceSegments,
         slots;
 
     function init(c) {
@@ -44,17 +43,24 @@ function (
         adsSwitchedOn = !userPrefs.isOff('adverts');
 
         // Run through slots and create documentWrite for each.
-        // Other ad types suchas iframes and custom can be plugged in here later
+        // Other ad types such as iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
+            
             for(var i = 0, j = slotHolders.length; i < j; ++i) {
                 var name = slotHolders[i].getAttribute('data-' + size);
                 var slot = new DocumentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             }
+            
             if (config.switches.audienceScience) {
                 audienceScience.load(config.page);
             }
+
+            if (config.switches.quantcast) {
+                quantcast.load();
+            }
+        
         }
 
         //Make the request to ad server
@@ -77,7 +83,7 @@ function (
         }
 
         //This is a horrible hack to hide slot if no creative is returned from oas
-        //Check existance of empty tracking pixel
+        //Check existence of empty tracking pixel
         if(config.page.pageId === "") {
             var middleSlot = document.getElementById('ad-slot-middle-banner-ad');
 

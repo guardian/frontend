@@ -3,9 +3,10 @@ package model
 import common.{ AkkaSupport, Logging }
 import conf.ContentApi
 import akka.actor.Cancellable
-import akka.util.Duration
 import java.util.concurrent.TimeUnit._
 import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.duration._
 
 trait LiveBlogAgent extends AkkaSupport with Logging {
 
@@ -13,28 +14,29 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
   private val ukAgent = play_akka.agent[Option[Trail]](None)
 
   def refreshLiveBlogs() = {
-    ukAgent.sendOff { old => findBlogFor("UK") }
-    usAgent.sendOff { old => findBlogFor("US") }
+    findBlogFor("UK").foreach(ukAgent.send(_))
+    findBlogFor("US").foreach(usAgent.send(_))
   }
 
   private def findBlogFor(edition: String) = {
-    val tag = "football/series/saturday-clockwatch|tone/minutebyminute,(" + ContentApi.supportedTypes + ")"
-    log.info("Fetching football blogs with tag: " + tag)
-    val response: ItemResponse = ContentApi.item("/football", edition)
+    val tag = s"football/series/saturday-clockwatch|tone/minutebyminute,(${ContentApi.supportedTypes})"
+    log.info(s"Fetching football blogs with tag: $tag")
+    ContentApi.item("/football", edition)
       .tag(tag)
       .showEditorsPicks(true)
-      .response
+      .response.map {response =>
 
-    val editorsPicks = response.editorsPicks map { new Content(_) }
+      val editorsPicks = response.editorsPicks map { new Content(_) }
 
-    val editorsPicksIds = editorsPicks map { _.id }
+      val editorsPicksIds = editorsPicks map { _.id }
 
-    val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+      val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
 
-    // order by editors' picks first
-    val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
+      // order by editors' picks first
+      val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
 
-    liveBlogs.find(isClockWatch).orElse(liveBlogs.headOption)
+      liveBlogs.find(isClockWatch).orElse(liveBlogs.headOption)
+    }
   }
 
   private def isClockWatch(content: Content) = content.tags.exists(_.id == "football/series/saturday-clockwatch")
@@ -57,7 +59,7 @@ object LiveBlog extends LiveBlogAgent {
   private var schedule: Option[Cancellable] = None
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(Duration(2, MINUTES), initialDelay = Duration(10, SECONDS)) {
+    schedule = Some(play_akka.scheduler.every(2.minutes, initialDelay = 10.seconds) {
       refreshLiveBlogs()
     })
   }
