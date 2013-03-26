@@ -68,30 +68,32 @@ define([
         },
             
         abTest: function() {
-        	var testName = 'Most Read',
-        		updateHrefs = function(selector) { 
-        			common.$g(selector).attr('href', function(a) { return bonzo(a).attr('href') + '?testComplete=1' }); 
-    			};
-    			
-	        Abba(testName)
-	            .control('Control', function(){
-		        	// update hrefs for test
-	            	updateHrefs('#tabs-popular-1 a');
-	          	})
-	            .variant('"The Guardian" selected', function(){
-		        	bean.fire(common.$g('#js-popular-tabs a[data-link-name~="Guardian"]')[0], 'click');
-	                // update hrefs for test
-	            	updateHrefs('#tabs-popular-2 a');
-	            })
-	            .start();
-	        
-	        var query = window.location.search; 
-	        if(query.indexOf('testComplete=1') !== -1) {
-	        	Abba(testName).complete();
-	        	// remove test complete flag from query 
-	        	// NOTE: causes reload. necessary? better way to do it? 
-	        	window.location.search = query.replace('testComplete=1', '');
-	        }
+            require(['js!https://intense-oasis-8128.herokuapp.com/v1/abba.js'], function() {
+                var testName = 'Most Read',
+                    updateHrefs = function(selector) {
+                        common.$g(selector).attr('href', function(a) {
+                            return bonzo(a).attr('href') + '?testComplete=1';
+                        });
+                    },
+                    query = window.location.search;
+                    
+                if(query.indexOf('testComplete=1') !== -1) {
+                    Abba(testName).complete();
+                }
+                
+                Abba(testName)
+                    .control('Control', function(){
+                        // update hrefs for test
+                        updateHrefs('#tabs-popular-1 a');
+                    })
+                    .variant('"The Guardian" selected', function(){
+                        // select global populat tab
+                        bean.fire(common.$g('#js-popular-tabs a[data-link-name~="Guardian"]')[0], 'click');
+                        // update hrefs for test
+                        updateHrefs('#tabs-popular-2 a');
+                    })
+                    .start();
+            });
         },
 
         initExperiments: function(config) {

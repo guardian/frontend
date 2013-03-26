@@ -84,11 +84,6 @@
         script.src = '@Static("javascripts/bootstraps/app.js")';
 
         document.getElementsByTagName("head")[0].appendChild(script);
-        
-        var abbaHost = 'https://intense-oasis-8128.herokuapp.com',
-            $abbaScript = document.createElement('script');
-        $abbaScript.src = abbaHost + '/v1/abba.js';
-        document.getElementsByTagName('head')[0].appendChild($abbaScript);
     
     })(guardian.isModernBrowser);
 
