@@ -336,7 +336,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Make the document accessible with ARIA support") {
 
       Given("I read an article")
+      
       CommonSwitches.SocialSwitch.switchOn
+      CommonSwitches.SearchSwitch.switchOn
+      
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
 
@@ -351,6 +354,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".search-box").getAttribute("role") should be("search")
         
       }
     }
