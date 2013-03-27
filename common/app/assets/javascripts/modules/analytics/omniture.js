@@ -129,7 +129,7 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
             this.logView();
             common.mediator.on('module:clickstream:click', this.logTag );
             common.mediator.emit('module:omniture:loaded');
-        }
+        };
 
         this.init = function() {
 

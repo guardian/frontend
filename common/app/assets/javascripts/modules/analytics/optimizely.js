@@ -2,9 +2,9 @@ define(function() {
 
     function readTests(config) {
         var tests = [];
+        var prop = '';
         if (window.optimizely) {
             var optim = window.optimizely;
-            var prop = '';
             for (var i = 0, j = optim.activeExperiments.length; i<j; ++i) {
                 var experimentId = optim.activeExperiments[i];
                 var activeVariantId = optim.variationIdsMap[experimentId][0];
@@ -15,12 +15,11 @@ define(function() {
                 }
             }
         }
-        console.log(prop);
         return prop;
     }
 
     return {
         'readTests': readTests
-    }
+    };
 });
 
