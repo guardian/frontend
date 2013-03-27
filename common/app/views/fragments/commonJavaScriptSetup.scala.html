@@ -70,7 +70,8 @@
                     s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
                 )},
                 'edition': '@Site(request).edition',
-                'ajaxUrl': 'http://@Site(request).ajaxHost'
+                'ajaxUrl': 'http://@Site(request).ajaxHost',
+                isDev: @play.Play.isDev()
             },
             switches : { @{Html(switches.map{ switch =>
                     s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
