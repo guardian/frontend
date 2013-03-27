@@ -20,7 +20,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
         it("should log javascript errors with the error message, line number and file", function(){
             var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
             e.log(fakeError.message, fakeError.lineno, fakeError.filename);
-            expect(document.getElementById('js-err').getAttribute('src')).toBe('/px.gif?js/foo%2C1%2Cfoo.js');
+            expect(document.getElementById('js-err').getAttribute('src')).toContain('/px.gif?js/foo%2C1%2Cfoo.js');
         });
 
     });

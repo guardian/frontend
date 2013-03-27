@@ -2,7 +2,8 @@ define(['common'], function (common) {
 
     var Errors = function (w) {
 
-        var path = '/px.gif',
+        var url = "http://beacon." + window.location.hostname,
+            path = '/px.gif',
             win = w || window,
             body = document.body,
             createImage = function(url) {
@@ -13,7 +14,7 @@ define(['common'], function (common) {
                 body.appendChild(image);
             },
             makeUrl = function(properties) {
-                return path + '?js/' + encodeURIComponent(properties.join(','));
+                return url + path + '?js/' + encodeURIComponent(properties.join(','));
             },
             log = function(message, filename, lineno) {
                 var url = makeUrl([message, filename, lineno]);
