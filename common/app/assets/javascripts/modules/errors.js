@@ -2,7 +2,7 @@ define(['common'], function (common) {
 
     var Errors = function (w) {
 
-        var url = "http://beacon." + window.location.hostname,
+        var url = "//beacon." + window.location.hostname,
             path = '/px.gif',
             win = w || window,
             body = document.body,
