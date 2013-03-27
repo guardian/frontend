@@ -3,7 +3,14 @@
 
 <header id="header" class="cf" role="banner" datalink-name="global navigation: header">
 
-    <a href="/" data-link-name="site logo" id="logo" class="i i-guardian-logo">The Guardian</a>
+    <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
+
+    <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
+        class="control control--topstories">
+        <i class="i i-nav-divider"></i>
+        <span>Top stories</span>
+        <i class="i i-arrow-small-down"></i>
+    </a>
 
     <ol class="nav global-nav">
         @Navigation(page).map{ nav =>
@@ -13,20 +20,11 @@
         }
     </ol>
 
-    <div class="nav-controls">
-        <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
-            class="control control--sections">
-            <i class="i i-nav-divider"></i>
-            <span class="i i-menu">Sections</span>
-        </a>
-
-        <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
-            class="control control--topstories">
-            <i class="i i-nav-divider"></i>
-            <span>Top stories</span>
-            <i class="i i-arrow-small-down"></i>
-        </a>
-    </div>
+    <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
+        class="control control--sections">
+        <i class="i i-nav-divider"></i>
+        <span class="i i-menu">Sections</span>
+    </a>
 </header>
 
 <div id="topstories-header" class="nav-popup top-stories is-off"></div>

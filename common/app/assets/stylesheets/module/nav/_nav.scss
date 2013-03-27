@@ -99,17 +99,27 @@
   width: auto !important;
   height: 58px;
   overflow: hidden;
-  padding: 0 168px 0 $gutter;
+  padding: 0 50px 0 140px;
   @media only screen and (min-width: 35em) { display: block; }
 }
 
-  .global-nav__item { float:left; }
+  .global-nav__item {
+    float:left;
+  }
 
-  .global-nav__link {
+  .global-nav__link,
+  .global-nav__link:link,
+  .global-nav__link:active,
+  .global-nav__link:hover,
+  .global-nav__link:visited {
     display: block;
+    margin: 16px 0 10px 0;
+    padding: 5px $gutter 3px $gutter;
     font-family: $serif !important;
     font-size: 13px;
-    margin: 0;
-    padding: 21px $gutter;
+    text-decoration: none;
     color: #ffffff;
+    border-right: 1px solid $lightBlue;
   }
+
+    .global-nav__item:last-child .global-nav__link { border-right: none; }

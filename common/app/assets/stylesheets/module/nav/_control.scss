@@ -29,7 +29,11 @@
  ========================================================================== */
 
 .control--sections {
-  float: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: auto;
+  height: 58px;
   width: 34px;
   padding: 15px 16px 15px 0px;
 }
@@ -59,12 +63,19 @@
  ========================================================================== */
 
 .control--topstories {
-  float: right;
+  position: absolute;
+  top:0px;
+  right: 50px;
   height: 28px;
   font-family: $serif !important;
   font-size: 13px;
   margin: 0;
-  padding: 15px 0;
+  padding: 17px 0 13px 0;
+
+  @media only screen and (min-width: 35em) {
+    right: auto;
+    left: 140px;
+  }
 }
 
 .control--topstories span {
@@ -76,7 +87,7 @@
 }
 
 .control--topstories .i-arrow-small-down {
-  margin: 12px 10px 8px 5px;
+  margin: 10px 10px 8px 5px;
 }
 
 .control--topstories.is-active span {

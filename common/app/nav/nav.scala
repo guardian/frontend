@@ -22,14 +22,13 @@ object Navigation {
     ),
     NavItem("World News", "/world"),
     NavItem("Sport", "/sport"),
-    NavItem("Football", "/football"),
+    football(metadata),
     NavItem("Comment is free", "/commentisfree"),
     NavItem("Life & Style", "/lifeandstyle"),
     NavItem("Culture", "/culture"),
     NavItem("Business", "/business"),
     NavItem("Technology", "/technology"),
-    NavItem("Environment", "/environment"),
-    football(metadata)
+    NavItem("Environment", "/environment")
   )
 
 
