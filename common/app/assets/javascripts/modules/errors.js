@@ -55,4 +55,3 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
     };
 
     return Errors;
-});
