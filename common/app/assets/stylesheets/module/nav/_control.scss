@@ -14,6 +14,8 @@
   .control:active,
   .control:hover,
   .control:visited{
+    font-family: $serif !important;
+    font-size: 13px;
     color: #ffffff;
     text-decoration: none !important;
   }
@@ -22,27 +24,6 @@
 .control.is-active {
   background-color: #ffffff;
   color: $blue;
-}
-
-
-/* Sections control - (Hamburger icon )
- ========================================================================== */
-
-.control--sections {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: auto;
-  height: 58px;
-  width: 34px;
-  padding: 15px 16px 15px 0px;
-}
-
-.control--sections span {
-  float: right;
-  margin-top: 8px;
-  display: inline-block;
-  text-indent: -1000em;
 }
 
 .i-nav-divider {
@@ -54,10 +35,39 @@
   border-left: 1px solid #122853;
 }
 
+/* Sections control - (Hamburger icon )
+ ========================================================================== */
+
+.control--sections {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: auto;
+  height: 28px;
+  padding: 15px 16px 15px 0px;
+}
+
+.control__menu.i {
+  float: right;
+  margin-top: 8px;
+  display: inline-block;
+  text-indent: -1000em;
+  @media only screen and (min-width: 35em) { display: none; }
+}
+
 .is-active .i-nav-divider {
   border-color: #ffffff;
   background-color: #ffffff;
 }
+
+.control__more {
+    display: none;
+    float: right;
+    margin-top: 5px;
+    @media only screen and (min-width: 35em) { display: inline-block; }
+}
+
+.control__more .i-more-arrow { margin: 2px 0 0 4px; }
 
 /* Top stories control
  ========================================================================== */
@@ -67,8 +77,6 @@
   top:0px;
   right: 50px;
   height: 28px;
-  font-family: $serif !important;
-  font-size: 13px;
   margin: 0;
   padding: 17px 0 13px 0;
 
@@ -93,4 +101,13 @@
 .control--topstories.is-active span {
   background: none !important;
   border-color: transparent !important;
+}
+
+.control--topstories .i-nav-divider--right {
+  display: none;
+  position: absolute;
+  top:17px;
+  right:0px;
+  margin-right: 0px;
+  @media only screen and (min-width: 35em) { display: block; }
 }
