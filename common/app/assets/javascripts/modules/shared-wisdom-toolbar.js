@@ -52,11 +52,11 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	                    var ad = ['adslot_' + bonzo(adSlot).attr('data-base')],
 	                        // get ad id (from the link, if it exists)
 	                        a = common.$g('.ad-container  > a', adSlot),
-	                        regEx = /(oas.guardian.co.uk|247realmedia.com).*\/Guardian\/([^/]+)\//,
+	                        regEx = /(?:oas.guardian.co.uk|247realmedia.com).*\/Guardian\/([^/]+)/,
 	                        campaignId;
 	                    if (a.length !== 0 && (campaignId = regEx.exec(a.attr('href')))) {
 	                        // pull out the campaign id
-	                        ad.push(campaignId[2]); 
+	                        ad.push(campaignId[1]); 
 	                    } else {
 	                        ad.push('__unknown__');
 	                    }
