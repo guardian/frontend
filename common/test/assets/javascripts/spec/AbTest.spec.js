@@ -27,7 +27,7 @@ define(['modules/ab-test'], function(abTest) {
         it('should be able to start test', function() {
             var testName = 'A Test';
             // start test
-            abTest.start(testName);
+            expect(abTest.start(testName)).toBe(abTest);
         });
         
     });

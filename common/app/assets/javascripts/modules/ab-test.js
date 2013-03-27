@@ -2,14 +2,15 @@ define([], function () {
     
     var tests = {};
     
-    function storeVariant(name) {
-        
+    function storeTest(testName, variantName) {
+        document.cookie = 'frontend-ab-test=' + testName + '_' + variantName + ';path=/;domain=.guardian.co.uk;max-age=600';
     }
 
     var abTest = {
             
         add: function(testName, variants) {
             tests[testName] = variants;
+            
             return abTest;
         },
         
@@ -19,16 +20,17 @@ define([], function () {
         
         start: function(testName) {
             // put in random variant
-            var variantNames = ['control'],
+            var test = tests[testName],
+                variantNames = ['control'],
                 randomVariantName;
-            for (var variantName in tests[testName]) {
+            for (var variantName in test) {
                 variantNames.push(variantName);
             }
-            randomVariantName = variantNames[Math.floor(Math.random() * messages.length)];
-            // store variant
-            storeVariant(randomVariantName);
+            randomVariantName = variantNames[Math.floor(Math.random() * variantNames.length)];
+            // store test's variant
+            storeTest(testName, randomVariantName);
             // run variant (if not control)
-            (randomVariantName === 'control') || variants[randomVariantName]();
+            (randomVariantName === 'control') || test[randomVariantName]();
             
             return abTest;
         }
