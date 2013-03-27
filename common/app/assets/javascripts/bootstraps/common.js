@@ -22,6 +22,7 @@ define([
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
+    'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/search',
@@ -49,6 +50,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    optimizely,
     Adverts,
     Cookies,
     Search,
@@ -169,7 +171,19 @@ define([
         },
 
         loadOphanAnalytics: function (config) {
-            require([config.page.ophanUrl], function (Ophan) {
+            var dependOn = [config.page.ophanUrl];
+            if (config.switches.optimizely === true) {
+                console.log("optimizely true");
+                dependOn.push('js!' + config.page.optimizelyUrl);
+            }
+            require(dependOn, function (Ophan) {
+                if (config.switches.optimizely === true) {
+                    Ophan.additionalViewData(function() {
+                        return {
+                            "optimizely": optimizely.readTests()
+                        };
+                    });
+                }
                 Ophan.startLog();
             });
         },
