@@ -36,6 +36,10 @@ input.gsc-search-button-v2 {
     min-height: $gutter;
 }
 
+.gs-webResult gs-result {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;;
+}
+
 .gsc-control-cse {
     padding: 0 $gutter !important;
 }
