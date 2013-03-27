@@ -1,15 +1,41 @@
 .footer {
     overflow: hidden;
     margin: 0;
-    padding: $baseline*2 $gutter $baseline*4 $gutter;
+    padding: 0 0 $baseline*4 0;
     background-color: $darkMushroom;
 }
 
+/* Uses an id as is used as fragment
+ * identifier for non-js mobile nav */
+#footer-nav {
+  float: right;
+  width: 100%;
+  background-color: $blue;
+}
+
+.footer > .nav {
+  padding-left: $gutter;
+}
+
+.footer .nav--stacked {
+  float: left;
+  width: 48%;
+  margin: 0;
+}
+
+  .footer .nav--stacked li a {
+    @extend .type-10;
+    color: $blue;
+    margin-left: 0;
+    border-top-color: #C0C9CE;
+  }
+
 .footer p {
+    @include box-sizing(border-box);
     @extend .type-11;
     width: 42%;
     margin: 0;
-    padding: $baseline*2 0 0 $gutter;
+    padding: $baseline*2 $gutter 0 $gutter;
     float:left;
     color: $blue;
 }

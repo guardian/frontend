@@ -1,11 +1,12 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @defining(Site(request)) { site =>
-     <nav role="navigation" aria-label="Guardian sections">
-        <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
+     <nav role="navigation" aria-label="Guardian sections"
+        @if(isFooter){ data-link-name="global navigation: footer : sections"}>
+        <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
             @Navigation(request).map{ section =>
-            <li>
+            <li class="nav--columns__item">
                 <a href="@section.href"
                    data-link-name="@section.linkName"
                 @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
@@ -15,14 +16,14 @@
                 </a>
             </li>
             }
-            <li><a data-link-name="all sections" href="/sections">All sections</a></li>
+            <li class="nav--columns__item"><a data-link-name="all sections" href="/sections">All sections</a></li>
         </ul>
 
-        <ul class="nav nav-columns nav-section-divider nav-top-border-off @if(isFooter){nav-footer} cf">
+        <ul class="nav nav--columns nav--section-divider nav--top-border-off @if(isFooter){nav--footer} cf">
             @if(site.isUsEdition) {
-            <li><a class="edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+            <li class="nav--columns__item"><a class="edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
             } else {
-            <li><a class="edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            <li class="nav--columns__item"><a class="edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
             }
         </ul>
      </nav>

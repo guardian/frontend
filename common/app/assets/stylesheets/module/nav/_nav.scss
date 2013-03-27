@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Nav object
+   ========================================================================== */
+
+/**
+ *
+ * Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction
+ *
+ * The root component nav and >li>a selectors should not be modified directly,
+ * instead use modifier classes such as "nav--stacked"
+ */
+
+.nav {
+    list-style: none;
+    margin: 0;
+    padding: $baseline *2 0 4px 0;
+}
+
+  .nav > li,
+  .nav > li > a {
+      display: inline-block;
+      zoom: 1;
+  }
+
+  .nav li.is-active {
+    font-weight: 500;
+  }
+
+/* Nav modifiers
+ ========================================================================== */
+  .nav--stacked > li {
+      display: list-item;
+  }
+
+  .nav--columns {
+    padding: $baseline*2 $gutter $baseline $gutter;
+  }
+
+    .nav--columns__item {
+      width: 46%;
+      margin-right: 3%;
+      display: inline-block; // doing this instead of float to prevent mixed item height float collision
+      vertical-align: top;
+    }
+
+      .nav .nav--columns__item a {
+        @extend .type-10;
+        padding: $baseline*2 0;
+        border-top: 1px solid $mushroom;
+        display: block;
+        height: auto;
+        background-color: transparent;
+        color: #333333;
+      }
+
+      .nav--columns__item--full {
+        width: 100%;
+        margin: 0;
+      }
+
+      .nav--columns li:nth-child(even) {
+        float: right; // this aligns right edge correctly
+        margin-right: 0%;
+        margin-left: 3%;
+      }
+
+    .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
+    .nav--stacked.nav--top-border-off > li:nth-child(1) a {
+      border-top: none;
+      padding-top: 0;
+    }
+
+  .nav.nav--section-divider {
+    padding: $baseline*2 0;
+    margin: 0 $gutter;
+    border-top: 2px solid $darkMushroom;
+  }
+
+  .nav--section-divider a {
+    color: #ffffff;
+  }
+
+  .nav--footer .nav--columns__item a {
+      color: #ffffff;
+      border-top: 1px solid #2B528B;
+  }
+
+  .nav--footer.nav--section-divider {
+      color: #ffffff !important;
+      border-top: 2px solid #2B528B;
+  }
+
+
+/* Global navigation
+   ========================================================================== */
+
+.global-nav {
+  display: none;
+  width: auto !important;
+  height: 58px;
+  overflow: hidden;
+  padding: 0 168px 0 $gutter;
+  @media only screen and (min-width: 35em) { display: block; }
+}
+
+  .global-nav__item { float:left; }
+
+  .global-nav__link {
+    display: block;
+    font-family: $serif !important;
+    font-size: 13px;
+    margin: 0;
+    padding: 21px $gutter;
+    color: #ffffff;
+  }

@@ -28,7 +28,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
         sections.length should be > 0
 
         And("a button to activate that list")
-        $("#navigation-header a")(1).getAttribute("href") should include("australia-mining-boom-end#sections")
+        $(".nav-controls a")(1).getAttribute("href") should include("australia-mining-boom-end#sections")
       }
     }
 

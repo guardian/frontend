@@ -1,0 +1,45 @@
+@(page: MetaData)(implicit request: RequestHeader)
+@import nav.Navigation
+
+<header id="header" class="cf" role="banner" datalink-name="global navigation: header">
+
+    <a href="/" data-link-name="site logo" id="logo" class="i i-guardian-logo">The Guardian</a>
+
+    <ol class="nav global-nav">
+        @Navigation(page).map{ nav =>
+            <li class="global-nav__item @if(nav.currentFor(page)){is-current}">
+                <a href="@nav.url" class="global-nav__link" data-link-name="@nav.dataLinkName">@nav.name</a>
+            </li>
+        }
+    </ol>
+
+    <div class="nav-controls">
+        <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
+            class="control control--sections">
+            <i class="i i-nav-divider"></i>
+            <span class="i i-menu">Sections</span>
+        </a>
+
+        <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
+            class="control control--topstories">
+            <i class="i i-nav-divider"></i>
+            <span>Top stories</span>
+            <i class="i i-arrow-small-down"></i>
+        </a>
+    </div>
+</header>
+
+<div id="topstories-header" class="nav-popup top-stories is-off"></div>
+
+<div id="sections-header" class="nav-popup sections is-off"
+    data-link-name="global navigation: header : sections">
+    @fragments.sections(page, false)
+
+        <div class="search-box">
+            <gcse:searchbox></gcse:searchbox>
+        </div>
+        <div class="search-results" data-link-name="Search">
+            <gcse:searchresults></gcse:searchresults>
+        </div>
+</div>
+

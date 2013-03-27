@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Navigation controls
+   ========================================================================== */
+
+/* Control
+ ========================================================================== */
+.control {
+  color: #ffffff;
+  background-color: transparent;
+  vertical-align: top;
+}
+
+  .control:link,
+  .control:active,
+  .control:hover,
+  .control:visited{
+    color: #ffffff;
+    text-decoration: none !important;
+  }
+
+.control.is-active,
+.control.is-active {
+  background-color: #ffffff;
+  color: $blue;
+}
+
+
+/* Sections control - (Hamburger icon )
+ ========================================================================== */
+
+.control--sections {
+  float: right;
+  width: 34px;
+  padding: 15px 16px 15px 0px;
+}
+
+.control--sections span {
+  float: right;
+  margin-top: 8px;
+  display: inline-block;
+  text-indent: -1000em;
+}
+
+.i-nav-divider {
+  float: left;
+  height: 28px;
+  width: 1px;
+  margin-right: 8px;
+  background-color: #274C98;
+  border-left: 1px solid #122853;
+}
+
+.is-active .i-nav-divider {
+  border-color: #ffffff;
+  background-color: #ffffff;
+}
+
+/* Top stories control
+ ========================================================================== */
+
+.control--topstories {
+  float: right;
+  height: 28px;
+  font-family: $serif !important;
+  font-size: 13px;
+  margin: 0;
+  padding: 15px 0;
+}
+
+.control--topstories span {
+  display: inline-block;
+  height: 28px;
+  vertical-align: top;
+  line-height: 28px;
+  margin-right:8px;
+}
+
+.control--topstories .i-arrow-small-down {
+  margin: 12px 10px 8px 5px;
+}
+
+.control--topstories.is-active span {
+  background: none !important;
+  border-color: transparent !important;
+}

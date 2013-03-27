@@ -1,0 +1,18 @@
+/* ==========================================================================
+   Nav pop-up
+   ========================================================================== */
+
+.nav-popup {
+  -webkit-transform: translate3d(0,0,0);
+  position: relative;
+  clear: both;
+  z-index: 100;
+  padding: $baseline*2 0;
+  list-style: none;
+  margin-bottom: -4px;
+  border-bottom: $baseline solid $blue;
+}
+
+.nav-popup .nav--footer {
+  background-color: $blue;
+}

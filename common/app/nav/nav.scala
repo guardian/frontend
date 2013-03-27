@@ -16,11 +16,19 @@ case class NavItem(name: String, url: String, links: Seq[NavItem] = Nil, current
 object Navigation {
 
   def apply(metadata: MetaData) = Seq(
-    NavItem("Home", "/"),
     NavItem("UK", "/uk", Seq(
       NavItem("Politics", "/politics"), NavItem("Media", "/media"), NavItem("Science", "/science"),
       NavItem("Society", "/society"), NavItem("Crime", "/uk/ukcrime"))
     ),
+    NavItem("World News", "/world"),
+    NavItem("Sport", "/sport"),
+    NavItem("Football", "/football"),
+    NavItem("Comment is free", "/commentisfree"),
+    NavItem("Life & Style", "/lifeandstyle"),
+    NavItem("Culture", "/culture"),
+    NavItem("Business", "/business"),
+    NavItem("Technology", "/technology"),
+    NavItem("Environment", "/environment"),
     football(metadata)
   )
 
@@ -43,44 +51,4 @@ object Navigation {
     ))
   }
 }
-
-
-
-
-//trait LinkGenerator {
-//  def links(metadata: MetaData): Seq[Link]
-//}
-//
-//
-//object SectionGenerator extends LinkGenerator {
-//  val sectionLinks = Map(
-//    "world" -> Seq(Link("/foo", "foo", "Foo"))
-//  )
-//  val default = Seq(Link("/foo", "foo", "Foo"))
-//  def links(metadata: MetaData): Seq[Link] = sectionLinks.get(metadata.section).getOrElse(default)
-//}
-//
-//object FootballGenerator extends LinkGenerator {
-//
-//  def links(metadata: MetaData) = metadata match {
-//
-//    case tag: Tag if tag.isFootballCompetition => Seq(
-//      Link(s"/${tag.id}/table", "", "")
-//    )
-//    case tag: Tag if tag.isFootballTeam => ???
-//
-//    case s if s.section == "football" => Seq(Link("/foo", "foo", "Foo"))
-//
-//    case _ => Nil
-//  }
-//
-//}
-//
-//
-//object Navigation extends LinkGenerator {
-//
-//  val generators = Seq(FootballGenerator, SectionGenerator)
-//
-//  def links(metadata: MetaData): Seq[Link] = generators.map(g => g.links(metadata)).find(_.nonEmpty).getOrElse(Nil)
-//}
 

@@ -12,7 +12,7 @@
 </a>
 
 @if(!isFooter){
-    <div id="navigation-header" data-link-name="global navigation: header">
+    <div class="nav-controls" data-link-name="global navigation: header">
         <a href="#sections-footer" data-is-ajax="1" data-link-name="Sections" id="sections-control-header" class="sections-control">
             <i class="i i-nav-divider"></i>
             <span class="i i-menu">Sections</span>
@@ -25,7 +25,7 @@
 }
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}">
-    <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
+    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav-footer} cf">
         @styleguide.Navigation(request, Configuration).map{ section =>
             <li>
                 <a href="@section.href"

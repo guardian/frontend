@@ -21,7 +21,9 @@
 
 //Global modules
 @import "module/_media";
-@import "module/_nav";
+@import "module/nav/_nav";
+@import "module/nav/_control";
+@import "module/nav/_pop-up";
 @import "module/_tabs";
 @import "module/_headers";
 @import "module/trails/_trailblock";
