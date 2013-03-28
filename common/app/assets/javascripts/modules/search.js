@@ -20,7 +20,7 @@ define(['bean'], function (bean) {
                 });
             }
         };
-    }
+    };
 
     return Search;
 });
