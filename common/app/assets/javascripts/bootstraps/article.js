@@ -55,13 +55,6 @@ define([
                 reader.init();
             }
         },
-        
-        addOptimizely: function(config) {
-            // pull in optimizely js
-            if(config.switches.optimizely === true) {
-                require(['js!' + config.page.optimizelyUrl]);
-            }
-        },
 
         initExperiments: function(config) {
             common.mediator.on('modules:experiment:render', function() {
@@ -93,7 +86,6 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
-            modules.addOptimizely(config);
         });
     };
 
