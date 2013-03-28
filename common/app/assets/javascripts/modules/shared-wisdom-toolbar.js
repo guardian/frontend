@@ -3,7 +3,8 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var hidden = true,
 		closed = true,
 		data = null,
-		url = 'http://10.121.73.229/pageview/dynamic/',
+		host = 'http://10.121.72.112',
+		url = host + '/pageview/dynamic/',
 		panelHeight = null,
 		id = 'shared-wisdom-toolbar';
 
