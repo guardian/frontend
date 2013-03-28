@@ -4,12 +4,11 @@ define(['common', 'modules/errors'], function(common, Errors) {
        
         var e,
             p = 'uk/2012/oct/15/mod-military-arms-firms',
-            w = {
-                onerror: jasmine.createSpy('error')
-            };
+            w = {},
+            fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
         
         beforeEach(function() {
-            e = new Errors(w);
+            e = new Errors({window: w});
             e.init();
         });
 
@@ -21,6 +20,17 @@ define(['common', 'modules/errors'], function(common, Errors) {
             var fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' }
             e.log(fakeError.message, fakeError.lineno, fakeError.filename);
             expect(document.getElementById('js-err').getAttribute('src')).toContain('/px.gif?js/foo%2C1%2Cfoo.js');
+        });
+
+        it("if DEV, should log to console", function(){
+        	var cons = {
+	        		error: jasmine.createSpy('error')
+	        	},
+            	e = new Errors({ isDev: true, window: w, console: cons });
+            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
+            expect(cons.error.mostRecentCall.args[0]).toEqual({
+            	message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
+        	});
         });
 
     });
