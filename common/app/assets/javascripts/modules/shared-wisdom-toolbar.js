@@ -43,7 +43,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		    var $styles = bonzo(document.createElement('link'))
 		        .attr('type', 'text/css')
 		        .attr('rel', 'stylesheet')
-		        .attr('href', 'https://raw.github.com/guardian/frontend/shared-wisdom-toolbar/common/app/assets/stylesheets/module/_shared-wisdom-toolbar.css')
+		        .attr('href', 'https://rawgithub.com/guardian/frontend/shared-wisdom-toolbar/common/app/assets/stylesheets/module/_shared-wisdom-toolbar.css');
 		    common.$g('head').append($styles);
 		    
 			var cookies = objectifyCookies(document.cookie),
