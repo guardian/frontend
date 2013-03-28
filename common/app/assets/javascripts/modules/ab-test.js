@@ -3,10 +3,26 @@ define([], function () {
     var tests = {};
     
     function storeTest(testName, variantName) {
-        document.cookie = 'frontend-ab-test=' + testName + '_' + variantName + ';path=/;domain=.guardian.co.uk;max-age=600';
+        abTest.cookie = 'frontend-ab-test-' + testName + '=' + variantName + ';path=/;domain=.guardian.co.uk;max-age=600';
+        
+        return abTest;
+    }
+    
+    function inTest(testName) {
+        var testCookie = abTest.cookie.split('; ').filter(function(cookie) {
+            return cookie.split('=')[0] = 'frontend-ab-test-' + testName; 
+        })[0];
+        
+        if (testCookie) {
+            return testCookie.split('=')[1];
+        } else {
+            return false;
+        }
     }
 
     var abTest = {
+            
+        setCookie: document.cookie,
             
         add: function(testName, variants) {
             tests[testName] = variants;
@@ -19,18 +35,22 @@ define([], function () {
         },
         
         start: function(testName) {
-            // put in random variant
             var test = tests[testName],
-                variantNames = ['control'],
-                randomVariantName;
-            for (var variantName in test) {
-                variantNames.push(variantName);
+                // are we already in the test
+                testVariant = inTest(testName);
+            
+            if (testVariant === false) {
+                var variantNames = ['control'];
+                for (var variantName in test) {
+                    variantNames.push(variantName);
+                }
+                testVariant = variantNames[Math.floor(Math.random() * variantNames.length)];
+                // store test's variant
+                storeTest(testName, testVariant);
             }
-            randomVariantName = variantNames[Math.floor(Math.random() * variantNames.length)];
-            // store test's variant
-            storeTest(testName, randomVariantName);
+            
             // run variant (if not control)
-            (randomVariantName === 'control') || test[randomVariantName]();
+            (testVariant === 'control') || test[testVariant]();
             
             return abTest;
         }

@@ -29,6 +29,18 @@ define(['modules/ab-test'], function(abTest) {
             // start test
             expect(abTest.start(testName)).toBe(abTest);
         });
+
+        it('should store test in cookie', function() {
+            var testName = 'A Test';
+            abTest.cookie = ''
+            // start test
+            abTest.start(testName);
+            // check cookie was set correctly
+            expect(abTest.cookie).toContain('frontend-ab-test-A Test');
+            expect(abTest.cookie).toContain('path=/');
+            expect(abTest.cookie).toContain('domain=.guardian.co.uk');
+            expect(abTest.cookie).toContain('max-age=600');
+        });
         
     });
 
