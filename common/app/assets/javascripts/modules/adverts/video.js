@@ -1,24 +1,39 @@
 define([
     "common",
-    "bean"
+    "bean",
+    "ajax"
 ], function(
    common,
-   bean
+   bean,
+   ajax
     ) {
 
     function Video(config) {
 
         var support = config.support,
             video = config.el,
-            loaded = false,
-            url = "http://cdn5.unicornmedia.com/now/stitched/mp4/a2a102a4-334b-428c-801b-0049ba6f85ab/00000000-0000-0000-0000-000000000000/3a41c6e4-93a3-4108-8995-64ffca7b9106/224e7283-52f4-430e-9df2-f33f395a2065/0/0/21/-1305548010/unicorn.mp4",
-            url2 = "https://s3-eu-west-1.amazonaws.com/aws-frontend-story-telling/ads/Countdown10to0.mp4";
+            played = false,
+            proxy = "/oas/",
+            url = "/2/m.guardiantest.co.uk/self-hosted/1234567890@x40";
 
         this.load = function(format) {
+            ajax({
+                url: proxy + format + url,
+                type: "json",
+                method: 'get',
+                success : function (resp) {
+                    if(resp && resp.file) {
+                        common.mediator.emit("module:video:adverts:load", resp.file);
+                    }
+                }
+            });
+        };
+
+        this.play = function(format, file) {
             var sources = video.querySelectorAll('source'),
                 source;
 
-            loaded = true;
+            played = true;
 
             //Horrible UA detection for iOS
             if(format === "mp4") {
@@ -40,15 +55,13 @@ define([
                 video.play();
             });
 
-            video.src = url2;
+            video.src = file;
             video.play();
         };
 
         this.init = function() {
             var format = false,
                 that = this;
-
-            console.log(support);
 
             for (var f in support) {
                 if(support.hasOwnProperty(f)) {
@@ -60,11 +73,14 @@ define([
             }
 
             if(format) {
-                bean.on(video, "play", function() {
-                    if(!loaded) {
-                        that.load(format);
-                    }
+                common.mediator.on("module:video:adverts:load", function(file) {
+                    bean.on(video, "play", function() {
+                        if(!played) {
+                            that.play(format, file);
+                        }
+                    });
                 });
+                this.load(format);
             }
         }
 
