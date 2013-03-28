@@ -75,7 +75,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500", 
+                  "font-weight": "500",
                   "file": "resources/fonts/EgyptianText-Medium.woff",
                   "format": "woff"
                 },
@@ -106,7 +106,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500", 
+                  "font-weight": "500",
                   "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
@@ -152,7 +152,20 @@ module.exports = function (grunt) {
                 }
               ]
             }
-          },
+          }
+        },
+        // Clean stuff up
+        clean: {
+          // Clean any pre-commit hooks in .git/hooks directory
+          hooks: ['.git/hooks/pre-commit']
+        },
+
+        // Run shell commands
+        shell: {
+          hooks: {
+            // Copy the project's pre-commit hook into .git/hooks
+            command: 'cp git-hooks/pre-commit .git/hooks/'
+          }
         }
 
     });
@@ -162,6 +175,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-webfontjson');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-shell');
 
     // Standard tasks
     grunt.registerTask('test:common', ['jshint:common']);
@@ -173,4 +188,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
     grunt.registerTask('default', ['test', 'compile']);
+
+    // Clean the .git/hooks/pre-commit file then copy in the latest version
+    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
 };
