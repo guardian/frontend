@@ -38,6 +38,14 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
 		init: function(callback) {
+		    // add the styles
+		    // TODO: pull in css for now, making this more self-contained
+		    var $styles = bonzo(document.createElement('link'))
+		        .attr('type', 'text/css')
+		        .attr('rel', 'stylesheet')
+		        .attr('href', 'https://raw.github.com/guardian/frontend/shared-wisdom-toolbar/common/app/assets/stylesheets/module/_shared-wisdom-toolbar.css')
+		    common.$g('head').append($styles);
+		    
 			var cookies = objectifyCookies(document.cookie),
 				params = [
 				    ['url', window.location], 
@@ -109,8 +117,8 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		    					data.insights.slice(1).map(function(insight) {
 		    						return '<li>' + insight.sentence + '</li>'; 
 		    					}).join('') +
-		    				'<ul>' +
-		    			'<div>' +
+		    				'</ul>' +
+		    			'</div>' +
     				'</div>'
     			);
 	    		var panel = common.$g('body #shared-wisdom-toolbar .panel');
