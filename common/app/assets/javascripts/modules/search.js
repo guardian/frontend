@@ -1,6 +1,6 @@
 define(['bean'], function (bean) {
 
-    function Search(config) {
+    var Search = function (config) {
 
         var gcsUrl;
 
