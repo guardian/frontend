@@ -9,13 +9,10 @@ define(function() {
                 var experimentId = optim.activeExperiments[i];
                 var activeVariantId = optim.variationIdsMap[experimentId][0];
                 prop += optim.allExperiments[experimentId].name + '#' + experimentId + '=';
-                prop += optim.allVariations[activeVariantId].name + '#' + activeVariantId;
-                if (i >= optim.activeExperiments.length) {
-                    prop += "|||";
-                }
+                prop += optim.allVariations[activeVariantId].name + '#' + activeVariantId + '|||'
             }
         }
-        return prop;
+        return prop.substring(0, prop.length-3);
     }
 
     return {
