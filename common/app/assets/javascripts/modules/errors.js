@@ -25,10 +25,10 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             },
             log = function(message, filename, lineno) {
                 var error = {
-                        message: message.toString(),
-                        filename: filename,
-                        lineno: lineno,
-                    };
+                    message: message.toString(),
+                    filename: filename,
+                    lineno: lineno,
+                };
                 if (isDev) {
                     cons.error(error);
                 } else {
