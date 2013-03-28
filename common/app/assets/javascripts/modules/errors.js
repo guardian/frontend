@@ -16,25 +16,23 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 image.src = url;
                 body.appendChild(image);
             },
-            makeUrl = function(properties) {
+            makeUrl = function(properties, isAd) {
                 var query = [];
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
-                return url + path + '?js/' + query.join('&');
+                return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
             log = function(message, filename, lineno) {
                 var error = {
-                    message: message.toString(),
-                    filename: filename,
-                    lineno: lineno,
-                    isad: (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.') ? 1 : 0
-                };
-                
+                        message: message.toString(),
+                        filename: filename,
+                        lineno: lineno,
+                    };
                 if (isDev) {
                     cons.error(error);
                 } else {
-                    var url = makeUrl(error);
+                    var url = makeUrl(error, (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.'));
                     createImage(url);
                 }
                 return (userPrefs.isOn('showErrors')) ? false : true;
