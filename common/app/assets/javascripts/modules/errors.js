@@ -1,10 +1,13 @@
-define(['common'], function (common) {
+define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
-    var Errors = function (w) {
+    var Errors = function (config) {
 
-        var url = "//beacon." + window.location.hostname,
+        var c = config || {},
+            isDev = (c.isDev !== undefined) ? c.isDev : false,
+            url = "//beacon." + window.location.hostname,
             path = '/px.gif',
-            win = w || window,
+            cons = c.console || window.console,
+            win = c.window || window,
             body = document.body,
             createImage = function(url) {
                 var image = new Image();
@@ -13,24 +16,37 @@ define(['common'], function (common) {
                 image.src = url;
                 body.appendChild(image);
             },
-            makeUrl = function(properties) {
-                return url + path + '?js/' + encodeURIComponent(properties.join(','));
+            makeUrl = function(properties, isAd) {
+                var query = [];
+                for (var name in properties) {
+                    query.push(name + '=' + encodeURIComponent(properties[name]));
+                }
+                return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
             log = function(message, filename, lineno) {
-                var url = makeUrl([message, filename, lineno]);
-                createImage(url);
+                var error = {
+                    message: message.toString(),
+                    filename: filename,
+                    lineno: lineno,
+                };
+                if (isDev) {
+                    cons.error(error);
+                } else {
+                    var url = makeUrl(error, (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.'));
+                    createImage(url);
+                }
+                return (userPrefs.isOn('showErrors')) ? false : true;
             },
             init = function() {
                 win.onerror = log;
             };
-        
+
         return {
             log: log,
             init: init
         };
-        
+
     };
 
     return Errors;
 });
-
