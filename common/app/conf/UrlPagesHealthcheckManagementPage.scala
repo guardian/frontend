@@ -28,11 +28,8 @@ class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPag
       WS.url(url).get().map{ response => url -> response }
     }
 
-
-
     val sequenced = Promise.sequence(checks) // List[Promise[...]] -> Promise[List[...]]
     val failed = sequenced map { _ filter { _._2.status / 100 != 2 } }
-
 
     Await.result(failed, 10 -> SECONDS) match {
       case Nil =>

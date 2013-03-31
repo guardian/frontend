@@ -14,6 +14,7 @@ import implicits.Football
 
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration.{Duration => Timed, _}
+import controllers.{CompetitionWatch, LiveMatchWatch}
 
 trait CompetitionSupport extends Football {
 
@@ -196,9 +197,14 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
   def startup() {
     import play_akka.scheduler._
-    schedules = every(Timed(10, SECONDS), initialDelay = Timed(1, SECONDS)) { refreshMatchDay() } ::
-      every(Timed(5, MINUTES), initialDelay = Timed(1, SECONDS)) { refreshCompetitionData() } ::
-      competitionAgents.zipWithIndex.toList.map {
+    schedules =
+      every(Timed(10, SECONDS), initialDelay = Timed(1, SECONDS)) {
+        LiveMatchWatch.refresh()
+        refreshMatchDay()
+      } :: every(Timed(5, MINUTES), initialDelay = Timed(1, SECONDS)) {
+        CompetitionWatch.refresh()
+        refreshCompetitionData()
+      } :: competitionAgents.zipWithIndex.toList.map {
         case (agent, index) =>
           //stagger fixtures and results refreshes to avoid timeouts
           every(Timed(5, MINUTES), initialDelay = Timed(5 + index, SECONDS)) { agent.refresh() }
