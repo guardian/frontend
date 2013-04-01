@@ -4,10 +4,11 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.{Logging, AkkaSupport}
 import play.api.mvc.{Action, Controller}
+import conf.CommonSwitches._
 
 class ScheduleWatchController(private val scheduleWatchers: Seq[ScheduleWatch]) extends Controller {
   def render() = Action {
-    if (scheduleWatchers.exists(_.isStale))
+    if (ScheduleWatchSwitch.isSwitchedOn && scheduleWatchers.exists(_.isStale))
       InternalServerError
     else
       Ok
@@ -18,7 +19,7 @@ class ScheduleWatchController(private val scheduleWatchers: Seq[ScheduleWatch]) 
 
 class ScheduleWatch(val name: String, val gracePeriod: Duration) extends AkkaSupport with Logging {
 
-  private val agent = play_akka.agent(DateTime.now)
+  val agent = play_akka.agent(DateTime.now)
 
   def refresh() = agent.send(DateTime.now)
 

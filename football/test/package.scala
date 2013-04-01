@@ -70,6 +70,4 @@ object `package` {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
-
-  object Fake extends Fake
 }
