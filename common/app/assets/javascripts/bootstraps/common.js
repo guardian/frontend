@@ -26,7 +26,8 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/search',
-    'modules/analytics/omnitureMedia'
+    'modules/analytics/omnitureMedia',
+    'modules/debug'
 ], function (
     common,
     ajax,
@@ -54,7 +55,8 @@ define([
     Adverts,
     Cookies,
     Search,
-    Video
+    Video,
+    Debug
 ) {
 
     var modules = {
@@ -74,6 +76,10 @@ define([
 
         upgradeImages: function () {
             new Images().upgrade();
+        },
+
+        showDebug: function () {
+            new Debug();
         },
 
         initialiseNavigation: function (config) {
@@ -200,6 +206,7 @@ define([
     };
 
     var ready = function(config) {
+        modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
