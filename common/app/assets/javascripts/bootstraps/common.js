@@ -79,7 +79,7 @@ define([
         },
 
         showDebug: function () {
-            new Debug();
+            new Debug().show();
         },
 
         initialiseNavigation: function (config) {
