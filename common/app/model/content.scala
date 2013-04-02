@@ -4,6 +4,8 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset 
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
+import org.jsoup.Jsoup
+import collection.JavaConversions._
 
 class Content(
     delegate: ApiContent,
@@ -20,6 +22,8 @@ class Content(
   lazy val videoImages: Seq[Image] = delegate.mediaAssets.filter(_.`type` == "video")
     .filter(_.safeFields.isDefinedAt("stillImageUrl"))
     .map { videoAsset => Image(videoAsset.copy(file = videoAsset.safeFields.get("stillImageUrl"))) }
+
+  lazy val videoAssets: Seq[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }
 
   lazy val id: String = delegate.id
   lazy val sectionName: String = delegate.sectionName.getOrElse("")
@@ -97,6 +101,11 @@ class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
   lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
+
+  lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
+    .map(e => e.hasClass("gu-video") && e.tagName() == "video")
+    .getOrElse(false)
+
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 }
 
@@ -104,7 +113,7 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
 
   private implicit val ordering = EncodingOrdering
 
-  private val videoAsset: Option[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }.headOption
+  private val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val blockAds: Boolean = videoAsset.map(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false)).getOrElse(false)
