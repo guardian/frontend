@@ -6,17 +6,16 @@
         <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
             @Navigation(request).map{ section =>
-            <li class="nav--columns__item">
+            <li class="nav__item">
                 <a href="@section.href"
-                   data-link-name="@section.linkName"
-                @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
-                @if(section.newWindow){ target="_blank" }
-                >
-                @HtmlFormat.raw(section.title)
+                    data-link-name="@section.linkName"
+                    class="nav__link@if("/" + page.id == section.href) { is-active}"
+                    @if(section.newWindow){ target="_blank" }>
+                        @HtmlFormat.raw(section.title)
                 </a>
             </li>
             }
-            <li class="nav--columns__item"><a data-link-name="all sections" href="/sections">All sections</a></li>
+            <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
         </ul>
     
         @if(!isFooter){
@@ -30,9 +29,9 @@
 
         <ul class="nav nav--columns nav--section-divider nav--top-border-off @if(isFooter){nav--footer} cf">
             @if(site.isUsEdition) {
-            <li class="nav__item"><a class="edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
             } else {
-            <li class="nav--columns__item"><a class="edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
             }
         </ul>
      </nav>

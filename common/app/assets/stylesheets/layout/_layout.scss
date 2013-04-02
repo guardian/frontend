@@ -3,9 +3,10 @@
    ========================================================================== */
 
 #container {
-    clear: both;
-    max-width: 80em;
-    max-width: 125rem;
+  position: relative;
+  clear: both;
+  max-width: 80em;
+  max-width: 125rem;
 
   @media (min-width: 40.0625em) {
         padding-bottom: 10%;

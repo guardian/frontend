@@ -16,6 +16,7 @@ case class NavItem(name: String, url: String, links: Seq[NavItem] = Nil, current
 object Navigation {
 
   def apply(metadata: MetaData) = Seq(
+    NavItem("Home", "/"),
     NavItem("UK", "/uk", Seq(
       NavItem("Politics", "/politics"), NavItem("Media", "/media"), NavItem("Science", "/science"),
       NavItem("Society", "/society"), NavItem("Crime", "/uk/ukcrime"))

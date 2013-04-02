@@ -18,3 +18,11 @@
     background-color: #ffffff;
   }
 }
+
+.nav-popup .nav__link {
+  @media only screen and (min-width: 35em) {
+    @include font($serifheadline, 200, 16, 16);
+  }
+}
+
+

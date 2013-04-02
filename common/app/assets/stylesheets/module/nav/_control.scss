@@ -15,7 +15,7 @@
   .control:hover,
   .control:visited{
     font-family: $serif !important;
-    font-size: 13px;
+    font-size: 16px;
     color: #ffffff;
     text-decoration: none !important;
 
@@ -64,7 +64,7 @@
     border-left: 1px solid #444444;
   }
 
-  @media only screen and (min-width: 70em) {
+  @media only screen and (min-width: 80em) {
     display: none;
   }
 }

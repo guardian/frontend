@@ -8,10 +8,6 @@
     //For expandables
     position: relative;
     z-index: 1000;
-
-    @media screen and (min-width: 50.625em) {
-        min-height: 90px;
-    }
 }
 
     .ad-slot iframe {
