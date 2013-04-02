@@ -28,11 +28,14 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicit
     }
   }
 
+  //ensures that the data needed to run our tests has loaded
+  // it is all async
   private def testDataLoaded = {
     Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
     Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
     Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
-    Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false)
+    Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false) &&
+    Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
   }
 }
 
