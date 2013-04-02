@@ -50,7 +50,7 @@ define(function () {
         
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            end_time = perf.timing.responseStart;
+            end_time = perf.timing.responseEnd;
 
             if (start_time && end_time) {
                 total_time = end_time - start_time;
@@ -78,7 +78,7 @@ define(function () {
         var speed = "high";
 
         if (load_time) {
-            if (load_time > 750) { // .75 second
+            if (load_time > 1000) { // One second
                 speed = 'medium';
                 if (load_time > 3000) { // Three seconds
                     speed = 'low';
