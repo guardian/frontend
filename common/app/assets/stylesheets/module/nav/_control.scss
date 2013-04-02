@@ -18,6 +18,8 @@
     font-size: 13px;
     color: #ffffff;
     text-decoration: none !important;
+
+    @media only screen and (min-width: 35em) { color: #444444; }
   }
 
 .control.is-active,
@@ -33,6 +35,10 @@
   margin-right: 8px;
   background-color: #274C98;
   border-left: 1px solid #122853;
+
+  @media only screen and (min-width: 35em) {
+    display:none !important;
+  }
 }
 
 /* Sections control - (Hamburger icon )
@@ -44,7 +50,15 @@
   right: 0px;
   width: auto;
   height: 28px;
-  padding: 15px 16px 15px 0px;
+  padding: 15px $gutter 15px 0px;
+
+  @media only screen and (min-width: 35em) {
+    top: 58px;
+    padding: 0 $gutter 10px $gutter;
+    margin: $baseline*2 0 $baseline*2 0;
+    border-left: 1px solid #444444;
+  }
+
   @media only screen and (min-width: 80em) {
     display: none;
   }
@@ -66,7 +80,6 @@
 .control__more {
     display: none;
     float: right;
-    margin-top: 5px;
     @media only screen and (min-width: 35em) { display: inline-block; }
 }
 

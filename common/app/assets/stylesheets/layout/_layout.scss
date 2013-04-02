@@ -21,13 +21,12 @@
 #header {
   position: relative;
   background-color: $blue;
-  height: 58px;
 }
 
 #logo {
   display: block;
   float: left;
-  margin: 20px 0 $baseline*2 $gutter;
+  margin: 20px 0 18px $gutter;
   text-indent: -9999px;
 
   @media only screen and (-webkit-min-device-pixel-ratio: 2) {

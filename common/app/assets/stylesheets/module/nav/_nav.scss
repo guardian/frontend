@@ -96,10 +96,13 @@
 
 .global-nav {
   display: none;
+  float:left;
+  clear:left;
   width: auto !important;
   height: 58px;
   overflow: hidden;
-  padding: 0 76px 0 20px;
+  padding: 0 76px 0 0;
+  background-color: #F5F2F0;
   @media only screen and (min-width: 35em) { display: block; }
 }
 
@@ -113,13 +116,13 @@
   .global-nav__link:hover,
   .global-nav__link:visited {
     display: block;
-    margin: 16px 0 10px 0;
-    padding: 5px $gutter 3px $gutter;
+    margin: $baseline*2 0 $baseline*2 0;
+    padding: 0px $gutter $baseline*4 $gutter;
     font-family: $serif !important;
     font-size: 13px;
     text-decoration: none;
-    color: #ffffff;
-    border-right: 1px solid $lightBlue;
+    color: #444444;
+    border-right: 1px solid #444444;
   }
 
     .global-nav__item:last-child .global-nav__link { border-right: none; }
