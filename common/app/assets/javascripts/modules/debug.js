@@ -1,4 +1,4 @@
-define(['common', 'modules/userPrefs'], function (common, userPrefs) {
+define(['common', 'modules/userPrefs', 'bonzo'], function (common, userPrefs, bonzo) {
 
     function Debug() {
 
@@ -6,7 +6,7 @@ define(['common', 'modules/userPrefs'], function (common, userPrefs) {
             if (window.localStorage && userPrefs.get('dev-debug') === 'true') {
                 var debug = document.querySelector("#dev-debug");
                 if (debug) {
-                    debug.style.display = 'block';
+                    bonzo(debug).addClass('active');
                 }
                 common.mediator.emit('modules:debug:render');
             }
