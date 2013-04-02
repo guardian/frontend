@@ -2,7 +2,8 @@
 
 @defining(Site(request)) { site =>
      <nav role="navigation" aria-label="Guardian sections"
-        @if(isFooter){ data-link-name="global navigation: footer : sections"}>
+        @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
+            class="nav-popup" data-link-name="global navigation: header : sections"}>
         <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
             @Navigation(request).map{ section =>

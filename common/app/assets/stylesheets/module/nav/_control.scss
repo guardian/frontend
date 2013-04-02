@@ -45,6 +45,9 @@
   width: auto;
   height: 28px;
   padding: 15px 16px 15px 0px;
+  @media only screen and (min-width: 80em) {
+    display: none;
+  }
 }
 
 .control__menu.i {
@@ -81,8 +84,7 @@
   padding: 17px 0 13px 0;
 
   @media only screen and (min-width: 35em) {
-    right: auto;
-    left: 140px;
+    display: none;
   }
 }
 
