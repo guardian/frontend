@@ -35,7 +35,8 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicit
     Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
     Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
     Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false) &&
-    Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
+    Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15)) &&
+    Competitions.matches.exists(m => m.homeTeam.name == "Sheff Wed" && m.awayTeam.name == "Leeds")
   }
 }
 
