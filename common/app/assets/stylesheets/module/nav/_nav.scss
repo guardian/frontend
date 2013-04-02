@@ -26,24 +26,31 @@
     font-weight: 500;
   }
 
-/* Nav modifiers
+/* ==========================================================================
+   Nav modifiers
+   ========================================================================== */
+
+
+/* Stacked
  ========================================================================== */
   .nav--stacked > li {
       display: list-item;
   }
 
+/* Columns
+========================================================================== */
   .nav--columns {
     padding: $baseline*2 $gutter $baseline $gutter;
   }
 
-    .nav--columns__item {
+    .nav--columns .nav__item {
       width: 46%;
       margin-right: 3%;
       display: inline-block; // doing this instead of float to prevent mixed item height float collision
       vertical-align: top;
     }
 
-      .nav .nav--columns__item a {
+      .nav--columns .nav__item a {
         @extend .type-10;
         padding: $baseline*2 0;
         border-top: 1px solid $mushroom;
@@ -53,7 +60,7 @@
         color: #333333;
       }
 
-      .nav--columns__item--full {
+      .nav--columns .nav__item--full {
         width: 100%;
         margin: 0;
       }
@@ -70,6 +77,9 @@
       padding-top: 0;
     }
 
+/* Section divider
+========================================================================== */
+
   .nav.nav--section-divider {
     padding: $baseline*2 0;
     margin: 0 $gutter;
@@ -80,7 +90,13 @@
     color: #ffffff;
   }
 
-  .nav--footer .nav--columns__item a {
+/* Footer navigation
+   ========================================================================== */
+.nav--footer {
+  background-color: $blue;
+}
+
+  .nav--footer .nav__item a {
       color: #ffffff;
       border-top: 1px solid #2B528B;
   }
@@ -94,11 +110,12 @@
 /* Global navigation
    ========================================================================== */
 
-.global-nav {
+.nav--global {
+  @include box-sizing(border-box);
   display: none;
   float:left;
   clear:left;
-  width: auto !important;
+  width: 100%;
   height: 58px;
   overflow: hidden;
   padding: 0 76px 0 0;
@@ -106,15 +123,15 @@
   @media only screen and (min-width: 35em) { display: block; }
 }
 
-  .global-nav__item {
+  .nav__item {
     float:left;
   }
 
-  .global-nav__link,
-  .global-nav__link:link,
-  .global-nav__link:active,
-  .global-nav__link:hover,
-  .global-nav__link:visited {
+  .nav--global .nav__link,
+  .nav--global .nav__link:link,
+  .nav--global .nav__link:active,
+  .nav--global .nav__link:hover,
+  .nav--global .nav__link:visited {
     display: block;
     margin: $baseline*2 0 $baseline*2 0;
     padding: 0px $gutter $baseline*4 $gutter;

@@ -13,10 +13,10 @@
         <i class="i i-nav-divider i-nav-divider--right"></i>
     </a>
 
-    <ol class="nav global-nav">
+    <ol class="nav nav--global">
         @Navigation(page).map{ nav =>
-            <li class="global-nav__item @if(nav.currentFor(page)){is-current}">
-                <a href="@nav.url" class="global-nav__link" data-link-name="@nav.dataLinkName">@nav.name</a>
+            <li class="nav__item @if(nav.currentFor(page)){is-current}">
+                <a href="@nav.url" class="nav__link" data-link-name="@nav.dataLinkName">@nav.name</a>
             </li>
         }
     </ol>

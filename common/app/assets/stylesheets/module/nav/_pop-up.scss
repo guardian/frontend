@@ -3,7 +3,6 @@
    ========================================================================== */
 
 .nav-popup {
-  -webkit-transform: translate3d(0,0,0);
   position: relative;
   clear: both;
   z-index: 100;
@@ -11,8 +10,11 @@
   list-style: none;
   margin-bottom: -4px;
   border-bottom: $baseline solid $blue;
-}
 
-.nav-popup .nav--footer {
-  background-color: $blue;
+  @media only screen and (min-width: 35em) {
+    position: absolute;
+    top: 190px;
+    right: 0px;
+    background-color: #ffffff;
+  }
 }

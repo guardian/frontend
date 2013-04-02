@@ -26,6 +26,11 @@
 .control.is-active {
   background-color: #ffffff;
   color: $blue;
+
+  @media only screen and (min-width: 35em) {
+    background-color: transparent;
+
+  }
 }
 
 .i-nav-divider {
@@ -59,7 +64,7 @@
     border-left: 1px solid #444444;
   }
 
-  @media only screen and (min-width: 80em) {
+  @media only screen and (min-width: 70em) {
     display: none;
   }
 }
