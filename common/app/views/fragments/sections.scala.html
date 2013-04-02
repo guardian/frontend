@@ -18,6 +18,15 @@
             }
             <li class="nav--columns__item"><a data-link-name="all sections" href="/sections">All sections</a></li>
         </ul>
+    
+        @if(!isFooter){
+            <div class="search-box" role="search">
+                <gcse:searchbox></gcse:searchbox>
+            </div>
+            <div class="search-results" data-link-name="search">
+                <gcse:searchresults></gcse:searchresults>
+            </div>
+        }
 
         <ul class="nav nav--columns nav--section-divider nav--top-border-off @if(isFooter){nav--footer} cf">
             @if(site.isUsEdition) {

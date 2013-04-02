@@ -1,8 +1,8 @@
-define(['common', 'modules/detect'], function(common, detect) {
+define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(common, detect, optimizely) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
-	/**
+    /**
      * @param Object w 'window' object, used for testing
      */
     function Omniture(s, config, w) {
@@ -68,7 +68,6 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.tl(true, 'o', tagStr);
         };
 
-
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
@@ -106,6 +105,10 @@ define(['common', 'modules/detect'], function(common, detect) {
 
             s.prop48    = detect.getConnectionSpeed(w.performance);
 
+            if (config.switches.optimizely === true) {
+                s.prop51    = optimizely.readTests();
+            }
+
             s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
@@ -121,6 +124,13 @@ define(['common', 'modules/detect'], function(common, detect) {
             }
         };
 
+        this.loaded = function() {
+            this.populatePageProperties();
+            this.logView();
+            common.mediator.on('module:clickstream:click', this.logTag );
+            common.mediator.emit('module:omniture:loaded');
+        };
+
         this.init = function() {
 
             // must be set before the Omniture file is parsed
@@ -132,17 +142,15 @@ define(['common', 'modules/detect'], function(common, detect) {
             // use the global 's' object
 
             if (s !== null) {
-                that.populatePageProperties();
-                that.logView();
-                common.mediator.on('module:clickstream:click', that.logTag );
-                common.mediator.emit('module:omniture:loaded');
+                that.loaded();
             } else {
-                require(['js!omniture'], function(placeholder){
+                var dependOn = ['js!omniture'];
+                if (config.switches.optimizely === true) {
+                    dependOn.push('js!' + config.page.optimizelyUrl);
+                }
+                require(dependOn, function(placeholder){
                     s = window.s;
-                    that.populatePageProperties();
-                    that.logView();
-                    common.mediator.on('module:clickstream:click', that.logTag );
-                    common.mediator.emit('module:omniture:loaded');
+                    that.loaded();
                 });
             }
 

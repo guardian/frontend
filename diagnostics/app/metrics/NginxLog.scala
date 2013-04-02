@@ -42,10 +42,21 @@ object NginxLog {
     }
   }
 
+  // handle _ads_ namespaced errors
+  object ads {
+
+    val total = new CountMetric("diagnostics", "ads", "Total Javascript advert errors", "")
+    val metrics: Seq[Metric] = Seq(total)
+
+    def apply() {
+      total.recordCount(1)
+    }
+  }
+
   // handle _js_ namespaced errors
   object js {
 
-    val total = new CountMetric("diagnostics", "js", "Total JavaScript errors", "", None)
+    val total = new CountMetric("diagnostics", "js", "Total JavaScript non-advert errors", "", None)
 
     /*  iOS */
     val js_ios_6_mobilesafari = new CountMetric("diagnostics", "js_ios_6_safari", "iOS 6 Safari JS errors", "")
@@ -138,7 +149,7 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics ++ ads.metrics
 
   Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
@@ -165,6 +176,7 @@ object NginxLog {
         namespace.getOrElse("unknown") match {
           case "fonts" => fonts()
           case "js" => js(userAgent)
+          case "ads" => ads()
           case _ => null
         }
 

@@ -22,10 +22,12 @@ define([
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
+    'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/search',
-    'modules/analytics/omnitureMedia'
+    'modules/analytics/omnitureMedia',
+    'modules/debug'
 ], function (
     common,
     ajax,
@@ -49,10 +51,12 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    optimizely,
     Adverts,
     Cookies,
     Search,
-    Video
+    Video,
+    Debug
 ) {
 
     var modules = {
@@ -61,14 +65,21 @@ define([
             ajax.init(config.page.ajaxUrl);
         },
 
-        attachGlobalErrorHandler: function () {
-            var e = new Errors(window);
-                e.init();
+        attachGlobalErrorHandler: function (config) {
+            var e = new Errors({
+                window: window,
+                isDev: config.page.isDev
+            });
+            e.init();
             common.mediator.on("module:error", e.log);
         },
 
         upgradeImages: function () {
             new Images().upgrade();
+        },
+
+        showDebug: function () {
+            new Debug().show();
         },
 
         initialiseNavigation: function (config) {
@@ -127,20 +138,12 @@ define([
             var t = new Tabs().init();
         },
 
-        loadFonts: function(config, ua, prefs) {
-            var showFonts = false;
+        loadFonts: function(config, ua) {
             if(config.switches.webFonts) {
-                showFonts = true;
-            }
-
-            var fileFormat = detect.getFontFormatSupport(ua),
-                fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-
-            var f = new Fonts(fontStyleNodes, fileFormat);
-            if (showFonts) {
+                var fileFormat = detect.getFontFormatSupport(ua),
+                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                var f = new Fonts(fontStyleNodes, fileFormat);
                 f.loadFromServerAndApply();
-            } else {
-                f.clearFontsFromStorage();
             }
         },
 
@@ -166,15 +169,28 @@ define([
         },
 
         loadOphanAnalytics: function (config) {
-            require([config.page.ophanUrl], function (Ophan) {
+            var dependOn = [config.page.ophanUrl];
+            if (config.switches.optimizely === true) {
+                dependOn.push('js!' + config.page.optimizelyUrl);
+            }
+            require(dependOn, function (Ophan) {
+                if (config.switches.optimizely === true) {
+                    Ophan.additionalViewData(function() {
+                        return {
+                            "optimizely": optimizely.readTests()
+                        };
+                    });
+                }
                 Ophan.startLog();
             });
         },
 
         loadAdverts: function (config) {
-            Adverts.init(config);
-
-            common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+           
+            if (config.switches.adverts) {
+                Adverts.init(config);
+                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+            }
         },
 
         cleanupCookies: function() {
@@ -190,9 +206,10 @@ define([
     };
 
     var ready = function(config) {
+        modules.showDebug();
         modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler();
-        modules.loadFonts(config, navigator.userAgent, userPrefs);
+        modules.attachGlobalErrorHandler(config);
+        modules.loadFonts(config, navigator.userAgent);
         modules.upgradeImages();
         modules.showTabs();
 
