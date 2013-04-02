@@ -3,7 +3,7 @@ define(['common', 'modules/userPrefs', 'bonzo'], function (common, userPrefs, bo
     function Debug() {
 
         this.show = function(){
-            if (window.localStorage && userPrefs.get('dev-debug') === 'true') {
+            if (userPrefs.get('dev-debug') === 'true') {
                 var debug = document.querySelector("#dev-debug");
                 if (debug) {
                     bonzo(debug).addClass('active');
