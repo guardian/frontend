@@ -76,9 +76,10 @@ object `package` {
       val start = System.currentTimeMillis()
 
       while (!testDataLoaded()){
+        Thread.sleep(100)
         //give the futures some time to do their thing
         //ensure we are not stuck in an endless loop if we mess up a test
-        if (System.currentTimeMillis() - start > 20000) throw new RuntimeException("this is taking too long to load test data")
+        if (System.currentTimeMillis() - start > 10000) throw new RuntimeException("this is taking too long to load test data")
       }
     }
 
