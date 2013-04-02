@@ -75,7 +75,7 @@ object `package` {
 
       val start = System.currentTimeMillis()
 
-      while (!testDataLoaded){
+      while (!testDataLoaded()){
         //give the futures some time to do their thing
         //ensure we are not stuck in an endless loop if we mess up a test
         if (System.currentTimeMillis() - start > 20000) throw new RuntimeException("this is taking too long to load test data")
@@ -84,13 +84,12 @@ object `package` {
 
     //ensures that the data needed to run our tests has loaded
     // it is all async
-    private def testDataLoaded = {
+    private def testDataLoaded() = {
       Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
       Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
       Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
       Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false) &&
-      Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15)) &&
-      Competitions.matches.exists(m => m.homeTeam.name == "Sheff Wed" && m.awayTeam.name == "Leeds")
+      Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
     }
   }
 
