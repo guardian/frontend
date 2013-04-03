@@ -29,7 +29,7 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
@@ -70,7 +70,7 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 5, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     )),
