@@ -10,7 +10,7 @@
         <div class="box-indent">
         @story.places.take(1).map{ place =>
             <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=12&size=320x320&maptype=roadmap&sensor=false&markers=size:small|color:yellow|label:|@helper.urlEncode(place.name.get)"/>
-            <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=5&size=120x120&maptype=roadmap&sensor=false&markers=size:small|color:yellow|label:|@helper.urlEncode(place.name.get)" class="map-inset"/>
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=5&size=120x120&maptype=roadmap&sensor=false" class="map-inset"/>
             } 
         </div>
 
