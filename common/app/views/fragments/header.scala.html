@@ -1,5 +1,4 @@
 @(page: MetaData)(implicit request: RequestHeader)
-@import nav.Navigation
 
 <header id="header" class="cf" role="banner" datalink-name="global navigation: header">
 
@@ -30,9 +29,9 @@
     </a>
 
     <ul class="nav nav--global" data-link-name="Global navigation">
-        @Navigation(page).map{ nav =>
+        @Navigation(page, request).map{ nav =>
             <li class="nav__item @if(nav.currentFor(page)){is-current}">
-                <a href="@nav.url" class="nav__link" data-link-name="@nav.dataLinkName">@nav.name</a>
+                <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
             </li>
         }
     </ul>

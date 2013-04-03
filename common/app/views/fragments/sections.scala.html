@@ -5,13 +5,13 @@
         @if(isFooter){ data-link-name="global navigation: footer : sections"}>
         <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
-            @Navigation(request).map{ section =>
-            <li class="nav__item@if(section.newWindow && !isFooter){ mobile-only}">
-                <a href="@section.href"
-                    data-link-name="@section.linkName"
-                    class="nav__link@if("/" + page.id == section.href) { is-active}"
-                    @if(section.newWindow){ target="_blank" }>
-                        @HtmlFormat.raw(section.title)
+            @Navigation(page, request).map{ section =>
+            <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                <a href="@section.name.href"
+                    data-link-name="@section.name.linkName"
+                    class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+                    @if(section.name.newWindow){ target="_blank" }>
+                        @HtmlFormat.raw(section.name.title)
                 </a>
             </li>
             }
