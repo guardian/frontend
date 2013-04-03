@@ -52,6 +52,10 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
 		init: function(callback) {
+		    // only display if switched on
+		    if (userPrefs.isOff(id)) {
+		        return;
+		    }
 			var cookies = objectifyCookies(document.cookie),
 				params = [
 				    ['url', window.location], 
@@ -94,7 +98,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	                    function(resp) {
 	                        common.mediator.trigger(
 	                            'module:error', 
-	                            ['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', 80]
+	                            ['Error getting data from ' + url + ': ' + resp.statusText, 'modules/shared-wisdom-toolbar.js', 101]
 	                        );
 	                    }
 	                );
@@ -105,7 +109,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		},
 
     	show: function(config) {
-    		if (hidden && !userPrefs.isOff(id)) {
+    		if (hidden && !userPrefs.isOff(id + '.hidden')) {
 	    		var numbersText = [];
 	    		for (var text in data.numbers) {
 	    			numbersText.push(text.replace(/_/g, ' ') + ': <strong>' + data.numbers[text] + '</strong>');
@@ -140,7 +144,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	    			sharedWisdomToolbar.hide();
 	    		});
 	    		hidden = false;
-    		} else if (userPrefs.isOff(id)) {
+    		} else if (userPrefs.isOff(id + '.hidden')) {
     			sharedWisdomToolbar.button();
     		}
     	},
@@ -151,7 +155,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
     			bean.on(common.$g('#shared-wisdom-toolbar')[0], 'transitionend webkitTransitionEnd', function() {
     				bonzo(this).remove();
         			hidden = true;
-        			userPrefs.switchOff(id);
+        			userPrefs.switchOff(id + '.hidden');
     				sharedWisdomToolbar.button();
     			})
     			common.$g('#shared-wisdom-toolbar').css('opacity', 0);
@@ -164,7 +168,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 			);
     		bean.on(common.$g('#show-shared-wisdom-toolbar')[0], 'click', function() {
     			bonzo(this).remove();
-    			userPrefs.switchOn(id);
+    			userPrefs.switchOn(id + '.hidden');
     			sharedWisdomToolbar.show();
     		})
     	},
