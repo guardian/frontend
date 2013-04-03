@@ -274,9 +274,9 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Front.ukEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
       Front.usEditions("front").descriptions(4) should be(TrailblockDescription("business", "Business", 1, style = Some(Thumbnail)))
 
-      And("I should see 1 Life and Style story")
-      Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
-      Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 1, style = Some(Thumbnail)))
+      And("I should see 3 Life and Style stories")
+      Front.ukEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 3, style = Some(Thumbnail)))
+      Front.usEditions("front").descriptions(5) should be(TrailblockDescription("lifeandstyle", "Life and style", 3, style = Some(Thumbnail)))
 
       And("I should see 1 Technology story")
       Front.ukEditions("front").descriptions(6) should be(TrailblockDescription("technology", "Technology", 1, style = Some(Thumbnail)))
