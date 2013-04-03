@@ -65,7 +65,7 @@ GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> 
 GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
 
 GET     /football/microapp/scores                           controllers.microapp.LiveScoresComponentController.renderScores()
-GET     /football/api/microapp/scores                       controllers.microapp.LiveScoresComponentController.renderJson()
+GET     /football/api/microapp/scores/:matchId              controllers.microapp.LiveScoresComponentController.renderJson(matchId)
 
 #Front
 GET     /_warmup                                            controllers.FrontController.warmup()
