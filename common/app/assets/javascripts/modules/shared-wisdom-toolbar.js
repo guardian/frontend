@@ -3,7 +3,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var hidden = true,
 		closed = true,
 		data = null,
-		host = 'http://10.121.72.112',
+		host = 'http://blackandwhite',
 		url = host + '/pageview/dynamic/',
 		panelHeight = null,
 		id = 'shared-wisdom-toolbar';
@@ -35,17 +35,23 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		return cookies;
 	}
 	
+	function displayInsight(insight) {
+	    var sentence = insight.sentence;
+	    if (insight.url) {
+	        var $link = bonzo(document.createElement('a'));
+	        $link.text(sentence);
+	        if (insight.tooltip) {
+	            $link.attr('title', insight.tooltip);
+	        }
+	        return $link[0].outerHTML;
+	    } else {
+	        return sentence;  
+	    }
+	}
+	
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
 		init: function(callback) {
-		    // add the styles
-		    // TODO: pull in css for now, making this more self-contained
-		    var $styles = bonzo(document.createElement('link'))
-		        .attr('type', 'text/css')
-		        .attr('rel', 'stylesheet')
-		        .attr('href', 'https://rawgithub.com/guardian/frontend/shared-wisdom-toolbar/common/app/assets/stylesheets/module/_shared-wisdom-toolbar.css');
-		    common.$g('head').append($styles);
-		    
 			var cookies = objectifyCookies(document.cookie),
 				params = [
 				    ['url', window.location], 
@@ -106,7 +112,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	    		}
 	    		common.$g('body').prepend(
     				'<div id="shared-wisdom-toolbar" data-link-name="shared-wisdom-toolbar">' +
-    					'<p class="top-insight">' + data.insights[0].sentence + '</p>' +
+    					'<p class="top-insight">' + displayInsight(data.insights[0]) + '</p>' +
     					data.stats.map(function(stat) {
     						return '<abbr class="stat" title="' + stat.name + '">' + stat.value + '</abbr>'; 
     					}).join('') +
@@ -115,7 +121,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
     					'<div class="panel">' +
 		    				'<ul>' +
 		    					data.insights.slice(1).map(function(insight) {
-		    						return '<li>' + insight.sentence + '</li>'; 
+		    						return '<li>' + displayInsight(insight) + '</li>'; 
 		    					}).join('') +
 		    				'</ul>' +
 		    			'</div>' +
