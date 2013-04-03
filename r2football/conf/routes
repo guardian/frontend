@@ -37,3 +37,13 @@ GET     /football/match/:matchId                            controllers.MatchCon
 
 GET     /football/microapp/scores                           controllers.microapp.LiveScoresComponentController.renderScores()
 GET     /football/api/microapp/scores                       controllers.microapp.LiveScoresComponentController.renderJson()
+
+
+#Core nav routes
+GET    /most-read.json                                      controllers.MostPopularController.renderJson(path = "")
+GET    /most-read/*path.json                                controllers.MostPopularController.renderJson(path)
+GET    /most-read                                           controllers.MostPopularController.renderNoJavascript(path = "")
+GET    /most-read/*path                                     controllers.MostPopularController.renderNoJavascript(path)
+GET    /top-stories                                         controllers.TopStoriesController.render()
+GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
+GET    /related/*path                                       controllers.RelatedController.render(path)
