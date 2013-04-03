@@ -12,7 +12,7 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result).get should be("text/html")
     charset(result).get should be("utf-8")
-    header("Cache-Control", result).get should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=7200")
+    header("Cache-Control", result).get should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=345600")
   }
 
   it should "serve the correct headers when given a callback parameter" in Fake {

@@ -49,7 +49,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
       Given("I load most popular")
       HtmlUnit.connection("/most-read") { connection =>
         Then("the requested should be cached for 15 minutes")
-        connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=7200")
+        connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=345600")
       }
     }
   }
