@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-football":{
+        "frontend-r2football":{
             "type":"asg-elb",
             "apps":[ "frontend::football" ],
             "data":{
@@ -26,10 +26,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-football.deploy"]
+            "actionsBeforeApp": ["frontend-r2football.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-football.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-r2football.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
