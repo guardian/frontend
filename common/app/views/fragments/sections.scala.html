@@ -6,7 +6,7 @@
         <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
             @Navigation(request).map{ section =>
-            <li class="nav__item">
+            <li class="nav__item@if(section.newWindow && !isFooter){ mobile-only}">
                 <a href="@section.href"
                     data-link-name="@section.linkName"
                     class="nav__link@if("/" + page.id == section.href) { is-active}"
@@ -15,7 +15,7 @@
                 </a>
             </li>
             }
-            <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
+            <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
         </ul>
     
         @if(!isFooter){
@@ -27,7 +27,7 @@
             </div>
         }
 
-        <ul class="nav nav--columns nav--section-divider nav--top-border-off @if(isFooter){nav--footer} cf">
+        <ul class="nav nav--columns nav--section-divider nav--top-border-off @if(isFooter){nav--footer} else {mobile-only} cf">
             @if(site.isUsEdition) {
             <li class="nav__item"><a class="nav__link edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
             } else {

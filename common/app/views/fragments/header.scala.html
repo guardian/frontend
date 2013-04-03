@@ -5,6 +5,23 @@
 
     <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
+    <ul class="nav nav--toolbar pull-left" data-link-name="Edition toolbar">
+        @defining(Site(request)) { site =>
+            @if(site.isUsEdition) {
+                <li class="nav__item is-active">US</li>
+                <li class="nav__item"><a class="nav__link" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+            } else {
+                <li class="nav__item is-active">UK</li>
+                <li class="nav__item"><a class="nav__link" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            }
+        }
+    </ul>
+
+    <ul class="nav nav--toolbar pull-right" data-link-name="Toolbar">
+        <li class="nav__item"><a class="nav__link" href="https://soulmates.guardian.co.uk/" target="_blank" data-link-name="Soulmates">Soulmates</a>
+        <li class="nav__item"><a class="nav__link" href="http://jobs.guardian.co.uk/" target="_blank" data-link-name="Jobs">Jobs</a>
+    </ul>
+
     <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
         class="control control--topstories">
         <i class="i i-nav-divider"></i>
@@ -12,13 +29,13 @@
         <i class="i i-arrow-small-down"></i>
     </a>
 
-    <ol class="nav nav--global">
+    <ul class="nav nav--global" data-link-name="Global navigation">
         @Navigation(page).map{ nav =>
             <li class="nav__item @if(nav.currentFor(page)){is-current}">
                 <a href="@nav.url" class="nav__link" data-link-name="@nav.dataLinkName">@nav.name</a>
             </li>
         }
-    </ol>
+    </ul>
 
     <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
         class="control control--sections">

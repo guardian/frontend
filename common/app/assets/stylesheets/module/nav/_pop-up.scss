@@ -11,17 +11,33 @@
   margin-bottom: -4px;
   border-bottom: $baseline solid $blue;
 
-  @media only screen and (min-width: 35em) {
+  @media only screen and (min-width: $tablet) {
     position: absolute;
     top: 190px;
     right: 0px;
     background-color: #ffffff;
+    border-bottom: none;
+
+    @include box-shadow(-3px 3px 10px -3px #444);
+  }
+}
+
+.nav-popup .nav__item {
+  @media only screen and (min-width: $tablet) {
+    margin: 0 $gutter;
+    border-bottom: 1px solid #C3C3C3;
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 
 .nav-popup .nav__link {
-  @media only screen and (min-width: 35em) {
-    @include font($serifheadline, 200, 16, 16);
+  @media only screen and (min-width: $tablet) {
+    color: #444444;
+    padding: $baseline*2 $gutter $baseline*4 0;
+    @include font($serifheadline, 200, 14, 14);
   }
 }
 

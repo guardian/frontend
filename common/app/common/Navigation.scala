@@ -21,7 +21,7 @@ object Navigation {
     SectionLink("technology", "Technology", "/technology", "Technology"),
     SectionLink("environment", "Environment", "/environment", "Environment"),
     SectionLink("soulmates", "Soulmates", "https://soulmates.guardian.co.uk/", "Soulmates", newWindow = true),
-    SectionLink("jobs", "Jobs", "http://m.jobs.guardian.co.uk/", "Jobs", newWindow = true)
+    SectionLink("jobs", "Jobs", "http://jobs.guardian.co.uk/", "Jobs", newWindow = true)
   )
 
   private val usSections = Seq(

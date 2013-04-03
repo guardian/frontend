@@ -15,11 +15,14 @@
   .control:hover,
   .control:visited{
     font-family: $serif !important;
-    font-size: 16px;
+    font-size: 13px;
     color: #ffffff;
     text-decoration: none !important;
 
-    @media only screen and (min-width: 35em) { color: #444444; }
+    @media only screen and (min-width: $tablet) {
+      font-size: 14px;
+      color: #444444;
+    }
   }
 
 .control.is-active,
@@ -27,9 +30,9 @@
   background-color: #ffffff;
   color: $blue;
 
-  @media only screen and (min-width: 35em) {
+  @media only screen and (min-width: $tablet) {
     background-color: transparent;
-
+    color: #444444;
   }
 }
 
@@ -41,7 +44,7 @@
   background-color: #274C98;
   border-left: 1px solid #122853;
 
-  @media only screen and (min-width: 35em) {
+  @media only screen and (min-width: $tablet) {
     display:none !important;
   }
 }
@@ -61,7 +64,6 @@
     top: 58px;
     padding: 0 $gutter 10px $gutter;
     margin: $baseline*2 0 $baseline*2 0;
-    border-left: 1px solid #444444;
   }
 
   @media only screen and (min-width: 80em) {
@@ -74,7 +76,7 @@
   margin-top: 8px;
   display: inline-block;
   text-indent: -1000em;
-  @media only screen and (min-width: 35em) { display: none; }
+  @media only screen and (min-width: $tablet) { display: none; }
 }
 
 .is-active .i-nav-divider {
@@ -85,10 +87,11 @@
 .control__more {
     display: none;
     float: right;
-    @media only screen and (min-width: 35em) { display: inline-block; }
+    @media only screen and (min-width: $tablet) { display: inline-block; }
 }
 
 .control__more .i-more-arrow { margin: 2px 0 0 4px; }
+.is-active .i-more-arrow { @include rotate(180deg); }
 
 /* Top stories control
  ========================================================================== */
@@ -101,7 +104,7 @@
   margin: 0;
   padding: 17px 0 13px 0;
 
-  @media only screen and (min-width: 35em) {
+  @media only screen and (min-width: $tablet) {
     display: none;
   }
 }
@@ -129,5 +132,5 @@
   top:17px;
   right:0px;
   margin-right: 0px;
-  @media only screen and (min-width: 35em) { display: block; }
+  @media only screen and (min-width: $tablet) { display: block; }
 }

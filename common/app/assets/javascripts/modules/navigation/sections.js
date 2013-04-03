@@ -16,7 +16,6 @@ define([
             sectionsNav = document.querySelector('.nav--global'),
             $sectionsHeader = bonzo(sectionsHeader),
             className = 'is-off',
-            layoutMode = detect.getLayoutMode(),
             that = this;
 
         this.view = {
@@ -38,26 +37,26 @@ define([
                 });
 
                 bean.on(window, 'resize', common.debounce(function(e){
-                    that.view.hideVisible();
-                    if(layoutMode != 'tablet') {
+                    var layoutMode = detect.getLayoutMode();
+
+                    if(layoutMode != 'mobile') {
                         that.view.hideColumns();
                     } else {
                         that.view.showColumns();
                     }
-                }, 500));
+                }, 200));
             },
 
             showColumns : function() {
-                common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav-columns');
+                popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+                common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function() {
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
-            },
 
-            hideVisible : function() {
                 var visibleItems = [];
-                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+                popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
 
                 common.$g('.nav__item', sectionsNav).each(function(e) {
                     if(bonzo(e).offset().top < 160) {
@@ -72,11 +71,11 @@ define([
         };
 
         this.init = function () {
+            var layoutMode = detect.getLayoutMode();
             this.view.bindings();
 
-            if(layoutMode != 'tablet') {
+            if(layoutMode != 'mobile') {
                 this.view.hideColumns();
-                this.view.hideVisible();
             }
         };
      }
