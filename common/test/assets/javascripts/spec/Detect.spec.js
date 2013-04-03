@@ -25,11 +25,11 @@ define(['modules/detect'], function(detect) {
         
         it("should calculate the speed of a slow, medium & fast client request", function(){
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } })).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } })).toBe('low');
             
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 3000 } })).toBe('medium');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 3000 } })).toBe('medium');
             
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } })).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } })).toBe('high');
 
         });
 
@@ -39,11 +39,11 @@ define(['modules/detect'], function(detect) {
 
             expect(detect.getConnectionSpeed(null, { type: 4} )).toBe('low'); // type 3 is CELL_3G
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } }, { type: 4} )).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 1000 } }, { type: 4} )).toBe('low');
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } }, { type: 6} )).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } }, { type: 6} )).toBe('low');
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } }, { type: 6} )).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } }, { type: 6} )).toBe('high');
 
         });
     });

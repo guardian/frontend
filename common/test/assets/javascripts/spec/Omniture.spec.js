@@ -5,13 +5,14 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         var config = {};
 
         var w = {
-        	performance: { timing: { requestStart: 1, responseStart: 5000 } },
+        	performance: { timing: { requestStart: 1, responseEnd: 5000 } },
         	innerWidth: 500
         }
 
         beforeEach(function(){
 
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' }
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
+            config.switches = { optimizely: false };
 
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");

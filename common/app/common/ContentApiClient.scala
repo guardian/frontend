@@ -12,7 +12,6 @@ import com.gu.openplatform.contentapi.util.FutureInstances
 
 import com.gu.openplatform.contentapi.connection.Http
 
-
 trait ApiQueryDefaults { self: Api[Future] =>
 
   val supportedTypes = "type/gallery|type/article|type/video"
@@ -67,11 +66,16 @@ object ContentApiMetrics {
 trait DelegateHttp extends Http[Future] {
   import System.currentTimeMillis
   import ContentApiMetrics._
+  import Configuration.host
+  import java.net.URLEncoder.encode
 
   private val dispatch = new Http[Future] with Logging {
     override def GET(url: String, headers: Iterable[(String, String)]) = {
+
+      val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
+
       val start = currentTimeMillis
-      val response = WS.url(url).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+      val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
 
       // record metrics
       response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
@@ -91,8 +95,6 @@ trait DelegateHttp extends Http[Future] {
     .map(_.getClass == classOf[TimeoutException])
     .getOrElse(false)
 }
-
-
 
 import FutureInstances._
 
@@ -117,4 +119,3 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
-
