@@ -63,7 +63,9 @@ case class Story(
     title: String,
     events: Seq[Event] = Nil,
     explainer: Option[String] = None,
-    hero: Option[String] = None) extends implicits.Collections {
+    hero: Option[String] = None,
+    labels: Map[String, String] = Map()
+    ) extends implicits.Collections {
 
   lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
@@ -103,7 +105,8 @@ object Story {
     title = s.title,
     explainer = s.explainer.filter(_.nonEmpty),
     hero = s.hero.filter(_.nonEmpty),
-    events = s.events.map(Event(_, content))
+    events = s.events.map(Event(_, content)),
+    labels = s.labels
   )
 
   import Mongo.Stories
@@ -184,7 +187,9 @@ private case class ParsedStory(
   title: String,
   events: Seq[ParsedEvent] = Nil,
   hero: Option[String] = None,
-  explainer: Option[String] = None)
+  explainer: Option[String] = None,
+  labels: Map[String, String] = Map()
+  ) { } 
 
 private case class ParsedEvent(
     title: String,
