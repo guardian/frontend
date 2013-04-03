@@ -1,6 +1,0 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# For dev machines
-GET     /   controllers.Application.front
