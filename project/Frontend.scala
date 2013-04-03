@@ -34,7 +34,7 @@ object Frontend extends Build with Prototypes with Testing {
     libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
   )
 
-  val football = application("football").dependsOn(commonWithTests).settings(
+  val football = application("r2football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
