@@ -19,7 +19,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("public, max-age=5")
+    headers("Cache-Control") should be("public, max-age=5, stale-while-revalidate=5, stale-if-error=7200")
   }
 
   it should "cache content less than 24 hours old for 1 minute" in {
@@ -29,7 +29,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("public, max-age=60")
+    headers("Cache-Control") should be("public, max-age=60, stale-while-revalidate=60, stale-if-error=7200")
   }
 
   it should "cache older content for 15 minutes" in {
@@ -39,7 +39,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("public, max-age=900")
+    headers("Cache-Control") should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=7200")
   }
 
   it should "cache other things for 1 minute" in {
@@ -58,7 +58,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(page)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("public, max-age=60")
+    headers("Cache-Control") should be("public, max-age=60, stale-while-revalidate=60, stale-if-error=7200")
   }
 
   it should "double the cache time if DoubleCacheTimesSwitch is switched on" in {
@@ -70,7 +70,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("public, max-age=120")
+    headers("Cache-Control") should be("public, max-age=120, stale-while-revalidate=120, stale-if-error=7200")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {

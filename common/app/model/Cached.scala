@@ -22,8 +22,10 @@ object Cached extends Results {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
+
+    // see http://tools.ietf.org/html/rfc5861 for definitions of these headers
     result.withHeaders(
-      "Cache-Control" -> s"public, max-age=$maxAge",
+      "Cache-Control" -> s"public, max-age=$maxAge, stale-while-revalidate=$maxAge, stale-if-error=7200",
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
