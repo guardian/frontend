@@ -46,7 +46,7 @@ class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with
 
       Given("A valid call from a match page on load")
       val url = "/football/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham"
-      val request = FakeRequest(GET, url)
+      val request = FakeRequest(GET, url).withHeaders("host" -> "testhost")
       val controller = new LiveScoresForTest(comps, Some(nav))
 
       When("I call the controller")
@@ -84,17 +84,19 @@ class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with
       contentAsString(result) should include("""<li>Gylfi Sigurdsson 76, </li>""")
       contentAsString(result) should include("""<li>Gareth Bale 90</li>""")
 
+      And("it should include the ajax URL")
+      contentAsString(result) should include("""data-ajax-url="testhost/football/api/microapp/scores/1234"""")
     }
 
     scenario("A match report page doing live updates of the match scores") {
 
       Given("A valid JSONP Ajax call from a match page")
-      val url = "/football/api/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham&callback=cb"
+      val url = "/football/api/microapp/scores/1234?callback=cb"
       val request = FakeRequest(GET, url)
       val controller = new LiveScoresForTest(comps, Some(nav))
 
       When("I call the controller")
-      val result = controller.renderJson()(request)
+      val result = controller.renderJson("1234")(request)
 
       Then("The response should have an OK status")
       status(result) should be(200)
@@ -113,12 +115,12 @@ class LiveScoresComponentFeatureTest extends FeatureSpec with GivenWhenThen with
     scenario("A call to the Live Scores API") {
 
       Given("A valid request to the API")
-      val url = "/football/api/microapp/scores?teams=43,19&currentPage=football/2013/feb/25/spurs-v-westham"
+      val url = "/football/api/microapp/scores/1234"
       val request = FakeRequest(GET, url)
       val controller = new LiveScoresForTest(comps, Some(nav))
 
       When("I call the controller")
-      val result = controller.renderJson()(request)
+      val result = controller.renderJson("1234")(request)
 
       Then("The response should have an OK status")
       status(result) should be(200)

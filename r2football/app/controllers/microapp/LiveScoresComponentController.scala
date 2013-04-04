@@ -2,7 +2,7 @@ package controllers.microapp
 
 import model.{ Cached, TeamMap }
 import feed.{ CompetitionSupport, Competitions }
-import common.{ JsonComponent, Logging, Compressed }
+import common._
 import play.api.mvc._
 import model.Competition
 import implicits.{ Requests, Football }
@@ -11,33 +11,49 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateMidnight
 import concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
+import scala.Some
+import controllers.MatchNav
+import model.Competition
 
 trait LiveScoresComponentController extends Controller with Football with Requests with Logging {
   type Renderer = (MatchNav, Competition, RequestHeader) => Result
 
-  def renderScores() = renderMatchNav { (nav, comp, request) =>
-    Ok(Compressed(views.html.microapp.matchLiveScore(nav, comp)))
+  def renderScores() = {
+    renderMatchNav(None) { (nav, comp, request) =>
+      val ajaxUrl = Site(request).ajaxHost + "/football/api/microapp/scores/" + nav.theMatch.id
+      Ok(Compressed(views.html.microapp.matchLiveScore(nav, comp, ajaxUrl)))
+    }
   }
 
-  def renderJson() = renderMatchNav { (nav, comp, request) =>
-    JsonComponent(
-      request.getParameter("callback"),
-      "scores" -> views.html.microapp.matchLiveScore(nav, comp)
-    )
+  def renderJson(matchId: String) = Action { implicit request =>
+    competitions.withMatch(matchId) flatMap { comp =>
+      comp.matches find {_.id == matchId} map { theMatch =>
+        Cached(60) {
+          JsonComponent(
+            request.getParameter("callback"),
+            "scores" -> views.html.microapp.scoreLine(theMatch, comp)
+          )
+        }
+      }
+    } getOrElse NotFound
   }
 
-  protected def renderMatchNav(renderer: Renderer) = Action { implicit request =>
-    val teamsAndPath = request.getParameter("teams") map { _.split(",") filter { teamExists } } match {
-      case Some(Array(team1, team2)) =>
-        request.getParameter("currentPage") map { (team1, team2, _) }
+  protected def renderMatchNav(date: Option[DateMidnight])(renderer: Renderer) = Action { implicit request =>
+    val theDate = date getOrElse {
+      request.getParameter("currentPage") match {
+        case Some(path) => extractDate(path)
+        case _ => throw new IllegalArgumentException("No currentPath found!")
+      }
+    }
+    val teams = request.getParameter("teams") map { _.split(",") filter { teamExists } } match {
+      case Some(Array(team1, team2)) => Some(team1, team2)
 
       case _ => None
     }
 
-    teamsAndPath map {
-      case (team1, team2, path) =>
-        val date = extractDate(path)
-        val future = futureMatchNav(date, team1, team2)
+    teams map {
+      case (team1, team2) =>
+        val future = futureMatchNav(theDate, team1, team2)
         Async {
           future map { optNav: Option[MatchNav] =>
             optNav map { nav =>

@@ -1,46 +1,71 @@
-@(matchNav: controllers.MatchNav, comp: model.Competition)
+@(matchNav: controllers.MatchNav, comp: model.Competition, ajaxUrl: String)
 @import implicits.Football._
 
 @defining(matchNav.theMatch){fMatch =>
+
+<style>
+    #content > .six-col {
+        float: none;
+    }
+
+    .m-sport {
+        border-bottom: 1px solid #008000;
+    }
+
+    .m-sport #tabs {
+        border-bottom: 1px solid #999;
+    }
+
+    .m-sport h2 {
+        margin-top: 0;
+        border-top: 0;
+        font-size: 14px !important;
+        padding: 9px 0 12px 0 !important;
+    }
+
+    .m-sport th {
+        padding-right: 30px;
+        text-align: left;
+        vertical-align: top;
+        width: 150px;
+    }
+
+    .m-sport li {
+        display: inline;
+        color: #666;
+    }
+
+    /* delete after r2 refactoring and the importants too */
+    .football .article-attributes {
+        border-top: none !important;
+    }
+</style>
+
+<script>
+    jQ(function() {
+
+        var refreshInterval = 60,
+            node = jQ('#match-stats-summary'),
+            contentUrl = node.attr('data-ajax-url');
+
+        function reloadScores() {
+            jQ.ajax({
+                url: contentUrl,
+                cache: true,
+                jsonpCallback: 'scorescb',
+                success: function(response) {
+                    node.html(response.scores);
+                    setTimeout(reloadScores, refreshInterval * 1000);
+                }
+            })
+        }
+
+        // First load
+        reloadScores();
+    });
+</script>
+
 <div class="m-sport">
-    <style>
-        #content > .six-col {
-            float: none;
-        }
-
-        .m-sport {
-            border-bottom: 1px solid #008000;
-        }
-
-        .m-sport #tabs {
-            border-bottom: 1px solid #999;
-        }
-
-        .m-sport h2 {
-            margin-top: 0;
-            border-top: 0;
-            font-size: 14px !important;
-            padding: 9px 0 12px 0 !important;
-        }
-
-        .m-sport th {
-            padding-right: 30px;
-            text-align: left;
-            vertical-align: top;
-            width: 150px;
-        }
-
-        .m-sport li {
-            display: inline;
-            color: #666;
-        }
-
-            /* delete after r2 refactoring and the importants too */
-        .football .article-attributes
-        {
-            border-top: none !important;
-        }
-    </style>
 
   @if(matchNav.hasReports){
     <div id="tabs" >
@@ -52,24 +77,8 @@
     </div>
   }
 
-    <div id="match-stats-summary" data="@fMatch.id" >
-        <h2 data="@comp.id">@comp.fullName</h2>
-        <table>
-            <tbody>
-            <tr>
-                <th data="@fMatch.homeTeam.id" >@(fMatch.homeTeam.name) @{fMatch.homeTeam.score getOrElse 0}</th>
-                <td>
-                    @scorers(fMatch.homeTeam.scorers)
-                </td>
-            </tr>
-            <tr class="away">
-                <th data="@fMatch.awayTeam.id">@(fMatch.awayTeam.name) @{fMatch.awayTeam.score getOrElse 0}</th>
-                <td>
-                    @scorers(fMatch.awayTeam.scorers)
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="match-stats-summary" data="@fMatch.id" data-ajax-url="@ajaxUrl">
+        @html.microapp.scoreLine(fMatch, comp)
     </div>
 </div>
 }
@@ -80,19 +89,4 @@
   } else {
     <li><a class="inactive" href="@trail.url">@text</a></li>
   }
-}
-
-@scorers(scorers: Option[String]) = {
-  <ul>
-    @{
-      scorers.map { scors : String =>
-        val all = scors.split(",")
-        all map { s =>
-          val noBrace = s.replace("(", " ").replace(")", "")
-          val scorer = if (s == all.last) noBrace else noBrace + ", "
-          <li>{scorer}</li>
-        }
-      }
-    }
-  </ul>
 }
