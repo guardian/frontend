@@ -113,10 +113,17 @@ trait Prototypes extends Testing {
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
+        case s: String if s.startsWith("Routes") => MergeStrategy.first
+        case s: String if s.startsWith("controllers/") => MergeStrategy.first
+        case s: String if s.startsWith("conf/") => MergeStrategy.first
+        case "Global$.class" => MergeStrategy.first
+        case "routes" => MergeStrategy.first
+        case "deploy.json" => MergeStrategy.first
+        case "application.conf" => MergeStrategy.first
+        case "application-logger.xml" => MergeStrategy.first
         case "README" => MergeStrategy.first
         case "CHANGELOG" => MergeStrategy.first
-        case x => println(x)
-          old(x)
+        case x => old(x)
       }
     }
   )
