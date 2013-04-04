@@ -60,7 +60,7 @@
   height: 28px;
   padding: 15px $gutter 15px 0px;
 
-  @media only screen and (min-width: 35em) {
+  @media only screen and (min-width: $tablet) {
     top: 58px;
     padding: 0 $gutter 10px $gutter;
     margin: $baseline*2 0 $baseline*2 0;
@@ -99,7 +99,7 @@
 .control--topstories {
   position: absolute;
   top:0px;
-  right: 50px;
+  right: 94px;
   height: 28px;
   margin: 0;
   padding: 17px 0 13px 0;
@@ -110,27 +110,57 @@
 }
 
 .control--topstories span {
-  display: inline-block;
+  display: none;
   height: 28px;
   vertical-align: top;
   line-height: 28px;
   margin-right:8px;
+
+  @media only screen and (min-width: 26.25em) {
+    display: inline-block;
+  }
+}
+
+  .control--topstories.is-active span {
+    background: none !important;
+    border-color: transparent !important;
+  }
+
+.control--topstories .i-top-stories {
+  margin: 6px $baseline*4 0 $baseline*2;
+
+  @media only screen and (min-width: 26.25em) {
+    display: none;
+  }
 }
 
 .control--topstories .i-arrow-small-down {
   margin: 10px 10px 8px 5px;
 }
 
-.control--topstories.is-active span {
-  background: none !important;
-  border-color: transparent !important;
+
+
+/* Search control
+ ========================================================================== */
+
+.control--search {
+  position: absolute;
+  top: 0px;
+  right: 46px;
+  width: auto;
+  height: 28px;
+  padding: 15px $baseline*4 15px 0px;
+  border: none;
+  text-indent: -1000em;
+
+  @media only screen and (min-width: $tablet) {
+    display: none;
+  }
 }
 
-.control--topstories .i-nav-divider--right {
-  display: none;
-  position: absolute;
-  top:17px;
-  right:0px;
-  margin-right: 0px;
-  @media only screen and (min-width: $tablet) { display: block; }
+.control--search .i-search {
+  float: right;
+  margin-top: $baseline*2;
+  margin-left: $baseline*2;
+  display: inline-block;
 }

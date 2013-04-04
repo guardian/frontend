@@ -35,8 +35,6 @@ input.gsc-search-button-v2 {
 }
 
 .search-results {
-  min-height: $gutter;
-
   @media only screen and (min-width: 35em) { display: none;}
 }
 

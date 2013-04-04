@@ -39,6 +39,8 @@ define([
                 bean.on(window, 'resize', common.debounce(function(e){
                     var layoutMode = detect.getLayoutMode();
 
+                    bonzo(sectionsHeader).addClass(className);
+
                     if(layoutMode != 'mobile') {
                         that.view.hideColumns();
                     } else {

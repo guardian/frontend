@@ -17,6 +17,7 @@
     right: 0px;
     background-color: #ffffff;
     border-bottom: none;
+    padding-bottom: 0;
 
     @include box-shadow(-3px 3px 10px -3px #444);
   }

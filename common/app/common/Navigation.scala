@@ -18,7 +18,7 @@ def currentFor(metadata: MetaData) = {
 object Sections  {
 
   //News
-  val news  = SectionLink("news", "News", "/", "News")
+  val news  = SectionLink("news", "News", "/", "Home")
   val world = SectionLink("world", "World News", "/world", "World news")
   val uk    = SectionLink("uk", "UK", "/uk", "UK")
   val us    = SectionLink("us", "US", "/world/usa", "US")

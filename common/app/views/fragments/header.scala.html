@@ -4,29 +4,19 @@
 
     <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
-    <ul class="nav nav--toolbar pull-left" data-link-name="Edition toolbar">
+    <ul class="nav nav--toolbar pull-right" data-link-name="Toolbar">
         @defining(Site(request)) { site =>
             @if(site.isUsEdition) {
                 <li class="nav__item is-active">US</li>
-                <li class="nav__item"><a class="nav__link" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+                <li class="nav__item"><a class="nav__link" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK</a></li>
             } else {
                 <li class="nav__item is-active">UK</li>
-                <li class="nav__item"><a class="nav__link" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+                <li class="nav__item"><a class="nav__link" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US</a></li>
             }
         }
-    </ul>
-
-    <ul class="nav nav--toolbar pull-right" data-link-name="Toolbar">
         <li class="nav__item"><a class="nav__link" href="https://soulmates.guardian.co.uk/" target="_blank" data-link-name="Soulmates">Soulmates</a>
         <li class="nav__item"><a class="nav__link" href="http://jobs.guardian.co.uk/" target="_blank" data-link-name="Jobs">Jobs</a>
     </ul>
-
-    <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
-        class="control control--topstories">
-        <i class="i i-nav-divider"></i>
-        <span>Top stories</span>
-        <i class="i i-arrow-small-down"></i>
-    </a>
 
     <ul class="nav nav--global" data-link-name="Global navigation">
         @Navigation(page, request).map{ nav =>
@@ -35,6 +25,19 @@
             </li>
         }
     </ul>
+
+    <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
+        class="control control--topstories">
+        <i class="i i-nav-divider"></i>
+        <span>Top stories<i class="i i-arrow-small-down"></i></span>
+        <i class="i i-top-stories"></i>
+    </a>
+
+    <a href="#" data-link-name="Search icon" class="control control--search" id="search-control-header">
+        <i class="i i-nav-divider"></i>
+        <span>Search</span>
+        <i class="i i-search"></i>
+    </a>
 
     <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
         class="control control--sections">
@@ -46,14 +49,16 @@
 
 <div id="topstories-header" class="nav-popup is-off"></div>
 
-<div id="sections-header" class="nav-popup is-off">
-    @fragments.sections(page, false)
-
-    <div class="search-box">
+<div id="search-header" class="nav-popup is-off">
+    <div class="search-box" role="search">
         <gcse:searchbox></gcse:searchbox>
     </div>
-    <div class="search-results" data-link-name="Search">
+    <div class="search-results" data-link-name="search">
         <gcse:searchresults></gcse:searchresults>
     </div>
+</div>
+
+<div id="sections-header" class="nav-popup is-off">
+    @fragments.sections(page, false)
 </div>
 
