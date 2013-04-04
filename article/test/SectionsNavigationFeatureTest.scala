@@ -23,12 +23,12 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         Then("I should see a list of top sections")
 
-        val sections = find("#sections-footer li a")
+        val sections = find("#footer-nav li a")
 
         sections.length should be > 0
 
         And("a button to activate that list")
-        $(".nav-controls a")(1).getAttribute("href") should include("australia-mining-boom-end#sections")
+        findFirst(".control--sections").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
       }
     }
 
