@@ -19,7 +19,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount"
 
-  val references = "pa-football-competition,pa-football-team"
+  val references = "pa-football-competition,pa-football-team,witness-assignment"
 
   val inlineElements = "picture,witness,video"
 

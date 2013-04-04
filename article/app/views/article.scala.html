@@ -17,6 +17,22 @@
             @fragments.standfirst(article)
         </header>
 
+        @if(article.allowUserGeneratedContent) {
+            @article.witnessAssignment.map{ assignmentId =>
+                <div class="witness-call-to-action">
+                    <a href="https://witness.guardian.co.uk/assignment/@assignmentId" data-link-name="witness cta">
+                        <i class="i i-ee-add-button"></i>
+                        <div class="witness-call-to-action--box">
+                            <p>
+                                Contribute with <i class="i i-witness-logo" title="Guardian Witness"></i>
+                            </p>
+                            <i class="i i-powered-by-ee"></i>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+
         <div class="after-header"></div>
 
         @if(!article.isLive  && !article.hasVideoAtTop) {
