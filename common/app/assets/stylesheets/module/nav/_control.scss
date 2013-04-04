@@ -53,9 +53,7 @@
  ========================================================================== */
 
 .control--sections {
-  position: absolute;
-  top: 0px;
-  right: 0px;
+  float:right;
   width: auto;
   height: 28px;
   padding: 15px $gutter 15px 0px;
@@ -66,7 +64,7 @@
     margin: $baseline*2 0 $baseline*2 0;
   }
 
-  @media only screen and (min-width: 80em) {
+  @media only screen and (min-width: 85em) {
     display: none;
   }
 }
@@ -97,9 +95,8 @@
  ========================================================================== */
 
 .control--topstories {
-  position: absolute;
-  top:0px;
-  right: 94px;
+  float: right;
+  margin-right: 46px;
   height: 28px;
   margin: 0;
   padding: 17px 0 13px 0;
@@ -144,9 +141,10 @@
  ========================================================================== */
 
 .control--search {
-  position: absolute;
-  top: 0px;
-  right: 46px;
+  float:right;
+  //position: absolute;
+  //top: 0px;
+  //right: 46px;
   width: auto;
   height: 28px;
   padding: 15px $baseline*4 15px 0px;

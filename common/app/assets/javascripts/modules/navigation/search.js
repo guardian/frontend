@@ -22,7 +22,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                     var control = args[0],
                         state = args[1];
 
-                    if (state === false) {
+                    if (state === false || control !== 'search-control-header') {
                         that.view.hide();
                     }
                 });
