@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Nav object
+   ========================================================================== */
+
+/**
+ *
+ * Nav abstraction as per: csswizardry.com/2011/09/the-nav-abstraction
+ *
+ * The root component nav and >li>a selectors should not be modified directly,
+ * instead use modifier classes such as "nav--stacked"
+ */
+
+.nav {
+    list-style: none;
+    margin: 0;
+    padding: $baseline *2 0 4px 0;
+}
+
+  .nav > li,
+  .nav > li > a {
+      display: inline-block;
+      zoom: 1;
+  }
+
+  .nav li.is-active {
+    font-weight: 500;
+  }
+
+/* ==========================================================================
+   Nav modifiers
+   ========================================================================== */
+
+
+/* Stacked
+ ========================================================================== */
+  .nav--stacked > li {
+      display: list-item;
+  }
+
+/* Columns
+========================================================================== */
+  .nav--columns {
+    padding: $baseline*2 $gutter $baseline $gutter;
+  }
+
+    .nav--columns .nav__item {
+      width: 46%;
+      margin-right: 3%;
+      display: inline-block; // doing this instead of float to prevent mixed item height float collision
+      vertical-align: top;
+    }
+
+      .nav--columns .nav__item--full {
+        width: 100%;
+        margin: 0;
+      }
+
+
+    .nav--columns .nav__link {
+      @extend .type-10;
+      padding: $baseline*2 0;
+      border-top: 1px solid $mushroom;
+      display: block;
+      height: auto;
+      background-color: transparent;
+      color: #333333;
+    }
+
+    .nav--columns li:nth-child(even) {
+      float: right; // this aligns right edge correctly
+      margin-right: 0%;
+      margin-left: 3%;
+    }
+
+    .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
+    .nav--stacked.nav--top-border-off > li:nth-child(1) a {
+      border-top: none;
+      padding-top: 0;
+    }
+
+/* Section divider
+========================================================================== */
+
+  .nav.nav--section-divider {
+    padding: $baseline*2 0;
+    margin: 0 $gutter;
+    border-top: 2px solid $darkMushroom;
+  }
+
+  .nav--section-divider a {
+    color: #ffffff;
+  }
+
+/* Footer navigation
+   ========================================================================== */
+.nav--footer {
+  background-color: $blue;
+}
+
+  .nav--footer .nav__item a {
+      color: #ffffff;
+      border-top: 1px solid #2B528B;
+  }
+
+  .nav--footer.nav--section-divider {
+      color: #ffffff !important;
+      border-top: 2px solid #2B528B;
+  }
+
+
+/* Global navigation
+   ========================================================================== */
+
+.nav--global {
+  @include box-sizing(border-box);
+  display: none;
+  float:left;
+  clear:left;
+  width: 100%;
+  height: 54px;
+  overflow: hidden;
+  padding: 0 90px 0 0;
+  background-color: #F5F2F0;
+  @media only screen and (min-width: $tablet) { display: block; }
+}
+
+  .nav--global .nav__item {
+    float:left;
+  }
+
+  .nav--global .nav__link,
+  .nav--global .nav__link:link,
+  .nav--global .nav__link:active,
+  .nav--global .nav__link:hover,
+  .nav--global .nav__link:visited {
+    display: block;
+    margin: $baseline*2 0 0 0;
+    padding: 0px $gutter $baseline*4 $gutter;
+    font-family: $serif !important;
+    font-size: 14px;
+    text-decoration: none;
+    color: #444444;
+    border-right: 1px solid #444444;
+  }
+
+    .nav--global .nav__item:last-child .nav__link { border-right: none; }
+
+/* Toolbar navigation
+   ========================================================================== */
+.nav--toolbar {
+  @extend .type-10;
+  display: none;
+  margin: 0 $baseline*2 0 $gutter;
+  padding: $baseline*3 0 0 0;
+  @media only screen and (min-width: $tablet) { display: block; }
+}
+
+  .nav--toolbar .nav__item {
+    margin: $baseline 0 0 0;
+    padding: $baseline $baseline*2;
+    color: #ffffff;
+    border-right: 1px solid #94B1CA;
+
+    &:last-child { border-right: none; }
+  }
+
+  .nav--toolbar .nav__item.is-active { text-decoration: underline; }
+
+  .nav--toolbar .nav__link,
+  .nav--toolbar .nav__link:link,
+  .nav--toolbar .nav__link:active,
+  .nav--toolbar .nav__link:hover,
+  .nav--toolbar .nav__link:visited {
+    color: #fff;
+    text-decoration: none;
+  }

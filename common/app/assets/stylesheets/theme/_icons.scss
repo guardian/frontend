@@ -27,6 +27,22 @@
     @extend .svg-i-menu-active;
 }
 
+.is-active .i-search {
+  @extend .i-search-blue;
+}
+
+.svg .is-active .i-top-stories {
+  @extend .svg-i-search-blue;
+}
+
+.is-active .i-top-stories {
+  @extend .i-top-stories-active;
+}
+
+.svg .is-active .i-top-stories {
+  @extend .svg-i-top-stories-active;
+}
+
 .i-date {
     margin-right: 5px;
     margin-bottom: -1px;

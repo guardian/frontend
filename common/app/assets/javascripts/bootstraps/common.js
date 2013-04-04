@@ -14,6 +14,7 @@ define([
     'modules/navigation/controls',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
+    'modules/navigation/search',
     'modules/related',
     'modules/popular',
     'modules/expandable',
@@ -25,7 +26,6 @@ define([
     'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
-    'modules/search',
     'modules/analytics/omnitureMedia',
     'modules/debug'
 ], function (
@@ -43,6 +43,7 @@ define([
     Control,
     TopStories,
     Sections,
+    Search,
     Related,
     Popular,
     Expandable,
@@ -54,7 +55,6 @@ define([
     optimizely,
     Adverts,
     Cookies,
-    Search,
     Video,
     Debug
 ) {
@@ -86,13 +86,16 @@ define([
 
             // the section panel
             new Sections().init();
+            new Search(config).init();
 
             // the toolbar
             var t = new Control({id: 'topstories-control-header'}),
-                s = new Control({id: 'sections-control-header'});
+                s = new Control({id: 'search-control-header'}),
+                n = new Control({id: 'sections-control-header'});
 
             t.init();
             s.init();
+            n.init();
 
             common.mediator.on('modules:topstories:render', function(args) {
                 t.show();
@@ -195,13 +198,6 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
         }
     };
 
@@ -218,8 +214,6 @@ define([
 
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
-
-        modules.initialiseSearch(config);
 
         modules.showRelativeDates();
     };
