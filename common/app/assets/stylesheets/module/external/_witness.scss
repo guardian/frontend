@@ -129,6 +129,11 @@
   }
 }
 
+.element-witness-text .element-witness--main {
+  @extend .svg-i-quote-marks;
+  background-position: $baseline*2 0 !important;
+}
+
 .witness-call-to-action--box {
   border: 1px solid $darkMushroom;
   overflow: hidden;
