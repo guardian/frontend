@@ -20,7 +20,7 @@
 
     <ul class="nav nav--global" data-link-name="Global navigation">
         @Navigation(page, request).map{ nav =>
-            <li class="nav__item @if(nav.currentFor(page)){is-current}">
+            <li class="nav__item @if(nav.currentFor(page)){is-active}">
                 <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
             </li>
         }
@@ -35,7 +35,7 @@
 
     <a href="#" data-link-name="Search icon" class="control control--search" id="search-control-header">
         <i class="i i-nav-divider"></i>
-        <span>Search</span>
+        <span class="h">Search</span>
         <i class="i i-search"></i>
     </a>
 

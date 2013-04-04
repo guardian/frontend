@@ -59,6 +59,8 @@
   padding: 15px $gutter 15px 0px;
 
   @media only screen and (min-width: $tablet) {
+    position: absolute;
+    right: 0px;
     top: 58px;
     padding: 0 $gutter 10px $gutter;
     margin: $baseline*2 0 $baseline*2 0;
@@ -136,20 +138,14 @@
 }
 
 
-
 /* Search control
  ========================================================================== */
 
 .control--search {
   float:right;
-  //position: absolute;
-  //top: 0px;
-  //right: 46px;
-  width: auto;
   height: 28px;
   padding: 15px $baseline*4 15px 0px;
   border: none;
-  text-indent: -1000em;
 
   @media only screen and (min-width: $tablet) {
     display: none;
@@ -157,8 +153,6 @@
 }
 
 .control--search .i-search {
-  float: right;
   margin-top: $baseline*2;
   margin-left: $baseline*2;
-  display: inline-block;
 }
