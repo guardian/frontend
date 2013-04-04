@@ -80,18 +80,6 @@
         "id":"pa-football-team/26366"
       }]
     },{
-      "id":"football/morecambe",
-      "type":"keyword",
-      "webTitle":"Morecambe",
-      "webUrl":"http://www.guardian.co.uk/football/morecambe",
-      "apiUrl":"http://content.guardianapis.com/football/morecambe",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/215"
-      }]
-    },{
       "id":"football/freiburg",
       "type":"keyword",
       "webTitle":"Freiburg",
@@ -102,6 +90,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/26461"
+      }]
+    },{
+      "id":"football/morecambe",
+      "type":"keyword",
+      "webTitle":"Morecambe",
+      "webUrl":"http://www.guardian.co.uk/football/morecambe",
+      "apiUrl":"http://content.guardianapis.com/football/morecambe",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/215"
       }]
     },{
       "id":"football/angola",
@@ -332,18 +332,6 @@
         "id":"pa-football-team/1073"
       }]
     },{
-      "id":"football/cardiffcity",
-      "type":"keyword",
-      "webTitle":"Cardiff City",
-      "webUrl":"http://www.guardian.co.uk/football/cardiffcity",
-      "apiUrl":"http://content.guardianapis.com/football/cardiffcity",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/52"
-      }]
-    },{
       "id":"football/raith",
       "type":"keyword",
       "webTitle":"Raith Rovers",
@@ -354,6 +342,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/114"
+      }]
+    },{
+      "id":"football/cardiffcity",
+      "type":"keyword",
+      "webTitle":"Cardiff City",
+      "webUrl":"http://www.guardian.co.uk/football/cardiffcity",
+      "apiUrl":"http://content.guardianapis.com/football/cardiffcity",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/52"
       }]
     },{
       "id":"football/switzerland",

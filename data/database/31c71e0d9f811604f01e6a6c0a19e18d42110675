@@ -1,0 +1,2919 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "editorsPicks":[{
+      "id":"world/2013/apr/04/north-korea-moves-missile-coast",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T11:19:32Z",
+      "webTitle":"North Korea moves missile with 'considerable range' to coast, says Seoul",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/north-korea-moves-missile-coast",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/north-korea-moves-missile-coast",
+      "fields":{
+        "trailText":"<p>South Korea's defence minister confirms move, but says North is showing no other signs of preparing for full-scale conflict</p>",
+        "headline":"North Korea moves missile with 'considerable range' to coast, says Seoul",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074327643/North-Korean-Musudan-clas-005.jpg",
+        "wordcount":"803",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/north-korea",
+        "type":"keyword",
+        "webTitle":"North Korea",
+        "webUrl":"http://www.guardian.co.uk/world/north-korea",
+        "apiUrl":"http://content.guardianapis.com/world/north-korea",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.guardian.co.uk/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/south-korea",
+        "type":"keyword",
+        "webTitle":"South Korea",
+        "webUrl":"http://www.guardian.co.uk/world/south-korea",
+        "apiUrl":"http://content.guardianapis.com/world/south-korea",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.guardian.co.uk/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.guardian.co.uk/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-military",
+        "type":"keyword",
+        "webTitle":"US military",
+        "webUrl":"http://www.guardian.co.uk/world/us-military",
+        "apiUrl":"http://content.guardianapis.com/world/us-military",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/ewenmacaskill",
+        "type":"contributor",
+        "webTitle":"Ewen MacAskill",
+        "webUrl":"http://www.guardian.co.uk/profile/ewenmacaskill",
+        "apiUrl":"http://content.guardianapis.com/profile/ewenmacaskill",
+        "bio":"<p>Ewen MacAskill is the Guardian's Washington DC bureau chief. He was diplomatic editor from 1999-2006, chief political correspondent from 1996-99 and political editor of the Scotsman from 1990-96</p>",
+        "r2ContributorId":"15256",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/01/21/ewen_macaskill_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/justinmccurry",
+        "type":"contributor",
+        "webTitle":"Justin McCurry",
+        "webUrl":"http://www.guardian.co.uk/profile/justinmccurry",
+        "apiUrl":"http://content.guardianapis.com/profile/justinmccurry",
+        "bio":"<p>Justin McCurry is the Guardian's Tokyo correspondent.</p>",
+        "rcsId":"GNL410654",
+        "r2ContributorId":"15273",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/16/justin_mccurry_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074324343/North-Korean-Musudan-clas-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074324343/North-Korean-Musudan-clas-002.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"54",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074325442/North-Korean-Musudan-clas-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074325442/North-Korean-Musudan-clas-003.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"340",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074326593/North-Korean-Musudan-clas-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074326593/North-Korean-Musudan-clas-004.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"130",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074327643/North-Korean-Musudan-clas-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074327643/North-Korean-Musudan-clas-005.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"84",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074328792/North-Korean-Musudan-clas-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074328792/North-Korean-Musudan-clas-006.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"132",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074329876/North-Korean-Musudan-clas-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074329876/North-Korean-Musudan-clas-007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"168",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074331042/North-Korean-Musudan-clas-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074331042/North-Korean-Musudan-clas-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"180",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074332167/North-Korean-Musudan-clas-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074332167/North-Korean-Musudan-clas-009.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"228",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074333292/North-Korean-Musudan-clas-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074333292/North-Korean-Musudan-clas-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"276",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074334540/North-Korean-Musudan-clas-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074334540/North-Korean-Musudan-clas-011.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"372",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074333292/North-Korean-Musudan-clas-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074333292/North-Korean-Musudan-clas-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Ed Jones",
+          "altText":"North Korean Musudan-class missiles displayed during a 2012 military parade ",
+          "height":"276",
+          "credit":"Ed Jones/AFP/Getty Images",
+          "caption":"South Korea's description suggests the weapon in question may be a Musudan-class missile, shown here on display during a 2012 military parade.  Photograph: Ed Jones/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/4/4/1365071846164/Map-North-Korean-missile--001.png",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/4/4/1365071846164/Map-North-Korean-missile--001.png",
+          "source":"Graphic",
+          "altText":"Map: North Korean missile defence ranges and Guam deployment",
+          "height":"532",
+          "credit":"Graphic",
+          "caption":"Map: North Korean missile defence ranges and Guam deployment",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"uk/2013/apr/03/offshore-secrets-offshore-tax-haven",
+      "sectionId":"uk",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-04-03T22:59:51Z",
+      "webTitle":"Leaks reveal secrets of the rich who hide cash offshore",
+      "webUrl":"http://www.guardian.co.uk/uk/2013/apr/03/offshore-secrets-offshore-tax-haven",
+      "apiUrl":"http://content.guardianapis.com/uk/2013/apr/03/offshore-secrets-offshore-tax-haven",
+      "fields":{
+        "trailText":"<p><strong>Exclusive: </strong>Offshore financial industry leak exposes identities of thousands of holders of anonymous wealth from around the world</p>",
+        "headline":"Leaks reveal secrets of the rich who hide cash offshore",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020416475/British-Virgin-Islands-002.jpg",
+        "wordcount":"975",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/series/offshore-secrets",
+        "type":"series",
+        "webTitle":"Offshore secrets",
+        "webUrl":"http://www.guardian.co.uk/uk/series/offshore-secrets",
+        "apiUrl":"http://content.guardianapis.com/uk/series/offshore-secrets",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/taxavoidance",
+        "type":"keyword",
+        "webTitle":"Tax avoidance",
+        "webUrl":"http://www.guardian.co.uk/business/taxavoidance",
+        "apiUrl":"http://content.guardianapis.com/business/taxavoidance",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/british-virgin-islands",
+        "type":"keyword",
+        "webTitle":"British Virgin Islands",
+        "webUrl":"http://www.guardian.co.uk/world/british-virgin-islands",
+        "apiUrl":"http://content.guardianapis.com/world/british-virgin-islands",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/davidleigh",
+        "type":"contributor",
+        "webTitle":"David Leigh",
+        "webUrl":"http://www.guardian.co.uk/profile/davidleigh",
+        "apiUrl":"http://content.guardianapis.com/profile/davidleigh",
+        "bio":"<p>David Leigh is the Guardian's investigations executive editor, whose work was behind the jailing of <a href=\"http://www.guardian.co.uk/politics/aitken\">Jonathan Aitken</a> and the exposure of secret payments by arms company BAE</p>",
+        "rcsId":"GNL041963",
+        "r2ContributorId":"15562",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/david_leigh_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365019945412/British-Virgin-Islands-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365019945412/British-Virgin-Islands-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"54",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"British Virgin Islands is the leading offshore haven used by an array of government officials and rich families across the world. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020415266/British-Virgin-Islands-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020415266/British-Virgin-Islands-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"130",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020416475/British-Virgin-Islands-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020416475/British-Virgin-Islands-002.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"84",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020417632/British-Virgin-Islands-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020417632/British-Virgin-Islands-003.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"132",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020418742/British-Virgin-Islands-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020418742/British-Virgin-Islands-004.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"168",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020420034/British-Virgin-Islands-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020420034/British-Virgin-Islands-005.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"180",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020421230/British-Virgin-Islands-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020421230/British-Virgin-Islands-006.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"228",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020422580/British-Virgin-Islands-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020422580/British-Virgin-Islands-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"276",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020422580/British-Virgin-Islands-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365020422580/British-Virgin-Islands-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Duncan Mcnicol",
+          "altText":"British Virgin Islands",
+          "height":"276",
+          "credit":"Duncan Mcnicol/Getty Images",
+          "caption":"The British Virgin Islands, the world's leading offshore haven used by an array of government officials and rich families to hide their wealth. Photograph: Duncan Mcnicol/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/04/connecticut-strictest-gun-control-laws",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T07:43:00Z",
+      "webTitle":"Connecticut passes strictest gun control laws in US as Obama's reforms stall",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/connecticut-strictest-gun-control-laws",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/connecticut-strictest-gun-control-laws",
+      "fields":{
+        "trailText":"Legislation comes after Adam Lanza shot dead 20 children at Sandy Hook elementary school in Newtown in December",
+        "headline":"Connecticut passes strictest gun control laws in US as Obama's reforms stall",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/12/17/1355763008055/A-memorial-in-Newtown-Con-005.jpg",
+        "wordcount":"451",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/connecticut",
+        "type":"keyword",
+        "webTitle":"Connecticut",
+        "webUrl":"http://www.guardian.co.uk/world/connecticut",
+        "apiUrl":"http://content.guardianapis.com/world/connecticut",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gun-control",
+        "type":"keyword",
+        "webTitle":"US gun control",
+        "webUrl":"http://www.guardian.co.uk/world/gun-control",
+        "apiUrl":"http://content.guardianapis.com/world/gun-control",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.guardian.co.uk/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/12/17/1355763018562/A-memorial-in-Newtown-Con-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/12/17/1355763018562/A-memorial-in-Newtown-Con-010.jpg",
+          "source":"EPA",
+          "photographer":"Peter Foley",
+          "altText":"A memorial in Newtown, Connecticut",
+          "height":"276",
+          "credit":"Peter Foley/EPA",
+          "caption":"A makeshift memorial to the victims of the massacre in Newtown, Connecticut, which has reignited the national debate on gun control. Photograph: Peter Foley/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/apr/03/imf-cyprus-bailout-terms",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-04-03T17:00:29Z",
+      "webTitle":"IMF sets terms of Cyprus bailout",
+      "webUrl":"http://www.guardian.co.uk/business/2013/apr/03/imf-cyprus-bailout-terms",
+      "apiUrl":"http://content.guardianapis.com/business/2013/apr/03/imf-cyprus-bailout-terms",
+      "fields":{
+        "trailText":"International Monetary Fund managing director Christine Lagarde said Cyprus must press ahead with measures to bring the island's budget into surplus by 2018",
+        "headline":"IMF sets terms of Cyprus bailout",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/2/1364907510476/5f37e67d-32f6-42dd-bc6b-adf768a394e5-140x84.jpeg",
+        "wordcount":"514",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/imf",
+        "type":"keyword",
+        "webTitle":"International Monetary Fund (IMF)",
+        "webUrl":"http://www.guardian.co.uk/business/imf",
+        "apiUrl":"http://content.guardianapis.com/business/imf",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.guardian.co.uk/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/cyprus",
+        "type":"keyword",
+        "webTitle":"Cyprus",
+        "webUrl":"http://www.guardian.co.uk/world/cyprus",
+        "apiUrl":"http://content.guardianapis.com/world/cyprus",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.guardian.co.uk/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/debt-crisis",
+        "type":"keyword",
+        "webTitle":"Eurozone crisis",
+        "webUrl":"http://www.guardian.co.uk/business/debt-crisis",
+        "apiUrl":"http://content.guardianapis.com/business/debt-crisis",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/phillipinman",
+        "type":"contributor",
+        "webTitle":"Phillip Inman",
+        "webUrl":"http://www.guardian.co.uk/profile/phillipinman",
+        "apiUrl":"http://content.guardianapis.com/profile/phillipinman",
+        "bio":"<p>Phillip Inman is economics correspondent of the Guardian and Observer. He is the author of Managing Your Debt, a Which? essential guide</p>",
+        "rcsId":"GNL359331",
+        "r2ContributorId":"16288",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/phillip_inman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/2/1364907507070/5f37e67d-32f6-42dd-bc6b-adf768a394e5-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/2/1364907507070/5f37e67d-32f6-42dd-bc6b-adf768a394e5-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Petros Giannakouris",
+          "altText":"Cyprus' new finance minister Haris Georgiades, second from left, in a meeting ahead of the country's bailout.",
+          "height":"276",
+          "credit":"Petros Giannakouris/AP",
+          "caption":"Cyprus' new finance minister Haris Georgiades, second from left, in a meeting ahead of the country's bailout. Photograph: Petros Giannakouris/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/04/israeli-troops-palestinian-youths-west-bank",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T07:24:54Z",
+      "webTitle":"Israeli troops shoot dead two Palestinian youths in West Bank",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/israeli-troops-palestinian-youths-west-bank",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/israeli-troops-palestinian-youths-west-bank",
+      "fields":{
+        "trailText":"Youths aged 17 and 18 killed as confrontations enter a third day following the death of a Palestinian prisoner in an Israeli jail",
+        "headline":"Israeli troops shoot dead two Palestinian youths in West Bank",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060266043/West-Bank-005.jpg",
+        "wordcount":"537",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.guardian.co.uk/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/palestinian-territories",
+        "type":"keyword",
+        "webTitle":"Palestinian territories",
+        "webUrl":"http://www.guardian.co.uk/world/palestinian-territories",
+        "apiUrl":"http://content.guardianapis.com/world/palestinian-territories",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.guardian.co.uk/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060261638/West-Bank-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060261638/West-Bank-002.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"54",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060263055/West-Bank-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060263055/West-Bank-003.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"340",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060264647/West-Bank-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060264647/West-Bank-004.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"130",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060266043/West-Bank-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060266043/West-Bank-005.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"84",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060267396/West-Bank-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060267396/West-Bank-006.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"132",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060268727/West-Bank-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060268727/West-Bank-007.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"168",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060270095/West-Bank-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060270095/West-Bank-008.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"180",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060271447/West-Bank-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060271447/West-Bank-009.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"228",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060272804/West-Bank-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060272804/West-Bank-010.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"276",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060274226/West-Bank-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060274226/West-Bank-011.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"372",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060272804/West-Bank-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365060272804/West-Bank-010.jpg",
+          "source":"EPA",
+          "photographer":"Abed Al Hashlamoun",
+          "altText":"West Bank",
+          "height":"276",
+          "credit":"Abed Al Hashlamoun/EPA",
+          "caption":"Clashes flared after the death on Tuesday of Maysara Abu Hamdeya, 64, who was serving a life sentence in an Israeli jail. Photograph: Abed Al Hashlamoun/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/middle-east-live/2013/apr/04/syria-civil-war-clashes-continue-in-damascus-live-updates",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T07:54:00Z",
+      "webTitle":"Syria civil war: clashes continue in Damascus – as it happened",
+      "webUrl":"http://www.guardian.co.uk/world/middle-east-live/2013/apr/04/syria-civil-war-clashes-continue-in-damascus-live-updates",
+      "apiUrl":"http://content.guardianapis.com/world/middle-east-live/2013/apr/04/syria-civil-war-clashes-continue-in-damascus-live-updates",
+      "fields":{
+        "trailText":"<p>• '79 killed' in attacks across Syria<br />• Regime forces 'training in Iran'<br />• Syrian media attacks Jordan for hosting training of rebels<br />• <a href=\"http://www.guardian.co.uk/world/middle-east-live/2013/apr/04/syria-civil-war-clashes-continue-in-damascus-live-updates#block-515d95e9b57973a4e8f9fa85\">Click here for a summary of today's key events</a></p>",
+        "headline":"Syria civil war: clashes continue in Damascus – as it happened",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908239/3af53216-1428-4fc9-802c-ee33146d2ef1-140x84.jpeg",
+        "wordcount":"1819",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/middle-east-live",
+        "type":"blog",
+        "webTitle":"Middle East Live",
+        "webUrl":"http://www.guardian.co.uk/world/middle-east-live",
+        "apiUrl":"http://content.guardianapis.com/world/middle-east-live",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.guardian.co.uk/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.guardian.co.uk/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/syria",
+        "type":"keyword",
+        "webTitle":"Syria",
+        "webUrl":"http://www.guardian.co.uk/world/syria",
+        "apiUrl":"http://content.guardianapis.com/world/syria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/israel",
+        "type":"keyword",
+        "webTitle":"Israel",
+        "webUrl":"http://www.guardian.co.uk/world/israel",
+        "apiUrl":"http://content.guardianapis.com/world/israel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/egypt",
+        "type":"keyword",
+        "webTitle":"Egypt",
+        "webUrl":"http://www.guardian.co.uk/world/egypt",
+        "apiUrl":"http://content.guardianapis.com/world/egypt",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/paulowen",
+        "type":"contributor",
+        "webTitle":"Paul Owen",
+        "webUrl":"http://www.guardian.co.uk/profile/paulowen",
+        "apiUrl":"http://content.guardianapis.com/profile/paulowen",
+        "bio":"<p>Paul Owen is a Guardian journalist. He has also written for the Times Literary Supplement, the Times, and the Independent, among others. He is co-editor of the book <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780852652213\">The Wire Re-up: The Guardian Guide to the Greatest TV Show Ever Made</a>. In 2011 he was nominated at the Amnesty International and the Foreign Press Association awards for his work on the <a href=\"http://www.guardian.co.uk/world/middle-east-live\">Middle East live blog</a>. Follow him on Twitter @<a href=\"https://twitter.com/#!/PaulTOwen\">paultowen</a> or email him at <a href=\"mailto:paul.owen@guardian.co.uk\">paul.owen@guardian.co.uk</a></p>",
+        "r2ContributorId":"19197",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Politics/Pix/pictures/2008/01/17/Paul_Owen.jpg",
+        "references":[]
+      },{
+        "id":"news/blog",
+        "type":"blog",
+        "webTitle":"News blog",
+        "webUrl":"http://www.guardian.co.uk/news/blog",
+        "apiUrl":"http://content.guardianapis.com/news/blog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365081739609/Time-magazines-feature-Th-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365081739609/Time-magazines-feature-Th-010.jpg",
+          "source":"Time",
+          "photographer":"",
+          "altText":"Time magazine's feature 'The Women Warriors of the Free Syrian Army'.",
+          "height":"276",
+          "credit":"/Time",
+          "caption":"Time magazine's feature 'The Women Warriors of the Free Syrian Army'. Photograph: Time",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"main",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907199/3af53216-1428-4fc9-802c-ee33146d2ef1-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907199/3af53216-1428-4fc9-802c-ee33146d2ef1-460x276.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"276",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907556/3af53216-1428-4fc9-802c-ee33146d2ef1-380x228.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907556/3af53216-1428-4fc9-802c-ee33146d2ef1-380x228.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"228",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907856/3af53216-1428-4fc9-802c-ee33146d2ef1-620x372.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061907856/3af53216-1428-4fc9-802c-ee33146d2ef1-620x372.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"372",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908239/3af53216-1428-4fc9-802c-ee33146d2ef1-140x84.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908239/3af53216-1428-4fc9-802c-ee33146d2ef1-140x84.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"84",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908471/3af53216-1428-4fc9-802c-ee33146d2ef1-540x324.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908471/3af53216-1428-4fc9-802c-ee33146d2ef1-540x324.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"324",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"540"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908731/3af53216-1428-4fc9-802c-ee33146d2ef1-220x132.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908731/3af53216-1428-4fc9-802c-ee33146d2ef1-220x132.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"132",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908941/3af53216-1428-4fc9-802c-ee33146d2ef1-300x180.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365061908941/3af53216-1428-4fc9-802c-ee33146d2ef1-300x180.jpeg",
+          "source":"AFP/Getty Images",
+          "photographer":"-",
+          "altText":"A picture made available by the Syrian presidency media office on 3 April 2013 shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel.",
+          "height":"180",
+          "credit":"-/AFP/Getty Images",
+          "caption":"A picture made available by the Syrian presidency media office on 3 April shows Syrian president Bashar al-Assad greeting journalists with the Turkish television channel Ulusal and Aydinlik newspaper in Damascus on 2 April for an interview which is to run on 5 April, according to the president's YouTube channel. Photograph: AFP/Getty Images",
+          "width":"300"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/apr/04/fast-food-employee-strike-new-york",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-04-04T10:13:00Z",
+      "webTitle":"New York fast-food industry employees plan strike against low wages",
+      "webUrl":"http://www.guardian.co.uk/business/2013/apr/04/fast-food-employee-strike-new-york",
+      "apiUrl":"http://content.guardianapis.com/business/2013/apr/04/fast-food-employee-strike-new-york",
+      "fields":{
+        "trailText":"<p>Organisers predict hundreds will boycott work on Thursday in planned protest against the notoriously low-wage industry</p>",
+        "headline":"New York fast-food industry employees plan strike against low wages",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/14/1360854905165/McDonalds-workers-003.jpg",
+        "wordcount":"747",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/fooddrinks",
+        "type":"keyword",
+        "webTitle":"Food & drink industry",
+        "webUrl":"http://www.guardian.co.uk/business/fooddrinks",
+        "apiUrl":"http://content.guardianapis.com/business/fooddrinks",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"lifeandstyle/fast-food",
+        "type":"keyword",
+        "webTitle":"Fast food",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/fast-food",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/fast-food",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.guardian.co.uk/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.guardian.co.uk/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.guardian.co.uk/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/mcdonalds",
+        "type":"keyword",
+        "webTitle":"McDonald's",
+        "webUrl":"http://www.guardian.co.uk/business/mcdonalds",
+        "apiUrl":"http://content.guardianapis.com/business/mcdonalds",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/paulharris",
+        "type":"contributor",
+        "webTitle":"Paul Harris",
+        "webUrl":"http://www.guardian.co.uk/profile/paulharris",
+        "apiUrl":"http://content.guardianapis.com/profile/paulharris",
+        "bio":"<p>Paul Harris is a US correspondent for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a> and Observer</p>",
+        "rcsId":"GNL004733",
+        "r2ContributorId":"16239",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/24/1359029262500/Paul-web.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/useconomy",
+        "type":"keyword",
+        "webTitle":"US economy",
+        "webUrl":"http://www.guardian.co.uk/business/useconomy",
+        "apiUrl":"http://content.guardianapis.com/business/useconomy",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/14/1360854906891/McDonalds-workers-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/14/1360854906891/McDonalds-workers-004.jpg",
+          "source":"Alamy",
+          "photographer":"Alex Segre / Alamy",
+          "altText":"McDonald's workers",
+          "height":"276",
+          "credit":"Alex Segre / Alamy/Alamy",
+          "caption":"Some workers in New York City fast food restaurants had been warned not to take part in the planned action. Photograph: Alex Segre/Alamy",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/04/barack-obama-salary-solidarity",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T10:20:21Z",
+      "webTitle":"Barack Obama to give up 5% of salary in show of solidarity over cuts",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/barack-obama-salary-solidarity",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/barack-obama-salary-solidarity",
+      "fields":{
+        "trailText":"President will return $20,000 to the treasury, mirroring the 5% reduction to federal agencies' budgets",
+        "headline":"Barack Obama to give up 5% of salary in show of solidarity over cuts",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070620976/Obama-003.jpg",
+        "wordcount":"329",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.guardian.co.uk/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.guardian.co.uk/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.guardian.co.uk/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070618357/Obama-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070618357/Obama-001.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"54",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070619809/Obama-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070619809/Obama-002.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"130",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070620976/Obama-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070620976/Obama-003.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"84",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070622100/Obama-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070622100/Obama-004.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"132",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070623201/Obama-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070623201/Obama-005.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"168",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070624315/Obama-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070624315/Obama-006.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"180",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070625419/Obama-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070625419/Obama-007.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"228",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070626523/Obama-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070626523/Obama-008.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"276",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070626523/Obama-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365070626523/Obama-008.jpg",
+          "source":"AP",
+          "photographer":"Brennan Linsley",
+          "altText":"Obama",
+          "height":"276",
+          "credit":"Brennan Linsley/AP",
+          "caption":"Barack Obama will hand back 5% of his presidential salary of $400,000. Photograph: Brennan Linsley/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/04/craigslist-killer-richard-beasley-ohio",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T15:02:00Z",
+      "webTitle":"Craigslist murder trial: judge sentences Richard Beasley to death",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/craigslist-killer-richard-beasley-ohio",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/craigslist-killer-richard-beasley-ohio",
+      "fields":{
+        "trailText":"<p>Beasley, 53, was convicted of the murder of three men he lured to his Ohio farm by posting bogus job offers on Craigslist</p>",
+        "headline":"Craigslist murder trial: judge sentences Richard Beasley to death",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/21/1363873386250/Richard-Beasley-front-wit-005.jpg",
+        "wordcount":"495",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/ohio",
+        "type":"keyword",
+        "webTitle":"Ohio",
+        "webUrl":"http://www.guardian.co.uk/world/ohio",
+        "apiUrl":"http://content.guardianapis.com/world/ohio",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-crime",
+        "type":"keyword",
+        "webTitle":"US crime",
+        "webUrl":"http://www.guardian.co.uk/world/us-crime",
+        "apiUrl":"http://content.guardianapis.com/world/us-crime",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/capital-punishment",
+        "type":"keyword",
+        "webTitle":"Capital punishment",
+        "webUrl":"http://www.guardian.co.uk/world/capital-punishment",
+        "apiUrl":"http://content.guardianapis.com/world/capital-punishment",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/21/1363873394862/Richard-Beasley-front-wit-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/3/21/1363873394862/Richard-Beasley-front-wit-010.jpg",
+          "source":"Akron Beacon Journal/Reuters",
+          "photographer":"Michael Chritton",
+          "altText":"Richard Beasley (front) with his mother, Carol Beasley",
+          "height":"276",
+          "credit":"Michael Chritton/Akron Beacon Journal/Reuters",
+          "caption":"Richard Beasley (front) with his mother, Carol Beasley in court last month. Photograph: Michael Chritton/Akron Beacon Journal/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/apr/04/oscar-pistorius-photographed-training-students",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T09:37:01Z",
+      "webTitle":"Oscar Pistorius photographed training by high school students",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/apr/04/oscar-pistorius-photographed-training-students",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/apr/04/oscar-pistorius-photographed-training-students",
+      "fields":{
+        "trailText":"Students visiting a university took and distributed pictures of the Paralympian, who is awaiting trial for the murder of his girlfriend",
+        "headline":"Oscar Pistorius photographed training by high school students",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068128070/Oscar-Pistorius-photograp-005.jpg",
+        "wordcount":"202",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/reeva-steenkamp-shooting",
+        "type":"keyword",
+        "webTitle":"Reeva Steenkamp shooting",
+        "webUrl":"http://www.guardian.co.uk/world/reeva-steenkamp-shooting",
+        "apiUrl":"http://content.guardianapis.com/world/reeva-steenkamp-shooting",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/oscar-pistorius",
+        "type":"keyword",
+        "webTitle":"Oscar Pistorius",
+        "webUrl":"http://www.guardian.co.uk/sport/oscar-pistorius",
+        "apiUrl":"http://content.guardianapis.com/sport/oscar-pistorius",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/southafrica",
+        "type":"keyword",
+        "webTitle":"South Africa",
+        "webUrl":"http://www.guardian.co.uk/world/southafrica",
+        "apiUrl":"http://content.guardianapis.com/world/southafrica",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.guardian.co.uk/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/athletics",
+        "type":"keyword",
+        "webTitle":"Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/davidsmith",
+        "type":"contributor",
+        "webTitle":"David Smith",
+        "webUrl":"http://www.guardian.co.uk/profile/davidsmith",
+        "apiUrl":"http://content.guardianapis.com/profile/davidsmith",
+        "bio":"<p>David Smith is the Guardian's Africa correspondent</p>",
+        "rcsId":"GNL508721",
+        "r2ContributorId":"15571",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/3/6/1331034359272/David_Smith.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068124652/Oscar-Pistorius-photograp-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068124652/Oscar-Pistorius-photograp-002.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"54",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068125730/Oscar-Pistorius-photograp-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068125730/Oscar-Pistorius-photograp-003.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"340",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068126994/Oscar-Pistorius-photograp-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068126994/Oscar-Pistorius-photograp-004.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"130",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068128070/Oscar-Pistorius-photograp-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068128070/Oscar-Pistorius-photograp-005.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"84",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068129421/Oscar-Pistorius-photograp-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068129421/Oscar-Pistorius-photograp-006.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"132",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068130577/Oscar-Pistorius-photograp-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068130577/Oscar-Pistorius-photograp-007.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"168",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068132090/Oscar-Pistorius-photograp-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068132090/Oscar-Pistorius-photograp-008.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"180",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068133206/Oscar-Pistorius-photograp-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068133206/Oscar-Pistorius-photograp-009.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"228",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068134369/Oscar-Pistorius-photograp-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068134369/Oscar-Pistorius-photograp-010.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"276",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068135727/Oscar-Pistorius-photograp-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068135727/Oscar-Pistorius-photograp-011.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"372",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068134369/Oscar-Pistorius-photograp-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365068134369/Oscar-Pistorius-photograp-010.jpg",
+          "source":"The Witness",
+          "altText":"Oscar Pistorius photographed on the athletics track at Pretoria University",
+          "height":"276",
+          "credit":"The Witness",
+          "caption":"Oscar Pistorius was photographed on the athletics track at Pretoria University by a group of high school hockey players.  Photograph: The Witness",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/03/mark-sanford-south-carolina-colbert-warning",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-03T16:34:00Z",
+      "webTitle":"Mark Sanford to South Carolina rival: Stephen Colbert's fame won't help you",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/03/mark-sanford-south-carolina-colbert-warning",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/03/mark-sanford-south-carolina-colbert-warning",
+      "fields":{
+        "trailText":"<p>Ex-governor tells Elizabeth Colbert Busch that she cannot expect to win House seat just because she is Stephen Colbert's sister</p>",
+        "headline":"Mark Sanford to South Carolina rival: Stephen Colbert's fame won't help you",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/3/1365006003199/Mark-Sanford-005.jpg",
+        "wordcount":"630",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/south-carolina",
+        "type":"keyword",
+        "webTitle":"South Carolina",
+        "webUrl":"http://www.guardian.co.uk/world/south-carolina",
+        "apiUrl":"http://content.guardianapis.com/world/south-carolina",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/republicans",
+        "type":"keyword",
+        "webTitle":"Republicans",
+        "webUrl":"http://www.guardian.co.uk/world/republicans",
+        "apiUrl":"http://content.guardianapis.com/world/republicans",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/democrats",
+        "type":"keyword",
+        "webTitle":"Democrats",
+        "webUrl":"http://www.guardian.co.uk/world/democrats",
+        "apiUrl":"http://content.guardianapis.com/world/democrats",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.guardian.co.uk/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/ewenmacaskill",
+        "type":"contributor",
+        "webTitle":"Ewen MacAskill",
+        "webUrl":"http://www.guardian.co.uk/profile/ewenmacaskill",
+        "apiUrl":"http://content.guardianapis.com/profile/ewenmacaskill",
+        "bio":"<p>Ewen MacAskill is the Guardian's Washington DC bureau chief. He was diplomatic editor from 1999-2006, chief political correspondent from 1996-99 and political editor of the Scotsman from 1990-96</p>",
+        "r2ContributorId":"15256",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/01/21/ewen_macaskill_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/3/1365006011615/Mark-Sanford-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/3/1365006011615/Mark-Sanford-010.jpg",
+          "source":"AP",
+          "photographer":"Bruce Smith",
+          "altText":"Mark Sanford",
+          "height":"276",
+          "credit":"Bruce Smith/AP",
+          "caption":"Mark Sanford, left, with his fiancee Maria Belen Chapur. Sanford beat Curtis Bostic to win the Republican primary. Photograph: Bruce Smith/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/04/fort-knox-shooting-one-dead",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T07:33:00Z",
+      "webTitle":"Fort Knox shooting: killing was 'not a random act', say authorities",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/04/fort-knox-shooting-one-dead",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/04/fort-knox-shooting-one-dead",
+      "fields":{
+        "trailText":"<p>Suspect still at large after civilian employee was gunned down in parking lot, says US army</p>",
+        "headline":"Fort Knox shooting: killing was 'not a random act', say authorities",
+        "hasStoryPackage":"true",
+        "wordcount":"328",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/us-military",
+        "type":"keyword",
+        "webTitle":"US military",
+        "webUrl":"http://www.guardian.co.uk/world/us-military",
+        "apiUrl":"http://content.guardianapis.com/world/us-military",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/kentucky",
+        "type":"keyword",
+        "webTitle":"Kentucky",
+        "webUrl":"http://www.guardian.co.uk/world/kentucky",
+        "apiUrl":"http://content.guardianapis.com/world/kentucky",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/gun-crime",
+        "type":"keyword",
+        "webTitle":"Gun crime",
+        "webUrl":"http://www.guardian.co.uk/world/gun-crime",
+        "apiUrl":"http://content.guardianapis.com/world/gun-crime",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[],
+      "references":[]
+    },{
+      "id":"world/2013/apr/03/afghan-suicide-attack-provincial-courthouse",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-03T18:06:34Z",
+      "webTitle":"Afghan suicide attack on provincial courthouse kills scores",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/03/afghan-suicide-attack-provincial-courthouse",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/03/afghan-suicide-attack-provincial-courthouse",
+      "fields":{
+        "trailText":"Suicide squad dressed as soldiers leaves 44 people dead and over 100 injured in deadliest day for civilians in more than a year",
+        "headline":"Afghan suicide attack on provincial courthouse kills scores",
+        "hasStoryPackage":"false",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012314288/An-injured-Afghan-army-so-005.jpg",
+        "wordcount":"684",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.guardian.co.uk/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.guardian.co.uk/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/hamid-karzai",
+        "type":"keyword",
+        "webTitle":"Hamid Karzai",
+        "webUrl":"http://www.guardian.co.uk/world/hamid-karzai",
+        "apiUrl":"http://content.guardianapis.com/world/hamid-karzai",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/terrorism",
+        "type":"keyword",
+        "webTitle":"Global terrorism",
+        "webUrl":"http://www.guardian.co.uk/world/terrorism",
+        "apiUrl":"http://content.guardianapis.com/world/terrorism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/emma-graham-harrison",
+        "type":"contributor",
+        "webTitle":"Emma Graham-Harrison",
+        "webUrl":"http://www.guardian.co.uk/profile/emma-graham-harrison",
+        "apiUrl":"http://content.guardianapis.com/profile/emma-graham-harrison",
+        "r2ContributorId":"49577",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012310508/An-injured-Afghan-army-so-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012310508/An-injured-Afghan-army-so-002.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"54",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012311829/An-injured-Afghan-army-so-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012311829/An-injured-Afghan-army-so-003.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"340",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012313119/An-injured-Afghan-army-so-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012313119/An-injured-Afghan-army-so-004.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"130",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012314288/An-injured-Afghan-army-so-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012314288/An-injured-Afghan-army-so-005.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"84",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012315622/An-injured-Afghan-army-so-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012315622/An-injured-Afghan-army-so-006.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"132",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012316839/An-injured-Afghan-army-so-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012316839/An-injured-Afghan-army-so-007.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"168",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012318168/An-injured-Afghan-army-so-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012318168/An-injured-Afghan-army-so-008.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"180",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012319516/An-injured-Afghan-army-so-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012319516/An-injured-Afghan-army-so-009.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"228",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012320718/An-injured-Afghan-army-so-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012320718/An-injured-Afghan-army-so-010.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"276",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012322293/An-injured-Afghan-army-so-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012322293/An-injured-Afghan-army-so-011.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"372",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012320718/An-injured-Afghan-army-so-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1365012320718/An-injured-Afghan-army-so-010.jpg",
+          "source":"AP",
+          "photographer":"Anonymous",
+          "altText":"An injured Afghan army soldier is taken to hospital in Farah after a suicide attack on a courthouse",
+          "height":"276",
+          "credit":"Anonymous/AP",
+          "caption":"An injured Afghan army soldier is taken to hospital in Farah after a suicide squad stormed a provincial courthouse and then battled security forces for hours. Photograph: Anonymous/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/apr/03/china-reports-bird-flu-cases",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-04-04T03:17:00Z",
+      "webTitle":"China reports nine bird flu cases amid allegations of cover up on social media",
+      "webUrl":"http://www.guardian.co.uk/world/2013/apr/03/china-reports-bird-flu-cases",
+      "apiUrl":"http://content.guardianapis.com/world/2013/apr/03/china-reports-bird-flu-cases",
+      "fields":{
+        "trailText":"<p>H7N9 killed two men in Shanghai, reports of the disease have also emerged in eastern Anhui and Jiangsu provinces</p>",
+        "headline":"China reports nine bird flu cases amid allegations of cover up on social media",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2011/1/13/1294926486186/Rooster-that-has-been-gen-003.jpg",
+        "wordcount":"678",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/bird-flu",
+        "type":"keyword",
+        "webTitle":"Bird flu",
+        "webUrl":"http://www.guardian.co.uk/world/bird-flu",
+        "apiUrl":"http://content.guardianapis.com/world/bird-flu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.guardian.co.uk/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world-health-organisation",
+        "type":"keyword",
+        "webTitle":"World Health Organisation",
+        "webUrl":"http://www.guardian.co.uk/world/world-health-organisation",
+        "apiUrl":"http://content.guardianapis.com/world/world-health-organisation",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.guardian.co.uk/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.guardian.co.uk/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.guardian.co.uk/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/social-media",
+        "type":"keyword",
+        "webTitle":"Social media",
+        "webUrl":"http://www.guardian.co.uk/media/social-media",
+        "apiUrl":"http://content.guardianapis.com/media/social-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/digital-media",
+        "type":"keyword",
+        "webTitle":"Digital media",
+        "webUrl":"http://www.guardian.co.uk/media/digital-media",
+        "apiUrl":"http://content.guardianapis.com/media/digital-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/jonathan-kaiman",
+        "type":"contributor",
+        "webTitle":"Jonathan Kaiman",
+        "webUrl":"http://www.guardian.co.uk/profile/jonathan-kaiman",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathan-kaiman",
+        "bio":"<p>Jonathan Kaiman writes for The Guardian from Beijing. Follow him on Twitter at @JRKaiman</p>",
+        "r2ContributorId":"53598",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/11/16/1353064204982/Jonathan-Kaiman.jpg",
+        "references":[]
+      },{
+        "id":"profile/nicola-davison",
+        "type":"contributor",
+        "webTitle":"Nicola Davison",
+        "webUrl":"http://www.guardian.co.uk/profile/nicola-davison",
+        "apiUrl":"http://content.guardianapis.com/profile/nicola-davison",
+        "bio":"<p>Nicola Davison is a freelance journalist based in Shanghai. She writes about current affairs, the arts and especially about China</p>",
+        "r2ContributorId":"44243",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/5/24/1306254497030/Nicola-Davison2.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1364960937694/Patients-arriving-in-Seou-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/3/1364960937694/Patients-arriving-in-Seou-008.jpg",
+          "source":"EPA/Yonhap",
+          "altText":"Patients arriving in Seoul from China are checked for high temperature that might show H7N9 bird flu",
+          "height":"276",
+          "credit":"EPA/Yonhap",
+          "caption":"Passengers arriving in Seoul from China are checked with thermal imaging equipment for high temperatures that might indicate infection with bird flu. Photograph Yonhap/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/apr/04/selena-gomez-running-wild-spring-breakers",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-04-04T12:08:01Z",
+      "webTitle":"Selena Gomez on running wild in Spring Breakers",
+      "webUrl":"http://www.guardian.co.uk/film/2013/apr/04/selena-gomez-running-wild-spring-breakers",
+      "apiUrl":"http://content.guardianapis.com/film/2013/apr/04/selena-gomez-running-wild-spring-breakers",
+      "fields":{
+        "trailText":"In Harmony Korine's lurid new film, she plays a bikini-clad party girl. What happened to the child star who once dated Justin Bieber? She talks to <strong>John Patterson</strong>",
+        "headline":"Selena Gomez on running wild in Spring Breakers",
+        "hasStoryPackage":"true",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073176520/Selena-Gomez-as-Faith-in--005.jpg",
+        "wordcount":"1532",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"film/harmony-korine",
+        "type":"keyword",
+        "webTitle":"Harmony Korine",
+        "webUrl":"http://www.guardian.co.uk/film/harmony-korine",
+        "apiUrl":"http://content.guardianapis.com/film/harmony-korine",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.guardian.co.uk/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"music/justin-bieber",
+        "type":"keyword",
+        "webTitle":"Justin Bieber",
+        "webUrl":"http://www.guardian.co.uk/music/justin-bieber",
+        "apiUrl":"http://content.guardianapis.com/music/justin-bieber",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.guardian.co.uk/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.guardian.co.uk/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/johnpatterson",
+        "type":"contributor",
+        "webTitle":"John Patterson",
+        "webUrl":"http://www.guardian.co.uk/profile/johnpatterson",
+        "apiUrl":"http://content.guardianapis.com/profile/johnpatterson",
+        "bio":"<p>John Patterson writes about film and is based in Los Angeles.</p>",
+        "rcsId":"GNL297119",
+        "r2ContributorId":"15873",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_patterson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/g2/film-and-music",
+        "type":"newspaper-book-section",
+        "webTitle":"Film and music",
+        "webUrl":"http://www.guardian.co.uk/theguardian/g2/film-and-music",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/film-and-music",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.guardian.co.uk/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073172156/Selena-Gomez-as-Faith-in--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073172156/Selena-Gomez-as-Faith-in--002.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"54",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073173536/Selena-Gomez-as-Faith-in--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073173536/Selena-Gomez-as-Faith-in--003.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"340",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073175011/Selena-Gomez-as-Faith-in--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073175011/Selena-Gomez-as-Faith-in--004.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"130",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073176520/Selena-Gomez-as-Faith-in--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073176520/Selena-Gomez-as-Faith-in--005.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"84",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073178001/Selena-Gomez-as-Faith-in--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073178001/Selena-Gomez-as-Faith-in--006.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"132",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073179421/Selena-Gomez-as-Faith-in--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073179421/Selena-Gomez-as-Faith-in--007.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"168",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073180804/Selena-Gomez-as-Faith-in--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073180804/Selena-Gomez-as-Faith-in--008.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"180",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073182312/Selena-Gomez-as-Faith-in--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073182312/Selena-Gomez-as-Faith-in--009.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"228",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073183633/Selena-Gomez-as-Faith-in--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073183633/Selena-Gomez-as-Faith-in--010.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073185300/Selena-Gomez-as-Faith-in--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073185300/Selena-Gomez-as-Faith-in--011.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"372",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073183633/Selena-Gomez-as-Faith-in--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365073183633/Selena-Gomez-as-Faith-in--010.jpg",
+          "source":"PR",
+          "altText":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "height":"276",
+          "credit":"PR",
+          "caption":"Selena Gomez as Faith in Spring Breakers: 'I love and relate to her.'",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074681877/Gomez-in-Barney-and-Frien-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074681877/Gomez-in-Barney-and-Frien-010.jpg",
+          "source":"Everett Collection/Re",
+          "altText":"Gomez in Barney and Friends (sat on the space hopper), 2004.",
+          "height":"276",
+          "credit":"Everett Collection/Re",
+          "caption":"Gomez in Barney and Friends (sat on the space hopper), 2004. Photograph: Everett Collection/Re",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365075055315/Gomez-in-Wizards-Of-Waver-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365075055315/Gomez-in-Wizards-Of-Waver-010.jpg",
+          "source":"Disney/Everett/Rex Feature",
+          "altText":"Gomez in Wizards Of Waverly Place, 2007.",
+          "height":"276",
+          "credit":"Disney/Everett/Rex Feature",
+          "caption":"Gomez in Wizards Of Waverly Place, 2007. Photograph: Disney/Everett/Rex Feature",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074906658/Performing-with-her-band--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/4/1365074906658/Performing-with-her-band--010.jpg",
+          "source":"Taylor Hill",
+          "altText":"Performing with her band, Selena Gomez & the Scene.",
+          "height":"276",
+          "credit":"Taylor Hill",
+          "caption":"Performing with her band, Selena Gomez & the Scene. Photograph: Taylor Hill",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}
