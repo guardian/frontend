@@ -18,8 +18,8 @@ define(function () {
      */
     function getLayoutMode(width) {
         var mode = "mobile";
-        
-        width = width ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+
+        width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
 
         if (width > BASE_WIDTH) {
             mode = "tablet";
@@ -52,7 +52,7 @@ define(function () {
             total_time;
 
         var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-        
+
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
             end_time = perf.timing.responseEnd;
@@ -94,7 +94,6 @@ define(function () {
             }
         }
 
-        
         return speed;
 
     }
