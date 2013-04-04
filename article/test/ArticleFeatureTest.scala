@@ -295,6 +295,31 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Hide main picture if video is at start of article") {
+      Given("I am on an article with a video at the start of the body")
+      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+        import browser._
+        Then("the main picture should be hidden")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (0)
+
+        And("the embedded video should have a poster")
+        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/mainwebsite/poster/2013/3/26/130326HuntReform_7409761.jpg")
+      }
+    }
+
+    scenario("Show main picture if video is further down article") {
+      Given("I am on an article with a video further down inside the body")
+      HtmlUnit("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
+        import browser._
+
+        Then("the main picture should be shown")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+
+        And("the embedded video should have a poster")
+        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/bc/281851582/281851582_1019162777001_110624Glastothreewords-4863219.jpg?pubId=281851582")
+      }
+    }
+
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an aricle and want to share it with my friends")

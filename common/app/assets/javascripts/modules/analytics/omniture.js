@@ -103,7 +103,7 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
 
             s.prop47    = config.page.edition || '';
 
-            s.prop48    = detect.getConnectionSpeed(w.performance);
+            s.prop48    = detect.getConnectionSpeed(w.performance, null, true);
 
             if (config.switches.optimizely === true) {
                 s.prop51    = optimizely.readTests();

@@ -15,7 +15,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 // model :- Story -> Event -> Articles|Agents|Places
 
-case class Place(id: Option[String] = None) {}
+case class Place(name: Option[String] = None) {}
 
 case class Agent(
   name: Option[String] = None,
@@ -52,9 +52,11 @@ object Event {
       val cleanQuote = c.quote.map { q =>
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
+
       val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
+  
   )
 }
 
@@ -63,11 +65,15 @@ case class Story(
     title: String,
     events: Seq[Event] = Nil,
     explainer: Option[String] = None,
-    hero: Option[String] = None) extends implicits.Collections {
+    hero: Option[String] = None,
+    labels: Map[String, String] = Map()
+    ) extends implicits.Collections {
 
   lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
   lazy val content = events.flatMap(_.content).sortBy(_.importance).reverse.distinctBy(_.id)
+  lazy val places = events.flatMap(_.places)
+  lazy val hasPlaces = places.nonEmpty
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents).sortBy(_.importance).reverse
   lazy val hasAgents: Boolean = agents.nonEmpty
@@ -103,7 +109,8 @@ object Story {
     title = s.title,
     explainer = s.explainer.filter(_.nonEmpty),
     hero = s.hero.filter(_.nonEmpty),
-    events = s.events.map(Event(_, content))
+    events = s.events.map(Event(_, content)),
+    labels = s.labels
   )
 
   import Mongo.Stories
@@ -184,7 +191,9 @@ private case class ParsedStory(
   title: String,
   events: Seq[ParsedEvent] = Nil,
   hero: Option[String] = None,
-  explainer: Option[String] = None)
+  explainer: Option[String] = None,
+  labels: Map[String, String] = Map()
+  ) { } 
 
 private case class ParsedEvent(
     title: String,

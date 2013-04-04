@@ -55,7 +55,7 @@ define(function () {
         
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            end_time = perf.timing.responseStart;
+            end_time = perf.timing.responseEnd;
 
             if (start_time && end_time) {
                 total_time = end_time - start_time;
@@ -65,7 +65,7 @@ define(function () {
         return total_time;
     }
 
-    function getConnectionSpeed(performance, connection) {
+    function getConnectionSpeed(performance, connection, reportUnknown) {
 
         connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
 
@@ -77,19 +77,23 @@ define(function () {
             return 'low';
         }
 
-        var load_time = getPageSpeed(performance);
+        var loadTime = getPageSpeed(performance);
 
-        // Assume high speed for non supporting browsers.
+        // Assume high speed for non supporting browsers
         var speed = "high";
+        if (reportUnknown) {
+            speed = "unknown";
+        }
 
-        if (load_time) {
-            if (load_time > 750) { // .75 second
+        if (loadTime) {
+            if (loadTime > 1000) { // One second
                 speed = 'medium';
-                if (load_time > 3000) { // Three seconds
+                if (loadTime > 3000) { // Three seconds
                     speed = 'low';
                 }
             }
         }
+
         
         return speed;
 

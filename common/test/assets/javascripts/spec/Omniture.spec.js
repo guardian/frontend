@@ -5,7 +5,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         var config = {};
 
         var w = {
-        	performance: { timing: { requestStart: 1, responseStart: 5000 } },
+        	performance: { timing: { requestStart: 1, responseEnd: 5000 } },
         	innerWidth: 500
         }
 

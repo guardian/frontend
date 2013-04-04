@@ -5,7 +5,10 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    <h3 class="story-sub-head">Latest</h3>
+                
+                    <h3 class="story-sub-head">
+                        @story.labels.getOrElse("latest", "Latest")
+                    </h3>
 
                     @fragments.dateline(a.webPublicationDate, a.isLive, edition)
 

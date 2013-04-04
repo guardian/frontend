@@ -17,6 +17,7 @@ import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 import conf.Configuration
+import com.gu.openplatform.contentapi.model.MediaAsset
 
 sealed trait Style {
   val className: String
@@ -152,6 +153,23 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
       }
 
       fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+    }
+    body
+  }
+}
+
+case class VideoPosterCleaner(videos: Seq[MediaAsset]) extends HtmlCleaner {
+
+  def clean(body: Document): Document = {
+    body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
+      videoTag.getElementsByTag("source").headOption.foreach{ source =>
+        val file = source.attr("src")
+        videos.find(_.encodings.exists(_.file == file)).foreach{ video =>
+          video.fields.getOrElse(Map.empty).get("stillImageUrl").foreach{ poster =>
+            videoTag.attr("poster", poster)
+          }
+        }
+      }
     }
     body
   }

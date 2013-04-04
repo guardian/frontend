@@ -59,7 +59,7 @@ content.api.host=http://XXXX
 pa.api.key=XXXX
 ```
 
-Get the correct key and host from another developer on the project.
+Get the correct key and host from another developer on the project (or for external developers, sign up for a key at http://guardian.mashery.com).
 
 To set up a proxy
 
