@@ -4,9 +4,8 @@ import model.{ Cached, TeamMap }
 import feed.{ CompetitionSupport, Competitions }
 import common._
 import play.api.mvc._
-import model.Competition
 import implicits.{ Requests, Football }
-import controllers.{ MoreOnMatchController, MatchNav }
+import controllers.MoreOnMatchController
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateMidnight
 import concurrent.Future
