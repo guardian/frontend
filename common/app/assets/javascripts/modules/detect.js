@@ -19,8 +19,8 @@ define(function () {
     function getLayoutMode(width) {
         var mode = "mobile";
         
-        width = (width !== undefined) ? width : window.innerWidth;
-        
+        width = width ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+
         if (width > BASE_WIDTH) {
             mode = "tablet";
         }
