@@ -41,7 +41,7 @@ define([
 
                     bonzo(sectionsHeader).addClass(className);
 
-                    if(layoutMode != 'mobile') {
+                    if(layoutMode !== 'mobile') {
                         that.view.hideColumns();
                     } else {
                         that.view.showColumns();
@@ -50,14 +50,14 @@ define([
             },
 
             showColumns : function() {
-                popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+                common.$g('.nav__item', sectionsHeader).removeClass('h');
                 common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function() {
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
-                var visibleItems = [];
+                var visibleItems = [],
                 popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
 
                 common.$g('.nav__item', sectionsNav).each(function(e) {
@@ -76,7 +76,7 @@ define([
             var layoutMode = detect.getLayoutMode();
             this.view.bindings();
 
-            if(layoutMode != 'mobile') {
+            if(layoutMode !== 'mobile') {
                 this.view.hideColumns();
             }
         };
