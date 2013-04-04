@@ -26,7 +26,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             },
             log = function(message, filename, lineno, isUncaught) {
                 var error = {
-                    message: message.toString(),
+                    message: message,
                     filename: filename,
                     lineno: lineno,
                 };
