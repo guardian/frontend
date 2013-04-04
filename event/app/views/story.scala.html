@@ -5,7 +5,7 @@
     @defining(page.story){ story =>
 
         <h1 class="story-title">@story.title</h1>
-
+        
         @fragments.latest(story, page.edition, 2)
 
         <div class="story-content">
@@ -15,7 +15,7 @@
             @fragments.agents(story)
         </div>
 
-
+        @fragments.places(story)
         @fragments.popular(story)
         @fragments.timeline(story)
     }
