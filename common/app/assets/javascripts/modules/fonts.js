@@ -96,7 +96,7 @@ define(['ajax', 'common'], function (ajax, common) {
 
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');
-                if (minWidth && parseInt(minWidth) >= window.innerWidth) {
+                if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
                     widthMatches = false;
                 }
 
