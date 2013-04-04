@@ -126,16 +126,9 @@
   }
 
 .control--topstories .i-top-stories {
-  margin: 6px $baseline*4 0 $baseline*2;
-
-  @media only screen and (min-width: 26.25em) {
-    display: none;
-  }
+  margin: 5px $baseline*4 0 $baseline*2;
 }
 
-.control--topstories .i-arrow-small-down {
-  margin: 10px 10px 8px 5px;
-}
 
 
 /* Search control
