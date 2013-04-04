@@ -20,7 +20,7 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                     .attr('data-link-name', linkText);
                 $story[hidden ? 'show' : 'hide']();
                 hidden = !hidden;
-            }
+            };
 
         // initialise
         this.init = function() {
