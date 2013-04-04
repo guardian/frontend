@@ -13,7 +13,7 @@
 
   @media only screen and (min-width: $tablet) {
     position: absolute;
-    top: 190px;
+    top: 185px;
     right: 0px;
     background-color: #ffffff;
     border-bottom: none;
@@ -28,7 +28,7 @@
     margin: 0 $gutter;
     border-bottom: 1px solid #C3C3C3;
 
-    &:last-child {
+    &:last-child:not(.mobile-only) {
       border-bottom: none;
     }
   }

@@ -18,7 +18,8 @@ def currentFor(metadata: MetaData) = {
 object Sections  {
 
   //News
-  val news  = SectionLink("news", "News", "/", "Home")
+  val home = SectionLink("news", "News", "/", "Home")
+  val news  = SectionLink("news", "News", "/", "News")
   val world = SectionLink("world", "World News", "/world", "World news")
   val uk    = SectionLink("uk", "UK", "/uk", "UK")
   val us    = SectionLink("us", "US", "/world/usa", "US")
@@ -140,7 +141,7 @@ object Navigation {
   import Sections._
 
   def ukSections(metadata: MetaData, site: Site) = Seq(
-    NavItem(news),
+    NavItem(home),
     NavItem(uk, Seq(politics, media, science, society, health, education)),
     NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
     NavItem(cif, Seq(SectionLink("commentisfree", "Cif America", s"http://${site.usHost}/commentisfree", "Cif America"), cifbelief, cifgreen)),
@@ -155,7 +156,7 @@ object Navigation {
   )
 
   def usSections(metadata: MetaData, site: Site) = Seq(
-    NavItem(news),
+    NavItem(home),
     NavItem(us),
     NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
     NavItem(SectionLink("sport", "Sport", "/sport", "Sports"), Seq(nfl, mlb, nba, mls, nhl, football)),
