@@ -8,40 +8,50 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
         
         var $el = bonzo(element),
             opts = options || {},
-            reqwesting = false;
+            hidden = true,
+            text = {
+                show: 'Continue reading...',
+                hide: 'Hide article'
+            },
+            $story,
+            toggleStory = function() {
+                var linkText = text[hidden ? 'hide' : 'show'];
+                $el.text(linkText)
+                    .attr('data-link-name', linkText);
+                $story[hidden ? 'show' : 'hide']();
+                hidden = !hidden;
+            }
 
         // initialise
         this.init = function() {
             bean.on($el[0], 'click', function(e) {
                 e.preventDefault();
-                if (reqwesting) {
-                    return;
-                }
-                reqwesting = true;
-                var href = $el.attr('href');
-                // make request to endpoint
-                ajax({
-                    url: href + '.json',
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    success: function(resp) {
-                        // skip first n paras
-                        var skip = $el.attr('data-skip-paras'),
-                            re = new RegExp('^(<p>[^<]*<\/p>\\s*){' + skip + '}');
-                        $el.before(resp.html.replace(re, ''))
-                            // remove the link
-                            .remove();
-                    },
-                    // TODO: doesn't work, using jsonp
-                    error: function(error) {
-                        common.mediator.trigger('module:error', ['Unable to continue reading "' + href + '"', 'modules/story/continue-reading.js', 35]);
-                        // redirect to article
-                        // NOTE: need to wait a few milliseconds to make sure error beacon is called
-                        setTimeout(function() {
-                            window.location = href;
-                        }, 400);
+                // if it's already showing, just hide
+                if (!hidden) {
+                    toggleStory();
+                } else {
+                    // if we've already made the request, just show
+                    if ($story) {
+                        toggleStory();
+                    } else {
+                        var href = $el.attr('href');
+                        // make request to endpoint
+                        ajax({
+                            url: href + '.json',
+                            type: 'jsonp',
+                            jsonpCallback: 'callback',
+                            success: function(resp) {
+                                // skip first n paras
+                                var skip = $el.attr('data-skip-paras'),
+                                    re = new RegExp('^(<p>[^<]*<\/p>\\s*){' + skip + '}'),
+                                    // assuming the link is in a 'p'
+                                    $p = bonzo($el.parent());
+                                $story = bonzo($p.after('<div>' + resp.html.replace(re, '') + '</div>').next());
+                                toggleStory();
+                            }
+                        });
                     }
-                });
+                }
             });
         };
         
