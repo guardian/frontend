@@ -2,7 +2,12 @@
 
 <footer class="footer" data-link-name="footer" role="contentinfo">
 
-    <ul class="sections nav nav-stacked nav-top-border-off cf">
+    <div id="footer-nav">
+        <a class="top" data-link-name="back to top" href="#top">Back to top <i class="i i-arrow-small-up"></i></a>
+        @fragments.sections(page, true)
+    </div>
+
+    <ul class="nav nav--stacked nav--top-border-off cf">
     	<li>@fragments.mainSiteLink(page)</li>
     	<li><a data-link-name="about" href="/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site">About this new site</a></li>
         <li><a data-link-name="help" href="/help/2012/nov/26/guardian-mobile-site">Help</a></li>

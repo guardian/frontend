@@ -63,7 +63,7 @@ module.exports = function (grunt) {
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
-          woff: {
+          WebEgyptianWoff: {
             options: {
               "filename": "common/app/public/fonts/WebEgyptian.woff.js",
               "callback": "guFont",
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
               ]
             }
           },
-          ttf: {
+          WebEgyptianTtf: {
             options: {
               "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
               "callback": "guFont",
@@ -120,6 +120,34 @@ module.exports = function (grunt) {
                   "font-family": "EgyptianHeadline",
                   "font-weight": "600",
                   "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
+                  "format": "ttf"
+                }
+              ]
+            }
+          },
+          WebEgyptianNavWoff: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptianNav.woff.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                  "format": "ttf"
+                }
+              ]
+            }
+          },
+          WebEgyptianNavTtf: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptianNav.ttf.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
                   "format": "ttf"
                 }
               ]
