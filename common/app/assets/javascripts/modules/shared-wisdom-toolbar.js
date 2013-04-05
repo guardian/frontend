@@ -60,7 +60,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 				params = [
 				    ['url', window.location], 
 				    ['omniture_s_vi', cookies.s_vi || ''], 
-				    ['ophan_browserId', cookies.OAX || '']
+				    ['ophan_browserId', cookies.bwid || '']
 			    ];
 
 			if (!data) {
