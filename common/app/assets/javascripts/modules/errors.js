@@ -44,7 +44,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             init = function() {
                 win.onerror = function(message, filename, lineno) {
                     return log(message, filename, lineno, true);
-                }
+                };
             };
 
         return {
