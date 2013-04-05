@@ -21,19 +21,36 @@ define(['common', 'modules/errors'], function(common, Errors) {
         });
 
         it("should log javascript errors with the error message, line number and file", function(){
-            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
+            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
             expect(document.getElementById('js-err').getAttribute('src')).toContain('/px.gif?js/message=foo&filename=foo.js&lineno=1');
         });
 
-        it("if DEV, should log to console", function(){
-        	var cons = {
-	        		error: jasmine.createSpy('error')
-	        	},
-            	e = new Errors({ isDev: true, window: w, console: cons });
-            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
+        it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
+            var userPrefs = {
+                    isOn: jasmine.createSpy('isOn').andReturn(true)
+                },
+                e = new Errors({ userPrefs: userPrefs });
+            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy();
+        });
+
+        it("if DEV, and an uncaught error, should do nothing", function(){
+            var cons = {
+                    error: jasmine.createSpy('error')
+                },
+                e = new Errors({ isDev: true, console: cons });
+            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno, true)).toBeFalsy();
+            expect(cons.error).not.toHaveBeenCalled();
+        });
+
+        it("if DEV, and a caught error, should log to console", function(){
+            var cons = {
+                    error: jasmine.createSpy('error')
+                },
+                e = new Errors({ isDev: true, console: cons });
+            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy(false);
             expect(cons.error.mostRecentCall.args[0]).toEqual({
-            	message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
-        	});
+                message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
+            });
         });
         
         describe('Advert errors', function() {
@@ -52,17 +69,6 @@ define(['common', 'modules/errors'], function(common, Errors) {
                 );
             });
             
-        });
-
-        it("if DEV, should log to console", function(){
-        	var cons = {
-	        		error: jasmine.createSpy('error')
-	        	},
-            	e = new Errors({ isDev: true, window: w, console: cons });
-            e.log(fakeError.message, fakeError.filename, fakeError.lineno);
-            expect(cons.error.mostRecentCall.args[0]).toEqual({
-            	message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
-        	});
         });
 
     });
