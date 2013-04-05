@@ -164,7 +164,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
     	
     	button: function() {
     		common.$g('body').prepend(
-				'<button id="show-shared-wisdom-toolbar" data-link-name="show" type="button" class="show">O</button>'
+				'<button id="show-shared-wisdom-toolbar" data-link-name="show" type="button" class="show">sw</button>'
 			);
     		bean.on(common.$g('#show-shared-wisdom-toolbar')[0], 'click', function() {
     			bonzo(this).remove();
