@@ -35,7 +35,7 @@
   }
 
   .element-witness--brand {
-    padding: 0 $baseline*2 0 $baseline;
+    padding: 0 $baseline*2 0 0;
     line-height: 14px;
   }
 
@@ -87,7 +87,7 @@
   }
 
   .element-witness--author a {
-    padding-left: $baseline*2;
+    padding-left: $baseline;
   }
 
   .element-witness--author-name {
@@ -157,7 +157,7 @@
 .i-ee-add-button {
   position: absolute;
   top: 0;
-  left: -1px;
+  left: 0px;
   z-index: 100;
 }
 
