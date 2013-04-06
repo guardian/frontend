@@ -50,7 +50,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for section navigation")
-          findFirst("#sections-control-header").href should endWith("/#sections-footer")
+          findFirst("#sections-control-header").href should endWith("/#footer-nav")
       }
     }
 

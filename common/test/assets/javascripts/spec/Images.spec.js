@@ -19,11 +19,11 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
         it("swap a low resolution image for a full resolution", function(){
             
             window.innerWidth = 2000; 
-            window.performance = { timing: { requestStart: 1, responseStart: 10 } };
-             
+            window.performance = { timing: { requestStart: 1, responseEnd: 10 } };
+
             var i = new Images().upgrade(document.getElementById('upgrade'));
             
-            var img = document.getElementById('upgradeImages')
+            var img = document.getElementById('upgradeImages');
             expect(img.src).toContain('http://placekitten.com/1/1');
             expect(img.className).toContain('image-high');
             

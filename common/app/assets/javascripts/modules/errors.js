@@ -9,6 +9,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             cons = c.console || window.console,
             win = c.window || window,
             body = document.body,
+            prefs = c.userPrefs || userPrefs,
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-err';
@@ -23,22 +24,27 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 }
                 return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
-            log = function(message, filename, lineno) {
+            log = function(message, filename, lineno, isUncaught) {
                 var error = {
-                    message: message.toString(),
+                    message: message,
                     filename: filename,
                     lineno: lineno,
                 };
                 if (isDev) {
-                    cons.error(error);
+                    if (isUncaught !== true) {
+                        cons.error(error);
+                    }
+                    return false;
                 } else {
                     var url = makeUrl(error, (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.'));
                     createImage(url);
+                    return (prefs.isOn('showErrors')) ? false : true;
                 }
-                return (userPrefs.isOn('showErrors')) ? false : true;
             },
             init = function() {
-                win.onerror = log;
+                win.onerror = function(message, filename, lineno) {
+                    return log(message, filename, lineno, true);
+                };
             };
 
         return {

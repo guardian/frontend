@@ -92,7 +92,15 @@ define(['ajax', 'common'], function (ajax, common) {
                 localStorage.setItem('test', 'test1');
                 localStorage.removeItem('test');
                 var nameAndCacheKey =  getNameAndCacheKey(style);
-                return (localStorage.getItem(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]) === null);
+                var cachedValue = localStorage.getItem(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
+
+                var widthMatches = true;
+                var minWidth = style.getAttribute('data-min-width');
+                if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
+                    widthMatches = false;
+                }
+
+                return (cachedValue === null && widthMatches);
             }
             catch (e) {
                 return false;

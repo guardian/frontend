@@ -1,5 +1,5 @@
 /*
-    Module: detect/detect.js
+    Module: detect/detect.js                                                                                                 8
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
@@ -8,23 +8,28 @@
 
 define(function () {
 
-    var BASE_WIDTH     = 400,
-        MEDIAN_WIDTH   = 650,
-        EXTENDED_WIDTH = 900;
+    var BASE_WIDTH     = 560,
+        MEDIAN_WIDTH   = 900,
+        EXTENDED_WIDTH = 1280;
     
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
      * in firefox
      */
     function getLayoutMode(width) {
-        var mode = "base";
-        
-        width = (width !== undefined) ? width : window.innerWidth;
-        
+        var mode = "mobile";
+
+        width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+
         if (width > BASE_WIDTH) {
-            mode = "median";
+            mode = "tablet";
         }
+
         if (width > MEDIAN_WIDTH) {
+            mode = "desktop";
+        }
+
+        if (width > EXTENDED_WIDTH) {
             mode = "extended";
         }
 
@@ -47,7 +52,7 @@ define(function () {
             total_time;
 
         var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-        
+
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
             end_time = perf.timing.responseEnd;
@@ -89,7 +94,6 @@ define(function () {
             }
         }
 
-        
         return speed;
 
     }
