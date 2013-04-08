@@ -201,11 +201,7 @@ define([
         }
     };
 
-    var ready = function(config) {
-        modules.showDebug();
-        modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler(config);
-        modules.loadFonts(config, navigator.userAgent);
+    var doModules = function(config) {
         modules.upgradeImages();
         modules.showTabs();
 
@@ -216,10 +212,8 @@ define([
         modules.transcludeMostPopular(config.page.section, config.page.edition);
 
         modules.showRelativeDates();
-    };
 
-    // If you can wait for load event, do so.
-    var defer = function(config) {
+        // modules that can defer to a load event
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics(config);
@@ -229,8 +223,16 @@ define([
     };
 
     var init = function (config) {
-        ready(config, userPrefs);
-        defer(config);
+        // modules that should only init once
+        modules.showDebug();
+        modules.initialiseAjax(config);
+        modules.attachGlobalErrorHandler(config);
+        modules.loadFonts(config, navigator.userAgent);
+
+        // modules that can run multiple times..
+        common.mediator.on(  'page.ready', doModules);
+
+        common.mediator.emit('page.ready', config);
     };
 
     return {
