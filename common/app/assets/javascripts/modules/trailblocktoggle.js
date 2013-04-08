@@ -25,7 +25,7 @@ define([
                 var toggles = common.$g(options.toggleSelectorClass).each(function (toggle) {
 
                     bean.add(toggle, 'click', function (e) {
-                        common.mediator.emit('modules:trailblockToggle:toggle', this);
+                        view.toggleTrailblock(this);
                     });
                 });
             },
@@ -75,7 +75,7 @@ define([
                         var sectionArray = existingPrefs.split(',');
                         for (var i in sectionArray) {
                             var item = sectionArray[i];
-                            common.mediator.emit('modules:trailblockToggle:toggle', null, item);
+                            view.toggleTrailblock(null, item);
                         }
                     }
                 }
@@ -127,7 +127,7 @@ define([
             view.showToggleLinks();
             view.renderUserPreference();
         };
-
+        
         //View Listeners
         common.mediator.on('modules:trailblockToggle:toggle', view.toggleTrailblock);
 
