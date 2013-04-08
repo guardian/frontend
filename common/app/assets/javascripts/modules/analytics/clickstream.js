@@ -32,29 +32,35 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             return !urlHost || (urlHost === host && urlProtocol === protocol);
         };
 
-        var getTag = function (element, tag) {
+        var getTag = function (element, tag, valid) {
 
             var elementName = element.tagName.toLowerCase(),
                 dataLinkName = element.getAttribute('data-link-name');
 
+            valid = valid || filterSource(element.tagName.toLowerCase()).length > 0;
+
             if (elementName === 'body') {
-                return tag.reverse().join(' | ');
+                return valid ? tag.reverse().join(' | ') : false;
             }
 
             if (dataLinkName) {
                 tag.push(dataLinkName);
             }
 
-            return getTag(element.parentNode, tag);
+            return getTag(element.parentNode, tag, valid);
         };
 
         // delegate, emit the derived tag
         bean.add(document.body, 'click', function (event) {
-            var target, dataIsXhr, href, isSamePage, isSameHost;
+            var target = event.target,
+                tag    = getTag(target, [], false),
+                dataIsXhr,
+                href,
+                isSamePage,
+                isSameHost;
 
-            if (filterSource(event.target.tagName.toLowerCase()).length > 0) {
+            if (tag) {
 
-                target = event.target;
                 dataIsXhr = target.getAttribute('data-is-ajax');
                 href = target.getAttribute('href');
 
@@ -65,7 +71,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 );
                 isSameHost = hasSameHost(href);
 
-                common.mediator.emit('module:clickstream:click', [target, getTag(target, []), isSamePage, isSameHost]);
+                common.mediator.emit('module:clickstream:click', [target, tag, isSamePage, isSameHost]);
 
             } else {
                 return false;
