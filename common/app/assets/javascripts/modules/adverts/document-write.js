@@ -21,8 +21,10 @@ define([
     }
 
     function getPageUrl(config) {
-            var id = (config.pageId === '') ? '' : config.pageId + '/';
-            return 'm.guardian.co.uk/' + id + 'oas.html';
+            var id = (config.pageId === '') ? '' : config.pageId + '/',
+                host = detect.getLayoutMode().match(/median|extended/) ? 'www.guardian.co.uk' : 'm.guardian.co.uk';
+
+            return host + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
