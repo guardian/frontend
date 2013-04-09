@@ -28,10 +28,9 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var r = new Router(),
-                context = document.getElementById('container');
+            var r = new Router();
 
-            var pageRoute = function(config, context) {
+            var pageRoute = function(config) {
                 //Fronts
                 r.get('/', function(req) { Front.init(req, config); });
                 r.get('/sport', function(req) { Front.init(req, config); });
@@ -71,7 +70,7 @@ define('bootstraps/app', [
             common.mediator.on('page:ready', pageRoute);
 
             // Emit the initial synthetic domReady
-            common.mediator.emit('page:ready', config, context);
+            common.mediator.emit('page:ready', config);
 
         });
     };

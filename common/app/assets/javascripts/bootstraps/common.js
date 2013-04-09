@@ -201,20 +201,20 @@ define([
         }
     };
 
-    var pageView = function (config, context) {
-        modules.upgradeImages(context);
-        modules.showTabs(context);
-        modules.initialiseNavigation(config, context);
-        modules.transcludeTopStories(config, context);
-        modules.transcludeRelated(config, context);
-        modules.transcludeMostPopular(config.page.section, config.page.edition, context);
-        modules.showRelativeDates(context);
+    var pageView = function (config) {
+        modules.upgradeImages();
+        modules.showTabs();
+        modules.initialiseNavigation(config);
+        modules.transcludeTopStories(config);
+        modules.transcludeRelated(config);
+        modules.transcludeMostPopular(config.page.section, config.page.edition);
+        modules.showRelativeDates();
 
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config, context);
-            modules.loadOphanAnalytics(config, context);
-            modules.loadAdverts(config, context);
-            modules.cleanupCookies(context);
+            modules.loadOmnitureAnalytics(config);
+            modules.loadOphanAnalytics(config);
+            modules.loadAdverts(config);
+            modules.cleanupCookies();
         });
     };
 
