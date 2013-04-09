@@ -35,15 +35,12 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 });
             }
         };
-
-        // Bindings
-        
-        common.mediator.on('modules:images:upgrade', this.view.upgrade);
    
         // Model
         
         this.upgrade = function () {
             if (connectionSpeed !== 'low') {
+                this.view.upgrade();
                 common.mediator.emit('modules:images:upgrade');
             }
         };
