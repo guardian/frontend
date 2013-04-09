@@ -1,0 +1,54 @@
+@(story: Story)
+
+<!-- all the photos we have on this subject from the latest chapter -->
+
+@gallery(g: model.Gallery) = {
+    <li class="event-article event-article--media">
+        <p class="type-2">
+                @g.headline
+        </p>
+        @g.images.take(100).zipWithRowInfo.map{ case(image, info) =>
+            <a href="@g.url?index=@info.rowNum">
+                <img src="@image.url" />
+            </a>
+            <p type="type-6">
+                @Html(image.caption.getOrElse(""))
+            </p>
+        }
+        @fragments.relativeDate(g.webPublicationDate, false, false)
+    </li>
+}
+
+@eventList(events: Seq[Event], isPanel: Boolean) = {
+    <ul class="unstyled @if(isPanel){ panel}">
+        @events.map { event =>
+            <li class="trail event-block" data-link-name="trail">
+
+                @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
+                    @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
+                }
+
+                @if(event.hasContent) {
+                    <ul class="unstyled event-articles">
+                        @event.content.map{
+                            case g: Gallery => { @gallery(g) }
+                        }
+                    </ul>
+                }
+
+            </li>
+        }
+    </ul>
+}
+
+@if(story.hasEvents) {
+    <section class="story-pictures" data-link-name="story-pictures">
+        <h2 class="story-title story-title--section">
+            @story.labels.getOrElse("pictures", "In pictures")
+        </h2>
+        <div id="js-pictures" class="photos box-indent" data-link-name="Pictures">
+            @eventList(story.events.take(1), false) // only the latest chapter
+        </div>
+    </section>
+}
+
