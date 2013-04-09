@@ -137,8 +137,8 @@ define([
 
         },
 
-        showTabs: function() {
-            var t = new Tabs().init();
+        showTabs: function(context) {
+            var t = new Tabs(context).init();
         },
 
         loadFonts: function(config, ua) {

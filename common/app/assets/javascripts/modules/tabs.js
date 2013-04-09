@@ -3,19 +3,20 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
     /*
         expects the following HTML structure
 
-        <ol class="tabs js-tabs">
-            <li class="tabs-selected"><a href="#foo">Foo</a></li>
-            <li><a href="#bar">Bar</a></li>
-        </ol>
+        <div class="tabs-container {tabs-fixable}">
+            <ol class="tabs js-tabs">
+                <li class="tabs-selected"><a href="#foo">Foo</a></li>
+                <li><a href="#bar">Bar</a></li>
+            </ol>
 
-        <div class="tabs-content">
-             <div class="tabs-pane" id="foo">foo</div>
-             <div class="tabs-pane js-hidden" id="bar">bar</div>
+            <div class="tabs-content">
+                 <div class="tabs-pane" id="foo">foo</div>
+                 <div class="tabs-pane js-hidden" id="bar">bar</div>
+            </div>
         </div>
-
     */
 
-    var Tabs = function (options) {
+    var Tabs = function (context) {
 
         var view = {
 
@@ -41,7 +42,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
         this.init = function () {
 
-            var ols = common.$g('.tabs-container').each(function (container) {
+            [].forEach.call(context.querySelectorAll('.tabs-container'), function(container) {
 
                 var tabSet = common.$g('ol.js-tabs', container)[0],
                     tabSetHeight = 0,
