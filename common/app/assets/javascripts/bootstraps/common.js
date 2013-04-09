@@ -75,7 +75,7 @@ define([
         },
 
         upgradeImages: function (context) {
-            new Images(context).upgrade();
+            var n = new Images();
         },
 
         showDebug: function () {
@@ -124,21 +124,21 @@ define([
             });
         },
 
-        transcludeMostPopular: function (section, edition) {
+        transcludeMostPopular: function (section, edition, context) {
             var url = '/most-read' + (section ? '/' + section : '') + '.json',
-                domContainer = document.getElementById('js-popular');
+                domContainer = context.querySelector('.js-popular');
 
             if (domContainer) {
                 new Popular(domContainer).load(url);
                 common.mediator.on('modules:popular:render', function() {
-                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
+                    common.mediator.emit('modules:tabs:loaded', {}, context);
                 });
             }
 
         },
 
         showTabs: function(context) {
-            var t = new Tabs(context).init();
+            var t = new Tabs();
         },
 
         loadFonts: function(config, ua) {
@@ -202,7 +202,6 @@ define([
     };
 
     var pageView = function (config, context) {
-        modules.upgradeImages(context);
         modules.showTabs(context);
         modules.initialiseNavigation(config, context);
         modules.transcludeTopStories(config, context);
@@ -219,23 +218,16 @@ define([
     };
 
     var runOnce = function (config) {
+        modules.upgradeImages();
         modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
     };
 
-    var init = function (config) {
-        var context = document.querySelector('#container');
-        if(context) {
-            runOnce(config);
-            common.mediator.on(  'page:ready', pageView);
-            common.mediator.emit('page:ready', config, context);
-        }
-    };
-
     return {
-        init: init
+        runOnce: runOnce,
+        pageView: pageView
     };
 
 });

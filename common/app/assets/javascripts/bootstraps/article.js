@@ -56,21 +56,15 @@ define([
             }
         },
 
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Experiment(config);
-
+        initExperiments: function(config, context) {
+            var e = new Experiment(config, context);
             e.init();
         }
     };
 
-    var ready = function(config) {
+    var ready = function(config, context) {
 
-        modules.initExperiments(config);
+        modules.initExperiments(config, context);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -89,8 +83,8 @@ define([
         });
     };
 
-    var init = function (req, config) {
-        ready(config);
+    var init = function (req, config, context) {
+        ready(config, context);
         defer(config);
     };
 
