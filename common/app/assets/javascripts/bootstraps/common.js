@@ -74,8 +74,8 @@ define([
             common.mediator.on("module:error", e.log);
         },
 
-        upgradeImages: function () {
-            new Images().upgrade();
+        upgradeImages: function (context) {
+            new Images(context).upgrade();
         },
 
         showDebug: function () {

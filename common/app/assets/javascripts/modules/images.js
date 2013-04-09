@@ -1,6 +1,6 @@
 define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
 
-    function Images() {
+    function Images(context) {
     
         var connectionSpeed = detect.getConnectionSpeed(),
             layoutMode = detect.getLayoutMode();
@@ -16,7 +16,7 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 }
 
                 //upgrade other images;
-                common.$g('img').each(function(image, index) {
+                [].forEach.call(context.querySelectorAll('img'), function(image) {
                     image = bonzo(image);
                     if (!image.attr('data-fullsrc')) {
                         return;
@@ -36,15 +36,11 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
             }
         };
 
-        // Bindings
-        
-        common.mediator.on('modules:images:upgrade', this.view.upgrade);
-   
         // Model
         
         this.upgrade = function () {
             if (connectionSpeed !== 'low') {
-                common.mediator.emit('modules:images:upgrade');
+                this.view.upgrade();
             }
         };
     }
