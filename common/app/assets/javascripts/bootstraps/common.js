@@ -201,25 +201,15 @@ define([
         }
     };
 
-    var ready = function(config) {
-        modules.showDebug();
-        modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler(config);
-        modules.loadFonts(config, navigator.userAgent);
+    var pageView = function(config) {
         modules.upgradeImages();
         modules.showTabs();
-
         modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
-
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
-
         modules.showRelativeDates();
-    };
 
-    // If you can wait for load event, do so.
-    var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics(config);
@@ -228,9 +218,17 @@ define([
         });
     };
 
+    var runOnce = function (config) {
+        modules.showDebug();
+        modules.initialiseAjax(config);
+        modules.attachGlobalErrorHandler(config);
+        modules.loadFonts(config, navigator.userAgent);
+    };
+
     var init = function (config) {
-        ready(config, userPrefs);
-        defer(config);
+        runOnce(config);
+        common.mediator.on(  'page:ready', pageView);
+        common.mediator.emit('page:ready', config);
     };
 
     return {
