@@ -6,15 +6,17 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/story/experiment",
-    "modules/accordion"
+    "modules/accordion",
+    "modules/experiments/bootstrap"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
     Reading,
-    Experiment,
-    Accordion
+    Story,
+    Accordion,
+    Experiment
 ) {
 
     var modules = {
@@ -63,21 +65,26 @@ define([
             }
         },
 
-        initExperiments: function(config) {
+        initStory: function(config) {
             common.mediator.on('modules:experiment:render', function() {
                 if(document.querySelector('.accordion')) {
                     var a = new Accordion();
                 }
             });
-            var e = new Experiment(config);
+            var e = new Story(config);
 
             e.init();
+        },
+
+        initExperiments: function(config) {
+            console.log(Experiment);
         }
     };
 
     var ready = function(config) {
 
-        modules.initExperiments(config);
+        modules.initStory(config);
+        modules.initExperiments(config)
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -86,6 +93,7 @@ define([
         if(config.page.section === "football") {
             modules.matchNav(config);
         }
+        
 
     };
 

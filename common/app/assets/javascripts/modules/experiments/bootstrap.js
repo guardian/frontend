@@ -1,4 +1,10 @@
-define([], function () {
+define([
+        'modules/experiments/segmentor', // something that can segment the users         
+        
+        // list of live experiments here
+        'modules/experiments/tests/gallery'
+
+        ], function () {
     
     var tests = {};
     
