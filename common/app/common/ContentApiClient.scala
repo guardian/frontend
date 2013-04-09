@@ -4,13 +4,15 @@ import com.gu.openplatform.contentapi.{ApiError, Api}
 import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, HttpResponse}
 import com.gu.management.{ CountMetric, Metric, TimingMetric }
 import conf.Configuration
-import java.util.concurrent.TimeoutException
+import java.util.concurrent.{ConcurrentHashMap, TimeoutException}
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.ws.WS
 import com.gu.openplatform.contentapi.util.FutureInstances
 
 import com.gu.openplatform.contentapi.connection.Http
+
+import collection.JavaConversions._
 
 trait ApiQueryDefaults { self: Api[Future] =>
 
@@ -63,6 +65,8 @@ object ContentApiMetrics {
   val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
 }
 
+
+
 trait DelegateHttp extends Http[Future] {
   import System.currentTimeMillis
   import ContentApiMetrics._
@@ -98,6 +102,8 @@ trait DelegateHttp extends Http[Future] {
 
 import FutureInstances._
 
+private object dogPileCache extends ConcurrentHashMap[String, Future[HttpResponse]]
+
 class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
     with Logging {
 
@@ -111,11 +117,22 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries
+    //you cannot editionalize tag queries                                                                                                                                  super.G
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
       s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+
+  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = Option(dogPileCache.get(url)).getOrElse{
+    val future =  super.GET(url, headers)
+    dogPileCache.put(url, future)
+    future.onComplete(t => dogPileCache.remove(url))
+
+    //just a failsafe for the unlikely event that onComplete has already run
+    if (future.isCompleted) dogPileCache.remove(url)
+
+    future
+  }
 }
