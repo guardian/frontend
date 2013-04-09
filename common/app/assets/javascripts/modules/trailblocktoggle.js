@@ -23,7 +23,6 @@ define([
             showToggleLinks: function () {
 
                 var toggles = common.$g(options.toggleSelectorClass).each(function (toggle) {
-
                     bean.add(toggle, 'click', function (e) {
                         view.toggleTrailblock(this);
                     });
@@ -127,9 +126,6 @@ define([
             view.showToggleLinks();
             view.renderUserPreference();
         };
-        
-        //View Listeners
-        common.mediator.on('modules:trailblockToggle:toggle', view.toggleTrailblock);
 
     };
 

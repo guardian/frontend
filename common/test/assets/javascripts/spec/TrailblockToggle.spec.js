@@ -3,7 +3,8 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
     describe("Trailblock Toggle", function() {
 
         var tt,
-            edition;
+            edition,
+            trigger = document.getElementById('js-trigger-sport');
 
         //Have to stub the global guardian object
         window.guardian = {
@@ -21,7 +22,8 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
         });
 
         afterEach(function() {
-            common.mediator.removeEvent('modules:trailblockToggle:toggle');
+            // remove listener
+            bean.off(trigger, 'click');
             tt = null;
             edition = null;
         });
@@ -33,19 +35,16 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
         });
 
         it("should expand and contract a panel", function() {
-    
-            trigger = document.getElementById('js-trigger-sport');
-
             /// shut
-            common.mediator.emit('modules:trailblockToggle:toggle', trigger);
+            bean.fire(trigger, 'click');
             expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(true);
-            
-           
-            // open 
-            common.mediator.emit('modules:trailblockToggle:toggle', trigger);
+
+
+            // open
+            bean.fire(trigger, 'click');
             expect(common.$g('.js-front-trailblock').hasClass('rolled-out')).toBe(true);
-        
+
         });
-       
+
     });
 });
