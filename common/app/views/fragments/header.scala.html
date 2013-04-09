@@ -4,21 +4,7 @@
 
     <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
-    <ul class="nav nav--toolbar pull-right" data-link-name="Toolbar">
-        @defining(Site(request)) { site =>
-            @if(site.isUsEdition) {
-                <li class="nav__item is-active">US</li>
-                <li class="nav__item"><a class="nav__link" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK</a></li>
-            } else {
-                <li class="nav__item is-active">UK</li>
-                <li class="nav__item"><a class="nav__link" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US</a></li>
-            }
-        }
-        <li class="nav__item"><a class="nav__link" href="https://soulmates.guardian.co.uk/" target="_blank" data-link-name="Soulmates">Soulmates</a>
-        <li class="nav__item"><a class="nav__link" href="http://jobs.guardian.co.uk/" target="_blank" data-link-name="Jobs">Jobs</a>
-    </ul>
-
-    <ul class="nav nav--global" data-link-name="Global navigation">
+    <ul class="nav nav--global" data-link-name="global navigation: header : sections">
         @Navigation(page, request).map{ nav =>
             <li class="nav__item @if(nav.currentFor(page)){is-active}">
                 <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
