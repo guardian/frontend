@@ -1,3 +1,16 @@
+
+.story-agents { 
+  margin: $baseline*4 $gutter $baseline*4 $gutter;
+  padding: $baseline*4 $gutter $baseline*6 $gutter;
+  background-color: black;
+}
+
+.story-agents .story-title { 
+  border-top: none;
+  margin-top: 0;
+  color: white;
+}
+
 .agents, .agent {
   display: block;
   width: 100%;
@@ -9,7 +22,6 @@
 
 .agent-head {
   border-top: 1px solid #cccccc;
-  margin: 0;
   padding: $baseline*3 0 $baseline*2 0;
   overflow: auto;
 }
@@ -25,15 +37,15 @@
 .panel .agent:first-child .agent-head { border-top: 1px solid #cccccc; }
 
 .agent-img {
-  float: left;
-  width: 35%;
-  max-width: 115px;
-  margin-right: $baseline*4;
+  display: block;
+  width: 100%;
+  margin-bottom: $baseline*6;
 }
 
 .agent-name {
   @extend .type-5;
   margin-bottom: 0px;
+  color: #ffb70b;
 }
 
 .agent-role {
@@ -44,4 +56,8 @@
 .agent-body {
   @extend .type-6;
   margin-top: $baseline*2;
+}
+
+.agent-body p {
+  color: white;
 }
