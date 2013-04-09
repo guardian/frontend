@@ -19,7 +19,7 @@
     border-bottom: none;
     padding-bottom: 0;
 
-    @include box-shadow(-3px 3px 10px -3px #444);
+    @include box-shadow(-3px 3px 6px -3px #444);
   }
 }
 
@@ -28,7 +28,7 @@
     margin: 0 $gutter;
     border-bottom: 1px solid #C3C3C3;
 
-    &:last-child:not(.mobile-only) {
+    &:last-child {
       border-bottom: none;
     }
   }

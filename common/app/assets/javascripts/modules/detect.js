@@ -8,7 +8,7 @@
 
 define(function () {
 
-    var BASE_WIDTH     = 560,
+    var BASE_WIDTH     = 600,
         MEDIAN_WIDTH   = 900,
         EXTENDED_WIDTH = 1280;
     
