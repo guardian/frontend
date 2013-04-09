@@ -227,8 +227,8 @@ define([
 
     var init = function (config) {
         runOnce(config);
-        common.mediator.on(  'page.ready', pageView);
-        common.mediator.emit('page.ready', config);
+        common.mediator.on(  'page:ready', pageView);
+        common.mediator.emit('page:ready', config);
     };
 
     return {
