@@ -26,8 +26,7 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
-    'modules/debug'
-    'modules/search',
+    'modules/debug',
     'modules/shared-wisdom-toolbar'
 ], function (
     common,
@@ -57,7 +56,6 @@ define([
     Cookies,
     Video,
     Debug,
-    Search,
     sharedWisdomToolbar
 ) {
 
