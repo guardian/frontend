@@ -23,6 +23,13 @@
   }
 }
 
+.nav-popup .nav--section-divider {
+  @media only screen and (min-width: $tablet) {
+    margin: 0px;
+    border-top: none;
+  }
+}
+
 .nav-popup .nav__item {
   @media only screen and (min-width: $tablet) {
     margin: 0 $gutter;
