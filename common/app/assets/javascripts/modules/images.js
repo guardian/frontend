@@ -16,7 +16,7 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 }
 
                 //upgrade other images;
-                [].forEach.call(context.querySelectorAll('img'), function(image) {
+                [].forEach.call(context.getElementsByTagName('img'), function(image) {
                     image = bonzo(image);
                     if (!image.attr('data-fullsrc')) {
                         return;
