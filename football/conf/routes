@@ -34,3 +34,6 @@ GET     /football/teams                                     controllers.LeagueTa
 
 GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
 GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
+
+
+GET     /_schedule-health                                    controllers.ScheduleHealthcheckController.render()

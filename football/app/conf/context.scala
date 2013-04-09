@@ -12,6 +12,7 @@ import pa.{ Http, PaClient }
 import model.{ TeamMap, LiveBlog }
 import concurrent.Future
 import System.currentTimeMillis
+import controllers.ScheduleHealthcheckController
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
@@ -26,6 +27,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     Competitions.shutDown()
     LiveBlog.shutdown()
     TeamMap.shutdown()
+    ScheduleHealthcheckController.shutdown()
   }
 }
 
@@ -102,7 +104,8 @@ object Management extends Management {
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
       "/football/live",
-      "/football/premierleague/results"
+      "/football/premierleague/results",
+      "/_schedule-health"
     ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),

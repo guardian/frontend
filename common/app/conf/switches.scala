@@ -81,12 +81,16 @@ object CommonSwitches {
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
-  
+
+  val ScheduleWatchSwitch = DefaultSwitch("schedule-watch",
+      "If this switch is enabled then 'watched' schedules will cause the healthcheck to fail if they become stale.",
+      initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch, ScheduleWatchSwitch
   )
 }
 
