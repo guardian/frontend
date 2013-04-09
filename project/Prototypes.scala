@@ -64,6 +64,8 @@ trait Prototypes extends Testing {
         Seq(
           // don't copy across svg files (they're inline)
           (sourceDirectory / "assets" / "images") ** "*.png",
+          // copy everything across on dev
+          // better, only copy across the files we need (tie into the curl config?)
 //          (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
           (sourceDirectory / "assets" / "javascripts") ** "*.js",
           (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",

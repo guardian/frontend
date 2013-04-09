@@ -18,6 +18,7 @@ object Frontend extends Build with Prototypes with Testing {
     javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
     cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
+    // conditionally turn off compiliation on dev
 //    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
     resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
   )

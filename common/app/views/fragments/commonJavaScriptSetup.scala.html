@@ -14,7 +14,15 @@
                 apiName: 'require',
                 paths: {
                     omniture: '@Static("javascripts/vendor/omniture.js")',
-                    homescreen: '@Static("javascripts/vendor/add2home.js")' // Mofified version. Do not upgrade.
+                    homescreen: '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
+                    bean: '@Static("javascripts/components/bean/bean.js")',
+                    bonzo: '@Static("javascripts/components/bonzo/src/bonzo.js")',
+                    domReady: '@Static("javascripts/components/domready/ready.js")',
+                    EventEmitter: '@Static("javascripts/components/eventEmitter/EventEmitter.js")',
+                    qwery: '@Static("javascripts/components/qwery/mobile/qwery-mobile.js")',
+                    reqwest: '@Static("javascripts/components/reqwest/src/reqwest.js")',
+                    domwrite: '@Static("javascripts/components/dom-write/dom-write.js")',
+                    swipe: '@Static("javascripts/components/swipe/swipe.js")'
                 }
             };
 
@@ -36,7 +44,7 @@
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 var style = styleNodes[i],
-                    nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
+                    nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(:?\.(.*))?\.js$/),
                     cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                 if (cachedCss) {
                     style.innerHTML = cachedCss;
@@ -79,20 +87,18 @@
             }
         };
         
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")';
-        document.getElementsByTagName("head")[0].appendChild(script);
+        var curlScript = document.createElement('script');
+        curlScript.src = '@Static("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")';
+        document.getElementsByTagName("head")[0].appendChild(curlScript);
 
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/app.js")';
-        document.getElementsByTagName("head")[0].appendChild(script);
+        var appScript = document.createElement('script');
+        appScript.src = '@Static("javascripts/bootstraps/app.js")';
+        document.getElementsByTagName("head")[0].appendChild(appScript);
 
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/go.js")';
-        document.getElementsByTagName("head")[0].appendChild(script);
+        var goScript = document.createElement('script');
+        goScript.async = 'async';
+        goScript.src = '@Static("javascripts/bootstraps/go.js")';
+        document.getElementsByTagName("head")[0].appendChild(goScript);
     
     })(guardian.isModernBrowser);
 

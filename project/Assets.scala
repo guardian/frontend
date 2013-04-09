@@ -18,7 +18,10 @@ case class Asset(absolute: File, base: File) {
     val Path = """(.*)\.([^\.]*)$""".r
     val Path(file, suffix) = debased
 
-    "%s.%s.%s".format(file, absolute.md5Hex, suffix)
+    // don't add MD5 hash - conditional on dev
+    // better to not run asset hashing at all on dev?
+//    "%s.%s.%s".format(file, absolute.md5Hex, suffix)
+    "%s.%s".format(file, suffix)
   }
 
   def toText: String = debased + "=" + debasedWithMD5Chunk

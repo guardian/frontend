@@ -185,7 +185,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
 
-    grunt.registerTask('compile', ['compile:common:css']);
+    grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
     grunt.registerTask('default', ['test', 'compile']);
 
