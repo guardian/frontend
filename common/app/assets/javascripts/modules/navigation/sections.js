@@ -40,6 +40,7 @@ define([
                     var layoutMode = detect.getLayoutMode();
 
                     bonzo(sectionsHeader).addClass(className);
+                    common.mediator.emit('modules:control:change', ['search-control-header', true]);
 
                     if(layoutMode !== 'mobile') {
                         that.view.hideColumns();
