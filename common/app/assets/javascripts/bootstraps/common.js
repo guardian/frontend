@@ -201,19 +201,15 @@ define([
         }
     };
 
-    var doModules = function(config) {
+    var pageView = function(config) {
         modules.upgradeImages();
         modules.showTabs();
-
         modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
-
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
-
         modules.showRelativeDates();
 
-        // modules that can defer to a load event
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics(config);
@@ -222,16 +218,16 @@ define([
         });
     };
 
-    var init = function (config) {
-        // modules that should only init once
+    var runOnce = function (config) {
         modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
+    };
 
-        // modules that can run multiple times..
-        common.mediator.on(  'page.ready', doModules);
-
+    var init = function (config) {
+        runOnce(config);
+        common.mediator.on(  'page.ready', pageView);
         common.mediator.emit('page.ready', config);
     };
 
