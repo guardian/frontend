@@ -201,40 +201,33 @@ define([
         }
     };
 
-    var ready = function(config) {
+    var pageView = function (config, context) {
+        modules.upgradeImages(context);
+        modules.showTabs(context);
+        modules.initialiseNavigation(config, context);
+        modules.transcludeTopStories(config, context);
+        modules.transcludeRelated(config, context);
+        modules.transcludeMostPopular(config.page.section, config.page.edition, context);
+        modules.showRelativeDates(context);
+
+        common.deferToLoadEvent(function() {
+            modules.loadOmnitureAnalytics(config, context);
+            modules.loadOphanAnalytics(config, context);
+            modules.loadAdverts(config, context);
+            modules.cleanupCookies(context);
+        });
+    };
+
+    var runOnce = function (config) {
         modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
-        modules.upgradeImages();
-        modules.showTabs();
-
-        modules.initialiseNavigation(config);
-        modules.transcludeTopStories(config);
-
-        modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config.page.section, config.page.edition);
-
-        modules.showRelativeDates();
-    };
-
-    // If you can wait for load event, do so.
-    var defer = function(config) {
-        common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics(config);
-            modules.loadAdverts(config);
-            modules.cleanupCookies();
-        });
-    };
-
-    var init = function (config) {
-        ready(config, userPrefs);
-        defer(config);
     };
 
     return {
-        init: init
+        runOnce: runOnce,
+        pageView: pageView
     };
 
 });
