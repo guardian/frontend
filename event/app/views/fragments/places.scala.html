@@ -7,11 +7,11 @@
             @story.labels.getOrElse("places", "Places")
         </h2>
 
-        <div class="box-indent">
-        @story.places.take(1).map{ place =>
-            <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=12&size=320x320&maptype=roadmap&sensor=false&markers=size:small|color:yellow|label:|@helper.urlEncode(place.name.get)"/>
-            <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=5&size=120x120&maptype=roadmap&sensor=false&markers=size:tiny|color:yellow|label:|@helper.urlEncode(place.name.get)" class="map-inset"/>
-            } 
+        <div class="story-map">
+            @story.places.take(1).map{ place =>
+                <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=12&size=320x320&maptype=roadmap&sensor=false&markers=size:small|color:yellow|label:|@helper.urlEncode(place.name.get)" class="map-detail" />
+                <img src="http://maps.googleapis.com/maps/api/staticmap?center=@helper.urlEncode(place.name.get)&zoom=5&size=120x120&maptype=roadmap&sensor=false&markers=size:tiny|color:yellow|label:|@helper.urlEncode(place.name.get)" class="map-inset"/>
+                } 
         </div>
 
     </section>

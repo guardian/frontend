@@ -112,9 +112,23 @@ a.trail-story-title {
   color: $newsRed;
 }
 
-.story-places .map-inset {
-    margin: 1px 0 0 -121px;
-    position: absolute;
-    border: 1px solid #000;
+.story-places { 
+}
+
+.story-map {
+  position: relative;
+  margin: $baseline*4 $gutter $baseline*4 $gutter;
+}
+
+.map-detail {
+  width: 100%;
+  margin-right: $gutter;
+}
+
+.map-inset {
+  position: absolute;
+  border: 1px solid #000;  
+  top: 0; 
+  right: 0;
 }
 
