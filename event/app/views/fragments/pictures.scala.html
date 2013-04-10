@@ -4,14 +4,14 @@
 
 @gallery(g: model.Gallery) = {
     <li class="event-article picture-article--media">
-        <p class="type-2">
-                @g.headline
+        <p>
+            @g.standfirst.map { s =>
+                @s
+            }.getOrElse(g.headline)
         </p>
         @g.images.take(100).zipWithRowInfo.map{ case(image, info) =>
-            <a href="@g.url?index=@info.rowNum">
-                <img src="@image.url" />
-            </a>
-            <p>
+            <img src="@image.url" />
+            <p class="type-7">
                 @Html(image.caption.getOrElse(""))
             </p>
         }
