@@ -17,7 +17,6 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/related',
-    'modules/popular',
     'modules/expandable',
     'modules/fonts',
     'modules/tabs',
@@ -47,7 +46,6 @@ define([
     Sections,
     Search,
     Related,
-    Popular,
     Expandable,
     Fonts,
     Tabs,
@@ -136,7 +134,7 @@ define([
                 url: '/most-read' + (config.page.section ? '/' + config.page.section : '') + '.json',
                 container: container,
                 success: function () {
-                    common.mediator.emit('fragment:ready', container);
+                    common.mediator.emit('fragment:ready:tabs',  container);
                 }
             });
         },
@@ -146,7 +144,7 @@ define([
             common.mediator.on('page:ready', function(config, context) {
                 tabs.init(context);
             });
-            common.mediator.on('fragment:ready', function(context) {
+            common.mediator.on('fragment:ready:tabs', function(context) {
                 tabs.init(context);
             });
         },
@@ -161,7 +159,13 @@ define([
         },
 
         showRelativeDates: function () {
-            RelativeDates.init();
+            var dates = RelativeDates.init();
+            common.mediator.on('page:ready', function(config, context) {
+                dates.init(context);
+            });
+            common.mediator.on('fragment:ready:dates', function(context) {
+                dates.init(context);
+            });
         },
 
         loadOmnitureAnalytics: function (config) {
