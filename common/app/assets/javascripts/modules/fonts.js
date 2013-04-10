@@ -74,13 +74,13 @@ define(['ajax', 'common'], function (ajax, common) {
             this.clearWithPrefix(storagePrefix + name);
             this.clearWithPrefix('_guFont:'); // Remove legacy non-cache-busted font.
         };
-        
+
         this.clearAllFontsFromStorage = function() {
             this.clearWithPrefix(storagePrefix);
         };
 
         function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/);
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(:?\.(.*))?\.js$/);
             nameAndCacheKey.shift();
             return nameAndCacheKey;
         }
