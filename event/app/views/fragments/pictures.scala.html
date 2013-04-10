@@ -9,7 +9,7 @@
                 @s
             }.getOrElse(g.headline)
         </p>
-        @g.images.take(100).zipWithRowInfo.map{ case(image, info) =>
+        @g.images.zipWithRowInfo.map{ case(image, info) =>
             <img src="@image.url" />
             <p class="type-7">
                 @Html(image.caption.getOrElse(""))
