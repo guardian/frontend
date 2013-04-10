@@ -3,11 +3,14 @@
   * https://github.com/fat/bean
   * MIT license
   */
-!(function (name, context, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports = definition(name, context);
-  else if (typeof define == 'function' && typeof define.amd  == 'object') define(definition);
-  else context[name] = definition(name, context);
-}('bean', this, function (name, context) {
+(function (name, context, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else context[name] = definition()
+})('bean', this, function (name, context) {
+  name    = name    || 'bean'
+  context = context || this
+
   var win            = window
     , old            = context[name]
     , namespaceRegex = /[^\.]*(?=\..*)\.|.*/
@@ -734,4 +737,4 @@
   setSelectorEngine()
 
   return bean
-}));
+});
