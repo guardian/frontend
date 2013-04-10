@@ -1,4 +1,5 @@
 define('bootstraps/app', [
+    "common",
     "domReady",
     "modules/router",
     "bootstraps/common",
@@ -10,9 +11,10 @@ define('bootstraps/app', [
     "bootstraps/story",
     "modules/pageconfig"
 ], function (
+    common,
     domReady,
     Router,
-    Common,
+    bootstrapCommon,
     Front,
     Football,
     Article,
@@ -28,9 +30,6 @@ define('bootstraps/app', [
         domReady(function() {
             var r = new Router();
 
-            //Init all common modules first
-            Common.init(config);
-
             //Fronts
             r.get('/', function(req) { Front.init(req, config); });
             r.get('/sport', function(req) { Front.init(req, config); });
@@ -43,23 +42,35 @@ define('bootstraps/app', [
             r.get('/football/:tag/:action', function(req) { Football.init(req, config); });
             r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config); });
 
-            //Articles
-            if(config.page.contentType === "Article") {
-                Article.init({url: window.location.pathName}, config);
-            }
-
-            if (config.page.contentType === "Video") {
-                Video.init({url: window.location.pathName}, config);
-            }
-
-            if (config.page.contentType === "Gallery") {
-                Gallery.init({url: window.location.pathName}, config);
-            }
-
             r.get('/stories/:id', function(req) { Story.init(req, config);});
 
-            //Kick it all off
-            r.init();
+            var pageRoute = function(config) {
+                //Articles
+                if(config.page.contentType === "Article") {
+                    Article.init({url: window.location.pathName}, config);
+                }
+
+                if (config.page.contentType === "Video") {
+                    Video.init({url: window.location.pathName}, config);
+                }
+
+                if (config.page.contentType === "Gallery") {
+                    Gallery.init({url: window.location.pathName}, config);
+                }
+
+                //Kick it all off
+                r.init();
+            };
+
+            // Init the common "run once" modules
+            bootstrapCommon.runOnce(config);
+
+            // Bindings for "repeatable" actions
+            common.mediator.on('page:ready', bootstrapCommon.pageView);
+            common.mediator.on('page:ready', pageRoute);
+
+            // Emit the initial synthetic ready event
+            common.mediator.emit('page:ready', config);
         });
     };
 
