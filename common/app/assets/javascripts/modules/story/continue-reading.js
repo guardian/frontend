@@ -11,7 +11,7 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
             hidden = true,
             text = {
                 show: 'Continue reading...',
-                hide: 'Hide article'
+                hide: 'Hide'
             },
             $story,
             toggleStory = function() {
