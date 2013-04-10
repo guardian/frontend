@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
     if (isDev) {
-        console.log("\n### Running Grunt in DEV mode ###\n");
+        grunt.log.subhead('Running Grunt in DEV mode');
     }
 
     // Project configuration.
