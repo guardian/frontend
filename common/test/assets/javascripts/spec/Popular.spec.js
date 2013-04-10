@@ -22,7 +22,6 @@ define(['common', 'ajax', 'modules/lazyload'], function(common, ajax, lazyLoad) 
                     container: appendTo,
                     jsonpCallbackName: 'showMostPopular',
                     success: function () {
-                        console.log('#############')
                         common.mediator.emit('modules:popular:loaded');
                     }
                 });

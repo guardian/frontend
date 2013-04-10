@@ -79,6 +79,9 @@ define([
             common.mediator.on('page:ready', function(config, context) {
                 images.upgrade(context);
             });
+            common.mediator.on('fragment:ready:images', function(context) {
+                images.upgrade(context);
+            });
         },
 
         showDebug: function () {
