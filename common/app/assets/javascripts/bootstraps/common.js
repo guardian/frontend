@@ -219,8 +219,7 @@ define([
         modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
         modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config, context); // context aware
-        modules.showRelativeDates();
+        modules.transcludeMostPopular(config, context);
 
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
@@ -231,12 +230,14 @@ define([
     };
 
     var runOnce = function (config) {
-        modules.upgradeImages(); // context aware
-        modules.showTabs();      // context aware
-        modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
+        modules.showDebug();
+
+        modules.upgradeImages();
+        modules.showTabs();
+        modules.showRelativeDates();
     };
 
     return {
