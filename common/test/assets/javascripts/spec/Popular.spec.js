@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/popular'], function(common, ajax, Popular) {
+define(['common', 'ajax', 'modules/lazyload'], function(common, ajax, lazyLoad) {
 
     describe("Popular", function() {
        
@@ -16,7 +16,16 @@ define(['common', 'ajax', 'modules/popular'], function(common, ajax, Popular) {
             appendTo = document.getElementById('popular-1');
             
             runs(function() {
-                new Popular(appendTo).load('fixtures/popular');
+                //new Popular(appendTo).load('fixtures/popular');
+                lazyLoad({
+                    url: 'fixtures/popular',
+                    container: appendTo,
+                    jsonpCallbackName: 'showMostPopular',
+                    success: function () {
+                        console.log('#############')
+                        common.mediator.emit('modules:popular:loaded');
+                    }
+                });
             });
 
             waits(500);
