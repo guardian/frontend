@@ -11,7 +11,7 @@
             <a href="@g.url?index=@info.rowNum">
                 <img src="@image.url" />
             </a>
-            <p type="type-6">
+            <p>
                 @Html(image.caption.getOrElse(""))
             </p>
         }
@@ -32,6 +32,7 @@
                     <ul class="unstyled event-articles">
                         @event.content.map{
                             case g: Gallery => { @gallery(g) }
+                            case _ => {}
                         }
                     </ul>
                 }
@@ -47,8 +48,7 @@
             @story.labels.getOrElse("pictures", "In pictures")
         </h2>
         <div id="js-pictures" class="photos box-indent" data-link-name="Pictures">
-            @eventList(story.events.take(1), false) // only the latest chapter
+            @eventList(story.events.take(1), false)
         </div>
     </section>
 }
-
