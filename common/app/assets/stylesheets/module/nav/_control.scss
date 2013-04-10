@@ -4,36 +4,24 @@
 
 /* Control
  ========================================================================== */
-.control {
-  color: #ffffff;
-  background-color: transparent;
-  vertical-align: top;
-}
-
-  .control:link,
-  .control:active,
-  .control:hover,
-  .control:visited{
+.control,
+.control:link,
+.control:active,
+.control:hover,
+.control:visited {
+    color: #ffffff;
     font-family: $serif !important;
     font-size: 13px;
     color: #ffffff;
+    background-color: transparent;
+    vertical-align: top;
     text-decoration: none !important;
-
-    @media only screen and (min-width: $tablet) {
-      font-size: 14px;
-      color: #444444;
-    }
   }
 
 .control.is-active,
 .control.is-active {
   background-color: #ffffff;
   color: $blue;
-
-  @media only screen and (min-width: $tablet) {
-    background-color: transparent;
-    color: #444444;
-  }
 }
 
 .i-nav-divider {
@@ -43,16 +31,17 @@
   margin-right: 8px;
   background-color: #274C98;
   border-left: 1px solid #122853;
-
-  @media only screen and (min-width: $tablet) {
-    display:none !important;
-  }
 }
+
 
 /* Sections control - (Hamburger icon )
  ========================================================================== */
 
-.control--sections {
+.control--sections,
+.control--sections:link,
+.control--sections:active,
+.control--sections:hover,
+.control--sections:visited {
   float:right;
   width: auto;
   height: 28px;
@@ -64,6 +53,9 @@
     top: 58px;
     padding: 0 $gutter 10px $gutter;
     margin: $baseline*2 0 $baseline*2 0;
+    background-color: transparent;
+    color: #444444;
+    font-size: 14px;
   }
 
   @media only screen and (min-width: 85em) {
@@ -93,6 +85,12 @@
 .control__more .i-more-arrow { margin: 2px 0 0 4px; }
 .is-active .i-more-arrow { @include rotate(180deg); }
 
+.control--sections .i-nav-divider {
+  @media only screen and (min-width: $tablet) {
+    display:none !important;
+  }
+}
+
 /* Top stories control
  ========================================================================== */
 
@@ -104,7 +102,9 @@
   padding: 17px 0 13px 0;
 
   @media only screen and (min-width: $tablet) {
-    display: none;
+    position: absolute;
+    top: 0px;
+    right: 38px;
   }
 }
 
@@ -141,7 +141,9 @@
   border: none;
 
   @media only screen and (min-width: $tablet) {
-    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
   }
 }
 

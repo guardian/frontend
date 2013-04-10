@@ -1,7 +1,5 @@
 .search-box {
   margin: 0 $gutter;
-
-  @media only screen and (min-width: 35em) { display: none;}
 }
 
 .gsc-search-box .gsib_a {
@@ -34,9 +32,6 @@ input.gsc-search-button-v2 {
     height: 14px !important;
 }
 
-.search-results {
-  @media only screen and (min-width: 35em) { display: none;}
-}
 
 .gs-result {
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;;
