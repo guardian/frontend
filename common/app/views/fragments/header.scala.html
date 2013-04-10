@@ -16,7 +16,7 @@
     class="control control--sections">
         <i class="i i-nav-divider"></i>
         <span class="control__menu i i-menu">Sections</span>
-        <span class="control__more">More <i class="i i-more-arrow"></i></span>
+        <i class="i i-menu-active"></i>
     </a>
 
     <a href="#" data-link-name="Search icon" class="control control--search" id="search-control-header">
@@ -33,9 +33,9 @@
     </a>
 </header>
 
-<div id="topstories-header" class="nav-popup is-off"></div>
+<div id="topstories-header" class="nav-popup nav-popup--box is-off"></div>
 
-<div id="search-header" class="nav-popup is-off">
+<div id="search-header" class="nav-popup nav-popup--box is-off">
     <div class="search-box" role="search">
         <gcse:searchbox></gcse:searchbox>
     </div>
@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<div id="sections-header" class="nav-popup is-off">
+<div id="sections-header" class="nav-popup nav-popup--small is-off">
     @fragments.sections(page, false)
 </div>
 

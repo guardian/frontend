@@ -38,6 +38,10 @@
     @include box-sizing(border-box);
 }
 
+.section-head.zone-color {
+  @media only screen and (min-width: $tablet) { border-top: none; }
+}
+
 //Articles
 //---------------------------------------------
 .article-section-head {
