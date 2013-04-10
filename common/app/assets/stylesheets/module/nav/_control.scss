@@ -33,6 +33,10 @@
   border-left: 1px solid #122853;
 }
 
+.is-active .i-nav-divider {
+  border-color: #ffffff;
+  background-color: #ffffff;
+}
 
 /* Sections control - (Hamburger icon )
  ========================================================================== */
@@ -57,37 +61,35 @@
     color: #444444;
     font-size: 14px;
   }
-
-  @media only screen and (min-width: 85em) {
-    display: none;
-  }
 }
 
 .control__menu.i {
   float: right;
   margin-top: 8px;
-  display: inline-block;
   text-indent: -1000em;
-  @media only screen and (min-width: $tablet) { display: none; }
 }
 
-.is-active .i-nav-divider {
-  border-color: #ffffff;
-  background-color: #ffffff;
+span.control__menu.i-menu {
+  display: inline-block;
+
+  @media only screen and (min-width: $tablet) {
+    display:none;
+  }
 }
 
-.control__more {
-    display: none;
-    float: right;
-    @media only screen and (min-width: $tablet) { display: inline-block; }
-}
+.control--sections .i-menu-active {
+  display: none;
 
-.control__more .i-more-arrow { margin: 2px 0 0 4px; }
-.is-active .i-more-arrow { @include rotate(180deg); }
+  @media only screen and (min-width: $tablet) {
+    margin-top: $baseline*2;
+    display: inline-block;
+  }
+}
 
 .control--sections .i-nav-divider {
   @media only screen and (min-width: $tablet) {
-    display:none !important;
+    border-color: #BBBBBB;
+    background-color: #ffffff;
   }
 }
 
