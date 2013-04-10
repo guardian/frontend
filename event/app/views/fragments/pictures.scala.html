@@ -3,7 +3,7 @@
 <!-- all the photos we have on this subject from the latest chapter -->
 
 @gallery(g: model.Gallery) = {
-    <li class="event-article event-article--media">
+    <li class="event-article picture-article--media">
         <p class="type-2">
                 @g.headline
         </p>
@@ -22,7 +22,7 @@
 @eventList(events: Seq[Event], isPanel: Boolean) = {
     <ul class="unstyled @if(isPanel){ panel}">
         @events.map { event =>
-            <li class="trail event-block" data-link-name="trail">
+            <li class="trail" data-link-name="trail">
 
                 @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)

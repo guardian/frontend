@@ -112,9 +112,6 @@ a.trail-story-title {
   color: $newsRed;
 }
 
-.story-places { 
-}
-
 .story-map {
   position: relative;
   margin: $baseline*4 $gutter $baseline*4 $gutter;
@@ -132,3 +129,8 @@ a.trail-story-title {
   right: 0;
 }
 
+.picture-article--media img {
+    display: block;
+    width: 100%;
+    margin-top: 0 2.5% 5px 0;
+}
