@@ -40,7 +40,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             }
         };
 
-        this.init = function (config, context) {
+        this.init = function (context) {
 
             [].forEach.call(context.querySelectorAll('.tabs-container'), function(container) {
 
@@ -93,11 +93,6 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 }
             });
         };
-
-        // Bindings
-        common.mediator.on('modules:tabs:loaded', this.init);
-        common.mediator.on('page:ready', this.init);
-
     };
 
     return Tabs;

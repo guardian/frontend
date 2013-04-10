@@ -39,15 +39,12 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
 
         // Model
         
-        this.upgrade = function (config, context) {
+        this.upgrade = function (context) {
             if (connectionSpeed !== 'low') {
                 self.view.upgrade(context);
+                common.mediator.emit('modules:images:upgrade');
             }
         };
-
-        // Bindings
-
-        common.mediator.on('page:ready', self.upgrade);
     }
     
     return Images;

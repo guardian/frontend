@@ -21,7 +21,7 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                     bonzo(element).text(buttonText);
                 });
 
-            common.mediator.on('ui:more-matches:clicked', function (_link) {
+            function clicked(_link) {
                 var link = bonzo(_link);
                 ajax({
                     url: link.attr('href'),
@@ -42,10 +42,12 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                         common.mediator('module:error', 'Failed to load more matches', 'more-matches.js');
                     }
                 });
-            });
+            }
+            
+            common.mediator.on('ui:more-matches:clicked', clicked);
 
             bean.add(nav, 'a', 'click', function(e) {
-                common.mediator.emit('ui:more-matches:clicked', [e.target]);
+                clicked(e.target);
                 e.preventDefault();
             });
 

@@ -4,7 +4,7 @@ import com.gu.openplatform.contentapi.{ApiError, Api}
 import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, HttpResponse}
 import com.gu.management.{ CountMetric, Metric, TimingMetric }
 import conf.Configuration
-import java.util.concurrent.TimeoutException
+import java.util.concurrent.{ConcurrentHashMap, TimeoutException}
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.ws.WS
@@ -60,8 +60,19 @@ object ContentApiMetrics {
     "Content api calls that timeout"
   )
 
-  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
+  object DogpileHitsCountMetric extends CountMetric(
+    "performance",
+    "content-api-dogpile-hits",
+    "Content API dogpile hits",
+    "Hits to the content api dogpile cache"
+  )
+
+  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric, DogpileHitsCountMetric)
 }
+
+
+
+private object dogPileCache extends ConcurrentHashMap[String, Future[play.api.libs.ws.Response]]
 
 trait DelegateHttp extends Http[Future] {
   import System.currentTimeMillis
@@ -69,23 +80,36 @@ trait DelegateHttp extends Http[Future] {
   import Configuration.host
   import java.net.URLEncoder.encode
 
-  private val dispatch = new Http[Future] with Logging {
+  private val wsHttp = new Http[Future] with Logging {
     override def GET(url: String, headers: Iterable[(String, String)]) = {
+      val cacheKey = url
+      val cachedResponse = Option(dogPileCache.get(cacheKey))
 
-      val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
+      cachedResponse.foreach(r => DogpileHitsCountMetric.increment())
 
-      val start = currentTimeMillis
-      val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+      cachedResponse.getOrElse{
 
-      // record metrics
-      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
-      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
+        val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
 
-      response.map{ r => HttpResponse(r.body, r.status, r.statusText)}
+        val start = currentTimeMillis
+        val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+
+        // record metrics
+        response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+        response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
+
+        dogPileCache.put(cacheKey, response)
+
+        response.onComplete(r => dogPileCache.remove(cacheKey))
+        //just in case it was really quick
+        if (response.isCompleted) dogPileCache.remove(cacheKey)
+
+        response
+      }.map{ r => HttpResponse(r.body, r.status, r.statusText)}
     }
   }
 
-  private var _http: Http[Future] = dispatch
+  private var _http: Http[Future] = wsHttp
   def http = _http
   def http_=(delegateHttp: Http[Future]) = _http = delegateHttp
 
@@ -111,11 +135,12 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries
+    //you cannot editionalize tag queries                                                                                                                                  super.G
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
       s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+
 }

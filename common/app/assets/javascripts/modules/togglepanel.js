@@ -18,6 +18,7 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
 
         bindToggler: function (toggler) {
             bean.add(toggler, 'click', function () {
+                view.toggle(toggler);
                 common.mediator.emit('modules:togglepanel:toggle', toggler);
             });
         }
@@ -30,8 +31,6 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
             model.bindToggler(togglers[i]);
         }
     };
-
-    common.mediator.on('modules:togglepanel:toggle', view.toggle);
 
     return {
         init: init

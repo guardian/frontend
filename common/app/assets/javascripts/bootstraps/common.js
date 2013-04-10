@@ -2,6 +2,7 @@ define([
     //Commmon libraries
     'common',
     'ajax',
+    'modules/lazyload',
     'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
@@ -31,6 +32,7 @@ define([
 ], function (
     common,
     ajax,
+    lazyLoad,
     detect,
     userPrefs,
 
@@ -74,8 +76,11 @@ define([
             common.mediator.on("module:error", e.log);
         },
 
-        upgradeImages: function (context) {
-            var n = new Images();
+        upgradeImages: function () {
+            var images = new Images();
+            common.mediator.on('page:ready', function(config, context) {
+                images.upgrade(context);
+            });
         },
 
         showDebug: function () {
@@ -124,21 +129,26 @@ define([
             });
         },
 
-        transcludeMostPopular: function (section, edition, context) {
-            var url = '/most-read' + (section ? '/' + section : '') + '.json',
-                domContainer = context.querySelector('.js-popular');
+        transcludeMostPopular: function (config, context) {
+            var container = context.querySelector('.js-popular');
 
-            if (domContainer) {
-                new Popular(domContainer).load(url);
-                common.mediator.on('modules:popular:render', function() {
-                    common.mediator.emit('modules:tabs:loaded', {}, context);
-                });
-            }
-
+            lazyLoad({
+                url: '/most-read' + (config.page.section ? '/' + config.page.section : '') + '.json',
+                container: container,
+                success: function () {
+                    common.mediator.emit('fragment:ready', container);
+                }
+            });
         },
 
-        showTabs: function(context) {
-            var t = new Tabs();
+        showTabs: function() {
+            var tabs = new Tabs();
+            common.mediator.on('page:ready', function(config, context) {
+                tabs.init(context);
+            });
+            common.mediator.on('fragment:ready', function(context) {
+                tabs.init(context);
+            });
         },
 
         loadFonts: function(config, ua) {
@@ -201,13 +211,12 @@ define([
         }
     };
 
-    var pageView = function (config, context) {
-        modules.showTabs(context);
-        modules.initialiseNavigation(config, context);
-        modules.transcludeTopStories(config, context);
-        modules.transcludeRelated(config, context);
-        modules.transcludeMostPopular(config.page.section, config.page.edition, context);
-        modules.showRelativeDates(context);
+    var pageReady = function (config, context) {
+        modules.initialiseNavigation(config);
+        modules.transcludeTopStories(config);
+        modules.transcludeRelated(config);
+        modules.transcludeMostPopular(config, context); // context aware
+        modules.showRelativeDates();
 
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
@@ -218,7 +227,8 @@ define([
     };
 
     var runOnce = function (config) {
-        modules.upgradeImages();
+        modules.upgradeImages(); // context aware
+        modules.showTabs();      // context aware
         modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
@@ -227,7 +237,7 @@ define([
 
     return {
         runOnce: runOnce,
-        pageView: pageView
+        pageReady: pageReady
     };
 
 });
