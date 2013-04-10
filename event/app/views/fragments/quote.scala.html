@@ -19,7 +19,12 @@
             <blockquote class="quoted" data-link-name="story quote">
                 @quote.text.map{ text =>
                   <p>
-                    <a class="continue" data-link-name="Continue reading" data-skip-paras="1" href="@article.url">@cleanTrailText(text)</a>
+                    @cleanTrailText(text)
+                  </p>
+                  <p>
+                  <a class="continue" data-link-name="Continue reading" data-skip-paras="0" href="@article.url">
+                      Continue reading... 
+                  </a>
                   </p>
                 }
                 <cite>@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
