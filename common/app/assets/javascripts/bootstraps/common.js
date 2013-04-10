@@ -159,7 +159,7 @@ define([
         },
 
         showRelativeDates: function () {
-            var dates = RelativeDates.init();
+            var dates = RelativeDates;
             common.mediator.on('page:ready', function(config, context) {
                 dates.init(context);
             });
