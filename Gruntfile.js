@@ -1,7 +1,12 @@
 /* global module: false */
 module.exports = function (grunt) {
-    // Project configuration.
 
+    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
+    if (isDev) {
+        grunt.log.subhead('Running Grunt in DEV mode');
+    }
+
+    // Project configuration.
     grunt.initConfig({
         sass: {
             common: {
@@ -12,7 +17,8 @@ module.exports = function (grunt) {
                 options: {
                     check: false,
                     quiet: true,
-                    style: "compressed",
+                    debugInfo: (isDev) ? true : false,
+                    style: (isDev) ? 'nested' : 'compressed',
                     loadPath: [
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
@@ -41,7 +47,8 @@ module.exports = function (grunt) {
                         "startFile" : "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile"   : "common/app/assets/javascripts/bootstraps/go.js"
                     },
-                    "optimize"  : "uglify2",
+                    optimize: (isDev) ? 'none' : 'uglify2',
+                    useSourceUrl:  (isDev) ? true : false,
                     "preserveLicenseComments" : false
                 }
             }
