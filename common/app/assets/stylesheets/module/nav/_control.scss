@@ -71,6 +71,7 @@
 
 span.control__menu.i-menu {
   display: inline-block;
+  margin-left: 6px;
 
   @media only screen and (min-width: $tablet) {
     display:none;
@@ -88,6 +89,7 @@ span.control__menu.i-menu {
 
 .control--sections .i-nav-divider {
   @media only screen and (min-width: $tablet) {
+    margin-right: $baseline*3;
     border-color: #BBBBBB;
     background-color: #ffffff;
   }
@@ -106,7 +108,7 @@ span.control__menu.i-menu {
   @media only screen and (min-width: $tablet) {
     position: absolute;
     top: 0px;
-    right: 38px;
+    right: 48px;
   }
 }
 
@@ -115,7 +117,8 @@ span.control__menu.i-menu {
   height: 28px;
   vertical-align: top;
   line-height: 28px;
-  margin-right:8px;
+  margin-right: $baseline*2;
+  margin-left: $baseline*2;
 
   @media only screen and (min-width: 26.25em) {
     display: inline-block;
@@ -129,6 +132,14 @@ span.control__menu.i-menu {
 
 .control--topstories .i-top-stories {
   margin: 5px $baseline*4 0 $baseline*2;
+
+  @media only screen and (min-width: $tablet) {
+    margin-left: 0px;
+  }
+}
+
+.control--topstories .i-nav-divider {
+  margin-top: -2px;
 }
 
 
@@ -151,5 +162,6 @@ span.control__menu.i-menu {
 
 .control--search .i-search {
   margin-top: $baseline*2;
-  margin-left: $baseline*2;
+  margin-left: 6px;
+  margin-right: 2px;
 }

@@ -4,13 +4,15 @@
 
     <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
-    <ul class="nav nav--global" data-link-name="global navigation: header : sections">
-        @Navigation(page, request).map{ nav =>
-            <li class="nav__item @if(nav.currentFor(page)){is-active}">
-                <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
-            </li>
-        }
-    </ul>
+    <div class="nav-container">
+        <ul class="nav nav--global" data-link-name="global navigation: header : sections">
+            @Navigation(page, request).map{ nav =>
+                <li class="nav__item @if(nav.currentFor(page)){is-active}">
+                    <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
+                </li>
+            }
+        </ul>
+    </div>
 
     <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
     class="control control--sections">

@@ -92,8 +92,12 @@
 
     .nav-popup--small .nav--section-divider {
       @media only screen and (min-width: $tablet) {
-        margin-top: -8px !important;
+        margin-top: -5px !important;
         .nav__item { margin: 0;}
+      }
+
+      @media only screen and (min-width: 78em) {
+        margin-top: -13px !important;;
       }
     }
 
@@ -129,6 +133,15 @@
 
 /* Global navigation
    ========================================================================== */
+.nav-container {
+  @include box-sizing(border-box);
+  display: none;
+  overflow: auto;
+  width: 100%;
+  padding: 0 $gutter;
+  background-color: #ffffff;
+  @media only screen and (min-width: $tablet) { display: block; }
+}
 
 .nav--global {
   @include box-sizing(border-box);
@@ -139,10 +152,7 @@
   height: 46px;
   overflow: hidden;
   padding: 0 90px 0 0;
-  margin: 0;
   background-color: #ffffff;
-  border-left: $gutter solid #ffffff;
-  border-right: $gutter solid #ffffff;
   border-bottom: 1px solid $darkMushroom;
 
   @media only screen and (min-width: $tablet) { display: block; }
@@ -158,8 +168,8 @@
   .nav--global .nav__link:hover,
   .nav--global .nav__link:visited {
     display: block;
-    margin: $baseline*2 0 $baseline*3 0;
-    padding: $baseline*1 $baseline*3 0 $baseline*3;
+    margin: 10px 0 $baseline*3 0;
+    padding: 2px $baseline*3 0 $baseline*3;
     font-family: $serif !important;
     font-size: 14px;
     text-decoration: none;
