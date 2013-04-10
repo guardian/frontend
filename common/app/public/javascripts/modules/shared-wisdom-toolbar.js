@@ -51,11 +51,18 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
-		init: function(callback) {
+		init: function(callback, config) {
 		    // only display if switched on
 		    if (userPrefs.isOff(id)) {
 		        return;
 		    }
+            // add css
+            var $css = bonzo(document.createElement('link'))
+                .attr('rel', 'stylesheet')
+                .attr('type', 'text/css')
+                .attr('href', config.css);
+            common.$g('head').append($css);
+
 			var cookies = objectifyCookies(document.cookie),
 				params = [
 				    ['url', window.location], 
