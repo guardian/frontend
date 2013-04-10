@@ -64,11 +64,11 @@
                     <i class="i i-arrow-large-down"></i>
                 </h3>
 
-                @if(event.hasExplainer) { <p class="event-summary">@StripHtmlTags(event.explainer.get)</p> }
-
                 @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
                 }
+                
+                @if(event.hasExplainer) { <p class="event-summary">@StripHtmlTags(event.explainer.get)</p> }
 
                 <div class="event-children">
 
