@@ -103,7 +103,7 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
 
             s.prop47    = config.page.edition || '';
 
-            s.prop48    = detect.getConnectionSpeed(w.performance, null, true);
+
 
             if (config.switches.optimizely === true) {
                 s.prop51    = optimizely.readTests();
@@ -112,6 +112,8 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
             s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
+
+            s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
