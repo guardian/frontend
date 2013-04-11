@@ -16,6 +16,7 @@ GET     /football/:competition/results/:year/:month/:day    controllers.Competit
 GET     /football/:tag/results                              controllers.ResultsController.renderTag(tag)
 
 GET     /football/live                                      controllers.LiveMatchesController.render()
+GET     /football/matches                                   controllers.LiveMatchesController.render()
 GET     /football/:competition/live                         controllers.LiveMatchesController.renderFor(competition)
 
 GET     /football/tables                                    controllers.LeagueTableController.render()
