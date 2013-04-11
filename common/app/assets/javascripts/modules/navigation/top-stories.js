@@ -7,12 +7,12 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
         this.view = {
 
-            render: function (html, topstoriesHeader) {
+            render: function (html, container) {
 
-                var $topstoriesHeader = bonzo(topstoriesHeader),
+                var $container = bonzo(container),
                     className = "is-off";
 
-                topstoriesHeader.innerHTML = '<h3 class="headline-list__tile type-5">Top stories</h3>'
+                container.innerHTML = '<h3 class="headline-list__tile type-5">Top stories</h3>'
                     + '<div class="headline-list headline-list--top box-indent" data-link-name="top-stories">'
                     + html
                     + '</div>';
@@ -20,7 +20,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 common.mediator.emit('modules:topstories:render');
 
                 common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
-                    $topstoriesHeader.removeClass(className);
+                    $container.removeClass(className);
                 });
 
                 common.mediator.on('modules:control:change', function(args) {
@@ -29,7 +29,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         state = args[1];
 
                     if (state === false || control !== 'topstories-control-header') {
-                        $topstoriesHeader.addClass(className);
+                        $container.addClass(className);
                     }
                 });
             }
@@ -52,6 +52,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',
                     success: function (json) {
+                        common.mediator.emit('modules:topstories:loaded');
                         self.view.render(json.html, container);
                     }
                 });
