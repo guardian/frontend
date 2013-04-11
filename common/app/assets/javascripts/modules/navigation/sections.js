@@ -36,17 +36,20 @@ define([
 
                 });
 
+                var hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
+
                 bean.on(window, 'resize', common.debounce(function(e){
-                    var layoutMode = detect.getLayoutMode();
+                    hasCrossedBreakpoint(function(layoutMode) {
 
-                    bonzo(sectionsHeader).addClass(className);
-                    common.mediator.emit('modules:control:change', ['search-control-header', true]);
+                        bonzo(sectionsHeader).addClass(className);
+                        common.mediator.emit('modules:control:change', ['search-control-header', true]);
 
-                    if(layoutMode !== 'mobile') {
-                        that.view.hideColumns();
-                    } else {
-                        that.view.showColumns();
-                    }
+                        if(layoutMode !== 'mobile') {
+                            that.view.hideColumns();
+                        } else {
+                            that.view.showColumns();
+                        }
+                    });
                 }, 200));
             },
 

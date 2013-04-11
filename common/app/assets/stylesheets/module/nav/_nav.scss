@@ -59,7 +59,6 @@
         margin: 0;
       }
 
-
     .nav--columns .nav__link {
       @extend .type-10;
       padding: $baseline*2 0;
@@ -86,24 +85,44 @@
 ========================================================================== */
 
   .nav.nav--section-divider {
-    padding: $baseline*2 0;
-    margin: 0 $gutter;
-    border-top: 2px solid $darkMushroom;
+    padding: $baseline*2 $gutter;
+    margin: 0;
+    background-color: $mushroom;
   }
 
-  .nav--section-divider a {
-    color: #ffffff;
+    .nav-popup--small .nav--section-divider {
+      @media only screen and (min-width: $tablet) {
+        margin-top: -5px !important;
+        .nav__item { margin: 0;}
+      }
+
+      @media only screen and (min-width: 78em) {
+        margin-top: -13px !important;;
+      }
+    }
+
+  .nav--section-divider .nav__link {
+    border-bottom: 1px solid $darkMushroom;
+  }
+
+  .nav--section-divider .nav__item:last-child .nav__link {
+    border-bottom: none;
   }
 
 /* Footer navigation
    ========================================================================== */
-.nav--footer {
+.nav--footer,
+.nav--footer.nav--section-divider {
   background-color: $blue;
 }
 
-  .nav--footer .nav__item a {
+  .nav--footer .nav__link {
       color: #ffffff;
       border-top: 1px solid #2B528B;
+  }
+
+  .nav--footer.nav--section-divider .nav__link {
+    border-bottom: 1px solid #2B528B;
   }
 
   .nav--footer.nav--section-divider {
@@ -114,6 +133,15 @@
 
 /* Global navigation
    ========================================================================== */
+.nav-container {
+  @include box-sizing(border-box);
+  display: none;
+  overflow: auto;
+  width: 100%;
+  padding: 0 $gutter;
+  background-color: #ffffff;
+  @media only screen and (min-width: $tablet) { display: block; }
+}
 
 .nav--global {
   @include box-sizing(border-box);
@@ -121,10 +149,12 @@
   float:left;
   clear:left;
   width: 100%;
-  height: 54px;
+  height: 46px;
   overflow: hidden;
   padding: 0 90px 0 0;
-  background-color: #F5F2F0;
+  background-color: #ffffff;
+  border-bottom: 1px solid $darkMushroom;
+
   @media only screen and (min-width: $tablet) { display: block; }
 }
 
@@ -138,15 +168,16 @@
   .nav--global .nav__link:hover,
   .nav--global .nav__link:visited {
     display: block;
-    margin: $baseline*2 0 0 0;
-    padding: 0px $gutter $baseline*4 $gutter;
+    margin: 10px 0 $baseline*3 0;
+    padding: 2px $baseline*3 0 $baseline*3;
     font-family: $serif !important;
     font-size: 14px;
     text-decoration: none;
     color: #444444;
-    border-right: 1px solid #444444;
+    border-right: 1px solid #BBBBBB;
   }
 
+    .nav--global .nav__item:first-child .nav__link { padding-left: 0px; }
     .nav--global .nav__item:last-child .nav__link { border-right: none; }
 
 /* Toolbar navigation

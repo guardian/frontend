@@ -20,11 +20,11 @@
 }
 
 .is-active .i-menu {
-    @extend .i-menu-active;
+  @extend .i-menu-active;
 }
 
 .svg .is-active .i-menu {
-    @extend .svg-i-menu-active;
+  @extend .svg-i-menu-active;
 }
 
 .is-active .i-search {
