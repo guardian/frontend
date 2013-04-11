@@ -39,8 +39,7 @@ define([
                 var hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
 
                 bean.on(window, 'resize', common.debounce(function(e){
-                    hasCrossedBreakpoint(function() {
-                        var layoutMode = detect.getLayoutMode();
+                    hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
                         common.mediator.emit('modules:control:change', ['search-control-header', true]);
