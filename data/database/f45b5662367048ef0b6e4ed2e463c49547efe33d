@@ -272,18 +272,6 @@
         "id":"pa-football-team/88"
       }]
     },{
-      "id":"football/tottenham-hotspur",
-      "type":"keyword",
-      "webTitle":"Tottenham Hotspur",
-      "webUrl":"http://www.guardian.co.uk/football/tottenham-hotspur",
-      "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/19"
-      }]
-    },{
       "id":"football/coventry",
       "type":"keyword",
       "webTitle":"Coventry City",
@@ -294,6 +282,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/6"
+      }]
+    },{
+      "id":"football/tottenham-hotspur",
+      "type":"keyword",
+      "webTitle":"Tottenham Hotspur",
+      "webUrl":"http://www.guardian.co.uk/football/tottenham-hotspur",
+      "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
       }]
     },{
       "id":"football/livingston",
@@ -560,18 +560,6 @@
         "id":"pa-football-team/46"
       }]
     },{
-      "id":"football/iran",
-      "type":"keyword",
-      "webTitle":"Iran",
-      "webUrl":"http://www.guardian.co.uk/football/iran",
-      "apiUrl":"http://content.guardianapis.com/football/iran",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/8111"
-      }]
-    },{
       "id":"football/westbrom",
       "type":"keyword",
       "webTitle":"West Bromwich Albion",
@@ -582,6 +570,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/42"
+      }]
+    },{
+      "id":"football/iran",
+      "type":"keyword",
+      "webTitle":"Iran",
+      "webUrl":"http://www.guardian.co.uk/football/iran",
+      "apiUrl":"http://content.guardianapis.com/football/iran",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/8111"
       }]
     },{
       "id":"football/bournemouth",
