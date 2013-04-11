@@ -51,10 +51,11 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
-    if (format == "json") {
-      renderJsonTrails(model.editorsPicks ++ model.latestContent)
-    } else {
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent))
+    } getOrElse {
       Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
     }
   }
+  
 }

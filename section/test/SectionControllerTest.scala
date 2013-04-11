@@ -6,10 +6,19 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
 class SectionControllerTest extends FlatSpec with ShouldMatchers {
+  
+  val section = "books"
 
   "Section Controller" should "200 when content type is front" in Fake {
-    val result = controllers.SectionController.render("books")(TestRequest())
+    val result = controllers.SectionController.render(section)(TestRequest())
     status(result) should be(200)
+  }
+
+  it should "return JSONP when callback is supplied" in Fake {
+    val fakeRequest = FakeRequest(GET, section + "?callback=foo").withHeaders("host" -> "localhost:9000")
+    val result = controllers.SectionController.render(section)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/javascript")
   }
 
   it should "internal redirect when content type is not front" in Fake {
