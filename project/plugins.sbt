@@ -10,11 +10,9 @@ resolvers ++= Seq(
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.3.0")
 
-addSbtPlugin("play" % "sbt-plugin" % "2.1.0")
+addSbtPlugin("play" % "sbt-plugin" % "2.1.1")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.0.1")
-
-//addSbtPlugin("templemore" % "xsbt-cucumber-plugin" % "0.7.2")
 
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.8.5")
 
