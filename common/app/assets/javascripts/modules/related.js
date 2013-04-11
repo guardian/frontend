@@ -11,6 +11,7 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
         } else if (config.switches.relatedContent) {
 
             container = context.querySelector('.js-related');
+            url =  url || '/related/' + config.page.pageId;
 
             lazyLoad({
                 url: url,

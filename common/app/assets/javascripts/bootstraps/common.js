@@ -112,7 +112,7 @@ define([
 
         transcludeRelated: function () {
             common.mediator.on("page:article:ready", function(config, context){
-                related(config, context, '/related/' + config.page.pageId);
+                related(config, context);
             });
         },
 
