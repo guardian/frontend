@@ -12,41 +12,64 @@
   border-bottom: $baseline solid $blue;
 
   @media only screen and (min-width: $tablet) {
-    position: absolute;
-    top: 185px;
-    right: 0px;
+    top: -48px;
+    margin-bottom: -48px;
+    width: 100%;
     background-color: #ffffff;
-    border-bottom: none;
-    padding-bottom: 0;
-
-    @include box-shadow(-3px 3px 6px -3px #444);
   }
 }
 
 .nav-popup .nav--section-divider {
+  padding-bottom: $baseline*4;
+
   @media only screen and (min-width: $tablet) {
     margin: 0px;
     border-top: none;
   }
 }
 
-.nav-popup .nav__item {
-  @media only screen and (min-width: $tablet) {
-    margin: 0 $gutter;
-    border-bottom: 1px solid #C3C3C3;
 
-    &:last-child {
-      border-bottom: none;
+/* Small
+ ========================================================================== */
+.nav-popup--small  {
+  padding-bottom: 0;
+
+  @media only screen and (min-width: $tablet) {
+    position: absolute;
+    top: 174px;
+    right: 0px;
+    width: auto;
+    padding: 0;
+    min-width: 160px;
+    background-color: #ffffff;
+    border-bottom: 2px solid $darkMushroom;
+    border-left: 2px solid $darkMushroom;
+  }
+
+  @media only screen and (min-width: $desktopAd) {
+    top: 200px;
+  }
+}
+
+  .nav-popup--small .nav__item {
+    @media only screen and (min-width: $tablet) {
+      margin: 0 $gutter;
+      border-bottom: 1px solid #C3C3C3;
+      text-align: right;
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
-}
 
-.nav-popup .nav__link {
-  @media only screen and (min-width: $tablet) {
-    color: #444444;
-    padding: $baseline*2 $gutter $baseline*4 0;
-    @include font($serifheadline, 200, 14, 14);
+  .nav-popup--small .nav__link,
+  .nav-popup--small .nav--columns .nav__link{
+    @extend .type-7;
+
+    @media only screen and (min-width: $tablet) {
+      color: #444444;
+      padding: $baseline*3 0 $baseline*3 0;
+      @include font($serifheadline, 200, 14, 14);
+    }
   }
-}
-
-
