@@ -50,10 +50,11 @@ object TagController extends Controller with Logging with JsonTrails {
   }
 
   private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {
-    if (format == "json") {
-      renderJsonTrails(model.trails)
-    } else {
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.tagBody(model.tag, model.trails, model.leadContent))
+    } getOrElse {
       Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
     }
   }
+  
 }
