@@ -2,13 +2,14 @@ define([
     //Commmon libraries
     'common',
     'ajax',
-    'modules/lazyload',
     'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
     'qwery',
     //Modules
+    'modules/popular',
+    'modules/related',
     'modules/router',
     'modules/errors',
     'modules/images',
@@ -16,8 +17,6 @@ define([
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/related',
-    'modules/expandable',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -31,13 +30,14 @@ define([
 ], function (
     common,
     ajax,
-    lazyLoad,
     detect,
     userPrefs,
 
     domReady,
     qwery,
 
+    popular,
+    related,
     Router,
     Errors,
     Images,
@@ -45,8 +45,6 @@ define([
     TopStories,
     Sections,
     Search,
-    Related,
-    Expandable,
     Fonts,
     Tabs,
     RelativeDates,
@@ -112,43 +110,22 @@ define([
             new TopStories().load(config);
         },
 
-        transcludeRelated: function (config){
-            common.mediator.on("modules:related:load", function(){
-                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
-                    host,
-                    pageId,
-                    url;
-
-                if (config.page.hasStoryPackage) {
-                    relatedExpandable.init();
-                } else {
-                    pageId = config.page.pageId;
-                    url =  '/related/' + pageId;
-                    common.mediator.on('modules:related:render', relatedExpandable.init);
-                    new Related(document.getElementById('js-related'), config.switches).load(url);
-                }
+        transcludeRelated: function () {
+            common.mediator.on("page:article:ready", function(config, context){
+                related(config, context, '/related/' + config.page.pageId);
             });
         },
 
-        transcludeMostPopular: function (config, context) {
-            var container = context.querySelector('.js-popular');
-
-            lazyLoad({
-                url: '/most-read' + (config.page.section ? '/' + config.page.section : '') + '.json',
-                container: container,
-                success: function () {
-                    common.mediator.emit('fragment:ready:tabs',  container);
-                }
+        transcludeMostPopular: function () {
+            common.mediator.on('page:ready', function(config, context) {
+                popular(config, context);
             });
         },
 
         showTabs: function() {
             var tabs = new Tabs();
-            common.mediator.on('page:ready', function(config, context) {
-                tabs.init(context);
-            });
-            common.mediator.on('fragment:ready:tabs', function(context) {
-                tabs.init(context);
+            common.mediator.on('modules:popular:loaded', function(el) {
+                tabs.init(el);
             });
         },
 
@@ -166,8 +143,8 @@ define([
             common.mediator.on('page:ready', function(config, context) {
                 dates.init(context);
             });
-            common.mediator.on('fragment:ready:dates', function(context) {
-                dates.init(context);
+            common.mediator.on('fragment:ready:dates', function(el) {
+                dates.init(el);
             });
         },
 
@@ -221,8 +198,6 @@ define([
     var pageReady = function (config, context) {
         modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
-        modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config, context);
 
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
@@ -241,6 +216,8 @@ define([
         modules.upgradeImages();
         modules.showTabs();
         modules.showRelativeDates();
+        modules.transcludeRelated();
+        modules.transcludeMostPopular();
     };
 
     return {

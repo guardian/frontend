@@ -1,38 +1,29 @@
-define(['common', 'ajax'], function (common, ajax) {
+define(['common', 'modules/lazyload', 'modules/expandable'], function (common, lazyLoad, Expandable) {
 
-    function Related(attachTo, switches) {
-        
-        // View
-        this.view = {
-            attachTo: attachTo,
-            render: function (html) {
-                attachTo.innerHTML = html;
-                common.mediator.emit('modules:related:render');
-            }
-        };
-        
-        // Model
-        this.load = function (url) {
-            var that = this;
-            if (switches.relatedContent) {
-                return ajax({
-                    url: url,
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'showRelated',
-                    success: function (json) {
-                        that.view.render(json.html);
-                        common.mediator.emit('modules:related:loaded', [json.html]);
-                    },
-                    error: function () {
-                        common.mediator('module:error', 'Failed to load related', 'related.js');
-                    }
-                });
-            }
-        };
+    function related(config, context, url) {
+        var container;
+
+        if (config.page.hasStoryPackage) {
+
+            new Expandable({dom: context.querySelector('.related-trails'), expanded: false}).init();
+            common.mediator.emit('modules:related:loaded', config, context);
+
+        } else if (config.switches.relatedContent) {
+
+            container = context.querySelector('.js-related');
+
+            lazyLoad({
+                url: url,
+                container: container,
+                jsonpCallbackName: 'showRelated',
+                success: function () {
+                    new Expandable({dom: container.querySelector('.related-trails'), expanded: false}).init();
+                    common.mediator.emit('modules:related:loaded', config, context);
+                }
+            });
+        }
 
     }
     
-    return Related;
-
+    return related;
 });

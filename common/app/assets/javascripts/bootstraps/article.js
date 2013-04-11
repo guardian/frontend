@@ -54,17 +54,12 @@ define([
 
                 reader.init();
             }
-        },
-
-        initExperiments: function(config, context) {
-            var e = new Experiment(config, context);
-            e.init();
         }
     };
 
     var ready = function(config, context) {
 
-        modules.initExperiments(config, context);
+        common.mediator.emit("page:article:ready", config, context);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);

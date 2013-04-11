@@ -94,9 +94,6 @@ define([
                     } else {
                         that.view.fallback();
                     }
-                },
-                error: function () {
-                    that.view.fallback();
                 }
             });
         };
