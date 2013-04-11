@@ -36,7 +36,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     , button = document.getElementById('control');
 
                 expect(callback).toHaveBeenCalledOnce();
-                expect(container.innerHTML).toBe('<div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');
+                expect(container.innerHTML).toBe('<h3 class="headline-list__tile type-5">Top stories</h3><div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');
                 expect(button.className).not.toContain('is-off');
             })
         });
