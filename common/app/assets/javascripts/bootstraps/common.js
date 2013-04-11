@@ -106,8 +106,11 @@ define([
             });
         },
 
-        transcludeTopStories: function (config) {
-            new TopStories().load(config);
+        transcludeTopStories: function () {
+            var topStories = new TopStories();
+            common.mediator.on('page:ready', function(config, context) {
+                topStories.load(config, context);
+            });
         },
 
         transcludeRelated: function () {
@@ -116,7 +119,7 @@ define([
             });
         },
 
-        transcludeMostPopular: function () {
+        transcludePopular: function () {
             common.mediator.on('page:ready', function(config, context) {
                 popular(config, context);
             });
@@ -197,7 +200,6 @@ define([
 
     var pageReady = function (config, context) {
         modules.initialiseNavigation(config);
-        modules.transcludeTopStories(config);
 
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
@@ -217,7 +219,8 @@ define([
         modules.showTabs();
         modules.showRelativeDates();
         modules.transcludeRelated();
-        modules.transcludeMostPopular();
+        modules.transcludePopular();
+        modules.transcludeTopStories();
     };
 
     return {
