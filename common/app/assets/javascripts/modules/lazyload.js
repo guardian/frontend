@@ -8,7 +8,6 @@ define(['common', 'ajax'], function (common, ajax) {
             url               - string
             container         - element object
             success           - callback function, optional
-            error             - callback function, optional
             jsonpCallbackName - string, optional
         */
 
@@ -23,12 +22,6 @@ define(['common', 'ajax'], function (common, ajax) {
                     opts.container.innerHTML = json.html;
                     if (typeof opts.success === 'function') {
                         opts.success();
-                    }
-                },
-                error: function () {
-                    common.mediator('module:error', 'Failed to lazyload ' + opts.url, 'lazyload.js');
-                    if (typeof opts.error === 'function') {
-                        opts.error();
                     }
                 }
             });
