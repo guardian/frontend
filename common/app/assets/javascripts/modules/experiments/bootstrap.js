@@ -1,68 +1,74 @@
 define([
-        'modules/experiments/segmentor', // something that can segment the users
-        
-        // list of live experiments here
-        'modules/experiments/tests/gallery'
+    'modules/userPrefs',
 
-        ], function () {
+    //Current tests
+    'modules/experiments/tests/relatedContent'
+], function (
+    userPrefs,
+    relatedContent) {
     
-    var tests = {};
-    
-    function storeTest(testName, variantName) {
-        abTest.cookie = 'frontend-ab-test-' + testName + '=' + variantName + ';path=/;domain=.guardian.co.uk;max-age=600';
-        
-        return abTest;
-    }
-    
-    function inTest(testName) {
-        var testCookie = abTest.cookie.split('; ').filter(function(cookie) {
-            return cookie.split('=')[0] = 'frontend-ab-test-' + testName;
-        })[0];
-        
-        if (testCookie) {
-            return testCookie.split('=')[1];
-        } else {
-            return false;
-        }
-    }
-
-    var abTest = {
-            
-        setCookie: document.cookie,
-            
-        add: function(testName, variants) {
-            tests[testName] = variants;
-            
-            return abTest;
-        },
-        
-        get: function(testName) {
-            return tests[testName];
-        },
-        
-        start: function(testName) {
-            var test = tests[testName],
-                // are we already in the test
-                testVariant = inTest(testName);
-            
-            if (testVariant === false) {
-                var variantNames = ['control'];
-                for (var variantName in test) {
-                    variantNames.push(variantName);
-                }
-                testVariant = variantNames[Math.floor(Math.random() * variantNames.length)];
-                // store test's variant
-                storeTest(testName, testVariant);
-            }
-            
-            // run variant (if not control)
-            if(testVariant !== 'control') { test[testVariant](); }
-            
-            return abTest;
-        }
-            
+    var TESTS = {
+        "related-content" : relatedContent
     };
 
-    return abTest;
+    // gu.prefs.ab = {test: 'testId', variant: 'variantName'}
+    var key = 'ab';
 
+    function inTest() {
+        var test = JSON.parse(userPrefs.get(key));
+        return (test && TESTS[test.id]) ? test : false;
+    }
+
+    function storeTest(test, variant) {
+        var data = {test: test, variant: variant};
+        userPrefs.set(key, JSON.stringify(data));
+    }
+
+    function clearTest() {
+        userPrefs.remove(key);
+    }
+
+    function runVariant(test, variant) {
+        for(var i= 0, l = test.variants.length;  i < l; i++) {
+            if(test.variants[i].id === variant) {
+                test.variants[i].test();
+            }
+        }
+    }
+        
+    function start(test) {
+
+        if (Math.random() < test.audience) {
+            var variantNames = [];
+
+            for(var i= 0, l = test.variants.length;  i < l; i++) {
+                variantNames.push(test.variants[i].id);
+            }
+
+            var testVariant = variantNames[Math.floor(Math.random() * variantNames.length)];
+
+            runVariant(test, testVariant);
+            storeTest(test.id, testVariant);
+        }
+
+    }
+
+    function init(config) {
+        var currentTest = inTest();
+        if(currentTest) {
+            runVariant(TESTS[currentTest.id], currentTest.variant);
+        } else {
+            clearTest();
+            for(var i = 0, l = TESTS.length; i<l; i++) {
+               if(inTest()) { break; }
+               if(TESTS[i].canRun) {
+                   start(TESTS[i]);
+               }
+            }
+        }
+    }
+
+    return {
+        init: init
+    };
 });

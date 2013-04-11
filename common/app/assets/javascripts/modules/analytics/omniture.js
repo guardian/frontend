@@ -103,8 +103,6 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
 
             s.prop47    = config.page.edition || '';
 
-
-
             if (config.switches.optimizely === true) {
                 s.prop51    = optimizely.readTests();
             }
@@ -147,9 +145,6 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
                 that.loaded();
             } else {
                 var dependOn = ['js!omniture'];
-                if (config.switches.optimizely === true) {
-                    dependOn.push('js!' + config.page.optimizelyUrl);
-                }
                 require(dependOn, function(placeholder){
                     s = window.s;
                     that.loaded();

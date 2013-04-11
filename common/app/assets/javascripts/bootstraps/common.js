@@ -176,9 +176,6 @@ define([
 
         loadOphanAnalytics: function (config) {
             var dependOn = [config.page.ophanUrl];
-            if (config.switches.optimizely === true) {
-                dependOn.push('js!' + config.page.optimizelyUrl);
-            }
             require(dependOn, function (Ophan) {
                 if (config.switches.optimizely === true) {
                     Ophan.additionalViewData(function() {
