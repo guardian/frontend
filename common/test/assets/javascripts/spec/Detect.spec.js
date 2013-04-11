@@ -1,4 +1,7 @@
 define(['modules/detect'], function(detect) {
+
+    var windowWidth = window.innerWidth,
+        windowHeight = window.innerHeight;
    
     describe("Layout", function() {
         
@@ -12,6 +15,12 @@ define(['modules/detect'], function(detect) {
             expect(detect.getLayoutMode(700)).toBe('tablet');
             
             expect(detect.getLayoutMode(2000)).toBe('extended');
+        });
+
+        it("should return a function to test layout dimension changes", function(){
+            var hasCrossedTheMagicLines = detect.hasCrossedBreakpoint();
+
+            expect(typeof hasCrossedTheMagicLines).toBe('function');
         });
 
     });
