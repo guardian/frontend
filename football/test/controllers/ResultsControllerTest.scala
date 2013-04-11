@@ -19,7 +19,7 @@ class ResultsControllerTest extends FlatSpec with ShouldMatchers {
     header("Content-Type", result).get should be("application/javascript")
   }
   
-  val tag = "arsenal"
+  val tag = "premierleague"
   
   it should "200 when content type is tag results" in Fake {
     val result = controllers.ResultsController.renderTag(tag)(TestRequest())
