@@ -76,7 +76,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop25).toBe("Middle East Live");
             expect(s.prop14).toBe("build-73");
             expect(s.prop47).toBe("US");
-            expect(s.prop48).toBe("low");
+            expect(s.prop68).toBe("low");
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");

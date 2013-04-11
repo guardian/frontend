@@ -9,7 +9,7 @@ define(['modules/detect'], function(detect) {
         it("should return the correct layout mode for the device resolution", function(){
             expect(detect.getLayoutMode(100)).toBe('mobile');
 
-            expect(detect.getLayoutMode(570)).toBe('tablet');
+            expect(detect.getLayoutMode(700)).toBe('tablet');
             
             expect(detect.getLayoutMode(2000)).toBe('extended');
         });

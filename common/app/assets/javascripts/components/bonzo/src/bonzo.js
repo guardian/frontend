@@ -8,7 +8,8 @@
     , html = doc.documentElement
     , parentNode = 'parentNode'
     , specialAttributes = /^(checked|value|selected|disabled)$/i
-    , specialTags = /^(select|fieldset|table|tbody|tfoot|td|tr|colgroup)$/i // tags that we have trouble inserting *into*
+      // tags that we have trouble inserting *into*
+    , specialTags = /^(select|fieldset|table|tbody|tfoot|td|tr|colgroup)$/i
     , simpleScriptTagRe = /\s*<script +src=['"]([^'"]+)['"]>/
     , table = ['<table>', '</table>', 1]
     , td = ['<table><tbody><tr>', '</tr></tbody></table>', 3]
@@ -68,6 +69,39 @@
           return s.replace(trimReplace, '')
         }
 
+    , getStyle = features.computedStyle
+        ? function (el, property) {
+            var value = null
+              , computed = doc.defaultView.getComputedStyle(el, '')
+            computed && (value = computed[property])
+            return el.style[property] || value
+          }
+        : !(ie && html.currentStyle)
+          ? function (el, property) {
+              return el.style[property]
+            }
+          :
+          /**
+           * @param {Element} el
+           * @param {string} property
+           * @return {string|number}
+           */
+          function (el, property) {
+            var val, value
+            if (property == 'opacity' && !features.opasity) {
+              val = 100
+              try {
+                val = el['filters']['DXImageTransform.Microsoft.Alpha'].opacity
+              } catch (e1) {
+                try {
+                  val = el['filters']('alpha').opacity
+                } catch (e2) {}
+              }
+              return val / 100
+            }
+            value = el.currentStyle ? el.currentStyle[property] : null
+            return el.style[property] || value
+          }
 
   function isNode(node) {
     return node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11)
@@ -86,13 +120,12 @@
     return node
   }
 
-
   /**
    * @param {string} c a class name to test
    * @return {boolean}
    */
   function classReg(c) {
-    return new RegExp("(^|\\s+)" + c + "(\\s+|$)")
+    return new RegExp('(^|\\s+)' + c + '(\\s+|$)')
   }
 
 
@@ -211,41 +244,6 @@
       return p ? camelize(p) : null
   }
 
-  var getStyle = features.computedStyle ?
-    function (el, property) {
-      var value = null
-        , computed = doc.defaultView.getComputedStyle(el, '')
-      computed && (value = computed[property])
-      return el.style[property] || value
-    } :
-
-    (ie && html.currentStyle) ?
-
-    /**
-     * @param {Element} el
-     * @param {string} property
-     * @return {string|number}
-     */
-    function (el, property) {
-      if (property == 'opacity' && !features.opasity) {
-        var val = 100
-        try {
-          val = el['filters']['DXImageTransform.Microsoft.Alpha'].opacity
-        } catch (e1) {
-          try {
-            val = el['filters']('alpha').opacity
-          } catch (e2) {}
-        }
-        return val / 100
-      }
-      var value = el.currentStyle ? el.currentStyle[property] : null
-      return el.style[property] || value
-    } :
-
-    function (el, property) {
-      return el.style[property]
-    }
-
   // this insert method is intense
   function insert(target, host, fn, rev) {
     var i = 0, self = host || this, r = []
@@ -333,6 +331,21 @@
    */
   function setter(el, v) {
     return typeof v == 'function' ? v(el) : v
+  }
+
+  function scroll(x, y, type) {
+    var el = this[0]
+    if (!el) return this
+    if (x == null && y == null) {
+      return (isBody(el) ? getWindowScroll() : { x: el.scrollLeft, y: el.scrollTop })[type]
+    }
+    if (isBody(el)) {
+      win.scrollTo(x, y)
+    } else {
+      x != null && (el.scrollLeft = x)
+      y != null && (el.scrollTop = y)
+    }
+    return this
   }
 
   /**
@@ -553,6 +566,17 @@
         return this.remove()
       }
 
+      /**
+       * @param {Object=} opt_host an optional host scope (primarily used when integrated with Ender)
+       * @return {Bonzo}
+       */
+    , clone: function (opt_host) {
+        var ret = [] // don't change original array
+          , l, i
+        for (i = 0, l = this.length; i < l; i++) ret[i] = cloneNode(opt_host || this, this[i])
+        return bonzo(ret)
+      }
+
       // class management
 
       /**
@@ -705,7 +729,7 @@
        * @return {Element|Node}
        */
     , related: function (method) {
-        return this.map(
+        return bonzo(this.map(
           function (el) {
             el = el[method]
             while (el && el.nodeType !== 1) {
@@ -716,7 +740,7 @@
           function (el) {
             return el
           }
-        )
+        ))
       }
 
 
@@ -869,12 +893,15 @@
        */
     , attr: function (k, opt_v) {
         var el = this[0]
+          , n
+
         if (typeof k != 'string' && !(k instanceof String)) {
-          for (var n in k) {
+          for (n in k) {
             k.hasOwnProperty(n) && this.attr(n, k[n])
           }
           return this
         }
+
         return typeof opt_v == 'undefined' ?
           !el ? null : specialAttributes.test(k) ?
             stateAttributes.test(k) && typeof el[k] == 'string' ?
@@ -992,6 +1019,7 @@
     var c = el.cloneNode(true)
       , cloneElems
       , elElems
+      , i
 
     // check for existence of an event cloner
     // preferably https://github.com/fat/bean
@@ -1003,25 +1031,10 @@
       cloneElems = host.$(c).find('*')
       elElems = host.$(el).find('*')
 
-      for (var i = 0; i < elElems.length; i++)
+      for (i = 0; i < elElems.length; i++)
         host.$(cloneElems[i]).cloneEvents(elElems[i])
     }
     return c
-  }
-
-  function scroll(x, y, type) {
-    var el = this[0]
-    if (!el) return this
-    if (x == null && y == null) {
-      return (isBody(el) ? getWindowScroll() : { x: el.scrollLeft, y: el.scrollTop })[type]
-    }
-    if (isBody(el)) {
-      win.scrollTo(x, y)
-    } else {
-      x != null && (el.scrollLeft = x)
-      y != null && (el.scrollTop = y)
-    }
-    return this
   }
 
   function isBody(element) {

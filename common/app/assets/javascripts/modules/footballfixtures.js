@@ -25,6 +25,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
             render: function (html) {
                 bonzo(options.prependTo).after(html);
                 common.mediator.emit('modules:footballfixtures:render');
+                if(options.expandable) {
+                    common.mediator.emit('modules:footballfixtures:expand', 'front-competition-fixtures');
+                }
             }
         };
         
@@ -49,13 +52,6 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 }
             });
         };
-
-        // Bindings
-        common.mediator.on('modules:footballfixtures:render', function() {
-            if(options.expandable) {
-                common.mediator.emit('modules:footballfixtures:expand', 'front-competition-fixtures');
-            }
-        }, this);
 
         this.generateQuery = function() {
             var query = this.queryString,

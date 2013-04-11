@@ -43,6 +43,10 @@
     padding: $baseline*2 $gutter $baseline $gutter;
   }
 
+    .nav--columns-football {
+      padding: $baseline*2 0 $baseline 0
+    }
+
     .nav--columns .nav__item {
       width: 46%;
       margin-right: 3%;

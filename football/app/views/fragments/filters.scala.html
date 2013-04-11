@@ -4,8 +4,8 @@
     @filterMap.get(name).map{ filters =>
         <li class="cf">
             <h2>@name</h2>
-            <ul class="nav nav-columns nav--top-border-off sections">
-                @filters.map{ filter => <li><a href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
+            <ul class="nav nav--columns nav--columns-football nav--top-border-off sections">
+                @filters.map{ filter => <li class="nav__item"><a class="nav__link" href="@filter.url" data-link-name="@filter.name">@filter.name</a></li> }
             </ul>
         </li>
     }

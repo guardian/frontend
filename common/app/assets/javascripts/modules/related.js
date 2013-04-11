@@ -10,12 +10,10 @@ define(['common', 'ajax'], function (common, ajax) {
                 common.mediator.emit('modules:related:render');
             }
         };
-
-        // Bindings
-        common.mediator.on('modules:related:loaded', this.view.render);
         
         // Model
         this.load = function (url) {
+            var that = this;
             if (switches.relatedContent) {
                 return ajax({
                     url: url,
@@ -23,6 +21,7 @@ define(['common', 'ajax'], function (common, ajax) {
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'showRelated',
                     success: function (json) {
+                        that.view.render(json.html);
                         common.mediator.emit('modules:related:loaded', [json.html]);
                     },
                     error: function () {
