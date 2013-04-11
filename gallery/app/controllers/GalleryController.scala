@@ -50,7 +50,12 @@ object GalleryController extends Controller with Logging {
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =
-    Cached(model.gallery) {
-      Ok(Compressed(views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)))
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail))
+    } getOrElse {
+      Cached(model.gallery) {
+        Ok(Compressed(views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)))
+      }
     }
+    
 }
