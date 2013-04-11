@@ -152,18 +152,6 @@
         "id":"pa-football-team/31"
       }]
     },{
-      "id":"football/yeoviltown",
-      "type":"keyword",
-      "webTitle":"Yeovil Town",
-      "webUrl":"http://www.guardian.co.uk/football/yeoviltown",
-      "apiUrl":"http://content.guardianapis.com/football/yeoviltown",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/6870"
-      }]
-    },{
       "id":"football/dumbarton",
       "type":"keyword",
       "webTitle":"Dumbarton",
@@ -174,6 +162,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/120"
+      }]
+    },{
+      "id":"football/yeoviltown",
+      "type":"keyword",
+      "webTitle":"Yeovil Town",
+      "webUrl":"http://www.guardian.co.uk/football/yeoviltown",
+      "apiUrl":"http://content.guardianapis.com/football/yeoviltown",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/6870"
       }]
     },{
       "id":"football/stetienne",
@@ -200,18 +200,6 @@
         "id":"pa-football-team/27826"
       }]
     },{
-      "id":"football/atalanta",
-      "type":"keyword",
-      "webTitle":"Atalanta",
-      "webUrl":"http://www.guardian.co.uk/football/atalanta",
-      "apiUrl":"http://content.guardianapis.com/football/atalanta",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26364"
-      }]
-    },{
       "id":"football/chesterfield",
       "type":"keyword",
       "webTitle":"Chesterfield",
@@ -222,6 +210,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/73"
+      }]
+    },{
+      "id":"football/atalanta",
+      "type":"keyword",
+      "webTitle":"Atalanta",
+      "webUrl":"http://www.guardian.co.uk/football/atalanta",
+      "apiUrl":"http://content.guardianapis.com/football/atalanta",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26364"
       }]
     },{
       "id":"football/benfica",

@@ -152,18 +152,6 @@
         "id":"pa-football-team/4"
       }]
     },{
-      "id":"football/gillingham",
-      "type":"keyword",
-      "webTitle":"Gillingham",
-      "webUrl":"http://www.guardian.co.uk/football/gillingham",
-      "apiUrl":"http://content.guardianapis.com/football/gillingham",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/77"
-      }]
-    },{
       "id":"football/gabon",
       "type":"keyword",
       "webTitle":"Gabon",
@@ -174,6 +162,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/37277"
+      }]
+    },{
+      "id":"football/gillingham",
+      "type":"keyword",
+      "webTitle":"Gillingham",
+      "webUrl":"http://www.guardian.co.uk/football/gillingham",
+      "apiUrl":"http://content.guardianapis.com/football/gillingham",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/77"
       }]
     },{
       "id":"football/catania",
@@ -536,18 +536,6 @@
         "id":"pa-football-team/26357"
       }]
     },{
-      "id":"football/torquay-united",
-      "type":"keyword",
-      "webTitle":"Torquay United",
-      "webUrl":"http://www.guardian.co.uk/football/torquay-united",
-      "apiUrl":"http://content.guardianapis.com/football/torquay-united",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/90"
-      }]
-    },{
       "id":"football/canada",
       "type":"keyword",
       "webTitle":"Canada",
@@ -558,6 +546,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/31901"
+      }]
+    },{
+      "id":"football/torquay-united",
+      "type":"keyword",
+      "webTitle":"Torquay United",
+      "webUrl":"http://www.guardian.co.uk/football/torquay-united",
+      "apiUrl":"http://content.guardianapis.com/football/torquay-united",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/90"
       }]
     },{
       "id":"football/wolfsburg",

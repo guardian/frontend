@@ -52,6 +52,6 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
 object Reference {
   def apply(s: String) = {
     val parts = s.split("/")
-    parts(0) -> parts(1)
+    parts(0) -> parts.drop(1).mkString("/")
   }
 }
