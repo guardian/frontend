@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 
 class SectionsControllerTest extends FlatSpec with ShouldMatchers {
 
-  "Sections Controller" should "200 when content type is front" in Fake {
+  "Sections Controller" should "200 when content type is sections" in Fake {
     val result = controllers.SectionsController.render()(TestRequest())
     status(result) should be(200)
   }
