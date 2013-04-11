@@ -13,8 +13,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
             bindEventToButton: function() {
                 if(dom[0] === undefined) { return; } //This is for pages with top-stories
-                var eventName = (window.ontouchstart) ? 'touchstart' : 'click';
-                bean.add(dom[0], eventName, function (e) {
+                bean.add(dom[0], 'click touchstart', function (e) {
                     var current = new Date().getTime();
                     var delta = current - lastClickTime;
                     if (delta >= delay) {
