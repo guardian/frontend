@@ -23,16 +23,6 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }
   }
 
-  def renderJson(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderSectionFront(model, "json")
-        case Right(_) => NotFound //do not redirect json
-      }
-    }
-  }
-
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Site(request).edition
     log.info(s"Fetching front: $path for edition $edition")
