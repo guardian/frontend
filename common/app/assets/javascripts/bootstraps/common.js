@@ -94,17 +94,20 @@ define([
 
         transcludeRelated: function (config){
             common.mediator.on("modules:related:load", function(){
-                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
-                    host,
+                var relatedExpandable,
                     pageId,
                     url;
 
                 if (config.page.hasStoryPackage) {
+                    relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
                     relatedExpandable.init();
                 } else {
                     pageId = config.page.pageId;
                     url =  '/related/' + pageId;
-                    common.mediator.on('modules:related:render', relatedExpandable.init);
+                    common.mediator.on('modules:related:render', function() {
+                        relatedExpandable = new Expandable({ id: 'related-trails', expanded: false });
+                        relatedExpandable.init();
+                    });
                     new Related(document.getElementById('js-related'), config.switches).load(url);
                 }
             });

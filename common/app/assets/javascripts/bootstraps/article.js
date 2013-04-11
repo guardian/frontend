@@ -77,14 +77,14 @@ define([
         },
 
         initExperiments: function(config) {
-            console.log(Experiment);
+
         }
     };
 
     var ready = function(config) {
 
         modules.initStory(config);
-        modules.initExperiments(config)
+        modules.initExperiments(config);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);

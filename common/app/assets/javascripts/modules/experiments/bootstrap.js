@@ -1,5 +1,5 @@
 define([
-        'modules/experiments/segmentor', // something that can segment the users         
+        'modules/experiments/segmentor', // something that can segment the users
         
         // list of live experiments here
         'modules/experiments/tests/gallery'
@@ -16,7 +16,7 @@ define([
     
     function inTest(testName) {
         var testCookie = abTest.cookie.split('; ').filter(function(cookie) {
-            return cookie.split('=')[0] = 'frontend-ab-test-' + testName; 
+            return cookie.split('=')[0] = 'frontend-ab-test-' + testName;
         })[0];
         
         if (testCookie) {
@@ -56,7 +56,7 @@ define([
             }
             
             // run variant (if not control)
-            (testVariant === 'control') || test[testVariant]();
+            if(testVariant !== 'control') { test[testVariant](); }
             
             return abTest;
         }
