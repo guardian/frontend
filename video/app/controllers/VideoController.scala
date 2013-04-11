@@ -38,7 +38,11 @@ object VideoController extends Controller with Logging {
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
-    Cached(model.video) {
-      Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.videoBody(model.video, model.storyPackage, Site(request).edition))
+    } getOrElse {
+      Cached(model.video) {
+        Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
+      }
     }
 }
