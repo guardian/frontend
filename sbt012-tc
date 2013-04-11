@@ -40,7 +40,7 @@ fi
 
 # Ivy configuration
 echo "setting ivy cache dir"
-IVY_PARAMS="-Dsbt.ivy.home=$HOME/.ivy2-frontend -Divy.home=$HOME/.ivy2-frontend"
+IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
 echo $IVY_PARAMS
 
 # proxy that Play uses
