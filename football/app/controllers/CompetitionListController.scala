@@ -18,10 +18,15 @@ object CompetitionListController extends Controller with CompetitionListFilters 
       "Internationals",
       "Rest of world"
     )
-
-    Cached(page) {
-      Ok(Compressed(views.html.competitions(filters, page, competitionList)))
+    
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.competitionsBody(filters, page, competitionList))
+    } getOrElse {
+      Cached(page)(
+        Ok(Compressed(views.html.competitions(filters, page, competitionList)))
+      )
     }
+    
   }
 
 }

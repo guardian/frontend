@@ -39,10 +39,15 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(4)) })
       }
     }
-
-    Cached(page) {
-      Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football", filters, None))))
+    
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.tablesBody(TablesPage(page, groups, "/football", filters, None)))
+    } getOrElse {
+      Cached(page)(
+        Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football", filters, None))))
+      )
     }
+
   }
 
   def renderTeamlist() = Action { implicit request =>
@@ -60,10 +65,15 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     }
 
     val comps = Competitions.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
-
-    Cached(page) {
-      Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)))
+    
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps))
+    } getOrElse {
+      Cached(page)(
+        Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)))
+      )
     }
+
   }
 
   def renderCompetition(competition: String) = Action { implicit request =>
@@ -76,10 +86,15 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
       )
-
-      Cached(page) {
-        Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
+    
+      request.getQueryString("callback").map { callback =>
+        JsonComponent(views.html.fragments.tablesBody(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition))))
+      } getOrElse {
+        Cached(page)(
+          Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
+        )
       }
+
     }.getOrElse(Redirect("/football/tables"))
   }
 }
