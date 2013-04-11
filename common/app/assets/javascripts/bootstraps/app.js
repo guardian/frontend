@@ -28,7 +28,8 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var r = new Router();
+            var r = new Router(),
+                context = document.getElementById('container');
 
             //Fronts
             r.get('/', function(req) { Front.init(req, config); });
@@ -66,11 +67,11 @@ define('bootstraps/app', [
             bootstrapCommon.runOnce(config);
 
             // Bindings for "repeatable" actions
-            common.mediator.on('page:ready', bootstrapCommon.pageView);
+            common.mediator.on('page:ready', bootstrapCommon.pageReady);
             common.mediator.on('page:ready', pageRoute);
 
             // Emit the initial synthetic ready event
-            common.mediator.emit('page:ready', config);
+            common.mediator.emit('page:ready', config, context);
         });
     };
 

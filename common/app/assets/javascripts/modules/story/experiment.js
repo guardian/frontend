@@ -16,7 +16,7 @@ define([
     Story
 ) {
 
-    function Experiment(config) {
+    function Experiment(config, context) {
 
         var experimentName = localStorage.getItem('gu.experiment') || '',
             that = this;
@@ -50,7 +50,6 @@ define([
                     case 'somethingElse':
                         break;
                 }
-                common.mediator.emit('modules:experiment:render');
             },
 
             renderStoryModule01: function(json) {
@@ -70,18 +69,18 @@ define([
                 }
 
                 story = new Story.init({}, config);
+
+                if(context.querySelector('.accordion')) {
+                    var a = new Accordion(context);
+                }
+
+                common.mediator.emit('modules:tabs:loaded', {}, context);
             },
 
             fallback: function () {
                 common.mediator.emit("modules:related:load");
             }
         };
-
-        // Bindings
-        common.mediator.on('modules:experiment:loaded', this.view.render);
-        common.mediator.on('modules:experiment:render', function() {
-            common.mediator.emit('modules:tabs:render');
-        });
 
         this.load = function (url) {
             return ajax({

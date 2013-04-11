@@ -3,12 +3,13 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
     function Images() {
     
         var connectionSpeed = detect.getConnectionSpeed(),
-            layoutMode = detect.getLayoutMode();
+            layoutMode = detect.getLayoutMode(),
+            self = this;
 
         // View
 
         this.view = {
-            upgrade: function () {
+            upgrade: function (context) {
 
                 // upgrade svg images
                 if (detect.hasSvgSupport()) {
@@ -16,7 +17,7 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 }
 
                 //upgrade other images;
-                common.$g('img').each(function(image, index) {
+                [].forEach.call(context.getElementsByTagName('img'), function(image) {
                     image = bonzo(image);
                     if (!image.attr('data-fullsrc')) {
                         return;
@@ -35,12 +36,12 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 });
             }
         };
-   
+
         // Model
         
-        this.upgrade = function () {
+        this.upgrade = function (context) {
             if (connectionSpeed !== 'low') {
-                this.view.upgrade();
+                self.view.upgrade(context);
                 common.mediator.emit('modules:images:upgrade');
             }
         };
