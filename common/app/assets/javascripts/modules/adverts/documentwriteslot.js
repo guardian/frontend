@@ -24,7 +24,7 @@ define([
             domwrite.render(slot);
             this.loaded = true;
          } catch(e) {
-             common.mediator.emit('module:error', e, 'document-write.js');
+             common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };
 

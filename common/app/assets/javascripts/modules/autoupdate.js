@@ -101,6 +101,7 @@ define([
                         that.off();
                         that.view.destroy();
                     } else {
+                        that.view.render(response);
                         common.mediator.emit('modules:autoupdate:loaded', response);
                     }
                 },
@@ -130,9 +131,6 @@ define([
         this.setPref = function(pref) {
             userPrefs.set(options.prefName, pref);
         };
-
-        // Bindings
-        common.mediator.on('modules:autoupdate:loaded', this.view.render);
 
         // Initialise
         this.init = function () {

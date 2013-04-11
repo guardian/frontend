@@ -25,8 +25,9 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                     var fullWidth = parseFloat(image.attr('data-full-width'));
                     var fullsrc = image.attr('data-fullsrc');
                     var forceUpgrade = image.attr('data-force-upgrade');
+
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if(forceUpgrade || layoutMode === 'extended') {
+                        if(forceUpgrade || layoutMode === 'desktop') {
                             image.attr('src', fullsrc);
                             image.addClass('image-high');
                         }
@@ -34,15 +35,12 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 });
             }
         };
-
-        // Bindings
-        
-        common.mediator.on('modules:images:upgrade', this.view.upgrade);
    
         // Model
         
         this.upgrade = function () {
             if (connectionSpeed !== 'low') {
+                this.view.upgrade();
                 common.mediator.emit('modules:images:upgrade');
             }
         };

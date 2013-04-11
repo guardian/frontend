@@ -1,13 +1,44 @@
-#container {
-    clear: both;
-    max-width: 1024px;
+/* ==========================================================================
+   Global wrapper
+   ========================================================================== */
 
-  @media (min-width: 40.0625em) {
-        padding-bottom: 10%;
-        width: 90%;
-        margin: 0 auto;
+#container {
+  position: relative;
+  clear: both;
+  max-width: 80em;
+  max-width: 125rem;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Global header and navigation
+   ========================================================================== */
+
+#header {
+  position: relative;
+  background-color: $blue;
+}
+
+#logo {
+  display: block;
+  float: left;
+  margin: 20px 0 18px $gutter;
+  text-indent: -9999px;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    background-size: 100%;
+    background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
   }
 }
+
+
+/*
+   Layout helpers
+   ========================================================================== */
+
+/**
+ * @todo Should these be moved to helpers?
+ */
 
 .component {
     margin-bottom: 20px;

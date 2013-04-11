@@ -28,7 +28,7 @@ public class StorySteps {
 
     @Then("^Latest developments is displayed$")
     public void Latest_developments_is_displayed() throws Throwable {
-        WebElement heading = webDriver.findElement(By.cssSelector(".story-latest .story-sub-head"));
+        WebElement heading = webDriver.waitForElement(By.cssSelector(".story-latest .story-sub-head"));
         assertTrue(heading.getText().equals("Latest"));
     }
 

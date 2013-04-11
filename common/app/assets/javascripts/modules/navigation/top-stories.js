@@ -12,7 +12,8 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     $topstoriesHeader = bonzo(topstoriesHeader),
                     className = "is-off";
 
-                topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
+                topstoriesHeader.innerHTML = '<h3 class="headline-list__tile type-5">Top stories</h3>'
+                    + '<div class="headline-list headline-list--top box-indent" data-link-name="top-stories">'
                     + html
                     + '</div>';
 

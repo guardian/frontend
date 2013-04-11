@@ -15,19 +15,17 @@ define(['common', 'ajax'], function (common, ajax) {
 
         };
 
-        // Bindings
-
-        common.mediator.on('modules:popular:loaded', this.view.render);
-
         // Model
 
         this.load = function (url) {
+            var that = this;
             return ajax({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'showMostPopular',
                     success: function (json) {
+                        that.view.render(json.html);
                         common.mediator.emit('modules:popular:loaded', [json.html]);
                     },
                     error: function () {

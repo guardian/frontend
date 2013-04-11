@@ -1,88 +1,164 @@
 //Module: witness
 //Desc: This file contains all styles for Guardian Witness
 
-.element-witness {
+.from-content-api {
+
+  .element-witness {
     border: 1px solid $darkMushroom;
     margin-bottom: $baseline*5;
-    padding-top: $baseline*3;
-}
+  }
 
-.element-witness a,
-.element-witness a:hover,
-.element-witness a:link {
+  .element-witness a,
+  .element-witness a:hover,
+  .element-witness a:link {
     color: #333333;
-}
+  }
 
-.element-witness a:visited {
-    color: #7CA6BE;
-}
+  .element-witness {
+    a, a:link, a:visited {
+      color: #005689;
+      text-decoration: none;
+    }
+  }
 
-.element-witness p {
+  .element-witness p {
     @extend .type-7;
-}
+  }
 
-.element-witness--title {
-    @extend .type-5;
+  .element-witness--title {
+    @extend .type-3;
     margin-bottom: $baseline*2;
- }
+  }
 
-.element-witness--main {
+  .element-witness--main {
     padding: $baseline*3 $baseline*2 $baseline*4 $baseline*2;
-}
+  }
 
-.element-witness--brand {
-    padding: 0 $baseline*2 0 $baseline*2;
-}
+  .element-witness--brand {
+    padding: 0 $baseline*2 0 0;
+    line-height: 14px;
+  }
 
-.element-witness figcaption:before{
-    display:none;
-}
+  .element-witness figcaption:before {
+    display: none;
+  }
 
-.element-witness figcaption {
+  .element-witness figcaption {
     margin: $baseline*4 0 0 0;
-}
+  }
 
-.element-witness-video iframe {
+  .element-witness-video iframe {
     max-width: 100%;
-}
+  }
 
-.element-witness--main img {
+  .element-witness--main img {
     width: 100%;
     max-width: 100%;
     margin-bottom: 0px;
-}
+  }
 
-.element-witness--metadata {
+  .element-witness--metadata {
+    p {
+      @extend .type-10;
+    }
     border-top: 1px solid $darkMushroom;
     background: $mushroom;
     padding: $baseline*3 $baseline*2 $baseline*3 $baseline*2;
     line-height: 1.0em;
-}
+    color: #666666 !important;
+  }
 
-.element-witness--metadata img{
+  .element-witness--metadata img {
     margin-bottom: 0px;
-}
+  }
 
-.element-witness--author {
+  p.element-witness--source {
+    @extend .type-10;
+
+    padding-left: $baseline*2;
+    color: #666666;
+  }
+
+  .element-witness--author {
     @extend .type-11;
     display: inline-block;
     margin-bottom: 0px;
     width: 100%;
-}
+  }
 
-.element-witness--author-name {
+  .element-witness--author a {
+    padding-left: $baseline;
+  }
+
+  .element-witness--author-name {
     @extend .type-11;
     display: inline-block;
     font-weight: bold;
-}
+  }
 
-.element-witness--author time {
-    @extend .type-11;
+  .element-witness--author time {
     display: block;
-}
+  }
 
-.witness-avatar {
+  .witness-avatar {
     float: left;
     padding: 0 $baseline*2 0 0;
+  }
+
+  .element-witness--date {
+    margin-bottom: 0px;
+  }
 }
+
+.witness-call-to-action {
+  position: relative;
+  overflow: hidden;
+  max-height: 47px;
+  margin: 0 $baseline*4 $baseline*4 $baseline*4;
+
+  p {
+    @extend .type-10;
+    float: left;
+    padding: 2px $baseline*2 $baseline $baseline*2;
+    margin-left: 50px;
+  }
+
+  .i-witness-logo {
+    display: block;
+    overflow: hidden;
+  }
+}
+
+.element-witness-text .element-witness--main {
+  @extend .svg-i-quote-marks;
+  background-position: $baseline*2 0 !important;
+}
+
+.witness-call-to-action--box {
+  border: 1px solid $darkMushroom;
+  overflow: hidden;
+  max-height: 45px;
+  margin: 1px 0 0 0px;
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.i-powered-by-ee {
+  float: right;
+  border-left: 1px solid $darkMushroom;
+  margin: 6px 8px 0 4px;
+  background-position: 8px 0 !important;
+  padding-left: 8px;
+}
+
+.i-ee-add-button {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  z-index: 100;
+}
+
 

@@ -33,6 +33,12 @@
     display: none;
 }
 
+.mobile-only {
+  @media only screen and (min-width: $tablet) {
+    display: none !important;
+  }
+}
+
 // Micro clearfix
 // http://nicolasgallagher.com/micro-clearfix-hack/
 

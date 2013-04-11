@@ -4,6 +4,6 @@
   "commit": "99c9c99d58e9aa51fd8eef46c245c69f98830ed6",
   "repository": {
     "type": "git",
-    "url": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git"
+    "url": "git@github.com:scottjehl/iOS-Orientationchange-Fix.git"
   }
 }

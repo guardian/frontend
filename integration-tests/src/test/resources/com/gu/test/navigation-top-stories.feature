@@ -1,4 +1,4 @@
- @core-navigation @navigation-top-stories
+ @core-navigation @ignore
 Feature: Navigation - Top Stories 
 
 	In order to explore the latest Guardian stories 

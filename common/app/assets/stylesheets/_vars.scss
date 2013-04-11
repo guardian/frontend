@@ -1,29 +1,52 @@
-// note: try to at least alphabetise these within sections
+/* ==========================================================================
+    Global Variables
+   ========================================================================== */
+/**
+ *  Be careful of SASS variable scope: http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
+ **/
 
-//Legacy - can we remove?
+/* Breakpoints
+ ========================================================================== */
+$mobile: 18.75em; //300px
+$tablet: 37.5em; //600px
+$desktop: 56.25em; //900px
+
+/* Tweakpoints
+ ========================================================================== */
+ $desktopAd: 810px; // Pixel width for leader board change.
+
+/* Layout dimensions
+ ========================================================================== */
+$baseline: 4px;
+$gutter: 16px;
 $inArticleInlineImgWidth: 114px;
-$navBorderWidth: 10px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
 
-//Margins and paddings
-$baseline: 4px;
-$gutter: 16px;
-
-//Fonts
+/* Fonts
+ ========================================================================== */
 $sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
-//Colours
+/* Colours
+ ========================================================================== */
+/**
+ * @todo: Blues need comments to associate with brand/logo colours
+ **/
 $blue: #214583;
 $darkBlue: #152E5F;
+$lightBlue: #95B2CB;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
 $darkMushroom: #E3E3DB;
 
-// zones
-// (be sure to update the styleguide when changing these)
+/* Zones
+ ========================================================================== */
+
+/** (be sure to update the styleguide when changing these)
+ * note: try to at least alphabetise these within sections
+ **/
 $articleOrange: #e47a39; //Used for live-blogging
 $businessBlue: #004179;
 $commentBlue: #004179;
@@ -37,6 +60,7 @@ $sportDark: #005D1D;
 $sportMid: #057227;
 $travelBlue: #066EC9;
 
-//Football
+/* Football
+ ========================================================================== */
 $homeColour: $sportBright;
 $awayColour: #19646E;

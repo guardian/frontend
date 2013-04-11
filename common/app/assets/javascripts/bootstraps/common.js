@@ -14,6 +14,7 @@ define([
     'modules/navigation/controls',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
+    'modules/navigation/search',
     'modules/related',
     'modules/popular',
     'modules/expandable',
@@ -22,10 +23,11 @@ define([
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
+    'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
-    'modules/search',
-    'modules/analytics/omnitureMedia'
+    'modules/analytics/omnitureMedia',
+    'modules/debug'
 ], function (
     common,
     ajax,
@@ -41,6 +43,7 @@ define([
     Control,
     TopStories,
     Sections,
+    Search,
     Related,
     Popular,
     Expandable,
@@ -49,10 +52,11 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    optimizely,
     Adverts,
     Cookies,
-    Search,
-    Video
+    Video,
+    Debug
 ) {
 
     var modules = {
@@ -61,9 +65,12 @@ define([
             ajax.init(config.page.ajaxUrl);
         },
 
-        attachGlobalErrorHandler: function () {
-            var e = new Errors(window);
-                e.init();
+        attachGlobalErrorHandler: function (config) {
+            var e = new Errors({
+                window: window,
+                isDev: config.page.isDev
+            });
+            e.init();
             common.mediator.on("module:error", e.log);
         },
 
@@ -71,17 +78,24 @@ define([
             new Images().upgrade();
         },
 
+        showDebug: function () {
+            new Debug().show();
+        },
+
         initialiseNavigation: function (config) {
 
             // the section panel
             new Sections().init();
+            new Search(config).init();
 
             // the toolbar
             var t = new Control({id: 'topstories-control-header'}),
-                s = new Control({id: 'sections-control-header'});
+                s = new Control({id: 'search-control-header'}),
+                n = new Control({id: 'sections-control-header'});
 
             t.init();
             s.init();
+            n.init();
 
             common.mediator.on('modules:topstories:render', function(args) {
                 t.show();
@@ -161,7 +175,18 @@ define([
         },
 
         loadOphanAnalytics: function (config) {
-            require([config.page.ophanUrl], function (Ophan) {
+            var dependOn = [config.page.ophanUrl];
+            if (config.switches.optimizely === true) {
+                dependOn.push('js!' + config.page.optimizelyUrl);
+            }
+            require(dependOn, function (Ophan) {
+                if (config.switches.optimizely === true) {
+                    Ophan.additionalViewData(function() {
+                        return {
+                            "optimizely": optimizely.readTests()
+                        };
+                    });
+                }
                 Ophan.startLog();
             });
         },
@@ -176,36 +201,18 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
         }
     };
 
-    var ready = function(config) {
-        modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler();
-        modules.loadFonts(config, navigator.userAgent);
+    var pageView = function (config) {
         modules.upgradeImages();
         modules.showTabs();
-
         modules.initialiseNavigation(config);
         modules.transcludeTopStories(config);
-
         modules.transcludeRelated(config);
         modules.transcludeMostPopular(config.page.section, config.page.edition);
-
-        modules.initialiseSearch(config);
-
         modules.showRelativeDates();
-    };
 
-    // If you can wait for load event, do so.
-    var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config);
             modules.loadOphanAnalytics(config);
@@ -214,13 +221,16 @@ define([
         });
     };
 
-    var init = function (config) {
-        ready(config, userPrefs);
-        defer(config);
+    var runOnce = function (config) {
+        modules.showDebug();
+        modules.initialiseAjax(config);
+        modules.attachGlobalErrorHandler(config);
+        modules.loadFonts(config, navigator.userAgent);
     };
 
     return {
-        init: init
+        runOnce: runOnce,
+        pageView: pageView
     };
 
 });

@@ -1,28 +1,31 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @defining(Site(request)) { site =>
-     <nav role="navigation" aria-label="Guardian sections">
-        <ul class="nav nav-columns nav-top-border-off @if(isFooter){nav-footer} cf">
+     <nav role="navigation" aria-label="Guardian sections"
+        @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
+            data-link-name="global navigation: header : sections"}>
+        <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
 
-            @Navigation(request).map{ section =>
-            <li>
-                <a href="@section.href"
-                   data-link-name="@section.linkName"
-                @if("/" + page.id == section.href) { class="is-active @if(!isFooter){zone-color}"}
-                @if(section.newWindow){ target="_blank" }
-                >
-                @HtmlFormat.raw(section.title)
+            @Navigation(page, request).map{ section =>
+            <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                <a href="@section.name.href"
+                    data-link-name="@section.name.linkName"
+                    class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+                    @if(section.name.newWindow){ target="_blank" }>
+                        @HtmlFormat.raw(section.name.title)
                 </a>
             </li>
             }
-            <li><a data-link-name="all sections" href="/sections">All sections</a></li>
+            <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
         </ul>
 
-        <ul class="nav nav-columns nav-section-divider nav-top-border-off @if(isFooter){nav-footer} cf">
+        <ul class="nav nav--columns nav--section-divider @if(isFooter){ nav--top-border-off nav--footer} cf">
+            <li class="nav__item"><a class="nav__link" href="https://soulmates.guardian.co.uk/" target="_blank" data-link-name="Soulmates">Soulmates</a>
+            <li class="nav__item"><a class="nav__link" href="http://jobs.guardian.co.uk/" target="_blank" data-link-name="Jobs">Jobs</a>
             @if(site.isUsEdition) {
-            <li><a class="edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
             } else {
-            <li><a class="edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
             }
         </ul>
      </nav>

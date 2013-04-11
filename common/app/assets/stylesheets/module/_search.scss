@@ -1,8 +1,5 @@
 .search-box {
-    border-top: 2px solid #e3e3db;
-    margin: 0 $gutter - 2;
-    padding: $baseline 0 0 0;
-    height: 58px;
+  margin: 0 $gutter;
 }
 
 .gsc-search-box .gsib_a {
@@ -17,13 +14,27 @@
     height: 28px;
 }
 
-.gsc-search-box .gsc-search-button {
-    padding: 8px 14px;
-    margin: 5px 0 0 0;
+.gsc-search-box .gsc-input {
+    padding: 0 !important;
 }
 
-.search-results {
-    min-height: $gutter;
+td.gsc-search-button {
+    margin: 0 !important;
+    padding: 5px 0 0 0 !important;
+}
+
+input.gsc-search-button,
+input.gsc-search-button-v2 {
+    @include rounded-corners(0 !important);
+    margin: 0 !important;
+    padding: 7px 8px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+
+.gs-result {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;;
 }
 
 .gsc-control-cse {

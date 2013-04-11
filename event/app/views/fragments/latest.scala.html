@@ -5,7 +5,10 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    <h3 class="story-sub-head">Latest</h3>
+                
+                    <h3 class="story-sub-head">
+                        @story.labels.getOrElse("latest", "Latest")
+                    </h3>
 
                     @fragments.dateline(a.webPublicationDate, a.isLive, edition)
 
@@ -31,7 +34,7 @@
                         WitnessCleaner,
                         Summary(paras)
                     )
-                    <p><a class="continue" href="@a.url">Continue reading...</a></p>
+                    <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
                     <p><a class="back-to-top" href="#top">Back to top</a></p>
                 </div>
             </article>

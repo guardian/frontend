@@ -17,9 +17,11 @@
             @fragments.standfirst(article)
         </header>
 
+        @fragments.witnessCallToAction(article)
+
         <div class="after-header"></div>
 
-        @if(!article.isLive) {
+        @if(!article.isLive  && !article.hasVideoAtTop) {
             @article.mainPicture.map{ mainPicture =>
                 @article.mainPicture(width=220).map{ smallCrop =>
                     @fragments.img(mainPicture, smallCrop)

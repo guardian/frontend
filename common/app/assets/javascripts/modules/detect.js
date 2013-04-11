@@ -1,5 +1,5 @@
 /*
-    Module: detect/detect.js
+    Module: detect/detect.js                                                                                                 8
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
@@ -8,27 +8,52 @@
 
 define(function () {
 
-    var BASE_WIDTH     = 400,
-        MEDIAN_WIDTH   = 650,
-        EXTENDED_WIDTH = 900;
+    var BASE_WIDTH     = 600,
+        MEDIAN_WIDTH   = 900,
+        EXTENDED_WIDTH = 1280;
     
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
      * in firefox
      */
     function getLayoutMode(width) {
-        var mode = "base";
-        
-        width = (width !== undefined) ? width : window.innerWidth;
-        
+        var mode = "mobile";
+
+        width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+
         if (width > BASE_WIDTH) {
-            mode = "median";
+            mode = "tablet";
         }
+
         if (width > MEDIAN_WIDTH) {
+            mode = "desktop";
+        }
+
+        if (width > EXTENDED_WIDTH) {
             mode = "extended";
         }
 
         return mode;
+    }
+
+    /**
+     *     Util: returns a function that:
+     *     1. takes a callback function
+     *     2. calls it if the window width has crossed any of our layout modes since the last call to this function
+     *     Usage. Setup:
+     *      var hasCrossedTheMagicLines = hasCrossedBreakpoint()
+     *     then:
+     *       hasCrossedTheMagicLines(function(){ do stuff })
+     */
+    function hasCrossedBreakpoint(){
+        var was = getLayoutMode();
+        return function(callback){
+            var is = getLayoutMode();
+            if ( is !== was ) {
+                was = is;
+                callback(is);
+            }
+        };
     }
 
     function getPixelRatio() {
@@ -47,10 +72,10 @@ define(function () {
             total_time;
 
         var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-        
+
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            end_time = perf.timing.responseStart;
+            end_time = perf.timing.responseEnd;
 
             if (start_time && end_time) {
                 total_time = end_time - start_time;
@@ -60,7 +85,7 @@ define(function () {
         return total_time;
     }
 
-    function getConnectionSpeed(performance, connection) {
+    function getConnectionSpeed(performance, connection, reportUnknown) {
 
         connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
 
@@ -72,20 +97,23 @@ define(function () {
             return 'low';
         }
 
-        var load_time = getPageSpeed(performance);
+        var loadTime = getPageSpeed(performance);
 
-        // Assume high speed for non supporting browsers.
+        // Assume high speed for non supporting browsers
         var speed = "high";
+        if (reportUnknown) {
+            speed = "unknown";
+        }
 
-        if (load_time) {
-            if (load_time > 750) { // .75 second
+        if (loadTime) {
+            if (loadTime > 1000) { // One second
                 speed = 'medium';
-                if (load_time > 3000) { // Three seconds
+                if (loadTime > 3000) { // Three seconds
                     speed = 'low';
                 }
             }
         }
-        
+
         return speed;
 
     }
@@ -116,6 +144,7 @@ define(function () {
 
     return {
         getLayoutMode: getLayoutMode,
+        hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,

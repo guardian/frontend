@@ -1,11 +1,15 @@
-define(['common'], function (common) {
+define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
-    var Errors = function (w) {
+    var Errors = function (config) {
 
-        var url = "//beacon." + window.location.hostname,
+        var c = config || {},
+            isDev = (c.isDev !== undefined) ? c.isDev : false,
+            url = "//beacon." + window.location.hostname,
             path = '/px.gif',
-            win = w || window,
+            cons = c.console || window.console,
+            win = c.window || window,
             body = document.body,
+            prefs = c.userPrefs || userPrefs,
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-err';
@@ -13,24 +17,42 @@ define(['common'], function (common) {
                 image.src = url;
                 body.appendChild(image);
             },
-            makeUrl = function(properties) {
-                return url + path + '?js/' + encodeURIComponent(properties.join(','));
+            makeUrl = function(properties, isAd) {
+                var query = [];
+                for (var name in properties) {
+                    query.push(name + '=' + encodeURIComponent(properties[name]));
+                }
+                return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
-            log = function(message, filename, lineno) {
-                var url = makeUrl([message, filename, lineno]);
-                createImage(url);
+            log = function(message, filename, lineno, isUncaught) {
+                var error = {
+                    message: message,
+                    filename: filename,
+                    lineno: lineno,
+                };
+                if (isDev) {
+                    if (isUncaught !== true) {
+                        cons.error(error);
+                    }
+                    return false;
+                } else {
+                    var url = makeUrl(error, (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.'));
+                    createImage(url);
+                    return (prefs.isOn('showErrors')) ? false : true;
+                }
             },
             init = function() {
-                win.onerror = log;
+                win.onerror = function(message, filename, lineno) {
+                    return log(message, filename, lineno, true);
+                };
             };
-        
+
         return {
             log: log,
             init: init
         };
-        
+
     };
 
     return Errors;
 });
-
