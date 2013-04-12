@@ -10,21 +10,25 @@ define([
     relatedContent) {
     
     var TESTS = {
-        "related-content" : relatedContent
-    };
+            "relatedContent" : relatedContent
+        };
 
-    // gu.prefs.ab = {test: 'testId', variant: 'variantName'}
     var key = 'ab';
-
-    //Checks if local storage is set and if test still is active
-    function inTest() {
-        var test = JSON.parse(userPrefs.get(key));
-        return (test && TESTS[test.id]) ? test : false;
-    }
 
     function storeTest(test, variant) {
         var data = {test: test, variant: variant};
         userPrefs.set(key, JSON.stringify(data));
+    }
+
+    function getTest() {
+        return JSON.parse(userPrefs.get(key));
+    }
+
+    // Checks if:
+    // local storage is set, is an active test & switch is on
+    function inTest(switches) {
+        var test = getTest();
+        return (test && TESTS[test.id] && switches['ab' + test.id]) ? true : false;
     }
 
     function clearTest() {
@@ -61,10 +65,12 @@ define([
     }
 
     function init(config) {
-        var currentTest = inTest();
+        var switches = config.switches,
+            inTest = inTest(switches);
+
         //Is the user in an active test?
-        if(currentTest) {
-            runVariant(TESTS[currentTest.id], currentTest.variant);
+        if(inTest) {
+            runVariant(TESTS[getTest().id], currentTest.variant);
         } else {
             //First clear out any old test data
             clearTest();
@@ -72,7 +78,7 @@ define([
             //Loop over active tests
             for(var i = 0, l = TESTS.length; i<l; i++) {
                //If previous iteration worked break;
-               if(inTest()) { break; }
+               if(inTest(switches)) { break; }
                //Can the test run on this page
                if(TESTS[i].canRun) {
                    //Start
@@ -84,6 +90,8 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+        inTest : inTest,
+        getTest : getTest
     };
 });

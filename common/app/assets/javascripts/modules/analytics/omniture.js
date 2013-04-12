@@ -1,4 +1,12 @@
-define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(common, detect, optimizely) {
+define([
+    'common',
+    'modules/detect',
+    'modules/experiments/ab'
+], function(
+    common,
+    detect,
+    ab
+) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -103,8 +111,13 @@ define(['common', 'modules/detect', 'modules/analytics/optimizely'], function(co
 
             s.prop47    = config.page.edition || '';
 
-            if (config.switches.optimizely === true) {
-                s.prop51    = optimizely.readTests();
+            if (ab.inTest(config.switches)) {
+                var test = ab.getTest();
+                    testData = test.id + ' : ' + test.variant;
+
+                s.prop51  = testData;
+                s.evar51  = testData;
+                s.event58 = testData;
             }
 
             s.prop56    = 'Javascript';

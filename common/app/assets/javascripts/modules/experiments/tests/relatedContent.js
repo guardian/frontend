@@ -4,7 +4,7 @@ define(['bonzo'], function (bonzo) {
 
         var mostPopular = bonzo('popular-trails');
 
-        this.id = 'related-content';
+        this.id = 'relatedContent';
         this.audience = 0.01;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
