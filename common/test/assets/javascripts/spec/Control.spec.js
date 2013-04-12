@@ -57,7 +57,7 @@ define([ 'common',
                 expect(document.getElementById('control-2').className).not.toContain('is-active')
             });
 
-            it("Should toggle the state of a button when clicked", function() {
+            it("Should toggle the state of a button and when clicked repeatedly", function() {
                 new Control().init(document.querySelector('#controls-a'));
 
                 var clock = sinon.useFakeTimers(123456789, "Date") // set date to some arbitrary epoch time
@@ -112,18 +112,35 @@ define([ 'common',
                 expect(document.getElementById('control-1b').className).not.toContain('is-active')
             });
 
-            it("Should reveal the related content", function() {
+            it("Should reveal its related content", function() {
                 new Control().init(document.querySelector('#controls-a'));
 
                 bean.fire(document.getElementById('control-1'), 'click');
                 expect(document.getElementById('target-1').className).not.toContain('is-off');
             });
 
-            it("Should hide the un-related content", function() {
+            it("Should hide any un-related content", function() {
                 new Control().init(document.querySelector('#controls-a'));
 
                 bean.fire(document.getElementById('control-1'), 'click');
                 expect(document.getElementById('target-2').className).toContain('is-off');
+            });
+
+            it("Should toggle the state of its related content when clicked repeatedly", function() {
+                new Control().init(document.querySelector('#controls-a'));
+
+                var clock = sinon.useFakeTimers(123456789, "Date") // set date to some arbitrary epoch time
+
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('target-1').className).not.toContain('is-off')
+
+                clock.tick(delay);
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('target-1').className).toContain('is-off')
+
+                clock.tick(delay);
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('target-1').className).not.toContain('is-off')
             });
 
         });
