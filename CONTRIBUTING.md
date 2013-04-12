@@ -5,7 +5,7 @@ We welcome code submissions from other teams. Here's the rules of engagement.
 - The philosophy here is about communication, taking responsibility for your changes, and fast, incremental delivery. If someone is asking why such and such found it's way in to the product then you are [Doing It Wrong](http://bookalicio.us/wp-content/uploads/2011/06/doing-it-wrong.jpg).
 - Speak to the team before you decide to do anything major. We can probably help design the change to maximise it's chances of being accepted.
 - We have three environments - DEV (your machine), CODE and PROD.
-- Pull requests made to master assume the change is ready to be pushed in PROD.
+- Pull requests made to master assume the change is ready to be pushed in PROD (code, ux, design, qa).
 - Many small requests will be reviewed/merged quicker than a giant lists of changes. Use a switch if you do not want the public to see what you are releasing.
 
 ## Submission
