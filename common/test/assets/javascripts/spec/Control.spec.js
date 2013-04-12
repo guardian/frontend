@@ -3,17 +3,25 @@ define([ 'common',
          'modules/navigation/control',
          'fixtures'], function(common, bean, Control, fixtures) {
 
-
         describe("Controls", function() {
 
-            // Note: the fixture element ids are required by the test only, not the Control module
-            var conf = {
+            var delay = 400,
+                conf = {
                     id: 'controls',
-                    fixtures: [
-                        '<div id="control-1" data-control-for="target-1" class="control is-off"   >button</div>',
-                        '<div id="control-2" data-control-for="target-2" class="control is-active">button</div>',
-                        '<div id="target-1"  class="target-1 is-off"></div>',
-                        '<div id="target-2"  class="target-2 is-off"></div>',
+                    fixtures: [ // NB: element ids are required by the test, not by the actual Control module
+                        '<div id="controls-a">' +
+                            '<div id="control-1" data-control-for="target-1" class="control">button</div>' +
+                            '<div id="control-2" data-control-for="target-2" class="control is-active">button</div>' +
+                            '<div id="target-1"  class="target-1 is-off">content</div>' +
+                            '<div id="target-2"  class="target-2">content</div>' +
+                        '</div>',
+
+                        '<div id="controls-b">' +
+                            '<div id="control-1b" data-control-for="target-1" class="control">button</div>' +
+                            '<div id="control-2b" data-control-for="target-2" class="control is-active">button</div>' +
+                            '<div id="target-1b"  class="target-1 is-off">content</div>' +
+                            '<div id="target-2b"  class="target-2">content</div>' +
+                        '</div>'
                     ]
             }
 
@@ -22,46 +30,62 @@ define([ 'common',
             });
 
             it("Should update the state of a button when clicked (from an initial state of 'off')", function() {
-                new Control().init(document);
+                new Control().init(document.querySelector('#controls-a'));
 
                 bean.fire(document.getElementById('control-1'), 'click');
                 expect(document.getElementById('control-1').className).toContain('is-active')
             });
 
             it("Should update the state of a button when touched (from an initial state of 'off')", function() {
-                new Control().init(document);
+                new Control().init(document.querySelector('#controls-a'));
 
                 bean.fire(document.getElementById('control-1'), 'touchstart');
                 expect(document.getElementById('control-1').className).toContain('is-active')
             });
 
             it("Should update the state of a button when clicked (from an initial state of 'on')", function() {
-                new Control().init(document);
-                bean.fire(document.getElementById('control-2'), 'click');
+                new Control().init(document.querySelector('#controls-a'));
 
+                bean.fire(document.getElementById('control-2'), 'click');
                 expect(document.getElementById('control-2').className).not.toContain('is-active')
             });
 
             it("Should update the state of a button when touched (from an initial state of 'on')", function() {
-                new Control().init(document);
-                bean.fire(document.getElementById('control-2'), 'touchstart');
+                new Control().init(document.querySelector('#controls-a'));
 
+                bean.fire(document.getElementById('control-2'), 'touchstart');
                 expect(document.getElementById('control-2').className).not.toContain('is-active')
             });
 
-            it("Adds a delay to events to avoid double-click events from firing", function() { // An Android
+            it("Should toggle the state of a button when clicked", function() {
+                new Control().init(document.querySelector('#controls-a'));
+
+                var clock = sinon.useFakeTimers(123456789, "Date") // set date to some arbitrary epoch time
+
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('control-1').className).toContain('is-active')
+
+                clock.tick(delay);
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('control-1').className).not.toContain('is-active')
+
+                clock.tick(delay);
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('control-1').className).toContain('is-active')
+            });
+
+            it("Adds a delay to events to avoid double-click events from firing", function() {
+                new Control().init(document.querySelector('#controls-a'));
 
                 spyOn(common.mediator, 'emit');
 
                 var clock = sinon.useFakeTimers(123456789, "Date") // set date to some arbitrary epoch time
 
-                new Control().init(document);
-
-                // fire 3 events within 400ms
+                // fire 3 events within delayms
                 bean.fire(document.getElementById('control-1'), 'click');
-                clock.tick(200);
+                clock.tick(delay/2);
                 bean.fire(document.getElementById('control-1'), 'click');
-                clock.tick(200);
+                clock.tick(delay/2);
                 bean.fire(document.getElementById('control-1'), 'click');
 
                 // TODO - replace with sinon withArgs matcher
@@ -70,27 +94,36 @@ define([ 'common',
                 })
 
                 expect(buttonEvents.length).toEqual(2);
-
             });
 
-            it("Deactives it's state when another button on the page is activated", function() { // An Android
+            it("Deactives it's state when another button on the page is activated", function() {
+                new Control().init(document.querySelector('#controls-a'));
 
-                new Control().init(document);
-
-                // control-1 'click' should deactive control-2 active states
                 bean.fire(document.getElementById('control-1'), 'click');
-
                 expect(document.getElementById('control-2').className).not.toContain('is-active');
             });
 
-            it("Should reveal the navigation control when the content has loaded", function() { // An Android
+            it("Does not interfere with other control sets", function() {
+                new Control().init(document.querySelector('#controls-a'));
+                new Control().init(document.querySelector('#controls-b'));
 
-                new Control().init(document);
-
-                // control-1 'click' should remove is-off class from target-1
                 bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('control-1').className).toContain('is-active')
+                expect(document.getElementById('control-1b').className).not.toContain('is-active')
+            });
 
+            it("Should reveal the related content", function() {
+                new Control().init(document.querySelector('#controls-a'));
+
+                bean.fire(document.getElementById('control-1'), 'click');
                 expect(document.getElementById('target-1').className).not.toContain('is-off');
+            });
+
+            it("Should hide the un-related content", function() {
+                new Control().init(document.querySelector('#controls-a'));
+
+                bean.fire(document.getElementById('control-1'), 'click');
+                expect(document.getElementById('target-2').className).toContain('is-off');
             });
 
         });
