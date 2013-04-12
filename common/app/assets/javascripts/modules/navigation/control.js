@@ -1,6 +1,6 @@
 define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
-    var NavTabs = function () {
+    var Control = function () {
 
         var delay = 400,
             lastClickTime = 0,
@@ -49,6 +49,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                         if (delta >= delay) {
                             lastClickTime = current;
                             self.view.toggle(controls, control, context);
+                            common.mediator.emit('modules:control:change');
                         }
                         e.preventDefault();
                     });
@@ -57,6 +58,6 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         };
     };
 
-    return NavTabs;
+    return Control;
 
 });

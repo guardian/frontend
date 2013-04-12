@@ -27,7 +27,6 @@ define([
                     hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
-                        common.mediator.emit('modules:control:change', ['search-control-header', true]);
 
                         if(layoutMode !== 'mobile') {
                             that.view.hideColumns(sectionsHeader, sectionsNav);
