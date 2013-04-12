@@ -17,6 +17,7 @@ define([
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
+    'modules/navigation/navtabs',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -45,6 +46,7 @@ define([
     TopStories,
     Sections,
     Search,
+    NavTabs,
     Fonts,
     Tabs,
     RelativeDates,
@@ -86,23 +88,10 @@ define([
             new Debug().show();
         },
 
-        initialiseNavigation: function (config) {
-
-            // the section panel
-            new Sections().init();
-            new Search(config).init();
-
-            // the toolbar
-            var t = new Control({id: 'topstories-control-header'}),
-                s = new Control({id: 'search-control-header'}),
-                n = new Control({id: 'sections-control-header'});
-
-            t.init();
-            s.init();
-            n.init();
-
-            common.mediator.on('modules:topstories:render', function(args) {
-                t.show();
+        initialiseNavigation: function () {
+            var navtabs = new NavTabs();
+            common.mediator.on('page:ready', function(config, context) {
+                navtabs.init(context);
             });
         },
 
@@ -199,8 +188,6 @@ define([
     };
 
     var pageReady = function (config, context) {
-        modules.initialiseNavigation(config);
-
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
             modules.loadOphanAnalytics(config, context);
@@ -221,6 +208,7 @@ define([
         modules.transcludeRelated();
         modules.transcludePopular();
         modules.transcludeTopStories();
+        modules.initialiseNavigation();
     };
 
     return {

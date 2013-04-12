@@ -14,20 +14,20 @@
         </ul>
     </div>
 
-    <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" id="sections-control-header"
+    <a href="#footer-nav" data-is-ajax="1" data-link-name="Sections" data-control-for="nav-popup-sections"
     class="control control--sections">
         <i class="i i-nav-divider"></i>
         <span class="control__menu i i-menu">Sections</span>
         <i class="i i-menu-active"></i>
     </a>
 
-    <a href="#" data-link-name="Search icon" class="control control--search" id="search-control-header">
+    <a href="#" data-link-name="Search icon" class="control control--search" data-control-for="nav-popup-search">
         <i class="i i-nav-divider"></i>
         <span class="h">Search</span>
         <i class="i i-search"></i>
     </a>
 
-    <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" id="topstories-control-header"
+    <a href="/top-stories" data-is-ajax="1" data-link-name="Top stories" data-control-for="nav-popup-topstories"
         class="control control--topstories">
         <i class="i i-nav-divider"></i>
         <span>Top stories</span>
@@ -35,9 +35,9 @@
     </a>
 </header>
 
-<div class="topstories-header nav-popup nav-popup--box is-off"></div>
+<div class="nav-popup-topstories nav-popup nav-popup--box is-off"></div>
 
-<div id="search-header" class="nav-popup nav-popup--box is-off">
+<div class="nav-popup-search nav-popup nav-popup--box is-off">
     <div class="search-box" role="search">
         <gcse:searchbox></gcse:searchbox>
     </div>
@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<div id="sections-header" class="nav-popup nav-popup--small is-off">
+<div class="nav-popup-sections nav-popup nav-popup--small is-off">
     @fragments.sections(page, false)
 </div>
 

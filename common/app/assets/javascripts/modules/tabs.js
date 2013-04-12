@@ -42,7 +42,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
         this.init = function (context) {
 
-            [].forEach.call(context.querySelectorAll('.tabs-container'), function(container) {
+            Array.prototype.forEach.call(context.querySelectorAll('.tabs-container'), function(container) {
 
                 var tabSet = common.$g('ol.js-tabs', container)[0],
                     tabSetHeight = 0,

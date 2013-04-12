@@ -20,22 +20,6 @@ define([
 
         this.view = {
             bindings : function() {
-                common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                    $sectionsHeader.removeClass(className);
-                    $sectionsHeader.focus();
-                });
-
-                common.mediator.on('modules:control:change', function(args) {
-
-                    var control = args[0],
-                        state = args[1];
-
-                    if (state === false || control !== 'sections-control-header') {
-                        $sectionsHeader.addClass(className);
-                    }
-
-                });
-
                 var hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
 
                 bean.on(window, 'resize', common.debounce(function(e){
@@ -76,11 +60,10 @@ define([
             }
         };
 
-        this.init = function () {
-            var layoutMode = detect.getLayoutMode();
-            this.view.bindings();
+        this.init = function (context) {
+            this.view.bindings(context);
 
-            if(layoutMode !== 'mobile') {
+            if(detect.getLayoutMode() !== 'mobile') {
                 this.view.hideColumns();
             }
         };

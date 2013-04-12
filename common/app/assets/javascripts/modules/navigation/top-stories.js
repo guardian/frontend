@@ -40,7 +40,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         this.load = function (config, context) {
 
             var url = '/top-stories.json?page-size=10&view=link',
-                container = context.querySelector('.topstories-header');
+                container = context.querySelector('.nav-popup-topstories');
 
             if(container) {
                 if (config.pathPrefix) {
