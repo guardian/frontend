@@ -12,15 +12,16 @@ define([
 
     function Sections() {
 
-        var sectionsHeader = document.getElementById('sections-header'),
-            sectionsNav = document.querySelector('.nav--global'),
-            $sectionsHeader = bonzo(sectionsHeader),
-            className = 'is-off',
-            that = this;
+        var className = 'is-off',
+            that = this,
+            hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
 
         this.view = {
-            bindings : function() {
-                var hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
+            bindings : function(context) {
+
+                var sectionsHeader = context.querySelector('.nav-popup-sections'),
+                    sectionsNav    = context.querySelector('.nav--global'),
+                    $sectionsHeader = bonzo(sectionsHeader);
 
                 bean.on(window, 'resize', common.debounce(function(e){
                     hasCrossedBreakpoint(function(layoutMode) {
@@ -29,20 +30,24 @@ define([
                         common.mediator.emit('modules:control:change', ['search-control-header', true]);
 
                         if(layoutMode !== 'mobile') {
-                            that.view.hideColumns();
+                            that.view.hideColumns(sectionsHeader, sectionsNav);
                         } else {
-                            that.view.showColumns();
+                            that.view.showColumns(sectionsHeader, sectionsNav);
                         }
                     });
                 }, 200));
+
+                if(detect.getLayoutMode() !== 'mobile') {
+                    that.view.hideColumns(sectionsHeader, sectionsNav);
+                }
             },
 
-            showColumns : function() {
+            showColumns : function(sectionsHeader, sectionsNav) {
                 common.$g('.nav__item', sectionsHeader).removeClass('h');
                 common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
-            hideColumns :  function() {
+            hideColumns :  function(sectionsHeader, sectionsNav) {
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
                 var visibleItems = [],
@@ -62,10 +67,6 @@ define([
 
         this.init = function (context) {
             this.view.bindings(context);
-
-            if(detect.getLayoutMode() !== 'mobile') {
-                this.view.hideColumns();
-            }
         };
      }
 

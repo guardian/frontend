@@ -90,8 +90,10 @@ define([
 
         initialiseNavigation: function () {
             var navtabs = new NavTabs();
+            var sections = new Sections();
             common.mediator.on('page:ready', function(config, context) {
                 navtabs.init(context);
+                sections.init(context);
             });
         },
 
