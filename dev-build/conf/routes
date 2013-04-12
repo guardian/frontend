@@ -69,7 +69,6 @@ GET     /_warmup                                            controllers.FrontCon
 GET     /_up                                                controllers.FrontController.isUp()
 GET     /                                                   controllers.FrontController.render(path = "front")
 GET     /$path<culture|sport>                               controllers.FrontController.render(path)
-GET     /$path<culture|sport>.json                          controllers.FrontController.renderJson(path)
 
 #Video
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
@@ -79,15 +78,12 @@ GET     /$path<.*/gallery/.*>                               controllers.GalleryC
 
 #Tag
 GET     /$path<[\w\d-]*/[\w\d-]*>                           controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*>.json                      controllers.TagController.renderJson(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json             controllers.TagController.renderJson(path)
 
 #Section
 GET		/sections							               controllers.SectionsController.render()
 # culture and sport sections now live in front
 GET    /$path<(?!culture|sport)[\w\d-]*>                   controllers.SectionController.render(path)
-GET    /$path<(?!culture|sport)[\w\d-]*>.json              controllers.SectionController.renderJson(path)
 
 #Articles
 GET     /*path                                             controllers.ArticleController.render(path)
