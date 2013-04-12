@@ -14,9 +14,21 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
-  it should "return JSONP when callback is supplied" in Fake {
+  it should "return JSONP when callback is supplied to front" in Fake {
     val fakeRequest = FakeRequest(GET, "?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = controllers.FrontController.render("front")(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "200 when content type is front trails" in Fake {
+    val result = controllers.FrontController.renderTrails("front")(TestRequest())
+    status(result) should be(200)
+  }
+
+  it should "return JSONP when callback is supplied to front trails" in Fake {
+    val fakeRequest = FakeRequest(GET, "/culture/trails?callback=foo").withHeaders("host" -> "localhost:9000")
+    val result = controllers.FrontController.renderTrails("front")(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }

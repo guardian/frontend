@@ -17,7 +17,17 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
-        case Left(model) => renderSectionFront(model, "html")
+        case Left(model) => renderSectionFront(model)
+        case Right(notFound) => notFound
+      }
+    }
+  }
+
+  def renderTrails(path: String) = Action { implicit request =>
+    val promiseOfSection = lookup(path)
+    Async {
+      promiseOfSection.map {
+        case Left(model) => renderTrailsFragment(model)
         case Right(notFound) => notFound
       }
     }
@@ -40,11 +50,19 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
+  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = Cached(model.section) {
     request.getQueryString("callback").map { callback =>
       JsonComponent(views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent))
     } getOrElse {
       Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
+    }
+  }
+  
+  private def renderTrailsFragment(model: SectionFrontPage)(implicit request: RequestHeader) = Cached(model.section) {
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.sectionTrails(model.section, model.editorsPicks, model.latestContent, showAll = true))
+    } getOrElse {
+      Ok(Compressed(views.html.fragments.sectionTrails(model.section, model.editorsPicks, model.latestContent, showAll = true)))
     }
   }
   

@@ -63,12 +63,7 @@ class FrontController extends Controller with Logging with JsonTrails {
     Ok("Ok")
   }
   
-  def render(path: String) = Action {
-    implicit request => 
-      renderFront(path)
-  }
-
-  def renderFront(path: String)(implicit request: RequestHeader) = {
+  def render(path: String) = Action { implicit request =>
 
     val edition = Site(request).edition
 
@@ -88,6 +83,31 @@ class FrontController extends Controller with Logging with JsonTrails {
           JsonComponent(views.html.fragments.frontBody(frontPage, trailblocks))
         } getOrElse {
           Ok(Compressed(views.html.front(frontPage, trailblocks)))
+        }
+      }
+    }
+  }
+  
+  def renderTrails(path: String) = Action { implicit request =>
+
+    val edition = Site(request).edition
+
+    val frontPage: MetaData = path match {
+      case "front" => NetworkFrontPage
+      case "sport" => SportFrontPage
+      case "culture" => CultureFrontPage
+    }
+
+    // get the first trailblock
+    val trailblock: Option[Trailblock] = front(path, edition).headOption
+    if (trailblock.isEmpty) {
+      InternalServerError
+    } else {
+      Cached(frontPage) {
+        request.getQueryString("callback").map { callback =>
+          JsonComponent(views.html.fragments.frontTrails(trailblock.get, showAll = true))
+        } getOrElse {
+          Ok(Compressed(views.html.fragments.frontTrails(trailblock.get, showAll = true)))
         }
       }
     }

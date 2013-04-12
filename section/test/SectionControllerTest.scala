@@ -14,7 +14,7 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
-  it should "return JSONP when callback is supplied" in Fake {
+  it should "return JSONP when callback is supplied to front" in Fake {
     val fakeRequest = FakeRequest(GET, section + "?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = controllers.SectionController.render(section)(fakeRequest)
     status(result) should be(200)
@@ -26,4 +26,17 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
+
+  it should "200 when content type is front trails" in Fake {
+    val result = controllers.SectionController.renderTrails(section)(TestRequest())
+    status(result) should be(200)
+  }
+
+  it should "return JSONP when callback is supplied to front trails" in Fake {
+    val fakeRequest = FakeRequest(GET, section + "/trails?callback=foo").withHeaders("host" -> "localhost:9000")
+    val result = controllers.SectionController.renderTrails(section)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/javascript")
+  }
+  
 }

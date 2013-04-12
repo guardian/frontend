@@ -69,6 +69,7 @@ GET     /_warmup                                            controllers.FrontCon
 GET     /_up                                                controllers.FrontController.isUp()
 GET     /                                                   controllers.FrontController.render(path = "front")
 GET     /$path<culture|sport>                               controllers.FrontController.render(path)
+GET     /$path<culture|sport>/trails                        controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
@@ -84,6 +85,7 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagContr
 GET		/sections							               controllers.SectionsController.render()
 # culture and sport sections now live in front
 GET    /$path<(?!culture|sport)[\w\d-]*>                   controllers.SectionController.render(path)
+GET    /$path<(?!culture|sport)[\w\d-]*>/trails            controllers.SectionController.renderTrails(path)
 
 #Articles
 GET     /*path                                             controllers.ArticleController.render(path)
