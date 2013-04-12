@@ -88,12 +88,14 @@ define([
             new Debug().show();
         },
 
-        initialiseNavigation: function () {
-            var navtabs = new NavTabs();
+        initialiseNavigation: function (config) {
+            var navtabs  = new NavTabs();
             var sections = new Sections();
+            var search   = new Search(config);
             common.mediator.on('page:ready', function(config, context) {
                 navtabs.init(context);
                 sections.init(context);
+                search.init(context);
             });
         },
 
@@ -210,7 +212,7 @@ define([
         modules.transcludeRelated();
         modules.transcludePopular();
         modules.transcludeTopStories();
-        modules.initialiseNavigation();
+        modules.initialiseNavigation(config);
     };
 
     return {
