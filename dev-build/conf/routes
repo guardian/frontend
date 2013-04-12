@@ -78,7 +78,8 @@ GET     /$path<.*/video/.*>                                 controllers.VideoCon
 GET     /$path<.*/gallery/.*>                               controllers.GalleryController.render(path)
 
 #Tag
-GET     /$path<[\w\d-]*/[\w\d-]*>                           controllers.TagController.render(path)
+# note: reg ex so this doesn't interfer with $section/trails
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
 
 #Section
