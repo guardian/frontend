@@ -13,11 +13,10 @@ define([
     'modules/router',
     'modules/errors',
     'modules/images',
-    'modules/navigation/controls',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/navtabs',
+    'modules/navigation/control',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -42,11 +41,10 @@ define([
     Router,
     Errors,
     Images,
-    Control,
     TopStories,
     Sections,
     Search,
-    NavTabs,
+    NavControl,
     Fonts,
     Tabs,
     RelativeDates,
@@ -89,11 +87,11 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var navtabs  = new NavTabs();
+            var navControl = new NavControl();
             var sections = new Sections();
-            var search   = new Search(config);
+            var search = new Search(config);
             common.mediator.on('page:ready', function(config, context) {
-                navtabs.init(context);
+                navControl.init(context);
                 sections.init(context);
                 search.init(context);
             });
