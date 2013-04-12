@@ -12,6 +12,11 @@
         <p class="match-status type-12">
             <abbr class="match-@MatchStatus(live.matchStatus)">@MatchStatus(live.matchStatus)</abbr>
         </p>
+
+        @if(live.homeTeam.aggregateScore){
+            <p class="match-aggregate type-10"><span>(agg. <span>@live.homeTeam.aggregateScore-@live.awayTeam.aggregateScore</span>)</span></p>
+        } 
+
         @live.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
     </a>
 </li>

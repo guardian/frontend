@@ -82,7 +82,7 @@ define([
     };
 
     // All methods placed inside here will exec after DOMReady
-    var ready = function(req, config) {
+    var ready = function(req, config, context) {
         modules.showTrailblockToggles(config);
         modules.showTrailblockShowMore();
         if(config.page.edition === "UK") {
