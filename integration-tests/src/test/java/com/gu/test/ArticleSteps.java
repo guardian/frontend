@@ -78,7 +78,7 @@ public class ArticleSteps {
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
-		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector("#js-related h3"));
+		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector(".js-related h3"));
 		assertEquals(headerText, relatedHeader.getText());
 	}
 
@@ -196,7 +196,7 @@ public class ArticleSteps {
 		
 		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "none" : "0";
 		// sections are hidden with css max-height
-		assertTrue(webDriver.waitForCss(By.cssSelector("#related-trails .panel"), "max-height", expectedTrailblockHeight));
+		assertTrue(webDriver.waitForCss(By.cssSelector(".related-trails .panel"), "max-height", expectedTrailblockHeight));
 	}
 
 	@When("^Back to top is selected$")

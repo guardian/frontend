@@ -8,6 +8,8 @@ define([
     'domReady',
     'qwery',
     //Modules
+    'modules/popular',
+    'modules/related',
     'modules/router',
     'modules/errors',
     'modules/images',
@@ -15,9 +17,6 @@ define([
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/related',
-    'modules/popular',
-    'modules/expandable',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -37,6 +36,8 @@ define([
     domReady,
     qwery,
 
+    popular,
+    related,
     Router,
     Errors,
     Images,
@@ -44,9 +45,6 @@ define([
     TopStories,
     Sections,
     Search,
-    Related,
-    Popular,
-    Expandable,
     Fonts,
     Tabs,
     RelativeDates,
@@ -75,7 +73,13 @@ define([
         },
 
         upgradeImages: function () {
-            new Images().upgrade();
+            var images = new Images();
+            common.mediator.on('page:ready', function(config, context) {
+                images.upgrade(context);
+            });
+            common.mediator.on('fragment:ready:images', function(context) {
+                images.upgrade(context);
+            });
         },
 
         showDebug: function () {
@@ -102,43 +106,30 @@ define([
             });
         },
 
-        transcludeTopStories: function (config) {
-            new TopStories().load(config);
-        },
-
-        transcludeRelated: function (config){
-            common.mediator.on("modules:related:load", function(){
-                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
-                    host,
-                    pageId,
-                    url;
-
-                if (config.page.hasStoryPackage) {
-                    relatedExpandable.init();
-                } else {
-                    pageId = config.page.pageId;
-                    url =  '/related/' + pageId;
-                    common.mediator.on('modules:related:render', relatedExpandable.init);
-                    new Related(document.getElementById('js-related'), config.switches).load(url);
-                }
+        transcludeTopStories: function () {
+            var topStories = new TopStories();
+            common.mediator.on('page:ready', function(config, context) {
+                topStories.load(config, context);
             });
         },
 
-        transcludeMostPopular: function (section, edition) {
-            var url = '/most-read' + (section ? '/' + section : '') + '.json',
-                domContainer = document.getElementById('js-popular');
+        transcludeRelated: function () {
+            common.mediator.on("page:article:ready", function(config, context){
+                related(config, context);
+            });
+        },
 
-            if (domContainer) {
-                new Popular(domContainer).load(url);
-                common.mediator.on('modules:popular:render', function() {
-                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-                });
-            }
-
+        transcludePopular: function () {
+            common.mediator.on('page:ready', function(config, context) {
+                popular(config, context);
+            });
         },
 
         showTabs: function() {
-            var t = new Tabs().init();
+            var tabs = new Tabs();
+            common.mediator.on('modules:popular:loaded', function(el) {
+                tabs.init(el);
+            });
         },
 
         loadFonts: function(config, ua) {
@@ -151,7 +142,13 @@ define([
         },
 
         showRelativeDates: function () {
-            RelativeDates.init();
+            var dates = RelativeDates;
+            common.mediator.on('page:ready', function(config, context) {
+                dates.init(context);
+            });
+            common.mediator.on('fragment:ready:dates', function(el) {
+                dates.init(el);
+            });
         },
 
         loadOmnitureAnalytics: function (config) {
@@ -201,33 +198,34 @@ define([
         }
     };
 
-    var pageView = function (config) {
-        modules.upgradeImages();
-        modules.showTabs();
+    var pageReady = function (config, context) {
         modules.initialiseNavigation(config);
-        modules.transcludeTopStories(config);
-        modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config.page.section, config.page.edition);
-        modules.showRelativeDates();
 
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics(config);
-            modules.loadAdverts(config);
-            modules.cleanupCookies();
+            modules.loadOmnitureAnalytics(config, context);
+            modules.loadOphanAnalytics(config, context);
+            modules.loadAdverts(config, context);
+            modules.cleanupCookies(context);
         });
     };
 
     var runOnce = function (config) {
-        modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
+        modules.showDebug();
+
+        modules.upgradeImages();
+        modules.showTabs();
+        modules.showRelativeDates();
+        modules.transcludeRelated();
+        modules.transcludePopular();
+        modules.transcludeTopStories();
     };
 
     return {
         runOnce: runOnce,
-        pageView: pageView
+        pageReady: pageReady
     };
 
 });

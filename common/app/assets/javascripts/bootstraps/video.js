@@ -33,8 +33,10 @@ define([
         }
     };
 
-    var init = function(req, config) {
-        modules.initExperiments(config);
+    var init = function(req, config, context) {
+
+        common.mediator.emit("page:gallery:ready", config, context);
+
         modules.initAnalytics(config);
     };
 

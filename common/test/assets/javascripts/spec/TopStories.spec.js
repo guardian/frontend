@@ -5,13 +5,15 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
         var conf = {
                 id: 'topstories',
                 fixtures: ['' +
-                    '<div id="control" class="topstories-control" class="is-off">' +
-                    '</div>' +
-                    '<div id="topstories-header">' +
+                    '<div id="topstories-context">' +
+                        '<div class="control topstories-control" class="is-off">' +
+                        '</div>' +
+                        '<div class="topstories-header">' +
+                        '</div>' +
                     '</div>'
                 ]
             },
-            page = { pathPrefix: "fixtures", page: { edition: 'uk' }};
+            config = { pathPrefix: "fixtures", page: { edition: 'uk' }};
 
         beforeEach(function () {
             ajax.init("");
@@ -24,7 +26,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
             common.mediator.on('modules:topstories:loaded', callback);
 
             runs(function () {
-                new TopStories().load(page);
+                new TopStories().load(config, document.querySelector('#topstories-context'));
             });
 
             waitsFor(function () {
@@ -32,8 +34,8 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
             }, "top-stories callback never called", 500);
 
             runs(function () {
-                var container = document.getElementById('topstories-header')
-                    , button = document.getElementById('control');
+                var container = document.querySelector('#topstories-context .topstories-header'),
+                    button    = document.querySelector('#topstories-context .control');
 
                 expect(callback).toHaveBeenCalledOnce();
                 expect(container.innerHTML).toBe('<h3 class="headline-list__tile type-5">Top stories</h3><div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');

@@ -1,41 +1,20 @@
-define(['common', 'ajax'], function (common, ajax) {
+define(['common', 'modules/lazyload'], function (common, lazyLoad) {
 
-    function Popular(attachTo) {
+    function popular(config, context, url) {
+        var container = context.querySelector('.js-popular');
 
-        // View
-
-        this.view = {
-
-            attachTo: attachTo,
-
-            render: function (html) {
-                attachTo.innerHTML = html;
-                common.mediator.emit('modules:popular:render');
-            }
-
-        };
-
-        // Model
-
-        this.load = function (url) {
-            var that = this;
-            return ajax({
-                    url: url,
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'showMostPopular',
-                    success: function (json) {
-                        that.view.render(json.html);
-                        common.mediator.emit('modules:popular:loaded', [json.html]);
-                    },
-                    error: function () {
-                        common.mediator('module:error', 'Failed to load most popular', 'popular.js');
-                    }
-                });
-        };
-
+        if (container) {
+            url = url || '/most-read' + (config.page.section ? '/' + config.page.section : '') + '.json';
+            lazyLoad({
+                url: url,
+                container: container,
+                jsonpCallbackName: 'showMostPopular',
+                success: function () {
+                    common.mediator.emit('modules:popular:loaded', container);
+                }
+            });
+        }
     }
 
-    return Popular;
-
+    return popular;
 });
