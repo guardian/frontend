@@ -1,0 +1,13 @@
+trailblockShowMore(
+    {
+        html: '<ul>'
+                + '<li class="trail"><h2><a href="/link/one">Link one</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/three">Link three</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/four">Link four</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/five">Link five</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/six">Link six</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/seven">Link seven</a></h2></li>'
+                + '<li class="trail"><h2><a href="/link/eight">Link eight</a></h2></li>'
+              + '</ul>'
+    }
+);
