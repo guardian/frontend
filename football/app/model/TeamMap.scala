@@ -99,7 +99,7 @@ object TeamMap extends AkkaSupport with Logging {
     ("26256", "Leverkusen"),
     ("32309", "Hannover"),
     ("7520", "Helsingborg"),
-    ("26322", "Twente")
+    ("26322", "Twente"),
     ("26398", "Basel")
 )
 
