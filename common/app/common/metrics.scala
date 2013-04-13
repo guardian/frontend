@@ -1,8 +1,12 @@
 package common
 
+import play.api.libs.ws.WS
 import akka.dispatch.{ MessageDispatcher, Dispatcher }
-import com.gu.management.{ TextMetric, GaugeMetric, CountMetric, TimingMetric }
+import com.gu.management._
 import conf.RequestMeasurementMetrics
+import com.ning.http.client.providers.netty.NettyConnectionsPool
+import org.jboss.netty.channel.group.DefaultChannelGroup
+import scala.Some
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -27,7 +31,6 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
     result.get
   }
 }
-
 
 object AkkaMetrics extends AkkaSupport {
 
@@ -88,6 +91,42 @@ object AkkaMetrics extends AkkaSupport {
   )
 }
 
+abstract class WsMetric(
+    val group: String, val name: String, val title: String, val description: String,
+    override val master: Option[Metric] = None) extends AbstractMetric[Int] {
+  val `type`: String = "gauge"
+  override def asJson: StatusMetric = super.asJson.copy(value = Some(getValue().toString))
+}
+
+case class WsStats(connectionPoolSize: Int, openChannels: Int)
+
+// takes some reflection hackery to get hold of these stats
+object WsStats {
+
+  val connectionPool = getField(WS.client.getProvider, "connectionsPool").asInstanceOf[NettyConnectionsPool]
+
+  def apply(): WsStats = WsStats(
+    connectionPoolSize = getField(connectionPool, "channel2IdleChannel").asInstanceOf[java.util.Map[Any, Any]].size,
+    openChannels = getField(WS.client.getProvider, "openChannels").asInstanceOf[DefaultChannelGroup].size()
+  )
+
+  private def getField(obj: Any, fieldName: String) = {
+    val m = obj.getClass.getDeclaredField(fieldName)
+    m.setAccessible(true)
+    m.get(obj)
+  }
+
+  object ConnectionPoolSizeMetric extends WsMetric("web-service", "connection-pool-size", "Connection pool size", "Connection pool size"){
+    val getValue = () => WsStats().connectionPoolSize
+  }
+  object OpenChannelsSizeMetric extends WsMetric("web-service", "open-channels", "Open channels in WS", "Open channels in WS"){
+    val getValue = () => WsStats().openChannels
+  }
+
+  lazy val all = Seq(ConnectionPoolSizeMetric, OpenChannelsSizeMetric)
+
+}
+
 object CommonMetrics {
-  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all
+  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ WsStats.all
 }
