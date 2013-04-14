@@ -1,17 +1,26 @@
 define(['modules/detect'], function(detect) {
+
+    var windowWidth = window.innerWidth,
+        windowHeight = window.innerHeight;
    
     describe("Layout", function() {
         
         it("should default to 'base' layout mode", function(){
-            expect(detect.getLayoutMode(null)).toBe('base');
+            expect(detect.getLayoutMode(null)).toBe('mobile');
         });
     
         it("should return the correct layout mode for the device resolution", function(){
-            expect(detect.getLayoutMode(100)).toBe('base');
+            expect(detect.getLayoutMode(100)).toBe('mobile');
 
-            expect(detect.getLayoutMode(500)).toBe('median');
+            expect(detect.getLayoutMode(700)).toBe('tablet');
             
             expect(detect.getLayoutMode(2000)).toBe('extended');
+        });
+
+        it("should return a function to test layout dimension changes", function(){
+            var hasCrossedTheMagicLines = detect.hasCrossedBreakpoint();
+
+            expect(typeof hasCrossedTheMagicLines).toBe('function');
         });
 
     });
@@ -25,25 +34,33 @@ define(['modules/detect'], function(detect) {
         
         it("should calculate the speed of a slow, medium & fast client request", function(){
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } })).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } })).toBe('low');
             
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 3000 } })).toBe('medium');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 3000 } })).toBe('medium');
             
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } })).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } })).toBe('high');
 
         });
 
-        it("if mobile connection type can be determined speed should default to low", function() {
+        it("should return low if CELL connection can be determined", function() {
 
             expect(detect.getConnectionSpeed(null, { type: 3} )).toBe('low'); // type 3 is CELL_2G
 
-            expect(detect.getConnectionSpeed(null, { type: 4} )).toBe('low'); // type 3 is CELL_3G
+            expect(detect.getConnectionSpeed(null, { type: 4} )).toBe('low'); // type 4 is CELL_3G
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 1000 } }, { type: 4} )).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } }, { type: 4} )).toBe('low');
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 8000 } }, { type: 6} )).toBe('low');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 8000 } }, { type: 6} )).toBe('low');
 
-            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseStart: 750 } }, { type: 6} )).toBe('high');
+            expect(detect.getConnectionSpeed({ timing: { requestStart: 1, responseEnd: 750 } }, { type: 6} )).toBe('high');
+
+        });
+
+        it("should return high or unknown if the speed can't be determined", function() {
+
+            expect(detect.getConnectionSpeed(null, null)).toBe('high');
+
+            expect(detect.getConnectionSpeed(null, null, true)).toBe('unknown');
 
         });
     });

@@ -5,10 +5,10 @@
 
   <title id="foo">Jasmine Spec Runner</title>
 
-  <link rel="shortcut icon" type="image/png" href="vendor/jasmine-1.2.0/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="vendor/jasmine-1.2.0/jasmine.css">
-  <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine.js"></script>
-  <script type="text/javascript" src="vendor/jasmine-1.2.0/jasmine-html.js"></script>
+  <link rel="shortcut icon" type="image/png" href="components/jasmine/images/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="components/jasmine/lib/jasmine-core/jasmine.css">
+  <script type="text/javascript" src="components/jasmine/lib/jasmine-core/jasmine.js"></script>
+  <script type="text/javascript" src="components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
   <script type="text/javascript" src="../../../app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js"></script>
   <script>
       curl({
@@ -52,9 +52,15 @@
         margin: 0 auto !important;
     }
   </style>
-  <script type="text/javascript" src="vendor/sinon-1.3.4/sinon.js"></script>
-  <script type="text/javascript" src="vendor/sinon-1.3.4/jasmine-sinon.js"></script>
-  <script type="text/javascript" src="vendor/seedrandom.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/spy.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/stub.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/util/event.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/util/fake_timers.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/util/fake_server.js"></script>
+  <script type="text/javascript" src="components/sinon/lib/sinon/util/fake_xml_http_request.js"></script>
+  <script type="text/javascript" src="components/jasmine-sinon/lib/jasmine-sinon.js"></script>
+  <script type="text/javascript" src="components/seedrandom/index.js"></script>
   <script type="text/javascript">
 
     window.onhashchange = function(){
@@ -161,11 +167,10 @@
     <div id="test-cases">
 
         <!-- Related.spec -->
-        <div id="related-1"></div>
-        <div id="related-2"></div>
+        <div class="js-related"></div>
 
         <!-- Popular.spec -->
-        <div id="popular-1"></div>
+        <div class="js-popular"></div>
 
         <!-- Expandables -->
         <style>

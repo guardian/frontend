@@ -1,16 +1,19 @@
 .article-zone {
-  padding: 13px $gutter 14px $gutter;
+  padding: 13px 0 14px 0;
+  margin: 0 $gutter;
   line-height: 1em;
   border-top: 4px solid $mushroom;
   border-bottom: 1px solid $mushroom;
   @include box-sizing(border-box);
+
+  @media only screen and (min-width: $tablet) { border-top: none; }
 }
 
 .article-zone-sub {
   @extend .type-6;
 }
 
-#js-popular .article-zone {
+.js-popular .article-zone {
   border-bottom: none;
 }
 

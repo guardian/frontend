@@ -1,4 +1,5 @@
 define('bootstraps/app', [
+    "common",
     "domReady",
     "modules/router",
     "bootstraps/common",
@@ -10,9 +11,10 @@ define('bootstraps/app', [
     "bootstraps/story",
     "modules/pageconfig"
 ], function (
+    common,
     domReady,
     Router,
-    Common,
+    bootstrapCommon,
     Front,
     Football,
     Article,
@@ -26,40 +28,47 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var r = new Router();
-
-            //Init all common modules first
-            Common.init(config);
+            var r = new Router(),
+                context = document.getElementById('container');
 
             //Fronts
-            r.get('/', function(req) { Front.init(req, config); });
-            r.get('/sport', function(req) { Front.init(req, config); });
-            r.get('/culture', function(req) { Front.init(req, config); });
+            r.get('/', function(req) {        Front.init(req, config, context); });
+            r.get('/sport', function(req) {   Front.init(req, config, context); });
+            r.get('/culture', function(req) { Front.init(req, config, context); });
 
             //Football
-            r.get('/football', function(req) { Football.init(req, config); });
-            r.get('/football/:action', function(req) { Football.init(req, config); });
-            r.get('/football/:action/:year/:month/:day', function(req) { Football.init(req, config); });
-            r.get('/football/:tag/:action', function(req) { Football.init(req, config); });
-            r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config); });
+            r.get('/football', function(req) {                                Football.init(req, config, context); });
+            r.get('/football/:action', function(req) {                        Football.init(req, config, context); });
+            r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
+            r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
+            r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
 
-            //Articles
-            if(config.page.contentType === "Article") {
-                Article.init({url: window.location.pathName}, config);
-            }
+            r.get('/stories/:id', function(req) { Story.init(req, config, context);});
 
-            if (config.page.contentType === "Video") {
-                Video.init({url: window.location.pathName}, config);
-            }
+            var pageRoute = function(config, context) {
+                //Articles
+                if(config.page.contentType === "Article") {
+                    Article.init({url: window.location.pathName}, config, context);
+                }
 
-            if (config.page.contentType === "Gallery") {
-                Gallery.init({url: window.location.pathName}, config);
-            }
+                if (config.page.contentType === "Video") {
+                    Video.init({url: window.location.pathName}, config, context);
+                }
 
-            r.get('/stories/:id', function(req) { Story.init(req, config);});
+                if (config.page.contentType === "Gallery") {
+                    Gallery.init({url: window.location.pathName}, config, context);
+                }
 
-            //Kick it all off
-            r.init();
+                //Kick it all off
+                r.init();
+            };
+
+            bootstrapCommon.runOnce(config);
+
+            common.mediator.on('page:ready', bootstrapCommon.pageReady);
+            common.mediator.on('page:ready', pageRoute);
+
+            common.mediator.emit('page:ready', config, context);
         });
     };
 

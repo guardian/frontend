@@ -48,7 +48,7 @@
             if (fontTime > 50) {
                 var img = document.createElement("img");
                 img.style = "display: none";
-                img.src = "/px.gif?fonts/&fonttime=" + fontTime;
+                img.src = "//beacon." + window.location.hostname +  "/px.gif?fonts/&fonttime=" + fontTime;
                 document.getElementsByTagName("head")[0].appendChild(img);
             }
         }
@@ -70,7 +70,8 @@
                     s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
                 )},
                 'edition': '@Site(request).edition',
-                'ajaxUrl': 'http://@Site(request).ajaxHost'
+                'ajaxUrl': 'http://@Site(request).ajaxHost',
+                isDev: @play.Play.isDev()
             },
             switches : { @{Html(switches.map{ switch =>
                     s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"

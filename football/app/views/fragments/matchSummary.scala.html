@@ -14,5 +14,10 @@
   } else {
     <h2 class="type-3">@homeTeam.name v @awayTeam.name</h2>
   }
+
+    @if(theMatch.homeTeam.aggregateScore){
+        <p class="match-aggregate type-10"><span>(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</span></p>
+    } 
+
     @theMatch.comments.map{ comments => <h5 class="match-comment type-5">@comments.replace("(", "").replace(")", "")</h5>}
 }

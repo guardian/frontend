@@ -5,13 +5,14 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         var config = {};
 
         var w = {
-        	performance: { timing: { requestStart: 1, responseStart: 5000 } },
+        	performance: { timing: { requestStart: 1, responseEnd: 5000 } },
         	innerWidth: 500
         }
 
         beforeEach(function(){
 
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' }
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
+            config.switches = { optimizely: false };
 
             s = { t: function(){}, tl: function(){} };
             sinon.spy(s, "t");
@@ -75,7 +76,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop25).toBe("Middle East Live");
             expect(s.prop14).toBe("build-73");
             expect(s.prop47).toBe("US");
-            expect(s.prop48).toBe("low");
+            expect(s.prop68).toBe("low");
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");

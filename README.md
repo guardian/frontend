@@ -59,7 +59,7 @@ content.api.host=http://XXXX
 pa.api.key=XXXX
 ```
 
-Get the correct key and host from another developer on the project.
+Get the correct key and host from another developer on the project (or for external developers, sign up for a key at http://guardian.mashery.com).
 
 To set up a proxy
 
@@ -138,3 +138,8 @@ Further documentation notes and useful items can be found in `dev`.
 [sbt-idea]: https://github.com/mpeltonen/sbt-idea
 [vagrant]: http://vagrantup.com
 [magenta]: https://github.com/guardian/deploy
+
+
+
+
+

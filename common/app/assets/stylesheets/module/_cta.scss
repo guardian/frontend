@@ -29,13 +29,22 @@ button.cta{
         -moz-box-shadow: none;
     }
 
+.expander {
+  @extend .type-8;
+  display: block;
+  padding-top: 5px;
+  color: #666666;
+}
+
 .top,
 .top:link,
 .top:visited,
 .top:active {
+    @extend .type-8;
     display: block;
     color: #A1B7CF;
     background-color: $darkBlue;
+    border-top: 1px solid #2B528B;
     padding: $baseline*2 $gutter $baseline*2 $gutter;
 }
 
@@ -46,4 +55,12 @@ button.cta{
 
 .cta-small.cta-small-border {
     border-bottom: 1px solid #EDEDE7;
+}
+
+.most-viewed-no-js {
+  display: block;
+}
+
+.most-viewed-no-js i {
+  float: right;
 }

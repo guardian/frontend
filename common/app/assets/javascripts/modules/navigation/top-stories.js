@@ -3,23 +3,24 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
     function TopStories() {
 
         // View
+        var self = this;
 
         this.view = {
 
-            render: function (html) {
+            render: function (html, container) {
 
-                var topstoriesHeader = document.getElementById('topstories-header'),
-                    $topstoriesHeader = bonzo(topstoriesHeader),
+                var $container = bonzo(container),
                     className = "is-off";
 
-                topstoriesHeader.innerHTML = '<div class="headline-list box-indent" data-link-name="top-stories">'
+                container.innerHTML = '<h3 class="headline-list__tile type-5">Top stories</h3>'
+                    + '<div class="headline-list headline-list--top box-indent" data-link-name="top-stories">'
                     + html
                     + '</div>';
 
                 common.mediator.emit('modules:topstories:render');
 
                 common.mediator.on('modules:control:change:topstories-control-header:true', function(args) {
-                    $topstoriesHeader.removeClass(className);
+                    $container.removeClass(className);
                 });
 
                 common.mediator.on('modules:control:change', function(args) {
@@ -28,35 +29,34 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         state = args[1];
 
                     if (state === false || control !== 'topstories-control-header') {
-                        $topstoriesHeader.addClass(className);
+                        $container.addClass(className);
                     }
                 });
             }
         };
 
-        // Bindings
-
-        common.mediator.on('modules:topstories:loaded', this.view.render);
-
         // Model
 
-        this.load = function (config) {
+        this.load = function (config, context) {
 
-            var url = '/top-stories.json?page-size=10&view=link';
+            var url = '/top-stories.json?page-size=10&view=link',
+                container = context.querySelector('.topstories-header');
 
-            if (config.pathPrefix) {
-                url = config.pathPrefix + url;
-            }
-
-            return ajax({
+            if(container) {
+                if (config.pathPrefix) {
+                    url = config.pathPrefix + url;
+                }
+                ajax({
                     url: url,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'navigation',
                     success: function (json) {
-                        common.mediator.emit('modules:topstories:loaded', [json.html]);
+                        common.mediator.emit('modules:topstories:loaded');
+                        self.view.render(json.html, container);
                     }
                 });
+            }
         };
 
     }

@@ -1,7 +1,12 @@
 /* global module: false */
 module.exports = function (grunt) {
-    // Project configuration.
 
+    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
+    if (isDev) {
+        grunt.log.subhead('Running Grunt in DEV mode');
+    }
+
+    // Project configuration.
     grunt.initConfig({
         sass: {
             common: {
@@ -12,7 +17,8 @@ module.exports = function (grunt) {
                 options: {
                     check: false,
                     quiet: true,
-                    style: "compressed",
+                    debugInfo: (isDev) ? true : false,
+                    style: (isDev) ? 'nested' : 'compressed',
                     loadPath: [
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
@@ -41,7 +47,8 @@ module.exports = function (grunt) {
                         "startFile" : "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         "endFile"   : "common/app/assets/javascripts/bootstraps/go.js"
                     },
-                    "optimize"  : "uglify2",
+                    optimize: (isDev) ? 'none' : 'uglify2',
+                    useSourceUrl:  (isDev) ? true : false,
                     "preserveLicenseComments" : false
                 }
             }
@@ -63,7 +70,7 @@ module.exports = function (grunt) {
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
-          woff: {
+          WebEgyptianWoff: {
             options: {
               "filename": "common/app/public/fonts/WebEgyptian.woff.js",
               "callback": "guFont",
@@ -75,7 +82,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500", 
+                  "font-weight": "500",
                   "file": "resources/fonts/EgyptianText-Medium.woff",
                   "format": "woff"
                 },
@@ -94,7 +101,7 @@ module.exports = function (grunt) {
               ]
             }
           },
-          ttf: {
+          WebEgyptianTtf: {
             options: {
               "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
               "callback": "guFont",
@@ -106,7 +113,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500", 
+                  "font-weight": "500",
                   "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
@@ -125,6 +132,47 @@ module.exports = function (grunt) {
               ]
             }
           },
+          WebEgyptianNavWoff: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptianNav.woff.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                  "format": "ttf"
+                }
+              ]
+            }
+          },
+          WebEgyptianNavTtf: {
+            options: {
+              "filename": "common/app/public/fonts/WebEgyptianNav.ttf.js",
+              "callback": "guFont",
+              "fonts": [
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                  "format": "ttf"
+                }
+              ]
+            }
+          }
+        },
+        // Clean stuff up
+        clean: {
+          // Clean any pre-commit hooks in .git/hooks directory
+          hooks: ['.git/hooks/pre-commit']
+        },
+
+        // Run shell commands
+        shell: {
+          hooks: {
+            // Copy the project's pre-commit hook into .git/hooks
+            command: 'cp git-hooks/pre-commit .git/hooks/'
+          }
         }
 
     });
@@ -134,6 +182,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-webfontjson');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-shell');
 
     // Standard tasks
     grunt.registerTask('test:common', ['jshint:common']);
@@ -145,4 +195,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
     grunt.registerTask('default', ['test', 'compile']);
+
+    // Clean the .git/hooks/pre-commit file then copy in the latest version
+    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
 };

@@ -6,7 +6,7 @@
 </h3>
 <div class="box-indent">
     <div class="sections cf football-nav" data-link-name="football bottom nav">
-        <ul class="nav nav-columns nav-top-border-off cf">
+        <ul class="nav nav--columns nav--top-border-off sections cf">
             @defining({ 
                 var linkList = List(
                     Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
@@ -38,7 +38,7 @@
 
             }) { links =>
                 @links.map{ l =>
-                    <li><a href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
+                    <li class="nav__item"><a class="nav__link" href="@l.url" data-link-name="@l.linkName">@l.linkText</a></li>
                 }
             }
         </ul>

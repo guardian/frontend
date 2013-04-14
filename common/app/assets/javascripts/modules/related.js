@@ -1,39 +1,30 @@
-define(['common', 'ajax'], function (common, ajax) {
+define(['common', 'modules/lazyload', 'modules/expandable'], function (common, lazyLoad, Expandable) {
 
-    function Related(attachTo, switches) {
-        
-        // View
-        this.view = {
-            attachTo: attachTo,
-            render: function (html) {
-                attachTo.innerHTML = html;
-                common.mediator.emit('modules:related:render');
-            }
-        };
+    function related(config, context, url) {
+        var container;
 
-        // Bindings
-        common.mediator.on('modules:related:loaded', this.view.render);
-        
-        // Model
-        this.load = function (url) {
-            if (switches.relatedContent) {
-                return ajax({
-                    url: url,
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'showRelated',
-                    success: function (json) {
-                        common.mediator.emit('modules:related:loaded', [json.html]);
-                    },
-                    error: function () {
-                        common.mediator('module:error', 'Failed to load related', 'related.js');
-                    }
-                });
-            }
-        };
+        if (config.page.hasStoryPackage) {
+
+            new Expandable({dom: context.querySelector('.related-trails'), expanded: false}).init();
+            common.mediator.emit('modules:related:loaded', config, context);
+
+        } else if (config.switches.relatedContent) {
+
+            container = context.querySelector('.js-related');
+            url =  url || '/related/' + config.page.pageId;
+
+            lazyLoad({
+                url: url,
+                container: container,
+                jsonpCallbackName: 'showRelated',
+                success: function () {
+                    new Expandable({dom: container.querySelector('.related-trails'), expanded: false}).init();
+                    common.mediator.emit('modules:related:loaded', config, context);
+                }
+            });
+        }
 
     }
     
-    return Related;
-
+    return related;
 });

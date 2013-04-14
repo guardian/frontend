@@ -54,30 +54,12 @@ define([
 
                 reader.init();
             }
-        },
-        
-        addOptimizely: function(config) {
-            // pull in optimizely js
-            if(config.switches.optimizely === true) {
-                require(['js!' + config.page.optimizelyUrl]);
-            }
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Experiment(config);
-
-            e.init();
         }
     };
 
-    var ready = function(config) {
+    var ready = function(config, context) {
 
-        modules.initExperiments(config);
+        common.mediator.emit("page:article:ready", config, context);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -93,12 +75,11 @@ define([
     var defer = function(config) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
-            modules.addOptimizely(config);
         });
     };
 
-    var init = function (req, config) {
-        ready(config);
+    var init = function (req, config, context) {
+        ready(config, context);
         defer(config);
     };
 

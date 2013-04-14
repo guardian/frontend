@@ -5,7 +5,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         var config = {};
 
         beforeEach(function(){
-            config.page = { omnitureAccount: 'the_account' }
+            config.page = { omnitureAccount: 'the_account' };
+            config.switches = { optimizely: false };
         });
 
         it("should load the omniture 's' object", function(){

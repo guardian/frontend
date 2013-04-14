@@ -28,13 +28,13 @@ object TeamMap extends AkkaSupport with Logging {
     ("84", "Peterboro"),
     ("44", "Wolves"),
     ("20", "MK Dons"),
-    ("74", "Cochester"),
+    ("74", "Colchester"),
     ("188", "Crawley"),
     ("45987", "Wimbledon"),
     ("24", "Bradford City"),
     ("11899", "Fleetwood"),
     ("1204", "Accrington"),
-    ("184", "Albion"),
+    ("184", "Burton A"),
     ("49567", "Telford"),
     ("1205", "Alfreton"),
     ("71", "Cambridge"),
@@ -62,7 +62,6 @@ object TeamMap extends AkkaSupport with Logging {
     ("10883", "Truro"),
     ("10202", "Tonbridge"),
     ("7808", "Bath"),
-    ("11667", "t"),
     ("150", "Sutton"),
     ("12671", "Staines"),
     ("23510", "Havant"),
@@ -80,7 +79,7 @@ object TeamMap extends AkkaSupport with Logging {
     ("26247", "Bayern"),
     ("6997", "Spartak"),
     ("49647", "CFR Cluj"),
-    ("26451", "Galatasary"),
+    ("26451", "Galatasaray"),
     ("26269", "SC Braga"),
     ("42007", "Anzhi"),
     ("35999", "Hapoel"),
@@ -91,7 +90,7 @@ object TeamMap extends AkkaSupport with Logging {
     ("6901", "Steaua"),
     ("26412", "Copenhagen"),
     ("38429", "Videoton"),
-    ("26268", "Gijon"),
+    ("26268", "Gijón"),
     ("6136", "Inter"),
     ("6935", "Partizan"),
     ("56055", "H Kiryat Shmona"),
@@ -100,8 +99,9 @@ object TeamMap extends AkkaSupport with Logging {
     ("26256", "Leverkusen"),
     ("32309", "Hannover"),
     ("7520", "Helsingborg"),
-    ("26322", "Twente")
-  )
+    ("26322", "Twente"),
+    ("26398", "Basel")
+)
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 

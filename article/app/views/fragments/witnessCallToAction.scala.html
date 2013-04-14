@@ -1,0 +1,21 @@
+@(content: model.Content)
+
+@if(content.allowUserGeneratedContent) {
+    @content.witnessAssignment.map{ assignmentId =>
+        @defining(s"https://witness.guardian.co.uk/assignment/$assignmentId#contribute"){ assignmentUrl =>
+            <div class="witness-call-to-action">
+                <a href="@assignmentUrl" data-link-name="witness cta plus">
+                    <i class="i i-ee-add-button"></i>
+                 </a>
+                    <div class="witness-call-to-action--box">
+                        <a href="@assignmentUrl" data-link-name="witness cta text">
+                            <p>
+                                Contribute with <i class="i i-witness-logo" title="Guardian Witness"></i>
+                            </p>
+                        </a>
+                        <i class="i i-powered-by-ee"></i>
+                    </div>
+            </div>
+       }
+    }
+}

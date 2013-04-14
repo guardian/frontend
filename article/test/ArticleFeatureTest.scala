@@ -295,6 +295,31 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Hide main picture if video is at start of article") {
+      Given("I am on an article with a video at the start of the body")
+      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+        import browser._
+        Then("the main picture should be hidden")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (0)
+
+        And("the embedded video should have a poster")
+        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/mainwebsite/poster/2013/3/26/130326HuntReform_7409761.jpg")
+      }
+    }
+
+    scenario("Show main picture if video is further down article") {
+      Given("I am on an article with a video further down inside the body")
+      HtmlUnit("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
+        import browser._
+
+        Then("the main picture should be shown")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+
+        And("the embedded video should have a poster")
+        findFirst("video").getAttribute("poster") should be("http://cdn.theguardian.tv/bc/281851582/281851582_1019162777001_110624Glastothreewords-4863219.jpg?pubId=281851582")
+      }
+    }
+
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an aricle and want to share it with my friends")
@@ -336,14 +361,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Make the document accessible with ARIA support") {
 
       Given("I read an article")
+      
       CommonSwitches.SocialSwitch.switchOn
+      CommonSwitches.SearchSwitch.switchOn
+      
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst("#related-trails").getAttribute("role") should be("complementary")
-        findFirst("#js-related").getAttribute("role") should be("complementary")
-        findFirst("#js-popular").getAttribute("role") should be("complementary")
+        findFirst(".related-trails").getAttribute("role") should be("complementary")
+        findFirst(".js-related").getAttribute("role") should be("complementary")
+        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst("footer").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -351,6 +379,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".search-box").getAttribute("role") should be("search")
         
       }
     }
