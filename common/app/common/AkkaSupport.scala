@@ -18,11 +18,6 @@ trait AkkaSupport {
     def uptime(): Long = system().uptime
 
     object dispatcher {
-
-      // TODO check if we still need these
-      val actions = system().dispatchers.lookup("play.akka.actor.actions-dispatcher")
-      val promises = system().dispatchers.lookup("play.akka.actor.promises-dispatcher")
-      val websockets = system().dispatchers.lookup("play.akka.actor.websockets-dispatcher")
       val default = system().dispatchers.lookup("play.akka.actor.default-dispatcher")
     }
 
