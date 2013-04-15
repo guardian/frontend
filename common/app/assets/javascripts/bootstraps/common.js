@@ -221,7 +221,7 @@ define([
             modules.loadOphanAnalytics(config, context);
             modules.loadAdverts(config, context);
             modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar();
+            modules.showSharedWisdomToolbar(config);
         });
     };
 
