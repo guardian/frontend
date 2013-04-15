@@ -1,4 +1,4 @@
-define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(common, ajax, bean, TrailblockShowMore) {
+define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], function(common, ajax, bean, bonzo, TrailblockShowMore) {
 
     describe("TrailblockShowMore", function() {
         
@@ -6,8 +6,8 @@ define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(commo
             '<div id="front-container">'
                 + '<div class="js-show-more trailblock" id="trailblock-show-more-fixture">'
                     + '<ul>'
-                        + '<li class="trail"><h2><a href="/link/one">Link one</a></h2></li>'
-                        + '<li class="trail"><h2><a href="/link/two">Link two</a></h2></li>'
+                        + '<li class="trail"><h2><a href="/link/one" data-link-name="1">Link one</a></h2></li>'
+                        + '<li class="trail"><h2><a href="/link/two" data-link-name="2">Link two</a></h2></li>'
                     + '</ul>'
                 + '</div>'
             + '</div>',
@@ -50,6 +50,16 @@ define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(commo
             });
         });
         
+        it("should emit 'module:trailblock-show-more:render' on render", function(){
+            waitsFor(function() {
+                return common.mediator.emit.called;
+              }, 'Trails not loaded in in time', 100);
+            
+            runs(function() {
+                expect(common.mediator.emit.secondCall).toHaveBeenCalledWith('module:trailblock-show-more:render');
+            });
+        });
+        
         it('should append 5 more trails', function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
@@ -58,6 +68,12 @@ define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(commo
             runs(function() {
                 expect(common.$g('#front-container ul').length).toBe(1);
                 expect(common.$g('#front-container .trail').length).toBe(7);
+                bean.fire($cta[0], 'click');
+                expect(common.$g('#front-container .trail').length).toBe(12);
+                var numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+                common.$g('#front-container .trail').each(function(trail, index) {
+                    expect(common.$g('h2 a', trail).attr('href')).toBe('/link/' + numbers[index]);
+                });
             });
         });
         
@@ -67,10 +83,52 @@ define(['common','ajax', 'bean', 'modules/trailblock-show-more'], function(commo
               }, 'Trails not loaded in in time', 100);
             
             runs(function() {
+                bean.fire($cta[0], 'click');
+                bean.fire($cta[0], 'click');
                 common.$g('#front-container .trail').each(function(trail) {
                     var href = common.$g('h2 a', trail[0]).attr('href')
                     expect(common.$g('#front-container .trail h2 a[href="' + href + '"]').length).toBe(1);
                 });
+            });
+        });
+        
+        it("should increase cta omniture count by one on success", function(){
+            waitsFor(function() {
+                return common.mediator.emit.called;
+              }, 'Trails not loaded in in time', 100);
+            
+            runs(function() {
+                expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
+                // click again
+                bean.fire($cta[0], 'click');
+                expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 3');
+            });
+        });
+        
+        it("should correctly increment omniture count on trails", function(){
+            waitsFor(function() {
+                return common.mediator.emit.called;
+              }, 'Trails not loaded in in time', 100);
+            
+            runs(function() {
+                bean.fire($cta[0], 'click');
+                bean.fire($cta[0], 'click');
+                common.$g('#front-container .trail h2 a').each(function(trail, index) {
+                    expect(bonzo(trail).attr('data-link-name')).toEqual(index + 1 + '')
+                });
+            });
+        });
+        
+        it("should remove cta when no more trails", function(){
+            waitsFor(function() {
+                return common.mediator.emit.called;
+              }, 'Trails not loaded in in time', 100);
+            
+            runs(function() {
+                bean.fire($cta[0], 'click');
+                bean.fire($cta[0], 'click');
+                expect(common.$g('#front-container .trail').length).toBe(13);
+                expect(common.$g('#front-container .trailblock .cta').length).toBe(0);
             });
         });
        

@@ -1,6 +1,6 @@
 /*
-    Module: autoupdate.js
-    Description: Used to load update fragments of the DOM from specfied endpoint
+    Module: trailblock-show-more.js
+    Description: Pull in more trailblocks dynamically
 */
 define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
@@ -8,7 +8,8 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
         
         var opts = options || {},
             className = opts.className || 'js-show-more',
-            trails = {};
+            trails = {},
+            trailblockLength = 5;
 
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
@@ -22,8 +23,17 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
            },
            
            render: function($cta, section) {
-               // put the trails in the trailblock
-               bonzo($cta.previous()).append(trails[section]);
+               // what's the offset?
+               for (var i = 0; i < trailblockLength; i++) {
+                   var trail = trails[section][i];
+                   if (!trail) {
+                       this.removeCta($cta);
+                       break;
+                   }                   
+                   bonzo($cta.previous()).append(trail);
+               }
+               // remove trails
+               trails[section] = trails[section].slice(trailblockLength); 
                common.mediator.emit('module:trailblock-show-more:render');
            }
         
@@ -38,51 +48,53 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             
             // event delegation for clicking of cta
             bean.on(qwery('#front-container')[0], 'click', '.trailblock button.cta', function(e) {
-                var $cta = bonzo(e.target)
-                        // disable button
-                        .attr('disabled', 'disabled'),
+                var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
-                    section = bonzo($cta.parent()).attr('data-section-id') || 'top-stories',
-                    // what's the offset?
-                    offset = qwery('.trail', $cta.parent()[0]).length;
+                    section = bonzo($cta.parent()).attr('data-section-id') || 'top-stories';
                 
-                ajax({
-                    url: opts.url || '/' +   + '/trails',
-                    type: 'jsonp',
-                    jsonpCallbackName: opts.jsonpCallbackName,
-                    success: function (resp) {
-                        common.mediator.emit('module:trailblock-show-more:loaded');
-                        // de-dupe
-                        $currentTrails = common.$g('.trail h2 a', $cta.previous());
-                        // add new trails to hidden div
-                        var $trails = bonzo(bonzo.create(resp.html));
-                        common.$g('.trail', $trails[0]).each(function(trail) {
-                            // get the href for this trail
-                            var href = common.$g('h2 a', trail).first().attr('href');
-                            // if we already have this trail, remove it
-                            if (common.$g('.trail h2 a[href="' + href + '"]', $cta.previous()).length) {
-                                bonzo(trail).remove();
-                            }
-                        })
-                        // store response
-                        trails.section = $trails;
-                        
-                        that.view.render($cta, section);
-                        
-                        // if no more, remove cta
-                        if (!resp.hasMore) {
-                            that.view.removeCta($cta);
-                        } else {
-                            // otherwise, increase the show more count
-                            var newDataLinkName = $cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
-                                // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
-                                return prefix + (parseInt(count, 10) + 1);
+                function updateTrailblock($cta, section) {
+                    that.view.render($cta, section);
+                    
+                    // increase the show more count
+                    var newDataLinkName = $cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
+                        // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
+                        return prefix + (parseInt(count, 10) + 1);
+                    });
+                    $cta.attr('data-link-name', newDataLinkName);
+                }
+                
+                // have we already got the trails
+                if (trails[section]) {
+                    updateTrailblock($cta, section);
+                } else {
+                    ajax({
+                        url: opts.url || '/' +  section + '/trails',
+                        type: 'jsonp',
+                        jsonpCallbackName: opts.jsonpCallbackName,
+                        success: function (resp) {
+                            common.mediator.emit('module:trailblock-show-more:loaded');
+                            var $trailList = bonzo(bonzo.create(resp.html)),
+                                $trails = common.$g('li', $trailList),
+                                numTrails = common.$g('.trail', $cta.previous()).length;
+                            // store trails
+                            trails[section] = [];
+                            // de-dupe
+                            $trails.each(function(trail) {
+                                // get the href for this trail
+                                var href = common.$g('h2 a', trail).attr('href');
+                                // only add if we don't already have this trail (based on href)
+                                if (common.$g('.trail h2 a[href="' + href + '"]', $cta.previous()).length === 0) {
+                                    // correct omniture count
+                                    common.$g('h2 a', trail).attr('data-link-name', ++numTrails);
+                                    trails[section].push(trail);
+                                }
                             });
-                            $cta.attr('data-link-name', newDataLinkName)
-                                .removeAttr('disabled');
+                            
+                            updateTrailblock($cta, section);
                         }
-                    }
-                });
+                    });
+                }
+                
             });
         };
     }
