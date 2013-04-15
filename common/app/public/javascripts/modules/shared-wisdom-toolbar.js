@@ -53,7 +53,7 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 		// init takes callback, as makes http request
 		init: function(callback, config) {
 		    // only display if switched on
-		    if (userPrefs.isOff(id)) {
+		    if (!userPrefs.isOn(id)) {
 		        return;
 		    }
             // add css
