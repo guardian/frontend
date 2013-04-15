@@ -29,11 +29,11 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                    if (!trail) {
                        this.removeCta($cta);
                        break;
-                   }                   
+                   }
                    bonzo($cta.previous()).append(trail);
                }
                // remove trails
-               trails[section] = trails[section].slice(trailblockLength); 
+               trails[section] = trails[section].slice(trailblockLength);
                common.mediator.emit('module:trailblock-show-more:render');
            }
         

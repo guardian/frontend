@@ -84,7 +84,6 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             
             runs(function() {
                 bean.fire($cta[0], 'click');
-                bean.fire($cta[0], 'click');
                 common.$g('#front-container .trail').each(function(trail) {
                     var href = common.$g('h2 a', trail[0]).attr('href')
                     expect(common.$g('#front-container .trail h2 a[href="' + href + '"]').length).toBe(1);
@@ -111,7 +110,6 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
               }, 'Trails not loaded in in time', 100);
             
             runs(function() {
-                bean.fire($cta[0], 'click');
                 bean.fire($cta[0], 'click');
                 common.$g('#front-container .trail h2 a').each(function(trail, index) {
                     expect(bonzo(trail).attr('data-link-name')).toEqual(index + 1 + '')
