@@ -26,7 +26,8 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
-    'modules/debug'
+    'modules/debug',
+    'modules/shared-wisdom-toolbar'
 ], function (
     common,
     ajax,
@@ -54,7 +55,8 @@ define([
     Adverts,
     Cookies,
     Video,
-    Debug
+    Debug,
+    sharedWisdomToolbar
 ) {
 
     var modules = {
@@ -177,7 +179,7 @@ define([
         },
 
         loadAdverts: function (config) {
-           
+
             if (config.switches.adverts) {
                 Adverts.init(config);
                 common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
@@ -186,6 +188,19 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
+        },
+
+        showSharedWisdomToolbar: function(config) {
+            sharedWisdomToolbar.init(function() {
+                sharedWisdomToolbar.show();
+            }, config.modules.sharedWisdomToolbar);
         }
     };
 
@@ -195,6 +210,7 @@ define([
             modules.loadOphanAnalytics(config, context);
             modules.loadAdverts(config, context);
             modules.cleanupCookies(context);
+            modules.showSharedWisdomToolbar(config);
         });
     };
 
