@@ -34,7 +34,10 @@ object ImageController extends Controller with Logging with Implicits {
                     
                     val resized = image.resize(TrailImage.width, TrailImage.height)
                     val compressed = resized(format) compress TrailImage.compression
-                    Ok(compressed) as contentType
+                    
+                    Cached(86400) {
+                      Ok(compressed) as contentType
+                    }
 
                   case "im4java" =>
           
@@ -46,9 +49,10 @@ object ImageController extends Controller with Logging with Implicits {
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
                     
                     val resized = Im4Java(image, operation, format)
-                   
-                    Ok(resized) as contentType
-                
+                  
+                    Cached(86400) {
+                      Ok(resized) as contentType
+                    }
                 }
 
             case 404 => NotFound
