@@ -7,32 +7,39 @@ define([
 ], function (
     common,
     userPrefs,
-    relatedContent) {
+    RelatedContent) {
     
     var TESTS = {
-            "relatedContent" : relatedContent
+            "relatedContent" : new RelatedContent()
         };
 
     var key = 'ab';
 
     function storeTest(test, variant) {
-        var data = {test: test, variant: variant};
-        userPrefs.set(key, JSON.stringify(data));
+        var data = {id: test, variant: variant};
+        userPrefs.set(key + ".current", JSON.stringify(data));
     }
 
     function getTest() {
-        return JSON.parse(userPrefs.get(key));
+        return (userPrefs.get(key)) ? JSON.parse(userPrefs.get(key)) : false;
     }
 
     // Checks if:
     // local storage is set, is an active test & switch is on
     function inTest(switches) {
         var test = getTest();
-        return (test && TESTS[test.id] && switches['ab' + test.id]) ? true : false;
+        return (test && TESTS[test.id]) ? true : false;
     }
 
     function clearTest() {
-        userPrefs.remove(key);
+        return userPrefs.remove(key);
+    }
+
+    function logParticipation(testName) {
+        var k = key + '.participation',
+            data = userPrefs.get(key);
+
+        userPrefs.set(key + ".current", JSON.stringify(data));
     }
 
     //Finds variant in specific tests and exec's
@@ -62,27 +69,31 @@ define([
             storeTest(test.id, testVariant);
         }
 
+        logParticipation(test.id);
     }
 
     function init(config) {
         var switches = config.switches,
-            inTest = inTest(switches);
+            isInTest = inTest(switches);
 
         //Is the user in an active test?
-        if(inTest) {
-            runVariant(TESTS[getTest().id], currentTest.variant);
+        if(isInTest) {
+            var currentTest = getTest();
+            runVariant(TESTS[currentTest.id], currentTest.variant);
         } else {
             //First clear out any old test data
             clearTest();
 
             //Loop over active tests
-            for(var i = 0, l = TESTS.length; i<l; i++) {
+            for(var test in TESTS) {
+
                //If previous iteration worked break;
                if(inTest(switches)) { break; }
+
                //Can the test run on this page
-               if(TESTS[i].canRun) {
+               if(TESTS[test].canRun(config)) {
                    //Start
-                   start(TESTS[i]);
+                   start(TESTS[test]);
                }
             }
         }

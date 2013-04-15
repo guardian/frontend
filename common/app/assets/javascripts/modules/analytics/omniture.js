@@ -112,7 +112,7 @@ define([
             s.prop47    = config.page.edition || '';
 
             if (ab.inTest(config.switches)) {
-                var test = ab.getTest();
+                var test = ab.getTest(),
                     testData = test.id + ' : ' + test.variant;
 
                 s.prop51  = testData;

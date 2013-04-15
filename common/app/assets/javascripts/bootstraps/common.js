@@ -27,7 +27,8 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
-    'modules/debug'
+    'modules/debug',
+    'modules/experiments/ab'
 ], function (
     common,
     ajax,
@@ -56,7 +57,8 @@ define([
     Adverts,
     Cookies,
     Video,
-    Debug
+    Debug,
+    AB
 ) {
 
     var modules = {
@@ -211,8 +213,11 @@ define([
         modules.showRelativeDates();
 
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics(config);
+            common.mediator.on('ab:loaded', function() {
+                modules.loadOmnitureAnalytics(config);
+                modules.loadOphanAnalytics(config);
+            });
+            AB.init(config);
             modules.loadAdverts(config);
             modules.cleanupCookies();
         });

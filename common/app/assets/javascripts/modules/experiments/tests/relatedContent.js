@@ -2,10 +2,10 @@ define(['bonzo'], function (bonzo) {
 
     var ExperimentRelatedContent = function () {
 
-        var mostPopular = bonzo('popular-trails');
+        var self = this;
 
         this.id = 'relatedContent';
-        this.audience = 0.01;
+        this.audience = 1;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
           return (config.page.contentType === "Article") ? true : false;
@@ -15,17 +15,20 @@ define(['bonzo'], function (bonzo) {
                 id: 'control',
                 split: 50,
                 test: function () {
-                    var data = 'Related content test : show : ' + mostPopular.data('link-name');
-                    mostPopular.data('link-name', data);
+                    var mostPopular =  bonzo(document.getElementById('popular-trails')),
+                        data = 'AB | ' + self.id + ' test | show | ' + mostPopular.attr('data-link-name');
+
+                    mostPopular.attr('data-link-name', data);
                 }
             },
             {
                 id: 'hide',
                 split: 50,
                 test: function () {
-                    bonzo('#js-related').remove();
-                    var data = 'Related content test : hide : ' + mostPopular.data('link-name');
-                    mostPopular.data('link-name', data);
+                    var mostPopular =  bonzo(document.getElementById('popular-trails'));
+                    bonzo(document.getElementById('js-related')).remove();
+                    var data = 'AB | ' + self.id + ' test | hide | '  + mostPopular.attr('data-link-name');
+                    mostPopular.attr('data-link-name', data);
                 }
             }
         ];

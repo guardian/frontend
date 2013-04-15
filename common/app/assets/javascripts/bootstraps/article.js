@@ -6,8 +6,7 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/story/experiment",
-    "modules/accordion",
-    "modules/experiments/bootstrap"
+    "modules/accordion"
 ], function (
     common,
     Expandable,
@@ -15,8 +14,7 @@ define([
     MatchNav,
     Reading,
     Story,
-    Accordion,
-    Experiment
+    Accordion
 ) {
 
     var modules = {

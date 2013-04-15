@@ -21,15 +21,15 @@ define(function () {
 
         width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
 
-        if (width > BASE_WIDTH) {
+        if (width >= BASE_WIDTH) {
             mode = "tablet";
         }
 
-        if (width > MEDIAN_WIDTH) {
+        if (width >= MEDIAN_WIDTH) {
             mode = "desktop";
         }
 
-        if (width > EXTENDED_WIDTH) {
+        if (width >= EXTENDED_WIDTH) {
             mode = "extended";
         }
 

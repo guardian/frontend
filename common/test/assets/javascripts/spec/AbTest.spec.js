@@ -1,6 +1,6 @@
-define(['modules/ab-test'], function(abTest) {
+define(['modules/experiments/ab'], function(AB) {
     
-    describe('AB Test', function() {
+    describe('AB Testing', function() {
 
         beforeEach(function() {
         });
@@ -10,8 +10,10 @@ define(['modules/ab-test'], function(abTest) {
 
         it('should exist', function() {
             // basic, check it exists
-            expect(abTest).toBeDefined();
+            expect(AB).toBeDefined();
         });
+
+        describe("Connection speed", function() {
 
         it('should be able to add and retrieve a test', function() {
             var testName = 'A Test',

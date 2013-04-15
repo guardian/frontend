@@ -81,7 +81,7 @@ define([
             this.view.bindings();
 
             if(layoutMode !== 'mobile') {
-                this.view.hideColumns();
+                that.view.hideColumns();
             }
         };
      }
