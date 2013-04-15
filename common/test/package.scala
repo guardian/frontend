@@ -119,6 +119,8 @@ class Fake extends TestSettings {
   ) { block }
 }
 
+object Fake extends Fake
+
 
 object TestRequest {
   def apply(): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
