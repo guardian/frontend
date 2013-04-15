@@ -48,6 +48,7 @@ object Frontend extends Build with Prototypes with Testing {
   val image = application("image").dependsOn(commonWithTests).settings(
        libraryDependencies ++= Seq(
          "org.imgscalr" % "imgscalr-lib" % "4.2",
+         "org.im4java" % "im4java" % "1.4.0",
          "commons-io" % "commons-io" % "2.0.1",
          "commons-lang" % "commons-lang" % "2.5"
        )
