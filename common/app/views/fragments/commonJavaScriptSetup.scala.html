@@ -10,7 +10,7 @@
             isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
             }, 
             curl = {
-                baseUrl: '@{Configuration.static.path}javascripts',
+                baseUrl: '@{Configuration.assets.path}javascripts',
                 apiName: 'require',
                 paths: {
                     omniture                       : '@Static("javascripts/vendor/omniture.js")',

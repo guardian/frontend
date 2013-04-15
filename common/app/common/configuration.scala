@@ -78,6 +78,18 @@ class GuardianConfiguration(
     }
   }
 
+  object images {
+    lazy val path = configuration.getStringProperty("images.path").getOrElse {
+      throw new IllegalStateException("Image path not configured")
+    }
+  }
+  
+  object assets {
+    lazy val path = configuration.getStringProperty("assets.path").getOrElse {
+      throw new IllegalStateException("Image path not configured")
+    }
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change accross environments
