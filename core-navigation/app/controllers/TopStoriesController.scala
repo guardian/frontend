@@ -57,7 +57,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
   }
 
   private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
-    val response = views.html.fragments.trailblocks.link(trails, request.getQueryString("pageSize").map{ _.toInt }.getOrElse(trails.size))
+    val response = views.html.fragments.trailblocks.link(trails, request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size))
     renderFormat(response, response, 900)
   }
 }
