@@ -93,6 +93,4 @@ object `package` {
       Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
     }
   }
-
-  object Fake extends Fake
 }
