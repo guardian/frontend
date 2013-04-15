@@ -26,14 +26,14 @@ object ImageController extends Controller with Logging with Implicits {
                 val format = contentType.fromLast("/")
                 val image = response.getAHCResponse.getResponseBodyAsStream.toBufferedImage
                 
-                log.info("Resize %s (%s) to (%s,%s) at %s compression".format(path, format, TrailImage.width, TrailImage.height, TrailImage.compression))
+                log.info("Resize %s (%s) to (%s,%s) at %s compression".format(path, format, ProfileImage.width, ProfileImage.height, ProfileImage.compression))
                 
                 mode match {
                   
                   case "scalr" => 
                     
-                    val resized = image.resize(TrailImage.width, TrailImage.height)
-                    val compressed = resized(format) compress TrailImage.compression
+                    val resized = image.resize(ProfileImage.width, ProfileImage.height)
+                    val compressed = resized(format) compress ProfileImage.compression
                     
                     Cached(86400) {
                       Ok(compressed) as contentType
@@ -44,8 +44,8 @@ object ImageController extends Controller with Logging with Implicits {
                     // configuration
                     val operation = new IMOperation()
                     operation.addImage
-                    operation.resize(TrailImage.width, TrailImage.height)
-                    operation.quality(TrailImage.compression.toDouble)
+                    operation.resize(ProfileImage.width, ProfileImage.height)
+                    operation.quality(ProfileImage.compression.toDouble)
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
                     
                     val resized = Im4Java(image, operation, format)

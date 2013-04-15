@@ -12,6 +12,12 @@ object TrailImage {
   val height = 192 // 5:3
 }
 
+object ProfileImage {
+  val compression = 70
+  val width = 140
+  val height = 140 
+}
+
 object Im4Java {
 
   def apply(image: BufferedImage, operation:IMOperation, format: String = "jpg"): Array[Byte] = { 
