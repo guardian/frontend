@@ -7,9 +7,12 @@ define(['common', 'ajax'], function (common, ajax) {
 
             url               - string
             container         - element object
+
+            beforeInsert      - function applied to response html before inserting it into container, optional
             success           - callback function, optional
+
             jsonpCallbackName - string, optional
-            fore              - boolean, default false. Reload an already-populated container
+            force             - boolean, default false. Reload an already-populated container
         */
 
         var load;
