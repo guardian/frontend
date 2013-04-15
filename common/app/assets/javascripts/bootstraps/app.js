@@ -48,7 +48,7 @@ define('bootstraps/app', [
             var pageRoute = function(config, context) {
                 //Articles
                 if(config.page.contentType === "Article") {
-                    Article.init({url: window.location.pathName}, config, context);
+                    Article.init(config, context);
                 }
 
                 if (config.page.contentType === "Video") {
@@ -63,7 +63,7 @@ define('bootstraps/app', [
                 r.init();
             };
 
-            bootstrapCommon.runOnce(config);
+            bootstrapCommon.init(config);
 
             common.mediator.on('page:ready', bootstrapCommon.pageReady);
             common.mediator.on('page:ready', pageRoute);

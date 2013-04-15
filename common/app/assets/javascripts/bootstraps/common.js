@@ -214,7 +214,7 @@ define([
         });
     };
 
-    var runOnce = function (config) {
+    var init = function (config) {
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
@@ -230,7 +230,7 @@ define([
     };
 
     return {
-        runOnce: runOnce,
+        init: init,
         pageReady: pageReady
     };
 
