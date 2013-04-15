@@ -34,14 +34,16 @@ module.exports = function (grunt) {
                     name    : "bootstraps/app",
                     out     : "common/target/scala-2.10/resource_managed/main/public/javascripts/bootstraps/app.js",
                     "paths"  : {
-                        "bean"         : "components/bean/bean",
-                        "bonzo"        : "components/bonzo/src/bonzo",
-                        "domReady"     : "components/domready/ready",
-                        "EventEmitter" : "components/eventEmitter/EventEmitter",
-                        "qwery"        : "components/qwery/mobile/qwery-mobile",
-                        "reqwest"      : "components/reqwest/src/reqwest",
-                        "domwrite"     : "components/dom-write/dom-write",
-                        "swipe"        : "components/swipe/swipe"
+                        "bean"                         : "components/bean/bean",
+                        "bonzo"                        : "components/bonzo/src/bonzo",
+                        "domReady"                     : "components/domready/ready",
+                        "EventEmitter"                 : "components/eventEmitter/EventEmitter",
+                        "qwery"                        : "components/qwery/mobile/qwery-mobile",
+                        "reqwest"                      : "components/reqwest/src/reqwest",
+                        "domwrite"                     : "components/dom-write/dom-write",
+                        "swipe"                        : "components/swipe/swipe",
+                        // add excluded modules here, note empty scheme (note, also need to add to curl options)
+                        'modules/shared-wisdom-toolbar': 'empty:'
                     },
                     "wrap" : {
                         "startFile" : "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",

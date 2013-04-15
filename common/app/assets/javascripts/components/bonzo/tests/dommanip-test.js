@@ -214,29 +214,4 @@ sink('DOM Manipulation', function(test, ok, before, after, assert) {
       ok($(document.createElement('div')).detach(), 'can call detach on already detached elements')
     } catch (e) { ok(false, 'error detaching detached element: ' + e); console && console.log(e,e.stack) }
   })
-
-  test('should clone() detached node list', 8, function () {
-    var orig = $.create('<div><a href="http://foo/">foo</a></div><p id="paragraphtastic"><span>spantastic</span></p>')
-      , clone = $(orig).clone()
-
-    ok(orig.length == 2, 'sanity check, original fixture has 2 parent elements')
-    ok(orig.length == clone.length, 'clone has 2 parent elements')
-    ok(orig[0] !== clone[0], 'clone element !== original element')
-    ok(orig[1] !== clone[1], 'clone element !== original element')
-    ok(orig[0].childNodes[0] !== clone[0].childNodes[0], 'clone element !== original element (child node)')
-    ok(orig[1].childNodes[0] !== clone[1].childNodes[0], 'clone element !== original element (child node)')
-    ok(clone[0].childNodes[0].href == 'http://foo/', 'cloned attributes')
-    ok(clone[1].id == 'paragraphtastic', 'cloned attributes')
-  })
-
-  test('should clone() attached node list', 2, function () {
-    var html = Q('#clonesrc')[0].innerHTML.toLowerCase().replace(/\s/g, '')
-    var src = $(Q('#clonesrc > *'))
-    src.clone().appendTo('#clonedst')
-    var newhtml = Q('#clonedst')[0].innerHTML.toLowerCase().replace(/\s/g, '')
-    ok(html == newhtml, 'cloning attached node duplicates HTML')
-    src.clone().appendTo('#clonedst') // do it again!
-    newhtml = Q('#clonedst')[0].innerHTML.toLowerCase().replace(/\s/g, '')
-    ok(html + html == newhtml, 'cloning attached node duplicates HTML (again!)')
-  })
 })
