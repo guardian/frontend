@@ -14,12 +14,12 @@ object TrailImage {
 
 object Im4Java {
 
-  def apply(image: BufferedImage, op:IMOperation, format: String = "jpg"): Array[Byte] = { 
+  def apply(image: BufferedImage, operation:IMOperation, format: String = "jpg"): Array[Byte] = { 
     val cmd = new ConvertCmd
     val s2b = new Stream2BufferedImage
     cmd.setOutputConsumer(s2b)
 
-    cmd.run(op, image)
+    cmd.run(operation, image)
     val resized = s2b.getImage()
 
     val baos = new ByteArrayOutputStream

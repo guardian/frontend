@@ -5,14 +5,8 @@ import play.api.mvc.{ Controller, Action }
 import play.api.libs.ws.WS
 import scala.language.reflectiveCalls
 import play.api.libs.concurrent.Execution.Implicits._
-import org.im4java.core.{ IMOperation, ConvertCmd, Stream2BufferedImage }
+import org.im4java.core.{ IMOperation }
 import model._
-
-// TODELETE
-
-import java.io.ByteArrayOutputStream
-import javax.imageio.ImageIO
-import java.awt.image.BufferedImage  
 
 object ImageController extends Controller with Logging with Implicits {
 
@@ -45,13 +39,13 @@ object ImageController extends Controller with Logging with Implicits {
                   case "im4java" =>
           
                     // configuration
-                    val op = new IMOperation()
-                    op.addImage()
-                    op.resize(TrailImage.width, TrailImage.height)
-                    op.quality(TrailImage.compression.toDouble)
-                    op.addImage(format + ":-") // FIXME assume im and content-type will always map to each other
+                    val operation = new IMOperation()
+                    operation.addImage
+                    operation.resize(TrailImage.width, TrailImage.height)
+                    operation.quality(TrailImage.compression.toDouble)
+                    operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
                     
-                    val resized = Im4Java(image, op, format)
+                    val resized = Im4Java(image, operation, format)
                    
                     Ok(resized) as contentType
                 
