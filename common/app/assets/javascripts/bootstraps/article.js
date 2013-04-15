@@ -19,17 +19,21 @@ define([
 
     var modules = {
 
-        matchNav: function(config){
-            var teamIds = config.referencesOfType('paFootballTeam');
-            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+        matchNav: function(){
+            var matchNav = new MatchNav();
+            common.mediator.on('page:ready', function(config, context) {
+                var teamIds = config.referencesOfType('paFootballTeam');
+                var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
 
-            if(teamIds.length === 2 && isRightTypeOfContent){
-                var url = "/football/api/match-nav/";
-                            url += config.webPublicationDateAsUrlPart() + "/";
-                            url += teamIds[0] + "/" + teamIds[1];
-                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
-                new MatchNav().load(url);
-            }
+                if(teamIds.length === 2 && isRightTypeOfContent){
+                    var url = "/football/api/match-nav/";
+                        url += config.webPublicationDateAsUrlPart() + "/";
+                        url += teamIds[0] + "/" + teamIds[1];
+                        url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+
+                    matchNav.load(url, context);
+                }
+            });
         },
 
         initLiveBlogging: function(switches) {
@@ -66,13 +70,13 @@ define([
         }
 
         if(config.page.section === "football") {
-            modules.matchNav(config);
+            modules.matchNav(config, context);
         }
 
     };
 
     // If you can wait for load event, do so.
-    var defer = function(config) {
+    var defer = function(config, context) {
         common.deferToLoadEvent(function() {
             modules.logReading(config);
         });

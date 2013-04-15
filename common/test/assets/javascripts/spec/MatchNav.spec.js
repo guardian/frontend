@@ -22,14 +22,14 @@ define(['common', 'ajax', 'modules/matchnav', 'modules/pageconfig'], function(co
         it("should request the related links and graft them on to the dom", function(){
 
             runs(function() {
-                new MatchNav().load("fixtures/match-stats-nav");
+                new MatchNav().load("fixtures/match-stats-nav", document);
             });
 
             waits(500);
 
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
-                expect(document.getElementById("js-related").innerHTML).toBe('2');
+                expect(document.querySelector(".js-related").innerHTML).toBe('2');
                 expect(document.querySelector('.after-header').innerHTML).toBe('1');
             });
         });
