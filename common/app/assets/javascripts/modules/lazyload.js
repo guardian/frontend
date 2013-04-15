@@ -1,4 +1,4 @@
-define(['common', 'ajax'], function (common, ajax) {
+define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     var lazyLoad = function(opts) {
 
@@ -7,34 +7,33 @@ define(['common', 'ajax'], function (common, ajax) {
 
             url               - string
             container         - element object
-
             beforeInsert      - function applied to response html before inserting it into container, optional
             success           - callback function, optional
-
             jsonpCallbackName - string, optional
             force             - boolean, default false. Reload an already-populated container
         */
 
-        var load;
+        var into;
 
         opts = opts || {};
-
-        load = opts.force || opts.container.innerHTML.match(/^\s*$/g);
-
         opts.beforeInsert = opts.beforeInsert || function(html) { return html; };
 
-        if (load && opts.url && opts.container) {
-            return ajax({
-                url: opts.url,
-                type: 'jsonp',
-                jsonpCallbackName: opts.jsonpCallbackName,
-                success: function (json) {
-                    opts.container.innerHTML = opts.beforeInsert(json.html);
-                    if (typeof opts.success === 'function') {
-                        opts.success();
+        if (opts.url && opts.container) {
+            into = bonzo(opts.container);
+            if (opts.force || ! into.hasClass('lazyloaded')) {
+                return ajax({
+                    url: opts.url,
+                    type: 'jsonp',
+                    jsonpCallbackName: opts.jsonpCallbackName,
+                    success: function (json) {
+                        into.html(opts.beforeInsert(json.html));
+                        into.addClass('lazyloaded');
+                        if (typeof opts.success === 'function') {
+                            opts.success();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
     };
