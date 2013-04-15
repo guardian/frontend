@@ -3,8 +3,9 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
+import play.api.Play
 
-class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
+class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object switches {
@@ -112,6 +113,13 @@ class GuardianConfiguration(
   object nginx {
     lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
   }
+
+  // log out Play config on start
+  log.info("Play config ----------------------------------------------------------------------------")
+  Play.maybeApplication.map(c => c.configuration.entrySet.toSeq.sortBy(_._1).foreach{ case (k,v) =>
+    log.info(s"$k=$v")
+  })
+  log.info("Play config ----------------------------------------------------------------------------")
 }
 
 object ManifestData {

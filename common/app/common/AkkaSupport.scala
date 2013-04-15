@@ -3,7 +3,6 @@ package common
 import akka.actor.{ ActorSystem, Cancellable }
 import akka.agent.Agent
 
-//import akka.agent.Agent
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
 import play.api.libs.concurrent.Execution.Implicits._
@@ -19,9 +18,6 @@ trait AkkaSupport {
     def uptime(): Long = system().uptime
 
     object dispatcher {
-      val actions = system().dispatchers.lookup("play.akka.actor.actions-dispatcher")
-      val promises = system().dispatchers.lookup("play.akka.actor.promises-dispatcher")
-      val websockets = system().dispatchers.lookup("play.akka.actor.websockets-dispatcher")
       val default = system().dispatchers.lookup("play.akka.actor.default-dispatcher")
     }
 
