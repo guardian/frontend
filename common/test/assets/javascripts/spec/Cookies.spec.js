@@ -11,7 +11,6 @@ define(['modules/cookies'], function(cookies) {
         it("should let list of cookies be cleared", function() {
 
             var c = document.cookie;
-            window.console.log('cookies', c);
 
             expect(c).toMatch(/testname1/);
             expect(c).toMatch(/testname2/);
