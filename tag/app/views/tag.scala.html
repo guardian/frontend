@@ -8,13 +8,13 @@
 
         @if(tag.isContributor) {
             <div class="profile media">
-                @if(tag.contributorImageUrl) {
+                @if(tag.contributorImagePath) {
                     <div class="profile-img media-img">
-                        <img src="@tag.contributorImageUrl" alt="@tag.name" />
+                        <img src="@{Configuration.images.path + tag.contributorImagePath.get}" alt="@tag.name" />
                     </div>
                 }
                 @if(tag.bio) {
-                    <p class="type-4 profile-bio">
+                    <p class="type-7 profile-bio">
                         @RemoveOuterParaHtml(tag.bio)
                     </p>
                 }

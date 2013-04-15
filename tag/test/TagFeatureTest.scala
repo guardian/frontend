@@ -21,6 +21,31 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
     }
 
   }
+  
+  feature("Contributor pages") {
+
+    scenario("Should display the profile images") {
+
+      Given("I visit the 'Jemima Kiss' contributor page")
+      HtmlUnit("/profile/jemimakiss") { browser =>
+        import browser._
+        Then("I should see her profile image")
+        val profileImage = findFirst(".profile-img img")
+        profileImage.getAttribute("src") should endWith("sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
+      }
+    }
+
+    scenario("Should not not display profiles where they don't exist") {
+      Given("I visit the 'Sam Jones' contributor page")
+      HtmlUnit("/profile/samjones") { browser =>
+        import browser._
+        Then("I should not see her profile image")
+        val profileImages = find(".profile-img img")
+        profileImages.length should be(0) 
+      }
+
+    }
+  }
 
   feature("Tag Pages Football Nav") {
 
