@@ -15,15 +15,15 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
     val edition = Site(request).edition
     val promiseOfTopStories = lookup(edition)
     Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_, "html") } getOrElse { NotFound })
+      promiseOfTopStories.map(_.map { renderTopStories(_) } getOrElse { NotFound })
     }
   }
 
-  def renderJson() = Action { implicit request =>
+  def renderTrails() = Action { implicit request =>
     val edition = Site(request).edition
     val promiseOfTopStories = lookup(edition)
     Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_, "json") } getOrElse { NotFound })
+      promiseOfTopStories.map(_.map { renderTopStoriesTrails(_) } getOrElse { NotFound })
     }
   }
 
@@ -43,20 +43,21 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       }
   }
 
-  private def renderTopStories(trails: Seq[Trail], format: String)(implicit request: RequestHeader) = {
-    Cached(900) {
-      if (format == "json") {
-        renderJsonTrails(trails)
-      } else {
-        val page = new Page(
-          Some("http://www.guardian.co.uk/"),
-          "top-stories",
-          "top-stories",
-          "Top Stories",
-          "GFE:Top Stories"
-        )
-        Ok(Compressed(views.html.topStories(page, trails)))
-      }
-    }
+  private def renderTopStories(trails: Seq[Trail])(implicit request: RequestHeader) = {
+    val page = new Page(
+      Some("http://www.guardian.co.uk/"),
+      "top-stories",
+      "top-stories",
+      "Top Stories",
+      "GFE:Top Stories"
+    )
+    val htmlResponse = views.html.topStories(page, trails)
+    val jsonResponse = views.html.fragments.topStoriesBody(trails)
+    renderFormat(htmlResponse, jsonResponse, 900)
+  }
+
+  private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
+    val response = views.html.fragments.trailblocks.link(trails, request.getQueryString("pageSize").map{ _.toInt }.getOrElse(trails.size))
+    renderFormat(response, response, 900)
   }
 }

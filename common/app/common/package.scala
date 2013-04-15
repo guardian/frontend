@@ -58,6 +58,14 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       Ok(Compressed(htmlResponse))
     }
   }
+  
+  def renderFormat(htmlResponse: Html, jsonResponse: Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(jsonResponse)
+    } getOrElse {
+      Ok(Compressed(htmlResponse))
+    }
+  }
 }
 
 object Reference {
