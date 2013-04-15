@@ -7,29 +7,24 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             lastClickTime = 0;
 
         this.init = function(context) {
-            var controls = context.querySelectorAll('.control');
-
-            Array.prototype.forEach.call(controls, function(control){
-                var target = self.getTarget(control, context);
-                if (target) {
-                    bean.add(control, 'click touchstart', function (e) {
-                        var current = new Date().getTime();
-                        var delta = current - lastClickTime;
-                        if (delta >= delay) {
-                            lastClickTime = current;
-                            self.toggle(controls, control, context);
-                            common.mediator.emit('modules:control:change');
-                        }
-                        e.preventDefault();
-                    });
-                }
+            Array.prototype.forEach.call(context.querySelectorAll('.control'), function(control){
+                bean.add(control, 'click touchstart', function (e) {
+                    var current = new Date().getTime();
+                    var delta = current - lastClickTime;
+                    if (delta >= delay) {
+                        lastClickTime = current;
+                        self.toggle(control, context);
+                        common.mediator.emit('modules:control:change');
+                    }
+                    e.preventDefault();
+                });
             });
         };
     };
 
-    Control.prototype.toggle = function(controls, control, context) {
+    Control.prototype.toggle = function(control, context) {
         var self = this;
-        Array.prototype.forEach.call(controls, function(c){
+        Array.prototype.forEach.call(context.querySelectorAll('.control'), function(c){
             if (c === control) {
                 self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c, context);
             }
@@ -40,20 +35,26 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     };
 
     Control.prototype.getTarget = function(control, context) {
-        var target = bonzo(control).data('control-for');
-        if (target) {
-            return context.querySelector('.' + target);
+        var targetClass = bonzo(control).data('control-for');
+        if (targetClass) {
+            return context.querySelector('.' + targetClass);
         }
     };
 
     Control.prototype.open = function(c, context) {
-        bonzo(c).addClass('is-active');
-        bonzo(this.getTarget(c, context)).removeClass('is-off');
+        var target = this.getTarget(c, context);
+        if (target) {
+            bonzo(c).addClass('is-active');
+            bonzo(target).removeClass('is-off');
+        }
     };
     
     Control.prototype.close = function(c, context) {
-        bonzo(c).removeClass('is-active');
-        bonzo(this.getTarget(c, context)).addClass('is-off');
+        var target = this.getTarget(c, context);
+        if (target) {
+            bonzo(c).removeClass('is-active');
+            bonzo(target).addClass('is-off');
+        }
     };
 
     return Control;
