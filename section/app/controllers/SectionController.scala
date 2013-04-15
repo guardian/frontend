@@ -52,8 +52,8 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
-    val htmlResponse = views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
-    val jsonResponse = views.html.section(model.section, model.editorsPicks, model.latestContent)
+    val htmlResponse = views.html.section(model.section, model.editorsPicks, model.latestContent)
+    val jsonResponse = views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
     renderFormat(htmlResponse, jsonResponse, model.section)
   }
   
