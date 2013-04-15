@@ -82,11 +82,16 @@ object CommonSwitches {
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
   
+  val ImageServerSwitch = DefaultSwitch("image-server",
+    "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
+    ImageServerSwitch
   )
 }
 
