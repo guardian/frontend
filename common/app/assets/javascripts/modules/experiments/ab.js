@@ -13,33 +13,38 @@ define([
             "relatedContent" : new RelatedContent()
         };
 
-    var key = 'ab';
+    var testKey = 'ab.current',
+        participationKey = "ab.participation";
+
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
-        userPrefs.set(key + ".current", JSON.stringify(data));
+        userPrefs.set(testKey, JSON.stringify(data));
     }
 
     function getTest() {
-        return (userPrefs.get(key)) ? JSON.parse(userPrefs.get(key)) : false;
+        return (userPrefs.get(testKey)) ? JSON.parse(userPrefs.get(testKey)) : false;
     }
 
     // Checks if:
-    // local storage is set, is an active test & switch is on
+    // local storage is set, is an active test, not already participated & switch is on
     function inTest(switches) {
         var test = getTest();
         return (test && TESTS[test.id]) ? true : false;
     }
 
     function clearTest() {
-        return userPrefs.remove(key);
+        return userPrefs.remove(testKey);
     }
 
-    function logParticipation(testName) {
-        var k = key + '.participation',
-            data = userPrefs.get(key);
+    function getParticipation(testName) {
+        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)) : false;
+    }
 
-        userPrefs.set(key + ".current", JSON.stringify(data));
+    function setParticipation(testName) {
+        var data = (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).push(testName) : [testName];
+
+        userPrefs.set(participationKey, JSON.stringify(data));
     }
 
     //Finds variant in specific tests and exec's
@@ -69,7 +74,7 @@ define([
             storeTest(test.id, testVariant);
         }
 
-        logParticipation(test.id);
+        setParticipation(test.id);
     }
 
     function init(config) {
