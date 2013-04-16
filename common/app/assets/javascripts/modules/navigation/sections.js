@@ -12,53 +12,41 @@ define([
 
     function Sections() {
 
-        var sectionsHeader = document.getElementById('sections-header'),
-            sectionsNav = document.querySelector('.nav--global'),
-            $sectionsHeader = bonzo(sectionsHeader),
-            className = 'is-off',
-            that = this;
+        var className = 'is-off',
+            that = this,
+            hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
 
         this.view = {
-            bindings : function() {
-                common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                    $sectionsHeader.removeClass(className);
-                    $sectionsHeader.focus();
-                });
+            bindings : function(context) {
 
-                common.mediator.on('modules:control:change', function(args) {
-
-                    var control = args[0],
-                        state = args[1];
-
-                    if (state === false || control !== 'sections-control-header') {
-                        $sectionsHeader.addClass(className);
-                    }
-
-                });
-
-                var hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
+                var sectionsHeader = context.querySelector('.nav-popup-sections'),
+                    sectionsNav    = context.querySelector('.nav--global'),
+                    $sectionsHeader = bonzo(sectionsHeader);
 
                 bean.on(window, 'resize', common.debounce(function(e){
                     hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
-                        common.mediator.emit('modules:control:change', ['search-control-header', true]);
 
                         if(layoutMode !== 'mobile') {
-                            that.view.hideColumns();
+                            that.view.hideColumns(sectionsHeader, sectionsNav);
                         } else {
-                            that.view.showColumns();
+                            that.view.showColumns(sectionsHeader, sectionsNav);
                         }
                     });
                 }, 200));
+
+                if(detect.getLayoutMode() !== 'mobile') {
+                    that.view.hideColumns(sectionsHeader, sectionsNav);
+                }
             },
 
-            showColumns : function() {
+            showColumns : function(sectionsHeader, sectionsNav) {
                 common.$g('.nav__item', sectionsHeader).removeClass('h');
                 common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
-            hideColumns :  function() {
+            hideColumns :  function(sectionsHeader, sectionsNav) {
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
                 var visibleItems = [],
@@ -76,13 +64,8 @@ define([
             }
         };
 
-        this.init = function () {
-            var layoutMode = detect.getLayoutMode();
-            this.view.bindings();
-
-            if(layoutMode !== 'mobile') {
-                this.view.hideColumns();
-            }
+        this.init = function (context) {
+            this.view.bindings(context);
         };
      }
 
