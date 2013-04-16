@@ -4,17 +4,13 @@ define([
     "modules/expandable",
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading",
-    "modules/story/experiment",
-    "modules/accordion"
+    "modules/analytics/reading"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
-    Reading,
-    Story,
-    Accordion
+    Reading
 ) {
 
     var modules = {
