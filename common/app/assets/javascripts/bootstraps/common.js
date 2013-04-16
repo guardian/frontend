@@ -169,7 +169,12 @@ define([
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest();
                             return {
-                                "AB": 'AB | ' + test.id + ' | ' + test.variant
+                                "experiments": [
+                                    {
+                                        id: test.id,
+                                        variant: test.variant
+                                    }
+                                ]
                             };
                         });
                     }
