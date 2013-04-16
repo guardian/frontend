@@ -5,15 +5,24 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         var enabled,
             gcsUrl,
             currentContext,
-            self = this;
+            self = this,
+            delay = 400,
+            lastClickTime = 0;
+
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
             
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-            bean.on(document, 'click', '.control--search', function(e) {
-                self.load(currentContext);
+            bean.on(document, 'click touchstart', '.control--search', function(e) {
+                var current = new Date().getTime();
+                var delta = current - lastClickTime;
+                if (delta >= delay) {
+                    lastClickTime = current;
+                    self.load(currentContext);
+                }
+                e.preventDefault();
             });
 
             bean.on(document, 'click', '.search-results', function(e) {
