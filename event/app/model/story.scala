@@ -77,6 +77,8 @@ case class Story(
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents).sortBy(_.importance).reverse
   lazy val hasAgents: Boolean = agents.nonEmpty
+  lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis)
+  lazy val hasReaction: Boolean = reaction.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
   lazy val contentByImportance: Seq[Content] = content.sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance * -1).distinctBy(_.id)

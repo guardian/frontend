@@ -8,7 +8,7 @@ $orange: #FF7F00;
   border-bottom: 1px solid #CFCFCF;
 }
 
-  .story-title--section {
+.story-title--section {
     @extend .type-3;
     border-top: 1px solid #CFCFCF;
     border-bottom: none;
@@ -133,4 +133,25 @@ a.trail-story-title {
     display: block;
     width: 100%;
     margin: 0 2.5% 5px 0;
+}
+
+@media only screen and (min-width: $tablet) {
+
+    .story-container .story-title, .story-content, .story-latest, .story-places, .story-pictures, .story-timeline {
+        width: 600px;
+        margin: 0 auto;
+    }
+   
+    .story-container .story-title {
+        padding: $baseline*8 16px;
+    }
+    
+    .story-container .story-storyline {
+        font-size: 30px;  
+    }
+
+    .story-agents {
+        margin-left: 0px;
+    }
+
 }
