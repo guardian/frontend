@@ -32,7 +32,6 @@ define([
 
             if(timeline) {
                 $('.event-children').addClass('h');
-                $('.event-summary').addClass('h');
                 bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
                     $('.event-summary', block).toggleClass('h');
