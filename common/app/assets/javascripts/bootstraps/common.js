@@ -167,14 +167,15 @@ define([
             require(config.page.ophanUrl, function (Ophan) {
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
-                            var test = AB.getTest();
-                            return {
-                                "experiments": [
+                            var test = AB.getTest(),
+                                data = [
                                     {
                                         id: test.id,
                                         variant: test.variant
                                     }
-                                ]
+                                ];
+                            return {
+                                "experiments": JSON.stringify(data)
                             };
                         });
                     }
