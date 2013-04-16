@@ -59,19 +59,6 @@ function s_doPlugins(s) {
 
     /* Set prop63 to the load time in seconds, with one decimal value */
     s.prop63 = s.getLoadTimeDim();
-
-    /* Retrieve navigation interaction data */
-    var ni = typeof(localStorage) != 'undefined' && typeof(JSON) != 'undefined'? localStorage.getItem(/*storagePrefix + */'referrerVars') : null;
-    if (ni) {
-        ni = JSON.parse(ni);
-        var d = new Date().getTime();
-        if (d - ni.time < 60 * 1000) { // One minute
-            s.eVar24 = ni.pageName;
-            s.eVar37 = ni.tag;
-            s.events = s.apl(s.events,'event37',',');
-        }
-        localStorage.removeItem(/*storagePrefix + */'referrerVars');
-    }
 }
 s.doPlugins=s_doPlugins;
 
