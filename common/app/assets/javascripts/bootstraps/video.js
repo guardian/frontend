@@ -15,7 +15,7 @@ define([
             var v = new Videostream({
                 id: config.page.id,
                 el: document.querySelector('#player video'),
-                ophanUrl: config.ophanUrl
+                ophanUrl: config.page.ophanUrl
             });
 
             v.init();
