@@ -81,6 +81,10 @@ object CommonSwitches {
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
+
+  val ABRelatedContent = DefaultSwitch("ab-related-content",
+    "If this switch is on related content AB test will be enabled.",
+    initiallyOn = false)
   
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
@@ -91,7 +95,7 @@ object CommonSwitches {
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    ImageServerSwitch
+    ImageServerSwitch, ABRelatedContent
   )
 }
 

@@ -27,6 +27,7 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
+    'modules/experiments/ab',
     'modules/shared-wisdom-toolbar'
 ], function (
     common,
@@ -56,6 +57,7 @@ define([
     Cookies,
     Video,
     Debug,
+    AB,
     sharedWisdomToolbar
 ) {
 
@@ -162,18 +164,15 @@ define([
         },
 
         loadOphanAnalytics: function (config) {
-            var dependOn = [config.page.ophanUrl];
-            if (config.switches.optimizely === true) {
-                dependOn.push('js!' + config.page.optimizelyUrl);
-            }
-            require(dependOn, function (Ophan) {
-                if (config.switches.optimizely === true) {
-                    Ophan.additionalViewData(function() {
-                        return {
-                            "optimizely": optimizely.readTests()
-                        };
-                    });
-                }
+            require(config.page.ophanUrl, function (Ophan) {
+                    if(AB.inTest(config.switches)) {
+                        Ophan.additionalViewData(function() {
+                            var test = AB.getTest();
+                            return {
+                                "AB": 'AB | ' + test.id + ' | ' + test.variant
+                            };
+                        });
+                    }
                 Ophan.startLog();
             });
         },
@@ -201,15 +200,23 @@ define([
             sharedWisdomToolbar.init(function() {
                 sharedWisdomToolbar.show();
             }, config.modules.sharedWisdomToolbar);
+        },
+
+        initialiseAbTesting: function(config, context) {
+            common.mediator.on('ab:loaded', function() {
+                modules.loadOmnitureAnalytics(config);
+                modules.loadOphanAnalytics(config);
+            });
+
+            AB.init(config, context);
         }
     };
 
     var pageReady = function (config, context) {
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config, context);
-            modules.loadOphanAnalytics(config, context);
-            modules.loadAdverts(config, context);
-            modules.cleanupCookies(context);
+            modules.initialiseAbTesting(config, context);
+            modules.loadAdverts(config);
+            modules.cleanupCookies();
             modules.showSharedWisdomToolbar(config);
         });
     };
