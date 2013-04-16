@@ -1,4 +1,4 @@
-define(['modules/experiments/ab'], function(AB) {
+define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
     
     describe('AB Testing', function() {
 
@@ -13,35 +13,44 @@ define(['modules/experiments/ab'], function(AB) {
             expect(AB).toBeDefined();
         });
 
-        describe("Connection speed", function() {
+        describe("Test running", function() {
 
-        it('should be able to add and retrieve a test', function() {
-            var testName = 'A Test',
-                variants = {
-                    variantOne: function() {}
-                };
-            // add test
-            expect(abTest.add(testName, variants)).toBe(abTest);
-            // retrieve it
-            expect(abTest.get(testName)).toBe(variants);
+            it('should be able to add a test', function() {
+                var newTest = AB.addTest(Test);
+
+                // add test
+                expect(newTest.id).toBe("DummyTest");
+            });
+
+            it('should be able to start test', function() {
+                var newTest = AB.addTest(Test),
+                    spy = sinon.spy(newTest.variants[0], "test");
+
+                AB.runVariant(newTest, "control");
+
+                expect(spy).toHaveBeenCalled();
+            });
         });
 
-        it('should be able to start test', function() {
-            var testName = 'A Test';
-            // start test
-            expect(abTest.start(testName)).toBe(abTest);
-        });
+        describe("User test settings", function() {
+            it('Can store and retrive user test settings', function() {
+                AB.storeTest("DummyTest", "control");
 
-        it('should store test in cookie', function() {
-            var testName = 'A Test';
-            abTest.cookie = ''
-            // start test
-            abTest.start(testName);
-            // check cookie was set correctly
-            expect(abTest.cookie).toContain('frontend-ab-test-A Test');
-            expect(abTest.cookie).toContain('path=/');
-            expect(abTest.cookie).toContain('domain=.guardian.co.uk');
-            expect(abTest.cookie).toContain('max-age=600');
+                expect(AB.getTest().id).toBe("DummyTest");
+                expect(AB.getTest().variant).toBe("control");
+            });
+
+            it('Can clear user test settings', function() {
+               AB.clearTest();
+               expect(AB.getTest()).toBe(false);
+            });
+
+            it('Can store user participation', function(){
+               AB.setParticipation("DummyTest");
+               expect(AB.hasParticipated("DummyTest")).toBe(true);
+
+            });
+
         });
         
     });

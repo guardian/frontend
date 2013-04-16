@@ -10,12 +10,18 @@ define([
     RelatedContent) {
     
     var TESTS = {
-            "RelatedContent" : new RelatedContent()
+            RelatedContent : new RelatedContent()
         };
 
     var testKey = 'ab.current',
         participationKey = "ab.participation";
 
+    //For testing purposes
+    function addTest(Test) {
+        var test = new Test();
+        TESTS[test.id] = test;
+        return TESTS[test.id];
+    }
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
@@ -126,6 +132,12 @@ define([
     return {
         init: init,
         inTest : inTest,
-        getTest : getTest
+        addTest: addTest,
+        getTest : getTest,
+        storeTest: storeTest,
+        clearTest: clearTest,
+        runVariant : runVariant,
+        setParticipation: setParticipation,
+        hasParticipated: hasParticipated
     };
 });
