@@ -10,7 +10,7 @@ define([
     RelatedContent) {
     
     var TESTS = {
-            "relatedContent" : new RelatedContent()
+            "RelatedContent" : new RelatedContent()
         };
 
     var testKey = 'ab.current',
@@ -27,22 +27,38 @@ define([
     }
 
     // Checks if:
-    // local storage is set, is an active test, not already participated & switch is on
+    // local storage is set, is an active test & switch is on
     function inTest(switches) {
-        var test = getTest();
-        return (test && TESTS[test.id]) ? true : false;
+        var test = getTest(),
+            switchedOn = switches["ab" + test.id];
+
+        return (test && TESTS[test.id] && switchedOn) ? true : false;
     }
 
     function clearTest() {
         return userPrefs.remove(testKey);
     }
 
-    function getParticipation(testName) {
-        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)) : false;
+    function hasParticipated(testName) {
+        return (getParticipation().indexOf(testName) > -1) ? true : false;
+    }
+
+    function getParticipation() {
+        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).tests : [];
     }
 
     function setParticipation(testName) {
-        var data = (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).push(testName) : [testName];
+        var data;
+        if(getParticipation().length > 0) {
+            var tests = getParticipation();
+            if(!hasParticipated(testName)) {
+                data = {"tests": tests.push(testName) };
+            } else {
+                data = {"tests": tests };
+            }
+        } else {
+            data = {"tests":[testName]};
+        }
 
         userPrefs.set(participationKey, JSON.stringify(data));
     }
@@ -90,15 +106,17 @@ define([
             clearTest();
 
             //Loop over active tests
-            for(var test in TESTS) {
+            for(var testName in TESTS) {
 
                //If previous iteration worked break;
                if(inTest(switches)) { break; }
 
-               //Can the test run on this page
-               if(TESTS[test].canRun(config)) {
+               var test =  TESTS[testName];
+
+               //Can the test run on this page and user not already participated
+               if(test.canRun(config) && !hasParticipated(test.id)) {
                    //Start
-                   start(TESTS[test]);
+                   start(test);
                }
             }
         }
