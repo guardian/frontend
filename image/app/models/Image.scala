@@ -5,18 +5,12 @@ import org.im4java.core.{ IMOperation, ConvertCmd, Stream2BufferedImage }
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-// Image configuration. 
-object TrailImage {
-  val compression = 70
-  val width = 320
-  val height = 192 // 5:3
-}
 
-object ProfileImage {
-  val compression = 70
-  val width = 140
-  val height = 140 
-}
+case class ImageProfile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
+
+// Configuration of our different image profiles
+object Contributor extends ImageProfile(140, 140, 70) {}
+object Gallery extends ImageProfile(750, 480, 90) {}
 
 object Im4Java {
 

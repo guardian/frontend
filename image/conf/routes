@@ -2,7 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# This is a bake off, hence two implementations
-GET     /resize/sclr/*path    controllers.ImageController.render(path, mode: String = "scalr")
-GET     /resize/im4j/*path    controllers.ImageController.render(path, mode: String = "im4java")
+# Test the different libraries. This is a bake off, hence two implementations
+
+GET     /resize/sclr/*path      controllers.ImageController.renderGallery(path, mode: String = "scalr")
+GET     /resize/im4j/*path      controllers.ImageController.renderGallery(path, mode: String = "im4java")
+
+# Nb. changing these URLs will bust the cache. Be careful. 
+
+GET     /c/*path   controllers.ImageController.renderContributor(path, mode: String = "scalr")
+GET     /g/*path   controllers.ImageController.renderGallery(path, mode: String = "scalr")
+
 
