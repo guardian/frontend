@@ -14,11 +14,11 @@ object ImageController extends Controller with Logging with Implicits {
   val Path = """([/\w\.-]*)""".r
 
   def renderContributor(target: String, mode: String) = Action { implicit request =>
-    render(target, mode, model.Contributor)
+    render(target, mode, model.ContributorImage)
   }
   
   def renderGallery(target: String, mode: String) = Action { implicit request =>
-    render(target, mode, model.Gallery)
+    render(target, mode, model.GalleryImage)
   }
 
   private def render(target: String, mode: String, profile: ImageProfile)(implicit request: RequestHeader): Result = { 

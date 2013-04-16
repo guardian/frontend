@@ -9,8 +9,8 @@ import javax.imageio.ImageIO
 case class ImageProfile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
 
 // Configuration of our different image profiles
-object Contributor extends ImageProfile(140, 140, 70) {}
-object Gallery extends ImageProfile(750, 480, 90) {}
+object ContributorImage extends ImageProfile(140, 140, 70) {}
+object GalleryImage extends ImageProfile(750, 480, 90) {}
 
 object Im4Java {
 
