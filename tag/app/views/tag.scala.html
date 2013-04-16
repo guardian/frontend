@@ -8,9 +8,9 @@
 
         @if(tag.isContributor) {
             <div class="profile media">
-                @if(tag.contributorImagePath) {
+                @tag.contributorImagePath.map { url =>
                     <div class="profile-img media-img">
-                        <img src="@{Configuration.images.path + tag.contributorImagePath.get}" alt="@tag.name" />
+                        <img src="@url" alt="@tag.name" />
                     </div>
                 }
                 @if(tag.bio) {

@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import java.net.URI
 import common.Reference
+import views.support.{Contributor, ImgSrc}
 
 case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val name: String = webTitle
@@ -19,13 +20,7 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val linkText: String = webTitle
   lazy val pageId = delegate
 
-  lazy val contributorImagePath: Option[String] = {
-    if (!delegate.bylineImageUrl.isEmpty) {
-      Some(new URI(delegate.bylineImageUrl.get).getPath)
-    } else {
-      None
-    } 
-  }
+  lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")

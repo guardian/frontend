@@ -3,6 +3,7 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
+import conf.{CommonSwitches, Configuration}
 
 class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -27,11 +28,13 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
     scenario("Should display the profile images") {
 
       Given("I visit the 'Jemima Kiss' contributor page")
+      CommonSwitches.ImageServerSwitch.switchOn()
+
       HtmlUnit("/profile/jemimakiss") { browser =>
         import browser._
         Then("I should see her profile image")
         val profileImage = findFirst(".profile-img img")
-        profileImage.getAttribute("src") should endWith("sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
+        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/c/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
       }
     }
 
