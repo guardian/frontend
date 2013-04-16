@@ -1,11 +1,11 @@
 @(page: MetaData)(implicit request: RequestHeader)
 
-<header id="header" class="cf" role="banner" datalink-name="global navigation: header">
+<header id="header" class="cf" role="banner" data-link-name="global navigation: header">
 
     <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
     <div class="nav-container">
-        <ul class="nav nav--global" data-link-name="global navigation: header : sections">
+        <ul class="nav nav--global" data-link-name="Sections">
             @Navigation(page, request).map{ nav =>
                 <li class="nav__item @if(nav.currentFor(page)){is-active}">
                     <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
