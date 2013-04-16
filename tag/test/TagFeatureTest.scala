@@ -8,13 +8,13 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
   feature("Tag Pages trail size") {
 
-    scenario("Tag pages should show 20 trails") {
+    scenario("Tag pages should show at least 20 trails (includes  leadContent if present)") {
 
       Given("I visit a tag page")
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
-        val trails = $(".trailblock .unstyled > li")
+        val trails = $(".trailblock .trail, .lead-content")
         trails.length should be(20)
       }
 

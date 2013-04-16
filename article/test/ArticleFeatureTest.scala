@@ -379,7 +379,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
-        findFirst(".search-box").getAttribute("role") should be("search")
         
       }
     }

@@ -13,10 +13,10 @@ define([
     'modules/router',
     'modules/errors',
     'modules/images',
-    'modules/navigation/controls',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
+    'modules/navigation/control',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -42,10 +42,10 @@ define([
     Router,
     Errors,
     Images,
-    Control,
     TopStories,
     Sections,
     Search,
+    NavControl,
     Fonts,
     Tabs,
     RelativeDates,
@@ -89,22 +89,13 @@ define([
         },
 
         initialiseNavigation: function (config) {
-
-            // the section panel
-            new Sections().init();
-            new Search(config).init();
-
-            // the toolbar
-            var t = new Control({id: 'topstories-control-header'}),
-                s = new Control({id: 'search-control-header'}),
-                n = new Control({id: 'sections-control-header'});
-
-            t.init();
-            s.init();
-            n.init();
-
-            common.mediator.on('modules:topstories:render', function(args) {
-                t.show();
+            var navControl = new NavControl();
+            var sections = new Sections();
+            var search = new Search(config);
+            common.mediator.on('page:ready', function(config, context) {
+                navControl.init(context);
+                sections.init(context);
+                search.init(context);
             });
         },
 
@@ -214,14 +205,12 @@ define([
     };
 
     var pageReady = function (config, context) {
-        modules.initialiseNavigation(config);
-
         common.deferToLoadEvent(function() {
             modules.loadOmnitureAnalytics(config, context);
             modules.loadOphanAnalytics(config, context);
             modules.loadAdverts(config, context);
             modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar();
+            modules.showSharedWisdomToolbar(config);
         });
     };
 
@@ -237,6 +226,7 @@ define([
         modules.transcludeRelated();
         modules.transcludePopular();
         modules.transcludeTopStories();
+        modules.initialiseNavigation(config);
     };
 
     return {
