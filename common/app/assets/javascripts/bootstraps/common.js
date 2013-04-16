@@ -27,8 +27,7 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
-    'modules/experiments/ab',
-    'modules/shared-wisdom-toolbar'
+    'modules/experiments/ab'
 ], function (
     common,
     ajax,
@@ -57,8 +56,7 @@ define([
     Cookies,
     Video,
     Debug,
-    AB,
-    sharedWisdomToolbar
+    AB
 ) {
 
     var modules = {
@@ -203,9 +201,14 @@ define([
         },
 
         showSharedWisdomToolbar: function(config) {
-            sharedWisdomToolbar.init(function() {
-                sharedWisdomToolbar.show();
-            }, config.modules.sharedWisdomToolbar);
+            // only display if switched on
+            if (userPrefs.isOn('shared-wisdom-toolbar')) {
+                require('modules/shared-wisdom-toolbar', function(sharedWisdomToolbar) {
+                    sharedWisdomToolbar.init(function() {
+                        sharedWisdomToolbar.show();
+                    }, config.modules.sharedWisdomToolbar);
+                });
+            }
         },
 
         initialiseAbTesting: function(config, context) {
