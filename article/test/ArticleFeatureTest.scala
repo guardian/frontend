@@ -320,6 +320,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Show primary picture on composer articles") {
+      Given("I am on an article created in composer tools")
+      HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
+        import broswer._
+        Then("The main picture should be show")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+      }
+    }
+
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an aricle and want to share it with my friends")
