@@ -2,8 +2,7 @@
 
 @defining(trails.length){ numTrails =>
     <h3 id="related-content-head" class="type-2 article-zone">@Html(heading)</h3>
-    <div class="trailblock @if(isShaded){trailblock-shaded}"
-        id="related-trails" 
+    <div class="related-trails trailblock @if(isShaded){trailblock-shaded}"
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading"
         role="complementary"

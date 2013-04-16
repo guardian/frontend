@@ -8,16 +8,15 @@ define([
     'domReady',
     'qwery',
     //Modules
+    'modules/popular',
+    'modules/related',
     'modules/router',
     'modules/errors',
     'modules/images',
-    'modules/navigation/controls',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/related',
-    'modules/popular',
-    'modules/expandable',
+    'modules/navigation/control',
     'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
@@ -27,7 +26,8 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
-    'modules/debug'
+    'modules/debug',
+    'modules/shared-wisdom-toolbar'
 ], function (
     common,
     ajax,
@@ -37,16 +37,15 @@ define([
     domReady,
     qwery,
 
+    popular,
+    related,
     Router,
     Errors,
     Images,
-    Control,
     TopStories,
     Sections,
     Search,
-    Related,
-    Popular,
-    Expandable,
+    NavControl,
     Fonts,
     Tabs,
     RelativeDates,
@@ -56,7 +55,8 @@ define([
     Adverts,
     Cookies,
     Video,
-    Debug
+    Debug,
+    sharedWisdomToolbar
 ) {
 
     var modules = {
@@ -75,7 +75,13 @@ define([
         },
 
         upgradeImages: function () {
-            new Images().upgrade();
+            var images = new Images();
+            common.mediator.on('page:ready', function(config, context) {
+                images.upgrade(context);
+            });
+            common.mediator.on('fragment:ready:images', function(context) {
+                images.upgrade(context);
+            });
         },
 
         showDebug: function () {
@@ -83,62 +89,40 @@ define([
         },
 
         initialiseNavigation: function (config) {
-
-            // the section panel
-            new Sections().init();
-            new Search(config).init();
-
-            // the toolbar
-            var t = new Control({id: 'topstories-control-header'}),
-                s = new Control({id: 'search-control-header'}),
-                n = new Control({id: 'sections-control-header'});
-
-            t.init();
-            s.init();
-            n.init();
-
-            common.mediator.on('modules:topstories:render', function(args) {
-                t.show();
+            var navControl = new NavControl();
+            var sections = new Sections();
+            var search = new Search(config);
+            common.mediator.on('page:ready', function(config, context) {
+                navControl.init(context);
+                sections.init(context);
+                search.init(context);
             });
         },
 
-        transcludeTopStories: function (config) {
-            new TopStories().load(config);
-        },
-
-        transcludeRelated: function (config){
-            common.mediator.on("modules:related:load", function(){
-                var relatedExpandable = new Expandable({ id: 'related-trails', expanded: false }),
-                    host,
-                    pageId,
-                    url;
-
-                if (config.page.hasStoryPackage) {
-                    relatedExpandable.init();
-                } else {
-                    pageId = config.page.pageId;
-                    url =  '/related/' + pageId;
-                    common.mediator.on('modules:related:render', relatedExpandable.init);
-                    new Related(document.getElementById('js-related'), config.switches).load(url);
-                }
+        transcludeTopStories: function () {
+            var topStories = new TopStories();
+            common.mediator.on('page:ready', function(config, context) {
+                topStories.load(config, context);
             });
         },
 
-        transcludeMostPopular: function (section, edition) {
-            var url = '/most-read' + (section ? '/' + section : '') + '.json',
-                domContainer = document.getElementById('js-popular');
+        transcludeRelated: function () {
+            common.mediator.on("page:article:ready", function(config, context){
+                related(config, context);
+            });
+        },
 
-            if (domContainer) {
-                new Popular(domContainer).load(url);
-                common.mediator.on('modules:popular:render', function() {
-                    common.mediator.emit('modules:tabs:render', '#js-popular-tabs');
-                });
-            }
-
+        transcludePopular: function () {
+            common.mediator.on('page:ready', function(config, context) {
+                popular(config, context);
+            });
         },
 
         showTabs: function() {
-            var t = new Tabs().init();
+            var tabs = new Tabs();
+            common.mediator.on('modules:popular:loaded', function(el) {
+                tabs.init(el);
+            });
         },
 
         loadFonts: function(config, ua) {
@@ -151,7 +135,13 @@ define([
         },
 
         showRelativeDates: function () {
-            RelativeDates.init();
+            var dates = RelativeDates;
+            common.mediator.on('page:ready', function(config, context) {
+                dates.init(context);
+            });
+            common.mediator.on('fragment:ready:dates', function(el) {
+                dates.init(el);
+            });
         },
 
         loadOmnitureAnalytics: function (config) {
@@ -189,7 +179,7 @@ define([
         },
 
         loadAdverts: function (config) {
-           
+
             if (config.switches.adverts) {
                 Adverts.init(config);
                 common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
@@ -198,36 +188,50 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+
+        initialiseSearch: function(config) {
+            var s = new Search(config);
+            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
+                s.init();
+            });
+        },
+
+        showSharedWisdomToolbar: function(config) {
+            sharedWisdomToolbar.init(function() {
+                sharedWisdomToolbar.show();
+            }, config.modules.sharedWisdomToolbar);
         }
     };
 
-    var pageView = function (config) {
-        modules.upgradeImages();
-        modules.showTabs();
-        modules.initialiseNavigation(config);
-        modules.transcludeTopStories(config);
-        modules.transcludeRelated(config);
-        modules.transcludeMostPopular(config.page.section, config.page.edition);
-        modules.showRelativeDates();
-
+    var pageReady = function (config, context) {
         common.deferToLoadEvent(function() {
-            modules.loadOmnitureAnalytics(config);
-            modules.loadOphanAnalytics(config);
-            modules.loadAdverts(config);
-            modules.cleanupCookies();
+            modules.loadOmnitureAnalytics(config, context);
+            modules.loadOphanAnalytics(config, context);
+            modules.loadAdverts(config, context);
+            modules.cleanupCookies(context);
+            modules.showSharedWisdomToolbar(config);
         });
     };
 
     var runOnce = function (config) {
-        modules.showDebug();
         modules.initialiseAjax(config);
         modules.attachGlobalErrorHandler(config);
         modules.loadFonts(config, navigator.userAgent);
+        modules.showDebug();
+
+        modules.upgradeImages();
+        modules.showTabs();
+        modules.showRelativeDates();
+        modules.transcludeRelated();
+        modules.transcludePopular();
+        modules.transcludeTopStories();
+        modules.initialiseNavigation(config);
     };
 
     return {
         runOnce: runOnce,
-        pageView: pageView
+        pageReady: pageReady
     };
 
 });

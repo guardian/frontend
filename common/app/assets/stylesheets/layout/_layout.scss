@@ -7,12 +7,7 @@
   clear: both;
   max-width: 80em;
   max-width: 125rem;
-
-  @media (min-width: 40.0625em) {
-        padding-bottom: 10%;
-        width: 90%;
-        margin: 0 auto;
-  }
+  margin: 0 auto;
 }
 
 /* ==========================================================================
@@ -31,6 +26,7 @@
   text-indent: -9999px;
 
   @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    background-position: 0px 0px;
     background-size: 100%;
     background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
   }

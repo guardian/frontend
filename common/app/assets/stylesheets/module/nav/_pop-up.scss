@@ -12,14 +12,16 @@
   border-bottom: $baseline solid $blue;
 
   @media only screen and (min-width: $tablet) {
-    top: -54px;
-    margin-bottom: -54px;
+    top: -48px;
+    margin-bottom: -48px;
     width: 100%;
     background-color: #ffffff;
   }
 }
 
 .nav-popup .nav--section-divider {
+  padding-bottom: $baseline*4;
+
   @media only screen and (min-width: $tablet) {
     margin: 0px;
     border-top: none;
@@ -63,11 +65,11 @@
 
   .nav-popup--small .nav__link,
   .nav-popup--small .nav--columns .nav__link{
-    @extend .type-6;
+    @extend .type-7;
 
     @media only screen and (min-width: $tablet) {
       color: #444444;
-      padding: $baseline*2 0 $baseline*4 0;
+      padding: $baseline*3 0 $baseline*3 0;
       @include font($serifheadline, 200, 14, 14);
     }
   }

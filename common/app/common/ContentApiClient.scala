@@ -1,14 +1,14 @@
 package common
 
-import com.gu.openplatform.contentapi.{ApiError, Api}
+import com.gu.openplatform.contentapi.Api
 import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, HttpResponse}
 import com.gu.management.{ CountMetric, Metric, TimingMetric }
 import conf.Configuration
-import java.util.concurrent.{ConcurrentHashMap, TimeoutException}
+import java.util.concurrent.TimeoutException
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.ws.WS
-import com.gu.openplatform.contentapi.util.FutureInstances
+import com.gu.openplatform.contentapi.util.FutureInstances._
 
 import com.gu.openplatform.contentapi.connection.Http
 
@@ -19,11 +19,11 @@ trait ApiQueryDefaults { self: Api[Future] =>
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount"
 
-  val references = "pa-football-competition,pa-football-team"
+  val references = "pa-football-competition,pa-football-team,witness-assignment"
 
   val inlineElements = "picture,witness,video"
 
-  //common fileds that we use across most queries.
+  //common fields that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item.itemId(id)
     .edition(edition)
     .showTags("all")
@@ -70,10 +70,6 @@ object ContentApiMetrics {
   val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric, DogpileHitsCountMetric)
 }
 
-
-
-private object dogPileCache extends ConcurrentHashMap[String, Future[play.api.libs.ws.Response]]
-
 trait DelegateHttp extends Http[Future] {
   import System.currentTimeMillis
   import ContentApiMetrics._
@@ -82,31 +78,16 @@ trait DelegateHttp extends Http[Future] {
 
   private val wsHttp = new Http[Future] with Logging {
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      val cacheKey = url
-      val cachedResponse = Option(dogPileCache.get(cacheKey))
+      val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
 
-      cachedResponse.foreach(r => DogpileHitsCountMetric.increment())
+      val start = currentTimeMillis
+      val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
 
-      cachedResponse.getOrElse{
-
-        val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
-
-        val start = currentTimeMillis
-        val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
-
-        // record metrics
-        response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
-        response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
-
-        dogPileCache.put(cacheKey, response)
-
-        response.onComplete(r => dogPileCache.remove(cacheKey))
-        //just in case it was really quick
-        if (response.isCompleted) dogPileCache.remove(cacheKey)
-
-        response
-      }.map{ r => HttpResponse(r.body, r.status, r.statusText)}
-    }
+      // record metrics
+      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
+      response
+    }.map{ r => HttpResponse(r.body, r.status, r.statusText)}
   }
 
   private var _http: Http[Future] = wsHttp
@@ -119,8 +100,6 @@ trait DelegateHttp extends Http[Future] {
     .map(_.getClass == classOf[TimeoutException])
     .getOrElse(false)
 }
-
-import FutureInstances._
 
 class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
     with Logging {

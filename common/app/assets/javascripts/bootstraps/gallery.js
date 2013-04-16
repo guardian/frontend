@@ -43,9 +43,11 @@ define([
         }
     };
 
-    var init = function(req, config) {
+    var init = function(req, config, context) {
+
+        common.mediator.emit("page:gallery:ready", config, context);
+
         modules.augmentGallery();
-        modules.initExperiments(config);
         modules.initOphanTracking(config);
     };
 

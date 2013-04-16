@@ -21,19 +21,39 @@ define(function () {
 
         width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
 
-        if (width > BASE_WIDTH) {
+        if (width >= BASE_WIDTH) {
             mode = "tablet";
         }
 
-        if (width > MEDIAN_WIDTH) {
+        if (width >= MEDIAN_WIDTH) {
             mode = "desktop";
         }
 
-        if (width > EXTENDED_WIDTH) {
+        if (width >= EXTENDED_WIDTH) {
             mode = "extended";
         }
 
         return mode;
+    }
+
+    /**
+     *     Util: returns a function that:
+     *     1. takes a callback function
+     *     2. calls it if the window width has crossed any of our layout modes since the last call to this function
+     *     Usage. Setup:
+     *      var hasCrossedTheMagicLines = hasCrossedBreakpoint()
+     *     then:
+     *       hasCrossedTheMagicLines(function(){ do stuff })
+     */
+    function hasCrossedBreakpoint(){
+        var was = getLayoutMode();
+        return function(callback){
+            var is = getLayoutMode();
+            if ( is !== was ) {
+                was = is;
+                callback(is);
+            }
+        };
     }
 
     function getPixelRatio() {
@@ -124,6 +144,7 @@ define(function () {
 
     return {
         getLayoutMode: getLayoutMode,
+        hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
