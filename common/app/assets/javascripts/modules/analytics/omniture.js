@@ -113,7 +113,7 @@ define([
 
             if (ab.inTest(config.switches)) {
                 var test = ab.getTest(),
-                    testData = test.id + ' : ' + test.variant;
+                    testData = 'AB | ' + test.id + ' | ' + test.variant;
 
                 s.prop51  = testData;
                 s.evar51  = testData;

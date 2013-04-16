@@ -97,13 +97,13 @@ define(['common', 'bonzo'], function (common, bonzo) {
             : '';
     }
 
-    function findValidTimestamps() {
+    function findValidTimestamps(context) {
         // `.blocktime time` used in blog html
-        return common.$g('.js-timestamp, .block-time time');
+        return common.$g('.js-timestamp, .block-time time', context);
     }
 
-    function replaceValidTimestamps() {
-        findValidTimestamps().each(function(e, i) {
+    function replaceValidTimestamps(context) {
+        findValidTimestamps(context).each(function(e, i) {
             var el = bonzo(e),
                 datetime = new Date(el.attr('datetime')),
                 // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
@@ -116,13 +116,13 @@ define(['common', 'bonzo'], function (common, bonzo) {
         });
     }
 
-    // Bindings
-    ['popular', 'related', 'autoupdate'].forEach(function(module) {
+     // DEPRECATED: Bindings
+    ['related', 'autoupdate'].forEach(function(module) {
         common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
-    
-    function init() {
-        replaceValidTimestamps();
+   
+    function init(context) {
+        replaceValidTimestamps(context);
     }
 
     return {

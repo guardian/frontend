@@ -1,0 +1,20 @@
+@(story: Story)
+
+@if(story.hasReaction && story.reaction.length >= 4) {
+
+    <div class="story-reactions">
+        <ul>
+            @story.reaction.take(4).map{ a => 
+                <li class="story-reaction">
+                    <p class="story-reaction-lead">
+                        <a href="@a.url">
+                            @a.headline
+                        </a>
+                    </p>
+                    @fragments.byline(a.byline, a)
+                </li>
+            }
+        </ul>
+    </div>
+    
+}

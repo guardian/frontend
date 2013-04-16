@@ -369,9 +369,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst("#related-trails").getAttribute("role") should be("complementary")
-        findFirst("#js-related").getAttribute("role") should be("complementary")
-        findFirst("#js-popular").getAttribute("role") should be("complementary")
+        findFirst(".related-trails").getAttribute("role") should be("complementary")
+        findFirst(".js-related").getAttribute("role") should be("complementary")
+        findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst("footer").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
@@ -379,7 +379,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
-        findFirst(".search-box").getAttribute("role") should be("search")
         
       }
     }

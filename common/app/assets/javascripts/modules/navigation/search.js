@@ -2,61 +2,72 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
     var Search = function (config) {
 
-        var gcsUrl,
-            searchHeader = document.getElementById('search-header'),
-            $searchHeader = bonzo(searchHeader),
-            className = "is-off" ,
-            loaded = false,
-            that = this;
+        var enabled,
+            gcsUrl,
+            currentContext,
+            self = this,
+            delay = 400,
+            lastClickTime = 0;
 
-        // View
-        this.view = {
 
-            bindings: function() {
-                common.mediator.on('modules:control:change:search-control-header:true', function() {
-                    that.view.show();
-                });
+        if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
+            
+            enabled = true;
+            gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-                common.mediator.on('modules:control:change', function(args) {
+            bean.on(document, 'click touchstart', '.control--search', function(e) {
+                var current = new Date().getTime();
+                var delta = current - lastClickTime;
+                if (delta >= delay) {
+                    lastClickTime = current;
+                    self.load(currentContext);
+                }
+                e.preventDefault();
+            });
 
-                    var control = args[0],
-                        state = args[1];
+            bean.on(document, 'click', '.search-results', function(e) {
+                var targetEl = e.target;
+                if (targetEl.nodeName.toLowerCase() === "a") {
+                    targetEl.target = "_self";
+                }
+            });
+        }
 
-                    if (state === false || control !== 'search-control-header') {
-                        that.view.hide();
-                    }
-                });
-            },
+        this.load = function(context) {
+            var container = context.querySelector('.nav-popup-search'),
+                s,
+                x;
 
-            show: function() {
-                $searchHeader.removeClass(className);
-            },
+            // Unload any search placeholders elsewhere in the DOM
+            Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
+                if (c !== container) {
+                    c.innerHTML = '';
+                }
+            });
 
-            hide: function() {
-                $searchHeader.addClass(className);
+            // Load the Google search monolith, if not already present in this context.
+            // We have to re-run their script each time we do this.
+            if (! container.innerHTML) {
+                container.innerHTML = '' +
+                    '<div class="search-box" role="search">' +
+                        '<gcse:searchbox></gcse:searchbox>' +
+                    '</div>' +
+                    '<div class="search-results" data-link-name="search">' +
+                        '<gcse:searchresults></gcse:searchresults>' +
+                    '</div>';
+
+                s = document.createElement('script');
+                s.async = true;
+                s.src = gcsUrl;
+                x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
             }
         };
 
-        this.load = function() {
-            if (config.switches.googleSearch && gcsUrl) {
-                require(['js!' + gcsUrl + '!order'], function () {
-                    bean.on(document.querySelector('.search-results'), 'click', function(e) {
-                        var targetEl = e.target;
-                        if (targetEl.nodeName.toLowerCase() === "a") {
-                            targetEl.target = "_self";
-                        }
-                    });
-                });
+        this.init = function(context) {
+            if (enabled) {
+                currentContext = context;
             }
-        };
-
-        this.init = function() {
-            if (config.page.googleSearchUrl && config.page.googleSearchId) {
-                gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
-                this.load();
-            }
-
-            this.view.bindings();
         };
 
     };

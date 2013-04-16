@@ -54,28 +54,12 @@ define([
 
                 reader.init();
             }
-        },
-
-        initStory: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Story(config);
-
-            e.init();
-        },
-
-        initExperiments: function(config) {
-
         }
     };
 
-    var ready = function(config) {
+    var ready = function(config, context) {
 
-        modules.initStory(config);
-        modules.initExperiments(config);
+        common.mediator.emit("page:article:ready", config, context);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -84,7 +68,6 @@ define([
         if(config.page.section === "football") {
             modules.matchNav(config);
         }
-        
 
     };
 
@@ -95,8 +78,8 @@ define([
         });
     };
 
-    var init = function (req, config) {
-        ready(config);
+    var init = function (req, config, context) {
+        ready(config, context);
         defer(config);
     };
 

@@ -6,10 +6,10 @@
 
         <ul class="nav nav--columns nav--top-border-off cf">
             @comp.teams.map{ team =>
-            <li data-team-id="@team.id">
-                @TeamUrl(team).map{ url => <a href="@url" data-link-name="@team.name">
+            <li class="nav__item" data-team-id="@team.id">
+                @TeamUrl(team).map{ url => <a href="@url" class="nav__link" data-link-name="@team.name">
                     @team.name
-                </a> }.getOrElse{ <span class="no-link-team">@team.name</span> }
+                </a> }.getOrElse{ <span class="nav__link no-link-team">@team.name</span> }
 
             </li>
             }

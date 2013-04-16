@@ -12,8 +12,7 @@ define(['bonzo'], function (bonzo) {
         };
         this.variants = [
             {
-                id: 'control',
-                split: 50,
+                id: 'show',
                 test: function () {
                     var mostPopular =  bonzo(document.getElementById('popular-trails')),
                         data = 'AB | ' + self.id + ' test | show | ' + mostPopular.attr('data-link-name');
@@ -23,7 +22,6 @@ define(['bonzo'], function (bonzo) {
             },
             {
                 id: 'hide',
-                split: 50,
                 test: function () {
                     var mostPopular =  bonzo(document.getElementById('popular-trails'));
                     bonzo(document.getElementById('js-related')).remove();

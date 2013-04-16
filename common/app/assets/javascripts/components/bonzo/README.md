@@ -107,7 +107,6 @@ Complete Bonzo API
   * after(html || node)
   * insertAfter(target || selector)
   * replaceWith(html || node)
-  * clone()
   * css()
     - css(prop) get
     - css(prop, val) set

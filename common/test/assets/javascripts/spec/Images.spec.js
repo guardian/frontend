@@ -7,7 +7,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
                     fixtures: [
                         '<div id="upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/1/1" src="http://placekitten.com/2/2" data-thumb-width="5" data-full-width="100" id="upgradeImages" class="visible" /></div>',
                         '<div id="force-upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/3/3" src="http://placekitten.com/2/2" data-force-upgrade="1" data-thumb-width="5" data-full-width="100" id="upgradeImagesForce" class="visible" /></div>',
-                        '<img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/>'
+                        '<div id="upgrade-svg"><img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/></div>'
                     ]
                    }
 
@@ -43,7 +43,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
             window.innerWidth = 1024;
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
             
-            new Images().upgrade();
+            new Images().upgrade(document.getElementById('upgrade-svg'));
             expect(document.getElementsByTagName('body')[0].className).toContain('svg');
         });
 

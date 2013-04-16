@@ -13,8 +13,9 @@
                 baseUrl: '@{Configuration.static.path}javascripts',
                 apiName: 'require',
                 paths: {
-                    omniture: '@Static("javascripts/vendor/omniture.js")',
-                    homescreen: '@Static("javascripts/vendor/add2home.js")' // Mofified version. Do not upgrade.
+                    omniture                       : '@Static("javascripts/vendor/omniture.js")',
+                    homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
+                    'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
                 }
             };
 
@@ -76,6 +77,11 @@
             switches : { @{Html(switches.map{ switch =>
                     s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
                 }.mkString(","))}
+            },
+            modules: {
+                sharedWisdomToolbar: {
+                    css: '@Static("stylesheets/modules/shared-wisdom-toolbar.css")'
+                }
             }
         };
 

@@ -43,12 +43,12 @@
     </article>
 
     @fragments.social(article.canonicalUrl.get, article.headline)
-    
-    <aside id="js-related" role="complementary">
+
+    <aside class="js-related" role="complementary">
         @if(storyPackage.nonEmpty) {
             @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
         }
     </aside>
 
-    <div id="js-popular" role="complementary"></div>
+    <div   class="js-popular" role="complementary"></div>
 }
