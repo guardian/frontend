@@ -164,14 +164,15 @@ define([
         },
 
         loadOphanAnalytics: function (config) {
-            var dependOn = [config.page.ophanUrl];
-            require(dependOn, function (Ophan) {
-                if (config.switches.optimizely === true) {
-                    Ophan.additionalViewData(function() {
-                        return {
-                            "optimizely": optimizely.readTests()
-                        };
-                    });
+            require(config.page.ophanUrl, function (Ophan) {
+                    if(AB.inTest(config.switches)) {
+                        Ophan.additionalViewData(function() {
+                            var test = AB.getTest();
+                            return {
+                                "AB": 'AB | ' + test.id + ' | ' + test.variant
+                            };
+                        });
+                    }
                 }
                 Ophan.startLog();
             });
