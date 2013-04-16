@@ -8,14 +8,12 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
         this.init = function(context) {
             Array.prototype.forEach.call(context.querySelectorAll('.control'), function(control){
+                var toggler =  common.rateLimit(function() {
+                    self.toggle(control, context);
+                    common.mediator.emit('modules:control:change');
+                });
                 bean.add(control, 'click touchstart', function (e) {
-                    var current = new Date().getTime();
-                    var delta = current - lastClickTime;
-                    if (delta >= delay) {
-                        lastClickTime = current;
-                        self.toggle(control, context);
-                        common.mediator.emit('modules:control:change');
-                    }
+                    toggler();
                     e.preventDefault();
                 });
             });

@@ -5,27 +5,23 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         var enabled,
             gcsUrl,
             currentContext,
-            self = this,
-            delay = 400,
-            lastClickTime = 0;
-
+            self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
             
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
+            var searchLoader = common.rateLimit(function() {
+                self.load(currentContext);
+            });
+
             bean.on(document, 'click touchstart', '.control--search', function(e) {
-                var current = new Date().getTime();
-                var delta = current - lastClickTime;
-                if (delta >= delay) {
-                    lastClickTime = current;
-                    self.load(currentContext);
-                }
+                searchLoader();
                 e.preventDefault();
             });
 
-            bean.on(document, 'click', '.search-results', function(e) {
+            bean.on(document, 'click touchstart', '.search-results', function(e) {
                 var targetEl = e.target;
                 if (targetEl.nodeName.toLowerCase() === "a") {
                     targetEl.target = "_self";
