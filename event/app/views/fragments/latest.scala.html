@@ -26,14 +26,16 @@
                 @fragments.byline(a.byline, a)
 
                 <div class="article-body from-content-api @if(a.isLive) {live-blog}">
-                    @withJsoup(BulletCleaner(a.body))(
-                        PictureCleaner(a),
-                        InBodyLinkCleaner("in body link"),
-                        BlockNumberCleaner,
-                        TweetCleaner,
-                        WitnessCleaner,
-                        Summary(paras)
-                    )
+                    <div class="sample-paras">
+                        @withJsoup(BulletCleaner(a.body))(
+                            PictureCleaner(a),
+                            InBodyLinkCleaner("in body link"),
+                            BlockNumberCleaner,
+                            TweetCleaner,
+                            WitnessCleaner,
+                            Summary(paras)
+                        )
+                    </div>
                     <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
                 </div>
             </article>
