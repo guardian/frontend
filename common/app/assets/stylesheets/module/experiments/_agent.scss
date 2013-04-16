@@ -1,8 +1,16 @@
 
+@media only screen and (max-width: $tablet) {
+
+    .story-agents { 
+      margin: $baseline*4 $gutter $baseline*4 $gutter;
+      background-color: black;
+    }
+
+}
+    
 .story-agents { 
-  margin: $baseline*4 $gutter $baseline*4 $gutter;
-  padding: $baseline*4 $gutter $baseline*6 $gutter;
-  background-color: black;
+      padding: $baseline*4 $gutter $baseline*6 $gutter;
+      background-color: black;
 }
 
 .story-agents .story-title { 
