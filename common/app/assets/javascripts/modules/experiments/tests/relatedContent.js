@@ -5,14 +5,14 @@ define(['bonzo'], function (bonzo) {
         var self = this;
 
         this.id = 'RelatedContent';
-        this.audience = 1;
+        this.audience = 0.01;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
           return (config.page.contentType === "Article") ? true : false;
         };
         this.variants = [
             {
-                id: 'show',
+                id: 'control',
                 test: function () {
                     var mostPopular =  bonzo(document.getElementById('popular-trails')),
                         data = 'AB | ' + self.id + ' test | show | ' + mostPopular.attr('data-link-name');

@@ -173,7 +173,6 @@ define([
                             };
                         });
                     }
-                }
                 Ophan.startLog();
             });
         },
