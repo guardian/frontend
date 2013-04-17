@@ -22,8 +22,8 @@ object Management extends Management {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      // TODO: Add gif and png.
-      "/resize/sclr/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg"
+      "/resize/sclr/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg",
+      "/resize/im4j/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg"
     ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
