@@ -2,7 +2,7 @@
 
 {
     @item match {
-        case content: model.Content => {"webPublicationDate" : new Date(@content.webPublicationDate.getMillis),}
+        case content: model.Content => {"webPublicationDate" : @content.webPublicationDate.getMillis,}
         case other => {@None}
     }
     "page": {
