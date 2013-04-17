@@ -29,7 +29,7 @@ define(['common', 'ajax', 'modules/matchnav', 'modules/pageconfig'], function(co
 
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
-                expect(document.querySelector("aside").innerHTML).toBe('2');
+                expect(document.querySelector(".js-related").innerHTML).toBe('2');
                 expect(document.querySelector('.after-header').innerHTML).toBe('1');
             });
         });
