@@ -63,7 +63,7 @@ public class FrontSteps {
         assertEquals(ctaText, cta.getText());
         cta.click();
         // wait for second list of top stories to load in
-        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
+        webDriver.waitForElement(By.xpath(trailblockXpath + "/ul[2]"));
     }
 	
 }
