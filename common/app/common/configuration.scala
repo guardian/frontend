@@ -4,6 +4,7 @@ import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
 import play.api.Play
+import conf.CommonSwitches.ImageServerSwitch
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -75,6 +76,18 @@ class GuardianConfiguration(
   object static {
     lazy val path = configuration.getStringProperty("static.path").getOrElse {
       throw new IllegalStateException("Static path not configured")
+    }
+  }
+
+  object images {
+    lazy val path = configuration.getStringProperty("images.path").getOrElse {
+      throw new IllegalStateException("Image path not configured")
+    }
+  }
+
+  object assets {
+    lazy val path = configuration.getStringProperty("assets.path").getOrElse {
+      throw new IllegalStateException("Image path not configured")
     }
   }
 
