@@ -23,8 +23,7 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
-    'modules/experiments/ab',
-    'modules/shared-wisdom-toolbar'
+    'modules/experiments/ab'
 ], function (
     common,
     userPrefs,
@@ -49,8 +48,7 @@ define([
     Cookies,
     Video,
     Debug,
-    AB,
-    sharedWisdomToolbar
+    AB
 ) {
 
     var modules = {
@@ -133,9 +131,15 @@ define([
             require(config.page.ophanUrl, function (Ophan) {
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
-                            var test = AB.getTest();
+                            var test = AB.getTest(),
+                                data = [
+                                    {
+                                        id: test.id,
+                                        variant: test.variant
+                                    }
+                                ];
                             return {
-                                "AB": 'AB | ' + test.id + ' | ' + test.variant
+                                "experiments": JSON.stringify(data)
                             };
                         });
                     }
@@ -163,9 +167,14 @@ define([
         },
 
         showSharedWisdomToolbar: function(config) {
-            sharedWisdomToolbar.init(function() {
-                sharedWisdomToolbar.show();
-            }, config.modules.sharedWisdomToolbar);
+            // only display if switched on
+            if (userPrefs.isOn('shared-wisdom-toolbar')) {
+                require('modules/shared-wisdom-toolbar', function(sharedWisdomToolbar) {
+                    sharedWisdomToolbar.init(function() {
+                        sharedWisdomToolbar.show();
+                    }, config.modules.sharedWisdomToolbar);
+                });
+            }
         },
 
         initialiseAbTesting: function(config, context) {

@@ -38,11 +38,10 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	function displayInsight(insight) {
 	    var sentence = insight.sentence;
 	    if (insight.url) {
-	        var $link = bonzo(document.createElement('a'));
-	        $link.text(sentence);
-	        if (insight.tooltip) {
-	            $link.attr('title', insight.tooltip);
-	        }
+	        var $link = bonzo(document.createElement('a'))
+	            .text(sentence)
+                .attr('href', insight.url)
+	            .attr('title', insight.tooltip);
 	        return $link[0].outerHTML;
 	    } else {
 	        return sentence;  
@@ -52,10 +51,6 @@ define(['modules/userPrefs', 'common', 'bonzo', 'bean', 'reqwest', 'qwery'], fun
 	var sharedWisdomToolbar = {	
 		// init takes callback, as makes http request
 		init: function(callback, config) {
-		    // only display if switched on
-		    if (!userPrefs.isOn(id)) {
-		        return;
-		    }
             // add css
             var $css = bonzo(document.createElement('link'))
                 .attr('rel', 'stylesheet')
