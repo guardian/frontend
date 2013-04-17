@@ -23,7 +23,8 @@ object Management extends Management {
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
       "/resize/sclr/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg",
-      "/resize/im4j/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg"
+      "/resize/im4j/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg",
+      "/resize/im4j/sys-images/Guardian/Pix/pictures/2012/7/16/1342432227090/-460.png"
     ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
