@@ -14,7 +14,8 @@ object Gallery extends Profile(750, 480, 90) {}
 object Im4Java {
 
   def apply(image: BufferedImage, operation:IMOperation, format: String = "jpg"): Array[Byte] = { 
-    val cmd = new ConvertCmd
+    
+    val cmd = new ConvertCmd(true) // true uses GraphicsMagick, which is better supported by CentOS 
     val s2b = new Stream2BufferedImage
     cmd.setOutputConsumer(s2b)
 
