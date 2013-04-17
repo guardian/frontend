@@ -7,7 +7,7 @@ define(['common', 'bean'], function (common, bean) {
         @param {Object} options hash of configuration options:
             dom         : DOM element to convert
             expanded    : {Boolean} Whether the component should init in an expanded state
-            expanded    : {Boolean} Whether to display the count in the CTA
+            showCount   : {Boolean} Whether to display the count in the CTA
     */
     var Expandable = function (options) {
 
