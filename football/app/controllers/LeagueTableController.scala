@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import conf._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
@@ -40,13 +41,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       }
     }
     
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(views.html.fragments.tablesBody(TablesPage(page, groups, "/football", filters, None)))
-    } getOrElse {
-      Cached(page)(
-        Ok(Compressed(views.html.tables(TablesPage(page, groups, "/football", filters, None))))
-      )
-    }
+    val htmlResponse = views.html.tables(TablesPage(page, groups, "/football", filters, None))
+    val jsonResponse = views.html.fragments.tablesBody(TablesPage(page, groups, "/football", filters, None))
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
   }
 
@@ -66,13 +63,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
     val comps = Competitions.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
     
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps))
-    } getOrElse {
-      Cached(page)(
-        Ok(Compressed(views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)))
-      )
-    }
+    val htmlResponse = views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
+    val jsonResponse = views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
   }
 
@@ -87,14 +80,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         "GFE:Football:automatic:competition tables"
       )
     
-      request.getQueryString("callback").map { callback =>
-        JsonComponent(views.html.fragments.tablesBody(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition))))
-      } getOrElse {
-        Cached(page)(
-          Ok(Compressed(views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))))
-        )
-      }
-
+      val htmlResponse = views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
+      val jsonResponse = views.html.fragments.tablesBody(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
+      renderFormat(htmlResponse, jsonResponse, page, Switches.all)
     }.getOrElse(Redirect("/football/tables"))
   }
 }

@@ -26,6 +26,11 @@ object JsonComponent extends Results {
     val json = jsonFor(items: _*)
     resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
   }
+  
+  def apply(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader) = {
+    val json = jsonFor(metaData, switches, items: _*)
+    resultFor(request, json) getOrElse (BadRequest("parameter 'callback' is required"))
+  }
 
   def apply(obj: JsObject)(implicit request: RequestHeader) = resultFor(request,
     Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
@@ -42,14 +47,10 @@ object JsonComponent extends Results {
   }
   
   def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
-    jsonify(items :+ ("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)))
-  }
-
-  def jsonFor(items: (String, Any)*): String = {
-    jsonify(items)
+    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)) +: items: _*)
   }
   
-  private def jsonify(items: Seq[(String, Any)]) = {
+  def jsonFor(items: (String, Any)*) = {
     import play.api.libs.json.Writes._
     Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
