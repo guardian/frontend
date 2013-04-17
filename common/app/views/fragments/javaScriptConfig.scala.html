@@ -1,10 +1,6 @@
 @(item: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
 {
-    @item match {
-        case content: model.Content => {"webPublicationDate" : @content.webPublicationDate.getMillis,}
-        case other => {@None}
-    }
     "page": {
         @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
         @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
