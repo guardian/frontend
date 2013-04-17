@@ -44,7 +44,16 @@ object Frontend extends Build with Prototypes with Testing {
       "feed._"
     )
   )
-
+  
+  val image = application("image").dependsOn(commonWithTests).settings(
+       libraryDependencies ++= Seq(
+         "org.imgscalr" % "imgscalr-lib" % "4.2",
+         "org.im4java" % "im4java" % "1.4.0",
+         "commons-io" % "commons-io" % "2.0.1",
+         "commons-lang" % "commons-lang" % "2.5"
+       )
+   )
+  
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "net.sf.uadetector" % "uadetector-resources" % "2012.08",
@@ -60,6 +69,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(video)
     .dependsOn(gallery)
     .dependsOn(football)
+    .dependsOn(image)
     .dependsOn(coreNavigation)
     .dependsOn(router)
     .dependsOn(diagnostics)
@@ -75,6 +85,7 @@ object Frontend extends Build with Prototypes with Testing {
     video,
     gallery,
     football,
+    image,
     coreNavigation,
     router,
     diagnostics,
