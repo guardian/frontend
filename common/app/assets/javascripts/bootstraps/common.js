@@ -1,8 +1,6 @@
 define([
     //Commmon libraries
     'common',
-    'ajax',
-    'modules/detect',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
@@ -11,13 +9,11 @@ define([
     'modules/popular',
     'modules/related',
     'modules/router',
-    'modules/errors',
     'modules/images',
     'modules/navigation/top-stories',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
-    'modules/fonts',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -30,8 +26,6 @@ define([
     'modules/experiments/ab'
 ], function (
     common,
-    ajax,
-    detect,
     userPrefs,
 
     domReady,
@@ -40,13 +34,11 @@ define([
     popular,
     related,
     Router,
-    Errors,
     Images,
     TopStories,
     Sections,
     Search,
     NavControl,
-    Fonts,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -61,22 +53,9 @@ define([
 
     var modules = {
 
-        initialiseAjax: function(config) {
-            ajax.init(config.page.ajaxUrl);
-        },
-
-        attachGlobalErrorHandler: function (config) {
-            var e = new Errors({
-                window: window,
-                isDev: config.page.isDev
-            });
-            e.init();
-            common.mediator.on("module:error", e.log);
-        },
-
         upgradeImages: function () {
             var images = new Images();
-            common.mediator.on('page:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
             });
             common.mediator.on('fragment:ready:images', function(context) {
@@ -84,15 +63,11 @@ define([
             });
         },
 
-        showDebug: function () {
-            new Debug().show();
-        },
-
         initialiseNavigation: function (config) {
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
-            common.mediator.on('page:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 navControl.init(context);
                 sections.init(context);
                 search.init(context);
@@ -101,19 +76,19 @@ define([
 
         transcludeTopStories: function () {
             var topStories = new TopStories();
-            common.mediator.on('page:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 topStories.load(config, context);
             });
         },
 
         transcludeRelated: function () {
-            common.mediator.on("page:article:ready", function(config, context){
+            common.mediator.on("page:common:ready", function(config, context){
                 related(config, context);
             });
         },
 
         transcludePopular: function () {
-            common.mediator.on('page:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 popular(config, context);
             });
         },
@@ -125,18 +100,9 @@ define([
             });
         },
 
-        loadFonts: function(config, ua) {
-            if(config.switches.webFonts) {
-                var fileFormat = detect.getFontFormatSupport(ua),
-                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                var f = new Fonts(fontStyleNodes, fileFormat);
-                f.loadFromServerAndApply();
-            }
-        },
-
         showRelativeDates: function () {
             var dates = RelativeDates;
-            common.mediator.on('page:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 dates.init(context);
             });
             common.mediator.on('fragment:ready:dates', function(el) {
@@ -221,21 +187,25 @@ define([
         }
     };
 
-    var pageReady = function (config, context) {
-        common.deferToLoadEvent(function() {
+    var deferrable = function (config, context) {
+        deferrable = function (config, context) {
+            // TODO: move these up into the first-call scope by making them singletons
             modules.initialiseAbTesting(config, context);
-            modules.loadAdverts(config);
-            modules.cleanupCookies();
+            modules.loadAdverts(config, context);
+            modules.cleanupCookies(context);
             modules.showSharedWisdomToolbar(config);
+            
+            common.mediator.emit("page:common:loaded", config, context);
+        };
+        common.deferToLoadEvent(function() {
+            deferrable(config, context);
         });
     };
 
-    var runOnce = function (config) {
-        modules.initialiseAjax(config);
-        modules.attachGlobalErrorHandler(config);
-        modules.loadFonts(config, navigator.userAgent);
-        modules.showDebug();
-
+    var ready = function (config, context) {
+        ready = function (config, context) {
+            common.mediator.emit("page:common:ready", config, context);
+        };
         modules.upgradeImages();
         modules.showTabs();
         modules.showRelativeDates();
@@ -243,11 +213,16 @@ define([
         modules.transcludePopular();
         modules.transcludeTopStories();
         modules.initialiseNavigation(config);
+
+        ready(config, context);
+    };
+
+    var init = function (config, context) {
+        ready(config, context);
+        deferrable(config, context);
     };
 
     return {
-        runOnce: runOnce,
-        pageReady: pageReady
+        init: init
     };
-
 });
