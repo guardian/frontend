@@ -1,20 +1,20 @@
 define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], function (bean, Swipe, common, detect, url, bonzo) {
 
-    function Gallery() {
+    function Gallery(context) {
 
         var urlParams = url.getUrlVars();
 
         var view = {
 
             galleryConfig: {
-                nextLink: document.getElementById('js-gallery-next'),
-                prevLink: document.getElementById('js-gallery-prev'),
+                nextLink: context.querySelector('.js-gallery-next'),
+                prevLink: context.querySelector('.js-gallery-prev'),
                 currentIndex: urlParams.index || 0,
                 currentSlideClassName: 'js-current-gallery-slide',
                 inSwipeMode: false,
                 inFullScreenMode: false,
                 gallerySwipe: null,
-                container: document.getElementById('js-gallery-holder'),
+                container: context.querySelector('.js-gallery-holder'),
                 stopUpdatingURL: false
             },
 
@@ -26,7 +26,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                     view.galleryConfig.inSwipeMode = true;
 
                     // add swipe styling
-                    document.getElementById('js-gallery').className += ' gallery-swipe';
+                    context.querySelector('.js-gallery').className += ' gallery-swipe';
 
                     // when we load, grab the prev/next and show them too
                     var currentSlide = common.$g('.' + view.galleryConfig.currentSlideClassName)[0];
@@ -42,7 +42,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                     view.galleryConfig.gallerySwipe = new Swipe(view.galleryConfig.container, {
                         callback: function(event, index, elm) {
 
-                            var count = document.getElementById('js-gallery-index');
+                            var count = context.querySelector('.js-gallery-index');
                             var currentPos = parseInt(bonzo(count).text(), 10);
                             var nextIndex = parseInt(index, 10);
                             var nextIndexCount = nextIndex + 1;
@@ -91,7 +91,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                     });
 
                     // bind arrow key navigation
-                    bean.add(document, 'keydown', function(e) {
+                    bean.add(context, 'keydown', function(e) {
                         var didAdvance = false;
                         if (e.keyCode === 37) { // left
                             didAdvance = view.advanceGallery('prev');
@@ -119,7 +119,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                         // so first we work out which direction to move in
                         if (view.galleryConfig.inSwipeMode) {
 
-                            var currentSlide = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
+                            var currentSlide = context.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
                             var currentIndex = parseInt(currentSlide.getAttribute('data-index'), 10);
 
                             // we don't need to manually update URLs as popstate does it for us
@@ -150,12 +150,12 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
             advanceGallery: function (direction, customItemIndexToShow) {
 
                 // set up variables
-                var currentSlide    = document.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
+                var currentSlide    = context.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
                 var currentIndex    = parseInt(currentSlide.getAttribute('data-index'), 10);
                 var totalSlides     = parseInt(currentSlide.getAttribute('data-total'), 10);
                 var isFirst         = (currentIndex === 1);
                 var isLast          = (currentIndex === totalSlides);
-                var slideCounter    = document.getElementById('js-gallery-index');
+                var slideCounter    = context.querySelector('.js-gallery-index');
 
                 // don't try to do anything if we're at the start/end going forward/back
                 if ( (isFirst && direction === "prev") ||
@@ -183,7 +183,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
 
                 } else {
                     // used for scrolling to a custom item on pageload
-                    elmToWorkWith = document.getElementById('js-gallery-item-' + customItemIndexToShow);
+                    elmToWorkWith = context.querySelector('.js-gallery-item-' + customItemIndexToShow);
                     newSlideIndex = customItemIndexToShow;
                 }
 

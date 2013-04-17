@@ -65,17 +65,6 @@ define([
         }
     };
 
-    var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            common.mediator.emit("page:article:loaded", config, context);
-        };
-        // On first call to this fn only:
-        common.deferToLoadEvent(function() {
-            modules.logReading();
-            deferrable(config, context);
-        });
-    };
-
     var ready = function (config, context) {
         ready = function (config, context) {
             common.mediator.emit("page:article:ready", config, context);
@@ -83,16 +72,12 @@ define([
         // On first call to this fn only:
         modules.matchNav();
         modules.initLiveBlogging();
+        modules.logReading();
         ready(config, context);
-    };
-
-    var init = function (config, context) {
-        ready(config, context);
-        deferrable(config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 
 });
