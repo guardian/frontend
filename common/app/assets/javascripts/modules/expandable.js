@@ -7,22 +7,30 @@ define(['common', 'bean'], function (common, bean) {
         @param {Object} options hash of configuration options:
             dom         : DOM element to convert
             expanded    : {Boolean} Whether the component should init in an expanded state
+            expanded    : {Boolean} Whether to display the count in the CTA
     */
-    var Expandable = function (opts) {
+    var Expandable = function (options) {
 
-        var dom = common.$g(opts.dom), // root element of the trailblock
-            expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
+        var opts = options || {},
+            dom = common.$g(opts.dom), // root element of the trailblock
+            expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
             cta = document.createElement('span'),
             domCount,
             count,
-            self = this;
+            self = this,
+            showCount = (opts.showCount === false) ? false : true;
 
         // View
         
         var view = {
            
             updateCallToAction: function () {
-                cta.innerHTML = 'Show ' + model.getCount() + ' ' + ((expanded) ? 'fewer' : 'more');
+                var text = 'Show ';
+                if (showCount) {
+                    text += model.getCount() + ' ';
+                }
+                text += (expanded) ? 'fewer' : 'more';
+                cta.innerHTML = text;
                 cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
                 cta.setAttribute('data-is-ajax', '1');
             },
