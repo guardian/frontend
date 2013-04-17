@@ -1,0 +1,167 @@
+/* ==========================================================================
+   Navigation controls
+   ========================================================================== */
+
+/* Control
+ ========================================================================== */
+.control,
+.control:link,
+.control:active,
+.control:hover,
+.control:visited {
+    color: #ffffff;
+    font-family: $serif !important;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: transparent;
+    vertical-align: top;
+    text-decoration: none !important;
+  }
+
+.control.is-active,
+.control.is-active {
+  background-color: #ffffff;
+  color: $blue;
+}
+
+.i-nav-divider {
+  float: left;
+  height: 28px;
+  width: 1px;
+  margin-right: 8px;
+  background-color: #274C98;
+  border-left: 1px solid #122853;
+}
+
+.is-active .i-nav-divider {
+  border-color: #ffffff;
+  background-color: #ffffff;
+}
+
+/* Sections control - (Hamburger icon )
+ ========================================================================== */
+
+.control--sections,
+.control--sections:link,
+.control--sections:active,
+.control--sections:hover,
+.control--sections:visited {
+  float:right;
+  width: auto;
+  height: 28px;
+  padding: 15px $gutter 15px 0px;
+
+  @media only screen and (min-width: $tablet) {
+    position: absolute;
+    right: 0px;
+    top: 58px;
+    padding: 0 $gutter 10px $gutter;
+    margin: $baseline*2 0 $baseline*2 0;
+    background-color: transparent;
+    color: #444444;
+    font-size: 14px;
+  }
+}
+
+.control__menu.i {
+  float: right;
+  margin-top: 8px;
+  text-indent: -1000em;
+}
+
+span.control__menu.i-menu {
+  display: inline-block;
+  margin-left: 6px;
+
+  @media only screen and (min-width: $tablet) {
+    display:none;
+  }
+}
+
+.control--sections .i-menu-active {
+  display: none;
+
+  @media only screen and (min-width: $tablet) {
+    margin-top: $baseline*2;
+    display: inline-block;
+  }
+}
+
+.control--sections .i-nav-divider {
+  @media only screen and (min-width: $tablet) {
+    margin-right: $baseline*3;
+    border-color: #BBBBBB;
+    background-color: #ffffff;
+  }
+}
+
+/* Top stories control
+ ========================================================================== */
+
+.control--topstories {
+  float: right;
+  margin-right: 46px;
+  height: 28px;
+  margin: 0;
+  padding: 17px 0 13px 0;
+
+  @media only screen and (min-width: $tablet) {
+    position: absolute;
+    top: 0px;
+    right: 48px;
+  }
+}
+
+.control--topstories span {
+  display: none;
+  height: 28px;
+  vertical-align: top;
+  line-height: 28px;
+  margin-right: $baseline*2;
+  margin-left: $baseline*2;
+
+  @media only screen and (min-width: 26.25em) {
+    display: inline-block;
+  }
+}
+
+  .control--topstories.is-active span {
+    background: none !important;
+    border-color: transparent !important;
+  }
+
+.control--topstories .i-top-stories {
+  margin: 5px $baseline*4 0 $baseline*2;
+
+  @media only screen and (min-width: $tablet) {
+    margin-left: 0px;
+  }
+}
+
+.control--topstories .i-nav-divider {
+  margin-top: -2px;
+}
+
+
+
+/* Search control
+ ========================================================================== */
+
+.control--search {
+  float:right;
+  height: 28px;
+  padding: 15px $baseline*4 15px 0px;
+  border: none;
+
+  @media only screen and (min-width: $tablet) {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+.control--search .i-search {
+  margin-top: $baseline*2;
+  margin-left: 6px;
+  margin-right: 2px;
+}

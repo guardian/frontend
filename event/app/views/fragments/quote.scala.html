@@ -4,22 +4,28 @@
     @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
         <div class="story-quote">
 
-            <h3 class="story-sub-head story-sub-head--quote">Guardian 
-                @{
-                    article.colour match {
-                        case 1 => "Overview"
-                        case 2 => "Background"
-                        case 3 => "Analysis"
-                        case 4 => "Reaction"
-                        case 5 => "Comment"
-                    }
-                }
+            <h3 class="story-sub-head story-sub-head--quote">
+                @story.labels.getOrElse("quote" + index, "Guardian " + { article.colour match {
+                            case 1 => "Overview"
+                            case 2 => "Background"
+                            case 3 => "Analysis"
+                            case 4 => "Reaction"
+                            case 5 => "Comment"
+                            }
+                          })
             </h3>
 
             @article.quote.map{ quote =>
             <blockquote class="quoted" data-link-name="story quote">
                 @quote.text.map{ text =>
-                    <p><a href="@article.url">@cleanTrailText(text)</a></p>
+                  <p>
+                    @cleanTrailText(text)
+                  </p>
+                  <p>
+                  <a class="continue" data-link-name="Continue reading" data-skip-paras="0" href="@article.url">
+                      Continue reading... 
+                  </a>
+                  </p>
                 }
                 <cite>@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
             </blockquote>

@@ -58,12 +58,14 @@ trait Prototypes extends Testing {
 
       //effectively disables built in Play javascript compiler
       javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
+      lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
       
       assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
         Seq(
           // don't copy across svg files (they're inline)
           (sourceDirectory / "assets" / "images") ** "*.png",
           (sourceDirectory / "assets" / "javascripts" / "bootstraps") ** "app.js",
+          (sourceDirectory / "assets" / "stylesheets") ** "*.min.css",
           (sourceDirectory / "public") ** "*"
         )
       },

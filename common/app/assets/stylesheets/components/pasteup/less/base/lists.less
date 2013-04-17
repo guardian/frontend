@@ -1,0 +1,56 @@
+dt {
+	font-weight: bold;
+}
+
+// Addresses paddings set differently in IE6/7
+menu,
+ol,
+ul {
+    padding: 0;
+    margin-left: 25px;
+}
+
+// Corrects list images handled incorrectly in IE7
+nav ul,
+nav ol {
+    list-style: none;
+    list-style-image: none;
+}
+
+// Some list helpers
+
+// Remove margin and bullets from lists.
+ol.unstyled, 
+ul.unstyled {
+	margin-left: 0;
+	list-style: none;	
+}
+
+// Remove margins and inline the list items.
+.inline {
+	margin-left: 0;
+}
+.inline li,
+.inline li {
+	display: inline;
+}
+
+// Add separator pipes inbetween inline list items (eg, footer).
+.inline.with-separators li:after {
+	content: " | ";
+}
+.inline.with-separators li:last-child:after {
+	content: none;
+}
+
+// Layout dls like a table
+// TODO: Fix fixed pixel width?
+.dl-horizontal dt {
+	float: left;
+	clear: left;
+	width: 150px;
+	text-align: right;
+}
+.dl-horizontal dd {
+	margin-left: 160px;
+}

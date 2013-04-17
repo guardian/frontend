@@ -272,18 +272,6 @@
         "id":"pa-football-team/6600"
       }]
     },{
-      "id":"football/dundee",
-      "type":"keyword",
-      "webTitle":"Dundee",
-      "webUrl":"http://www.guardian.co.uk/football/dundee",
-      "apiUrl":"http://content.guardianapis.com/football/dundee",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/95"
-      }]
-    },{
       "id":"football/brechin",
       "type":"keyword",
       "webTitle":"Brechin",
@@ -294,6 +282,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/118"
+      }]
+    },{
+      "id":"football/dundee",
+      "type":"keyword",
+      "webTitle":"Dundee",
+      "webUrl":"http://www.guardian.co.uk/football/dundee",
+      "apiUrl":"http://content.guardianapis.com/football/dundee",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/95"
       }]
     },{
       "id":"football/belgium",
@@ -368,18 +368,6 @@
         "id":"pa-football-team/26291"
       }]
     },{
-      "id":"football/stokecity",
-      "type":"keyword",
-      "webTitle":"Stoke City",
-      "webUrl":"http://www.guardian.co.uk/football/stokecity",
-      "apiUrl":"http://content.guardianapis.com/football/stokecity",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/38"
-      }]
-    },{
       "id":"football/toulouse",
       "type":"keyword",
       "webTitle":"Toulouse",
@@ -390,6 +378,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/26346"
+      }]
+    },{
+      "id":"football/stokecity",
+      "type":"keyword",
+      "webTitle":"Stoke City",
+      "webUrl":"http://www.guardian.co.uk/football/stokecity",
+      "apiUrl":"http://content.guardianapis.com/football/stokecity",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/38"
       }]
     },{
       "id":"football/siena",
@@ -404,18 +404,6 @@
         "id":"pa-football-team/38623"
       }]
     },{
-      "id":"football/nancy",
-      "type":"keyword",
-      "webTitle":"Nancy",
-      "webUrl":"http://www.guardian.co.uk/football/nancy",
-      "apiUrl":"http://content.guardianapis.com/football/nancy",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/26468"
-      }]
-    },{
       "id":"football/egypt",
       "type":"keyword",
       "webTitle":"Egypt",
@@ -426,6 +414,18 @@
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/987"
+      }]
+    },{
+      "id":"football/nancy",
+      "type":"keyword",
+      "webTitle":"Nancy",
+      "webUrl":"http://www.guardian.co.uk/football/nancy",
+      "apiUrl":"http://content.guardianapis.com/football/nancy",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26468"
       }]
     },{
       "id":"football/japan",

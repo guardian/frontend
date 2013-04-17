@@ -30,7 +30,7 @@ define([
             var v = new Videostream({
                 id: config.page.id,
                 el: document.querySelector('#player video'),
-                ophanUrl: config.ophanUrl
+                ophanUrl: config.page.ophanUrl
             });
 
             v.init();
@@ -48,9 +48,11 @@ define([
         }
     };
 
-    var init = function(req, config) {
+
+    var init = function(req, config, context) {
+        common.mediator.emit("page:video:ready", config, context);
+
         modules.initAdverts(config);
-        modules.initExperiments(config);
         modules.initAnalytics(config);
     };
 

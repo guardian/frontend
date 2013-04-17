@@ -1,0 +1,64 @@
+//Fronts/Sections/tags
+//---------------------------------------------
+.front-section-head,
+.sub-section-head {
+    position: relative;
+    overflow: hidden;
+    border-top: $baseline solid $mushroom;
+}
+
+    .front-section-head h1,
+    .sub-section-head h1 {
+        margin-bottom: 0px;
+        line-height: 1em;
+    }
+
+    .front-section-head a,
+    .sub-section-head a {
+        display: block;
+        padding: 15px $gutter;
+    }
+
+    .front-section-head a, 
+    .front-section-head a:link, 
+    .front-section-head a:visited {
+        color: #ffffff;
+    }
+
+.sub-section-head {
+    border-bottom: 1px solid $mushroom;
+}
+
+.section-head {
+    @extend .type-0;
+    padding: 14px 0 15px 0;
+    margin: 0 $gutter;
+    line-height: 1em;
+    border-top: 4px solid $mushroom;
+    border-bottom: 1px solid $mushroom;
+    @include box-sizing(border-box);
+}
+
+.section-head.zone-color {
+  @media only screen and (min-width: $tablet) { border-top: none; }
+}
+
+//Articles
+//---------------------------------------------
+.article-section-head {
+    @include box-sizing(border-box);
+    padding: 13px 0 14px 0;
+    margin: 0 $gutter;
+    line-height: 1em;
+    border-top: 4px solid $mushroom;
+    border-bottom: 1px solid $mushroom;
+
+    @media only screen and (min-width: $tablet) { border-top: none; }
+}
+
+//Static pages and misc
+//---------------------------------------------
+.page-head {
+    @extend .type-4;
+    padding: 0 $gutter $baseline*2 $gutter;
+}

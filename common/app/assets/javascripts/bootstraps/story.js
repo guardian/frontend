@@ -5,7 +5,8 @@ define([
 
     "modules/accordion",
     "modules/expandable",
-    "modules/story/storytype"
+    "modules/story/storytype",
+    "modules/story/continue-reading"
 ], function(
     common,
     bean,
@@ -13,7 +14,8 @@ define([
 
     Accordion,
     Expandable,
-    StoryType
+    StoryType,
+    ContinueReading
 ) {
 
     var modules = {
@@ -30,7 +32,6 @@ define([
 
             if(timeline) {
                 $('.event-children').addClass('h');
-                $('.event-summary').addClass('h');
                 bean.on(timeline, eventType, '.event-title', function(e) {
                     var block = $(this).parent();
                     $('.event-summary', block).toggleClass('h');
@@ -65,6 +66,12 @@ define([
                 var e = new Expandable({id: id, expanded: false});
                 e.init();
             }
+        },
+
+        initContinueReading: function() {
+            common.$g('a.continue').each(function(el) {
+                new ContinueReading(el).init();
+            });
         },
 
         loadMoreStories: function(storyId) {
@@ -124,6 +131,7 @@ define([
         modules.initTimeline();
         modules.initAgents();
         modules.initExpandables();
+        modules.initContinueReading();
         modules.loadMoreStories(storyId);
         modules.loadPageType(storyId, config);
     };

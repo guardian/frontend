@@ -1,0 +1,42 @@
+/*
+    The grid is based on 60px columns
+    Column widths are worked out as 60px + 80px for each subsequent column
+    e.g. 4 col = 60px + (80px * 3) = 300px
+    TODO: half columns
+*/
+
+.col-12 { width: 940px; }
+.col-11 { width: 860px; }
+.col-10 { width: 780px; }
+.col-9  { width: 700px; }
+.col-8  { width: 620px; }
+.col-7  { width: 540px; }
+.col-6  { width: 460px; }
+.col-5  { width: 380px; }
+.col-4  { width: 300px; }
+.col-3  { width: 220px; }
+.col-2  { width: 140px; }
+.col-1  { width: 60px; }
+
+.row {
+	clear: both;
+	zoom: 1;
+}
+// Micro clearfix
+.row:before,
+.row:after {
+    content: "";
+    display: table;
+}
+.row:after {
+    clear: both;
+}
+
+/* All column padding / margin */
+.row [class*="col-"] {
+	float: left;
+	margin-left: 20px;
+}
+.row [class*="col-"]:first-child {
+    margin-left: 0;
+}

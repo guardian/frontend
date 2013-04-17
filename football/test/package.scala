@@ -7,32 +7,19 @@ import pa.Http
 import io.Source
 import play.api.Plugin
 import org.joda.time.DateMidnight
-import common._
 import concurrent.Future
+import play.api.test.TestBrowser
+import play.api.libs.concurrent.Execution.Implicits._
 
-class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with implicits.Football {
+
+class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
   override def onStart() = {
     FootballClient.http = TestHttp
     Competitions.refreshCompetitionData()
     Competitions.refreshMatchDay()
-    Competitions.competitionAgents.filter(_.competition.id != "127").foreach { agent =>
+    Competitions.competitionAgents.filter(_.competition.id != "127").foreach{ agent =>
       agent.refresh()
     }
-    val start = System.currentTimeMillis()
-
-    while (!testDataLoaded){
-      //give the futures some time to do their thing
-
-      //ensure we are not stuck in an endless loop if we mess up a test
-      if (System.currentTimeMillis() - start > 10000) throw new RuntimeException("this is taking too long to load test data")
-    }
-  }
-
-  private def testDataLoaded = {
-    Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
-    Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
-    Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
-    Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false)
   }
 }
 
@@ -44,7 +31,7 @@ object TestHttp extends Http {
   val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 
   def GET(url: String) = {
-    import play.api.libs.concurrent.Execution.Implicits._
+
     val fileName = {
       val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
         .replace("http://pads6.pa-sport.com/", "")
@@ -62,14 +49,48 @@ object TestHttp extends Http {
       case t: Throwable => Future(pa.Response(404, "not found", "not found"))
     }
   }
-
 }
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit {
+  object HtmlUnit extends EditionalisedHtmlUnit with implicits.Football {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
-  }
 
-  object Fake extends Fake
+    override def UK[T](path: String)(block: TestBrowser => T): T = {
+      warmup()
+      goTo(path, ukHost)(block)
+    }
+
+    override def US[T](path: String)(block: TestBrowser => T): T = {
+      warmup()
+      goTo(path, usHost)(block)
+    }
+
+    // You do not want this (it is effectively blocking) inside the football plugin
+    def warmup() {
+
+      super.UK("/football/live"){ browser =>
+        // do nothing
+      }
+
+      val start = System.currentTimeMillis()
+
+      while (!testDataLoaded()){
+        Thread.sleep(100)
+        //give the futures some time to do their thing
+        //ensure we are not stuck in an endless loop if we mess up a test
+        if (System.currentTimeMillis() - start > 10000) throw new RuntimeException("this is taking too long to load test data")
+      }
+    }
+
+    //ensures that the data needed to run our tests has loaded
+    // it is all async
+    private def testDataLoaded() = {
+      Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
+      Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
+      Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
+      Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false) &&
+      Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
+    }
+  }
 }

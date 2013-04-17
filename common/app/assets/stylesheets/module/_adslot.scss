@@ -1,0 +1,38 @@
+.ad-slot {
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    min-height: 70px;
+    background-color: #f8f8f2;
+    //For expandables
+    position: relative;
+    z-index: 1000;
+    @media only screen and (min-width: $desktopAd) { min-height: 96px; }
+}
+
+    .ad-slot iframe {
+        margin: 0 auto;
+    }
+
+.ad-container {
+    display: inline-block;
+    width: auto;
+    margin: 0 auto !important;
+}
+
+[data-link-name*="bottom-banner-ad"] {
+	padding: $baseline*2 0;
+    background-color: #ffffff;
+}
+
+#ad-slot-middle-banner-ad {
+    background-color: #ffffff;
+    min-height: 0px;
+    border-bottom: 1px solid #EDEDE7;
+}
+
+#ad-slot-middle-banner-ad .ad-container {
+    max-height: 50px;
+    padding: 5px 0px 10px 0px;
+}

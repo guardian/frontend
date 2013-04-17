@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Global wrapper
+   ========================================================================== */
+
+#container {
+  position: relative;
+  clear: both;
+  max-width: 80em;
+  max-width: 125rem;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Global header and navigation
+   ========================================================================== */
+
+#header {
+  position: relative;
+  background-color: $blue;
+}
+
+#logo {
+  display: block;
+  float: left;
+  margin: 20px 0 18px $gutter;
+  text-indent: -9999px;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    background-position: 0px 0px;
+    background-size: 100%;
+    background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
+  }
+}
+
+
+/*
+   Layout helpers
+   ========================================================================== */
+
+/**
+ * @todo Should these be moved to helpers?
+ */
+
+.component {
+    margin-bottom: 20px;
+}
+
+.box-indent {
+    padding: 0 $gutter $baseline*1 $gutter;
+}
+
+.inline-image {
+    width: $inArticleInlineImgWidth;
+    float: left;
+    margin: 0;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 3px;
+}
+
+.img-tiny.inline-image {
+    width: auto;
+    max-width: $inArticleInlineImgWidth;
+}

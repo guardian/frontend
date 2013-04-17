@@ -2,9 +2,14 @@
 
 #Node package management for Grunt build steps
 
+export PATH=dev/gems/bin:$PATH
+
+bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
 NPM_EXIT=$?
+
+
 
 if [ $NPM_EXIT == "1" ]; then
    exit 1
@@ -35,7 +40,7 @@ fi
 
 # Ivy configuration
 echo "setting ivy cache dir"
-IVY_PARAMS="-Dsbt.ivy.home=$HOME/.ivy2-frontend -Divy.home=$HOME/.ivy2-frontend"
+IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
 echo $IVY_PARAMS
 
 # proxy that Play uses

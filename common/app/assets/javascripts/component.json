@@ -1,5 +1,5 @@
 {
-  "name": "frontend-common",
+  "name": "frontend-common-js",
   "version": "0.1.0 ",
   "dependencies": {
     "bean": "1.0",

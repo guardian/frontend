@@ -1,0 +1,104 @@
+.topbar {
+	background: #ededed; // light grey
+	float: left;
+	font-size: 12px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+.topbar ul {
+	background: #ededed; // light grey
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.topbar li {
+	border-left: 1px solid #c6c6c6; // grey
+	float: left;
+	list-style: none;
+}
+.topbar li:first-child {
+	border-left: 0 none;
+}
+
+.topbar a, {
+	display: block;
+	margin: 0;
+	padding: 8px 10px 7px 10px;
+	text-decoration: none;
+	cursor: pointer;
+}
+.topbar a:hover,
+.topbar a:focus,
+.topbar .dropdown-holder:hover,
+.topbar .dropdown-holder:focus {
+	background: #d9d9d9; // hover grey
+}
+
+// Topbar Dropdowns
+.dropdown-holder {
+	position: relative;
+}
+.dropdown {
+	position: absolute;
+	left: -1px;
+	display: none;
+}
+.dropdown li {
+	border-left: 0 none;
+	border-top: 1px solid #c6c6c6; // grey
+	clear: both;
+	width: 100%;
+}
+.dropdown a { 
+	background: #d9d9d9; // hover grey
+	padding: 4px 10px 3px 10px;
+	white-space: nowrap;
+}
+.dropdown a:hover { 
+	background: #C6C6C6; // secondary hover grey
+	white-space: nowrap;
+}
+.dropdown li:first-child {
+	border-top: 0 none;
+}
+.dropdown-holder:hover .dropdown,
+.dropdown-holder a:focus + .dropdown,
+.dropdown:focus {
+	display: block;
+}
+
+// Optionally align menus right
+.dropdown.align-right {
+	left: auto;
+	right: -1px;
+}
+// Allow for no border on first and last elements
+li:first-child .dropdown.left-align {
+	left: 0;
+}
+li:last-child .dropdown.align-right {
+	right: 0;
+}
+
+// Add some trial responsiveness
+@media screen and (max-width: 600px) {
+	.topbar ul {
+		float: none;
+		border: none;
+	}
+	.topbar li {
+		float: none;
+		border: none;
+		border-bottom: 1px solid #c6c6c6;
+	}
+	.dropdown {
+		position: static;
+		width: 100%;
+	}
+}
+
+// Some styles for small screen nav roll-up.
+
+.topbar-show {
+	display: block;
+}

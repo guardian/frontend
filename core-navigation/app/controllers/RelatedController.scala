@@ -16,9 +16,9 @@ object RelatedController extends Controller with Logging {
     val promiseOfRelated = lookup(edition, path)
     Async {
       promiseOfRelated.map(_.map {
-        case Related(_, Nil) => NotFound
+        case Related(_, Nil) => JsonNotFound()
         case r => renderRelated(r)
-      } getOrElse { NotFound })
+      } getOrElse { JsonNotFound() })
     }
   }
 

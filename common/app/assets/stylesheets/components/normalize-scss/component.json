@@ -1,0 +1,27 @@
+{
+  "name": "normalize-scss",
+  "version": "2.1.0",
+  "author": "",
+  "homepage": "https://github.com/appleboy/normalize.scss",
+  "styles": [
+    "_normalize.scss"
+  ],
+  "main": [
+    "_normalize.scss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appleboy/normalize.scss.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "gitHead": "0c52482a8ad098ff9f576466bde820d633556e51",
+  "readme": "# normalize.css v2.1.0\n\nNormalize.css is a customisable CSS file that makes browsers render all\nelements more consistently and in line with modern standards. We researched the\ndifferences between default browser styles in order to precisely target only\nthe styles that need normalizing.\n\n[Check out the demo](http://necolas.github.com/normalize.css/2.1.0/test.html)\n\n## What does it do?\n\n* Preserves useful defaults, unlike many CSS resets.\n* Normalizes styles for a wide range of elements.\n* Corrects bugs and common browser inconsistencies.\n* Improves usability with subtle improvements.\n* Explains what code does using detailed comments.\n\n## How to use it\n\nNormalize.css is intended to be used as an alternative to CSS resets.\n\nIt's suggested that you read the `normalize.css` file and consider customising\nit to meet your needs. Alternatively, include the file in your project and\noverride the defaults later in your CSS.\n\n## Browser support\n\n* Google Chrome\n* Mozilla Firefox 4+\n* Apple Safari 5+\n* Opera 12+\n* Internet Explorer 8+\n\n## Contribute\n\nPlease read my [issue\nguidelines](https://github.com/necolas/issue-guidelines).\n\n## Acknowledgements\n\nNormalize.css is a project by [Nicolas Gallagher](https://github.com/necolas),\nco-created with [Jonathan Neal](https://github.com/jonathantneal).\n",
+  "readmeFilename": "README.md",
+  "_id": "normalize.scss@2.1.0",
+  "description": "Normalize.css is a customisable CSS file that makes browsers render all elements more consistently and in line with modern standards. We researched the differences between default browser styles in order to precisely target only the styles that need normalizing."
+}

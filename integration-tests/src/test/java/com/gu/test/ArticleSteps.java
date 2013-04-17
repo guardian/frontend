@@ -78,7 +78,7 @@ public class ArticleSteps {
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
-		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector("#js-related h3"));
+		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector(".js-related h3"));
 		assertEquals(headerText, relatedHeader.getText());
 	}
 
@@ -161,12 +161,12 @@ public class ArticleSteps {
 
 	@When("^I select the sections navigation button$")
 	public void I_select_the_sections_navigation_button( ) throws Throwable {
-		webDriver.findElement(By.id("sections-control-header")).click();
+		webDriver.findElement(By.className("control--sections")).click();
 	}
 
 	@Then("^it should show me a list of sections$")
 	public void it_should_show_a_list_of_sections() throws Throwable {
-		assertEquals("block", webDriver.getElementCssValue(By.id("sections-header"), "display"));
+		assertEquals("block", webDriver.getElementCssValue(By.className("nav-popup-sections"), "display"));
 	}
 
 	@Then("^another click on the \"([^\"]*)\" \"([^\"]*)\" tab closes the list$")
@@ -196,7 +196,7 @@ public class ArticleSteps {
 		
 		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "none" : "0";
 		// sections are hidden with css max-height
-		assertTrue(webDriver.waitForCss(By.cssSelector("#related-trails .panel"), "max-height", expectedTrailblockHeight));
+		assertTrue(webDriver.waitForCss(By.cssSelector(".related-trails .panel"), "max-height", expectedTrailblockHeight));
 	}
 
 	@When("^Back to top is selected$")

@@ -1,0 +1,20 @@
+.match-stat {
+    padding-bottom: $baseline;
+    margin-bottom: 0;
+}
+    .match-stat h5 {
+        font-weight: 500;
+    }
+
+    .match-stat li {
+       display: inline-block;
+       width: 49%;
+    }
+
+    .match-stat span {
+        display: inline-block;
+    }
+
+    .match-stat li:nth-child(2) {
+        text-align: right;
+    }

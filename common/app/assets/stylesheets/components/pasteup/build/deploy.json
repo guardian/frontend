@@ -1,0 +1,15 @@
+{
+    "packages":{
+        "pasteup":{
+            "type":"executable-jar-webapp",
+            "data":{
+                "bucket":"pasteup-qa"
+            }
+        }
+    },
+    "recipes":{
+        "artifactUploadOnly":{
+            "actionsBeforeApp": ["pasteup.uploadArtifacts"]
+        }
+    }
+}

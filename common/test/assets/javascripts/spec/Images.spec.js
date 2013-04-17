@@ -7,7 +7,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
                     fixtures: [
                         '<div id="upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/1/1" src="http://placekitten.com/2/2" data-thumb-width="5" data-full-width="100" id="upgradeImages" class="visible" /></div>',
                         '<div id="force-upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/3/3" src="http://placekitten.com/2/2" data-force-upgrade="1" data-thumb-width="5" data-full-width="100" id="upgradeImagesForce" class="visible" /></div>',
-                        '<img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/>'
+                        '<div id="upgrade-svg"><img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" src="http://x.y.z/c.svg"/></div>'
                     ]
                    }
 
@@ -19,11 +19,11 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
         it("swap a low resolution image for a full resolution", function(){
             
             window.innerWidth = 2000; 
-            window.performance = { timing: { requestStart: 1, responseStart: 10 } };
-             
+            window.performance = { timing: { requestStart: 1, responseEnd: 10 } };
+
             var i = new Images().upgrade(document.getElementById('upgrade'));
             
-            var img = document.getElementById('upgradeImages')
+            var img = document.getElementById('upgradeImages');
             expect(img.src).toContain('http://placekitten.com/1/1');
             expect(img.className).toContain('image-high');
             
@@ -43,7 +43,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
             window.innerWidth = 1024;
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
             
-            new Images().upgrade();
+            new Images().upgrade(document.getElementById('upgrade-svg'));
             expect(document.getElementsByTagName('body')[0].className).toContain('svg');
         });
 

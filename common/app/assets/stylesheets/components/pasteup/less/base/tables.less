@@ -1,0 +1,71 @@
+/*
+	Tables:
+	https://sites.google.com/a/guardian.co.uk/bootstrap/-archive/table_specs090108.pdf?attredirects=0&d=1
+*/
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-color: #333;
+}
+
+/* Set stripey row backgrounds */
+tr {
+	background-color: #F5F5F5;
+}
+tbody tr:nth-child(even) {
+	background-color: #EDEDED;
+}
+
+/* On tbody hover, remove any default highlight and reset stripey rows. */
+tbody:hover tr {
+	background-color: #F5F5F5;
+}
+tbody:hover tr:nth-child(even) {
+	background-color: #EDEDED;
+}
+
+tbody:hover tr:hover,
+tr.highlighted-row {
+	background-color: #FFF3A5;
+}
+
+th {
+	background-color: #D8D8D8;
+	border-bottom: 1px solid #999;
+	font-weight: bold;
+	text-align: left;
+}
+
+th,
+td {
+	padding: 10px;
+	border-right: 1px solid #B9B9B9;
+}
+th:last-child,
+td:last-child {
+	border-right: none;
+}
+
+table caption {
+	background-color: #CCC;
+	text-align: left;
+	padding: 10px 6px 20px 6px;
+	border-bottom: 1px solid #999;
+	border-top: 1px solid #0061A6; // blue by default
+}
+
+tfoot tr {
+	background-color: F5F5F5;
+	border-top: 1px dotted #999;
+	font-size: 11px;
+	line-height: 14px;
+}
+
+// Table helpers
+table.condensed th, 
+table.condensed td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}

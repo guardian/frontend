@@ -2,8 +2,10 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
+import java.net.InetAddress
+import play.api.Play
 
-class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") {
+class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
   object switches {
@@ -50,6 +52,10 @@ class GuardianConfiguration(
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
 
+  object host {
+    lazy val name = InetAddress.getLocalHost.getHostName
+  }
+
   object proxy {
 
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
@@ -79,7 +85,8 @@ class GuardianConfiguration(
       "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
       "oasSiteId" -> "beta.guardian.co.uk/oas.html",
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js"
+      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "optimizelyUrl" -> "//cdn.optimizely.com/js/203695201.js"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
@@ -106,6 +113,13 @@ class GuardianConfiguration(
   object nginx {
     lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
   }
+
+  // log out Play config on start
+  log.info("Play config ----------------------------------------------------------------------------")
+  Play.maybeApplication.map(c => c.configuration.entrySet.toSeq.sortBy(_._1).foreach{ case (k,v) =>
+    log.info(s"$k=$v")
+  })
+  log.info("Play config ----------------------------------------------------------------------------")
 }
 
 object ManifestData {

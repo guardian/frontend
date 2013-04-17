@@ -10,6 +10,7 @@
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
+    var SVGO = require('../../node_modules/svgo/lib/svgo');
     var utils = {};
     var config;
 
@@ -36,6 +37,45 @@
         done(code === 0 || 'fallback' in opts ? null: result, result, code);
       });
       return child;
+    };
+
+    var savings = 0;
+
+    processSVG = function(files, file, callback) {
+        if(files[file].match( /\.svg$/i )){
+            // optimize SVG from current file
+            var svgo = new SVGO();
+            svgo.fromFile(files[file])
+                .then(function(result) {
+                    var inBytes =  (Math.round((result.info.inBytes / 1024) * 1000) / 1000),
+                        outBytes = (Math.round((result.info.outBytes / 1024) * 1000) / 1000);
+
+                    fs.writeFileSync(files[file], result.data);
+
+                    savings += (inBytes - outBytes);
+
+                    if(file < files.length-1){
+                        processSVG(files, file + 1, callback);
+                    } else {
+                        console.log("Total savings: " + Math.round(savings) + "kb");
+                        callback();
+                    }
+                }).done();
+        } else {
+            if(file < files.length-1){
+                processSVG(files, file + 1, callback);
+            }
+        }
+    };
+
+    cleanSVG = function(src, callback) {
+        var files = fs.readdirSync(src);
+
+        for(var i=0, l= files.length; i < l; i++){
+            files[i] = src + files[i];
+        }
+
+        processSVG(files, 0, callback);
     };
 
     //Load config from json file
@@ -87,60 +127,66 @@
         // create the output directory
         fs.mkdir( config.imgDest );
 
-        console.info( "\nOuput css file created." );
+        console.info( "Ouput css file created." );
 
-        // take it to phantomjs to do the rest
-        console.info( "\nNow spawning phantomjs..." );
+        console.info( "Cleaning SVG" );
+        cleanSVG(config.imgDest, function(){
 
-        utils.spawn({
-          cmd: 'phantomjs',
-          args: [
-            'spricon-phantom.js',
-            config.src,
-            config.imgDest,
-            config.cssDest,
-            '',
-            datasvgcss,
-            datapngcss,
-            urlpngcss,
-            spritepath,
-            cssprefix,
-            cssbasepath,
-            generatesvg,
-            styleguidepath,
-            styleguidefilename
-          ],
-          fallback: ''
-        }, function(err, result, code) {
-            //If no error is returned from phantomjs
-            if(!err && code === 0) {
 
-                //Generate md5 hash of newly created sprite file
-                var md5sum = crypto.createHash('md5');
-                var s = fs.ReadStream(config.imgDest + 'sprite.png');
+                // take it to phantomjs to do the rest
+                console.info( "Now spawning phantomjs..." );
 
-                s.on('data', function(d) {
-                  md5sum.update(d);
+                utils.spawn({
+                  cmd: 'phantomjs',
+                  args: [
+                    'spricon-phantom.js',
+                    config.src,
+                    config.imgDest,
+                    config.cssDest,
+                    '',
+                    datasvgcss,
+                    datapngcss,
+                    urlpngcss,
+                    spritepath,
+                    cssprefix,
+                    cssbasepath,
+                    generatesvg,
+                    styleguidepath,
+                    styleguidefilename
+                  ],
+                  fallback: ''
+                }, function(err, result, code) {
+                    //If no error is returned from phantomjs
+                    if(!err && code === 0) {
+
+                        //Generate md5 hash of newly created sprite file
+                        var md5sum = crypto.createHash('md5');
+                        var s = fs.ReadStream(config.imgDest + 'sprite.png');
+
+                        s.on('data', function(d) {
+                          md5sum.update(d);
+                        });
+
+                        s.on('end', function() {
+                            var hash = md5sum.digest('hex');
+
+                            //Read the png sprite css file
+                            var spriteData = fs.readFileSync(config.cssDest + config.urlpngcss, 'utf-8');
+
+                            //Replace sprite file reference with hash
+                            var newData = spriteData.replace(/sprite\.png/g, 'sprite.' + hash + '.png');
+
+                            //Write back to file
+                            fs.writeFileSync(config.cssDest + config.urlpngcss, newData, 'utf-8');
+
+                        });
+
+                        console.info("Spricon complete...");
+                    } else {
+                        console.error("Something went wrong with phantomjs...");
+                    }
                 });
 
-                s.on('end', function() {
-                    var hash = md5sum.digest('hex');
-
-                    //Read the png sprite css file
-                    var spriteData = fs.readFileSync(config.cssDest + config.urlpngcss, 'utf-8');
-
-                    //Replace sprite file reference with hash
-                    var newData = spriteData.replace(/sprite\.png/g, 'sprite.' + hash + '.png');
-
-                    //Write back to file
-                    fs.writeFileSync(config.cssDest + config.urlpngcss, newData, 'utf-8');
-
-                });
-
-                console.info("Spricon complete...");
-            } else {
-                console.error("\nSomething went wrong with phantomjs...");
-            }
         });
 
     });

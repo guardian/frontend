@@ -3,12 +3,13 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
     function Images() {
     
         var connectionSpeed = detect.getConnectionSpeed(),
-            layoutMode = detect.getLayoutMode();
+            layoutMode = detect.getLayoutMode(),
+            self = this;
 
         // View
 
         this.view = {
-            upgrade: function () {
+            upgrade: function (context) {
 
                 // upgrade svg images
                 if (detect.hasSvgSupport()) {
@@ -16,7 +17,7 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 }
 
                 //upgrade other images;
-                common.$g('img').each(function(image, index) {
+                Array.prototype.forEach.call(context.getElementsByTagName('img'), function(image) {
                     image = bonzo(image);
                     if (!image.attr('data-fullsrc')) {
                         return;
@@ -25,8 +26,9 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                     var fullWidth = parseFloat(image.attr('data-full-width'));
                     var fullsrc = image.attr('data-fullsrc');
                     var forceUpgrade = image.attr('data-force-upgrade');
+
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if(forceUpgrade || layoutMode === 'extended') {
+                        if(forceUpgrade || layoutMode === 'desktop') {
                             image.attr('src', fullsrc);
                             image.addClass('image-high');
                         }
@@ -35,14 +37,11 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
             }
         };
 
-        // Bindings
-        
-        common.mediator.on('modules:images:upgrade', this.view.upgrade);
-   
         // Model
         
-        this.upgrade = function () {
+        this.upgrade = function (context) {
             if (connectionSpeed !== 'low') {
+                self.view.upgrade(context);
                 common.mediator.emit('modules:images:upgrade');
             }
         };

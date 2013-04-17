@@ -3,7 +3,7 @@ define(['common', 'modules/tabs', 'bean'], function(common, Tabs, bean) {
     describe("Tabs", function() {
 
         var t = new Tabs();
-        t.init();
+        t.init(document);
 
         var tab1 = document.getElementById('tab1'); // is selected by default
         var tab2 = document.getElementById('tab2');

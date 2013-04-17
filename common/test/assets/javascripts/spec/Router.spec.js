@@ -23,18 +23,19 @@ define(['common', 'modules/router'], function(common, Router) {
 
         it("should parse / and add endmarker", function() {
             r.get("/", function() { });
-            expect(r.getRoutes()[0].regex.regexp).toEqual(/\//);
+            console.log(r.getRoutes()[0].regex);
+            expect(r.getRoutes()[0].regex.regexp).toEqual(new RegExp('/$'));
         });
 
         it("should parse basic route and leave untouched", function() {
             r.get("/section", function() { });
-            expect(r.getRoutes()[0].regex.regexp).toEqual(/\/section$/);
+            expect(r.getRoutes()[0].regex.regexp).toEqual(new RegExp('/section$'));
         });
 
         it("should parse basic named identifier in position 0", function() {
             r.get("/:section", function(){});
             expect(r.getRoutes()[0].regex.groups["section"]).toEqual(0);
-            expect(r.getRoutes()[0].regex.regexp).toEqual(/\/([^\/.\\\\]+)$/);
+            expect(r.getRoutes()[0].regex.regexp).toEqual(new RegExp('/([^/.\\\\]+)$'));
         });
 
     });

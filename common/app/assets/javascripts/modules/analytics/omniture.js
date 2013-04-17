@@ -1,8 +1,16 @@
-define(['common', 'modules/detect'], function(common, detect) {
+define([
+    'common',
+    'modules/detect',
+    'modules/experiments/ab'
+], function(
+    common,
+    detect,
+    ab
+) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
-	/**
+    /**
      * @param Object w 'window' object, used for testing
      */
     function Omniture(s, config, w) {
@@ -68,7 +76,6 @@ define(['common', 'modules/detect'], function(common, detect) {
             s.tl(true, 'o', tagStr);
         };
 
-
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
@@ -104,11 +111,20 @@ define(['common', 'modules/detect'], function(common, detect) {
 
             s.prop47    = config.page.edition || '';
 
-            s.prop48    = detect.getConnectionSpeed(w.performance);
+            if (ab.inTest(config.switches)) {
+                var test = ab.getTest(),
+                    testData = 'AB | ' + test.id + ' | ' + test.variant;
+
+                s.prop51  = testData;
+                s.evar51  = testData;
+                s.event58 = testData;
+            }
 
             s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
+
+            s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
@@ -116,6 +132,16 @@ define(['common', 'modules/detect'], function(common, detect) {
                 s.prop30 = 'non-content';
             }
 
+            if (window.location.hash === '#popup:homescreen') {
+                s.eVar38 = 'popup:homescreen';
+            }
+        };
+
+        this.loaded = function() {
+            this.populatePageProperties();
+            this.logView();
+            common.mediator.on('module:clickstream:click', this.logTag );
+            common.mediator.emit('module:omniture:loaded');
         };
 
         this.init = function() {
@@ -129,17 +155,12 @@ define(['common', 'modules/detect'], function(common, detect) {
             // use the global 's' object
 
             if (s !== null) {
-                that.populatePageProperties();
-                that.logView();
-                common.mediator.on('module:clickstream:click', that.logTag );
-                common.mediator.emit('module:omniture:loaded');
+                that.loaded();
             } else {
-                require(['js!omniture'], function(placeholder){
+                var dependOn = ['js!omniture'];
+                require(dependOn, function(placeholder){
                     s = window.s;
-                    that.populatePageProperties();
-                    that.logView();
-                    common.mediator.on('module:clickstream:click', that.logTag );
-                    common.mediator.emit('module:omniture:loaded');
+                    that.loaded();
                 });
             }
 

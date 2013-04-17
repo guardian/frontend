@@ -82,7 +82,7 @@ define([
                 });
                 this.load(format);
             }
-        }
+        };
 
     }
 

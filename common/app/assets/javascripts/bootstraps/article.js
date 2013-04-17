@@ -4,17 +4,13 @@ define([
     "modules/expandable",
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading",
-    "modules/story/experiment",
-    "modules/accordion"
+    "modules/analytics/reading"
 ], function (
     common,
     Expandable,
     AutoUpdate,
     MatchNav,
-    Reading,
-    Experiment,
-    Accordion
+    Reading
 ) {
 
     var modules = {
@@ -54,23 +50,12 @@ define([
 
                 reader.init();
             }
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Experiment(config);
-
-            e.init();
         }
     };
 
-    var ready = function(config) {
+    var ready = function(config, context) {
 
-        modules.initExperiments(config);
+        common.mediator.emit("page:article:ready", config, context);
 
         if (config.page.isLive) {
             modules.initLiveBlogging(config.switches);
@@ -89,8 +74,8 @@ define([
         });
     };
 
-    var init = function (req, config) {
-        ready(config);
+    var init = function (req, config, context) {
+        ready(config, context);
         defer(config);
     };
 

@@ -1,0 +1,41 @@
+// The grid is based on 60px columns
+// Column widths are worked out as 60px + 80px for each subsequent column
+// e.g. 4 col = 60px + (80px * 3) = 300px
+// TODO: half columns
+
+.fluid-row .col-12 { width: 99.99999998999999%; }
+.fluid-row .col-11 { width: 91.489361693%; }
+.fluid-row .col-10 { width: 82.97872339599999%; }
+.fluid-row .col-9  { width: 74.468085099%; }
+.fluid-row .col-8  { width: 65.95744680199999%; }
+.fluid-row .col-7  { width: 57.446808505%; }
+.fluid-row .col-6  { width: 48.93617020799999%; }
+.fluid-row .col-5  { width: 40.425531911%; }
+.fluid-row .col-4  { width: 31.914893614%; }
+.fluid-row .col-3  { width: 23.404255317%; }
+.fluid-row .col-2  { width: 14.89361702%; }
+.fluid-row .col-1  { width: 6.382978723%; }
+
+.fluid-row {
+	clear: both;
+	zoom: 1;
+}
+// Micro clearfix
+.fluid-row:before,
+.fluid-row:after {
+    content: "";
+    display: table;
+}
+.fluid-row:after {
+    clear: both;
+}
+
+// All column padding / margin
+.fluid-row [class*="col-"] {
+	float: left;
+	margin-left: 2.127659574%;
+}
+
+.fluid-row [class*="col-"]:first-child {
+	margin-left: 0;
+}

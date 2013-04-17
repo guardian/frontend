@@ -1,0 +1,81 @@
+
+@media only screen and (max-width: $tablet) {
+
+    .story-agents { 
+      margin: $baseline*4 $gutter $baseline*4 $gutter;
+      background-color: black;
+    }
+
+}
+    
+.story-agents { 
+      padding: $baseline*4 $gutter $baseline*6 $gutter;
+      background-color: black;
+}
+
+.story-agents .story-title { 
+  border-top: none;
+  margin: 0;
+  color: white;
+}
+
+.story-agents .cta {
+  background-color: black;
+  color: #f4f4ee;
+}
+
+.story-agents .trailblock { 
+  padding: 0;
+}
+
+.agents, .agent {
+  display: block;
+  width: 100%;
+}
+
+.agent {
+  margin-bottom: $baseline*2;
+}
+
+.agent-head {
+  border-top: 1px solid #cccccc;
+  padding: $baseline*3 0 $baseline*2 0;
+  overflow: auto;
+}
+
+.agent button {
+  clear: both;
+  background-color: transparent;
+  border: none;
+  margin: 0 45%;
+}
+
+.agent:first-child .agent-head { border-top: none; }
+.panel .agent:first-child .agent-head { border-top: 1px solid #cccccc; }
+
+.agent-img {
+  display: block;
+  width: 100%;
+  margin-bottom: $baseline*6;
+}
+
+.agent-name {
+  @extend .type-5;
+  margin-bottom: 0px;
+  color: #ffb70b;
+}
+
+.agent-role {
+  @extend .type-6;
+  margin-bottom: none;
+}
+
+.agent-body {
+  @extend .type-6;
+  margin-top: $baseline*2;
+}
+
+.agent-body p, .agent-role {
+  color: white;
+}
+

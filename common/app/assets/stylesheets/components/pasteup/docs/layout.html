@@ -1,0 +1,120 @@
+            <h1>Layout CSS</h1>
+
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">Content wrappers</h2>
+            </div>
+            <p>Two generic class names exist for wrapping content.</p>
+            
+            <h3 class="base-heading"><code>wrap</code></h3>
+            <p>Add a class name of <code>wrap</code> to create a fixed width element with a width of 940px centered on the page.</p>
+            
+            <h3 class="base-heading"><code>fluid-wrap</code></h3>
+            <p>Add a class name of <code>fluid-wrap</code> to create a fluid width element with a maximum width of 940px centered on the page.</p>
+
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">940px fixed width grid</h2>
+            </div>
+            <p>This is the 940px fixed width grid as seen on <a href="http://guardian.co.uk">www.guardian.co.uk</a>. It is made up of 12 60 pixel wide columns with 20 pixel gutters, and can be split into any configuration, as demonstrated below.</p>
+
+            <div class="pasteup-grid margin-top margin-bottom">
+                <div class="row margin-top">
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                </div>
+                <div class="row margin-top">
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                </div>
+                <div class="row margin-top">
+                    <div class="col-4">4</div>
+                    <div class="col-4">4</div>
+                    <div class="col-4">4</div>
+                </div>
+                <div class="row margin-top">
+                    <div class="col-8">8</div>
+                    <div class="col-4">4</div>
+                </div>
+                <div class="row margin-top">
+                    <div class="col-6">6</div>
+                    <div class="col-6">6</div>
+                </div>
+            </div><!-- /.pasteup-grid -->
+
+            <p>This is created by the use of two class values, <code><b>row</b></code> and <code><b>col-[n]</b></code>. Here's the code that implements the final two rows of the above layouts.</p>
+
+            <div class="margin-top margin-bottom"><code><pre>
+&lt;div class="<b>row</b>"&gt;
+    &lt;div class="<b>col-8</b>"&gt;8&lt;/div&gt;
+    &lt;div class="<b>col-4</b>"&gt;4&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="<b>row</b>"&gt;
+    &lt;div class="<b>col-6</b>"&gt;6&lt;/div&gt;
+    &lt;div class="<b>col-6</b>"&gt;6&lt;/div&gt;
+&lt;/div&gt;
+            <pre></code></div>
+
+            <div class="hd zone-border zone-border-medium margin-top">
+                <h2 class="sub-heading">Fluid width grid</h2>
+            </div>
+            <p>The fluid grid is implemented in percentages so that the widths of the columns scale along with the width of the users browser. Combined with media queries and flexible width images this can be used to implement a responsive design, which assumes less about your users browsing environment.</p>
+
+            <div class="pasteup-grid margin-top margin-bottom">
+                <div class="fluid-row margin-top">
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                    <div class="col-1">1</div>
+                </div>
+                <div class="fluid-row margin-top">
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                    <div class="col-3">3</div>
+                </div>
+                <div class="fluid-row margin-top">
+                    <div class="col-4">4</div>
+                    <div class="col-4">4</div>
+                    <div class="col-4">4</div>
+                </div>
+                <div class="fluid-row margin-top">
+                    <div class="col-8">8</div>
+                    <div class="col-4">4</div>
+                </div>
+                <div class="fluid-row margin-top">
+                    <div class="col-6">6</div>
+                    <div class="col-6">6</div>
+                </div>
+            </div><!-- /.pasteup-grid -->
+
+            <p>This is created by the use of two class values, <code><b>fluid-row</b></code> and <code><b>col-[n]</b></code>. Here's the code that implements the final two rows of the above layouts.</p>
+
+            <div class="margin-top margin-bottom"><code><pre>
+&lt;div class="<b>fluid-row</b>"&gt;
+    &lt;div class="<b>col-8</b>"&gt;8&lt;/div&gt;
+    &lt;div class="<b>col-4</b>"&gt;4&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="<b>fluid-row</b>"&gt;
+    &lt;div class="<b>col-6</b>"&gt;6&lt;/div&gt;
+    &lt;div class="<b>col-6</b>"&gt;6&lt;/div&gt;
+&lt;/div&gt;
+            <pre></code></div>

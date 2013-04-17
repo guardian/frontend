@@ -1,0 +1,57 @@
+// Some surgical layout helpers
+.pull-left {
+    float: left
+}
+
+.pull-right {
+    float: right;
+}
+.margin-top {
+    margin-top: $baseline*2;
+}
+
+.margin-bottom {
+    margin-bottom: $baseline*2;
+}
+
+.border-top {
+    border-top: 1px solid $mushroom;
+}
+
+.border-bottom {
+    border-bottom: 4px solid $mushroom;
+}
+
+// Accessible hidden content.
+.h {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+[hidden] {
+    display: none;
+}
+
+.mobile-only {
+  @media only screen and (min-width: $tablet) {
+    display: none !important;
+  }
+}
+
+// Micro clearfix
+// http://nicolasgallagher.com/micro-clearfix-hack/
+
+// For modern browsers
+.cf:before,
+.cf:after {
+    content:"";
+    display:table;
+}
+.cf:after {
+    clear:both;
+}
+// For IE 6/7 (trigger hasLayout)
+.cf {
+    zoom:1;
+}

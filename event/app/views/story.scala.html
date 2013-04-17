@@ -4,19 +4,23 @@
 
     @defining(page.story){ story =>
 
-        <h1 class="story-title">@story.title</h1>
+        <div class="story-container">
+            <h1 class="story-title story-storyline">@story.title</h1>
+            
+            @fragments.latest(story, page.edition, 2)
 
-        @fragments.latest(story, page.edition, 2)
+            @fragments.reaction(story)
 
-        <div class="story-content">
-            @fragments.quote(story, 0)
-            @fragments.explainer(story)
-            @fragments.quote(story, 1)
-            @fragments.agents(story)
+            <div class="story-content">
+                @fragments.quote(story, 0)
+                @fragments.explainer(story)
+                @fragments.quote(story, 1)
+                @fragments.agents(story)
+            </div>
+
+            @fragments.places(story)
+            @fragments.pictures(story)
+            @fragments.timeline(story)
         </div>
-
-
-        @fragments.popular(story)
-        @fragments.timeline(story)
     }
 }

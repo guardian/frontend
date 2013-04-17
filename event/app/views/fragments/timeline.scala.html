@@ -64,11 +64,11 @@
                     <i class="i i-arrow-large-down"></i>
                 </h3>
 
-                @if(event.hasExplainer) { <p class="event-summary">@event.explainer.get</p> }
-
                 @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
                 }
+                
+                @if(event.hasExplainer) { <p class="event-summary">@StripHtmlTags(event.explainer.get)</p> }
 
                 <div class="event-children">
 
@@ -92,16 +92,14 @@
 
 @if(story.hasEvents) {
     <section class="story-timeline" data-link-name="story-timeline">
-        <h2 class="story-title story-title--section">Timeline of events</h2>
+        <h2 class="story-title story-title--section">
+            @story.labels.getOrElse("timeline", "Timeline of events")
+        </h2>
 
         <div id="js-timeline" class="timeline box-indent"
              data-count="@{story.events.size - 3}" data-link-name="Event timeline">
             @eventList(story.events.take(3), false)
             @eventList(story.events.drop(3), true)
         </div>
-        
-        <p class="box-indent from-content-api">
-            <a href="#top" class="back-to-top">Back to top</a>
-        </p>
     </section>
 }

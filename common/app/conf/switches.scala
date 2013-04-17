@@ -70,11 +70,27 @@ object CommonSwitches {
     "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
     initiallyOn = false)
 
+  val HomescreenSwitch = DefaultSwitch("homescreen",
+    "If this switch is enabled the add-to-homescreen popup will plague iOS users",
+    initiallyOn = false)
+
+  val OptimizelySwitch = DefaultSwitch("optimizely",
+    "If this switch is on Optimizely will be enabled.",
+    initiallyOn = false)
+
+  val AdvertSwitch = DefaultSwitch("adverts",
+    "If this switch is on OAS adverts will be enabled.",
+    initiallyOn = true)
+
+  val ABRelatedContent = DefaultSwitch("ab-related-content",
+    "If this switch is on related content AB test will be enabled.",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch, 
-    SearchSwitch, QuantcastSwitch
+    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch, ABRelatedContent
   )
 }
 

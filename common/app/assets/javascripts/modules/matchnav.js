@@ -14,17 +14,16 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
                 common.mediator.emit('modules:matchnav:render');
             }
         };
-
-        // Bindings
-        common.mediator.on('modules:matchnav:loaded', this.view.render);
         
         this.load = function (url) {
+            var that = this;
             ajax({
                 url: url,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showMatchNav',
                 success: function (json) {
+                    that.view.render(json);
                     common.mediator.emit('modules:matchnav:loaded', json);
                 },
                 error: function () {

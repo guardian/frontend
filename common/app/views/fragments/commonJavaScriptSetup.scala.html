@@ -13,7 +13,9 @@
                 baseUrl: '@{Configuration.static.path}javascripts',
                 apiName: 'require',
                 paths: {
-                    omniture: '@Static("javascripts/vendor/omniture.js")'
+                    omniture                       : '@Static("javascripts/vendor/omniture.js")',
+                    homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
+                    'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
                 }
             };
 
@@ -47,7 +49,7 @@
             if (fontTime > 50) {
                 var img = document.createElement("img");
                 img.style = "display: none";
-                img.src = "/px.gif?fonts/&fonttime=" + fontTime;
+                img.src = "//beacon." + window.location.hostname +  "/px.gif?fonts/&fonttime=" + fontTime;
                 document.getElementsByTagName("head")[0].appendChild(img);
             }
         }
@@ -69,11 +71,17 @@
                     s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
                 )},
                 'edition': '@Site(request).edition',
-                'ajaxUrl': 'http://@Site(request).ajaxHost'
+                'ajaxUrl': 'http://@Site(request).ajaxHost',
+                isDev: @play.Play.isDev()
             },
             switches : { @{Html(switches.map{ switch =>
                     s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
                 }.mkString(","))}
+            },
+            modules: {
+                sharedWisdomToolbar: {
+                    css: '@Static("stylesheets/modules/shared-wisdom-toolbar.css")'
+                }
             }
         };
 
@@ -81,7 +89,7 @@
         script.async = 'async';
         script.src = '@Static("javascripts/bootstraps/app.js")';
 
-        document.getElementsByTagName("head")[0].appendChild(script); 
+        document.getElementsByTagName("head")[0].appendChild(script);
     
     })(guardian.isModernBrowser);
 

@@ -1,0 +1,138 @@
+// Thanks Harry Roberts.
+
+
+// Would you like Sass's silent classes, or regular CSS classes?
+$use-silent-classes:    false;
+
+
+// At which point should lap and desk breakpoints kick in?
+$medium-start:             600px;
+$large-start:            1000px;
+
+
+// Do not edit the following variables.
+$class-type:            unquote(".");
+
+@if $use-silent-classes == true{
+    $class-type: unquote("%");
+}
+
+
+
+
+
+// ------------------------------------*\
+//     $GRID SETUP
+// ------------------------------------*/
+//  1. Allow the grid system to be used on lists.
+//  2. Remove any margins and paddings that might affect the grid system.
+//  4. Remove whitespace caused by `inline-block` elements.
+#{$class-type}grid{
+    list-style:none;                /* [1] */
+    margin:0;                       /* [2] */
+    padding:0;                      /* [2] */
+    letter-spacing:-0.31em;         /* [4] */
+    word-spacing:-0.43em;           /* [4] */
+}
+
+// 1. Cause columns to stack side-by-side.
+// 3. Align columns to the tops of each other.
+// 4. Reinstate removed whitespace.
+// 5. Required to combine fluid widths and fixed gutters.
+#{$class-type}grid-item{
+    display:inline-block;           /* [1] */
+    vertical-align:top;             /* [3] */
+    letter-spacing:normal;          /* [4] */
+    word-spacing:normal;            /* [4] */
+    -webkit-box-sizing:border-box;  /* [5] */
+       -moz-box-sizing:border-box;  /* [5] */
+            box-sizing:border-box;  /* [5] */
+}
+
+// Set gutter width for 6 cols
+#{$class-type}grid{
+    margin-left: -3%;
+}
+#{$class-type}grid-item{
+    padding-left: 3%;
+}
+// Set gutter width for 12 cols
+@media only screen and (min-width:600px) {
+    #{$class-type}grid{
+        margin-left: -2%;
+    }
+    #{$class-type}grid-item{
+        padding-left: 2%;
+    }
+}
+
+// Create our widths, prefixed by the specified namespace.
+@mixin device-type($namespace:""){
+
+    #{$class-type}grid-#{$namespace}1of1  { width:100%; }
+
+    #{$class-type}grid-#{$namespace}1of2  { width:50%; }
+
+    #{$class-type}grid-#{$namespace}1of3  { width:33.333%; }
+    #{$class-type}grid-#{$namespace}2of3  { width:66.666%; }
+
+    #{$class-type}grid-#{$namespace}1of4  { width:25%; }
+    #{$class-type}grid-#{$namespace}2of4  { @extend #{$class-type}grid-#{$namespace}2of4; }
+    #{$class-type}grid-#{$namespace}3of4  { width:75%; }
+
+    #{$class-type}grid-#{$namespace}1of5  { width:20%; }
+    #{$class-type}grid-#{$namespace}2of5  { width:40%; }
+    #{$class-type}grid-#{$namespace}3of5  { width:60%; }
+    #{$class-type}grid-#{$namespace}4of5  { width:80%; }
+
+    #{$class-type}grid-#{$namespace}1of6  { width:16.666%; }
+    #{$class-type}grid-#{$namespace}2of6  { @extend #{$class-type}grid-#{$namespace}1of3; }
+    #{$class-type}grid-#{$namespace}3of6  { @extend #{$class-type}grid-#{$namespace}1of2; }
+    #{$class-type}grid-#{$namespace}4of6  { @extend #{$class-type}grid-#{$namespace}2of3; }
+    #{$class-type}grid-#{$namespace}5of6  { width:83.333%; }
+
+    #{$class-type}grid-#{$namespace}1of8  { width:12.5%; }
+    #{$class-type}grid-#{$namespace}2of8  { @extend #{$class-type}grid-#{$namespace}1of4; }
+    #{$class-type}grid-#{$namespace}3of8  { width:37.5%; }
+    #{$class-type}grid-#{$namespace}4of8  { @extend #{$class-type}grid-#{$namespace}1of2; }
+    #{$class-type}grid-#{$namespace}5of8  { width:62.5%; }
+    #{$class-type}grid-#{$namespace}6of8  { @extend #{$class-type}grid-#{$namespace}3of4; }
+    #{$class-type}grid-#{$namespace}7of8  { width:87.5%; }
+
+    #{$class-type}grid-#{$namespace}1of10  { width:10%; }
+    #{$class-type}grid-#{$namespace}2of10  { @extend #{$class-type}grid-#{$namespace}1of5; }
+    #{$class-type}grid-#{$namespace}3of10  { width:30%; }
+    #{$class-type}grid-#{$namespace}4of10  { @extend #{$class-type}grid-#{$namespace}2of5; }
+    #{$class-type}grid-#{$namespace}5of10  { @extend #{$class-type}grid-#{$namespace}1of2; }
+    #{$class-type}grid-#{$namespace}6of10  { @extend #{$class-type}grid-#{$namespace}3of5; }
+    #{$class-type}grid-#{$namespace}7of10  { width:70%; }
+    #{$class-type}grid-#{$namespace}8of10  { @extend #{$class-type}grid-#{$namespace}4of5; }
+    #{$class-type}grid-#{$namespace}9of10  { width:90%; }
+
+    #{$class-type}grid-#{$namespace}1of12  { width:8.333%; }
+    #{$class-type}grid-#{$namespace}2of12  { @extend #{$class-type}grid-#{$namespace}1of6; }
+    #{$class-type}grid-#{$namespace}3of12  { @extend #{$class-type}grid-#{$namespace}1of4; }
+    #{$class-type}grid-#{$namespace}4of12  { @extend #{$class-type}grid-#{$namespace}1of3; }
+    #{$class-type}grid-#{$namespace}5of12  { width:41.666% }
+    #{$class-type}grid-#{$namespace}6of12  { @extend #{$class-type}grid-#{$namespace}1of2; }
+    #{$class-type}grid-#{$namespace}7of12  { width:58.333%; }
+    #{$class-type}grid-#{$namespace}8of12  { @extend #{$class-type}grid-#{$namespace}2of3; }
+    #{$class-type}grid-#{$namespace}9of12  { @extend #{$class-type}grid-#{$namespace}3of4; }
+    #{$class-type}grid-#{$namespace}10of12 { @extend #{$class-type}grid-#{$namespace}5of6; }
+    #{$class-type}grid-#{$namespace}11of12 { width:91.666%; }
+
+
+}
+
+
+// Base, non-responsive mobile width classes.
+@include device-type();
+
+// Specific breakpoint widths.
+@media only screen and (min-width:$medium-start){
+    @include device-type("medium-");
+}
+
+@media only screen and (min-width:$large-start){
+    @include device-type("large-");
+}

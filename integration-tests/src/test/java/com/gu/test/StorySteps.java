@@ -28,7 +28,7 @@ public class StorySteps {
 
     @Then("^Latest developments is displayed$")
     public void Latest_developments_is_displayed() throws Throwable {
-        WebElement heading = webDriver.findElement(By.cssSelector(".story-latest .story-sub-head"));
+        WebElement heading = webDriver.waitForElement(By.cssSelector(".story-latest .story-sub-head"));
         assertTrue(heading.getText().equals("Latest"));
     }
 
@@ -39,8 +39,8 @@ public class StorySteps {
 
     @Then("^the first (\\d+) blocks from article is shown$")
     public void the_first_blocks_from_article_is_shown(int stories) throws Throwable {
-        List<WebElement> s = webDriver.findElements(By.cssSelector(".story-latest .article-body > *"));
-        assertEquals((s.size() - 2), stories);
+        List<WebElement> s = webDriver.findElements(By.cssSelector(".story-latest .article-body .sample-paras p"));
+        assertEquals(s.size(), stories);
     }
 
     @Then("^a \"([^\"]*)\" of events is displayed$")

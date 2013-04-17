@@ -25,7 +25,7 @@ object PlayAssetHash extends Plugin {
     },
     assetsToHash <<= (sourceDirectory in Compile) { sourceDirectory =>
       Seq(
-        (sourceDirectory / "assets") ** "*.css",
+        (sourceDirectory / "assets" / "stylesheets") ** "*.css",
         (sourceDirectory / "assets" / "images") ** "*",
         (sourceDirectory / "public") ** "*"
       )

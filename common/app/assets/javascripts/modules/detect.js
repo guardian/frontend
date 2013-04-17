@@ -1,5 +1,5 @@
 /*
-    Module: detect/detect.js
+    Module: detect/detect.js                                                                                                 8
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
@@ -8,27 +8,52 @@
 
 define(function () {
 
-    var BASE_WIDTH     = 400,
-        MEDIAN_WIDTH   = 650,
-        EXTENDED_WIDTH = 900;
+    var BASE_WIDTH     = 600,
+        MEDIAN_WIDTH   = 900,
+        EXTENDED_WIDTH = 1280;
     
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
      * in firefox
      */
     function getLayoutMode(width) {
-        var mode = "base";
-        
-        width = (width !== undefined) ? width : window.innerWidth;
-        
-        if (width > BASE_WIDTH) {
-            mode = "median";
+        var mode = "mobile";
+
+        width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+
+        if (width >= BASE_WIDTH) {
+            mode = "tablet";
         }
-        if (width > MEDIAN_WIDTH) {
+
+        if (width >= MEDIAN_WIDTH) {
+            mode = "desktop";
+        }
+
+        if (width >= EXTENDED_WIDTH) {
             mode = "extended";
         }
 
         return mode;
+    }
+
+    /**
+     *     Util: returns a function that:
+     *     1. takes a callback function
+     *     2. calls it if the window width has crossed any of our layout modes since the last call to this function
+     *     Usage. Setup:
+     *      var hasCrossedTheMagicLines = hasCrossedBreakpoint()
+     *     then:
+     *       hasCrossedTheMagicLines(function(){ do stuff })
+     */
+    function hasCrossedBreakpoint(){
+        var was = getLayoutMode();
+        return function(callback){
+            var is = getLayoutMode();
+            if ( is !== was ) {
+                was = is;
+                callback(is);
+            }
+        };
     }
 
     function getPixelRatio() {
@@ -47,10 +72,10 @@ define(function () {
             total_time;
 
         var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-        
+
         if (perf && perf.timing) {
             start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            end_time = perf.timing.responseStart;
+            end_time = perf.timing.responseEnd;
 
             if (start_time && end_time) {
                 total_time = end_time - start_time;
@@ -60,22 +85,35 @@ define(function () {
         return total_time;
     }
 
-    function getConnectionSpeed(performance) {
+    function getConnectionSpeed(performance, connection, reportUnknown) {
 
-        var load_time = getPageSpeed(performance);
+        connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
 
-        // Assume high speed for non supporting browsers.
+        var isMobileNetwork = connection.type === 3 // connection.CELL_2G
+                  || connection.type === 4 // connection.CELL_3G
+                  || /^[23]g$/.test( connection.type ); // string value in new spec
+
+        if (isMobileNetwork) {
+            return 'low';
+        }
+
+        var loadTime = getPageSpeed(performance);
+
+        // Assume high speed for non supporting browsers
         var speed = "high";
+        if (reportUnknown) {
+            speed = "unknown";
+        }
 
-        if (load_time) {
-            if (load_time > 1000) { // One second
+        if (loadTime) {
+            if (loadTime > 1000) { // One second
                 speed = 'medium';
-                if (load_time > 4000) { // Four seconds
+                if (loadTime > 3000) { // Three seconds
                     speed = 'low';
                 }
             }
         }
-        
+
         return speed;
 
     }
@@ -122,6 +160,7 @@ define(function () {
 
     return {
         getLayoutMode: getLayoutMode,
+        hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,

@@ -5,7 +5,10 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    <h3 class="story-sub-head">Latest</h3>
+                
+                    <h3 class="story-sub-head">
+                        @story.labels.getOrElse("latest", "Latest")
+                    </h3>
 
                     @fragments.dateline(a.webPublicationDate, a.isLive, edition)
 
@@ -23,16 +26,17 @@
                 @fragments.byline(a.byline, a)
 
                 <div class="article-body from-content-api @if(a.isLive) {live-blog}">
-                    @withJsoup(BulletCleaner(a.body))(
-                        PictureCleaner(a),
-                        InBodyLinkCleaner("in body link"),
-                        BlockNumberCleaner,
-                        TweetCleaner,
-                        WitnessCleaner,
-                        Summary(paras)
-                    )
-                    <p><a class="continue" href="@a.url">Continue reading...</a></p>
-                    <p><a class="back-to-top" href="#top">Back to top</a></p>
+                    <div class="sample-paras">
+                        @withJsoup(BulletCleaner(a.body))(
+                            PictureCleaner(a),
+                            InBodyLinkCleaner("in body link"),
+                            BlockNumberCleaner,
+                            TweetCleaner,
+                            WitnessCleaner,
+                            Summary(paras)
+                        )
+                    </div>
+                    <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
                 </div>
             </article>
         }
