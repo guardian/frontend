@@ -11,36 +11,29 @@ define([
 ) {
 
     var modules = {
-        initAnalytics: function (config) {
-            var v = new Videostream({
-                id: config.page.id,
-                el: document.querySelector('#player video'),
-                ophanUrl: config.page.ophanUrl
+        initAnalytics: function () {
+            common.mediator.on('page:video:ready', function(config, context) {
+                var v = new Videostream({
+                    id: config.page.id,
+                    el: context.querySelector('.player video'),
+                    ophanUrl: config.page.ophanUrl
+                });
+
+                v.init();
             });
-
-            v.init();
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Experiment(config);
-
-            e.init();
         }
     };
 
-    var init = function(req, config, context) {
-
-        common.mediator.emit("page:gallery:ready", config, context);
-
-        modules.initAnalytics(config);
+    var ready = function (config, context) {
+        ready = function (config, context) {
+            common.mediator.emit("page:video:ready", config, context);
+        };
+        // On first call to this fn only:
+        modules.initAnalytics();
+        ready(config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 });

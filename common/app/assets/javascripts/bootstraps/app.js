@@ -96,7 +96,7 @@ define('bootstraps/app', [
                 }
 
                 if (config.page.contentType === "Video") {
-                    Video.init({url: window.location.pathName}, config, context);
+                    Video.init(config, context);
                 }
 
                 if (config.page.contentType === "Gallery") {
