@@ -34,11 +34,11 @@
     
     @fragments.social(video.canonicalUrl.get, video.headline)
 
-    @if(storyPackage.nonEmpty) {
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-    } else {
-        <div id="js-related" role="complementary"></div>
-    }
-    @fragments.mostPopularPlaceholder(video.section)
+    <aside class="js-related" role="complementary">
+        @if(storyPackage.nonEmpty) {
+            @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        }
+    </aside>
 
+    @fragments.mostPopularPlaceholder(video.section)
 }
