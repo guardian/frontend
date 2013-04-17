@@ -1,16 +1,21 @@
-package model
+package model.image
 
 import java.awt.image.BufferedImage
 import org.im4java.core.{ IMOperation, ConvertCmd, Stream2BufferedImage }
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
+case class Profile(width: Int = 50, height: Int = 50, compression: Int = 50) {
+  
+  def small {
+    ( "width" -> 140, "height" -> 140, "compression" -> 200 )
+  }
 
-case class ImageProfile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
+}
 
 // Configuration of our different image profiles
-object ContributorImage extends ImageProfile(140, 140, 70) {}
-object GalleryImage extends ImageProfile(750, 480, 90) {}
+object Contributor extends Profile(140, 140, 70) {}
+object Gallery extends Profile(750, 480, 90) {}
 
 object Im4Java {
 

@@ -4,12 +4,10 @@
 
 # Test the different libraries. This is a bake off, hence two implementations
 
-GET     /resize/sclr/*path      controllers.ImageController.renderGallery(path, mode: String = "scalr")
-GET     /resize/im4j/*path      controllers.ImageController.renderGallery(path, mode: String = "im4java")
+GET     /resize/sclr/*path      controllers.ImageController.render(path, mode: String = "scalr", profile: String = "g")
+GET     /resize/im4j/*path      controllers.ImageController.render(path, mode: String = "im4java", profile: String = "g")
 
-# Nb. changing these URLs will bust the cache. Be careful. 
+# Nb. changing these URLs will bust the image cache. Be very careful! 
 
-GET     /c/*path   controllers.ImageController.renderContributor(path, mode: String = "scalr")
-GET     /g/*path   controllers.ImageController.renderGallery(path, mode: String = "scalr")
-
+GET     /:profile/*path   controllers.ImageController.render(path, mode: String = "scalr", profile: String)
 

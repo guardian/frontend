@@ -13,15 +13,15 @@ object ImageController extends Controller with Logging with Implicits {
   // URL validation: We're only going to accept proxy paths that match [/\w\.-]*
   val Path = """([/\w\.-]*)""".r
 
-  def renderContributor(target: String, mode: String) = Action { implicit request =>
-    render(target, mode, model.ContributorImage)
-  }
-  
-  def renderGallery(target: String, mode: String) = Action { implicit request =>
-    render(target, mode, model.GalleryImage)
+  def render(target: String, mode: String, profile: String) = Action { implicit request =>
+    profile match {
+      case "c" => renderImage(target, mode, model.image.Contributor)
+      case "g" => renderImage(target, mode, model.image.Gallery)
+      case _ => NotFound
+    }
   }
 
-  private def render(target: String, mode: String, profile: ImageProfile)(implicit request: RequestHeader): Result = { 
+  private def renderImage(target: String, mode: String, profile: image.Profile)(implicit request: RequestHeader): Result = { 
 
     val Path(sanitised) = target
     val path = "http://static.guim.co.uk/" + sanitised
@@ -58,7 +58,7 @@ object ImageController extends Controller with Logging with Implicits {
                     operation.quality(profile.compression.toDouble)
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
                     
-                    val resized = Im4Java(image, operation, format)
+                    val resized = model.image.Im4Java(image, operation, format)
                   
                     Cached(imageCacheLifetime) {
                       Ok(resized) as contentType
