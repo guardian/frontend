@@ -13,41 +13,45 @@ define([
     var TrailblockToggle = function () {
 
         var options = {
-            'toggleSelectorClass': '.js-toggle-trailblock',
             'edition' : '',
             'prefName': 'front-trailblocks-'
         };
 
         var view = {
 
-            showToggleLinks: function () {
-
-                var toggles = common.$g(options.toggleSelectorClass).each(function (toggle) {
+            showToggleLinks: function (context) {
+                Array.prototype.forEach.call(context.querySelectorAll('.js-toggle-trailblock'), function(toggle){
                     bean.add(toggle, 'click', function (e) {
-                        view.toggleTrailblock(this);
+                        view.toggleTrailblock({
+                            trigger: this,
+                            context: context
+                        });
                     });
                 });
             },
 
-            toggleTrailblock: function (trigger, manualTrigger) {
+            toggleTrailblock: function (opts) {
 
-                var idPrefix = "front-trailblock-";
-                var classesToToggle = 'rolled-out rolled-up';
+                var trigger       = opts.trigger,
+                    manualTrigger = opts.manualTrigger,
+                    context       = opts.context,
+                    classPrefix = "front-trailblock-",
+                    classesToToggle = 'rolled-out rolled-up',
+                    trailblockId,
+                    trailblock;
 
                 if (manualTrigger) {
-                    trigger = document.getElementById('js-trigger-' + manualTrigger);
+                    trigger = context.querySelector('.js-trigger-' + manualTrigger);
                 }
 
                 // convert trigger to bonzo object
                 trigger = bonzo(trigger);
 
-                var trailblockId = trigger.attr('data-block-name'),
-                    trailblock;
+                trailblockId = trigger.attr('data-block-name');
 
-                trailblock = idPrefix;
-                trailblock += trailblockId;
+                trailblock = '.' + classPrefix + trailblockId;
 
-                trailblock = document.getElementById(trailblock);
+                trailblock = context.querySelector(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
 
                 var text = trigger.text();
@@ -65,7 +69,7 @@ define([
                 }
             },
 
-            renderUserPreference: function () {
+            renderUserPreference: function (context) {
                 // bit of duplication here from function below
                 if (window.localStorage) {
                     var existingPrefs = userPrefs.get(options.prefName);
@@ -74,7 +78,10 @@ define([
                         var sectionArray = existingPrefs.split(',');
                         for (var i in sectionArray) {
                             var item = sectionArray[i];
-                            view.toggleTrailblock(null, item);
+                            view.toggleTrailblock({
+                                manualTrigger: item,
+                                context: context
+                            });
                         }
                     }
                 }
@@ -120,11 +127,10 @@ define([
 
         };
 
-        this.go = function (edition) {
-            options.edition = edition;
-            options.prefName = options.prefName + options.edition;
-            view.showToggleLinks();
-            view.renderUserPreference();
+        this.go = function (config, context) {
+            options.prefName = options.prefName + config.page.edition;
+            view.showToggleLinks(context);
+            view.renderUserPreference(context);
         };
 
     };

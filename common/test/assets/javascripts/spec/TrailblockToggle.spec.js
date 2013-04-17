@@ -3,8 +3,7 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
     describe("Trailblock Toggle", function() {
 
         var tt,
-            edition,
-            trigger = document.getElementById('js-trigger-sport');
+            trigger = document.querySelector('.js-trigger-sport');
 
         //Have to stub the global guardian object
         window.guardian = {
@@ -15,17 +14,13 @@ define(['common', 'bean', 'modules/trailblocktoggle'], function(common, bean, Tr
         };
 
         beforeEach(function() {
-            tt = new TrailblockToggle();
-            edition = 'uk';
-
-            tt.go(edition);
+            tt = new TrailblockToggle().go({page: { edition: 'uk'}}, document);
         });
 
         afterEach(function() {
             // remove listener
             bean.off(trigger, 'click');
             tt = null;
-            edition = null;
         });
 
 

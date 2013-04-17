@@ -7,8 +7,7 @@ define([
     "modules/expandable",
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
-    "modules/footballfixtures",
-    "modules/story/frontstories"
+    "modules/footballfixtures"
 ], function (
     common,
     qwery,
@@ -17,26 +16,16 @@ define([
     Expandable,
     TrailblockToggle,
     TrailblockShowMore,
-    FootballFixtures,
-    FrontStories
+    FootballFixtures
 ) {
 
     var modules = {
             
-        showFrontExpanders: function () {
-            var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
-            for (i=0, l=frontTrailblocks.length; i<l; i++) {
-                var elm = frontTrailblocks[i];
-                var id = elm.id;
-                var frontExpandable = new Expandable({ id: id, expanded: false });
-                frontExpandable.init();
-            }
-        },
-        
         showTrailblockToggles: function (config) {
-            var edition = config.page.edition;
             var tt = new TrailblockToggle();
-            tt.go(edition);
+            common.mediator.on('page:front:ready', function(config, context) {
+                tt.go(config, context);
+            });
         },
 
         showTrailblockShowMore: function () {
@@ -74,21 +63,20 @@ define([
                     }).init();
                     break;
             }
-        },
-
-        showFrontStories: function(config) {
-            var fs = new FrontStories().init(config);
         }
     };
 
-    // All methods placed inside here will exec after DOMReady
-    var ready = function(req, config, context) {
+    var ready = function (config, context) {
+        ready = function (config, context) {
+            common.mediator.emit("page:front:ready", config, context);
+        };
+        // On first call to this fn only:
         modules.showTrailblockToggles(config);
         modules.showTrailblockShowMore();
         if(config.page.edition === "UK") {
-            modules.showFootballFixtures(req.url);
+            modules.showFootballFixtures(window.location.pathname);
         }
-        modules.showFrontStories(config);
+        ready(config, context);
     };
 
     return {
