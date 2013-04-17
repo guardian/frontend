@@ -1,12 +1,12 @@
 package common
 
-
+import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
 import play.api.mvc.{AnyContent, Result, RequestHeader, Results}
 import play.api.templates.Html
-
+import com.gu.management.Switchable
 
 object JsonComponent extends Results {
 
@@ -14,6 +14,11 @@ object JsonComponent extends Results {
 
   def apply(html: Html)(implicit request: RequestHeader) = {
     val json = jsonFor(("html" -> html))
+    resultFor(request, json) getOrElse (Ok(html))
+  }
+  
+  def apply(metaData: MetaData, switches: Seq[Switchable], html: Html)(implicit request: RequestHeader) = {
+    val json = jsonFor(metaData, switches, ("html" -> html))
     resultFor(request, json) getOrElse (Ok(html))
   }
 
@@ -35,8 +40,16 @@ object JsonComponent extends Results {
     }
     Ok(json).as("application/javascript")
   }
+  
+  def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
+    jsonify(items :+ ("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)))
+  }
 
-  def jsonFor(items: (String, Any)*) = {
+  def jsonFor(items: (String, Any)*): String = {
+    jsonify(items)
+  }
+  
+  private def jsonify(items: Seq[(String, Any)]) = {
     import play.api.libs.json.Writes._
     Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
@@ -47,6 +60,7 @@ object JsonComponent extends Results {
         case (name, value: Int) => (name -> toJson(value))
         case (name, value: Double) => (name -> toJson(value))
         case (name, value: Float) => (name -> toJson(value))
+        case (name, value: JsValue) => (name -> value)
       }
     ))
   }

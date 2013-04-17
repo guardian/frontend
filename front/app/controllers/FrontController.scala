@@ -3,6 +3,7 @@ package controllers
 import common._
 import front._
 import model._
+import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
@@ -80,7 +81,7 @@ class FrontController extends Controller with Logging with JsonTrails {
     } else {
       val htmlResponse = views.html.front(frontPage, trailblocks)
       val jsonResponse = views.html.fragments.frontBody(frontPage, trailblocks)
-      renderFormat(htmlResponse, jsonResponse, frontPage)
+      renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
     }
   }
   
