@@ -26,16 +26,16 @@ s.linkTrackEvents="None";
 s.usePlugins=true;
 function s_doPlugins(s) {
     /* Make sure s.events is initialised */
-    s.events = s.events ? s.events : '';
+//    s.events = s.events ? s.events : '';
 
     /* s_code version */
-    s.prop62 = "Mdot Guardian H.25.3 v1 20130122";
+//    s.prop62 = "Mdot Guardian H.25.3 v1 20130122";
 
     /* URL */
-    s.prop61 = "D=g";
+//    s.prop61 = "D=g";
 
     /* Set Page View Event */
-    s.events=s.apl(s.events,'event4',',',2);
+//    s.events=s.apl(s.events,'event4',',',2);
 
     /* External Paid Campaign Tracking */
     if (!s.eVar38){
@@ -44,21 +44,34 @@ function s_doPlugins(s) {
     s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
 
     /* Campaign stacking */
-    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
+//    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
 
     /* Days Since Last Visit */
-    s.eVar10=s.getDaysSinceLastVisit('s_lv');
+//    s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-    s.prop16=s.eVar16=s.getNewRepeat(365);
+//    s.prop16=s.eVar16=s.getNewRepeat(365);
 
     /* Copy pageName into eVar7 */
-    if (s.pageName && !s.eVar7) {
-        s.eVar7="D=pageName";
-    }
+//    if (s.pageName && !s.eVar7) {
+//        s.eVar7="D=pageName";
+//    }
 
     /* Set prop63 to the load time in seconds, with one decimal value */
-    s.prop63 = s.getLoadTimeDim();
+//    s.prop63 = s.getLoadTimeDim();
+
+    /* Retrieve navigation interaction data */
+//    var ni = typeof(localStorage) != 'undefined' && typeof(JSON) != 'undefined'? localStorage.getItem(/*storagePrefix + */'referrerVars') : null;
+//    if (ni) {
+//        ni = JSON.parse(ni);
+//        var d = new Date().getTime();
+//        if (d - ni.time < 60 * 1000) { // One minute
+//            s.eVar24 = ni.pageName;
+//            s.eVar37 = ni.tag;
+//            s.events = s.apl(s.events,'event37',',');
+//        }
+//        localStorage.removeItem(/*storagePrefix + */'referrerVars');
+//    }
 }
 s.doPlugins=s_doPlugins;
 
@@ -162,8 +175,8 @@ s.getDaysSinceLastVisit=new Function("c",""
     +"!=f5) return '';else return cval_s;");
 
 /*
- *	Plug-in: crossVisitParticipation v1.7 - stacks values from
- *	specified variable in cookie and returns value
+ *  Plug-in: crossVisitParticipation v1.7 - stacks values from
+ *  specified variable in cookie and returns value
  */
 s.crossVisitParticipation=new Function("v","cn","ex","ct","dl","ev","dv",""
     +"var s=this,ce;if(typeof(dv)==='undefined')dv=0;if(s.events&&ev){var"
@@ -204,6 +217,7 @@ s.getLoadTimeDim=new Function("",""
 /*
  * Plugin Utility: HTML5Storage v0.11
  */
+/*
 if(typeof Storage!=="undefined"&&typeof JSON!=="undefined"){s.c_rr=s.c_r;s.c_ww=s.c_w;if(s._forceCookies)
 {if(!s.inList("s_cc",s._forceCookies)){s._forceCookies=s.apl(s._forceCookies,"s_cc",",")}
     if(!s.inList("s_sq",s._forceCookies)){s._forceCookies=s.apl(s._forceCookies,"s_sq",",")}}else{s._forceCookies="s_cc,s_sq"}
@@ -215,6 +229,7 @@ if(typeof Storage!=="undefined"&&typeof JSON!=="undefined"){s.c_rr=s.c_r;s.c_ww=
         {e=r.ape(e);i=new Date;if(n&&r.cookieLifetime!="SESSION"){var s=new Date(n.getTime());
             if(!isNaN(r.cookieLifetime)&&s.getTime()>i.getTime()+r.cookieLifetime*1e3){s.setTime(i.getTime()+r.cookieLifetime*1e3)}
             if(s>i){t={expiry:s.getTime(),value:t};t=JSON.stringify(t);localStorage.setItem(e,t)}}else{sessionStorage.setItem(e,t)}}}s.c_r=c_r;s.c_w=c_w}
+*/
 
 /*
  * Utility: inList v1.0 - find out if a value is in a list
@@ -483,4 +498,3 @@ var s_code='',s_objectID;function s_gi(un,pg,ss){var c="s.version='H.25.3';s.an=
         +"'+c.substring(e+1);s=c.indexOf('=function(')}return c;");
     c=s_d(c);if(e>0){a=parseInt(i=v.substring(e+5));if(a>3)a=parseFloat(i)}else if(m>0)a=parseFloat(u.substring(m+10));else a=parseFloat(v);if(a<5||v.indexOf('Opera')>=0||u.indexOf('Opera')>=0)c=s_ft(c);if(!s){s=new Object;if(!w.s_c_in){w.s_c_il=new Array;w.s_c_in=0}s._il=w.s_c_il;s._in=w.s_c_in;s._il[s._in]=s;w.s_c_in++;}s._c='s_c';(new Function("s","un","pg","ss",c))(s,un,pg,ss);return s}
 function s_giqf(){var w=window,q=w.s_giq,i,t,s;if(q)for(i=0;i<q.length;i++){t=q[i];s=s_gi(t.oun);s.sa(t.un);s.setTagContainer(t.tagContainerName)}w.s_giq=0}s_giqf()
-
