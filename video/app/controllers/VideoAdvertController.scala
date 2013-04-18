@@ -9,9 +9,32 @@ import ExecutionContext.Implicits.global
 import play.api.libs.json.{JsObject, Json}
 import play.api.libs.json.Json._
 import model.Cached
-
+import scala.xml.Elem
 
 object VideoAdvertController extends Controller with Logging {
+
+  private def parseVast(xml: Elem) = {
+    val files = xml \\ "MediaFile"
+    val media = files.headOption.map(_.text.trim()).getOrElse("")
+
+    val impressionNode = xml \\ "Impression"
+    val impression = impressionNode.headOption.map(_.text.trim()).getOrElse("")
+
+    val clickThroughNode = xml \\ "ClickThrough"
+    val clickThrough = clickThroughNode.headOption.map(_.text.trim()).getOrElse("")
+
+    val trackingNodes = xml \\ "Tracking"
+    val tracking = trackingNodes.map{ track =>
+      val event = track.attribute("event").headOption.map(_.text.trim()).getOrElse("")
+      val url = track.text.trim()
+      (event -> url)
+    }.toMap + (("impression" -> impression), ("clickThrough" -> clickThrough))
+
+    toJson(Map(
+      "file" -> toJson(media),
+      "trackingEvents" -> toJson(tracking)
+    )).as[JsObject]
+  }
 
   def fetch(format: String, path: String) = Action { implicit request =>
 
@@ -26,19 +49,11 @@ object VideoAdvertController extends Controller with Logging {
               case 200 =>
                 val xml = response.xml
 
-                val files = xml \\ "MediaFile"
-                val media = files.headOption.map(_.text.trim()).getOrElse("")
-
-                val trackingNodes = xml \\ "Tracking"
-                val tracking = trackingNodes.map{ track =>
-                   val event = track.attribute("event").headOption.map(_.text).getOrElse("")
-                   val url = track.text.trim()
-                   (event -> url)
-                }.toMap
-
-                val json = toJson(Map("file" -> toJson(media), "tracking" -> toJson(tracking))).as[JsObject]
-
-                Cached(15)(JsonComponent(json))
+                //We currently only support the VAST xml schema
+                xml.label match {
+                  case "VAST" => Cached(15)(JsonComponent(parseVast(xml)))
+                  case _ => NotFound
+                }
 
               case 404 => NotFound
             }

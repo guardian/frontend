@@ -6,12 +6,18 @@ define([
    common,
    bean,
    ajax
-    ) {
+) {
 
     function Video(config) {
         this.support = config.support;
         this.video = config.el;
         this.played = false;
+    }
+
+    function VideoEvent(name, url) {
+        this.name = name;
+        this.url = url;
+        this.hasFired = false;
     }
 
     Video.prototype.proxy = "/oas/";
@@ -32,7 +38,8 @@ define([
     };
 
     Video.prototype.play = function(format, data) {
-        var sources = this.video.querySelectorAll('source'),
+        var self = this,
+            sources = this.video.querySelectorAll('source'),
             source;
 
         this.played = true;
@@ -52,9 +59,9 @@ define([
         }
 
         bean.on(this.video, "ended error", function() {
-            bean.off(this.video, "ended error");
-            this.video.src = source;
-            this.video.play();
+            bean.off(self.video, "ended error");
+            self.video.src = source;
+            self.video.play();
         });
 
         this.video.src = data.file;
@@ -65,8 +72,19 @@ define([
         }
     };
 
-    Video.prototype.tracking = function(tracking) {
+    Video.prototype.initTracking = function(tracking) {
+       var events = [];
+       for(var event in tracking) {
+           events.push(new VideoEvent(event, tracking[event]));
+       }
+    };
 
+    Video.prototype.getProgress = function() {
+        return this.video.currentTime;
+    };
+
+    Video.prototype.getDuration = function() {
+        return this.video.duration;
     };
 
     Video.prototype.init = function() {
