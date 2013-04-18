@@ -62,8 +62,6 @@ trait CompetitionSupport extends Football {
   def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = competitions.flatMap{ c =>
-      println(c)
-      println(c.matches)
       c.matches.find(_.id == id)
     }.headOption
 
