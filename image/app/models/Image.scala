@@ -23,6 +23,14 @@ object Contributor extends Profile(140, 140, 70) {}
 object Gallery extends Profile(750, 480, 90) {}
 
 // Test profiles
+object Naked extends Profile(750, 480, 90) {
+  override lazy val operation = {
+    val op = new IMOperation()
+    op.addImage
+    op
+  }
+}
+
 object Flip extends Profile {
   override lazy val operation = {
     val op = new IMOperation()

@@ -17,6 +17,7 @@ object ImageController extends Controller with Logging with Implicits {
     profile match {
       case "c" => renderImage(target, mode, model.image.Contributor)
       case "g" => renderImage(target, mode, model.image.Gallery)
+      case "n" => renderImage(target, mode, model.image.Naked) // no resizing, just passed through GraphicsMagick 
       
       case "test/flip" => renderImage(target, mode, model.image.Flip)
       case "test/grey" => renderImage(target, mode, model.image.Grey)
