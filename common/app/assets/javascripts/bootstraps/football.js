@@ -135,7 +135,7 @@ define([
             case 'live':
                 modules.showMoreMatches(context);
                 modules.initTogglePanels(context);
-                if (context.querySelector('.match.live-match').length > 0) {
+                if (context.querySelector('.match.live-match')) {
                     modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches);
                 }
                 break;
