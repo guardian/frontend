@@ -2,7 +2,6 @@
 define([
     //Common libraries
     "common",
-    "qwery",
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -15,7 +14,6 @@ define([
     "modules/matchnav"
 ], function (
     common,
-    qwery,
     Router,
     TogglePanel,
     Expandable,
@@ -167,17 +165,14 @@ define([
                     if(match.isLive) {
                         modules.initAutoUpdate(
                             {
-                                "summary"   : qwery('.match-summary')[0],
-                                "stats"     : qwery('.match-stats')[0]
+                                "summary"   : context.querySelector('.match-summary'),
+                                "stats"     : context.querySelector('.match-stats')
                             },
                             config.switches,
                             true
                         );
                     }
                 }
-
-
-
                 break;
         }
     
