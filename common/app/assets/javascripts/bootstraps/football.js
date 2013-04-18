@@ -36,52 +36,52 @@ define([
             }
         },
 
-        initTogglePanels: function () {
-            TogglePanel.init();
+        initTogglePanels: function (context) {
+            TogglePanel.init(context);
         },
 
-        showFrontFixtures: function() {
+        showFrontFixtures: function(context) {
             var table = new FootballFixtures({
-                prependTo: qwery('ul > li', '.trailblock')[1],
+                prependTo: context.querySelector('.trailblock ul > li'),
                 contextual: false,
                 expandable: true,
                 numVisible: 10
             }).init();
         },
 
-        showMoreMatches: function() {
-            var matchesNav = document.getElementById('js-matches-nav');
+        showMoreMatches: function(context) {
+            var matchesNav = context.querySelector('.js-matches-nav');
             MoreMatches.init(matchesNav);
         },
 
-        showCompetitionData: function(competition) {
+        showCompetitionData: function(competition, context) {
             common.mediator.on('modules:footballfixtures:render', function(){
-                var title = document.querySelector('.football-table-link');
+                var title = context.querySelector('.football-table-link');
                 if(title) { title.className = "js-hidden"; }
             });
 
             var todaysFixtures = new FootballFixtures({
-                prependTo: document.querySelector('.t2'),
+                prependTo: context.querySelector('.t2'),
                 competitions: [competition],
                 contextual: true,
                 expandable: false
             }).init();
 
             var table = new FootballTable({
-                prependTo: document.querySelector('.t3'),
+                prependTo: context.querySelector('.t3'),
                 competition: competition
             }).init();
         },
 
-        showTeamData: function(team) {
+        showTeamData: function(team, context) {
             var fixtures = new FootballFixtures({
-                prependTo: document.querySelector('.t2'),
+                prependTo: context.querySelector('.t2'),
                 path: '/football/api/teamfixtures/' + team,
                 expandable: false
             }).init();
 
             var table = new FootballTable({
-                prependTo: document.querySelector('.t3'),
+                prependTo: context.querySelector('.t3'),
                 path: '/football/api/teamtable/' + team
             }).init();
         },
@@ -118,46 +118,46 @@ define([
         });
     };
 
-    var ready = function(req, config) {
+    var ready = function(req, config, context) {
 
         var page = req.params.action;
 
         switch(page) {
             case undefined :
-                modules.showFrontFixtures();
+                modules.showFrontFixtures(context);
                 break;
             case 'fixtures':
-                modules.showMoreMatches();
-                modules.initTogglePanels();
+                modules.showMoreMatches(context);
+                modules.initTogglePanels(context);
                 break;
             case 'results':
-                modules.showMoreMatches();
-                modules.initTogglePanels();
+                modules.showMoreMatches(context);
+                modules.initTogglePanels(context);
                 break;
             case 'live':
-                modules.showMoreMatches();
-                modules.initTogglePanels();
-                if (qwery('.match.live-match').length > 0) {
-                    modules.initAutoUpdate(qwery(".matches-container")[0], config.switches);
+                modules.showMoreMatches(context);
+                modules.initTogglePanels(context);
+                if (context.querySelector('.match.live-match').length > 0) {
+                    modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches);
                 }
                 break;
             case 'table':
-                modules.showMoreMatches();
-                modules.initTogglePanels();
+                modules.showMoreMatches(context);
+                modules.initTogglePanels(context);
                 break;
             case 'tables':
-                modules.showMoreMatches();
-                modules.initTogglePanels();
+                modules.showMoreMatches(context);
+                modules.initTogglePanels(context);
                 break;
             default:
                 var comp = config.referenceOfType('paFootballCompetition'),
                     team = config.referenceOfType('paFootballTeam');
 
                 if(comp) {
-                    modules.showCompetitionData(comp);
+                    modules.showCompetitionData(comp, context);
                 }
                 if(team) {
-                    modules.showTeamData(team);
+                    modules.showTeamData(team, context);
                 }
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
