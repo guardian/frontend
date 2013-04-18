@@ -7,6 +7,6 @@ object Configuration extends GuardianConfiguration("frontend", webappConfDirecto
 
 object ContentApi extends ContentApiClient(Configuration)
 
-object Static extends StaticAssets(Configuration.static.path)
+object Static extends StaticAssets(Configuration.assets.path)
 
 object RequestMeasurementMetrics extends RequestMetrics.Standard
