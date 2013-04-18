@@ -65,7 +65,7 @@ public class FrontSteps {
         int trailCount = trailblock.findElements(By.className("trail")).size();
         cta.click();
         // wait for second list of top stories to load in
-        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul/li[" + (trailCount * 2) + "]"));
+        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul/li[" + (trailCount + 5) + "]"));
     }
 	
 }
