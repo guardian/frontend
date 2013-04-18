@@ -30,7 +30,9 @@ define([
 
         showTrailblockShowMore: function () {
             var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();
+            common.mediator.on('page:front:ready', function(config, context) {
+                trailblockShowMore.init(context);
+            });
         },
 
         showFootballFixtures: function(path) {
