@@ -41,10 +41,6 @@ define([
         },
 
         showFrontFixtures: function() {
-            common.mediator.on('modules:footballfixtures:expand', function(id) {
-                var expandable = new Expandable({ id: id, expanded: false });
-                expandable.init();
-            });
             var table = new FootballFixtures({
                 prependTo: qwery('ul > li', '.trailblock')[1],
                 contextual: false,

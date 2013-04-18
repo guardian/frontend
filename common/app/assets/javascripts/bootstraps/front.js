@@ -1,19 +1,15 @@
 define([
     //Common libraries
     "common",
-    "qwery",
     "domReady",
     //Modules
-    "modules/expandable",
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
     "modules/footballfixtures"
 ], function (
     common,
-    qwery,
     domReady,
 
-    Expandable,
     TrailblockToggle,
     TrailblockShowMore,
     FootballFixtures
@@ -42,14 +38,9 @@ define([
                     var prependTo,
                     table;
 
-                    common.mediator.on('modules:footballfixtures:expand', function(id) {
-                        var expandable = new Expandable({ id: id, expanded: false });
-                        expandable.init();
-                    });
-
                     switch(window.location.pathname) {
                         case "/" :
-                            prependTo = qwery('ul > li', '.zone-sport')[1];
+                            prependTo = context.querySelector('.zone-sport ul > li');
                             table = new FootballFixtures({
                                 prependTo: prependTo,
                                 competitions: ['500', '510', '100'],
@@ -59,7 +50,7 @@ define([
                             }).init();
                             break;
                         case "/sport" :
-                            prependTo = qwery('ul > li', '.trailblock')[1];
+                            prependTo = context.querySelector('.trailblock ul > li');
                             table = new FootballFixtures({
                                 prependTo: prependTo,
                                 contextual: false,
