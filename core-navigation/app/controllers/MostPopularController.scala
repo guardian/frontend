@@ -19,7 +19,7 @@ object MostPopularController extends Controller with Logging {
   )
 
 
-  def renderJson(path: String) = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
     val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
@@ -28,22 +28,11 @@ object MostPopularController extends Controller with Logging {
         sectionPopular =>
           (sectionPopular ++ globalPopular) match {
             case Nil => NotFound
-            case popular => Cached(900)(JsonComponent(views.html.fragments.mostPopular(popular, 5)))
-          }
-      }
-    }
-  }
-
-  def renderNoJavascript(path: String) = Action { implicit request =>
-    val edition = Site(request).edition
-    val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
-    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-    Async {
-      promiseOfSectionPopular.map {
-        sectionPopular =>
-          (sectionPopular ++ globalPopular) match {
-            case Nil => NotFound
-            case popular => Cached(900)(Ok(Compressed(views.html.mostPopular(page, popular))))
+            case popular => {
+              val htmlResponse = views.html.mostPopular(page, popular)
+              val jsonResponse = views.html.fragments.mostPopular(popular, 5)
+              renderFormat(htmlResponse, jsonResponse, 900)
+            }
           }
       }
     }
