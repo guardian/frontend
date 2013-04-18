@@ -5,12 +5,12 @@ import org.im4java.core.{ IMOperation, ConvertCmd, Stream2BufferedImage }
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-case class Profile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
+case class Profile(width: Option[Int] = None, height: Option[Int] = None, compression: Int = 10) {}
 
 // Configuration of our different image profiles
-object Contributor extends Profile(140, 140, 70) {}
-object Gallery extends Profile(750, 480, 90) {}
-object Naked extends Profile(0, 0, 70) {}
+object Contributor extends Profile(Some(140), Some(140), 70) {}
+object Gallery extends Profile(Some(750), Some(480), 90) {}
+object Naked extends Profile(None, None, 70) {}
 
 object Im4Java {
 
