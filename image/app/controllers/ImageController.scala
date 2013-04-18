@@ -17,6 +17,7 @@ object ImageController extends Controller with Logging with Implicits {
     profile match {
       case "c" => renderImage(target, mode, model.image.Contributor)
       case "g" => renderImage(target, mode, model.image.Gallery)
+      case "n" => renderImage(target, mode, model.image.Naked)
       case _ => NotFound
     }
   }
@@ -54,7 +55,9 @@ object ImageController extends Controller with Logging with Implicits {
                     // configuration
                     val operation = new IMOperation()
                     operation.addImage
-                    operation.resize(profile.width, profile.height)
+                    if (profile.width > 0 && profile.height > 0) {
+                      operation.resize(profile.width, profile.height)
+                    }
                     operation.quality(profile.compression.toDouble)
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
                     

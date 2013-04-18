@@ -10,6 +10,7 @@ case class Profile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
 // Configuration of our different image profiles
 object Contributor extends Profile(140, 140, 70) {}
 object Gallery extends Profile(750, 480, 90) {}
+object Naked extends Profile(0, 0, 70) {}
 
 object Im4Java {
 
