@@ -7,6 +7,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.concurrent.Execution.Implicits._
 import concurrent.Future
+import play.api.templates.Html
 
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
@@ -17,18 +18,18 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
-        case Left(model) => renderSectionFront(model, "html")
+        case Left(model) => renderSectionFront(model)
         case Right(notFound) => notFound
       }
     }
   }
 
-  def renderJson(path: String) = Action { implicit request =>
+  def renderTrails(path: String) = Action { implicit request =>
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
-        case Left(model) => renderSectionFront(model, "json")
-        case Right(_) => NotFound //do not redirect json
+        case Left(model) => renderTrailsFragment(model)
+        case Right(notFound) => notFound
       }
     }
   }
@@ -50,11 +51,16 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage, format: String)(implicit request: RequestHeader) = Cached(model.section) {
-    if (format == "json") {
-      renderJsonTrails(model.editorsPicks ++ model.latestContent)
-    } else {
-      Ok(Compressed(views.html.section(model.section, model.editorsPicks, model.latestContent)))
-    }
+  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
+    val htmlResponse = views.html.section(model.section, model.editorsPicks, model.latestContent)
+    val jsonResponse = views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
+    renderFormat(htmlResponse, jsonResponse, model.section, Switches.all)
   }
+  
+  private def renderTrailsFragment(model: SectionFrontPage)(implicit request: RequestHeader) = {
+    val trails: Seq[Trail] = model.editorsPicks ++ model.latestContent
+    val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+    renderFormat(response, response, model.section)
+  }
+  
 }
