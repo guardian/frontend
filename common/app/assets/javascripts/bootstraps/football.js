@@ -34,10 +34,6 @@ define([
             }
         },
 
-        initTogglePanels: function (context) {
-            TogglePanel.init(context);
-        },
-
         showFrontFixtures: function(context) {
             var table = new FootballFixtures({
                 prependTo: context.querySelector('.trailblock ul > li'),
@@ -48,8 +44,8 @@ define([
         },
 
         showMoreMatches: function(context) {
-            var matchesNav = context.querySelector('.js-matches-nav');
-            MoreMatches.init(matchesNav);
+            MoreMatches.init(context.querySelector('.js-matches-nav'));
+            TogglePanel.init(context);
         },
 
         showCompetitionData: function(competition, context) {
@@ -124,28 +120,23 @@ define([
             case undefined :
                 modules.showFrontFixtures(context);
                 break;
-            case 'fixtures':
-                modules.showMoreMatches(context);
-                modules.initTogglePanels(context);
-                break;
-            case 'results':
-                modules.showMoreMatches(context);
-                modules.initTogglePanels(context);
-                break;
             case 'live':
                 modules.showMoreMatches(context);
-                modules.initTogglePanels(context);
                 if (context.querySelector('.match.live-match')) {
                     modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches);
                 }
                 break;
+            case 'fixtures':
+                modules.showMoreMatches(context);
+                break;
+            case 'results':
+                modules.showMoreMatches(context);
+                break;
             case 'table':
                 modules.showMoreMatches(context);
-                modules.initTogglePanels(context);
                 break;
             case 'tables':
                 modules.showMoreMatches(context);
-                modules.initTogglePanels(context);
                 break;
             default:
                 var comp = config.referenceOfType('paFootballCompetition'),
