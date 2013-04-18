@@ -17,7 +17,7 @@ define([
     var modules = {
 
         initAdverts: function(config) {
-            if(config.switches.videoAdvert && !config.page.blockAds) {
+            if(config.switches.videoAdverts && !config.page.blockAds) {
                 var support = detect.getVideoFormatSupport();
                 var a = new Advert({
                     el: document.getElementsByTagName('video')[0],

@@ -75,8 +75,8 @@ define([
 
         if(format) {
             common.mediator.on("module:video:adverts:load", function(file) {
-                bean.on(this.video, "play", function() {
-                    if(!this.played) {
+                bean.on(that.video, "play", function() {
+                    if(!that.played) {
                         that.play(format, file);
                     }
                 });
