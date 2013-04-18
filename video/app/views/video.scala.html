@@ -15,7 +15,7 @@
 
 
         <div id="player">
-            <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
+            <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                 @video.encodings.map{ encoding =>
                     <source src="@encoding.url" />
                 }
