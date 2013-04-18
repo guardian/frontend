@@ -35,7 +35,15 @@
 
     <div class="article-body from-content-api @if(article.isLive) {live-blog}"
         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-          @fragments.articleBody(article)
+        @* <!-- ordering of cleaners is important --> *@
+        @withJsoup(BulletCleaner(article.body))(
+            PictureCleaner(article),
+            InBodyLinkCleaner("in body link"),
+            BlockNumberCleaner,
+            TweetCleaner,
+            WitnessCleaner,
+            VideoPosterCleaner(article.videoAssets)
+        )
     </div>
     
 </article>
