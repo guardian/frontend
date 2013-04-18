@@ -9,6 +9,6 @@
         aria-labelledby="related-content-head">
         @* order the related trails by date *@
         @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, numThumbnails = 3, related = true, headingLevel = 3)
-        @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = visibleTrails, related = true, isPanel = true)
+        @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = trails.size - visibleTrails, related = true, isPanel = true)
     </div>
 }

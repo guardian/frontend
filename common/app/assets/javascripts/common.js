@@ -33,6 +33,20 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                     fn.apply(context, args);
                 }, delay);
             };
+        },
+        rateLimit : function (fn, delay) {
+            var delay = delay || 400,
+                lastClickTime = 0;
+            return function () {
+                var context = this,
+                    args = arguments,
+                    current = new Date().getTime();
+
+                if (! lastClickTime || (current - lastClickTime) > delay) {
+                    lastClickTime = current;
+                    fn.apply(context, args);
+                }
+            };
         }
     };
 });

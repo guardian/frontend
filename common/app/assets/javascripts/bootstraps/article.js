@@ -15,74 +15,84 @@ define([
 
     var modules = {
 
-        matchNav: function(config){
-            var teamIds = config.referencesOfType('paFootballTeam');
-            var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+        matchNav: function(){
+            var matchNav = new MatchNav();
+            common.mediator.on('page:article:ready', function(config, context) {
+                if(config.page.section === "football") {
+                    var teamIds = config.referencesOfType('paFootballTeam');
+                    var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
 
-            if(teamIds.length === 2 && isRightTypeOfContent){
-                var url = "/football/api/match-nav/";
+                    if(teamIds.length === 2 && isRightTypeOfContent){
+                        var url = "/football/api/match-nav/";
                             url += config.webPublicationDateAsUrlPart() + "/";
                             url += teamIds[0] + "/" + teamIds[1];
                             url += "?currentPage=" + encodeURIComponent(config.page.pageId);
-                new MatchNav().load(url);
-            }
+
+                        matchNav.load(url, context);
+                    }
+                }
+            });
         },
 
-        initLiveBlogging: function(switches) {
-            var a = new AutoUpdate({
-                path: window.location.pathname,
-                delay: 60000,
-                attachTo: document.querySelector(".article-body"),
-                switches: switches
-            }).init();
+        initLiveBlogging: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.page.isLive) {
+                    var a = new AutoUpdate({
+                        path: window.location.pathname,
+                        delay: 60000,
+                        attachTo: context.querySelector(".article-body"),
+                        switches: config.switches
+                    }).init();
+                }
+            });
         },
 
-        logReading: function(config) {
-            var wordCount = config.page.wordCount;
-            if(wordCount !== "") {
-                
-                var reader = new Reading({
-                    id: config.page.pageId,
-                    wordCount: parseInt(config.page.wordCount, 10),
-                    el: document.querySelector('.article-body'),
-                    ophanUrl: config.page.ophanUrl
-                });
+        logReading: function() {
+            common.mediator.on('page:article:loaded', function(config, context) {
+                var wordCount = config.page.wordCount;
+                if(wordCount !== "") {
+                    
+                    var reader = new Reading({
+                        id: config.page.pageId,
+                        wordCount: parseInt(config.page.wordCount, 10),
+                        el: context.querySelector('.article-body'),
+                        ophanUrl: config.page.ophanUrl
+                    });
 
-                reader.init();
-            }
+                    reader.init();
+                }
+            });
         }
     };
 
-    var ready = function(config, context) {
-
-        common.mediator.emit("page:article:ready", config, context);
-
-        if (config.page.isLive) {
-            modules.initLiveBlogging(config.switches);
-        }
-
-        if(config.page.section === "football") {
-            modules.matchNav(config);
-        }
-
-    };
-
-    // If you can wait for load event, do so.
-    var defer = function(config) {
+    var deferrable = function (config, context) {
+        deferrable = function (config, context) {
+            common.mediator.emit("page:article:loaded", config, context);
+        };
+        // On first call to this fn only:
         common.deferToLoadEvent(function() {
-            modules.logReading(config);
+            modules.logReading();
+            deferrable(config, context);
         });
     };
 
-    var init = function (req, config, context) {
+    var ready = function (config, context) {
+        ready = function (config, context) {
+            common.mediator.emit("page:article:ready", config, context);
+        };
+        // On first call to this fn only:
+        modules.matchNav();
+        modules.initLiveBlogging();
         ready(config, context);
-        defer(config);
     };
 
+    var init = function (config, context) {
+        ready(config, context);
+        deferrable(config, context);
+    };
 
     return {
         init: init
     };
 
 });
-

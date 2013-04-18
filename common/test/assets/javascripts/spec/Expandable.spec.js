@@ -41,6 +41,11 @@ define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, b
             var x = new Expandable({ dom: document.querySelector('#trail-g') }).init();
             expect(common.$g('#trail-g .cta').length).toBe(0);
         });
+        
+        it("should be able to turn off the trail count", function(){
+            var x = new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
+            expect(common.$g('#trail-h .cta')[0].innerHTML).not.toContain('3');
+        });
        
     });
 

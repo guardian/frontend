@@ -14,6 +14,7 @@ Requirements
 * A Mac or Linux pc
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
+* Installed GraphicsMagick
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
 
@@ -73,7 +74,7 @@ Running
 
 Assuming you have checked out this project, open a console and change directory into the root of the project.
 
-Start Simple Build Tool (sbt) by running `./sbt011 --no-proxy`
+Start Simple Build Tool (sbt) by running `./sbt012 --no-proxy`
 
 Once sbt is running (it may take a while first time) then compile the project by typing `compile` (also can take a while first time)
 
@@ -123,7 +124,7 @@ Deployment uses the [Magenta][magenta] library.
 
 No Proxy Build
 --------------
-Invoke `sbt011` with a `--no-proxy` parameter to directly download artifacts.
+Invoke `sbt012` with a `--no-proxy` parameter to directly download artifacts.
 
 
 Additional Documentation
