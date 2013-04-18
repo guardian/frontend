@@ -12,10 +12,11 @@ define([
         this.support = config.support;
         this.video = config.el;
         this.played = false;
+        this.timer = false;
+        this.events = {};
     }
 
-    function VideoEvent(name, url) {
-        this.name = name;
+    function VideoEvent(url) {
         this.url = url;
         this.hasFired = false;
     }
@@ -62,6 +63,7 @@ define([
             bean.off(self.video, "ended error");
             self.video.src = source;
             self.video.play();
+            window.clearInterval(self.timer);
         });
 
         this.video.src = data.file;
@@ -73,10 +75,28 @@ define([
     };
 
     Video.prototype.initTracking = function(tracking) {
-       var events = [];
+       var self;
+
        for(var event in tracking) {
-           events.push(new VideoEvent(event, tracking[event]));
+           this.events[event] = new VideoEvent(tracking[event]);
        }
+
+       if(this.events.impression) { this.logEvent(this.events.impression); }
+       if(this.events.start) { this.logEvent(this.events.start); }
+
+       this.timer = setInterval(function() {
+           var progress = self.getProgress(),
+               duration = self.getDuration();
+
+           if(progress > (duration/2) && !self.events.midPoint.hasFired) {
+               self.logEvent(self.events.midPoint);
+           }
+
+           if(progress >= duration && !self.events.complete.hasFired) {
+               self.logEvent(self.events.complete);
+               clearInterval(self.timer);
+           }
+       });
     };
 
     Video.prototype.getProgress = function() {
@@ -85,6 +105,13 @@ define([
 
     Video.prototype.getDuration = function() {
         return this.video.duration;
+    };
+
+    Video.prototype.logEvent = function(event) {
+        var px = new Image();
+        px.src = event.src; px.width = 0; px.height = 0;
+        document.appendChild(px);
+        event.hasFired = true;
     };
 
     Video.prototype.init = function() {
