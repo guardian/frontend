@@ -21,7 +21,7 @@ define([
 
     var modules = {
             
-        showTrailblockToggles: function (config) {
+        showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
                 tt.go(config, context);
@@ -36,35 +36,40 @@ define([
         },
 
         showFootballFixtures: function(path) {
-            var prependTo,
-            table;
+            common.mediator.on('page:front:ready', function(config, context) {
+                if(config.page.edition === "UK") {
 
-            common.mediator.on('modules:footballfixtures:expand', function(id) {
-                var expandable = new Expandable({ id: id, expanded: false });
-                expandable.init();
+                    var prependTo,
+                    table;
+
+                    common.mediator.on('modules:footballfixtures:expand', function(id) {
+                        var expandable = new Expandable({ id: id, expanded: false });
+                        expandable.init();
+                    });
+
+                    switch(window.location.pathname) {
+                        case "/" :
+                            prependTo = qwery('ul > li', '.zone-sport')[1];
+                            table = new FootballFixtures({
+                                prependTo: prependTo,
+                                competitions: ['500', '510', '100'],
+                                contextual: false,
+                                expandable: true,
+                                numVisible: 3
+                            }).init();
+                            break;
+                        case "/sport" :
+                            prependTo = qwery('ul > li', '.trailblock')[1];
+                            table = new FootballFixtures({
+                                prependTo: prependTo,
+                                contextual: false,
+                                expandable: true,
+                                numVisible: 5
+                            }).init();
+                            break;
+                    }
+                }
             });
-
-            switch(path) {
-                case "/" :
-                    prependTo = qwery('ul > li', '.zone-sport')[1];
-                    table = new FootballFixtures({
-                        prependTo: prependTo,
-                        competitions: ['500', '510', '100'],
-                        contextual: false,
-                        expandable: true,
-                        numVisible: 3
-                    }).init();
-                    break;
-                case "/sport" :
-                    prependTo = qwery('ul > li', '.trailblock')[1];
-                    table = new FootballFixtures({
-                        prependTo: prependTo,
-                        contextual: false,
-                        expandable: true,
-                        numVisible: 5
-                    }).init();
-                    break;
-            }
         }
     };
 
@@ -73,11 +78,10 @@ define([
             common.mediator.emit("page:front:ready", config, context);
         };
         // On first call to this fn only:
-        modules.showTrailblockToggles(config);
+        modules.showTrailblockToggles();
         modules.showTrailblockShowMore();
-        if(config.page.edition === "UK") {
-            modules.showFootballFixtures(window.location.pathname);
-        }
+        modules.showFootballFixtures();
+
         ready(config, context);
     };
 
