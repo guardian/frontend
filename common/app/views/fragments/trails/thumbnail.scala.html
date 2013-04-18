@@ -3,7 +3,7 @@
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 <div class="media">
     @if(showThumbnail) {
-        @trail.thumbnail.map{ thumbnailPath =>
+        @trail.thumbnailPath.map{ thumbnailPath =>
             <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
                 <img class="maxed" src="@thumbnailPath"
                     data-thumb-width="140"
