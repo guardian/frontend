@@ -17,7 +17,7 @@ object VideoAdvertController extends Controller with Logging {
 
     val url: String = "http://oas.guardian.co.uk/" + path
 
-//    if(CommonSwitches.VideoAdvertsSwitch.isSwitchedOn) {
+    if(CommonSwitches.VideoAdvertSwitch.isSwitchedOn) {
 
       Async {
           //Timeout is set to be very low so we don't bring down video boxes due to long OAS response times
@@ -25,9 +25,18 @@ object VideoAdvertController extends Controller with Logging {
             response.status match {
               case 200 =>
                 val xml = response.xml
+
                 val files = xml \\ "MediaFile"
-                val media = files.head.child.head.toString().trim()
-                val json = toJson(Map("file" -> media)).as[JsObject]
+                val media = files.headOption.map(_.text.trim()).getOrElse("")
+
+                val trackingNodes = xml \\ "Tracking"
+                val tracking = trackingNodes.map{ track =>
+                   val event = track.attribute("event").headOption.map(_.text).getOrElse("")
+                   val url = track.text.trim()
+                   (event -> url)
+                }.toMap
+
+                val json = toJson(Map("file" -> toJson(media), "tracking" -> toJson(tracking))).as[JsObject]
 
                 Cached(15)(JsonComponent(json))
 
@@ -36,8 +45,8 @@ object VideoAdvertController extends Controller with Logging {
           }
       }
 
-//    } else {
-//       ServiceUnavailable
-//    }
+    } else {
+       ServiceUnavailable
+    }
   }
 }

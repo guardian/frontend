@@ -18,19 +18,20 @@ define([
     Video.prototype.url = "/2/m.guardiantest.co.uk/self-hosted/1234567890@x40";
 
     Video.prototype.load = function(format) {
+        var self = this;
         ajax({
             url: this.proxy + format + this.url,
             type: "jsonp",
             jsonpCallbackName: "advert",
             success : function (resp) {
                 if(resp && resp.file) {
-                    common.mediator.emit("module:video:adverts:load", resp.file);
+                    self.play(format, resp);
                 }
             }
         });
     };
 
-    Video.prototype.play = function(format, file) {
+    Video.prototype.play = function(format, data) {
         var sources = this.video.querySelectorAll('source'),
             source;
 
@@ -56,8 +57,16 @@ define([
             this.video.play();
         });
 
-        this.video.src = file;
+        this.video.src = data.file;
         this.video.play();
+
+        if(data.tracking) {
+            this.initTracking(data.tracking);
+        }
+    };
+
+    Video.prototype.tracking = function(tracking) {
+
     };
 
     Video.prototype.init = function() {
