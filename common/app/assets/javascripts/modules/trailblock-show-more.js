@@ -4,11 +4,8 @@
 */
 define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
-    function TrailblockShowMore(options) {
+    function TrailblockShowMore() {
         
-        var opts = options || {},
-            className = opts.className || 'js-show-more';
-
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
                 
@@ -29,8 +26,8 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
         };
 
         // initialise
-        this.init = function() {
-            var trailblocks = common.$g('.' + className);
+        this.init = function(context) {
+            var trailblocks = common.$g('.js-show-more', context);
             // append the cta
             trailblocks.each(this.view.appendCta);
             var that = this;

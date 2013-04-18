@@ -2,61 +2,53 @@ define([
     "common",
     "modules/detect",
     "modules/analytics/video",
-    "modules/adverts/video",
-    "modules/accordion",
-    "modules/story/experiment"
+    "modules/adverts/video"
 ], function(
     common,
     detect,
     Videostream,
-    Advert,
-    Accordion,
-    Experiment
+    Advert
 ) {
 
     var modules = {
 
         initAdverts: function(config) {
-            if(config.switches.videoAdverts && !config.page.blockAds) {
-                var support = detect.getVideoFormatSupport();
-                var a = new Advert({
-                    el: document.getElementsByTagName('video')[0],
-                    support: support
-                }).init();
-            }
-        },
-
-        initAnalytics: function (config) {
-            var v = new Videostream({
-                id: config.page.id,
-                el: document.querySelector('#player video'),
-                ophanUrl: config.page.ophanUrl
-            });
-
-            v.init();
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
+            common.mediator.on('page:video:ready', function(config, context) {
+                if(config.switches.videoAdverts && !config.page.blockAds) {
+                    var support = detect.getVideoFormatSupport();
+                    var a = new Advert({
+                        el: context.querySelector('.player video'),
+                        support: support
+                    }).init();
                 }
             });
-            var e = new Experiment(config);
+        },
 
-            e.init();
+        initAnalytics: function () {
+            common.mediator.on('page:video:ready', function(config, context) {
+                var v = new Videostream({
+                    id: config.page.id,
+                    el: context.querySelector('.player video'),
+                    ophanUrl: config.page.ophanUrl
+                });
+
+                v.init();
+            });
         }
     };
 
 
-    var init = function(req, config, context) {
-        common.mediator.emit("page:video:ready", config, context);
-
-        modules.initAdverts(config);
-        modules.initAnalytics(config);
+    var ready = function (config, context) {
+        ready = function (config, context) {
+            common.mediator.emit("page:video:ready", config, context);
+        };
+        // On first call to this fn only:
+        modules.initAnalytics();
+        modules.initAdverts();
+        ready(config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 });
