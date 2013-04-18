@@ -17,6 +17,11 @@ object ImageController extends Controller with Logging with Implicits {
     profile match {
       case "c" => renderImage(target, mode, model.image.Contributor)
       case "g" => renderImage(target, mode, model.image.Gallery)
+      
+      case "test/flip" => renderImage(target, mode, model.image.Flip)
+      case "test/grey" => renderImage(target, mode, model.image.Grey)
+      case "test/crop" => renderImage(target, mode, model.image.Crop)
+
       case _ => NotFound
     }
   }
@@ -50,15 +55,10 @@ object ImageController extends Controller with Logging with Implicits {
                     }
 
                   case "im4java" =>
-          
+
                     // configuration
-                    val operation = new IMOperation()
-                    operation.addImage
-                    operation.resize(profile.width, profile.height)
-                    operation.quality(profile.compression.toDouble)
-                    operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
-                    
-                    val resized = model.image.Im4Java(image, operation, format)
+                    val operation = profile.operation.addImage(format + ":-") 
+                    val resized = model.image.Transform(image, operation, format)
                   
                     Cached(imageCacheLifetime) {
                       Ok(resized) as contentType
