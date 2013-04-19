@@ -25,7 +25,8 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
     t.copy(team = team)
   }}.map{ table =>
     log.info(s"found ${table.size} league table entries for competition ${competition.fullName}")
-    agent.send(table)
+    agent.update(table)
+    table
   }
 
   def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
@@ -46,6 +47,7 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
       m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
     }
     agent.update(copiedMatches)
+    copiedMatches
   }
 
   def shutdownLiveMatches() { agent.close() }
@@ -68,6 +70,7 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   }}.map{fixtures =>
     log.info(s"found ${fixtures.size} fixtures for competition ${competition.fullName}")
     agent.send(fixtures)
+    fixtures
   }
 
   def add(theMatch: Fixture) { agent.send(old => old :+ theMatch) }
@@ -109,6 +112,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
 
         (results ++ resultsToKeep).distinctBy(_.id)
       }
+      results
     }
   }
 

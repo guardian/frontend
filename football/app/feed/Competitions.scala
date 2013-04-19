@@ -168,10 +168,12 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   }
 
   //one http call updates all competitions
-  def refreshCompetitionData() = FootballClient.competitions.map(_.map { season =>
+  def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
     log.info("Refreshing competition data")
-    competitionAgents.find(_.competition.id == season.id).foreach { agent =>
-      agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+    competitionAgents.find(_.competition.id == season.id).map { agent =>
+      val newCompetition = agent.competition.copy(startDate = Some(season.startDate))
+      agent.update(newCompetition)
+      newCompetition
     }
   })
 
@@ -180,16 +182,16 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     val liveMatches = todaysMatches.filter(_.isLive)
     val results = todaysMatches.filter(_.isResult)
-    competitionAgents.foreach { agent =>
+    competitionAgents.map { agent =>
+
+      //update the results of the competition
+      val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
+      agent.addResultsFromMatchDay(competitionResults)
 
       //update the live matches of the competition
       val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
       log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
       agent.updateLiveMatches(competitionLiveMatches)
-
-      //update the results of the competition
-      val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
-      agent.addResultsFromMatchDay(competitionResults)
     }
   }
 
