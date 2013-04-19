@@ -4,9 +4,10 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
+import play.api.libs.ws.WS
 
 class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
-
+    WS
   feature("League Tables") {
 
     scenario("User cannot filter league table by a competition which isn't a league") {
@@ -19,21 +20,9 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
         val expectedLeagueTableLinks: Array[String] = Array(
           "Premier League",
           "Championship",
-          "League One",
-          "League Two",
-          "Champions League",
-          "Europa League",
-          "La Liga",
-          "Scottish Premier League",
-          "Scottish Division One",
-          "Scottish Division Two",
-          "Scottish Division Three",
-          "World Cup 2014 qualifiers",
           "View all tables"
         )
-
         $("#js-football-league-list a").getTexts().toArray() should be(expectedLeagueTableLinks)
-
       }
 
     }

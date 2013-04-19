@@ -5,23 +5,13 @@ import play.api.{ Application => PlayApplication }
 import conf.{ FootballStatsPlugin, FootballClient, Configuration }
 import pa.Http
 import io.Source
-import play.api.Plugin
 import org.joda.time.DateMidnight
-import concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 import play.api.test.TestBrowser
 import play.api.libs.concurrent.Execution.Implicits._
 
 
-class StubFootballStatsPlugin(app: PlayApplication) extends Plugin {
-  override def onStart() = {
-    FootballClient.http = TestHttp
-    Competitions.refreshCompetitionData()
-    Competitions.refreshMatchDay()
-    Competitions.competitionAgents.filter(_.competition.id != "127").foreach{ agent =>
-      agent.refresh()
-    }
-  }
-}
 
 // Stubs data for Football stats integration tests
 object TestHttp extends Http {
@@ -53,7 +43,9 @@ object TestHttp extends Http {
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit with implicits.Football {
-    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
+
+    FootballClient.http = TestHttp
+
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
 
     override def UK[T](path: String)(block: TestBrowser => T): T = {
@@ -67,30 +59,27 @@ object `package` {
     }
 
     // You do not want this (it is effectively blocking) inside the football plugin
-    def warmup() {
+    def warmup() = Fake{
 
-      super.UK("/football/live"){ browser =>
-        // do nothing
-      }
-
-      val start = System.currentTimeMillis()
-
-      while (!testDataLoaded()){
-        Thread.sleep(100)
-        //give the futures some time to do their thing
-        //ensure we are not stuck in an endless loop if we mess up a test
-        if (System.currentTimeMillis() - start > 10000) throw new RuntimeException("this is taking too long to load test data")
+      if (Competitions.matches.isEmpty) {
+        val competitionsToWarmUp = Seq("100", "101", "300")
+        Competitions.competitions.filter(c => competitionsToWarmUp.contains(c.id)).foreach{ premierleague =>
+          if (premierleague.leagueTable.isEmpty) {
+            await(Competitions.refreshMatchDay())
+            Competitions.competitionAgents.filter(c => competitionsToWarmUp.contains(c.competition.id)).foreach{ agent =>
+              await(agent.refreshFixtures())
+              agent.awaitFixtures()
+              await(agent.refreshResults())
+              agent.awaitResults()
+              await(agent.refreshLeagueTable())
+              agent.awaitLeagueTable()
+            }
+          }
+        }
       }
     }
 
-    //ensures that the data needed to run our tests has loaded
-    // it is all async
-    private def testDataLoaded() = {
-      Competitions.withId("100").map(_.matches.exists(_.isFixture)).getOrElse(false) &&
-      Competitions.withId("100").map(_.matches.exists(_.isResult)).getOrElse(false) &&
-      Competitions.withId("100").map(_.matches.exists(_.isLive)).getOrElse(false) &&
-      Competitions.withId("100").map(_.hasLeagueTable).getOrElse(false) &&
-      Competitions.matchDates.exists(_ == new DateMidnight(2012, 10, 15))
-    }
+    private def await[T](f: Future[T]) = Await.ready(f, 10.seconds)
+
   }
 }
