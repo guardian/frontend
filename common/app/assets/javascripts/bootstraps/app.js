@@ -87,7 +87,7 @@ define('bootstraps/app', [
             r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
             r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
 
-            r.get('/stories/:id', function(req) { Story.init(req, config, context);});
+            r.get('/stories/:id', function(req) { Story.init(config, context);});
 
             var pageRoute = function(config, context) {
                 //Articles
