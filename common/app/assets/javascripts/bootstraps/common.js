@@ -189,18 +189,22 @@ define([
     };
 
     var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAnalyticsAndAbTesting(config, context);
-            modules.loadAdverts();
-            modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar(config);
-            
-            common.mediator.emit("page:common:deferred:loaded", config, context);
-        };
         common.deferToLoadEvent(function() {
+            deferrable = function (config, context) {
+                // TODO: move these up into the first-call scope by making them singletons
+                modules.initialiseAnalyticsAndAbTesting(config, context);
+                modules.cleanupCookies(context);
+                modules.showSharedWisdomToolbar(config);
+                
+                common.mediator.emit("page:common:deferred:loaded", config, context);
+            };
+            modules.loadAdverts();
+
             deferrable(config, context);
         });
+
+        // Set to noop, so it can't be re-eval'd until it's redefined on page load (above).
+        deferrable = function () {};
     };
 
     var ready = function (config, context) {
