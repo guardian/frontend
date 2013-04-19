@@ -4,14 +4,14 @@ define(['common', 'bean', 'modules/gallery', 'bonzo'], function(common, bean, Ga
 
         window.ontouchstart = {}; // this tricks the gallery into thinking we support touch events
 
-        var g = new Gallery().init();
-        var nextLink = document.getElementById('js-gallery-next');
-        var prevLink = document.getElementById('js-gallery-prev');
+        var g = new Gallery(document).init();
+        var nextLink = document.querySelector('.js-gallery-next');
+        var prevLink = document.querySelector('.js-gallery-prev');
         var selectedItemClass = 'js-current-gallery-slide';
         var initialSlide = document.querySelector('.' + selectedItemClass);
-        var firstSlide = document.getElementById('js-gallery-item-1');
-        var nextSlide = document.getElementById('js-gallery-item-2');
-        var counter = document.getElementById('js-gallery-index');
+        var firstSlide = document.querySelector('.js-gallery-item-1');
+        var nextSlide = document.querySelector('.js-gallery-item-2');
+        var counter = document.querySelector('.js-gallery-index');
 
         // check the next slide is preloaded
         it("should preload the next image in the gallery for swipe users", function(){

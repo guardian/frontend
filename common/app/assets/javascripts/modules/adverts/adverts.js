@@ -106,7 +106,7 @@ function (
             var slot =  '<div id="ad-slot-middle-banner-ad" data-link-name="ad slot middle-banner-ad"';
                 slot += ' data-base="x55" data-median="x55" class="ad-slot"><div class="ad-container"></div></div>';
 
-            bonzo(qwery('#front-trailblock-commentisfree li')[1]).after(slot);
+            bonzo(qwery('.front-trailblock-commentisfree li')[1]).after(slot);
         }
     }
 
