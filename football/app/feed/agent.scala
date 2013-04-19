@@ -20,14 +20,12 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
 
   private lazy val agent = play_akka.agent[Seq[LeagueTableEntry]](Nil)
 
-  def refreshLeagueTable() {
-    FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
-      val team = t.team.copy(name = TeamName(t.team))
-      t.copy(team = team)
-    }}.map{ table =>
-      log.info(s"found ${table.size} league table entries for competition ${competition.fullName}")
-      agent.send(table)
-    }
+  def refreshLeagueTable() = FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
+    val team = t.team.copy(name = TeamName(t.team))
+    t.copy(team = team)
+  }}.map{ table =>
+    log.info(s"found ${table.size} league table entries for competition ${competition.fullName}")
+    agent.send(table)
   }
 
   def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
@@ -61,15 +59,13 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   private lazy val agent = play_akka.agent[Seq[Fixture]](Nil)
 
-  def refreshFixtures() {
-    FootballClient.fixtures(competition.id).map{ _.map { f =>
-      val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
-      val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
-      f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
-    }}.map{fixtures =>
-      log.info(s"found ${fixtures.size} fixtures for competition ${competition.fullName}")
-      agent.send(fixtures)
-    }
+  def refreshFixtures() = FootballClient.fixtures(competition.id).map{ _.map { f =>
+    val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
+    val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
+    f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+  }}.map{fixtures =>
+    log.info(s"found ${fixtures.size} fixtures for competition ${competition.fullName}")
+    agent.send(fixtures)
   }
 
   def add(theMatch: Fixture) { agent.send(old => old :+ theMatch) }
@@ -87,7 +83,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
 
   private lazy val agent = play_akka.agent[Seq[FootballMatch]](Nil)
 
-  def refreshResults() {
+  def refreshResults() = {
 
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
