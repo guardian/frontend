@@ -23,10 +23,11 @@ object ImgSrc {
 
   def apply(image: Image, imageType: ImageType): String = image.url.map{ url => apply(url, imageType) }.getOrElse("")
 
-  def apply(url: String, imageType: ImageType): String = if (ImageServerSwitch.isSwitchedOn) {
+  def apply(url: String, imageType: ImageType): String = {
     val uri = new URI(url)
-    s"$imageHost/${imageType.prefix}${uri.getPath}"
-  } else s"${url}"
-
-
+    if (ImageServerSwitch.isSwitchedOn && uri.getHost == "static.guim.co.uk") {
+      s"$imageHost/${imageType.prefix}${uri.getPath}"
+    } else s"${url}"
+  }
 }
+

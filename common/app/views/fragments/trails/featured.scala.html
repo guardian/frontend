@@ -12,11 +12,11 @@
 
 @trail.mainPicture(width=220).map{ smallCrop =>
     <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
-        <img class="maxed" src="@smallCrop.url"
+        <img class="maxed" src="@smallCrop.path"
             data-force-upgrade="true"
             data-thumb-width="@smallCrop.width"
             @trail.mainPicture.map { largeCrop =>
-                data-fullsrc="@largeCrop.url"
+                data-fullsrc="@largeCrop.path"
                 data-full-width="@largeCrop.width"
             }
             itemprop="contentURL"

@@ -18,6 +18,7 @@ import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
+import views.support.{Naked, ImgSrc}
 
 sealed trait Style {
   val className: String
@@ -143,6 +144,8 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
 
       fig.getElementsByTag("img").foreach { img =>
         img.attr("itemprop", "contentURL")
+        val src = img.attr("src")
+        img.attr("src", ImgSrc(src, Naked))
         Option(img.attr("width")).filter(_.isInt) foreach { width =>
           fig.attr("class", width.toInt match {
             case width if width <= 220 => "img-base inline-image"
