@@ -2,12 +2,12 @@ define(['common', 'bean', 'modules/gallery', 'bonzo'], function(common, bean, Ga
 
     describe("Gallery", function() {
 
-        var g = new Gallery().init();
-        var nextLink = document.getElementById('js-gallery-next');
-        var prevLink = document.getElementById('js-gallery-prev');
+        var g = new Gallery(document).init();
+        var nextLink = document.querySelector('.js-gallery-next');
+        var prevLink = document.querySelector('.js-gallery-prev');
         var selectedItemClass = 'js-current-gallery-slide';
         var initialSlide = document.querySelector('.' + selectedItemClass);
-        var counter = document.getElementById('js-gallery-index');
+        var counter = document.querySelector('.js-gallery-index');
 
         // taken from http://stackoverflow.com/a/10520017/176615
         function triggerKeypress(k) {

@@ -76,9 +76,9 @@ define('bootstraps/app', [
             modules.showDebug();
 
             //Fronts
-            r.get('/', function(req) {        Front.init(req, config, context); });
-            r.get('/sport', function(req) {   Front.init(req, config, context); });
-            r.get('/culture', function(req) { Front.init(req, config, context); });
+            r.get('/', function(req) {        Front.init(config, context); });
+            r.get('/sport', function(req) {   Front.init(config, context); });
+            r.get('/culture', function(req) { Front.init(config, context); });
 
             //Football
             r.get('/football', function(req) {                                Football.init(req, config, context); });
@@ -96,11 +96,11 @@ define('bootstraps/app', [
                 }
 
                 if (config.page.contentType === "Video") {
-                    Video.init({url: window.location.pathName}, config, context);
+                    Video.init(config, context);
                 }
 
                 if (config.page.contentType === "Gallery") {
-                    Gallery.init({url: window.location.pathName}, config, context);
+                    Gallery.init(config, context);
                 }
 
                 //Kick it all off
