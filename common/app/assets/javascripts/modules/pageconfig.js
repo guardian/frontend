@@ -24,10 +24,11 @@ define(['modules/pad', "common"], function (pad, common) {
                 // the date nicely formatted and padded for use as part of a url
                 // looks like    2012/04/31
                 webPublicationDateAsUrlPart: function(){
-                    if(this.webPublicationDate){
-                        return this.webPublicationDate.getFullYear() + '/' +
-                            pad(this.webPublicationDate.getMonth() + 1, 2) + '/' +
-                            pad(this.webPublicationDate.getDate(), 2);
+                    if(this.page.webPublicationDate){
+                        var pubDate = new Date(this.page.webPublicationDate);
+                        return pubDate.getFullYear() + '/' +
+                            pad(pubDate.getMonth() + 1, 2) + '/' +
+                            pad(pubDate.getDate(), 2);
                     }
                 }
             },

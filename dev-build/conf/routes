@@ -10,13 +10,11 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 
 #Core nav
-GET    /most-read.json                                      controllers.MostPopularController.renderJson(path = "")
-GET    /most-read/*path.json                                controllers.MostPopularController.renderJson(path)
-GET    /most-read                                           controllers.MostPopularController.renderNoJavascript(path = "")
-GET    /most-read/*path                                     controllers.MostPopularController.renderNoJavascript(path)
+GET    /most-read                                           controllers.MostPopularController.render(path = "")
+GET    /most-read/*path                                     controllers.MostPopularController.render(path)
 GET    /top-stories                                         controllers.TopStoriesController.render()
-GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
-GET     /related/*path                                      controllers.RelatedController.render(path)
+GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
+GET    /related/*path                                       controllers.RelatedController.render(path)
 
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
@@ -69,7 +67,7 @@ GET     /_warmup                                            controllers.FrontCon
 GET     /_up                                                controllers.FrontController.isUp()
 GET     /                                                   controllers.FrontController.render(path = "front")
 GET     /$path<culture|sport>                               controllers.FrontController.render(path)
-GET     /$path<culture|sport>.json                          controllers.FrontController.renderJson(path)
+GET     /$path<culture|sport>/trails                        controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
@@ -78,16 +76,15 @@ GET     /$path<.*/video/.*>                                 controllers.VideoCon
 GET     /$path<.*/gallery/.*>                               controllers.GalleryController.render(path)
 
 #Tag
-GET     /$path<[\w\d-]*/[\w\d-]*>                           controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*>.json                      controllers.TagController.renderJson(path)
+# note: reg ex so this doesn't interfer with $section/trails
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json             controllers.TagController.renderJson(path)
 
 #Section
 GET		/sections							               controllers.SectionsController.render()
 # culture and sport sections now live in front
 GET    /$path<(?!culture|sport)[\w\d-]*>                   controllers.SectionController.render(path)
-GET    /$path<(?!culture|sport)[\w\d-]*>.json              controllers.SectionController.renderJson(path)
+GET    /$path<(?!culture|sport)[\w\d-]*>/trails            controllers.SectionController.renderTrails(path)
 
 #Articles
 GET     /*path                                             controllers.ArticleController.render(path)

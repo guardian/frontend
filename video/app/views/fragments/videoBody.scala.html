@@ -1,0 +1,40 @@
+@(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+
+<article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
+         itemscope itemtype="@video.schemaType" role="main">
+
+    <header class="article-head">
+        @fragments.dateline(video.webPublicationDate, video.isLive, edition)
+        @fragments.headline(video.headline)
+    </header>
+
+
+    <div class="player">
+        <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
+            @video.encodings.map{ encoding =>
+                <source src="@encoding.url" />
+            }
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+</article>
+
+<div class="gallery-byline">
+    @fragments.byline(video.byline, video)
+</div>
+<div class="box-indent video-standfirst">
+    @fragments.standfirst(video)
+</div>
+
+@fragments.social(video.canonicalUrl.get, video.headline)
+
+@if(storyPackage.nonEmpty) {
+    <aside role="complementary">
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    </aside>
+} else {
+    <aside class="js-related" role="complementary"></aside>
+}
+
+@fragments.mostPopularPlaceholder(video.section)
