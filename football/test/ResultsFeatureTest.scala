@@ -33,7 +33,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".match-status").getText should include("FT")
 
         And("I should see results for previous days")
-        $(".competitions-date").getTexts should contain("Sunday 7 October 2012")
+        $(".competitions-date").getTexts should contain("Friday 19 October 2012")
         $(".competitions-date").getTexts should contain("Saturday 6 October 2012")
       }
     }
@@ -45,7 +45,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see the 'previous'")
 
-        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/03")
+        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/02")
       }
     }
 

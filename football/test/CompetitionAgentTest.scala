@@ -59,6 +59,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
+    await(TestCompetitions.refreshCompetitionData())
     await(TestCompetitions.refreshMatchDay())
 
     TestCompetitions.matches.filter(_.isLive).map(_.id) should contain ("3518286")
