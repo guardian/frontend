@@ -27,7 +27,7 @@
         @fragments.matchesList(model, model.pageType)
 
         @if(model.previousPage.isDefined || model.nextPage.isDefined) {
-            <div id="js-matches-nav" class="matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
+            <div class="js-matches-nav matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
                 @model.previousPage.map{url => <a href="@url" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
                 @model.nextPage.map{url => <a href="@url" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
             </div>

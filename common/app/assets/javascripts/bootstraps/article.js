@@ -1,13 +1,11 @@
 define([
     "common",
 
-    "modules/expandable",
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading"
 ], function (
     common,
-    Expandable,
     AutoUpdate,
     MatchNav,
     Reading
