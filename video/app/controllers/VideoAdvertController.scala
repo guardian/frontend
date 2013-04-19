@@ -36,9 +36,9 @@ object VideoAdvertController extends Controller with Logging {
     )).as[JsObject]
   }
 
-  def fetch(format: String, path: String) = Action { implicit request =>
+  def fetch(format: String) = Action { implicit request =>
 
-    val url: String = "http://oas.guardian.co.uk/" + path
+    val url: String = "http://oas.guardian.co.uk//2/m.guardiantest.co.uk/self-hosted/1234567890@x40"
 
     if(CommonSwitches.VideoAdvertSwitch.isSwitchedOn) {
 

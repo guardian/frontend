@@ -21,13 +21,12 @@ define([
         this.hasFired = false;
     }
 
-    Video.prototype.proxy = "/oas/";
-    Video.prototype.url = "/2/m.guardiantest.co.uk/self-hosted/1234567890@x40";
+    Video.prototype.url = "/video/ad/";
 
     Video.prototype.load = function(format) {
         var self = this;
         ajax({
-            url: this.proxy + format + this.url,
+            url: this.url + format,
             type: "jsonp",
             jsonpCallbackName: "advert",
             success : function (resp) {
@@ -63,40 +62,46 @@ define([
             bean.off(self.video, "ended error");
             self.video.src = source;
             self.video.play();
-            window.clearInterval(self.timer);
+            common.$g(this.video).removeClass("hascursor");
+            if(self.events.complete && !self.events.complete.hasFired) {
+                self.logEvent(self.events.complete);
+                clearInterval(self.timer);
+            }
         });
 
         this.video.src = data.file;
         this.video.play();
 
-        if(data.tracking) {
-            this.initTracking(data.tracking);
+        if(data.trackingEvents) {
+            this.initTracking(data.trackingEvents);
         }
     };
 
     Video.prototype.initTracking = function(tracking) {
-       var self;
+        var self = this;
 
-       for(var event in tracking) {
+        for(var event in tracking) {
            this.events[event] = new VideoEvent(tracking[event]);
-       }
+        }
 
-       if(this.events.impression) { this.logEvent(this.events.impression); }
-       if(this.events.start) { this.logEvent(this.events.start); }
+        if(this.events.impression) { this.logEvent(this.events.impression); }
+        if(this.events.start) { this.logEvent(this.events.start); }
+        if(this.events.clickThrough) {
+            common.$g(this.video).addClass("has-cursor");
+            bean.on(self.video, "click", function(){
+                bean.off(self.video, "click");
+                window.open(self.events.clickThrough.url);
+            });
+        }
 
        this.timer = setInterval(function() {
            var progress = self.getProgress(),
                duration = self.getDuration();
 
-           if(progress > (duration/2) && !self.events.midPoint.hasFired) {
-               self.logEvent(self.events.midPoint);
+           if(progress > (duration/2) && !self.events.midpoint.hasFired) {
+               self.logEvent(self.events.midpoint);
            }
-
-           if(progress >= duration && !self.events.complete.hasFired) {
-               self.logEvent(self.events.complete);
-               clearInterval(self.timer);
-           }
-       });
+       }, 1000);
     };
 
     Video.prototype.getProgress = function() {
@@ -109,8 +114,8 @@ define([
 
     Video.prototype.logEvent = function(event) {
         var px = new Image();
-        px.src = event.src; px.width = 0; px.height = 0;
-        document.appendChild(px);
+        px.src = event.url; px.width = 0; px.height = 0;
+        document.body.appendChild(px);
         event.hasFired = true;
     };
 
