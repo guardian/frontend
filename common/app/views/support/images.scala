@@ -13,6 +13,10 @@ object Contributor extends ImageType {
   val prefix = "c"
 }
 
+object Naked extends ImageType {
+  val prefix = "n"
+}
+
 object ImgSrc {
 
   val imageHost = Configuration.images.path
