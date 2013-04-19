@@ -42,7 +42,7 @@ define([
                 delay;
 
             // Remove the 'false' clause once Omniture guys support the localStorage approach...
-            if (false && isSameHost && !isSamePage) {
+            if (isSameHost && !isSamePage) {
                 // Came from a link to a new page on the same host.
                 // Do session storage rather than an omniture track.
                 storeObj = {
@@ -134,6 +134,19 @@ define([
 
             if (window.location.hash === '#popup:homescreen') {
                 s.eVar38 = 'popup:homescreen';
+            }
+
+            /* Retrieve navigation interaction data */
+            var ni = localStorage.getItem('gu.analytics.referrerVars');
+            if (ni) {
+                ni = JSON.parse(ni);
+                var d = new Date().getTime();
+                if (d - ni.time < 60 * 1000) { // One minute
+                    s.eVar24 = ni.pageName;
+                    s.eVar37 = ni.tag;
+                    s.events = s.apl(s.events,'event37',',');
+                }
+                localStorage.removeItem('gu.analytics.referrerVars');
             }
         };
 
