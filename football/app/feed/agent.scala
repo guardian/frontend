@@ -155,12 +155,15 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
     shutdownResults()
     shutdownLiveMatches()
     shutdownLeagueTables()
+    agent.close()
   }
 
   def await() {
+    quietly(agent.await(Timeout(5000)))
     awaitFixtures()
     awaitResults()
     awaitLeagueTable()
+    awaitLiveMatches()
   }
 
   //used for adding test data

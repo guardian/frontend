@@ -58,7 +58,6 @@ object `package` {
       goTo(path, usHost)(block)
     }
 
-    // You do not want this (it is effectively blocking) inside the football plugin
     def warmup() = Fake{
 
       if (Competitions.matches.isEmpty) {
@@ -74,10 +73,7 @@ object `package` {
               await(fixtures)
               await(results)
               await(table)
-              agent.awaitResults()
-              agent.awaitFixtures()
-              agent.awaitLeagueTable()
-              agent.awaitLiveMatches()
+              agent.await()
             }
           }
         }
