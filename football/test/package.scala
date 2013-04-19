@@ -65,12 +65,17 @@ object `package` {
 
         await(Competitions.refreshMatchDay())
         Competitions.competitionAgents.par.foreach{ agent =>
+          // first await is to load live matches
+          agent.await()
+
           val fixtures = agent.refreshFixtures()
           val results = agent.refreshResults()
           val table = agent.refreshLeagueTable()
           await(fixtures)
           await(results)
           await(table)
+
+          // second await is everything else
           agent.await()
         }
       }

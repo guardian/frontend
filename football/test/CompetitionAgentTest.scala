@@ -25,6 +25,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
 
     TestCompetitions.competitionAgents.foreach{ agent =>
+      agent.await()
       await(agent.refreshFixtures())
       agent.await()
     }
@@ -45,6 +46,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     await(TestCompetitions.refreshCompetitionData())
 
     TestCompetitions.competitionAgents.foreach{ agent =>
+      agent.await()
       await(agent.refreshResults())
       agent.await()
     }
@@ -85,6 +87,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     await(TestCompetitions.refreshCompetitionData())
 
     TestCompetitions.competitionAgents.foreach{ agent =>
+      agent.await()
       await(agent.refreshLeagueTable())
       agent.await()
     }

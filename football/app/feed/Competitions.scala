@@ -180,7 +180,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     val liveMatches = todaysMatches.filter(_.isLive)
     val results = todaysMatches.filter(_.isResult)
-    competitionAgents.filter(_.competition.descriptionFullyLoaded).foreach { agent =>
+    competitionAgents.foreach { agent =>
 
       //update the live matches of the competition
       val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
