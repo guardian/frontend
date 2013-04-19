@@ -40,7 +40,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
         };
 
         // initialise
-        this.init = function(context) {
+        this.init = function() {
             var that = this,
                 trailblocks = common.$g('.' + className, context)
                     // append the cta
