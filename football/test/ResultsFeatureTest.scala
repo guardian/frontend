@@ -45,7 +45,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see the 'previous'")
 
-        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/02")
+        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/03")
       }
     }
 

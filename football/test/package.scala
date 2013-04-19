@@ -62,6 +62,7 @@ object `package` {
     def warmup() = Fake{
 
       if (Competitions.matches.isEmpty) {
+        await(Competitions.refreshCompetitionData())
         val competitionsToWarmUp = Seq("100", "101", "300")
         Competitions.competitions.filter(c => competitionsToWarmUp.contains(c.id)).foreach{ premierleague =>
           if (premierleague.leagueTable.isEmpty) {
