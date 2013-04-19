@@ -88,8 +88,8 @@ define([
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
             common.$g(this.video).addClass("has-cursor");
-            bean.on(self.video, "click", function(){
-                bean.off(self.video, "click");
+            bean.on(self.video, "click touchstart", function(){
+                bean.off(self.video, "click touchstart");
                 window.open(self.events.clickThrough.url);
             });
         }
