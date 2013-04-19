@@ -53,6 +53,8 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
   def add(theMatch: MatchDay) { agent.send(old => old :+ theMatch) }
 
   def liveMatches = agent()
+
+  def awaitLiveMatches() { quietly { agent.await(Timeout(5000)) } }
 }
 
 trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {

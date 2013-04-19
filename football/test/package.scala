@@ -68,12 +68,16 @@ object `package` {
           if (premierleague.leagueTable.isEmpty) {
             await(Competitions.refreshMatchDay())
             Competitions.competitionAgents.filter(c => competitionsToWarmUp.contains(c.competition.id)).foreach{ agent =>
-              await(agent.refreshFixtures())
-              agent.awaitFixtures()
-              await(agent.refreshResults())
+              val fixtures = agent.refreshFixtures()
+              val results = agent.refreshResults()
+              val table = agent.refreshLeagueTable()
+              await(fixtures)
+              await(results)
+              await(table)
               agent.awaitResults()
-              await(agent.refreshLeagueTable())
+              agent.awaitFixtures()
               agent.awaitLeagueTable()
+              agent.awaitLiveMatches()
             }
           }
         }
