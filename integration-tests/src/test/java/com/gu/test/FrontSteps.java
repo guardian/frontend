@@ -59,11 +59,13 @@ public class FrontSteps {
         // horrible xpath to find the sections with a certain title
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
+        // Wait for javascript to inject button.cta
+        webDriver.waitForElement(By.cssSelector("button.cta"));
         WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
         assertEquals(ctaText, cta.getText());
         cta.click();
         // wait for second list of top stories to load in
-        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
+        webDriver.waitForElement(By.xpath(trailblockXpath + "/ul[2]"));
     }
 	
 }

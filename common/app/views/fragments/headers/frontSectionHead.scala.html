@@ -6,9 +6,9 @@
         </a>
     </h1>
     @if(edition != "false") { 
-    <button class="js-visible js-toggle-trailblock toggle-trailblock" data-zone-name="@edition.toLowerCase()"
+    <button class="js-visible js-toggle-trailblock toggle-trailblock js-trigger-@SafeName(description)"
+        data-zone-name="@edition.toLowerCase()"
         data-block-name="@SafeName(description)"
-        id="js-trigger-@SafeName(description)"
         data-link-name="Hide">Hide</button>
     }
 </div>

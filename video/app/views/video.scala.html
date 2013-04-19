@@ -14,7 +14,7 @@
         </header>
 
 
-        <div id="player">
+        <div class="player">
             <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                 @video.encodings.map{ encoding =>
                     <source src="@encoding.url" />
@@ -35,10 +35,12 @@
     @fragments.social(video.canonicalUrl.get, video.headline)
 
     @if(storyPackage.nonEmpty) {
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        <aside role="complementary">
+            @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        </aside>
     } else {
-        <div id="js-related" role="complementary"></div>
+        <aside class="js-related" role="complementary"></aside>
     }
-    @fragments.mostPopularPlaceholder(video.section)
 
+    @fragments.mostPopularPlaceholder(video.section)
 }

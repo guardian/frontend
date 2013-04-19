@@ -33,7 +33,7 @@ define(['modules/detect', 'common'], function(detect, common){
                     history.pushState(
                         params.state || {},
                         params.title || window.title,
-                        params.querystring
+                        params.querystring + window.location.hash
                     );
                 }
             }
