@@ -37,10 +37,8 @@ object VideoController extends Controller with Logging {
     }.recover{suppressApiNotFound}
   }
 
-  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage, Site(request).edition)
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage, Site(request).edition)
-    renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
-  }
-    
+  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
+    Cached(model.video) {
+      Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
+    }
 }

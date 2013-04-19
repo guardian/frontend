@@ -6,19 +6,10 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
 class ArticleControllerTest extends FlatSpec with ShouldMatchers {
-  
-  val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
 
   "Article Controller" should "200 when content type is article" in Fake {
-    val result = controllers.ArticleController.render(articleUrl)(TestRequest())
+    val result = controllers.ArticleController.render("environment/2012/feb/22/capitalise-low-carbon-future")(TestRequest())
     status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, articleUrl + "?callback=foo").withHeaders("host" -> "localhost:9000")
-    val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
   }
 
   it should "redirect to desktop when content type is not supported in app" in Fake {

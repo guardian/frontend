@@ -4,10 +4,6 @@ import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
 import play.api.mvc.Result
 import play.api.libs.concurrent.Execution.Implicits._
-import play.api.templates.Html
-import model.Cached
-import play.api.mvc.RequestHeader
-import com.gu.management.Switchable
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
@@ -50,30 +46,6 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: Throwable =>
       log.error(s"Failing quietly on: ${e.getMessage}", e)
       default
-  }
-  
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
-  }
-  
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(metaData, switches, jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
-  }
-  
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
   }
 }
 
