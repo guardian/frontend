@@ -6,6 +6,7 @@ import org.scala_tools.time.Imports._
 import common.Reference
 import org.jsoup.Jsoup
 import collection.JavaConversions._
+import views.support.{Naked, ImgSrc}
 
 class Content(
     delegate: ApiContent,
@@ -50,6 +51,7 @@ class Content(
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
+  override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
 
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
 

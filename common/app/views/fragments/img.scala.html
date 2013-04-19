@@ -1,10 +1,10 @@
 @(mainPicture: Image, smallCrop: Image)
 
 <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-    <img class="maxed main-image" src="@smallCrop.url"
+    <img class="maxed main-image" src="@smallCrop.path"
         data-force-upgrade="true"
         data-thumb-width="@smallCrop.width"
-        data-fullsrc="@mainPicture.url"
+        data-fullsrc="@mainPicture.path"
         data-full-width="@mainPicture.width"
         itemprop="contentURL"
         alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"

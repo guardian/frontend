@@ -13,6 +13,7 @@ trait Trail extends Images with Tags {
   def section: String //sectionId
   def sectionName: String
   def thumbnail: Option[String] = None
+  def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def storyItems: Option[StoryItems] = None
 

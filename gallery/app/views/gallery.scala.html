@@ -51,9 +51,9 @@
                             <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
                                 src="@image.path" data-width="@image.width" data-height="@image.height" />
                     } else {
-
                         <li class="js-gallery-item-@row.rowNum is-off" data-image="false" data-index="@row.rowNum"
                         data-total="@gallery.size" data-src="@image.path" data-fullsrc='@image.path'
+
                         data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
                         data-width="@image.width" data-height="@image.height">
                     }
