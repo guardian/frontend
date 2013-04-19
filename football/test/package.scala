@@ -62,20 +62,16 @@ object `package` {
 
       if (Competitions.matches.isEmpty) {
         await(Competitions.refreshCompetitionData())
-        val competitionsToWarmUp = Seq("100", "101", "300")
-        Competitions.competitions.filter(c => competitionsToWarmUp.contains(c.id)).foreach{ premierleague =>
-          if (premierleague.leagueTable.isEmpty) {
-            await(Competitions.refreshMatchDay())
-            Competitions.competitionAgents.filter(c => competitionsToWarmUp.contains(c.competition.id)).foreach{ agent =>
-              val fixtures = agent.refreshFixtures()
-              val results = agent.refreshResults()
-              val table = agent.refreshLeagueTable()
-              await(fixtures)
-              await(results)
-              await(table)
-              agent.await()
-            }
-          }
+
+        await(Competitions.refreshMatchDay())
+        Competitions.competitionAgents.par.foreach{ agent =>
+          val fixtures = agent.refreshFixtures()
+          val results = agent.refreshResults()
+          val table = agent.refreshLeagueTable()
+          await(fixtures)
+          await(results)
+          await(table)
+          agent.await()
         }
       }
     }

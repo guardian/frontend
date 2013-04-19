@@ -23,9 +23,10 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     await(TestCompetitions.refreshCompetitionData())
 
+
     TestCompetitions.competitionAgents.foreach{ agent =>
       await(agent.refreshFixtures())
-      agent.awaitFixtures()
+      agent.await()
     }
 
     TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3519484")
@@ -45,7 +46,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     TestCompetitions.competitionAgents.foreach{ agent =>
       await(agent.refreshResults())
-      agent.awaitResults()
+      agent.await()
     }
 
     TestCompetitions.matches.filter(_.isResult).map(_.id) should contain ("3528302")
@@ -65,7 +66,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     await(TestCompetitions.refreshMatchDay())
 
     TestCompetitions.competitionAgents.foreach{ agent =>
-      agent.awaitLiveMatches()
+      agent.await()
     }
 
     TestCompetitions.matches.filter(_.isLive).map(_.id) should contain ("3518286")
@@ -81,12 +82,12 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
+    await(TestCompetitions.refreshCompetitionData())
+
     TestCompetitions.competitionAgents.foreach{ agent =>
       await(agent.refreshLeagueTable())
-      agent.awaitLeagueTable()
+      agent.await()
     }
-
-    await(TestCompetitions.refreshCompetitionData())
 
     TestCompetitions.competitions(0).leagueTable(0).team.id should be ("4")
 

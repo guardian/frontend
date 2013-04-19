@@ -48,7 +48,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
         When("I should see a link to the next fixtures")
 
-        findFirst("[data-link-name=next]").getAttribute("href") should endWith("/football/fixtures/2012/oct/27")
+        findFirst("[data-link-name=next]").getAttribute("href") should endWith("/football/fixtures/2012/oct/24")
 
       }
     }
