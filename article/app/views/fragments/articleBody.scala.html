@@ -1,61 +1,12 @@
-@(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+@(article: Article)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-1">
-    <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
-</h2>
+@* <!-- ordering of cleaners is important --> *@
 
-<article id="article" class="article @if(article.isLive){is-live}"
-    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-
-    <header class="article-head">
-        @fragments.dateline(article.webPublicationDate, article.isLive, edition)
-
-        @fragments.headline(article.headline)
-
-        @fragments.standfirst(article)
-    </header>
-
-    @fragments.witnessCallToAction(article)
-
-    <div class="after-header"></div>
-
-    @if(!article.isLive  && !article.hasVideoAtTop) {
-        @article.mainPicture.map{ mainPicture =>
-            @article.mainPicture(width=220).map{ smallCrop =>
-                @fragments.img(mainPicture, smallCrop)
-            }
-        }
-    }
-
-    @fragments.byline(article.byline, article)
-
-    @if(article.isLive) {
-        @fragments.autoUpdate()
-    }
-
-    <div class="article-body from-content-api @if(article.isLive) {live-blog}"
-        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-        @* <!-- ordering of cleaners is important --> *@
-        @withJsoup(BulletCleaner(article.body))(
-            PictureCleaner(article),
-            InBodyLinkCleaner("in body link"),
-            BlockNumberCleaner,
-            TweetCleaner,
-            WitnessCleaner,
-            VideoPosterCleaner(article.videoAssets)
-        )
-    </div>
-    
-</article>
-
-@fragments.social(article.canonicalUrl.get, article.headline)
-
-@if(storyPackage.nonEmpty) {
-    <aside role="complementary">
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-    </aside>
-} else {
-    <aside class="js-related" role="complementary"></aside>
-}
-
-<div   class="js-popular" role="complementary"></div>
+@withJsoup(BulletCleaner(article.body))(
+    PictureCleaner(article),
+    InBodyLinkCleaner("in body link"),
+    BlockNumberCleaner,
+    TweetCleaner,
+    WitnessCleaner,
+    VideoPosterCleaner(article.videoAssets)
+)

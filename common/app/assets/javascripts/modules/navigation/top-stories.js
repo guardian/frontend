@@ -6,7 +6,7 @@ define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, 
 
         this.load = function (config, context) {
 
-            var url = '/top-stories/trails?page-size=10&view=link',
+            var url = '/top-stories.json?page-size=10&view=link',
                 container = context.querySelector('.nav-popup-topstories');
 
             if(container) {

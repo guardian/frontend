@@ -42,10 +42,12 @@ object ArticleController extends Controller with Logging {
 
   }
 
-  private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.article(model.article, model.storyPackage, model.edition)
-    val jsonResponse = views.html.fragments.articleBody(model.article, model.storyPackage, model.edition)
-    renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
-  }
-  
+  private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(views.html.fragments.articleBody(model.article))
+    } getOrElse {
+      Cached(model.article)(
+        Ok(Compressed(views.html.article(model.article, model.storyPackage, model.edition)))
+      )
+    }
 }

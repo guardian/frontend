@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import conf._
 import feed.{ CompetitionSupport, Competitions }
 import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
@@ -50,8 +49,6 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(
-          resultsPage.page,
-          Switches.all,
           "html" -> views.html.fragments.matchesList(resultsPage),
           "more" -> Html(previousPage.getOrElse("")))
       }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
@@ -147,10 +144,11 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
         s"${team.name} results",
         "GFE:Football:automatic:team results"
       )
-      
-      val htmlResponse = views.html.teamFixtures(page, filters, upcomingFixtures)
-      val jsonResponse = views.html.fragments.teamFixturesBody(page, filters, upcomingFixtures)
-      renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+
+      Cached(60) {
+        val html = views.html.teamFixtures(page, filters, upcomingFixtures)
+        Ok(Compressed(html))
+      }
     }.getOrElse(NotFound)
   }
 }

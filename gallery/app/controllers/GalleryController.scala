@@ -49,10 +49,8 @@ object GalleryController extends Controller with Logging {
 
   }
 
-  private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
-    val jsonResponse = views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
-    renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
-  }
-    
+  private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =
+    Cached(model.gallery) {
+      Ok(Compressed(views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)))
+    }
 }
