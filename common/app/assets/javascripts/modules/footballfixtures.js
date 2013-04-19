@@ -2,7 +2,17 @@
     Module: footballfixtures.js
     Description: Used to load a list of football fixtures of a given competition and append to DOM
 */
-define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
+define([
+    'common',
+    'ajax',
+    'bonzo',
+    'modules/expandable'
+], function (
+    common,
+    ajax,
+    bonzo,
+    Expandable
+) {
     /*
         @param {Object} options hash of configuration options:
             prependTo   : {DOMElement}  DOM element to prepend component to
@@ -26,7 +36,12 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 bonzo(options.prependTo).after(html);
                 common.mediator.emit('modules:footballfixtures:render');
                 if(options.expandable) {
-                    common.mediator.emit('modules:footballfixtures:expand', 'front-competition-fixtures');
+                    var expandable = new Expandable({
+                        dom: 'front-competition-fixtures',
+                        expanded: false
+                    });
+                    expandable.init();
+                    common.mediator.emit('modules:footballfixtures:expand');
                 }
             }
         };

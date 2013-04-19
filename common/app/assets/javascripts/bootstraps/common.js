@@ -177,7 +177,7 @@ define([
             }
         },
 
-        initialiseAbTesting: function(config, context) {
+        initialiseAnalyticsAndAbTesting: function(config, context) {
             common.mediator.on('ab:loaded', function() {
                 modules.loadOmnitureAnalytics(config);
                 modules.loadOphanAnalytics(config);
@@ -190,7 +190,7 @@ define([
     var deferrable = function (config, context) {
         deferrable = function (config, context) {
             // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAbTesting(config, context);
+            modules.initialiseAnalyticsAndAbTesting(config, context);
             modules.loadAdverts(config, context);
             modules.cleanupCookies(context);
             modules.showSharedWisdomToolbar(config);

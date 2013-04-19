@@ -19,17 +19,15 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
         bindToggler: function (toggler) {
             bean.add(toggler, 'click', function () {
                 view.toggle(toggler);
-                common.mediator.emit('modules:togglepanel:toggle', toggler);
             });
         }
 
     };
 
-    var init = function () {
-        var togglers = common.$g('.js-collapsible');
-        for (var i=0, l=togglers.length; i<l; i++) {
-            model.bindToggler(togglers[i]);
-        }
+    var init = function (context) {
+        Array.prototype.forEach.call(context.querySelectorAll('.js-collapsible'), function(toggler) {
+            model.bindToggler(toggler);
+        });
     };
 
     return {

@@ -5,7 +5,11 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
 
         if (config.page.hasStoryPackage) {
 
-            new Expandable({dom: context.querySelector('.related-trails'), expanded: false, showCount: false}).init();
+            new Expandable({
+                dom: context.querySelector('.related-trails'),
+                expanded: false,
+                showCount: false
+            }).init();
             common.mediator.emit('modules:related:loaded', config, context);
 
         } else if (config.switches.relatedContent) {
