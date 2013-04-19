@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import conf._
 import feed.{ CompetitionSupport, Competitions }
 import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
@@ -46,12 +45,10 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
       filters = filters,
       comp = comp
     )
-    
+
     Cached(page) {
       request.getQueryString("callback").map { callback =>
         JsonComponent(
-          fixturesPage.page,
-          Switches.all,
           "html" -> views.html.fragments.matchesList(fixturesPage),
           "more" -> Html(nextPage.getOrElse("")))
       }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
@@ -163,10 +160,17 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
 
       val previousResult = fixtures.filter(_.fixture.date <= startDate).takeRight(1)
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
-      
-    
-      val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
-      renderFormat(html, html, 60)
+
+      Cached(60) {
+        val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
+        request.getQueryString("callback").map { callback =>
+          JsonComponent(html)
+        } getOrElse {
+          Cached(60) {
+            Ok(Compressed(html))
+          }
+        }
+      }
     }.getOrElse(NotFound)
   }
 }

@@ -2,7 +2,11 @@
 
 @main(front, Switches.all){
 }{
+    <div id="front-container" class="cf" data-link-name="Front" role="main">
+        @trailblocks.map{ block =>
+            @fragments.frontBlock(block, Site(request).edition)
+        }
+    </div>
 
-    @fragments.frontBody(front, trailblocks)
-    
+    @fragments.mostPopularPlaceholder(front.section)
 }

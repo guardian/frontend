@@ -1,9 +1,0 @@
-@(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
-
-<div id="front-container" class="cf" data-link-name="Front" role="main">
-    @trailblocks.map{ block =>
-        @fragments.frontBlock(block, Site(request).edition)
-    }
-</div>
-
-@fragments.mostPopularPlaceholder(front.section)

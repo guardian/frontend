@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import conf._
 import feed.{ CompetitionSupport, Competitions }
 import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
@@ -41,10 +40,12 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
       filters = filters,
       comp = competition
     )
-    
-    val htmlResponse = views.html.matches(livePage)
-    val jsonResponse = views.html.fragments.matchesList(livePage, livePage.pageType)
-    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+
+    Cached(page) {
+      request.getQueryString("callback").map { callback =>
+        JsonComponent(views.html.fragments.matchesList(livePage, livePage.pageType))
+      }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
+    }
   }
 
   def render() = Action { implicit request =>
