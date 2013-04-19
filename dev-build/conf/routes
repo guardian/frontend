@@ -72,7 +72,7 @@ GET     /$path<culture|sport>                               controllers.FrontCon
 GET     /$path<culture|sport>.json                          controllers.FrontController.renderJson(path)
 
 #Video
-GET     /oas/:format/*path                                  controllers.VideoAdvertController.fetch(format, path)
+GET     /video/ad/:format                                   controllers.VideoAdvertController.fetch(format)
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
 
 #Gallery

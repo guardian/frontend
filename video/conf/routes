@@ -2,9 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /oas/:format/*path                 controllers.VideoAdvertController.fetch(format, path)
+GET     /video/ad/:format           controllers.VideoAdvertController.fetch(format)
 GET     /pages/*path                controllers.VideoController.render(path)
 
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /*path                     controllers.VideoController.render(path)
+GET     /*path                      controllers.VideoController.render(path)
