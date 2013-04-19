@@ -61,23 +61,19 @@ object `package` {
     def warmup() = Fake{
 
       if (Competitions.matches.isEmpty) {
+
+        // first make sure we have loaded the competition descriptions
         await(Competitions.refreshCompetitionData())
+        Competitions.competitionAgents.foreach(_.await())
 
+        // now load matches and league tables
         await(Competitions.refreshMatchDay())
-        Competitions.competitionAgents.par.foreach{ agent =>
-          // first await is to load live matches
-          agent.await()
+        Competitions.competitionAgents.flatMap{ agent =>
+          Seq(agent.refreshFixtures(), agent.refreshResults(), agent.refreshLeagueTable())
+        }.foreach(await)
 
-          val fixtures = agent.refreshFixtures()
-          val results = agent.refreshResults()
-          val table = agent.refreshLeagueTable()
-          await(fixtures)
-          await(results)
-          await(table)
-
-          // second await is everything else
-          agent.await()
-        }
+        //now give the agents a chance to complete
+        Competitions.competitionAgents.foreach(_.await())
       }
     }
 
