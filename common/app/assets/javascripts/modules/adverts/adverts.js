@@ -27,18 +27,19 @@ function (
     quantcast
 ) {
     
-    var config,
+    var currConfig,
+        currContext,
         adsSwitchedOn,
         slots;
 
-    function init(c) {
-        config = c;
+    function init(config, context) {
+        currConfig  = config;
+        currContext = context;
         slots = [];
 
-        generateMiddleSlot(config);
+        generateMiddleSlot(currConfig);
 
-        var slotHolders = document.querySelectorAll('.ad-slot'),
-            size = (window.innerWidth > 810) ? 'median' : 'base';
+        var size = (window.innerWidth > 810) ? 'median' : 'base';
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
 
@@ -46,18 +47,23 @@ function (
         // Other ad types such as iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
             
-            for(var i = 0, j = slotHolders.length; i < j; ++i) {
-                var name = slotHolders[i].getAttribute('data-' + size);
-                var slot = new DocumentWriteSlot(name, slotHolders[i].querySelector('.ad-container'));
-                slot.setDimensions(dimensionMap[name]);
-                slots.push(slot);
-            }
+            Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
+                var name = as.getAttribute('data-' + size),
+                    container = as.querySelector('.ad-container');
+
+                // Only load empty ad containers
+                if (container.innerHTML.match(/^\s*$/)) {
+                    var slot = new DocumentWriteSlot(name, container);
+                    slot.setDimensions(dimensionMap[name]);
+                    slots.push(slot);
+                }
+            });
             
-            if (config.switches.audienceScience) {
-                audienceScience.load(config.page);
+            if (currConfig.switches.audienceScience) {
+                audienceScience.load(currConfig.page);
             }
 
-            if (config.switches.quantcast) {
+            if (currConfig.switches.quantcast) {
                 quantcast.load();
             }
         
@@ -65,7 +71,7 @@ function (
 
         //Make the request to ad server
         documentWrite.load({
-            config: config,
+            config: currConfig,
             slots: slots
         });
     }
@@ -84,8 +90,8 @@ function (
 
         //This is a horrible hack to hide slot if no creative is returned from oas
         //Check existence of empty tracking pixel
-        if(config.page.pageId === "") {
-            var middleSlot = document.getElementById('ad-slot-middle-banner-ad');
+        if(currConfig.page.pageId === "") {
+            var middleSlot = currContext.querySelector('.ad-slot-middle-banner-ad');
 
             if(middleSlot.innerHTML.indexOf("x55/default/empty.gif")  !== -1) {
                 bonzo(middleSlot).hide();
@@ -100,14 +106,18 @@ function (
         );
     }
 
-    function generateMiddleSlot(config) {
+    function generateMiddleSlot() {
         //Temporary middle slot needs better implementation in the future
-        if(config.page.pageId === "") {
-            var slot =  '<div id="ad-slot-middle-banner-ad" data-link-name="ad slot middle-banner-ad"';
-                slot += ' data-base="x55" data-median="x55" class="ad-slot"><div class="ad-container"></div></div>';
+        if(currConfig.page.pageId === "" && hasNoMiddleSlot()) {
+            var slot =  '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
+                slot += ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
 
-            bonzo(qwery('.front-trailblock-commentisfree li')[1]).after(slot);
+            bonzo(currContext.querySelector('.front-trailblock-commentisfree li')).after(slot);
         }
+    }
+
+    function hasNoMiddleSlot() {
+        return ! currContext.querySelector('.ad-slot-middle-banner-ad');
     }
 
     return {

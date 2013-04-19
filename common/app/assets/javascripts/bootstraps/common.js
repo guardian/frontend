@@ -148,11 +148,12 @@ define([
         },
 
         loadAdverts: function (config) {
-
-            if (config.switches.adverts) {
-                Adverts.init(config);
-                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-            }
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                if (config.switches.adverts) {
+                    Adverts.init(config, context);
+                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                }
+            });
         },
 
         cleanupCookies: function() {
@@ -191,11 +192,11 @@ define([
         deferrable = function (config, context) {
             // TODO: move these up into the first-call scope by making them singletons
             modules.initialiseAnalyticsAndAbTesting(config, context);
-            modules.loadAdverts(config, context);
+            modules.loadAdverts();
             modules.cleanupCookies(context);
             modules.showSharedWisdomToolbar(config);
             
-            common.mediator.emit("page:common:loaded", config, context);
+            common.mediator.emit("page:common:deferred:loaded", config, context);
         };
         common.deferToLoadEvent(function() {
             deferrable(config, context);
