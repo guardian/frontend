@@ -49,10 +49,10 @@
                         <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
                             data-index="@row.rowNum" data-total="@gallery.size">
                             <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                src="@image.url" data-width="@image.width" data-height="@image.height" />
+                                src="@image.path" data-width="@image.width" data-height="@image.height" />
                     } else {
                         <li class="js-gallery-item-@row.rowNum is-off" data-image="false" data-index="@row.rowNum"
-                        data-total="@gallery.size" data-src="@image.url" data-fullsrc='@image.url'
+                        data-total="@gallery.size" data-src="@image.path" data-fullsrc='@image.url'
                         data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
                         data-width="@image.width" data-height="@image.height">
                     }
