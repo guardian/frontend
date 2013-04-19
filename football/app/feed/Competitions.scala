@@ -168,7 +168,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   }
 
   //one http call updates all competitions
-  def refreshCompetitionData() = FootballClient.competitions.map(_.foreach { season =>
+  def refreshCompetitionData() = FootballClient.competitions.map(_.map { season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).foreach { agent =>
       agent.update(agent.competition.copy(startDate = Some(season.startDate)))
