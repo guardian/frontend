@@ -49,14 +49,10 @@ function (
             
             Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
                 var name = as.getAttribute('data-' + size),
-                    container = as.querySelector('.ad-container');
-
-                // Only load empty ad containers
-                if (container.innerHTML.match(/^\s*$/)) {
-                    var slot = new DocumentWriteSlot(name, container);
-                    slot.setDimensions(dimensionMap[name]);
-                    slots.push(slot);
-                }
+                    slot = new DocumentWriteSlot(name, as.querySelector('.ad-container'));
+                
+                slot.setDimensions(dimensionMap[name]);
+                slots.push(slot);
             });
             
             if (currConfig.switches.audienceScience) {
@@ -108,16 +104,12 @@ function (
 
     function generateMiddleSlot() {
         //Temporary middle slot needs better implementation in the future
-        if(currConfig.page.pageId === "" && hasNoMiddleSlot()) {
+        if(currConfig.page.pageId === "") {
             var slot =  '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
                 slot += ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
 
             bonzo(currContext.querySelector('.front-trailblock-commentisfree li')).after(slot);
         }
-    }
-
-    function hasNoMiddleSlot() {
-        return ! currContext.querySelector('.ad-slot-middle-banner-ad');
     }
 
     return {

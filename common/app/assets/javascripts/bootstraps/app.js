@@ -110,7 +110,10 @@ define('bootstraps/app', [
             common.mediator.on('page:ready', bootstrapCommon.init);
             common.mediator.on('page:ready', pageRoute);
 
-            common.mediator.emit('page:ready', config, context);
+            if(!context.readyEmitted) {
+                common.mediator.emit('page:ready', config, context);
+                context.readyEmitted = true;
+            }
         });
     };
 
