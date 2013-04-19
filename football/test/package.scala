@@ -66,13 +66,14 @@ object `package` {
         await(Competitions.refreshCompetitionData())
         Competitions.competitionAgents.foreach(_.await())
 
-        // now load matches and league tables
-        await(Competitions.refreshMatchDay())
+        //now make sure we have results, fixtures and league tables
         Competitions.competitionAgents.flatMap{ agent =>
           Seq(agent.refreshFixtures(), agent.refreshResults(), agent.refreshLeagueTable())
         }.foreach(await)
+        Competitions.competitionAgents.foreach(_.await())
 
-        //now give the agents a chance to complete
+        // now load live matches
+        await(Competitions.refreshMatchDay())
         Competitions.competitionAgents.foreach(_.await())
       }
     }
