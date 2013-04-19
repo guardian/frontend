@@ -10,15 +10,15 @@
         }
 	}
 
-    <div class="trailblock @if(block.description.showMore){ js-show-more}"
-    id="front-trailblock-@SafeName(block.description)"
-    data-count="@block.description.numItemsVisible"
-    data-section-id="@block.description.id">
-	    @block.description.style match {
-	        case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
-	        case Some(Headline)  => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
-	        case _               => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
-	    }
-	</div>
+    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
+        data-count="@block.description.numItemsVisible"
+        data-section-id="@block.description.id">
+
+        @block.description.style match {
+            case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
+            case Some(Headline)  => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
+            case _               => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
+        }
+    </div>
 
 </section>

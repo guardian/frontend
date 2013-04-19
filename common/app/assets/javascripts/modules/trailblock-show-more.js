@@ -42,10 +42,9 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
         // initialise
         this.init = function() {
             var that = this,
-                trailblocks = common.$g('.' + className)
+                trailblocks = common.$g('.' + className, context)
                     // append the cta
                     .each(this.view.appendCta);
-            
             // event delegation for clicking of cta
             bean.on(qwery('#front-container')[0], 'click', '.trailblock button.cta', function(e) {
                 var $cta = bonzo(e.target),

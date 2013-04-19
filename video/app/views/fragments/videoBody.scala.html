@@ -1,9 +1,5 @@
 @(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-1">
-    <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
-</h2>
-
 <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
          itemscope itemtype="@video.schemaType" role="main">
 
@@ -13,7 +9,7 @@
     </header>
 
 
-    <div id="player">
+    <div class="player">
         <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
             @video.encodings.map{ encoding =>
                 <source src="@encoding.url" />
@@ -34,8 +30,11 @@
 @fragments.social(video.canonicalUrl.get, video.headline)
 
 @if(storyPackage.nonEmpty) {
-    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    <aside role="complementary">
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    </aside>
 } else {
-    <div id="js-related" role="complementary"></div>
+    <aside class="js-related" role="complementary"></aside>
 }
+
 @fragments.mostPopularPlaceholder(video.section)
