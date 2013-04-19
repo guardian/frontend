@@ -139,7 +139,7 @@ define([
                                     }
                                 ];
                             return {
-                                "experiments": JSON.stringify(data)
+                                "experiments_json": JSON.stringify(data)
                             };
                         });
                     }
