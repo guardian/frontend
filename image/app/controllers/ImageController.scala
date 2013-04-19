@@ -43,7 +43,7 @@ object ImageController extends Controller with Logging with Implicits {
                   
                   case "scalr" => 
                     
-                    val resized = image.resize(profile.width, profile.height)
+                    val resized = image.resize(profile.width.getOrElse(50), profile.height.getOrElse(50))
                     val compressed = resized(format) compress profile.compression
                     
                     Cached(imageCacheLifetime) {
@@ -55,8 +55,8 @@ object ImageController extends Controller with Logging with Implicits {
                     // configuration
                     val operation = new IMOperation()
                     operation.addImage
-                    if (profile.width > 0 && profile.height > 0) {
-                      operation.resize(profile.width, profile.height)
+                    if (!(profile.width.isEmpty && profile.height.isEmpty)) {
+                      operation.resize(profile.width.get, profile.height.get)
                     }
                     operation.quality(profile.compression.toDouble)
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
