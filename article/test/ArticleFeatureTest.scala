@@ -207,7 +207,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $("#ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
