@@ -80,7 +80,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see the article's image")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
-          be("http://i.guim.co.uk/n/sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
+          endWith("sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
@@ -162,7 +162,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         CommonSwitches.ImageServerSwitch.switchOn
         inBodyImage.getAttribute("class") should be("img-extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          be("http://i.guim.co.uk/n/sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
