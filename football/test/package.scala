@@ -63,22 +63,20 @@ object `package` {
       if (Competitions.matches.isEmpty) {
 
         // first make sure we have loaded the competition descriptions
-        await(Competitions.refreshCompetitionData())
-        Competitions.competitionAgents.foreach(_.await())
+        await(Competitions.refreshCompetitionData().map(_.map(c => await(c))))
 
         //now make sure we have results, fixtures and league tables
         Competitions.competitionAgents.flatMap{ agent =>
           Seq(agent.refreshFixtures(), agent.refreshResults(), agent.refreshLeagueTable())
         }.foreach(await)
-        Competitions.competitionAgents.foreach(_.await())
 
         // now load live matches
         await(Competitions.refreshMatchDay())
-        Competitions.competitionAgents.foreach(_.await())
       }
     }
 
     private def await[T](f: Future[T]) = Await.ready(f, 10.seconds)
+
 
   }
 }

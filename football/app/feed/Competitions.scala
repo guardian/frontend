@@ -173,7 +173,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
     competitionAgents.find(_.competition.id == season.id).map { agent =>
       val newCompetition = agent.competition.copy(startDate = Some(season.startDate))
       agent.update(newCompetition)
-      newCompetition
     }
   })
 
