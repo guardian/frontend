@@ -23,10 +23,9 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
   def refreshLeagueTable() = FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
     val team = t.team.copy(name = TeamName(t.team))
     t.copy(team = team)
-  }}.map{ table =>
+  }}.flatMap{ table =>
     log.info(s"found ${table.size} league table entries for competition ${competition.fullName}")
-    agent.update(table)
-    table
+    agent.alter(t => table)(Timeout(2000))
   }
 
   def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
@@ -46,13 +45,12 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
       val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
       m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
     }
-    agent.update(copiedMatches)
-    copiedMatches
+    agent.alter(m => copiedMatches)(Timeout(2000))
   }
 
   def shutdownLiveMatches() { agent.close() }
 
-  def add(theMatch: MatchDay) { agent.send(old => old :+ theMatch) }
+  def add(theMatch: MatchDay) = agent.alter(old => old :+ theMatch)(Timeout(2000))
 
   def liveMatches = agent()
 
@@ -67,13 +65,12 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
     val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
     val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
     f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
-  }}.map{fixtures =>
+  }}.flatMap{fixtures =>
     log.info(s"found ${fixtures.size} fixtures for competition ${competition.fullName}")
-    agent.send(fixtures)
-    fixtures
+    agent.alter(f => fixtures)(Timeout(2000))
   }
 
-  def add(theMatch: Fixture) { agent.send(old => old :+ theMatch) }
+  def add(theMatch: Fixture) = agent.alter(old => old :+ theMatch)(Timeout(2000))
 
   def shutdownFixtures() { agent.close() }
 
@@ -101,7 +98,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }.map{ results =>
-      agent.send{ old =>
+      agent.alter{ old =>
       //unfortunately we need to poll 2 feeds to get this data correctly
         val resultsToKeep = old.filter(_.date >= today).filter {
           case m: MatchDay => true
@@ -111,25 +108,24 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
         log.info(s"found ${results.size} results for competition ${competition.fullName}")
 
         (results ++ resultsToKeep).distinctBy(_.id)
-      }
-      results
+      }(Timeout(2000))
     }
   }
 
-  def addResultsFromMatchDay(matches: Seq[MatchDay]) {
+  def addResultsFromMatchDay(matches: Seq[MatchDay]) = {
     val matchesWithCorrectTeamNames = matches.map { m =>
       val homeTeam = m.homeTeam.copy(name = TeamName(m.homeTeam))
       val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
       m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
     }
-    agent.send { old =>
+    agent.alter { old =>
       val matchesToKeep = old.filterNot(m => matches.exists(_.id == m.id))
 
       (matchesToKeep ++ matchesWithCorrectTeamNames).distinctBy(_.id)
-    }
+    }(Timeout(2000))
   }
 
-  def add(theMatch: Result) { agent.send(old => old :+ theMatch) }
+  def add(theMatch: Result) = agent.alter(old => old :+ theMatch)(Timeout(2000))
 
   def shutdownResults() { agent.close() }
 
@@ -146,7 +142,7 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
 
   def competition = agent()
 
-  def update(competition: Competition) { agent.update(competition) }
+  def update(competition: Competition) = agent.alter(c => competition)(Timeout(2000))
 
   def refresh() {
     refreshFixtures()
