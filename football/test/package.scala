@@ -15,14 +15,6 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with Football
   }
 }
 
-object FakeWithTestData extends Fake with FootballTestData {
-  override def apply[T](block: => T): T = super.apply{
-    loadTestData()
-    block
-  }
-}
-
-
 // Stubs data for Football stats integration tests
 object TestHttp extends Http {
 
@@ -56,4 +48,9 @@ object `package` {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
+}
+
+object FakeWithTestData extends Fake  {
+  override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
+  override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
 }
