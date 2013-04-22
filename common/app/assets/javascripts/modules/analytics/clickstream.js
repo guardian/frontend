@@ -44,7 +44,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             }
 
             if (elName === 'body') {
-                if (spec.validTarget) {
+                if (spec.validTarget && spec.tag.length) {
                     spec.tag = [].concat(spec.tag).reverse().join(' | ');
                     delete spec.el;
                     delete spec.validTarget;
