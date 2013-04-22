@@ -1,8 +1,9 @@
+/*global guardian:false */
 define([
     "common",
     "bean",
     "ajax",
-
+    'bonzo',
     "modules/accordion",
     "modules/expandable",
     "modules/story/storytype",
@@ -11,7 +12,7 @@ define([
     common,
     bean,
     ajax,
-
+    bonzo,
     Accordion,
     Expandable,
     StoryType,
@@ -125,6 +126,13 @@ define([
     };
 
     var init = function(req, config) {
+        // append story specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.story)
+            .appendTo(document.querySelector('head'));
+        
         var storyId = config.page.pageId.replace("stories/", "");
 
         modules.initAccordion();

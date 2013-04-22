@@ -1,11 +1,13 @@
+/*global guardian:false */
 define([
     "common",
-
+    'bonzo',
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading"
 ], function (
     common,
+    bonzo,
     AutoUpdate,
     MatchNav,
     Reading
@@ -64,6 +66,13 @@ define([
     };
 
     var ready = function (config, context) {
+        // append article specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.article)
+            .appendTo(document.querySelector('head'));
+        
         ready = function (config, context) {
             common.mediator.emit("page:article:ready", config, context);
         };

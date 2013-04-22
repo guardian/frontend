@@ -9,8 +9,12 @@
     var guardian = {
             isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window),
             css: {
-                main: '@Static("stylesheets/main.min.css")',
-                football: '@Static("stylesheets/football.min.css")'
+                article: '@Static("stylesheets/article.min.css")',
+                football: '@Static("stylesheets/football.min.css")',
+                front: '@Static("stylesheets/front.min.css")',
+                gallery: '@Static("stylesheets/gallery.min.css")',
+                story: '@Static("stylesheets/story.min.css")',
+                video: '@Static("stylesheets/video.min.css")'
             }
         },
         curl = {

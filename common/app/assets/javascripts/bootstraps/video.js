@@ -1,10 +1,13 @@
+/*global guardian:false */
 define([
     "common",
+    'bonzo',
     "modules/detect",
     "modules/analytics/video",
     "modules/adverts/video"
 ], function(
     common,
+    bonzo,
     detect,
     Videostream,
     Advert
@@ -39,6 +42,13 @@ define([
 
 
     var ready = function (config, context) {
+        // append video specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.video)
+            .appendTo(document.querySelector('head'));
+        
         ready = function (config, context) {
             common.mediator.emit("page:video:ready", config, context);
         };

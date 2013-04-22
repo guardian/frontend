@@ -115,7 +115,6 @@ define([
     };
 
     var ready = function(req, config, context) {
-        
         // append football specific css
         bonzo(document.createElement('link'))
             .attr('rel', 'stylesheet')

@@ -1,6 +1,8 @@
+/*global guardian:false */
 define([
     //Common libraries
     "common",
+    'bonzo',
     "domReady",
     //Modules
     "modules/trailblocktoggle",
@@ -8,6 +10,7 @@ define([
     "modules/footballfixtures"
 ], function (
     common,
+    bonzo,
     domReady,
 
     TrailblockToggle,
@@ -65,6 +68,13 @@ define([
     };
 
     var ready = function (config, context) {
+        // append front specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.front)
+            .appendTo(document.querySelector('head'));
+        
         ready = function (config, context) {
             common.mediator.emit("page:front:ready", config, context);
         };

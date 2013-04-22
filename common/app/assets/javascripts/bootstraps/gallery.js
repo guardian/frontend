@@ -1,12 +1,14 @@
+/*global guardian:false */
 define([
     "common",
-
+    'bonzo',
     "modules/gallery",
     "modules/analytics/gallery",
     "modules/accordion",
     "modules/story/experiment"
 ], function(
     common,
+    bonzo,
     Gallery,
     Tracking,
     Accordion,
@@ -37,6 +39,13 @@ define([
     };
 
     var ready = function (config, context) {
+        // append gallery specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.gallery)
+            .appendTo(document.querySelector('head'));
+        
         ready = function (config, context) {
             common.mediator.emit("page:gallery:ready", config, context);
         };

@@ -1,7 +1,6 @@
 /*global guardian:true */
 define('bootstraps/app', [
     "common",
-    'bonzo',
     "domReady",
     "ajax",
     'modules/detect',
@@ -19,7 +18,6 @@ define('bootstraps/app', [
     "modules/pageconfig"
 ], function (
     common,
-    bonzo,
     domReady,
     ajax,
     detect,
@@ -70,12 +68,6 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            bonzo(document.createElement('link'))
-                .attr('rel', 'stylesheet')
-                .attr('type', 'text/css')
-                .attr('href', guardian.css.main)
-                .appendTo(document.querySelector('head'));
-            
             var r = new Router(),
                 context = document.getElementById('container');
 
