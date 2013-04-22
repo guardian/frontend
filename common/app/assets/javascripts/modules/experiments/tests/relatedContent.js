@@ -3,7 +3,7 @@ define(['bonzo'], function (bonzo) {
     var ExperimentRelatedContent = function () {
 
         this.id = 'RelatedContent';
-        this.audience = 1;
+        this.audience = 0.2;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
           return (config.page.contentType === "Article") ? true : false;
