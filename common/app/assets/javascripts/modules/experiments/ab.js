@@ -81,7 +81,7 @@ define([
 
     function initTracking(id, variant) {
         var data = 'AB | ' + id + ' test | ' + variant;
-        common.$g(document.body).attr('data-link-name', data);
+        common.$g(document.body).attr('data-link-test', data);
     }
         
     function start(test) {
@@ -112,7 +112,9 @@ define([
         //Is the user in an active test?
         if(isInTest) {
             var currentTest = getTest();
-            runVariant(TESTS[currentTest.id], currentTest.variant);
+            if(TESTS[currentTest.id].canRun(config)) {
+                runVariant(TESTS[currentTest.id], currentTest.variant);
+            }
         } else {
             //First clear out any old test data
             clearTest();
