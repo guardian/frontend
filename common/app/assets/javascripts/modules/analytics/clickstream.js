@@ -35,8 +35,13 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
         var getClickSpec = function (spec) {
             var el = spec.el,
                 elName = el.tagName.toLowerCase(),
-                dataLinkName,
+                dataLinkName = el.getAttribute('data-link-name'),
                 href;
+
+            if (dataLinkName) {
+                spec.tag = spec.tag || [];
+                spec.tag.push(dataLinkName);
+            }
 
             if (elName === 'body') {
                 if (spec.validTarget) {
@@ -62,12 +67,6 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
 
                     spec.sameHost = spec.samePage || compareHosts(href);
                 }
-            }
-
-            dataLinkName = el.getAttribute('data-link-name');
-            if (dataLinkName) {
-                spec.tag = spec.tag || [];
-                spec.tag.push(dataLinkName);
             }
 
             // Recurse
