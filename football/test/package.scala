@@ -23,7 +23,8 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with Football
               agent.update(comp),
               agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
               agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
-              agent.updateResults(comp.matches.filter(_.isInstanceOf[Result]))
+              agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
+              agent.updateLeagueTable(comp.leagueTable)
             )
           }
         }

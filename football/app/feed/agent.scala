@@ -30,6 +30,8 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
 
   def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
 
+  def updateLeagueTable(leagueTable: Seq[LeagueTableEntry]) = agent.alter(l => leagueTable)(Timeout(2000))
+
   def shutdownLeagueTables() { agent.close() }
 
   def leagueTable = agent()

@@ -10,43 +10,41 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
     WS
   feature("League Tables") {
 
-    scenario("User cannot filter league table by a competition which isn't a league") {
-
-      Given("I visit the league tables page")
+    scenario("Visit 'all tables' page") {
+      Given("I visit the a all tables page")
 
       HtmlUnit("/football/tables") { browser =>
         import browser._
 
-        val expectedLeagueTableLinks: Array[String] = Array(
-          "Premier League",
-          "Championship",
-          "League One",
-          "League Two",
-          "Champions League",
-          "Europa League",
-          "La Liga",
-          "Scottish Premier League",
-          "Scottish Division One",
-          "Scottish Division Two",
-          "Scottish Division Three",
-          "World Cup 2014 qualifiers",
-          "View all tables"
-        )
-        $("#js-football-league-list a").getTexts().toArray() should be(expectedLeagueTableLinks)
-      }
+        Then("I should see the first 4 entries of each table")
 
+        val teams = $("[data-link-name='View team']").getTexts
+        teams should contain("Arsenal")
+        teams should contain("Man C")
+        teams should contain("Man U")
+        teams should contain("Chelsea")
+
+        teams should not contain ("Wigan") // 5th in prem league not visible
+
+        teams should contain("Bolton")
+        teams should contain("Cardiff")
+      }
     }
 
-    scenario("Should show league table for competition") {
+    scenario("Visit 'competition table' page") {
       Given("I visit the a competition league table page")
 
       HtmlUnit("/football/premierleague/table") { browser =>
         import browser._
 
         $("h1").getTexts should contain("Premier League table")
-        $(".table-football-body td").getTexts should contain("Arsenal")
-      }
+        val teams = $(".table-football-body td").getTexts
+        teams should contain("Arsenal")
 
+        teams should contain ("Wigan") // I can now see all items
+
+        $("h1").getTexts should not contain("Championship League table")
+      }
     }
 
     scenario("Should redirect when no competition table data found") {

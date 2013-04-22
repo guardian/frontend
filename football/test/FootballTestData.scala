@@ -41,7 +41,16 @@ trait FootballTestData {
         fixture("Reading", "QPR", today + 4.days),
         fixture("Swansea", "Reading", today + 5.days)
       ),
-      leagueTable = Seq()
+      leagueTable = Seq(
+        leagueEntry("Arsenal", 1),
+        leagueEntry("Man C", 2),
+        leagueEntry("Man U", 3),
+        leagueEntry("Chelsea", 4),
+        leagueEntry("Wigan", 5),
+        leagueEntry("Everton", 6),
+        leagueEntry("Liverpool", 7)
+      )
+
     ),
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European",
       startDate = Some((today - 2.months).toDateMidnight),
@@ -50,7 +59,10 @@ trait FootballTestData {
         liveMatch("Cardiff", "Brighton", 2, 0, today.withTime(15, 0, 0, 0)),
         fixture("Wolves", "Burnley", today + 2.days)
       ),
-      leagueTable = Seq()
+      leagueTable = Seq(
+        leagueEntry("Bolton", 1),
+        leagueEntry("Cardiff", 2)
+      )
     )
   )
 
@@ -77,5 +89,7 @@ trait FootballTestData {
     awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
   )
 
-
+  private def leagueEntry(team: String, rank: Int) = LeagueTableEntry("1", None,
+    LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
+      LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 }
