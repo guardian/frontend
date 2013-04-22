@@ -74,8 +74,14 @@ define([
         for(var i= 0, l = test.variants.length;  i < l; i++) {
             if(test.variants[i].id === variant) {
                 test.variants[i].test();
+                initTracking(test.id, variant);
             }
         }
+    }
+
+    function initTracking(id, variant) {
+        var data = 'AB | ' + id + ' test | ' + variant;
+        common.$g(document.body).attr('data-link-name', data);
     }
         
     function start(test) {
