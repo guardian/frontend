@@ -28,8 +28,6 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
     agent.alter(t => table)(Timeout(2000))
   }
 
-  def awaitLeagueTable() { quietly { agent.await(Timeout(5000)) } }
-
   def updateLeagueTable(leagueTable: Seq[LeagueTableEntry]) = agent.alter(l => leagueTable)(Timeout(2000))
 
   def shutdownLeagueTables() { agent.close() }
@@ -55,8 +53,6 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
   def add(theMatch: MatchDay) = agent.alter(old => old :+ theMatch)(Timeout(2000))
 
   def liveMatches = agent()
-
-  def awaitLiveMatches() { quietly { agent.await(Timeout(5000)) } }
 }
 
 trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
@@ -75,8 +71,6 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   def add(theMatch: Fixture) = agent.alter(old => old :+ theMatch)(Timeout(2000))
 
   def shutdownFixtures() { agent.close() }
-
-  def awaitFixtures() { quietly(agent.await(Timeout(5000))) }
 
   def updateFixtures(fixtures: Seq[Fixture]) = agent.alter(old => fixtures)(Timeout(2000))
 
@@ -101,7 +95,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
         val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
-    }.map{ results =>
+    }.flatMap{ results =>
       agent.alter{ old =>
       //unfortunately we need to poll 2 feeds to get this data correctly
         val resultsToKeep = old.filter(_.date >= today).filter {
@@ -137,8 +131,6 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
 
   def updateResults(results: Seq[FootballMatch]) = agent.alter(r => results)(Timeout(2000))
 
-  def awaitResults() { quietly { agent.await(Timeout(5000)) } }
-
   def resultsOn(date: DateMidnight) = results.filter(_.date.toDateMidnight == date)
 }
 
@@ -163,25 +155,6 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
     shutdownLeagueTables()
     agent.close()
   }
-
-  def await() {
-    quietly(agent.await(Timeout(5000)))
-    awaitFixtures()
-    awaitResults()
-    awaitLeagueTable()
-    awaitLiveMatches()
-  }
-
-  //used for adding test data
-  def setMatches(matches: Seq[FootballMatch]) {
-    matches.foreach {
-      case fixture: Fixture => add(fixture)
-      case result: Result => add(result)
-      case live: MatchDay => add(live)
-    }
-    await()
-  }
-
 }
 
 object CompetitionAgent {

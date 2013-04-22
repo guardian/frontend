@@ -21,13 +21,11 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
-    await(TestCompetitions.refreshCompetitionData())
+    await(TestCompetitions.refreshCompetitionData()).foreach(await)
 
 
     TestCompetitions.competitionAgents.foreach{ agent =>
-      agent.await()
       await(agent.refreshFixtures())
-      agent.await()
     }
 
     TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3519484")
@@ -43,12 +41,10 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
-    await(TestCompetitions.refreshCompetitionData())
+    await(TestCompetitions.refreshCompetitionData()).foreach(await)
 
     TestCompetitions.competitionAgents.foreach{ agent =>
-      agent.await()
       await(agent.refreshResults())
-      agent.await()
     }
 
     TestCompetitions.matches.filter(_.isResult).map(_.id) should contain ("3528302")
@@ -64,12 +60,8 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
-    await(TestCompetitions.refreshCompetitionData())
-    await(TestCompetitions.refreshMatchDay())
-
-    TestCompetitions.competitionAgents.foreach{ agent =>
-      agent.await()
-    }
+    await(TestCompetitions.refreshCompetitionData()).foreach(await)
+    await(TestCompetitions.refreshMatchDay()).foreach(await)
 
     TestCompetitions.matches.filter(_.isLive).map(_.id) should contain ("3518286")
 
@@ -84,12 +76,10 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
       )
     }
 
-    await(TestCompetitions.refreshCompetitionData())
+    await(TestCompetitions.refreshCompetitionData()).foreach(await)
 
     TestCompetitions.competitionAgents.foreach{ agent =>
-      agent.await()
       await(agent.refreshLeagueTable())
-      agent.await()
     }
 
     TestCompetitions.competitions(0).leagueTable(0).team.id should be ("4")
@@ -97,7 +87,5 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     TestCompetitions.shutDown()
   }
 
-  private def await(f: Future[_]) {
-    Await.result(f, 10.seconds)
-  }
+  private def await[T](f: Future[T]): T = Await.result(f, 10.seconds)
 }
