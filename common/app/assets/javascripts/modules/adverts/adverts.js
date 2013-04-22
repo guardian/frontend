@@ -37,8 +37,6 @@ function (
         currContext = context;
         slots = [];
 
-        generateMiddleSlot(currConfig);
-
         var size = (window.innerWidth > 810) ? 'median' : 'base';
 
         adsSwitchedOn = !userPrefs.isOff('adverts');
@@ -49,8 +47,11 @@ function (
             
             Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
                 var name = as.getAttribute('data-' + size),
-                    slot = new DocumentWriteSlot(name, as.querySelector('.ad-container'));
+                    container = as.querySelector('.ad-container'),
+                    slot = new DocumentWriteSlot(name, container);
                 
+                container.innerHTML = '';
+
                 slot.setDimensions(dimensionMap[name]);
                 slots.push(slot);
             });
@@ -63,6 +64,7 @@ function (
                 quantcast.load();
             }
         
+            generateMiddleSlot(currConfig);
         }
 
         //Make the request to ad server

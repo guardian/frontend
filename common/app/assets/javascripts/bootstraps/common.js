@@ -189,22 +189,17 @@ define([
     };
 
     var deferrable = function (config, context) {
-        common.deferToLoadEvent(function() {
-            deferrable = function (config, context) {
-                // TODO: move these up into the first-call scope by making them singletons
-                modules.initialiseAnalyticsAndAbTesting(config, context);
-                modules.cleanupCookies(context);
-                modules.showSharedWisdomToolbar(config);
-                
-                common.mediator.emit("page:common:deferred:loaded", config, context);
-            };
-            modules.loadAdverts();
+        deferrable = function (config, context) {
+            // TODO: move these up into the first-call scope by making them singletons
+            modules.initialiseAnalyticsAndAbTesting(config, context);
+            modules.cleanupCookies(context);
+            modules.showSharedWisdomToolbar(config);
 
-            deferrable(config, context);
-        });
+            common.mediator.emit("page:common:deferred:loaded", config, context);
+        };
+        modules.loadAdverts();
 
-        // Set to noop, so it can't be re-eval'd until it's redefined on page load (above).
-        deferrable = function () {};
+        deferrable(config, context);
     };
 
     var ready = function (config, context) {
@@ -224,7 +219,9 @@ define([
 
     var init = function (config, context) {
         ready(config, context);
-        deferrable(config, context);
+        common.deferToLoadEvent(function() {
+            deferrable(config, context);
+        });
     };
 
     return {
