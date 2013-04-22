@@ -5,8 +5,6 @@ import org.scalatest.matchers.ShouldMatchers
 
 class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
-  // just checking these pages actually load
-
   feature("Live Matches") {
 
     scenario("Visit the live matches") {
@@ -14,7 +12,12 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
       Given("I visit the live matches page")
 
       HtmlUnit("/football/live") { browser =>
+        import browser._
         Then("I should see todays live matches")
+        val matches = $(".match-desc").getTexts
+        matches should contain ("Arsenal 1-0 Spurs")
+        matches should contain ("Chelsea 0-0 Man U")
+        matches should contain ("Cardiff 2-0 Brighton")
       }
     }
 
@@ -22,7 +25,12 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
       Given("I am on the premier league live matches page")
       HtmlUnit("/football/premierleague/live") { browser =>
+        import browser._
         Then("I should see premier league live games")
+        $(".match-desc").getTexts should contain ("Arsenal 1-0 Spurs")
+
+        And("I should not see other leagues games")
+        $(".match-desc").getTexts should not contain ("Cardiff 2-0 Brighton")
       }
     }
 
