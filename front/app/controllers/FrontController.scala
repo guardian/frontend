@@ -21,6 +21,18 @@ object NetworkFrontPage extends MetaData {
   )
 }
 
+object AustraliaNetworkFrontPage extends MetaData {
+  override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
+  override val id = "australia"
+  override val section = "australia"
+  override val webTitle = "The Guardian"
+  override lazy val analyticsName = "GFE:Network Front"
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "content-type" -> "Network Front"
+  )
+}
+
 object SportFrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
   override val id = "sport"
@@ -79,6 +91,7 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
     }
@@ -96,7 +109,7 @@ class FrontController extends Controller with Logging with JsonTrails {
               renderJsonTrails(trailblock.trails)
           }.getOrElse(InternalServerError)
         } else {
-          Ok(Compressed(views.html.front(frontPage, trailblocks)))
+            Ok(Compressed(views.html.front(frontPage, trailblocks)))
         }
       }
     }

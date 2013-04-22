@@ -1,7 +1,7 @@
 package controllers.front
 
 import common._
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue, JsNull}
 import play.api.libs.json.Json.parse
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration._
@@ -69,15 +69,17 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 
-  private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = {
-    (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
-      TrailblockDescription(
-        toId((block \ "id").as[String]),
-        (block \ "title").as[String],
-        (block \ "numItems").as[Int],
-        showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
-      )
-    }
+  private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = editionJson match {
+    case JsNull => Nil
+    case _ =>  (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
+        TrailblockDescription(
+          toId((block \ "id").as[String]),
+          (block \ "title").as[String],
+          (block \ "numItems").as[Int],
+          showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
+        )
+      }
+
   }
 
   private def toId(id: String) = id.split("/").toSeq match {

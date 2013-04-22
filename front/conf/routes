@@ -8,5 +8,5 @@ GET     /assets/*file                   controllers.Assets.at(path="/public", fi
 GET     /_warmup                        controllers.FrontController.warmup()
 GET     /_up                            controllers.FrontController.isUp()
 GET     /                               controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>           controllers.FrontController.render(path)
+GET     /$path<culture|sport|australia> controllers.FrontController.render(path)
 GET     /$path<culture|sport>.json      controllers.FrontController.renderJson(path)

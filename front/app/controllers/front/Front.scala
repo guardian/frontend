@@ -2,7 +2,6 @@ package controllers.front
 
 import model.TrailblockDescription
 import model.Trailblock
-import akka.actor.Cancellable
 import common.{ Logging, AkkaSupport }
 
 import scala.concurrent.duration._
@@ -97,7 +96,18 @@ class Front extends AkkaSupport with Logging {
 
   )
 
-  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq
+  lazy val auEditions = Map(
+
+    "front" -> new ConfiguredEdition("AUS", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      TrailblockDescription("commentisfree/commentisfree+world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
+    ))
+  )
+
+  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq ++ auEditions.toSeq
 
   def refresh() {
     allFronts.foreach { case (name, front) => front.refresh() }
@@ -112,9 +122,10 @@ class Front extends AkkaSupport with Logging {
     refreshSchedule
   }
 
-  def apply(path: String, edition: String): Seq[Trailblock] = edition match {
-    case "US" => usEditions(path)()
-    case anythingElse => ukEditions(path)()
+  def apply(path: String, edition: String): Seq[Trailblock] = (path, edition) match {
+    case ("australia", _) => auEditions("front")()
+    case (_, "US") => usEditions(path)()
+    case _ => ukEditions(path)()
   }
 
   lazy val warmup = {

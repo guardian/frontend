@@ -30,6 +30,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     //End to end integration tests
 
+
     scenario("Load the network front") {
 
       Given("I visit the network front")
