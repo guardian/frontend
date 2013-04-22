@@ -16,7 +16,7 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
 
       Given("I visit a match page")
 
-      FakeWithTestData {
+      Fake {
         val request = FakeRequest("GET", "/football/foo?callback=call").withHeaders("host" -> "localhost:9000")
 
         val result = MoreOnMatchController.matchNav("2012", "12", "01", "1006", "65")(request)

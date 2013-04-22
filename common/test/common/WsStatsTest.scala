@@ -5,6 +5,8 @@ import org.scalatest.matchers.ShouldMatchers
 import common.WsStats
 import common._
 
+private object Fake extends FakeApp
+
 class WsStatsTest extends FlatSpec with ShouldMatchers {
 
   "WsStats" should "not change its implementation" in Fake {

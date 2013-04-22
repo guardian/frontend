@@ -13,7 +13,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
   FootballClient.http = TestHttp
 
-  "CompetitionAgent" should "load fixtures" in FakeWithTestData {
+  "CompetitionAgent" should "load fixtures" in Fake {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -35,7 +35,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     TestCompetitions.shutDown()
   }
 
-  it should "load results" in FakeWithTestData {
+  it should "load results" in Fake {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -56,7 +56,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     TestCompetitions.shutDown()
   }
 
-  it should "load live matches" in FakeWithTestData {
+  it should "load live matches" in Fake {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -76,7 +76,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
     TestCompetitions.shutDown()
   }
 
-  it should "load league tables" in FakeWithTestData {
+  it should "load league tables" in Fake {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
