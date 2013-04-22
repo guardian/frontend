@@ -9,12 +9,17 @@ import model.TeamFixture
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
-import pa.{MatchDay, MatchDayTeam, FootballTeam, FootballMatch}
+import pa._
 import implicits.Football
 import common._
 
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration.{Duration => Timed, _}
+import pa.MatchDayTeam
+import pa.MatchDay
+import scala.Some
+import model.Competition
+import model.TeamFixture
 
 trait CompetitionSupport extends Football {
 
@@ -88,12 +93,6 @@ trait CompetitionSupport extends Football {
     def competitions = comps
   }
 }
-
-
-
-
-
-
 
 trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
@@ -208,11 +207,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   def shutDown() {
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
-  }
-
-  //used to add test data
-  def setMatches(competitionId: String, matches: Seq[FootballMatch]) {
-    competitionAgents.find(_.competition.id == competitionId).foreach(_.setMatches(matches))
   }
 }
 

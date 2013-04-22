@@ -1,35 +1,24 @@
 package test
 
-import feed.Competitions
 import play.api.{Application => PlayApplication, Plugin}
 import conf.{FootballStatsPlugin, Configuration}
-import pa.{Result, Fixture, MatchDay, Http}
+import pa.Http
 import io.Source
 import org.joda.time.DateMidnight
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 
 
-
-
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with FootballTestData {
-  override def onStart() = {
+  override def onStart() {
+    loadTestData()
+  }
+}
 
-    if (Competitions.matches.isEmpty) {
-      if (Competitions.matches.isEmpty) {
-        Competitions.competitionAgents.flatMap { agent =>
-          competitions.filter(_.id == agent.competition.id).flatMap{ comp =>
-            Seq(
-              agent.update(comp),
-              agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
-              agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
-              agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
-              agent.updateLeagueTable(comp.leagueTable)
-            )
-          }
-        }
-      }
-    }
+object FakeWithTestData extends Fake with FootballTestData {
+  override def apply[T](block: => T): T = super.apply{
+    loadTestData()
+    block
   }
 }
 

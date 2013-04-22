@@ -10,6 +10,8 @@ import pa.MatchDay
 import pa.Stage
 import scala.Some
 import pa.Fixture
+import feed.Competitions
+import scala.concurrent.Await
 
 
 trait FootballTestData {
@@ -24,11 +26,19 @@ trait FootballTestData {
 
   private val _result = Result("1234", today.toDateTime,  None, "1", false, None, team, team,None, None, None)
 
+  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0), None, "", false, None,
+    MatchDayTeam("1006", "", None, None, None, None),
+    MatchDayTeam("65", "", None, None, None, None),
+    None, None, None)
+
+
   val competitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
       showInTeamsList = true,
       startDate = Some((today - 2.months).toDateMidnight),
       matches = Seq(
+        matchWithReport,
+        result("Derby", "Blackburn", 0, 1, today - 20.days).copy(id = "3518296"),
         result("Stoke", "Villa", 1, 1, today - 4.days),
         result("Fulham", "Norwich", 0, 0, today - 3.days),
         result("Wigan", "Everton", 1, 1, today - 1.day),
@@ -92,4 +102,23 @@ trait FootballTestData {
   private def leagueEntry(team: String, rank: Int) = LeagueTableEntry("1", None,
     LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
+
+  def loadTestData() {
+    if (Competitions.matches.isEmpty) {
+      if (Competitions.matches.isEmpty) {
+        val futures = Competitions.competitionAgents.flatMap { agent =>
+          competitions.filter(_.id == agent.competition.id).flatMap { comp =>
+              Seq(
+                agent.update(comp),
+                agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
+                agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
+                agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
+                agent.updateLeagueTable(comp.leagueTable)
+              )
+          }
+        }
+        futures.foreach(f => Await.result(f, scala.concurrent.duration.Duration("2000ms")))
+      }
+    }
+  }
 }
