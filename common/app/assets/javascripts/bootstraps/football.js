@@ -2,6 +2,7 @@
 define([
     //Common libraries
     "common",
+    'bonzo',
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -14,6 +15,7 @@ define([
     "modules/matchnav"
 ], function (
     common,
+    bonzo,
     Router,
     TogglePanel,
     Expandable,
@@ -113,6 +115,13 @@ define([
     };
 
     var ready = function(req, config, context) {
+        
+        // append football specific css
+        bonzo(document.createElement('link'))
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', guardian.css.football)
+            .appendTo(document.querySelector('head'));
 
         var page = req.params.action;
 

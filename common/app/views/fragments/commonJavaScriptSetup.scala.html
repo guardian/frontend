@@ -7,17 +7,21 @@
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
     var guardian = {
-            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
-            }, 
-            curl = {
-                baseUrl: '@{Configuration.assets.path}javascripts',
-                apiName: 'require',
-                paths: {
-                    omniture                       : '@Static("javascripts/vendor/omniture.js")',
-                    homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
-                    'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
-                }
-            };
+            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window),
+            css: {
+                main: '@Static("stylesheets/main.min.css")',
+                football: '@Static("stylesheets/football.min.css")'
+            }
+        },
+        curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                omniture                       : '@Static("javascripts/vendor/omniture.js")',
+                homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
+                'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
+            }
+        };
 
     (function loadFontsFromStorage(prefs, key) {
 

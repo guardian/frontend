@@ -56,7 +56,7 @@ var outputHTML = [];
 var tableClosingHTML = '</tbody></table>';
 
 // add a single reference to the sprite background
-pngcssrules.push(".i { background-image: url(" + spritepath + "sprite.png); background-repeat: no-repeat; display: inline-block; }");
+pngcssrules.push(".i { background-repeat: no-repeat; display: inline-block; }");
 
 
 // increment the current file index and process it
