@@ -76,6 +76,8 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
 
   def awaitFixtures() { quietly(agent.await(Timeout(5000))) }
 
+  def updateFixtures(fixtures: Seq[Fixture]) = agent.alter(old => fixtures)(Timeout(2000))
+
   def fixtures = agent()
 
   def fixturesOn(date: DateMidnight) = fixtures.filter(_.date.toDateMidnight == date)
@@ -130,6 +132,8 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
   def shutdownResults() { agent.close() }
 
   def results = agent()
+
+  def updateResults(results: Seq[FootballMatch]) = agent.alter(r => results)(Timeout(2000))
 
   def awaitResults() { quietly { agent.await(Timeout(5000)) } }
 

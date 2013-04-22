@@ -12,47 +12,38 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
       Given("I visit the results page")
 
-      //the url /football/results is based on the current day
-      //this just checks it loads
       HtmlUnit("/football/results") { browser =>
         import browser._
-        findFirst("h1").getText should be("All results")
-      }
 
-      //A dated url will give us a fixed set of results we can assert against
-      HtmlUnit("/football/results/2012/oct/20") { browser =>
-        import browser._
-
-        Then("I should see results for today")
-
-        findFirst(".competitions-date").getText should be("Friday 19 October 2012")
-
-        val results = $(".matches").findFirst(".match-desc")
-        results.findFirst(".match-home").getText should be("Sheff Wed")
-        results.findFirst(".match-away").getText should be("Leeds")
-        findFirst(".match-status").getText should include("FT")
+        Then("I should see todays live matches")
+        val matches = $(".match-desc").getTexts
+        matches should contain ("Arsenal 1-0 Spurs")
 
         And("I should see results for previous days")
-        $(".competitions-date").getTexts should contain("Friday 19 October 2012")
-        $(".competitions-date").getTexts should contain("Wednesday 17 October 2012")
+        matches should contain ("Sunderland 1-1 West Ham")
+        matches should contain ("Wigan 1-1 Everton")
+        matches should contain ("Bolton 1-1 Derby")
+        matches should contain ("Fulham 0-0 Norwich")
       }
     }
 
     scenario("Next results") {
       Given("I am on the results page")
-      HtmlUnit("/football/results/2012/oct/20") { browser =>
+      HtmlUnit("/football/results") { browser =>
         import browser._
 
-        Then("I should see the 'previous'")
+        And("I click the 'previous' results link")
+        findFirst("[data-link-name=previous]").click()
 
-        findFirst("[data-link-name=previous]").getAttribute("href") should endWith("/football/results/2012/oct/15")
+        Then("I should see earlier results")
+        $(".match-desc").getTexts should contain ("Stoke 1-1 Villa")
       }
     }
 
     scenario("Competition results filter") {
 
       Given("I am on the the results page")
-      HtmlUnit("/football/results/2012/oct/20") { browser =>
+      HtmlUnit("/football/results") { browser =>
         import browser._
 
         When("I click the filter to premier league link")
@@ -61,13 +52,16 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         browser.await()
 
         Then("I should navigate to the premier league results page")
-        find(".match-desc").map(_.getText) should contain("Spurs 2-4 Chelsea")
+        $(".match-desc").getTexts should contain("Arsenal 1-0 Spurs")
+
+        And("I should not see other leagues results")
+        $(".match-desc").getTexts should not contain("Bolton 1-1 Derby")
       }
     }
 
     scenario("Link tracking") {
       Given("I visit the results page")
-      HtmlUnit("/football/results/2012/oct/20") { browser =>
+      HtmlUnit("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
