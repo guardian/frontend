@@ -8,31 +8,42 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
         
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
-                
+
            appendCta: function(trailblock) {
                bonzo(trailblock).append('<button class="cta" data-link-name="Show more | 1">Show more</button>');
            },
-           
+
            removeCta: function(cta) {
                cta.remove();
            },
-           
+
            render: function(cta, response) {
                // put the trails before the cta
                cta.before(response.html);
                common.mediator.emit('module:trailblock-show-more:render');
            }
-        
+
         };
 
         // initialise
         this.init = function(context) {
-            var trailblocks = common.$g('.js-show-more', context);
+            var trailblocks = common.$g('.js-show-more', context),
+                that = this;
+            
+            if(! trailblocks.length) {
+                return;
+            }
+
+            // Remove the class, so we can't do multiple inits
+            trailblocks.each(function(trailblock){
+                bonzo(trailblock).removeClass('js-show-more');
+            });
+
             // append the cta
             trailblocks.each(this.view.appendCta);
-            var that = this;
+
             // event delegation for clicking of cta
-            bean.on(qwery('#front-container')[0], 'click', '.trailblock button.cta', function(e) {
+            bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.cta', function(e) {
                 var cta = bonzo(e.target);
                 // disable button
                 cta.attr('disabled', 'disabled');
