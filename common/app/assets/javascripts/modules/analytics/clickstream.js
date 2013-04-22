@@ -35,7 +35,8 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
         var getClickSpec = function (spec) {
             var el = spec.el,
                 elName = el.tagName.toLowerCase(),
-                dataLinkName;
+                dataLinkName,
+                href;
 
             if (elName === 'body') {
                 if (spec.validTarget) {
@@ -53,8 +54,13 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0;
                 if(spec.validTarget) {
                     spec.target = el;
-                    spec.samePage = (elName === 'button') || (' ' + el.className + ' ').indexOf(' control ') > -1;
-                    spec.sameHost = spec.samePage || compareHosts(el.getAttribute('href'));
+                    href = el.getAttribute('href');
+                    spec.samePage = href && href.indexOf('#') === 0
+                        || elName === 'button'
+                        || el.getAttribute('data-is-ajax')
+                        || ' '+el.className+' '.indexOf(' control ') > -1;
+
+                    spec.sameHost = spec.samePage || compareHosts(href);
                 }
             }
 
