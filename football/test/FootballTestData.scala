@@ -38,7 +38,7 @@ trait FootballTestData {
       startDate = Some((today - 2.months).toDateMidnight),
       matches = Seq(
         matchWithReport,
-        result("Derby", "Blackburn", 0, 1, today - 20.days).copy(id = "3518296"),
+        result("Derby", "Blackburn", 0, 1, today - 5.days).copy(id = "3518296"),
         result("Stoke", "Villa", 1, 1, today - 4.days),
         result("Fulham", "Norwich", 0, 0, today - 3.days),
         result("Wigan", "Everton", 1, 1, today - 1.day),
