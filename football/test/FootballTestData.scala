@@ -108,8 +108,8 @@ trait FootballTestData {
       if (Competitions.matches.isEmpty) {
         val futures = Competitions.competitionAgents.flatMap { agent =>
           competitions.filter(_.id == agent.competition.id).flatMap { comp =>
-            Await.result(agent.update(comp), scala.concurrent.duration.Duration("2000ms"))
             Seq(
+              agent.update(comp),
               agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
               agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
               agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
@@ -118,21 +118,7 @@ trait FootballTestData {
           }
         }
         futures.foreach(f => Await.result(f, scala.concurrent.duration.Duration("2000ms")))
-
-        isTestDataLoaded
       }
     }
   }
-
-  private def isTestDataLoaded = {
-    val diff = competitions.flatMap(_.matches).map(_.id).diff(Competitions.matches.map(_.id))
-
-    println("--------- DIFF -----------")
-
-    if (diff.nonEmpty) {
-      println(s"*** matches not found ${diff.mkString(",")} ***")
-    }
-    diff == Nil
-  }
-
 }

@@ -52,19 +52,10 @@ object MatchController extends Controller with Football with Requests with Loggi
   }
 
   private def render(maybeMatch: Option[FootballMatch]) = Action { implicit request =>
-
-    println(s"whatsup matchId ${maybeMatch.map(_.id)}")
-
     maybeMatch.map { theMatch =>
       val promiseOfLineup = FootballClient.lineUp(theMatch.id)
-
-      println(s"whatsup promised a lineup")
-
       Async {
         promiseOfLineup.map { lineUp =>
-
-          println(s"whatsup got a lineup ${lineUp.awayTeam.name}")
-
           Cached(60) {
             request.getParameter("callback").map { callback =>
               JsonComponent(
