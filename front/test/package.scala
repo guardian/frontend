@@ -25,7 +25,7 @@ object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
 object `package` {
 
-  object Fake extends Fake {
+  object Fake extends FakeApp {
     override val globalSettingsOverride = Some(FrontTestGlobal)
   }
 

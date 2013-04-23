@@ -9,11 +9,17 @@ import model.TeamFixture
 import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
-import pa.{MatchDay, MatchDayTeam, FootballTeam, FootballMatch}
+import pa._
 import implicits.Football
+import common._
 
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration.{Duration => Timed, _}
+import pa.MatchDayTeam
+import pa.MatchDay
+import scala.Some
+import model.Competition
+import model.TeamFixture
 
 trait CompetitionSupport extends Football {
 
@@ -88,12 +94,6 @@ trait CompetitionSupport extends Football {
   }
 }
 
-
-
-
-
-
-
 trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
@@ -167,30 +167,29 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   }
 
   //one http call updates all competitions
-  def refreshCompetitionData() = FootballClient.competitions.map(_.foreach { season =>
+  def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
     log.info("Refreshing competition data")
-    competitionAgents.find(_.competition.id == season.id).foreach { agent =>
-      agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+    competitionAgents.find(_.competition.id == season.id).map { agent =>
+      val newCompetition = agent.competition.copy(startDate = Some(season.startDate))
+      agent.update(newCompetition)
     }
   })
 
   //one http call updates all competitions
-  def refreshMatchDay() {
-    FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
+  def refreshMatchDay() = FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
 
-      val liveMatches = todaysMatches.filter(_.isLive)
-      val results = todaysMatches.filter(_.isResult)
-      competitionAgents.foreach { agent =>
+    val liveMatches = todaysMatches.filter(_.isLive)
+    val results = todaysMatches.filter(_.isResult)
+    competitionAgents.map { agent =>
 
-        //update the live matches of the competition
-        val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-        log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
-        agent.updateLiveMatches(competitionLiveMatches)
+      //update the results of the competition
+      val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
+      agent.addResultsFromMatchDay(competitionResults)
 
-        //update the results of the competition
-        val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
-        agent.addResultsFromMatchDay(competitionResults)
-      }
+      //update the live matches of the competition
+      val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
+      log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
+      agent.updateLiveMatches(competitionLiveMatches)
     }
   }
 
@@ -208,11 +207,6 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   def shutDown() {
     schedules.foreach(_.cancel())
     competitionAgents.foreach(_.shutdown())
-  }
-
-  //used to add test data
-  def setMatches(competitionId: String, matches: Seq[FootballMatch]) {
-    competitionAgents.find(_.competition.id == competitionId).foreach(_.setMatches(matches))
   }
 }
 
