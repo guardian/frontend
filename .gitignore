@@ -35,8 +35,10 @@ local.sbt
 
 node_modules
 
-common/app/assets/stylesheets/head.min.css
 common/app/assets/stylesheets/main.min.css
+
+common/app/assets/stylesheets/head.min.css
+common/app/assets/stylesheets/global.min.css
 common/app/assets/stylesheets/article.min.css
 common/app/assets/stylesheets/football.min.css
 common/app/assets/stylesheets/front.min.css

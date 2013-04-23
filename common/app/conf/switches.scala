@@ -94,12 +94,16 @@ object CommonSwitches {
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
   
+  val CssLazyLoadSwitch = DefaultSwitch("css-lazy-load",
+    "If this switch is on then use a slimmed down, lazy-loaded css setup (css in head with server sepcific files)",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent, CssLazyLoadSwitch
   )
 }
 
