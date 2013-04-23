@@ -18,17 +18,7 @@ object TagController extends Controller with Logging with JsonTrails {
     val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
-        case Left(model) => renderTag(model, "html")
-        case Right(notFound) => notFound
-      }
-    }
-  }
-
-  def renderJson(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTag(model, "json")
+        case Left(model) => renderTag(model)
         case Right(notFound) => notFound
       }
     }
@@ -49,11 +39,10 @@ object TagController extends Controller with Logging with JsonTrails {
     }.recover{suppressApiNotFound}
   }
 
-  private def renderTag(model: TagAndTrails, format: String)(implicit request: RequestHeader) = Cached(model.tag) {
-    if (format == "json") {
-      renderJsonTrails(model.trails)
-    } else {
-      Ok(Compressed(views.html.tag(model.tag, model.trails, model.leadContent)))
-    }
+  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = {
+    val htmlResponse = views.html.tag(model.tag, model.trails, model.leadContent)
+    val jsonResponse = views.html.fragments.tagBody(model.tag, model.trails, model.leadContent)
+    renderFormat(htmlResponse, jsonResponse, model.tag)
   }
+  
 }
