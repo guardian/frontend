@@ -108,13 +108,13 @@ trait FootballTestData {
       if (Competitions.matches.isEmpty) {
         val futures = Competitions.competitionAgents.flatMap { agent =>
           competitions.filter(_.id == agent.competition.id).flatMap { comp =>
-              Seq(
-                agent.update(comp),
-                agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
-                agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
-                agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
-                agent.updateLeagueTable(comp.leagueTable)
-              )
+            Await.result(agent.update(comp), scala.concurrent.duration.Duration("2000ms"))
+            Seq(
+              agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
+              agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
+              agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
+              agent.updateLeagueTable(comp.leagueTable)
+            )
           }
         }
         futures.foreach(f => Await.result(f, scala.concurrent.duration.Duration("2000ms")))
