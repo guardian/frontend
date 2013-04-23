@@ -49,7 +49,7 @@ define([
         return (isNaN(v)) ? 0 : v;
     };
 
-    var visitsToday = function (today) {
+    var visitsToday = function () {
         var visits = parseInt(data[keys.today], 0);
         return (isNaN(visits)) ? 0 : visits;
     };
@@ -112,6 +112,7 @@ define([
         firstVisit: firstVisit,
         visitsToday: visitsToday,
         lastVisit: lastVisit,
-        visitsBySection: visitsBySection
+        visitsBySection: visitsBySection,
+        get: get
         };
     });

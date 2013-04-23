@@ -38,41 +38,57 @@ define(['modules/experiments/aware'], function(Aware) {
             
             Aware.init() 
             
-            // move day forward 6 hours
+            // move day forward 6 hours from the epoch & log a visit
             var fakeNow = Date.parse('2013-04-22T04:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
-            
-            // log another visit 'today' and check we only count a single visit today
             Aware.logVisit()
 
+            // move to 8pm the same day and log another visit
             var fakeNow = Date.parse('2013-04-22T20:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
-
             Aware.logVisit()
+
             expect(Aware.visits()).toBe(2);
             expect(Aware.visitsToday()).toBe(2);
-            
+           
+            // move three days hance and log a final visit
             var fakeNow = Date.parse('2013-04-25T12:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
-            
             Aware.logVisit()
+            
             expect(Aware.visits()).toBe(3);
-            expect(Aware.visitsToday(fakeNow)).toBe(1);
+            expect(Aware.visitsToday()).toBe(1);
 
         });
 
         it('should count frequency of visits to different sections over the last few days', function() {
            
-            var section1 = 'foo' 
-            var section2 = 'bar' 
-            
-            Aware.logVisit(section1)
-            Aware.logVisit(section1)
-            Aware.logVisit(section2)
+            ['foo', 'foo', 'bar'].forEach(function (section) {
+                Aware.logVisit(section)
+            })
+
             expect(Aware.visitsBySection('foo')).toBe(2);
             expect(Aware.visits()).toBe(3);
             
         });
+        
+        it('should list top sections', function() {     
+            
+            ['foo', 'bar', 'bar', 'car', 'bar'].forEach(function (section) {
+                Aware.logVisit(section)
+            })
+
+            var aware = Aware.get(),
+                n = 2;
+              
+            var topSections = Object.keys(aware).filter(function (key) {
+                return (key.indexOf('section') > -1 ) 
+            }).sort(function (a, b) { 
+                return -(aware[a] - aware[b])
+            }).slice(0, n)
+                
+            expect(topSections.toString()).toBe(['section.bar', 'section.foo'].toString());
+        }) 
 
     });
 });
