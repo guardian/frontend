@@ -126,12 +126,7 @@ define([
     };
 
     var init = function(req, config) {
-        // append story specific css
-        bonzo(document.createElement('link'))
-            .attr('rel', 'stylesheet')
-            .attr('type', 'text/css')
-            .attr('href', guardian.css.story)
-            .appendTo(document.querySelector('head'));
+        common.lazyLoadCss('story', config);
         
         var storyId = config.page.pageId.replace("stories/", "");
 

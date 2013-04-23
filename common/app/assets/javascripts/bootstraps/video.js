@@ -42,12 +42,7 @@ define([
 
 
     var ready = function (config, context) {
-        // append video specific css
-        bonzo(document.createElement('link'))
-            .attr('rel', 'stylesheet')
-            .attr('type', 'text/css')
-            .attr('href', guardian.css.video)
-            .appendTo(document.querySelector('head'));
+        common.lazyLoadCss('video', config);
         
         ready = function (config, context) {
             common.mediator.emit("page:video:ready", config, context);

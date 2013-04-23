@@ -66,14 +66,7 @@ define([
     };
 
     var ready = function (config, context) {
-        if (config.switches.cssLasyLoad === true) {
-            // append article specific css
-            bonzo(document.createElement('link'))
-                .attr('rel', 'stylesheet')
-                .attr('type', 'text/css')
-                .attr('href', guardian.css.article)
-                .appendTo(document.querySelector('head'));
-        }
+        common.lazyLoadCss('article', config);
         
         ready = function (config, context) {
             common.mediator.emit("page:article:ready", config, context);
