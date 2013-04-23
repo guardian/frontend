@@ -14,13 +14,14 @@ define([
 
         var options = {
             'edition' : '',
-            'prefName': 'front-trailblocks-'
+            'prefPrefix': 'front-trailblocks-'
         };
 
         var view = {
 
             showToggleLinks: function (context) {
-                Array.prototype.forEach.call(context.querySelectorAll('.js-toggle-trailblock'), function(toggle){
+                Array.prototype.forEach.call(context.querySelectorAll('.js-toggle-trailblock'), function(toggle) {
+                    bonzo(toggle).removeClass('js-toggle-trailblock');
                     bean.add(toggle, 'click', function (e) {
                         view.toggleTrailblock({
                             trigger: this,
@@ -42,6 +43,11 @@ define([
 
                 if (manualTrigger) {
                     trigger = context.querySelector('.js-trigger-' + manualTrigger);
+                    if(bonzo(trigger).hasClass('userpref-applied')) {
+                        return;
+                    } else {
+                        bonzo(trigger).addClass('userpref-applied');
+                    }
                 }
 
                 // convert trigger to bonzo object
@@ -71,18 +77,16 @@ define([
 
             renderUserPreference: function (context) {
                 // bit of duplication here from function below
-                if (window.localStorage) {
-                    var existingPrefs = userPrefs.get(options.prefName);
+                var existingPrefs = userPrefs.get(options.prefName);
 
-                    if (existingPrefs) {
-                        var sectionArray = existingPrefs.split(',');
-                        for (var i in sectionArray) {
-                            var item = sectionArray[i];
-                            view.toggleTrailblock({
-                                manualTrigger: item,
-                                context: context
-                            });
-                        }
+                if (existingPrefs) {
+                    var sectionArray = existingPrefs.split(',');
+                    for (var i in sectionArray) {
+                        var item = sectionArray[i];
+                        view.toggleTrailblock({
+                            manualTrigger: item,
+                            context: context
+                        });
                     }
                 }
             }
@@ -128,7 +132,7 @@ define([
         };
 
         this.go = function (config, context) {
-            options.prefName = options.prefName + config.page.edition;
+            options.prefName = options.prefPrefix + config.page.edition;
             view.showToggleLinks(context);
             view.renderUserPreference(context);
         };

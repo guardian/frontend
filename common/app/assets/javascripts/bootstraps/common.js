@@ -189,32 +189,30 @@ define([
     };
 
     var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAnalyticsAndAbTesting(config, context);
-            modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar(config);
+        if (!this.initialisedDeferred) {
+            this.initialisedDeferred = true;
+            modules.loadAdverts();
+        }
+        // TODO: move these up into the above !this.initialised block
+        modules.initialiseAnalyticsAndAbTesting(config, context);
+        modules.cleanupCookies(context);
+        modules.showSharedWisdomToolbar(config);
 
-            common.mediator.emit("page:common:deferred:loaded", config, context);
-        };
-        modules.loadAdverts();
-
-        deferrable(config, context);
+        common.mediator.emit("page:common:deferred:loaded", config, context);
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:common:ready", config, context);
-        };
-        modules.upgradeImages();
-        modules.showTabs();
-        modules.showRelativeDates();
-        modules.transcludeRelated();
-        modules.transcludePopular();
-        modules.transcludeTopStories();
-        modules.initialiseNavigation(config);
-
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.upgradeImages();
+            modules.showTabs();
+            modules.showRelativeDates();
+            modules.transcludeRelated();
+            modules.transcludePopular();
+            modules.transcludeTopStories();
+            modules.initialiseNavigation(config);
+        }
+        common.mediator.emit("page:common:ready", config, context);
     };
 
     var init = function (config, context) {

@@ -1,6 +1,7 @@
 define([
     //Common libraries
     "common",
+    "bonzo",
     "domReady",
     //Modules
     "modules/trailblocktoggle",
@@ -8,6 +9,7 @@ define([
     "modules/footballfixtures"
 ], function (
     common,
+    bonzo,
     domReady,
 
     TrailblockToggle,
@@ -35,29 +37,32 @@ define([
             common.mediator.on('page:front:ready', function(config, context) {
                 if(config.page.edition === "UK") {
 
-                    var prependTo,
-                    table;
+                    var opts,
+                        table;
 
                     switch(window.location.pathname) {
                         case "/" :
-                            prependTo = context.querySelector('.zone-sport ul > li');
-                            table = new FootballFixtures({
-                                prependTo: prependTo,
+                            opts = {
+                                prependTo: context.querySelector('.zone-sport ul > li'),
                                 competitions: ['500', '510', '100'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 3
-                            }).init();
+                            };
                             break;
                         case "/sport" :
-                            prependTo = context.querySelector('.trailblock ul > li');
-                            table = new FootballFixtures({
-                                prependTo: prependTo,
+                            opts = {
+                                prependTo: context.querySelector('.trailblock ul > li'),
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 5
-                            }).init();
+                            };
                             break;
+                    }
+
+                    if(!bonzo(opts.prependTo).hasClass('footballfixtures-loaded')) {
+                        bonzo(opts.prependTo).addClass('footballfixtures-loaded');
+                        table = new FootballFixtures(opts).init();
                     }
                 }
             });
@@ -65,15 +70,13 @@ define([
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:front:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.showTrailblockToggles();
-        modules.showTrailblockShowMore();
-        modules.showFootballFixtures();
-
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.showTrailblockToggles();
+            modules.showTrailblockShowMore();
+            modules.showFootballFixtures();
+        }
+        common.mediator.emit("page:front:ready", config, context);
     };
 
     return {

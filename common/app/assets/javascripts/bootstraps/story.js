@@ -124,19 +124,24 @@ define([
         }
     };
 
-    var init = function(req, config) {
-        var storyId = config.page.pageId.replace("stories/", "");
+    var ready = function(req, config, context) {
+        if (!this.initialised) {
+            this.initialised = true;
 
-        modules.initAccordion();
-        modules.initTimeline();
-        modules.initAgents();
-        modules.initExpandables();
-        modules.initContinueReading();
-        modules.loadMoreStories(storyId);
-        modules.loadPageType(storyId, config);
+            var storyId = config.page.pageId.replace("stories/", "");
+
+            modules.initAccordion();
+            modules.initTimeline();
+            modules.initAgents();
+            modules.initExpandables();
+            modules.initContinueReading();
+            modules.loadMoreStories(storyId);
+            modules.loadPageType(storyId, config);
+        }
+        common.mediator.emit("page:story:ready", config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 });

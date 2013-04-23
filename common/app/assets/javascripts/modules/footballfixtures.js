@@ -91,10 +91,7 @@ define([
 
             var query = (options.path) ? options.path : this.generateQuery();
 
-            if(!bonzo(options.prependTo).hasClass('footballfixtures-loaded')) {
-                bonzo(options.prependTo).addClass('footballfixtures-loaded');
-                this.load(query);
-            }
+            this.load(query);
         };
 
     }

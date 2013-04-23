@@ -37,13 +37,12 @@ define([
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:gallery:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.augmentGallery();
-        modules.initOphanTracking();
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.augmentGallery();
+            modules.initOphanTracking();
+        }
+        common.mediator.emit("page:gallery:ready", config, context);
     };
 
     return {

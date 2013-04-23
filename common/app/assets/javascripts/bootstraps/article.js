@@ -64,14 +64,13 @@ define([
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:article:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.matchNav();
-        modules.initLiveBlogging();
-        modules.logReading();
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.matchNav();
+            modules.initLiveBlogging();
+            modules.logReading();
+        }
+        common.mediator.emit("page:article:ready", config, context);
     };
 
     return {

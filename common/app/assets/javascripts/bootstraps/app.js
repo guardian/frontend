@@ -1,5 +1,4 @@
 define('bootstraps/app', [
-    "bean",
     "common",
     "domReady",
     "ajax",
@@ -17,7 +16,6 @@ define('bootstraps/app', [
     "bootstraps/story",
     "modules/pageconfig"
 ], function (
-    bean,
     common,
     domReady,
     ajax,
@@ -112,12 +110,7 @@ define('bootstraps/app', [
             common.mediator.on('page:ready', bootstrapCommon.init);
             common.mediator.on('page:ready', pageRoute);
 
-            //common.mediator.emit('page:ready', config, context);
-            bean.on(document, 'keydown', function (e) {
-                if(e.keyCode === 39) {
-                    common.mediator.emit('page:ready', config, context);
-                }
-            });
+            common.mediator.emit('page:ready', config, context);
         });
     };
 
