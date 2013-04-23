@@ -126,6 +126,9 @@ trait FootballTestData {
 
   private def isTestDataLoaded = {
     val diff = competitions.flatMap(_.matches).map(_.id).diff(Competitions.matches.map(_.id))
+
+    println("--------- DIFF -----------")
+
     if (diff.nonEmpty) {
       println(s"*** matches not found ${diff.mkString(",")} ***")
     }
