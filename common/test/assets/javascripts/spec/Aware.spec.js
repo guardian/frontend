@@ -29,7 +29,6 @@ define(['modules/experiments/aware'], function(Aware) {
         });
 
         it('should calcuate the number of seconds since my last visit', function() {
-            Aware.init() 
             Aware.logVisit()
             expect(Aware.lastVisit(fakeNow)).toBe(24)
 
@@ -67,7 +66,6 @@ define(['modules/experiments/aware'], function(Aware) {
             var section1 = 'foo' 
             var section2 = 'bar' 
             
-            Aware.init() 
             Aware.logVisit(section1)
             Aware.logVisit(section1)
             Aware.logVisit(section2)
