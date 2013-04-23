@@ -1,7 +1,7 @@
 package test
 
 import play.api.{Application => PlayApplication, Plugin}
-import conf.{FootballStatsPlugin, Configuration}
+import conf.{FootballClient, FootballStatsPlugin, Configuration}
 import pa.Http
 import io.Source
 import org.joda.time.DateMidnight
@@ -11,6 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with FootballTestData {
   override def onStart() {
+    FootballClient.http = TestHttp
     loadTestData()
   }
 }
