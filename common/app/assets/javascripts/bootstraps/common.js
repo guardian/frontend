@@ -201,9 +201,9 @@ define([
             });
         }
         // TODO: move these up into the above !this.initialised block
-        //modules.initialiseAnalyticsAndAbTesting(config, context);
-        //modules.cleanupCookies(context);
-        //modules.showSharedWisdomToolbar(config);
+        modules.initialiseAnalyticsAndAbTesting(config, context);
+        modules.cleanupCookies(context);
+        modules.showSharedWisdomToolbar(config);
 
         common.mediator.emit("page:common:deferred:loaded", config, context);
     };
