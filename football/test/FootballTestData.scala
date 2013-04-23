@@ -79,21 +79,21 @@ trait FootballTestData {
 
 
   private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
-    id = s"$homeName $awayName $date",
+    id = s"liveMatch $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
     awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
   )
 
   private def fixture(homeName: String, awayName: String, date: DateTime) = _fixture.copy(
-    id = s"$homeName $awayName $date",
+    id = s"fixture $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = None),
     awayTeam = team.copy(id = awayName, name = awayName, score = None)
   )
 
   private def result(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = _result.copy(
-    id = s"$homeName $awayName $date",
+    id = s"result $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
     awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
@@ -108,8 +108,8 @@ trait FootballTestData {
       if (Competitions.matches.isEmpty) {
         val futures = Competitions.competitionAgents.flatMap { agent =>
           competitions.filter(_.id == agent.competition.id).flatMap { comp =>
-            Await.result(agent.update(comp), scala.concurrent.duration.Duration("2000ms"))
             Seq(
+              agent.update(comp),
               agent.updateLiveMatches(comp.matches.filter(_.isInstanceOf[MatchDay]).map(_.asInstanceOf[MatchDay])),
               agent.updateFixtures(comp.matches.filter(_.isInstanceOf[Fixture]).map(_.asInstanceOf[Fixture])),
               agent.updateResults(comp.matches.filter(_.isInstanceOf[Result])),
