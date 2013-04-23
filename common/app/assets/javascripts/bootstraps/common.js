@@ -128,7 +128,7 @@ define([
                 }
             });
 
-            var cs = new Clickstream({ filter: ["a", "span", "button"] }),
+            var cs = new Clickstream({filter: ["a", "button"]}),
                 o = new Omniture(null, config).init();
         },
 

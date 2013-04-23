@@ -25,28 +25,16 @@ object CompetitionTablesController extends Controller with Logging with Competit
 
     competitionId.map { id =>
       loadTable(id).map { table =>
-        Cached(60) {
-          val html = views.html.fragments.frontTableBlock(table)
-          request.getQueryString("callback").map { callback =>
-            JsonComponent(html)
-          } getOrElse {
-            Ok(Compressed(html))
-          }
-        }
+        val html = views.html.fragments.frontTableBlock(table)
+        renderFormat(html, html, 60)
       }.getOrElse(Cached(600)(NoContent))
     } getOrElse (BadRequest("need a competition id"))
   }
 
   def renderTeam(teamId: String) = Action { implicit request =>
     loadTableWithTeam(teamId).map { table =>
-      Cached(60) {
-        val html = views.html.fragments.frontTableBlock(table, Some(teamId))
-        request.getQueryString("callback").map { callback =>
-          JsonComponent(html)
-        } getOrElse {
-          Ok(Compressed(html))
-        }
-      }
+      val html = views.html.fragments.frontTableBlock(table, Some(teamId))
+      renderFormat(html, html, 60)
     }.getOrElse(Cached(600)(NoContent))
   }
 }

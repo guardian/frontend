@@ -9,6 +9,10 @@
     padding-top: $baseline*3
 }
 
+.trailblock ul:last-child .trail:last-child {
+    border-bottom: none;
+}
+
 .trail:first-child h2 {
     margin-bottom: $baseline;
 }

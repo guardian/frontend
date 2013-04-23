@@ -12,15 +12,20 @@ case class Competition(
     startDate: Option[DateMidnight] = None,
     matches: Seq[FootballMatch] = Nil,
     leagueTable: Seq[LeagueTableEntry] = Nil,
-    showInTeamsList: Boolean = false) extends implicits.Collections {
+    showInTeamsList: Boolean = false) extends implicits.Collections with implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
+  lazy val hasLiveMatches = matches.exists(_.isLive)
+  lazy val hasResults = matches.exists(_.isResult)
+  lazy val hasFixtures = matches.exists(_.isFixture)
   lazy val hasLeagueTable = leagueTable.nonEmpty
   lazy val hasTeams = teams.nonEmpty
 
   lazy val matchDates = matches.map(_.date.toDateMidnight).distinct
 
   lazy val teams = matches.flatMap { m => Seq(m.homeTeam, m.awayTeam) }.distinctBy(_.id).sortBy(TeamName(_))
+
+  lazy val descriptionFullyLoaded = startDate.isDefined
 }
 
 case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
