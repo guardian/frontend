@@ -11,8 +11,6 @@ import conf.FootballClient
 
 class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.Football {
 
-  FootballClient.http = TestHttp
-
   "CompetitionAgent" should "load fixtures" in Fake {
 
     object TestCompetitions extends Competitions {
