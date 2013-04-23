@@ -1,9 +1,15 @@
+import org.apache.commons.io.FileUtils
 import sbt._
 import sbt.Keys._
 import sbtassembly.Plugin.AssemblyKeys._
 import PlayArtifact._
 
+
 object PlayAssetHash extends Plugin {
+
+  val cleanAssetMaps = TaskKey[Unit]("clean-asset-maps", "Deletes all asset map files")
+
+  val cleanAssetMapsTask = cleanAssetMaps <<= deleteAssetMaps
 
   lazy val staticFilesPackage: SettingKey[String] =
     SettingKey("static-files-package", "Package to deploy static files to when building artifact")
@@ -11,6 +17,7 @@ object PlayAssetHash extends Plugin {
   staticFilesPackage := "static-files"
 
   lazy val playAssetHashCompileSettings: Seq[Setting[_]] = Seq(
+    cleanAssetMapsTask,
     resourceGenerators in Compile <+= resourceGeneratorTask,
     managedResources in Compile <<= managedResourcesWithMD5s
   )
@@ -44,6 +51,15 @@ object PlayAssetHash extends Plugin {
     }
   }
 
+  def deleteAssetMaps = (streams, resourceManaged, target) map { (s, resources, target) =>
+    val log = s.log
+    val assetMapDir = target / "dist" / "assetmaps"
+    log.info(assetMapDir.getAbsolutePath)
+    if (assetMapDir.exists()) {
+      FileUtils.deleteDirectory(assetMapDir)
+      log.info("Deleted assetmap dir " + assetMapDir)
+    }
+  }
   def generatorTransform(sourceDirectory: File, resourceManaged: File, assetFinder: PathFinder, assetRoots: Seq[File]) = {
     val copies = assetFinder.get.filterNot(_.isDirectory) map {
       asset => {
