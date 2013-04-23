@@ -33,29 +33,26 @@ define([
             s.tl(true,'o',"AutoUpdate Refresh");
         };
 
-        this.logTag = function(params) {
-            var element = params[0],
-                tag = params[1],
-                isSamePage = params[2],
-                isSameHost = params[3],
-                storeObj,
+        this.logTag = function(spec) {
+            var storeObj,
                 delay;
 
-            // Remove the 'false' clause once Omniture guys support the localStorage approach...
-            if (isSameHost && !isSamePage) {
-                // Came from a link to a new page on the same host.
-                // Do session storage rather than an omniture track.
+            if (!spec.tag) {
+                return;
+            } else if (spec.sameHost && !spec.samePage) {
+                // Came from a link to a new page on the same host,
+                // so do session storage rather than an omniture track.
                 storeObj = {
                     pageName: s.pageName,
-                    tag: tag,
+                    tag: spec.tag,
                     time: new Date().getTime()
                 };
                 localStorage.setItem(storagePrefix + 'referrerVars', JSON.stringify(storeObj));
             } else {
-                that.populateEventProperties(tag);
+                that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-                delay = isSamePage ? true : element;
-                s.tl(delay, 'o', tag);
+                delay = spec.samePage ? true : spec.target;
+                s.tl(delay, 'o', spec.tag);
             }
         };
 
