@@ -19,21 +19,16 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 
-//Base font-sizes
-//Mixin uses arguments: (family, weight, size, line-height);
-
-
-//SerifHeadline
-.type-0 { @include font($serifheadline, 600, 22, 32) }
-.type-1 { @include font($serifheadline, 600, 20, 28) }
-.type-2 { @include font($serifheadline, 600, 18, 28) }
+.type-0 { @extend %type-0 }
+.type-1 { @extend %type-1 }
+.type-2 { @extend %type-2 }
 
 //SerifText
-.type-3 { @include font($serif, 500, 20, 28) }
-.type-4 { @include font($serif, 500, 18, 24) }
-.type-5 { @include font($serif, 500, 16, 22) }
-.type-6 { @include font($serif, normal, 16, 24) }
-.type-7 { @include font($serif, normal, 14, 20) }
+.type-3 { @extend %type-3 }
+.type-4 { @extend %type-4 }
+.type-5 { @extend %type-5 }
+.type-6 { @extend %type-6 }
+.type-7 { @extend %type-7 }
 
 //Serif b and strong need to be 'medium' weight.
 .type-6 b,
@@ -44,11 +39,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 //Sans-serif's
-.type-8  { @include font($sans-serif, normal, 14, 20) }
-.type-9  { @include font($sans-serif, bold, 13, 20) }
-.type-10 { @include font($sans-serif, normal, 13, 20) }
-.type-11 { @include font($sans-serif, normal, 12, 16) }
-.type-12 { @include font($sans-serif, normal, 11, 16) }
+.type-8  { @extend %type-8 }
+.type-9  { @extend %type-9 }
+.type-10 { @extend %type-10 }
+.type-11 { @extend %type-11 }
+.type-12 { @extend %type-12 }
 
 //Default type elements
 p {
@@ -57,12 +52,12 @@ p {
 }
 
 h1 {
-    @extend .type-1;
+    @extend %type-1;
 }
 
 h3 {
     margin: 0 0 7px 0;
-    @extend .type-6;
+    @extend %type-6;
 }
 
 h4 {
@@ -70,9 +65,9 @@ h4 {
     padding: 8px 10px 7px 10px;
     background-color: #ededed;
     border-top: 1px solid #cccccc;
-    @extend .type-6;
+    @extend %type-6;
 }
 
 th, td {
-    @extend .type-10
+    @extend %type-10
 }

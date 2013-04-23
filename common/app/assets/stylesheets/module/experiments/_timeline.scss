@@ -6,7 +6,7 @@
 }
 
 .event-block .i-date { display: none; }
-.event-block .relative-timestamp { @extend .type-7;}
+.event-block .relative-timestamp { @extend %type-7;}
 
 .date-line {
     margin:-10px 0 0 4px;
@@ -22,7 +22,7 @@
 .event-title span {
   display: inline-block;
   width: 90%;
-  @extend .type-5;
+  @extend %type-5;
 }
 
 .event-title i {
@@ -38,7 +38,7 @@
 }
 
 .event-summary {
-  @extend .type-6;
+  @extend %type-6;
   padding: 0 0 $baseline 0;
 }
 

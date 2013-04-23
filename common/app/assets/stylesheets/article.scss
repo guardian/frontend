@@ -3,6 +3,9 @@
 //Variables and mixins
 @import "_vars";
 @import "_mixins";
+@import "_extends-only";
+
+//Base
 
 //Global modules
 @import "module/_article";
@@ -13,3 +16,7 @@
 //and may contain more specific selectors than we would usually like
 @import "module/external/_from-content-api";
 @import "module/external/_witness";
+
+//State
+@import "theme/_global-icons-sprite";
+@import "theme/_global-icons-svg";

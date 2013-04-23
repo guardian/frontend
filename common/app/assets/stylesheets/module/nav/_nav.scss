@@ -60,7 +60,7 @@
       }
 
     .nav--columns .nav__link {
-      @extend .type-10;
+      @extend %type-10;
       padding: $baseline*2 0;
       border-top: 1px solid $mushroom;
       display: block;
@@ -183,7 +183,7 @@
 /* Toolbar navigation
    ========================================================================== */
 .nav--toolbar {
-  @extend .type-10;
+  @extend %type-10;
   display: none;
   margin: 0 $baseline*2 0 $gutter;
   padding: $baseline*3 0 0 0;

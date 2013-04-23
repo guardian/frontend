@@ -3,12 +3,12 @@
 //Variables and mixins
 @import "_vars";
 @import "_mixins";
+@import "_extends-only";
 
 //External components
 @import "responsive-grid";
 
 //Base
-@import "base/_type";
 @import "base/_base";
 @import "base/_lists";
 @import "base/_tables";
