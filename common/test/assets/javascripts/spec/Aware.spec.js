@@ -82,10 +82,10 @@ define(['modules/experiments/aware'], function(Aware) {
                 n = 2;
               
             var topSections = Object.keys(aware).filter(function (key) {
-                return (key.indexOf('section') > -1 ) 
-            }).sort(function (a, b) { 
-                return -(aware[a] - aware[b])
-            }).slice(0, n)
+                    return (key.indexOf('section') > -1 ) 
+                }).sort(function (a, b) { 
+                    return -(aware[a] - aware[b])
+                }).slice(0, n)
                 
             expect(topSections.toString()).toBe(['section.bar', 'section.foo'].toString());
         }) 
