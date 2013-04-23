@@ -71,5 +71,10 @@ define(['common', 'modules/errors'], function(common, Errors) {
             
         });
 
+        it("should correctly parse [object Event] errors", function(){
+            e.log([new Event('AnEvent')], fakeError.filename, fakeError.lineno);
+            expect(document.getElementById('js-err').getAttribute('src')).toContain('/px.gif?js/message=event%20object%3DAnEvent&filename=foo.js&lineno=1');
+        });
+
     });
 })
