@@ -8,7 +8,7 @@ class MatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
   feature("MatchPage") {
 
-    scenario("Visit match page") {
+    ignore("Visit match page") {
 
       Given("I visit a match page")
 
