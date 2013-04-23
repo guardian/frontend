@@ -54,7 +54,6 @@ object PlayAssetHash extends Plugin {
   def deleteAssetMaps = (streams, resourceManaged, target) map { (s, resources, target) =>
     val log = s.log
     val assetMapDir = target / "dist" / "assetmaps"
-    log.info(assetMapDir.getAbsolutePath)
     if (assetMapDir.exists()) {
       FileUtils.deleteDirectory(assetMapDir)
       log.info("Deleted assetmap dir " + assetMapDir)
