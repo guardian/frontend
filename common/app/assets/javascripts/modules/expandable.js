@@ -2,7 +2,13 @@
     Module: expandable.js
     Description: Used to make a list of items expand and contract
 */
-define(['common', 'bean'], function (common, bean) {
+define([
+    'common',
+    'bean'
+], function (
+    common,
+    bean
+) {
     /*
         @param {Object} options hash of configuration options:
             dom         : DOM element to convert
@@ -83,9 +89,12 @@ define(['common', 'bean'], function (common, bean) {
 
         return {
             init: function() {
-                if (! dom.html() || model.getCount() < 3) {
+
+                if (dom.hasClass('expandable-initialised') || !dom.html() || model.getCount() < 3) {
                     return false;
                 }
+                dom.addClass('expandable-initialised');
+
                 view.renderCallToAction();
                 view.renderState();
             },

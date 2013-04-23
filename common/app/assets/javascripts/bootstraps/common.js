@@ -4,7 +4,7 @@ define([
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
-    'qwery',
+    'bonzo',
     //Modules
     'modules/popular',
     'modules/related',
@@ -29,7 +29,7 @@ define([
     userPrefs,
 
     domReady,
-    qwery,
+    bonzo,
 
     popular,
     related,
@@ -68,9 +68,14 @@ define([
             var sections = new Sections();
             var search = new Search(config);
             common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
+                var header = bonzo(context.querySelector('header'));
+                if(!header.hasClass('initialised')) {
+                    header.addClass('initialised');
+
+                    navControl.init(context);
+                    sections.init(context);
+                    search.init(context);
+                }
             });
         },
 
@@ -191,12 +196,14 @@ define([
     var deferrable = function (config, context) {
         if (!this.initialisedDeferred) {
             this.initialisedDeferred = true;
-            modules.loadAdverts();
+            common.deferToLoadEvent(function() {
+                modules.loadAdverts();
+            });
         }
         // TODO: move these up into the above !this.initialised block
-        modules.initialiseAnalyticsAndAbTesting(config, context);
-        modules.cleanupCookies(context);
-        modules.showSharedWisdomToolbar(config);
+        //modules.initialiseAnalyticsAndAbTesting(config, context);
+        //modules.cleanupCookies(context);
+        //modules.showSharedWisdomToolbar(config);
 
         common.mediator.emit("page:common:deferred:loaded", config, context);
     };
@@ -217,9 +224,7 @@ define([
 
     var init = function (config, context) {
         ready(config, context);
-        common.deferToLoadEvent(function() {
-            deferrable(config, context);
-        });
+        deferrable(config, context);
     };
 
     return {
