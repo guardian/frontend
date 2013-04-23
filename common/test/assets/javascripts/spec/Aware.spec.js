@@ -18,7 +18,7 @@ define(['modules/experiments/aware'], function(Aware) {
 
         it('should identify a first-time visitor', function() {
             expect(Aware.visits()).toBe(0);
-            expect(Aware.firstTime()).toBeTruthy();
+            expect(Aware.firstVisit()).toBeTruthy();
         });
 
         it('should identify a return visitor', function() {
@@ -63,7 +63,7 @@ define(['modules/experiments/aware'], function(Aware) {
         });
 
         it('should count frequency of visits to different sections over the last few days', function() {
-            
+           
             var section1 = 'foo' 
             var section2 = 'bar' 
             
