@@ -44,6 +44,8 @@ function (
         // Run through slots and create documentWrite for each.
         // Other ad types such as iframes and custom can be plugged in here later
         if (adsSwitchedOn) {
+
+            generateMiddleSlot(currConfig);
             
             Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
                 var name = as.getAttribute('data-' + size),
@@ -64,7 +66,6 @@ function (
                 quantcast.load();
             }
         
-            generateMiddleSlot(currConfig);
         }
 
         //Make the request to ad server
@@ -104,13 +105,22 @@ function (
         );
     }
 
+    //Temporary middle slot needs better implementation in the future
     function generateMiddleSlot() {
-        //Temporary middle slot needs better implementation in the future
-        if(currConfig.page.pageId === "") {
-            var slot =  '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
-                slot += ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
+        var slot,
+            prependTo;
 
-            bonzo(currContext.querySelector('.front-trailblock-commentisfree li')).after(slot);
+        if(currConfig.page.pageId === "") {
+            prependTo = currContext.querySelector('.front-trailblock-commentisfree li');
+
+            if(!bonzo(prependTo).hasClass('middleslot-loaded')) {
+                bonzo(prependTo).addClass('middleslot-loaded');
+
+                slot = '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
+                slot+= ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
+
+                bonzo(prependTo).after(slot);
+            }
         }
     }
 
