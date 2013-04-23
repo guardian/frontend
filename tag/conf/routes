@@ -6,6 +6,4 @@
 GET     /assets/*file                                 controllers.Assets.at(path="/public", file)
 
 GET     /$path<[\w\d-]*/[\w\d-]*>                     controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*>.json                controllers.TagController.renderJson(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>            controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json       controllers.TagController.renderJson(path)
