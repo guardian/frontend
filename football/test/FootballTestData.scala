@@ -79,21 +79,21 @@ trait FootballTestData {
 
 
   private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
-    id = s"$homeName $awayName $date",
+    id = s"liveMatch $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
     awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
   )
 
   private def fixture(homeName: String, awayName: String, date: DateTime) = _fixture.copy(
-    id = s"$homeName $awayName $date",
+    id = s"fixture $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = None),
     awayTeam = team.copy(id = awayName, name = awayName, score = None)
   )
 
   private def result(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = _result.copy(
-    id = s"$homeName $awayName $date",
+    id = s"result $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
     awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
@@ -118,7 +118,18 @@ trait FootballTestData {
           }
         }
         futures.foreach(f => Await.result(f, scala.concurrent.duration.Duration("2000ms")))
+
+        isTestDataLoaded
       }
     }
   }
+
+  private def isTestDataLoaded = {
+    val diff = competitions.flatMap(_.matches).map(_.id).diff(Competitions.matches.map(_.id))
+    if (diff.nonEmpty) {
+      println(s"*** matches not found ${diff.mkString(",")} ***")
+    }
+    diff == Nil
+  }
+
 }
