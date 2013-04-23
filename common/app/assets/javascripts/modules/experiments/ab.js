@@ -10,7 +10,7 @@ define([
     RelatedContent) {
     
     var TESTS = {
-            RelatedContent : new RelatedContent()
+            RelatedContentV2 : new RelatedContent()
         };
 
     var testKey = 'ab.current',
