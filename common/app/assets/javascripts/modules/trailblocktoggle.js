@@ -37,7 +37,7 @@ define([
                     manualTrigger = opts.manualTrigger,
                     context       = opts.context,
                     classPrefix = "front-trailblock-",
-                    classesToToggle = 'rolled-out rolled-up',
+                    classesToToggle = 'rolled-up',
                     trailblockId,
                     trailblock;
 

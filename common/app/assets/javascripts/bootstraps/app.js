@@ -90,7 +90,9 @@ define('bootstraps/app', [
             r.get('/stories/:id', function(req) { Story.init(config, context);});
 
             var pageRoute = function(config, context) {
-                //Articles
+
+                bootstrapCommon.init(config, context);
+
                 if(config.page.contentType === "Article") {
                     Article.init(config, context);
                 }
@@ -107,7 +109,6 @@ define('bootstraps/app', [
                 r.init();
             };
 
-            common.mediator.on('page:ready', bootstrapCommon.init);
             common.mediator.on('page:ready', pageRoute);
 
             common.mediator.emit('page:ready', config, context);

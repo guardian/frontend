@@ -14,7 +14,7 @@ define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, b
         it("should correctly render the default shut state", function(){
             var a = new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
             
-            expect(common.$g('#trail-c')[0].className).toBe('shut');
+            expect(common.$g('#trail-c')[0].className).toContain('shut');
             expect(common.$g('#trail-c .cta').text()).toBe('Show 3 more');
         });
 

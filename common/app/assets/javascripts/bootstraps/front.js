@@ -60,7 +60,7 @@ define([
                             break;
                     }
 
-                    if(!bonzo(opts.prependTo).hasClass('footballfixtures-loaded')) {
+                    if(opts && !bonzo(opts.prependTo).hasClass('footballfixtures-loaded')) {
                         bonzo(opts.prependTo).addClass('footballfixtures-loaded');
                         table = new FootballFixtures(opts).init();
                     }

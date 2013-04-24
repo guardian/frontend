@@ -215,7 +215,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         adPlaceholder.getAttribute("data-extended") should be("x54")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")

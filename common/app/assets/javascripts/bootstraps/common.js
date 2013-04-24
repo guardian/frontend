@@ -198,12 +198,13 @@ define([
             this.initialisedDeferred = true;
             common.deferToLoadEvent(function() {
                 modules.loadAdverts();
+
+                // TODO: make these run in event 'page:common:deferred:loaded'
+                modules.initialiseAnalyticsAndAbTesting(config, context);
+                modules.cleanupCookies(context);
+                modules.showSharedWisdomToolbar(config);
             });
         }
-        // TODO: move these up into the above !this.initialised block
-        modules.initialiseAnalyticsAndAbTesting(config, context);
-        modules.cleanupCookies(context);
-        modules.showSharedWisdomToolbar(config);
 
         common.mediator.emit("page:common:deferred:loaded", config, context);
     };
