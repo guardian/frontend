@@ -3,6 +3,7 @@
 //Variables and mixins
 @import "_vars";
 @import "_mixins";
+@import "_extends-only";
 
 //External components
 @import "_normalize";
@@ -71,4 +72,3 @@
 @import "module/experiments/_accordion";
 @import "module/experiments/_agent";
 @import "module/experiments/_reaction";
-

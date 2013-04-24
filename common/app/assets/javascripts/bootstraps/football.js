@@ -113,6 +113,7 @@ define([
     };
 
     var ready = function(req, config, context) {
+        common.lazyLoadCss('football', config);
 
         var page = req.params.action;
 

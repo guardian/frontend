@@ -37,6 +37,8 @@ define([
     };
 
     var ready = function (config, context) {
+        common.lazyLoadCss('gallery', config);
+        
         ready = function (config, context) {
             common.mediator.emit("page:gallery:ready", config, context);
         };

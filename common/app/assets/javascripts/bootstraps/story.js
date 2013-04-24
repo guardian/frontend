@@ -125,6 +125,8 @@ define([
     };
 
     var init = function(req, config) {
+        common.lazyLoadCss('story', config);
+        
         var storyId = config.page.pageId.replace("stories/", "");
 
         modules.initAccordion();

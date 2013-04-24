@@ -8,14 +8,14 @@
 //Core elements
 //---------------------------------------------
 .from-content-api h2 {
-    @extend .type-4;
+    @extend %type-4;
     color: #333333;
     margin-bottom: $baseline;
     clear: both;
 }
 
 .from-content-api h3 {
-    @extend .type-5;
+    @extend %type-5;
     margin: 0;
     font-family: georgia;
 }
@@ -27,7 +27,7 @@
 .from-content-api address,
 .from-content-api blockquote,
 .from-content-api blockquote p {
-    @extend .type-6;
+    @extend %type-6;
     margin: 0px 0px $baseline*2 0px;
     padding: 0px;
     color: #333333;
@@ -35,7 +35,7 @@
 
 .article blockquote,
 .article blockquote p {
-    @extend .type-6;
+    @extend %type-6;
     color: #333333;
     font-weight: normal;
     border-left: none;
@@ -53,7 +53,7 @@
 .caption,
 figcaption,
 .main-caption {
-    @extend .type-12;
+    @extend %type-12;
     color:#666666;
 }
 
@@ -89,7 +89,7 @@ figure {
 //Citations
 //---------------------------------------------
 .from-content-api cite {
-    @extend .type-7
+    @extend %type-7
 }
 
     .from-content-api cite a {
