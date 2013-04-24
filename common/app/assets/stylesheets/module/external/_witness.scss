@@ -22,11 +22,11 @@
   }
 
   .element-witness p {
-    @extend .type-7;
+    @extend %type-7;
   }
 
   .element-witness--title {
-    @extend .type-3;
+    @extend %type-3;
     margin-bottom: $baseline*2;
   }
 
@@ -59,7 +59,7 @@
 
   .element-witness--metadata {
     p {
-      @extend .type-10;
+      @extend %type-10;
     }
     border-top: 1px solid $darkMushroom;
     background: $mushroom;
@@ -73,14 +73,14 @@
   }
 
   p.element-witness--source {
-    @extend .type-10;
+    @extend %type-10;
 
     padding-left: $baseline*2;
     color: #666666;
   }
 
   .element-witness--author {
-    @extend .type-11;
+    @extend %type-11;
     display: inline-block;
     margin-bottom: 0px;
     width: 100%;
@@ -91,7 +91,7 @@
   }
 
   .element-witness--author-name {
-    @extend .type-11;
+    @extend %type-11;
     display: inline-block;
     font-weight: bold;
   }
@@ -117,7 +117,7 @@
   margin: 0 $baseline*4 $baseline*4 $baseline*4;
 
   p {
-    @extend .type-10;
+    @extend %type-10;
     float: left;
     padding: 2px $baseline*2 $baseline $baseline*2;
     margin-left: 50px;

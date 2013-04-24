@@ -1,5 +1,5 @@
 #addToHomeScreen {
-    @extend .type-8;
+    @extend %type-8;
     z-index:9999;
     -webkit-user-select:none;
     user-select:none;
@@ -20,7 +20,7 @@
 }
 
 #addToHomeScreen.addToHomeIpad {
-    @extend .type-8;
+    @extend %type-8;
     width:240px;
     margin-left: 14px;
     @include box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));

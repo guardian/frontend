@@ -1,7 +1,7 @@
 $orange: #FF7F00;
 
 .story-title {
-  @extend .type-3;
+  @extend %type-3;
   padding: $baseline*4 0 $baseline*5 0;
   margin: 0 $gutter;
   line-height: 1em;
@@ -9,14 +9,14 @@ $orange: #FF7F00;
 }
 
 .story-title--section {
-    @extend .type-3;
+    @extend %type-3;
     border-top: 1px solid #CFCFCF;
     border-bottom: none;
     margin-top: $baseline*7;
   }
 
 .story-sub-head {
-  @extend .type-6;
+  @extend %type-6;
   color: $orange;
   margin-bottom: $baseline*2;
 }
@@ -94,7 +94,7 @@ $orange: #FF7F00;
 
 .back-to-top,
 .from-content-api a.back-to-top {
-  @extend .type-10;
+  @extend %type-10;
   color: #bbb;
 }
 

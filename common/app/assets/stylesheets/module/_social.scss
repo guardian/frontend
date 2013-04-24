@@ -7,7 +7,7 @@
  
 .social-btn,
 a.social-btn {
-    @extend .type-10;
+    @extend %type-10;
     text-align: center;
     display: block;
     padding: 8px 0px;

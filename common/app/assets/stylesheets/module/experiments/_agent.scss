@@ -60,18 +60,18 @@
 }
 
 .agent-name {
-  @extend .type-5;
+  @extend %type-5;
   margin-bottom: 0px;
   color: #ffb70b;
 }
 
 .agent-role {
-  @extend .type-6;
+  @extend %type-6;
   margin-bottom: none;
 }
 
 .agent-body {
-  @extend .type-6;
+  @extend %type-6;
   margin-top: $baseline*2;
 }
 

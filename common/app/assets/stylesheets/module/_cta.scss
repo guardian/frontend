@@ -1,5 +1,5 @@
 .cta {
-    @extend .type-10;
+    @extend %type-10;
     line-height: 1em;
     display: block;
     color: #545454;
@@ -30,7 +30,7 @@ button.cta{
     }
 
 .expander {
-  @extend .type-8;
+  @extend %type-8;
   display: block;
   padding-top: 5px;
   color: #666666;
@@ -40,7 +40,7 @@ button.cta{
 .top:link,
 .top:visited,
 .top:active {
-    @extend .type-8;
+    @extend %type-8;
     display: block;
     color: #A1B7CF;
     background-color: $darkBlue;

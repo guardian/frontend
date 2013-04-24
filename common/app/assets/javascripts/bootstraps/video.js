@@ -39,6 +39,8 @@ define([
 
 
     var ready = function (config, context) {
+        common.lazyLoadCss('video', config);
+        
         ready = function (config, context) {
             common.mediator.emit("page:video:ready", config, context);
         };
