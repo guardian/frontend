@@ -13,11 +13,11 @@ define([
     /**
      * @param Object w 'window' object, used for testing
      */
-    function Omniture(s, config, w) {
+    function Omniture(s, w) {
 
-        var that = this;
-
-        var storagePrefix = "gu.analytics.";
+        var storagePrefix = "gu.analytics.",
+            config,
+            that = this;
 
         w = w || {};
 
@@ -147,40 +147,44 @@ define([
             }
         };
 
-        this.loaded = function() {
+        this.loaded = function(callback) {
             this.populatePageProperties();
             this.logView();
-            common.mediator.on('module:clickstream:click', this.logTag );
-            common.mediator.emit('module:omniture:loaded');
+            if (typeof callback === 'function') {
+                callback();
+            }
         };
 
-        this.init = function() {
+        this.go = function(c, callback) {
+            var that = this;
+
+            config = c; // update the module-wide config
 
             // must be set before the Omniture file is parsed
             window.s_account = config.page.omnitureAccount;
 
-            var that = this;
-
             // if the omniture object was not injected in to the constructor
             // use the global 's' object
-
-            if (s !== null) {
-                that.loaded();
+            if (window.s) {
+                s = window.s;
+                that.loaded(callback);
             } else {
                 var dependOn = ['js!omniture'];
                 require(dependOn, function(placeholder){
                     s = window.s;
-                    that.loaded();
+                    that.loaded(callback);
                 });
             }
-
-            common.mediator.on('module:autoupdate:loaded', function() {
-                that.populatePageProperties();
-                that.logUpdate();
-            });
-
-            common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
         };
+
+        common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+
+        common.mediator.on('module:clickstream:click', that.logTag );
+
+        common.mediator.on('module:autoupdate:loaded', function() {
+            that.populatePageProperties();
+            that.logUpdate();
+        });
 
     }
 

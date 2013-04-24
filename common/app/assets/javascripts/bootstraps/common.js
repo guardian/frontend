@@ -115,25 +115,30 @@ define([
             });
         },
 
-        loadOmnitureAnalytics: function (config) {
-            common.mediator.on('module:omniture:loaded', function() {
-                var videos = document.getElementsByTagName("video");
-                if(videos) {
-                    for(var i = 0, l = videos.length; i < l; i++) {
-                        var v = new Video({
-                            el: videos[i],
-                            config: config
-                        }).init();
-                    }
-                }
-            });
-
+        loadAnalytics: function () {
             var cs = new Clickstream({filter: ["a", "button"]}),
-                o = new Omniture(null, config).init();
-        },
+                omniture = new Omniture();
 
-        loadOphanAnalytics: function (config) {
-            require(config.page.ophanUrl, function (Ophan) {
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
+
+                // AB must execute before Omniture
+                AB.init(config);
+
+                omniture.go(config, function(){
+                    // Oniture callback logic:
+
+                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                        if (!bonzo(video).hasClass('tracking-applied')) {
+                            bonzo(video).addClass('tracking-applied');
+                            var v = new Video({
+                                el: video,
+                                config: config
+                            }).init();
+                        }
+                    });
+                });
+
+                require(config.page.ophanUrl, function (Ophan) {
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),
@@ -148,7 +153,9 @@ define([
                             };
                         });
                     }
-                Ophan.startLog();
+                    Ophan.startLog();
+                });
+
             });
         },
 
@@ -181,32 +188,23 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
-        },
-
-        initialiseAnalyticsAndAbTesting: function(config, context) {
-            common.mediator.on('ab:loaded', function() {
-                modules.loadOmnitureAnalytics(config);
-                modules.loadOphanAnalytics(config);
-            });
-
-            AB.init(config, context);
         }
     };
 
     var deferrable = function (config, context) {
-        if (!this.initialisedDeferred) {
-            this.initialisedDeferred = true;
-            common.deferToLoadEvent(function() {
+        var self = this;
+        common.deferToLoadEvent(function() {
+            if (!self.initialisedDeferred) {
+                self.initialisedDeferred = true;
                 modules.loadAdverts();
+                modules.loadAnalytics();
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
-                modules.initialiseAnalyticsAndAbTesting(config, context);
                 modules.cleanupCookies(context);
                 modules.showSharedWisdomToolbar(config);
-
-                common.mediator.emit("page:common:deferred:loaded", config, context);
-            });
-        }
+            }
+            common.mediator.emit("page:common:deferred:loaded", config, context);
+        });
     };
 
     var ready = function (config, context) {
