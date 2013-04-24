@@ -20,7 +20,7 @@ define([
         var opts = options || {},
             dom = common.$g(opts.dom), // root element of the trailblock
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
-            cta = document.createElement('a'),
+            cta = document.createElement('button'),
             domCount,
             count,
             self = this,
