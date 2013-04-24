@@ -125,7 +125,9 @@
         var styleguidefilename = config.styleguidefilename || "sprites.scala.html";
 
         // create the output directory
-        fs.mkdir( config.imgDest );
+        if (!fs.existsSync( config.imgDest )) {
+            fs.mkdirSync( config.imgDest );
+        }
 
         console.info( "Ouput css file created." );
 

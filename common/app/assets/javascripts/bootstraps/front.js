@@ -65,6 +65,8 @@ define([
     };
 
     var ready = function (config, context) {
+        common.lazyLoadCss('front', config);
+        
         ready = function (config, context) {
             common.mediator.emit("page:front:ready", config, context);
         };

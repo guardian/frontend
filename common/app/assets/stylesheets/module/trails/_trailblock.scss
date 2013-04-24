@@ -17,13 +17,13 @@
     }
 
 .trailblock-topstories .trail-headline {
-    @extend .type-3;
+    @extend %type-3;
 }
 
 .trailblock-topstories li:first-child .b2 { border-top:none;}
 
 .toggle-trailblock {
-    @extend .type-8;
+    @extend %type-8;
     position: absolute;
     top: 0px;
     right: 0px;
