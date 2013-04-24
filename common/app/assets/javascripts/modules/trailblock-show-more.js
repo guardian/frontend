@@ -13,33 +13,48 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
-
+                
+            render: function($cta, section) {
+                // what's the offset?
+                for (var i = 0; i < trailblockLength; i++) {
+                    var trail = trails[section][i];
+                    if (!trail) {
+                        break;
+                    }
+                    bonzo($cta.previous()).append(trail);
+                }
+                // remove trails
+                trails[section] = trails[section].slice(trailblockLength);
+                common.mediator.emit('module:trailblock-show-more:render');
+            },
+                
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta" data-link-name="Show more | 1">Show more</button>');
+               bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
            },
 
            removeCta: function($cta) {
                $cta.remove();
            },
            
-           render: function($cta, section) {
-               // what's the offset?
-               for (var i = 0; i < trailblockLength; i++) {
-                   var trail = trails[section][i];
-                   if (!trail) {
-                       break;
-                   }
-                   bonzo($cta.previous()).append(trail);
-               }
-               // remove trails
-               trails[section] = trails[section].slice(trailblockLength);
-               if (!trails[section].length) {
+           updateCta: function($cta) {
+               var section = getSection($cta);
+               if (trails[section] && trails[section].length === 0) {
                    this.removeCta($cta);
+               } else {
+                   // increase the show more count
+                   var newDataLinkName = $cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
+                       // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
+                       return prefix + (parseInt(count, 10) + 1);
+                   });
+                   $cta.attr('data-link-name', newDataLinkName);
                }
-               common.mediator.emit('module:trailblock-show-more:render');
            }
 
         };
+        
+        function getSection($cta) {
+            return bonzo($cta.parent()).attr('data-section-id') || 'top-stories';
+        }
 
         // initialise
         this.init = function(context) {
@@ -63,22 +78,11 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.cta', function(e) {
                 var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
-                    section = bonzo($cta.parent()).attr('data-section-id') || 'top-stories';
-                
-                function updateTrailblock($cta, section) {
-                    that.view.render($cta, section);
-                    
-                    // increase the show more count
-                    var newDataLinkName = $cta.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
-                        // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
-                        return prefix + (parseInt(count, 10) + 1);
-                    });
-                    $cta.attr('data-link-name', newDataLinkName);
-                }
+                    section = getSection($cta);
                 
                 // have we already got the trails
                 if (trails[section]) {
-                    updateTrailblock($cta, section);
+                    that.view.render($cta, section);
                 } else {
                     ajax({
                         url: opts.url || '/' +  section + '/trails',
@@ -103,11 +107,18 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                                 }
                             });
                             
-                            updateTrailblock($cta, section);
+                            that.view.render($cta, section);
                         }
                     });
                 }
                 
+            });
+            
+            common.mediator.on('module:clickstream:click', function(clickSpec) {
+                var $cta = bonzo(clickSpec.target);
+                if ($cta.hasClass('trailblock-show-more')) {
+                    that.view.updateCta($cta);
+                }
             });
         };
     }
