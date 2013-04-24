@@ -84,9 +84,9 @@ object CommonSwitches {
 
   val VideoAdvertSwitch = DefaultSwitch("video-adverts",
     "If this switch is on OAS video adverts will be enabled.",
-    initiallyOn = true)
+    initiallyOn = false)
 
-  val ABRelatedContent = DefaultSwitch("ab-related-content",
+  val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
     "If this switch is on related content AB test will be enabled.",
     initiallyOn = false)
   
@@ -103,7 +103,7 @@ object CommonSwitches {
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent, CssLazyLoadSwitch
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, CssLazyLoadSwitch
   )
 }
 
