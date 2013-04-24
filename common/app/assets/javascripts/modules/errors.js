@@ -1,3 +1,4 @@
+/*global Event:true */
 define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
     var Errors = function (config) {
