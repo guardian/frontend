@@ -203,10 +203,10 @@ define([
                 modules.initialiseAnalyticsAndAbTesting(config, context);
                 modules.cleanupCookies(context);
                 modules.showSharedWisdomToolbar(config);
+
+                common.mediator.emit("page:common:deferred:loaded", config, context);
             });
         }
-
-        common.mediator.emit("page:common:deferred:loaded", config, context);
     };
 
     var ready = function (config, context) {
