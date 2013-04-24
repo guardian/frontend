@@ -37,15 +37,13 @@ define([
     };
 
     var ready = function (config, context) {
-        common.lazyLoadCss('gallery', config);
-        
-        ready = function (config, context) {
-            common.mediator.emit("page:gallery:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.augmentGallery();
-        modules.initOphanTracking();
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('gallery', config);
+            modules.augmentGallery();
+            modules.initOphanTracking();
+        }
+        common.mediator.emit("page:gallery:ready", config, context);
     };
 
     return {

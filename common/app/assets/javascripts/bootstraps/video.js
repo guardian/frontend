@@ -39,15 +39,13 @@ define([
 
 
     var ready = function (config, context) {
-        common.lazyLoadCss('video', config);
-        
-        ready = function (config, context) {
-            common.mediator.emit("page:video:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.initAnalytics();
-        modules.initAdverts();
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('video', config);
+            modules.initAnalytics();
+            modules.initAdverts();
+        }
+        common.mediator.emit("page:video:ready", config, context);
     };
 
     return {

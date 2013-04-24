@@ -4,7 +4,7 @@ define([
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
-    'qwery',
+    'bonzo',
     //Modules
     'modules/popular',
     'modules/related',
@@ -29,7 +29,7 @@ define([
     userPrefs,
 
     domReady,
-    qwery,
+    bonzo,
 
     popular,
     related,
@@ -68,9 +68,14 @@ define([
             var sections = new Sections();
             var search = new Search(config);
             common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
+                var header = bonzo(context.querySelector('header'));
+                if(!header.hasClass('initialised')) {
+                    header.addClass('initialised');
+
+                    navControl.init(context);
+                    sections.init(context);
+                    search.init(context);
+                }
             });
         },
 
@@ -148,11 +153,12 @@ define([
         },
 
         loadAdverts: function (config) {
-
-            if (config.switches.adverts) {
-                Adverts.init(config);
-                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-            }
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                if (config.switches.adverts) {
+                    Adverts.init(config, context);
+                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                }
+            });
         },
 
         cleanupCookies: function() {
@@ -188,33 +194,33 @@ define([
     };
 
     var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAnalyticsAndAbTesting(config, context);
-            modules.loadAdverts(config, context);
-            modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar(config);
-            
-            common.mediator.emit("page:common:loaded", config, context);
-        };
-        common.deferToLoadEvent(function() {
-            deferrable(config, context);
-        });
+        if (!this.initialisedDeferred) {
+            this.initialisedDeferred = true;
+            common.deferToLoadEvent(function() {
+                modules.loadAdverts();
+
+                // TODO: make these run in event 'page:common:deferred:loaded'
+                modules.initialiseAnalyticsAndAbTesting(config, context);
+                modules.cleanupCookies(context);
+                modules.showSharedWisdomToolbar(config);
+            });
+        }
+
+        common.mediator.emit("page:common:deferred:loaded", config, context);
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:common:ready", config, context);
-        };
-        modules.upgradeImages();
-        modules.showTabs();
-        modules.showRelativeDates();
-        modules.transcludeRelated();
-        modules.transcludePopular();
-        modules.transcludeTopStories();
-        modules.initialiseNavigation(config);
-
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.upgradeImages();
+            modules.showTabs();
+            modules.showRelativeDates();
+            modules.transcludeRelated();
+            modules.transcludePopular();
+            modules.transcludeTopStories();
+            modules.initialiseNavigation(config);
+        }
+        common.mediator.emit("page:common:ready", config, context);
     };
 
     var init = function (config, context) {
