@@ -1,13 +1,10 @@
-/*global guardian:false */
 define([
     "common",
-    'bonzo',
     "modules/detect",
     "modules/analytics/video",
     "modules/adverts/video"
 ], function(
     common,
-    bonzo,
     detect,
     Videostream,
     Advert

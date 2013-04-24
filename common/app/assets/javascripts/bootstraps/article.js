@@ -1,13 +1,11 @@
-/*global guardian:false */
 define([
     "common",
-    'bonzo',
+
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading"
 ], function (
     common,
-    bonzo,
     AutoUpdate,
     MatchNav,
     Reading

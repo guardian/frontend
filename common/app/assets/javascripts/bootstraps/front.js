@@ -1,8 +1,6 @@
-/*global guardian:false */
 define([
     //Common libraries
     "common",
-    'bonzo',
     "domReady",
     //Modules
     "modules/trailblocktoggle",
@@ -10,7 +8,6 @@ define([
     "modules/footballfixtures"
 ], function (
     common,
-    bonzo,
     domReady,
 
     TrailblockToggle,

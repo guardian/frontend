@@ -1,9 +1,8 @@
-/*global guardian:false */
 define([
     "common",
     "bean",
     "ajax",
-    'bonzo',
+
     "modules/accordion",
     "modules/expandable",
     "modules/story/storytype",
@@ -12,7 +11,7 @@ define([
     common,
     bean,
     ajax,
-    bonzo,
+
     Accordion,
     Expandable,
     StoryType,

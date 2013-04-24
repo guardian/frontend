@@ -1,14 +1,12 @@
-/*global guardian:false */
 define([
     "common",
-    'bonzo',
+
     "modules/gallery",
     "modules/analytics/gallery",
     "modules/accordion",
     "modules/story/experiment"
 ], function(
     common,
-    bonzo,
     Gallery,
     Tracking,
     Accordion,

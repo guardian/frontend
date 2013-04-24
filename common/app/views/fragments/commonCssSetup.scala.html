@@ -4,8 +4,8 @@
 
 @if(CssLazyLoadSwitch.isSwitchedOn) {
 	<style type="text/css">
-	    .i { background-image: url(@Static("images/global/sprite.png")); }
 	    @Html(io.Source.fromFile("common/app/assets/stylesheets/head.min.css").mkString)
+        .i { background-image: url(@Static("images/global/sprite.png")); }
 	</style>
 } else {
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />

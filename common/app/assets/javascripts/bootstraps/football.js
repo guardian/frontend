@@ -2,7 +2,6 @@
 define([
     //Common libraries
     "common",
-    'bonzo',
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -15,7 +14,6 @@ define([
     "modules/matchnav"
 ], function (
     common,
-    bonzo,
     Router,
     TogglePanel,
     Expandable,
