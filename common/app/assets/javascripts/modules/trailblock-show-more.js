@@ -29,7 +29,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             },
                 
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta" data-link-name="Show more | 1">Show more</button>');
+               bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
            },
 
            removeCta: function($cta) {
@@ -115,7 +115,10 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             });
             
             common.mediator.on('module:clickstream:click', function(clickSpec) {
-                that.view.updateCta(bonzo(clickSpec.target));
+                var $cta = bonzo(clickSpec.target);
+                if ($cta.hasClass('trailblock-show-more')) {
+                    that.view.updateCta($cta);
+                }
             });
         };
     }

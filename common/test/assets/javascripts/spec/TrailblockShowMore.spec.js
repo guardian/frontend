@@ -105,6 +105,17 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             });
         });
         
+        it("shouldn't listen to non-cta clickstream clicks", function(){
+            waitsFor(function() {
+                return common.mediator.emit.called;
+              }, 'Trails not loaded in in time', 100);
+            
+            runs(function() {
+                common.mediator.emit('module:clickstream:click', { target: document.querySelector('body') });
+                expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 1');
+            });
+        });
+        
         it("should correctly increment omniture count on trails", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
