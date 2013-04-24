@@ -7,10 +7,9 @@
 //External components
 @import "_normalize";
 
-@import "_extends-only";
-
 //Base
 @import "base/_type";
+@import "_extends-only";
 @import "base/_links";
 @import "base/_helpers";
 @import "base/_lists";
