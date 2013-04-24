@@ -97,6 +97,10 @@ define([
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'autoUpdate',
                 success: function (response) {
+                    if (!response) {
+                        common.mediator('module:error', 'Failed to load auto-update: ' + options.path, 'autoupdate.js');
+                        return;
+                    }
                     if(response.refreshStatus === false) {
                         that.off();
                         that.view.destroy();
@@ -104,9 +108,6 @@ define([
                         that.view.render(response);
                         common.mediator.emit('modules:autoupdate:loaded', response);
                     }
-                },
-                error: function () {
-                    common.mediator('module:error', 'Failed to load auto-update:' + options.path, 'autoupdate.js');
                 }
             });
         };
