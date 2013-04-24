@@ -84,7 +84,7 @@ object CommonSwitches {
 
   val VideoAdvertSwitch = DefaultSwitch("video-adverts",
     "If this switch is on OAS video adverts will be enabled.",
-    initiallyOn = true)
+    initiallyOn = false)
 
   val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
     "If this switch is on related content AB test will be enabled.",
