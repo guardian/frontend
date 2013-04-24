@@ -72,6 +72,7 @@ define([
     var ready = function(config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            common.lazyLoadCss('story', config);
             modules.initTimeline();
             modules.initAgents();
             modules.initExpandables();

@@ -65,7 +65,7 @@
 
   .nav-popup--small .nav__link,
   .nav-popup--small .nav--columns .nav__link{
-    @extend .type-7;
+    @extend %type-7;
 
     @media only screen and (min-width: $tablet) {
       color: #444444;

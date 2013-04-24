@@ -117,8 +117,7 @@ trait Prototypes extends Testing {
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
         case "README" => MergeStrategy.first
         case "CHANGELOG" => MergeStrategy.first
-        case x => println(x)
-          old(x)
+        case x => old(x)
       }
     }
   )

@@ -125,7 +125,8 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             runs(function() {
                 bean.fire($cta[0], 'click');
                 bean.fire($cta[0], 'click');
-                expect(common.$g('.front-container .trail').length).toBe(13);
+
+                expect(common.$g('.front-container .trail').length).toBe(17);
                 expect(common.$g('.front-container .trailblock .cta').length).toBe(0);
             });
         });

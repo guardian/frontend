@@ -1,4 +1,7 @@
 @(metaData: MetaData, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
+
+@import CommonSwitches._
+
 <!doctype html>
 <html class="js-off">
 <head>
@@ -19,6 +22,10 @@
         @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
         @fragments.footer(metaData)
     </div>
+    
+    @if(CssLazyLoadSwitch.isSwitchedOn) {
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
+    }
 
     @fragments.analytics(metaData)
     @fragments.debug()

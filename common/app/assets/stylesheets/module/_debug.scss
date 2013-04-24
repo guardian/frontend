@@ -3,7 +3,7 @@
 }
 
 #dev-debug.active {
-  @extend .type-10;
+  @extend %type-10;
   margin-top: $baseline*2;
   display: block;
 }

@@ -27,13 +27,15 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                for (var i = 0; i < trailblockLength; i++) {
                    var trail = trails[section][i];
                    if (!trail) {
-                       this.removeCta($cta);
                        break;
                    }
                    bonzo($cta.previous()).append(trail);
                }
                // remove trails
                trails[section] = trails[section].slice(trailblockLength);
+               if (!trails[section].length) {
+                   this.removeCta($cta);
+               }
                common.mediator.emit('module:trailblock-show-more:render');
            }
 

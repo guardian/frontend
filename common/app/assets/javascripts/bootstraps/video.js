@@ -41,6 +41,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            common.lazyLoadCss('video', config);
             modules.initAnalytics();
             modules.initAdverts();
         }
