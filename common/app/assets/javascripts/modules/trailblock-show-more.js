@@ -13,11 +13,11 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
-                
+
            appendCta: function(trailblock) {
                bonzo(trailblock).append('<button class="cta" data-link-name="Show more | 1">Show more</button>');
            },
-           
+
            removeCta: function($cta) {
                $cta.remove();
            },
@@ -38,17 +38,29 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                }
                common.mediator.emit('module:trailblock-show-more:render');
            }
-        
+
         };
 
         // initialise
         this.init = function(context) {
+
             var that = this,
-                trailblocks = common.$g('.' + className, context)
-                    // append the cta
-                    .each(this.view.appendCta);
+                trailblocks = common.$g('.' + className, context);
+
+            if(! trailblocks.length) {
+                return;
+            }
+
+            // Remove the class, so we can't do multiple inits
+            trailblocks.each(function(trailblock){
+                bonzo(trailblock).removeClass('js-show-more');
+            });
+
+            // append the cta
+            trailblocks.each(this.view.appendCta);
+
             // event delegation for clicking of cta
-            bean.on(qwery('#front-container')[0], 'click', '.trailblock button.cta', function(e) {
+            bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.cta', function(e) {
                 var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
                     section = bonzo($cta.parent()).attr('data-section-id') || 'top-stories';

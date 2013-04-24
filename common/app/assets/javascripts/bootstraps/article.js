@@ -64,16 +64,14 @@ define([
     };
 
     var ready = function (config, context) {
-        common.lazyLoadCss('article', config);
-        
-        ready = function (config, context) {
-            common.mediator.emit("page:article:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.matchNav();
-        modules.initLiveBlogging();
-        modules.logReading();
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('article', config);
+            modules.matchNav();
+            modules.initLiveBlogging();
+            modules.logReading();
+        }
+        common.mediator.emit("page:article:ready", config, context);
     };
 
     return {

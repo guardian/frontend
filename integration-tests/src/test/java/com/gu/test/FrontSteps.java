@@ -23,7 +23,7 @@ public class FrontSteps {
     }
 	
     // xpath to the first hideable section
-    protected String sectionXpath = "//div[@id = 'front-container']/section[2]";
+    protected String sectionXpath = "//div[contains(@class, 'front-container')]/section[2]";
     protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]";
 	
     @Given("^a section is hidden$")

@@ -2,6 +2,7 @@
 define([
     //Common libraries
     "common",
+    "bonzo",
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -14,6 +15,7 @@ define([
     "modules/matchnav"
 ], function (
     common,
+    bonzo,
     Router,
     TogglePanel,
     Expandable,
@@ -35,12 +37,17 @@ define([
         },
 
         showFrontFixtures: function(context) {
-            var table = new FootballFixtures({
-                prependTo: context.querySelector('.trailblock ul > li'),
-                contextual: false,
-                expandable: true,
-                numVisible: 10
-            }).init();
+            var prependTo = context.querySelector('.trailblock ul > li'),
+                table;
+            if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
+                bonzo(prependTo).addClass('footballfixtures-loaded');
+                table = new FootballFixtures({
+                    prependTo: prependTo,
+                    contextual: false,
+                    expandable: true,
+                    numVisible: 10
+                }).init();
+            }
         },
 
         showMoreMatches: function(context) {
