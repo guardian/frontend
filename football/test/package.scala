@@ -27,7 +27,7 @@ object TestHttp extends Http {
 
     val fileName = {
       val file = base + (url.replace(Configuration.pa.apiKey, "APIKEY")
-        .replace("http://pads6.pa-sport.com/", "")
+        .replace(s"${Configuration.pa.host}/", "")
         .replace("/", "__"))
 
       // spoof todays date
