@@ -34,6 +34,7 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
         afterEach(function() {
             common.$g('.front-container').remove();
             common.mediator.emit.restore();
+            common.mediator.removeEvent('module:clickstream:click');
         });
 
         it("should append the 'show more' cta", function(){
@@ -91,16 +92,16 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             });
         });
         
-        it("should increase cta omniture count by one on success", function(){
+        it("should increase cta omniture count by one on 'module:clickstream:click' event", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
             
             runs(function() {
-                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
-                // click again
-                bean.fire($cta[0], 'click');
-                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 3');
+                common.mediator.emit('module:clickstream:click', { target: document.querySelector('#front-container .cta') });
+                expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
+                common.mediator.emit('module:clickstream:click', { target: document.querySelector('#front-container .cta') });
+                expect(common.$g('#front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 3');
             });
         });
         
@@ -125,9 +126,9 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             runs(function() {
                 bean.fire($cta[0], 'click');
                 bean.fire($cta[0], 'click');
-
-                expect(common.$g('.front-container .trail').length).toBe(17);
-                expect(common.$g('.front-container .trailblock .cta').length).toBe(0);
+                expect(common.$g('#front-container .trail').length).toBe(17);
+                common.mediator.emit('module:clickstream:click', { target: document.querySelector('#front-container .cta') });
+                expect(common.$g('#front-container .trailblock .cta').length).toBe(0);
             });
         });
        
