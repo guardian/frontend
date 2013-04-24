@@ -1,4 +1,3 @@
-/*global guardian:true */
 define('bootstraps/app', [
     "common",
     "domReady",
