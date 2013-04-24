@@ -28,7 +28,11 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             log = function(message, filename, lineno, isUncaught) {
                 // tracking down meaning of [object Event] error message
                 if (message[0] && message[0] instanceof Event) {
-                    message = 'event object=' + message[0].type;
+                    var props = [];
+                    for (var prop in message[0]) {
+                        props.push(prop + ': ' + message[0][prop]);
+                    }
+                    message = 'event object = { ' + props.join(', ') + ' }';
                 }
                 var error = {
                     message: message,
