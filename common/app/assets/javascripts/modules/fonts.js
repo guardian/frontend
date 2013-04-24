@@ -30,11 +30,12 @@ define(['ajax', 'common'], function (ajax, common) {
                         url: url + style.getAttribute('data-cache-file-' + fileFormat),
                         type: 'jsonp',
                         jsonpCallbackName: 'guFont',
-                        error: function () {
-                            common.mediator('module:error', 'Failed to load fonts', 'fonts.js');
-                        },
                         success: (function (style) {
                             return function (json) {
+                                if (!json) {
+                                    common.mediator('module:error', 'Failed to load fonts', 'fonts.js');
+                                    return;
+                                }
                                 if (typeof callback === 'function') {
                                     callback(style, json);
                                 }
