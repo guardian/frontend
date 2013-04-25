@@ -125,7 +125,7 @@ define([
                 AB.init(config);
 
                 omniture.go(config, function(){
-                    // Oniture callback logic:
+                    // Omniture callback logic:
 
                     Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
