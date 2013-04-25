@@ -113,8 +113,8 @@ define([
                     testData = 'AB | ' + test.id + ' | ' + test.variant;
 
                 s.prop51  = testData;
-                s.evar51  = testData;
-                s.event58 = testData;
+                s.eVar51  = testData;
+                s.events = s.apl(s.events,'event58',',');
             }
 
             s.prop56    = 'Javascript';
