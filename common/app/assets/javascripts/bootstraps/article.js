@@ -3,12 +3,14 @@ define([
 
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading"
+    "modules/analytics/reading",
+    "modules/experiments/aware"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
-    Reading
+    Reading,
+    Aware
 ) {
 
     var modules = {
@@ -60,17 +62,30 @@ define([
                     reader.init();
                 }
             });
+        },
+        
+        aware: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+               Aware.logVisit(config.page.section);
+            });
         }
     };
 
     var ready = function (config, context) {
+
         ready = function (config, context) {
             common.mediator.emit("page:article:ready", config, context);
         };
+
         // On first call to this fn only:
         modules.matchNav();
         modules.initLiveBlogging();
         modules.logReading();
+        
+        if (config.switches.aware) {
+            modules.aware();
+        }
+
         ready(config, context);
     };
 

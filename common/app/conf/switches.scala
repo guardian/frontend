@@ -94,12 +94,16 @@ object CommonSwitches {
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
   
+  val AwareSwitch = DefaultSwitch("aware",
+    "If this switch is on the 'aware' javascript module will log usage data to local storage",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent, AwareSwitch
   )
 }
 
