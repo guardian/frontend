@@ -27,6 +27,9 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
                         common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
                         return;
                     }
+                    if (json.status === 404) {
+                        return;
+                    }
                     that.view.render(json, context);
                     common.mediator.emit('modules:matchnav:loaded', json);
                 }
