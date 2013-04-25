@@ -126,6 +126,8 @@ object PlayAssetHash extends Plugin {
         (targetDist / "public" / file, "packages/%s/%s".format(staticDir, file))
       }
 
-      staticFiles
+      // need to add the head.min.css file to the app
+      val headCssFile = "stylesheets/head.min.css"
+      staticFiles ++ Map(targetDist / "public" / headCssFile -> "packages/%s/%s".format(staticDir, headCssFile))
   }
 }
