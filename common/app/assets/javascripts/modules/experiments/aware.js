@@ -17,6 +17,7 @@ define([
         };
 
     var init = function () {
+        data = {};
         epoch = startOfToday();
     };
     
@@ -29,6 +30,10 @@ define([
     var get = function () {
         return (userPrefs.get(storagePrefix)) ? JSON.parse(userPrefs.get(storagePrefix)) : {};
     };
+    
+    var remove = function () {
+        userPrefs.remove(storagePrefix);
+    };
 
     // returns the start of a 24hr cycle, lets say 11pm the previous day
     var startOfToday = function () {
@@ -40,17 +45,20 @@ define([
     };
 
     var visits = function () {
-        var v = parseInt(data[keys.total], 0);
+        var data = get(),
+            v = parseInt(data[keys.total], 0);
         return (isNaN(v)) ? 0 : v;
     };
   
     var visitsBySection = function (section) {
-        var v = parseInt(data[keys.section + section], 0);
+        var data = get(),
+            v = parseInt(data[keys.section + section], 0);
         return (isNaN(v)) ? 0 : v;
     };
 
     var visitsToday = function () {
-        var visits = parseInt(data[keys.today], 0);
+        var data = get(),
+            visits = parseInt(data[keys.today], 0);
         return (isNaN(visits)) ? 0 : visits;
     };
   
@@ -66,7 +74,7 @@ define([
     var firstVisitToday = function () {
         return (((new Date() - epoch) / 1000 / 60 / 60) < 24);
     };
-    
+   
     var incrementVisits = function () {
         data[keys.total] = visits() + 1;
         data[keys.last] = new Date();
@@ -113,6 +121,8 @@ define([
         visitsToday: visitsToday,
         lastVisit: lastVisit,
         visitsBySection: visitsBySection,
-        get: get
+        get: get,
+        remove: remove
         };
+
     });

@@ -3,6 +3,7 @@ define(['modules/experiments/aware'], function(Aware) {
     describe('Aware', function() {
 
         beforeEach(function() {
+            Aware.init()
             localStorage.clear();
         });
         
@@ -89,6 +90,19 @@ define(['modules/experiments/aware'], function(Aware) {
                 
             expect(topSections.toString()).toBe(['section.bar', 'section.foo'].toString());
         }) 
+        
+        it('should be able to wipe the aware data', function() {
+           
+            ['foo', 'bar'].forEach(function (section) {
+                Aware.logVisit(section)
+            })
+
+            Aware.remove()
+
+            //expect(Aware.visitsBySection('foo')).toBe(0);
+            expect(Aware.visits()).toBe(0);
+            
+        });
 
     });
 });
