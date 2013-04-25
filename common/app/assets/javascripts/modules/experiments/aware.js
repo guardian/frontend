@@ -45,12 +45,12 @@ define([
     };
   
     var visitsBySection = function (section) {
-        var v = parseInt(data[keys.section + section], 0);
+        var v = parseInt(data[keys.section + section], 10);
         return (isNaN(v)) ? 0 : v;
     };
 
     var visitsToday = function (today) {
-        var visits = parseInt(data[keys.today], 0);
+        var visits = parseInt(data[keys.today], 10);
         return (isNaN(visits)) ? 0 : visits;
     };
   
