@@ -29,8 +29,8 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 // tracking down meaning of [object Event] error message
                 if (message.toString() === '[object Event]') {
                     var props = [];
-                    for (var prop in message[0]) {
-                        props.push(prop + ': ' + message[0][prop]);
+                    for (var prop in message) {
+                        props.push(prop + ': ' + message[prop]);
                     }
                     message = 'event object = { ' + props.join(', ') + ' }';
                 }
