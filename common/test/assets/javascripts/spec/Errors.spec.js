@@ -72,7 +72,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
         });
 
         it("should correctly parse [object Event] errors", function(){
-            e.log([new Event('AnEvent')], fakeError.filename, fakeError.lineno);
+            e.log(new Event('AnEvent'), fakeError.filename, fakeError.lineno);
             expect(document.getElementById('js-err').getAttribute('src')).toContain('type%3A%20AnEvent');
         });
 
