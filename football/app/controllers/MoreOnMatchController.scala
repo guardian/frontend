@@ -2,7 +2,7 @@ package controllers
 
 import model.{ Trail, Cached, Content }
 import play.api.mvc.{ RequestHeader, Action, Controller }
-import common.{ Site, JsonComponent, Logging }
+import common.{ Site, JsonComponent, Logging, JsonNotFound }
 import org.joda.time.format.DateTimeFormat
 import conf.ContentApi
 import feed.Competitions._
@@ -39,14 +39,14 @@ object MoreOnMatchController extends Controller with Football with Requests with
         // for our purposes here, we are only interested in content with exactly 2 team tags
         promiseOfRelated.map(_.filter(_.tags.filter(_.isFootballTeam).length == 2)).map { related =>
           related match {
-            case Nil => NotFound
+            case Nil => Cached(300)(JsonNotFound())
             case _ => Cached(300)(JsonComponent(
               "nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related))))
             )
           }
         }
       }
-    }.getOrElse(NotFound)
+    }.getOrElse(Cached(300)(JsonNotFound()))
   }
 
   def moreOn(matchId: String) = Action { implicit request =>
@@ -55,7 +55,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       Async {
         promiseOfRelated.map { related =>
           related match {
-            case Nil => NotFound
+            case Nil => Cached(300)(JsonNotFound())
             case _ => Cached(300)(JsonComponent(
               ("nav" -> views.html.fragments.matchNav(populateNavModel(theMatch, withExactlyTwoTeams(related)))),
               ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)))
@@ -63,7 +63,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
           }
         }
       }
-    }.getOrElse(NotFound)
+    }.getOrElse(Cached(300)(JsonNotFound()))
   }
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
