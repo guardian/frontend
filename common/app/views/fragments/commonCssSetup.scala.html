@@ -1,10 +1,10 @@
 @()
 
-@import CommonSwitches._
+@import CommonSwitches.CssLazyLoadSwitch
 
 @if(CssLazyLoadSwitch.isSwitchedOn) {
 	<style type="text/css">
-	    @Html(io.Source.fromFile("common/app/assets/stylesheets/head.min.css").mkString)
+	    @Html(Head.css)
         .i { background-image: url(@Static("images/global/sprite.png")); }
 	</style>
 } else {
