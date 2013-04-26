@@ -1,4 +1,4 @@
-define(['common', 'modules/errors'], function(common, Errors) {
+define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
 
     describe("Errors", function() {
        
@@ -72,8 +72,15 @@ define(['common', 'modules/errors'], function(common, Errors) {
         });
 
         it("should correctly parse [object Event] errors", function(){
-            e.log(new Event('AnEvent'), fakeError.filename, fakeError.lineno);
-            expect(document.getElementById('js-err').getAttribute('src')).toContain('type%3A%20AnEvent');
+            // script element for error event
+            var script = document.createElement('script');
+            script.src = 'http://foo.com/bar.js';
+            // fake event
+            bean.on(script, 'error', function(event) {
+                e.log(event.originalEvent, fakeError.filename, fakeError.lineno);
+                expect(document.getElementById('js-err').getAttribute('src')).toContain('Error%20in%20file%20http%3A%2F%2Ffoo.com%2Fbar.js');
+            })
+            bean.fire(script, 'error');
         });
 
     });
