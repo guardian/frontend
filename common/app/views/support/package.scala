@@ -325,3 +325,7 @@ object cleanTrailText {
 object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }
+
+object Head {
+  lazy val css: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+}
