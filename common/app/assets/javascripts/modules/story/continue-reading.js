@@ -42,11 +42,13 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                             jsonpCallback: 'callback',
                             success: function(resp) {
                                 // skip first n paras
-                                var skip = $el.attr('data-skip-paras'),
-                                    re = new RegExp('^(<p>[^<]*<\/p>\\s*){' + skip + '}'),
+                                var skip = parseInt($el.attr('data-skip-paras'), 10) + 1,
                                     // assuming the link is in a 'p'
-                                    $p = bonzo($el.parent());
-                                $story = bonzo($p.after('<div>' + resp.html.replace(re, '') + '</div>').next());
+                                    $p = bonzo($el.parent()),
+                                    $content = bonzo(bonzo.create(resp.html))[1],
+                                    $body = $content.querySelectorAll('.article-body *:nth-child(n+' + skip + ')');
+
+                                $story = bonzo($p.after(bonzo(bonzo.create('<div>')).append($body)).next());
                                 toggleStory();
                             }
                         });
