@@ -48,7 +48,9 @@
     
 </article>
 
-@fragments.social(article.canonicalUrl.get, article.headline)
+@article.canonicalUrl.map{ url =>
+    @fragments.social(url, article.headline)
+}
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">
