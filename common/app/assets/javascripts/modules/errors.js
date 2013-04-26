@@ -27,8 +27,8 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             },
             log = function(message, filename, lineno, isUncaught) {
                 // tracking down meaning of [object Event] error message
-                if (message.toString() === '[object Event]' && message.srcElement instanceof HTMLScriptElement) {
-                    message = 'Error in file ' + message.srcElement.src;
+                if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
+                    message = 'Error in file ' + message.target.src;
                 }
                 var error = {
                     message: message,
