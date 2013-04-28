@@ -1,4 +1,5 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
+@import conf.CommonSwitches.AustraliaSwitch
 
 @defining(Site(request)) { site =>
      <nav role="navigation" aria-label="Guardian sections"
@@ -23,9 +24,14 @@
             <li class="nav__item"><a class="nav__link" href="https://soulmates.guardian.co.uk/" target="_blank" data-link-name="Soulmates">Soulmates</a>
             <li class="nav__item"><a class="nav__link" href="http://jobs.guardian.co.uk/" target="_blank" data-link-name="Jobs">Jobs</a>
             @if(site.isUsEdition) {
-            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
+                <li class="nav__item"><a id="edition-switch" class="nav__link edition" data-link-name="switch to uk edition" href="http://@site.ukHost/@page.id">UK edition</a></li>
             } else {
-            <li class="nav__item"><a class="nav__link edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+                <li class="nav__item"><a id="edition-switch" class="nav__link edition" data-link-name="switch to us edition" href="http://@site.usHost/@page.id">US edition</a></li>
+            }
+
+            @*<!-- TODO this is temp till we have proper single domain editions -->*@
+            @if(AustraliaSwitch.isSwitchedOn && page.id == ""){
+                <li class="nav__item"><a id="au-link" class="nav__link edition" data-link-name="switch to au edition" href="http://@site.ukHost/australia">AUS edition</a></li>
             }
         </ul>
      </nav>
