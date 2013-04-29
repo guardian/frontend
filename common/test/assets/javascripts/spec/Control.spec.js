@@ -5,7 +5,7 @@ define([ 'common',
 
         describe("Controls", function() {
 
-            var delay = 400,
+            var delay = 405, // This is 5ms greater than the actual rateLimit delay, to allow a bit of leeway
                 conf = {
                     id: 'controls',
                     fixtures: [ // NB: element ids are required by the test, not by the actual Control module

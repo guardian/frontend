@@ -23,7 +23,7 @@ public class FrontSteps {
     }
 	
     // xpath to the first hideable section
-    protected String sectionXpath = "//div[@id = 'front-container']/section[2]";
+    protected String sectionXpath = "//div[contains(@class, 'front-container')]/section[2]";
     protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]";
 	
     @Given("^a section is hidden$")
@@ -59,11 +59,15 @@ public class FrontSteps {
         // horrible xpath to find the sections with a certain title
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
+        // Wait for javascript to inject button.cta
+        webDriver.waitForElement(By.cssSelector("button.cta"));
         WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
         assertEquals(ctaText, cta.getText());
+        // how many trails do we currently have
+        int trailCount = trailblock.findElements(By.className("trail")).size();
         cta.click();
         // wait for second list of top stories to load in
-        webDriver.waitForElement(By.xpath("//div[@id='" +  trailblock.getAttribute("id") + "']/ul[2]"));
+        webDriver.waitForElement(By.xpath(trailblockXpath + "/ul/li[" + (trailCount + 5) + "]"));
     }
 	
 }

@@ -7,17 +7,25 @@
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
     var guardian = {
-            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
-            }, 
-            curl = {
-                baseUrl: '@{Configuration.static.path}javascripts',
-                apiName: 'require',
-                paths: {
-                    omniture                       : '@Static("javascripts/vendor/omniture.js")',
-                    homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
-                    'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
-                }
-            };
+            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window),
+            css: {
+                article: '@Static("stylesheets/article.min.css")',
+                football: '@Static("stylesheets/football.min.css")',
+                front: '@Static("stylesheets/front.min.css")',
+                gallery: '@Static("stylesheets/gallery.min.css")',
+                story: '@Static("stylesheets/story.min.css")',
+                video: '@Static("stylesheets/video.min.css")'
+            }
+        },
+        curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                omniture                       : '@Static("javascripts/vendor/omniture.js")',
+                homescreen                     : '@Static("javascripts/vendor/add2home.js")', // Mofified version. Do not upgrade.
+                'modules/shared-wisdom-toolbar': '@Static("javascripts/modules/shared-wisdom-toolbar.js")'
+            }
+        };
 
     (function loadFontsFromStorage(prefs, key) {
 
@@ -59,31 +67,7 @@
 
         if (!isModern) { return false; }
 
-        guardian.config = {
-            @item match {
-                case content: model.Content => {'webPublicationDate' : new Date(@content.webPublicationDate.getMillis),}
-                case other => {@None}
-            }
-            page: {
-                @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
-
-                @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
-                    s"'${JavaScriptVariableName(key.split('.').last)}':'${value}'"}.mkString(",")
-                )},
-                'edition': '@Site(request).edition',
-                'ajaxUrl': 'http://@Site(request).ajaxHost',
-                isDev: @play.Play.isDev()
-            },
-            switches : { @{Html(switches.map{ switch =>
-                    s"'${JavaScriptVariableName(switch.name)}':${switch.isSwitchedOn}"
-                }.mkString(","))}
-            },
-            modules: {
-                sharedWisdomToolbar: {
-                    css: '@Static("stylesheets/modules/shared-wisdom-toolbar.css")'
-                }
-            }
-        };
+        guardian.config = @fragments.javaScriptConfig(item, switches);
 
         var script = document.createElement('script');
         script.async = 'async';

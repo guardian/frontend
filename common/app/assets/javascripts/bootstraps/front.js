@@ -1,94 +1,83 @@
 define([
     //Common libraries
     "common",
-    "qwery",
+    "bonzo",
     "domReady",
     //Modules
-    "modules/expandable",
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
-    "modules/footballfixtures",
-    "modules/story/frontstories"
+    "modules/footballfixtures"
 ], function (
     common,
-    qwery,
+    bonzo,
     domReady,
 
-    Expandable,
     TrailblockToggle,
     TrailblockShowMore,
-    FootballFixtures,
-    FrontStories
+    FootballFixtures
 ) {
 
     var modules = {
             
-        showFrontExpanders: function () {
-            var frontTrailblocks = common.$g('.js-front-trailblock'), i, l;
-            for (i=0, l=frontTrailblocks.length; i<l; i++) {
-                var elm = frontTrailblocks[i];
-                var id = elm.id;
-                var frontExpandable = new Expandable({ id: id, expanded: false });
-                frontExpandable.init();
-            }
-        },
-        
-        showTrailblockToggles: function (config) {
-            var edition = config.page.edition;
+        showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
-            tt.go(edition);
+            common.mediator.on('page:front:ready', function(config, context) {
+                tt.go(config, context);
+            });
         },
 
         showTrailblockShowMore: function () {
             var trailblockShowMore = new TrailblockShowMore();
-            trailblockShowMore.init();
+            common.mediator.on('page:front:ready', function(config, context) {
+                trailblockShowMore.init(context);
+            });
         },
 
         showFootballFixtures: function(path) {
-            var prependTo,
-            table;
+            common.mediator.on('page:front:ready', function(config, context) {
+                if(config.page.edition === "UK") {
 
-            common.mediator.on('modules:footballfixtures:expand', function(id) {
-                var expandable = new Expandable({ id: id, expanded: false });
-                expandable.init();
+                    var opts,
+                        table;
+
+                    switch(window.location.pathname) {
+                        case "/" :
+                            opts = {
+                                prependTo: context.querySelector('.zone-sport ul > li'),
+                                competitions: ['500', '510', '100'],
+                                contextual: false,
+                                expandable: true,
+                                numVisible: 3
+                            };
+                            break;
+                        case "/sport" :
+                            opts = {
+                                prependTo: context.querySelector('.trailblock ul > li'),
+                                contextual: false,
+                                expandable: true,
+                                numVisible: 5
+                            };
+                            break;
+                    }
+
+                    if(opts && !bonzo(opts.prependTo).hasClass('footballfixtures-loaded')) {
+                        bonzo(opts.prependTo).addClass('footballfixtures-loaded');
+                        table = new FootballFixtures(opts).init();
+                    }
+                }
             });
-
-            switch(path) {
-                case "/" :
-                    prependTo = qwery('ul > li', '.zone-sport')[1];
-                    table = new FootballFixtures({
-                        prependTo: prependTo,
-                        competitions: ['500', '510', '100'],
-                        contextual: false,
-                        expandable: true,
-                        numVisible: 3
-                    }).init();
-                    break;
-                case "/sport" :
-                    prependTo = qwery('ul > li', '.trailblock')[1];
-                    table = new FootballFixtures({
-                        prependTo: prependTo,
-                        contextual: false,
-                        expandable: true,
-                        numVisible: 5
-                    }).init();
-                    break;
-            }
-        },
-
-        showFrontStories: function(config) {
-            var fs = new FrontStories().init(config);
         }
     };
 
-    // All methods placed inside here will exec after DOMReady
-    var ready = function(req, config, context) {
-        modules.showTrailblockToggles(config);
-        modules.showTrailblockShowMore();
-        if(config.page.edition === "UK") {
-            modules.showFootballFixtures(req.url);
+    var ready = function (config, context) {
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('front', config);
+            modules.showTrailblockToggles();
+            modules.showTrailblockShowMore();
+            modules.showFootballFixtures();
         }
-        modules.showFrontStories(config);
+        common.mediator.emit("page:front:ready", config, context);
     };
 
     return {

@@ -1,46 +1,54 @@
 define([
     "common",
+    "modules/detect",
     "modules/analytics/video",
-    "modules/accordion",
-    "modules/story/experiment"
+    "modules/adverts/video"
 ], function(
     common,
+    detect,
     Videostream,
-    Accordion,
-    Experiment
+    Advert
 ) {
 
     var modules = {
-        initAnalytics: function (config) {
-            var v = new Videostream({
-                id: config.page.id,
-                el: document.querySelector('#player video'),
-                ophanUrl: config.page.ophanUrl
-            });
 
-            v.init();
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
+        initAdverts: function(config) {
+            common.mediator.on('page:video:ready', function(config, context) {
+                if(config.switches.videoAdverts && !config.page.blockAds) {
+                    var support = detect.getVideoFormatSupport();
+                    var a = new Advert({
+                        el: context.querySelector('.player video'),
+                        support: support
+                    }).init();
                 }
             });
-            var e = new Experiment(config);
+        },
 
-            e.init();
+        initAnalytics: function () {
+            common.mediator.on('page:video:ready', function(config, context) {
+                var v = new Videostream({
+                    id: config.page.id,
+                    el: context.querySelector('.player video'),
+                    ophanUrl: config.page.ophanUrl
+                });
+
+                v.init();
+            });
         }
     };
 
-    var init = function(req, config, context) {
 
-        common.mediator.emit("page:gallery:ready", config, context);
-
-        modules.initAnalytics(config);
+    var ready = function (config, context) {
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('video', config);
+            modules.initAnalytics();
+            modules.initAdverts();
+        }
+        common.mediator.emit("page:video:ready", config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 });

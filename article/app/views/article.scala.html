@@ -2,53 +2,6 @@
 
 @main(article, Switches.all){ }{
 
-	<h2 class="article-zone type-1">
-    	<a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
-	</h2>
+    @fragments.articleBody(article, storyPackage, edition)
 
-    <article id="article" class="article @if(article.isLive){is-live}"
-        itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-
-        <header class="article-head">
-            @fragments.dateline(article.webPublicationDate, article.isLive, edition)
-
-            @fragments.headline(article.headline)
-
-            @fragments.standfirst(article)
-        </header>
-
-        @fragments.witnessCallToAction(article)
-
-        <div class="after-header"></div>
-
-        @if(!article.isLive  && !article.hasVideoAtTop) {
-            @article.mainPicture.map{ mainPicture =>
-                @article.mainPicture(width=220).map{ smallCrop =>
-                    @fragments.img(mainPicture, smallCrop)
-                }
-            }
-        }
-
-        @fragments.byline(article.byline, article)
-
-        @if(article.isLive) {
-            @fragments.autoUpdate()
-        }
-
-        <div class="article-body from-content-api @if(article.isLive) {live-blog}"
-            itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-		      @fragments.articleBody(article)
-        </div>
-        
-    </article>
-
-    @fragments.social(article.canonicalUrl.get, article.headline)
-
-    <aside class="js-related" role="complementary">
-        @if(storyPackage.nonEmpty) {
-            @fragments.relatedTrails(storyPackage, heading = "Related content", visibleTrails = 5)
-        }
-    </aside>
-
-    <div   class="js-popular" role="complementary"></div>
 }

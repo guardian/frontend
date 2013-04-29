@@ -33,6 +33,30 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                     fn.apply(context, args);
                 }, delay);
             };
+        },
+        rateLimit : function (fn, delay) {
+            var delay = delay || 400,
+                lastClickTime = 0;
+            return function () {
+                var context = this,
+                    args = arguments,
+                    current = new Date().getTime();
+
+                if (! lastClickTime || (current - lastClickTime) > delay) {
+                    lastClickTime = current;
+                    fn.apply(context, args);
+                }
+            };
+        },
+        lazyLoadCss: function(name, config) {
+            if (config.switches.cssLazyLoad === true) {
+                // append server specific css
+                bonzo(document.createElement('link'))
+                    .attr('rel', 'stylesheet')
+                    .attr('type', 'text/css')
+                    .attr('href', guardian.css[name])
+                    .appendTo(document.querySelector('head'));
+            }
         }
     };
 });

@@ -108,7 +108,7 @@ object WithHost {
 /**
  * Executes a block of code in a FakeApplication.
  */
-class Fake extends TestSettings {
+trait FakeApp extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
@@ -118,9 +118,6 @@ class Fake extends TestSettings {
     )
   ) { block }
 }
-
-object Fake extends Fake
-
 
 object TestRequest {
   def apply(): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {

@@ -6,7 +6,7 @@ body {
     font-family: $sans-serif;
     margin: 0px 0px $baseline*2 0px;
     color: #666666;
-    @extend .type-11;
+    @extend %type-11;
 }
 
 .relative-timestamp {

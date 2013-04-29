@@ -10,6 +10,7 @@
 
 //Base
 @import "base/_type";
+@import "_extends-only";
 @import "base/_base";
 @import "base/_links";
 @import "base/_lists";
@@ -71,4 +72,3 @@
 @import "module/experiments/_accordion";
 @import "module/experiments/_agent";
 @import "module/experiments/_reaction";
-

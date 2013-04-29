@@ -13,11 +13,11 @@ define([
     /**
      * @param Object w 'window' object, used for testing
      */
-    function Omniture(s, config, w) {
+    function Omniture(s, w) {
 
-        var that = this;
-
-        var storagePrefix = "gu.analytics.";
+        var storagePrefix = "gu.analytics.",
+            config,
+            that = this;
 
         w = w || {};
 
@@ -33,29 +33,26 @@ define([
             s.tl(true,'o',"AutoUpdate Refresh");
         };
 
-        this.logTag = function(params) {
-            var element = params[0],
-                tag = params[1],
-                isSamePage = params[2],
-                isSameHost = params[3],
-                storeObj,
+        this.logTag = function(spec) {
+            var storeObj,
                 delay;
 
-            // Remove the 'false' clause once Omniture guys support the localStorage approach...
-            if (false && isSameHost && !isSamePage) {
-                // Came from a link to a new page on the same host.
-                // Do session storage rather than an omniture track.
+            if (!spec.tag) {
+                return;
+            } else if (spec.sameHost && !spec.samePage) {
+                // Came from a link to a new page on the same host,
+                // so do session storage rather than an omniture track.
                 storeObj = {
                     pageName: s.pageName,
-                    tag: tag,
+                    tag: spec.tag,
                     time: new Date().getTime()
                 };
                 localStorage.setItem(storagePrefix + 'referrerVars', JSON.stringify(storeObj));
             } else {
-                that.populateEventProperties(tag);
+                that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-                delay = isSamePage ? true : element;
-                s.tl(delay, 'o', tag);
+                delay = spec.samePage ? true : spec.target;
+                s.tl(delay, 'o', spec.tag);
             }
         };
 
@@ -135,42 +132,59 @@ define([
             if (window.location.hash === '#popup:homescreen') {
                 s.eVar38 = 'popup:homescreen';
             }
+
+            /* Retrieve navigation interaction data */
+            var ni = localStorage.getItem('gu.analytics.referrerVars');
+            if (ni) {
+                ni = JSON.parse(ni);
+                var d = new Date().getTime();
+                if (d - ni.time < 60 * 1000) { // One minute
+                    s.eVar24 = ni.pageName;
+                    s.eVar37 = ni.tag;
+                    s.events = s.apl(s.events,'event37',',');
+                }
+                localStorage.removeItem('gu.analytics.referrerVars');
+            }
         };
 
-        this.loaded = function() {
+        this.loaded = function(callback) {
             this.populatePageProperties();
             this.logView();
-            common.mediator.on('module:clickstream:click', this.logTag );
-            common.mediator.emit('module:omniture:loaded');
+            if (typeof callback === 'function') {
+                callback();
+            }
         };
 
-        this.init = function() {
+        this.go = function(c, callback) {
+            var that = this;
+
+            config = c; // update the module-wide config
 
             // must be set before the Omniture file is parsed
             window.s_account = config.page.omnitureAccount;
 
-            var that = this;
-
             // if the omniture object was not injected in to the constructor
             // use the global 's' object
-
-            if (s !== null) {
-                that.loaded();
+            if (window.s) {
+                s = window.s;
+                that.loaded(callback);
             } else {
                 var dependOn = ['js!omniture'];
                 require(dependOn, function(placeholder){
                     s = window.s;
-                    that.loaded();
+                    that.loaded(callback);
                 });
             }
-
-            common.mediator.on('module:autoupdate:loaded', function() {
-                that.populatePageProperties();
-                that.logUpdate();
-            });
-
-            common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
         };
+
+        common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+
+        common.mediator.on('module:clickstream:click', that.logTag );
+
+        common.mediator.on('module:autoupdate:loaded', function() {
+            that.populatePageProperties();
+            that.logUpdate();
+        });
 
     }
 

@@ -41,12 +41,12 @@ object MetadataJson {
     // thank you erasure
     case (key, value) if value.isInstanceOf[Map[_, _]] =>
       val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
-      s"'$key': {$valueJson}"
+      s""""$key": {$valueJson}"""
     case (key, value) if value.isInstanceOf[Seq[_]] =>
       val valueJson = value.asInstanceOf[Seq[(String, Any)]].map(v => s"{${MetadataJson(v)}}").mkString(",")
-      s"'$key': [${valueJson}]".format(key, valueJson)
+      s""""$key": [${valueJson}]""".format(key, valueJson)
     case (key, value) =>
-      s"'${JavaScriptVariableName(key)}': ${JavaScriptValue(value)}"
+      s""""${JavaScriptVariableName(key)}": ${JavaScriptValue(value)}"""
   }
 }
 
@@ -79,7 +79,7 @@ object SafeName {
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
-    case s => s"'${s.toString.replace("'", "\\'")}'"
+    case s => s""""${s.toString.replace(""""""", """\\"""")}""""
   }
 }
 
@@ -143,6 +143,8 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
 
       fig.getElementsByTag("img").foreach { img =>
         img.attr("itemprop", "contentURL")
+        val src = img.attr("src")
+        img.attr("src", ImgSrc(src, Naked))
         Option(img.attr("width")).filter(_.isInt) foreach { width =>
           fig.attr("class", width.toInt match {
             case width if width <= 220 => "img-base inline-image"

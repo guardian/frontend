@@ -78,7 +78,7 @@ public class ArticleSteps {
 
 	@Then("^\"([^\"]*)\" is displayed$")
 	public void is_displayed(String headerText) throws Throwable {
-		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector(".js-related h3"));
+		WebElement relatedHeader = webDriver.waitForElement(By.cssSelector("aside h3"));
 		assertEquals(headerText, relatedHeader.getText());
 	}
 
@@ -191,7 +191,7 @@ public class ArticleSteps {
 	@Then("^I can (expand|collapse) expanders$")
 	public void I_can_expand_and_collapse_expanders(String sectionState) throws Throwable {
 		// waits for expander to appear
-		WebElement expander = webDriver.waitForVisible(By.className("cta"));
+		WebElement expander = webDriver.waitForElement(By.className("cta"));
 		expander.click();
 		
 		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "none" : "0";

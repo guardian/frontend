@@ -2,27 +2,41 @@
     Module: expandable.js
     Description: Used to make a list of items expand and contract
 */
-define(['common', 'bean'], function (common, bean) {
+define([
+    'common',
+    'bean'
+], function (
+    common,
+    bean
+) {
     /*
         @param {Object} options hash of configuration options:
             dom         : DOM element to convert
             expanded    : {Boolean} Whether the component should init in an expanded state
+            showCount   : {Boolean} Whether to display the count in the CTA
     */
-    var Expandable = function (opts) {
+    var Expandable = function (options) {
 
-        var dom = common.$g(opts.dom), // root element of the trailblock
-            expanded = (opts.hasOwnProperty('expanded')) ? expanded : true, // true = open, false = closed
-            cta = document.createElement('span'),
+        var opts = options || {},
+            dom = common.$g(opts.dom), // root element of the trailblock
+            expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
+            cta = document.createElement('button'),
             domCount,
             count,
-            self = this;
+            self = this,
+            showCount = (opts.showCount === false) ? false : true;
 
         // View
         
         var view = {
            
             updateCallToAction: function () {
-                cta.innerHTML = 'Show ' + model.getCount() + ' ' + ((expanded) ? 'fewer' : 'more');
+                var text = 'Show ';
+                if (showCount) {
+                    text += model.getCount() + ' ';
+                }
+                text += (expanded) ? 'fewer' : 'more';
+                cta.innerHTML = text;
                 cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
                 cta.setAttribute('data-is-ajax', '1');
             },
@@ -75,9 +89,12 @@ define(['common', 'bean'], function (common, bean) {
 
         return {
             init: function() {
-                if (! dom.html() || model.getCount() < 3) {
+
+                if (dom.hasClass('expandable-initialised') || !dom.html() || model.getCount() < 3) {
                     return false;
                 }
+                dom.addClass('expandable-initialised');
+
                 view.renderCallToAction();
                 view.renderState();
             },

@@ -32,7 +32,7 @@
 }
 
 .headline-list .count {
-	@extend .type-7;
+	@extend %type-7;
     float:left;
     line-height: 16px;
     color: #777777;
@@ -40,7 +40,7 @@
 }
 
 .headline-list__tile {
-  @extend .type-6;
+  @extend %type-6;
   color: #333333;
   margin: 0 $gutter $baseline $gutter;
   border-bottom: 1px solid #DDDDDD;

@@ -2,19 +2,55 @@ package test
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import org.joda.time.DateTime
-import pa.{ MatchDayTeam, Result }
-import feed.Competitions
-import io.Source
+import controllers.MoreOnMatchController
+import play.api.test.Helpers._
+import play.api.test.FakeRequest
 
 class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
-  val matches = Seq(
-    Result("1234", new DateTime(2012, 12, 1, 15, 0), None, "", false, None,
-      MatchDayTeam("1006", "", None, None, None, None),
-      MatchDayTeam("65", "", None, None, None, None),
-      None, None, None
-    ))
+  val theMatch =
+
+  feature("Match Nav") {
+
+    scenario("View content related to a match") {
+
+      Given("I visit a match page")
+
+      Fake {
+        val request = FakeRequest("GET", "/football/api/match-nav/2012/12/01/1006/65?callback=call").withHeaders("host" -> "localhost:9000")
+
+        val result = MoreOnMatchController.matchNav("2012", "12", "01", "1006", "65")(request)
+
+        status(result) should be(200)
+
+        val body = contentAsString(result)
+
+        Then("I should see the match report")
+        body should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
+
+        And("I should see the stats page")
+        body should include("/football/match/")
+      }
+    }
+
+    scenario("Non-existant match pages return jsonp with status property 404") {
+
+      Given("I visit a non-existant match page")
+
+      Fake {
+        val request = FakeRequest("GET", "football/api/match-nav/2010/01/01/1/2?callback=call").withHeaders("host" -> "localhost:9000")
+
+        val result = MoreOnMatchController.matchNav("2010", "01", "01", "1", "2")(request)
+
+        status(result) should be(200)
+
+        val body = contentAsString(result)
+
+        Then("I should see the status in the object with value 404")
+        body should include("\"status\":404")
+      }
+    }
+  }
 
   feature("More on match") {
 
@@ -23,19 +59,39 @@ class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
       Given("I visit a match page")
 
       Fake {
-        Competitions.setMatches("100", matches)
-      }
+        val request = FakeRequest("GET", "/football/api/match-nav/1010?callback=call").withHeaders("host" -> "localhost:9000")
 
-      HtmlUnit.connection("/football/api/match-nav/2012/12/01/1006/65?callback=showMatch") { connection =>
+        val result = MoreOnMatchController.moreOn("1010")(request)
 
-        val json = Source.fromInputStream(connection.getInputStream).mkString
+        status(result) should be(200)
+
+        val body = contentAsString(result)
 
         Then("I should see the match report")
-        json should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
+        body should include("/football/2012/dec/02/arsenal-swansea-match-report-michu")
 
         And("I should see the stats page")
-        json should include("/football/match/")
+        body should include("/football/match/")
       }
     }
+
+    scenario("Non-existant match pages return jsonp with status property 404") {
+
+      Given("I visit a non-existant match page")
+
+      Fake {
+        val request = FakeRequest("GET", "/football/api/match-nav/bad-id?callback=call").withHeaders("host" -> "localhost:9000")
+
+        val result = MoreOnMatchController.moreOn("bad-id")(request)
+
+        status(result) should be(200)
+
+        val body = contentAsString(result)
+
+        Then("I should see the status in the object with value 404")
+        body should include("\"status\":404")
+      }
+    }
+    
   }
 }

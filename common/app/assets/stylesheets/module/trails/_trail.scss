@@ -9,6 +9,10 @@
     padding-top: $baseline*3
 }
 
+.trailblock ul:last-child .trail:last-child {
+    border-bottom: none;
+}
+
 .trail:first-child h2 {
     margin-bottom: $baseline;
 }
@@ -22,8 +26,8 @@
 }
 
 .trail-headline {
-    @media screen and (min-width: 25em) { @extend .type-4; }
-    @media screen and (min-width: 64em) { @extend .type-5; }
+    @media screen and (min-width: 25em) { @extend %type-4; }
+    @media screen and (min-width: 64em) { @extend %type-5; }
 }
 
 .media .trail-headline {
@@ -47,7 +51,7 @@
 }
 
 .trail-text {
-    @extend .type-7;
+    @extend %type-7;
     display: block;
     clear: left;
     padding: 0;

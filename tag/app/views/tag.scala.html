@@ -2,49 +2,6 @@
 
 @main(tag, Switches.all){  }{
 
-    <section class="front-section zone-@tag.section" data-link-name="@tag.section" role="main">
+    @fragments.tagBody(tag, trails, leadContent)
 
-        @fragments.headers.sectionHead(tag.name)
-
-        @if(tag.isContributor) {
-            <div class="profile media">
-                @if(tag.contributorImageUrl) {
-                    <div class="profile-img media-img">
-                        <img src="@tag.contributorImageUrl" alt="@tag.name" />
-                    </div>
-                }
-                @if(tag.bio) {
-                    <p class="type-4 profile-bio">
-                        @RemoveOuterParaHtml(tag.bio)
-                    </p>
-                }
-            </div>
-
-            <h2 class="type-2 article-zone b1">Latest</h2>
-        }
-
-
-        @if(leadContent.nonEmpty) {
-            @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-	            <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}" data-link-name="lead content">
-                    @fragments.trails.featured(trail, info.rowNum)
-	            </div>
-            }
-        }
-
-        <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
-            @fragments.trailblocks.section(trails, trails.size)
-        </div>
-
-    </section>
-
-    @if(tag.section == "football") {
-        @if(tag.isFootballCompetition) {
-            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
-        } else {
-            @fragments.footballNav("/football")
-        }
-    }
-
-    @fragments.mostPopularPlaceholder(tag.section)
 }

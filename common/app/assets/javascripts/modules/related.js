@@ -5,23 +5,27 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
 
         if (config.page.hasStoryPackage) {
 
-            new Expandable({dom: context.querySelector('.related-trails'), expanded: false}).init();
+            new Expandable({
+                dom: context.querySelector('.related-trails'),
+                expanded: false,
+                showCount: false
+            }).init();
             common.mediator.emit('modules:related:loaded', config, context);
 
         } else if (config.switches.relatedContent) {
 
             container = context.querySelector('.js-related');
-            url =  url || '/related/' + config.page.pageId;
-
-            lazyLoad({
-                url: url,
-                container: container,
-                jsonpCallbackName: 'showRelated',
-                success: function () {
-                    new Expandable({dom: container.querySelector('.related-trails'), expanded: false}).init();
-                    common.mediator.emit('modules:related:loaded', config, context);
-                }
-            });
+            if (container) {
+                lazyLoad({
+                    url: url || '/related/' + config.page.pageId,
+                    container: container,
+                    jsonpCallbackName: 'showRelated',
+                    success: function () {
+                        new Expandable({dom: container.querySelector('.related-trails'), expanded: false, showCount: false}).init();
+                        common.mediator.emit('modules:related:loaded', config, context);
+                    }
+                });
+            }
         }
 
     }

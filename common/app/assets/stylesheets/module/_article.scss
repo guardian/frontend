@@ -10,7 +10,7 @@
 }
 
 .article-zone-sub {
-  @extend .type-6;
+  @extend %type-6;
 }
 
 .js-popular .article-zone {
@@ -22,7 +22,7 @@
 }
 
 .article-headline {
-  @extend .type-3;
+  @extend %type-3;
   margin-bottom: $baseline*2;
 }
 

@@ -5,17 +5,17 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
         // View
         
         this.view = {
-            render: function (json) {
-                document.querySelector(".after-header").innerHTML = json.nav;
+            render: function (json, context) {
+                context.querySelector(".after-header").innerHTML = json.nav;
                 if (json.related) {
-                    document.querySelector("#js-related").innerHTML = json.related;
+                    context.querySelector(".js-related").innerHTML = json.related;
                 }
 
                 common.mediator.emit('modules:matchnav:render');
             }
         };
         
-        this.load = function (url) {
+        this.load = function (url, context) {
             var that = this;
             ajax({
                 url: url,
@@ -23,11 +23,15 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showMatchNav',
                 success: function (json) {
-                    that.view.render(json);
+                    if (!json) {
+                        common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
+                        return;
+                    }
+                    if (json.status === 404) {
+                        return;
+                    }
+                    that.view.render(json, context);
                     common.mediator.emit('modules:matchnav:loaded', json);
-                },
-                error: function () {
-                    common.mediator('module:error', 'Failed to load match nav', 'matchnav.js');
                 }
             });
         };

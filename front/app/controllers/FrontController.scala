@@ -4,6 +4,7 @@ import common._
 import conf.CommonSwitches.AustraliaFrontSwitch
 import front._
 import model._
+import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
@@ -75,18 +76,8 @@ class FrontController extends Controller with Logging with JsonTrails {
   def isUp() = Action {
     Ok("Ok")
   }
-
-  def render(path: String) = Action {
-    implicit request =>
-      renderFront(path, "html")
-  }
-
-  def renderJson(path: String) = Action {
-    implicit request =>
-      renderFront(path, "json")
-  }
-
-  private def renderFront(path: String, format: String)(implicit request: RequestHeader) = {
+  
+  def render(path: String) = Action { implicit request =>
 
     val edition = Site(request).edition
 
@@ -105,19 +96,31 @@ class FrontController extends Controller with Logging with JsonTrails {
     }
     else if (trailblocks.isEmpty) {
       InternalServerError
+    } else {
+      val htmlResponse = views.html.front(frontPage, trailblocks)
+      val jsonResponse = views.html.fragments.frontBody(frontPage, trailblocks)
+      renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
     }
-    else {
-      Cached(frontPage) {
-        if (format == "json") {
-          // pull out correct trailblock
-          trailblocks.find(_.description.id == path).map {
-            trailblock =>
-              renderJsonTrails(trailblock.trails)
-          }.getOrElse(InternalServerError)
-        } else {
-            Ok(Compressed(views.html.front(frontPage, trailblocks)))
-        }
-      }
+  }
+  
+  def renderTrails(path: String) = Action { implicit request =>
+
+    val edition = Site(request).edition
+
+    val frontPage: MetaData = path match {
+      case "front" => NetworkFrontPage
+      case "sport" => SportFrontPage
+      case "culture" => CultureFrontPage
+    }
+
+    // get the first trailblock
+    val trailblock: Option[Trailblock] = front(path, edition).headOption
+    if (trailblock.isEmpty) {
+      InternalServerError
+    } else {
+      val trails: Seq[Trail] = trailblock.get.trails
+      val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+      renderFormat(response, response, frontPage)
     }
   }
 

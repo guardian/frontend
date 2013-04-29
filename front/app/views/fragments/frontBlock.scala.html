@@ -10,8 +10,7 @@
         }
 	}
 
-    <div class="trailblock @if(block.description.showMore){ js-show-more}"
-        id="front-trailblock-@SafeName(block.description)"
+    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
         data-count="@block.description.numItemsVisible"
         data-section-id="@block.description.id">
 

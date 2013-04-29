@@ -76,9 +76,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
+        CommonSwitches.ImageServerSwitch.switchOn
+
         Then("I should see the article's image")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
-          be("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
+          endWith("sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
@@ -157,10 +159,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
+        CommonSwitches.ImageServerSwitch.switchOn
         inBodyImage.getAttribute("class") should be("img-extended")
-
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          be("http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
@@ -205,7 +207,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $("#ad-slot-top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot-top-banner-ad").first()
 
         And("the placeholder has the correct slot names")
         adPlaceholder.getAttribute("data-base") should be("Top2")
@@ -213,7 +215,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         adPlaceholder.getAttribute("data-extended") should be("x54")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot-top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
@@ -251,7 +253,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be <= (10)
+        $("[itemprop=relatedLink]").size() should be(29)
       }
     }
 
@@ -320,6 +322,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Show primary picture on composer articles") {
+      Given("I am on an article created in composer tools")
+      HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
+        import broswer._
+        Then("The main picture should be show")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+      }
+    }
+
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an aricle and want to share it with my friends")
@@ -370,7 +381,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         Then("I should see the main ARIA roles described")
         findFirst(".related-trails").getAttribute("role") should be("complementary")
-        findFirst(".js-related").getAttribute("role") should be("complementary")
+        findFirst("aside").getAttribute("role") should be("complementary")
         findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst("footer").getAttribute("role") should be("contentinfo")

@@ -201,12 +201,12 @@ a.competition-title {
 }
 
 //These are nasty... blame the designers!
-#front-competition-fixtures {
+.front-competition-fixtures {
     padding-bottom: 0px;
     border-bottom: none;
 }
 
-#front-competition-fixtures .cta {
+.front-competition-fixtures .cta {
     margin-top:5px;
 }
 
@@ -328,7 +328,10 @@ a.competition-title {
     border-bottom: none;
 }
 
-//For omniture tracking
+.football-filter > a {
+    color: #ffffff;
+}
+
 .football-filter > span {
     display: block;
 }

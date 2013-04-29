@@ -4,6 +4,6 @@ object `package` {
 
   object HtmlUnit extends EditionalisedHtmlUnit
 
-  object Fake extends Fake
+  object Fake extends FakeApp
 
 }

@@ -82,7 +82,11 @@ object CommonSwitches {
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
 
-  val ABRelatedContent = DefaultSwitch("ab-related-content",
+  val VideoAdvertSwitch = DefaultSwitch("video-adverts",
+    "If this switch is on OAS video adverts will be enabled.",
+    initiallyOn = false)
+
+  val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
     "If this switch is on related content AB test will be enabled.",
     initiallyOn = false)
 
@@ -90,11 +94,20 @@ object CommonSwitches {
     "If this switch is on the australia front will be available",
     initiallyOn = false)
   
+  val ImageServerSwitch = DefaultSwitch("image-server",
+    "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
+    initiallyOn = false)
+  
+  val CssLazyLoadSwitch = DefaultSwitch("css-lazy-load",
+    "If this switch is on then use a slimmed down, lazy-loaded css setup (css in head with server sepcific files)",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch, ABRelatedContent,
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, CssLazyLoadSwitch,
     AustraliaFrontSwitch
   )
 }

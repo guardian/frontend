@@ -14,7 +14,7 @@ define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, b
         it("should correctly render the default shut state", function(){
             var a = new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
             
-            expect(common.$g('#trail-c')[0].className).toBe('shut');
+            expect(common.$g('#trail-c')[0].className).toContain('shut');
             expect(common.$g('#trail-c .cta').text()).toBe('Show 3 more');
         });
 
@@ -40,6 +40,11 @@ define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, b
         it("should not enable expandables where there are less than three hidden trails", function(){
             var x = new Expandable({ dom: document.querySelector('#trail-g') }).init();
             expect(common.$g('#trail-g .cta').length).toBe(0);
+        });
+        
+        it("should be able to turn off the trail count", function(){
+            var x = new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
+            expect(common.$g('#trail-h .cta')[0].innerHTML).not.toContain('3');
         });
        
     });

@@ -15,43 +15,39 @@ define([
 
     var modules = {
         augmentGallery: function () {
-            var g = new Gallery().init();
+            common.mediator.on('page:gallery:ready', function(config, context) {
+                var g = new Gallery(context).init();
+            });
         },
         initOphanTracking:  function(config) {
-            var gallerySize = config.page.gallerySize;
-            if(gallerySize !== "") {
-                var t = new Tracking({
-                    id: config.page.id,
-                    el : document.getElementById('js-gallery-holder'),
-                    imageCount: parseInt(gallerySize, 10),
-                    ophanUrl: config.page.ophanUrl
-                });
+            common.mediator.on('page:gallery:ready', function(config, context) {
+                var gallerySize = config.page.gallerySize;
+                if(gallerySize !== "") {
+                    var t = new Tracking({
+                        id: config.page.id,
+                        el : context.querySelector('.js-gallery-holder'),
+                        imageCount: parseInt(gallerySize, 10),
+                        ophanUrl: config.page.ophanUrl
+                    });
 
-                t.init();
-            }
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
+                    t.init();
                 }
             });
-            var e = new Experiment(config);
-
-            e.init();
         }
     };
 
-    var init = function(req, config, context) {
-
+    var ready = function (config, context) {
+        if (!this.initialised) {
+            this.initialised = true;
+            common.lazyLoadCss('gallery', config);
+            modules.augmentGallery();
+            modules.initOphanTracking();
+        }
         common.mediator.emit("page:gallery:ready", config, context);
-
-        modules.augmentGallery();
-        modules.initOphanTracking(config);
     };
 
     return {
-        init: init
+        init: ready
     };
+
 });
