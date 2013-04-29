@@ -45,7 +45,7 @@ define([
             });
         },
 
-        logReading: function() {
+        logReading: function(context) {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
@@ -69,7 +69,7 @@ define([
             common.lazyLoadCss('article', config);
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading();
+            modules.logReading(context);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

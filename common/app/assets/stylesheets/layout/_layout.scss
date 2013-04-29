@@ -56,3 +56,42 @@
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
+
+/* ==========================================================================
+   Swipe framework
+   ========================================================================== */
+
+#swipepages {
+    position: relative;
+}
+
+#swipepages-inner {
+    position: relative;
+    top: 0px;
+    height: 100%;
+    width: 100%; 
+    @include transition(0ms ease-out);
+    @include transform(translateZ(0px)); 
+}
+
+#swipepage-0,
+#swipepage-1,
+#swipepage-2 {
+    @include transform(translateZ(0px));
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#swipepage-0 {
+    left: -100%; 
+}
+
+#swipepage-1 {
+    left: 0%; 
+}
+
+#swipepage-2 {
+    left: 100%; 
+}

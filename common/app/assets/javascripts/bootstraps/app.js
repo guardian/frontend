@@ -76,7 +76,7 @@ define('bootstraps/app', [
             modules.showDebug();
 
             //Fronts
-            r.get('/', function(req) {        Front.init(config, context); });
+            r.get('/', function(req) {        Front.init(config, context); }); // <-- The context is in the CLOSURE!! ARG!
             r.get('/sport', function(req) {   Front.init(config, context); });
             r.get('/culture', function(req) { Front.init(config, context); });
 

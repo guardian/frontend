@@ -77,6 +77,7 @@ define([
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
         }
+        window.console.log('FRONT', context);
         common.mediator.emit("page:front:ready", config, context);
     };
 

@@ -50,6 +50,7 @@ module.exports = function (grunt) {
                         "reqwest"                      : "components/reqwest/src/reqwest",
                         "domwrite"                     : "components/dom-write/dom-write",
                         "swipe"                        : "components/swipe/swipe",
+                        "swipeview"                    : "components/swipeview/swipeview",
                         // add excluded modules here, note empty scheme (note, also need to add to curl options)
                         'modules/shared-wisdom-toolbar': 'empty:'
                     },

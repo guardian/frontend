@@ -15,14 +15,22 @@
 </head>
 <body id="top" class="zone-@metaData.section" itemscope itemtype="http://schema.org/WebPage">
 
-    <div id="container">
-        @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
-        @fragments.header(metaData)
-        @body
-        @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
-        @fragments.footer(metaData)
+    <div id="swipepages">
+        <div id="swipepages-inner">
+            <div id="swipepage-0"></div>
+            <div id="swipepage-1">
+                <div id="container">
+                    @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
+                    @fragments.header(metaData)
+                    @body
+                    @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
+                    @fragments.footer(metaData)
+                </div>
+            </div swipepage-1>
+            <div id="swipepage-2"></div>
+        </div>
     </div>
-    
+
     @if(CssLazyLoadSwitch.isSwitchedOn) {
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
     }

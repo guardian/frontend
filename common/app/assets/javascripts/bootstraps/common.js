@@ -23,7 +23,8 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
-    'modules/experiments/ab'
+    'modules/experiments/ab',
+    'modules/editionswipe'
 ], function (
     common,
     userPrefs,
@@ -48,7 +49,8 @@ define([
     Cookies,
     Video,
     Debug,
-    AB
+    AB,
+    editionSwipe
 ) {
 
     var modules = {
@@ -188,6 +190,44 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
+        },
+
+        initEditionSwipe: function(config) { // TODO: config shouldn;t be passed here; should come via jsonp reaponse and be passed into afterShow
+            var opts = {
+                afterShow: function(configSwipe) {
+                    var edition;
+
+                    config.swipe = configSwipe;
+
+                    if( config.swipe.initiatedBy === 'initial' || config.swipe.initiatedBy === 'link') {
+                        edition = [];
+                        // First page in edition is the referrer
+                        edition.push(common.urlPath(config.swipe.referrer));
+                        // Second page in edition is the current page
+                        common.pushIfNew(window.location.pathname, edition);
+                        // Remaining pages are scraped from trails
+                        common.$g('li[data-link-name="trail"] a', config.swipe.visiblePane).each(function(el, index) {
+                            common.pushIfNew(el.pathname, edition);
+                        });
+                        if (edition.length >= 3) {
+                            config.swipe.api.setEdition(edition);
+                        }
+                    }
+
+                    if( config.swipe.initiatedBy !== 'initial') {
+                        common.mediator.emit('page:ready', config, config.swipe.visiblePane);
+                    }
+
+                },
+                el: '#swipepages',
+                linkSelector: 'a:not(.control)',
+                ajaxStrip: [
+                    [/^[\s\S]*<div id=\"swipepage-1\">/, ''],
+                    [/<\/div swipepage-1>[\s\S]*$/, '']
+                ],
+                widthGuess: 1
+            };
+            editionSwipe(opts);
         }
     };
 
@@ -217,6 +257,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
+            modules.initEditionSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };
