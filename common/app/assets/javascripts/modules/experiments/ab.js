@@ -36,7 +36,7 @@ define([
     // local storage is set, is an active test & switch is on
     function inTest(switches) {
         var test = getTest(),
-            switchedOn = switches["ab" + test.id];
+            switchedOn = switches ? switches["ab" + test.id] : false;
 
         return (test && TESTS[test.id] && switchedOn) ? true : false;
     }

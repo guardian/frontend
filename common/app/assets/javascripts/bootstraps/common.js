@@ -1,6 +1,7 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
@@ -28,6 +29,7 @@ define([
     'modules/editionswipe'
 ], function (
     common,
+    ajax,
     userPrefs,
 
     domReady,
@@ -213,31 +215,31 @@ define([
 
             var opts = {
                 afterShow: function(swipeSpec) {
-                    var edition;
 
                     if( swipeSpec.initiatedBy !== 'initial') {
                         common.mediator.emit('page:ready', pageConfig(swipeSpec.config), swipeSpec.visiblePane);
                     }
 
                     if( swipeSpec.initiatedBy === 'initial' || swipeSpec.initiatedBy === 'link') {
-                        edition = [];
-                        // First page in edition is the referrer
-                        edition.push(common.urlPath(swipeSpec.config.referrer));
-                        // Second page in edition is the current page
-                        common.pushIfNew(window.location.pathname, edition);
-                        // Remaining pages are scraped from trails
-                        common.$g('.trail h2 a, .trail h3 a', swipeSpec.visiblePane).each(function(el, index) {
-                            common.pushIfNew(el.pathname, edition);
+                        ajax({
+                            url: '/more-stories' + window.location.pathname,
+                            type: 'jsonp',
+                            success: function (json) {
+                                window.console.log('json');
+                                window.console.log(json);
+                                swipeSpec.api.setEdition(json.stories);
+                                swipeSpec.api.loadSidePanes();
+                                window.console.log(swipeSpec);
+                            }
                         });
-                        if (edition.length >= 3) {
-                            swipeSpec.api.setEdition(edition);
-                        }
+                    } else {
+                        swipeSpec.api.loadSidePanes();
                     }
+
                 },
                 el: '#swipepages',
                 bodySelector: '.parts__body',
-                linkSelector: 'a:not(.control)',
-                widthGuess: 1
+                linkSelector: 'a:not(.control)'
             };
             editionSwipe(opts);
         }
