@@ -29,6 +29,9 @@ define([
                         $('.event-children', block).toggleClass('h');
                         $('i', block).toggleClass('is-open');
                     });
+
+                    //Open first block by default
+                    bean.fire(timeline.querySelector('.event-title'), 'click');
                 }
             });
         },

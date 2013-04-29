@@ -23,8 +23,11 @@ case class Agent(
   importance: Int = 0,
   role: Option[String] = None,
   picture: Option[String] = None,
+  url: Option[String] = None,
   rdfType: Option[String] = None // Eg, http://schema.org/Person
-  ) {}
+  ) {
+    lazy val hasLink = url.isDefined && name.isDefined
+}
 
 case class Event(
     title: String,

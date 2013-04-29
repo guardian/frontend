@@ -6,7 +6,9 @@
     <li class="event-article picture-article--media">
         <p>
             @g.standfirst.map { s =>
-                @s
+                @withJsoup(BulletCleaner(s))(
+                    InBodyLinkCleaner("in body link")
+                )
             }.getOrElse(g.headline)
         </p>
         @g.images.zipWithRowInfo.map{ case(image, info) =>
