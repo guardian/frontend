@@ -85,12 +85,17 @@ object CommonSwitches {
   val ABRelatedContent = DefaultSwitch("ab-related-content",
     "If this switch is on related content AB test will be enabled.",
     initiallyOn = false)
+
+  val AustraliaFrontSwitch = DefaultSwitch("australia-front",
+    "If this switch is on the australia front will be available",
+    initiallyOn = false)
   
   val all: Seq[Switchable] = Seq(
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch, ABRelatedContent
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch, ABRelatedContent,
+    AustraliaFrontSwitch
   )
 }
 

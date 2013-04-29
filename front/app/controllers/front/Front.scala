@@ -98,7 +98,7 @@ class Front extends AkkaSupport with Logging {
 
   lazy val auEditions = Map(
 
-    "front" -> new ConfiguredEdition("AUS", Seq(
+    "front" -> new ConfiguredEdition("AU", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),

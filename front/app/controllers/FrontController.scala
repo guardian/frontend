@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import conf.CommonSwitches.AustraliaFrontSwitch
 import front._
 import model._
 import play.api.mvc._
@@ -98,9 +99,14 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     // get the trailblocks
     val trailblocks: Seq[Trailblock] = front(path, edition)
-    if (trailblocks.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblocks.isEmpty) {
       InternalServerError
-    } else {
+    }
+    else {
       Cached(frontPage) {
         if (format == "json") {
           // pull out correct trailblock
