@@ -1,8 +1,15 @@
 @(agent: Agent)
 <li class="agent">
     <div class="agent-head">
-        @agent.picture.map{ pic => <img class="agent-img" src="@pic" /> }
-        @agent.name.map{ name => <h3 class="agent-name">@name</h3> }
+        @if(agent.hasLink) {
+            @agent.url.map{ url =>
+                @agent.picture.map{ pic => <a href="@url" target="_blank" data-link-name="agent"><img class="agent-img" src="@pic" /></a> }
+                @agent.name.map{ name => <a href="@url" target="_blank"data-link-name="agent"><h3 class="agent-name">@name</h3></a> }
+            }
+        } else {
+            @agent.picture.map{ pic => <img class="agent-img" src="@pic" /> }
+            @agent.name.map{ name => <h3 class="agent-name">@name</h3> }
+        }
         @agent.role.map{ role => <p class="agent-role">@role</p> }
     </div>
     <div class="agent-body">
