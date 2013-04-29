@@ -127,13 +127,13 @@ define(['swipeview', 'bean', 'bonzo', 'qwery', 'reqwest'], function(SwipeView, b
             hiddenPaneMargin = 0,
             referrer = document.referrer;
 
-        var normalizeUrl = function(url) {
+        function normalizeUrl(url) {
             var a = document.createElement('a');
             a.href = url;
             a = a.pathname + a.search;
             a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
             return a;
-        };
+        }
 
         function load(o) {
             var
