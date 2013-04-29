@@ -37,7 +37,7 @@ define('bootstraps/app', [
     var modules = {
 
         initialiseAjax: function(config) {
-            ajax.init(config.page.ajaxUrl);
+            ajax.init(config);
         },
 
         attachGlobalErrorHandler: function (config) {

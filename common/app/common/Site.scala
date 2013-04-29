@@ -69,11 +69,25 @@ object Site extends Logging {
     )).toMap
 
   def apply(implicit request: RequestHeader): Site = {
+
+    val editionOverride = request.getQueryString("_gu_edition").map(AllowedEdition(_))
+
     val host = request.headers("host").toLowerCase
-    sites.get(host).getOrElse {
+
+    val site = sites.get(host).getOrElse {
       // allows working through things like proxylocal during dev
       log.info(s"Using dynamic domain for site $host")
       Site(host, host, host, host, host, host, "UK")
     }
+
+    editionOverride.map(edition => site.copy(edition = edition)).getOrElse(site)
   }
 }
+
+object AllowedEdition {
+  private val allowed = Seq("UK", "US")
+
+  // if edition is not in allowed list return the default
+  def apply(ed: String) = allowed.find(_ == ed.toUpperCase).getOrElse("UK")
+}
+
