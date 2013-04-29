@@ -9,17 +9,26 @@ define(['modules/local-storage'], function(localStorage) {
                     window.localStorage[prop].restore();
                 }
             }
+            localStorage._setWindow(window);
         });
         
+        function setWindowLocalStorage(winLocalStorage) {
+            localStorage._setWindow({localStorage: winLocalStorage})
+        }
+        
         function testSetAndGet(key, data, dataAsString, type) {
-            sinon.stub(window.localStorage, 'setItem').withArgs(key, dataAsString + '|' + type).returns(true);
+            setWindowLocalStorage({
+                setItem: sinon.stub().withArgs(key, dataAsString + '|' + type).returns(true),
+                getItem: sinon.stub().withArgs(key).returns(dataAsString + '|' + type)
+            });
             expect(localStorage.set(key, data)).toBeTruthy();
-            sinon.stub(window.localStorage, 'getItem').withArgs(key).returns(dataAsString + '|' + type);
             expect(localStorage.get(key)).toEqual(data);
         }
 
         it('shouldn\'t be available if can\'t set data', function() {
-            sinon.stub(window.localStorage, 'setItem').throws();
+            setWindowLocalStorage({
+                setItem: sinon.stub().throws()
+            });
             expect(localStorage.isAvailable()).toBeFalsy();
         });
 
@@ -34,13 +43,38 @@ define(['modules/local-storage'], function(localStorage) {
 
         it('should be able to remove item', function() {
             var key = 'foo';
-            sinon.stub(window.localStorage, 'removeItem').withArgs(key).returns(true);
+            setWindowLocalStorage({
+                removeItem: sinon.stub().withArgs(key).returns(true)
+            });
             expect(localStorage.remove(key)).toBeTruthy();
         });
 
         it('should be able to clear data', function() {
-            sinon.stub(window.localStorage, 'clear').returns(true);
-            expect(localStorage.clear()).toBeTruthy();
+            setWindowLocalStorage({
+                clear: sinon.stub().returns(true)
+            });
+            expect(localStorage.removeAll()).toBeTruthy();
+        });
+
+        it('should return if key not set', function() {
+            setWindowLocalStorage({
+                getItem: sinon.stub().returns(null)
+            });
+            expect(localStorage.get('foo')).toBe(null);
+        });
+
+        it('should return number of items in storage', function() {
+            localStorage.removeAll();
+            localStorage.set('foo',' bar');
+            expect(localStorage.length()).toBe(1);
+            localStorage.set('foo2',' bar2');
+            expect(localStorage.length()).toBe(2);
+        });
+
+        it('should return item by index', function() {
+            localStorage.removeAll();
+            localStorage.set('foo',' bar');
+            expect(localStorage.getKey(0)).toBe('foo');
         });
         
         describe('Saving and retriving different data types', function() {

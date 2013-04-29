@@ -97,35 +97,33 @@ define([
 
             logPreference: function (shouldHideSection, section) {
 
-                if (window.localStorage) {
-                    var existingPrefs = userPrefs.get(options.prefName);
+                var existingPrefs = userPrefs.get(options.prefName);
 
-                    if (existingPrefs) {
+                if (existingPrefs) {
 
-                        // see if it already exists
-                        var sectionArray = existingPrefs.split(',');
-                        for (var i in sectionArray) {
-                            var item = sectionArray[i];
-                            if (item === section) {
-                                if (!shouldHideSection) {
-                                    sectionArray.splice(i, 1); // remove it from list
-                                }
+                    // see if it already exists
+                    var sectionArray = existingPrefs.split(',');
+                    for (var i in sectionArray) {
+                        var item = sectionArray[i];
+                        if (item === section) {
+                            if (!shouldHideSection) {
+                                sectionArray.splice(i, 1); // remove it from list
                             }
                         }
-
-                        if (shouldHideSection) {
-                            sectionArray.push(section);
-                        }
-
-                        var newPrefs = sectionArray.join(',');
-                        userPrefs.set(options.prefName, newPrefs);
-
-                    // need to create it instead
-                    } else {
-                        userPrefs.set(options.prefName, section);
                     }
 
+                    if (shouldHideSection) {
+                        sectionArray.push(section);
+                    }
+
+                    var newPrefs = sectionArray.join(',');
+                    userPrefs.set(options.prefName, newPrefs);
+
+                // need to create it instead
+                } else {
+                    userPrefs.set(options.prefName, section);
                 }
+
 
             }
 

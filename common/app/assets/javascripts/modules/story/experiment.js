@@ -5,7 +5,8 @@ define([
 
     "modules/accordion",
     "modules/expandable",
-    "bootstraps/story"
+    "bootstraps/story",
+    'modules/local-storage'
 ], function(
     common,
     bean,
@@ -13,12 +14,13 @@ define([
 
     Accordion,
     Expandable,
-    Story
+    Story,
+    localStorage
 ) {
 
     function Experiment(config, context) {
 
-        var experimentName = localStorage.getItem('gu.experiment') || '',
+        var experimentName = localStorage.get('gu.experiment') || '',
             that = this;
 
         this.init = function () {

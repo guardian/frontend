@@ -4,14 +4,16 @@ define([
     'ajax',
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
-    'modules/adverts/dimensionMap'
+    'modules/adverts/dimensionMap',
+    'modules/local-storage',
     ], function(
         common,
         domwrite,
         ajax,
         DocumentWrite,
         DocumentWriteSlot,
-        dimensionMap
+        dimensionMap,
+        localStorage
     )  {
 
     var slots = [
@@ -37,7 +39,7 @@ define([
             ajaxUrl: "",
             edition: "UK"
         }});
-        localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
+        localStorage.set('gu.ads.audsci', ["E012390","E012782"]);
         common.mediator.removeEvent();
     });
  

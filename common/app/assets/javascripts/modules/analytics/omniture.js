@@ -1,11 +1,13 @@
 define([
     'common',
     'modules/detect',
-    'modules/experiments/ab'
+    'modules/experiments/ab',
+    'modules/local-storage'
 ], function(
     common,
     detect,
-    ab
+    ab,
+    localStorage
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -47,7 +49,7 @@ define([
                     tag: spec.tag,
                     time: new Date().getTime()
                 };
-                localStorage.setItem(storagePrefix + 'referrerVars', JSON.stringify(storeObj));
+                localStorage.set(storagePrefix + 'referrerVars', storeObj);
             } else {
                 that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
@@ -134,7 +136,7 @@ define([
             }
 
             /* Retrieve navigation interaction data */
-            var ni = localStorage.getItem('gu.analytics.referrerVars');
+            var ni = localStorage.get('gu.analytics.referrerVars');
             if (ni) {
                 ni = JSON.parse(ni);
                 var d = new Date().getTime();
@@ -143,7 +145,7 @@ define([
                     s.eVar37 = ni.tag;
                     s.events = s.apl(s.events,'event37',',');
                 }
-                localStorage.removeItem('gu.analytics.referrerVars');
+                localStorage.remove('gu.analytics.referrerVars');
             }
         };
 

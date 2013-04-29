@@ -1,7 +1,7 @@
-define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'modules/detect'], function(common, ajax, Adverts, IframeAdSlot, detect) {
+define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadslot', 'modules/detect', 'modules/local-storage'], function(common, ajax, Adverts, IframeAdSlot, detect, localStorage) {
 
     //Ignore audience science for these tests.
-    localStorage.removeItem("gu.ads.audsci");
+    localStorage.remove("gu.ads.audsci");
 
     beforeEach(function(){
         ajax.init({page: {
@@ -97,7 +97,7 @@ define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadsl
 
         it("should not create ads if userPref is switchedOff", function() {
 
-            window.localStorage['gu.prefs.switch.adverts'] = false;
+            localStorage.set('gu.prefs.switch.adverts', false);
 
             Adverts.init(config);
             Adverts.loadAds();

@@ -4,15 +4,21 @@
 */
 define([], function () {
     
+    var w = window;
+    
     var localStorage = {
+            
+        _setWindow: function(window) {
+            w = window;
+        },
             
         isAvailable: function() {
             try {
                 // to fully test, need to set item
                 // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
                 var testKey = 'local-storage-module-test';
-                window.setItem(testKey, 'test');
-                window.removeItem(testKey);
+                w.localStorage.setItem(testKey, 'test');
+                w.localStorage.removeItem(testKey);
                 return true;
             } catch (e) {
                 return false;
@@ -28,13 +34,17 @@ define([], function () {
             if (type === 'object') {
                 data = JSON.stringify(data);
             }
-            return window.localStorage.setItem(key, data + '|' + type);
+            return w.localStorage.setItem(key, data + '|' + type);
         },
         
         get: function(key) {
-            var dataWithType = window.localStorage.getItem(key),
-                // what's its type
-                typeLastIndex = dataWithType.lastIndexOf('|'),
+            var dataWithType = w.localStorage.getItem(key);
+            if (dataWithType === null) {
+                return null;
+            }
+            
+            // what's its type
+            var typeLastIndex = dataWithType.lastIndexOf('|'),
                 data = dataWithType.substring(0, typeLastIndex),
                 type = dataWithType.substring(typeLastIndex + 1);
             
@@ -51,12 +61,20 @@ define([], function () {
         },
         
         remove: function(key) {
-            return window.localStorage.removeItem(key);
+            return w.localStorage.removeItem(key);
         },
         
-        clear: function() {
-            return window.localStorage.clear();
+        removeAll: function() {
+            return w.localStorage.clear();
         },
+        
+        length: function() {
+            return w.localStorage.length;
+        },
+        
+        getKey: function(i) {
+            return w.localStorage.key(i);
+        }
             
     };
     
