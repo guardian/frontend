@@ -55,7 +55,7 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                     .attr('rel', 'stylesheet')
                     .attr('type', 'text/css')
                     .attr('href', guardian.css[name])
-                    .appendTo(document.querySelector('head'));
+                    .appendTo(document.querySelector('body'));
             }
         },
         inArray : function(needle, haystack) {
