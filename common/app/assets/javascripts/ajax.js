@@ -10,9 +10,9 @@ define(["reqwest"], function (reqwest) {
 
     function appendEdition(params) {
         if(params.url.indexOf('?') > -1){
-            params.url = params.url + '&'
+            params.url = params.url + '&';
         } else {
-            params.url = params.url + '?'
+            params.url = params.url + '?';
         }
         params.url = params.url + '_gu_edition=' + edition;
     }
