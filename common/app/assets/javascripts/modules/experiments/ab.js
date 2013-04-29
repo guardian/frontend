@@ -134,7 +134,6 @@ define([
                }
             }
         }
-        common.mediator.emit('ab:loaded');
     }
 
     return {

@@ -46,8 +46,8 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             if (elName === 'body') {
                 if (spec.validTarget && spec.tag.length) {
                     spec.tag = [].concat(spec.tag).reverse().join(' | ');
-                    if(document.body.getAttribute('data-link-test')) {
-                        spec.tag = document.body.getAttribute('data-link-test') + ' | ' + spec.tag;
+                    if(el.getAttribute('data-link-test')) {
+                        spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
                     }
                     delete spec.el;
                     delete spec.validTarget;

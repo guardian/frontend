@@ -18,7 +18,11 @@ case class Asset(absolute: File, base: File) {
     val Path = """(.*)\.([^\.]*)$""".r
     val Path(file, suffix) = debased
 
-    "%s.%s.%s".format(file, absolute.md5Hex, suffix)
+    // don't hash head css
+    file match {
+      case "stylesheets/head.min" => "%s.%s".format(file, suffix)
+      case _ => "%s.%s.%s".format(file, absolute.md5Hex, suffix)
+    }
   }
 
   def toText: String = debased + "=" + debasedWithMD5Chunk
