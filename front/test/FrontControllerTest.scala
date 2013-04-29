@@ -4,6 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
+import conf.CommonSwitches
 
 class FrontControllerTest extends FlatSpec with ShouldMatchers {
   
@@ -31,6 +32,12 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FrontController.renderTrails("front")(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "404 for australia when switched off" in Fake {
+    CommonSwitches.AustraliaFrontSwitch.switchOff()
+    val result = controllers.FrontController.render("australia")(TestRequest())
+    status(result) should be(404)
   }
 
 }
