@@ -58,6 +58,14 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+    )),
+
+    "australia" -> new ConfiguredEdition("AU", Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      TrailblockDescription("commentisfree/commentisfree+world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     ))
   )
 
@@ -92,22 +100,19 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail))
-    ))
+    )),
 
-  )
-
-  lazy val auEditions = Map(
-
-    "front" -> new ConfiguredEdition("AU", Seq(
+    "australia" -> new ConfiguredEdition("AU", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("commentisfree/commentisfree+world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     ))
+
   )
 
-  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq ++ auEditions.toSeq
+  private def allFronts = ukEditions.toSeq ++ usEditions.toSeq
 
   def refresh() {
     allFronts.foreach { case (name, front) => front.refresh() }
@@ -123,7 +128,6 @@ class Front extends AkkaSupport with Logging {
   }
 
   def apply(path: String, edition: String): Seq[Trailblock] = (path, edition) match {
-    case ("australia", _) => auEditions("front")()
     case (_, "US") => usEditions(path)()
     case _ => ukEditions(path)()
   }
