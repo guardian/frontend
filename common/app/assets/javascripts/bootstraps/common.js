@@ -6,6 +6,7 @@ define([
     'domReady',
     'bonzo',
     //Modules
+    'modules/pageconfig',
     'modules/popular',
     'modules/related',
     'modules/router',
@@ -32,6 +33,7 @@ define([
     domReady,
     bonzo,
 
+    pageConfig,
     popular,
     related,
     Router,
@@ -192,39 +194,50 @@ define([
             }
         },
 
-        initEditionSwipe: function(config) { // TODO: config shouldn;t be passed here; should come via jsonp reaponse and be passed into afterShow
+        initSwipe: function(config) { // TODO: config shouldn;t be passed here; should come via jsonp reaponse and be passed into afterShow
+            
+            var pages = document.querySelector('#swipepages');
+            var page0 = pages.querySelector('#swipepage-0 .parts');
+            var page1 = pages.querySelector('#swipepage-1 .parts');
+            var page2 = pages.querySelector('#swipepage-2 .parts');
+
+            var head = page1.querySelector('.parts__head');
+            var foot = page1.querySelector('.parts__foot');
+
+            bonzo(page0).append(head.cloneNode(true));
+            bonzo(page0).append(bonzo.create('<div class="parts__body">'));
+            bonzo(page0).append(foot.cloneNode(true));
+
+            bonzo(page2).append(head.cloneNode(true));
+            bonzo(page2).append(bonzo.create('<div class="parts__body">'));
+            bonzo(page2).append(foot.cloneNode(true));
+
             var opts = {
-                afterShow: function(configSwipe) {
+                afterShow: function(swipeSpec) {
                     var edition;
 
-                    config.swipe = configSwipe;
+                    if( swipeSpec.initiatedBy !== 'initial') {
+                        common.mediator.emit('page:ready', pageConfig(swipeSpec.config), swipeSpec.visiblePane);
+                    }
 
-                    if( config.swipe.initiatedBy === 'initial' || config.swipe.initiatedBy === 'link') {
+                    if( swipeSpec.initiatedBy === 'initial' || swipeSpec.initiatedBy === 'link') {
                         edition = [];
                         // First page in edition is the referrer
-                        edition.push(common.urlPath(config.swipe.referrer));
+                        edition.push(common.urlPath(swipeSpec.config.referrer));
                         // Second page in edition is the current page
                         common.pushIfNew(window.location.pathname, edition);
                         // Remaining pages are scraped from trails
-                        common.$g('li[data-link-name="trail"] a', config.swipe.visiblePane).each(function(el, index) {
+                        common.$g('.trail h2 a, .trail h3 a', swipeSpec.visiblePane).each(function(el, index) {
                             common.pushIfNew(el.pathname, edition);
                         });
                         if (edition.length >= 3) {
-                            config.swipe.api.setEdition(edition);
+                            swipeSpec.api.setEdition(edition);
                         }
                     }
-
-                    if( config.swipe.initiatedBy !== 'initial') {
-                        common.mediator.emit('page:ready', config, config.swipe.visiblePane);
-                    }
-
                 },
                 el: '#swipepages',
+                bodySelector: '.parts__body',
                 linkSelector: 'a:not(.control)',
-                ajaxStrip: [
-                    [/^[\s\S]*<div id=\"swipepage-1\">/, ''],
-                    [/<\/div swipepage-1>[\s\S]*$/, '']
-                ],
                 widthGuess: 1
             };
             editionSwipe(opts);
@@ -257,7 +270,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.initEditionSwipe(config);
+            modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

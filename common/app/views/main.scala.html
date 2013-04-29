@@ -17,17 +17,23 @@
 
     <div id="swipepages">
         <div id="swipepages-inner">
-            <div id="swipepage-0"></div>
+            <div id="swipepage-0"><div class="parts"></div></div>
             <div id="swipepage-1">
-                <div id="container">
-                    @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
-                    @fragments.header(metaData)
-                    @body
-                    @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
-                    @fragments.footer(metaData)
+                <div class="parts">
+                    <div class="parts__head">
+                        @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
+                        @fragments.header(metaData)
+                    </div>
+                    <div class="parts__body">
+                        @body
+                    </div>
+                    <div class="parts__foot">
+                        @fragments.adSlot(id="bottom-banner-ad", baseSlot="Bottom2", medianSlot="Bottom", extendedSlot="x54")
+                        @fragments.footer(metaData)
+                    </div>
                 </div>
             </div swipepage-1>
-            <div id="swipepage-2"></div>
+            <div id="swipepage-2"><div class="parts"></div></div>
         </div>
     </div>
 

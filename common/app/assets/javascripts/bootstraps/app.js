@@ -67,31 +67,33 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var r = new Router(),
-                context = document.getElementById('container');
+            var context = document.getElementById('swipepage-1');
 
             modules.initialiseAjax(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
-            //Fronts
-            r.get('/', function(req) {        Front.init(config, context); }); // <-- The context is in the CLOSURE!! ARG!
-            r.get('/sport', function(req) {   Front.init(config, context); });
-            r.get('/culture', function(req) { Front.init(config, context); });
-
-            //Football
-            r.get('/football', function(req) {                                Football.init(req, config, context); });
-            r.get('/football/:action', function(req) {                        Football.init(req, config, context); });
-            r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
-            r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
-            r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
-
-            r.get('/stories/:id', function(req) { Story.init(config, context);});
-
             var pageRoute = function(config, context) {
 
+                // We should rip out this router:
+                var r = new Router();
+
                 bootstrapCommon.init(config, context);
+
+                //Fronts
+                r.get('/', function(req) {        Front.init(config, context); });
+                r.get('/sport', function(req) {   Front.init(config, context); });
+                r.get('/culture', function(req) { Front.init(config, context); });
+
+                //Football
+                r.get('/football', function(req) {                                Football.init(req, config, context); });
+                r.get('/football/:action', function(req) {                        Football.init(req, config, context); });
+                r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
+                r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
+                r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
+
+                r.get('/stories/:id', function(req) { Story.init(config, context);});
 
                 if(config.page.contentType === "Article") {
                     Article.init(config, context);
@@ -110,7 +112,7 @@ define('bootstraps/app', [
             };
 
             common.mediator.on('page:ready', pageRoute);
-
+            
             common.mediator.emit('page:ready', config, context);
         });
     };
