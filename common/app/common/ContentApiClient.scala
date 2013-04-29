@@ -110,11 +110,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
 
   override protected def fetch(url: String, parameters: Map[String, Any]) = {
     checkQueryIsEditionalized(url, parameters)
-    val doPrint: Boolean = url.endsWith("/")
-    if(doPrint) println("*+* Content query: %s".format(parameters map {case (k, v) => k + "=" + v } mkString (url + "?", "&", "")))
-    val f = super.fetch(url, parameters + ("user-tier" -> "internal"))
-    if(doPrint) f foreach { s => println("*+* Response: %s".format(s)) }
-    f
+    super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {

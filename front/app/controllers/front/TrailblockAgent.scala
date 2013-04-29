@@ -43,13 +43,11 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
   lazy val warmup = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
 
-  private def loadTrails(id: String): Future[Seq[Trail]] ={
-    val query = ContentApi.item(id, edition)
+  private def loadTrails(id: String): Future[Seq[Trail]] = ContentApi.item(id, edition)
     .showEditorsPicks(true)
     .pageSize(20)
-    query.response
+    .response
     .map { response =>
-      if(id.isEmpty) println("*+* Response returned for url: %s, Items: %s!".format(query._apiUrl.get, response.editorsPicks))
       val editorsPicks = response.editorsPicks map {
         new Content(_)
       }
@@ -60,7 +58,6 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 
       editorsPicks ++ latest
     }
-  }
 }
 
 object TrailblockAgent {
