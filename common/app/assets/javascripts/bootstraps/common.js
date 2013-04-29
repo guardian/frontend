@@ -225,11 +225,8 @@ define([
                             url: '/more-stories' + window.location.pathname,
                             type: 'jsonp',
                             success: function (json) {
-                                window.console.log('json');
-                                window.console.log(json);
                                 swipeSpec.api.setEdition(json.stories);
                                 swipeSpec.api.loadSidePanes();
-                                window.console.log(swipeSpec);
                             }
                         });
                     } else {
