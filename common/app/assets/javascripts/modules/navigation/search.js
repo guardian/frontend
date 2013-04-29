@@ -5,6 +5,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         var enabled,
             gcsUrl,
             currentContext,
+            container,
             self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
@@ -13,7 +14,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
             var searchLoader = common.rateLimit(function() {
-                self.load(currentContext);
+                self.load();
             });
 
             bean.on(document, 'click touchstart', '.control--search', function(e) {
@@ -29,14 +30,15 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             });
         }
 
-        this.load = function(context) {
-            var container = context.querySelector('.nav-popup-search'),
-                s,
+        this.load = function() {
+            var s,
                 x;
+
+            container = currentContext.querySelector('.nav-popup-search');
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
-                if (c !== container) {
+                if (1 || c !== container) {
                     c.innerHTML = '';
                 }
             });

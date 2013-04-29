@@ -75,11 +75,10 @@ define([
                 var header = bonzo(context.querySelector('header'));
                 if(!header.hasClass('initialised')) {
                     header.addClass('initialised');
-
                     navControl.init(context);
                     sections.init(context);
-                    search.init(context);
                 }
+                search.init(context);
             });
         },
 
