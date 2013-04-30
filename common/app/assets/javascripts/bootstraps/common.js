@@ -126,6 +126,8 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
+                window.console.log(config);
+
                 // AB must execute before Omniture
                 AB.init(config);
 
@@ -158,7 +160,7 @@ define([
                             };
                         });
                     }
-                    Ophan.startLog();
+                    Ophan.startLog(config.referrer);
                 });
 
             });
@@ -214,25 +216,25 @@ define([
             bonzo(page2).append(foot.cloneNode(true));
 
             var opts = {
-                afterShow: function(swipeSpec) {
+                afterShow: function(config) {
+                    var swipe = config.swipe;
 
-                    if( swipeSpec.initiatedBy !== 'initial') {
-                        common.mediator.emit('page:ready', pageConfig(swipeSpec.config), swipeSpec.visiblePane);
+                    if( swipe.initiatedBy !== 'initial') {
+                        common.mediator.emit('page:ready', pageConfig(config), swipe.visiblePane);
                     }
 
-                    if( swipeSpec.initiatedBy === 'initial' || swipeSpec.initiatedBy === 'link') {
+                    if( swipe.initiatedBy === 'initial' || swipe.initiatedBy === 'link') {
                         ajax({
                             url: '/more-stories' + window.location.pathname,
                             type: 'jsonp',
                             success: function (json) {
-                                swipeSpec.api.setEdition(json.stories);
-                                swipeSpec.api.loadSidePanes();
+                                swipe.api.setEdition(json.stories);
+                                swipe.api.loadSidePanes();
                             }
                         });
                     } else {
-                        swipeSpec.api.loadSidePanes();
+                        swipe.api.loadSidePanes();
                     }
-
                 },
                 el: '#swipepages',
                 bodySelector: '.parts__body',

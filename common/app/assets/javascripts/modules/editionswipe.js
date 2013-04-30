@@ -83,8 +83,6 @@ define([
         var
             // general purpose do-nothing function
             noop = function () {},
-
-            // Configuration options.
             opts = extend(
                 {
                     // Container element
@@ -119,6 +117,7 @@ define([
             throttle,
             cache = {},
             canonicalLink = $('link[rel=canonical]'),
+            config, // the current pane's config
             contentArea = $(opts.el)[0],
             contentAreaTop = $(opts.el).offset().top,
             editionPos = -1,
@@ -138,7 +137,6 @@ define([
             panes,
             paneNow = 1,
             paneThen = 1,
-            swipeSpec,
             vendorPrefixes = ['ms', 'Khtml', 'O', 'Moz', 'Webkit', ''],
             visiblePaneMargin = 0,
             hiddenPaneMargin = 0;
@@ -213,20 +211,16 @@ define([
 
         // Fire post load actions
         function doAfterShow (el) {
-            var url, div, pos;
+            var url,
+                div,
+                pos;
 
             updateHeight();
             throttle = false;
 
-            swipeSpec = {
-                visiblePane: el,
-                initiatedBy: initiatedBy,
-                api: api
-            };
-
             if (initialPage) {
                 initialPage = false;
-                swipeSpec.config = {
+                config = {
                     referrer: document.referrer
                 };
                 /*
@@ -236,16 +230,15 @@ define([
                 */
             }
             else {
-                // Set the url for pushState
                 url = el.dataset.url;
                 setEditionPos(url);
 
-                swipeSpec.config = (cache[url] || {}).config || {};
-                swipeSpec.config.referrer = window.location.href; // works because we havent yet push'd the new URL
+                config = (cache[url] || {}).config || {};
+                config.referrer = window.location.href; // works because we havent yet push'd the new URL
 
-                if (swipeSpec.config.webTitle) {
+                if (config.webTitle) {
                     div = document.createElement('div');
-                    div.innerHTML = swipeSpec.config.webTitle; // resolves any html entities
+                    div.innerHTML = config.webTitle; // resolves html entities
                     document.title = div.firstChild.nodeValue;
                 }
 
@@ -258,12 +251,19 @@ define([
                 }
                 noHistoryPush = false;
 
-                // Update href of canonical link tag, using newly updated location
+                // Update canonical tag using pushed location
                 canonicalLink.attr('href', window.location.href);
             }
 
+            // Add swipe info & api to the config
+            config.swipe = {
+                visiblePane: el,
+                initiatedBy: initiatedBy,
+                api: api
+            };
+
             // Fire the main aftershow callback
-            opts.afterShow(swipeSpec);
+            opts.afterShow(config);
         }
 
         var spinner = (function () {
@@ -340,11 +340,11 @@ define([
                 return urlInEdition(editionPos);
             }
             // Cases where we've got next/prev overrides in the current page's data
-            else if (swipeSpec.config && swipeSpec.config.nextUrl && dir === 1) {
-                return swipeSpec.config.nextUrl;
+            else if (config.nextUrl && dir === 1) {
+                return config.nextUrl;
             }
-            else if (swipeSpec.config && swipeSpec.config.prevUrl && dir === -1) {
-                return swipeSpec.config.prevUrl;
+            else if (config.prevUrl && dir === -1) {
+                return config.prevUrl;
             }
             // Cases where we've got an edition position already
             else if (editionPos > -1 && inEdition) {
