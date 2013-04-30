@@ -144,13 +144,6 @@ define([
                 });
 
                 require(config.page.ophanUrl, function (Ophan) {
-
-                    
-                    if(Ophan === undefined) {
-                        window.console.log('NO OPHAN FOR: ' + window.location.href);
-                        window.console.log(config);
-                    }
-                    
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),

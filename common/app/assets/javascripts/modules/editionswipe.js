@@ -2,12 +2,14 @@
 // Author: Stephan Fowler
 
 define([
+    'common',
     'swipeview',
     'bean',
     'bonzo',
     'qwery',
     'ajax'
 ], function(
+    common,
     SwipeView,
     bean,
     bonzo,
@@ -41,6 +43,14 @@ define([
             return false;
         }
         return true;
+    }
+
+    function normalizeUrl(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        a = a.pathname + a.search;
+        a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
+        return a;
     }
 
     var deBounce = (function () {
@@ -89,9 +99,6 @@ define([
                     // Callback after a pane is made visible; use for analytics events, social buttons, etc.
                     afterShow: noop,
 
-                    // Milliseconds until edition should expire, i.e. cache should flush and/or content should reload instead of Ajax'ing. 0 => no expiry.
-                    expiryPeriod: 0,
-
                     // CSS selector for anchors that should initiate an ajax+pushState reload.
                     linkSelector: 'a:not(.no-ajax)',
 
@@ -109,8 +116,6 @@ define([
 
             // Private vars
             androidVersion,
-            ajaxCount = 0,
-            ajaxRegex = new RegExp(opts.ajaxRegex,'g'),
             throttle,
             cache = {},
             canonicalLink = $('link[rel=canonical]'),
@@ -136,16 +141,7 @@ define([
             swipeSpec,
             vendorPrefixes = ['ms', 'Khtml', 'O', 'Moz', 'Webkit', ''],
             visiblePaneMargin = 0,
-            hiddenPaneMargin = 0,
-            referrer = document.referrer;
-
-        function normalizeUrl(url) {
-            var a = document.createElement('a');
-            a.href = url;
-            a = a.pathname + a.search;
-            a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
-            return a;
-        }
+            hiddenPaneMargin = 0;
 
         function load(o) {
             var
@@ -165,6 +161,7 @@ define([
                 // Is cached ?
                 if (spec) {
                     populate(el, spec);
+                    common.mediator.emit('module:swipenav:pane:loaded', el);
                     callback();
                 }
                 else {
@@ -175,22 +172,14 @@ define([
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
                         success: function (spec) {
-                            var i;
-
+                            el.dataset.waiting = '';
                             if (el.dataset.url === url) {
                                 populate(el, spec);
                                 cache[url] = spec;
+                                common.mediator.emit('module:swipenav:pane:loaded', el);
                                 callback();
                             }
-
-                            el.dataset.waiting = '';
-                            ajaxCount += 1;
-                            // Maybe flush cache
-                            if (ajaxCount > 50) {
-                                ajaxCount = 0;
-                                cache = {};
-                            }
-                        }
+                         }
                     });
                     if (o.showSpinner) {
                         spinner.show();
@@ -205,34 +194,6 @@ define([
             opts.afterLoad(el);
         }
 
-        function reloadContent() {
-            reloadPane( 0);
-            reloadPane( 1);
-            reloadPane(-1);
-        }
-
-        function repaintContent() {
-            repaintPane( 0);
-            repaintPane( 1);
-            repaintPane(-1);
-        }
-
-        /*
-        bean.on(window, 'resize', function () {
-            // Emulator mode: detect a window resize and re-request the content, throttled to one reload per second.
-            if (opts.emulator) {
-                deBounce(function () {
-                    cache = {};
-                    reloadContent();
-                }, 1013, 'reloadContent');
-            }
-            // Normal mode: redraw the existing content
-            else {
-                repaintContent();
-            }
-        });
-        */
-
         // Make the contentArea height equal to the visiblePane height. (We view the latter through the former.)
         function updateHeight() {
             var height = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
@@ -242,14 +203,14 @@ define([
         }
 
         // Fire post load actions
-        function doAfterShow () {
+        function doAfterShow (el) {
             var url, div, pos;
 
             updateHeight();
             throttle = false;
 
             swipeSpec = {
-                visiblePane: visiblePane,
+                visiblePane: el,
                 initiatedBy: initiatedBy,
                 api: api
             };
@@ -267,12 +228,11 @@ define([
             }
             else {
                 // Set the url for pushState
-                url = visiblePane.dataset.url;
+                url = el.dataset.url;
                 setEditionPos(url);
 
                 swipeSpec.config = (cache[url] || {}).config || {};
                 swipeSpec.config.referrer = window.location.href; // works because we havent yet push'd the new URL
-                swipeSpec.visiblePane = visiblePane;
 
                 if (swipeSpec.config.webTitle) {
                     div = document.createElement('div');
@@ -338,6 +298,7 @@ define([
                 edition = arr;
                 editionLen = len;
                 editionLookup = {};
+                window.console.log('Sequence:');
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
                     editionLookup[arr[i].url] = arr[i];
@@ -350,7 +311,6 @@ define([
 
         function gotoUrl(url, dir) {
             var pos = posInEdition(url);
-            doFirst();
             if (normalizeUrl(window.location.pathname) === url) {
                 dir = 0; // load back into visible pane
             }
@@ -417,7 +377,6 @@ define([
         function gotoEditionPage(pos) {
             var dir;
             if (pos !== editionPos && pos < editionLen) {
-                doFirst();
                 dir = pos < editionPos ? -1 : 1;
                 editionPos = pos;
                 gotoUrl(urlInEdition(pos), dir);
@@ -428,10 +387,6 @@ define([
             window.history.pushState(state, title, url);
         }
 
-        function doFirst() {
-            opts.beforeShow();
-        }
-
         function genChecksum(s) {
             var i;
             var chk = 0x12345678;
@@ -439,19 +394,6 @@ define([
                 chk += (s.charCodeAt(i) * i);
             }
             return chk;
-        }
-
-        function reloadPane(dir) {
-            var el = panes.masterPages[(paneNow + dir).mod(3)];
-            load({
-                url: el.dataset.url,
-                container: el
-            });
-        }
-
-        function repaintPane(dir) {
-            var el = panes.masterPages[(paneNow + dir).mod(3)];
-            opts.afterLoad(el);
         }
 
         function preparePane(o) {
@@ -476,12 +418,8 @@ define([
                     container: el,
                     showSpinner: doSlideIn,
                     callback: function () {
-                        // el might have become visiblePane since request was made, e.g. due to rapid swiping. If so, no need to slideInPane
-                        if (el === visiblePane) {
-                            doAfterShow();
-                        }
                         // before slideInPane, confirm that this pane hasn't had its url changed since the request was made
-                        else if (doSlideIn && el.dataset.url === url) {
+                        if (doSlideIn && el.dataset.url === url) {
                             slideInPane(dir);
                         }
                     }
@@ -493,7 +431,6 @@ define([
         }
 
         function slideInPane(dir) {
-            doFirst();
             switch(dir) {
                 case 1:
                     panes.next();
@@ -502,7 +439,7 @@ define([
                     panes.prev();
                     break;
                 default:
-                    doAfterShow();
+                    common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
             }
         }
 
@@ -591,11 +528,10 @@ define([
                 if (visiblePane.dataset && visiblePane.dataset.waiting === '1') {
                     spinner.show();
                 }
-                doAfterShow();
+                common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
             }
         });
         panes.onMoveOut(function () {
-            doFirst();
             initiatedBy = 'swipe';
         });
 
@@ -606,42 +542,11 @@ define([
         // Set a body class. Might be useful.
         $('body').addClass('has-swipe');
 
-        doAfterShow();
-
-        // Flush cache on expiry
-        /*
-        if (opts.expiryPeriod) {
-            setInterval(function(){
-                cache = {};
-            }, parseInt(opts.expiryPeriod, 10));
-        }
-        */
-   
-        // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
-        setInterval(function(){
-            updateHeight();
-        }, 509); // Prime number, for good luck
-
-
-        // Bind back/forward button behavior
-        window.onpopstate = function (event) {
-            var
-                state = event.state,
-                popId,
-                dir;
-            // Ignore inital popstate that some browsers fire on page load
-            if (!state) { return; }
-            initiatedBy = 'browser_history';
-            popId = state.id ? state.id : -1;
-            // Deduce the bac/fwd pop direction
-            dir = popId < uid.get() ? -1 : 1;
-            uid.set(popId);
-            // Prevent a history stats from being pushed
-            noHistoryPush = true;
-            editionPos = state.editionPos;
-            // Reveal the newly poped location
-            gotoUrl(normalizeUrl(window.location.href), dir);
-        };
+        common.mediator.on('module:swipenav:pane:loaded', function(el){
+            if(el === visiblePane && !el.dataset.waiting) {
+                doAfterShow(el);
+            }
+        });
 
         // Bind clicks
         bean.on(document, 'click', opts.linkSelector, function (e) {
@@ -689,6 +594,33 @@ define([
                     break;
             }
         });
+
+        // Bind back/forward button behavior
+        window.onpopstate = function (event) {
+            var
+                state = event.state,
+                popId,
+                dir;
+            // Ignore inital popstate that some browsers fire on page load
+            if (!state) { return; }
+            initiatedBy = 'browser_history';
+            popId = state.id ? state.id : -1;
+            // Deduce the bac/fwd pop direction
+            dir = popId < uid.get() ? -1 : 1;
+            uid.set(popId);
+            // Prevent a history stats from being pushed
+            noHistoryPush = true;
+            editionPos = state.editionPos;
+            // Reveal the newly poped location
+            gotoUrl(normalizeUrl(window.location.href), dir);
+        };
+
+        // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
+        setInterval(function(){
+            updateHeight();
+        }, 509); // Prime number, for good luck
+
+        common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
 
         // Return an API
         return api;
