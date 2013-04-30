@@ -1,4 +1,4 @@
-// Description: Edition Swipe module
+// Description: Sequence Swipe module
 // Author: Stephan Fowler
 
 define([
@@ -106,7 +106,7 @@ define([
                     // The name of the query param sent wth Ajax page-fragment requests
                     queryParam: 'frag_width',
 
-                    // Initial edition
+                    // Initial sequence
                     sequence: [],
 
                     // CSS selector for a spinner/busy indicator
@@ -123,14 +123,14 @@ define([
             config, // the current pane's config
             contentArea = $(opts.el)[0],
             contentAreaTop = $(opts.el).offset().top,
-            editionPos = -1,
-            edition = [],
-            editionLookup,
-            editionLen = 0,
-            editionChecksum,
+            sequencePos = -1,
+            sequence = [],
+            sequenceLookup,
+            sequenceLen = 0,
+            sequenceChecksum,
             supportsHistory = false,
             supportsTransitions = false,
-            inEdition = false,
+            inSequence = false,
             initialised,
             initialPage,
             initiatedBy = 'initial',
@@ -234,7 +234,7 @@ define([
             }
             else {
                 url = el.dataset.url;
-                setEditionPos(url);
+                setSequencePos(url);
 
                 config = (cache[url] || {}).config || {};
                 config.referrer = window.location.href; // works because we havent yet push'd the new URL
@@ -248,7 +248,7 @@ define([
                 if (!noHistoryPush) {
                     var state = {
                         id: uid.nxt(),
-                        editionPos: editionPos
+                        sequencePos: sequencePos
                     };
                     doHistoryPush(state, document.title, url);
                 }
@@ -287,47 +287,47 @@ define([
             return obj;
         }());
 
-        function setEditionPos(url) {
-            editionPos = posInEdition(normalizeUrl(url));
-            inEdition = (editionPos > -1);
+        function setSequencePos(url) {
+            sequencePos = posInSequence(normalizeUrl(url));
+            inSequence = (sequencePos > -1);
         }
 
-        function posInEdition(url) {
-            url = editionLookup[normalizeUrl(url)];
+        function posInSequence(url) {
+            url = sequenceLookup[normalizeUrl(url)];
             return url ? url.pos : -1;
         }
 
-        function urlInEdition(pos) {
-            return pos > -1 && pos < editionLen ? edition[pos].url : edition[0].url;
+        function urlInSequence(pos) {
+            return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
         }
 
-        function setEdition(arr) {
+        function setSequence(arr) {
             var len = arr.length,
                 pos,
                 i;
 
             if (len >= 3) {
-                edition = arr;
-                editionLen = len;
-                editionLookup = {};
+                sequence = arr;
+                sequenceLen = len;
+                sequenceLookup = {};
                 window.console.log('Sequence:');
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
-                    editionLookup[arr[i].url] = arr[i];
+                    sequenceLookup[arr[i].url] = arr[i];
                     window.console.log(i + " " + arr[i].url);
                 }
-                setEditionPos(window.location.href);
+                setSequencePos(window.location.href);
                 cache = {};
             }
         }
 
         function gotoUrl(url, dir) {
-            var pos = posInEdition(url);
+            var pos = posInSequence(url);
             if (normalizeUrl(window.location.pathname) === url) {
                 dir = 0; // load back into visible pane
             }
             else if (typeof dir === 'undefined') {
-                dir = pos > -1 && pos < editionPos ? -1 : 1;
+                dir = pos > -1 && pos < sequencePos ? -1 : 1;
             }
             preparePane({
                 url: url,
@@ -342,7 +342,7 @@ define([
             // dir = -1 : left
 
             if (dir === 0) {
-                return urlInEdition(editionPos);
+                return urlInSequence(sequencePos);
             }
             // Cases where we've got next/prev overrides in the current page's data
             else if (config.nextUrl && dir === 1) {
@@ -351,20 +351,20 @@ define([
             else if (config.prevUrl && dir === -1) {
                 return config.prevUrl;
             }
-            // Cases where we've got an edition position already
-            else if (editionPos > -1 && inEdition) {
-                return urlInEdition((editionPos + dir).mod(editionLen));
+            // Cases where we've got an sequence position already
+            else if (sequencePos > -1 && inSequence) {
+                return urlInSequence((sequencePos + dir).mod(sequenceLen));
             }
-            else if (editionPos > -1 && !inEdition) {
-                // We're displaying a non-edition page; have current-edition-page to the left, next-edition-page to right
-                return urlInEdition((editionPos + (dir === 1 ? 1 : 0)).mod(editionLen));
+            else if (sequencePos > -1 && !inSequence) {
+                // We're displaying a non-sequence page; have current-sequence-page to the left, next-sequence-page to right
+                return urlInSequence((sequencePos + (dir === 1 ? 1 : 0)).mod(sequenceLen));
             }
-            // Cases where we've NOT yet got an edition position
+            // Cases where we've NOT yet got an sequence position
             else if (dir === 1) {
-                return urlInEdition(1);
+                return urlInSequence(1);
             }
             else {
-                return urlInEdition(0);
+                return urlInSequence(0);
             }
         }
 
@@ -386,12 +386,12 @@ define([
             return true;
         }
 
-        function gotoEditionPage(pos) {
+        function gotoSequencePage(pos) {
             var dir;
-            if (pos !== editionPos && pos < editionLen) {
-                dir = pos < editionPos ? -1 : 1;
-                editionPos = pos;
-                gotoUrl(urlInEdition(pos), dir);
+            if (pos !== sequencePos && pos < sequenceLen) {
+                dir = pos < sequencePos ? -1 : 1;
+                sequencePos = pos;
+                gotoUrl(urlInSequence(pos), dir);
             }
         }
 
@@ -466,17 +466,17 @@ define([
 
         // This'll be the public api
         var api = {
-            setEdition: setEdition,
+            setSequence: setSequence,
 
             loadSidePanes: loadSidePanes,
 
-            getEdition: function(){
-                return edition;
+            getSequence: function(){
+                return sequence;
             },
 
-            gotoEditionPage: function(pos, type){
+            gotoSequencePage: function(pos, type){
                 initiatedBy = type ? type.toString() : 'position';
-                gotoEditionPage(pos, type);
+                gotoSequencePage(pos, type);
             },
 
             gotoUrl: function(url, type){
@@ -523,7 +523,7 @@ define([
 
         initialPage = normalizeUrl(window.location.href);
 
-        setEdition(opts.sequence);
+        setSequence(opts.sequence);
 
         // SwipeView init
         panes = new SwipeView(contentArea, {});
@@ -624,7 +624,7 @@ define([
             uid.set(popId);
             // Prevent a history stats from being pushed
             noHistoryPush = true;
-            editionPos = state.editionPos;
+            sequencePos = state.sequencePos;
             // Reveal the newly poped location
             gotoUrl(normalizeUrl(window.location.href), dir);
         };

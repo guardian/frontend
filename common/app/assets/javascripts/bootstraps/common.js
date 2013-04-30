@@ -26,7 +26,7 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/editionswipe'
+    'modules/swipenav'
 ], function (
     common,
     ajax,
@@ -54,7 +54,7 @@ define([
     Video,
     Debug,
     AB,
-    editionSwipe
+    swipeNav
 ) {
 
     var modules = {
@@ -226,7 +226,11 @@ define([
         },
 
         startSwipe: function(sequence) {
-            var opts = {
+            var opts;
+            if (!sequence || sequence.length < 3) {
+                return;
+            }
+            opts = {
                 afterShow: function(config) {
                     var swipe = config.swipe;
 
@@ -240,7 +244,7 @@ define([
                             type: 'jsonp',
                             success: function (json) {
                                 if (json.stories) {
-                                    swipe.api.setEdition(json.stories);
+                                    swipe.api.setSequence(json.stories);
                                     swipe.api.loadSidePanes();
                                 }
                             }
@@ -254,10 +258,7 @@ define([
                 bodySelector: '.parts__body',
                 linkSelector: 'a:not(.control)'
             };
-            if (!sequence || sequence.length < 3) {
-                return;
-            }
-            editionSwipe(opts);
+            swipeNav(opts);
         }
     };
 
