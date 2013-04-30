@@ -23,15 +23,15 @@ define([
 
                 if(timeline) {
                     $('.event-children', timeline).addClass('h');
-                    bean.on(timeline, eventType, '.event-title', function(e) {
+                    bean.on(timeline, eventType, '.event__title', function(e) {
                         var block = $(this).parent();
-                        $('.event-summary', block).toggleClass('h');
+                        $('.event__summary', block).toggleClass('h');
                         $('.event-children', block).toggleClass('h');
                         $('i', block).toggleClass('is-open');
                     });
 
                     //Open first block by default
-                    bean.fire(timeline.querySelector('.event-title'), 'click');
+                    bean.fire(timeline.querySelector('.event__title'), 'click');
                 }
             });
         },
