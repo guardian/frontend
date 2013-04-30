@@ -9,8 +9,8 @@ define(["reqwest"], function (reqwest) {
     };
 
     function appendEdition(params) {
-        var alreadyHasParameters = params.url.indexOf('?') > -1;
-        params.url = params.url + (alreadyHasParameters ? '&' : '?') + '_edition=' + edition;
+        var delimiter = params.url.indexOf('?') > -1 ? '&' : '?';
+        params.url = params.url + delimiter + '_edition=' + edition;
         return params;
     }
 
