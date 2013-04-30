@@ -13,6 +13,7 @@ define([
             total:   'total',
             last:    'last',
             today:   'today',
+            path:    'path',
             section: 'section.'
         };
 
@@ -34,7 +35,7 @@ define([
     var remove = function () {
         userPrefs.remove(storagePrefix);
     };
-
+    
     // returns the start of a 24hr cycle, lets say 11pm the previous day
     var startOfToday = function () {
         var y  = new Date(new Date() - 1);
@@ -66,42 +67,66 @@ define([
         return (visits() === 0);
     };
     
-    // seconds ago
-    var lastVisit = function (now) {
-        return (now - new Date(data[keys.last])) / 1000 / 60 / 60;
+    // hours ago
+    var lastVisit = function () {
+        var data = get();
+        console.log(data[keys.last]);
+        return (new Date() - new Date(data[keys.last])) / 1000 / 60 / 60;
     };
 
     var firstVisitToday = function () {
         return (((new Date() - epoch) / 1000 / 60 / 60) < 24);
     };
+    
+    var path = function () {
+        if (!data[keys.path]) {
+            data[keys.path] = []
+        }
+        return data[keys.path]
+    };
    
+    var incrementPath = function (p) {
+        var data = get(),
+            hoursSinceLastVisit = lastVisit();
+        console.log(hoursSinceLastVisit, path());
+        if (hoursSinceLastVisit < 0) {
+            data[keys.path].push(p);
+        } else {
+            data[keys.path] = [p]
+        } 
+        set(data);
+    };
+
     var incrementVisits = function () {
         data[keys.total] = visits() + 1;
         data[keys.last] = new Date();
+        set(data);
     };
 
     var incrementVisitsToday = function () {
         data[keys.today] = visitsToday() + 1;
+        set(data);
     };
 
     var resetToday = function () {
         data[keys.today] = 1;
+        set(data);
     };
 
     var incrementVisitsToSection = function (name) {
         data[keys.section + name] = visitsBySection(name) + 1;
+        set(data);
     };
 
     //
-    var logVisit = function (section) {
-        
-        data = get();
-        data[keys.last] =  new Date();
+    var logVisit = function (config) {
+       
+        incrementPath(config.pageId)
         
         incrementVisits();
 
-        if (section) {
-            incrementVisitsToSection(section);
+        if (config.section) {
+            incrementVisitsToSection(config.section);
         }
         
         if (firstVisitToday()) {
@@ -109,8 +134,8 @@ define([
         } else {
             resetToday();
         }
-        
-        set(data);
+     
+
     };
 
     return {
@@ -122,6 +147,7 @@ define([
         lastVisit: lastVisit,
         visitsBySection: visitsBySection,
         get: get,
+        path: path,
         remove: remove
         };
 
