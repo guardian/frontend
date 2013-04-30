@@ -17,8 +17,8 @@ object MoreStoriesController extends Controller with Logging {
     val promiseOfMoreStories = mostViewed(edition, section).map(_.toList)
     Async {
       promiseOfMoreStories.map {
-        sectionPopular =>
-          sectionPopular match {
+        moreStories =>
+          moreStories match {
             case Nil => JsonNotFound()
             case moreStories => {
               val currentPage = toJson(Map("url" -> s"/$path"))
