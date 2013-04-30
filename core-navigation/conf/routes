@@ -13,4 +13,5 @@ GET    /top-stories/trails              controllers.TopStoriesController.renderT
 
 GET    /related/*path                   controllers.RelatedController.render(path)
 
+GET    /more-stories/                   controllers.MoreStoriesController.render(path = "")
 GET    /more-stories/*path              controllers.MoreStoriesController.render(path)
