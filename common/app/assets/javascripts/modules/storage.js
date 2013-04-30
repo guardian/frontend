@@ -48,8 +48,15 @@ define(['common'], function (common) {
             
             // what's its type
             var typeLastIndex = dataWithType.lastIndexOf('|'),
+                data, type;
+            // migration code, can be deleted eventually
+            if (typeLastIndex === -1) {
+                data = dataWithType,
+                type = storage._migrate(key, data);
+            } else {
                 data = dataWithType.substring(0, typeLastIndex),
                 type = dataWithType.substring(typeLastIndex + 1);
+            }
             
             switch (type) {
                 case 'object':
@@ -77,6 +84,23 @@ define(['common'], function (common) {
         
         getKey: function(i) {
             return w.localStorage.key(i);
+        },
+        
+        _migrate: function(key, data) {
+            var type = 'string';
+            switch (key) {
+                case 'gu.ads.audsci':
+                case 'gu.prefs.ab.participation':
+                    type = 'object';
+                    break;
+                case 'gu.prefs.switch.shared-wisdom-toolbar':
+                case 'gu.prefs.switch.showErrors':
+                    type = 'boolean';
+                    break;
+            }
+            w.localStorage.removeItem(key);
+            w.localStorage.setItem(key, data + '|type');
+            return type;
         }
             
     };

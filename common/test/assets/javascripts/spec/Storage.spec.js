@@ -81,6 +81,30 @@ define(['common', 'modules/storage'], function(common, storage) {
             storage.set('foo',' bar');
             expect(storage.getKey(0)).toBe('foo');
         });
+
+        it('should migrate current data', function() {
+            
+            function testMigration(key, oldData, newData, type) {
+                setWindowLocalStorage({
+                    getItem: sinon.stub().returns(oldData),
+                    removeItem: sinon.stub().withArgs(key),
+                    setItem: sinon.stub().withArgs(key, oldData + '|' + type)
+                });
+                expect(storage.get(key)).toEqual(newData);
+            }
+            
+            [
+                ['gu.prefs.ab.participation', '{"tests":2}', {tests:2}, 'object'],
+                ['gu.ads.audsci', '["E013547","E013463"]', ['E013547', 'E013463'], 'object'],
+                ['gu.prefs.auto-update', 'on', 'on', 'string'],
+                ['gu.prefs.front-trailblocks-UK', 'culture,business', 'culture,business', 'string'],
+                ['gu.prefs.switch.shared-wisdom-toolbar', 'false', false, 'boolean'],
+                ['gu.prefs.switch.showErrors', 'true', true, 'boolean'],
+            ].forEach(function(data) {
+                testMigration(data[0], data[1], data[2]);
+            });
+            
+        });
         
         describe('Saving and retriving different data types', function() {
 
