@@ -130,7 +130,7 @@ define([
                 AB.init(config);
 
                 omniture.go(config, function(){
-                    // Omniture callback logic:
+                    // callback:
 
                     Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
@@ -144,6 +144,13 @@ define([
                 });
 
                 require(config.page.ophanUrl, function (Ophan) {
+
+                    
+                    if(Ophan === undefined) {
+                        window.console.log('NO OPHAN FOR: ' + window.location.href);
+                        window.console.log(config);
+                    }
+                    
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),
@@ -166,7 +173,7 @@ define([
 
         loadAdverts: function (config) {
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                if (config.switches.adverts) {
+                if (config.switches && config.switches.adverts) {
                     Adverts.init(config, context);
                     common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
                 }

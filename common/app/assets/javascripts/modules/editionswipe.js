@@ -1,7 +1,19 @@
 // Description: Edition Swipe module
 // Author: Stephan Fowler
 
-define(['swipeview', 'bean', 'bonzo', 'qwery', 'reqwest'], function(SwipeView, bean, bonzo, qwery, reqwest) {
+define([
+    'swipeview',
+    'bean',
+    'bonzo',
+    'qwery',
+    'ajax'
+], function(
+    SwipeView,
+    bean,
+    bonzo,
+    qwery,
+    ajax
+) {
 
     function $(selector, context) {
         return bonzo(qwery(selector, context));
@@ -157,7 +169,7 @@ define(['swipeview', 'bean', 'bonzo', 'qwery', 'reqwest'], function(SwipeView, b
                 }
                 else {
                     el.dataset.waiting = '1';
-                    reqwest({
+                    ajax({
                         url: url,
                         method: 'get',
                         type: 'jsonp',
@@ -178,8 +190,7 @@ define(['swipeview', 'bean', 'bonzo', 'qwery', 'reqwest'], function(SwipeView, b
                                 ajaxCount = 0;
                                 cache = {};
                             }
-                        },
-                        error: function () {}
+                        }
                     });
                     if (o.showSpinner) {
                         spinner.show();
