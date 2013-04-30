@@ -8,7 +8,7 @@
 	<article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType">
 
         <header class="article-head">
-            @fragments.dateline(content.webPublicationDate, false, Site(request).edition)
+            @fragments.dateline(content.webPublicationDate, false, Edition(request))
             @fragments.headline(content.headline)
         </header>
 

@@ -5,9 +5,9 @@
 @defining(Site(request)){ site =>
     @item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
         @if(item.id == ""){
-            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}/fullsite" data-link-name="desktop version @site.edition full site">Desktop version</a>
+            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}/fullsite" data-link-name="desktop version @Edition(request) full site">Desktop version</a>
         } else {
-            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}@url?mobile-redirect=false" data-link-name="desktop version @site.edition">Desktop version</a>
+            <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}@url?mobile-redirect=false" data-link-name="desktop version @Edition(request)">Desktop version</a>
         }
     }
 }

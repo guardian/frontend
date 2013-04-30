@@ -197,7 +197,7 @@ object Navigation {
     ))
   }
 
-  def apply(metaData: MetaData, request: RequestHeader) = Site(request).edition match {
+  def apply(metaData: MetaData, request: RequestHeader) = Edition(request) match {
     case "US" => usSections(metaData, Site(request))
     case _ => ukSections(metaData, Site(request))
   }
@@ -210,7 +210,7 @@ object Zones {
   def apply(request: RequestHeader) = {
 
     val site = Site(request)
-    val edition = site.edition
+    val edition = Edition(request)
 
     var sportSections = List(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
 

@@ -50,7 +50,6 @@ object StoryController extends Controller with Logging {
   }
 
   def latestWithContent() = Action { implicit request =>
-    val edition = Site(request).edition
     val promiseOfStories = Future(Story.mongo.latestWithContent())
 
     Async {
@@ -69,7 +68,7 @@ object StoryController extends Controller with Logging {
 
   def byId(id: String) = Action {
     implicit request =>
-      val edition = Site(request).edition
+      val edition = Edition(request)
       val promiseOfStory = Future(Story.mongo.byId(id))
       val version = conf.CommonSwitches.StoryVersionBSwitch.isSwitchedOn
 
@@ -90,7 +89,7 @@ object StoryController extends Controller with Logging {
 
   def headerAndBlock(id: String) = Action {
     implicit request =>
-      val edition = Site(request).edition
+      val edition = Edition(request)
       val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {

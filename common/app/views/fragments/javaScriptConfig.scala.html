@@ -6,7 +6,7 @@
         @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
             s""""${JavaScriptVariableName(key.split('.').last)}":"${value}""""}.mkString(",")
         )},
-        "edition": "@Site(request).edition",
+        "edition": "@Edition(request)",
         "ajaxUrl": "http://@Site(request).ajaxHost",
         "isDev": @play.Play.isDev()
     },

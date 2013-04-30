@@ -22,7 +22,7 @@ object VideoController extends Controller with Logging {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching video: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)
@@ -38,8 +38,8 @@ object VideoController extends Controller with Logging {
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage, Site(request).edition)
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage, Site(request).edition)
+    val htmlResponse = views.html.video(model.video, model.storyPackage, Edition(request))
+    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage, Edition(request))
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
     

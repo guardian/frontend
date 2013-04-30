@@ -12,7 +12,7 @@ case class Related(heading: String, trails: Seq[Trail])
 object RelatedController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
-    val edition = Site(request).edition
+    val edition = Edition(request)
     val promiseOfRelated = lookup(edition, path)
     Async {
       promiseOfRelated.map(_.map {

@@ -66,7 +66,7 @@ class FrontController extends Controller with Logging with JsonTrails {
   
   def render(path: String) = Action { implicit request =>
 
-    val edition = Site(request).edition
+    val edition = Edition(request)
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
@@ -87,7 +87,7 @@ class FrontController extends Controller with Logging with JsonTrails {
   
   def renderTrails(path: String) = Action { implicit request =>
 
-    val edition = Site(request).edition
+    val edition = Edition(request)
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage

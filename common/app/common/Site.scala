@@ -9,7 +9,9 @@ case class Site(
     usDesktopHost: String,
     ukAjaxHost: String,
     usAjaxHost: String,
-    edition: String = "UK") {
+
+    // use Edition(request) instead
+    private[common] val edition: String = "UK") {
 
   lazy val isUsEdition = edition == "US"
   lazy val isUkEdition = !isUsEdition
