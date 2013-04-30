@@ -310,6 +310,7 @@ define([
                 edition = arr;
                 editionLen = len;
                 editionLookup = {};
+                window.console.log('Sequence:');
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
                     editionLookup[arr[i].url] = arr[i];
