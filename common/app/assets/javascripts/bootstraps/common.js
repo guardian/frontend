@@ -195,39 +195,35 @@ define([
             }
         },
 
-        loadSwipeSequence: function() {
+        prepareSwipe: function() {
             ajax({
                 url: '/more-stories' + window.location.pathname,
                 type: 'jsonp',
                 success: function (json) {
                     if (json.stories) {
-                        modules.initSwipe(json.stories);
+                        modules.startSwipe(json.stories);
                     }
                 }
             });
-        },
 
-        initSwipe: function(sequence) {
-            if (!sequence || sequence.length < 3) {
-                return;
-            }
-
-            var pages = document.querySelector('#swipepages');
-            var page0 = pages.querySelector('#swipepage-0 .parts');
-            var page1 = pages.querySelector('#swipepage-1 .parts');
-            var page2 = pages.querySelector('#swipepage-2 .parts');
-
-            var head = page1.querySelector('.parts__head');
-            var foot = page1.querySelector('.parts__foot');
+            var pages = document.querySelector('#swipepages'),
+                page0 = pages.querySelector('#swipepage-0 .parts'),
+                page1 = pages.querySelector('#swipepage-1 .parts'),
+                page2 = pages.querySelector('#swipepage-2 .parts'),
+                head  = page1.querySelector('.parts__head'),
+                foot  = page1.querySelector('.parts__foot'),
+                initialBodyHtml = '<div class="parts__body"><div class="swipepage-msg">Loading page...</div></div>';
 
             bonzo(page0).append(head.cloneNode(true));
-            bonzo(page0).append(bonzo.create('<div class="parts__body">'));
+            bonzo(page0).append(bonzo.create(initialBodyHtml));
             bonzo(page0).append(foot.cloneNode(true));
 
             bonzo(page2).append(head.cloneNode(true));
-            bonzo(page2).append(bonzo.create('<div class="parts__body">'));
+            bonzo(page2).append(bonzo.create(initialBodyHtml));
             bonzo(page2).append(foot.cloneNode(true));
+        },
 
+        startSwipe: function(sequence) {
             var opts = {
                 afterShow: function(config) {
                     var swipe = config.swipe;
@@ -256,6 +252,9 @@ define([
                 bodySelector: '.parts__body',
                 linkSelector: 'a:not(.control)'
             };
+            if (!sequence || sequence.length < 3) {
+                return;
+            }
             editionSwipe(opts);
         }
     };
@@ -286,7 +285,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.loadSwipeSequence();
+            modules.prepareSwipe();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

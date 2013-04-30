@@ -184,7 +184,7 @@ define([
                                 }
                             } else {
                                 spec = {
-                                    html: '<div class="jsonp-error">Oops. This page might be broken?</div>',
+                                    html: '<div class="swipepage-msg">Oops. This page might be broken?</div>',
                                     config: {}
                                 };
                                 populate(el, spec);
