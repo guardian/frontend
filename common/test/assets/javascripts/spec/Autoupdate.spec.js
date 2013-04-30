@@ -16,7 +16,10 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, 
         };
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             window.localStorage['gu.prefs.auto-update'] = 'on';
             path = 'fixtures/autoupdate';
             delay = 1000;

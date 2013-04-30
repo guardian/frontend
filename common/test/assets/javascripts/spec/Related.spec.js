@@ -5,7 +5,10 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
         var callback, appendTo;
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             callback = sinon.stub();
             common.mediator.on('modules:related:loaded', callback);
         });
