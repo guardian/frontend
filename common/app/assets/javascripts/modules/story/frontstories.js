@@ -1,14 +1,16 @@
 define([
     "common",
-    "ajax"
+    "ajax",
+    'modules/storage'
 ], function(
     common,
-    ajax
+    ajax,
+    storage
 ) {
 
     function FrontStories() {
 
-        var override = localStorage.getItem('gu.storyfronttrails') === 'on',
+        var override = storage.get('gu.storyfronttrails') === 'on',
             self = this;
 
         this.init = function (config) {
