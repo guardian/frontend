@@ -79,6 +79,8 @@ define([
                     header.addClass('initialised');
                     navControl.init(context);
                     sections.init(context);
+                } else {
+                    navControl.closeGlobally();
                 }
                 search.init(context);
             });

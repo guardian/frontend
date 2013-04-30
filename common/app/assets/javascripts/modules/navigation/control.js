@@ -18,6 +18,14 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 });
             });
         };
+
+        this.closeGlobally = function() {
+            Array.prototype.forEach.call(document.querySelectorAll('.swipepage'), function(context) {
+                Array.prototype.forEach.call(context.querySelectorAll('.control'), function(control){
+                    self.close(control, context);
+                });
+            });
+        };
     };
 
     Control.prototype.toggle = function(control, context) {
