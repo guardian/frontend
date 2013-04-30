@@ -15,6 +15,7 @@ GET    /most-read/*path                                     controllers.MostPopu
 GET    /top-stories                                         controllers.TopStoriesController.render()
 GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
 GET    /related/*path                                       controllers.RelatedController.render(path)
+GET    /more-stories/                                       controllers.MoreStoriesController.render(path = "")
 GET    /more-stories/*path                                  controllers.MoreStoriesController.render(path)
 
 #Stories
