@@ -61,11 +61,12 @@ define([
         };
     }());
 
-    // TODO: make a local fn instead
-    if (typeof Number.prototype.mod !== 'function') {
-        Number.prototype.mod = function (n) {
-            return ((this % n) + n) % n;
-        };
+    function mod(x, m) {
+        return ((x % m) + m) % m;
+    }
+
+    function mod3(x) {
+        return mod(x, 3);
     }
 
     var module = function (useropts) {
@@ -343,11 +344,11 @@ define([
             }
             // Cases where we've got an sequence position already
             else if (sequencePos > -1 && inSequence) {
-                return urlInSequence((sequencePos + dir).mod(sequenceLen));
+                return urlInSequence(mod(sequencePos + dir, sequenceLen));
             }
             else if (sequencePos > -1 && !inSequence) {
                 // We're displaying a non-sequence page; have current-sequence-page to the left, next-sequence-page to right
-                return urlInSequence((sequencePos + (dir === 1 ? 1 : 0)).mod(sequenceLen));
+                return urlInSequence(mod(sequencePos + (dir === 1 ? 1 : 0), sequenceLen));
             }
             // Cases where we've NOT yet got an sequence position
             else if (dir === 1) {
@@ -410,7 +411,7 @@ define([
             }
             url = normalizeUrl(url); // normalize
 
-            el = panes.masterPages[(paneNow + dir).mod(3)];
+            el = panes.masterPages[mod3(paneNow + dir)];
             
             // Only load if not already loaded into this pane, or cache has been flushed
             if (el.dataset.url !== url || isEmptyObj(cache)) {
@@ -519,7 +520,7 @@ define([
         panes = new SwipeView(contentArea, {});
 
         panes.onFlip(function () {
-            paneNow = (panes.pageIndex+1).mod(3);
+            paneNow = mod3(panes.pageIndex+1);
             if (paneThen !== paneNow) {
                 // shuffle down the pane we've just left
                 $(panes.masterPages[paneThen]).css('marginTop', hiddenPaneMargin);
@@ -574,9 +575,9 @@ define([
             hiddenPaneMargin = Math.max( 0, $(window).scrollTop() - contentAreaTop );
             if( hiddenPaneMargin < visiblePaneMargin ) {
                 // We've scrolled up over the offset; reset all margins and jump to topmost scroll
-                $(panes.masterPages[(paneNow).mod(3)]).css(  'marginTop', 0);
-                $(panes.masterPages[(paneNow+1).mod(3)]).css('marginTop', 0);
-                $(panes.masterPages[(paneNow-1).mod(3)]).css('marginTop', 0);
+                $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
+                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
+                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
                 // And reset the scroll
                 $(window).scrollTop( contentAreaTop );
                 visiblePaneMargin = 0;
@@ -584,8 +585,8 @@ define([
             }
             else {
                 // We've scrolled down; push L/R sidepanes down to level of current pane
-                $(panes.masterPages[(paneNow+1).mod(3)]).css('marginTop', hiddenPaneMargin);
-                $(panes.masterPages[(paneNow-1).mod(3)]).css('marginTop', hiddenPaneMargin);
+                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', hiddenPaneMargin);
+                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', hiddenPaneMargin);
             }
         });
 
