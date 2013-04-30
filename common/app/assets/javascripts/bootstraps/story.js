@@ -1,3 +1,5 @@
+/* global: Swipe */
+
 define([
     "common",
     "bean",
@@ -66,11 +68,9 @@ define([
         },
 
         initSwipe: function() {
-            var swipeLib = ['js!swipe'];
+            var swipeLib = ['js!swipe'], Swipe;
             require(swipeLib, function() {
-              
-                console.log(document.getElementById('picture-swipe'));
-                window.mySwipe = new Swipe(document.getElementById('picture-swipe'), {
+                var mySwipe = new Swipe(document.getElementById('picture-swipe'), {
                      speed: 100,
                      continuous: true,
                      disableScroll: false,
