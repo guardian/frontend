@@ -12,7 +12,7 @@
 
                     @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
 
-                    <h2 class="article-headline">@a.headline</h2>
+                   <h2 class="article-headline">@a.headlineOverride</h2>
 
                     @if(!a.isLive && !a.hasVideoAtTop) {
                         @a.mainPicture.map{ mainPicture =>

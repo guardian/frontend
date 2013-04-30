@@ -9,7 +9,7 @@
                 @withJsoup(BulletCleaner(s))(
                     InBodyLinkCleaner("in body link")
                 )
-            }.getOrElse(g.headline)
+            }.getOrElse(g.headlineOverride)
         </p>
         @g.images.zipWithRowInfo.map{ case(image, info) =>
             <img src="@image.url" />

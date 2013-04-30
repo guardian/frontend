@@ -56,7 +56,7 @@ object Event {
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
 
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote, c.headlineOverride))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   
@@ -187,7 +187,8 @@ private case class ParsedContent(
   colour: Int,
   shares: Option[Int] = None,
   comments: Option[Int] = None,
-  quote: Option[Quote] = None)
+  quote: Option[Quote] = None,
+  headlineOverride: Option[String] = None)
 
 private case class ParsedPlace(id: String)
 
