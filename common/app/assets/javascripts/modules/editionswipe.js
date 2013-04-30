@@ -173,13 +173,22 @@ define([
                         jsonpCallbackName: 'swipePreload',
                         success: function (spec) {
                             el.dataset.waiting = '';
-                            if (el.dataset.url === url) {
+                            if (spec && spec.html && spec.config) {
+                                // Only use if response still corresponds to the required content for this el
+                                if (el.dataset.url === url) {
+                                    populate(el, spec);
+                                    cache[url] = spec;
+                                    common.mediator.emit('module:swipenav:pane:loaded', el);
+                                    callback();
+                                }
+                            } else {
+                                spec = {
+                                    html: '<div class="jsonp-error">Oops. This page might be broken?</div>',
+                                    config: {}
+                                };
                                 populate(el, spec);
-                                cache[url] = spec;
-                                common.mediator.emit('module:swipenav:pane:loaded', el);
-                                callback();
                             }
-                         }
+                        }
                     });
                     if (o.showSpinner) {
                         spinner.show();
