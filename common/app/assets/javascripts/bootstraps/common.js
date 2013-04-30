@@ -126,8 +126,6 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                window.console.log(config);
-
                 // AB must execute before Omniture
                 AB.init(config);
 
@@ -197,8 +195,23 @@ define([
             }
         },
 
-        initSwipe: function(config) { // TODO: config shouldn;t be passed here; should come via jsonp reaponse and be passed into afterShow
-            
+        loadSwipeSequence: function() {
+            ajax({
+                url: '/more-stories' + window.location.pathname,
+                type: 'jsonp',
+                success: function (json) {
+                    if (json.stories) {
+                        modules.initSwipe(json.stories);
+                    }
+                }
+            });
+        },
+
+        initSwipe: function(sequence) {
+            if (!sequence || sequence.length < 3) {
+                return;
+            }
+
             var pages = document.querySelector('#swipepages');
             var page0 = pages.querySelector('#swipepage-0 .parts');
             var page1 = pages.querySelector('#swipepage-1 .parts');
@@ -223,19 +236,22 @@ define([
                         common.mediator.emit('page:ready', pageConfig(config), swipe.visiblePane);
                     }
 
-                    if( swipe.initiatedBy === 'initial' || swipe.initiatedBy === 'link') {
+                    if( swipe.initiatedBy === 'link') {
                         ajax({
                             url: '/more-stories' + window.location.pathname,
                             type: 'jsonp',
                             success: function (json) {
-                                swipe.api.setEdition(json.stories);
-                                swipe.api.loadSidePanes();
+                                if (json.stories) {
+                                    swipe.api.setEdition(json.stories);
+                                    swipe.api.loadSidePanes();
+                                }
                             }
                         });
                     } else {
                         swipe.api.loadSidePanes();
                     }
                 },
+                sequence: sequence,
                 el: '#swipepages',
                 bodySelector: '.parts__body',
                 linkSelector: 'a:not(.control)'
@@ -270,7 +286,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.initSwipe(config);
+            modules.loadSwipeSequence();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -106,6 +106,9 @@ define([
                     // The name of the query param sent wth Ajax page-fragment requests
                     queryParam: 'frag_width',
 
+                    // Initial edition
+                    sequence: [],
+
                     // CSS selector for a spinner/busy indicator
                     loadingIndicator: undefined
                 },
@@ -310,6 +313,7 @@ define([
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
                     editionLookup[arr[i].url] = arr[i];
+                    window.console.log(i + " " + arr[i].url);
                 }
                 setEditionPos(window.location.href);
                 cache = {};
@@ -516,10 +520,11 @@ define([
             return;
         }
 
-        // Setup some context
         initialPage = normalizeUrl(window.location.href);
 
-        // Swipe setup
+        setEdition(opts.sequence);
+
+        // SwipeView init
         panes = new SwipeView(contentArea, {});
 
         panes.onFlip(function () {
@@ -538,6 +543,7 @@ define([
                 common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
             }
         });
+
         panes.onMoveOut(function () {
             initiatedBy = 'swipe';
         });
