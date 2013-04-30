@@ -28,16 +28,6 @@ define([
         return destination;
     }
 
-    function inArray(needle, haystack) {
-        var length = haystack.length;
-        for(var i = 0; i < length; i++) {
-            if(haystack[i] === needle) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     function isEmptyObj(obj) {
         for(var i in obj) {
             return false;
