@@ -70,7 +70,7 @@ object Site extends Logging {
 
   def apply(implicit request: RequestHeader): Site = {
 
-    val editionOverride = request.getQueryString("_gu_edition").map(AllowedEdition(_))
+    val editionOverride = request.getQueryString("_edition").map(AllowedEdition(_))
 
     val host = request.headers("host").toLowerCase
 

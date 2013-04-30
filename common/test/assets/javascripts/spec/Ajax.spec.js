@@ -14,11 +14,20 @@ define(['common', 'ajax'], function (common, ajax) {
             ajax.init(config);
         });
 
-        it("should add the edition as a query parameter to the url", function () {
+        it("should add the edition as an additional query parameter to the url", function () {
+            // added to existing list of parameters
             ajax({
                 url: "http://apis.guardian.co.uk/test-url?a=b"
             });
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?a=b&_gu_edition=UK");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?a=b&_edition=UK");
+        });
+
+        it("should add the edition as the first query parameter to the url", function () {
+            // added as first parameter
+            ajax({
+                url: "http://apis.guardian.co.uk/test-url"
+            });
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?_edition=UK");
         });
 
         it("should proxy calls to reqwest", function () {
@@ -27,14 +36,14 @@ define(['common', 'ajax'], function (common, ajax) {
                 url: "/foo"
             });
             expect(ajax.reqwest.callCount).toBe(1);
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://m.guardian.co.uk/foo?_gu_edition=UK");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://m.guardian.co.uk/foo?_edition=UK");
         });
 
         it("should not touch a url that is already absolute", function () {
             ajax({
                 url: "http://apis.guardian.co.uk/test-url"
             });
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?_gu_edition=UK");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url?_edition=UK");
         });
     });
 

@@ -9,17 +9,14 @@ define(["reqwest"], function (reqwest) {
     };
 
     function appendEdition(params) {
-        if(params.url.indexOf('?') > -1){
-            params.url = params.url + '&';
-        } else {
-            params.url = params.url + '?';
-        }
-        params.url = params.url + '_gu_edition=' + edition;
+        var alreadyHasParameters = params.url.indexOf('?') > -1;
+        params.url = params.url + (alreadyHasParameters ? '&' : '?') + '_edition=' + edition;
+        return params;
     }
 
     function ajax(params) {
 
-        appendEdition(params);
+        params = appendEdition(params);
 
         if(params.url.lastIndexOf("http://", 0)!==0){
             params.url = makeAbsolute(params.url);

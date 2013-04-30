@@ -28,7 +28,7 @@ class SiteTest extends FlatSpec with ShouldMatchers {
 
   it should "override the edition if the edition parameter is set" in {
 
-    val request = FakeRequest("GET", "http://localhost:9000?_gu_edition=UK")
+    val request = FakeRequest("GET", "http://localhost:9000?_edition=UK")
       .withHeaders("host" -> "m.guardiannews.com")
 
     Site(request) should be(Site(ukHost = "m.guardian.co.uk", usHost = "m.guardiannews.com",
