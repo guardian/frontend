@@ -3,53 +3,57 @@
 <!-- all the photos we have on this subject from the latest chapter -->
 
 @gallery(g: model.Gallery) = {
-    <li class="event-article picture-article--media">
-        <p>
-            @g.standfirst.map { s =>
-                @withJsoup(BulletCleaner(s))(
-                    InBodyLinkCleaner("in body link")
-                )
-            }.getOrElse(g.headlineOverride)
-        </p>
+
         @g.images.zipWithRowInfo.map{ case(image, info) =>
-            <img src="@image.url" />
-            <p class="type-7">
-                @Html(image.caption.getOrElse(""))
-            </p>
+            <div>
+                <img src="@image.url" />
+                <p class="type-7">
+                    @Html(image.caption.getOrElse(""))
+                </p>
+            </div>
         }
-        @fragments.relativeDate(g.webPublicationDate, false, false)
-    </li>
 }
 
 @eventList(events: Seq[Event], isPanel: Boolean) = {
-    <ul class="unstyled @if(isPanel){ panel}">
-        @events.map { event =>
-            <li class="trail" data-link-name="trail">
-
-                @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
-                    @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
-                }
-
-                @if(event.hasContent) {
-                    <ul class="unstyled event-articles">
-                        @event.content.map{
-                            case g: Gallery => { @gallery(g) }
-                            case _ => {}
-                        }
-                    </ul>
-                }
-
-            </li>
+    @events.map { event =>
+        @if(event.hasContent) {
+            <div class="swipe" id="picture-swipe">
+                <div class="swipe-wrap">
+                    @event.content.map{
+                        case g: Gallery => { @gallery(g) }
+                        case _ => {}
+                    }
+                </div>
+            </div>
         }
-    </ul>
+    }
 }
 
 @if(story.hasEvents) {
+
+    <style>
+        #js-pictures img { width: 100%; }
+        .swipe {
+          overflow: hidden;
+          visibility: hidden;
+          position: relative;
+        }
+        .swipe-wrap {
+          overflow: hidden;
+          position: relative;
+        }
+        .swipe-wrap > div {
+          float:left;
+          width:100%;
+          position: relative;
+        }
+    </style>
+    
     <section class="story-pictures" data-link-name="story-pictures">
         <h2 class="story-title story-title--section">
             @story.labels.getOrElse("pictures", "In pictures")
         </h2>
-        <div id="js-pictures" class="photos box-indent" data-link-name="Pictures">
+        <div id="js-pictures" class="box-indent" data-link-name="Pictures">
             @eventList(story.events.take(1), false)
         </div>
     </section>

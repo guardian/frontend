@@ -4,7 +4,9 @@ define([
     "ajax",
 
     "modules/expandable",
-    "modules/story/continue-reading"
+    "modules/story/continue-reading",
+    
+    "swipe"
 ], function(
     common,
     bean,
@@ -63,6 +65,22 @@ define([
             });
         },
 
+        initSwipe: function() {
+            var swipeLib = ['js!swipe'];
+            require(swipeLib, function() {
+              
+                console.log(document.getElementById('picture-swipe'));
+                window.mySwipe = new Swipe(document.getElementById('picture-swipe'), {
+                     speed: 100,
+                     continuous: true,
+                     disableScroll: false,
+                     stopPropagation: true,
+                     callback: function(index, elem) {},
+                     transitionEnd: function(index, elem) {}
+               });
+            });
+        },
+
         initContinueReading: function() {
             common.mediator.on('page:story:ready', function(config, context) {
                 Array.prototype.forEach.call(context.querySelectorAll('a.continue'), function(el){
@@ -80,6 +98,7 @@ define([
             modules.initAgents();
             modules.initExpandables();
             modules.initContinueReading();
+            modules.initSwipe();
         }
         common.mediator.emit("page:story:ready", config, context);
     };
