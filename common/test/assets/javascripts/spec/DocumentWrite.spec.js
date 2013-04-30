@@ -5,7 +5,7 @@ define([
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
-    'modules/local-storage',
+    'modules/storage',
     ], function(
         common,
         domwrite,
@@ -13,7 +13,7 @@ define([
         DocumentWrite,
         DocumentWriteSlot,
         dimensionMap,
-        localStorage
+        storage
     )  {
 
     var slots = [
@@ -39,7 +39,7 @@ define([
             ajaxUrl: "",
             edition: "UK"
         }});
-        localStorage.set('gu.ads.audsci', ["E012390","E012782"]);
+        storage.set('gu.ads.audsci', ["E012390","E012782"]);
         common.mediator.removeEvent();
     });
  

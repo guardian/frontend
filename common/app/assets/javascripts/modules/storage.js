@@ -1,12 +1,12 @@
 /*
-    Module: local-storage.js
+    Module: storage.js
     Description: Wrapper around localStorage functionality
 */
 define([], function () {
     
     var w = window;
     
-    var localStorage = {
+    var storage = {
             
         _setWindow: function(window) {
             w = window;
@@ -26,7 +26,7 @@ define([], function () {
         },
         
         set: function(key, data) {
-            if (!localStorage.isAvailable) {
+            if (!storage.isAvailable) {
                 return false;
             }
             var type = typeof data;
@@ -78,6 +78,6 @@ define([], function () {
             
     };
     
-    return localStorage;
+    return storage;
 
 });

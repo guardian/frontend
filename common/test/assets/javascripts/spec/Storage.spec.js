@@ -1,6 +1,6 @@
-define(['modules/local-storage'], function(localStorage) {
+define(['modules/storage'], function(storage) {
 
-    describe('localStorage module', function() {
+    describe('storage module', function() {
 
         afterEach(function() {
             // restore stubbed local storage methods
@@ -9,11 +9,11 @@ define(['modules/local-storage'], function(localStorage) {
                     window.localStorage[prop].restore();
                 }
             }
-            localStorage._setWindow(window);
+            storage._setWindow(window);
         });
         
         function setWindowLocalStorage(winLocalStorage) {
-            localStorage._setWindow({localStorage: winLocalStorage})
+            storage._setWindow({localStorage: winLocalStorage})
         }
         
         function testSetAndGet(key, data, dataAsString, type) {
@@ -21,15 +21,15 @@ define(['modules/local-storage'], function(localStorage) {
                 setItem: sinon.stub().withArgs(key, dataAsString + '|' + type).returns(true),
                 getItem: sinon.stub().withArgs(key).returns(dataAsString + '|' + type)
             });
-            expect(localStorage.set(key, data)).toBeTruthy();
-            expect(localStorage.get(key)).toEqual(data);
+            expect(storage.set(key, data)).toBeTruthy();
+            expect(storage.get(key)).toEqual(data);
         }
 
         it('shouldn\'t be available if can\'t set data', function() {
             setWindowLocalStorage({
                 setItem: sinon.stub().throws()
             });
-            expect(localStorage.isAvailable()).toBeFalsy();
+            expect(storage.isAvailable()).toBeFalsy();
         });
 
         it('should save and retrieve data', function() {
@@ -37,8 +37,8 @@ define(['modules/local-storage'], function(localStorage) {
         });
 
         it('should not save if local storage unavailavble', function() {
-            sinon.stub(localStorage, 'isAvailable').returns(false);
-            expect(localStorage.set('foo', 'bar')).toBeFalsy();
+            sinon.stub(storage, 'isAvailable').returns(false);
+            expect(storage.set('foo', 'bar')).toBeFalsy();
         });
 
         it('should be able to remove item', function() {
@@ -46,35 +46,35 @@ define(['modules/local-storage'], function(localStorage) {
             setWindowLocalStorage({
                 removeItem: sinon.stub().withArgs(key).returns(true)
             });
-            expect(localStorage.remove(key)).toBeTruthy();
+            expect(storage.remove(key)).toBeTruthy();
         });
 
         it('should be able to clear data', function() {
             setWindowLocalStorage({
                 clear: sinon.stub().returns(true)
             });
-            expect(localStorage.removeAll()).toBeTruthy();
+            expect(storage.removeAll()).toBeTruthy();
         });
 
         it('should return if key not set', function() {
             setWindowLocalStorage({
                 getItem: sinon.stub().returns(null)
             });
-            expect(localStorage.get('foo')).toBe(null);
+            expect(storage.get('foo')).toBe(null);
         });
 
         it('should return number of items in storage', function() {
-            localStorage.removeAll();
-            localStorage.set('foo',' bar');
-            expect(localStorage.length()).toBe(1);
-            localStorage.set('foo2',' bar2');
-            expect(localStorage.length()).toBe(2);
+            storage.removeAll();
+            storage.set('foo',' bar');
+            expect(storage.length()).toBe(1);
+            storage.set('foo2',' bar2');
+            expect(storage.length()).toBe(2);
         });
 
         it('should return item by index', function() {
-            localStorage.removeAll();
-            localStorage.set('foo',' bar');
-            expect(localStorage.getKey(0)).toBe('foo');
+            storage.removeAll();
+            storage.set('foo',' bar');
+            expect(storage.getKey(0)).toBe('foo');
         });
         
         describe('Saving and retriving different data types', function() {

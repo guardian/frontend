@@ -1,7 +1,7 @@
-define(['modules/local-storage'], function(localStorage) {
+define(['modules/storage'], function(storage) {
 
     var storagePrefix = 'gu.prefs.',
-        store = localStorage,
+        store = storage,
         location = document.location,
         qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
 

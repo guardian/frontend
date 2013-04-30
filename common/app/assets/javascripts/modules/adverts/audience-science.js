@@ -1,9 +1,9 @@
-define(['modules/cookies', 'modules/local-storage'], function(Cookies, localStorage) {
+define(['modules/cookies', 'modules/storage'], function(Cookies, storage) {
 
     var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
 
     function getSegments() {
-        var segments = localStorage.get("gu.ads.audsci");
+        var segments = storage.get("gu.ads.audsci");
         return (segments) ? segments : [];
     }
 
@@ -21,7 +21,7 @@ define(['modules/cookies', 'modules/local-storage'], function(Cookies, localStor
             }
         };
         window.DM_onSegsAvailable = function(segments, id) {
-            localStorage.set("gu.ads.audsci", processSegments(segments));
+            storage.set("gu.ads.audsci", processSegments(segments));
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);
         };

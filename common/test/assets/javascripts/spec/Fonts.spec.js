@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(common, ajax, Fonts, localStorage) {
+define(['common', 'ajax', 'modules/fonts', 'modules/storage'], function(common, ajax, Fonts, storage) {
     
     describe("Web Font Loader", function() {
 
@@ -24,7 +24,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            localStorage.removeAll();
+            storage.removeAll();
             styleNodes = document.querySelectorAll('[data-cache-name]');
             fileFormat = 'woff';
             callback = sinon.stub();
@@ -45,7 +45,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
             runs(function() {
                 expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                 }
             });
         });
@@ -64,7 +64,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
 
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                     expect(styleNodes[i].innerHTML).toBe('@font-face{');
                 }
             });
@@ -86,7 +86,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
 
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{android');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{android');
                     expect(styleNodes[i].innerHTML).toBe('@font-face{android');
                 }
             });
@@ -98,7 +98,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
 
             // Pretend data was already in localStorage
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                localStorage.set(storagePrefix + getNameAndCacheKey(styleNodes[i]), '@font-face{notfromnetwork');
+                storage.set(storagePrefix + getNameAndCacheKey(styleNodes[i]), '@font-face{notfromnetwork');
             }
 
             runs(function() {
@@ -111,7 +111,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
 
             runs(function() {
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{notfromnetwork');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{notfromnetwork');
                 }
             })
                 
@@ -121,18 +121,18 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
             
             // Pretend data was already in localStorage
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                localStorage.set(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
+                storage.set(storagePrefix + styleNodes[i].getAttribute('data-cache-name'), '@font-face{notfromnetwork');
             }
             // Plus one non-font storage.
-            localStorage.set('guUserPref:myPref', 'myprefvalue');
+            storage.set('guUserPref:myPref', 'myprefvalue');
 
-            expect(localStorage.length()).toEqual(styleNodes.length + 1);
+            expect(storage.length()).toEqual(styleNodes.length + 1);
 
             new Fonts(styleNodes, fileFormat).clearAllFontsFromStorage();
 
             // localStorage should be empty.
-            expect(localStorage.length()).toEqual(1);
-            expect(localStorage.get('guUserPref:myPref')).toEqual('myprefvalue');
+            expect(storage.length()).toEqual(1);
+            expect(storage.get('guUserPref:myPref')).toEqual('myprefvalue');
 
         });
 
@@ -151,7 +151,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
             runs(function() {
                 expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{');
                 }
             });
 
@@ -170,7 +170,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
                 var styleNodes = document.querySelectorAll('[data-cache-name]');
                 expect(callback.calledTwice).toBeTruthy();
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{-cachebusted');
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe('@font-face{-cachebusted');
                 }
                 replaceCacheKeysInDOM('123456789', '12345');
             });
@@ -200,7 +200,7 @@ define(['common', 'ajax', 'modules/fonts', 'modules/local-storage'], function(co
                 expect(ajaxSpy.callCount).toBe(0);
 
                 for (var i = 0, j = styleNodes.length; i<j; ++i) {
-                    expect(localStorage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe(null);
+                    expect(storage.get(storagePrefix + getNameAndCacheKey(styleNodes[i]))).toBe(null);
                 }
             })
                 

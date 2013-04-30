@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/local-storage'], function(common, ajax, bean, Autoupdate, localStorage) {
+define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], function(common, ajax, bean, Autoupdate, storage) {
 
     describe("Auto update", function() {
 
@@ -20,7 +20,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/local-storage']
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            localStorage.set('gu.prefs.auto-update', 'on');
+            storage.set('gu.prefs.auto-update', 'on');
             path = 'fixtures/autoupdate';
             delay = 1000;
             attachTo = document.getElementById('update-area');
@@ -51,7 +51,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/local-storage']
 
 
         it("should get user prefs from local storage ", function(){
-            localStorage.set('gu.prefs.auto-update', 'off');
+            storage.set('gu.prefs.auto-update', 'off');
 
             var a = new Autoupdate({
                     path: path,
