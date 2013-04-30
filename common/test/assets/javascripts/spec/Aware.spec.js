@@ -73,24 +73,6 @@ define(['modules/experiments/aware'], function(Aware) {
             
         });
         
-        it('should list top sections', function() {     
-            
-            ['foo', 'bar', 'bar', 'car', 'bar'].forEach(function (section) {
-                Aware.logVisit(section)
-            })
-
-            var aware = Aware.get(),
-                n = 2;
-              
-            var topSections = Object.keys(aware).filter(function (key) {
-                    return (key.indexOf('section') > -1 ) 
-                }).sort(function (a, b) { 
-                    return -(aware[a] - aware[b])
-                }).slice(0, n)
-                
-            expect(topSections.toString()).toBe(['section.bar', 'section.foo'].toString());
-        }) 
-        
         it('should be able to wipe the aware data', function() {
            
             ['foo', 'bar'].forEach(function (section) {
