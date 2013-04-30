@@ -2,7 +2,7 @@
     Module: storage.js
     Description: Wrapper around localStorage functionality
 */
-define([], function () {
+define(['common'], function (common) {
     
     var w = window;
     
@@ -12,29 +12,32 @@ define([], function () {
             w = window;
         },
             
-        isAvailable: function() {
+        isAvailable: function(data) {
+            var testKey = 'local-storage-module-test',
+                d = data || 'test';
             try {
                 // to fully test, need to set item
                 // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
-                var testKey = 'local-storage-module-test';
-                w.localStorage.setItem(testKey, 'test');
+                w.localStorage.setItem(testKey, d);
                 w.localStorage.removeItem(testKey);
                 return true;
             } catch (e) {
+                common.mediator.emit('module:error', 'Unable to save to local storage', 'modules/storage.js');
                 return false;
             }
         },
         
         set: function(key, data) {
-            if (!storage.isAvailable) {
-                return false;
-            }
             var type = typeof data;
             // handle object data
             if (type === 'object') {
                 data = JSON.stringify(data);
             }
-            return w.localStorage.setItem(key, data + '|' + type);
+            var dataWithType = data + '|' + type;
+            if (!storage.isAvailable(dataWithType)) {
+                return false;
+            }
+            return w.localStorage.setItem(key, dataWithType);
         },
         
         get: function(key) {
@@ -54,7 +57,7 @@ define([], function () {
                 case 'boolean':
                     return (data === 'true') ? true : false;
                 case 'number':
-                    return parseInt(data, 10);
+                    return parseFloat(data, 10);
                 default:
                     return data;
             }

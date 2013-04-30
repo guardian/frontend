@@ -1,6 +1,8 @@
-define(['modules/storage'], function(storage) {
+define(['common', 'modules/storage'], function(common, storage) {
 
     describe('storage module', function() {
+        
+        sinon.spy(common.mediator, 'emit');
 
         afterEach(function() {
             // restore stubbed local storage methods
@@ -19,7 +21,8 @@ define(['modules/storage'], function(storage) {
         function testSetAndGet(key, data, dataAsString, type) {
             setWindowLocalStorage({
                 setItem: sinon.stub().withArgs(key, dataAsString + '|' + type).returns(true),
-                getItem: sinon.stub().withArgs(key).returns(dataAsString + '|' + type)
+                getItem: sinon.stub().withArgs(key).returns(dataAsString + '|' + type),
+                removeItem: sinon.stub().withArgs(dataAsString + '|' + type)
             });
             expect(storage.set(key, data)).toBeTruthy();
             expect(storage.get(key)).toEqual(data);
@@ -30,6 +33,7 @@ define(['modules/storage'], function(storage) {
                 setItem: sinon.stub().throws()
             });
             expect(storage.isAvailable()).toBeFalsy();
+            expect(common.mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage', 'modules/storage.js');
         });
 
         it('should save and retrieve data', function() {
@@ -39,6 +43,7 @@ define(['modules/storage'], function(storage) {
         it('should not save if local storage unavailavble', function() {
             sinon.stub(storage, 'isAvailable').returns(false);
             expect(storage.set('foo', 'bar')).toBeFalsy();
+            storage.isAvailable.restore();
         });
 
         it('should be able to remove item', function() {
