@@ -13,7 +13,10 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             + '</div>',
             $cta;
         
-        ajax.init("");
+        ajax.init({page: {
+            ajaxUrl: "",
+            edition: "UK"
+        }});
 
         beforeEach(function() {
             common.$g('body').append(fixtureTrailblock);

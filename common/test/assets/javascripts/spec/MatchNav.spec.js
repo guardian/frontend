@@ -13,7 +13,10 @@ define(['common', 'ajax', 'modules/matchnav', 'modules/pageconfig'], function(co
         var callback;
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             callback = sinon.spy(function(){});
             common.mediator.on('modules:matchnav:loaded', callback);
         });

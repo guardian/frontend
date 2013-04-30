@@ -33,7 +33,10 @@ define([
     };
    
     beforeEach(function(){
-        ajax.init("");
+        ajax.init({page: {
+            ajaxUrl: "",
+            edition: "UK"
+        }});
         localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
         common.mediator.removeEvent();
     });

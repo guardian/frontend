@@ -4,7 +4,10 @@ define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadsl
     localStorage.removeItem("gu.ads.audsci");
 
     beforeEach(function(){
-        ajax.init("");
+        ajax.init({page: {
+            ajaxUrl: "",
+            edition: "UK"
+        }});
     });
 
     var config = {

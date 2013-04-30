@@ -20,7 +20,10 @@ define(['common', 'ajax', 'modules/fonts'], function(common, ajax, Fonts) {
         }
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             localStorage.clear();
             styleNodes = document.querySelectorAll('[data-cache-name]');
             fileFormat = 'woff';

@@ -3,7 +3,10 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common,
     describe("Football fixtures component", function() {
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             mockAjax = jasmine.createSpy('ajax');
             prependTo = qwery('ul > li', '#football-fixtures')[0];
             competitions = [500, 510, 100];
