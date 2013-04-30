@@ -8,28 +8,36 @@ import feed.MostPopularAgent
 import play.api.libs.concurrent.Execution.Implicits._
 import concurrent.Future
 import play.api.libs.json.Json._
+import play.api.mvc.Result
+import akka.dispatch.OnFailure
 
 object MoreStoriesController extends Controller with Logging {
 
   def render(path: String) = Action { implicit request =>
     val edition = Site(request).edition
     val section = path.split("/").headOption.getOrElse("")
-    val promiseOfMoreStories = mostViewed(edition, section).map(_.toList)
+    val promiseOfMoreStories = mostViewed(edition, section)
     Async {
-      promiseOfMoreStories.map {
-        moreStories =>
-          moreStories match {
-            case Nil => JsonNotFound()
-            case moreStories => {
-              val currentPage = toJson(Map("url" -> s"/$path"))
-              var stories = currentPage +: moreStories.filter { _.url != s"/$path" }.map { story => toJson(Map("url" -> story.url)) } 
-              // append section front at the end, if we're not currently on it
-              if (!path.equals(section)) {
-                stories = stories ++ Seq(toJson(Map("url" -> s"/$section")))
+      promiseOfMoreStories.map { moreStories =>
+        moreStories match {
+          case Left(moreStories) => {
+            renderJson(path, section, moreStories)
+          }
+          // get network front's more stories
+          case Right(notFound) => {
+            val promiseOfNetworkFrontMoreStories = mostViewed(edition, "")
+            Async {
+              promiseOfNetworkFrontMoreStories.map { networkFrontMoreStories =>
+                networkFrontMoreStories match {
+                  case Left(networkFrontMoreStories) => {
+                    renderJson(path, section, networkFrontMoreStories)
+                  }
+                  case Right(notFound) => JsonNotFound()
+                }
               }
-              Cached(900){ JsonComponent(("stories" -> toJson(stories))) }
             }
           }
+        }
       }
     }
   }
@@ -39,8 +47,25 @@ object MoreStoriesController extends Controller with Logging {
     ContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-      .response.map{response =>
-          SupportedContentFilter(response.mostViewed map { new Content(_) })
-    }
+      .response.map{ response =>
+        val items = SupportedContentFilter(response.mostViewed map { new Content(_) })
+        if (!items.isEmpty) {
+          Left(items)
+        } else {
+          Right(NotFound)
+        }
+      }
+      .recover{ suppressApiNotFound }
   }
+
+  private def renderJson(path: String, section: String, moreStories: Seq[Content])(implicit request: RequestHeader): Result = {
+    val currentPage = toJson(Map("url" -> s"/$path"))
+    var stories = currentPage +: moreStories.filter { _.url != s"/$path" }.map { story => toJson(Map("url" -> story.url)) }
+    // append section front at the end, if we're not currently on it
+    if (!path.equals(section)) {
+      stories = stories ++ Seq(toJson(Map("url" -> s"/$section")))
+    }
+    Cached(900){ JsonComponent(("stories" -> toJson(stories))) }
+  }
+
 }
