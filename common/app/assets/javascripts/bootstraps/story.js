@@ -68,7 +68,7 @@ define([
         },
 
         initSwipe: function() {
-            var swipeLib = ['js!swipe'], Swipe;
+            var swipeLib = ['js!swipe'];
             require(swipeLib, function() {
                 var mySwipe = new Swipe(document.getElementById('picture-swipe'), {
                      speed: 100,
