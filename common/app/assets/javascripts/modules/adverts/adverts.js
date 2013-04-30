@@ -47,15 +47,21 @@ function (
 
             generateMiddleSlot(currConfig);
             
-            Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
-                var name = as.getAttribute('data-' + size),
-                    container = as.querySelector('.ad-container'),
-                    slot = new DocumentWriteSlot(name, container);
-                
-                container.innerHTML = '';
-
-                slot.setDimensions(dimensionMap[name]);
-                slots.push(slot);
+            Array.prototype.forEach.call(document.querySelectorAll('.swipepage'), function(context) {
+                Array.prototype.forEach.call(context.querySelectorAll('.ad-slot'), function(as) {
+                    var container = as.querySelector('.ad-container'),
+                        name,
+                        slot;
+                    // Empty all ads in the dom
+                    container.innerHTML = '';
+                    // Load the currContext ads only
+                    if (context === currContext ) {
+                        name = as.getAttribute('data-' + size),
+                        slot = new DocumentWriteSlot(name, container);
+                        slot.setDimensions(dimensionMap[name]);
+                        slots.push(slot);
+                    }
+                });
             });
             
             if (currConfig.switches.audienceScience) {
