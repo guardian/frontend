@@ -66,7 +66,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('article', config);
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading();

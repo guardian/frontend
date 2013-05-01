@@ -1,35 +1,35 @@
-define(function() {
+define(['modules/storage'], function(storage) {
 
     var storagePrefix = 'gu.prefs.',
-        store = localStorage,
+        store = storage,
         location = document.location,
         qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
 
     function set(name, value) {
-        store[storagePrefix + name] = value;
+        store.set(storagePrefix + name, value);
     }
     function get(name) {
-        return store[storagePrefix + name];
+        return store.get(storagePrefix + name);
     }
     function remove(name) {
-        store.removeItem(storagePrefix + name);
+        store.remove(storagePrefix + name);
     }
 
     function switchOn(name) {
-        store[storagePrefix + "switch." + name] = "true";
+        store.set(storagePrefix + "switch." + name, true);
     }
     function switchOff(name) {
-        store[storagePrefix + "switch." + name] = "false";
+        store.set(storagePrefix + "switch." + name, false);
     }
     function removeSwitch(name) {
-        store.removeItem(storagePrefix + "switch." + name);
+        store.remove(storagePrefix + "switch." + name);
     }
 
     function isOn(name) {
-        return store[storagePrefix + "switch." + name] === "true";
+        return store.get(storagePrefix + "switch." + name) === true;
     }
     function isOff(name) {
-        return store[storagePrefix + "switch." + name] === "false";
+        return store.get(storagePrefix + "switch." + name) === false;
     }
 
     for (var i = 0, j = qs.length; i<j; ++i) {
