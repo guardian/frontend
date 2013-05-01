@@ -1,9 +1,9 @@
 define([
-    "common",
+    "bonzo",
     "ajax",
     'modules/storage'
 ], function(
-    common,
+    bonzo,
     ajax,
     storage
 ) {
@@ -22,10 +22,19 @@ define([
         // View
         this.view = {
             render: function (json) {
-                var trail = document.querySelectorAll('.trail')[0],
+                // NOTE: hard-coded to replace first trail tagged with 'politics/local-elections' - REMOVE ME AFTER TEST
+                var trail = document.querySelector('.trail[data-trail-tags*="politics/local-elections"]'),
                     // pull out first trail
-                    firstStory = /^<li.*?<\/li>/.exec(json.html)[0];
-                common.$g(trail).after(firstStory);
+                    firstStory = /^<li.*?<\/li>/.exec(json.html);
+                if (firstStory) {
+                    if (trail) {
+                        // replace
+                        bonzo(trail).replaceWith(firstStory[0]);
+                    } else {
+                        // otherwise bung in second position
+                        bonzo(document.querySelector('.trail')).after(firstStory[0]);
+                    }
+                }
             }
         };
 
