@@ -9,7 +9,7 @@
 
                    <h2 class="article-headline">@a.headlineOverride</h2>
 
-                    @if(!a.isLive && !a.hasVideoAtTop) {
+                    @if(!a.hasVideoAtTop) {
                         @a.mainPicture.map{ mainPicture =>
                             @a.mainPicture(width=220).map{ smallCrop =>
                                 @fragments.img(mainPicture, smallCrop)

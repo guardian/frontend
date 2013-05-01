@@ -1,27 +1,31 @@
 @(story: Story)
 
 @if(story.hasAgents) {
-    <section class="story-agents" data-link-name="story-agents">
+    <section class="story-agents" data-link-name="Agents">
     
         <h2 class="story-title story-title--section">
             @story.labels.getOrElse("agents", "Key players")
         </h2>
-
-        @defining(story.agents.length){ numAgents =>
-            <div id="js-agents" class="trailblock expandable" data-count="@{numAgents - 3}">
-                <ul class="unstyled agents">
-                    @story.agents.take(3).map{ agent =>
-                        @fragments.agent(agent)
-                    }
-                </ul>
-                @if(numAgents > 3) {
-                    <ul class="unstyled agents panel">
-                        @story.agents.drop(3).map{ agent =>
+        <div class="js-swipe">
+            <div class="js-swipe__items">
+                <div class="js-swipe__wrap">
+                    @defining(story.agents.length){ numAgents =>
+                        @story.agents.map{ agent =>
                             @fragments.agent(agent)
                         }
-                    </ul>
-                }
+                    }
+                </div>
             </div>
-        }
+            <div class="js-swipe__controls cta-new h">
+                <button class="cta-new__btn cta-new__btn--left" data-link-name="Prev">
+                    <i class="i i-arrow-blue-down cta-new__icn"></i>
+                </button>
+                <span class="cta-new__text cta-new__text--center"></span>
+                <button class="cta-new__btn cta-new__btn--right" data-link-name="Next">
+                    <i class="i i-arrow-blue-down cta-new__icn"></i>
+                </button>
+            </div>
+        </div>
     </section>
 }
+

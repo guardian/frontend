@@ -90,6 +90,13 @@ $orange: #FF7F00;
   margin-top: $baseline*2;
 }
 
+.story-overview figure {
+  margin: 12px 10px 12px 10px;
+}
+
+.story-explainer {
+  margin: 0 10px 12px 10px;
+}
 
 .story-section {
   width: 100%;
@@ -218,38 +225,79 @@ a.trail-story-title {
   .story-title--white {
     background-color: #333333;
   }
+
+  .js-swipe {
+    background-color: #333333
+  }
 }
 
-#js-pictures {
+.js-swipe {
   margin: 0 10px;
+  overflow: hidden;
 }
 
-.swipe {
+.js-swipte__items {
   overflow: hidden;
   visibility: hidden;
   position: relative;
 }
 
-.swipe-wrap {
+.js-swipe__wrap {
   overflow: hidden;
   position: relative;
-  background-color: #333333;
 }
 
-.story-picture {
+.js-swipe__item {
   float:left;
   width:100%;
-  min-height: 456px;
+  min-height: 424px;
   position: relative;
   padding: 0 2px 0 2px;
   @include box-sizing(border-box);
 }
 
-.story-picture__image { width: 100%; }
+.js-swipe__img {
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 200px;
+}
 
 .story-picture__caption {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
   padding: 6px 2px 32px 2px;
   color: #fff !important;
+}
+
+/* ==========================================================================
+   Story-agent
+   ========================================================================== */
+.story-agents,
+.story-agents .story-title {
+  margin-bottom: 12px;
+}
+
+.agent__name,
+.agent__name a,
+.agent__role {
+  margin: 0px;
+  font-family: $serifheadline;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.2em;
+  color: #000;
+}
+
+.agent__role {
+  color: #F7634F;
+}
+
+.agent__body {
+  margin-top: 12px;
+  font-family: $sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: #000;
 }
 
 /* ==========================================================================
@@ -334,25 +382,3 @@ a.trail-story-title {
     @include rotate(90deg);
   }
 }
-
-
-//@media only screen and (min-width: $tablet) {
-//
-//    .story-container .story-title, .story-content, .story-latest, .story-places, .story-pictures, .story-timeline {
-//        width: 600px;
-//        margin: 0 auto;
-//    }
-//
-//    .story-container .story-title {
-//        padding: $baseline*8 16px;
-//    }
-//
-//    .story-container .story-storyline {
-//        font-size: 30px;
-//    }
-//
-//    .story-agents {
-//        margin-left: 0px;
-//    }
-//
-//}
