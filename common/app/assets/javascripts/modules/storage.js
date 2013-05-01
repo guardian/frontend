@@ -22,7 +22,7 @@ define(['common'], function (common) {
                 w.localStorage.removeItem(testKey);
                 return true;
             } catch (e) {
-                common.mediator.emit('module:error', 'Unable to save to local storage', 'modules/storage.js');
+                common.mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'modules/storage.js');
                 return false;
             }
         },
