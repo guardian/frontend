@@ -33,7 +33,7 @@ define(['common', 'modules/storage'], function(common, storage) {
                 setItem: sinon.stub().throws()
             });
             expect(storage.isAvailable()).toBeFalsy();
-            expect(common.mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage', 'modules/storage.js');
+            expect(common.mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'modules/storage.js');
         });
 
         it('should save and retrieve data', function() {
