@@ -26,7 +26,7 @@ define([
         this.view = {
             render: function (json) {
                 // NOTE: hard-coded to replace first trail tagged with 'politics/local-elections' - REMOVE ME AFTER TEST
-                var trail = document.querySelector('.trail[data-trail-tags*="politics/local-elections"]'),
+                var trail = document.querySelector('section:first-child .trail[data-trail-tags*="politics/local-elections"]'),
                     firstStory = bonzo.create(json.html)[0];
                 if (firstStory) {
                     if (trail) {
