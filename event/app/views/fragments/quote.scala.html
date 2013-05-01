@@ -5,7 +5,7 @@
         <div class="story-quote">
 
             <h3 class="story-sub-head story-sub-head--quote">
-                @story.labels.getOrElse("quote" + index, "Guardian " + { article.colour match {
+                @story.labels.getOrElse("quote" + index, { article.colour match {
                             case 1 => "Overview"
                             case 2 => "Background"
                             case 3 => "Analysis"
