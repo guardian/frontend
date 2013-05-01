@@ -1,12 +1,13 @@
 define(['modules/story/frontstories'], function (FrontStories) {
 
-    var ExperimentRelatedContent = function () {
+    var LocalElectionStory = function () {
 
         this.id = 'LocalElectionStory';
-        this.audience = 0.5;
+        this.audience = 1;
         this.description = 'Swap out the first local-elections tagged trail with the story component';
         this.canRun = function(config) {
-          return true;
+            // only run on network front
+            return config.page.pageId === '';
         };
         this.variants = [
             {
@@ -16,15 +17,14 @@ define(['modules/story/frontstories'], function (FrontStories) {
                 }
             },
             {
-                id: 'hide',
+                id: 'swap',
                 test: function () {
-                    var frontStories = new FrontStories();
-                    frontStories.init();
+                    new FrontStories().init();
                 }
             }
         ];
     };
 
-    return ExperimentRelatedContent;
+    return LocalElectionStory;
 
 });
