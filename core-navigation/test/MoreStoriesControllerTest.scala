@@ -73,7 +73,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
 
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     // get last story
-    stories.size should be(22)
+    stories.size should be(20)
     stories.head should not be(Json.toJson(Map("url" -> s"/$badPage")))
     stories.last should not be(Json.toJson(Map("url" -> s"/$badSection")))
   }
