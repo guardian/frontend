@@ -5,11 +5,6 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                
-                    <h3 class="story-sub-head">
-                        @story.labels.getOrElse("latest", "Latest")
-                    </h3>
-
                     @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
 
                     <h2 class="article-headline">@a.headline</h2>
@@ -36,7 +31,14 @@
                             Summary(paras)
                         )
                     </div>
-                    <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
+                    <p>
+                        <a class="cta-new" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">
+                            Continue reading
+                            <button class="cta-new__btn cta-new__btn--right">
+                                <i class="i i-arrow-blue-down cta-new__icn"></i>
+                            </button>
+                        </a>
+                    </p>
                 </div>
 
                 @defining(page.canonicalUrl.getOrElse(Site(request).host + "/" + page.id)) { url =>
