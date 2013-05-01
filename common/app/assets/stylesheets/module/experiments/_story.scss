@@ -1,19 +1,37 @@
 $orange: #FF7F00;
 
+/* ==========================================================================
+   Story-title
+   ========================================================================== */
 .story-title {
-  @extend %type-3;
-  padding: $baseline*4 0 $baseline*5 0;
-  margin: 0 $gutter;
-  line-height: 1em;
-  border-bottom: 1px solid #CFCFCF;
+  font-family: $serifheadline;
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 3rem;
+  padding: 12px 0 32px 0;
+  min-height: 100px;
+  margin: 0 10px;
+  border-bottom: 1px solid #9D9D9D;
+  @include box-sizing(border-box);
 }
 
 .story-title--section {
-    @extend %type-3;
-    border-top: 1px solid #CFCFCF;
-    border-bottom: none;
-    margin-top: $baseline*7;
-  }
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  padding: 0 0 6px 0;
+  border-top: 1px solid #9D9D9D;
+  border-bottom: 1px dotted #9D9D9D;
+  min-height: 32px;
+}
+
+.story-title--indent {
+  padding-left: 2px;
+}
+
+.story-title--white {
+  border-color: transparent;
+  color: #fff;
+}
 
 .story-sub-head {
   @extend %type-6;
@@ -21,11 +39,57 @@ $orange: #FF7F00;
   margin-bottom: $baseline*2;
 }
 
-.story-latest .main-caption { padding: $baseline*4 0px;}
+/* ==========================================================================
+   Story-latest article
+   ========================================================================== */
+.story-latest {
+
+  .article-head {
+    padding: 0px 10px;
+  }
+
+  .dateline {
+    margin: 4px 0;
+  }
+
+  .social {
+    padding: 12px 0px 16px 10px
+  }
+
+  .article-headline {
+    min-height:60px;
+    font-family: $serifheadline;
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    padding: 0 0 16px 0;
+    margin-bottom: 12px;
+    @include box-sizing(border-box);
+  }
+
+  .byline {
+    padding: 2px 0 8px 0;
+    margin: 0 10px 8px 10px;
+  }
+
+  .article-body {
+    padding: 0 10px 8px 10px;
+  }
+
+  .main-caption { padding: $baseline*4 0px;}
+
+  .sample-paras {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #000;
+  }
+
+}
 
 .story-overview .page-head {
   margin-top: $baseline*2;
 }
+
 
 .story-section {
   width: 100%;
@@ -38,41 +102,48 @@ $orange: #FF7F00;
   font-size: 1.2rem;
  }
 
-.story-quote {
-  margin: $baseline*4 $gutter $baseline*4 $gutter;
-  padding: $baseline*4 $gutter $baseline*6 $gutter;
-  background-color: $mushroom;
-}
+/* ==========================================================================
+   Story quote
+   ========================================================================== */
 
-.story-sub-head--quote {
-  font-size: 1.8rem;
-  padding-bottom: $baseline*6;
-  border-bottom: 1px dashed #72726B;
-}
-
-.story-quote blockquote {
+.story-quote__quote {
+  position: relative;
   display: inline-block;
-  margin: $baseline*5 0 $baseline*4 0;
+  margin: 0;
   padding: 0;
-  color: #444;
+  margin: 0 10px 12px 10px;
 }
 
-.story-quote blockquote:before {
+.story-quote__quote p {
+  padding-left: 2px;
+  font-family: $serifheadline;
+  font-weight: 200;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  margin: 0 0 44px 0;
+  color: #000;
+}
+
+.story-quote__quote:before {
   @extend .i;
   @extend .i-story-quote;
   display: block;
   content: '';
-  margin: 0 0 $baseline*2 0;
+  margin: 12px 0 0 2px;
   clear: both;
 }
 
-  .story-quote blockquote a {
-      color: #444;
-  }
-
-  .story-quote cite {
-    color: #84837E;
+  .story-quote__cite {
+    position: absolute;
+    bottom: 48px;
+    left: 2px;
+    margin-bottom: 0px;
+    font-family: $serifheadline;
+    font-weight: 600;
+    font-size: 1.6rem;
     font-style: normal;
+    line-height: 2.4rem;
+    color: #000;
   }
 
 .story-popular .trail:last-child { border-bottom: none; }
@@ -112,6 +183,9 @@ a.trail-story-title {
   color: $newsRed;
 }
 
+/* ==========================================================================
+   Story maps
+   ========================================================================== */
 .story-map {
   position: relative;
   margin: $baseline*4 $gutter $baseline*4 $gutter;
@@ -135,23 +209,150 @@ a.trail-story-title {
     margin: 0 2.5% 5px 0;
 }
 
-@media only screen and (min-width: $tablet) {
+/* ==========================================================================
+   In-pictures
+   ========================================================================== */
+.story-pictures {
+  margin-bottom: 12px;
 
-    .story-container .story-title, .story-content, .story-latest, .story-places, .story-pictures, .story-timeline {
-        width: 600px;
-        margin: 0 auto;
-    }
-   
-    .story-container .story-title {
-        padding: $baseline*8 16px;
-    }
-    
-    .story-container .story-storyline {
-        font-size: 30px;  
-    }
-
-    .story-agents {
-        margin-left: 0px;
-    }
-
+  .story-title--white {
+    background-color: #333333;
+  }
 }
+
+#js-pictures {
+  margin: 0 10px;
+}
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+  background-color: #333333;
+}
+
+.story-picture {
+  float:left;
+  width:100%;
+  min-height: 456px;
+  position: relative;
+  padding: 0 2px 0 2px;
+  @include box-sizing(border-box);
+}
+
+.story-picture__image { width: 100%; }
+
+.story-picture__caption {
+  padding: 6px 2px 32px 2px;
+  color: #fff !important;
+}
+
+/* ==========================================================================
+   New call to actions
+   ========================================================================== */
+
+.cta-new {
+  position: relative;
+  display: block;
+  width:  100%;
+  height: 32px;
+  color: #005689;
+  font-family: $serif;
+  font-size: 1.4rem;
+  vertical-align: top;
+  padding-left: 2px;
+  border-top: 1px dotted rgb(103,103,103);
+  @include box-sizing(border-box);
+}
+
+.cta-new--dark {
+  background-color: #333333;
+  border-top-style: solid;
+
+  .cta-new__btn {
+    border-color: #fff;
+    border-style: solid;
+    background-color: #005588;
+  }
+
+  .cta-new__text {
+    color: #B3B3B4;
+  }
+}
+
+.cta-new__btn {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height:31px;
+  border-width: 0px;
+  border-style: dotted;
+  border-color: rgb(103,103,103);
+  background-color: transparent;
+  @include box-sizing(border-box);
+
+  .i {
+    position: absolute;
+    bottom: 2px;
+  }
+}
+
+.is-open .cta-new__btn i {
+  @include rotate(180deg);
+}
+
+.cta-new__text--center {
+  position: absolute;
+  bottom: 0px;
+  font-size: 1.4rem;
+  left: 48%;
+}
+
+.cta-new__btn--right {
+  float:right;
+  border-left-width: 1px;
+
+  .i {
+    left: 2px;
+    bottom: 8px;
+    @include rotate(-90deg);
+  }
+}
+
+.cta-new__btn--left {
+  flaot:left;
+  border-right-width: 1px;
+
+  .i {
+    right: 0px;
+    bottom: 8px;
+    @include rotate(90deg);
+  }
+}
+
+
+//@media only screen and (min-width: $tablet) {
+//
+//    .story-container .story-title, .story-content, .story-latest, .story-places, .story-pictures, .story-timeline {
+//        width: 600px;
+//        margin: 0 auto;
+//    }
+//
+//    .story-container .story-title {
+//        padding: $baseline*8 16px;
+//    }
+//
+//    .story-container .story-storyline {
+//        font-size: 30px;
+//    }
+//
+//    .story-agents {
+//        margin-left: 0px;
+//    }
+//
+//}

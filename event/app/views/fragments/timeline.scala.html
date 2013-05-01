@@ -8,9 +8,7 @@
     <li class="event__article">
         <p class="type-6">
             <a href="@a.url">
-                @a.standfirst.map { s =>
-                    @standfirst(s)
-                }.getOrElse(a.headline)
+                @a.headlineOverride
             </a>
         </p>
         @fragments.relativeDate(a.webPublicationDate, false, false)
@@ -21,9 +19,7 @@
     <li class="event__article event__article--media">
         <p class="type-6">
             <a href="@g.url">
-            @g.standfirst.map { s =>
-                @standfirst(s)
-            }.getOrElse(g.headline)
+                @g.headlineOverride
             </a>
         </p>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
@@ -37,9 +33,7 @@
 <li class="event__article event__article--media">
     <p class="type-6">
         <a href="@v.url">
-        @v.standfirst.map { s =>
-            @standfirst(s)
-        }.getOrElse(v.headline)
+            @v.headlineOverride
         </a>
     </p>
     <div class="player">
@@ -96,7 +90,7 @@
             @story.labels.getOrElse("timeline", "The story so far")
         </h2>
 
-        <div id="js-timeline" class="timeline box-indent"
+        <div id="js-timeline" class="timeline"
              data-count="@{story.events.size - 3}" data-link-name="Event timeline">
             @eventList(story.events.take(3), false)
             @eventList(story.events.drop(3), true)
