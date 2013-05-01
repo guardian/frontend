@@ -3,3 +3,8 @@ a.trail-story-title {
   position:absolute;
   margin-top:-21px;
 }
+
+.trail:first-child a.trail-story-title {
+	margin-left:120px;
+	margin-top:-23px;
+}
