@@ -3,14 +3,17 @@ define([
     'modules/userPrefs',
 
     //Current tests
-    'modules/experiments/tests/relatedContent'
+    'modules/experiments/tests/relatedContent',
+    'modules/experiments/tests/local-election-story'
 ], function (
     common,
     userPrefs,
-    RelatedContent) {
+    RelatedContent,
+    LocalElectionStory) {
     
     var TESTS = {
-            RelatedContentV2 : new RelatedContent()
+            RelatedContentV2 : new RelatedContent(),
+            LocalElectionStory: new LocalElectionStory()
         };
 
     var testKey = 'ab.current',

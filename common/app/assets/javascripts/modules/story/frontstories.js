@@ -1,3 +1,4 @@
+/*global guardian:true */
 define([
     "bonzo",
     "ajax",
@@ -13,8 +14,8 @@ define([
         var override = storage.get('gu.storyfronttrails') === 'on',
             self = this;
 
-        this.init = function (config) {
-            if (config.switches.storyFrontTrails || override) {
+        this.init = function () {
+            if (guardian.config.switches.storyFrontTrails || override) {
                 this.load();
             }
         };
