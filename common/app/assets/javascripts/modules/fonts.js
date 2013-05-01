@@ -1,5 +1,5 @@
 /*jshint loopfunc: true */
-define(['ajax', 'common'], function (ajax, common) {
+define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
 
     function Fonts(styleNodes, fileFormat) {
 
@@ -21,7 +21,6 @@ define(['ajax', 'common'], function (ajax, common) {
 
             // If no URL, then load from standard static assets path.
             url = url || '';
-
             for (var i = 0, j = styleNodes.length; i < j; ++i) {
                 var style = styleNodes[i];
                 if (fontIsRequired(style)) {
@@ -43,7 +42,7 @@ define(['ajax', 'common'], function (ajax, common) {
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
                                 that.clearFont(nameAndCacheKey[0]);
-                                localStorage.setItem(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
+                                storage.set(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
                                 common.mediator.emit('modules:fonts:loaded', [json.name]);
                             };
                         }(style))
@@ -62,11 +61,11 @@ define(['ajax', 'common'], function (ajax, common) {
         };
 
         this.clearWithPrefix = function(prefix) {
-            // Loop in reverse because localStorage indexes will change as you delete items.
-            for (var i = localStorage.length - 1; i > -1; --i) {
-                var name = localStorage.key(i);
+            // Loop in reverse because storage indexes will change as you delete items.
+            for (var i = storage.length() - 1; i > -1; --i) {
+                var name = storage.getKey(i);
                 if (name.indexOf(prefix) === 0) {
-                    localStorage.removeItem(name);
+                    storage.remove(name);
                 }
             }
         };
@@ -87,13 +86,11 @@ define(['ajax', 'common'], function (ajax, common) {
         }
 
         function fontIsRequired(style) {
-            // A final check for localStorage (is it full, disabled, any other error).
+            // A final check for storage (is it full, disabled, any other error).
             // Because it would be horrible if people downloaded fonts and then couldn't cache them.
-            try {
-                localStorage.setItem('test', 'test1');
-                localStorage.removeItem('test');
+            if (storage.isAvailable()) {
                 var nameAndCacheKey =  getNameAndCacheKey(style);
-                var cachedValue = localStorage.getItem(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
+                var cachedValue = storage.get(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
 
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');
@@ -102,8 +99,7 @@ define(['ajax', 'common'], function (ajax, common) {
                 }
 
                 return (cachedValue === null && widthMatches);
-            }
-            catch (e) {
+            } else {
                 return false;
             }
         }
