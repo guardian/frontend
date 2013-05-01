@@ -7,6 +7,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.MostPopularAgent
 import play.api.libs.concurrent.Execution.Implicits._
 import concurrent.Future
+import play.api.libs.json._
 import play.api.libs.json.Json._
 import play.api.mvc.Result
 import akka.dispatch.OnFailure
@@ -30,7 +31,7 @@ object MoreStoriesController extends Controller with Logging {
               promiseOfNetworkFrontMoreStories.map { networkFrontMoreStories =>
                 networkFrontMoreStories match {
                   case Left(networkFrontMoreStories) => {
-                    renderJson(path, section, networkFrontMoreStories)
+                    renderJson(path, networkFrontMoreStories)
                   }
                   case Right(notFound) => JsonNotFound()
                 }
@@ -57,10 +58,19 @@ object MoreStoriesController extends Controller with Logging {
       }
       .recover{ suppressApiNotFound }
   }
+  
+  private def moreStoriesToJson(path: String, moreStories: Seq[Content]): Seq[JsValue] = {
+    moreStories.filter { _.url != s"/$path" }.map { story => toJson(Map("url" -> story.url)) }
+  }
+
+  private def renderJson(path: String, moreStories: Seq[Content])(implicit request: RequestHeader): Result = {
+    var stories = moreStoriesToJson(path, moreStories);
+    Cached(900){ JsonComponent(("stories" -> toJson(stories))) }
+  }
 
   private def renderJson(path: String, section: String, moreStories: Seq[Content])(implicit request: RequestHeader): Result = {
     val currentPage = toJson(Map("url" -> s"/$path"))
-    var stories = currentPage +: moreStories.filter { _.url != s"/$path" }.map { story => toJson(Map("url" -> story.url)) }
+    var stories = currentPage +: moreStoriesToJson(path, moreStories)
     // append section front at the end, if we're not currently on it
     if (!path.equals(section)) {
       stories = stories ++ Seq(toJson(Map("url" -> s"/$section")))
