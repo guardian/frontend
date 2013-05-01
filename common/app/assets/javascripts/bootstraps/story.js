@@ -1,10 +1,14 @@
+/* global: Swipe */
+
 define([
     "common",
     "bean",
     "ajax",
 
     "modules/expandable",
-    "modules/story/continue-reading"
+    "modules/story/continue-reading",
+    
+    "swipe"
 ], function(
     common,
     bean,
@@ -41,17 +45,19 @@ define([
                 var eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
                     agents = context.querySelector('.story-agents');
 
-                common.$g('.agent-body', agents).addClass('h');
-                common.$g('button', agents).removeClass('h');
+                if(agents) {
+                    common.$g('.agent-body', agents).addClass('h');
+                    common.$g('button', agents).removeClass('h');
 
-                common.$g('.agent-body', agents).first().removeClass('h');
-                common.$g('i', agents).first().toggleClass('is-open');
+                    common.$g('.agent-body', agents).first().removeClass('h');
+                    common.$g('i', agents).first().toggleClass('is-open');
 
-                bean.on(agents, eventType, 'button', function() {
-                    var agent = this.parentNode;
-                    common.$g('.agent-body', agent).toggleClass('h');
-                    common.$g('i', agent).toggleClass('is-open');
-                });
+                    bean.on(agents, eventType, 'button', function() {
+                        var agent = this.parentNode;
+                        common.$g('.agent-body', agent).toggleClass('h');
+                        common.$g('i', agent).toggleClass('is-open');
+                    });
+                }
             });
         },
 
@@ -63,9 +69,43 @@ define([
             });
         },
 
+        initSwipe: function() {
+            var swipeContainer = document.getElementById('picture-swipe');
+
+            if(swipeContainer) {
+                var swipeLib = ['js!swipe'],
+                    numOfPictures = swipeContainer.querySelectorAll('figure').length;
+
+                require(swipeLib, function() {
+                    common.$g('#container').css('overflow', 'hidden');
+                    var mySwipe = new Swipe(swipeContainer, {
+                         speed: 100,
+                         continuous: true,
+                         disableScroll: false,
+                         stopPropagation: true,
+                         callback: function(index, elem) {
+                             common.$g('.cta-new__text', '#js-pictures-control').text(index+1 + '/' + numOfPictures);
+                         },
+                         transitionEnd: function(index, elem) {}
+                    });
+
+                    bean.on(document.querySelector('#js-pictures-control .cta-new__btn--left'), 'click', function() {
+                        mySwipe.prev();
+                    });
+
+                    bean.on(document.querySelector('#js-pictures-control .cta-new__btn--right'), 'click', function() {
+                        mySwipe.next();
+                    });
+
+                    common.$g('.cta-new__text--center', '#js-pictures-control').text('1/' + numOfPictures);
+                    common.$g('#js-pictures-control').removeClass('h');
+                });
+            }
+        },
+
         initContinueReading: function() {
             common.mediator.on('page:story:ready', function(config, context) {
-                Array.prototype.forEach.call(context.querySelectorAll('a.continue'), function(el){
+                Array.prototype.forEach.call(context.querySelectorAll('.js-continue'), function(el){
                     new ContinueReading(el).init();
                 });
             });
@@ -75,11 +115,12 @@ define([
     var ready = function(config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('story', config);
+            common.lazyLoadCss('article', config);
             modules.initTimeline();
             modules.initAgents();
             modules.initExpandables();
             modules.initContinueReading();
+            modules.initSwipe();
         }
         common.mediator.emit("page:story:ready", config, context);
     };

@@ -3,54 +3,48 @@
 <!-- all the photos we have on this subject from the latest chapter -->
 
 @gallery(g: model.Gallery) = {
-    <li class="event-article picture-article--media">
-        <p>
-            @g.standfirst.map { s =>
-                @withJsoup(BulletCleaner(s))(
-                    InBodyLinkCleaner("in body link")
-                )
-            }.getOrElse(g.headline)
-        </p>
+
         @g.images.zipWithRowInfo.map{ case(image, info) =>
-            <img src="@image.url" />
-            <p class="type-7">
-                @Html(image.caption.getOrElse(""))
-            </p>
+            <figure class="story-picture">
+                <img class="story-picture__image" src="@image.url" />
+                @image.caption.map { caption =>
+                    <figcaption class="story-picture__caption">@caption</figcaption>
+                }
+            </figure>
         }
-        @fragments.relativeDate(g.webPublicationDate, false, false)
-    </li>
 }
 
 @eventList(events: Seq[Event], isPanel: Boolean) = {
-    <ul class="unstyled @if(isPanel){ panel}">
-        @events.map { event =>
-            <li class="trail" data-link-name="trail">
-
-                @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
-                    @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
-                }
-
-                @if(event.hasContent) {
-                    <ul class="unstyled event-articles">
-                        @event.content.map{
-                            case g: Gallery => { @gallery(g) }
-                            case _ => {}
-                        }
-                    </ul>
-                }
-
-            </li>
+    @events.map { event =>
+        @if(event.hasContent) {
+            <div class="swipe" id="picture-swipe">
+                <div class="swipe-wrap">
+                    @event.content.map{
+                        case g: Gallery => { @gallery(g) }
+                        case _ => {}
+                    }
+                </div>
+            </div>
         }
-    </ul>
+    }
 }
 
 @if(story.hasEvents) {
     <section class="story-pictures" data-link-name="story-pictures">
-        <h2 class="story-title story-title--section">
+        <h2 class="story-title story-title--section story-title--white">
             @story.labels.getOrElse("pictures", "In pictures")
         </h2>
-        <div id="js-pictures" class="photos box-indent" data-link-name="Pictures">
+        <div id="js-pictures" data-link-name="Pictures">
             @eventList(story.events.take(1), false)
+            <div id="js-pictures-control" class="cta-new cta-new--dark h" data-link-name="In pictures">
+                <button class="cta-new__btn cta-new__btn--left">
+                    <i class="i i-arrow-white-down cta-new__icn"></i>
+                </button>
+                <span class="cta-new__text cta-new__text--center"></span>
+                <button class="cta-new__btn cta-new__btn--right">
+                    <i class="i i-arrow-white-down cta-new__icn"></i>
+                </button>
+            </div>
         </div>
     </section>
 }

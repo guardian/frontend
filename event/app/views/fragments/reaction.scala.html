@@ -1,20 +1,30 @@
 @(story: Story)
 
-@if(story.hasReaction && story.reaction.length >= 4) {
+@if(story.hasReaction) {
 
-    <div class="story-reactions">
-        <ul>
+    <section class="story-reactions">
+        <h2 class="story-title story-title--section story-title--indent">
+            @story.labels.getOrElse("reaction", "Reaction")
+        </h2>
+        <ul class="unstyled">
             @story.reaction.take(4).map{ a => 
                 <li class="story-reaction">
-                    <p class="story-reaction-lead">
-                        <a href="@a.url">
-                            @a.headline
-                        </a>
-                    </p>
-                    @fragments.byline(a.byline, a)
+                    <h3 class="story-reaction__lead">@a.headlineOverride</h3>
+                    @a.contributors.headOption.map{ c =>
+                        <p class="story-reaction__byline">@c.webTitle</p>
+                        @c.contributorImagePath.map{ url =>
+                            <img class="story-reaction__img" src="@url" />
+                        }
+                    }
+                    <a class="cta-new" data-link-name="Continue reading" href="@a.url">
+                        Continue reading
+                        <button class="cta-new__btn cta-new__btn--right">
+                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                        </button>
+                    </a>
                 </li>
             }
         </ul>
-    </div>
+    </section>
     
 }
