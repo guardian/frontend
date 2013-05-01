@@ -99,7 +99,7 @@ define(['common'], function (common) {
                     break;
             }
             w.localStorage.removeItem(key);
-            w.localStorage.setItem(key, data + '|type');
+            w.localStorage.setItem(key, data + '|' + type);
             return type;
         }
             
