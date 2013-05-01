@@ -138,7 +138,6 @@ define([
             /* Retrieve navigation interaction data */
             var ni = storage.get('gu.analytics.referrerVars');
             if (ni) {
-                ni = JSON.parse(ni);
                 var d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
