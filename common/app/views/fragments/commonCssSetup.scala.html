@@ -1,15 +1,9 @@
 @()
 
-@import CommonSwitches.CssLazyLoadSwitch
-
-@if(CssLazyLoadSwitch.isSwitchedOn) {
-	<style type="text/css">
-	    @Html(Head.css)
-        .i { background-image: url(@Static("images/global/sprite.png")); }
-	</style>
-} else {
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
-}
+<style type="text/css">
+    @Html(Head.css)
+    .i { background-image: url(@Static("images/global/sprite.png")); }
+</style>
 
 <style class="initial" data-cache-name="WebEgyptial" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.js")"></style>
 
