@@ -22,6 +22,11 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     controllers.MoreStoriesController.render(page)(fakeRequest)
   }
   
+  private def makeRequest(page: String, variant: String): Result = {
+    val fakeRequest = FakeRequest(GET, s"/more-stories/${page}?callback=${callbackName}&variant=${variant}").withHeaders("host" -> "localhost:9000")
+    controllers.MoreStoriesController.render(page)(fakeRequest)
+  }
+  
   private def extractStories(json: JsValue): Seq[JsValue] = {
     (json \ "stories").as[Seq[JsValue]]
   }
@@ -76,6 +81,14 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     stories.size should be(20)
     stories.head should not be(Json.toJson(Map("url" -> s"/$badPage")))
     stories.last should not be(Json.toJson(Map("url" -> s"/$badSection")))
+  }
+
+  it should "return most read for variant 1" in Fake {
+    val result = makeRequest(article, "1")
+    
+    val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
+    // get last story
+    stories(1) should be(Json.toJson(Map("url" -> "/football/blog/2013/apr/30/transfer-targets-rooney-bale-suarez")))
   }
   
 }

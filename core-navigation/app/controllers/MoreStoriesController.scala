@@ -42,14 +42,36 @@ object MoreStoriesController extends Controller with Logging {
       }
     }
   }
+  
+  private def getMoreStories(edition: String, path: String)(implicit request: RequestHeader) {
+    request.getQueryString("variant").map {
+      case "2" => editorsPicks(edition, path)
+    } getOrElse(mostViewed(edition, path))
+  }
 
-  private def mostViewed(edition: String, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching more stories: $path for edition $edition")
-    ContentApi.item(path, edition)
+  private def mostViewed(edition: String, section: String)(implicit request: RequestHeader) = {
+    log.info(s"Fetching more stories: $section for edition $edition")
+    ContentApi.item(section, edition)
       .tag(None)
       .showMostViewed(true)
       .response.map{ response =>
         val items = SupportedContentFilter(response.mostViewed map { new Content(_) })
+        if (!items.isEmpty) {
+          Left(items)
+        } else {
+          Right(NotFound)
+        }
+      }
+      .recover{ suppressApiNotFound }
+  }
+
+  private def editorsPicks(edition: String, section: String)(implicit request: RequestHeader) = {
+    log.info(s"Fetching more stories: $section for edition $edition")
+    ContentApi.item(section, edition)
+      .tag(None)
+      .showEditorsPicks(true)
+      .response.map{ response =>
+        val items = SupportedContentFilter(response.editorsPicks map { new Content(_) })
         if (!items.isEmpty) {
           Left(items)
         } else {
