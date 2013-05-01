@@ -56,6 +56,10 @@ define(['common'], function (common) {
             } else {
                 data = dataWithType.substring(0, typeLastIndex),
                 type = dataWithType.substring(typeLastIndex + 1);
+                // fix bug
+                if (type === 'type') {
+                    type = storage._migrate(key, data);
+                }
             }
             
             switch (type) {
@@ -99,7 +103,7 @@ define(['common'], function (common) {
                     break;
             }
             w.localStorage.removeItem(key);
-            w.localStorage.setItem(key, data + '|type');
+            w.localStorage.setItem(key, data + '|' + type);
             return type;
         }
             
