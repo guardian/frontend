@@ -3,7 +3,7 @@
     <article class="article @if(a.isLive){is-live}">
         <header class="article-head">
             @fragments.dateline(a.webPublicationDate, a.isLive, edition)
-            <h2 class="article-headline">@a.headline</h2>
+            <h2 class="article-headline">@a.headlineOverride</h2>
         </header>
 
         @fragments.byline(a.byline, a)

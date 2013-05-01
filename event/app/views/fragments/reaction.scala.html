@@ -9,7 +9,7 @@
         <ul class="unstyled">
             @story.reaction.take(4).map{ a => 
                 <li class="story-reaction">
-                    <h3 class="story-reaction__lead">@a.headline</h3>
+                    <h3 class="story-reaction__lead">@a.headlineOverride</h3>
                     @a.contributors.headOption.map{ c =>
                         <p class="story-reaction__byline">@c.webTitle</p>
                         @c.contributorImagePath.map{ url =>

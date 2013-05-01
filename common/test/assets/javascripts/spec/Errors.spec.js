@@ -78,7 +78,7 @@ define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
             // fake event
             bean.on(script, 'error', function(event) {
                 e.log(event.originalEvent, fakeError.filename, fakeError.lineno);
-                expect(document.getElementById('js-err').getAttribute('src')).toContain('Error%20in%20file%20http%3A%2F%2Ffoo.com%2Fbar.js');
+                expect(document.getElementById('js-err').getAttribute('src')).toContain('Syntax%20or%20http%20error%3A%20http%3A%2F%2Ffoo.com%2Fbar.js');
             })
             bean.fire(script, 'error');
         });

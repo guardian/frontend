@@ -26,9 +26,9 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
             log = function(message, filename, lineno, isUncaught) {
-                // tracking down meaning of [object Event] error message
+                // error events are thrown by script elements
                 if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
-                    message = 'Error in file ' + message.target.src;
+                    message = 'Syntax or http error: ' + message.target.src;
                 }
                 var error = {
                     message: message,

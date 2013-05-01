@@ -15,7 +15,10 @@
 @fragments.filters(model.filters, model.page, "tables")
 
 <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
+    
+
     @model.tables.map{ table =>
+    
 
     <li class="league-table">
 
@@ -31,18 +34,20 @@
                 </thead>
             }
 
+
             @table.groups.map{ group =>
             <tbody class="table-football-body">
-                @group.round.map { round =>
-                    @round.name.map { name =>
-                        <tr>
-                            <th colspan="20" class="table-football-leftaligned">@name</th>
-                        </tr>
-                        @* we repeat this nav for group tables *@
-                        @fragments.tableColumnHeaders()
+                @if(table.multiGroup) {
+                    @group.round.map { round =>
+                        @round.name.map { name =>
+                            <tr>
+                                <th colspan="20" class="table-football-leftaligned">@name</th>
+                            </tr>
+                            @* we repeat this nav for group tables *@
+                            @fragments.tableColumnHeaders()
+                        }
                     }
                 }
-
                 @group.entries.zipWithRowInfo.map{ case (entry, row) => @fragments.tableRow(entry, row) }
             </tbody>
             }
