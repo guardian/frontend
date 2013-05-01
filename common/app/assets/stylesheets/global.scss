@@ -30,10 +30,6 @@
 @import "module/_live-blog";
 @import "module/football/_matches";
 
-//External modules
-//These are for styling HTML that we get from external sources
-//and may contain more specific selectors than we would usually like
-@import "module/external/_from-content-api";
 @import "module/external/_witness";
 
 //State
