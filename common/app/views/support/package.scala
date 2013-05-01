@@ -308,8 +308,6 @@ object `package` extends Formats {
 }
 
 object Format {
-
-  // TODO EDITIONS
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
