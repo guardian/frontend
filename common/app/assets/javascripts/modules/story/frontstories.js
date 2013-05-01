@@ -22,8 +22,10 @@ define([
         // View
         this.view = {
             render: function (json) {
-                var trail = document.querySelectorAll('.trail')[0];
-                common.$g(trail).after(json.html);
+                var trail = document.querySelectorAll('.trail')[0],
+                    // pull out first trail
+                    firstStory = /^<li.*?<\/li>/.exec(json.html)[0];
+                common.$g(trail).after(firstStory);
             }
         };
 
@@ -37,8 +39,6 @@ define([
                     if (json) {
                         self.view.render(json);
                     }
-                },
-                error: function () {
                 }
             });
         };

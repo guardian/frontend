@@ -3,7 +3,7 @@
 @trail(content: Seq[model.Content], story: Story) = {
     @content.map{
         case trail: Article => {
-            <li class="trail">
+            <li class="trail" data-link-name="trail">
 
                 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 

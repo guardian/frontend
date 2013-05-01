@@ -6,7 +6,8 @@ define([
     //Modules
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
-    "modules/footballfixtures"
+    "modules/footballfixtures",
+    'modules/story/frontstories'
 ], function (
     common,
     bonzo,
@@ -14,7 +15,8 @@ define([
 
     TrailblockToggle,
     TrailblockShowMore,
-    FootballFixtures
+    FootballFixtures,
+    FrontStories
 ) {
 
     var modules = {
@@ -66,6 +68,11 @@ define([
                     }
                 }
             });
+        },
+        
+        showFrontStories: function(config) {
+            var frontStories = new FrontStories();
+            frontStories.init(config);
         }
     };
 
@@ -75,6 +82,7 @@ define([
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
+            modules.showFrontStories(config);
         }
         common.mediator.emit("page:front:ready", config, context);
     };
