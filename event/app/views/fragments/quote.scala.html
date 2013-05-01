@@ -4,31 +4,34 @@
     @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
         <div class="story-quote">
 
-            <h3 class="story-sub-head story-sub-head--quote">
-                @story.labels.getOrElse("quote" + index, { article.colour match {
-                            case 1 => "Overview"
-                            case 2 => "Background"
-                            case 3 => "Analysis"
-                            case 4 => "Reaction"
-                            case 5 => "Comment"
-                            }
-                          })
-            </h3>
+            <h2 class="story-title story-title--section">
+                @story.labels.getOrElse("quote" + index, {
+                    article.colour match {
+                        case 1 => "Overview"
+                        case 2 => "Background"
+                        case 3 => "Analysis"
+                        case 4 => "Reaction"
+                        case 5 => "Comment"
+                    }
+                })
+            </h2>
 
             @article.quote.map{ quote =>
-            <blockquote class="quoted" data-link-name="story quote">
-                @quote.text.map{ text =>
-                  <p>
-                    @cleanTrailText(text)
-                  </p>
-                  <p>
-                  <a class="continue" data-link-name="Continue reading" data-skip-paras="0" href="@article.url">
-                      Continue reading... 
-                  </a>
-                  </p>
-                }
-                <cite>@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
-            </blockquote>
+                <blockquote class="story-quote__quote" data-link-name="story quote">
+                    @quote.text.map{ text =>
+                      <p>
+                        @cleanTrailText(text)
+                      </p>
+                    }
+                    <cite class="story-quote__cite">@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
+
+                    <a class="cta-new" data-link-name="Continue reading" href="@article.url">
+                        Continue reading
+                        <button class="cta-new__btn cta-new__btn--right">
+                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                        </button>
+                    </a>
+                </blockquote>
             }
         </div>
     }

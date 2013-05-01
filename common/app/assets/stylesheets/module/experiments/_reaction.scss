@@ -1,6 +1,9 @@
 /* ==========================================================================
    Story-latest reaction
    ========================================================================== */
+.story-reactions {
+  margin-bottom: 12px;
+}
 
 .story-reactions .story-title,
 .story-reactions ul{
@@ -8,7 +11,8 @@
 }
 
 .story-reactions ul {
-  margin: 0 $gutter;
+  margin: 0 10px;
+  overflow: auto;
 }
 
 .story-reaction {
@@ -24,20 +28,20 @@
 .story-reaction__lead {
   position: relative;
   z-index: 100;
-  padding-top: 12px;
-  width:65%;
+  padding: 12px 0 0 2px;
+  width:60%;
   min-height: 100px;
   margin-bottom: 32px;
-  font-family: $serif;
+  font-family: $serifheadline;
   font-weight: 200;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 2.4rem;
 }
 
 .story-reaction__byline {
   position: absolute;
-  left: 0px;
-  bottom: 38px;
+  left: 2px;
+  bottom: 48px;
   margin-bottom: 0px;
   font-family: $serifheadline;
   font-weight: 600;
