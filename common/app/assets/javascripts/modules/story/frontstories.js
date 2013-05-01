@@ -47,9 +47,11 @@ define([
                                 common.$g('.trail-text', firstStory).text()
                             );
                             // update image
-                            common.$g('img', trail).attr(
-                                'src', common.$g('img', firstStory).attr('src')
-                            );
+                            var $img = common.$g('img', firstStory);
+                            common.$g('img', trail).attr({
+                                'src': $img.attr('src'),
+                                'alt': $img.attr('alt'),
+                            });
                             // update timestamp
                             common.$g('.relative-timestamp', trail).replaceWith(
                                 common.$g('.relative-timestamp', firstStory)
