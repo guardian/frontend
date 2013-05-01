@@ -12,7 +12,7 @@
 @import "base/_base";
 @import "base/_tables";
 
-//Mmodules
+//Modules
 @import "module/_article";
 @import "module/_tabs";
 @import "module/_headers";
@@ -26,12 +26,18 @@
 @import "module/_search";
 @import "module/_homescreen";
 @import "module/_debug";
-@import "module/trails/_trailblock";
-@import "module/trails/_trail";
 @import "module/nav/_pop-up";
-@import "module/_media";
+@import "module/_live-blog";
+@import "module/football/_matches";
+
+//External modules
+//These are for styling HTML that we get from external sources
+//and may contain more specific selectors than we would usually like
+@import "module/external/_from-content-api";
+@import "module/external/_witness";
 
 //State
+@import "theme/_global-icons-sprite";
 @import "theme/_global-icons-svg";
 @import "theme/_icons";
 @import "theme/_zones";
