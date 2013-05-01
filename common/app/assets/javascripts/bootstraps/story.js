@@ -70,35 +70,42 @@ define([
         },
 
         initSwipe: function() {
-            var swipeContainer = document.getElementById('picture-swipe');
+            var swipeContainers = document.querySelectorAll('.js-swipe__items');
 
-            if(swipeContainer) {
-                var swipeLib = ['js!swipe'],
-                    numOfPictures = swipeContainer.querySelectorAll('figure').length;
+            if(swipeContainers) {
+                var swipeLib = ['js!swipe'];
 
                 require(swipeLib, function() {
+
                     common.$g('#container').css('overflow', 'hidden');
-                    var mySwipe = new Swipe(swipeContainer, {
-                         speed: 100,
-                         continuous: true,
-                         disableScroll: false,
-                         stopPropagation: true,
-                         callback: function(index, elem) {
-                             common.$g('.cta-new__text', '#js-pictures-control').text(index+1 + '/' + numOfPictures);
-                         },
-                         transitionEnd: function(index, elem) {}
-                    });
 
-                    bean.on(document.querySelector('#js-pictures-control .cta-new__btn--left'), 'click', function() {
-                        mySwipe.prev();
-                    });
+                    Array.prototype.forEach.call(swipeContainers, function(el){
 
-                    bean.on(document.querySelector('#js-pictures-control .cta-new__btn--right'), 'click', function() {
-                        mySwipe.next();
-                    });
+                        var numOfPictures = el.querySelectorAll('figure').length,
+                            mySwipe = new Swipe(el, {
+                             speed: 100,
+                             continuous: true,
+                             disableScroll: false,
+                             stopPropagation: true,
+                             callback: function(index, elem) {
+                                 common.$g('.cta-new__text', el).text(index+1 + '/' + numOfPictures);
+                             },
+                             transitionEnd: function(index, elem) {}
+                        });
 
-                    common.$g('.cta-new__text--center', '#js-pictures-control').text('1/' + numOfPictures);
-                    common.$g('#js-pictures-control').removeClass('h');
+                        var controls = common.$g(el).next()[0];
+
+                        bean.on(controls.querySelector('.cta-new__btn--left'), 'click', function() {
+                            mySwipe.prev();
+                        });
+
+                        bean.on(controls.querySelector('.cta-new__btn--right'), 'click', function() {
+                            mySwipe.next();
+                        });
+
+                        common.$g('.cta-new__text--center', controls).text('1/' + numOfPictures);
+                        common.$g(controls).removeClass('h');
+                    });
                 });
             }
         },
@@ -115,7 +122,6 @@ define([
     var ready = function(config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('article', config);
             modules.initTimeline();
             modules.initAgents();
             modules.initExpandables();
