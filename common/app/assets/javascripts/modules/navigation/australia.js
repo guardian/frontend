@@ -4,31 +4,32 @@
 define([
     'common',
     'modules/userPrefs',
-    'bean'],
-    function (common, userPrefs, bean) {
+    'bean',
+    'bonzo'],
+    function (common, userPrefs, bean, bonzo) {
 
     var AUS = "australia-edition";
 
     function AustraliaEdition() {
-        var auLink = document.querySelector("#au-link");
-        var editionSwitch = document.querySelector("#edition-switch");
 
-        if (auLink) {
-            bean.add(auLink, "click", function(){
+        bean.on(document, 'click', '.edition', function(e) {
+            var edition = e.target.getAttribute('data-edition');
+
+            if (edition === 'au') {
                 userPrefs.switchOn(AUS);
-            });
-        }
-
-        if (editionSwitch) {
-            bean.add(editionSwitch, "click", function(){
+            } else {
                 userPrefs.switchOff(AUS);
-            });
-        }
+            }
+        });
+
 
         if (userPrefs.isOn(AUS)) {
             // convert all home links to AUS front
-            common.$g("a[href='/']").each(function(link){
-                link.href = "/australia";
+            common.$g("a[href='/']").attr("href", "/australia");
+
+            // remove au edition links
+            common.$g("a[data-edition='au']").each(function(e) {
+                bonzo(e.parentNode).remove();
             });
         }
     }
