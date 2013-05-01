@@ -9,7 +9,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import concurrent.Future
 
 
-case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
+case class ArticlePage(article: Article, storyPackage: List[Trail])
 
 case class ZoneColour(className: String, selectors: List[String], zoneName: String, hexCode: String)
 
@@ -66,7 +66,7 @@ object StyleGuideController extends Controller with Logging {
 
   private def lookupSingleArticle(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition $edition")
+    log.info(s"Fetching article: $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .showInlineElements("picture")
       .showTags("all")
@@ -74,7 +74,7 @@ object StyleGuideController extends Controller with Logging {
       .response.map{response =>
         val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
         val storyPackage = response.storyPackage map { new Content(_) }
-        articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+        articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
     }
   }
 
@@ -82,7 +82,7 @@ object StyleGuideController extends Controller with Logging {
     val page = Page(canonicalUrl = None, "modules", "style-guide", "Modules", "GFE:Style-guide:modules")
 
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.edition, model.storyPackage)))
+      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.storyPackage)))
     }
   }
 

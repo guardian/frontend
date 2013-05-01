@@ -1,4 +1,4 @@
-@(story: Story)
+@(story: Story)(implicit request: RequestHeader)
 
 @standfirst(s: String) = {
     @withJsoup(BulletCleaner(StripHtmlTags(s)))()

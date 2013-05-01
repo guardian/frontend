@@ -254,7 +254,8 @@ object OmnitureAnalyticsData {
       ("g", path),
       ("ns", "guardian"),
       ("pageName", pageName),
-      ("cdp", (if (Site(request).isUsEdition) "2" else "3")),
+      //TODO EDITIONS - temporary until we move to single domain
+      ("cdp", (if (Site(request).map(_.isUsEdition).getOrElse(false)) "2" else "3")),
       ("v7", pageName),
       ("c3", publication),
       ("ch", section),
@@ -307,12 +308,11 @@ object `package` extends Formats {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String, edition: String = "UK"): String = {
-    val timezone = edition match {
-      case "US" => "America/New_York"
-      case _ => "Europe/London"
-    }
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID(timezone)))
+
+  // TODO EDITIONS
+  def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
+    val timezone = Edition(request).timezone
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 }
 

@@ -1,8 +1,8 @@
-@(a: model.Article, edition: String)
+@(a: model.Article)(implicit request: RequestHeader)
 <li class="story-article">
     <article class="article @if(a.isLive){is-live}">
         <header class="article-head">
-            @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+            @fragments.dateline(a.webPublicationDate, a.isLive)
             <h2 class="article-headline">@a.headline</h2>
         </header>
 

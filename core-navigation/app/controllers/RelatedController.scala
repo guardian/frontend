@@ -22,8 +22,8 @@ object RelatedController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching related content for : $path for edition $edition")
+  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
+    log.info(s"Fetching related content for : $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .tag(None)
       .showRelated(true)

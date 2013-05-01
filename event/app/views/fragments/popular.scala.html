@@ -1,4 +1,4 @@
-@(story: Story)
+@(story: Story)(implicit request: RequestHeader)
 
 @if(story.hasContent) {
     <section class="story-popular" data-link-name="story-popular">

@@ -1,4 +1,4 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false)(implicit request: RequestHeader)
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>

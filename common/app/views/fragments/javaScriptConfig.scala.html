@@ -6,8 +6,8 @@
         @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
             s""""${JavaScriptVariableName(key.split('.').last)}":"${value}""""}.mkString(",")
         )},
-        "edition": "@Edition(request)",
-        "ajaxUrl": "http://@Site(request).ajaxHost",
+        "edition": "@Edition(request).id",
+        "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev()
     },
     "switches" : { @{Html(switches.map{ switch =>

@@ -27,8 +27,8 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
     }
   }
 
-  private def lookup(edition: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching top stories for edition $edition")
+  private def lookup(edition: Edition)(implicit request: RequestHeader) = {
+    log.info(s"Fetching top stories for edition ${edition.id}")
     ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response

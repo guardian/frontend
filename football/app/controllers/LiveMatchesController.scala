@@ -27,7 +27,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
     val today = new DateMidnight()
 
-    val blog = LiveBlog(Edition(request))
+    val blog: Option[Trail] = LiveBlog(Edition(request))
 
     val matches = Seq(MatchesOnDate(today, competitions.withMatchesOn(today).competitions))
 

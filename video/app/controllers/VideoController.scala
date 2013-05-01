@@ -38,8 +38,8 @@ object VideoController extends Controller with Logging {
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage, Edition(request))
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage, Edition(request))
+    val htmlResponse = views.html.video(model.video, model.storyPackage)
+    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
     

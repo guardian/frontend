@@ -3,6 +3,7 @@ package test
 import org.fluentlenium.core.domain.FluentWebElement
 import play.api.GlobalSettings
 import controllers.front.{Front, FrontLifecycle}
+import common.editions.Uk
 
 object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
@@ -12,7 +13,7 @@ object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
 
     val start = System.currentTimeMillis
 
-    while (Front("front", "UK").size < 9) {
+    while (Front("front", Uk).size < 9) {
       // ensure we don't get in an endless loop if test data changes
       if (System.currentTimeMillis - start > 10000) throw new RuntimeException("front should have loaded by now")
     }

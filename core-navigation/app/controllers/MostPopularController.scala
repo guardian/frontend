@@ -38,7 +38,7 @@ object MostPopularController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
+  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
     ContentApi.item(path, edition)
       .tag(None)

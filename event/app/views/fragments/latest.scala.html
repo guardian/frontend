@@ -10,7 +10,7 @@
                         @story.labels.getOrElse("latest", "Latest")
                     </h3>
 
-                    @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
+                    @fragments.dateline(a.webPublicationDate, a.isLive)
 
                     <h2 class="article-headline">@a.headline</h2>
 
@@ -39,9 +39,7 @@
                     <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
                 </div>
 
-                @defining(page.canonicalUrl.getOrElse(Site(request).host + "/" + page.id)) { url =>
-                    @fragments.social(url, story.title)
-                }
+                @fragments.social(page)
             </article>
         }
     }

@@ -1,4 +1,4 @@
-@(stories: Seq[Story])
+@(stories: Seq[Story])(implicit request: RequestHeader)
 
 @trail(content: Seq[model.Content], story: Story) = {
     @content.map{

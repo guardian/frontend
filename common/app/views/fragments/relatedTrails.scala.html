@@ -1,4 +1,4 @@
-@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, isShaded: Boolean = false)
+@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, isShaded: Boolean = false)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
     <h3 id="related-content-head" class="type-2 article-zone">@Html(heading)</h3>
