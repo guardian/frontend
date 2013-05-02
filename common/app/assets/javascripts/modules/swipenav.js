@@ -6,19 +6,22 @@ define([
     'swipeview',
     'bean',
     'bonzo',
-    'qwery',
     'ajax'
 ], function(
     common,
     SwipeView,
     bean,
     bonzo,
-    qwery,
     ajax
 ) {
 
     function $(selector, context) {
-        return bonzo(qwery(selector, context));
+        if (typeof selector === 'string'){
+            context = context || document;
+            return bonzo(context.querySelectorAll(selector));
+        } else {
+            return bonzo(selector);
+        }
     }
 
     function extend(destination, source) {
@@ -76,8 +79,8 @@ define([
             noop = function () {},
             opts = extend(
                 {
-                    // Container element
-                    el: undefined,
+                    // Swipe container element
+                    swipeContainer: undefined,
 
                     // Callback after a pane is loaded (including hidden panes); use for fancy js-managed rendering.
                     afterLoad: noop,
@@ -89,7 +92,7 @@ define([
                     afterShow: noop,
 
                     // CSS selector for anchors that should initiate an ajax+pushState reload.
-                    linkSelector: 'a:not(.no-ajax)',
+                    linkSelector: '',
 
                     // The CSS selector for the element in each pane that should receive the ajax'd in content
                     bodySelector: '*',
@@ -106,14 +109,17 @@ define([
                 useropts
             ),
 
+            swipeContainer = $(opts.swipeContainer),
+
             // Private vars
             androidVersion,
+            body = $('body'),
             throttle,
             cache = {},
             canonicalLink = $('link[rel=canonical]'),
             config, // the current pane's config
-            contentArea = $(opts.el)[0],
-            contentAreaTop = $(opts.el).offset().top,
+            contentArea = swipeContainer[0],
+            contentAreaTop = swipeContainer.offset().top,
             sequencePos = -1,
             sequence = [],
             sequenceLookup,
@@ -126,7 +132,7 @@ define([
             initialPage,
             initiatedBy = 'initial',
             noHistoryPush,
-            visiblePane = $('#swipepages-inner > #swipepage-1', opts.el)[0],
+            visiblePane = $('#swipepages-inner > #swipepage-1', contentArea)[0],
             pageData,
             panes,
             paneNow = 1,
@@ -157,14 +163,14 @@ define([
                     callback();
                 }
                 else {
-                    el.dataset.waiting = '1';
+                    $(el).addClass('pending');
                     ajax({
                         url: url,
                         method: 'get',
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
                         success: function (spec) {
-                            el.dataset.waiting = '';
+                            $(el).removeClass('pending');
                             if (spec && spec.html && spec.config) {
                                 // Only use if response still corresponds to the required content for this el
                                 if (el.dataset.url === url) {
@@ -326,7 +332,6 @@ define([
                 slideIn: true
             });
         }
-
 
         function getAdjacentUrl(dir) {
             // dir = 1 : right
@@ -529,9 +534,6 @@ define([
                 paneThen = paneNow;
                 visiblePane = panes.masterPages[paneNow];
 
-                if (visiblePane.dataset && visiblePane.dataset.waiting === '1') {
-                    spinner.show();
-                }
                 common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
             }
         });
@@ -545,41 +547,44 @@ define([
         visiblePane.dataset.url = normalizeUrl(window.location.href);
 
         // Set a body class. Might be useful.
-        $('body').addClass('has-swipe');
+        body.addClass('has-swipe');
 
         common.mediator.on('module:swipenav:pane:loaded', function(el){
-            if(el === visiblePane && !el.dataset.waiting) {
+            if(el === visiblePane && !$(el).hasClass('pending')) {
                 doAfterShow(el);
             }
         });
 
         // Bind clicks
-        bean.on(document, 'click', opts.linkSelector, function (e) {
-            var
-                url;
-            if (!validateClick(e)) { return true; }
-            e.preventDefault();
-            url = normalizeUrl($(this).attr('href'));
-            if (url === normalizeUrl(window.location.href)) {
-                // Force a complete reload if the link is for the current page
-                window.location.reload(true);
-            }
-            else {
-                initiatedBy = 'link';
-                gotoUrl(url);
-            }
-        });
+        if (opts.linkSelector){
+            bean.on(document, 'click', opts.linkSelector, function (e) {
+                var
+                    url;
+                if (!validateClick(e)) { return true; }
+                e.preventDefault();
+                url = normalizeUrl($(this).attr('href'));
+                if (url === normalizeUrl(window.location.href)) {
+                    // Force a complete reload if the link is for the current page
+                    window.location.reload(true);
+                }
+                else {
+                    initiatedBy = 'link';
+                    gotoUrl(url);
+                }
+            });
+        }
 
         // Fix pane margins, so sidepanes come in at their top
         bean.on(window, 'scroll', function () {
-            hiddenPaneMargin = Math.max( 0, $(window).scrollTop() - contentAreaTop );
+            hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
+
             if( hiddenPaneMargin < visiblePaneMargin ) {
                 // We've scrolled up over the offset; reset all margins and jump to topmost scroll
                 $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
                 $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
                 $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
                 // And reset the scroll
-                $(window).scrollTop( contentAreaTop );
+                body.scrollTop( contentAreaTop );
                 visiblePaneMargin = 0;
                 hiddenPaneMargin = 0;
             }

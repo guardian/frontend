@@ -204,7 +204,10 @@ define([
         },
 
         startSwipe: function(sequence) {
-            var opts,
+            var
+                linkSelector = '',
+                //linkSelector = 'a:not(.control)',
+                opts,
                 pages = document.querySelector('#swipepages'),
                 page0 = pages.querySelector('#swipepage-0 .parts'),
                 page1 = pages.querySelector('#swipepage-1 .parts'),
@@ -229,7 +232,7 @@ define([
                         common.mediator.emit('page:ready', pageConfig(config), swipe.visiblePane);
                     }
 
-                    if( swipe.initiatedBy === 'link') {
+                    if(linkSelector && swipe.initiatedBy === 'link') {
                         modules.getSwipeSequence(function(sequence){
                             swipe.api.setSequence(sequence);
                             swipe.api.loadSidePanes();
@@ -238,10 +241,10 @@ define([
                         swipe.api.loadSidePanes();
                     }
                 },
-                sequence: sequence,
-                el: '#swipepages',
+                linkSelector: linkSelector,
+                swipeContainer: '#swipepages',
                 bodySelector: '.parts__body',
-                linkSelector: 'a:not(.control)'
+                sequence: sequence
             };
             swipeNav(opts);
         }
