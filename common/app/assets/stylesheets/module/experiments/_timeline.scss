@@ -78,6 +78,10 @@
   margin-bottom: $baseline;
 }
 
+.chapter__article--media video {
+  width: 100%;
+}
+
 .chapter__article--media img {
   float: left;
   width: 22.5%;
