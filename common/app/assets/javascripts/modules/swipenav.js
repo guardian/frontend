@@ -115,14 +115,13 @@ define([
             androidVersion,
             body = $('body'),
             throttle,
-            cache = {},
             canonicalLink = $('link[rel=canonical]'),
             config, // the current pane's config
             contentArea = swipeContainer[0],
             contentAreaTop = swipeContainer.offset().top,
             sequencePos = -1,
             sequence = [],
-            sequenceLookup,
+            sequenceCache,
             sequenceLen = 0,
             sequenceChecksum,
             supportsHistory = false,
@@ -154,11 +153,11 @@ define([
                 el.dataset.url = url;
                     
                 // Ask the cache
-                spec = cache[url];
+                spec = sequenceCache[url];
 
                 // Is cached ?
-                if (spec) {
-                    populate(el, spec);
+                if (spec && spec.html) {
+                    populate(el, spec.html);
                     common.mediator.emit('module:swipenav:pane:loaded', el);
                     callback();
                 }
@@ -174,11 +173,13 @@ define([
                             if (spec && spec.html && spec.config) {
                                 // Only use if response still corresponds to the required content for this el
                                 if (el.dataset.url === url) {
-                                    populate(el, spec);
-                                    cache[url] = spec;
+                                    populate(el, spec.html);
                                     common.mediator.emit('module:swipenav:pane:loaded', el);
                                     callback();
                                 }
+                                sequenceCache[url] = sequenceCache[url] || {};
+                                sequenceCache[url].html = spec.html;
+                                sequenceCache[url].config = spec.config;
                             } else {
                                 spec = {
                                     html: '<div class="swipepage-msg">Oops. This page might be broken?</div>',
@@ -195,8 +196,8 @@ define([
             }
         }
 
-        function populate(el, spec) {
-            el.querySelector(opts.bodySelector).innerHTML = spec.html;
+        function populate(el, html) {
+            el.querySelector(opts.bodySelector).innerHTML = html;
             spinner.hide();
             opts.afterLoad(el);
         }
@@ -233,7 +234,7 @@ define([
                 url = el.dataset.url;
                 setSequencePos(url);
 
-                config = (cache[url] || {}).config || {};
+                config = (sequenceCache[url] || {}).config || {};
                 config.referrer = window.location.href; // works because we havent yet push'd the new URL
 
                 if (config.webTitle) {
@@ -290,7 +291,7 @@ define([
         }
 
         function posInSequence(url) {
-            url = sequenceLookup[normalizeUrl(url)];
+            url = sequenceCache[normalizeUrl(url)];
             return url ? url.pos : -1;
         }
 
@@ -306,15 +307,14 @@ define([
             if (len >= 3) {
                 sequence = arr;
                 sequenceLen = len;
-                sequenceLookup = {};
+                sequenceCache = {};
                 window.console.log('Sequence:');
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
-                    sequenceLookup[arr[i].url] = arr[i];
+                    sequenceCache[arr[i].url] = arr[i];
                     window.console.log(i + " " + arr[i].url);
                 }
                 setSequencePos(window.location.href);
-                cache = {};
             }
         }
 
@@ -418,8 +418,8 @@ define([
 
             el = panes.masterPages[mod3(paneNow + dir)];
             
-            // Only load if not already loaded into this pane, or cache has been flushed
-            if (el.dataset.url !== url || isEmptyObj(cache)) {
+            // Only load if not already loaded into this pane
+            if (el.dataset.url !== url) {
                 //el.querySelector(opts.bodySelector).innerHTML = ''; // Apparently this is better at preventing memory leaks that jQuert's .empty()
                 load({
                     url: url,
