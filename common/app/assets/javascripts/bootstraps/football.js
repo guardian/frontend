@@ -168,7 +168,11 @@ define([
                                 "summary"   : context.querySelector('.match-summary'),
                                 "stats"     : context.querySelector('.match-stats')
                             },
-                            config.switches
+                            config.switches,
+                            {
+                                "summary"   : '.match-summary > *',
+                                "stats"     : '.match-stats > *'
+                            }
                         );
                     }
                 }

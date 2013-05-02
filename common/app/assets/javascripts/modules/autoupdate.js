@@ -50,8 +50,7 @@ define([
                     var $attachTo = bonzo(attachTo);
                     // in case we don't want to show the full response
                     if (options.responseSelector) {
-                        var response = bonzo.create('<div>' + res.html + '<div>');
-                        $attachTo.html(common.$g(options.responseSelector, response[0]));
+                        $attachTo.html(common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
                         $attachTo.html(res.html);
                     }
@@ -59,10 +58,12 @@ define([
                     $attachTo.attr('data-last-updated', date);
                 //Multiple fragments to update
                 } else {
+                    var response = bonzo.create('<div>' + res.html + '<div>');
                     for (var view in attachTo) {
                         if(attachTo.hasOwnProperty(view)) {
-                            attachTo[view].innerHTML = res[view];
-                            bonzo(attachTo[view]).attr('data-last-updated', date);
+                            var html = common.$g(options.responseSelector[view], response[0]);
+                            bonzo(attachTo[view]).html(html)
+                                .attr('data-last-updated', date);
                         }
                     }
                 }
