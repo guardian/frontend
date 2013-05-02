@@ -50,22 +50,23 @@ function (
 
         generateMiddleSlot(currConfig);
         
-        Array.prototype.forEach.call(contexts, function(context){
-            Array.prototype.forEach.call(context.querySelectorAll('.ad-slot'), function(as) {
-                var container = as.querySelector('.ad-container'),
+        for (var c in contexts) {
+            var els = contexts[c].querySelectorAll('.ad-slot');
+            for(var i = 0, l = els.length; i < l; i += 1) {
+                var container = els[i].querySelector('.ad-container'),
                     name,
                     slot;
                 // Empty all ads in the dom
                 container.innerHTML = '';
                 // Load the currContext ads only
-                if (context === currContext) {
-                    name = as.getAttribute('data-' + size),
+                if (contexts[c] === currContext ) {
+                    name = els[i].getAttribute('data-' + size),
                     slot = new DocumentWriteSlot(name, container);
                     slot.setDimensions(dimensionMap[name]);
                     slots.push(slot);
                 }
-            });
-        });
+            }
+        }
         
         if (currConfig.switches.audienceScience) {
             audienceScience.load(currConfig.page);
