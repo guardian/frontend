@@ -66,7 +66,7 @@ define([
                         }
                     } else {
                         // otherwise bung in second position
-                        bonzo(document.querySelector('.trail')).after(firstStory);
+                        bonzo(document.querySelector('.trail:last-child')).after(firstStory);
                     }
                 }
             }

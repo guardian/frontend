@@ -11,6 +11,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
 import play.api.libs.concurrent.Execution.Implicits._
+import common.editions.Uk
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -155,7 +156,7 @@ object Story {
     private def loadContent(parsedStory: ParsedStory): Story = {
         val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
-        Await.result(ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
+        Await.result(ContentApi.search(Uk).showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
           Story(parsedStory, response.results.toSeq)
         }, 2.seconds)
     }

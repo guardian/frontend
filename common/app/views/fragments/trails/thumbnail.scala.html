@@ -1,4 +1,4 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)
+@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)(implicit request: RequestHeader)
 
 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 <div class="media">

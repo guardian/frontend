@@ -55,6 +55,13 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 .attr('type', 'text/css')
                 .attr('href', guardian.css[name])
                 .appendTo(document.querySelector('body'));
+        },
+        hardRefresh: function(event) {
+            // this means it will not load from the cache
+            if (event) {
+                event.preventDefault();
+            }
+            location.reload(true);
         }
     };
 });
