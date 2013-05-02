@@ -2,62 +2,90 @@
   margin: 12px 10px;
 }
 
-.event-block,
-.event-block:last-child {
-  border: 1px solid #DEDEDE;
-  padding: $baseline*4;
-  margin-bottom: $baseline*3;
-}
-
-.event-block .i-date { display: none; }
-.event-block .relative-timestamp { @extend %type-7;}
-
-.date-line {
-    margin:-10px 0 0 4px;
-    padding:$baseline*2 0 $baseline*2 $gutter;
-    border-left: 1px solid #777;
-    cursor: pointer;
-}
-
-.event__title {
+.chapter {
   position: relative;
+  margin-left: 24px;
+  padding:0 0 12px 48px;
+  border-left: 1px solid #333333;
 }
 
-  .event__title span {
-    display: inline-block;
-    width: 90%;
-    @extend %type-5;
-  }
-
-  .event__title i {
-    position: absolute;
-    top: 4px;
-    right: 0px;
-  }
-
-.story-sub-head--articles {
-  margin: $baseline*7 0 $baseline*4 0;
-  padding-bottom: $baseline*3;
-  border-bottom: 1px dashed #72726B;
+.chapter__marker {
+ display: block;
+ position: absolute;
+ top: 0px;
+ left: -20px;
+ width: 40px;
+ height: 40px;
+ background-color: #333333;
+ border-radius: 100px;
 }
 
-.event__summary {
+.chapter__marker--small {
+  width: 16px;
+  height: 16px;
+  left: -56px;
+  background-color: #676767;
+}
+
+.chapter__title {
+  font-family: $serifheadline;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  min-height: 44px;
+  margin-bottom: 12px;
+}
+
+.chapter .relative-timestamp {
+  padding: 4px 0 9px 0;
+}
+
+.chapter > .relative-timestamp {
+  border-top: 1px solid #929292;
+}
+
+.chapter:first-child > .relative-timestamp {
+  border-top: none;
+}
+
+.chapter__summary {
   @extend %type-6;
-  padding: 0 0 $baseline 0;
+  color: #000;
+  padding: 0 0 12px 0;
 }
 
-.event__article {
-  margin-bottom: $baseline*7;
+.chapter__article {
+  position: relative;
+  border-top: 1px solid #929292;
 }
-.event__article a { color: #444; }
 
-.event__article--media {
+.chapter__article:first-child {
+  border-top-style: dotted;
+}
+
+.chapter__article .article-headline {
+  background-color: #fff;
+  border-top:  none;
+}
+
+.chapter__article a { color: #000; }
+
+.chapter__article--media {
   overflow: hidden;
   margin-bottom: $baseline;
 }
 
-.event__article--media img {
+.chapter__article--media img {
   float: left;
   width: 22.5%;
   margin: 0 2.5% 5px 0;
+}
+
+.chapter i.cta-new__icn {
+  bottom: 0px;
+  @include rotate(0deg)
+}
+
+.chapter.is-open i.cta-new__icn {
+  @include rotate(180deg);
 }
