@@ -23,18 +23,26 @@ object Edition {
     editions.Us
   )
 
-  /*
-  TODO For a while we need to live with both Multi domain sites and single domain sites
-  this abstracts away getting the edition for those. Later we will simplify this
-   */
   def apply(request: RequestHeader): Edition = {
 
+    // override for Ajax calls
     val editionFromParameter = request.getQueryString("_edition").map(_.toUpperCase)
+
+    // set upstream from geo location/ user preference
     val editionFromHeader = request.headers.get("X-Gu-Edition").map(_.toUpperCase)
+
+    // TODO legacy fallback - delete after single site
     val editionFromSite = Site(request).map(_.edition)
 
-    val editionId = editionFromParameter.orElse(editionFromHeader)
-      .orElse(editionFromSite).getOrElse(Edition.defaultEdition)
+    // NOTE: this only works on dev machines for local testing
+    // in production no cookies make it this far
+    val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value.toUpperCase)
+
+    val editionId = editionFromParameter
+      .orElse(editionFromHeader)
+      .orElse(editionFromCookie)
+      .orElse(editionFromSite)
+      .getOrElse(Edition.defaultEdition.id)
 
     all.find(_.id == editionId).getOrElse(defaultEdition)
   }
