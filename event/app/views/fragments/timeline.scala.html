@@ -77,12 +77,14 @@
                     </ul>
                 }
 
-                <div class="cta-new js-more" data-link-name="View more">
-                    <span class="cta-new__text">View more</span>
-                    <button class="cta-new__btn cta-new__btn--right">
-                        <i class="i i-arrow-blue-down cta-new__icn"></i>
-                    </button>
-                </div>
+                @if(event.hasContent) {
+                    <div class="cta-new js-more" data-link-name="View more">
+                        <span class="cta-new__text">View more</span>
+                        <button class="cta-new__btn cta-new__btn--right">
+                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                        </button>
+                    </div>
+                }
 
             </li>
         }
