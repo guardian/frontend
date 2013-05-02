@@ -41,7 +41,7 @@
                     </p>
                 </div>
 
-                @defining(page.canonicalUrl.getOrElse(Site(request).host + "/" + page.id)) { url =>
+                @defining(page.canonicalUrl.getOrElse("http://" + Site(request).host + "/" + page.id)) { url =>
                     @fragments.social(url, story.title)
                 }
             </article>
