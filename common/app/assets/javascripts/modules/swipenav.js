@@ -31,13 +31,6 @@ define([
         return destination;
     }
 
-    function isEmptyObj(obj) {
-        for(var i in obj) {
-            return false;
-        }
-        return true;
-    }
-
     function normalizeUrl(url) {
         var a = document.createElement('a');
         a.href = url;
@@ -76,9 +69,6 @@ define([
                     // Callback after a pane is loaded (including hidden panes); use for fancy js-managed rendering.
                     afterLoad: noop,
 
-                    // Callback before any pane is made visible.
-                    beforeShow: noop,
-
                     // Callback after a pane is made visible; use for analytics events, social buttons, etc.
                     afterShow: noop,
 
@@ -96,7 +86,6 @@ define([
 
             swipeContainer = $(opts.swipeContainer),
 
-            // Private vars
             androidVersion,
             body = $('body'),
             throttle,
@@ -108,14 +97,12 @@ define([
             sequence = [],
             sequenceCache,
             sequenceLen = 0,
-            sequenceChecksum,
             supportsHistory = false,
             supportsTransitions = false,
             inSequence = false,
             initiatedBy = 'initial',
             noHistoryPush = false,
             visiblePane = $('#swipepages-inner > #swipepage-1', contentArea)[0],
-            pageData,
             panes,
             paneNow = 1,
             paneThen = 1,
