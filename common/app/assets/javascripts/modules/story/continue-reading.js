@@ -10,14 +10,15 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
             opts = options || {},
             hidden = true,
             text = {
-                show: 'Continue reading...',
+                show: 'Continue reading',
                 hide: 'Hide'
             },
             $story,
             toggleStory = function() {
                 var linkText = text[hidden ? 'hide' : 'show'];
-                $el.text(linkText)
-                    .attr('data-link-name', linkText);
+                element.querySelector('.cta-new__text').innerHTML = linkText;
+                $el.attr('data-link-name', linkText);
+                $el.toggleClass('is-open');
                 $story[hidden ? 'show' : 'hide']();
                 hidden = !hidden;
             };

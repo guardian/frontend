@@ -49,6 +49,7 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
             };
         },
         lazyLoadCss: function(name, config) {
+<<<<<<< HEAD
             if (config.switches.cssLazyLoad === true) {
                 // append server specific css
                 bonzo(document.createElement('link'))
@@ -64,6 +65,14 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 event.preventDefault();
             }
             location.reload(true);
+=======
+            // append server specific css
+            bonzo(document.createElement('link'))
+                .attr('rel', 'stylesheet')
+                .attr('type', 'text/css')
+                .attr('href', guardian.css[name])
+                .appendTo(document.querySelector('body'));
+>>>>>>> 6c5e08ab6ae645fd64eda32ba90da96189894401
         }
     };
 });

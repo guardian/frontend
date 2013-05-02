@@ -1,5 +1,11 @@
 @(header: Html)(body: Html)(messageType: String = "standard")
-<div class="site-message site-message-type-@messageType">
-    <h2><span class="site-message-icon"></span>@header</h2>
-    <p>@body</p> 
+<div class="site-message site-message--@messageType">
+    <h2 class="site-message__head">@header</h2>
+    <p class="site-message__body">@body</p>
+    <div class="cta-new cta-new--blue">
+        <span class="cta-new__text"></span>
+        <button class="cta-new__btn cta-new__btn--right" data-link-name="Next">
+            <i class="i i-arrow-white-down cta-new__icn--right"></i>
+        </button>
+    </div>
 </div>

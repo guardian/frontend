@@ -8,7 +8,7 @@
         </h2>
 
         @story.hero.map{ img =>
-            <figure class="box-indent" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+            <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
                 <img class="maxed main-image" src="@story.hero"
                      itemprop="contentURL"
                      alt="@StripHtmlTags(story.title)"
@@ -16,7 +16,7 @@
             </figure>
         }
 
-        <p class="story-explainer box-indent from-content-api" itemprop="description" data-link-name="explainer">
+        <p class="story-explainer from-content-api" itemprop="description" data-link-name="explainer">
             @cleanTrailText(explainer)
         </p>
     </section>
