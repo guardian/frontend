@@ -74,14 +74,8 @@ define([
             var sections = new Sections();
             var search = new Search(config);
             common.mediator.on('page:common:ready', function(config, context) {
-                var header = bonzo(context.querySelector('header'));
-                if(!header.hasClass('initialised')) {
-                    header.addClass('initialised');
-                    navControl.init(context);
-                    sections.init(context);
-                } else {
-                    navControl.closeGlobally();
-                }
+                navControl.init(context);
+                sections.init(context);
                 search.init(context);
             });
         },
@@ -197,18 +191,21 @@ define([
             }
         },
 
-        prepareSwipe: function() {
+        getSwipeSequence: function(callback) {
             ajax({
                 url: '/more-stories' + window.location.pathname,
                 type: 'jsonp',
                 success: function (json) {
-                    if (json.stories) {
-                        modules.startSwipe(json.stories);
+                    if (json.stories && json.stories.length >= 3) {
+                        callback(json.stories);
                     }
                 }
             });
+        },
 
-            var pages = document.querySelector('#swipepages'),
+        startSwipe: function(sequence) {
+            var opts,
+                pages = document.querySelector('#swipepages'),
                 page0 = pages.querySelector('#swipepage-0 .parts'),
                 page1 = pages.querySelector('#swipepage-1 .parts'),
                 page2 = pages.querySelector('#swipepage-2 .parts'),
@@ -223,13 +220,7 @@ define([
             bonzo(page2).append(head.cloneNode(true));
             bonzo(page2).append(bonzo.create(initialBodyHtml));
             bonzo(page2).append(foot.cloneNode(true));
-        },
 
-        startSwipe: function(sequence) {
-            var opts;
-            if (!sequence || sequence.length < 3) {
-                return;
-            }
             opts = {
                 afterShow: function(config) {
                     var swipe = config.swipe;
@@ -239,15 +230,9 @@ define([
                     }
 
                     if( swipe.initiatedBy === 'link') {
-                        ajax({
-                            url: '/more-stories' + window.location.pathname,
-                            type: 'jsonp',
-                            success: function (json) {
-                                if (json.stories) {
-                                    swipe.api.setSequence(json.stories);
-                                    swipe.api.loadSidePanes();
-                                }
-                            }
+                        modules.getSwipeSequence(function(sequence){
+                            swipe.api.setSequence(sequence);
+                            swipe.api.loadSidePanes();
                         });
                     } else {
                         swipe.api.loadSidePanes();
@@ -288,7 +273,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.prepareSwipe();
+            modules.getSwipeSequence(modules.startSwipe);
         }
         common.mediator.emit("page:common:ready", config, context);
     };
