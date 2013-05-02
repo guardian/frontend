@@ -102,11 +102,12 @@ class Front extends AkkaSupport with Logging {
       TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail))
     )),
 
-    "australia" -> new ConfiguredEdition("AU", Seq(
+    "australia" -> new AustraliaConfiguredEdition("AU", Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      TrailblockDescription("commentisfree/commentisfree+world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
+        _section = Some("commentisfree"), orderBy = Some("newest"), editorsPicks=Some(true)),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     ))
 

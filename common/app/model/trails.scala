@@ -3,6 +3,7 @@ package model
 import org.joda.time.DateTime
 import views.support.Style
 import scala.math
+import com.gu.openplatform.contentapi.Api.ItemQuery
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -32,6 +33,15 @@ trait Trail extends Images with Tags {
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
 case class TrailblockDescription(
-    id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false) {
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+    id: String, name: String,
+    numItemsVisible: Int,
+    style: Option[Style] = None,
+    showMore: Boolean = false,
+    _section: Option[String] = None,
+    orderBy: Option[String] = None,
+    editorsPicks: Option[Boolean] = Some(true)
+  ) {
+  lazy val section = _section.getOrElse {
+    id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+  }
 }
