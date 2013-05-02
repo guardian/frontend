@@ -95,16 +95,13 @@ define([
                     linkSelector: '',
 
                     // The CSS selector for the element in each pane that should receive the ajax'd in content
-                    bodySelector: '*',
+                    contentSelector: '*',
 
                     // The name of the query param sent wth Ajax page-fragment requests
                     queryParam: 'frag_width',
 
                     // Initial sequence
-                    sequence: [],
-
-                    // CSS selector for a spinner/busy indicator
-                    loadingIndicator: undefined
+                    sequence: []
                 },
                 useropts
             ),
@@ -127,8 +124,7 @@ define([
             supportsHistory = false,
             supportsTransitions = false,
             inSequence = false,
-            initialised,
-            initialPage,
+            initialPage = true,
             initiatedBy = 'initial',
             noHistoryPush,
             visiblePane = $('#swipepages-inner > #swipepage-1', contentArea)[0],
@@ -162,14 +158,14 @@ define([
                     callback();
                 }
                 else {
-                    $(el).addClass('pending');
+                    el.pending = true;
                     ajax({
                         url: url,
                         method: 'get',
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
                         success: function (spec) {
-                            $(el).removeClass('pending');
+                            delete el.pending;
                             if (spec && spec.html && spec.config) {
                                 // Only use if response still corresponds to the required content for this el
                                 if (el.dataset.url === url) {
@@ -189,16 +185,12 @@ define([
                             }
                         }
                     });
-                    if (o.showSpinner) {
-                        spinner.show();
-                    }
                 }
             }
         }
 
         function populate(el, html) {
-            el.querySelector(opts.bodySelector).innerHTML = html;
-            spinner.hide();
+            el.querySelector(opts.contentSelector).innerHTML = html;
             opts.afterLoad(el);
         }
 
@@ -224,11 +216,6 @@ define([
                 config = {
                     referrer: document.referrer
                 };
-                /*
-                if (supportsHistory) {
-                    ? create cache obj from the initial page from .parts__body and the config obj
-                }
-                */
             }
             else {
                 url = el.dataset.url;
@@ -266,24 +253,6 @@ define([
             // Fire the main aftershow callback
             opts.afterShow(config);
         }
-
-        var spinner = (function () {
-            var
-                el = $(opts.loadingIndicator),
-                obj = {};
-            if(el.length) {
-                obj.show = function () {
-                    el.show();
-                };
-                obj.hide = function () {
-                    el.hide();
-                };
-            }
-            else {
-                obj.show = obj.hide = noop;
-            }
-            return obj;
-        }());
 
         function setSequencePos(url) {
             sequencePos = posInSequence(normalizeUrl(url));
@@ -420,11 +389,10 @@ define([
             
             // Only load if not already loaded into this pane
             if (el.dataset.url !== url) {
-                //el.querySelector(opts.bodySelector).innerHTML = ''; // Apparently this is better at preventing memory leaks that jQuert's .empty()
+                //el.querySelector(opts.contentSelector).innerHTML = ''; // Apparently this is better at preventing memory leaks that jQuert's .empty()
                 load({
                     url: url,
                     container: el,
-                    showSpinner: doSlideIn,
                     callback: function () {
                         // before slideInPane, confirm that this pane hasn't had its url changed since the request was made
                         if (doSlideIn && el.dataset.url === url) {
@@ -517,8 +485,6 @@ define([
             return;
         }
 
-        initialPage = normalizeUrl(window.location.href);
-
         setSequence(opts.sequence);
 
         // SwipeView init
@@ -550,7 +516,7 @@ define([
         body.addClass('has-swipe');
 
         common.mediator.on('module:swipenav:pane:loaded', function(el){
-            if(el === visiblePane && !$(el).hasClass('pending')) {
+            if(el === visiblePane && !el.pending) {
                 doAfterShow(el);
             }
         });

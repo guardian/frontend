@@ -200,8 +200,8 @@ define([
 
         startSwipe: function(sequence) {
             var
-                linkSelector = '',
-                //linkSelector = 'a:not(.control)',
+                //linkSelector = '',
+                linkSelector = 'a:not(.control)',
                 opts,
                 pages = document.querySelector('#swipepages'),
                 page0 = pages.querySelector('#swipepage-0 .parts'),
