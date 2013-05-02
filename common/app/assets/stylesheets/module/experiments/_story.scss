@@ -33,16 +33,14 @@ $orange: #FF7F00;
   color: #fff;
 }
 
-.story-sub-head {
-  @extend %type-6;
-  color: $orange;
-  margin-bottom: $baseline*2;
+.story-overview .story-title {
+  margin-bottom: 12px;
 }
 
 /* ==========================================================================
-   Story-latest article
+   Story articles
    ========================================================================== */
-.story-latest {
+.story-container {
 
   .article-head {
     padding: 0px 10px;
@@ -279,7 +277,7 @@ $orange: #FF7F00;
   margin: 0px;
   font-family: $serifheadline;
   font-weight: 600;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.2em;
   color: #000;
 }
@@ -291,9 +289,13 @@ $orange: #FF7F00;
 .agent__body {
   margin-top: 12px;
   font-family: $sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
   color: #000;
+}
+
+.story-agents .cta-new__text--center {
+  color: #929396;
 }
 
 /* ==========================================================================
@@ -363,9 +365,13 @@ $orange: #FF7F00;
 
   .i {
     left: 2px;
-    bottom: 8px;
-    @include rotate(-90deg);
   }
+}
+
+.cta-new__icn--right,
+i.is-open.cta-new__icn--right {
+  bottom: 8px !important;
+  @include rotate(-90deg);
 }
 
 .cta-new__btn--left {
