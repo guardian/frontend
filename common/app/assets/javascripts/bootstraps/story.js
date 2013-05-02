@@ -23,7 +23,6 @@ define([
             common.mediator.on('page:story:ready', function(config, context) {
                 var $ = common.$g,
                     timeline = context.querySelector('.timeline'),
-                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
                     hidden = true,
                     text = {
                         show: 'View more',
@@ -31,7 +30,7 @@ define([
                     };
 
                 if(timeline) {
-                    bean.on(timeline, eventType, '.js-more', function(e) {
+                    bean.on(timeline, 'click', '.js-more', function(e) {
                         var block = $(this).parent(),
                             linkText = text[hidden ? 'hide' : 'show'];
 
@@ -41,9 +40,6 @@ define([
                         $('.cta-new', block).attr('data-link-name', linkText);
                         hidden = !hidden;
                     });
-
-                    //Open first block by default
-                    //bean.fire(timeline.querySelector('.event__title'), 'click');
                 }
             });
         },
