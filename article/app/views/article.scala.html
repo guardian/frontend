@@ -1,7 +1,7 @@
-@(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 @main(article, Switches.all){ }{
 
-    @fragments.articleBody(article, storyPackage, edition)
+    @fragments.articleBody(article, storyPackage)
 
 }

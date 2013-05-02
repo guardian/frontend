@@ -1,4 +1,4 @@
-@(metaData:Page, article: Article, edition: String, storyPackage: List[Trail])(implicit request: RequestHeader)
+@(metaData:Page, article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 @main(metaData, Switches.all){  }{
 
@@ -13,7 +13,7 @@
             <h2 class="article-zone type-2 margin-bottom cf">Article header</h2>
 
             @{
-                val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive, edition).toString()
+                val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive).toString()
                 fragments.module("dateline", "Dateline", datelineHTML, "Will show a 'LIVE' label where the content is a currently-updating liveblog.")
             }
 
@@ -194,7 +194,7 @@
             }
 
             @{
-                val frontSectionHeadHTML = views.html.fragments.headers.frontSectionHead(TrailblockDescription("lifeandstyle", "Life & Style", 5), "UK").toString()
+                val frontSectionHeadHTML = views.html.fragments.headers.frontSectionHead(TrailblockDescription("lifeandstyle", "Life & Style", 5), Some(Edition(request))).toString()
                 fragments.module("front-section-head", "Front section head", frontSectionHeadHTML, "Usually used as section head on network front")
             }
         <section>

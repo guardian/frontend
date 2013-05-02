@@ -67,12 +67,12 @@ define([
                 }
             });
         }
+        
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('front', config);
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();

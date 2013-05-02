@@ -98,7 +98,7 @@ define([
                 jsonpCallbackName: 'autoUpdate',
                 success: function (response) {
                     if (!response) {
-                        common.mediator('module:error', 'Failed to load auto-update: ' + options.path, 'autoupdate.js');
+                        common.mediator.emit('module:error', 'Failed to load auto-update: ' + options.path, 'autoupdate.js');
                         return;
                     }
                     if(response.refreshStatus === false) {

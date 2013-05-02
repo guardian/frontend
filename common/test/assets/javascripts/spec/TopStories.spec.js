@@ -16,7 +16,10 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
             config = { pathPrefix: "fixtures", page: { edition: 'uk' }};
 
         beforeEach(function () {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             fixtures.render(conf)
         });
 

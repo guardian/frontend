@@ -79,7 +79,7 @@ class FrontController extends Controller with Logging with JsonTrails {
   
   def render(path: String) = Action { implicit request =>
 
-    val edition = Site(request).edition
+    val edition = Edition(request)
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
@@ -105,10 +105,11 @@ class FrontController extends Controller with Logging with JsonTrails {
   
   def renderTrails(path: String) = Action { implicit request =>
 
-    val edition = Site(request).edition
+    val edition = Edition(request)
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
       case "australia" => AustraliaNetworkFrontPage
@@ -116,7 +117,11 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     // get the first trailblock
     val trailblock: Option[Trailblock] = front(path, edition).headOption
-    if (trailblock.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblock.isEmpty) {
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails

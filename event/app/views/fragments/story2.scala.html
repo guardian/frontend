@@ -1,4 +1,4 @@
-@(story: model.Story, edition: String)
+@(story: model.Story, page: StoryPage)(implicit request: RequestHeader)
 
 <div class="margin-top margin-bottom">
     <div class="story-package-title">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="story-package-detail">
-        @fragments.latest(story, edition, 2)
+        @fragments.latest(story, page, 2)
         @fragments.quote(story, 0)
         @fragments.explainer(story)
         @fragments.quote(story, 1)

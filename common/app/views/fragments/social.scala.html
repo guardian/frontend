@@ -1,8 +1,10 @@
-@(url: String, headline: String)
+@(page: MetaData)(implicit request: RequestHeader)
 
 @import CommonSwitches.SocialSwitch
 
 @if(SocialSwitch.isSwitchedOn) {
+
+@defining(page.canonicalUrl.getOrElse(s"http://$Host(request)/${page.id}")){ url =>
     <ul class="social">
         <li class="fb social-network">
             <a  class="social-btn"
@@ -14,14 +16,14 @@
        <li class="twitter social-network">
             <a  class="social-btn"
                 data-link-name="social-twitter"
-                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(headline)&url=@helper.urlEncode(url)">
+                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&url=@helper.urlEncode(url)">
                 <span>Twitter</span>
             </a>
         </li>
         <li class="linkedin social-network">
             <a  class="social-btn"
                 data-link-name="social-linkedin"
-                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(headline)&source=The+Guardian">
+                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(page.webTitle)&source=The+Guardian">
                 <span>LinkedIn</span>
             </a>
         </li>
@@ -34,4 +36,5 @@
             </a>
         </li>
     </ul>
+    }
 }

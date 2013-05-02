@@ -1,16 +1,10 @@
 @()
 
-@import CommonSwitches._
-
-@if(CssLazyLoadSwitch.isSwitchedOn) {
-	<style type="text/css">
-	    @Html(io.Source.fromFile("common/app/assets/stylesheets/head.min.css").mkString)
-        .i { background-image: url(@Static("images/global/sprite.png")); }
-	</style>
-} else {
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/main.min.css")" />
-}
+<style type="text/css">
+    @Html(Head.css)
+    .i,.caption:before,figcaption:before { background-image: url(@Static("images/global/sprite.png")); }
+</style>
 
 <style class="initial" data-cache-name="WebEgyptial" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.js")"></style>
 
-<style class="initial" data-cache-name="WebEgyptianNav" data-cache-file-woff="@Static("fonts/WebEgyptianNav.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptianNav.ttf.js")" data-min-width="600"></style>
+<style class="initial" data-cache-name="WebEgyptianNav" data-cache-file-woff="@Static("fonts/WebEgyptianNav.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptianNav.ttf.js")" data-min-width="300"></style>

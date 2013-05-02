@@ -7,20 +7,23 @@
         <div class="story-container">
             <h1 class="story-title story-storyline">@story.title</h1>
             
-            @fragments.latest(story, page.edition, 2)
+            @fragments.latest(story, page, 2)
 
+            @fragments.explainer(story)
             @fragments.reaction(story)
 
             <div class="story-content">
                 @fragments.quote(story, 0)
-                @fragments.explainer(story)
-                @fragments.quote(story, 1)
                 @fragments.agents(story)
+                @fragments.quote(story, 1)
             </div>
 
             @fragments.places(story)
             @fragments.pictures(story)
             @fragments.timeline(story)
+            @fragments.feedback()
         </div>
+
+        <div class="js-popular" role="complementary"></div>
     }
 }

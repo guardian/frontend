@@ -11,6 +11,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
 import play.api.libs.concurrent.Execution.Implicits._
+import common.editions.Uk
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -23,8 +24,11 @@ case class Agent(
   importance: Int = 0,
   role: Option[String] = None,
   picture: Option[String] = None,
+  url: Option[String] = None,
   rdfType: Option[String] = None // Eg, http://schema.org/Person
-  ) {}
+  ) {
+    lazy val hasLink = url.isDefined && name.isDefined
+}
 
 case class Event(
     title: String,
@@ -53,7 +57,7 @@ object Event {
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
 
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote, c.headlineOverride))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   
@@ -75,7 +79,7 @@ case class Story(
   lazy val places = events.flatMap(_.places)
   lazy val hasPlaces = places.nonEmpty
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val agents = events.flatMap(_.agents).sortBy(_.importance).reverse
+  lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis)
   lazy val hasReaction: Boolean = reaction.nonEmpty
@@ -152,7 +156,7 @@ object Story {
     private def loadContent(parsedStory: ParsedStory): Story = {
         val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
-        Await.result(ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
+        Await.result(ContentApi.search(Uk).showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
           Story(parsedStory, response.results.toSeq)
         }, 2.seconds)
     }
@@ -184,7 +188,8 @@ private case class ParsedContent(
   colour: Int,
   shares: Option[Int] = None,
   comments: Option[Int] = None,
-  quote: Option[Quote] = None)
+  quote: Option[Quote] = None,
+  headlineOverride: Option[String] = None)
 
 private case class ParsedPlace(id: String)
 
