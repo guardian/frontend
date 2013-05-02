@@ -3,12 +3,13 @@ package controllers.front
 import model.TrailblockDescription
 import scala.Some
 import model.Trailblock
+import common.Edition
 
 /*
   Responsible for handling the blocks of the front for an edition
   Responsibilites include de-duping
  */
-class FrontEdition(val edition: String, val descriptions: Seq[TrailblockDescription]) {
+class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescription]) {
 
   val manualAgents = descriptions.map(TrailblockAgent(_, edition))
 

@@ -11,7 +11,7 @@ import model.TrailblockDescription
 import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
-class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription])
+class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescription])
     extends FrontEdition(edition, descriptions)
     with AkkaSupport with Logging {
 
@@ -41,7 +41,7 @@ class ConfiguredEdition(edition: String, descriptions: Seq[TrailblockDescription
   }
 
   private def refreshAgents(configString: String, oldAgents: Seq[TrailblockAgent]) = {
-    val newTrailblocks = toBlocks(parse(configString) \ (edition.toLowerCase))
+    val newTrailblocks = toBlocks(parse(configString) \ (edition.id.toLowerCase))
 
     //only replace blocks if they are different (do not replace an old block with the same new block)
     val newAgents: Seq[TrailblockAgent] = newTrailblocks.map { newDescription =>

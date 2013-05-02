@@ -1,4 +1,4 @@
-@(block: Trailblock, edition: String)(implicit request: RequestHeader)
+@(block: Trailblock)(implicit request: RequestHeader)
 
 <section class="front-section zone-@block.description.section" data-link-name="block | @block.description.name">
 
@@ -6,7 +6,7 @@
 	    @if("/" + block.description.id == request.path) {
             @fragments.headers.sectionHead(block.description.name)
 	    } else {
-	       @fragments.headers.frontSectionHead(block.description, edition)
+	       @fragments.headers.frontSectionHead(block.description, Some(Edition(request)))
         }
 	}
 
