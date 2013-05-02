@@ -56,8 +56,8 @@ define(['common'], function (common) {
             } else {
                 data = dataWithType.substring(0, typeLastIndex),
                 type = dataWithType.substring(typeLastIndex + 1);
-                // fix bug
-                if (type === 'type') {
+                // fix bug(s)
+                if (type === 'type' || ((data === 'gu.prefs.ab.participation' || data === 'gu.prefs.ab.current') && type === 'string')) {
                     type = storage._migrate(key, data);
                 }
             }
@@ -94,6 +94,8 @@ define(['common'], function (common) {
             var type = 'string';
             switch (key) {
                 case 'gu.ads.audsci':
+                case 'gu.prefs.ab.participation':
+                case 'gu.prefs.ab.current':
                     type = 'object';
                     break;
                 case 'gu.prefs.switch.shared-wisdom-toolbar':
