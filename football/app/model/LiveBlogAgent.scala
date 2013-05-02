@@ -1,6 +1,6 @@
 package model
 
-import common.{ AkkaSupport, Logging }
+import common.{Edition, AkkaSupport, Logging}
 import conf.ContentApi
 import akka.actor.Cancellable
 import java.util.concurrent.TimeUnit._
@@ -10,15 +10,18 @@ import scala.concurrent.duration._
 
 trait LiveBlogAgent extends AkkaSupport with Logging {
 
-  private val usAgent = play_akka.agent[Option[Trail]](None)
-  private val ukAgent = play_akka.agent[Option[Trail]](None)
+  import Edition.{all => editions}
 
+  private val agents = editions.map(edition => edition.id -> play_akka.agent[Option[Trail]](None)).toMap
+
+  // TODO editions
   def refreshLiveBlogs() = {
-    findBlogFor("UK").foreach(ukAgent.send(_))
-    findBlogFor("US").foreach(usAgent.send(_))
+    editions.foreach{ edition =>
+      findBlogFor(edition).foreach(blog => agents(edition.id).send(blog))
+    }
   }
 
-  private def findBlogFor(edition: String) = {
+  private def findBlogFor(edition: Edition) = {
     val tag = s"football/series/saturday-clockwatch|tone/minutebyminute,(${ContentApi.supportedTypes})"
     log.info(s"Fetching football blogs with tag: $tag")
     ContentApi.item("/football", edition)
@@ -41,20 +44,17 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
 
   private def isClockWatch(content: Content) = content.tags.exists(_.id == "football/series/saturday-clockwatch")
 
-  def blogFor(edition: String) = edition match {
-    case "US" => usAgent()
-    case _ => ukAgent()
-  }
+  // TODO EDITIONS
+  def blogFor(edition: Edition) = agents(edition.id)
 
   def close() {
-    ukAgent.close()
-    usAgent.close()
+    agents.values.foreach(_.close())
   }
 
 }
 
 object LiveBlog extends LiveBlogAgent {
-  def apply(edition: String) = blogFor(edition)
+  def apply(edition: Edition) = blogFor(edition)()
 
   private var schedule: Option[Cancellable] = None
 

@@ -1,4 +1,4 @@
-@(article: Article, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 <h2 class="article-zone type-1">
     <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
@@ -8,7 +8,7 @@
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="article-head">
-        @fragments.dateline(article.webPublicationDate, article.isLive, edition)
+        @fragments.dateline(article.webPublicationDate, article.isLive)
 
         @fragments.headline(article.headline)
 
@@ -48,9 +48,7 @@
     
 </article>
 
-@article.canonicalUrl.map{ url =>
-    @fragments.social(url, article.headline)
-}
+@fragments.social(article)
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

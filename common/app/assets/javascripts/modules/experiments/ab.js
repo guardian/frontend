@@ -12,7 +12,6 @@ define([
     LocalElectionStory) {
     
     var TESTS = {
-            RelatedContentV2 : new RelatedContent(),
             LocalElectionStory: new LocalElectionStory()
         };
 
@@ -53,7 +52,12 @@ define([
     }
 
     function getParticipation() {
-        return (userPrefs.get(participationKey)) ? userPrefs.get(participationKey).tests : [];
+        var tests = (userPrefs.get(participationKey)) ? userPrefs.get(participationKey).tests : [];
+        // handle previous bug when tests was set to length
+        if (typeof tests === "number") {
+            tests = [];
+        }
+        return tests;
     }
 
     function setParticipation(testName) {

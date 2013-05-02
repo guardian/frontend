@@ -6,7 +6,7 @@
 
     <div class="nav-container">
         <ul class="nav nav--global" data-link-name="Sections">
-            @Navigation(page, request).map{ nav =>
+            @Edition(request).navigation(page).map{ nav =>
                 <li class="nav__item @if(nav.currentFor(page)){is-active}">
                     <a href="@nav.name.href" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
                 </li>
