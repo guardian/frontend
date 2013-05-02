@@ -46,15 +46,6 @@ define([
         return a;
     }
 
-    var deBounce = (function () {
-        var timers = {};
-        return function (fn, time, key) {
-            key = key || 1;
-            clearTimeout(timers[key]);
-            timers[key] = setTimeout(fn, time);
-        };
-    }());
-
     var uid = (function () {
         var i = 0;
         return {
@@ -95,10 +86,7 @@ define([
                     linkSelector: '',
 
                     // The CSS selector for the element in each pane that should receive the ajax'd in content
-                    contentSelector: '*',
-
-                    // The name of the query param sent wth Ajax page-fragment requests
-                    queryParam: 'frag_width',
+                    contentSelector: '*:first-child',
 
                     // Initial sequence
                     sequence: []
@@ -124,9 +112,8 @@ define([
             supportsHistory = false,
             supportsTransitions = false,
             inSequence = false,
-            initialPage = true,
             initiatedBy = 'initial',
-            noHistoryPush,
+            noHistoryPush = false,
             visiblePane = $('#swipepages-inner > #swipepage-1', contentArea)[0],
             pageData,
             panes,
@@ -141,7 +128,7 @@ define([
                 url = o.url,
                 el = o.container,
                 callback = o.callback || noop,
-                spec,
+                frag,
                 rx,
                 i;
             if (url && el) {
@@ -149,11 +136,11 @@ define([
                 el.dataset.url = url;
                     
                 // Ask the cache
-                spec = sequenceCache[url];
+                frag = sequenceCache[url];
 
                 // Is cached ?
-                if (spec && spec.html) {
-                    populate(el, spec.html);
+                if (frag && frag.html) {
+                    populate(el, frag.html);
                     common.mediator.emit('module:swipenav:pane:loaded', el);
                     callback();
                 }
@@ -164,25 +151,21 @@ define([
                         method: 'get',
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
-                        success: function (spec) {
+                        success: function (frag) {
+                            var html;
+
                             delete el.pending;
-                            if (spec && spec.html && spec.config) {
-                                // Only use if response still corresponds to the required content for this el
-                                if (el.dataset.url === url) {
-                                    populate(el, spec.html);
-                                    common.mediator.emit('module:swipenav:pane:loaded', el);
-                                    callback();
-                                }
-                                sequenceCache[url] = sequenceCache[url] || {};
-                                sequenceCache[url].html = spec.html;
-                                sequenceCache[url].config = spec.config;
-                            } else {
-                                spec = {
-                                    html: '<div class="swipepage-msg">Oops. This page might be broken?</div>',
-                                    config: {}
-                                };
-                                populate(el, spec);
+                            frag   = frag || {};
+                            html   = frag.html || '<div class="swipepage-msg">Oops. This page might be broken?</div>';
+
+                            if (el.dataset.url === url) {
+                                populate(el, html);
+                                common.mediator.emit('module:swipenav:pane:loaded', el);
+                                callback();
                             }
+                            sequenceCache[url] = sequenceCache[url] || {};
+                            sequenceCache[url].html = html;
+                            sequenceCache[url].config = frag.config || {};
                         }
                     });
                 }
@@ -211,11 +194,12 @@ define([
             updateHeight();
             throttle = false;
 
-            if (initialPage) {
-                initialPage = false;
+            if (initiatedBy === 'initial') {
+                url = document.location.href;
                 config = {
                     referrer: document.referrer
                 };
+                doHistoryPush({ id: uid.nxt() }, document.title, url, true);
             }
             else {
                 url = el.dataset.url;
@@ -230,18 +214,14 @@ define([
                     document.title = div.firstChild.nodeValue;
                 }
 
-                if (!noHistoryPush) {
-                    var state = {
-                        id: uid.nxt(),
-                        sequencePos: sequencePos
-                    };
-                    doHistoryPush(state, document.title, url);
-                }
-                noHistoryPush = false;
-
                 // Update canonical tag using pushed location
                 canonicalLink.attr('href', window.location.href);
             }
+
+            if (!noHistoryPush) {
+                doHistoryPush({ id: uid.nxt() }, document.title, url);
+            }
+            noHistoryPush = false;
 
             // Add swipe info & api to the config
             config.swipe = {
@@ -255,16 +235,16 @@ define([
         }
 
         function setSequencePos(url) {
-            sequencePos = posInSequence(normalizeUrl(url));
+            sequencePos = getSequencePos(normalizeUrl(url));
             inSequence = (sequencePos > -1);
         }
 
-        function posInSequence(url) {
+        function getSequencePos(url) {
             url = sequenceCache[normalizeUrl(url)];
             return url ? url.pos : -1;
         }
 
-        function urlInSequence(pos) {
+        function getSequenceUrl(pos) {
             return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
         }
 
@@ -277,22 +257,19 @@ define([
                 sequence = arr;
                 sequenceLen = len;
                 sequenceCache = {};
-                window.console.log('Sequence:');
+
                 for (i = 0; i < len; i += 1) {
                     arr[i].pos = i;
                     sequenceCache[arr[i].url] = arr[i];
-                    window.console.log(i + " " + arr[i].url);
+                    //window.console.log(i + " " + arr[i].url);
                 }
                 setSequencePos(window.location.href);
             }
         }
 
         function gotoUrl(url, dir) {
-            var pos = posInSequence(url);
-            if (normalizeUrl(window.location.pathname) === url) {
-                dir = 0; // load back into visible pane
-            }
-            else if (typeof dir === 'undefined') {
+            var pos = getSequencePos(url);
+            if (typeof dir === 'undefined') {
                 dir = pos > -1 && pos < sequencePos ? -1 : 1;
             }
             preparePane({
@@ -307,7 +284,7 @@ define([
             // dir = -1 : left
 
             if (dir === 0) {
-                return urlInSequence(sequencePos);
+                return getSequenceUrl(sequencePos);
             }
             // Cases where we've got next/prev overrides in the current page's data
             else if (config.nextUrl && dir === 1) {
@@ -318,18 +295,18 @@ define([
             }
             // Cases where we've got an sequence position already
             else if (sequencePos > -1 && inSequence) {
-                return urlInSequence(mod(sequencePos + dir, sequenceLen));
+                return getSequenceUrl(mod(sequencePos + dir, sequenceLen));
             }
             else if (sequencePos > -1 && !inSequence) {
                 // We're displaying a non-sequence page; have current-sequence-page to the left, next-sequence-page to right
-                return urlInSequence(mod(sequencePos + (dir === 1 ? 1 : 0), sequenceLen));
+                return getSequenceUrl(mod(sequencePos + (dir === 1 ? 1 : 0), sequenceLen));
             }
             // Cases where we've NOT yet got an sequence position
             else if (dir === 1) {
-                return urlInSequence(1);
+                return getSequenceUrl(1);
             }
             else {
-                return urlInSequence(0);
+                return getSequenceUrl(0);
             }
         }
 
@@ -342,12 +319,16 @@ define([
 
         function validateClick(event) {
             var link = event.currentTarget;
+
             // Middle click, cmd click, and ctrl click should open links in a new tab as normal.
             if (event.which > 1 || event.metaKey || event.ctrlKey) { return; }
+
             // Ignore cross origin links
             if (location.protocol !== link.protocol || location.host !== link.host) { return; }
+
             // Ignore anchors on the same page
             if (link.hash && link.href.replace(link.hash, '') === location.href.replace(location.hash, '')) { return; }
+
             return true;
         }
 
@@ -356,21 +337,12 @@ define([
             if (pos !== sequencePos && pos < sequenceLen) {
                 dir = pos < sequencePos ? -1 : 1;
                 sequencePos = pos;
-                gotoUrl(urlInSequence(pos), dir);
+                gotoUrl(getSequenceUrl(pos), dir);
             }
         }
 
-        function doHistoryPush(state, title, url) {
-            window.history.pushState(state, title, url);
-        }
-
-        function genChecksum(s) {
-            var i;
-            var chk = 0x12345678;
-            for (i = 0; i < s.length; i++) {
-                chk += (s.charCodeAt(i) * i);
-            }
-            return chk;
+        function doHistoryPush(state, title, url, replace) {
+            window.history[replace? 'replaceState' : 'pushState'](state, title, url);
         }
 
         function preparePane(o) {
@@ -383,7 +355,8 @@ define([
             if (!url) {
                 url = getAdjacentUrl(dir);
             }
-            url = normalizeUrl(url); // normalize
+
+            url = normalizeUrl(url);
 
             el = panes.masterPages[mod3(paneNow + dir)];
             
@@ -459,9 +432,9 @@ define([
             }
         };
 
-        // MAIN: Render the initial content
+        // MAIN
 
-        // Detect capabilities
+        // Detect History API support
         if (window.history && history.pushState) {
             supportsHistory = true;
             // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
@@ -474,7 +447,7 @@ define([
             return;
         }
 
-        // Tests for vendor specific prop
+        // Test for vendor-specific Transition support
         while(vendorPrefixes.length) {
             if (vendorPrefixes.pop() + 'Transition' in document.body.style) {
                 supportsTransitions = true;
@@ -485,6 +458,7 @@ define([
             return;
         }
 
+        // Set the initial sequence
         setSequence(opts.sequence);
 
         // SwipeView init
@@ -515,20 +489,29 @@ define([
         // Set a body class. Might be useful.
         body.addClass('has-swipe');
 
+        // Render panes that come into view, and that are not still loading
         common.mediator.on('module:swipenav:pane:loaded', function(el){
             if(el === visiblePane && !el.pending) {
                 doAfterShow(el);
             }
         });
 
-        // Bind clicks
+        // Fire the first pane-loaded event
+        common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
+
+        // BINDINGS
+
+        // Bind clicks to cause swipe-in transitions
         if (opts.linkSelector){
             bean.on(document, 'click', opts.linkSelector, function (e) {
-                var
-                    url;
+                var url;
+
                 if (!validateClick(e)) { return true; }
+
                 e.preventDefault();
+
                 url = normalizeUrl($(this).attr('href'));
+
                 if (url === normalizeUrl(window.location.href)) {
                     // Force a complete reload if the link is for the current page
                     window.location.reload(true);
@@ -561,6 +544,7 @@ define([
             }
         });
 
+        // Bind left/right keyboard keys
         bean.on(document, 'keydown', function (e) {
             initiatedBy = 'keyboard_arrow';
             switch(e.keyCode) {
@@ -573,20 +557,23 @@ define([
 
         // Bind back/forward button behavior
         window.onpopstate = function (event) {
-            var
-                state = event.state,
+            var state = event.state,
                 popId,
                 dir;
+
             // Ignore inital popstate that some browsers fire on page load
             if (!state) { return; }
+
             initiatedBy = 'browser_history';
             popId = state.id ? state.id : -1;
+
             // Deduce the bac/fwd pop direction
             dir = popId < uid.get() ? -1 : 1;
             uid.set(popId);
+
             // Prevent a history stats from being pushed
             noHistoryPush = true;
-            sequencePos = state.sequencePos;
+
             // Reveal the newly poped location
             gotoUrl(normalizeUrl(window.location.href), dir);
         };
@@ -595,8 +582,6 @@ define([
         setInterval(function(){
             updateHeight();
         }, 509); // Prime number, for good luck
-
-        common.mediator.emit('module:swipenav:pane:loaded', visiblePane);
 
         // Return an API
         return api;
