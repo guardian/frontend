@@ -87,12 +87,13 @@ define([
             }).init();
         },
 
-        initAutoUpdate: function(container, switches) {
+        initAutoUpdate: function(container, switches, responseSelector) {
             var a = new AutoUpdate({
                 path: window.location.pathname,
                 delay: 10000,
                 attachTo: container,
-                switches: switches
+                switches: switches,
+                responseSelector: responseSelector
             }).init();
         },
 
@@ -131,7 +132,7 @@ define([
             case 'live':
                 modules.showMoreMatches(context);
                 if (context.querySelector('.match.live-match')) {
-                    modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches);
+                    modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches, '.matches-container > *');
                 }
                 break;
             case 'fixtures':
@@ -167,8 +168,7 @@ define([
                                 "summary"   : context.querySelector('.match-summary'),
                                 "stats"     : context.querySelector('.match-stats')
                             },
-                            config.switches,
-                            true
+                            config.switches
                         );
                     }
                 }

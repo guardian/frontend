@@ -47,11 +47,17 @@ define([
 
                 //Check if we are handling single fragment
                 if(attachTo.nodeType) {
-                    attachTo.innerHTML = res.html;
-
+                    var $attachTo = bonzo(attachTo);
+                    // in case we don't want to show the full response
+                    if (options.responseSelector) {
+                        var response = bonzo.create('<div>' + res.html + '<div>');
+                        $attachTo.html(common.$g(options.responseSelector, response[0]));
+                    } else {
+                        $attachTo.html(res.html);
+                    }
                     // add a timestamp to the attacher
-                    bonzo(attachTo).attr('data-last-updated', date);
-                //Multiple frgamnets to update
+                    $attachTo.attr('data-last-updated', date);
+                //Multiple fragments to update
                 } else {
                     for (var view in attachTo) {
                         if(attachTo.hasOwnProperty(view)) {
