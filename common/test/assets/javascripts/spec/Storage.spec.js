@@ -100,7 +100,7 @@ define(['common', 'modules/storage'], function(common, storage) {
                 ['gu.prefs.front-trailblocks-UK', 'culture,business', 'culture,business', 'string'],
                 ['gu.prefs.switch.shared-wisdom-toolbar', 'false', false, 'boolean'],
                 ['gu.prefs.switch.showErrors', 'true', true, 'boolean'],
-                ['gu.prefs.aware', '{"foo":"bar"}', {foo:"bar"}, 'boolean']
+                ['gu.prefs.aware', '{"foo":"bar"}', {foo:"bar"}, 'object']
             ].forEach(function(data) {
                 testMigration(data[0], data[1], data[2]);
             });
