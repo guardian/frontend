@@ -19,7 +19,7 @@
 @if(story.hasEvents) {
     @story.events.take(1).map { event =>
         @if(event.hasContent) {
-            <section class="story-pictures" data-link-name="Pictures">
+            <section class="story-pictures h" data-link-name="Pictures">
                 <h2 class="story-title story-title--section story-title--white">
                     @story.labels.getOrElse("pictures", "In pictures")
                 </h2>
@@ -40,7 +40,7 @@
                         </button>
                         <span class="cta-new__text cta-new__text--center"></span>
                         <button class="cta-new__btn cta-new__btn--right" data-link-name="Next">
-                            <i class="i i-arrow-white-down cta-new__icn"></i>
+                            <i class="i i-arrow-white-down cta-new__icn--right"></i>
                         </button>
                     </div>
                 </div>
