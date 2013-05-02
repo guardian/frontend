@@ -2,7 +2,7 @@
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail" data-link-name="trail">
+        <li class="trail" data-link-name="trail" data-trail-tags="@trail.tags.map(_.id).mkString(",")">
             @fragments.trails.thumbnail(trail, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
         </li>
     }
