@@ -1,4 +1,4 @@
-@(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+@(video: Video, storyPackage: List[Trail])(implicit request: RequestHeader)
 
 <h2 class="article-zone type-1">
     <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
@@ -8,7 +8,7 @@
          itemscope itemtype="@video.schemaType" role="main">
 
     <header class="article-head">
-        @fragments.dateline(video.webPublicationDate, video.isLive, edition)
+        @fragments.dateline(video.webPublicationDate, video.isLive)
         @fragments.headline(video.headline)
     </header>
 
@@ -30,7 +30,7 @@
     @fragments.standfirst(video)
 </div>
 
-@fragments.social(video.canonicalUrl.get, video.headline)
+@fragments.social(video)
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

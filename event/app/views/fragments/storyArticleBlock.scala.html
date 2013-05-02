@@ -1,4 +1,4 @@
-@(story: model.Story, edition: String)
+@(story: model.Story)(implicit request: RequestHeader)
 
 <div class="margin-top margin-bottom">
     @fragments.quote(story, 0)

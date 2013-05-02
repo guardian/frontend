@@ -5,7 +5,7 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
+                    @fragments.dateline(a.webPublicationDate, a.isLive)
 
                    <h2 class="article-headline">@a.headlineOverride</h2>
 
@@ -41,9 +41,7 @@
                     </p>
                 </div>
 
-                @defining(page.canonicalUrl.getOrElse("http://" + Site(request).host + "/" + page.id)) { url =>
-                    @fragments.social(url, story.title)
-                }
+                @fragments.social(page)
             </article>
         }
     }

@@ -33,7 +33,7 @@ object GalleryController extends Controller with Logging {
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)

@@ -2,7 +2,7 @@ package controllers
 
 import model.{ Trail, Cached, Content }
 import play.api.mvc.{ RequestHeader, Action, Controller }
-import common.{ Site, JsonComponent, Logging, JsonNotFound }
+import common._
 import org.joda.time.format.DateTimeFormat
 import conf.ContentApi
 import feed.Competitions._
@@ -68,7 +68,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
-    ContentApi.search(Site(request).edition)
+    ContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))

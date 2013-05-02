@@ -6,8 +6,16 @@ define(function () {
         }
     }
 
+    function add(name, value) {
+        var expires = new Date();
+        expires.setMonth(expires.getMonth() + 5);
+        expires.setDate(1);
+        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + ";";
+    }
+
     return {
-        cleanUp: cleanUp
+        cleanUp: cleanUp,
+        add: add
     };
 
 });
