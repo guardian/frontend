@@ -45,7 +45,7 @@ object MoreStoriesController extends Controller with Logging {
   
   private def getMoreStories(edition: String, path: String)(implicit request: RequestHeader): Future[Either[Seq[Content],Result]] = {
     request.getQueryString("variant").map {
-      case "2" => editorsPicks(edition, path)
+      case "2" => frontTrails(edition, path)
       case _ => mostViewed(edition, path)
     } getOrElse(mostViewed(edition, path))
   }
@@ -53,7 +53,6 @@ object MoreStoriesController extends Controller with Logging {
   private def mostViewed(edition: String, section: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching more stories (most viewed): $section for edition $edition")
     ContentApi.item(section, edition)
-      .tag(None)
       .showMostViewed(true)
       .response.map{ response =>
         val items = SupportedContentFilter(response.mostViewed map { new Content(_) })
@@ -65,36 +64,22 @@ object MoreStoriesController extends Controller with Logging {
       }
       .recover{ suppressApiNotFound }
   }
-
-  private def editorsPicks(edition: String, section: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching more stories (editors picks): $section for edition $edition")
-    ContentApi.item(section, edition)
-      .tag(None)
-      .showEditorsPicks(true)
-      .response.map{ response =>
-        val items = SupportedContentFilter(response.editorsPicks map { new Content(_) })
-        if (!items.isEmpty) {
-          Left(items)
-        } else {
-          Right(NotFound)
-        }
-      }
-      .recover{ suppressApiNotFound }
-  }
   
   private def frontTrails(edition: String, section: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching more stories (front trails): $section for edition $edition")
-    ContentApi.item(path, edition)
-      .pageSize(20)
+    ContentApi.item(section, edition)
       .showEditorsPicks(true)
       .response.map {response =>
-          val section = response.section map { Section(_) }
           val editorsPicks = response.editorsPicks map { new Content(_) }
           val editorsPicksIds = editorsPicks map { _.id }
           val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-          val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
-          ModelOrResult(model, response)
-      }.recover{suppressApiNotFound}
+          val items = editorsPicks ++ latestContent 
+          if (!items.isEmpty) {
+            Left(items)
+          } else {
+            Right(NotFound)
+          }
+      }.recover{ suppressApiNotFound }
   }
   
   private def moreStoriesToJson(path: String, moreStories: Seq[Content]): Seq[JsValue] = {
