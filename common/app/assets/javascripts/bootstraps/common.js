@@ -160,24 +160,19 @@ define([
             });
         },
 
-        loadAdverts: function (config) {
-            common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                if (config.switches && config.switches.adverts) {
-                    Adverts.init(config, context);
-                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-                }
-            });
+        loadAdverts: function () {
+            if (!userPrefs.isOff('adverts')){
+                common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                    if (config.switches && config.switches.adverts) {
+                        Adverts.init(config, context);
+                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                    }
+                });
+            }
         },
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
         },
 
         showSharedWisdomToolbar: function(config) {
@@ -243,7 +238,7 @@ define([
                 },
                 linkSelector: linkSelector,
                 swipeContainer: '#swipepages',
-                bodySelector: '.parts__body',
+                contentSelector: '.parts__body',
                 sequence: sequence
             };
             swipeNav(opts);

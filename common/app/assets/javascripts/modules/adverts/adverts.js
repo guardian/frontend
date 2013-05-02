@@ -29,49 +29,50 @@ function (
     
     var currConfig,
         currContext,
-        adsSwitchedOn,
-        slots;
+        slots,
+        contexts = {};
 
     function init(config, context) {
+        var id = context.id;
+
+        if(id){
+            contexts[id] = context;
+        }
+
         currConfig  = config;
         currContext = context;
         slots = [];
 
         var size = (window.innerWidth > 810) ? 'median' : 'base';
 
-        adsSwitchedOn = !userPrefs.isOff('adverts');
-
         // Run through slots and create documentWrite for each.
         // Other ad types such as iframes and custom can be plugged in here later
-        if (adsSwitchedOn) {
 
-            generateMiddleSlot(currConfig);
-            
-            Array.prototype.forEach.call(document.querySelectorAll('.swipepage'), function(context) {
-                Array.prototype.forEach.call(context.querySelectorAll('.ad-slot'), function(as) {
-                    var container = as.querySelector('.ad-container'),
-                        name,
-                        slot;
-                    // Empty all ads in the dom
-                    container.innerHTML = '';
-                    // Load the currContext ads only
-                    if (context === currContext ) {
-                        name = as.getAttribute('data-' + size),
-                        slot = new DocumentWriteSlot(name, container);
-                        slot.setDimensions(dimensionMap[name]);
-                        slots.push(slot);
-                    }
-                });
-            });
-            
-            if (currConfig.switches.audienceScience) {
-                audienceScience.load(currConfig.page);
-            }
-
-            if (currConfig.switches.quantcast) {
-                quantcast.load();
-            }
+        generateMiddleSlot(currConfig);
         
+        Array.prototype.forEach.call(contexts, function(context){
+            Array.prototype.forEach.call(context.querySelectorAll('.ad-slot'), function(as) {
+                var container = as.querySelector('.ad-container'),
+                    name,
+                    slot;
+                // Empty all ads in the dom
+                container.innerHTML = '';
+                // Load the currContext ads only
+                if (context === currContext) {
+                    name = as.getAttribute('data-' + size),
+                    slot = new DocumentWriteSlot(name, container);
+                    slot.setDimensions(dimensionMap[name]);
+                    slots.push(slot);
+                }
+            });
+        });
+        
+        if (currConfig.switches.audienceScience) {
+            audienceScience.load(currConfig.page);
+        }
+
+        if (currConfig.switches.quantcast) {
+            quantcast.load();
         }
 
         //Make the request to ad server
@@ -83,13 +84,12 @@ function (
 
     function loadAds() {
         domwrite.capture();
-        if (adsSwitchedOn) {
-            //Run through adslots and check if they are on screen. Load if so.
-            for (var i = 0, j = slots.length; i<j; ++i) {
-                //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
-                if (!slots[i].loaded) {
-                    slots[i].render();
-                }
+
+        //Run through adslots and check if they are on screen. Load if so.
+        for (var i = 0, j = slots.length; i<j; ++i) {
+            //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
+            if (!slots[i].loaded) {
+                slots[i].render();
             }
         }
 
