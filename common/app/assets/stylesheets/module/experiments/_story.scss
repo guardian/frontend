@@ -281,7 +281,7 @@ a.trail-story-title {
   margin: 0px;
   font-family: $serifheadline;
   font-weight: 600;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.2em;
   color: #000;
 }
@@ -293,9 +293,13 @@ a.trail-story-title {
 .agent__body {
   margin-top: 12px;
   font-family: $sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
   color: #000;
+}
+
+.story-agents .cta-new__text--center {
+  color: #929396;
 }
 
 /* ==========================================================================
@@ -368,7 +372,8 @@ a.trail-story-title {
   }
 }
 
-.cta-new__icn--right {
+.cta-new__icn--right,
+i.is-open.cta-new__icn--right {
   bottom: 8px !important;
   @include rotate(-90deg);
 }

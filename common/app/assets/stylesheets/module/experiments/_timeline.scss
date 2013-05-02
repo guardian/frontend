@@ -4,8 +4,8 @@
 
 .chapter {
   position: relative;
-  margin-left: 24px;
-  padding:0 0 12px 48px;
+  margin-left: 34px;
+  padding:0 0 12px 46px;
   border-left: 1px solid #333333;
 }
 
@@ -13,9 +13,9 @@
  display: block;
  position: absolute;
  top: 0px;
- left: -20px;
- width: 40px;
- height: 40px;
+ left: -15px;
+ width: 30px;
+ height: 30px;
  background-color: #333333;
  border-radius: 100px;
 }
@@ -23,7 +23,8 @@
 .chapter__marker--small {
   width: 16px;
   height: 16px;
-  left: -56px;
+  left: -54px;
+  top: 6px;
   background-color: #676767;
 }
 
@@ -31,7 +32,7 @@
   font-family: $serifheadline;
   font-size: 1.8rem;
   font-weight: 600;
-  line-height: 2.4rem;
+  line-height: 2.2rem;
   min-height: 44px;
   margin-bottom: 12px;
 }
@@ -66,6 +67,8 @@
 .chapter__article .article-headline {
   background-color: #fff;
   border-top:  none;
+  font-size: 1.6rem;
+  line-height: 2rem;
 }
 
 .chapter__article a { color: #000; }
