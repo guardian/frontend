@@ -78,20 +78,22 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return most read by default" in Fake {
-    val result = makeRequest(article, "1")
+    val result = makeRequest(article)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories(1) should be(Json.toJson(Map("url" -> "/football/blog/2013/apr/30/transfer-targets-rooney-bale-suarez")))
+    stories.size should be(22)
+    stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/01/german-fairytale-champions-league-spiel")))
   }
 
   it should "return most read for variant 1" in Fake {
     val result = makeRequest(article, "1")
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories(1) should be(Json.toJson(Map("url" -> "/football/blog/2013/apr/30/transfer-targets-rooney-bale-suarez")))
+    stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/01/german-fairytale-champions-league-spiel")))
   }
 
-  it should "return editors picks for variant 2" in Fake {
+  it should "return front trails for variant 2" in Fake {
     val result = makeRequest(article, "2")
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
+    stories.size should be(17)
     stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/02/barcelona-bayern-munich-champions-league")))
   }
   
