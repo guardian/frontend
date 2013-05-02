@@ -94,6 +94,8 @@ define(['common'], function (common) {
             var type = 'string';
             switch (key) {
                 case 'gu.ads.audsci':
+                case 'gu.prefs.ab.participation':
+                case 'gu.prefs.ab.current':
                     type = 'object';
                     break;
                 case 'gu.prefs.switch.shared-wisdom-toolbar':
