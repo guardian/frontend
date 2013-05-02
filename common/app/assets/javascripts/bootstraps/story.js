@@ -87,6 +87,9 @@ define([
                     require(swipeLib, function() {
 
                         common.$g('#container').css('overflow', 'hidden');
+                        if(common.$g('figure', '.story-pictures').length) {
+                            common.$g('.story-pictures').removeClass('h');
+                        }
 
                         Array.prototype.forEach.call(swipeContainers, function(el){
 

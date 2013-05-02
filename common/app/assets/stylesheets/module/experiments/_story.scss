@@ -33,6 +33,10 @@ $orange: #FF7F00;
   color: #fff;
 }
 
+.story-overview .story-title {
+  margin-bottom: 12px;
+}
+
 /* ==========================================================================
    Story articles
    ========================================================================== */
@@ -361,9 +365,12 @@ a.trail-story-title {
 
   .i {
     left: 2px;
-    bottom: 8px;
-    @include rotate(-90deg);
   }
+}
+
+.cta-new__icn--right {
+  bottom: 8px !important;
+  @include rotate(-90deg);
 }
 
 .cta-new__btn--left {
