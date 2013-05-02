@@ -61,7 +61,8 @@ define([
         if(getParticipation().length > 0) {
             var tests = getParticipation();
             if(!hasParticipated(testName)) {
-                data = {"tests": tests.push(testName) };
+                tests.push(testName);
+                data = {"tests": tests };
             } else {
                 data = {"tests": tests };
             }
