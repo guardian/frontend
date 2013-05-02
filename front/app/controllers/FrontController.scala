@@ -109,13 +109,18 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
     }
 
     // get the first trailblock
     val trailblock: Option[Trailblock] = front(path, edition).headOption
-    if (trailblock.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblock.isEmpty) {
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails
