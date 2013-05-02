@@ -348,6 +348,17 @@ $orange: #FF7F00;
   }
 }
 
+.cta-new--blue {
+  background-color: #00638E;
+
+  .cta-new__text {
+    color: #fff;
+  }
+  .cta-new__btn--right {
+    border-color: #fff;
+  }
+}
+
 .is-open .cta-new__btn i {
   @include rotate(180deg);
 }
