@@ -18,7 +18,7 @@
 .story-reaction {
   position: relative;
   overflow: auto;
-  min-height: 100px;
+  min-height: 176px;
   margin-bottom: 12px;
   border-top: 1px solid #9D9D9D;
 }
@@ -30,18 +30,14 @@
   z-index: 100;
   padding: 12px 0 0 2px;
   width:60%;
-  min-height: 100px;
-  margin-bottom: 32px;
+  margin-bottom: 0px;
   font-family: $serifheadline;
   font-weight: 200;
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 2.4rem;
 }
 
 .story-reaction__byline {
-  position: absolute;
-  left: 2px;
-  bottom: 48px;
   margin-bottom: 0px;
   font-family: $serifheadline;
   font-weight: 600;
@@ -58,68 +54,12 @@
   bottom: 32px;
 }
 
+.story-reaction .cta-new {
+  position: absolute;
+  bottom: 0px;
+}
+
 
 .story-content {
     clear: both;
 }
-
-//@media only screen and (min-width: 400px) {
-//
-//    .story-reaction {
-//        float: left;
-//        margin-bottom: $baseline*4;
-//        margin-right: $gutter;
-//        min-width: 176px;
-//        width: 47%;
-//        min-height: 250px;
-//    }
-//
-//    .story-reaction:nth-child(2) {
-//        margin-right: 0;
-//    }
-//
-//}
-//
-//@media only screen and (min-width: $tablet) {
-//
-//    .story-reaction:nth-child(3), .story-reaction:nth-child(4) {
-//        display: block;
-//    }
-//
-//    .story-reactions {
-//        margin: 0 auto;
-//        width: 600px;
-//        display: block;
-//    }
-//
-//    .story-reaction {
-//        width: 276px;
-//        min-height: 200px;
-//    }
-//
-//    .story-reaction:last-child, .story-reaction:nth-child(2) {
-//        margin-right: 0;
-//    }
-//
-//}
-//
-//@media only screen and (min-width: $desktop) {
-//
-//    .story-reactions {
-//        width: 900px;
-//    }
-//
-//    .story-reaction:nth-child(2) {
-//        margin-right: $gutter;
-//    }
-//
-//    .story-reaction {
-//        width: 210px;
-//        min-height: 250px;
-//    }
-//
-//    .story-reactions ul {
-//        margin: $baseline*4 0 $baseline*4 0;
-//    }
-//
-//}

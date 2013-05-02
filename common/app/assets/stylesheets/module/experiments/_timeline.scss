@@ -4,8 +4,8 @@
 
 .chapter {
   position: relative;
-  margin-left: 34px;
-  padding:0 0 12px 46px;
+  margin-left: 20px;
+  padding: 0 0 12px 30px;
   border-left: 1px solid #333333;
 }
 
@@ -23,7 +23,7 @@
 .chapter__marker--small {
   width: 16px;
   height: 16px;
-  left: -54px;
+  left: -38px;
   top: 6px;
   background-color: #676767;
 }
@@ -76,6 +76,10 @@
 .chapter__article--media {
   overflow: hidden;
   margin-bottom: $baseline;
+}
+
+.chapter__article--media video {
+  width: 100%;
 }
 
 .chapter__article--media img {
