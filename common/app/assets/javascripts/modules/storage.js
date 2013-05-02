@@ -57,7 +57,7 @@ define(['common'], function (common) {
                 data = dataWithType.substring(0, typeLastIndex),
                 type = dataWithType.substring(typeLastIndex + 1);
                 // fix bug(s)
-                if (type === 'type' || ((data === 'gu.prefs.ab.participation' || data === 'gu.prefs.ab.current') && type === 'string')) {
+                if (type === 'type' || ((key === 'gu.prefs.ab.participation' || key === 'gu.prefs.ab.current') && type === 'string')) {
                     type = storage._migrate(key, data);
                 }
             }
