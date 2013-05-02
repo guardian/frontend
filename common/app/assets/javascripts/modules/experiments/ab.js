@@ -28,11 +28,11 @@ define([
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
-        userPrefs.set(testKey, JSON.stringify(data));
+        userPrefs.set(testKey, data);
     }
 
     function getTest() {
-        return (userPrefs.get(testKey)) ? JSON.parse(userPrefs.get(testKey)) : false;
+        return (userPrefs.get(testKey)) ? userPrefs.get(testKey) : false;
     }
 
     // Checks if:
@@ -53,7 +53,7 @@ define([
     }
 
     function getParticipation() {
-        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).tests : [];
+        return (userPrefs.get(participationKey)) ? userPrefs.get(participationKey).tests : [];
     }
 
     function setParticipation(testName) {
@@ -70,7 +70,7 @@ define([
             data = {"tests":[testName]};
         }
 
-        userPrefs.set(participationKey, JSON.stringify(data));
+        userPrefs.set(participationKey, data);
     }
 
     //Finds variant in specific tests and exec's
