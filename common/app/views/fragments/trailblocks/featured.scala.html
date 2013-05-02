@@ -2,7 +2,7 @@
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }" data-link-name="trail">
+        <li class="trail @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }" data-link-name="trail" data-trail-tags="@trail.tags.map(_.id).mkString(",")">
             @if(info.rowNum == 1) {
                 @fragments.trails.featured(trail, info.rowNum, related)
             } else {

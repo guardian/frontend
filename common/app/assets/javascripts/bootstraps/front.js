@@ -67,6 +67,7 @@ define([
                 }
             });
         }
+        
     };
 
     var ready = function (config, context) {
