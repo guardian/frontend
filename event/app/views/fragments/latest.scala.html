@@ -1,20 +1,15 @@
-@(story: Story, edition: String, paras: Int)
+@(story: Story, page: StoryPage, paras: Int)(implicit request: RequestHeader)
 
-@renderLatest(content: Seq[model.Content], edition: String) = {
+@renderLatest(content: Seq[model.Content], page: StoryPage) = {
     @content.map{
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                
-                    <h3 class="story-sub-head">
-                        @story.labels.getOrElse("latest", "Latest")
-                    </h3>
+                    @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
 
-                    @fragments.dateline(a.webPublicationDate, a.isLive, edition)
+                   <h2 class="article-headline">@a.headlineOverride</h2>
 
-                    <h2 class="article-headline">@a.headline</h2>
-
-                    @if(!a.isLive) {
+                    @if(!a.hasVideoAtTop) {
                         @a.mainPicture.map{ mainPicture =>
                             @a.mainPicture(width=220).map{ smallCrop =>
                                 @fragments.img(mainPicture, smallCrop)
@@ -36,14 +31,25 @@
                             Summary(paras)
                         )
                     </div>
-                    <p><a class="continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">Continue reading...</a></p>
+                    <p>
+                        <a class="cta-new js-continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">
+                            <span class="cta-new__text">Continue reading</span>
+                            <button class="cta-new__btn cta-new__btn--right">
+                                <i class="i i-arrow-blue-down cta-new__icn"></i>
+                            </button>
+                        </a>
+                    </p>
                 </div>
+
+                @defining(page.canonicalUrl.getOrElse(Site(request).host + "/" + page.id)) { url =>
+                    @fragments.social(url, story.title)
+                }
             </article>
         }
     }
 }
 
 <section class="story-latest">
-    @renderLatest(story.contentByImportance.take(1), edition)
+    @renderLatest(story.contentByImportance.take(1), page)
 </section>
 

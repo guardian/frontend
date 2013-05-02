@@ -3,52 +3,48 @@
 <!-- all the photos we have on this subject from the latest chapter -->
 
 @gallery(g: model.Gallery) = {
-    <li class="event-article picture-article--media">
-        <p>
-            @g.standfirst.map { s =>
-                @s
-            }.getOrElse(g.headline)
-        </p>
+
         @g.images.zipWithRowInfo.map{ case(image, info) =>
-            <img src="@image.url" />
-            <p class="type-7">
-                @Html(image.caption.getOrElse(""))
-            </p>
+            <figure class="js-swipe__item story-picture">
+                <img class="js-swipe__img story-picture__img" src="@image.url" />
+                @image.caption.map { caption =>
+                    <figcaption class="js-swipe__text story-picture__caption">@StripHtmlTags(caption)</figcaption>
+                }
+            </figure>
         }
-        @fragments.relativeDate(g.webPublicationDate, false, false)
-    </li>
 }
 
-@eventList(events: Seq[Event], isPanel: Boolean) = {
-    <ul class="unstyled @if(isPanel){ panel}">
-        @events.map { event =>
-            <li class="trail" data-link-name="trail">
 
-                @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
-                    @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
-                }
-
-                @if(event.hasContent) {
-                    <ul class="unstyled event-articles">
-                        @event.content.map{
-                            case g: Gallery => { @gallery(g) }
-                            case _ => {}
-                        }
-                    </ul>
-                }
-
-            </li>
-        }
-    </ul>
-}
 
 @if(story.hasEvents) {
-    <section class="story-pictures" data-link-name="story-pictures">
-        <h2 class="story-title story-title--section">
-            @story.labels.getOrElse("pictures", "In pictures")
-        </h2>
-        <div id="js-pictures" class="photos box-indent" data-link-name="Pictures">
-            @eventList(story.events.take(1), false)
-        </div>
-    </section>
+    @story.events.take(1).map { event =>
+        @if(event.hasContent) {
+            <section class="story-pictures" data-link-name="Pictures">
+                <h2 class="story-title story-title--section story-title--white">
+                    @story.labels.getOrElse("pictures", "In pictures")
+                </h2>
+
+                <div class="js-swipe">
+                    <div class="js-swipe__items">
+                        <div class="js-swipe__wrap">
+                            @event.content.map{
+                                case g: Gallery => { @gallery(g) }
+                                case _ => {}
+                            }
+                        </div>
+                    </div>
+
+                    <div class="js-swipe__controls cta-new cta-new--dark h">
+                        <button class="cta-new__btn cta-new__btn--left" data-link-name="Prev">
+                            <i class="i i-arrow-white-down cta-new__icn"></i>
+                        </button>
+                        <span class="cta-new__text cta-new__text--center"></span>
+                        <button class="cta-new__btn cta-new__btn--right" data-link-name="Next">
+                            <i class="i i-arrow-white-down cta-new__icn"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        }
+    }
 }

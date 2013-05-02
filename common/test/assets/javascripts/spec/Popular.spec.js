@@ -5,7 +5,10 @@ define(['common', 'ajax', 'modules/popular'], function(common, ajax, popular) {
         var popularLoadedCallback;
 
         beforeEach(function() {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
             popularLoadedCallback = sinon.stub();
             common.mediator.on('modules:popular:loaded', popularLoadedCallback);
         });

@@ -39,7 +39,7 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                         }
                     },
                     error: function () {
-                        common.mediator('module:error', 'Failed to load more matches', 'more-matches.js');
+                        common.mediator.emit('module:error', 'Failed to load more matches', 'more-matches.js');
                     }
                 });
             }

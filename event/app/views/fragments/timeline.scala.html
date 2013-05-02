@@ -5,12 +5,10 @@
 }
 
 @article(a: model.Article) = {
-    <li class="event-article">
+    <li class="event__article">
         <p class="type-6">
             <a href="@a.url">
-                @a.standfirst.map { s =>
-                    @standfirst(s)
-                }.getOrElse(a.headline)
+                @a.headlineOverride
             </a>
         </p>
         @fragments.relativeDate(a.webPublicationDate, false, false)
@@ -18,12 +16,10 @@
 }
 
 @gallery(g: model.Gallery) = {
-    <li class="event-article event-article--media">
+    <li class="event__article event__article--media">
         <p class="type-6">
             <a href="@g.url">
-            @g.standfirst.map { s =>
-                @standfirst(s)
-            }.getOrElse(g.headline)
+                @g.headlineOverride
             </a>
         </p>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
@@ -34,12 +30,10 @@
 }
 
 @video(v: model.Video) = {
-<li class="event-article event-article--media">
+<li class="event__article event__article--media">
     <p class="type-6">
         <a href="@v.url">
-        @v.standfirst.map { s =>
-            @standfirst(s)
-        }.getOrElse(v.headline)
+            @v.headlineOverride
         </a>
     </p>
     <div class="player">
@@ -59,7 +53,7 @@
         @events.map { event =>
             <li class="trail event-block" data-link-name="trail">
 
-                <h3 class="event-title">
+                <h3 class="event__title">
                     <span>@event.title</span>
                     <i class="i i-arrow-large-down"></i>
                 </h3>
@@ -68,14 +62,14 @@
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
                 }
                 
-                @if(event.hasExplainer) { <p class="event-summary">@StripHtmlTags(event.explainer.get)</p> }
+                @if(event.hasExplainer) { <p class="event__summary">@StripHtmlTags(event.explainer.get)</p> }
 
                 <div class="event-children">
 
                     <h3 class="story-sub-head story-sub-head--articles">Articles</h3>
 
                     @if(event.hasContent) {
-                    <ul class="unstyled event-articles">
+                    <ul class="unstyled event__articles">
                         @event.content.map{
                             case a: Article => { @article(a) }
                             case g: Gallery => { @gallery(g) }
@@ -93,10 +87,10 @@
 @if(story.hasEvents) {
     <section class="story-timeline" data-link-name="story-timeline">
         <h2 class="story-title story-title--section">
-            @story.labels.getOrElse("timeline", "Timeline of events")
+            @story.labels.getOrElse("timeline", "The story so far")
         </h2>
 
-        <div id="js-timeline" class="timeline box-indent"
+        <div id="js-timeline" class="timeline"
              data-count="@{story.events.size - 3}" data-link-name="Event timeline">
             @eventList(story.events.take(3), false)
             @eventList(story.events.drop(3), true)

@@ -1,12 +1,26 @@
 @(agent: Agent)
-<li class="agent">
-    <div class="agent-head">
-        @agent.picture.map{ pic => <img class="agent-img" src="@pic" /> }
-        @agent.name.map{ name => <h3 class="agent-name">@name</h3> }
-        @agent.role.map{ role => <p class="agent-role">@role</p> }
-    </div>
-    <div class="agent-body">
-        @agent.explainer.map{ explainer => <p>@explainer</p> }
-    </div>
-    <button class="h"><i class="i i-arrow-large-down"></i></button>
-</li>
+<figure class="js-swipe__item agent" data-link-name="agent">
+    @if(agent.hasLink) {
+        @agent.url.map{ url =>
+            @agent.picture.map{ pic =>
+                <a href="@url" target="_blank" data-link-name="img"><img class="js-swipe__img agent__img" src="@pic" /></a>
+            }
+        }
+    } else {
+        @agent.picture.map{ pic => <img class="js-swipe__img agent__img" src="@pic" /> }
+    }
+
+    <figcaption class="js-swipe__text">
+        @if(agent.hasLink) {
+            @agent.url.map{ url =>
+                @agent.name.map{ name =>
+                    <h3 class="agent__name"><a href="@url" target="_blank" data-link-name="agent name">@name</a></h3>
+                }
+            }
+        } else {
+            @agent.name.map{ name => <h3 class="agent__name">@name</h3> }
+        }
+        @agent.role.map{ role => <p class="agent__role">@role</p> }
+        @agent.explainer.map{ explainer => <p class="agent__body">@StripHtmlTags(explainer)</p> }
+    </figcaption>
+</figure>

@@ -93,13 +93,13 @@ object CommonSwitches {
   val AustraliaFrontSwitch = DefaultSwitch("australia-front",
     "If this switch is on the australia front will be available",
     initiallyOn = false)
+
+  val ABLocalElectionStory = DefaultSwitch("ab-local-election-story",
+    "If this switch is on local election story AB test will be enabled.",
+    initiallyOn = false)
   
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
-    initiallyOn = false)
-  
-  val CssLazyLoadSwitch = DefaultSwitch("css-lazy-load",
-    "If this switch is on then use a slimmed down, lazy-loaded css setup (css in head with server sepcific files)",
     initiallyOn = false)
   
   val all: Seq[Switchable] = Seq(
@@ -107,7 +107,7 @@ object CommonSwitches {
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, CssLazyLoadSwitch,
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStory,
     AustraliaFrontSwitch
   )
 }

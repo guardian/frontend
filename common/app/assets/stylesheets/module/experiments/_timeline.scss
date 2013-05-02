@@ -1,3 +1,7 @@
+.timeline {
+  margin: 12px 10px;
+}
+
 .event-block,
 .event-block:last-child {
   border: 1px solid #DEDEDE;
@@ -15,21 +19,21 @@
     cursor: pointer;
 }
 
-.event-title {
+.event__title {
   position: relative;
 }
 
-.event-title span {
-  display: inline-block;
-  width: 90%;
-  @extend %type-5;
-}
+  .event__title span {
+    display: inline-block;
+    width: 90%;
+    @extend %type-5;
+  }
 
-.event-title i {
-  position: absolute;
-  top: 4px;
-  right: 0px;
-}
+  .event__title i {
+    position: absolute;
+    top: 4px;
+    right: 0px;
+  }
 
 .story-sub-head--articles {
   margin: $baseline*7 0 $baseline*4 0;
@@ -37,22 +41,22 @@
   border-bottom: 1px dashed #72726B;
 }
 
-.event-summary {
+.event__summary {
   @extend %type-6;
   padding: 0 0 $baseline 0;
 }
 
-.event-article {
+.event__article {
   margin-bottom: $baseline*7;
 }
-.event-article a { color: #444; }
+.event__article a { color: #444; }
 
-.event-article--media {
-  overflow: auto;
+.event__article--media {
+  overflow: hidden;
   margin-bottom: $baseline;
 }
 
-.event-article--media img {
+.event__article--media img {
   float: left;
   width: 22.5%;
   margin: 0 2.5% 5px 0;

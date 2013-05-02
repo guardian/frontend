@@ -4,14 +4,16 @@ define([
     'ajax',
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
-    'modules/adverts/dimensionMap'
+    'modules/adverts/dimensionMap',
+    'modules/storage',
     ], function(
         common,
         domwrite,
         ajax,
         DocumentWrite,
         DocumentWriteSlot,
-        dimensionMap
+        dimensionMap,
+        storage
     )  {
 
     var slots = [
@@ -33,8 +35,11 @@ define([
     };
    
     beforeEach(function(){
-        ajax.init("");
-        localStorage.setItem('gu.ads.audsci', '["E012390","E012782"]'); 
+        ajax.init({page: {
+            ajaxUrl: "",
+            edition: "UK"
+        }});
+        storage.set('gu.ads.audsci', ["E012390","E012782"]);
         common.mediator.removeEvent();
     });
  

@@ -17,10 +17,12 @@ trait Trail extends Images with Tags {
   def isLive: Boolean
   def storyItems: Option[StoryItems] = None
 
+
+  // This is a hack. We need to move this somewhere better.
   def importance = storyItems.map(_.importance).getOrElse(0)
   def colour = storyItems.map(_.colour).getOrElse(0)
   def quote = storyItems.flatMap(_.quote)
-
+  def headlineOverride = storyItems.flatMap(_.headlineOverride).getOrElse(headline)
   def shares = storyItems.flatMap(_.shares).getOrElse(0)
   def comments = storyItems.flatMap(_.comments).getOrElse(0)
 

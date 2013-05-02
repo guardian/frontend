@@ -1,0 +1,9 @@
+a.trail-story-title {
+  color: $newsRed;
+  position:absolute;
+  margin-top:-23px;
+}
+
+.trail:first-child a.trail-story-title {
+	margin-left:120px;
+}

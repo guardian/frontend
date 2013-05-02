@@ -49,14 +49,12 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
             };
         },
         lazyLoadCss: function(name, config) {
-            if (config.switches.cssLazyLoad === true) {
-                // append server specific css
-                bonzo(document.createElement('link'))
-                    .attr('rel', 'stylesheet')
-                    .attr('type', 'text/css')
-                    .attr('href', guardian.css[name])
-                    .appendTo(document.querySelector('head'));
-            }
+            // append server specific css
+            bonzo(document.createElement('link'))
+                .attr('rel', 'stylesheet')
+                .attr('type', 'text/css')
+                .attr('href', guardian.css[name])
+                .appendTo(document.querySelector('body'));
         }
     };
 });
