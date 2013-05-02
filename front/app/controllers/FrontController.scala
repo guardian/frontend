@@ -111,6 +111,7 @@ class FrontController extends Controller with Logging with JsonTrails {
       case "front" => NetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
+      case "australia" => AustraliaNetworkFrontPage
     }
 
     // get the first trailblock
