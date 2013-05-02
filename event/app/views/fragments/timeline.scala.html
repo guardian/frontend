@@ -5,37 +5,41 @@
 }
 
 @article(a: model.Article) = {
-    <li class="event__article">
-        <p class="type-6">
+    <li class="chapter__article">
+        <i class="chapter__marker chapter__marker--small"></i>
+        @fragments.relativeDate(a.webPublicationDate, false, false)
+        <h4 class="article-headline">
             <a href="@a.url">
                 @a.headlineOverride
             </a>
-        </p>
-        @fragments.relativeDate(a.webPublicationDate, false, false)
+        </h4>
     </li>
 }
 
 @gallery(g: model.Gallery) = {
-    <li class="event__article event__article--media">
-        <p class="type-6">
+    <li class="chapter__article chapter__article--media">
+        <i class="chapter__marker chapter__marker--small"></i>
+        @fragments.relativeDate(g.webPublicationDate, false, false)
+        <h4 class="article-headline">
             <a href="@g.url">
                 @g.headlineOverride
             </a>
-        </p>
+        </h4>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
             <a href="@g.url?index=@info.rowNum"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
         }
-        @fragments.relativeDate(g.webPublicationDate, false, false)
     </li>
 }
 
 @video(v: model.Video) = {
-<li class="event__article event__article--media">
-    <p class="type-6">
+<li class="chapter__article chaoter__article--media">
+    <i class="chapter__marker chapter__marker--small"></i>
+    @fragments.relativeDate(v.webPublicationDate, false, false)
+    <h4 class="article-headline">
         <a href="@v.url">
             @v.headlineOverride
         </a>
-    </p>
+    </h4>
     <div class="player">
         <video controls="controls" poster="@v.imageOfWidth(640).map{ image => @image.url }.getOrElse("")">
         @v.encodings.map{ encoding =>
@@ -44,39 +48,40 @@
         Your browser does not support the video tag.
         </video>
     </div>
-    @fragments.relativeDate(v.webPublicationDate, false, false)
 </li>
 }
 
-@eventList(events: Seq[Event], isPanel: Boolean) = {
-    <ul class="unstyled @if(isPanel){ panel}">
+@eventList(events: Seq[Event]) = {
+    <ul class="unstyled">
         @events.map { event =>
-            <li class="trail event-block" data-link-name="trail">
-
-                <h3 class="event__title">
-                    <span>@event.title</span>
-                    <i class="i i-arrow-large-down"></i>
-                </h3>
+            <li class="chapter" data-link-name="Chapter">
+                <i class="chapter__marker"></i>
 
                 @defining(event.content.take(1).map(_.isLive).headOption.getOrElse(false)){ isLive =>
                     @fragments.relativeDate(event.startDate, isLive=isLive, isFront=true)
                 }
+
+                <h3 class="chapter__title">@event.title</h3>
                 
-                @if(event.hasExplainer) { <p class="event__summary">@StripHtmlTags(event.explainer.get)</p> }
+                @if(event.hasExplainer) {
+                    @event.explainer.map{ e => <p class="chapter__summary">@StripHtmlTags(e)</p> }
+                }
 
-                <div class="event-children">
-
-                    <h3 class="story-sub-head story-sub-head--articles">Articles</h3>
-
-                    @if(event.hasContent) {
-                    <ul class="unstyled event__articles">
+                @if(event.hasContent) {
+                    <ul class="unstyled chapter__articles h">
                         @event.content.map{
                             case a: Article => { @article(a) }
                             case g: Gallery => { @gallery(g) }
                             case v: Video   => { @video(v) }
                         }
                     </ul>
-                    }
+                }
+
+                <div class="cta-new js-more" data-link-name="View more">
+                    <span class="cta-new__text">View more</span>
+                    <button class="cta-new__btn cta-new__btn--right">
+                        <i class="i i-arrow-blue-down cta-new__icn"></i>
+                    </button>
                 </div>
 
             </li>
@@ -85,15 +90,13 @@
 }
 
 @if(story.hasEvents) {
-    <section class="story-timeline" data-link-name="story-timeline">
+    <section class="story-timeline" data-link-name="Timeline">
         <h2 class="story-title story-title--section">
             @story.labels.getOrElse("timeline", "The story so far")
         </h2>
 
-        <div id="js-timeline" class="timeline"
-             data-count="@{story.events.size - 3}" data-link-name="Event timeline">
-            @eventList(story.events.take(3), false)
-            @eventList(story.events.drop(3), true)
+        <div class="js-timeline timeline">
+            @eventList(story.events)
         </div>
     </section>
 }

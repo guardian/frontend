@@ -23,19 +23,27 @@ define([
             common.mediator.on('page:story:ready', function(config, context) {
                 var $ = common.$g,
                     timeline = context.querySelector('.timeline'),
-                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+                    eventType = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
+                    hidden = true,
+                    text = {
+                        show: 'View more',
+                        hide: 'View less'
+                    };
 
                 if(timeline) {
-                    $('.event-children', timeline).addClass('h');
-                    bean.on(timeline, eventType, '.event__title', function(e) {
-                        var block = $(this).parent();
-                        $('.event__summary', block).toggleClass('h');
-                        $('.event-children', block).toggleClass('h');
-                        $('i', block).toggleClass('is-open');
+                    bean.on(timeline, eventType, '.js-more', function(e) {
+                        var block = $(this).parent(),
+                            linkText = text[hidden ? 'hide' : 'show'];
+
+                        $('.chapter__articles', block).toggleClass('h');
+                        $(block[0]).toggleClass('is-open');
+                        $('.cta-new__text', block).text(linkText);
+                        $('.cta-new', block).attr('data-link-name', linkText);
+                        hidden = !hidden;
                     });
 
                     //Open first block by default
-                    bean.fire(timeline.querySelector('.event__title'), 'click');
+                    //bean.fire(timeline.querySelector('.event__title'), 'click');
                 }
             });
         },
@@ -70,44 +78,46 @@ define([
         },
 
         initSwipe: function() {
-            var swipeContainers = document.querySelectorAll('.js-swipe__items');
+            common.mediator.on('page:story:ready', function(config, context) {
+                var swipeContainers = context.querySelectorAll('.js-swipe__items');
 
-            if(swipeContainers) {
-                var swipeLib = ['js!swipe'];
+                if(swipeContainers) {
+                    var swipeLib = ['js!swipe'];
 
-                require(swipeLib, function() {
+                    require(swipeLib, function() {
 
-                    common.$g('#container').css('overflow', 'hidden');
+                        common.$g('#container').css('overflow', 'hidden');
 
-                    Array.prototype.forEach.call(swipeContainers, function(el){
+                        Array.prototype.forEach.call(swipeContainers, function(el){
 
-                        var numOfPictures = el.querySelectorAll('figure').length,
-                            mySwipe = new Swipe(el, {
-                             speed: 100,
-                             continuous: true,
-                             disableScroll: false,
-                             stopPropagation: true,
-                             callback: function(index, elem) {
-                                 common.$g('.cta-new__text', el).text(index+1 + '/' + numOfPictures);
-                             },
-                             transitionEnd: function(index, elem) {}
+                            var numOfPictures = el.querySelectorAll('figure').length,
+                                mySwipe = new Swipe(el, {
+                                 speed: 100,
+                                 continuous: true,
+                                 disableScroll: false,
+                                 stopPropagation: true,
+                                 callback: function(index, elem) {
+                                     common.$g('.cta-new__text', el).text(index+1 + '/' + numOfPictures);
+                                 },
+                                 transitionEnd: function(index, elem) {}
+                            });
+
+                            var controls = common.$g(el).next()[0];
+
+                            bean.on(controls.querySelector('.cta-new__btn--left'), 'click', function() {
+                                mySwipe.prev();
+                            });
+
+                            bean.on(controls.querySelector('.cta-new__btn--right'), 'click', function() {
+                                mySwipe.next();
+                            });
+
+                            common.$g('.cta-new__text--center', controls).text('1/' + numOfPictures);
+                            common.$g(controls).removeClass('h');
                         });
-
-                        var controls = common.$g(el).next()[0];
-
-                        bean.on(controls.querySelector('.cta-new__btn--left'), 'click', function() {
-                            mySwipe.prev();
-                        });
-
-                        bean.on(controls.querySelector('.cta-new__btn--right'), 'click', function() {
-                            mySwipe.next();
-                        });
-
-                        common.$g('.cta-new__text--center', controls).text('1/' + numOfPictures);
-                        common.$g(controls).removeClass('h');
                     });
-                });
-            }
+                }
+            });
         },
 
         initContinueReading: function() {

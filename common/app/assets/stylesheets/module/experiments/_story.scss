@@ -33,16 +33,10 @@ $orange: #FF7F00;
   color: #fff;
 }
 
-.story-sub-head {
-  @extend %type-6;
-  color: $orange;
-  margin-bottom: $baseline*2;
-}
-
 /* ==========================================================================
-   Story-latest article
+   Story articles
    ========================================================================== */
-.story-latest {
+.story-container {
 
   .article-head {
     padding: 0px 10px;
