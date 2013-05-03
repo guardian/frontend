@@ -143,8 +143,11 @@ object Story {
       }
     }
 
-    def latestWithContent(): Seq[Story] = {
-      measure(Stories.find(DBObject.empty).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+    def latestWithContent(storyId: Option[String] = None): Seq[Story] = {
+      val query = storyId.map{ storyId =>
+        DBObject("id" -> storyId)
+      } getOrElse(DBObject.empty)
+      measure(Stories.find(query).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
     }
 
     def latest(): Seq[Story] = {
