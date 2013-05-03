@@ -150,14 +150,15 @@ define([
                             frag   = frag || {};
                             html   = frag.html || '<div class="swipepage-msg">Oops. This page might be broken?</div>';
 
+                            sequenceCache[url] = sequenceCache[url] || {};
+                            sequenceCache[url].html = html;
+                            sequenceCache[url].config = frag.config || {};
+
                             if (el.dataset.url === url) {
                                 populate(el, html);
                                 common.mediator.emit('module:swipenav:pane:loaded', el);
                                 callback();
                             }
-                            sequenceCache[url] = sequenceCache[url] || {};
-                            sequenceCache[url].html = html;
-                            sequenceCache[url].config = frag.config || {};
                         }
                     });
                 }
