@@ -118,10 +118,15 @@ define([
                 frag,
                 rx,
                 i;
+
             if (url && el) {
                 el.dataset = el.dataset || {};
                 el.dataset.url = url;
-                    
+                
+                // Associate a contenet area with this pane, if not already done so
+                el.contentArea = el.contentArea || el.querySelector(opts.contentSelector);
+                el.contentArea.innerHTML = '<div class="swipepage-msg">Loading page...</div>';
+
                 // Ask the cache
                 frag = sequenceCache[url];
 
@@ -160,7 +165,7 @@ define([
         }
 
         function populate(el, html) {
-            el.querySelector(opts.contentSelector).innerHTML = html;
+            el.contentArea.innerHTML = html;
             opts.afterLoad(el);
         }
 
