@@ -94,7 +94,7 @@ object CommonSwitches {
     "If this switch is on the australia front will be available",
     initiallyOn = false)
 
-  val ABLocalElectionStory = DefaultSwitch("ab-local-election-story",
+  val ABLocalElectionStoryV2 = DefaultSwitch("ab-local-election-story-v2",
     "If this switch is on local election story AB test will be enabled.",
     initiallyOn = false)
   
@@ -107,7 +107,7 @@ object CommonSwitches {
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStory,
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStoryV2,
     AustraliaFrontSwitch
   )
 }
