@@ -12,7 +12,7 @@ define([
     LocalElectionStory) {
     
     var TESTS = {
-            LocalElectionStory: new LocalElectionStory()
+            LocalElectionStoryV2: new LocalElectionStory()
         };
 
     var testKey = 'ab.current',
