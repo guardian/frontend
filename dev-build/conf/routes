@@ -66,8 +66,8 @@ GET     /football/match/:matchId                            controllers.MatchCon
 GET     /_warmup                                            controllers.FrontController.warmup()
 GET     /_up                                                controllers.FrontController.isUp()
 GET     /                                                   controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>                               controllers.FrontController.render(path)
-GET     /$path<culture|sport>/trails                        controllers.FrontController.renderTrails(path)
+GET     /$path<culture|sport|australia>                     controllers.FrontController.render(path)
+GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /video/ad/:format                                   controllers.VideoAdvertController.fetch(format)
