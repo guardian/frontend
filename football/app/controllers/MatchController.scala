@@ -57,17 +57,10 @@ object MatchController extends Controller with Football with Requests with Loggi
       val promiseOfLineup = FootballClient.lineUp(theMatch.id)
       Async {
         promiseOfLineup.map { lineUp =>
-          Cached(60) {
-            val page = MatchPage(theMatch, lineUp)
-            request.getParameter("callback").map { callback =>
-              JsonComponent(
-                page,
-                Switches.all,
-                "summary" -> views.html.fragments.matchSummary(theMatch),
-                "stats" -> views.html.fragments.matchStats(page)
-              )
-            } getOrElse(Ok(Compressed(views.html.footballMatch(page))))
-          }
+          val page = MatchPage(theMatch, lineUp)
+          val htmlResponse = views.html.footballMatch(page)
+          val jsonResponse = views.html.fragments.footballMatchBody(page)
+          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
         }
       }
     }.getOrElse(NotFound)
