@@ -217,6 +217,7 @@ $orange: #FF7F00;
   margin-bottom: 12px;
 
   .story-title--white {
+    padding-left: 2px;
     background-color: #333333;
   }
 
@@ -254,6 +255,30 @@ $orange: #FF7F00;
   margin: 0 auto;
   max-width: 100%;
   max-height: 200px;
+
+  @media only screen and (min-width: $tablet) {
+    max-height: 400px;
+  }
+
+  @media only screen and (min-width: $desktop) {
+    max-height: 600px;
+  }
+}
+
+.story-picture--sheet {
+  padding: 2px;
+
+  img {
+    width: 49.5%;
+    float:left;
+    margin-bottom: 2px;
+  }
+
+  img:first-child {
+    width: 100%;
+  }
+
+  img:nth-child(even) { margin-right: 1%; }
 }
 
 .story-picture__caption {

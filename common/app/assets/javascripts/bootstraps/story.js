@@ -81,9 +81,10 @@ define([
                     var swipeLib = ['js!swipe'];
 
                     require(swipeLib, function() {
-
+                        var hasContactSheet = common.$g('figure', '.story-pictures').length;
                         common.$g('#container').css('overflow', 'hidden');
-                        if(common.$g('figure', '.story-pictures').length) {
+
+                        if(hasContactSheet) {
                             common.$g('.story-pictures').removeClass('h');
                         }
 
@@ -91,28 +92,33 @@ define([
 
                             var numOfPictures = el.querySelectorAll('figure').length,
                                 mySwipe = new Swipe(el, {
-                                 speed: 100,
-                                 continuous: true,
-                                 disableScroll: false,
-                                 stopPropagation: true,
-                                 callback: function(index, elem) {
-                                     common.$g('.cta-new__text', el).text(index+1 + '/' + numOfPictures);
-                                 },
-                                 transitionEnd: function(index, elem) {}
-                            });
+                                     speed: 100,
+                                     continuous: true,
+                                     disableScroll: false,
+                                     stopPropagation: true,
+                                     callback: function(index, elem) {
+                                         var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
+                                             text = common.$g('.cta-new__text', controls),
+                                             button = common.$g('.cta-new__btn--left', controls),
+                                             centreClass = 'cta-new__text--center';
 
-                            var controls = common.$g(el).next()[0];
+                                         if(hasContactSheet && index === 0) {
+                                             button.addClass('h');
+                                             text.removeClass(centreClass).text('View complete gallery');
+                                         } else {
+                                            button.removeClass('h');
+                                            text.addClass(centreClass).text(index + '/' + numOfPictures);
+                                         }
+                                     },
+                                     transitionEnd: function(index, elem) {}
+                                });
 
-                            bean.on(controls.querySelector('.cta-new__btn--left'), 'click', function() {
-                                mySwipe.prev();
-                            });
+                            bean.on(el, 'click', '.cta-new__btn--left', mySwipe.prev);
+                            bean.on(el, 'click','.cta-new__btn--right', mySwipe.next);
 
-                            bean.on(controls.querySelector('.cta-new__btn--right'), 'click', function() {
-                                mySwipe.next();
-                            });
+                            if(hasContactSheet) { common.$g(el.querySelector('.cta-new__btn--left')).addClass('h'); }
 
-                            common.$g('.cta-new__text--center', controls).text('1/' + numOfPictures);
-                            common.$g(controls).removeClass('h');
+                            common.$g('.js-swipe__controls', el.parentNode).removeClass('h');
                         });
                     });
                 }
