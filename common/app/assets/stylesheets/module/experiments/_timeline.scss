@@ -21,10 +21,10 @@
 }
 
 .chapter__marker--small {
-  width: 16px;
-  height: 16px;
-  left: -38px;
-  top: 6px;
+  width: 12px;
+  height: 12px;
+  left: -36px;
+  top: 7px;
   background-color: #676767;
 }
 
@@ -71,7 +71,7 @@
   line-height: 2rem;
 }
 
-.chapter__article a { color: #000; }
+.chapter__article a { color: rgb(103, 103, 103); }
 
 .chapter__article--media {
   overflow: hidden;
