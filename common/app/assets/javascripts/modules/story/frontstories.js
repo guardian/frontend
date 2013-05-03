@@ -69,7 +69,7 @@ define([
                         $trail.replaceWith(firstStory);
                     }
                 } else {
-                    // otherwise bung in second position
+                    // otherwise bung in last position
                     bonzo(document.querySelector('.trail:last-child')).after(firstStory);
                 }
             }
