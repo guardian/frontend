@@ -2,7 +2,6 @@ package controllers.front
 
 import model.Trailblock
 import common.{Edition, Logging, AkkaSupport}
-
 import scala.concurrent.duration._
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
@@ -16,7 +15,6 @@ class Front extends AkkaSupport with Logging {
     log.info("Refreshing Front")
     Front.refresh()
   }
-
   // Map of edition -> (path -> front)
   lazy val fronts = Edition.all.map{ edition =>
     edition.id -> edition.configuredFronts.map{ case (name, blocks) =>

@@ -14,7 +14,7 @@ object ArticleController extends Controller with Logging {
     val promiseOfArticle = lookup(path)
     Async {
       promiseOfArticle.map {
-        case Left(model) if model.article.isExpired => Gone(Compressed(views.html.expired(model.article)))
+        case Left(model) if model.article.isExpired => renderExpired(model)
         case Left(model) => renderArticle(model)
         case Right(notFound) => notFound
       }
@@ -37,6 +37,14 @@ object ArticleController extends Controller with Logging {
       ModelOrResult(model, response)
     }.recover{ suppressApiNotFound }
 
+  }
+
+  private def renderExpired(model: ArticlePage)(implicit request: RequestHeader): Result = Cached(model.article) {
+    request.getQueryString("callback").map { callback =>
+      JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
+    } getOrElse {
+      Gone(Compressed(views.html.expired(model.article)))
+    }
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {

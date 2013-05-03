@@ -75,6 +75,14 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
       TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+    ),
+
+    "australia" -> Seq(
+      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      TrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
   )
 }

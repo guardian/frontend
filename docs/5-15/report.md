@@ -1,9 +1,10 @@
-
 # Weekly reports
 
-From our own correspondents. Honest Tommies, in our trench, ducking shrapnel, eating left-over mud.
+From our own correspondents.
 
-These reports cover the Next Gen Web team's activities -  Colloquially, _url merge_, _responsive_, _storytelling_, _r2_ and _fronts/curation_ streams of work.
+Honest Tommies, in our trench, ducking shrapnel, eating left-over mud.
+
+These reports cover the Next Gen Web team's activities -  _url merge_, _responsive_, _storytelling_, _r2_ and _fronts/curation_ streams of work.
 
 ## 29th April
 

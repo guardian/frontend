@@ -71,7 +71,7 @@ case class Story(
     explainer: Option[String] = None,
     hero: Option[String] = None,
     labels: Map[String, String] = Map()
-    ) extends implicits.Collections {
+    ) extends implicits.Collections with implicits.ContentImplicits {
 
   lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
@@ -81,7 +81,7 @@ case class Story(
   lazy val hasContent: Boolean = content.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
-  lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis)
+  lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis).reverse
   lazy val hasReaction: Boolean = reaction.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
@@ -91,6 +91,8 @@ case class Story(
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
   lazy val contentByAnalysis: Seq[Content] = content.filter(_.colour > 2).sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
+  lazy val galleries: Seq[Gallery] = content.flatMap(_.maybeGallery).reverse
+  lazy val hasGalleries: Boolean = galleries.nonEmpty
 
   private def toColour(i: Int) = i match {
     case 1 => "Overview"
