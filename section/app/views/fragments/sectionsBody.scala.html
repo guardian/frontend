@@ -1,6 +1,6 @@
 @(page: Page)(implicit request: RequestHeader)
 
-@Zones(request).map{ zone =>
+@Edition(request).zones.map{ zone =>
 
     <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
 

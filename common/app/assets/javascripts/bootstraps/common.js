@@ -16,6 +16,7 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
+    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -44,6 +45,7 @@ define([
     Sections,
     Search,
     NavControl,
+    EditionSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -73,6 +75,7 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
+            var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
                 navControl.init(context);
                 sections.init(context);
@@ -188,7 +191,7 @@ define([
 
         getSwipeSequence: function(callback) {
             ajax({
-                url: '/more-stories' + window.location.pathname,
+                url: '/more-stories' + window.location.pathname + '?variant=2',
                 type: 'jsonp',
                 success: function (json) {
                     if (json.stories && json.stories.length >= 3) {

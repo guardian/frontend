@@ -17,7 +17,8 @@
         "require",
         "define",
         "EventEmitter",
-        "s"
+        "s",
+        "Swipe"
     ],
 
     "debug"         : false,

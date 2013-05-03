@@ -25,7 +25,7 @@ object TagController extends Controller with Logging with JsonTrails {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching tag: $path for edition $edition")
 
     ContentApi.item(path, edition).pageSize(20).response.map{response =>

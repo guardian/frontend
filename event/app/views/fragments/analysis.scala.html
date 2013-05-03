@@ -1,4 +1,4 @@
-@(story: Story, edition: String)
+@(story: Story)(implicit request: RequestHeader)
 
 <div class="tabs-container">
     <ol class="tabs js-tabs" id="js-story-tabs">
@@ -14,7 +14,7 @@
                     @{
                         c match {
                             case a: Article => {
-                                fragments.storyArticle(a, edition)
+                                fragments.storyArticle(a)
                             }
                         }
                     }

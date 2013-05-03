@@ -35,7 +35,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching front: $path for edition $edition")
 
     ContentApi.item(path, edition)

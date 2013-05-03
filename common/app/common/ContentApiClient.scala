@@ -24,8 +24,8 @@ trait ApiQueryDefaults { self: Api[Future] =>
   val inlineElements = "picture,witness,video"
 
   //common fields that we use across most queries.
-  def item(id: String, edition: String): ItemQuery = item.itemId(id)
-    .edition(edition)
+  def item(id: String, edition: Edition): ItemQuery = item.itemId(id)
+    .edition(edition.id)
     .showTags("all")
     .showFields(trailFields)
     .showInlineElements(inlineElements)
@@ -35,8 +35,8 @@ trait ApiQueryDefaults { self: Api[Future] =>
     .tag(supportedTypes)
 
   //common fields that we use across most queries.
-  def search(edition: String): SearchQuery = search
-    .edition(edition)
+  def search(edition: Edition): SearchQuery = search
+    .edition(edition.id)
     .showTags("all")
     .showInlineElements(inlineElements)
     .showReferences(references)

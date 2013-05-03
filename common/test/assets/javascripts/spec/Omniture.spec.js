@@ -161,7 +161,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             o.go(config);
             runs(function() {
                 common.mediator.emit('module:clickstream:click', clickSpec);
-                expect(JSON.parse(localStorage.getItem('gu.analytics.referrerVars')).tag).toEqual('tag in localstorage')
+                expect(JSON.parse(localStorage.getItem('gu.analytics.referrerVars').replace('|object', '')).tag).toEqual('tag in localstorage')
             });
 
         });

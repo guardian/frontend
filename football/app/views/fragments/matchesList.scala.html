@@ -1,4 +1,4 @@
-@(model: MatchesPage, isLive: String = "false")
+@(model: MatchesPage, isLive: String = "false")(implicit request: RequestHeader)
 
 @model.days.map{ day =>
 	@if(isLive != "live") { <h2 class="competitions-date type-7">@day.date.toString("EEEE d MMMM yyyy")</h2>}

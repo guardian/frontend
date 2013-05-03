@@ -148,4 +148,6 @@ case class StoryItems(
   colour: Int,
   shares: Option[Int] = None,
   comments: Option[Int] = None,
-  quote: Option[Quote] = None)
+  quote: Option[Quote] = None,
+  headlineOverride: Option[String] = None
+)

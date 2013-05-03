@@ -23,7 +23,10 @@ define(['common', 'ajax', 'bean', 'modules/trailblocktoggle'], function(common, 
                 '</div>' +
             '</div>';
 
-        ajax.init("");
+        ajax.init({page: {
+            ajaxUrl: "",
+            edition: "UK"
+        }});
 
         beforeEach(function() {
             common.$g('body').append(fixtureTrailblock);
