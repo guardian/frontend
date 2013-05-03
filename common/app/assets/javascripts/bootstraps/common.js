@@ -189,6 +189,12 @@ define([
             }
         },
 
+        initSwipe: function(config) {
+            if (config.switches && config.switches.swipeNavigation) {
+                modules.getSwipeSequence(modules.startSwipe);
+            }
+        },
+
         getSwipeSequence: function(callback) {
             ajax({
                 url: '/more-stories' + window.location.pathname + '?variant=2',
@@ -274,7 +280,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.getSwipeSequence(modules.startSwipe);
+            modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

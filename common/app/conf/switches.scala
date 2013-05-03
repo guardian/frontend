@@ -98,12 +98,32 @@ object CommonSwitches {
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
   
+  val SwipeNavigation = DefaultSwitch("swipe-navigation",
+    "If this switch is on then swipe navigation is enabled",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
-    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStory
+    FontSwitch,
+    AutoRefreshSwitch,
+    AudienceScienceSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    OmnitureVerificationSwitch,
+    NetworkFrontAppealSwitch,
+    ExperimentStoryModule01Switch,
+    StoryVersionBSwitch,
+    StoryFrontTrails,
+    SocialSwitch,
+    SearchSwitch,
+    QuantcastSwitch,
+    HomescreenSwitch,
+    OptimizelySwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    ImageServerSwitch,
+    ABRelatedContentV2,
+    ABLocalElectionStory,
+    SwipeNavigation
   )
 }
 
