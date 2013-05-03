@@ -96,6 +96,7 @@ define(['common'], function (common) {
                 case 'gu.ads.audsci':
                 case 'gu.prefs.ab.participation':
                 case 'gu.prefs.ab.current':
+                case 'gu.prefs.aware':
                     type = 'object';
                     break;
                 case 'gu.prefs.switch.shared-wisdom-toolbar':
