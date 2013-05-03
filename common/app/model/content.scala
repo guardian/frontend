@@ -133,6 +133,7 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
+  lazy val landscapes = images.filter(i => i.aspectRatio >= 1.5 && i.aspectRatio <= 1.55)
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
