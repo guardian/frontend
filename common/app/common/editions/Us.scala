@@ -74,7 +74,7 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      TrailblockDescription("commentisfree/commentisfree+world/australia", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
   )
