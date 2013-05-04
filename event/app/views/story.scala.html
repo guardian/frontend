@@ -3,27 +3,50 @@
 @main(page, Switches.all){ }{
 
     @defining(page.story){ story =>
+    
+    <div class="story-container">
+        <h1 class="story-title story-storyline">@story.title</h1>
+    </div>
 
-        <div class="story-container">
-            <h1 class="story-title story-storyline">@story.title</h1>
-            
-            @fragments.latest(story, page, 2)
+    <div class="tabs-container">
 
-            @fragments.explainer(story)
-            @fragments.reaction(story)
+        @if(story.hasLiveContent) {
+            <ol class="tabs js-tabs">
+                <li class="tabs-selected"><a href="#story" data-link-name="story">Story</a></li>
+                <li><a href="#live" data-link-name="live">Live</a></li>
+            </ol>
+        }
 
-            <div class="story-content">
-                @fragments.quote(story, 0)
-                @fragments.agents(story)
-                @fragments.quote(story, 1)
+        <div class="tabs-content">
+            <div class="tabs-pane" id="story">
+                <div class="story-container">
+                    @fragments.latest(story, page, 2)
+                    @fragments.explainer(story)
+
+                    <div class="story-content">
+                        @fragments.quote(story, 0)
+                        @fragments.agents(story)
+                        @fragments.quote(story, 1)
+                    </div>
+
+                    @fragments.places(story)
+                    @fragments.pictures(story)
+                    @fragments.timeline(story)
+                    @fragments.feedback()
+                
+                </div>
             </div>
 
-            @fragments.places(story)
-            @fragments.pictures(story)
-            @fragments.timeline(story)
-            @fragments.feedback()
+            @if(story.hasLiveContent) {
+                <div class="tabs-pane js-hidden" id="live" data-source="@story.liveBlogs.head.url">
+                    @fragments.autoUpdate()
+                    <div class="story-live"> </div>
+                </div>
+            }
+
         </div>
 
+    </div>
         <div class="js-popular" role="complementary"></div>
     }
 }

@@ -11,7 +11,6 @@ $orange: #FF7F00;
   padding: 12px 0 32px 0;
   min-height: 100px;
   margin: 0 10px;
-  border-bottom: 1px solid #9D9D9D;
   @include box-sizing(border-box);
 }
 
@@ -420,3 +419,22 @@ i.is-open.cta-new__icn--right {
     @include rotate(90deg);
   }
 }
+
+/** */
+.tabs-container { padding: 0; }
+
+/** */
+.update { margin-top: 8px; }
+
+.story-live .article-zone, .story-live .article-head { display: none; }
+
+.story-live .social { display: none; }
+
+.story-live .block:nth-child(n+20) {
+    display: none;
+}
+
+.tabs {
+    margin-bottom: 16px;
+}
+
