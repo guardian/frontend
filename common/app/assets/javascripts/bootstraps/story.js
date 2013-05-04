@@ -29,8 +29,8 @@ define([
                 var liveBlog = context.querySelector('#live');
                 if (!liveBlog) {
                     var a = new AutoUpdate({
-                        path: liveBlog.getAttribute('data-source'), 
-                        delay: 30000,
+                        path: liveBlog.getAttribute('data-source'),
+                        delay: 60000,
                         attachTo: context.querySelector(".story-live"),
                         switches: config.switches,
                         loadOnInitialise: true
@@ -133,8 +133,8 @@ define([
                                      transitionEnd: function(index, elem) {}
                                 });
 
-                            bean.on(el, 'click', '.cta-new__btn--left', function() { mySwipe.prev() });
-                            bean.on(el, 'click','.cta-new__btn--right', function() { mySwipe.next() });
+                            bean.on(el, 'click', '.cta-new__btn--left', function() { mySwipe.prev(); });
+                            bean.on(el, 'click','.cta-new__btn--right', function() { mySwipe.next(); });
 
                             if(hasContactSheet) { common.$g(el.querySelector('.cta-new__btn--left')).addClass('h'); }
 
@@ -156,7 +156,6 @@ define([
         initTabs: function () {
             var tabs = new Tabs();
             common.mediator.on('page:story:ready', function(config, context) {
-                console.log('************');
                 tabs.init(context);
             });
         }
