@@ -27,7 +27,7 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:story:ready', function(config, context) {
                 var liveBlog = context.querySelector('#live');
-                if (!liveBlog) {
+                if (liveBlog) {
                     var a = new AutoUpdate({
                         path: liveBlog.getAttribute('data-source'),
                         delay: 60000,
