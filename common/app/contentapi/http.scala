@@ -8,8 +8,6 @@ import play.api.libs.ws.WS
 import java.util.concurrent.TimeoutException
 import com.gu.management.{Metric, CountMetric, TimingMetric}
 
-import com.gu.openplatform.contentapi.util.FutureInstances._
-
 trait DelegateHttp extends Http[Future] with ExecutionContexts {
   import System.currentTimeMillis
   import ContentApiMetrics._

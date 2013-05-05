@@ -1,6 +1,6 @@
 package contentapi
 
-import com.gu.openplatform.contentapi.Api
+import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
 import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
@@ -39,17 +39,14 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .tag(supportedTypes)
 }
 
-import play.api.libs.concurrent.Execution.Implicits._
-import com.gu.openplatform.contentapi.util.FutureInstances.futureMonad
-
-class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future] with ApiQueryDefaults with DelegateHttp
+class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
     with Logging {
 
   import Configuration.contentApi
   override val targetUrl = contentApi.host
   apiKey = Some(contentApi.key)
 
-  override protected def fetch(url: String, parameters: Map[String, Any]) = {
+  override protected def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
     super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
@@ -62,5 +59,6 @@ class ContentApiClient(configuration: GuardianConfiguration) extends Api[Future]
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+
 
 }
