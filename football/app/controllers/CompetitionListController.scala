@@ -4,9 +4,9 @@ import common._
 import model._
 import conf._
 import play.api.mvc.{ Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
 
-object CompetitionListController extends Controller with CompetitionListFilters with Logging {
+
+object CompetitionListController extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
   val page = Page(canonicalUrl = None, "football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 

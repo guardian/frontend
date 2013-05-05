@@ -114,8 +114,6 @@ object CommonSwitches {
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
 
-  import play.api.libs.concurrent.Execution.Implicits._
-
   val configUrl = config.switches.configurationUrl
 
   private lazy val schedule = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {

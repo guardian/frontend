@@ -12,8 +12,8 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-import play.api.libs.concurrent.Execution.Implicits._
-sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters {
+
+sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters with ExecutionContexts {
 
   val daysToDisplay = 3
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")

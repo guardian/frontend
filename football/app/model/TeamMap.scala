@@ -2,7 +2,7 @@ package model
 import pa._
 import common.{ Logging, AkkaSupport }
 import conf.ContentApi
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 import com.gu.openplatform.contentapi.model.TagsResponse
 import scala.Some

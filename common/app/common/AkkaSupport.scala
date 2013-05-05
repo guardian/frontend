@@ -5,11 +5,14 @@ import akka.agent.Agent
 
 import play.api.libs.concurrent.{ Akka => PlayAkka }
 import play.api.Play
-import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration._
 
+trait ExecutionContexts {
+  implicit lazy val executionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
+}
 
-trait AkkaSupport {
+
+trait AkkaSupport extends ExecutionContexts {
 
   object play_akka {
 
