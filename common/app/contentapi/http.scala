@@ -1,6 +1,6 @@
 package contentapi
 
-import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
+import com.gu.openplatform.contentapi.connection.{Dispatch, HttpResponse, Http}
 import scala.concurrent.Future
 import conf.Configuration
 import common.{ExecutionContexts, TimingMetricLogging, Logging}
@@ -8,35 +8,47 @@ import play.api.libs.ws.WS
 import java.util.concurrent.TimeoutException
 import com.gu.management.{Metric, CountMetric, TimingMetric}
 
-trait DelegateHttp extends Http[Future] with ExecutionContexts {
+
+trait DispatchHttp extends Http[Future] with Dispatch with ExecutionContexts {
+
   import System.currentTimeMillis
   import ContentApiMetrics._
   import Configuration.host
   import java.net.URLEncoder.encode
 
-  private val wsHttp = new Http[Future] with Logging {
-    override def GET(url: String, headers: Iterable[(String, String)]) = {
-      val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
+  override lazy val maxConnections: Int = 1000
+  override lazy val connectionTimeoutInMs: Int = 1000
+  override lazy val requestTimeoutInMs: Int = 2000
 
-      val start = currentTimeMillis
-      val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+  // Ignoring Proxy on purpose - we only use it on CI server
+  // and you should never call content api directly from there
 
-      // record metrics
-      response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
-      response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
-      response
-    }.map{ r => HttpResponse(r.body, r.status, r.statusText)}
-  }
+  override def GET(url: String, headers: Iterable[(String, String)]) = {
+    val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
 
-  private var _http: Http[Future] = wsHttp
-  def http = _http
-  def http_=(delegateHttp: Http[Future]) = _http = delegateHttp
+    val start = currentTimeMillis
+    val response = super.get(urlWithHost, headers)
 
-  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
+    // record metrics
+    response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
+    response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment }
+    response
+  }.map{ r => HttpResponse(r.body, r.statusCode, r.statusMessage)}
 
   private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
-    .map(_.getClass == classOf[TimeoutException])
-    .getOrElse(false)
+      .map(_.getClass == classOf[TimeoutException])
+      .getOrElse(false)
+}
+
+// allows us to inject a test Http
+trait DelegateHttp extends Http[Future] with ExecutionContexts {
+
+  private var _http: Http[Future] = new DispatchHttp {}
+
+  def http = _http
+  def http_=(delegateHttp: Http[Future]) { _http = delegateHttp }
+
+  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
 }
 
 object ContentApiMetrics {
@@ -54,12 +66,5 @@ object ContentApiMetrics {
     "Content api calls that timeout"
   )
 
-  object DogpileHitsCountMetric extends CountMetric(
-    "performance",
-    "content-api-dogpile-hits",
-    "Content API dogpile hits",
-    "Hits to the content api dogpile cache"
-  )
-
-  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric, DogpileHitsCountMetric)
+  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
 }
