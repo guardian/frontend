@@ -446,7 +446,7 @@ define([
         setSequence(opts.sequence);
 
         // SwipeView init
-        panes = new SwipeView(contentArea, {disableForClass: 'js-gallery-img'});
+        panes = new SwipeView(contentArea, {});
 
         panes.onFlip(function () {
             paneNow = mod3(panes.pageIndex+1);
