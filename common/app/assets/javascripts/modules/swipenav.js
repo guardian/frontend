@@ -39,15 +39,6 @@ define([
         return a;
     }
 
-    var uid = (function () {
-        var i = 0;
-        return {
-            set: function (n) { i = n; },
-            nxt: function () { return i += 1; },
-            get: function () { return i; }
-        };
-    }());
-
     function mod(x, m) {
         return ((x % m) + m) % m;
     }
@@ -192,7 +183,7 @@ define([
                 config = {
                     referrer: document.referrer
                 };
-                doHistoryPush({ id: uid.nxt() }, document.title, url, true);
+                //doHistoryPush({}, document.title, url, true);
             }
             else {
                 url = el.dataset.url;
@@ -212,7 +203,7 @@ define([
             }
 
             if (!noHistoryPush) {
-                doHistoryPush({ id: uid.nxt() }, document.title, url);
+                doHistoryPush({}, document.title, url);
             }
             noHistoryPush = false;
 
@@ -455,7 +446,7 @@ define([
         setSequence(opts.sequence);
 
         // SwipeView init
-        panes = new SwipeView(contentArea, {});
+        panes = new SwipeView(contentArea, {disableForClass: 'js-gallery-img'});
 
         panes.onFlip(function () {
             paneNow = mod3(panes.pageIndex+1);
@@ -558,17 +549,12 @@ define([
             if (!state) { return; }
 
             initiatedBy = 'browser_history';
-            popId = state.id ? state.id : -1;
 
-            // Deduce the bac/fwd pop direction
-            dir = popId < uid.get() ? -1 : 1;
-            uid.set(popId);
-
-            // Prevent a history stats from being pushed
+            // Prevent a history state from being pushed as a result of calling gotoUrl
             noHistoryPush = true;
 
             // Reveal the newly poped location
-            gotoUrl(normalizeUrl(window.location.href), dir);
+            gotoUrl(normalizeUrl(window.location.href));
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.

@@ -316,6 +316,11 @@ define('swipeview', [], function() {
 		__move: function (e) {
 			if (!this.initiated) return;
 
+			if (e.target.className.match(/(gallery|control)/)) {
+				this.initiated = false;
+				return;
+			}
+
 			var point = hasTouch ? e.touches[0] : e,
 				deltaX = point.pageX - this.pointX,
 				deltaY = point.pageY - this.pointY,
@@ -329,8 +334,8 @@ define('swipeview', [], function() {
 			this.stepsX += Math.abs(deltaX);
 			this.stepsY += Math.abs(deltaY);
 
-			// We take a 10px buffer to figure out the direction of the swipe
-			if (this.stepsX < 10 && this.stepsY < 10) {
+			// We take a 5px buffer to figure out the direction of the swipe
+			if (this.stepsX < 5 && this.stepsY < 5) {
 //				e.preventDefault();
 				return;
 			}
@@ -438,7 +443,7 @@ define('swipeview', [], function() {
 
 			newX = -this.page * this.pageWidth;
 
-			this.slider.style[transitionDuration] = Math.floor(500 * Math.abs(this.x - newX) / this.pageWidth) + 'ms';
+			this.slider.style[transitionDuration] = Math.floor(300 * Math.abs(this.x - newX) / this.pageWidth) + 'ms';
 
 			// Hide the next page if we decided to disable looping
 			if (!this.options.loop) {
