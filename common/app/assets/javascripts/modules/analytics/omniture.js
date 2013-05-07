@@ -146,6 +146,11 @@ define([
                 }
                 storage.remove('gu.analytics.referrerVars');
             }
+
+            // Referrer might be set by an in-page navigation
+            if (config.referrer) {
+                s.referrer = config.referrer;
+            }
         };
 
         this.loaded = function(callback) {
