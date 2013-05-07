@@ -5,14 +5,14 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 import play.api.templates.Html
 
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
-object SectionController extends Controller with Logging with Paging with JsonTrails {
+object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfSection = lookup(path)

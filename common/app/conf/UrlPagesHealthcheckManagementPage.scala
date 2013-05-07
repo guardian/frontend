@@ -1,7 +1,7 @@
 package conf
 
 import scala.concurrent.Await
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import java.util.concurrent.TimeUnit
 import play.api.libs.concurrent.Promise
 import play.api.libs.ws.WS
@@ -10,11 +10,10 @@ import com.gu.management.HttpRequest
 import com.gu.management.PlainTextResponse
 import com.gu.management.ErrorResponse
 import java.net.{ HttpURLConnection, URL }
-import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration.Duration
 import scala.concurrent.duration._
 
-class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPage with Logging {
+class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPage with Logging with ExecutionContexts {
 
   val path = "/management/healthcheck"
 

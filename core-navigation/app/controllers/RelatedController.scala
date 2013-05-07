@@ -4,12 +4,12 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import com.gu.openplatform.contentapi.ApiError
 
 case class Related(heading: String, trails: Seq[Trail])
 
-object RelatedController extends Controller with Logging {
+object RelatedController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val edition = Edition(request)

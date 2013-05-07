@@ -2,7 +2,6 @@ package conf
 
 import _root_.play.api.libs.ws.WS
 import play.api.{ Application => PlayApp, Plugin }
-import play.api.libs.concurrent.Execution.Implicits._
 import common._
 import com.gu.management._
 import com.gu.management.play._
@@ -12,6 +11,7 @@ import pa.{ Http, PaClient }
 import model.{ TeamMap, LiveBlog }
 import concurrent.Future
 import System.currentTimeMillis
+import contentapi.ContentApiMetrics
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
@@ -29,7 +29,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
   }
 }
 
-object FootballClient extends PaClient with Http with Logging {
+object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
 
   override lazy val base = Configuration.pa.host
 

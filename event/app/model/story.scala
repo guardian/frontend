@@ -10,8 +10,9 @@ import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import common.editions.Uk
+import common.ExecutionContexts
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -103,7 +104,7 @@ case class Story(
   }
 }
 
-object Story {
+object Story extends ExecutionContexts{
 
   implicit val ctx = new Context {
     val name = "ISODateTimeFormat context"

@@ -5,10 +5,10 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.MostPopularAgent
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
-object MostPopularController extends Controller with Logging {
+object MostPopularController extends Controller with Logging with ExecutionContexts {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/"),
