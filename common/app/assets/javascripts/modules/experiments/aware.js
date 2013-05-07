@@ -13,12 +13,11 @@ define([
             total:   'total',
             last:    'last',
             today:   'today',
-            path:    'path',
             section: 'section.'
         };
 
     var init = function () {
-        data = {};
+        data = get();
         epoch = startOfToday();
     };
     
@@ -34,6 +33,7 @@ define([
     
     var remove = function () {
         userPrefs.remove(storagePrefix);
+        data = {};
     };
     
     // returns the start of a 24hr cycle, lets say 11pm the previous day
@@ -47,21 +47,20 @@ define([
 
     var visits = function () {
         var data = get(),
-            v = parseInt(data[keys.total], 0);
+            v = parseInt(data[keys.total], 10);
         return (isNaN(v)) ? 0 : v;
     };
   
     var visitsBySection = function (section) {
         var data = get(),
-            v = parseInt(data[keys.section + section], 0);
-        return (isNaN(v)) ? 0 : v;
+            visits = parseInt(data[keys.section + section], 10);
+        return (isNaN(visits)) ? 0 : visits;
     };
 
     var visitsToday = function () {
         var data = get(),
-            visits = parseInt(data[keys.today], 0);
-        var v = parseInt(data[keys.section + section], 10);
-        return (isNaN(v)) ? 0 : v;
+            visits = parseInt(data[keys.today], 10);
+        return (isNaN(visits)) ? 0 : visits;
     };
   
     var firstVisit = function () {
@@ -71,7 +70,6 @@ define([
     // hours ago
     var lastVisit = function () {
         var data = get();
-        console.log(data[keys.last]);
         return (new Date() - new Date(data[keys.last])) / 1000 / 60 / 60;
     };
 
@@ -79,65 +77,50 @@ define([
         return (((new Date() - epoch) / 1000 / 60 / 60) < 24);
     };
     
-    var path = function () {
-        if (!data[keys.path]) {
-            data[keys.path] = []
-        }
-        return data[keys.path]
-    };
-   
-    var incrementPath = function (p) {
-        var data = get(),
-            hoursSinceLastVisit = lastVisit();
-        console.log(hoursSinceLastVisit, path());
-        if (hoursSinceLastVisit < 0) {
-            data[keys.path].push(p);
-        } else {
-            data[keys.path] = [p]
-        } 
-        set(data);
-    };
-
     var incrementVisits = function () {
+        var data = get();
         data[keys.total] = visits() + 1;
         data[keys.last] = new Date();
         set(data);
     };
 
     var incrementVisitsToday = function () {
+        var data = get();
         data[keys.today] = visitsToday() + 1;
         set(data);
     };
 
     var resetToday = function () {
+        var data = get();
         data[keys.today] = 1;
         set(data);
     };
 
     var incrementVisitsToSection = function (name) {
+        var data = get();
         data[keys.section + name] = visitsBySection(name) + 1;
         set(data);
     };
 
     //
     var logVisit = function (config) {
-       
-        incrementPath(config.pageId)
         
         incrementVisits();
-
+        
         if (config.section) {
             incrementVisitsToSection(config.section);
         }
-        
+       
+        console.log(firstVisitToday(), epoch);
         if (firstVisitToday()) {
             incrementVisitsToday();
         } else {
             resetToday();
         }
-     
 
     };
+
+    init();
 
     return {
         init: init,
@@ -148,8 +131,8 @@ define([
         lastVisit: lastVisit,
         visitsBySection: visitsBySection,
         get: get,
-        path: path,
         remove: remove
         };
+
 
     });

@@ -3,15 +3,23 @@ define(['modules/experiments/aware'], function(Aware) {
     describe('Aware', function() {
 
         beforeEach(function() {
-            Aware.init()
-            localStorage.clear();
+            
+            // make the date static so tests are stable
+    	    var fakeLastVisit = Date.parse('2013-04-21T12:00:00+01:00'),
+                fakeNow = Date.parse('2013-04-22T12:00:00+01:00');
+        
+            sinon.useFakeTimers(fakeLastVisit, "Date");
+
+            // Clear up the local storage before each test
+            Aware.remove()
+
+            // Normally we don't need to initialise the module (as it does that on it's own), but because we are
+            // are fiddling around with fake dates and the module initialises as its loaded (via AMD) *before* the sinon date
+            // mocking library below, we need to call init every test.
+            Aware.init();
+        
         });
         
-        // make the date static so tests are stable
-    	var fakeLastVisit = Date.parse('2013-04-21T12:00:00+01:00'),
-            fakeNow = Date.parse('2013-04-22T12:00:00+01:00');
-        
-        sinon.useFakeTimers(fakeLastVisit, "Date");
 
         it('should exist', function() {
             expect(Aware).toBeDefined();
@@ -44,8 +52,7 @@ define(['modules/experiments/aware'], function(Aware) {
 
         it('should identify the frequency of visits "today"', function() {
             
-            var config = { section: 'foo', pageId: 'bar' }
-            Aware.init() 
+            var config = { section: 'foo' }
             
             // move day forward 6 hours from the epoch & log a visit
             var fakeNow = Date.parse('2013-04-22T04:00:00+01:00');
@@ -92,33 +99,5 @@ define(['modules/experiments/aware'], function(Aware) {
             expect(Aware.visits()).toBe(0);
             
         });
-        
-        it('should record my path through the site in the current session', function() {
-           
-            // 5pm
-            var fakeNow = Date.parse('2013-04-28T17:00:00+01:00');
-            sinon.useFakeTimers(fakeNow, "Date");
-
-            ['foo', 'bar', 'car'].forEach(function (section) {
-                var config = { section: section, pageId: section }
-                Aware.logVisit(config)
-            })
-            
-            expect(Aware.path().toString()).toBe(['foo', 'bar', 'car'].toString());
-            
-            // 6pm
-            var fakeNow = Date.parse('2013-04-28T18:00:00+01:00');
-            sinon.useFakeTimers(fakeNow, "Date");
-            
-            var config = { section: 's', pageId: 'blah' }
-            Aware.logVisit(config)
-            expect(Aware.path().toString()).toBe(['blah'].toString());
-
-        });
-        
-        xit('should record my entry page type', function() {
-            // unshift the path array
-        });
-
     });
 });
