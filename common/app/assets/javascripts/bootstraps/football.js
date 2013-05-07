@@ -2,6 +2,7 @@
 define([
     //Common libraries
     "common",
+    "bonzo",
     //Modules
     "modules/router",
     "modules/togglepanel",
@@ -14,6 +15,7 @@ define([
     "modules/matchnav"
 ], function (
     common,
+    bonzo,
     Router,
     TogglePanel,
     Expandable,
@@ -35,12 +37,17 @@ define([
         },
 
         showFrontFixtures: function(context) {
-            var table = new FootballFixtures({
-                prependTo: context.querySelector('.trailblock ul > li'),
-                contextual: false,
-                expandable: true,
-                numVisible: 10
-            }).init();
+            var prependTo = context.querySelector('.trailblock ul > li'),
+                table;
+            if(!bonzo(prependTo).hasClass('footballfixtures-loaded')) {
+                bonzo(prependTo).addClass('footballfixtures-loaded');
+                table = new FootballFixtures({
+                    prependTo: prependTo,
+                    contextual: false,
+                    expandable: true,
+                    numVisible: 10
+                }).init();
+            }
         },
 
         showMoreMatches: function(context) {
@@ -80,12 +87,13 @@ define([
             }).init();
         },
 
-        initAutoUpdate: function(container, switches) {
+        initAutoUpdate: function(container, switches, responseSelector) {
             var a = new AutoUpdate({
                 path: window.location.pathname,
                 delay: 10000,
                 attachTo: container,
-                switches: switches
+                switches: switches,
+                responseSelector: responseSelector
             }).init();
         },
 
@@ -113,6 +121,7 @@ define([
     };
 
     var ready = function(req, config, context) {
+        common.lazyLoadCss('football', config);
 
         var page = req.params.action;
 
@@ -123,7 +132,7 @@ define([
             case 'live':
                 modules.showMoreMatches(context);
                 if (context.querySelector('.match.live-match')) {
-                    modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches);
+                    modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches, '.matches-container > *');
                 }
                 break;
             case 'fixtures':
@@ -160,7 +169,10 @@ define([
                                 "stats"     : context.querySelector('.match-stats')
                             },
                             config.switches,
-                            true
+                            {
+                                "summary"   : '.match-summary > *',
+                                "stats"     : '.match-stats > *'
+                            }
                         );
                     }
                 }

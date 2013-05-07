@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import model._
+import conf._
 import play.api.mvc.{ Controller, Action }
 import conf.FootballClient
 import pa.FootballMatch
@@ -56,18 +57,10 @@ object MatchController extends Controller with Football with Requests with Loggi
       val promiseOfLineup = FootballClient.lineUp(theMatch.id)
       Async {
         promiseOfLineup.map { lineUp =>
-          Cached(60) {
-            request.getParameter("callback").map { callback =>
-              JsonComponent(
-                "summary" -> views.html.fragments.matchSummary(theMatch),
-                "stats" -> views.html.fragments.matchStats(MatchPage(theMatch, lineUp))
-              )
-            } getOrElse {
-              Cached(60) {
-                Ok(Compressed(views.html.footballMatch(MatchPage(theMatch, lineUp))))
-              }
-            }
-          }
+          val page = MatchPage(theMatch, lineUp)
+          val htmlResponse = views.html.footballMatch(page)
+          val jsonResponse = views.html.fragments.footballMatchBody(page)
+          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
         }
       }
     }.getOrElse(NotFound)

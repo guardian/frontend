@@ -84,10 +84,18 @@ object CommonSwitches {
 
   val VideoAdvertSwitch = DefaultSwitch("video-adverts",
     "If this switch is on OAS video adverts will be enabled.",
-    initiallyOn = true)
+    initiallyOn = false)
 
-  val ABRelatedContent = DefaultSwitch("ab-related-content",
+  val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
     "If this switch is on related content AB test will be enabled.",
+    initiallyOn = false)
+
+  val AustraliaFrontSwitch = DefaultSwitch("australia-front",
+    "If this switch is on the australia front will be available",
+    initiallyOn = false)
+
+  val ABLocalElectionStoryV2 = DefaultSwitch("ab-local-election-story-v2",
+    "If this switch is on local election story AB test will be enabled.",
     initiallyOn = false)
   
   val ImageServerSwitch = DefaultSwitch("image-server",
@@ -103,7 +111,8 @@ object CommonSwitches {
     RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContent, AwareSwitch
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStoryV2,
+    AustraliaFrontSwitch, AwareSwitch
   )
 }
 

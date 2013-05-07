@@ -11,7 +11,12 @@ module.exports = function (grunt) {
         sass: {
             common: {
                 files: {
-                    'common/app/assets/stylesheets/main.min.css': 'common/app/assets/stylesheets/main.scss',
+                    'common/app/assets/stylesheets/head.min.css': 'common/app/assets/stylesheets/head.scss',
+                    'common/app/assets/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
+                    'common/app/assets/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
+                    'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
+                    'common/app/assets/stylesheets/story.min.css': 'common/app/assets/stylesheets/story.scss',
+                    'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
                 },
                 options: {

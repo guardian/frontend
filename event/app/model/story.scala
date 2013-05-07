@@ -11,6 +11,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
 import play.api.libs.concurrent.Execution.Implicits._
+import common.editions.Uk
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -23,8 +24,11 @@ case class Agent(
   importance: Int = 0,
   role: Option[String] = None,
   picture: Option[String] = None,
+  url: Option[String] = None,
   rdfType: Option[String] = None // Eg, http://schema.org/Person
-  ) {}
+  ) {
+    lazy val hasLink = url.isDefined && name.isDefined
+}
 
 case class Event(
     title: String,
@@ -53,7 +57,7 @@ object Event {
         Quote(q.text.filter(_.nonEmpty), q.by.filter(_.nonEmpty), q.url.filter(_.nonEmpty), q.subject.filter(_.nonEmpty))
       }
 
-      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote))
+      val storyItems = Some(StoryItems(c.importance, c.colour, c.shares, c.comments, cleanQuote, c.headlineOverride))
       content.find(_.id == c.id).map(Content(_, storyItems))
     }
   
@@ -67,7 +71,7 @@ case class Story(
     explainer: Option[String] = None,
     hero: Option[String] = None,
     labels: Map[String, String] = Map()
-    ) extends implicits.Collections {
+    ) extends implicits.Collections with implicits.ContentImplicits {
 
   lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
@@ -75,9 +79,9 @@ case class Story(
   lazy val places = events.flatMap(_.places)
   lazy val hasPlaces = places.nonEmpty
   lazy val hasContent: Boolean = content.nonEmpty
-  lazy val agents = events.flatMap(_.agents).sortBy(_.importance).reverse
+  lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
-  lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis)
+  lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis).reverse
   lazy val hasReaction: Boolean = reaction.nonEmpty
   lazy val contentWithQuotes = contentByImportance.filter(_.quote.isDefined)
   lazy val hasQuotes: Boolean = contentWithQuotes.nonEmpty
@@ -87,6 +91,8 @@ case class Story(
   // This is here as a hack, colours should eventually be tones from the content API
   lazy val contentByColour: Map[String, Seq[Content]] = content.groupBy(_.colour).filter(_._1 > 0).map { case (key, value) => toColour(key) -> value }
   lazy val contentByAnalysis: Seq[Content] = content.filter(_.colour > 2).sortBy(_.webPublicationDate.getMillis).reverse.sortBy(_.importance).filter(!_.quote.isDefined)
+  lazy val galleries: Seq[Gallery] = content.flatMap(_.maybeGallery).reverse
+  lazy val hasGalleries: Boolean = galleries.nonEmpty
 
   private def toColour(i: Int) = i match {
     case 1 => "Overview"
@@ -152,7 +158,7 @@ object Story {
     private def loadContent(parsedStory: ParsedStory): Story = {
         val contentIds = parsedStory.events.flatMap(_.content.map(_.id)).distinct
         // TODO proper edition
-        Await.result(ContentApi.search("UK").showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
+        Await.result(ContentApi.search(Uk).showFields("all").ids(contentIds.mkString(",")).pageSize(50).response.map {response =>
           Story(parsedStory, response.results.toSeq)
         }, 2.seconds)
     }
@@ -184,7 +190,8 @@ private case class ParsedContent(
   colour: Int,
   shares: Option[Int] = None,
   comments: Option[Int] = None,
-  quote: Option[Quote] = None)
+  quote: Option[Quote] = None,
+  headlineOverride: Option[String] = None)
 
 private case class ParsedPlace(id: String)
 

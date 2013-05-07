@@ -41,7 +41,8 @@ define([
                         path: window.location.pathname,
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
-                        switches: config.switches
+                        switches: config.switches,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });
@@ -72,21 +73,17 @@ define([
     };
 
     var ready = function (config, context) {
-
-        ready = function (config, context) {
-            common.mediator.emit("page:article:ready", config, context);
-        };
-
-        // On first call to this fn only:
-        modules.matchNav();
-        modules.initLiveBlogging();
-        modules.logReading();
         
-        if (config.switches.aware) {
-            modules.aware();
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.matchNav();
+            modules.initLiveBlogging();
+            modules.logReading();
+            if (config.switches.aware) {
+                modules.aware();
+            }
         }
-
-        ready(config, context);
+        common.mediator.emit("page:article:ready", config, context);
     };
 
     return {

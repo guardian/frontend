@@ -3,14 +3,16 @@ define([
     'modules/userPrefs',
 
     //Current tests
-    'modules/experiments/tests/relatedContent'
+    'modules/experiments/tests/relatedContent',
+    'modules/experiments/tests/local-election-story'
 ], function (
     common,
     userPrefs,
-    RelatedContent) {
+    RelatedContent,
+    LocalElectionStory) {
     
     var TESTS = {
-            RelatedContent : new RelatedContent()
+            LocalElectionStoryV2: new LocalElectionStory()
         };
 
     var testKey = 'ab.current',
@@ -25,11 +27,11 @@ define([
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
-        userPrefs.set(testKey, JSON.stringify(data));
+        userPrefs.set(testKey, data);
     }
 
     function getTest() {
-        return (userPrefs.get(testKey)) ? JSON.parse(userPrefs.get(testKey)) : false;
+        return (userPrefs.get(testKey)) ? userPrefs.get(testKey) : false;
     }
 
     // Checks if:
@@ -50,7 +52,12 @@ define([
     }
 
     function getParticipation() {
-        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).tests : [];
+        var tests = (userPrefs.get(participationKey)) ? userPrefs.get(participationKey).tests : [];
+        // handle previous bug when tests was set to length
+        if (typeof tests === "number") {
+            tests = [];
+        }
+        return tests;
     }
 
     function setParticipation(testName) {
@@ -58,7 +65,8 @@ define([
         if(getParticipation().length > 0) {
             var tests = getParticipation();
             if(!hasParticipated(testName)) {
-                data = {"tests": tests.push(testName) };
+                tests.push(testName);
+                data = {"tests": tests };
             } else {
                 data = {"tests": tests };
             }
@@ -66,7 +74,7 @@ define([
             data = {"tests":[testName]};
         }
 
-        userPrefs.set(participationKey, JSON.stringify(data));
+        userPrefs.set(participationKey, data);
     }
 
     //Finds variant in specific tests and exec's
@@ -74,8 +82,14 @@ define([
         for(var i= 0, l = test.variants.length;  i < l; i++) {
             if(test.variants[i].id === variant) {
                 test.variants[i].test();
+                initTracking(test.id, variant);
             }
         }
+    }
+
+    function initTracking(id, variant) {
+        var data = 'AB | ' + id + ' test | ' + variant;
+        common.$g(document.body).attr('data-link-test', data);
     }
         
     function start(test) {
@@ -106,7 +120,9 @@ define([
         //Is the user in an active test?
         if(isInTest) {
             var currentTest = getTest();
-            runVariant(TESTS[currentTest.id], currentTest.variant);
+            if(TESTS[currentTest.id].canRun(config)) {
+                runVariant(TESTS[currentTest.id], currentTest.variant);
+            }
         } else {
             //First clear out any old test data
             clearTest();
@@ -126,7 +142,6 @@ define([
                }
             }
         }
-        common.mediator.emit('ab:loaded');
     }
 
     return {

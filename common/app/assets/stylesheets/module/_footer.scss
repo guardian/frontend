@@ -24,7 +24,7 @@
 }
 
   .footer .nav--stacked li a {
-    @extend .type-10;
+    @extend %type-10;
     color: $blue;
     margin-left: 0;
     border-top-color: #C0C9CE;
@@ -32,7 +32,7 @@
 
 .footer p {
     @include box-sizing(border-box);
-    @extend .type-11;
+    @extend %type-11;
     width: 42%;
     margin: 0;
     padding: $baseline*2 $gutter 0 $gutter;

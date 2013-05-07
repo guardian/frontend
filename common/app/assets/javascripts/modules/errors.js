@@ -1,3 +1,4 @@
+/*global Event:true */
 define(['modules/userPrefs', 'common'], function (userPrefs, common) {
 
     var Errors = function (config) {
@@ -25,6 +26,10 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
                 return url + path + '?' + ((isAd === true) ? 'ads' : 'js') + '/' + query.join('&');
             },
             log = function(message, filename, lineno, isUncaught) {
+                // error events are thrown by script elements
+                if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
+                    message = 'Syntax or http error: ' + message.target.src;
+                }
                 var error = {
                     message: message,
                     filename: filename,

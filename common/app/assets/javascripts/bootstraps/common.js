@@ -4,7 +4,7 @@ define([
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
-    'qwery',
+    'bonzo',
     //Modules
     'modules/popular',
     'modules/related',
@@ -14,6 +14,7 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
+    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -29,7 +30,7 @@ define([
     userPrefs,
 
     domReady,
-    qwery,
+    bonzo,
 
     popular,
     related,
@@ -39,6 +40,7 @@ define([
     Sections,
     Search,
     NavControl,
+    EditionSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -67,10 +69,16 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
+            var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
+                var header = bonzo(context.querySelector('header'));
+                if(!header.hasClass('initialised')) {
+                    header.addClass('initialised');
+
+                    navControl.init(context);
+                    sections.init(context);
+                    search.init(context);
+                }
             });
         },
 
@@ -110,25 +118,30 @@ define([
             });
         },
 
-        loadOmnitureAnalytics: function (config) {
-            common.mediator.on('module:omniture:loaded', function() {
-                var videos = document.getElementsByTagName("video");
-                if(videos) {
-                    for(var i = 0, l = videos.length; i < l; i++) {
-                        var v = new Video({
-                            el: videos[i],
-                            config: config
-                        }).init();
-                    }
-                }
-            });
+        loadAnalytics: function () {
+            var cs = new Clickstream({filter: ["a", "button"]}),
+                omniture = new Omniture();
 
-            var cs = new Clickstream({ filter: ["a", "span", "button"] }),
-                o = new Omniture(null, config).init();
-        },
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-        loadOphanAnalytics: function (config) {
-            require(config.page.ophanUrl, function (Ophan) {
+                // AB must execute before Omniture
+                AB.init(config);
+
+                omniture.go(config, function(){
+                    // Omniture callback logic:
+
+                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                        if (!bonzo(video).hasClass('tracking-applied')) {
+                            bonzo(video).addClass('tracking-applied');
+                            var v = new Video({
+                                el: video,
+                                config: config
+                            }).init();
+                        }
+                    });
+                });
+
+                require(config.page.ophanUrl, function (Ophan) {
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),
@@ -143,16 +156,19 @@ define([
                             };
                         });
                     }
-                Ophan.startLog();
+                    Ophan.startLog();
+                });
+
             });
         },
 
         loadAdverts: function (config) {
-
-            if (config.switches.adverts) {
-                Adverts.init(config);
-                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-            }
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                if (config.switches.adverts) {
+                    Adverts.init(config, context);
+                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                }
+            });
         },
 
         cleanupCookies: function() {
@@ -175,46 +191,37 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
-        },
-
-        initialiseAnalyticsAndAbTesting: function(config, context) {
-            common.mediator.on('ab:loaded', function() {
-                modules.loadOmnitureAnalytics(config);
-                modules.loadOphanAnalytics(config);
-            });
-
-            AB.init(config, context);
         }
     };
 
     var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAnalyticsAndAbTesting(config, context);
-            modules.loadAdverts(config, context);
-            modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar(config);
-            
-            common.mediator.emit("page:common:loaded", config, context);
-        };
+        var self = this;
         common.deferToLoadEvent(function() {
-            deferrable(config, context);
+            if (!self.initialisedDeferred) {
+                self.initialisedDeferred = true;
+                modules.loadAdverts();
+                modules.loadAnalytics();
+
+                // TODO: make these run in event 'page:common:deferred:loaded'
+                modules.cleanupCookies(context);
+                modules.showSharedWisdomToolbar(config);
+            }
+            common.mediator.emit("page:common:deferred:loaded", config, context);
         });
     };
 
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:common:ready", config, context);
-        };
-        modules.upgradeImages();
-        modules.showTabs();
-        modules.showRelativeDates();
-        modules.transcludeRelated();
-        modules.transcludePopular();
-        modules.transcludeTopStories();
-        modules.initialiseNavigation(config);
-
-        ready(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.upgradeImages();
+            modules.showTabs();
+            modules.showRelativeDates();
+            modules.transcludeRelated();
+            modules.transcludePopular();
+            modules.transcludeTopStories();
+            modules.initialiseNavigation(config);
+        }
+        common.mediator.emit("page:common:ready", config, context);
     };
 
     var init = function (config, context) {

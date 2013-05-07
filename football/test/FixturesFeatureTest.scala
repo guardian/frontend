@@ -13,42 +13,33 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
 
       Given("I visit the fixtures page")
 
-      //the url /football/fixtures is based on the current day
-      //this just checks it loads
       HtmlUnit("/football/fixtures") { browser =>
         import browser._
         findFirst("h1").getText should be("All fixtures")
-      }
 
-      //A dated url will give us a fixed set of fixtures we can assert against
-      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
-        import browser._
+        Then("I should see todays live matches")
+        val matches = $(".match-desc").getTexts
+        matches should contain ("Arsenal 1-0 Spurs")
 
-        Then("I should see fixtures for today")
-
-        findFirst(".competitions-date").getText should be("Sunday 21 October 2012")
-
-        val fixture = $(".matches").findFirst(".match-desc")
-        fixture.findFirst(".match-home").getText should be("Sunderland")
-        fixture.findFirst(".match-away").getText should be("Newcastle")
-        findFirst(".match-status").getText should include("13:30")
-
-        And("I should see fixtures for tomorrow")
-        $(".competitions-date").getTexts should contain("Monday 22 October 2012")
-
-        And("I should see fixtures for the next day")
-        $(".competitions-date").getTexts should contain("Tuesday 23 October 2012")
+        And("The next 3 days fixtures")
+        matches should contain("Liverpool v Man C")
+        matches should contain("Wigan v Fulham")
+        matches should contain("Wolves v Burnley")
+        matches should contain("Stoke v Everton")
       }
     }
 
     scenario("Next fixtures") {
       Given("I am on the fixtures page")
-      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
+      HtmlUnit("/football/fixtures") { browser =>
         import browser._
 
-        When("I should see a link to the next fixtures")
+        When("I click the 'Next' fixtures link")
 
-        findFirst("[data-link-name=next]").getAttribute("href") should endWith("/football/fixtures/2012/oct/24")
+        findFirst("[data-link-name=next]").click()
+
+        Then("I should see the next set of upcoming matches")
+        $(".match-desc").getTexts should contain ("Swansea v Reading")
 
       }
     }

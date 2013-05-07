@@ -1,14 +1,14 @@
-@(description: TrailblockDescription,  edition: String = "false")(implicit request: RequestHeader)
+@(description: TrailblockDescription,  edition: Option[Edition] = None)(implicit request: RequestHeader)
 <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
     <h1>
        <a @if(request.path != ""){class="zone-color"} data-link-name="section heading" href="/@description.id">
          @description.name
         </a>
     </h1>
-    @if(edition != "false") { 
-    <button class="js-visible js-toggle-trailblock toggle-trailblock js-trigger-@SafeName(description)"
-        data-zone-name="@edition.toLowerCase()"
-        data-block-name="@SafeName(description)"
-        data-link-name="Hide">Hide</button>
+    @edition.map(_.id).map{ ed =>
+        <button class="js-visible js-toggle-trailblock toggle-trailblock js-trigger-@SafeName(description)"
+            data-zone-name="@ed.toLowerCase()"
+            data-block-name="@SafeName(description)"
+            data-link-name="Hide">Hide</button>
     }
 </div>

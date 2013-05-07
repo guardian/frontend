@@ -22,7 +22,7 @@ object VideoController extends Controller with Logging {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching video: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)
@@ -37,8 +37,10 @@ object VideoController extends Controller with Logging {
     }.recover{suppressApiNotFound}
   }
 
-  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result =
-    Cached(model.video) {
-      Ok(Compressed(views.html.video(model.video, model.storyPackage, Site(request).edition)))
-    }
+  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
+    val htmlResponse = views.html.video(model.video, model.storyPackage)
+    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage)
+    renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
+  }
+    
 }

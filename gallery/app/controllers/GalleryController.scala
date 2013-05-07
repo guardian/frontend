@@ -33,7 +33,7 @@ object GalleryController extends Controller with Logging {
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)
@@ -49,8 +49,10 @@ object GalleryController extends Controller with Logging {
 
   }
 
-  private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) =
-    Cached(model.gallery) {
-      Ok(Compressed(views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)))
-    }
+  private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
+    val htmlResponse = views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
+    val jsonResponse = views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
+  }
+    
 }

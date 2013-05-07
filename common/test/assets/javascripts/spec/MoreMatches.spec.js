@@ -3,7 +3,10 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common', 'ajax'], function(Mo
     describe("MoreMatches", function() {
 
         beforeEach(function () {
-            ajax.init("");
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
         });
 
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;

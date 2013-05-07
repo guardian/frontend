@@ -14,13 +14,14 @@ define([
 
         var options = {
             'edition' : '',
-            'prefName': 'front-trailblocks-'
+            'prefPrefix': 'front-trailblocks-'
         };
 
         var view = {
 
             showToggleLinks: function (context) {
-                Array.prototype.forEach.call(context.querySelectorAll('.js-toggle-trailblock'), function(toggle){
+                Array.prototype.forEach.call(context.querySelectorAll('.js-toggle-trailblock'), function(toggle) {
+                    bonzo(toggle).removeClass('js-toggle-trailblock');
                     bean.add(toggle, 'click', function (e) {
                         view.toggleTrailblock({
                             trigger: this,
@@ -36,12 +37,17 @@ define([
                     manualTrigger = opts.manualTrigger,
                     context       = opts.context,
                     classPrefix = "front-trailblock-",
-                    classesToToggle = 'rolled-out rolled-up',
+                    classesToToggle = 'rolled-up',
                     trailblockId,
                     trailblock;
 
                 if (manualTrigger) {
                     trigger = context.querySelector('.js-trigger-' + manualTrigger);
+                    if(bonzo(trigger).hasClass('userpref-applied')) {
+                        return;
+                    } else {
+                        bonzo(trigger).addClass('userpref-applied');
+                    }
                 }
 
                 // convert trigger to bonzo object
@@ -71,18 +77,16 @@ define([
 
             renderUserPreference: function (context) {
                 // bit of duplication here from function below
-                if (window.localStorage) {
-                    var existingPrefs = userPrefs.get(options.prefName);
+                var existingPrefs = userPrefs.get(options.prefName);
 
-                    if (existingPrefs) {
-                        var sectionArray = existingPrefs.split(',');
-                        for (var i in sectionArray) {
-                            var item = sectionArray[i];
-                            view.toggleTrailblock({
-                                manualTrigger: item,
-                                context: context
-                            });
-                        }
+                if (existingPrefs) {
+                    var sectionArray = existingPrefs.split(',');
+                    for (var i in sectionArray) {
+                        var item = sectionArray[i];
+                        view.toggleTrailblock({
+                            manualTrigger: item,
+                            context: context
+                        });
                     }
                 }
             }
@@ -93,42 +97,40 @@ define([
 
             logPreference: function (shouldHideSection, section) {
 
-                if (window.localStorage) {
-                    var existingPrefs = userPrefs.get(options.prefName);
+                var existingPrefs = userPrefs.get(options.prefName);
 
-                    if (existingPrefs) {
+                if (existingPrefs) {
 
-                        // see if it already exists
-                        var sectionArray = existingPrefs.split(',');
-                        for (var i in sectionArray) {
-                            var item = sectionArray[i];
-                            if (item === section) {
-                                if (!shouldHideSection) {
-                                    sectionArray.splice(i, 1); // remove it from list
-                                }
+                    // see if it already exists
+                    var sectionArray = existingPrefs.split(',');
+                    for (var i in sectionArray) {
+                        var item = sectionArray[i];
+                        if (item === section) {
+                            if (!shouldHideSection) {
+                                sectionArray.splice(i, 1); // remove it from list
                             }
                         }
-
-                        if (shouldHideSection) {
-                            sectionArray.push(section);
-                        }
-
-                        var newPrefs = sectionArray.join(',');
-                        userPrefs.set(options.prefName, newPrefs);
-
-                    // need to create it instead
-                    } else {
-                        userPrefs.set(options.prefName, section);
                     }
 
+                    if (shouldHideSection) {
+                        sectionArray.push(section);
+                    }
+
+                    var newPrefs = sectionArray.join(',');
+                    userPrefs.set(options.prefName, newPrefs);
+
+                // need to create it instead
+                } else {
+                    userPrefs.set(options.prefName, section);
                 }
+
 
             }
 
         };
 
         this.go = function (config, context) {
-            options.prefName = options.prefName + config.page.edition;
+            options.prefName = options.prefPrefix + config.page.edition;
             view.showToggleLinks(context);
             view.renderUserPreference(context);
         };

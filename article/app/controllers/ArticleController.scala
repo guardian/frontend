@@ -1,15 +1,12 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Execution.Implicits._
-import concurrent.Future
-import com.gu.openplatform.contentapi.ApiError
 
-case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
+case class ArticlePage(article: Article, storyPackage: List[Trail])
 
 object ArticleController extends Controller with Logging {
 
@@ -17,7 +14,7 @@ object ArticleController extends Controller with Logging {
     val promiseOfArticle = lookup(path)
     Async {
       promiseOfArticle.map {
-        case Left(model) if model.article.isExpired => Gone(Compressed(views.html.expired(model.article)))
+        case Left(model) if model.article.isExpired => renderExpired(model)
         case Left(model) => renderArticle(model)
         case Right(notFound) => notFound
       }
@@ -25,8 +22,8 @@ object ArticleController extends Controller with Logging {
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
-    log.info(s"Fetching article: $path for edition $edition")
+    val edition = Edition(request)
+    log.info(s"Fetching article: $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .showExpired(true)
       .showTags("all")
@@ -36,18 +33,24 @@ object ArticleController extends Controller with Logging {
       val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
       val storyPackage = response.storyPackage map { new Content(_) }
 
-      val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+      val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
       ModelOrResult(model, response)
     }.recover{ suppressApiNotFound }
 
   }
 
-  private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result =
+  private def renderExpired(model: ArticlePage)(implicit request: RequestHeader): Result = Cached(model.article) {
     request.getQueryString("callback").map { callback =>
-      JsonComponent(views.html.fragments.articleBody(model.article))
+      JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
     } getOrElse {
-      Cached(model.article)(
-        Ok(Compressed(views.html.article(model.article, model.storyPackage, model.edition)))
-      )
+      Gone(Compressed(views.html.expired(model.article)))
     }
+  }
+
+  private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {
+    val htmlResponse = views.html.article(model.article, model.storyPackage)
+    val jsonResponse = views.html.fragments.articleBody(model.article, model.storyPackage)
+    renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+  }
+  
 }

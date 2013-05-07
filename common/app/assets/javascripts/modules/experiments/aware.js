@@ -24,12 +24,12 @@ define([
     
     // JSON interface to the local storage set()
     var set = function (data) {
-        userPrefs.set(storagePrefix, JSON.stringify(data));
+        userPrefs.set(storagePrefix, data);
     };
     
     // JSON interface to the local storage get()
     var get = function () {
-        return (userPrefs.get(storagePrefix)) ? JSON.parse(userPrefs.get(storagePrefix)) : {};
+        return (userPrefs.get(storagePrefix)) ? userPrefs.get(storagePrefix) : {};
     };
     
     var remove = function () {
@@ -60,7 +60,8 @@ define([
     var visitsToday = function () {
         var data = get(),
             visits = parseInt(data[keys.today], 0);
-        return (isNaN(visits)) ? 0 : visits;
+        var v = parseInt(data[keys.section + section], 10);
+        return (isNaN(v)) ? 0 : v;
     };
   
     var firstVisit = function () {

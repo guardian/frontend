@@ -14,7 +14,7 @@
 }
 
 a.accordion-btn {
-  @extend .type-4;
+  @extend %type-4;
   display: block;
   padding: 10px 15px 10px 0;
   border-bottom: 2px solid $mushroom;

@@ -2,7 +2,13 @@
     Module: expandable.js
     Description: Used to make a list of items expand and contract
 */
-define(['common', 'bean'], function (common, bean) {
+define([
+    'common',
+    'bean'
+], function (
+    common,
+    bean
+) {
     /*
         @param {Object} options hash of configuration options:
             dom         : DOM element to convert
@@ -14,7 +20,7 @@ define(['common', 'bean'], function (common, bean) {
         var opts = options || {},
             dom = common.$g(opts.dom), // root element of the trailblock
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
-            cta = document.createElement('span'),
+            cta = document.createElement('button'),
             domCount,
             count,
             self = this,
@@ -83,9 +89,12 @@ define(['common', 'bean'], function (common, bean) {
 
         return {
             init: function() {
-                if (! dom.html() || model.getCount() < 3) {
+
+                if (dom.hasClass('expandable-initialised') || !dom.html() || model.getCount() < 3) {
                     return false;
                 }
+                dom.addClass('expandable-initialised');
+
                 view.renderCallToAction();
                 view.renderState();
             },

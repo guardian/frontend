@@ -2,7 +2,7 @@
 //---------------------------------------------
 .timestamp,
 .published-time {
-	@extend .type-9;
+	@extend %type-9;
     border-top: 2px solid $darkMushroom;
     display: block;
     padding: $baseline*4 0px $baseline*1 0px;
@@ -24,7 +24,7 @@
     }
 
     .block-time.updated-time {
-       @extend .type-7;
+       @extend %type-7;
     }
 
 .timestamp:first-child,
@@ -38,7 +38,7 @@
 //---------------------------------------------
 .block-title,
 .live-blog .block-title {
-    @extend .type-4;
+    @extend %type-4;
     color: $articleOrange;
     border: none;
     padding: 0;

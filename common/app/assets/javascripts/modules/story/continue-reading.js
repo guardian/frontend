@@ -10,14 +10,15 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
             opts = options || {},
             hidden = true,
             text = {
-                show: 'Continue reading...',
+                show: 'Continue reading',
                 hide: 'Hide'
             },
             $story,
             toggleStory = function() {
                 var linkText = text[hidden ? 'hide' : 'show'];
-                $el.text(linkText)
-                    .attr('data-link-name', linkText);
+                element.querySelector('.cta-new__text').innerHTML = linkText;
+                $el.attr('data-link-name', linkText);
+                $el.toggleClass('is-open');
                 $story[hidden ? 'show' : 'hide']();
                 hidden = !hidden;
             };
@@ -42,11 +43,13 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                             jsonpCallback: 'callback',
                             success: function(resp) {
                                 // skip first n paras
-                                var skip = $el.attr('data-skip-paras'),
-                                    re = new RegExp('^(<p>[^<]*<\/p>\\s*){' + skip + '}'),
+                                var skip = parseInt($el.attr('data-skip-paras'), 10) + 1,
                                     // assuming the link is in a 'p'
-                                    $p = bonzo($el.parent());
-                                $story = bonzo($p.after('<div>' + resp.html.replace(re, '') + '</div>').next());
+                                    $p = bonzo($el.parent()),
+                                    $content = bonzo(bonzo.create(resp.html))[1],
+                                    $body = $content.querySelectorAll('.article-body *:nth-child(n+' + skip + ')');
+
+                                $story = bonzo($p.after(bonzo(bonzo.create('<div>')).append($body)).next());
                                 toggleStory();
                             }
                         });

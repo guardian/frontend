@@ -1,8 +1,10 @@
 package controllers
 
 import common._
+import conf.CommonSwitches.AustraliaFrontSwitch
 import front._
 import model._
+import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
@@ -13,6 +15,18 @@ object NetworkFrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk")
   override val id = ""
   override val section = ""
+  override val webTitle = "The Guardian"
+  override lazy val analyticsName = "GFE:Network Front"
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "content-type" -> "Network Front"
+  )
+}
+
+object AustraliaNetworkFrontPage extends MetaData {
+  override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
+  override val id = "australia"
+  override val section = "australia"
   override val webTitle = "The Guardian"
   override lazy val analyticsName = "GFE:Network Front"
 
@@ -62,43 +76,56 @@ class FrontController extends Controller with Logging with JsonTrails {
   def isUp() = Action {
     Ok("Ok")
   }
+  
+  def render(path: String) = Action { implicit request =>
 
-  def render(path: String) = Action {
-    implicit request =>
-      renderFront(path, "html")
-  }
-
-  def renderJson(path: String) = Action {
-    implicit request =>
-      renderFront(path, "json")
-  }
-
-  private def renderFront(path: String, format: String)(implicit request: RequestHeader) = {
-
-    val edition = Site(request).edition
+    val edition = Edition(request)
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
     }
 
     // get the trailblocks
     val trailblocks: Seq[Trailblock] = front(path, edition)
-    if (trailblocks.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblocks.isEmpty) {
       InternalServerError
     } else {
-      Cached(frontPage) {
-        if (format == "json") {
-          // pull out correct trailblock
-          trailblocks.find(_.description.id == path).map {
-            trailblock =>
-              renderJsonTrails(trailblock.trails)
-          }.getOrElse(InternalServerError)
-        } else {
-          Ok(Compressed(views.html.front(frontPage, trailblocks)))
-        }
-      }
+      val htmlResponse = views.html.front(frontPage, trailblocks)
+      val jsonResponse = views.html.fragments.frontBody(frontPage, trailblocks)
+      renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+    }
+  }
+  
+  def renderTrails(path: String) = Action { implicit request =>
+
+    val edition = Edition(request)
+
+    val frontPage: MetaData = path match {
+      case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
+      case "sport" => SportFrontPage
+      case "culture" => CultureFrontPage
+    }
+
+    // get the first trailblock
+    val trailblock: Option[Trailblock] = front(path, edition).headOption
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblock.isEmpty) {
+      InternalServerError
+    } else {
+      val trails: Seq[Trail] = trailblock.get.trails
+      val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+      renderFormat(response, response, frontPage)
     }
   }
 

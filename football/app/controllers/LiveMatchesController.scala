@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import conf._
 import feed.{ CompetitionSupport, Competitions }
 import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
@@ -26,7 +27,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
 
     val today = new DateMidnight()
 
-    val blog = LiveBlog(Site(request).edition)
+    val blog: Option[Trail] = LiveBlog(Edition(request))
 
     val matches = Seq(MatchesOnDate(today, competitions.withMatchesOn(today).competitions))
 
@@ -40,12 +41,10 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
       filters = filters,
       comp = competition
     )
-
-    Cached(page) {
-      request.getQueryString("callback").map { callback =>
-        JsonComponent(views.html.fragments.matchesList(livePage, livePage.pageType))
-      }.getOrElse(Ok(Compressed(views.html.matches(livePage))))
-    }
+    
+    val htmlResponse = views.html.matches(livePage)
+    val jsonResponse = views.html.fragments.matchesBody(livePage)
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 
   def render() = Action { implicit request =>

@@ -47,6 +47,21 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                     fn.apply(context, args);
                 }
             };
+        },
+        lazyLoadCss: function(name, config) {
+            // append server specific css
+            bonzo(document.createElement('link'))
+                .attr('rel', 'stylesheet')
+                .attr('type', 'text/css')
+                .attr('href', guardian.css[name])
+                .appendTo(document.querySelector('body'));
+        },
+        hardRefresh: function(event) {
+            // this means it will not load from the cache
+            if (event) {
+                event.preventDefault();
+            }
+            location.reload(true);
         }
     };
 });
