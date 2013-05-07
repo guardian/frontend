@@ -1,10 +1,12 @@
 define(['modules/story/frontstories'], function (FrontStories) {
 
     var LocalElectionStory = function () {
+        
+        var storyId = '680026';
 
-        this.id = 'LocalElectionStoryV2';
+        this.id = 'ClevelandStory';
         this.audience = 1;
-        this.description = 'Swap out the first local-elections tagged trail with the story component';
+        this.description = 'Swap out the first cleveland tagged trail with the story component';
         this.canRun = function(config) {
             // only run on network front
             return config.page.pageId === '';
@@ -19,7 +21,7 @@ define(['modules/story/frontstories'], function (FrontStories) {
             {
                 id: 'swap',
                 test: function () {
-                    new FrontStories().init();
+                    new FrontStories({ storyId: storyId }).init();
                 }
             }
         ];

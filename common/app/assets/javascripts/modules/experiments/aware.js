@@ -22,12 +22,12 @@ define([
     
     // JSON interface to the local storage set()
     var set = function (data) {
-        userPrefs.set(storagePrefix, JSON.stringify(data));
+        userPrefs.set(storagePrefix, data);
     };
     
     // JSON interface to the local storage get()
     var get = function () {
-        return (userPrefs.get(storagePrefix)) ? JSON.parse(userPrefs.get(storagePrefix)) : {};
+        return (userPrefs.get(storagePrefix)) ? userPrefs.get(storagePrefix) : {};
     };
 
     // returns the start of a 24hr cycle, lets say 11pm the previous day
