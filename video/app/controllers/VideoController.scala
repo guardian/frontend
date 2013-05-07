@@ -5,8 +5,9 @@ import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
 import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.JsObject
 
-case class VideoPage(video: Video, storyPackage: List[Trail])
+case class VideoPage(video: Video, storyPackage: List[Trail], advert: Option[JsObject])
 
 object VideoController extends Controller with Logging {
 
@@ -32,14 +33,14 @@ object VideoController extends Controller with Logging {
         val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
         val storyPackage = response.storyPackage map { new Content(_) }
 
-        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id), VideoAdvertAgent()) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage)
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage)
+    val htmlResponse = views.html.video(model)
+    val jsonResponse = views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
     
