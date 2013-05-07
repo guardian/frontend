@@ -62,11 +62,6 @@ trait HttpRecorder extends ExecutionContexts {
   }
 
   private def name(url: String, headers: Map[String, String]) = {
-
-    //TODO dont merge me
-
-    println(url)
-
     val urlPart = url.split("\\?").flatMap(_.split("\\&")).sorted.mkString
     val headerPart = headers.toList.map { case (key, value) => key + value }.sorted.mkString
     DigestUtils.shaHex((urlPart + headerPart).getBytes)
