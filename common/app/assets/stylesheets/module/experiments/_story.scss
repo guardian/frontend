@@ -420,21 +420,49 @@ i.is-open.cta-new__icn--right {
   }
 }
 
-/** */
-.tabs-container { padding: 0; }
+/* ==========================================================================
+   Tabs 
+   ========================================================================== */
 
-/** */
-.update { margin-top: 8px; }
+.tabs-container {
+    padding: 0;
+}
 
-.story-live .article-zone, .story-live .article-head { display: none; }
+.story-tabs-container .update {
+    margin-top: 8px;
+}
 
-.story-live .social { display: none; }
+.story-live .article-zone, .story-live .article-head {
+    display: none;
+}
+
+.story-live .social {
+    display: none;
+}
 
 .story-live .block:nth-child(n+20) {
     display: none;
 }
 
-.tabs {
+.story-tabs-container .tabs {
+    margin: 0 10px 0 10px;
     margin-bottom: 16px;
 }
+
+.story-tabs-container .tabs a {
+    text-align: left;   
+    color: white;
+    margin: 0px; 
+    padding: 0px 0px 13px 4px;
+}
+
+.story-tabs-container .tabs-selected a {
+    background-color: #f8f8f2;
+    color: #214583;
+}
+
+.story-tabs-container .tabs li {
+    background-color: #214583;
+}
+
 
