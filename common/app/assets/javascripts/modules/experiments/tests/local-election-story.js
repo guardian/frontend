@@ -1,6 +1,8 @@
 define(['modules/story/frontstories'], function (FrontStories) {
 
     var LocalElectionStory = function () {
+        
+        var storyId = '881908';
 
         this.id = 'LocalElectionStoryV2';
         this.audience = 1;
@@ -19,7 +21,7 @@ define(['modules/story/frontstories'], function (FrontStories) {
             {
                 id: 'swap',
                 test: function () {
-                    new FrontStories().init();
+                    new FrontStories({ storyId: storyId }).init();
                 }
             }
         ];
