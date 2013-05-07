@@ -20,7 +20,7 @@ $orange: #FF7F00;
   padding: 0 0 6px 0;
   border-top: 1px solid #9D9D9D;
   border-bottom: 1px dotted #9D9D9D;
-  min-height: 32px;
+  min-height: 36px;
 }
 
 .story-title--indent {
@@ -79,6 +79,16 @@ $orange: #FF7F00;
     font-size: 1.6rem;
     line-height: 2.4rem;
     color: #000;
+  
+    p {
+	  margin-bottom:0;
+	  text-indent:$gutter;
+	}
+	  
+	p:last-child {
+	  margin-bottom:8px
+	}
+	  
   }
 
 }
@@ -188,7 +198,7 @@ $orange: #FF7F00;
    ========================================================================== */
 .story-map {
   position: relative;
-  margin: $baseline*4 $gutter $baseline*4 $gutter;
+  margin: $baseline*3 10px;
 }
 
 .map-detail {
@@ -293,6 +303,10 @@ $orange: #FF7F00;
 .story-agents,
 .story-agents .story-title {
   margin-bottom: 12px;
+}
+
+.story-agents figcaption:before {
+	background-image:none;
 }
 
 .agent__name,
