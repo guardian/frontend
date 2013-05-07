@@ -111,25 +111,26 @@ define([
                         Array.prototype.forEach.call(swipeContainers, function(el){
 
                             var numOfPictures = el.querySelectorAll('figure').length,
+                                swipeCallback = function(index, elem) {
+                                    var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
+                                    text = common.$g('.cta-new__text', controls),
+                                    button = common.$g('.cta-new__btn--left', controls),
+                                    centreClass = 'cta-new__text--center';
+    
+                                    if(hasContactSheet && index === 0) {
+                                        button.addClass('h');
+                                        text.removeClass(centreClass).text('View complete gallery');
+                                    } else {
+                                       button.removeClass('h');
+                                       text.addClass(centreClass).text((index + 1) + '/' + numOfPictures);
+                                    }
+                                },
                                 mySwipe = new Swipe(el, {
                                      speed: 100,
                                      continuous: true,
                                      disableScroll: false,
                                      stopPropagation: true,
-                                     callback: function(index, elem) {
-                                         var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
-                                             text = common.$g('.cta-new__text', controls),
-                                             button = common.$g('.cta-new__btn--left', controls),
-                                             centreClass = 'cta-new__text--center';
-
-                                         if(hasContactSheet && index === 0) {
-                                             button.addClass('h');
-                                             text.removeClass(centreClass).text('View complete gallery');
-                                         } else {
-                                            button.removeClass('h');
-                                            text.addClass(centreClass).text(index + '/' + numOfPictures);
-                                         }
-                                     },
+                                     callback: swipeCallback,
                                      transitionEnd: function(index, elem) {}
                                 });
 
@@ -139,6 +140,9 @@ define([
                             if(hasContactSheet) { common.$g(el.querySelector('.cta-new__btn--left')).addClass('h'); }
 
                             common.$g('.js-swipe__controls', el.parentNode).removeClass('h');
+                            
+                            // init gallery (for text)
+                            swipeCallback(0, el.querySelector('figure'));
                         });
                     });
                 }
