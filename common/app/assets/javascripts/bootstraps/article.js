@@ -39,7 +39,8 @@ define([
                         path: window.location.pathname,
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
-                        switches: config.switches
+                        switches: config.switches,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });

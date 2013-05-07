@@ -1,19 +1,32 @@
 package controllers
 
 import common._
+import conf.CommonSwitches.AustraliaFrontSwitch
 import front._
 import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 object NetworkFrontPage extends MetaData {
   override val canonicalUrl = Some("http://www.guardian.co.uk")
   override val id = ""
   override val section = ""
+  override val webTitle = "The Guardian"
+  override lazy val analyticsName = "GFE:Network Front"
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    "content-type" -> "Network Front"
+  )
+}
+
+object AustraliaNetworkFrontPage extends MetaData {
+  override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
+  override val id = "australia"
+  override val section = "australia"
   override val webTitle = "The Guardian"
   override lazy val analyticsName = "GFE:Network Front"
 
@@ -49,7 +62,7 @@ object CultureFrontPage extends MetaData {
 }
 
 
-class FrontController extends Controller with Logging with JsonTrails {
+class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val front: Front = Front
 
@@ -70,13 +83,18 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
     }
 
     // get the trailblocks
     val trailblocks: Seq[Trailblock] = front(path, edition)
-    if (trailblocks.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblocks.isEmpty) {
       InternalServerError
     } else {
       val htmlResponse = views.html.front(frontPage, trailblocks)
@@ -91,13 +109,18 @@ class FrontController extends Controller with Logging with JsonTrails {
 
     val frontPage: MetaData = path match {
       case "front" => NetworkFrontPage
+      case "australia" => AustraliaNetworkFrontPage
       case "sport" => SportFrontPage
       case "culture" => CultureFrontPage
     }
 
     // get the first trailblock
     val trailblock: Option[Trailblock] = front(path, edition).headOption
-    if (trailblock.isEmpty) {
+
+    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
+      NotFound
+    }
+    else if (trailblock.isEmpty) {
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails

@@ -11,10 +11,10 @@ import feed._
 import pa.LineUp
 import scala.Some
 import implicits.{ Requests, Football }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -36,7 +36,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   )
 }
 
-object MatchController extends Controller with Football with Requests with Logging {
+object MatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
@@ -57,17 +57,10 @@ object MatchController extends Controller with Football with Requests with Loggi
       val promiseOfLineup = FootballClient.lineUp(theMatch.id)
       Async {
         promiseOfLineup.map { lineUp =>
-          Cached(60) {
-            val page = MatchPage(theMatch, lineUp)
-            request.getParameter("callback").map { callback =>
-              JsonComponent(
-                page,
-                Switches.all,
-                "summary" -> views.html.fragments.matchSummary(theMatch),
-                "stats" -> views.html.fragments.matchStats(page)
-              )
-            } getOrElse(Ok(Compressed(views.html.footballMatch(page))))
-          }
+          val page = MatchPage(theMatch, lineUp)
+          val htmlResponse = views.html.footballMatch(page)
+          val jsonResponse = views.html.fragments.footballMatchBody(page)
+          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
         }
       }
     }.getOrElse(NotFound)

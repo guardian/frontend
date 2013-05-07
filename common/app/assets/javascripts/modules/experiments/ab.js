@@ -4,15 +4,15 @@ define([
 
     //Current tests
     'modules/experiments/tests/relatedContent',
-    'modules/experiments/tests/local-election-story'
+    'modules/experiments/tests/cleveland-story'
 ], function (
     common,
     userPrefs,
     RelatedContent,
-    LocalElectionStory) {
+    ClevelandStory) {
     
     var TESTS = {
-            LocalElectionStoryV2: new LocalElectionStory()
+            ClevelandStory: new ClevelandStory()
         };
 
     var testKey = 'ab.current',

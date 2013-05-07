@@ -5,6 +5,7 @@ import _root_.play.api.{ Application => PlayApp }
 import com.gu.management.play._
 import com.gu.management._
 import logback.LogbackLevelPage
+import contentapi.ContentApiMetrics
 
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all

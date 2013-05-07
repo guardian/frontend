@@ -7,12 +7,12 @@ import model._
 import play.api.mvc.{ Result, RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
-object TagController extends Controller with Logging with JsonTrails {
+object TagController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfTag = lookup(path)
@@ -42,7 +42,7 @@ object TagController extends Controller with Logging with JsonTrails {
   private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = {
     val htmlResponse = views.html.tag(model.tag, model.trails, model.leadContent)
     val jsonResponse = views.html.fragments.tagBody(model.tag, model.trails, model.leadContent)
-    renderFormat(htmlResponse, jsonResponse, model.tag)
+    renderFormat(htmlResponse, jsonResponse, model.tag, Switches.all)
   }
   
 }

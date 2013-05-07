@@ -133,8 +133,8 @@ define([
                                      transitionEnd: function(index, elem) {}
                                 });
 
-                            bean.on(el, 'click', '.cta-new__btn--left', function() { mySwipe.prev(); });
-                            bean.on(el, 'click','.cta-new__btn--right', function() { mySwipe.next(); });
+                            bean.on(el.parentNode, 'click', '.cta-new__btn--left', mySwipe.prev);
+                            bean.on(el.parentNode, 'click', '.cta-new__btn--right', mySwipe.next);
 
                             if(hasContactSheet) { common.$g(el.querySelector('.cta-new__btn--left')).addClass('h'); }
 

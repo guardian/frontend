@@ -3,7 +3,6 @@ package common
 import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
 import play.api.mvc.Result
-import play.api.libs.concurrent.Execution.Implicits._
 import play.api.templates.Html
 import model.Cached
 import play.api.mvc.RequestHeader

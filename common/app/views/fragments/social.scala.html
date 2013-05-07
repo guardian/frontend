@@ -4,7 +4,7 @@
 
 @if(SocialSwitch.isSwitchedOn) {
 
-@defining(page.canonicalUrl.getOrElse(s"http://$Host(request)/${page.id}")){ url =>
+@defining(page.canonicalUrl.getOrElse(s"http://${request.host}${request.path}")){ url =>
     <ul class="social">
         <li class="fb social-network">
             <a  class="social-btn"
@@ -18,13 +18,6 @@
                 data-link-name="social-twitter"
                 href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&url=@helper.urlEncode(url)">
                 <span>Twitter</span>
-            </a>
-        </li>
-        <li class="linkedin social-network">
-            <a  class="social-btn"
-                data-link-name="social-linkedin"
-                href="http://www.linkedin.com/shareArticle?mini=true&url=@helper.urlEncode(url)&title=@helper.urlEncode(page.webTitle)&source=The+Guardian">
-                <span>LinkedIn</span>
             </a>
         </li>
         <li class="gplus social-network">

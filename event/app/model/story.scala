@@ -10,8 +10,9 @@ import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import common.editions.Uk
+import common.ExecutionContexts
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -105,7 +106,7 @@ case class Story(
   }
 }
 
-object Story {
+object Story extends ExecutionContexts{
 
   implicit val ctx = new Context {
     val name = "ISODateTimeFormat context"
@@ -147,8 +148,11 @@ object Story {
       }
     }
 
-    def latestWithContent(): Seq[Story] = {
-      measure(Stories.find(DBObject.empty).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+    def latestWithContent(storyId: Option[String] = None): Seq[Story] = {
+      val query = storyId.map{ storyId =>
+        DBObject("id" -> storyId)
+      } getOrElse(DBObject.empty)
+      measure(Stories.find(query).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
     }
 
     def latest(): Seq[Story] = {
