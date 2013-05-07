@@ -67,7 +67,7 @@ define([
         
         aware: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-               Aware.logVisit(config.page.section);
+               Aware.logVisit(config);
             });
         }
     };
