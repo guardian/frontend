@@ -19,7 +19,6 @@ define([
             self = this;
 
         this.init = function () {
-            console.log(guardian.config.switches);
             if (guardian.config.switches.abClevelandStory || override) {
                 this.load();
             }
