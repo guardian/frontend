@@ -198,11 +198,13 @@ define([
             if (config.switches.swipeNav || userPrefs.isOn('swipe-nav')) {
                 if (window.history && history.pushState) {
                     supportsHistory = true;
+                    /*
                     // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
                     androidVersion = window.navigator.userAgent.match(/Android\s+([\d\.]+)/i);
                     if (androidVersion && parseFloat(androidVersion[1]) <= 4.1) {
                         supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
                     }
+                    */
                 }
                 if (!supportsHistory) {
                     return;
