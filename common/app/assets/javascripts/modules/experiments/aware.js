@@ -111,7 +111,6 @@ define([
             incrementVisitsToSection(config.section);
         }
        
-        console.log(firstVisitToday(), epoch);
         if (firstVisitToday()) {
             incrementVisitsToday();
         } else {
