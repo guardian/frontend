@@ -109,7 +109,7 @@ define([
                         }
 
                         Array.prototype.forEach.call(swipeContainers, function(el){
-                            
+
                             var numOfPictures = el.querySelectorAll('figure').length,
                                 hasPictureSheet = el.querySelector('.story-picture--sheet'),
                                 swipeCallback = function(index, elem) {
