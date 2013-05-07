@@ -190,8 +190,37 @@ define([
         },
 
         initSwipe: function(config) {
-            if (config.switches && config.switches.swipeNavigation) {
-                modules.getSwipeSequence(modules.startSwipe);
+            var androidVersion,
+                vendorPrefixes = ['ms', 'Khtml', 'O', 'Moz', 'Webkit', ''],
+                supportsHistory = false,
+                supportsTransitions = false;
+
+            if (config.switches.swipeNav || userPrefs.isOn('swipe-nav')) {
+                if (window.history && history.pushState) {
+                    supportsHistory = true;
+                    // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
+                    androidVersion = window.navigator.userAgent.match(/Android\s+([\d\.]+)/i);
+                    if (androidVersion && parseFloat(androidVersion[1]) <= 4.1) {
+                        supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
+                    }
+                }
+                if (!supportsHistory) {
+                    return;
+                }
+
+                while(vendorPrefixes.length) {
+                    if (vendorPrefixes.pop() + 'Transition' in document.body.style) {
+                        supportsTransitions = true;
+                        break;
+                    }
+                }
+                if (!supportsTransitions) {
+                    return;
+                }
+
+                modules.getSwipeSequence(function(sequence){
+                    modules.startSwipe(sequence, config);
+                });
             }
         },
 
@@ -207,26 +236,13 @@ define([
             });
         },
 
-        startSwipe: function(sequence) {
-            var
-                //linkSelector = '',
-                linkSelector = 'a:not(.control)',
-                opts,
-                pages = document.querySelector('#swipepages'),
-                page0 = pages.querySelector('#swipepage-0 .parts'),
-                page1 = pages.querySelector('#swipepage-1 .parts'),
-                page2 = pages.querySelector('#swipepage-2 .parts'),
-                head  = page1.querySelector('.parts__head'),
-                foot  = page1.querySelector('.parts__foot'),
-                initialBodyHtml = '<div class="parts__body"><div class="swipepage-msg">Loading page...</div></div>';
+        startSwipe: function(sequence, config) {
+            var clickSelector = '',
+                opts;
 
-            bonzo(page0).append(head.cloneNode(true));
-            bonzo(page0).append(bonzo.create(initialBodyHtml));
-            bonzo(page0).append(foot.cloneNode(true));
-
-            bonzo(page2).append(head.cloneNode(true));
-            bonzo(page2).append(bonzo.create(initialBodyHtml));
-            bonzo(page2).append(foot.cloneNode(true));
+            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-nav-on-click')) {
+                clickSelector = 'a:not(.control)';
+            }
 
             opts = {
                 afterShow: function(config) {
@@ -236,7 +252,7 @@ define([
                         common.mediator.emit('page:ready', pageConfig(config), swipe.visiblePane);
                     }
 
-                    if(linkSelector && swipe.initiatedBy === 'link') {
+                    if(clickSelector && swipe.initiatedBy === 'click') {
                         modules.getSwipeSequence(function(sequence){
                             swipe.api.setSequence(sequence);
                             swipe.api.loadSidePanes();
@@ -245,7 +261,7 @@ define([
                         swipe.api.loadSidePanes();
                     }
                 },
-                linkSelector: linkSelector,
+                clickSelector: clickSelector,
                 swipeContainer: '#swipepages',
                 contentSelector: '.parts__body',
                 sequence: sequence

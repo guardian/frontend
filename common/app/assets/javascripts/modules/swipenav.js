@@ -63,8 +63,8 @@ define([
                     // Callback after a pane is made visible; use for analytics events, social buttons, etc.
                     afterShow: noop,
 
-                    // CSS selector for anchors that should initiate an ajax+pushState reload.
-                    linkSelector: '',
+                    // CSS selector for clickable elements that should initiate a preload+swipe
+                    clickSelector: '',
 
                     // The CSS selector for the element in each pane that should receive the ajax'd in content
                     contentSelector: '*:first-child',
@@ -77,7 +77,6 @@ define([
 
             swipeContainer = $(opts.swipeContainer),
 
-            androidVersion,
             body = $('body'),
             throttle,
             canonicalLink = $('link[rel=canonical]'),
@@ -88,8 +87,6 @@ define([
             sequence = [],
             sequenceCache,
             sequenceLen = 0,
-            supportsHistory = false,
-            supportsTransitions = false,
             inSequence = false,
             initiatedBy = 'initial',
             noHistoryPush = false,
@@ -97,9 +94,28 @@ define([
             panes,
             paneNow = 1,
             paneThen = 1,
-            vendorPrefixes = ['ms', 'Khtml', 'O', 'Moz', 'Webkit', ''],
+            pendingHTML = '<div class="swipepage-msg">Loading page...</div>',
             visiblePaneMargin = 0,
             hiddenPaneMargin = 0;
+
+
+        function prepareDOM() {
+            var pages = document.querySelector('#swipepages'),
+                page0 = pages.querySelector('#swipepage-0 .parts'),
+                page1 = pages.querySelector('#swipepage-1 .parts'),
+                page2 = pages.querySelector('#swipepage-2 .parts'),
+                head  = page1.querySelector('.parts__head'),
+                foot  = page1.querySelector('.parts__foot'),
+                initialBodyHtml = '<div class="parts__body">' + pendingHTML + '</div>';
+
+            bonzo(page0).append(head.cloneNode(true));
+            bonzo(page0).append(bonzo.create(initialBodyHtml));
+            bonzo(page0).append(foot.cloneNode(true));
+
+            bonzo(page2).append(head.cloneNode(true));
+            bonzo(page2).append(bonzo.create(initialBodyHtml));
+            bonzo(page2).append(foot.cloneNode(true));
+        }
 
         function load(o) {
             var
@@ -116,7 +132,7 @@ define([
                 
                 // Associate a contenet area with this pane, if not already done so
                 el.contentArea = el.contentArea || el.querySelector(opts.contentSelector);
-                el.contentArea.innerHTML = '<div class="swipepage-msg">Loading page...</div>';
+                el.contentArea.innerHTML = pendingHTML;
 
                 // Ask the cache
                 frag = sequenceCache[url];
@@ -401,7 +417,7 @@ define([
             },
 
             gotoUrl: function(url, type){
-                initiatedBy = type ? type.toString() : 'link';
+                initiatedBy = type ? type.toString() : 'click';
                 gotoUrl(url);
             },
 
@@ -416,31 +432,10 @@ define([
             }
         };
 
-        // MAIN
+        // MAIN exec
 
-        // Detect History API support
-        if (window.history && history.pushState) {
-            supportsHistory = true;
-            // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
-            androidVersion = window.navigator.userAgent.match(/Android\s+([\d\.]+)/i);
-            if (androidVersion && parseFloat(androidVersion[1]) <= 4.1) {
-                supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
-            }
-        }
-        if (!supportsHistory) {
-            return;
-        }
-
-        // Test for vendor-specific Transition support
-        while(vendorPrefixes.length) {
-            if (vendorPrefixes.pop() + 'Transition' in document.body.style) {
-                supportsTransitions = true;
-                break;
-            }
-        }
-        if (!supportsTransitions) {
-            return;
-        }
+        // Set up the DOM structure
+        prepareDOM();
 
         // Set the initial sequence
         setSequence(opts.sequence);
@@ -486,8 +481,8 @@ define([
         // BINDINGS
 
         // Bind clicks to cause swipe-in transitions
-        if (opts.linkSelector){
-            bean.on(document, 'click', opts.linkSelector, function (e) {
+        if (opts.clickSelector){
+            bean.on(document, 'click', opts.clickSelector, function (e) {
                 var url;
 
                 if (!validateClick(e)) { return true; }
@@ -501,7 +496,7 @@ define([
                     window.location.reload(true);
                 }
                 else {
-                    initiatedBy = 'link';
+                    initiatedBy = 'click';
                     gotoUrl(url);
                 }
             });
