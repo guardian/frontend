@@ -9,7 +9,7 @@ import feed.Competitions._
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class Report(trail: Trail, name: String)
@@ -23,7 +23,7 @@ case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
   lazy val hasReport = matchReport.isDefined
 }
 
-object MoreOnMatchController extends Controller with Football with Requests with Logging {
+object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
 

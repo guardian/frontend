@@ -4,10 +4,10 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import com.gu.openplatform.contentapi.ApiError
 
-object TopStoriesController extends Controller with Logging with Paging with JsonTrails {
+object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   val validFormats: Seq[String] = Seq("html", "json")
 

@@ -13,7 +13,7 @@ import pa._
 import implicits.Football
 import common._
 
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration.{Duration => Timed, _}
 import pa.MatchDayTeam
 import pa.MatchDay

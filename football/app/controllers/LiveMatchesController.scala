@@ -8,9 +8,9 @@ import model._
 import org.joda.time.DateMidnight
 import model.Page
 import conf.Configuration
-import play.api.libs.concurrent.Execution.Implicits._
 
-object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging {
+
+object LiveMatchesController extends Controller with CompetitionLiveFilters with Logging with ExecutionContexts {
 
   val page = new Page(Some("http://www.guardian.co.uk/football/matches"), "football/live", "football",
     "Today's matches", "GFE:Football:automatic:live matches") {

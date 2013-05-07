@@ -4,9 +4,9 @@ import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.libs.concurrent.Execution.Implicits._
 
-object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters {
+
+object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
   private def loadTable(competitionId: String): Option[Table] = Competitions.competitions
     .find(_.id == competitionId)

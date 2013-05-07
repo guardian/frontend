@@ -11,10 +11,10 @@ import feed._
 import pa.LineUp
 import scala.Some
 import implicits.{ Requests, Football }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -36,7 +36,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   )
 }
 
-object MatchController extends Controller with Football with Requests with Logging {
+object MatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
