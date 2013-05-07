@@ -7,6 +7,8 @@ define([
 
     "modules/expandable",
     "modules/story/continue-reading",
+    "modules/autoupdate",
+    "modules/tabs",
     
     "swipe"
 ], function(
@@ -15,10 +17,28 @@ define([
     ajax,
 
     Expandable,
-    ContinueReading
+    ContinueReading,
+    AutoUpdate,
+    Tabs
 ) {
 
     var modules = {
+        
+        initLiveBlogging: function() {
+            common.mediator.on('page:story:ready', function(config, context) {
+                var liveBlog = context.querySelector('#live');
+                if (liveBlog) {
+                    var a = new AutoUpdate({
+                        path: liveBlog.getAttribute('data-source'),
+                        delay: 60000,
+                        attachTo: context.querySelector(".story-live"),
+                        switches: config.switches,
+                        loadOnInitialise: true
+                    }).init();
+                }
+            });
+        },
+        
         initTimeline: function() {
             common.mediator.on('page:story:ready', function(config, context) {
                 var $ = common.$g,
@@ -131,7 +151,15 @@ define([
                     new ContinueReading(el).init();
                 });
             });
+        },
+            
+        initTabs: function () {
+            var tabs = new Tabs();
+            common.mediator.on('page:story:ready', function(config, context) {
+                tabs.init(context);
+            });
         }
+
     };
 
     var ready = function(config, context) {
@@ -142,6 +170,8 @@ define([
             modules.initExpandables();
             modules.initContinueReading();
             modules.initSwipe();
+            modules.initLiveBlogging();
+            modules.initTabs();
         }
         common.mediator.emit("page:story:ready", config, context);
     };

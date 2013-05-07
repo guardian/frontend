@@ -48,6 +48,28 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
                 expect(attachTo.innerHTML).toBe('<span>foo</span>');
             });
         });
+        
+        it("should optionally load the load the first update immediately after the module has initialised", function(){
+            
+            var callback1 = sinon.stub();
+            common.mediator.on('modules:autoupdate:loaded', callback1);
+
+            var a = new Autoupdate({
+                    path: path,
+                    delay: 10000,
+                    attachTo: attachTo,
+                    switches: {autoRefresh: true},
+                    loadOnInitialise: true
+                });
+                a.init();
+
+            waits(200); // should be shorter than the 'delay' param
+
+            runs(function(){
+                expect(callback1).toHaveBeenCalled();
+                expect(attachTo.innerHTML).toBe('<span>foo</span>');
+            });
+        });
 
 
         it("should get user prefs from local storage ", function(){
@@ -70,7 +92,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             });
         });
 
-        xit("should destroy itself if server sends turn off response", function() {
+        it("should destroy itself if server sends turn off response", function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
@@ -88,7 +110,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             });
         });
         
-        xit('should not poll if `autoRefresh` switch turned off (default)', function() {
+        it('should not poll if `autoRefresh` switch turned off (default)', function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
             
             var a = new Autoupdate({
