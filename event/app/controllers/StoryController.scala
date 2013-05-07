@@ -50,12 +50,12 @@ object StoryController extends Controller with Logging with ExecutionContexts {
   }
 
   def latestWithContent() = Action { implicit request =>
-    val promiseOfStories = Future(Story.mongo.latestWithContent())
+    val promiseOfStories = Future(Story.mongo.latestWithContent(request.getQueryString("storyId")))
 
     Async {
       promiseOfStories.map { stories =>
         if (stories.nonEmpty) {
-          Cached(60) {
+          Cached(300) {
             val html = views.html.fragments.latestWithContent(stories)
             JsonComponent(html)
           }

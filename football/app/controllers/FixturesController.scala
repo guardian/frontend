@@ -52,7 +52,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
         JsonComponent(
           fixturesPage.page,
           Switches.all,
-          "html" -> views.html.fragments.matchesList(fixturesPage),
+          "html" -> views.html.fragments.matchesBody(fixturesPage),
           "more" -> Html(nextPage.getOrElse("")))
       }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
     }

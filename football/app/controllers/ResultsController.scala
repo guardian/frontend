@@ -52,7 +52,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
         JsonComponent(
           resultsPage.page,
           Switches.all,
-          "html" -> views.html.fragments.matchesList(resultsPage),
+          "html" -> views.html.fragments.matchesBody(resultsPage),
           "more" -> Html(previousPage.getOrElse("")))
       }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
     }
