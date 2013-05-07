@@ -109,8 +109,9 @@ define([
                         }
 
                         Array.prototype.forEach.call(swipeContainers, function(el){
-
+                            
                             var numOfPictures = el.querySelectorAll('figure').length,
+                                hasPictureSheet = el.querySelector('.story-picture--sheet'),
                                 swipeCallback = function(index, elem) {
                                     var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
                                     text = common.$g('.cta-new__text', controls),
@@ -122,7 +123,9 @@ define([
                                         text.removeClass(centreClass).text('View complete gallery');
                                     } else {
                                        button.removeClass('h');
-                                       text.addClass(centreClass).text((index + 1) + '/' + numOfPictures);
+                                       // if there's a contact sheet, don't include it in the count
+                                       index = (hasPictureSheet) ? index : index + 1;
+                                       text.addClass(centreClass).text(index + '/' + numOfPictures);
                                     }
                                 },
                                 mySwipe = new Swipe(el, {
