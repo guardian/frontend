@@ -99,8 +99,6 @@ object CommonSwitches {
     RelatedContentSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
     SearchSwitch, QuantcastSwitch, HomescreenSwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ClevelandStory,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
     VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABStoryFrontTrail,
     AustraliaFrontSwitch
   )
