@@ -7,7 +7,7 @@ import model.Trailblock
 import scala.Some
 import model.TrailblockDescription
 import common._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 import concurrent.Future
 

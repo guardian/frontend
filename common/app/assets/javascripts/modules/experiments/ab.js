@@ -4,15 +4,15 @@ define([
 
     //Current tests
     'modules/experiments/tests/relatedContent',
-    'modules/experiments/tests/cleveland-story'
+    'modules/experiments/tests/story-front-trail'
 ], function (
     common,
     userPrefs,
     RelatedContent,
-    ClevelandStory) {
+    StoryFrontTrail) {
     
     var TESTS = {
-            ClevelandStory: new ClevelandStory()
+            StoryFrontTrail: new StoryFrontTrail()
         };
 
     var testKey = 'ab.current',
@@ -136,7 +136,7 @@ define([
                var test =  TESTS[testName];
 
                //Can the test run on this page and user not already participated
-               if(test.canRun(config) && !hasParticipated(test.id)) {
+               if(test.canRun(config) && !hasParticipated(test.id) && switches["ab" + test.id]) {
                    //Start
                    start(test);
                }

@@ -7,7 +7,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
 import conf.{ MongoErrorCount, MongoOkCount, MongoTimingMetric }
 import scala.concurrent.duration._
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 object StoryList extends AkkaSupport {
 

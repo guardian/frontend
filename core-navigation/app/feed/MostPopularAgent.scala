@@ -6,10 +6,10 @@ import conf.ContentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 import akka.actor.Cancellable
 import common._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 
-object MostPopularAgent extends AkkaSupport with Logging {
+object MostPopularAgent extends AkkaSupport with Logging with ExecutionContexts {
 
   private val agent = play_akka.agent[Map[String, Seq[Trail]]](Map.empty)
 

@@ -3,7 +3,7 @@ package controllers.front
 import common._
 import play.api.libs.json.{JsObject, JsValue, JsNull}
 import play.api.libs.json.Json.parse
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 import conf.Configuration
 import model.{ItemTrailblockDescription, Trailblock, TrailblockDescription}
