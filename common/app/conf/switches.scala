@@ -70,10 +70,6 @@ object CommonSwitches {
     "If this switch is enabled the add-to-homescreen popup will plague iOS users",
     initiallyOn = false)
 
-  val OptimizelySwitch = DefaultSwitch("optimizely",
-    "If this switch is on Optimizely will be enabled.",
-    initiallyOn = false)
-
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
@@ -90,8 +86,8 @@ object CommonSwitches {
     "If this switch is on the australia front will be available",
     initiallyOn = false)
 
-  val ClevelandStory = DefaultSwitch("ab-cleveland-story",
-    "If this switch is on cleveland story AB test will be enabled.",
+  val ABStoryFrontTrail = DefaultSwitch("ab-story-front-trail",
+    "If this switch is on story front trail AB test will be enabled.",
     initiallyOn = false)
   
   val ImageServerSwitch = DefaultSwitch("image-server",
@@ -102,8 +98,8 @@ object CommonSwitches {
     FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
     RelatedContentSwitch, NetworkFrontAppealSwitch,
     ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ClevelandStory,
+    SearchSwitch, QuantcastSwitch, HomescreenSwitch, AdvertSwitch,
+    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABStoryFrontTrail,
     AustraliaFrontSwitch
   )
 }

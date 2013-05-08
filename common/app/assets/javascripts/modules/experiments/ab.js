@@ -4,15 +4,15 @@ define([
 
     //Current tests
     'modules/experiments/tests/relatedContent',
-    'modules/experiments/tests/cleveland-story'
+    'modules/experiments/tests/story-front-trail'
 ], function (
     common,
     store,
     RelatedContent,
-    ClevelandStory) {
+    StoryFrontTrail) {
     
     var TESTS = {
-            ClevelandStory: new ClevelandStory()
+            StoryFrontTrail: new StoryFrontTrail()
         };
 
     var testKey = 'gu.ab.current',
