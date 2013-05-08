@@ -12,7 +12,6 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         beforeEach(function(){
 
             config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
-            config.switches = { optimizely: false };
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
             sinon.spy(s, "t");
