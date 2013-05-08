@@ -135,7 +135,7 @@ define([
                 s.eVar38 = 'popup:homescreen';
             }
 
-            /* Retrieve navigation interaction data */
+            /* Retrieve navigation interaction data, incl. swipe */
             var ni = storage.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();
@@ -145,11 +145,11 @@ define([
                     s.events = s.apl(s.events,'event37',',');
                 }
                 storage.remove('gu.analytics.referrerVars');
-            }
-
-            // Referrer might be set by an in-page navigation
-            if (config.referrer) {
-                s.referrer = config.referrer;
+            } else if (config.swipe) {
+                s.referrer = config.swipe.referrer;
+                s.eVar24   = config.swipe.referrerPageName;
+                s.eVar37   = config.swipe.initiatedBy;
+                s.events   = 'event37';
             }
         };
 

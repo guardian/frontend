@@ -80,7 +80,7 @@ define([
             body = $('body'),
             throttle,
             canonicalLink = $('link[rel=canonical]'),
-            config, // the current pane's config
+            config = {}, // the current pane's config
             contentArea = swipeContainer[0],
             contentAreaTop = swipeContainer.offset().top,
             sequencePos = -1,
@@ -186,49 +186,43 @@ define([
         }
 
         // Fire post load actions
-        function doAfterShow (el) {
+        function doAfterShow (context) {
             var url,
-                div,
-                pos;
+                div;
 
             updateHeight();
             throttle = false;
 
             if (initiatedBy === 'initial') {
-                url = document.location.href;
-                config = {
-                    referrer: document.referrer
-                };
-                //doHistoryPush({}, document.title, url, true);
+                loadSidePanes();
+                return;
             }
-            else {
-                url = el.dataset.url;
-                setSequencePos(url);
 
-                config = (sequenceCache[url] || {}).config || {};
-                config.referrer = window.location.href; // works because we havent yet push'd the new URL
+            url = context.dataset.url;
+            setSequencePos(url);
 
-                if (config.webTitle) {
-                    div = document.createElement('div');
-                    div.innerHTML = config.webTitle; // resolves html entities
-                    document.title = div.firstChild.nodeValue;
-                }
+            config = (sequenceCache[url] || {}).config || {};
 
-                // Update canonical tag using pushed location
-                canonicalLink.attr('href', window.location.href);
+            // Add swipe info & api to the config
+            config.swipe = {
+                context: context,
+                initiatedBy: initiatedBy,
+                api: api
+            };
+
+            if (config.webTitle) {
+                div = document.createElement('div');
+                div.innerHTML = config.webTitle; // resolves html entities
+                document.title = div.firstChild.nodeValue;
             }
+
+            // Update canonical tag using pushed location
+            canonicalLink.attr('href', window.location.href);
 
             if (!noHistoryPush) {
                 doHistoryPush({}, document.title, url);
             }
             noHistoryPush = false;
-
-            // Add swipe info & api to the config
-            config.swipe = {
-                visiblePane: el,
-                initiatedBy: initiatedBy,
-                api: api
-            };
 
             // Fire the main aftershow callback
             opts.afterShow(config);
@@ -525,7 +519,7 @@ define([
 
         // Bind left/right keyboard keys
         bean.on(document, 'keydown', function (e) {
-            initiatedBy = 'keyboard_arrow';
+            initiatedBy = 'swipe';
             switch(e.keyCode) {
                 case 37: throttledSlideIn(-1);
                     break;

@@ -240,19 +240,25 @@ define([
 
         startSwipe: function(sequence, config) {
             var clickSelector = '',
-                opts;
+                opts,
+                referrer = window.location.href,
+                referrerPageName = config.page.analyticsName;
 
             if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-nav-on-click')) {
                 clickSelector = 'a:not(.control)';
             }
 
-            opts = {
+            swipeNav({
                 afterShow: function(config) {
                     var swipe = config.swipe;
 
-                    if( swipe.initiatedBy !== 'initial') {
-                        common.mediator.emit('page:ready', pageConfig(config), swipe.visiblePane);
-                    }
+                    swipe.referrer = referrer;
+                    referrer = window.location.href;
+
+                    swipe.referrerPageName = referrerPageName;
+                    referrerPageName = config.page.analyticsName;
+
+                    common.mediator.emit('page:ready', pageConfig(config), swipe.context);
 
                     if(clickSelector && swipe.initiatedBy === 'click') {
                         modules.getSwipeSequence(function(sequence){
@@ -262,13 +268,13 @@ define([
                     } else {
                         swipe.api.loadSidePanes();
                     }
+
                 },
                 clickSelector: clickSelector,
                 swipeContainer: '#swipepages',
                 contentSelector: '.parts__body',
                 sequence: sequence
-            };
-            swipeNav(opts);
+            });
         }
     };
 
