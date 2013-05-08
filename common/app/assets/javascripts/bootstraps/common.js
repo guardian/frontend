@@ -195,16 +195,14 @@ define([
                 supportsHistory = false,
                 supportsTransitions = false;
 
-            if (config.switches.swipeNav || userPrefs.isOn('swipe-nav')) {
+            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav')) {
                 if (window.history && history.pushState) {
                     supportsHistory = true;
-                    /*
                     // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
                     androidVersion = window.navigator.userAgent.match(/Android\s+([\d\.]+)/i);
                     if (androidVersion && parseFloat(androidVersion[1]) <= 4.1) {
                         supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
                     }
-                    */
                 }
                 if (!supportsHistory) {
                     return;
@@ -244,7 +242,7 @@ define([
                 referrer = window.location.href,
                 referrerPageName = config.page.analyticsName;
 
-            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-nav-on-click')) {
+            if (config.switches.swipeNavOnClick && userPrefs.isOn('swipe-nav-on-click')) {
                 clickSelector = 'a:not(.control)';
             }
 
