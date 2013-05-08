@@ -84,6 +84,10 @@ $orange: #FF7F00;
 	  margin-bottom:0;
 	  text-indent:$gutter;
 	}
+      
+    p:first-child {
+      text-indent:0;
+    }
 	  
 	p:last-child {
 	  margin-bottom:8px
@@ -254,7 +258,6 @@ $orange: #FF7F00;
 .js-swipe__item {
   float:left;
   width:100%;
-  min-height: 424px;
   position: relative;
   padding: 0 2px 0 2px;
   @include box-sizing(border-box);
