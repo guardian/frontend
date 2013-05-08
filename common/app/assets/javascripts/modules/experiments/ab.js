@@ -4,15 +4,15 @@ define([
 
     //Current tests
     'modules/experiments/tests/relatedContent',
-    'modules/experiments/tests/cleveland-story'
+    'modules/experiments/tests/story-front-trail'
 ], function (
     common,
     userPrefs,
     RelatedContent,
-    ClevelandStory) {
+    StoryFrontTrail) {
     
     var TESTS = {
-            ClevelandStory: new ClevelandStory()
+            StoryFrontTrail: new StoryFrontTrail()
         };
 
     var testKey = 'ab.current',
