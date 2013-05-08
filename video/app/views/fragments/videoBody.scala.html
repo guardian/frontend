@@ -16,7 +16,7 @@
 
         @page.advert.map(_.toString).map{ ad =>
         <script>
-            guardian.videoAd = @Html(ad);
+            guardian.config.page.videoAd = @Html(ad);
         </script>
         }
 

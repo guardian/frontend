@@ -21,22 +21,6 @@ define([
         this.hasFired = false;
     }
 
-    Video.prototype.url = "/video/ad/";
-
-    Video.prototype.load = function(format) {
-        var self = this;
-        ajax({
-            url: this.url + format,
-            type: "jsonp",
-            jsonpCallbackName: "advert",
-            success : function (resp) {
-                if(resp && resp.file) {
-                    self.play(format, resp);
-                }
-            }
-        });
-    };
-
     Video.prototype.play = function(format, data) {
         var self = this,
             sources = this.video.querySelectorAll('source'),
@@ -59,10 +43,16 @@ define([
         }
 
         bean.on(this.video, "ended error", function() {
+            //Init omniture tracking
+            common.mediator.emit("video:ads:finsihed");
+
             bean.off(self.video, "ended error");
+            if(self.events.clickThrough) { bean.off(self.video, "click"); }
+
             self.video.src = source;
             self.video.play();
-            common.$g(this.video).removeClass("hascursor");
+            common.$g(self.video).removeClass("has-cursor");
+
             if(self.events.complete && !self.events.complete.hasFired) {
                 self.logEvent(self.events.complete);
                 clearInterval(self.timer);
@@ -119,7 +109,7 @@ define([
         event.hasFired = true;
     };
 
-    Video.prototype.init = function() {
+    Video.prototype.init = function(advert) {
         var format = false,
             that = this;
 
@@ -132,15 +122,15 @@ define([
             }
         }
 
-        if(format) {
-            common.mediator.on("module:video:adverts:load", function(file) {
-                bean.on(that.video, "play", function() {
-                    if(!that.played) {
-                        that.play(format, file);
-                    }
-                });
+        //We are only supporting mp4 adverts first
+        if(format === "mp4") {
+            bean.on(that.video, "play", function() {
+                if(!that.played) {
+                    that.play(format, advert);
+                }
             });
-            this.load(format);
+        } else {
+            common.mediator.emit("video:ads:finsihed");
         }
     };
 

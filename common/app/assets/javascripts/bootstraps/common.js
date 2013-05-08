@@ -129,15 +129,16 @@ define([
 
                 omniture.go(config, function(){
                     // Omniture callback logic:
-
-                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
-                        if (!bonzo(video).hasClass('tracking-applied')) {
-                            bonzo(video).addClass('tracking-applied');
-                            var v = new Video({
-                                el: video,
-                                config: config
-                            }).init();
-                        }
+                    common.mediator.on("video:ads:finsihed", function() {
+                        Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                            if (!bonzo(video).hasClass('tracking-applied')) {
+                                bonzo(video).addClass('tracking-applied');
+                                var v = new Video({
+                                    el: video,
+                                    config: config
+                                }).init();
+                            }
+                        });
                     });
                 });
 

@@ -1,6 +1,8 @@
 define([
+    "common",
     "bean"
 ], function(
+    common,
     bean
     ) {
 

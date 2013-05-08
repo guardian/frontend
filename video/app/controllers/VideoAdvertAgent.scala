@@ -14,7 +14,7 @@ trait VideoAdvertAgent extends AkkaSupport with Logging {
 
   lazy val agent = play_akka.agent[Option[JsObject]](None)
 
-  private lazy val schedule = play_akka.scheduler.every(5.minutes, initialDelay = 10.seconds){
+  private lazy val schedule = play_akka.scheduler.every(1.minute, initialDelay = 10.seconds){
     val random = System.currentTimeMillis
     loadAd(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").foreach(agent.send(_))
   }
