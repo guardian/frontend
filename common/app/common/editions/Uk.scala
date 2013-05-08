@@ -68,8 +68,6 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
     ),
 
     "culture" -> Seq(
-      QueryTrailblockDescription("culture", "Culture!!!", numItemsVisible = 5, style = Some(Featured), showMore = true,
-        customQuery=ContentApi.item("football", "au").showEditorsPicks(true)),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -84,8 +82,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      ItemTrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
-      QueryTrailblockDescription("commentisfree/commentisfree", "Comment is free!!", numItemsVisible = 3, style = Some(Featured), showMore = true,
+      QueryTrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
         customQuery=ContentApi.item("commentisfree", "au").showEditorsPicks(false)),
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
