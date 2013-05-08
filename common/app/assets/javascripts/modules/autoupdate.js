@@ -19,10 +19,11 @@ define([
 ) {
     /*
         @param {Object} options hash of configuration options:
-            path    : {String}              Endpoint path to ajax request,
-            delay   : {Number}              Timeout in milliseconds to query endpoint,
-            attachTo: {DOMElement|Object}   DOMElement or list of elements insert response into
-            switches: {Object}              Global swicthes object
+            path             : {String}              Endpoint path to ajax request,
+            delay            : {Number}              Timeout in milliseconds to query endpoint,
+            attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
+            switches         : {Object}              Global swicthes object
+            loadOnInitialise : {Number}              Make the first request when the module is created
     */
     function Autoupdate(config) {
 
@@ -147,6 +148,7 @@ define([
             }
 
             var that = this,
+                loadOnInitialise = options.loadOnInitialise || false,
                 pref = this.getPref();
 
             // add the component to the page, and show it
@@ -170,6 +172,11 @@ define([
                 this.view.toggle.call(this, this.btns[0]);
             } else {
                 this.view.toggle.call(this, this.btns[1]);
+            }
+
+             
+            if (loadOnInitialise) {
+                that.load.call(that);
             }
         };
 

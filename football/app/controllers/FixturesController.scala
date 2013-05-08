@@ -11,7 +11,7 @@ import org.scala_tools.time.Imports._
 import model.Page
 import scala.Some
 import play.api.templates.Html
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 
@@ -61,7 +61,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
   def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]): String
 }
 
-object FixturesController extends FixtureRenderer with Logging {
+object FixturesController extends FixtureRenderer with Logging with ExecutionContexts {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/football/matches"),

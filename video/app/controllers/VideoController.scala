@@ -4,11 +4,11 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
-object VideoController extends Controller with Logging {
+object VideoController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfVideo = lookup(path)

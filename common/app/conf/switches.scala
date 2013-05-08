@@ -34,10 +34,6 @@ object CommonSwitches {
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     initiallyOn = true)
 
-  val OmnitureVerificationSwitch = DefaultSwitch("omniture-verification",
-    "If this switch is turned on then a separate call to Omniture will be made to help verify our tracking.",
-    initiallyOn = false)
-
   val NetworkFrontAppealSwitch = DefaultSwitch("network-front-appeal",
     "Switch to show the appeal trailblock on the network front.",
     initiallyOn = false)
@@ -94,8 +90,8 @@ object CommonSwitches {
     "If this switch is on the australia front will be available",
     initiallyOn = false)
 
-  val ABLocalElectionStoryV2 = DefaultSwitch("ab-local-election-story-v2",
-    "If this switch is on local election story AB test will be enabled.",
+  val ABStoryFrontTrail = DefaultSwitch("ab-story-front-trail",
+    "If this switch is on story front trail AB test will be enabled.",
     initiallyOn = false)
   
   val ImageServerSwitch = DefaultSwitch("image-server",
@@ -111,18 +107,33 @@ object CommonSwitches {
     initiallyOn = false)
   
   val all: Seq[Switchable] = Seq(
-    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStoryV2,
-    AustraliaFrontSwitch, SwipeNav, SwipeNavOnClick
+    AutoRefreshSwitch,
+    FontSwitch,
+    AudienceScienceSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    NetworkFrontAppealSwitch,
+    WitnessVideoSwitch,
+    ExperimentStoryModule01Switch,
+    StoryVersionBSwitch,
+    StoryFrontTrails,
+    SocialSwitch,
+    SearchSwitch,
+    QuantcastSwitch,
+    HomescreenSwitch,
+    OptimizelySwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    ABRelatedContentV2,
+    AustraliaFrontSwitch,
+    ABStoryFrontTrail,
+    ImageServerSwitch,
+    SwipeNav,
+    SwipeNavOnClick
   )
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
-
-  import play.api.libs.concurrent.Execution.Implicits._
 
   val configUrl = config.switches.configurationUrl
 
