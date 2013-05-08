@@ -1,12 +1,12 @@
 define(['modules/story/frontstories'], function (FrontStories) {
 
-    var LocalElectionStory = function () {
+    var StoryFrontTrail = function () {
         
         var storyId = '680026';
 
-        this.id = 'ClevelandStory';
+        this.id = 'StoryFrontTrail';
         this.audience = 1;
-        this.description = 'Swap out the first cleveland tagged trail with the story component';
+        this.description = 'Swap out the first appropriately tagged trail with the story component';
         this.canRun = function(config) {
             // only run on network front
             return config.page.pageId === '';
@@ -27,6 +27,6 @@ define(['modules/story/frontstories'], function (FrontStories) {
         ];
     };
 
-    return LocalElectionStory;
+    return StoryFrontTrail;
 
 });
