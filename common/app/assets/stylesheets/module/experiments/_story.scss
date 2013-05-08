@@ -82,7 +82,7 @@ $orange: #FF7F00;
   
     p {
 	  margin-bottom:0;
-	  text-indent:$gutter;
+	  text-indent:$gutter*1.5;
 	}
       
     p:first-child {
