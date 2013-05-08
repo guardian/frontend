@@ -57,7 +57,7 @@ case class ItemTrailblockDescription(
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query = ContentApi.item(id, edition)
+  def query: Future[Seq[Trail]] = ContentApi.item(id, edition)
     .showEditorsPicks(true)
     .pageSize(20)
     .response

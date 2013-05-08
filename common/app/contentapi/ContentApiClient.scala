@@ -40,7 +40,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .showMedia("all")
   .tag(supportedTypes)
 
-  def customQuery(customQuery: ItemQuery) = customQuery
+  def customQuery(customQuery: ItemQuery): ItemQuery = customQuery
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
