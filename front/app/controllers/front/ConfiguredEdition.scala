@@ -6,8 +6,7 @@ import play.api.libs.json.Json.parse
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.duration._
 import conf.Configuration
-import model.Trailblock
-import model.TrailblockDescription
+import model.{ItemTrailblockDescription, Trailblock, TrailblockDescription}
 import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
@@ -72,12 +71,12 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
   private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = editionJson match {
     case JsNull => Nil
     case _ =>  (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
-        TrailblockDescription(
+        ItemTrailblockDescription(
           toId((block \ "id").as[String]),
           (block \ "title").as[String],
           (block \ "numItems").as[Int],
           showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
-        )
+        )(edition)
       }
 
   }

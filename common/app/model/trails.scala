@@ -3,7 +3,12 @@ package model
 import org.joda.time.DateTime
 import views.support.Style
 import scala.math
-import com.gu.openplatform.contentapi.Api.ItemQuery
+import conf.ContentApi
+import ContentApi.ItemQuery
+import scala.concurrent.Future
+import conf.ContentApi
+import common.Edition
+import play.api.libs.concurrent.Execution.Implicits._
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -32,16 +37,63 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
-case class TrailblockDescription(
+trait TrailblockDescription {
+  val id: String
+  val name: String
+  val numItemsVisible: Int
+  val style: Option[Style]
+  val section: String
+  val showMore: Boolean
+
+  def query: Future[Seq[Trail]]
+}
+
+case class ItemTrailblockDescription(
     id: String, name: String,
     numItemsVisible: Int,
     style: Option[Style] = None,
-    showMore: Boolean = false,
-    _section: Option[String] = None,
-    orderBy: Option[String] = None,
-    editorsPicks: Option[Boolean] = Some(true)
-  ) {
-  lazy val section = _section.getOrElse {
-    id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+    showMore: Boolean = false
+  )(implicit edition: Edition) extends TrailblockDescription
+  {
+    lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+
+  def query = ContentApi.item(id, edition)
+    .showEditorsPicks(true)
+    .pageSize(20)
+    .response
+    .map { response =>
+    val editorsPicks = response.editorsPicks map {
+      new Content(_)
+    }
+    val editorsPicksIds = editorsPicks map (_.id)
+    val latest = response.results map {
+      new Content(_)
+    } filterNot (c => editorsPicksIds contains (c.id))
+
+    editorsPicks ++ latest
+  }
+}
+
+case class QueryTrailblockDescription(
+            id: String,
+            name: String,
+            numItemsVisible: Int,
+            style: Option[Style] = None,
+            showMore: Boolean = false,
+            customQuery: ItemQuery)
+    extends TrailblockDescription {
+
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+
+  def query: Future[Seq[Trail]] = ContentApi.customQuery(customQuery).map { response =>
+    val editorsPicks = response.editorsPicks map {
+      new Content(_)
+    }
+
+    val results = response.results map {
+      new Content(_)
+    }
+
+    editorsPicks ++ results
   }
 }

@@ -18,6 +18,9 @@ import common.Edition
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
 
+  implicit val edition = Uk
+  val TrailblockDescription = ItemTrailblockDescription
+
   feature("Network Front") {
 
     info("In order to explore the breaking news and navigate to site sections")

@@ -2,14 +2,15 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.MetaData
+import model.{QueryTrailblockDescription, ItemTrailblockDescription, MetaData, TrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
-import model.TrailblockDescription
+import conf.ContentApi
 
 object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London")) with Sections with Zones {
 
+  implicit val UK = Uk
   val zones = Seq(
     newsZone,
     sportZone,
@@ -40,49 +41,53 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
   val configuredFronts = Map(
     "front" -> Seq(
-      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
+      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      ItemTrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     ),
 
     "sport" -> Seq(
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
     ),
 
     "culture" -> Seq(
-      TrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
-      TrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
-      TrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
+      QueryTrailblockDescription("culture", "Culture!!!", numItemsVisible = 5, style = Some(Featured), showMore = true,
+        customQuery=ContentApi.item("football", "au").showEditorsPicks(true)),
+      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ),
 
     "australia" -> Seq(
-      TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      TrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
-      TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
+      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      ItemTrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      QueryTrailblockDescription("commentisfree/commentisfree", "Comment is free!!", numItemsVisible = 3, style = Some(Featured), showMore = true,
+        customQuery=ContentApi.item("commentisfree", "au").showEditorsPicks(false)),
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
   )
 }
