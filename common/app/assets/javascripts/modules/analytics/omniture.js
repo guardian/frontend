@@ -142,7 +142,7 @@ define([
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
                     s.eVar37 = ni.tag;
-                    s.events = s.apl(s.events,'event37',',');
+                    s.events   = 'event37';
                 }
                 storage.remove('gu.analytics.referrerVars');
             } else if (config.swipe) {

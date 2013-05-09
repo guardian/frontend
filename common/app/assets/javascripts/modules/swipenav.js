@@ -1,6 +1,3 @@
-// Description: Sequence Swipe module
-// Author: Stephan Fowler
-
 define([
     'common',
     'swipeview',
