@@ -14,11 +14,30 @@ import akka.dispatch.OnFailure
 
 object MoreStoriesController extends Controller with Logging {
 
-  def mostViewed(path: String) = Action { implicit request =>
+  def render(path: String, moreStoriesType: String) = Action { implicit request =>
+    val edition = Edition(request)
+    val section = path.split("/").headOption.getOrElse("")
+    val moreStories = moreStoriesType match {
+      case "mostViewed" => getMostViewed(path, section, edition)
+      case "frontTrails" => getFrontTrails(path, section, edition)
+    }
+    Async {
+      moreStories.map { moreStories =>
+        moreStories match {
+          case Left(moreStories) => {
+            renderJson(path, section, moreStories)
+          }
+          case Right(notFound) => JsonNotFound()
+        }
+      }
+    }
+  }
+
+  private def getMostViewed(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     val section = path.split("/").headOption.getOrElse("")
     log.info(s"Fetching more stories (most viewed): $section for edition $edition")
-    val mostViewed = ContentApi.item(section, edition)
+    ContentApi.item(section, edition)
       .showMostViewed(true)
       .response.map{ response =>
         val items = SupportedContentFilter(response.mostViewed map { new Content(_) })
@@ -29,14 +48,13 @@ object MoreStoriesController extends Controller with Logging {
         }
       }
       .recover{ suppressApiNotFound }
-    render(mostViewed, path, section);
   }
   
-  def frontTrails(path: String) = Action { implicit request =>
+  private def getFrontTrails(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     val section = path.split("/").headOption.getOrElse("")
     log.info(s"Fetching more stories (front trails): $section for edition $edition")
-    val frontTrails = ContentApi.item(section, edition)
+    ContentApi.item(section, edition)
       .showEditorsPicks(true)
       .response.map {response =>
           val editorsPicks = response.editorsPicks map { new Content(_) }
@@ -49,20 +67,6 @@ object MoreStoriesController extends Controller with Logging {
             Right(NotFound)
           }
       }.recover{ suppressApiNotFound }
-    render(frontTrails, path, section);
-  }
-
-  private def render(moreStories: Future[Either[Seq[Content],Result]], path: String, section: String)(implicit request: RequestHeader) = {
-    Async {
-      moreStories.map { moreStories =>
-        moreStories match {
-          case Left(moreStories) => {
-            renderJson(path, section, moreStories)
-          }
-          case Right(notFound) => JsonNotFound()
-        }
-      }
-    }
   }
   
   private def moreStoriesToJson(path: String, moreStories: Seq[Content]): Seq[JsValue] = {
