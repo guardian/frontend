@@ -79,12 +79,12 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
     ),
 
     "australia" -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
+      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true)(Au),
       QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
         customQuery=ContentApi.item("commentisfree", "au").showEditorsPicks(false)),
-      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
     )
   )
 }
