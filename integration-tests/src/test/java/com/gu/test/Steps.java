@@ -82,7 +82,7 @@ public class Steps {
 		for (int i = 0; i < numOfTests; i++) {
 			WebElement test = webDriver.findElements(By.cssSelector("#tests a")).get(i);
 			String testName = test.getText();
-			test.click();
+			webDriver.jsClick(test);
 			// wait for 'duration' element, i.e. end of test (up to 10secs)
 			webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
 			// get any error messages

@@ -89,12 +89,12 @@ public class ArticleSteps {
 
 	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
-		webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[2]/a")).click();
+		webDriver.jsClick(webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[2]/a")));
 	}
 
 	@When("^I select the pan-site \"([^\"]*)\"$")
 	public void I_select_pan_site(String arg1) throws Throwable {
-		webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[1]/a")).click();
+		webDriver.jsClick(webDriver.findElement(By.xpath("//*[@id='js-popular-tabs']/li[1]/a")));
 	}
 
 	@Then("^I can see a list of the most popular stories on guardian.co.uk for the section I am in$")
@@ -124,7 +124,7 @@ public class ArticleSteps {
 
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
 	public void I_click_tab_at_the_top_of_the_page(String linkText) throws Throwable {
-		webDriver.findElement(By.linkText(linkText)).click();
+		webDriver.jsClick(webDriver.findElement(By.linkText(linkText)));
 	}
 
 	@Then("^a list of \"([^\"]*)\" opens$")
@@ -138,14 +138,14 @@ public class ArticleSteps {
 		// NOTE - HACKY! need to force wait 400ms wait, as can't click on again any quicker
 		Thread.sleep(500);
 		// click the tab
-		webDriver.findElement(By.linkText(linkText)).click();
+		webDriver.jsClick(webDriver.findElement(By.linkText(linkText)));
 		// wait for top stories tab to close
 		assertTrue(webDriver.waitForCss(By.id("topstories-header"), "display", "none"));
 	}
 
 	@When("^I click \"([^\"]*)\" tab at the foot of the page$")
 	public void I_click_tab_at_the_foot_of_the_page(String arg1) throws Throwable {
-		webDriver.findElement(By.id("topstories-control-footer")).click();
+		webDriver.jsClick(webDriver.findElement(By.id("topstories-control-footer")));
 	}
 
 	@Then("^a list of the footer \"([^\"]*)\" opens$")
@@ -155,13 +155,13 @@ public class ArticleSteps {
 
 	@Then("^another click on the footer \"([^\"]*)\" closes the list.$")
 	public void another_click_on_the_footer_closes_the_list(String arg1) throws Throwable {
-		webDriver.findElement(By.id("topstories-control-footer")).click();
+		webDriver.jsClick(webDriver.findElement(By.id("topstories-control-footer")));
 		assertEquals("none", webDriver.getElementCssValue(By.id("topstories-footer"), "display"));
 	}
 
 	@When("^I select the sections navigation button$")
 	public void I_select_the_sections_navigation_button( ) throws Throwable {
-		webDriver.findElement(By.className("control--sections")).click();
+		webDriver.jsClick(webDriver.findElement(By.className("control--sections")));
 	}
 
 	@Then("^it should show me a list of sections$")
@@ -171,7 +171,7 @@ public class ArticleSteps {
 
 	@Then("^another click on the \"([^\"]*)\" \"([^\"]*)\" tab closes the list$")
 	public void another_click_on_the_tab_closes_the_list(String arg1, String arg2) throws Throwable {
-		webDriver.findElement(By.id("sections-control-" + arg1)).click();
+		webDriver.jsClick(webDriver.findElement(By.id("sections-control-" + arg1)));
 		assertEquals("none", webDriver.getElementCssValue(By.id("sections-" + arg1), "display"));
 	}
 
@@ -192,7 +192,7 @@ public class ArticleSteps {
 	public void I_can_expand_and_collapse_expanders(String sectionState) throws Throwable {
 		// waits for expander to appear
 		WebElement expander = webDriver.waitForElement(By.className("cta"));
-		expander.click();
+		webDriver.jsClick(expander);
 		
 		String expectedTrailblockHeight = (sectionState.equals("expand")) ? "none" : "0";
 		// sections are hidden with css max-height

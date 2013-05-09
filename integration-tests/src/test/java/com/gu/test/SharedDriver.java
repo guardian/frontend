@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -174,4 +175,14 @@ public class SharedDriver extends EventFiringWebDriver {
 
 		return connection.getResponseCode();
 	}
+
+	/**
+	 * Fire a Javascript click on an element
+	 * 
+	 * @param element
+	 */
+	public void jsClick(WebElement element) {
+		((JavascriptExecutor)this).executeScript("arguments[0].click();", element); 
+	}
+
 }

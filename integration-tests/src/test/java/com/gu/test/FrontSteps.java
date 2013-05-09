@@ -41,7 +41,7 @@ public class FrontSteps {
     		// only click if not in correct state
     		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
     		if (actualTrailblockHeight != expectedTrailblockHeight) {
-    		  trailblockToggle.click();
+    		  webDriver.jsClick(trailblockToggle);
     		}
   	}
 
@@ -65,7 +65,7 @@ public class FrontSteps {
         assertEquals(ctaText, cta.getText());
         // how many trails do we currently have
         int trailCount = trailblock.findElements(By.className("trail")).size();
-        cta.click();
+        webDriver.jsClick(cta);
         // wait for second list of top stories to load in
         webDriver.waitForElement(By.xpath(trailblockXpath + "/ul/li[" + (trailCount + 5) + "]"));
     }
