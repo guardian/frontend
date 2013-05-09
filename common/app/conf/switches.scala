@@ -23,7 +23,7 @@ object CommonSwitches {
     initiallyOn = true)
 
   val FontDelaySwitch = DefaultSwitch("web-fonts-delay",
-    "If this is switched on then web fonts will pause for 2 seconds before rendering.",
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     initiallyOn = false)
 
   val AudienceScienceSwitch = DefaultSwitch("audience-science",
