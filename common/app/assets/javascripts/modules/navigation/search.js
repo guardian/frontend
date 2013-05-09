@@ -38,7 +38,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
-                if (1 || c !== container) {
+                if (c !== container) {
                     c.innerHTML = '';
                 }
             });

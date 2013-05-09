@@ -342,7 +342,6 @@ define([
             
             // Only load if not already loaded into this pane
             if (el.dataset.url !== url) {
-                //el.querySelector(opts.contentSelector).innerHTML = ''; // Apparently this is better at preventing memory leaks that jQuert's .empty()
                 load({
                     url: url,
                     container: el,
