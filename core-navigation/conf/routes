@@ -13,5 +13,7 @@ GET    /top-stories/trails              controllers.TopStoriesController.renderT
 
 GET    /related/*path                   controllers.RelatedController.render(path)
 
-GET    /more-stories/                   controllers.MoreStoriesController.render(path = "")
-GET    /more-stories/*path              controllers.MoreStoriesController.render(path)
+GET    /most-viewed/                    controllers.MoreStoriesController.mostViewed(path = "")
+GET    /most-viewed/*path               controllers.MoreStoriesController.mostViewed(path)
+GET    /front-trails/                   controllers.MoreStoriesController.frontTrails(path = "")
+GET    /front-trails/*path              controllers.MoreStoriesController.frontTrails(path)

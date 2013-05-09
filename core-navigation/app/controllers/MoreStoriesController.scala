@@ -14,45 +14,11 @@ import akka.dispatch.OnFailure
 
 object MoreStoriesController extends Controller with Logging {
 
-  def render(path: String) = Action { implicit request =>
+  def mostViewed(path: String) = Action { implicit request =>
     val edition = Edition(request)
     val section = path.split("/").headOption.getOrElse("")
-    val promiseOfMoreStories = getMoreStories(edition, section)
-    Async {
-      promiseOfMoreStories.map { moreStories =>
-        moreStories match {
-          case Left(moreStories) => {
-            renderJson(path, section, moreStories)
-          }
-          // get network front's more stories
-          case Right(notFound) => {
-            val promiseOfNetworkFrontMoreStories = getMoreStories(edition, "")
-            Async {
-              promiseOfNetworkFrontMoreStories.map { networkFrontMoreStories =>
-                networkFrontMoreStories match {
-                  case Left(networkFrontMoreStories) => {
-                    renderJson(path, networkFrontMoreStories)
-                  }
-                  case Right(notFound) => JsonNotFound()
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  private def getMoreStories(edition: Edition, path: String)(implicit request: RequestHeader): Future[Either[Seq[Content],Result]] = {
-    request.getQueryString("variant").map {
-      case "2" => frontTrails(edition, path)
-      case _ => mostViewed(edition, path)
-    } getOrElse(mostViewed(edition, path))
-  }
-
-  private def mostViewed(edition: Edition, section: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching more stories (most viewed): $section for edition $edition")
-    ContentApi.item(section, edition)
+    val mostViewed = ContentApi.item(section, edition)
       .showMostViewed(true)
       .response.map{ response =>
         val items = SupportedContentFilter(response.mostViewed map { new Content(_) })
@@ -63,11 +29,14 @@ object MoreStoriesController extends Controller with Logging {
         }
       }
       .recover{ suppressApiNotFound }
+    render(mostViewed, path, section);
   }
   
-  private def frontTrails(edition: Edition, section: String)(implicit request: RequestHeader) = {
+  def frontTrails(path: String) = Action { implicit request =>
+    val edition = Edition(request)
+    val section = path.split("/").headOption.getOrElse("")
     log.info(s"Fetching more stories (front trails): $section for edition $edition")
-    ContentApi.item(section, edition)
+    val frontTrails = ContentApi.item(section, edition)
       .showEditorsPicks(true)
       .response.map {response =>
           val editorsPicks = response.editorsPicks map { new Content(_) }
@@ -80,6 +49,20 @@ object MoreStoriesController extends Controller with Logging {
             Right(NotFound)
           }
       }.recover{ suppressApiNotFound }
+    render(frontTrails, path, section);
+  }
+
+  private def render(moreStories: Future[Either[Seq[Content],Result]], path: String, section: String)(implicit request: RequestHeader) = {
+    Async {
+      moreStories.map { moreStories =>
+        moreStories match {
+          case Left(moreStories) => {
+            renderJson(path, section, moreStories)
+          }
+          case Right(notFound) => JsonNotFound()
+        }
+      }
+    }
   }
   
   private def moreStoriesToJson(path: String, moreStories: Seq[Content]): Seq[JsValue] = {
