@@ -14,7 +14,7 @@
 
 .trail__headline {
   @extend %type-2;
-  min-height: 60px;
+  min-height: 72px;
   color: #000;
 }
 
@@ -51,12 +51,12 @@
 .trail--featured {
 
   .trail__headline {
-    @extend %type-0;
-    min-height: 96px;
+    @extend %type-1;
+    min-height: 72px;
 
     a {
       display: block;
-      padding-bottom: 48px;
+      padding-bottom: 36px;
     }
   }
 
