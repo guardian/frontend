@@ -503,7 +503,7 @@ define([
             }
         });
 
-        // Bind left/right keyboard keys
+        // Bind left/right keyboard keys. Might clash with other stuff (galleries...)
         bean.on(document, 'keydown', function (e) {
             initiatedBy = 'swipe';
             switch(e.keyCode) {
