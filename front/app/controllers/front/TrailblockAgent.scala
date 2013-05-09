@@ -15,7 +15,7 @@ import concurrent.Future
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class TrailblockAgent(val description: TrailblockDescription, val edition: Edition) extends AkkaSupport with Logging {
+class TrailblockAgent(val description: TrailblockDescription) extends AkkaSupport with Logging {
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
@@ -44,25 +44,9 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Editi
   def trailblock: Option[Trailblock] = agent()
 
   lazy val warmup = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
-
-  private def loadTrails(id: String): Future[Seq[Trail]] = ContentApi.item(id, edition)
-    .showEditorsPicks(true)
-    .pageSize(20)
-    .response
-    .map { response =>
-      val editorsPicks = response.editorsPicks map {
-        new Content(_)
-      }
-      val editorsPicksIds = editorsPicks map (_.id)
-      val latest = response.results map {
-        new Content(_)
-      } filterNot (c => editorsPicksIds contains (c.id))
-
-      editorsPicks ++ latest
-    }
 }
 
 object TrailblockAgent {
-  def apply(description: TrailblockDescription, edition: Edition): TrailblockAgent =
-    new TrailblockAgent(description, edition)
+  def apply(description: TrailblockDescription): TrailblockAgent =
+    new TrailblockAgent(description)
 }

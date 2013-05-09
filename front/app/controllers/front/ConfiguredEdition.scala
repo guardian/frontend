@@ -45,7 +45,7 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
     //only replace blocks if they are different (do not replace an old block with the same new block)
     val newAgents: Seq[TrailblockAgent] = newTrailblocks.map { newDescription =>
       oldAgents.find(oldBlock => oldBlock.description == newDescription)
-        .getOrElse(TrailblockAgent(newDescription, edition))
+        .getOrElse(TrailblockAgent(newDescription))
     }
 
     //close down the old agents we no longer need so they can be garbage collected
