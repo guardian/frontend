@@ -70,10 +70,6 @@ object CommonSwitches {
     "If this switch is enabled the add-to-homescreen popup will plague iOS users",
     initiallyOn = false)
 
-  val OptimizelySwitch = DefaultSwitch("optimizely",
-    "If this switch is on Optimizely will be enabled.",
-    initiallyOn = false)
-
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
@@ -121,7 +117,6 @@ object CommonSwitches {
     SearchSwitch,
     QuantcastSwitch,
     HomescreenSwitch,
-    OptimizelySwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
     ABRelatedContentV2,

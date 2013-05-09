@@ -13,6 +13,22 @@ a.social-btn {
     padding: 8px 0px;
     color: #ffffff;
     border-bottom: 8px solid #ffffff;
+    position:relative
+}
+
+.social .social-btn span{
+	display:block;
+    position:absolute;
+}
+.social .social-btn .logo-container{
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.social .social-btn .logo{
+	left:5px;
+	bottom:5px;
 }
 
 @media (min-width: 20em) {
