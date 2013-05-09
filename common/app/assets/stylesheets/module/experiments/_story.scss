@@ -56,10 +56,10 @@ $orange: #FF7F00;
   .article-headline {
     min-height:60px;
     font-family: $serifheadline;
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    padding: 0 0 16px 0;
+    font-weight: normal;
+    font-size: 2.4rem;
+    line-height: 2.9rem;
+    padding: 0;
     margin-bottom: 12px;
     @include box-sizing(border-box);
   }
@@ -465,20 +465,34 @@ i.is-open.cta-new__icn--right {
     margin-bottom: 16px;
 }
 
+.story-tabs-container .tabs li {
+    border-bottom:1px solid $darkMushroom;
+    @include box-sizing(border-box);
+}
+.story-tabs-container .tabs li:first-child{
+    border-right:1px solid $darkMushroom;	
+}
+
+.story-tabs-container .tabs li.tabs-selected {
+    border-top:1px solid $darkMushroom;
+    border-bottom:none;
+}
+
 .story-tabs-container .tabs a {
-    text-align: left;   
-    color: white;
+    text-align: left;
     margin: 0px; 
-    padding: 0px 0px 13px 4px;
+    padding: 4px 0px 15px 4px;
+    font-weight:normal;
+    font-size:1.4rem;
 }
 
 .story-tabs-container .tabs-selected a {
-    background-color: #f8f8f2;
-    color: #214583;
+	padding-top:3px;
+    background-color: #ffffff;
 }
 
 .story-tabs-container .tabs li {
-    background-color: #214583;
+    background-color: #eeeeee;
 }
 
 
