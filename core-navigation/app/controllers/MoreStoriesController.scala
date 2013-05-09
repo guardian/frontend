@@ -27,15 +27,29 @@ object MoreStoriesController extends Controller with Logging {
           case Left(moreStories) => {
             renderJson(path, section, moreStories)
           }
-          case Right(notFound) => JsonNotFound()
+          // get network front's more stories
+          case Right(notFound) => {
+            val frontMoreStories = moreStoriesType match {
+              case "mostViewed" => getMostViewed("", "", edition)
+              case "frontTrails" => getFrontTrails("", "", edition)
+            }
+            Async {
+              frontMoreStories.map { frontMoreStories =>
+                frontMoreStories match {
+                  case Left(frontMoreStories) => {
+                    renderJson(path, frontMoreStories)
+                  }
+                  case Right(notFound) => JsonNotFound()
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 
   private def getMostViewed(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
-    val edition = Edition(request)
-    val section = path.split("/").headOption.getOrElse("")
     log.info(s"Fetching more stories (most viewed): $section for edition $edition")
     ContentApi.item(section, edition)
       .showMostViewed(true)
@@ -51,8 +65,6 @@ object MoreStoriesController extends Controller with Logging {
   }
   
   private def getFrontTrails(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
-    val edition = Edition(request)
-    val section = path.split("/").headOption.getOrElse("")
     log.info(s"Fetching more stories (front trails): $section for edition $edition")
     ContentApi.item(section, edition)
       .showEditorsPicks(true)
