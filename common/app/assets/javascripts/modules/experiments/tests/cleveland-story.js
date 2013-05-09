@@ -5,7 +5,7 @@ define(['modules/story/frontstories'], function (FrontStories) {
         var storyId = '680026';
 
         this.id = 'ClevelandStory';
-        this.audience = 1;
+        this.audience = 0.1;
         this.description = 'Swap out the first cleveland tagged trail with the story component';
         this.canRun = function(config) {
             // only run on network front

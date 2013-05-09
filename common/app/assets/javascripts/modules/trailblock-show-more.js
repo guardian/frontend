@@ -27,9 +27,12 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 trails[section] = trails[section].slice(trailblockLength);
                 common.mediator.emit('module:trailblock-show-more:render');
             },
-                
+
            appendCta: function(trailblock) {
-               bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
+               var btn = '<div class="cta" data-link-name="Show more | 1">';
+                   btn += '<span class="cta__text">Show more</span><button class="cta__btn cta__btn--right">';
+                   btn += '<i class="i i-arrow-blue-down cta__icn"></i></button></div>';
+               bonzo(trailblock).append(btn);
            },
 
            removeCta: function($cta) {

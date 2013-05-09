@@ -1,19 +1,23 @@
 /* ==========================================================================
    Call to actions
    ========================================================================== */
-
 .cta {
   position: relative;
   display: block;
   width:  100%;
-  height: 32px;
-  color: #005689;
-  font-family: $serif;
-  font-size: 1.4rem;
+  height: 36px;
   vertical-align: top;
-  padding-left: 2px;
+  text-align: left;
+  padding:0 0 0 2px;
+  background-color: transparent;
+  border: none;
   border-top: 1px dotted rgb(103,103,103);
   @include box-sizing(border-box);
+}
+
+.cta__text {
+  @extend %type-7;
+  color: $linkBlue;
 }
 
 
@@ -21,9 +25,9 @@
    ========================================================================== */
 .cta__btn {
   display: inline-block;
+  width: 80px;
+  height: 36px;
   position: relative;
-  width: 60px;
-  height:31px;
   border-width: 0px;
   border-style: dotted;
   border-color: rgb(103,103,103);
