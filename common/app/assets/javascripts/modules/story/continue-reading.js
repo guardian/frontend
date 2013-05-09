@@ -48,8 +48,9 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                                     $p = bonzo($el.parent()),
                                     $content = bonzo(bonzo.create(resp.html))[1],
                                     $body = $content.querySelectorAll('.article-body *:nth-child(n+' + skip + ')');
-
-                                $story = bonzo($p.after(bonzo(bonzo.create('<div>')).append($body)).next());
+                                
+                                $story = bonzo(bonzo.create('<div>')).append($body);
+                                bonzo($p.previous()).append($story);
                                 toggleStory();
                             }
                         });
