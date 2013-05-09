@@ -23,6 +23,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	
 	protected static String HOST;
 
+	protected static String QUERY;
+
 	private static WebDriver REAL_DRIVER;
 
 	private static final Thread CLOSE_THREAD = new Thread() {
@@ -38,6 +40,8 @@ public class SharedDriver extends EventFiringWebDriver {
 		HOST = (System.getProperty("host") != null && !System.getProperty("host").isEmpty())
 			? System.getProperty("host") : "http://localhost:9000";
 		
+		QUERY = "?gu.prefs.switchOff=swipe-nav";
+
 		// create driver
 		REAL_DRIVER = DriverFactory.createDriver(System.getProperty("driver", "firefox"), System.getProperty("http_proxy", ""));
 
@@ -66,7 +70,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public void open(String url) {
-		get(HOST + url);
+		get(HOST + url + QUERY);
 	}
 
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
