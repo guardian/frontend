@@ -84,7 +84,6 @@ define([
             sequence = [],
             sequenceCache,
             sequenceLen = 0,
-            inSequence = false,
             initiatedBy = 'initial',
             noHistoryPush = false,
             visiblePane = $('#preloads-inner > #preload-1', contentArea)[0],
@@ -119,9 +118,7 @@ define([
                 url = o.url,
                 el = o.container,
                 callback = o.callback || noop,
-                frag,
-                rx,
-                i;
+                frag;
 
             if (url && el) {
                 el.dataset = el.dataset || {};
@@ -227,7 +224,6 @@ define([
 
         function setSequencePos(url) {
             sequencePos = getSequencePos(normalizeUrl(url));
-            inSequence = (sequencePos > -1);
         }
 
         function getSequencePos(url) {
@@ -271,8 +267,8 @@ define([
         }
 
         function getAdjacentUrl(dir) {
-            // dir = 1 : right
-            // dir = -1 : left
+            // dir = 1   => the right pane
+            // dir = -1  => the left pane
 
             if (dir === 0) {
                 return getSequenceUrl(sequencePos);
@@ -285,19 +281,12 @@ define([
                 return config.prevUrl;
             }
             // Cases where we've got an sequence position already
-            else if (sequencePos > -1 && inSequence) {
+            else if (sequencePos > -1) {
                 return getSequenceUrl(mod(sequencePos + dir, sequenceLen));
             }
-            else if (sequencePos > -1 && !inSequence) {
+            else{
                 // We're displaying a non-sequence page; have current-sequence-page to the left, next-sequence-page to right
-                return getSequenceUrl(mod(sequencePos + (dir === 1 ? 1 : 0), sequenceLen));
-            }
-            // Cases where we've NOT yet got an sequence position
-            else if (dir === 1) {
-                return getSequenceUrl(1);
-            }
-            else {
-                return getSequenceUrl(0);
+                return getSequenceUrl((dir === 1 ? 1 : 0), sequenceLen);
             }
         }
 
