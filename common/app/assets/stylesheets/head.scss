@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 //Variables and mixins
-@import "_grid";
 @import "_vars";
 @import "_mixins";
 
@@ -16,6 +15,7 @@
 @import "base/_lists";
 
 //layout
+@import "layout/_grid";
 @import "layout/_layout";
 
 //Global modules

@@ -1,8 +1,9 @@
-
+/* ==========================================================================
+   Trailblocks
+   ========================================================================== */
 .trailblock {
-    padding: 0 $gutter;
+  padding: 12px $gutter 24px $gutter;
 }
-
     .trailblock ul {
         margin-bottom: 0px;
     }
@@ -16,11 +17,9 @@
         margin-top: 0px;
     }
 
-.trailblock-topstories .trail-headline {
-    @extend %type-3;
-}
 
-.trailblock-topstories li:first-child .b2 { border-top:none;}
+/* Trailblock toggle
+   ========================================================================== */
 
 .toggle-trailblock {
     @extend %type-8;

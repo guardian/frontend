@@ -17,33 +17,35 @@ $baseHeight   : $base/$fontsize + 0em;
 $gridHeight   : $baseHeight * 2;
 $gridWidth    : $gridHeight * $ratio;
 
-.grid-box {
+.grid-box,
+%grid-box {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    margin: 0;
     padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
 }
 .grid-box-1 {
-    @extend .grid-box;
+    @extend %grid-box;
     width:  $gridWidth;
     height: $gridHeight;
 }
 .grid-box-1-5 {
-    @extend .grid-box;
+    @extend %grid-box;
     width:  $gridWidth * 1.5;
     height: $gridHeight * 1.5;
 }
 .grid-box-2 {
-    @extend .grid-box;
+    @extend %grid-box;
     width:  $gridWidth * 2;
     height: $gridHeight * 2;
 }
 .grid-box-3 {
-    @extend .grid-box;
+    @extend %grid-box;
     width:  $gridWidth * 3;
     height: $gridHeight * 3;
 }
 .grid-box-4 {
-    @extend .grid-box;
+    @extend %grid-box;
     width:  $gridWidth * 4;
     height: $gridHeight * 4;
 }

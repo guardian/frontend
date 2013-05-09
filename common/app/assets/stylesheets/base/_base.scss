@@ -10,11 +10,13 @@ body {
 }
 
 .relative-timestamp {
-    display: block;
-    height: 10px;
-    color: #777777;
-    margin: 0;
-    padding:0 0 $baseline*3 0;
+  @extend %type-11;
+  line-height: 1em;
+  display: block;
+  height: 1em;
+  color: #929497;
+  margin: 0;
+  padding:6px 0 6px 0;
 }
 
 .relative-timestamp span {
