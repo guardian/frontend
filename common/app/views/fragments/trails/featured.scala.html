@@ -1,9 +1,7 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
 
-<@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}"
-data-link-name="trail@if(trail.tags.filter(_.id == "world/ohio").nonEmpty){ | front-story}"
-data-trail-tags="@trail.tags.map(_.id).mkString(",")">
+<@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}" data-link-name="trail">
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
