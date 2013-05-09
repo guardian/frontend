@@ -67,7 +67,7 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var context = document.getElementById('swipepage-1');
+            var context = document.getElementById('preload-1');
 
             modules.initialiseAjax(config);
             modules.attachGlobalErrorHandler(config);

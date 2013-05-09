@@ -58,14 +58,14 @@
 }
 
 /* ==========================================================================
-   Swipe framework
+   Preloads (for swipe)
    ========================================================================== */
 
-#swipepages {
+#preloads {
     position: relative;
 }
 
-#swipepages-inner {
+#preloads-inner {
     position: relative;
     top: 0px;
     height: 100%;
@@ -74,9 +74,9 @@
     @include transform(translateZ(0px)); 
 }
 
-#swipepage-0,
-#swipepage-1,
-#swipepage-2 {
+#preload-0,
+#preload-1,
+#preload-2 {
     @include transform(translateZ(0px));
     position: absolute;
     top: 0px;
@@ -84,19 +84,19 @@
     width: 100%;
 }
 
-#swipepage-0 {
+#preload-0 {
     left: -100%; 
 }
 
-#swipepage-1 {
+#preload-1 {
     left: 0%; 
 }
 
-#swipepage-2 {
+#preload-2 {
     left: 100%; 
 }
 
-.swipepage-msg {
+.preload-msg {
   padding: 50px 50px 250px 50px;
   text-align: center;
 }

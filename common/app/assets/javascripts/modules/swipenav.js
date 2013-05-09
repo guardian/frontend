@@ -90,20 +90,20 @@ define([
             inSequence = false,
             initiatedBy = 'initial',
             noHistoryPush = false,
-            visiblePane = $('#swipepages-inner > #swipepage-1', contentArea)[0],
+            visiblePane = $('#preloads-inner > #preload-1', contentArea)[0],
             panes,
             paneNow = 1,
             paneThen = 1,
-            pendingHTML = '<div class="swipepage-msg">Loading page...</div>',
+            pendingHTML = '<div class="preload-msg">Loading page...</div>',
             visiblePaneMargin = 0,
             hiddenPaneMargin = 0;
 
 
         function prepareDOM() {
-            var pages = document.querySelector('#swipepages'),
-                page0 = pages.querySelector('#swipepage-0 .parts'),
-                page1 = pages.querySelector('#swipepage-1 .parts'),
-                page2 = pages.querySelector('#swipepage-2 .parts'),
+            var pages = document.querySelector('#preloads'),
+                page0 = pages.querySelector('#preload-0 .parts'),
+                page1 = pages.querySelector('#preload-1 .parts'),
+                page2 = pages.querySelector('#preload-2 .parts'),
                 head  = page1.querySelector('.parts__head'),
                 foot  = page1.querySelector('.parts__foot'),
                 initialBodyHtml = '<div class="parts__body">' + pendingHTML + '</div>';
@@ -155,7 +155,7 @@ define([
 
                             delete el.pending;
                             frag   = frag || {};
-                            html   = frag.html || '<div class="swipepage-msg">Oops. This page might be broken?</div>';
+                            html   = frag.html || '<div class="preload-msg">Oops. This page might be broken?</div>';
 
                             sequenceCache[url] = sequenceCache[url] || {};
                             sequenceCache[url].html = html;

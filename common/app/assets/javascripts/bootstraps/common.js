@@ -267,7 +267,7 @@ define([
 
                 },
                 clickSelector: clickSelector,
-                swipeContainer: '#swipepages',
+                swipeContainer: '#preloads',
                 contentSelector: '.parts__body',
                 sequence: sequence
             });

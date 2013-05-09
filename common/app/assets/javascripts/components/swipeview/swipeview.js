@@ -84,7 +84,7 @@ define('swipeview', [], function() {
 			//div.id = 'swipeview-slider';
 			//div.style.cssText = 'position:relative;top:0;height:100%;width:100%;' + cssVendor + 'transition-duration:0;' + cssVendor + 'transform:translateZ(0);' + cssVendor + 'transition-timing-function:ease-out';
 			//this.wrapper.appendChild(div);
-			div = document.getElementById('swipepages-inner');
+			div = document.getElementById('preloads-inner');
 			this.slider = div;
 
 			this.refreshSize();
@@ -93,7 +93,7 @@ define('swipeview', [], function() {
 				//div = document.createElement('div');
 				//div.id = 'swipeview-masterpage-' + (i+1);
 				//div.style.cssText = cssVendor + 'transform:translateZ(0);position:absolute;top:0;height:100%;width:100%;left:' + i*100 + '%';
-				div = document.getElementById('swipepage-' + (i+1));
+				div = document.getElementById('preload-' + (i+1));
 				if (!div.dataset) div.dataset = {};
 				pageIndex = i == -1 ? this.options.numberOfPages - 1 : i;
 				div.dataset.pageIndex = pageIndex;
