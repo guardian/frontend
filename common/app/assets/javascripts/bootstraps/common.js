@@ -224,7 +224,7 @@ define([
 
         getSwipeSequence: function(callback) {
             ajax({
-                url: '/more-stories' + window.location.pathname + '?variant=2',
+                url: '/front-trails' + window.location.pathname,
                 type: 'jsonp',
                 success: function (json) {
                     if (json.stories && json.stories.length >= 3) {

@@ -17,50 +17,57 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     Json.parse(json.stripPrefix(callbackName + "(").stripSuffix(");"))
   }
   
-  private def makeRequest(page: String): Result = {
-    val fakeRequest = FakeRequest(GET, s"/more-stories/${page}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
-    controllers.MoreStoriesController.render(page)(fakeRequest)
+  private def makeRequestFrontTrails(page: String): Result = {
+    val fakeRequest = FakeRequest(GET, s"/front-trails/${page}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
+    controllers.MoreStoriesController.render(page, "frontTrails")(fakeRequest)
   }
   
-  private def makeRequest(page: String, variant: String): Result = {
-    val fakeRequest = FakeRequest(GET, s"/more-stories/${page}?callback=${callbackName}&variant=${variant}").withHeaders("host" -> "localhost:9000")
-    controllers.MoreStoriesController.render(page)(fakeRequest)
+  private def makeRequestMostViewed(page: String): Result = {
+    val fakeRequest = FakeRequest(GET, s"/most-viewed/${page}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
+    controllers.MoreStoriesController.render(page, "mostViewed")(fakeRequest)
   }
   
   private def extractStories(json: JsValue): Seq[JsValue] = {
     (json \ "stories").as[Seq[JsValue]]
   }
 
-  "More Stories Controller" should "return a 200 JSONP response" in Fake {
-    val result = makeRequest(section)
+  "More Stories Controller" should "return a 200 JSONP response for front trails" in Fake {
+    val result = makeRequestFrontTrails(section)
+    status(result) should be(200)
+    contentType(result).get should be("application/javascript")
+    contentAsString(result) should startWith(callbackName + "({\"stories\"") // the callback
+  }
+
+  it should "return a 200 JSONP response for most viewed" in Fake {
+    val result = makeRequestMostViewed(section)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(callbackName + "({\"stories\"") // the callback
   }
 
   it should "return the current url as the first story" in Fake {
-    val result = makeRequest(article)
+    val result = makeRequestFrontTrails(article)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     // get first story
     stories.head should be(Json.toJson(Map("url" -> s"/$article")))
   }
 
   it should "not duplicate story" in Fake {
-    val result = makeRequest(article)
+    val result = makeRequestFrontTrails(article)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     // find current story
     stories.filter(_ == Json.toJson(Map("url" -> s"/$article"))).size should be(1)
   }
 
   it should "return section as last story" in Fake {
-    val result = makeRequest(article)
+    val result = makeRequestFrontTrails(article)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     // get last story
     stories.last should be(Json.toJson(Map("url" -> s"/$section")))
   }
 
   it should "not return section as last story if current story is the section" in Fake {
-    val result = makeRequest(section)
+    val result = makeRequestFrontTrails(section)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     // get last story
     stories.last should not be(Json.toJson(Map("url" -> s"/$section")))
@@ -69,32 +76,12 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   it should "return global most read if unknown page" in Fake {
     val badPage = "a/bad/page"
     val badSection = "a"
-    val result = makeRequest("a/bad/page")
+    val result = makeRequestFrontTrails("a/bad/page")
 
-    val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be(20)
-    stories.head should not be(Json.toJson(Map("url" -> s"/$badPage")))
-    stories.last should not be(Json.toJson(Map("url" -> s"/$badSection")))
-  }
-
-  it should "return most read by default" in Fake {
-    val result = makeRequest(article)
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be(22)
-    stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/01/german-fairytale-champions-league-spiel")))
-  }
-
-  it should "return most read for variant 1" in Fake {
-    val result = makeRequest(article, "1")
-    val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/01/german-fairytale-champions-league-spiel")))
-  }
-
-  it should "return front trails for variant 2" in Fake {
-    val result = makeRequest(article, "2")
-    val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be(17)
-    stories(1) should be(Json.toJson(Map("url" -> "/football/2013/may/02/barcelona-bayern-munich-champions-league")))
+    stories.head should not be(Json.toJson(Map("url" -> s"/$badPage")))
+    stories.last should not be(Json.toJson(Map("url" -> s"/$badSection")))
   }
   
 }

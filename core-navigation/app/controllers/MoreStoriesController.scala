@@ -14,24 +14,30 @@ import akka.dispatch.OnFailure
 
 object MoreStoriesController extends Controller with Logging {
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, moreStoriesType: String) = Action { implicit request =>
     val edition = Edition(request)
     val section = path.split("/").headOption.getOrElse("")
-    val promiseOfMoreStories = getMoreStories(edition, section)
+    val moreStories = moreStoriesType match {
+      case "mostViewed" => getMostViewed(path, section, edition)
+      case "frontTrails" => getFrontTrails(path, section, edition)
+    }
     Async {
-      promiseOfMoreStories.map { moreStories =>
+      moreStories.map { moreStories =>
         moreStories match {
           case Left(moreStories) => {
             renderJson(path, section, moreStories)
           }
           // get network front's more stories
           case Right(notFound) => {
-            val promiseOfNetworkFrontMoreStories = getMoreStories(edition, "")
+            val frontMoreStories = moreStoriesType match {
+              case "mostViewed" => getMostViewed("", "", edition)
+              case "frontTrails" => getFrontTrails("", "", edition)
+            }
             Async {
-              promiseOfNetworkFrontMoreStories.map { networkFrontMoreStories =>
-                networkFrontMoreStories match {
-                  case Left(networkFrontMoreStories) => {
-                    renderJson(path, networkFrontMoreStories)
+              frontMoreStories.map { frontMoreStories =>
+                frontMoreStories match {
+                  case Left(frontMoreStories) => {
+                    renderJson(path, frontMoreStories)
                   }
                   case Right(notFound) => JsonNotFound()
                 }
@@ -42,15 +48,8 @@ object MoreStoriesController extends Controller with Logging {
       }
     }
   }
-  
-  private def getMoreStories(edition: Edition, path: String)(implicit request: RequestHeader): Future[Either[Seq[Content],Result]] = {
-    request.getQueryString("variant").map {
-      case "2" => frontTrails(edition, path)
-      case _ => mostViewed(edition, path)
-    } getOrElse(mostViewed(edition, path))
-  }
 
-  private def mostViewed(edition: Edition, section: String)(implicit request: RequestHeader) = {
+  private def getMostViewed(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
     log.info(s"Fetching more stories (most viewed): $section for edition $edition")
     ContentApi.item(section, edition)
       .showMostViewed(true)
@@ -65,7 +64,7 @@ object MoreStoriesController extends Controller with Logging {
       .recover{ suppressApiNotFound }
   }
   
-  private def frontTrails(edition: Edition, section: String)(implicit request: RequestHeader) = {
+  private def getFrontTrails(path: String, section: String, edition: Edition)(implicit request: RequestHeader) = {
     log.info(s"Fetching more stories (front trails): $section for edition $edition")
     ContentApi.item(section, edition)
       .showEditorsPicks(true)
