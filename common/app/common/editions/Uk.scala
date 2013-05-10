@@ -7,8 +7,10 @@ import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
 import conf.ContentApi
+import contentapi.QueryDefaults
 
-object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London")) with Sections with Zones {
+object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London")) with Sections with Zones
+  with QueryDefaults {
 
   implicit val UK = Uk
   val zones = Seq(
@@ -83,7 +85,15 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true)(Au),
       QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
-        customQuery=ContentApi.item("commentisfree", "au").showEditorsPicks(false)),
+        customQuery=ContentApi.item.itemId("commentisfree")
+          .edition("au")
+          .showTags("all")
+          .showFields(trailFields)
+          .showInlineElements(inlineElements)
+          .showMedia("all")
+          .showReferences(references)
+          .showStoryPackage(true)
+          .tag(supportedTypes)),
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
     )
   )
