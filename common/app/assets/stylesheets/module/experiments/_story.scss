@@ -500,16 +500,16 @@ i.is-open.cta-new__icn--right {
 	color:#ffffff;
 	font-weight:500;
 }
-.story-container .site-message .cta-new {
+.cta-new--story {
 	border-top:1px solid #ffffff;
 }
-.story-container .site-message .cta-new a {
+.cta-new--story a {
 	padding-left:5px;
 	display:block;
 	position:relative;
 	padding-bottom:9px;
 }
-.story-container .site-message .cta-new__icn {
+.cta-new--story .cta-new__icn {
 	display:block;
 	height:32px;
 	border-left:1px solid #ffffff;
@@ -517,6 +517,6 @@ i.is-open.cta-new__icn--right {
 	top:0;
 	right:60px;
 }
-.story-container .site-message .cta-new__icn--right{
+.cta-new--story .cta-new__icn--right{
 	position:absolute;
 }
