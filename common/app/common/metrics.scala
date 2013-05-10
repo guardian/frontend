@@ -73,20 +73,22 @@ object AkkaMetrics extends AkkaSupport {
 
 object SystemMetrics {
 
-  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (bytes)", "Max heap memory (bytes)",
-    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax
+  // divide by 1048576 to convert bytes to MB
+
+  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (MB)", "Max heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (bytes)", "Used heap memory (bytes)",
-    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed
+  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (MB)", "Used heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
   )
 
-  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (bytes)", "Max non heap memory (bytes)",
-    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax
+  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (MB)", "Max non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (bytes)", "Used non heap memory (bytes)",
-    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax
+  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (MB)", "Used non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric, MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric)
