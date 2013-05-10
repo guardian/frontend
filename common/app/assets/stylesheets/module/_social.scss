@@ -41,11 +41,15 @@ a.social-btn {
         float: left;
         width: 24%;
         max-width: 80px;
-        }
+        margin-right:8px;
+    }
+    
+    .social .social-network:last-child {
+        margin-right:0;
+    }
 
     .social-btn,
     a.social-btn{
-        border-right: 8px solid #ffffff;
         border-bottom-width: 0px;
         }
    
