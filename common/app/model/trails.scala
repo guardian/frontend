@@ -37,6 +37,7 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
+
 trait TrailblockDescription {
   val id: String
   val name: String
@@ -48,12 +49,12 @@ trait TrailblockDescription {
   def query: Future[Seq[Trail]]
 }
 
-case class ItemTrailblockDescription(
-    id: String, name: String,
-    numItemsVisible: Int,
-    style: Option[Style] = None,
-    showMore: Boolean = false
-  )(implicit edition: Edition) extends TrailblockDescription
+class ItemTrailblockDescription(
+    val id: String, val name: String,
+    val numItemsVisible: Int,
+    val style: Option[Style],
+    val showMore: Boolean,
+    val edition: Edition) extends TrailblockDescription
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
@@ -72,6 +73,11 @@ case class ItemTrailblockDescription(
 
     editorsPicks ++ latest
   }
+}
+
+object ItemTrailblockDescription {
+  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false)(implicit edition: Edition) =
+    new ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, edition)
 }
 
 case class QueryTrailblockDescription(
