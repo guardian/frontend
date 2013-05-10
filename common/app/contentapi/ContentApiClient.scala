@@ -5,6 +5,7 @@ import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{Edition, Logging, GuardianConfiguration}
+import play.api.libs.ws.WS
 
 trait ApiQueryDefaults { self: Api[Future] =>
 
@@ -28,7 +29,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .showStoryPackage(true)
   .tag(supportedTypes)
 
-  //common fields that we use across most queries.
+  //common fields that we use across most queries.                                    dispatcher.id
   def search(edition: Edition): SearchQuery = search
   .edition(edition.id)
   .showTags("all")
@@ -39,7 +40,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .tag(supportedTypes)
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
+class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with ApacheHttp
     with Logging {
 
   import Configuration.contentApi
