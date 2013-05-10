@@ -75,11 +75,9 @@ define([
                 headerNodes.each(function(el) {
                     var node = bonzo(el),
                         height = node.offset().height,
-                        minHeight = parseInt(node.css('min-height'), 10);
+                        padding = (height < 60) ? 72-height : 120-height; // Yes, ugly!
 
-                    if (height > minHeight) {
-                        bonzo(el).addClass('trail__headline--large');
-                    }
+                    node.css('height', height+padding+'px');
                 });
             });
         }
