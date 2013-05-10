@@ -60,8 +60,8 @@ public class FrontSteps {
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
         // Wait for javascript to inject button.cta
-        webDriver.waitForElement(By.cssSelector("button.cta"));
-        WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
+        webDriver.waitForElement(By.cssSelector(".cta"));
+        WebElement cta = trailblock.findElement(By.cssSelector(".cta"));
         assertEquals(ctaText, cta.getText());
         // how many trails do we currently have
         int trailCount = trailblock.findElements(By.className("trail")).size();
