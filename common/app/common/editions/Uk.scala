@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{QueryTrailblockDescription, ItemTrailblockDescription, MetaData, TrailblockDescription}
+import model.{QueryTrailblockDescription, ItemTrailblockDescription, MetaData}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem

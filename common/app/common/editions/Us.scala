@@ -2,13 +2,15 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{MetaData, ItemTrailblockDescription}
+import model.{QueryTrailblockDescription, MetaData, ItemTrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
-import model.ItemTrailblockDescription
+import conf.ContentApi
+import contentapi.QueryDefaults
 
-object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_York")) with Sections with Zones {
+object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_York")) with Sections with Zones
+  with QueryDefaults {
 
   implicit val US = Us
   val zones = Seq(
@@ -75,7 +77,16 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      ItemTrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
+        customQuery=ContentApi.item.itemId("commentisfree")
+          .edition("au")
+          .showTags("all")
+          .showFields(trailFields)
+          .showInlineElements(inlineElements)
+          .showMedia("all")
+          .showReferences(references)
+          .showStoryPackage(true)
+          .tag(supportedTypes)),
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
   )
