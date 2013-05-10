@@ -22,6 +22,10 @@ object CommonSwitches {
     "If this is switched on then the custom Guardian web font will load.",
     initiallyOn = true)
 
+  val FontDelaySwitch = DefaultSwitch("web-fonts-delay",
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
+    initiallyOn = false)
+
   val AudienceScienceSwitch = DefaultSwitch("audience-science",
     "If this switch is on the Audience Science will be enabled.",
     initiallyOn = true)
@@ -104,6 +108,7 @@ object CommonSwitches {
   
   val all: Seq[Switchable] = Seq(
     AutoRefreshSwitch,
+    FontDelaySwitch,
     FontSwitch,
     AudienceScienceSwitch,
     DoubleCacheTimesSwitch,
