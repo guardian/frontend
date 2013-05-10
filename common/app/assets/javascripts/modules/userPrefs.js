@@ -58,7 +58,7 @@ define(['modules/storage'], function(storage) {
                         switchOff(val);
                         break;
                     default:
-                        // 1. +val casts any number (int, float) to a string
+                        // 1. +val casts any number (int, float) from a string
                         // 2. String(val) === "true" converts a string to bool
                         var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === "true") : val);
                         set(key, v);
