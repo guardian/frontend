@@ -68,7 +68,7 @@
 /* Blue
    ========================================================================== */
 .cta--blue {
-  background-color: #00638E;
+  background-color: $blue;
 
   .cta__text {
     color: #fff;
@@ -107,7 +107,7 @@ i.is-open.cta__icn--right {
 /* Left
    ========================================================================== */
 .cta__btn--left {
-  flaot:left;
+  float:left;
   border-right-width: 1px;
 
   .i {

@@ -12,9 +12,8 @@
         display: inline-block;
     }
 
-    .trailblock.rolled-up,
-    .trailblock.rolled-out {
-        margin-top: 0px;
+    .trailblock.is-shut {
+        display: none;
     }
 
 

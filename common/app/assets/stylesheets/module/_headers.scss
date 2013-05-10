@@ -4,23 +4,32 @@
 .sub-section-head {
     position: relative;
     overflow: hidden;
+    height: 36px;
+    margin: 0 $gutter;
+}
+
+.front-section-head {
+    background-color: $neutral2;
+}
+.sub-section-head {
     border-top: $baseline solid $mushroom;
 }
 
     .front-section-head h1,
     .sub-section-head h1 {
+        @include font($serifheadline, 600, 20, 20);
         margin-bottom: 0px;
-        line-height: 1em;
+        float: left;
     }
 
     .front-section-head a,
     .sub-section-head a {
         display: block;
-        padding: 15px $gutter;
+        padding: 2px;
     }
 
-    .front-section-head a, 
-    .front-section-head a:link, 
+    .front-section-head a,
+    .front-section-head a:link,
     .front-section-head a:visited {
         color: #ffffff;
     }
