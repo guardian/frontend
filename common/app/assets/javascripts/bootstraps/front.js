@@ -18,7 +18,7 @@ define([
 ) {
 
     var modules = {
-            
+
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
@@ -66,8 +66,20 @@ define([
                     }
                 }
             });
+        },
+
+        adjustFeaturedStoryHeader: function() {
+            common.mediator.on('page:front:ready', function(config, context) {
+                var headerNode = bonzo(context.querySelector('.trail--featured .trail__headline')),
+                    height = headerNode.offset().height,
+                    minHeight = parseInt(headerNode.css('min-height'), 10);
+
+                if (height > minHeight) {
+                    headerNode.addClass('trail__headline--large');
+                }
+            });
         }
-        
+
     };
 
     var ready = function (config, context) {
@@ -76,6 +88,7 @@ define([
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
+            modules.adjustFeaturedStoryHeader();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
