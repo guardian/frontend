@@ -3,13 +3,15 @@ define([
     'swipeview',
     'bean',
     'bonzo',
-    'ajax'
+    'ajax',
+    'modules/url'
 ], function(
     common,
     SwipeView,
     bean,
     bonzo,
-    ajax
+    ajax,
+    urls
 ) {
 
     function $(selector, context) {
@@ -207,7 +209,7 @@ define([
             canonicalLink.attr('href', window.location.href);
 
             if (!noHistoryPush) {
-                doHistoryPush({}, document.title, url);
+                urls.pushUrl({}, document.title, url);
             }
             noHistoryPush = false;
 
@@ -312,10 +314,6 @@ define([
                 sequencePos = pos;
                 gotoUrl(getSequenceUrl(pos), dir);
             }
-        }
-
-        function doHistoryPush(state, title, url, replace) {
-            window.history[replace? 'replaceState' : 'pushState'](state, title, url);
         }
 
         function preparePane(o) {
