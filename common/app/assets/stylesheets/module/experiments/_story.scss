@@ -56,10 +56,10 @@ $orange: #FF7F00;
   .article-headline {
     min-height:60px;
     font-family: $serifheadline;
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    padding: 0 0 16px 0;
+    font-weight: normal;
+    font-size: 2.4rem;
+    line-height: 2.9rem;
+    padding: 0;
     margin-bottom: 12px;
     @include box-sizing(border-box);
   }
@@ -85,7 +85,7 @@ $orange: #FF7F00;
 	  text-indent:$gutter*1.5;
 	}
       
-    p:first-child {
+    p:first-of-type {
       text-indent:0;
     }
 	  
@@ -138,7 +138,7 @@ $orange: #FF7F00;
   font-weight: 200;
   font-size: 2rem;
   line-height: 2.4rem;
-  margin: 0 0 44px 0;
+  margin: 0 0 4px 0;
   color: #000;
 }
 
@@ -152,10 +152,9 @@ $orange: #FF7F00;
 }
 
   .story-quote__cite {
-    position: absolute;
-    bottom: 48px;
-    left: 2px;
-    margin-bottom: 0px;
+    display:block;
+    margin-left: 2px;
+    margin-bottom: 15px;
     font-family: $serifheadline;
     font-weight: 600;
     font-size: 1.6rem;
@@ -466,20 +465,58 @@ i.is-open.cta-new__icn--right {
     margin-bottom: 16px;
 }
 
+.story-tabs-container .tabs li {
+    border-bottom:1px solid $darkMushroom;
+    @include box-sizing(border-box);
+}
+.story-tabs-container .tabs li:first-child{
+    border-right:1px solid $darkMushroom;	
+}
+
+.story-tabs-container .tabs li.tabs-selected {
+    border-top:1px solid $darkMushroom;
+    border-bottom:none;
+}
+
 .story-tabs-container .tabs a {
-    text-align: left;   
-    color: white;
+    text-align: left;
     margin: 0px; 
-    padding: 0px 0px 13px 4px;
+    padding: 4px 0px 15px 4px;
+    font-weight:normal;
+    font-size:1.4rem;
 }
 
 .story-tabs-container .tabs-selected a {
-    background-color: #f8f8f2;
-    color: #214583;
+	padding-top:3px;
+    background-color: #ffffff;
 }
 
 .story-tabs-container .tabs li {
-    background-color: #214583;
+    background-color: #eeeeee;
 }
 
-
+.story-container .site-message__body {
+	padding:5px;
+	color:#ffffff;
+	font-weight:500;
+}
+.cta-new--story {
+	border-top:1px solid #ffffff;
+}
+.cta-new--story a {
+	padding-left:5px;
+	display:block;
+	position:relative;
+	padding-bottom:9px;
+}
+.cta-new--story .cta-new__icn {
+	display:block;
+	height:32px;
+	border-left:1px solid #ffffff;
+	position:absolute;
+	top:0;
+	right:60px;
+}
+.cta-new--story .cta-new__icn--right{
+	position:absolute;
+}
