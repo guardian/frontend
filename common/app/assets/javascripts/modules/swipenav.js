@@ -21,13 +21,6 @@ define([
         }
     }
 
-    function extend(destination, source) {
-        for (var property in source) {
-            destination[property] = source[property];
-        }
-        return destination;
-    }
-
     function normalizeUrl(url) {
         var a = document.createElement('a');
         a.href = url;
@@ -49,7 +42,7 @@ define([
         var
             // general purpose do-nothing function
             noop = function () {},
-            opts = extend(
+            opts = common.extend(
                 {
                     // Swipe container element
                     swipeContainer: undefined,

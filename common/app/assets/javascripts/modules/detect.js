@@ -139,7 +139,15 @@ define(function () {
     }
 
     function hasPushStateSupport() {
-        return 'pushState' in history;
+        var supportsHistory = false;
+        if (window.history && history.pushState) {
+            supportsHistory = true;
+            // Android stock browser lies about its HistoryAPI support.
+            if (window.navigator.userAgent.match(/Android/i)) {
+                supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
+            }
+        }
+        return supportsHistory;
     }
 
     function getVideoFormatSupport() {

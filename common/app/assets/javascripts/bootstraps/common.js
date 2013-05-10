@@ -7,6 +7,7 @@ define([
     'domReady',
     'bonzo',
     //Modules
+    'modules/detect',
     'modules/pageconfig',
     'modules/popular',
     'modules/related',
@@ -35,6 +36,7 @@ define([
     domReady,
     bonzo,
 
+    detect,
     pageConfig,
     popular,
     related,
@@ -188,34 +190,7 @@ define([
         },
 
         initSwipe: function(config) {
-            var androidVersion,
-                vendorPrefixes = ['ms', 'Khtml', 'O', 'Moz', 'Webkit', ''],
-                supportsHistory = false,
-                supportsTransitions = false;
-
-            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav')) {
-                if (window.history && history.pushState) {
-                    supportsHistory = true;
-                    // Revert supportsHistory for Android <= 4.0, unless it's Chrome/Firefox browser
-                    androidVersion = window.navigator.userAgent.match(/Android\s+([\d\.]+)/i);
-                    if (androidVersion && parseFloat(androidVersion[1]) <= 4.1) {
-                        supportsHistory = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
-                    }
-                }
-                if (!supportsHistory) {
-                    return;
-                }
-
-                while(vendorPrefixes.length) {
-                    if (vendorPrefixes.pop() + 'Transition' in document.body.style) {
-                        supportsTransitions = true;
-                        break;
-                    }
-                }
-                if (!supportsTransitions) {
-                    return;
-                }
-
+            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.hasPushStateSupport()) {
                 modules.getSwipeSequence(function(sequence){
                     modules.startSwipe(sequence, config);
                 });
