@@ -70,13 +70,15 @@ define([
 
         adjustFeaturedStoryHeader: function() {
             common.mediator.on('page:front:ready', function(config, context) {
-                var headerNode = bonzo(context.querySelector('.trail--featured .trail__headline')),
-                    height = headerNode.offset().height,
-                    minHeight = parseInt(headerNode.css('min-height'), 10);
+                var headerNodes = bonzo(context.querySelectorAll('.trail--featured .trail__headline'));
 
-                if (height > minHeight) {
-                    headerNode.addClass('trail__headline--large');
-                }
+                headerNodes.each(function(el) {
+                    var node = bonzo(el),
+                        height = node.offset().height,
+                        padding = (height < 60) ? 72-height : 120-height; // Yes, ugly!
+
+                    node.css('height', height+padding+'px');
+                });
             });
         }
 
