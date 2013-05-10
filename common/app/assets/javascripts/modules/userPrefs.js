@@ -8,9 +8,11 @@ define(['modules/storage'], function(storage) {
     function set(name, value) {
         store.set(storagePrefix + name, value);
     }
+    
     function get(name) {
         return store.get(storagePrefix + name);
     }
+    
     function remove(name) {
         store.remove(storagePrefix + name);
     }
@@ -18,9 +20,11 @@ define(['modules/storage'], function(storage) {
     function switchOn(name) {
         store.set(storagePrefix + "switch." + name, true);
     }
+    
     function switchOff(name) {
         store.set(storagePrefix + "switch." + name, false);
     }
+    
     function removeSwitch(name) {
         store.remove(storagePrefix + "switch." + name);
     }
@@ -28,25 +32,30 @@ define(['modules/storage'], function(storage) {
     function isOn(name) {
         return store.get(storagePrefix + "switch." + name) === true;
     }
+    
     function isOff(name) {
         return store.get(storagePrefix + "switch." + name) === false;
     }
 
-    for (var i = 0, j = qs.length; i<j; ++i) {
-        var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
-        if (m) {
-            switch (m[1]) {
-                case "switchOn":
-                    switchOn(m[2]);
-                    break;
-                case "switchOff":
-                    switchOff(m[2]);
-                    break;
-                default:
-                    set(m[1], m[2]);
+    function setPrefs(qs) {
+        for (var i = 0, j = qs.length; i<j; ++i) {
+            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+            if (m) {
+                switch (m[1]) {
+                    case "switchOn":
+                        switchOn(m[2]);
+                        break;
+                    case "switchOff":
+                        switchOff(m[2]);
+                        break;
+                    default:
+                        set(m[1], m[2]);
+                }
             }
         }
     }
+   
+    setPrefs(qs)
 
     return {
         set: set,
