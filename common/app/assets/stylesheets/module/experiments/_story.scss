@@ -85,7 +85,7 @@ $orange: #FF7F00;
 	  text-indent:$gutter*1.5;
 	}
       
-    p:first-child {
+    p:first-of-type {
       text-indent:0;
     }
 	  
@@ -495,4 +495,28 @@ i.is-open.cta-new__icn--right {
     background-color: #eeeeee;
 }
 
-
+.story-container .site-message__body {
+	padding:5px;
+	color:#ffffff;
+	font-weight:500;
+}
+.story-container .site-message .cta-new {
+	border-top:1px solid #ffffff;
+}
+.story-container .site-message .cta-new a {
+	padding-left:5px;
+	display:block;
+	position:relative;
+	padding-bottom:9px;
+}
+.story-container .site-message .cta-new__icn {
+	display:block;
+	height:32px;
+	border-left:1px solid #ffffff;
+	position:absolute;
+	top:0;
+	right:50px;
+}
+.story-container .site-message .cta-new__icn--right{
+	position:absolute;
+}
