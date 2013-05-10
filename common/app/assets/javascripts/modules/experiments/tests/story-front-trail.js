@@ -2,7 +2,7 @@ define(['modules/story/frontstories'], function (FrontStories) {
 
     var StoryFrontTrail = function () {
         
-        var storyId = '461854';
+        var storyId = '680026';
 
         this.id = 'StoryFrontTrail';
         this.audience = 1;
