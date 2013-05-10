@@ -85,7 +85,7 @@ case class QueryTrailblockDescription(
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query: Future[Seq[Trail]] = ContentApi.customQuery(customQuery).map { response =>
+  def query: Future[Seq[Trail]] = customQuery.response.map { response =>
     val editorsPicks = response.editorsPicks map {
       new Content(_)
     }

@@ -6,8 +6,7 @@ import conf.Configuration
 import scala.concurrent.Future
 import common.{Edition, Logging, GuardianConfiguration}
 
-trait ApiQueryDefaults { self: Api[Future] =>
-
+trait QueryDefaults{
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
@@ -16,6 +15,9 @@ trait ApiQueryDefaults { self: Api[Future] =>
   val references = "pa-football-competition,pa-football-team,witness-assignment"
 
   val inlineElements = "picture,witness,video"
+}
+
+trait ApiQueryDefaults extends QueryDefaults { self: Api[Future] =>
 
   def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
@@ -40,7 +42,6 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .showMedia("all")
   .tag(supportedTypes)
 
-  def customQuery(customQuery: ItemQuery): ItemQuery = customQuery
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
