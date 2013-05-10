@@ -1,13 +1,13 @@
 define([
     'common',
-    'modules/userPrefs',
+    'modules/storage',
 
     //Current tests
     'modules/experiments/tests/relatedContent',
     'modules/experiments/tests/story-front-trail'
 ], function (
     common,
-    userPrefs,
+    store,
     RelatedContent,
     StoryFrontTrail) {
     
@@ -15,8 +15,8 @@ define([
             StoryFrontTrail: new StoryFrontTrail()
         };
 
-    var testKey = 'ab.current',
-        participationKey = "ab.participation";
+    var testKey = 'gu.ab.current',
+        participationKey = "gu.ab.participation";
 
     //For testing purposes
     function addTest(Test) {
@@ -27,11 +27,11 @@ define([
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
-        userPrefs.set(testKey, data);
+        store.set(testKey, data);
     }
 
     function getTest() {
-        return (userPrefs.get(testKey)) ? userPrefs.get(testKey) : false;
+        return (store.get(testKey)) ? store.get(testKey) : false;
     }
 
     // Checks if:
@@ -44,7 +44,7 @@ define([
     }
 
     function clearTest() {
-        return userPrefs.remove(testKey);
+        return store.remove(testKey);
     }
 
     function hasParticipated(testName) {
@@ -52,7 +52,7 @@ define([
     }
 
     function getParticipation() {
-        var tests = (userPrefs.get(participationKey)) ? userPrefs.get(participationKey).tests : [];
+        var tests = (store.get(participationKey)) ? store.get(participationKey).tests : [];
         // handle previous bug when tests was set to length
         if (typeof tests === "number") {
             tests = [];
@@ -74,7 +74,7 @@ define([
             data = {"tests":[testName]};
         }
 
-        userPrefs.set(participationKey, data);
+        store.set(participationKey, data);
     }
 
     //Finds variant in specific tests and exec's
@@ -116,6 +116,9 @@ define([
     function init(config) {
         var switches = config.switches,
             isInTest = inTest(switches);
+
+        // Clear up legacy storage names. This can be deleted "in the future".
+        store.clearByPrefix('gu.prefs.ab');
 
         //Is the user in an active test?
         if(isInTest) {
