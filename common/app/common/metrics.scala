@@ -1,12 +1,10 @@
 package common
 
-import play.api.libs.ws.WS
 import akka.dispatch.{ MessageDispatcher, Dispatcher }
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import com.ning.http.client.providers.netty.NettyConnectionsPool
-import org.jboss.netty.channel.group.DefaultChannelGroup
 import scala.Some
+import java.lang.management.ManagementFactory
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -73,6 +71,30 @@ object AkkaMetrics extends AkkaSupport {
   val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
+object SystemMetrics {
+
+  // divide by 1048576 to convert bytes to MB
+
+  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (MB)", "Max heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
+  )
+
+  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (MB)", "Used heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
+  )
+
+  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (MB)", "Max non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
+  )
+
+  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (MB)", "Used non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
+  )
+
+  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric, MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric)
+}
+
+
 abstract class WsMetric(
     val group: String, val name: String, val title: String, val description: String,
     override val master: Option[Metric] = None) extends AbstractMetric[Int] {
@@ -80,35 +102,8 @@ abstract class WsMetric(
   override def asJson: StatusMetric = super.asJson.copy(value = Some(getValue().toString))
 }
 
-case class WsStats(connectionPoolSize: Int, openChannels: Int)
-
-// takes some reflection hackery to get hold of these stats
-object WsStats {
-
-  val connectionPool = getField(WS.client.getProvider, "connectionsPool").asInstanceOf[NettyConnectionsPool]
-
-  def apply(): WsStats = WsStats(
-    connectionPoolSize = getField(connectionPool, "channel2IdleChannel").asInstanceOf[java.util.Map[Any, Any]].size,
-    openChannels = getField(WS.client.getProvider, "openChannels").asInstanceOf[DefaultChannelGroup].size()
-  )
-
-  private def getField(obj: Any, fieldName: String) = {
-    val m = obj.getClass.getDeclaredField(fieldName)
-    m.setAccessible(true)
-    m.get(obj)
-  }
-
-  object ConnectionPoolSizeMetric extends WsMetric("web-service", "connection-pool-size", "Connection pool size", "Connection pool size"){
-    val getValue = () => WsStats().connectionPoolSize
-  }
-  object OpenChannelsSizeMetric extends WsMetric("web-service", "open-channels", "Open channels in WS", "Open channels in WS"){
-    val getValue = () => WsStats().openChannels
-  }
-
-  lazy val all = Seq(ConnectionPoolSizeMetric, OpenChannelsSizeMetric)
-
-}
+case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
 
 object CommonMetrics {
-  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ WsStats.all
+  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
 }

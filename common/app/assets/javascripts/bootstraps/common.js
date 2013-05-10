@@ -15,11 +15,11 @@ define([
     'modules/navigation/search',
     'modules/navigation/control',
     'modules/navigation/australia',
+    'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
-    'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
@@ -41,11 +41,11 @@ define([
     Search,
     NavControl,
     Australia,
+    EditionSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
     Omniture,
-    optimizely,
     Adverts,
     Cookies,
     Video,
@@ -71,6 +71,7 @@ define([
             var search = new Search(config);
             var aus = new Australia(); // TODO temporary till we have single domain editions
 
+            var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
                 var header = bonzo(context.querySelector('header'));
                 if(!header.hasClass('initialised')) {

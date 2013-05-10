@@ -15,6 +15,11 @@ GET    /most-read/*path                                     controllers.MostPopu
 GET    /top-stories                                         controllers.TopStoriesController.render()
 GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
 GET    /related/*path                                       controllers.RelatedController.render(path)
+# more stories for swipe
+GET    /most-viewed/                                        controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed")
+GET    /most-viewed/*path                                   controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed")
+GET    /front-trails/                                       controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails")
+GET    /front-trails/*path                                  controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails")
 
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
@@ -66,8 +71,8 @@ GET     /football/match/:matchId                            controllers.MatchCon
 GET     /_warmup                                            controllers.FrontController.warmup()
 GET     /_up                                                controllers.FrontController.isUp()
 GET     /                                                   controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport>                               controllers.FrontController.render(path)
-GET     /$path<culture|sport>/trails                        controllers.FrontController.renderTrails(path)
+GET     /$path<culture|sport|australia>                     controllers.FrontController.render(path)
+GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /video/ad/:format                                   controllers.VideoAdvertController.fetch(format)

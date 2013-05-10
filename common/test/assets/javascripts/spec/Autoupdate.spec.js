@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, bean, Autoupdate) {
+define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], function(common, ajax, bean, Autoupdate, storage) {
 
     describe("Auto update", function() {
 
@@ -20,7 +20,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, 
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            window.localStorage['gu.prefs.auto-update'] = 'on';
+            storage.set('gu.prefs.auto-update', 'on');
             path = 'fixtures/autoupdate';
             delay = 1000;
             attachTo = document.getElementById('update-area');
@@ -48,10 +48,32 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, 
                 expect(attachTo.innerHTML).toBe('<span>foo</span>');
             });
         });
+        
+        it("should optionally load the load the first update immediately after the module has initialised", function(){
+            
+            var callback1 = sinon.stub();
+            common.mediator.on('modules:autoupdate:loaded', callback1);
+
+            var a = new Autoupdate({
+                    path: path,
+                    delay: 10000,
+                    attachTo: attachTo,
+                    switches: {autoRefresh: true},
+                    loadOnInitialise: true
+                });
+                a.init();
+
+            waits(200); // should be shorter than the 'delay' param
+
+            runs(function(){
+                expect(callback1).toHaveBeenCalled();
+                expect(attachTo.innerHTML).toBe('<span>foo</span>');
+            });
+        });
 
 
         it("should get user prefs from local storage ", function(){
-            window.localStorage['gu.prefs.auto-update'] = 'off';
+            storage.set('gu.prefs.auto-update', 'off');
 
             var a = new Autoupdate({
                     path: path,
@@ -70,7 +92,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, 
             });
         });
 
-        xit("should destroy itself if server sends turn off response", function() {
+        it("should destroy itself if server sends turn off response", function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
@@ -88,7 +110,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate'], function(common, ajax, 
             });
         });
         
-        xit('should not poll if `autoRefresh` switch turned off (default)', function() {
+        it('should not poll if `autoRefresh` switch turned off (default)', function() {
             common.mediator.on('modules:autoupdate:destroyed', callback);
             
             var a = new Autoupdate({

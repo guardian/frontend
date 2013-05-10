@@ -8,7 +8,7 @@ import model._
 import model.Page
 import pa.{ Round, LeagueTableEntry }
 import common.TeamCompetitions
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 case class TablesPage(
     page: Page,
@@ -19,7 +19,7 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-object LeagueTableController extends Controller with Logging with CompetitionTableFilters {
+object LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
   private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { Table(_) }
 

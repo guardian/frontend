@@ -2,14 +2,14 @@ package controllers
 
 import model.{ Trail, Cached, Content }
 import play.api.mvc.{ RequestHeader, Action, Controller }
-import common.{ Site, JsonComponent, Logging, JsonNotFound }
+import common._
 import org.joda.time.format.DateTimeFormat
 import conf.ContentApi
 import feed.Competitions._
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class Report(trail: Trail, name: String)
@@ -23,7 +23,7 @@ case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
   lazy val hasReport = matchReport.isDefined
 }
 
-object MoreOnMatchController extends Controller with Football with Requests with Logging {
+object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
 
@@ -68,7 +68,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
-    ContentApi.search(Site(request).edition)
+    ContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))

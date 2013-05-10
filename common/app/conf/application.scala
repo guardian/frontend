@@ -1,7 +1,8 @@
 package conf
 
-import common.{ StaticAssets, ContentApiClient, GuardianConfiguration }
+import common.{ StaticAssets, GuardianConfiguration }
 import com.gu.management.play.RequestMetrics
+import contentapi.ContentApiClient
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 

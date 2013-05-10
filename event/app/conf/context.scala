@@ -6,6 +6,7 @@ import com.gu.management._
 import com.gu.management.play.{ Management => GuManagement }
 
 import com.gu.management.logback.LogbackLevelPage
+import contentapi.ContentApiMetrics
 
 object Switches {
   val all: Seq[Switchable] = CommonSwitches.all
@@ -26,7 +27,9 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(Nil: _*), // TODO add healthcheck
+    new UrlPagesHealthcheckManagementPage(
+      "/stories"
+    ), 
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

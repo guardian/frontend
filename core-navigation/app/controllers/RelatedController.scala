@@ -4,15 +4,15 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import com.gu.openplatform.contentapi.ApiError
 
 case class Related(heading: String, trails: Seq[Trail])
 
-object RelatedController extends Controller with Logging {
+object RelatedController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
-    val edition = Site(request).edition
+    val edition = Edition(request)
     val promiseOfRelated = lookup(edition, path)
     Async {
       promiseOfRelated.map(_.map {
@@ -22,8 +22,8 @@ object RelatedController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching related content for : $path for edition $edition")
+  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
+    log.info(s"Fetching related content for : $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .tag(None)
       .showRelated(true)

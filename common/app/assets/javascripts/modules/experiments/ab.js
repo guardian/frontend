@@ -1,20 +1,22 @@
 define([
     'common',
-    'modules/userPrefs',
+    'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/relatedContent'
+    'modules/experiments/tests/relatedContent',
+    'modules/experiments/tests/story-front-trail'
 ], function (
     common,
-    userPrefs,
-    RelatedContent) {
+    store,
+    RelatedContent,
+    StoryFrontTrail) {
     
     var TESTS = {
-            RelatedContentV2 : new RelatedContent()
+            StoryFrontTrail: new StoryFrontTrail()
         };
 
-    var testKey = 'ab.current',
-        participationKey = "ab.participation";
+    var testKey = 'gu.ab.current',
+        participationKey = "gu.ab.participation";
 
     //For testing purposes
     function addTest(Test) {
@@ -25,11 +27,11 @@ define([
 
     function storeTest(test, variant) {
         var data = {id: test, variant: variant};
-        userPrefs.set(testKey, JSON.stringify(data));
+        store.set(testKey, data);
     }
 
     function getTest() {
-        return (userPrefs.get(testKey)) ? JSON.parse(userPrefs.get(testKey)) : false;
+        return (store.get(testKey)) ? store.get(testKey) : false;
     }
 
     // Checks if:
@@ -42,7 +44,7 @@ define([
     }
 
     function clearTest() {
-        return userPrefs.remove(testKey);
+        return store.remove(testKey);
     }
 
     function hasParticipated(testName) {
@@ -50,7 +52,12 @@ define([
     }
 
     function getParticipation() {
-        return (userPrefs.get(participationKey)) ? JSON.parse(userPrefs.get(participationKey)).tests : [];
+        var tests = (store.get(participationKey)) ? store.get(participationKey).tests : [];
+        // handle previous bug when tests was set to length
+        if (typeof tests === "number") {
+            tests = [];
+        }
+        return tests;
     }
 
     function setParticipation(testName) {
@@ -58,7 +65,8 @@ define([
         if(getParticipation().length > 0) {
             var tests = getParticipation();
             if(!hasParticipated(testName)) {
-                data = {"tests": tests.push(testName) };
+                tests.push(testName);
+                data = {"tests": tests };
             } else {
                 data = {"tests": tests };
             }
@@ -66,7 +74,7 @@ define([
             data = {"tests":[testName]};
         }
 
-        userPrefs.set(participationKey, JSON.stringify(data));
+        store.set(participationKey, data);
     }
 
     //Finds variant in specific tests and exec's
@@ -109,6 +117,9 @@ define([
         var switches = config.switches,
             isInTest = inTest(switches);
 
+        // Clear up legacy storage names. This can be deleted "in the future".
+        store.clearByPrefix('gu.prefs.ab');
+
         //Is the user in an active test?
         if(isInTest) {
             var currentTest = getTest();
@@ -128,7 +139,7 @@ define([
                var test =  TESTS[testName];
 
                //Can the test run on this page and user not already participated
-               if(test.canRun(config) && !hasParticipated(test.id)) {
+               if(test.canRun(config) && !hasParticipated(test.id) && switches["ab" + test.id]) {
                    //Start
                    start(test);
                }

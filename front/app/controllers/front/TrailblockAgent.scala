@@ -7,7 +7,7 @@ import model.Trailblock
 import scala.Some
 import model.TrailblockDescription
 import common._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 import concurrent.Future
 
@@ -15,7 +15,7 @@ import concurrent.Future
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class TrailblockAgent(val description: TrailblockDescription, val edition: String) extends AkkaSupport with Logging {
+class TrailblockAgent(val description: TrailblockDescription, val edition: Edition) extends AkkaSupport with Logging {
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
@@ -61,6 +61,6 @@ class TrailblockAgent(val description: TrailblockDescription, val edition: Strin
 }
 
 object TrailblockAgent {
-  def apply(description: TrailblockDescription, edition: String): TrailblockAgent =
+  def apply(description: TrailblockDescription, edition: Edition): TrailblockAgent =
     new TrailblockAgent(description, edition)
 }

@@ -39,7 +39,8 @@ define([
                         path: window.location.pathname,
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
-                        switches: config.switches
+                        switches: config.switches,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });
@@ -66,7 +67,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('article', config);
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading();

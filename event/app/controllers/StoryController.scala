@@ -3,7 +3,7 @@ package controllers
 import common._
 import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class StoriesPage(stories: Seq[Story]) extends Page(
@@ -14,7 +14,7 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
-case class StoryPage(story: Story, edition: String) extends Page(
+case class StoryPage(story: Story) extends Page(
   canonicalUrl = None,
   s"stories/${story.id}",
   "news", story.title,
@@ -22,7 +22,7 @@ case class StoryPage(story: Story, edition: String) extends Page(
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
-object StoryController extends Controller with Logging {
+object StoryController extends Controller with Logging with ExecutionContexts {
 
   def latest() = Action { implicit request =>
     val promiseOfStories = Future(Story.mongo.latest())
@@ -50,13 +50,12 @@ object StoryController extends Controller with Logging {
   }
 
   def latestWithContent() = Action { implicit request =>
-    val edition = Site(request).edition
-    val promiseOfStories = Future(Story.mongo.latestWithContent())
+    val promiseOfStories = Future(Story.mongo.latestWithContent(request.getQueryString("storyId")))
 
     Async {
       promiseOfStories.map { stories =>
         if (stories.nonEmpty) {
-          Cached(60) {
+          Cached(300) {
             val html = views.html.fragments.latestWithContent(stories)
             JsonComponent(html)
           }
@@ -69,7 +68,7 @@ object StoryController extends Controller with Logging {
 
   def byId(id: String) = Action {
     implicit request =>
-      val edition = Site(request).edition
+      val edition = Edition(request)
       val promiseOfStory = Future(Story.mongo.byId(id))
       val version = conf.CommonSwitches.StoryVersionBSwitch.isSwitchedOn
 
@@ -78,8 +77,8 @@ object StoryController extends Controller with Logging {
           storyOption.map { story =>
             Cached(60) {
               val html = version match {
-                case false  => views.html.story(StoryPage(story, edition))
-                case true   => views.html.storyVersionB(StoryPage(story, edition))
+                case false  => views.html.story(StoryPage(story))
+                case true   => views.html.storyVersionB(StoryPage(story))
               }
               Ok(Compressed(html))
             }
@@ -90,7 +89,6 @@ object StoryController extends Controller with Logging {
 
   def headerAndBlock(id: String) = Action {
     implicit request =>
-      val edition = Site(request).edition
       val promiseOfStory = Future(Story.mongo.withContent(id))
 
       Async {
@@ -101,7 +99,7 @@ object StoryController extends Controller with Logging {
             Cached(60) {
               JsonComponent(
                 "title" -> views.html.fragments.storyArticleHeader(story),
-                "block" -> views.html.fragments.storyArticleBlock(story, edition)
+                "block" -> views.html.fragments.storyArticleBlock(story)
               )
             }
 
