@@ -1,7 +1,5 @@
 define(['common', 'modules/userPrefs'], function(common, userPrefs) {
 
-    var userPrefKeyPrefix = 'gu.prefs';
-
     describe("userPrefs - Client-side preferences", function() {
    
         beforeEach(function() {
@@ -23,9 +21,15 @@ define(['common', 'modules/userPrefs'], function(common, userPrefs) {
         })
 
         it("should allow setting of preferences via the address bar", function() {
-          
+         
+            var prefix = 'gu.prefs.',
+                hash = { a: 1, b: false, c: 'str', switchOn: 'd', switchOff: 'e' },
+                hashAsAnchor = Object.keys(hash).map(function(h){
+                    return prefix + h + '=' + hash[h]
+                }).join("&");
+
             // string tests setting of prefs, switches of int, string, booleans
-            var qs = { hash: '#gu.prefs.a=1&gu.prefs.b=false&gu.prefs.c=str&gu.prefs.switchOn=d&gu.prefs.switchOff=e' };
+            var qs = { hash: '#' + hashAsAnchor };
             
             userPrefs.setPrefs(qs);
             
