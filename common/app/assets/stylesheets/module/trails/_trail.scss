@@ -4,16 +4,22 @@
 .trail {
     overflow: hidden;
     margin: 0;
-    border-bottom: 1px solid #676767;
-    padding: 0 0 (24/16)+em 0;
+    border-bottom: 1px solid #B3B3B4;
+    padding: 0 0 24px 0;
 }
 
   .trail:last-child {
       border-bottom: none;
   }
 
+  .trail:first-child:last-child {
+    padding: 0 0 0 0;
+  }
+
 .trail__headline {
   @extend %type-2;
+  font-size: 19px;
+  line-height: 23px;
   color: #000;
 }
 

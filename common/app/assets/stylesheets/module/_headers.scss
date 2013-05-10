@@ -11,6 +11,19 @@
 .front-section-head {
     background-color: $neutral2;
 }
+
+.front-section-head i {
+  @include rotate(180deg);
+}
+
+.front-section-head.is-shut i {
+  @include rotate(0deg);
+}
+
+.front-section-head.is-shut {
+  margin-bottom: 12px;
+}
+
 .sub-section-head {
     border-top: $baseline solid $mushroom;
 }

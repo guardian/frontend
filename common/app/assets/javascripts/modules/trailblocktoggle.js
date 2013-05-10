@@ -59,6 +59,7 @@ define([
 
                 trailblock = context.querySelector(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
+                bonzo(trigger[0].parentNode).toggleClass(classesToToggle);
                 bonzo(trigger[0].querySelector('.cta__icn')).toggleClass('is-open');
 
                 var labelNode = bonzo(trigger[0].querySelector('.cta__label'));

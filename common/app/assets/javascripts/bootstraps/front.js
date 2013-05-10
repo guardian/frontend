@@ -77,7 +77,7 @@ define([
                         height = node.offset().height,
                         padding = (height < 60) ? 72-height : 120-height; // Yes, ugly!
 
-                    node.css('height', height+padding+'px');
+                    node.css('min-height', height+padding+'px');
                 });
             });
         }
