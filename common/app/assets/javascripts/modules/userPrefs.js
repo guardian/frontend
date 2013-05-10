@@ -1,9 +1,7 @@
 define(['modules/storage'], function(storage) {
 
     var storagePrefix = 'gu.prefs.',
-        store = storage,
-        location = document.location,
-        qs = (location.search.substr(1) + '&' + location.hash.substr(1)).split('&');
+        store = storage;
 
     function set(name, value) {
         store.set(storagePrefix + name, value);
@@ -36,26 +34,40 @@ define(['modules/storage'], function(storage) {
     function isOff(name) {
         return store.get(storagePrefix + "switch." + name) === false;
     }
+   
+    function isNumeric(str){
+        return !isNaN(str);
+    }
+    
+    function isBoolean(str){
+        return (str === "true" || str === "false");
+    }
 
-    function setPrefs(qs) {
+    function setPrefs(loc) {
+        var qs = loc.hash.substr(1).split('&');
         for (var i = 0, j = qs.length; i<j; ++i) {
             var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
             if (m) {
-                switch (m[1]) {
+                var key = m[1],
+                    val = m[2];
+                switch (key) {
                     case "switchOn":
-                        switchOn(m[2]);
+                        switchOn(val);
                         break;
                     case "switchOff":
-                        switchOff(m[2]);
+                        switchOff(val);
                         break;
                     default:
-                        set(m[1], m[2]);
+                        // 1. +val casts any number (int, float) to a string
+                        // 2. String(val) === "true" converts a string to bool
+                        var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === "true") : val);
+                        set(key, v);
                 }
             }
         }
     }
    
-    setPrefs(qs)
+    setPrefs(window.location);
 
     return {
         set: set,
@@ -65,6 +77,7 @@ define(['modules/storage'], function(storage) {
         switchOff: switchOff,
         removeSwitch: removeSwitch,
         isOn: isOn,
-        isOff: isOff
+        isOff: isOff,
+        setPrefs: setPrefs
     };
 });

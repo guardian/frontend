@@ -21,8 +21,19 @@ define(['common', 'modules/userPrefs'], function(common, userPrefs) {
             userPrefs.remove('key');
             expect(userPrefs.get('key')).toBeNull()
         })
-        
-        xit("should allow setting of preferences via the querystring", function() {
+
+        it("should allow setting of preferences via the address bar", function() {
+          
+            // string tests setting of prefs, switches of int, string, booleans
+            var qs = { hash: '#gu.prefs.a=1&gu.prefs.b=false&gu.prefs.c=str&gu.prefs.switchOn=d&gu.prefs.switchOff=e' };
+            
+            userPrefs.setPrefs(qs);
+            
+            expect(userPrefs.get('a')).toBe(1) // int
+            expect(userPrefs.get('b')).toBe(false) // bool
+            expect(userPrefs.get('c')).toBe("str") // string
+            expect(userPrefs.isOn('d')).toBeTruthy()
+            expect(userPrefs.isOff('e')).toBeTruthy()
         })
         
     });
@@ -50,12 +61,6 @@ define(['common', 'modules/userPrefs'], function(common, userPrefs) {
             userPrefs.removeSwitch('s');
             expect(userPrefs.get('s')).toBeNull()
         })
-        
-        xit("should stub localStorage so that code can not remove localStorage date (accidentally)", function(){})
-        xit("", function(){})
-        xit("", function(){})
-        xit("", function(){})
-
 
     })
 
