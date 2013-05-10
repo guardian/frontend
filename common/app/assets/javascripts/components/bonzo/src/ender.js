@@ -74,6 +74,10 @@
       return $(b(this).previous())
     }
 
+  , related: function (t) {
+      return $(b(this).related(t))
+    }
+
   , appendTo: function (t) {
       return b(this.selector).appendTo(t, this)
     }
@@ -88,6 +92,10 @@
 
   , insertBefore: function (t) {
       return b(this.selector).insertBefore(t, this)
+    }
+
+  , clone: function () {
+      return $(b(this).clone(this))
     }
 
   , siblings: function () {
