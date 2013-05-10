@@ -65,8 +65,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                     href = el.getAttribute('href');
                     spec.samePage = href && href.indexOf('#') === 0
                         || elName === 'button'
-                        || el.getAttribute('data-is-ajax')
-                        || ' '+el.className+' '.indexOf(' control ') > -1;
+                        || el.getAttribute('data-is-ajax') !== null;
 
                     spec.sameHost = spec.samePage || compareHosts(href);
                 }
