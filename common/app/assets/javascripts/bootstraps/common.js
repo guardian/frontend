@@ -190,7 +190,7 @@ define([
         },
 
         initSwipe: function(config) {
-            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.hasPushStateSupport()) {
+            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.canSwipe()) {
                 modules.getSwipeSequence(function(sequence){
                     modules.startSwipe(sequence, config);
                 });
