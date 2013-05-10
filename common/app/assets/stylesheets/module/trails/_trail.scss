@@ -41,6 +41,10 @@
   }
 }
 
+.trail__img {
+  width: 100%;
+}
+
 /* ==========================================================================
    Trail modifiers
    ========================================================================== */
@@ -61,7 +65,6 @@
   }
 
   .trail__img {
-    width: 100%;
     vertical-align: bottom;
     margin-bottom: 12px;
   }
@@ -70,7 +73,10 @@
 /* Thumbnail
  ========================================================================== */
 .trail--thumbnail {
-  .media__img { margin-right: 0px; }
+  .media__img {
+    padding-right: 14px;
+    margin-right: 0px;
+  }
 }
 
 /* Misc

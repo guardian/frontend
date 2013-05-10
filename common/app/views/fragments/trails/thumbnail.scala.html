@@ -14,7 +14,7 @@
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
                 <a href="@trail.url" class="media__img grid-box-2" data-link-name="@rowNum | image">
-                    <img class="trail__image" src="@thumbnailPath"
+                    <img class="trail__img" src="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
                             data-fullsrc="@largeCrop.path"

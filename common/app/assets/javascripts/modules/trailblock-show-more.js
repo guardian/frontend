@@ -71,14 +71,14 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
             // Remove the class, so we can't do multiple inits
             trailblocks.each(function(trailblock){
-                bonzo(trailblock).removeClass('js-show-more');
+                bonzo(trailblock).removeClass(className);
             });
 
             // append the cta
             trailblocks.each(this.view.appendCta);
 
             // event delegation for clicking of cta
-            bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.cta', function(e) {
+            bean.on(context.querySelector('.front-container'), 'click', '.trailblock .cta', function(e) {
                 var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
                     section = getSection($cta);
