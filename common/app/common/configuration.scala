@@ -80,9 +80,7 @@ class GuardianConfiguration(
   }
 
   object static {
-    lazy val path = configuration.getStringProperty("static.path").getOrElse {
-      throw new IllegalStateException("Static path not configured")
-    }
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
   }
 
   object images {
