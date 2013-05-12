@@ -1,6 +1,6 @@
 package common
 
-import akka.dispatch.{ MessageDispatcher, Dispatcher }
+import akka.dispatch.Dispatcher
 import com.gu.management._
 import conf.RequestMeasurementMetrics
 import scala.Some
@@ -32,7 +32,7 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
 
 object AkkaMetrics extends AkkaSupport {
 
-  class DispatcherInhabitantsMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
+  class DispatcherInhabitantsMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
     "akka",
     "akka_%s_inhabitants" format name,
     "%s inhabitants" format name,
@@ -40,7 +40,7 @@ object AkkaMetrics extends AkkaSupport {
     () => dispatcher.inhabitants
   )
 
-  class DispatcherMailBoxTypeMetric(name: String, dispatcher: MessageDispatcher) extends TextMetric(
+  class DispatcherMailBoxTypeMetric(name: String, dispatcher: Dispatcher) extends TextMetric(
     "akka",
     "akka_%s_mailbox_type" format name,
     "%s mailbox type" format name,
@@ -51,22 +51,21 @@ object AkkaMetrics extends AkkaSupport {
     }
   )
 
-  class DispatcherMaximumThroughputMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
+  class DispatcherMaximumThroughputMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
     "akka",
     "akka_%s_maximum_throughput" format name,
     "%s maximum throughput" format name,
     "Akka %s maximum throughput" format name,
-    () => dispatcher match {
-      case downcast: Dispatcher => downcast.throughput
-      case _ => 0
-    }
+    () => dispatcher.throughput
   )
 
   object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => play_akka.uptime())
 
-  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", play_akka.dispatcher.default)
-  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", play_akka.dispatcher.default)
-  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", play_akka.dispatcher.default)
+  val dispatcher = executionContext.asInstanceOf[Dispatcher]
+
+  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", dispatcher)
+  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", dispatcher)
+  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", dispatcher)
 
   val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }

@@ -40,7 +40,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .tag(supportedTypes)
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with ApacheHttp
+class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
     with Logging {
 
   import Configuration.contentApi
