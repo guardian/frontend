@@ -1,15 +1,12 @@
 package controllers.front
 
 import model._
-import conf.ContentApi
-import com.gu.openplatform.contentapi.model.ItemResponse
 import model.Trailblock
 import scala.Some
 import model.TrailblockDescription
 import common._
 
 import scala.concurrent.duration._
-import concurrent.Future
 
 
 /*

@@ -7,8 +7,7 @@ import conf.ContentApi
 import ContentApi.ItemQuery
 import scala.concurrent.Future
 import conf.ContentApi
-import common.Edition
-import play.api.libs.concurrent.Execution.Implicits._
+import common.{ExecutionContexts, Edition}
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -38,7 +37,7 @@ trait Trail extends Images with Tags {
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
 
-trait TrailblockDescription {
+trait TrailblockDescription extends ExecutionContexts {
   val id: String
   val name: String
   val numItemsVisible: Int
