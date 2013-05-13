@@ -3,8 +3,6 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     var Control = function () {
 
         var self = this,
-            delay = 400,
-            lastClickTime = 0,
             contexts = {};
 
         this.init = function(context) {
@@ -20,20 +18,19 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
                     if(popup){
                         control.popup = popup;
-                        toggler = common.rateLimit(function() {
+                        bean.add(control, 'click touchstart', function (e) {
+                            e.preventDefault();
                             self.toggle(control, controls);
                             common.mediator.emit('modules:control:change');
-                        });
-                        bean.add(control, 'click touchstart', function (e) {
-                            toggler();
-                            e.preventDefault();
                         });
                     }
                 });
             }
 
             for (var c in contexts) {
-                Array.prototype.forEach.call(contexts[c], self.close);
+                if (c !== id) {
+                    Array.prototype.forEach.call(contexts[c], self.close);
+                }
             }
         };
     };
