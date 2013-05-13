@@ -127,7 +127,7 @@ define([
 
                 omniture.go(config, function(){
                     // Omniture callback logic:
-                    common.$g('video').each(function(video) {
+                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
                             bonzo(video).addClass('tracking-applied');
                             var v = new OmnitureMedia({
