@@ -63,6 +63,9 @@ define([
             }
         });
 
+        // Prevent different size ads from making the video jump around
+        this.video.style.height = this.video.offsetHeight+'px';
+
         bean.fire(this.video, "play:advert");
         this.video.src = data.file;
         this.video.play();
