@@ -60,23 +60,12 @@ define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
             });
         };
 
-        this.clearWithPrefix = function(prefix) {
-            // Loop in reverse because storage indexes will change as you delete items.
-            for (var i = storage.length() - 1; i > -1; --i) {
-                var name = storage.getKey(i);
-                if (name.indexOf(prefix) === 0) {
-                    storage.remove(name);
-                }
-            }
-        };
-
         this.clearFont = function(name) {
-            this.clearWithPrefix(storagePrefix + name);
-            this.clearWithPrefix('_guFont:'); // Remove legacy non-cache-busted font.
+            storage.clearByPrefix(storagePrefix + name);
         };
         
         this.clearAllFontsFromStorage = function() {
-            this.clearWithPrefix(storagePrefix);
+            storage.clearByPrefix(storagePrefix);
         };
 
         function getNameAndCacheKey(style) {

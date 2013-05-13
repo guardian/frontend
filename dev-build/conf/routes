@@ -15,6 +15,11 @@ GET    /most-read/*path                                     controllers.MostPopu
 GET    /top-stories                                         controllers.TopStoriesController.render()
 GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
 GET    /related/*path                                       controllers.RelatedController.render(path)
+# more stories for swipe
+GET    /most-viewed                                         controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed")
+GET    /most-viewed/*path                                   controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed")
+GET    /front-trails                                        controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails")
+GET    /front-trails/*path                                  controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails")
 
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
