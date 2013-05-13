@@ -11,7 +11,7 @@ import common.Edition
  */
 class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescription]) {
 
-  val manualAgents = descriptions.map(TrailblockAgent(_, edition))
+  val manualAgents = descriptions.map(TrailblockAgent(_))
 
   def apply(): Seq[Trailblock] = dedupe(manualAgents.flatMap(_.trailblock))
 

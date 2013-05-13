@@ -22,7 +22,6 @@ class Front extends AkkaSupport with Logging {
     }.toMap
   }.toMap
 
-
   private def allFronts = fronts.values.flatMap(_.values)
 
   def refresh() {
