@@ -17,6 +17,7 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
+    'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
@@ -46,6 +47,7 @@ define([
     Sections,
     Search,
     NavControl,
+    Australia,
     EditionSwitch,
     Tabs,
     RelativeDates,
@@ -75,6 +77,8 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
+            var aus = new Australia(); // TODO temporary till we have single domain editions
+
             var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
                 navControl.init(context);

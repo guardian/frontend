@@ -93,7 +93,7 @@ object CommonSwitches {
   val ABStoryFrontTrail = DefaultSwitch("ab-story-front-trail",
     "If this switch is on story front trail AB test will be enabled.",
     initiallyOn = false)
-  
+
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
