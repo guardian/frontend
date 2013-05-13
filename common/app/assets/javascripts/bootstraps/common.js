@@ -198,8 +198,9 @@ define([
         },
 
         getSwipeSequence: function(callback) {
+            var path = window.location.pathname;
             ajax({
-                url: '/front-trails' + window.location.pathname,
+                url: '/front-trails' + (path === '/' ? '' : path),
                 type: 'jsonp',
                 success: function (json) {
                     if (json.stories && json.stories.length >= 3) {
