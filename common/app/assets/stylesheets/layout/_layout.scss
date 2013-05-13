@@ -2,11 +2,11 @@
    Global wrapper
    ========================================================================== */
 
-#container {
+#preloads {
   position: relative;
   clear: both;
-  max-width: 80em;
-  max-width: 125rem;
+  max-width: 64em;
+  max-width: 102.4rem;
   margin: 0 auto;
 }
 
@@ -60,10 +60,6 @@
 /* ==========================================================================
    Preloads (for swipe)
    ========================================================================== */
-
-#preloads {
-    position: relative;
-}
 
 #preloads-inner {
     position: relative;
