@@ -55,7 +55,7 @@ trait ApacheHttp extends Http[Future] with ExecutionContexts with Logging {
             HttpTimeoutCountMetric.increment()
             promise.success(HttpResponse("", 504, "Timeout"))
 
-          // TODO
+          // just hide the error - we have already logged it
           case other => promise.success(HttpResponse("", 500, "Some upstream error"))
         }
       }
