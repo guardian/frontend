@@ -4,7 +4,6 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.JsObject
 
 case class VideoPage(video: Video, storyPackage: List[Trail], advert: Option[JsObject])
