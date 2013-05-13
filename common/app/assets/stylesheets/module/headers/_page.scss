@@ -1,0 +1,40 @@
+/* ==========================================================================
+    Page head
+   ========================================================================== */
+.page-head {
+  @extend %type-0;
+  padding: 14px 0 15px 0;
+  margin: 0 $gutter;
+  line-height: 1em;
+  border-top: 4px solid $mushroom;
+  border-bottom: 1px solid $mushroom;
+  @include box-sizing(border-box);
+}
+
+.page-head.zone-color {
+  @media only screen and (min-width: $tablet) { border-top: none; }
+}
+
+/* ==========================================================================
+   Section head modifiers
+   ========================================================================== */
+
+/* Article
+ ========================================================================== */
+.page-head--article {
+  @include box-sizing(border-box);
+  padding: 13px 0 14px 0;
+  margin: 0 $gutter;
+  line-height: 1em;
+  border-top: 4px solid $mushroom;
+  border-bottom: 1px solid $mushroom;
+
+  @media only screen and (min-width: $tablet) { border-top: none; }
+}
+
+/* Static
+ ========================================================================== */
+.page-head--static {
+  @extend %type-4;
+  padding: 0 $gutter $baseline*2 $gutter;
+}

@@ -1,0 +1,56 @@
+/* ==========================================================================
+    Section head
+   ========================================================================== */
+.section-head,
+.section-head {
+  position: relative;
+  overflow: hidden;
+  height: 36px;
+  margin: 0 $gutter;
+}
+
+.section-head__title {
+  @include font($serifheadline, 600, 20, 20);
+  margin-bottom: 0px;
+  float: left;
+}
+
+.section-head__link {
+  display: block;
+  padding: 2px;
+}
+
+/* ==========================================================================
+   Section head modifiers
+   ========================================================================== */
+
+/* Front
+ ========================================================================== */
+.section-head--front {
+  background-color: $neutral2;
+}
+
+.section-head--front .section-head__link,
+.section-head--front .section-head__link:link,
+.section-head--front .section-head__link:visited {
+  color: #ffffff;
+}
+
+.section-head--front i {
+  @include rotate(180deg);
+}
+
+.section-head--front.is-shut i {
+  @include rotate(0deg);
+}
+
+.section-head--front.is-shut {
+  margin-bottom: 12px;
+}
+
+/* Sub
+ ========================================================================== */
+
+.section-head--sub {
+  border-top: 5px solid #333333;
+}
