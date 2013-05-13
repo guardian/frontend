@@ -53,7 +53,7 @@ public class FootballSteps {
 	
 	@When("^I click the competition filter expander$")
 	public void I_click_the_competition_filter_expander() throws Throwable {
-	    webDriver.findElement(By.cssSelector("h1 i")).click();
+	    webDriver.jsClick(webDriver.findElement(By.cssSelector("h1 i")));
 	}
 
 	@Then("^the competition filter list opens$")
@@ -69,7 +69,7 @@ public class FootballSteps {
 	
 	@When("^I click \"(.+)\"$")
 	public void I_click(String linkText) throws Throwable {
-		webDriver.findElement(By.linkText(linkText)).click();
+		webDriver.jsClick(webDriver.findElement(By.linkText(linkText)));
 	}
 
 	@Then("^(\\d+) days worth of (results|fixtures) should load in$")
@@ -104,7 +104,7 @@ public class FootballSteps {
 		WebElement autoUpdate = webDriver.findElement(By.className("update"));
 		// get the off button
 		WebElement offButton = autoUpdate.findElement(By.cssSelector("button[data-action='off']"));
-		offButton.click();
+		webDriver.jsClick(offButton);
 	}
 
 	@Then("^auto-update should be off$")

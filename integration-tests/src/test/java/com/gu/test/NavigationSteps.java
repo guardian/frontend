@@ -23,7 +23,7 @@ public class NavigationSteps {
     	//adding a wait for the element to appear
     	webDriver.waitForElement(By.className(tabClass));
     	// click the tab
-    	webDriver.findElement(By.className(tabClass)).click();
+    	webDriver.jsClick(webDriver.findElement(By.className(tabClass)));
     }
 
     @Then("^I'm shown the top (\\d+) stories from the Guardian site$")
@@ -61,7 +61,7 @@ public class NavigationSteps {
     @When("^I click on a top story$")
     public void I_click_on_a_top_story_link() throws Throwable {
     	// get the first top story
-    	webDriver.findElement(By.cssSelector(".nav-popup-topstories li a")).click();
+    	webDriver.jsClick(webDriver.findElement(By.cssSelector(".nav-popup-topstories li a")));
     }
     
     @Then("^the top story link should have a (.*) of (.*)$")
