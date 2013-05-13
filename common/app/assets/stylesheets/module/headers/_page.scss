@@ -1,40 +1,34 @@
 /* ==========================================================================
     Page head
    ========================================================================== */
+
 .page-head {
-  @extend %type-0;
-  padding: 14px 0 15px 0;
+  @extend %type-2;
+  height: 36px;
+  padding: 6px 0 0 0;
   margin: 0 $gutter;
   line-height: 1em;
-  border-top: 4px solid $mushroom;
-  border-bottom: 1px solid $mushroom;
+  color: $linkBlue;
+  border-bottom: 1px dotted $neutral3;
   @include box-sizing(border-box);
 }
 
-.page-head.zone-color {
-  @media only screen and (min-width: $tablet) { border-top: none; }
-}
-
 /* ==========================================================================
-   Section head modifiers
+   Page head modifiers
    ========================================================================== */
+
 
 /* Article
  ========================================================================== */
 .page-head--article {
-  @include box-sizing(border-box);
-  padding: 13px 0 14px 0;
-  margin: 0 $gutter;
-  line-height: 1em;
-  border-top: 4px solid $mushroom;
-  border-bottom: 1px solid $mushroom;
-
-  @media only screen and (min-width: $tablet) { border-top: none; }
+  @extend %type-4
 }
 
-/* Static
+/* Sub heading
  ========================================================================== */
-.page-head--static {
-  @extend %type-4;
-  padding: 0 $gutter $baseline*2 $gutter;
+.page-head--sub {
+  border-bottom: none;
+  padding-top: 2px;
+  border-top: 5px solid $neutral2;
+  color: #000;
 }
