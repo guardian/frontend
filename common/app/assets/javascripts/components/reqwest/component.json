@@ -1,6 +1,6 @@
 {
   "name": "reqwest",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/ded/reqwest.git"

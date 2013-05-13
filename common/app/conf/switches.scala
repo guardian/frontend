@@ -97,14 +97,39 @@ object CommonSwitches {
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
-
+  
+  val SwipeNav = DefaultSwitch("swipe-nav",
+    "If this switch is on then swipe navigation is enabled",
+    initiallyOn = false)
+  
+  val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
+    "If this switch is also on then swipe navigation on clicks is enabled",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
-    FontSwitch, FontDelaySwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABStoryFrontTrail,
-    AustraliaFrontSwitch
+    AutoRefreshSwitch,
+    FontDelaySwitch,
+    FontSwitch,
+    AudienceScienceSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    NetworkFrontAppealSwitch,
+    WitnessVideoSwitch,
+    ExperimentStoryModule01Switch,
+    StoryVersionBSwitch,
+    StoryFrontTrails,
+    SocialSwitch,
+    SearchSwitch,
+    QuantcastSwitch,
+    HomescreenSwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    ABRelatedContentV2,
+    AustraliaFrontSwitch,
+    ABStoryFrontTrail,
+    ImageServerSwitch,
+    SwipeNav,
+    SwipeNavOnClick
   )
 }
 

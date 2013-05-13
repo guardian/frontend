@@ -29,43 +29,51 @@ function (
     
     var currConfig,
         currContext,
-        adsSwitchedOn,
-        slots;
+        slots,
+        contexts = {};
 
     function init(config, context) {
+        var id = context.id;
+
+        if(id){
+            contexts[id] = context;
+        }
+
         currConfig  = config;
         currContext = context;
         slots = [];
 
         var size = (window.innerWidth > 810) ? 'median' : 'base';
 
-        adsSwitchedOn = !userPrefs.isOff('adverts');
-
         // Run through slots and create documentWrite for each.
         // Other ad types such as iframes and custom can be plugged in here later
-        if (adsSwitchedOn) {
 
-            generateMiddleSlot(currConfig);
-            
-            Array.prototype.forEach.call(currContext.querySelectorAll('.ad-slot'), function(as) {
-                var name = as.getAttribute('data-' + size),
-                    container = as.querySelector('.ad-container'),
-                    slot = new DocumentWriteSlot(name, container);
-                
-                container.innerHTML = '';
-
-                slot.setDimensions(dimensionMap[name]);
-                slots.push(slot);
-            });
-            
-            if (currConfig.switches.audienceScience) {
-                audienceScience.load(currConfig.page);
-            }
-
-            if (currConfig.switches.quantcast) {
-                quantcast.load();
-            }
+        generateMiddleSlot(currConfig);
         
+        for (var c in contexts) {
+            var els = contexts[c].querySelectorAll('.ad-slot');
+            for(var i = 0, l = els.length; i < l; i += 1) {
+                var container = els[i].querySelector('.ad-container'),
+                    name,
+                    slot;
+                // Empty all ads in the dom
+                container.innerHTML = '';
+                // Load the currContext ads only
+                if (contexts[c] === currContext ) {
+                    name = els[i].getAttribute('data-' + size),
+                    slot = new DocumentWriteSlot(name, container);
+                    slot.setDimensions(dimensionMap[name]);
+                    slots.push(slot);
+                }
+            }
+        }
+        
+        if (currConfig.switches.audienceScience) {
+            audienceScience.load(currConfig.page);
+        }
+
+        if (currConfig.switches.quantcast) {
+            quantcast.load();
         }
 
         //Make the request to ad server
@@ -77,13 +85,12 @@ function (
 
     function loadAds() {
         domwrite.capture();
-        if (adsSwitchedOn) {
-            //Run through adslots and check if they are on screen. Load if so.
-            for (var i = 0, j = slots.length; i<j; ++i) {
-                //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
-                if (!slots[i].loaded) {
-                    slots[i].render();
-                }
+
+        //Run through adslots and check if they are on screen. Load if so.
+        for (var i = 0, j = slots.length; i<j; ++i) {
+            //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
+            if (!slots[i].loaded) {
+                slots[i].render();
             }
         }
 
