@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,6 +23,8 @@ public class SharedDriver extends EventFiringWebDriver {
 	
 	protected static String HOST;
 
+	protected static String USERPREFS;
+
 	private static WebDriver REAL_DRIVER;
 
 	private static final Thread CLOSE_THREAD = new Thread() {
@@ -37,6 +40,8 @@ public class SharedDriver extends EventFiringWebDriver {
 		HOST = (System.getProperty("host") != null && !System.getProperty("host").isEmpty())
 			? System.getProperty("host") : "http://localhost:9000";
 		
+		USERPREFS = "#gu.prefs.switchOff=swipe-nav";
+
 		// create driver
 		REAL_DRIVER = DriverFactory.createDriver(System.getProperty("driver", "firefox"), System.getProperty("http_proxy", ""));
 
@@ -65,7 +70,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	}
 
 	public void open(String url) {
-		get(HOST + url);
+		get(HOST + url + USERPREFS);
 	}
 
 	public boolean isTextPresentByElement(By elementname, String textToSearch) {
@@ -174,4 +179,14 @@ public class SharedDriver extends EventFiringWebDriver {
 
 		return connection.getResponseCode();
 	}
+
+	/**
+	 * Fire a Javascript click on an element
+	 * 
+	 * @param element
+	 */
+	public void jsClick(WebElement element) {
+		((JavascriptExecutor)this).executeScript("arguments[0].click();", element); 
+	}
+
 }

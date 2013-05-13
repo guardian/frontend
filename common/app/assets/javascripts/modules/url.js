@@ -1,5 +1,7 @@
 define(['modules/detect', 'common'], function(detect, common){
     
+    var supportsPushState = detect.hasPushStateSupport();
+
     var model = {
 
         // returns a map of querystrings
@@ -27,7 +29,6 @@ define(['modules/detect', 'common'], function(detect, common){
         // and optionally takes a "state" and "title" property too
         pushQueryString: function (params) {
             if (!params.querystring) { return; }
-            var supportsPushState = detect.hasPushStateSupport();
             if (supportsPushState) {
                 if (model.getCurrentQueryString() !== params.querystring) {
                     history.pushState(
@@ -37,8 +38,13 @@ define(['modules/detect', 'common'], function(detect, common){
                     );
                 }
             }
-        }
+        },
 
+        pushUrl: function (state, title, url, replace) {
+            if (supportsPushState) {
+                window.history[replace? 'replaceState' : 'pushState'](state, title, url);
+            }
+        }
     };
 
     // pubsub
@@ -46,7 +52,8 @@ define(['modules/detect', 'common'], function(detect, common){
 
     // not exposing all the methods here
     return {
-        getUrlVars: model.getUrlVars
+        getUrlVars: model.getUrlVars,
+        pushUrl: model.pushUrl
     };
 
 });

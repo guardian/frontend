@@ -42,7 +42,7 @@ define([
                     trailblock;
 
                 if (manualTrigger) {
-                    trigger = context.querySelector('.js-trigger-' + manualTrigger);
+                    trigger = context.querySelector('.js-trigger-' + manualTrigger.replace(/[^a-z0-9\-]+/, ''));
                     if(bonzo(trigger).hasClass('userpref-applied')) {
                         return;
                     } else {
