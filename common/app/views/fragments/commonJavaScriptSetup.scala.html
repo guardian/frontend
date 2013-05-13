@@ -75,11 +75,11 @@
             @if(FontDelaySwitch.isSwitchedOn) {
                 // If fonts not cached add user to the test.
                 if (fontsAlreadyCached === false) {
-                    if (Math.random() < 0.1) {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallback | nofallback');
+                    if (Math.random() < 0.5) {
+                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallbackAllUsers | nofallback');
                         removeFallbackFont();
                     } else {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallback | control');
+                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallbackAllUsers | control');
                     }
                 }
             } else {
