@@ -9,7 +9,7 @@ import play.api.libs.json.JsObject
 
 case class VideoPage(video: Video, storyPackage: List[Trail], advert: Option[JsObject])
 
-object VideoController extends Controller with Logging {
+object VideoController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfVideo = lookup(path)
@@ -43,5 +43,5 @@ object VideoController extends Controller with Logging {
     val jsonResponse = views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
-    
+
 }

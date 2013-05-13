@@ -3,7 +3,7 @@ package controllers
 import common._
 import play.api.mvc.{ Action, Controller }
 import model._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class StoriesPage(stories: Seq[Story]) extends Page(
@@ -22,7 +22,7 @@ case class StoryPage(story: Story) extends Page(
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> "story")
 }
 
-object StoryController extends Controller with Logging {
+object StoryController extends Controller with Logging with ExecutionContexts {
 
   def latest() = Action { implicit request =>
     val promiseOfStories = Future(Story.mongo.latest())

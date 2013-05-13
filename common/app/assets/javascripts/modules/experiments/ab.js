@@ -136,7 +136,7 @@ define([
                var test =  TESTS[testName];
 
                //Can the test run on this page and user not already participated
-               if(test.canRun(config) && !hasParticipated(test.id)) {
+               if(test.canRun(config) && !hasParticipated(test.id) && switches["ab" + test.id]) {
                    //Start
                    start(test);
                }

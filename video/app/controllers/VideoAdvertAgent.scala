@@ -6,7 +6,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
 import play.api.libs.ws.WS
-import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.{Future, Await}
 
 

@@ -8,7 +8,7 @@ import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 object NetworkFrontPage extends MetaData {
@@ -62,7 +62,7 @@ object CultureFrontPage extends MetaData {
 }
 
 
-class FrontController extends Controller with Logging with JsonTrails {
+class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val front: Front = Front
 

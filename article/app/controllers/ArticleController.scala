@@ -4,11 +4,11 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 case class ArticlePage(article: Article, storyPackage: List[Trail])
 
-object ArticleController extends Controller with Logging {
+object ArticleController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfArticle = lookup(path)

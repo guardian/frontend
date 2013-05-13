@@ -6,7 +6,7 @@ import pa.Http
 import io.Source
 import org.joda.time.DateMidnight
 import scala.concurrent.Future
-import play.api.libs.concurrent.Execution.Implicits._
+import common.ExecutionContexts
 
 
 class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with FootballTestData {
@@ -17,7 +17,7 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with Football
 }
 
 // Stubs data for Football stats integration tests
-object TestHttp extends Http {
+object TestHttp extends Http with ExecutionContexts {
 
   val today = new DateMidnight()
 
