@@ -82,16 +82,15 @@
 /* Thumbnail
  ========================================================================== */
 .trail--thumbnail {
-
-  .trail__headline {
-    min-height: 72px;
-  }
-
   .media__img {
     width: 9.625em;
     padding-right: 14px;
     margin-right: 0px;
   }
+}
+
+.js-off .trail__headline {
+  min-height: 72px;
 }
 
 /* Misc
