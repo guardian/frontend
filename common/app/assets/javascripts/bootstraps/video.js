@@ -18,10 +18,12 @@ define([
                     var support = detect.getVideoFormatSupport();
                     var a = new Advert({
                         el: context.querySelector('.player video'),
-                        support: support
+                        support: support,
+                        config: config,
+                        context: context
                     }).init(config.page.videoAd);
                 } else {
-                    common.mediator.emit("video:ads:finsihed");
+                    common.mediator.emit("video:ads:finished", config, context);
                 }
             });
         },
@@ -29,7 +31,7 @@ define([
         initAnalytics: function () {
             common.mediator.on('video:ads:finished', function(config, context) {
                 var v = new Videostream({
-                    id: config.page.id,
+                    id: config.page.pageId,
                     el: context.querySelector('.player video'),
                     ophanUrl: config.page.ophanUrl
                 });

@@ -8,14 +8,19 @@ define([
 
     function Video(options) {
 
-        var config = options.config,
+        var self = this,
+            config = options.config,
             video = options.el,
-            initialContentPlay = true,
+            videoType = "content",
             player = "HTML5 Video",
             mediaName = config.page.webTitle,
             provider = config.page.source || "",
             restricted = config.page.blockAds || "",
-            deBounced;
+            deBounced,
+            initialPlay =  {
+                advert: true,
+                content: true
+            };
 
         this.getDuration = function() {
             return video.duration;
@@ -26,12 +31,20 @@ define([
         };
 
         this.play = function() {
-            if (initialContentPlay) {
-                initialContentPlay = false;
-                s.Media.open(mediaName, this.getDuration(), player);
+            if ((videoType == 'content' && initialPlay[videoType] === true) ||
+                (videoType == 'advert' && initialPlay[videoType] === true)) {
+                    // We need to wait for the metadata before calling
+                    // s.Media.open, otherwise duration comes back as NaN
+                    bean.one(video, 'loadedmetadata', function() {
+                        s.Media.open(mediaName, self.getDuration(), player);
+                        s.Media.play(mediaName, self.getPosition());
+                    });
+
+                    initialPlay[videoType] = false;
+            } else {
+                s.Media.play(mediaName, self.getPosition());
             }
 
-            s.Media.play(mediaName, this.getPosition());
         };
 
         this.pause = function() {
@@ -62,6 +75,16 @@ define([
             }, 250);
         };
 
+        this.trackVideoAdvert = function() {
+            videoType = 'advert';
+            s.trackVideoAd();
+        };
+
+        this.trackVideoContent = function() {
+            videoType = 'content';
+            s.trackVideoContent(provider, restricted);
+        };
+
         this.init = function() {
             var that = this;
 
@@ -80,6 +103,9 @@ define([
             bean.on(video, 'seeking', function() { that.seeking(); });
             bean.on(video, 'seeked', function() {that.seeked(); });
             bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume"); });
+
+            bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
+            bean.on(video, 'play:content', function() { that.trackVideoContent(); });
         };
     }
 

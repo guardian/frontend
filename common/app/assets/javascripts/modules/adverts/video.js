@@ -9,6 +9,8 @@ define([
 ) {
 
     function Video(config) {
+        this.config = config.config;
+        this.context = config.context;
         this.support = config.support;
         this.video = config.el;
         this.played = false;
@@ -44,13 +46,15 @@ define([
 
         bean.on(this.video, "ended error", function() {
             //Init omniture tracking
-            common.mediator.emit("video:ads:finsihed");
+            common.mediator.emit("video:ads:finished", self.config, self.context);
 
             bean.off(self.video, "ended error");
             if(self.events.clickThrough) { bean.off(self.video, "click"); }
 
+            bean.fire(self.video, "play:content");
             self.video.src = source;
             self.video.play();
+
             common.$g(self.video).removeClass("has-cursor");
 
             if(self.events.complete && !self.events.complete.hasFired) {
@@ -59,6 +63,7 @@ define([
             }
         });
 
+        bean.fire(this.video, "play:advert");
         this.video.src = data.file;
         this.video.play();
 
@@ -130,7 +135,7 @@ define([
                 }
             });
         } else {
-            common.mediator.emit("video:ads:finsihed");
+            common.mediator.emit("video:ads:finished", that.config, that.context);
         }
     };
 
