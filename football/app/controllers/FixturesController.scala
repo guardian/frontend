@@ -54,7 +54,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
           Switches.all,
           "html" -> views.html.fragments.matchesBody(fixturesPage),
           "more" -> Html(nextPage.getOrElse("")))
-      }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
+      }.getOrElse(Ok(views.html.matches(fixturesPage)))
     }
   }
 
@@ -150,7 +150,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
 
       Cached(60) {
         val html = views.html.teamFixtures(page, filters, upcomingFixtures)
-        Ok(Compressed(html))
+        Ok(html)
       }
     }.getOrElse(NotFound)
   }

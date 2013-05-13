@@ -25,7 +25,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
 
     Async {
       promiseOfGalleryPage.map {
-        case Left(model) if model.gallery.isExpired => Gone(Compressed(views.html.expired(model.gallery)))
+        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
         case Left(model) => renderGallery(model)
         case Right(notFound) => notFound
       }

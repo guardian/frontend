@@ -38,7 +38,7 @@ object StoryController extends Controller with Logging with ExecutionContexts {
             } getOrElse {
               Cached(60) {
                 val html = views.html.latest(StoriesPage(stories))
-                Ok(Compressed(html))
+                Ok(html)
               }
             }
           }
@@ -80,7 +80,7 @@ object StoryController extends Controller with Logging with ExecutionContexts {
                 case false  => views.html.story(StoryPage(story))
                 case true   => views.html.storyVersionB(StoryPage(story))
               }
-              Ok(Compressed(html))
+              Ok(html)
             }
           }.getOrElse(NotFound)
         }

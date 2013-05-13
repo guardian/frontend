@@ -110,35 +110,6 @@ trait ApacheHttpLifecycle extends GlobalSettings {
   }
 }
 
-trait DispatchHttp extends Http[Future] with Dispatch with ExecutionContexts {
-
-  import System.currentTimeMillis
-  import ContentApiMetrics._
-  import Configuration.host
-  import java.net.URLEncoder.encode
-
-  override lazy val maxConnections: Int = 1000
-  override lazy val connectionTimeoutInMs: Int = 1000
-  override lazy val requestTimeoutInMs: Int = 2000
-
-  // Ignoring Proxy on purpose - we only use it on CI server
-  // and you should never call content api directly from there
-  override def GET(url: String, headers: Iterable[(String, String)]) = {
-    val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
-
-    val start = currentTimeMillis
-    val response = super.get(urlWithHost, headers)
-
-    // record metrics
-    response.onSuccess{ case _ => HttpTimingMetric.recordTimeSpent(currentTimeMillis - start) }
-    response.onFailure{ case e: Throwable if isTimeout(e) => HttpTimeoutCountMetric.increment() }
-    response
-  }.map{ r => HttpResponse(r.body, r.statusCode, r.statusMessage)}
-
-  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
-      .map(_.getClass == classOf[TimeoutException])
-      .getOrElse(false)
-}
 
 // allows us to inject a test Http
 trait DelegateHttp extends Http[Future] with ExecutionContexts {
