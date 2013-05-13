@@ -7,6 +7,7 @@ define([
     'domReady',
     'bonzo',
     //Modules
+    'modules/storage',
     'modules/detect',
     'modules/pageconfig',
     'modules/popular',
@@ -37,6 +38,7 @@ define([
     domReady,
     bonzo,
 
+    storage,
     detect,
     pageConfig,
     popular,
@@ -147,6 +149,17 @@ define([
                 });
 
                 require(config.page.ophanUrl, function (Ophan) {
+
+                    Ophan.additionalViewData(function() {
+                        var audsci = storage.get('gu.ads.audsci');
+
+                        if(audsci === null) {
+                            return {};
+                        }
+
+                        return { "audsci_json": JSON.stringify(audsci) };
+                    });
+
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),
