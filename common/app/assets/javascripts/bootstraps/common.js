@@ -48,7 +48,7 @@ define([
     optimizely,
     Adverts,
     Cookies,
-    Video,
+    OmnitureMedia,
     Debug,
     AB
 ) {
@@ -129,16 +129,14 @@ define([
 
                 omniture.go(config, function(){
                     // Omniture callback logic:
-                    common.mediator.on("video:ads:finsihed", function() {
-                        Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
-                            if (!bonzo(video).hasClass('tracking-applied')) {
-                                bonzo(video).addClass('tracking-applied');
-                                var v = new Video({
-                                    el: video,
-                                    config: config
-                                }).init();
-                            }
-                        });
+                    common.$g('video').each(function(video) {
+                        if (!bonzo(video).hasClass('tracking-applied')) {
+                            bonzo(video).addClass('tracking-applied');
+                            var v = new OmnitureMedia({
+                                el: video,
+                                config: config
+                            }).init();
+                        }
                     });
                 });
 

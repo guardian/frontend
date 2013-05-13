@@ -31,8 +31,8 @@ define([
         };
 
         this.play = function() {
-            if ((videoType == 'content' && initialPlay[videoType] === true) ||
-                (videoType == 'advert' && initialPlay[videoType] === true)) {
+            if ((videoType === 'content' && initialPlay[videoType] === true) ||
+                (videoType === 'advert' && initialPlay[videoType] === true)) {
                     // We need to wait for the metadata before calling
                     // s.Media.open, otherwise duration comes back as NaN
                     bean.one(video, 'loadedmetadata', function() {
