@@ -13,9 +13,8 @@ define([
     function AustraliaEdition() {
 
         bean.on(document, 'click', '.edition', function(e) {
-            var edition = e.target.getAttribute('data-edition');
 
-            if (edition === 'au') {
+            if (bonzo(e.target).hasClass('edition-au')) {
                 userPrefs.switchOn(AUS);
             } else {
                 userPrefs.switchOff(AUS);
@@ -28,7 +27,7 @@ define([
             common.$g("a[href='/']").attr("href", "/australia");
 
             // remove au edition links
-            common.$g("a[data-edition='au']").each(function(e) {
+            common.$g(".edition-au").each(function(e) {
                 bonzo(e.parentNode).remove();
             });
         }
