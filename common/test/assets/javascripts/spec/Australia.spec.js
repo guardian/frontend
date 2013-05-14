@@ -1,10 +1,10 @@
 define(['modules/navigation/australia', "common", "bean", 'modules/userPrefs'],
     function(Australia, common, bean, userPrefs) {
-    
+
     describe('Australia', function() {
 
-        var ausLink = document.querySelector("#au-link");
-        var editionSwitch = document.querySelector("#edition-switch");
+        var ausLink = document.querySelector(".edition-au");
+        var editionSwitch = document.querySelector(".edition:not(.edition-au)");
 
         beforeEach(function() {
             localStorage.clear();
@@ -15,7 +15,7 @@ define(['modules/navigation/australia', "common", "bean", 'modules/userPrefs'],
                 });
             });
         });
-        
+
         it('should exist', function() {
             expect(Australia).toBeDefined();
         });
