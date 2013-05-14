@@ -76,7 +76,6 @@ GET     /$path<culture|sport|australia>                     controllers.FrontCon
 GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path)
 
 #Video
-GET     /video/ad/:format                                   controllers.VideoAdvertController.fetch(format)
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
 
 #Gallery
