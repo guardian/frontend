@@ -49,7 +49,7 @@ public class NavigationSteps {
     public void the_menu_is(String tabName, String menuState) throws Throwable {
     	String menuId = "nav-popup-" + tabName.toLowerCase().replace(" ", "");
     	// if it's not in the correct state, click it
-    	if (menuState.equals("open")) {
+    	if (menuState.equals("close")) {
     		I_click_the_tab(tabName);
     		// NOTE - HACKY McHACKSON- js is coded to not allow toggling of nav tab quicker than 400ms
     		Thread.sleep(400);
