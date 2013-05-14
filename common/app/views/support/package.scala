@@ -11,13 +11,13 @@ import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-
 import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
+import play.Play
 
 sealed trait Style {
   val className: String
@@ -326,5 +326,8 @@ object StripHtmlTags {
 }
 
 object Head {
-  lazy val css: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+ def css = if (Play.isDev) volatileCss else persistantCss
+
+ private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+ private lazy val persistantCss: String = volatileCss
 }
