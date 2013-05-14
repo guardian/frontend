@@ -150,6 +150,11 @@ define([
 
                 require(config.page.ophanUrl, function (Ophan) {
 
+                    if (!Ophan.isInitialised) {
+                        Ophan.isInitialised = true;
+                        Ophan.initLog();
+                    }
+
                     Ophan.additionalViewData(function() {
                         var audsci = storage.get('gu.ads.audsci');
 
@@ -174,7 +179,7 @@ define([
                             };
                         });
                     }
-                    Ophan.startLog(config.referrer);
+                    Ophan.sendLog(config.referrer);
                 });
 
             });
