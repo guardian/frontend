@@ -4,9 +4,11 @@
 */
 define([
     'common',
+    'bonzo',
     'bean'
 ], function (
     common,
+    bonzo,
     bean
 ) {
     /*
@@ -20,11 +22,15 @@ define([
         var opts = options || {},
             dom = common.$g(opts.dom), // root element of the trailblock
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
-            cta = document.createElement('button'),
-            domCount,
             count,
             self = this,
             showCount = (opts.showCount === false) ? false : true;
+
+        var btn =  '<div class="cta">';
+            btn += '<span class="cta__text">Show more</span><button class="cta__btn cta__btn--right">';
+            btn += '<i class="i i-arrow-blue-down cta__icn"></i></button></div>';
+
+        var cta = bonzo(bonzo.create(btn))[0];
 
         // View
         
@@ -36,16 +42,16 @@ define([
                     text += model.getCount() + ' ';
                 }
                 text += (expanded) ? 'fewer' : 'more';
-                cta.innerHTML = text;
+                cta.querySelector('.cta__text').innerHTML = text;
                 cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
                 cta.setAttribute('data-is-ajax', '1');
             },
             
             renderState: function () {
                 if(expanded) {
-                    dom.removeClass('shut');
+                    dom.removeClass('is-shut');
                 } else {
-                    dom.addClass('shut');
+                    dom.addClass('is-shut');
                 }
             },
             

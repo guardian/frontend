@@ -32,14 +32,6 @@
     cursor: pointer;
 }
 
-.expander:before {
-    content: '- ';
-}
-
-.shut .expander:before {
-    content: '+ ';
-}
-
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
     padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon

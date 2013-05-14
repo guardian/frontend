@@ -1,8 +1,8 @@
-@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, isShaded: Boolean = false)(implicit request: RequestHeader)
+@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
     <h3 id="related-content-head" class="page-head page-head--sub">@Html(heading)</h3>
-    <div class="related-trails trailblock @if(isShaded){trailblock-shaded}"
+    <div class="related-trails trailblock"
         data-count="@{trails.length - visibleTrails}"
         data-link-name="Related @heading"
         role="complementary"
