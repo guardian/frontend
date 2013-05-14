@@ -12,7 +12,7 @@
 %type-4 { @include font($serif, normal, 19, 24) }
 %type-5 { @include font($serif, 500, 16, 22) }
 %type-6 { @include font($serif, normal, 16, 24) }
-%type-7 { @include font($serif, normal, 14, 20) }
+%type-7 { @include font($serif, normal, 14, 24) }
 
 //Serif b and strong need to be 'medium' weight.
 %type-6 b,

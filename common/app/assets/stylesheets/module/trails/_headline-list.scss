@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Headline list object
+   ========================================================================== */
+.headline-list {
+    padding: 0 $gutter;
+}
+
+.headline-list__item {
+	display: block;
+	overflow: auto;
+    border-bottom: 1px solid $neutral5;
+    padding: 6px 0 24px 0;
+}
+
+  .headline-list__item:last-child {
+      border-bottom: none;
+  }
+
+.headline-list__body {
+    @extend %type-7;
+    float: left;
+    width: 92%;
+    padding-left: $baseline*2;
+    color: $neutral2;
+    margin: -3px 0 0 0;
+}
+
+  .headline-list__body a {
+      color: $neutral2;
+  }
+  .headline-list__body a:visited{
+      color: $neutral3;
+  }
+
+.headline-list__count {
+	@extend %type-7;
+    float:left;
+    line-height: 16px;
+    color: $neutral4;
+    width: 12px;
+}
+
+.headline-list__tile {
+  @extend %type-6;
+  height: 36px;
+  color: #333333;
+  margin: 0 $gutter 0 $gutter;
+  border-bottom: 1px solid #DDDDDD;
+  padding: 6px 0 0 0;
+
+  @media only screen and (min-width: 26.25em) {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Headline list modifiers
+   ========================================================================== */
+
+
+/* Top
+ ========================================================================== */
+
+.headline-list--top {
+  margin: 0px !important;
+  list-style: none;
+}
