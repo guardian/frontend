@@ -23,7 +23,7 @@ Test results are not sent back to our tracking server until the window's `load` 
 ### Test 1
 
 * 10th-13th May (72 hours)
-* 3 second font delay when cached
+* 3 second font delay when uncached
 
 | Test group | Instances |  Proportion | Homepage bounce | Article bounce | Pages per visit | 
 | ---------- | ----- | ---------- | --------------- | -------------- | --------------- |
