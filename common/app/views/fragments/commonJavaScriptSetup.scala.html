@@ -13,7 +13,8 @@
                 gallery: '@Static("stylesheets/gallery.min.css")',
                 story: '@Static("stylesheets/story.min.css")',
                 video: '@Static("stylesheets/video.min.css")'
-            }
+            },
+            config: @fragments.javaScriptConfig(item, switches)
         },
         curl = {
             baseUrl: '@{Configuration.assets.path}javascripts',
@@ -62,18 +63,22 @@
         }
     })();
 
-    (function(isModern) {
-
-        if (!isModern) { return false; }
-
-        guardian.config = @fragments.javaScriptConfig(item, switches);
-
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/app.js")';
-
-        document.getElementsByTagName("head")[0].appendChild(script);
-    
-    })(guardian.isModernBrowser);
-
 </script>
+
+@if(BrowserSupport.HTMLPreparser(request)) {
+    <script src="@Static("javascripts/bootstraps/app.js")" async defer></script>
+} else {
+    <script>
+        (function(isModern) {
+
+            if (!isModern) { return false; }
+
+            var script = document.createElement('script');
+            script.async = 'async';
+            script.src = '@Static("javascripts/bootstraps/app.js")';
+
+            document.getElementsByTagName("head")[0].appendChild(script);
+        
+        })(guardian.isModernBrowser);
+    </script>
+}
