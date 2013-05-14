@@ -12,7 +12,7 @@
 
         @if(story.hasLiveContent) {
             <ol class="tabs js-tabs">
-                <li class="tabs-selected"><a href="#story" data-link-name="story">Summary</a></li>
+                <li class="tabs-selected"><a href="#story" data-link-name="story">The story so far</a></li>
                 <li><a href="#live" data-link-name="live">Live</a></li>
             </ol>
         }
@@ -20,17 +20,18 @@
         <div class="tabs-content">
             <div class="tabs-pane" id="story">
                 <div class="story-container">
-                    @fragments.latest(story, page, 2)
+                    @fragments.latest(story, page, 3)
                     @fragments.explainer(story)
 
                     <div class="story-content">
+                        @fragments.reaction(story)
                         @fragments.quote(story, 0)
                         @fragments.agents(story)
                         @fragments.quote(story, 1)
                     </div>
 
-                    @fragments.places(story)
                     @fragments.pictures(story)
+                    @fragments.places(story)
                     @fragments.timeline(story)
                     @fragments.feedback()
                 

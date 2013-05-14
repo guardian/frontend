@@ -1,6 +1,7 @@
 @(item: MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
 @import CommonSwitches.FontSwitch
+@import CommonSwitches.FontDelaySwitch
 
 <script id="gu">
     // we want this to happen ASAP to avoid FOUC
@@ -40,7 +41,34 @@
             showFonts = false;
         }
 
+        function removeFallbackFont() {
+            document.documentElement.className += ' delay-font-render';
+            setTimeout(function() {
+                document.documentElement.className = document.documentElement.className.replace('delay-font-render', '');
+            }, 3000);
+        }
+
         if (showFonts) {
+            
+            // This sledgehammers an AB test into localStorage for Omniture to pick up later.
+            @if(FontDelaySwitch.isSwitchedOn) {
+                var test = localStorage.getItem('gu.webfontrendertest');
+                if (test) {
+                    if (test.indexOf('| nofallback') > 0) {
+                        removeFallbackFont();
+                    }
+                } else {
+                    if (Math.random() < 0.1) {
+                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallback | nofallback');
+                        removeFallbackFont();
+                    } else {
+                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallback | control');
+                    }
+                }
+            } else {
+                localStorage.removeItem('gu.webfontrendertest');
+            }   
+
             var start = (new Date().getTime());
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
@@ -48,9 +76,12 @@
                     nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
                     cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                 if (cachedCss) {
+                    @if(FontDelaySwitch.isSwitchedOn) {
+                        document.documentElement.className = document.documentElement.className.replace('delay-font-render', '');
+                    }
                     style.innerHTML = cachedCss;
                     style.setAttribute('data-cache-full', 'true');
-                    document.querySelector('html').className += ' font-' + name + '-loaded';
+                    document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
                 }
             }
             var fontTime = (new Date().getTime()) - start;

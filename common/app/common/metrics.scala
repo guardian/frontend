@@ -1,13 +1,10 @@
 package common
 
-import play.api.libs.ws.WS
 import akka.dispatch.{ MessageDispatcher, Dispatcher }
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import com.ning.http.client.providers.netty.NettyConnectionsPool
-import org.jboss.netty.channel.group.DefaultChannelGroup
 import scala.Some
-import contentapi.DispatchHttp
+import java.lang.management.ManagementFactory
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -74,6 +71,30 @@ object AkkaMetrics extends AkkaSupport {
   val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
+object SystemMetrics {
+
+  // divide by 1048576 to convert bytes to MB
+
+  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (MB)", "Max heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
+  )
+
+  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (MB)", "Used heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
+  )
+
+  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (MB)", "Max non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
+  )
+
+  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (MB)", "Used non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
+  )
+
+  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric, MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric)
+}
+
+
 abstract class WsMetric(
     val group: String, val name: String, val title: String, val description: String,
     override val master: Option[Metric] = None) extends AbstractMetric[Int] {
@@ -84,5 +105,5 @@ abstract class WsMetric(
 case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
 
 object CommonMetrics {
-  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all
+  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
 }
