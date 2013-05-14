@@ -65,8 +65,8 @@
 
 </script>
 
-@if(BrowserSupport.HTMLPreparser(request)) {
-    <script src="@Static("javascripts/bootstraps/app.js")" async defer></script>
+@if(BrowserSupport(request).AsyncScript) {
+    <script src="@Static("javascripts/bootstraps/app.js")" async></script>
 } else {
     <script>
         (function(isModern) {
