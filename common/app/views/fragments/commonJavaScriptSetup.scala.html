@@ -97,7 +97,7 @@
 </script>
 
 @if(BrowserSupport(request).AsyncScript) {
-    <script src="@Static("javascripts/bootstraps/app.js")" async></script>
+    <script src="@Static("javascripts/bootstraps/app.js")" async data-app-js></script>
 } else {
     <script>
         (function(isModern) {
