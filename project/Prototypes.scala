@@ -88,7 +88,6 @@ trait Prototypes extends Testing {
         "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
       "com.gu.openplatform" %% "content-api-client" % "2.0",
-      "org.apache.httpcomponents" % "httpasyncclient" % "4.0-beta3",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
       "commons-io" % "commons-io" % "2.4",
