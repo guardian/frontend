@@ -33,7 +33,7 @@ trait ApiQueryDefaults extends QueryDefaults { self: Api[Future] =>
   .showStoryPackage(true)
   .tag(supportedTypes)
 
-  //common fields that we use across most queries.                                    dispatcher.id
+  //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
   .edition(edition.id)
   .showTags("all")
