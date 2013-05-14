@@ -43,7 +43,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     request.getQueryString("callback").map { callback =>
       JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
     } getOrElse {
-      Gone(Compressed(views.html.expired(model.article)))
+      Gone(views.html.expired(model.article))
     }
   }
 

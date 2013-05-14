@@ -5,6 +5,7 @@ import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{Edition, Logging, GuardianConfiguration}
+import play.api.libs.ws.WS
 
 trait QueryDefaults{
   val supportedTypes = "type/gallery|type/article|type/video"

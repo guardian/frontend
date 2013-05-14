@@ -14,7 +14,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     val promiseOfVideo = lookup(path)
     Async {
       promiseOfVideo.map {
-        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
+        case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
         case Left(model) => renderVideo(model)
         case Right(notFound) => notFound
       }
