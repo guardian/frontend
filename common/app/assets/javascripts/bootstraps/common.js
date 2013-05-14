@@ -57,7 +57,7 @@ define([
     Omniture,
     Adverts,
     Cookies,
-    Video,
+    OmnitureMedia,
     Debug,
     AB,
     swipeNav
@@ -140,7 +140,7 @@ define([
                     Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
                             bonzo(video).addClass('tracking-applied');
-                            var v = new Video({
+                            var v = new OmnitureMedia({
                                 el: video,
                                 config: config
                             }).init();
