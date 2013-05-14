@@ -327,8 +327,8 @@ object StripHtmlTags {
 }
 
 object Head {
- def css = if (Play.isDev) volatileCss else persistantCss
+  def css = if (Play.isDev) volatileCss else persistantCss
 
- private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
- private lazy val persistantCss: String = volatileCss
+  private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+  private lazy val persistantCss: String = volatileCss
 }
