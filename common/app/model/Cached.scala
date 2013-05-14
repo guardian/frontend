@@ -28,6 +28,7 @@ object Cached extends Results {
       "Cache-Control" -> s"public, max-age=$maxAge, stale-while-revalidate=$maxAge, stale-if-error=345600",
       "X-Gu-Stale-While-Revalidate" -> s"$maxAge",
       "X-Gu-Stale-If-Error" -> "345600",
+      "X-Gu-Cache-Control" -> s"private, max-age=$maxAge", // Tells fastly to use this at it's response header
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
