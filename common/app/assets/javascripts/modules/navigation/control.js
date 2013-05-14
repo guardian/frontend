@@ -18,10 +18,15 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
 
                     if(popup){
                         control.popup = popup;
-                        bean.add(control, 'click touchstart', function (e) {
-                            e.preventDefault();
+
+                        toggler = common.rateLimit(function(){
                             self.toggle(control, controls);
                             common.mediator.emit('modules:control:change');
+                        });
+
+                        bean.add(control, 'click touchstart', function (e) {
+                            e.preventDefault();
+                            toggler();
                         });
                     }
                 });

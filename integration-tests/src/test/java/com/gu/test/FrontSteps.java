@@ -40,7 +40,7 @@ public class FrontSteps {
     		String expectedTrailblockHeight = (sectionState.equals("show")) ? "none" : "0";
     		// only click if not in correct state
     		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
-    		if (actualTrailblockHeight != expectedTrailblockHeight) {
+    		if (!actualTrailblockHeight.equals(expectedTrailblockHeight)) {
     		  webDriver.jsClick(trailblockToggle);
     		}
   	}
