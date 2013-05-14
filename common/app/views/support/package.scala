@@ -25,6 +25,8 @@ sealed trait Style {
 
 object Featured extends Style { val className = "featured" }
 
+object FeaturedSmall extends Style { val className = "featured-small" }
+
 /**
  * trails display trailText and thumbnail (if available)
  */

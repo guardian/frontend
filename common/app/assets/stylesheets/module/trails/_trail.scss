@@ -64,18 +64,17 @@
       display: block;
     }
   }
-
-  .trail__headline--large {
-    a {
-      padding-bottom: 33px;
-    }
-  }
-
-  .trail__img {
-    vertical-align: bottom;
-    margin-bottom: 12px;
-  }
 }
+
+/* Featured small
+ ========================================================================== */
+
+.trail--featured .trail__img ,
+.trail--featured-smal .trail__img {
+  vertical-align: bottom;
+  margin-bottom: 12px;
+}
+
 
 /* Thumbnail
  ========================================================================== */

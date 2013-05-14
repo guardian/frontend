@@ -1,0 +1,11 @@
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false)(implicit request: RequestHeader)
+
+<ul class="unstyled">
+    @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
+        @if(info.rowNum == 1) {
+            @fragments.trails.featuredSmall(trail, info.rowNum, related, "li")
+        } else {
+            @fragments.trails.thumbnail(trail, info.rowNum, related, "li")
+        }
+    }
+</ul>

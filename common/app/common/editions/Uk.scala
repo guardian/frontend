@@ -3,7 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.MetaData
-import views.support.{Headline, Thumbnail, Featured}
+import views.support.{Headline, Thumbnail, Featured, FeaturedSmall}
 import scala.Some
 import common.NavItem
 import model.TrailblockDescription
@@ -41,8 +41,8 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
   val configuredFronts = Map(
     "front" -> Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(FeaturedSmall), showMore = true),
+      TrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(FeaturedSmall), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       TrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -53,7 +53,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
     "sport" -> Seq(
       TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(FeaturedSmall), showMore = true),
       TrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
       TrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -79,9 +79,9 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
     "australia" -> Seq(
       TrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      TrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(FeaturedSmall), showMore = true),
       TrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
-      TrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      TrailblockDescription("commentisfree/commentisfree", "Comment is free", numItemsVisible = 3, style = Some(FeaturedSmall), showMore = true),
       TrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
     )
   )
