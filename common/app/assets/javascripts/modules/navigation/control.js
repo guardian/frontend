@@ -13,20 +13,14 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 controls = context.querySelectorAll('.control');
                 contexts[id] = controls;
                 Array.prototype.forEach.call(controls, function(control) {
-                    var popup = self.getPopup(control, context),
-                        toggler;
+                    var popup = self.getPopup(control, context);
 
                     if(popup){
                         control.popup = popup;
-
-                        toggler = common.rateLimit(function(){
-                            self.toggle(control, controls);
-                            common.mediator.emit('modules:control:change');
-                        });
-
                         bean.add(control, 'click touchstart', function (e) {
                             e.preventDefault();
-                            toggler();
+                            self.toggle(control, controls);
+                            common.mediator.emit('modules:control:change');
                         });
                     }
                 });

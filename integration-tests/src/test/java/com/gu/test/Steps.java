@@ -52,7 +52,6 @@ public class Steps {
 	@Then("^the \"(Top stories|Sections)\" tab is (hidden|shown)$")
 	public void tab_is(String tabName, String tabState) throws Throwable {
 		String tabId = "control--" + tabName.toLowerCase().replace(" ", "");
-		System.out.println(tabId);
 	    WebElement tab = webDriver.waitForElement(By.className(tabId));
 	    // confirm element is shown/hidden
 	    assertEquals(tabState.equals("shown"), tab.isDisplayed());
