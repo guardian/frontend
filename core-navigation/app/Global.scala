@@ -1,5 +1,4 @@
 import conf.RequestMeasurementMetrics
-import contentapi.ApacheHttpLifecycle
 import feed.MostPopularAgent
 import play.api.mvc.WithFilters
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
@@ -22,4 +21,4 @@ trait MostPopularLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with MostPopularLifecycle with ApacheHttpLifecycle
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with MostPopularLifecycle
