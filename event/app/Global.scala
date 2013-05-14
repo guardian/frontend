@@ -1,5 +1,4 @@
 import conf.RequestMeasurementMetrics
-import contentapi.ApacheHttpLifecycle
 import model.StoryList
 import play.api.GlobalSettings
 import play.api.mvc.WithFilters
@@ -17,4 +16,4 @@ trait StoryLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with ApacheHttpLifecycle with StoryLifecycle
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with StoryLifecycle
