@@ -74,9 +74,7 @@ class GuardianConfiguration(
   }
 
   object ajax {
-    lazy val url = configuration.getStringProperty("ajax.url").getOrElse(
-      throw new IllegalStateException("Ajax url not configured")
-    )
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
   }
 
   object static {

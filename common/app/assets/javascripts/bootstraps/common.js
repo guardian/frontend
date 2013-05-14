@@ -1,11 +1,15 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
     'bonzo',
     //Modules
+    'modules/storage',
+    'modules/detect',
+    'modules/pageconfig',
     'modules/popular',
     'modules/related',
     'modules/router',
@@ -14,6 +18,7 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
+    'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
@@ -23,14 +28,19 @@ define([
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
-    'modules/experiments/ab'
+    'modules/experiments/ab',
+    'modules/swipenav'
 ], function (
     common,
+    ajax,
     userPrefs,
 
     domReady,
     bonzo,
 
+    storage,
+    detect,
+    pageConfig,
     popular,
     related,
     Router,
@@ -39,6 +49,7 @@ define([
     Sections,
     Search,
     NavControl,
+    Australia,
     EditionSwitch,
     Tabs,
     RelativeDates,
@@ -48,7 +59,8 @@ define([
     Cookies,
     OmnitureMedia,
     Debug,
-    AB
+    AB,
+    swipeNav
 ) {
 
     var modules = {
@@ -67,16 +79,13 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
+            var aus = new Australia(); // TODO temporary till we have single domain editions
+
             var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
-                var header = bonzo(context.querySelector('header'));
-                if(!header.hasClass('initialised')) {
-                    header.addClass('initialised');
-
-                    navControl.init(context);
-                    sections.init(context);
-                    search.init(context);
-                }
+                navControl.init(context);
+                sections.init(context);
+                search.init(context);
             });
         },
 
@@ -126,7 +135,8 @@ define([
                 AB.init(config);
 
                 omniture.go(config, function(){
-                    // Omniture callback logic:
+                    // callback:
+
                     Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
                             bonzo(video).addClass('tracking-applied');
@@ -139,6 +149,17 @@ define([
                 });
 
                 require(config.page.ophanUrl, function (Ophan) {
+
+                    Ophan.additionalViewData(function() {
+                        var audsci = storage.get('gu.ads.audsci');
+
+                        if(audsci === null) {
+                            return {};
+                        }
+
+                        return { "audsci_json": JSON.stringify(audsci) };
+                    });
+
                     if(AB.inTest(config.switches)) {
                         Ophan.additionalViewData(function() {
                             var test = AB.getTest(),
@@ -153,30 +174,25 @@ define([
                             };
                         });
                     }
-                    Ophan.startLog();
+                    Ophan.startLog(config.referrer);
                 });
 
             });
         },
 
-        loadAdverts: function (config) {
-            common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                if (config.switches.adverts) {
-                    Adverts.init(config, context);
-                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-                }
-            });
+        loadAdverts: function () {
+            if (!userPrefs.isOff('adverts')){
+                common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                    if (config.switches && config.switches.adverts) {
+                        Adverts.init(config, context);
+                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                    }
+                });
+            }
         },
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
         },
 
         showSharedWisdomToolbar: function(config) {
@@ -188,6 +204,66 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
+        },
+
+        initSwipe: function(config) {
+            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.canSwipe()) {
+                modules.getSwipeSequence(function(sequence){
+                    modules.startSwipe(sequence, config);
+                });
+            }
+        },
+
+        getSwipeSequence: function(callback) {
+            var path = window.location.pathname;
+            ajax({
+                url: '/front-trails' + (path === '/' ? '' : path),
+                type: 'jsonp',
+                success: function (json) {
+                    if (json.stories && json.stories.length >= 3) {
+                        callback(json.stories);
+                    }
+                }
+            });
+        },
+
+        startSwipe: function(sequence, config) {
+            var clickSelector = '',
+                opts,
+                referrer = window.location.href,
+                referrerPageName = config.page.analyticsName;
+
+            if (config.switches.swipeNavOnClick && userPrefs.isOn('swipe-nav-on-click')) {
+                clickSelector = 'a:not(.control)';
+            }
+
+            swipeNav({
+                afterShow: function(config) {
+                    var swipe = config.swipe;
+
+                    swipe.referrer = referrer;
+                    referrer = window.location.href;
+
+                    swipe.referrerPageName = referrerPageName;
+                    referrerPageName = config.page.analyticsName;
+
+                    common.mediator.emit('page:ready', pageConfig(config), swipe.context);
+
+                    if(clickSelector && swipe.initiatedBy === 'click') {
+                        modules.getSwipeSequence(function(sequence){
+                            swipe.api.setSequence(sequence);
+                            swipe.api.loadSidePanes();
+                        });
+                    } else {
+                        swipe.api.loadSidePanes();
+                    }
+
+                },
+                clickSelector: clickSelector,
+                swipeContainer: '#preloads',
+                contentSelector: '.parts__body',
+                sequence: sequence
+            });
         }
     };
 
@@ -217,6 +293,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
+            modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

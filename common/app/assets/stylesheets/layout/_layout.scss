@@ -56,3 +56,47 @@
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
+
+/* ==========================================================================
+   Preloads (for swipe)
+   ========================================================================== */
+
+#preloads {
+    position: relative;
+}
+
+#preloads-inner {
+    position: relative;
+    top: 0px;
+    height: 100%;
+    width: 100%; 
+    @include transition(0ms ease-out);
+    @include transform(translateZ(0px)); 
+}
+
+#preload-0,
+#preload-1,
+#preload-2 {
+    @include transform(translateZ(0px));
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#preload-0 {
+    left: -100%; 
+}
+
+#preload-1 {
+    left: 0%; 
+}
+
+#preload-2 {
+    left: 100%; 
+}
+
+.preload-msg {
+  padding: 50px 50px 250px 50px;
+  text-align: center;
+}
