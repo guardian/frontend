@@ -151,6 +151,8 @@ define([
                 var comp = config.referenceOfType('paFootballCompetition'),
                     team = config.referenceOfType('paFootballTeam');
 
+                if(config.page.contentType === "Article") { return; }
+
                 if(comp) {
                     modules.showCompetitionData(comp, context);
                 }
