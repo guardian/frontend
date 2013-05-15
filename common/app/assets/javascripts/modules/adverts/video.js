@@ -87,7 +87,7 @@ define([
             common.$g(this.video).addClass("has-cursor");
             bean.on(self.video, "click touchstart", function(){
                 bean.off(self.video, "click touchstart");
-                self.logEvent(self.events.oasClickThrough);
+                if(self.events.oasClickThrough) { self.logEvent(self.events.oasClickThrough); }
                 window.open(self.events.clickThrough.url);
             });
         }
