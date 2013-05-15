@@ -9,9 +9,10 @@
 .control:active,
 .control:hover,
 .control:visited {
-    color: #ffffff;
-    font-family: $serif !important;
-    font-size: 13px;
+    float:right;
+    height: 48px;
+    width: 60px;
+    position: relative;
     color: #ffffff;
     background-color: transparent;
     vertical-align: top;
@@ -24,13 +25,30 @@
   color: $blue;
 }
 
+.control__text {
+  @extend %type-13;
+  position: absolute;
+  color: #ffffff;
+  top: 11px;
+  left: 3px;
+}
+
+.is-active .control__text {
+  color: $linkBlue;
+}
+
+.control__icon {
+  position: absolute;
+  bottom: 3px;
+  left:3px;
+}
+
 .i-nav-divider {
   float: left;
-  height: 28px;
+  height: 36px;
   width: 1px;
-  margin-right: 8px;
-  background-color: #274C98;
-  border-left: 1px solid #122853;
+  margin: 12px 3px 0 0;
+  background-color: $main3;
 }
 
 .is-active .i-nav-divider {
@@ -46,10 +64,6 @@
 .control--sections:active,
 .control--sections:hover,
 .control--sections:visited {
-  float:right;
-  width: auto;
-  height: 28px;
-  padding: 15px $gutter 15px 0px;
 
   @media only screen and (min-width: $tablet) {
     position: absolute;
@@ -63,16 +77,7 @@
   }
 }
 
-.control__menu.i {
-  float: right;
-  margin-top: 8px;
-  text-indent: -1000em;
-}
-
 span.control__menu.i-menu {
-  display: inline-block;
-  margin-left: 6px;
-
   @media only screen and (min-width: $tablet) {
     display:none;
   }
@@ -97,58 +102,15 @@ span.control__menu.i-menu {
 
 /* Top stories control
  ========================================================================== */
-
 .control--topstories {
-  float: right;
   margin-right: 46px;
-  height: 28px;
   margin: 0;
-  padding: 17px 0 13px 0;
-
-  @media only screen and (min-width: $tablet) {
-    position: absolute;
-    top: 0px;
-    right: 48px;
-  }
 }
-
-.control--topstories span {
-  display: none;
-  height: 28px;
-  vertical-align: top;
-  line-height: 28px;
-  margin-right: $baseline*2;
-  margin-left: $baseline*2;
-
-  @media only screen and (min-width: 26.25em) {
-    display: inline-block;
-  }
-}
-
-  .control--topstories.is-active span {
-    background: none !important;
-    border-color: transparent !important;
-  }
-
-.control--topstories .i-top-stories {
-  margin: 5px $baseline*4 0 $baseline*2;
-
-  @media only screen and (min-width: $tablet) {
-    margin-left: 0px;
-  }
-}
-
-.control--topstories .i-nav-divider {
-  margin-top: -2px;
-}
-
-
 
 /* Search control
  ========================================================================== */
 
 .control--search {
-  float:right;
   height: 28px;
   padding: 15px $baseline*4 15px 0px;
   border: none;
