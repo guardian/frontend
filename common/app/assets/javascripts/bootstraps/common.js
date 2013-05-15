@@ -264,6 +264,7 @@ define([
                     }
 
                 },
+                config: config,
                 clickSelector: clickSelector,
                 swipeContainer: '#preloads',
                 contentSelector: '.parts__body',
