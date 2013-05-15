@@ -199,9 +199,9 @@ define([
                 api: api
             };
 
-            if (config.webTitle) {
+            if (config.page && config.page.webTitle) {
                 div = document.createElement('div');
-                div.innerHTML = config.webTitle; // resolves html entities
+                div.innerHTML = config.page.webTitle; // resolves html entities
                 document.title = div.firstChild.nodeValue;
             }
 
