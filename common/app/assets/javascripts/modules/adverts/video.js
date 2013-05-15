@@ -1,11 +1,9 @@
 define([
     "common",
-    "bean",
-    "ajax"
+    "bean"
 ], function(
    common,
-   bean,
-   ajax
+   bean
 ) {
 
     function Video(config) {
@@ -83,11 +81,13 @@ define([
         }
 
         if(this.events.impression) { this.logEvent(this.events.impression); }
+        if(this.events.oasImpression) { this.logEvent(this.events.oasImpression); }
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
             common.$g(this.video).addClass("has-cursor");
             bean.on(self.video, "click touchstart", function(){
                 bean.off(self.video, "click touchstart");
+                self.logEvent(self.events.oasClickThrough);
                 window.open(self.events.clickThrough.url);
             });
         }

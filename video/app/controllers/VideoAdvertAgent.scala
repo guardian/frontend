@@ -2,48 +2,52 @@ package controllers
 
 import common.{Logging, AkkaSupport}
 import scala.xml.{XML, Elem}
-import play.api.libs.json.Json._
-import play.api.libs.json.JsObject
 import scala.concurrent.duration._
 import play.api.libs.ws.WS
 import scala.concurrent.{Future, Await}
 
+case class VideoAdvert(media: String, tracking: Map[String, String])
 
-trait VideoAdvertAgent extends AkkaSupport with Logging {
+object VideoAdvertAgent extends AkkaSupport with Logging {
 
-  lazy val agent = play_akka.agent[Option[JsObject]](None)
+  lazy val agent = play_akka.agent[Option[VideoAdvert]](None)
 
-  private lazy val schedule = play_akka.scheduler.every(1.minute, initialDelay = 10.seconds){
-    val random = System.currentTimeMillis
-    loadAd(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").foreach(agent.send(_))
+  private lazy val schedule = play_akka.scheduler.every(30.seconds, initialDelay = 10.seconds) {
+
+    //val random = System.currentTimeMillis
+
+    //loadXml(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").flatMap{ xml =>
+    loadXml("http://127.0.0.1:8125/").flatMap{ xml =>
+      xml.label match {
+        case "VAST" => Future(parseVast(xml))
+        case "VideoAdServingTemplate" => {
+          val oasImpression = (xml \\ "Impression" \ "URL").text.trim
+          val oasClickThrough = (xml \\ "ClickTracking" \ "URL").text.trim
+          parseThirdParty(xml).map{ ad =>
+            ad.copy(tracking = ad.tracking + (("oasImpression" -> oasImpression), ("oasClickThrough" -> oasClickThrough)))
+          }
+        }
+      }
+    }.foreach(ad => agent.send(Some(ad)))
   }
 
-  def loadAd(url: String): Future[Option[JsObject]] = {
+  def parseThirdParty(xml: Elem) =  {
+    val url = (xml \\ "VASTAdTagURL" \ "URL").text.trim
+    loadXml(url).map(parseVast)
+  }
+
+  def loadXml(url: String): Future[Elem] = {
+
     WS.url(url).withTimeout(5000).get().map {
       response =>
         response.status match {
-          case 200 => parse(response.body)
+          case 200 => XML.loadString(response.body)
           case error =>
             log.error(s"Error loading video ads $error ${response.statusText}")
-            None
+            <badXml></badXml>
         }
     }
   }
-
-  def parseThirdParty(xml: Elem) = loadAd((xml \\ "VASTAdTagURL" \ "URL").text.trim)
-
-  def parse(body: String): Option[JsObject] = {
-    val xml = XML.loadString(body)
-
-    xml.label match {
-      case "VAST" => Some(parseVast(xml))
-      case "VideoAdServingTemplate" => Await.result(parseThirdParty(xml), 5.seconds)
-      case other =>
-        log.info(s"Did not understand video ad document $other")
-        None
-    }
-  }
-
 
   //just touch schedule
   def start() = schedule
@@ -53,9 +57,7 @@ trait VideoAdvertAgent extends AkkaSupport with Logging {
     agent.close()
   }
 
-
-
-  private def parseVast(xml: Elem) = {
+  private def parseVast(xml: Elem): VideoAdvert = {
     val files = xml \\ "MediaFile"
     val media = files.headOption.map(_.text.trim()).getOrElse("")
 
@@ -72,15 +74,10 @@ trait VideoAdvertAgent extends AkkaSupport with Logging {
       (event -> url)
     }.toMap + (("impression" -> impression), ("clickThrough" -> clickThrough))
 
-    toJson(Map(
-      "file" -> toJson(media),
-      "trackingEvents" -> toJson(tracking)
-    )).as[JsObject]
+    VideoAdvert(media, tracking)
   }
 
-
-}
-
-object VideoAdvertAgent extends VideoAdvertAgent {
   def apply() = agent()
 }
+
+
