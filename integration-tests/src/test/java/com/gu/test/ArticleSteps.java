@@ -90,8 +90,7 @@ public class ArticleSteps {
 	@When("^I select the sectional \"([^\"]*)\"$")
 	public void I_select_sectional(String arg1) throws Throwable {
         By sectionalMostPopular=(By.xpath("//*[@id='js-popular-tabs']/li[2]/a"));
-        webDriver.waitForVisible(sectionalMostPopular);
-		webDriver.click(webDriver.findElement(sectionalMostPopular));
+		webDriver.jsClick(webDriver.findElement(sectionalMostPopular));
 	}
 
 	@When("^I select the pan-site \"([^\"]*)\"$")
