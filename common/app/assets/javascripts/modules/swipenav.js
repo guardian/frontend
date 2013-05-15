@@ -23,7 +23,7 @@ define([
         }
     }
 
-    function normalizeUrl(url) {
+    function urlAbsPath(url) {
         var a = document.createElement('a');
         a.href = url;
         a = a.pathname + a.search;
@@ -61,6 +61,9 @@ define([
                     // The CSS selector for the element in each pane that should receive the ajax'd in content
                     contentSelector: '*:first-child',
 
+                    // The config for the initial page.
+                    config: {},
+
                     // Initial sequence
                     sequence: []
                 },
@@ -80,6 +83,7 @@ define([
             sequenceCache,
             sequenceLen = 0,
             initiatedBy = 'initial',
+            initialUrl = urlAbsPath(window.location.href),
             noHistoryPush = false,
             visiblePane = $('#preloads-inner > #preload-1', contentArea)[0],
             panes,
@@ -223,11 +227,11 @@ define([
         }
 
         function setSequencePos(url) {
-            sequencePos = getSequencePos(normalizeUrl(url));
+            sequencePos = getSequencePos(urlAbsPath(url));
         }
 
         function getSequencePos(url) {
-            url = sequenceCache[normalizeUrl(url)];
+            url = sequenceCache[urlAbsPath(url)];
             return url ? url.pos : -1;
         }
 
@@ -332,7 +336,7 @@ define([
                 url = getAdjacentUrl(dir);
             }
 
-            url = normalizeUrl(url);
+            url = urlAbsPath(url);
 
             el = panes.masterPages[mod3(paneNow + dir)];
             
@@ -435,6 +439,9 @@ define([
         // Set the initial sequence
         setSequence(opts.sequence);
 
+        // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
+        sequenceCache[initialUrl].config = opts.config;
+
         // SwipeView init
         panes = new SwipeView(contentArea, {});
 
@@ -458,7 +465,7 @@ define([
 
         // Identify and decorate the initially visible pane
         visiblePane = panes.masterPages[1];
-        visiblePane.dataset.url = normalizeUrl(window.location.href);
+        visiblePane.dataset.url = initialUrl;
 
         // Set a body class. Might be useful.
         body.addClass('has-swipe');
@@ -484,9 +491,9 @@ define([
 
                 e.preventDefault();
 
-                url = normalizeUrl($(this).attr('href'));
+                url = urlAbsPath($(this).attr('href'));
 
-                if (url === normalizeUrl(window.location.href)) {
+                if (url === urlAbsPath(window.location.href)) {
                     // Force a complete reload if the link is for the current page
                     window.location.reload(true);
                 }
@@ -529,7 +536,7 @@ define([
             noHistoryPush = true;
 
             // Reveal the newly poped location
-            gotoUrl(normalizeUrl(window.location.href));
+            gotoUrl(urlAbsPath(window.location.href));
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
