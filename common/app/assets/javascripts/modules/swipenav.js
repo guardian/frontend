@@ -22,7 +22,6 @@ define([
         bodyPartSelector = '.parts__body',
         canonicalLink,
         clickSelector,
-        config = {}, // the current pane's config
         contentAreaTop,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
@@ -173,7 +172,8 @@ define([
     // Fire post load actions
     function doAfterShow (context) {
         var url,
-            div;
+            div,
+            config;
 
         throttle = false;
 
@@ -551,6 +551,8 @@ define([
             sequenceCache[initialUrl].config = config;
 
             start();
+
+            return api;
         });
     };
 
