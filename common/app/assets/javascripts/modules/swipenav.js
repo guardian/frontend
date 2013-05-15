@@ -89,7 +89,7 @@ define([
             panes,
             paneNow = 1,
             paneThen = 1,
-            pendingHTML = '<div class="preload-msg">Loading page...</div>',
+            pendingHTML = '<div class="preload-msg">Loading page...<div class="is-updating"></div></div>',
             visiblePaneMargin = 0,
             hiddenPaneMargin = 0;
 
@@ -149,6 +149,7 @@ define([
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
                         success: function (frag) {
+
                             var html;
 
                             delete el.pending;
