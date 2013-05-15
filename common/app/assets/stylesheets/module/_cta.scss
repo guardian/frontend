@@ -68,7 +68,7 @@
 /* Blue
    ========================================================================== */
 .cta--blue {
-  background-color: $blue;
+  background-color: $linkBlue;
 
   .cta__text {
     color: #fff;
@@ -124,8 +124,7 @@ i.is-open.cta__icn--right {
     @extend %type-8;
     display: block;
     color: #A1B7CF;
-    background-color: $darkBlue;
-    border-top: 1px solid #2B528B;
+    background-color: $linkBlue;
     padding: $baseline*2 $gutter $baseline*2 $gutter;
 }
 

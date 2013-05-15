@@ -2,7 +2,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0 0 $baseline*4 0;
-    background-color: $darkMushroom;
+    background-color: $linkBlue;
 }
 
 /* Uses an id as is used as fragment
@@ -10,7 +10,7 @@
 #footer-nav {
   float: right;
   width: 100%;
-  background-color: $blue;
+  background-color: $neutral8;
 }
 
 .footer > .nav {
@@ -21,18 +21,21 @@
   float: left;
   width: 48%;
   margin: 0;
+  padding-bottom: 18px;
 }
 
   .footer .nav--stacked li a {
-    @extend %type-10;
-    color: $blue;
+    @extend %type-11;
+    line-height: 24px;
+    color: #c3d5e5;
     margin-left: 0;
     border-top-color: #C0C9CE;
   }
 
-.footer p {
+.footer__terms {
     @include box-sizing(border-box);
     @extend %type-11;
+    line-height: 24px;
     width: 42%;
     margin: 0;
     padding: $baseline*2 $gutter 0 $gutter;
@@ -40,10 +43,17 @@
     color: $blue;
 }
 
-.footer p a {
-    line-height: 20px;
-    line-height: 2rem;
+.footer__terms a {
     display: block;
-    color: $blue;
-    text-decoration: underline;
+    color: #c3d5e5;
+}
+
+
+.footer__copyright {
+    @extend %type-13;
+    border-top: 1px solid #c3d5e5;
+    color: #c3d5e5;
+    clear: both;
+    margin: 0 $gutter;
+    padding: $baseline*2 0;
 }

@@ -40,7 +40,7 @@
 /* Columns
 ========================================================================== */
   .nav--columns {
-    padding: $baseline*2 $gutter $baseline $gutter;
+    padding: 0 $gutter;
   }
 
     .nav--columns-football {
@@ -60,13 +60,14 @@
       }
 
     .nav--columns .nav__link {
-      @extend %type-10;
-      padding: $baseline*2 0;
-      border-top: 1px solid $mushroom;
+      @include box-sizing(border-box);
+      @extend %type-7;
+      line-height: 36px;
+      color: $neutral3;
+      border-top: 1px solid $neutral6;
       display: block;
-      height: auto;
       background-color: transparent;
-      color: #333333;
+
     }
 
     .nav--columns li:nth-child(even) {
@@ -85,8 +86,7 @@
 ========================================================================== */
 
   .nav.nav--section-divider {
-    padding: $baseline*2 $gutter;
-    margin: 0;
+    padding: 0 $gutter;
     background-color: $mushroom;
   }
 
@@ -111,23 +111,22 @@
 
 /* Footer navigation
    ========================================================================== */
-.nav--footer,
-.nav--footer.nav--section-divider {
-  background-color: $blue;
-}
+  .nav--footer,
+  .nav--footer.nav--section-divider {
+    background-color: $neutral8;
+  }
 
   .nav--footer .nav__link {
-      color: #ffffff;
-      border-top: 1px solid #2B528B;
+
   }
 
   .nav--footer.nav--section-divider .nav__link {
-    border-bottom: 1px solid #2B528B;
+    border-bottom: 1px solid $neutral6;
   }
 
   .nav--footer.nav--section-divider {
       color: #ffffff !important;
-      border-top: 2px solid #2B528B;
+      border-top: 1px solid $neutral5;
   }
 
 
@@ -170,7 +169,7 @@
     display: block;
     margin: 10px 0 $baseline*3 0;
     padding: 2px $baseline*3 0 $baseline*3;
-    font-family: $serif !important;
+    font-family: $serif !important;@include font($serif, normal, 14, 36);
     font-size: 14px;
     text-decoration: none;
     color: #444444;
