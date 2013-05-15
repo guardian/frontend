@@ -40,7 +40,7 @@
             showFonts = false;
         }
 
-        function removeFallbackFont() {
+        function delayFontRender() {
             document.documentElement.className += ' delay-font-render';
             setTimeout(function() {
                 document.documentElement.className = document.documentElement.className.replace('delay-font-render', '');
@@ -73,17 +73,22 @@
 
             // This sledgehammers an AB test into localStorage for Omniture to pick up later.
             @if(FontDelaySwitch.isSwitchedOn) {
-                // If fonts not cached add user to the test.
-                if (fontsAlreadyCached === false) {
-                    if (Math.random() < 0.5) {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallbackAllUsers | nofallback');
-                        removeFallbackFont();
+                var inTest = localStorage.getItem('gu.fontdelaytest');
+                if (inTest) {
+                    if (inTest.indexOf('delay') > 0) {
+                        deleyFontRender();
+                    }
+                } else {
+                    if (Math.random() < 0.1) {
+                        localStorage.setItem('gu.webfontrendertest', 'AB | DelayFontAllPages | delay');
+                        delayFontRender();
                     } else {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | WebFontFallbackAllUsers | control');
+                        localStorage.setItem('gu.webfontrendertest', 'AB | DelayFontAllPages | control');
                     }
                 }
             } else {
                 localStorage.removeItem('gu.webfontrendertest');
+                localStorage.removeItem('gu.fontdelaytest');
             }
         }
     })();
