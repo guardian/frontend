@@ -179,7 +179,7 @@ define([
                             };
                         });
                     }
-                    Ophan.sendLog(config.referrer);
+                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined);
                 });
 
             });
