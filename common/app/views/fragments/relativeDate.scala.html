@@ -1,4 +1,4 @@
-@(webPublicationDate: org.joda.time.DateTime, isLive: Boolean = false, isFront: Boolean = false)
+@(webPublicationDate: org.joda.time.DateTime, isLive: Boolean = false, isFront: Boolean = false)(implicit request: RequestHeader)
 
 <p class="relative-timestamp type-11 @if(isFront){ front-timestamp}">
 	@if(isLive){ <i class="is-live-icon">LIVE</i> } else { <i class="i i-date"></i> }

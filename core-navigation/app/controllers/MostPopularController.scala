@@ -5,10 +5,10 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.MostPopularAgent
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
-object MostPopularController extends Controller with Logging {
+object MostPopularController extends Controller with Logging with ExecutionContexts {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/"),
@@ -20,7 +20,7 @@ object MostPopularController extends Controller with Logging {
 
 
   def render(path: String) = Action { implicit request =>
-    val edition = Site(request).edition
+    val edition = Edition(request)
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
     val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
     Async {
@@ -38,7 +38,7 @@ object MostPopularController extends Controller with Logging {
     }
   }
 
-  private def lookup(edition: String, path: String)(implicit request: RequestHeader) = {
+  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
     ContentApi.item(path, edition)
       .tag(None)

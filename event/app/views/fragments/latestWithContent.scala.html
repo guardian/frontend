@@ -1,8 +1,8 @@
-@(stories: Seq[Story])
+@(stories: Seq[Story])(implicit request: RequestHeader)
 
 @trail(content: Seq[model.Content], story: Story) = {
     @content.map{
-        case trail: Article => {
+        case trail @ (_: Article | _: Video) => {
             <li class="trail" data-link-name="trail">
 
                 @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)

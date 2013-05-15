@@ -1,6 +1,7 @@
 @(item: MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
 @import CommonSwitches.FontSwitch
+@import CommonSwitches.FontDelaySwitch
 
 <script id="gu">
     // we want this to happen ASAP to avoid FOUC
@@ -9,9 +10,7 @@
     var guardian = {
             isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window),
             css: {
-                article: '@Static("stylesheets/article.min.css")',
                 football: '@Static("stylesheets/football.min.css")',
-                front: '@Static("stylesheets/front.min.css")',
                 gallery: '@Static("stylesheets/gallery.min.css")',
                 story: '@Static("stylesheets/story.min.css")',
                 video: '@Static("stylesheets/video.min.css")'
@@ -41,7 +40,16 @@
             showFonts = false;
         }
 
+        function delayFontRender() {
+            document.documentElement.className += ' delay-font-render';
+            setTimeout(function() {
+                document.documentElement.className = document.documentElement.className.replace('delay-font-render', '');
+            }, 3000);
+        }
+
         if (showFonts) {
+            var fontsAlreadyCached = false;
+
             var start = (new Date().getTime());
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
@@ -51,7 +59,8 @@
                 if (cachedCss) {
                     style.innerHTML = cachedCss;
                     style.setAttribute('data-cache-full', 'true');
-                    document.querySelector('html').className += ' font-' + name + '-loaded';
+                    document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
+                    fontsAlreadyCached = true;
                 }
             }
             var fontTime = (new Date().getTime()) - start;
@@ -60,6 +69,26 @@
                 img.style = "display: none";
                 img.src = "//beacon." + window.location.hostname +  "/px.gif?fonts/&fonttime=" + fontTime;
                 document.getElementsByTagName("head")[0].appendChild(img);
+            }
+
+            // This sledgehammers an AB test into localStorage for Omniture to pick up later.
+            @if(FontDelaySwitch.isSwitchedOn) {
+                var inTest = localStorage.getItem('gu.fontdelaytest');
+                if (inTest) {
+                    if (inTest.indexOf('delay') > 0) {
+                        delayFontRender();
+                    }
+                } else {
+                    if (Math.random() < 0.01) {
+                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | delay');
+                        delayFontRender();
+                    } else {
+                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | control');
+                    }
+                }
+            } else {
+                localStorage.removeItem('gu.webfontrendertest');
+                localStorage.removeItem('gu.fontdelaytest');
             }
         }
     })();

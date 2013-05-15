@@ -5,27 +5,27 @@ import model._
 import conf._
 import com.gu.openplatform.contentapi.model.ItemResponse
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 
-case class ArticlePage(article: Article, storyPackage: List[Trail], edition: String)
+case class ArticlePage(article: Article, storyPackage: List[Trail])
 
 case class ZoneColour(className: String, selectors: List[String], zoneName: String, hexCode: String)
 
-object StyleGuideController extends Controller with Logging {
+object StyleGuideController extends Controller with Logging with ExecutionContexts {
 
   def renderIndex = Action { implicit request =>
     val page = Page(canonicalUrl = None, "style-guide", "style-guide", "Style guide: home", "GFE:Style-guide")
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.index(page)))
+      Ok(views.html.styleGuide.index(page))
     }
   }
 
   def renderTypography = Action { implicit request =>
     val page = Page(canonicalUrl = None, "typography", "style-guide", "Typography", "GFE:Style-guide:typography")
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.typography(page)))
+      Ok(views.html.styleGuide.typography(page))
     }
   }
 
@@ -45,14 +45,14 @@ object StyleGuideController extends Controller with Logging {
     )
 
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.zones(page, zoneList)))
+      Ok(views.html.styleGuide.zones(page, zoneList))
     }
   }
 
   def renderSprites = Action { implicit request =>
     val page = Page(canonicalUrl = None, "sprites", "style-guide", "CSS sprites", "GFE:Style-guide:sprites")
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.sprites(page)))
+      Ok(views.html.styleGuide.sprites(page))
     }
   }
 
@@ -65,8 +65,8 @@ object StyleGuideController extends Controller with Logging {
   }
 
   private def lookupSingleArticle(path: String)(implicit request: RequestHeader) = {
-    val edition = Site(request).edition
-    log.info(s"Fetching article: $path for edition $edition")
+    val edition = Edition(request)
+    log.info(s"Fetching article: $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .showInlineElements("picture")
       .showTags("all")
@@ -74,7 +74,7 @@ object StyleGuideController extends Controller with Logging {
       .response.map{response =>
         val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
         val storyPackage = response.storyPackage map { new Content(_) }
-        articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id), edition) }
+        articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
     }
   }
 
@@ -82,21 +82,21 @@ object StyleGuideController extends Controller with Logging {
     val page = Page(canonicalUrl = None, "modules", "style-guide", "Modules", "GFE:Style-guide:modules")
 
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.modules(page, model.article, model.edition, model.storyPackage)))
+      Ok(views.html.styleGuide.modules(page, model.article, model.storyPackage))
     }
   }
 
   def cssHelpers = Action { implicit request =>
     val page = Page(canonicalUrl = None, "css-helpers", "style-guide", "CSS helpers", "GFE:Style-guide:css-helpers")
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.csshelpers(page)))
+      Ok(views.html.styleGuide.csshelpers(page))
     }
   }
 
   def codingStandards = Action { implicit request =>
     val page = Page(canonicalUrl = None, "coding-standards", "style-guide", "Coding standards", "GFE:Style-guide:coding-standards")
     Cached(60) {
-      Ok(Compressed(views.html.styleGuide.codingstandards(page)))
+      Ok(views.html.styleGuide.codingstandards(page))
     }
   }
 

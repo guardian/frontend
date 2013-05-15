@@ -14,20 +14,24 @@ define([
 
         initAdverts: function(config) {
             common.mediator.on('page:video:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(config.switches.videoAdverts && !config.page.blockAds && config.page.videoAd) {
                     var support = detect.getVideoFormatSupport();
                     var a = new Advert({
                         el: context.querySelector('.player video'),
-                        support: support
-                    }).init();
+                        support: support,
+                        config: config,
+                        context: context
+                    }).init(config.page.videoAd);
+                } else {
+                    common.mediator.emit("video:ads:finished", config, context);
                 }
             });
         },
 
         initAnalytics: function () {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('video:ads:finished', function(config, context) {
                 var v = new Videostream({
-                    id: config.page.id,
+                    id: config.page.pageId,
                     el: context.querySelector('.player video'),
                     ophanUrl: config.page.ophanUrl
                 });

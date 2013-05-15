@@ -9,6 +9,7 @@ import com.gu.openplatform.contentapi.model.MediaAsset
 import model.Image
 import scala.Some
 import model.Tag
+import common.editions.Uk
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
 
@@ -146,15 +147,15 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   }
 
   "SafeName" should "understand the Javascript name of top stories" in {
-    SafeName(TrailblockDescription("", "News", 3)) should be("top-stories")
+    SafeName(ItemTrailblockDescription("", "News", 3)(Uk)) should be("top-stories")
   }
 
   it should "understand a section" in {
-    SafeName(TrailblockDescription("sport", "Sport", 3)) should be("sport")
+    SafeName(ItemTrailblockDescription("sport", "Sport", 3)(Uk)) should be("sport")
   }
 
   it should "understand a tag" in {
-    SafeName(TrailblockDescription("sport/triathlon", "Sport", 3)) should be("sport-triathlon")
+    SafeName(ItemTrailblockDescription("sport/triathlon", "Sport", 3)(Uk)) should be("sport-triathlon")
   }
 
   "StripHtmlTags" should "strip html from string" in {

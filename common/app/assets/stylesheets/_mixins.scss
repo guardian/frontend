@@ -21,6 +21,12 @@
     -moz-transition: $args;
 }
 
+@mixin transform($args) {
+    transform: $args;
+    -webkit-transform: $args;
+    -moz-transform: $args;
+}
+
 @mixin rounded-corners($radius: 5px) {
   border-radius: $radius;
   -webkit-border-radius: $radius;

@@ -11,7 +11,6 @@ $orange: #FF7F00;
   padding: 12px 0 32px 0;
   min-height: 100px;
   margin: 0 10px;
-  border-bottom: 1px solid #9D9D9D;
   @include box-sizing(border-box);
 }
 
@@ -21,7 +20,7 @@ $orange: #FF7F00;
   padding: 0 0 6px 0;
   border-top: 1px solid #9D9D9D;
   border-bottom: 1px dotted #9D9D9D;
-  min-height: 32px;
+  min-height: 36px;
 }
 
 .story-title--indent {
@@ -33,16 +32,14 @@ $orange: #FF7F00;
   color: #fff;
 }
 
-.story-sub-head {
-  @extend %type-6;
-  color: $orange;
-  margin-bottom: $baseline*2;
+.story-overview .story-title {
+  margin-bottom: 12px;
 }
 
 /* ==========================================================================
-   Story-latest article
+   Story articles
    ========================================================================== */
-.story-latest {
+.story-container {
 
   .article-head {
     padding: 0px 10px;
@@ -59,10 +56,10 @@ $orange: #FF7F00;
   .article-headline {
     min-height:60px;
     font-family: $serifheadline;
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    padding: 0 0 16px 0;
+    font-weight: normal;
+    font-size: 2.4rem;
+    line-height: 2.9rem;
+    padding: 0;
     margin-bottom: 12px;
     @include box-sizing(border-box);
   }
@@ -82,6 +79,20 @@ $orange: #FF7F00;
     font-size: 1.6rem;
     line-height: 2.4rem;
     color: #000;
+  
+    p {
+	  margin-bottom:0;
+	  text-indent:$gutter*1.5;
+	}
+      
+    p:first-of-type {
+      text-indent:0;
+    }
+	  
+	p:last-child {
+	  margin-bottom:8px
+	}
+	  
   }
 
 }
@@ -127,7 +138,7 @@ $orange: #FF7F00;
   font-weight: 200;
   font-size: 2rem;
   line-height: 2.4rem;
-  margin: 0 0 44px 0;
+  margin: 0 0 4px 0;
   color: #000;
 }
 
@@ -141,10 +152,9 @@ $orange: #FF7F00;
 }
 
   .story-quote__cite {
-    position: absolute;
-    bottom: 48px;
-    left: 2px;
-    margin-bottom: 0px;
+    display:block;
+    margin-left: 2px;
+    margin-bottom: 15px;
     font-family: $serifheadline;
     font-weight: 600;
     font-size: 1.6rem;
@@ -191,7 +201,7 @@ $orange: #FF7F00;
    ========================================================================== */
 .story-map {
   position: relative;
-  margin: $baseline*4 $gutter $baseline*4 $gutter;
+  margin: $baseline*3 10px;
 }
 
 .map-detail {
@@ -219,6 +229,7 @@ $orange: #FF7F00;
   margin-bottom: 12px;
 
   .story-title--white {
+    padding-left: 2px;
     background-color: #333333;
   }
 
@@ -246,7 +257,6 @@ $orange: #FF7F00;
 .js-swipe__item {
   float:left;
   width:100%;
-  min-height: 424px;
   position: relative;
   padding: 0 2px 0 2px;
   @include box-sizing(border-box);
@@ -256,6 +266,30 @@ $orange: #FF7F00;
   margin: 0 auto;
   max-width: 100%;
   max-height: 200px;
+
+  @media only screen and (min-width: $tablet) {
+    max-height: 400px;
+  }
+
+  @media only screen and (min-width: $desktop) {
+    max-height: 600px;
+  }
+}
+
+.story-picture--sheet {
+  padding: 2px;
+
+  img {
+    width: 49.5%;
+    float:left;
+    margin-bottom: 2px;
+  }
+
+  img:first-child {
+    width: 100%;
+  }
+
+  img:nth-child(even) { margin-right: 1%; }
 }
 
 .story-picture__caption {
@@ -273,13 +307,17 @@ $orange: #FF7F00;
   margin-bottom: 12px;
 }
 
+.story-agents figcaption:before {
+	background-image:none;
+}
+
 .agent__name,
 .agent__name a,
 .agent__role {
   margin: 0px;
   font-family: $serifheadline;
   font-weight: 600;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.2em;
   color: #000;
 }
@@ -291,9 +329,13 @@ $orange: #FF7F00;
 .agent__body {
   margin-top: 12px;
   font-family: $sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
   color: #000;
+}
+
+.story-agents .cta-new__text--center {
+  color: #929396;
 }
 
 /* ==========================================================================
@@ -346,6 +388,28 @@ $orange: #FF7F00;
   }
 }
 
+.cta-new__btn--wide {
+	width:100%;
+	text-align:left;
+	padding:0 5px;
+	height:26px;
+	
+	.cta-new__text {
+        color: #005689;
+	}
+}
+
+.cta-new--blue {
+  background-color: #00638E;
+
+  .cta-new__text {
+    color: #fff;
+  }
+  .cta-new__btn--right {
+    border-color: #fff;
+  }
+}
+
 .is-open .cta-new__btn i {
   @include rotate(180deg);
 }
@@ -363,9 +427,27 @@ $orange: #FF7F00;
 
   .i {
     left: 2px;
-    bottom: 8px;
-    @include rotate(-90deg);
   }
+}
+
+.cta-new__icn-container {
+    display:block;
+    width:60px;
+    height:31px;
+    position:absolute;
+    top:0;
+    right:0;
+    border-left:1px dotted #676767;
+}
+
+.cta-new__icn-container--blue{
+    border-left:1px solid #ffffff;
+}
+
+.cta-new__icn--right,
+i.is-open.cta-new__icn--right {
+  bottom: 8px !important;
+  @include rotate(-90deg);
 }
 
 .cta-new__btn--left {
@@ -377,4 +459,81 @@ $orange: #FF7F00;
     bottom: 8px;
     @include rotate(90deg);
   }
+}
+
+/* ==========================================================================
+   Tabs 
+   ========================================================================== */
+
+.tabs-container {
+    padding: 0;
+}
+
+.story-tabs-container .update {
+    margin-top: 8px;
+}
+
+.story-live .article-zone, .story-live .article-head {
+    display: none;
+}
+
+.story-live .social {
+    display: none;
+}
+
+.story-live .block:nth-child(n+20) {
+    display: none;
+}
+
+.story-tabs-container .tabs {
+    margin: 0 10px 0 10px;
+    margin-bottom: 16px;
+}
+
+.story-tabs-container .tabs li {
+    border-bottom:1px solid $darkMushroom;
+    @include box-sizing(border-box);
+}
+.story-tabs-container .tabs li:first-child{
+    border-right:1px solid $darkMushroom;	
+}
+
+.story-tabs-container .tabs li.tabs-selected {
+    border-top:1px solid $darkMushroom;
+    border-bottom:none;
+}
+
+.story-tabs-container .tabs a {
+    text-align: left;
+    margin: 0px; 
+    padding: 4px 0px 15px 4px;
+    font-weight:normal;
+    font-size:1.4rem;
+}
+
+.story-tabs-container .tabs-selected a {
+	padding-top:3px;
+    background-color: #ffffff;
+}
+
+.story-tabs-container .tabs li {
+    background-color: #eeeeee;
+}
+
+.story-container .site-message__body {
+	padding:5px;
+	color:#ffffff;
+	font-weight:500;
+}
+.cta-new--story {
+	border-top:1px solid #ffffff;
+}
+.cta-new--story a {
+	padding-left:5px;
+	display:block;
+	position:relative;
+	padding-bottom:9px;
+}
+.cta-new--story .cta-new__icn--right{
+	position:absolute;
 }

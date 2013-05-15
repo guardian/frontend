@@ -6,10 +6,10 @@ import conf.ContentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 import akka.actor.Cancellable
 import common._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 
-object MostPopularAgent extends AkkaSupport with Logging {
+object MostPopularAgent extends AkkaSupport with Logging with ExecutionContexts {
 
   private val agent = play_akka.agent[Map[String, Seq[Trail]]](Map.empty)
 
@@ -17,20 +17,19 @@ object MostPopularAgent extends AkkaSupport with Logging {
     refresh()
   }
 
-  def mostPopular(edition: String) = agent().get(edition)
+  def mostPopular(edition: Edition) = agent().get(edition.id)
 
   def refresh() {
-    refresh("UK")
-    refresh("US")
+    Edition.all.foreach(refresh)
   }
 
   def await() { quietly(agent.await(2.seconds)) }
 
-  private def refresh(edition: String) {
+  private def refresh(edition: Edition) {
     ContentApi.item("/", edition).showMostViewed(true).response.foreach{ response =>
       val mostViewed = response.mostViewed map { new Content(_) } take (10)
       agent.send{ old =>
-        old + (edition -> mostViewed)
+        old + (edition.id -> mostViewed)
       }
     }
   }

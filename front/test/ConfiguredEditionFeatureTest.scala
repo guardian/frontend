@@ -3,8 +3,9 @@ package test
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 
 import controllers.front.{TrailblockAgent, ConfiguredEdition}
-import model.TrailblockDescription
+import model.{ItemTrailblockDescription, TrailblockDescription}
 import org.scalatest.matchers.ShouldMatchers
+import common.editions.{Us, Uk}
 
 class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -15,7 +16,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       Given("I visit the Network Front")
       And("I am on the UK edition")
       Fake {
-        val front = new ConfiguredEdition("UK", Nil) {
+        val front = new ConfiguredEdition(Uk, Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json"
         }
 
@@ -23,7 +24,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         loadOrTimeout(front)
 
         Then("I should see the configured feature trailblock")
-        front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("politics", "Politics", 3)))
+        front.configuredTrailblocks.map(_.description) should be(Seq(ItemTrailblockDescription("politics", "Politics", 3)(Uk)))
       }
     }
 
@@ -32,7 +33,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       Given("I visit the Network Front")
       And("I am on the US edition")
       Fake {
-        val front = new ConfiguredEdition("US", Nil) {
+        val front = new ConfiguredEdition(Us, Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-test.json"
         }
 
@@ -40,7 +41,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
         loadOrTimeout(front)
 
         Then("I should see the configured feature trailblock")
-        front.configuredTrailblocks.map(_.description) should be(Seq(TrailblockDescription("world/iraq", "Iraq", 3, showMore = true)))
+        front.configuredTrailblocks.map(_.description) should be(Seq(ItemTrailblockDescription("world/iraq", "Iraq", 3, showMore = true)(Us)))
       }
     }
 
@@ -49,7 +50,7 @@ class ConfiguredEditionFeatureTest extends FeatureSpec with GivenWhenThen with S
       Given("I visit the Network Front")
       And("the feature trailblock has broken confiuration")
       Fake {
-        val front = new ConfiguredEdition("US", Nil) {
+        val front = new ConfiguredEdition(Us, Nil) {
           override val configUrl = "http://s3-eu-west-1.amazonaws.com/aws-frontend-store/TMC/config/front-bad-does-not-exist.json"
         }
 

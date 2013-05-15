@@ -1,14 +1,14 @@
 package controllers
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import play.api.mvc.{ Controller, Action, _ }
 import play.api.libs.ws.WS
 import scala.language.reflectiveCalls
-import play.api.libs.concurrent.Execution.Implicits._
+
 import org.im4java.core.{ IMOperation }
 import model._
 
-object ImageController extends Controller with Logging with Implicits {
+object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
 
   // URL validation: We're only going to accept proxy paths that match [/\w\.-]*
   val Path = """([/\w\.-]*)""".r

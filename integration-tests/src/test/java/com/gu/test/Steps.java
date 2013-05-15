@@ -52,7 +52,7 @@ public class Steps {
 	@Then("^the \"(Top stories|Sections)\" tab is (hidden|shown)$")
 	public void tab_is(String tabName, String tabState) throws Throwable {
 		String tabId = "control--" + tabName.toLowerCase().replace(" ", "");
-	    WebElement tab = webDriver.findElement(By.className(tabId));
+	    WebElement tab = webDriver.waitForElement(By.className(tabId));
 	    // confirm element is shown/hidden
 	    assertEquals(tabState.equals("shown"), tab.isDisplayed());
 	}
@@ -82,7 +82,7 @@ public class Steps {
 		for (int i = 0; i < numOfTests; i++) {
 			WebElement test = webDriver.findElements(By.cssSelector("#tests a")).get(i);
 			String testName = test.getText();
-			test.click();
+			webDriver.jsClick(test);
 			// wait for 'duration' element, i.e. end of test (up to 10secs)
 			webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
 			// get any error messages

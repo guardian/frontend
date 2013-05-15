@@ -3,56 +3,64 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     var Control = function () {
 
         var self = this,
-            delay = 400,
-            lastClickTime = 0;
+            contexts = {};
 
         this.init = function(context) {
-            Array.prototype.forEach.call(context.querySelectorAll('.control'), function(control){
-                var toggler =  common.rateLimit(function() {
-                    self.toggle(control, context);
-                    common.mediator.emit('modules:control:change');
+            var id = context.id,
+                controls;
+
+            if(id && !contexts[id]){
+                controls = context.querySelectorAll('.control');
+                contexts[id] = controls;
+                Array.prototype.forEach.call(controls, function(control) {
+                    var popup = self.getPopup(control, context);
+
+                    if(popup){
+                        control.popup = popup;
+                        bean.add(control, 'click touchstart', function (e) {
+                            e.preventDefault();
+                            self.toggle(control, controls);
+                            common.mediator.emit('modules:control:change');
+                        });
+                    }
                 });
-                bean.add(control, 'click touchstart', function (e) {
-                    toggler();
-                    e.preventDefault();
-                });
-            });
+            }
+
+            for (var c in contexts) {
+                if (c !== id) {
+                    Array.prototype.forEach.call(contexts[c], self.close);
+                }
+            }
         };
     };
 
-    Control.prototype.toggle = function(control, context) {
+    Control.prototype.toggle = function(control, controls) {
         var self = this;
-        Array.prototype.forEach.call(context.querySelectorAll('.control'), function(c){
+        Array.prototype.forEach.call(controls, function(c){
             if (c === control) {
-                self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c, context);
+                self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c);
             }
             else {
-                self.close(c, context);
+                self.close(c);
             }
         });
     };
 
-    Control.prototype.getTarget = function(control, context) {
-        var targetClass = bonzo(control).data('control-for');
-        if (targetClass) {
-            return context.querySelector('.' + targetClass);
+    Control.prototype.getPopup = function(control, context) {
+        var popupClass = bonzo(control).data('control-for');
+        if (popupClass) {
+            return context.querySelector('.' + popupClass);
         }
     };
 
-    Control.prototype.open = function(c, context) {
-        var target = this.getTarget(c, context);
-        if (target) {
-            bonzo(c).addClass('is-active');
-            bonzo(target).removeClass('is-off');
-        }
+    Control.prototype.open = function(c) {
+        bonzo(c).addClass('is-active');
+        bonzo(c.popup).removeClass('is-off');
     };
     
-    Control.prototype.close = function(c, context) {
-        var target = this.getTarget(c, context);
-        if (target) {
-            bonzo(c).removeClass('is-active');
-            bonzo(target).addClass('is-off');
-        }
+    Control.prototype.close = function(c) {
+        bonzo(c).removeClass('is-active');
+        bonzo(c.popup).addClass('is-off');
     };
 
     return Control;

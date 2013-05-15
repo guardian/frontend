@@ -4,7 +4,7 @@
 
     <section class="story-reactions">
         <h2 class="story-title story-title--section story-title--indent">
-            @story.labels.getOrElse("reaction", "Reaction")
+            @story.labels.getOrElse("reaction", "Comment")
         </h2>
         <ul class="unstyled">
             @story.reaction.take(4).map{ a => 
@@ -19,7 +19,7 @@
                     <a class="cta-new" data-link-name="Continue reading" href="@a.url">
                         Continue reading
                         <button class="cta-new__btn cta-new__btn--right">
-                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                            <i class="i i-arrow-blue-down cta-new__icn cta-new__icn--right"></i>
                         </button>
                     </a>
                 </li>

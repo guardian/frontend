@@ -55,7 +55,7 @@ object JsonComponent extends Results {
     Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
         // compress and take the body if value is Html
-        case (name, html: Html) => (name -> toJson(Compressed(html).body))
+        case (name, html: Html) => (name -> toJson(html.body))
         case (name, value: String) => (name -> toJson(value))
         case (name, value: Boolean) => (name -> toJson(value))
         case (name, value: Int) => (name -> toJson(value))

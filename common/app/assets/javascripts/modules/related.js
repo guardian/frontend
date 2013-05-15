@@ -3,7 +3,7 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
     function related(config, context, url) {
         var container;
 
-        if (config.page.hasStoryPackage) {
+        if (config.page && config.page.hasStoryPackage) {
 
             new Expandable({
                 dom: context.querySelector('.related-trails'),
@@ -12,7 +12,7 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
             }).init();
             common.mediator.emit('modules:related:loaded', config, context);
 
-        } else if (config.switches.relatedContent) {
+        } else if (config.switches && config.switches.relatedContent) {
 
             container = context.querySelector('.js-related');
             if (container) {
@@ -29,6 +29,6 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
         }
 
     }
-    
+
     return related;
 });

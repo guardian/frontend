@@ -5,9 +5,10 @@ import org.apache.commons.codec.digest.DigestUtils
 import io.Source
 import com.gu.openplatform.contentapi.connection.HttpResponse
 import concurrent.Future
-import play.api.libs.concurrent.Execution.Implicits._
+import common.ExecutionContexts
 
-trait HttpRecorder {
+
+trait HttpRecorder extends ExecutionContexts {
 
   def baseDir: File
 

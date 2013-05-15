@@ -5,7 +5,7 @@
         case a: Article => {
             <article id="article" class="article @if(a.isLive){is-live}">
                 <header class="article-head">
-                    @fragments.dateline(a.webPublicationDate, a.isLive, page.edition)
+                    @fragments.dateline(a.webPublicationDate, a.isLive)
 
                    <h2 class="article-headline">@a.headlineOverride</h2>
 
@@ -28,11 +28,11 @@
                             BlockNumberCleaner,
                             TweetCleaner,
                             WitnessCleaner,
-                            Summary(paras)
+                            Summary(if(a.isLive){ 1 } else { paras})
                         )
                     </div>
                     <p>
-                        <a class="cta-new js-continue" data-link-name="Continue reading" data-skip-paras="@paras" href="@a.url">
+                        <a class="cta-new js-continue" data-link-name="Continue reading" data-is-ajax data-skip-paras="@paras" href="@a.url">
                             <span class="cta-new__text">Continue reading</span>
                             <button class="cta-new__btn cta-new__btn--right">
                                 <i class="i i-arrow-blue-down cta-new__icn"></i>
@@ -41,9 +41,7 @@
                     </p>
                 </div>
 
-                @defining(page.canonicalUrl.getOrElse(Site(request).host + "/" + page.id)) { url =>
-                    @fragments.social(url, story.title)
-                }
+                @fragments.social(page)
             </article>
         }
     }

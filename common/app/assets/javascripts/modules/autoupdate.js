@@ -19,10 +19,11 @@ define([
 ) {
     /*
         @param {Object} options hash of configuration options:
-            path    : {String}              Endpoint path to ajax request,
-            delay   : {Number}              Timeout in milliseconds to query endpoint,
-            attachTo: {DOMElement|Object}   DOMElement or list of elements insert response into
-            switches: {Object}              Global swicthes object
+            path             : {String}              Endpoint path to ajax request,
+            delay            : {Number}              Timeout in milliseconds to query endpoint,
+            attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
+            switches         : {Object}              Global swicthes object
+            loadOnInitialise : {Number}              Make the first request when the module is created
     */
     function Autoupdate(config) {
 
@@ -47,16 +48,23 @@ define([
 
                 //Check if we are handling single fragment
                 if(attachTo.nodeType) {
-                    attachTo.innerHTML = res.html;
-
+                    var $attachTo = bonzo(attachTo);
+                    // in case we don't want to show the full response
+                    if (options.responseSelector) {
+                        $attachTo.html(common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
+                    } else {
+                        $attachTo.html(res.html);
+                    }
                     // add a timestamp to the attacher
-                    bonzo(attachTo).attr('data-last-updated', date);
-                //Multiple frgamnets to update
+                    $attachTo.attr('data-last-updated', date);
+                //Multiple fragments to update
                 } else {
+                    var response = bonzo.create('<div>' + res.html + '<div>');
                     for (var view in attachTo) {
                         if(attachTo.hasOwnProperty(view)) {
-                            attachTo[view].innerHTML = res[view];
-                            bonzo(attachTo[view]).attr('data-last-updated', date);
+                            var html = common.$g(options.responseSelector[view], response[0]);
+                            bonzo(attachTo[view]).html(html)
+                                .attr('data-last-updated', date);
                         }
                     }
                 }
@@ -140,6 +148,7 @@ define([
             }
 
             var that = this,
+                loadOnInitialise = options.loadOnInitialise || false,
                 pref = this.getPref();
 
             // add the component to the page, and show it
@@ -163,6 +172,11 @@ define([
                 this.view.toggle.call(this, this.btns[0]);
             } else {
                 this.view.toggle.call(this, this.btns[1]);
+            }
+
+             
+            if (loadOnInitialise) {
+                that.load.call(that);
             }
         };
 

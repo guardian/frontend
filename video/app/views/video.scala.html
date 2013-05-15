@@ -1,7 +1,7 @@
-@(video: Video, storyPackage: List[Trail], edition: String)(implicit request: RequestHeader)
+@(page: VideoPage)(implicit request: RequestHeader)
 
-@main(video, Switches.all){ }{
+@main(page.video, Switches.all){ }{
 
-    @fragments.videoBody(video, storyPackage, edition)
+    @fragments.videoBody(page)
 
 }

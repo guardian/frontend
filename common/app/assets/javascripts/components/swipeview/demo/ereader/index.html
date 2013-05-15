@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>SwipeView</title>
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="../../src/swipeview.js"></script>
+
+<script type="text/javascript">
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+window.addEventListener('load', function () {
+	var	ereader,
+		el,
+		i,
+		pageIndex,
+		pages = [],
+		req = new XMLHttpRequest();
+
+	ereader = new SwipeView('#wrapper', { hastyPageFlip:true });
+
+	// Ajax request
+	req.open('GET', 'flowers.txt', true);
+	req.onreadystatechange = function () {
+		if (req.readyState != 4) return;
+
+		paginate(req.status != 200 && req.status != 304 ? false : req.responseText);
+
+		req = null;
+	}
+	req.send(null);
+
+	function paginate(book) {
+		var that = this,
+			container,
+			helper,
+			words = [],
+			segment,
+			wordCount = 80,
+			avgWordCount = 0,
+			progressTotal = 0,
+			progressCurrent = 0,
+			progressMaxWidth = document.getElementById('progressbar').clientWidth,
+			progressToBookRatio = 0,
+			progressBar = document.querySelector('#progressbar > span'),
+			size;
+
+		if (!book) return;
+
+		book = book.replace(/\n\n/g, ' <br><br>').replace(/\n/g, ' ');
+		progressTotal = book.length;
+		progressToBookRatio = progressMaxWidth / book.length;
+
+		container = document.createElement('div');
+		container.style.visibility = 'hidden';
+		container.innerHTML = '<div id="ereader-helper"></div>';
+		ereader.slider.appendChild(container);
+		helper = document.getElementById('ereader-helper');
+		helper.innerHTML = '';
+
+		var loopy = function () {
+			words = book.split(' ', wordCount);
+			segment = words.join(' ');
+			helper.innerHTML = segment;
+
+			if (helper.offsetHeight > ereader.wrapperHeight) {
+				if (size == -1) {
+					words.pop();
+					segment = words.join(' ');
+
+					pages.push(segment);
+					book = book.substr(segment.length);
+					avgWordCount = Math.round((wordCount + avgWordCount)/2);
+					wordCount = avgWordCount;
+					size = 0;
+					progressTotal -= segment.length;
+				} else {
+					size = 1;
+					wordCount--;
+				}
+			} else {
+				if (size == 1) {
+					pages.push(segment);
+					book = book.substr(segment.length);
+					avgWordCount = Math.round((wordCount + avgWordCount)/2);
+					wordCount = avgWordCount;
+					size = 0;
+					progressTotal -= segment.length;
+				} else {
+					if (segment == book) {
+						pages.push(segment);
+						book = '';
+					}
+
+					size = -1;
+					wordCount++;
+				}
+			}
+			
+			if (book) {
+				progressBar.style.width = 150 - Math.round(progressToBookRatio * progressTotal) + 'px';
+				setTimeout(loopy, 1);
+			} else {
+				book = null;
+				words = null;
+				segment = null;
+				helper.innerHTML = '';
+				ereader.slider.removeChild(container);
+
+				ereader.updatePageCount(pages.length);
+				ereader.masterPages[0].dataset.pageIndex = pages.length-1;
+				ereader.masterPages[0].dataset.upcomingPageIndex = ereader.masterPages[0].dataset.pageIndex;
+
+				// Load initial data
+				for (i=0; i<3; i++) {
+					pageIndex = i==0 ? pages.length-1 : i-1;
+					el = document.createElement('div');
+					el.innerHTML = pages[pageIndex];
+					ereader.masterPages[i].appendChild(el)
+				}
+
+				document.getElementById('loading').style.display = 'none';
+			}
+		}
+		
+		loopy();
+	}
+
+	ereader.onFlip(function () {
+		var el,
+			upcoming,
+			i;
+
+		for (i=0; i<3; i++) {
+			upcoming = ereader.masterPages[i].dataset.upcomingPageIndex;
+
+			if (upcoming != ereader.masterPages[i].dataset.pageIndex) {
+				el = ereader.masterPages[i].querySelector('div');
+				el.innerHTML = pages[upcoming];
+			}
+		}
+	});
+}, false);
+</script>
+</head>
+
+<body>
+	<div id="loading">
+		<p>Paginating. Please wait...</p>
+		<div id="progressbar"><span></span></div>
+	</div>
+	<div id="wrapper"></div>
+</body>
+</html>

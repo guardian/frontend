@@ -5,7 +5,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class GalleryPage(
@@ -14,7 +14,7 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)
 
-object GalleryController extends Controller with Logging {
+object GalleryController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
 
@@ -25,7 +25,7 @@ object GalleryController extends Controller with Logging {
 
     Async {
       promiseOfGalleryPage.map {
-        case Left(model) if model.gallery.isExpired => Gone(Compressed(views.html.expired(model.gallery)))
+        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
         case Left(model) => renderGallery(model)
         case Right(notFound) => notFound
       }
@@ -33,7 +33,7 @@ object GalleryController extends Controller with Logging {
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
-    val edition = Site(request).edition
+    val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)

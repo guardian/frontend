@@ -39,13 +39,14 @@ define([
                         path: window.location.pathname,
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
-                        switches: config.switches
+                        switches: config.switches,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });
         },
 
-        logReading: function() {
+        logReading: function(context) {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
@@ -68,7 +69,7 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading();
+            modules.logReading(context);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

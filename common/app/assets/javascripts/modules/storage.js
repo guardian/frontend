@@ -96,6 +96,7 @@ define(['common'], function (common) {
                 case 'gu.ads.audsci':
                 case 'gu.prefs.ab.participation':
                 case 'gu.prefs.ab.current':
+                case 'gu.prefs.aware':
                     type = 'object';
                     break;
                 case 'gu.prefs.switch.shared-wisdom-toolbar':
@@ -106,6 +107,16 @@ define(['common'], function (common) {
             w.localStorage.removeItem(key);
             w.localStorage.setItem(key, data + '|' + type);
             return type;
+        },
+
+        clearByPrefix: function(prefix) {
+            // Loop in reverse because storage indexes will change as you delete items.
+            for (var i = storage.length() - 1; i > -1; --i) {
+                var name = storage.getKey(i);
+                if (name.indexOf(prefix) === 0) {
+                    storage.remove(name);
+                }
+            }
         }
             
     };
