@@ -9,7 +9,6 @@ define([
     //Modules
     'modules/storage',
     'modules/detect',
-    'modules/pageconfig',
     'modules/popular',
     'modules/related',
     'modules/router',
@@ -40,7 +39,6 @@ define([
 
     storage,
     detect,
-    pageConfig,
     popular,
     related,
     Router,
@@ -213,63 +211,8 @@ define([
 
         initSwipe: function(config) {
             if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.canSwipe()) {
-                modules.getSwipeSequence(function(sequence){
-                    modules.startSwipe(sequence, config);
-                });
+                swipeNav(config);
             }
-        },
-
-        getSwipeSequence: function(callback) {
-            var path = window.location.pathname;
-            ajax({
-                url: '/front-trails' + (path === '/' ? '' : path),
-                type: 'jsonp',
-                success: function (json) {
-                    if (json.stories && json.stories.length >= 3) {
-                        callback(json.stories);
-                    }
-                }
-            });
-        },
-
-        startSwipe: function(sequence, config) {
-            var clickSelector = '',
-                opts,
-                referrer = window.location.href,
-                referrerPageName = config.page.analyticsName;
-
-            if (config.switches.swipeNavOnClick && userPrefs.isOn('swipe-nav-on-click')) {
-                clickSelector = 'a:not(.control)';
-            }
-
-            swipeNav({
-                afterShow: function(config) {
-                    var swipe = config.swipe;
-
-                    swipe.referrer = referrer;
-                    referrer = window.location.href;
-
-                    swipe.referrerPageName = referrerPageName;
-                    referrerPageName = config.page.analyticsName;
-
-                    common.mediator.emit('page:ready', pageConfig(config), swipe.context);
-
-                    if(clickSelector && swipe.initiatedBy === 'click') {
-                        modules.getSwipeSequence(function(sequence){
-                            swipe.api.setSequence(sequence);
-                            swipe.api.loadSidePanes();
-                        });
-                    } else {
-                        swipe.api.loadSidePanes();
-                    }
-
-                },
-                config: config,
-                clickSelector: clickSelector,
-                swipeContainer: '#preloads',
-                contentSelector: '.parts__body',
-                sequence: sequence
-            });
         }
     };
 
