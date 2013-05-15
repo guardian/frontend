@@ -187,10 +187,11 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
+                var ads = Adverts;
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts) {
-                        Adverts.init(config, context);
-                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                        ads.init(config, context);
+                        common.mediator.on('modules:adverts:docwrite:loaded', ads.loadAds);
                     }
                 });
             }
