@@ -81,6 +81,11 @@
 }
 
 .preload-msg {
-  padding: 50px 50px 250px 50px;
-  text-align: center;
+    padding: 50px 50px 250px 50px;
+    text-align: center;
+}
+
+.swipeview-active .is-updating {
+  display: block;
+  margin: 10px auto;
 }
