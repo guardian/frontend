@@ -99,6 +99,11 @@ define([
                 foot  = page1.querySelector('.parts__foot'),
                 initialBodyHtml = '<div class="parts__body">' + pendingHTML + '</div>';
 
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = "#preload-0{left: -100%} #preload-1{left:0%} #preload-2{left: 100%}";
+            document.body.appendChild(css);
+
             bonzo(page0).append(head.cloneNode(true));
             bonzo(page0).append(bonzo.create(initialBodyHtml));
             bonzo(page0).append(foot.cloneNode(true));
