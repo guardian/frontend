@@ -117,17 +117,8 @@ i.is-open.cta__icn--right {
   }
 }
 
-.top,
-.top:link,
-.top:visited,
-.top:active {
-    @extend %type-8;
-    display: block;
-    color: #A1B7CF;
-    background-color: $linkBlue;
-    padding: $baseline*2 $gutter $baseline*2 $gutter;
-}
-
+/* Misc
+   ========================================================================== */
 .cta-small {
     display: block;
     padding: $baseline*2 0 $baseline*3 0;
