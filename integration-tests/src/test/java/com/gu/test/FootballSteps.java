@@ -1,17 +1,17 @@
 package com.gu.test;
 
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FootballSteps {
 
@@ -53,7 +53,7 @@ public class FootballSteps {
 	
 	@When("^I click the competition filter expander$")
 	public void I_click_the_competition_filter_expander() throws Throwable {
-	    webDriver.jsClick(webDriver.findElement(By.cssSelector("h1 i")));
+	    webDriver.jsClick(webDriver.findElement(By.xpath("//*/h1/a")));
 	}
 
 	@Then("^the competition filter list opens$")
@@ -69,14 +69,16 @@ public class FootballSteps {
 	
 	@When("^I click \"(.+)\"$")
 	public void I_click(String linkText) throws Throwable {
+        Thread.sleep(250);
 		webDriver.jsClick(webDriver.findElement(By.linkText(linkText)));
 	}
 
 	@Then("^(\\d+) days worth of (results|fixtures) should load in$")
 	public void I_should_see_the_following_days_worth_of(int numOfDays, String matchesType) throws Throwable {
 		// should now have twice as many days worth of results
-		List<WebElement> competitions = webDriver.findElements(By.className("competitions"));
-		assertEquals(numOfDays, competitions.size() - numOfDays);
+		Thread.sleep(250);
+        List<WebElement> competitions = webDriver.findElements(By.className("competitions"));
+        assertEquals(numOfDays, competitions.size() - numOfDays);
 	}
 	
 	@Then("^there should be an auto-update component$")
