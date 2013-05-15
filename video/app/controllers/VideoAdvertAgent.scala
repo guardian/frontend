@@ -14,10 +14,9 @@ object VideoAdvertAgent extends AkkaSupport with Logging {
 
   private lazy val schedule = play_akka.scheduler.every(30.seconds, initialDelay = 10.seconds) {
 
-    //val random = System.currentTimeMillis
+    val random = System.currentTimeMillis
 
-    //loadXml(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").flatMap{ xml =>
-    loadXml("http://127.0.0.1:8125/").flatMap{ xml =>
+    loadXml(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").flatMap{ xml =>
       xml.label match {
         case "VAST" => Future(parseVast(xml))
         case "VideoAdServingTemplate" => {
