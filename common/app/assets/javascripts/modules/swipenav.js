@@ -371,6 +371,26 @@ define([
             });
         }
 
+        var pushDownSidepanes = common.debounce(function(){
+            hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
+
+            if( hiddenPaneMargin < visiblePaneMargin ) {
+                // We've scrolled up over the offset; reset all margins and jump to topmost scroll
+                $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
+                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
+                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
+                // And reset the scroll
+                body.scrollTop( contentAreaTop );
+                visiblePaneMargin = 0;
+                hiddenPaneMargin = 0;
+            }
+            else {
+                // We've scrolled down; push L/R sidepanes down to level of current pane
+                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', hiddenPaneMargin);
+                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', hiddenPaneMargin);
+            }
+        }, 250);
+
         // This'll be the public api
         var api = {
             setSequence: setSequence,
@@ -472,25 +492,10 @@ define([
             });
         }
 
+
         // Fix pane margins, so sidepanes come in at their top
         bean.on(window, 'scroll', function () {
-            hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
-
-            if( hiddenPaneMargin < visiblePaneMargin ) {
-                // We've scrolled up over the offset; reset all margins and jump to topmost scroll
-                $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
-                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
-                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
-                // And reset the scroll
-                body.scrollTop( contentAreaTop );
-                visiblePaneMargin = 0;
-                hiddenPaneMargin = 0;
-            }
-            else {
-                // We've scrolled down; push L/R sidepanes down to level of current pane
-                $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', hiddenPaneMargin);
-                $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', hiddenPaneMargin);
-            }
+            pushDownSidepanes();
         });
 
         // Bind left/right keyboard keys. Might clash with other stuff (galleries...)
