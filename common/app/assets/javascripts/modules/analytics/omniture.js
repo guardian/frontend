@@ -2,12 +2,14 @@ define([
     'common',
     'modules/detect',
     'modules/experiments/ab',
-    'modules/storage'
+    'modules/storage',
+    'components/gu-id/id'
 ], function(
     common,
     detect,
     ab,
-    storage
+    storage,
+    id
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -106,7 +108,7 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = 'Guest user';
+            s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
 
