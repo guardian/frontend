@@ -5,8 +5,9 @@ body {
 .dateline {
     font-family: $sans-serif;
     margin: 0px 0px $baseline*2 0px;
-    color: #666666;
+    color: $neutral4;
     @extend %type-11;
+    font-weight: bold;
 }
 
 .relative-timestamp {

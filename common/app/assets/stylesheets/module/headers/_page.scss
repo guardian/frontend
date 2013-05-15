@@ -9,7 +9,7 @@
   margin: 0 $gutter;
   line-height: 1em;
   color: $linkBlue;
-  border-bottom: 1px dotted $neutral3;
+  border-bottom: 1px solid $neutral3;
   @include box-sizing(border-box);
 }
 

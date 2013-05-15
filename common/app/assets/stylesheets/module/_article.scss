@@ -22,11 +22,15 @@
 }
 
 .article-headline {
-  @extend %type-2;
-  margin-bottom: $baseline*2;
+  @extend %type-1;
+  color: $neutral1;
+  padding-bottom: $baseline*2;
+  border-bottom: 1px dotted $neutral1;
 }
 
 .article-standfirst {
+  @extend %type-5;
+  line-height: 20px;
   margin-bottom: 0;
 }
 
@@ -42,14 +46,17 @@
 }
 
 .byline {
+  @include box-sizing(border-box);
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
-  margin: 0 $gutter $baseline*2 $gutter;
-  padding: $baseline 0 $baseline*4 0;
+  margin: 0 $gutter $baseline*3 $gutter;
+  padding: $baseline 0 $baseline*1.5 0;
 }
 
 .article .main-image {
+  @include box-sizing(border-box);
   margin-bottom: 0px;
+  padding: 0 $gutter;
 }
 
 .article-body {

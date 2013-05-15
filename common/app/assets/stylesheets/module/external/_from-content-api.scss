@@ -53,26 +53,13 @@
 .caption,
 figcaption,
 .main-caption {
-    @extend %type-12;
-    color:#666666;
+    @extend %type-11;
+    font-weight: bold;
+    color: $neutral4;
 }
 
 .main-caption {
     padding: $baseline*3 $gutter;
-}
-
-.caption:before,
-figcaption:before {
-    @extend .i;
-    @extend .i-image;
-    display: inline-block;
-    content: '';
-    margin-right: 4px;
-}
-
-.svg .caption:before,
-.svg figcaption:before {
-    @extend .svg-i-image;
 }
 
 //Figures
