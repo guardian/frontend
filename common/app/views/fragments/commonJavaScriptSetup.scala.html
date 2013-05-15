@@ -76,14 +76,14 @@
                 var inTest = localStorage.getItem('gu.fontdelaytest');
                 if (inTest) {
                     if (inTest.indexOf('delay') > 0) {
-                        deleyFontRender();
+                        delayFontRender();
                     }
                 } else {
                     if (Math.random() < 0.1) {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | DelayFontAllPages | delay');
+                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | delay');
                         delayFontRender();
                     } else {
-                        localStorage.setItem('gu.webfontrendertest', 'AB | DelayFontAllPages | control');
+                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | control');
                     }
                 }
             } else {
