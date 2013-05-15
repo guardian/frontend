@@ -149,7 +149,6 @@ define([
                         type: 'jsonp',
                         jsonpCallbackName: 'swipePreload',
                         success: function (frag) {
-
                             var html;
 
                             delete el.pending;
