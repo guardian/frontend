@@ -70,7 +70,7 @@ object AkkaMetrics extends AkkaSupport {
   val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
-object SystemMetrics {
+object SystemMetrics extends implicits.Numbers {
 
   // divide by 1048576 to convert bytes to MB
 
@@ -90,16 +90,20 @@ object SystemMetrics {
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
-  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric, MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric)
+  private lazy val buildNumber = ManifestData.build match {
+    case string if string.isInt => string.toInt
+    case _ => -1 // dev machines do not have a build number
+  }
+
+  object BuildNumberMetric extends GaugeMetric("application", "build-number", "Build number", "Build number",
+    () => buildNumber
+  )
+
+  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
 }
 
 
-abstract class WsMetric(
-    val group: String, val name: String, val title: String, val description: String,
-    override val master: Option[Metric] = None) extends AbstractMetric[Int] {
-  val `type`: String = "gauge"
-  override def asJson: StatusMetric = super.asJson.copy(value = Some(getValue().toString))
-}
 
 case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
 
