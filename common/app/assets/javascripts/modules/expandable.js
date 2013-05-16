@@ -50,7 +50,9 @@ define([
             renderState: function () {
                 if(expanded) {
                     dom.removeClass('is-shut');
+                    dom.addClass('is-open');
                 } else {
+                    dom.removeClass('is-open');
                     dom.addClass('is-shut');
                 }
             },
@@ -89,7 +91,7 @@ define([
             },
 
             isOpen: function () {
-                return (dom.hasClass('shut')) ? false : true;
+                return (dom.hasClass('is-shut')) ? false : true;
             }
         };
 

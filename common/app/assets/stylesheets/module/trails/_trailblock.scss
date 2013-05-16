@@ -8,43 +8,17 @@
         margin-bottom: 0px;
     }
 
-    .trailblock.shut .count {
-        display: inline-block;
-    }
-
-    .trailblock.is-shut {
-        display: none;
-    }
-
-
-/* Trailblock toggle
+/* Trailblock expandables
    ========================================================================== */
-
-.toggle-trailblock {
-    @extend %type-8;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    color: #ffffff;
-    padding: 15px $gutter $baseline*2 $baseline*2;
-    cursor: pointer;
-    background-color: transparent;
-    box-shadow: none;
-    font-weight: normal;
-    text-shadow: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+.trailblock.is-shut .panel {
+  display: none;
 }
 
-    .toggle-trailblock:hover,
-    .toggle-trailblock:active {
-        box-shadow: none;
-        background-color: transparent;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-    }
+.trailblock.is-shut .count {
+  display: inline-block;
+}
 
-    .sub-section-head .toggle-trailblock {
-        color: #888;
-    }
+.trailblock.is-shut .cta__icon {
+  @include rotate(180deg);
+}
+
