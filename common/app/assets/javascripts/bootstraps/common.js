@@ -191,6 +191,29 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
+        },
+
+        grid: function() {
+            var gridHeight = 36,
+                gridPadding = 12;
+
+            // This snaps individual elements to the grid
+            common.$g('.snap-to-grid').each(function(el) {
+                var height = el.offsetHeight,
+                    gridUnits = Math.ceil(height/(gridHeight+gridPadding));
+
+                el.className += ' grid-h-unit-' + gridUnits;
+            });
+
+            // This is a general purpose classname to snap all the children to grid
+            common.$g('.snap-children-to-grid').each(function(el) {
+                [].forEach.call(el.children, function(el) {
+                    var height = el.offsetHeight,
+                        gridUnits = Math.ceil(height/(gridHeight+gridPadding));
+
+                    el.className += ' grid-h-unit-' +gridUnits;
+                });
+            });
         }
     };
 
@@ -220,6 +243,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
+            modules.grid();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
