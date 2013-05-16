@@ -12,7 +12,7 @@ object VideoAdvertAgent extends AkkaSupport with Logging {
 
   lazy val agent = play_akka.agent[Option[VideoAdvert]](None)
 
-  private lazy val schedule = play_akka.scheduler.every(1.minutes, initialDelay = 10.seconds) {
+  private lazy val schedule = play_akka.scheduler.every(1.minute, initialDelay = 10.seconds) {
 
     val random = System.currentTimeMillis
 

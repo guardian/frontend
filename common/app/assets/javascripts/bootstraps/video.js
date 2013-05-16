@@ -14,6 +14,7 @@ define([
 
         initAdverts: function(config) {
             common.mediator.on('page:video:ready', function(config, context) {
+
                 if(config.switches.videoAdverts && !config.page.blockAds && config.page.videoAd) {
                     var support = detect.getVideoFormatSupport();
                     var a = new Advert({
