@@ -224,11 +224,11 @@ define([
     }
 
     function setSequencePos(url) {
-        sequencePos = getSequencePos(urlAbsPath(url));
+        sequencePos = getSequencePos(url);
     }
 
     function getSequencePos(url) {
-        url = sequenceCache[urlAbsPath(url)];
+        url = sequenceCache[url];
         return url ? url.pos : -1;
     }
 
@@ -236,22 +236,33 @@ define([
         return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
     }
 
-    function setSequence(arr) {
+    function setSequence(arr, url) {
         var len = arr.length,
-            pos,
+            s,
             i;
 
         if (len >= 3) {
-            sequence = arr;
-            sequenceLen = len;
+            // Make sure url is the first in the sequence
+            if(url && arr[0].url !== url) {
+                arr.unshift({url: url});
+                len += 1;
+            }
+
+            sequence = [];
+            sequenceLen = 0;
             sequenceCache = {};
 
             for (i = 0; i < len; i += 1) {
-                arr[i].pos = i;
-                sequenceCache[arr[i].url] = arr[i];
-                //window.console.log(i + " " + arr[i].url);
+                s = arr[i];
+                if(!sequenceCache[s.url]) { // this dedupes, while also creating a lookup obj
+                    s.pos = i;
+                    sequenceCache[s.url] = s;
+                    sequence.push(s);
+                    sequenceLen += 1;
+                    //window.console.log(i + " " + s.url);
+                }
             }
-            setSequencePos(window.location.href);
+            setSequencePos(url);
         }
     }
 
@@ -545,10 +556,12 @@ define([
             prepareDOM();
 
             // Set the initial sequence
-            setSequence(sequence);
+            setSequence(sequence, initialUrl);
 
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
-            sequenceCache[initialUrl].config = config;
+            if (sequenceCache[initialUrl]) {
+                sequenceCache[initialUrl].config = config;
+            }
 
             start();
 

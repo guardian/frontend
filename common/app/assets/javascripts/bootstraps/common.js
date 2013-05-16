@@ -188,7 +188,9 @@ define([
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts) {
                         Adverts.init(config, context);
-                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                        common.mediator.on('modules:adverts:docwrite:loaded', function(){
+                            Adverts.loadAds(context);
+                        });
                     }
                 });
             }
