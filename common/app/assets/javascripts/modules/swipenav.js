@@ -548,7 +548,9 @@ define([
             setSequence(sequence);
 
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
-            sequenceCache[initialUrl].config = config;
+            if (sequenceCache[initialUrl]) {
+                sequenceCache[initialUrl].config = config;
+            }
 
             start();
 
