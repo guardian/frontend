@@ -1,0 +1,41 @@
+@(article: Article)(implicit request: RequestHeader)
+
+<article id="article" class="article @if(article.isLive){is-live}"
+    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+
+    <header class="article-head">
+        @fragments.dateline(article.webPublicationDate, article.isLive)
+
+        @fragments.headline(article.headline)
+
+        @fragments.standfirst(article)
+    </header>
+
+    @if(!article.isLive  && !article.hasVideoAtTop) {
+        @article.mainPicture.map{ mainPicture =>
+            @article.mainPicture(width=220).map{ smallCrop =>
+                @fragments.img(mainPicture, smallCrop)
+            }
+        }
+    }
+
+    @fragments.byline(article.byline, article)
+
+    @if(article.isLive) {
+        @fragments.autoUpdate()
+    }
+
+    <div class="article-body from-content-api @if(article.isLive) {live-blog}"
+        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+        @* <!-- ordering of cleaners is important --> *@
+        @withJsoup(BulletCleaner(article.body))(
+            PictureCleaner(article),
+            InBodyLinkCleaner("in body link"),
+            BlockNumberCleaner,
+            TweetCleaner,
+            WitnessCleaner,
+            VideoPosterCleaner(article.videoAssets)
+        )
+    </div>
+    
+</article>
