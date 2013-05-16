@@ -1,15 +1,14 @@
 package com.gu.test;
 
-import java.util.List;
-
-import static org.junit.Assert.*;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class Steps {
 
@@ -82,7 +81,7 @@ public class Steps {
 		for (int i = 0; i < numOfTests; i++) {
 			WebElement test = webDriver.findElements(By.cssSelector("#tests a")).get(i);
 			String testName = test.getText();
-			webDriver.jsClick(test);
+			webDriver.click(test);
 			// wait for 'duration' element, i.e. end of test (up to 10secs)
 			webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
 			// get any error messages
