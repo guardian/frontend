@@ -18,7 +18,7 @@
 }
 
 .article-head {
-  padding: $baseline*3 $gutter $baseline*4 $gutter;
+  padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
 .article-headline {
@@ -61,6 +61,15 @@
 
 .article-body {
   padding: 0 $gutter $baseline*2 $gutter;
+
+  p {
+    margin-bottom:0;
+    text-indent:$gutter*1.5;
+  }
+
+  p:first-of-type {
+    text-indent:0;
+  }
 }
 
 .gu-video {
