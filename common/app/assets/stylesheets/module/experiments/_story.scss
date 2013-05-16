@@ -473,8 +473,13 @@ i.is-open.cta-new__icn--right {
     margin-top: 8px;
 }
 
-.story-live .article-zone, .story-live .article-head {
+.story-live .article-zone, 
+.story-live .article-head > * {
     display: none;
+}
+
+.story-live .article-head .dateline {
+	display:block;
 }
 
 .story-live .social {

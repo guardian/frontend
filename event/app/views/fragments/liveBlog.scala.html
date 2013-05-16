@@ -1,5 +1,9 @@
 @(article: Article)(implicit request: RequestHeader)
 
+<h2 class="article-zone type-1">
+    <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+</h2>
+
 <article id="article" class="article @if(article.isLive){is-live}"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -10,6 +14,8 @@
 
         @fragments.standfirst(article)
     </header>
+
+    <div class="after-header"></div>
 
     @if(!article.isLive  && !article.hasVideoAtTop) {
         @article.mainPicture.map{ mainPicture =>
@@ -39,3 +45,7 @@
     </div>
     
 </article>
+
+@fragments.social(article)
+
+<div   class="js-popular" role="complementary"></div>
