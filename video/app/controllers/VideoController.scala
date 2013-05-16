@@ -4,6 +4,7 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
+import play.api.libs.json.Json._
 import play.api.libs.json.JsObject
 
 case class VideoPage(video: Video, storyPackage: List[Trail], advert: Option[JsObject])
@@ -21,6 +22,15 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     }
   }
 
+  private def AdvertToJson(advert: Option[VideoAdvert]): Option[JsObject] = {
+    advert.map{ ad =>
+      toJson(Map(
+        "file" -> toJson(ad.media),
+        "trackingEvents" -> toJson(ad.tracking)
+      )).as[JsObject]
+    }
+  }
+
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching video: $path for edition $edition")
@@ -32,7 +42,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
         val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
         val storyPackage = response.storyPackage map { new Content(_) }
 
-        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id), VideoAdvertAgent()) }
+        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id), AdvertToJson(VideoAdvertAgent())) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}
   }
