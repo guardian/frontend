@@ -79,6 +79,7 @@ define([
 
                     if(height < 24) {
                         padding = 24-height;
+                        node.css('margin-bottom', '12px');
                     } else if(height > 24 && height < 70) {
                         padding = 72-height;
                     } else if (height > 70){
