@@ -74,8 +74,8 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
     ),
 
     "australia" -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
       QueryTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured), showMore = true,
         customQuery=ContentApi.item.itemId("culture")
@@ -97,7 +97,7 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
           .showReferences(references)
           .showStoryPackage(true)
           .tag(s"world/australia,($supportedTypes)")),
-      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
     )
   )
 }
