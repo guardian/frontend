@@ -35,8 +35,10 @@ define([
         }, config);
 
         this.template =
-            '<p class="update-text type-6">Auto update</p>' +
-            '<i class="'+ options.iconClass + '"/></i>' +
+            '<div class="update-indicator">' +
+            '   <p class="update-text">Auto update</p>' +
+            '   <i class="'+ options.iconClass + '"/></i>' +
+            '</div>' +
             '<button class="update-btn type-8" data-action="off" data-link-name="autoupdate off">Off</button>' +
             '<button class="update-btn type-8" data-action="on" data-link-name="autoupdate on">On</button>';
 
@@ -174,7 +176,7 @@ define([
                 this.view.toggle.call(this, this.btns[1]);
             }
 
-             
+
             if (loadOnInitialise) {
                 that.load.call(that);
             }

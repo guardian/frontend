@@ -65,37 +65,44 @@
 	display:block;
     background-color: $mushroom;
     margin: 0 $gutter $baseline*4 $gutter;
-    padding: 0 0 0 $baseline*2;
+    padding: 0 0 0 $baseline;
     overflow: hidden;
+    height: 36px;
 }
 
 .update.hidden{
     display: none;
 }
+.update-indicator {
+    float: left;
+}
 
 .update-text {
-    float:left;
+    @extend %type-7;
     margin: 0 $gutter 0 0;
     padding: 6px 0 0 0;
-    line-height: 32px;
+    line-height: 14px;
+    font-weight: 500;
 }
 
 .update-btn {
+    @extend %type-11;
     float:right;
     margin: 0;
-    padding: 13px 12px;
+    padding: 20px 30px 0 0;
     background-color: $mushroom;
-    color: #333333;
-    font-weight: normal;
+    color: $neutral4;
+    font-weight: bold;
     border: none;
     text-shadow: none;
     box-shadow: none;
+    width: 60px;
 }
 
 .update-btn.is-active,
 .update-btn:hover {
     color: #ffffff;
-    background-color: #E47A39;
+    background-color: $linkBlue;
 }
 
 .update-live-matches .update-btn.is-active,
@@ -108,11 +115,11 @@
     width: 36px;
     height: 12px;
     background-size: 100%;
-    margin-top: 18px;
+    margin-top: 2px;
 }
 
 .is-updating.is-active {
-    display:inline-block;
+    display:block;
 }
 
 .is-live-icon {
