@@ -21,17 +21,19 @@
   padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
+  .article-head .dateline { margin-bottom: 3px; }
+
 .article-headline {
   @extend %type-1;
   color: $neutral1;
-  padding-bottom: $baseline*2;
-  border-bottom: 1px dotted $neutral1;
 }
 
 .article-standfirst {
   @extend %type-5;
+  color: $neutral4;
   line-height: 20px;
   margin-bottom: 0;
+  border-top: 1px dotted $neutral4;
 }
 
 .bullet {
@@ -47,10 +49,13 @@
 
 .byline {
   @include box-sizing(border-box);
+  height: 36px;
+  display: block;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
-  margin: 0 $gutter $baseline*3 $gutter;
-  padding: $baseline 0 $baseline*1.5 0;
+  margin: 0 10px 12px 10px;
+  padding: 0;
+  vertical-align: top;
 }
 
 .article .main-image {
@@ -60,6 +65,7 @@
 }
 
 .article-body {
+  margin-top: 12px;
   padding: 0 $gutter $baseline*2 $gutter;
 
   p {
