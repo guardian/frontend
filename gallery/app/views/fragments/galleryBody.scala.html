@@ -1,19 +1,25 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-2">
-    <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
 </h2>
 
 <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
 
-    <header class="article-head">
-        @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-        @fragments.headline(gallery.headline)
+    <header class="article__head">
+        <div class="snap-to-grid">
+            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+            @fragments.headline(gallery.headline)
+        </div>
+        <div class="article__standfirst snap-to-grid">
         @fragments.standfirst(gallery)
+        </div>
     </header>
 
+    <div class="article__byline snap-to-grid">
     @fragments.byline(gallery.byline, gallery)
+    </div>
 
     <p class="js-gallery-nav box-indent gallery-nav type-11">
 

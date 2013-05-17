@@ -16,6 +16,10 @@
     padding: 0 0 0 0;
   }
 
+.trail__head {
+  margin-bottom: 12px;
+}
+
 .trail__headline {
   @extend %type-2;
   color: #000;
@@ -79,6 +83,10 @@
 /* Thumbnail
  ========================================================================== */
 .trail--thumbnail {
+  .media {
+    margin-top: -5px;
+  }
+
   .media__img {
     width: 9.625em;
     padding-right: 14px;

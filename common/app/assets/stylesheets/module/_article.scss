@@ -17,13 +17,13 @@
   border-bottom: none;
 }
 
-.article-head {
+.article__head {
   padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
-  .article-head .dateline { margin-bottom: 3px; }
+  .article__head .dateline { margin-bottom: 3px; }
 
-.article-headline {
+.article__headline {
   @extend %type-1;
   color: $neutral1;
 }
@@ -32,7 +32,8 @@
   @extend %type-5;
   color: $neutral4;
   line-height: 20px;
-  margin-bottom: 0;
+  margin:12px 0 0 0;
+  padding-top: 1px;
   border-top: 1px dotted $neutral4;
 }
 
@@ -64,13 +65,13 @@
   padding: 0 $gutter;
 }
 
-.article-body {
+.article__body {
   margin-top: 12px;
   padding: 0 $gutter $baseline*2 $gutter;
 
   p {
     margin-bottom:0;
-    text-indent:$gutter*1.5;
+    text-indent: 24px;
   }
 
   p:first-of-type {

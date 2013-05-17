@@ -68,28 +68,28 @@ define([
             });
         },
 
-        adjustFeaturedStoryHeader: function() {
-            common.mediator.on('page:front:ready', function(config, context) {
-                var headerNodes = bonzo(context.querySelectorAll('.trail__headline'));
-
-                headerNodes.each(function(el) {
-                    var node = bonzo(el),
-                        height = node.offset().height,
-                        padding;
-
-                    if(height < 24) {
-                        padding = 24-height;
-                        node.css('margin-bottom', '12px');
-                    } else if(height > 24 && height < 70) {
-                        padding = 72-height;
-                    } else if (height > 70){
-                        padding = 120-height;
-                    } // Yes, ugly!
-
-                    node.css('min-height', height+padding+'px');
-                });
-            });
-        }
+//        adjustFeaturedStoryHeader: function() {
+//            common.mediator.on('page:front:ready', function(config, context) {
+//                var headerNodes = bonzo(context.querySelectorAll('.trail__headline'));
+//
+//                headerNodes.each(function(el) {
+//                    var node = bonzo(el),
+//                        height = node.offset().height,
+//                        padding;
+//
+//                    if(height < 24) {
+//                        padding = 24-height;
+//                        node.css('margin-bottom', '12px');
+//                    } else if(height > 24 && height < 70) {
+//                        padding = 72-height;
+//                    } else if (height > 70){
+//                        padding = 120-height;
+//                    } // Yes, ugly!
+//
+//                    node.css('min-height', height+padding+'px');
+//                });
+//            });
+//        }
 
     };
 

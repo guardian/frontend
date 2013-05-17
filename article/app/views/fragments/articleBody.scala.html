@@ -7,12 +7,12 @@
 <article id="article" class="article @if(article.isLive){is-live}"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-    <header class="article-head">
+    <header class="article__head">
         <div class="snap-to-grid">
             @fragments.dateline(article.webPublicationDate, article.isLive)
             @fragments.headline(article.headline)
         </div>
-        <div class="snap-to-grid">
+        <div class="article__standfirst snap-to-grid">
             @fragments.standfirst(article)
         </div>
     </header>
@@ -21,17 +21,17 @@
 
     <div class="after-header"></div>
 
-    <div class="snap-to-grid">
-        @if(!article.isLive  && !article.hasVideoAtTop) {
+    @if(!article.isLive  && !article.hasVideoAtTop) {
+        <div class="snap-to-grid">
             @article.mainPicture.map{ mainPicture =>
                 @article.mainPicture(width=220).map{ smallCrop =>
                     @fragments.img(mainPicture, smallCrop)
                 }
             }
-        }
-    </div>
+        </div>
+    }
 
-    <div class="snap-to-grid">
+    <div class="article__byline snap-to-grid">
         @fragments.byline(article.byline, article)
     </div>
 
@@ -39,7 +39,7 @@
         @fragments.autoUpdate()
     }
 
-    <div class="article-body from-content-api @if(article.isLive) {live-blog}"
+    <div class="article__body from-content-api @if(article.isLive) {live-blog}"
         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
         @* <!-- ordering of cleaners is important --> *@
         @withJsoup(BulletCleaner(article.body))(

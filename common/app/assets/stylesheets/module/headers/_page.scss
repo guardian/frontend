@@ -21,7 +21,8 @@
 /* Article
  ========================================================================== */
 .page-head--article {
-  @extend %type-4
+  @extend %type-2;
+  font-weight: 200;
 }
 
 /* Sub heading
