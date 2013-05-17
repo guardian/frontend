@@ -2,14 +2,6 @@ body {
     background-color: #ffffff;
 }
 
-.dateline {
-    font-family: $sans-serif;
-    margin: 0px 0px $baseline*1.5 0px;
-    color: $neutral4;
-    @extend %type-11;
-    font-weight: bold;
-}
-
 .relative-timestamp {
   @extend %type-11;
   line-height: 1em;

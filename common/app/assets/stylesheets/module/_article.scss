@@ -21,7 +21,13 @@
   padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
-  .article__head .dateline { margin-bottom: 3px; }
+.article__head .dateline {
+    font-family: $sans-serif;
+    margin: 0px 0px $baseline*1.5 0px;
+    color: $neutral4;
+    @extend %type-11;
+    font-weight: bold;
+}
 
 .article__headline {
   @extend %type-1;
@@ -29,11 +35,11 @@
 }
 
 .article-standfirst {
-  @extend %type-5;
+  @extend %type-3;
   color: $neutral4;
   line-height: 20px;
   margin:12px 0 0 0;
-  padding-top: 1px;
+  padding-top: 4px;
   border-top: 1px dotted $neutral4;
 }
 
