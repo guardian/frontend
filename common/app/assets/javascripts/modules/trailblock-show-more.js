@@ -29,9 +29,9 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             },
 
            appendCta: function(trailblock) {
-               var btn = '<div class="cta" data-link-name="Show more | 1">';
-                   btn += '<span class="cta__text">Show more</span><button class="cta__btn cta__btn--right">';
-                   btn += '<i class="i i-arrow-blue-down cta__icn"></i></button></div>';
+               var btn = '<button class="cta js-show-more" data-link-name="Show more | 1">';
+                   btn += '<span class="cta__text">Show more</span><span class="cta__btn cta__btn--right">';
+                   btn += '<i class="i i-arrow-blue-down cta__icn"></i></span></button>';
                bonzo(trailblock).append(btn);
            },
 
@@ -120,7 +120,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
             common.mediator.on('module:clickstream:click', function(clickSpec) {
                 var $cta = bonzo(clickSpec.target);
-                if ($cta.hasClass('trailblock-show-more')) {
+                if ($cta.hasClass('js-show-more')) {
                     that.view.updateCta($cta);
                 }
             });

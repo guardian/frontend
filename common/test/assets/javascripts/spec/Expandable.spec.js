@@ -28,7 +28,7 @@ define(['common', 'modules/expandable', 'bonzo'], function(common, Expandable, b
            
             // open 
             x.toggle();
-            expect(document.getElementById('trail-d').className).toBe('');
+            expect(document.getElementById('trail-d').className).toBe('is-open');
         
         });
         

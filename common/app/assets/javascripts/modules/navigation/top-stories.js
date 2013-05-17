@@ -18,7 +18,7 @@ define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, 
                     container: container,
                     jsonpCallbackName: 'navigation',
                     beforeInsert: function (html) {
-                        return ' <h3 class="headline-list__tile">Top stories</h3>' + html;
+                        return ' <h3 class="headline-list__title">Top stories</h3>' + html;
                     },
                     success: function (json) {
                         common.mediator.emit('modules:topstories:loaded');

@@ -25,11 +25,12 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 // find the active tab in the set. returns an array of 1 item, hence [0]
                 var currentTab = common.$g('.tabs__tab--selected a', container)[0];
 
-                // trim the leading # and find the matching panel element
+                // trim the leading and find the matching panel element
                 var paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1));
                 var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
+
                 bonzo(currentTab.parentNode).removeClass('tabs__tab--selected');
                 bonzo(clickedTab.parentNode).addClass('tabs__tab--selected');
                 bonzo(paneToHide).hide();
