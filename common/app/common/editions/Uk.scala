@@ -82,8 +82,18 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
     "australia" -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true)(Au),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
+      QueryTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured), showMore = true,
+        customQuery=ContentApi.item.itemId("culture")
+          .edition("au")
+          .showTags("all")
+          .showFields(trailFields)
+          .showInlineElements(inlineElements)
+          .showMedia("all")
+          .showReferences(references)
+          .showStoryPackage(true)
+          .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")),
       QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true,
         customQuery=ContentApi.item.itemId("commentisfree")
           .edition("au")
@@ -93,7 +103,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
           .showMedia("all")
           .showReferences(references)
           .showStoryPackage(true)
-          .tag(supportedTypes)),
+          .tag(s"world/australia,($supportedTypes)")),
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
     )
   )
