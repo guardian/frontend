@@ -57,3 +57,12 @@
     margin: 0 $gutter;
     padding: $baseline*2 0;
 }
+
+
+.footer .cta {
+  border-top: 0;
+}
+
+.footer .cta__text {
+  margin-left: 8px;
+}

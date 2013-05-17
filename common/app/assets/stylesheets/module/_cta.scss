@@ -18,7 +18,6 @@
 .cta__text {
   @extend %type-7;
   color: $linkBlue;
-  margin-left: 8px;
 }
 
 
@@ -92,6 +91,7 @@
    ========================================================================== */
 .cta__btn--right {
   float:right;
+  border-left-width: 1px;
 
   .i {
     left: 2px;
@@ -134,4 +134,8 @@ i.is-open.cta__icn--right {
 
 .most-viewed-no-js i {
   float: right;
+}
+
+.section-head--front .cta__btn--right {
+  border-left-width: 0;
 }
