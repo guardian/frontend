@@ -16,9 +16,10 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 self.load(currentContext);
             });
 
-            bean.on(document, 'click touchstart', '.control--search', function(e) {
+            bean.on(document, 'click touchstart', '.control--sections', function(e) {
                 searchLoader();
                 e.preventDefault();
+
             });
 
             bean.on(document, 'click touchstart', '.search-results', function(e) {
@@ -30,12 +31,12 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         }
 
         this.load = function(context) {
-            var container = context.querySelector('.nav-popup-search'),
+            var container = context.querySelector('.nav-search'),
                 s,
                 x;
 
             // Unload any search placeholders elsewhere in the DOM
-            Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
+            Array.prototype.forEach.call(document.querySelectorAll('.nav-search'), function(c){
                 if (c !== container) {
                     c.innerHTML = '';
                 }

@@ -41,7 +41,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     button    = document.querySelector('#topstories-context .control');
 
                 expect(callback).toHaveBeenCalledOnce();
-                expect(container.innerHTML).toBe(' <h3 class="headline-list__title">Top stories</h3><b>top stories</b>');
+                expect(container.innerHTML).toBe('<b>top stories</b>');
                 expect(button.className).not.toContain('is-off');
             })
         });
