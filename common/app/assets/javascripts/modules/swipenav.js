@@ -537,7 +537,7 @@ define([
             contentAreaTop   = $(swipeContainerEl).offset().top;
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
-            if (config.switches.swipeNavOnClick && userPrefs.isOn('swipe-nav-on-click')) {
+            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-nav-on-click')) {
                 clickSelector = 'a:not(.control)';
             }
 
