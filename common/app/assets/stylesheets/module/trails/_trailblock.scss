@@ -16,6 +16,10 @@
   display: none;
 }
 
+.trailblock.is-shut {
+  padding: 0px $gutter 12px $gutter;
+}
+
 .trailblock.is-shut .count {
   display: inline-block;
 }
