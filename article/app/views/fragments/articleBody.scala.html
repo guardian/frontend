@@ -8,26 +8,32 @@
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="article-head">
-        @fragments.dateline(article.webPublicationDate, article.isLive)
-
-        @fragments.headline(article.headline)
-
-        @fragments.standfirst(article)
+        <div class="snap-to-grid">
+            @fragments.dateline(article.webPublicationDate, article.isLive)
+            @fragments.headline(article.headline)
+        </div>
+        <div class="snap-to-grid">
+            @fragments.standfirst(article)
+        </div>
     </header>
 
     @fragments.witnessCallToAction(article)
 
     <div class="after-header"></div>
 
-    @if(!article.isLive  && !article.hasVideoAtTop) {
-        @article.mainPicture.map{ mainPicture =>
-            @article.mainPicture(width=220).map{ smallCrop =>
-                @fragments.img(mainPicture, smallCrop)
+    <div class="snap-to-grid">
+        @if(!article.isLive  && !article.hasVideoAtTop) {
+            @article.mainPicture.map{ mainPicture =>
+                @article.mainPicture(width=220).map{ smallCrop =>
+                    @fragments.img(mainPicture, smallCrop)
+                }
             }
         }
-    }
+    </div>
 
-    @fragments.byline(article.byline, article)
+    <div class="snap-to-grid">
+        @fragments.byline(article.byline, article)
+    </div>
 
     @if(article.isLive) {
         @fragments.autoUpdate()
@@ -45,7 +51,7 @@
             VideoPosterCleaner(article.videoAssets)
         )
     </div>
-    
+
 </article>
 
 @fragments.social(article)
