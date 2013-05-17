@@ -92,7 +92,7 @@
 ========================================================================== */
 
   .nav.nav--section-divider {
-    padding: 0 $gutter;
+    padding: 0 $gutter $baseline*4 $gutter;
     background-color: $mushroom;
   }
 
