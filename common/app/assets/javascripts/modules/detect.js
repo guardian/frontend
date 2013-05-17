@@ -210,9 +210,11 @@ define(['modules/userPrefs'], function (userPrefs) {
         if (os.name === 'iOS' && os.version >= 6) {
             return true;
         }
+        /*
         if (os.name === 'Android' && os.version >= 4) {
             return true;
         }
+        */
         return false;
     }
 
