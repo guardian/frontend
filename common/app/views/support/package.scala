@@ -138,24 +138,26 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
-      fig.attr("itemprop", "associatedMedia")
-      fig.attr("itemscope", "")
-      fig.attr("itemtype", "http://schema.org/ImageObject")
+      if(fig.hasClass("element-image") || fig.hasAttr("data-media-id")) {
+        fig.attr("itemprop", "associatedMedia")
+        fig.attr("itemscope", "")
+        fig.attr("itemtype", "http://schema.org/ImageObject")
 
-      fig.getElementsByTag("img").foreach { img =>
-        img.attr("itemprop", "contentURL")
-        val src = img.attr("src")
-        img.attr("src", ImgSrc(src, Naked))
-        Option(img.attr("width")).filter(_.isInt) foreach { width =>
-          fig.attr("class", width.toInt match {
-            case width if width <= 220 => "img-base inline-image"
-            case width if width < 460 => "img-median inline-image"
-            case width => "img-extended"
-          })
+        fig.getElementsByTag("img").foreach { img =>
+          img.attr("itemprop", "contentURL")
+          val src = img.attr("src")
+          img.attr("src", ImgSrc(src, Naked))
+          Option(img.attr("width")).filter(_.isInt) foreach { width =>
+            fig.attr("class", width.toInt match {
+              case width if width <= 220 => "img-base inline-image"
+              case width if width < 460 => "img-median inline-image"
+              case width => "img-extended"
+            })
+          }
         }
-      }
 
-      fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+        fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+      }
     }
     body
   }
