@@ -35,7 +35,7 @@ function (
     function init(config, context) {
         var id = context.id;
 
-        if(id && !contexts[id]) {
+        if(id) {
 
             contexts[id] = context;
             currConfig  = config;
@@ -83,11 +83,7 @@ function (
         });
     }
 
-    function loadAds(context) {
-
-        if (context !== currContext) {
-            return;
-        }
+    function loadAds() {
 
         domwrite.capture();
 
