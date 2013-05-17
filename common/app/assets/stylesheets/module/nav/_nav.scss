@@ -43,6 +43,10 @@
     padding: 0 $gutter;
   }
 
+  .nav--columns:first-child {
+    margin-bottom: 4px;
+  }
+
     .nav--columns-football {
       padding: $baseline*2 0 $baseline 0
     }
@@ -65,8 +69,8 @@
     .nav--columns .nav__link {
       @include box-sizing(border-box);
       @extend %type-7;
-      color: $neutral3;
-      border-top: 1px solid $neutral6;
+      color: $neutral2;
+      border-top: 1px solid $neutral10;
       display: block;
       background-color: transparent;
 
