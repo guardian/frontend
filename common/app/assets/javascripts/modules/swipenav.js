@@ -69,9 +69,9 @@ define([
     }
 
     function loadSequence(callback) {
-        var path = window.location.pathname;
+        var section = window.location.pathname.match(/^\/[^\/]+/);
         ajax({
-            url: '/front-trails' + (path === '/' ? '' : path),
+            url: '/front-trails' + (section ? section[0] : ''),
             type: 'jsonp',
             success: function (json) {
                 if (json.stories && json.stories.length >= 3) {
