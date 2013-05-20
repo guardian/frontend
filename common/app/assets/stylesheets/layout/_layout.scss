@@ -67,7 +67,7 @@
     height: 100%;
     width: 100%; 
     @include transition(0ms ease-out);
-    @include transform(translateZ(0px)); 
+    @include transform(translateZ(0px));
 }
 
 #preload-0,
