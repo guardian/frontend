@@ -104,11 +104,19 @@ $from: $gridWidth * $gridColMin * 2;
     max-width: $gridWidth * 7;
 }
 
-.grid-article .main-image {
+.grid-article .main-image-wrap {
     float: right;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0 ($baseTopPad + $baseBotPad) ($baseLeftPad + $baseRightPad - 1);
+    background-color: #fff;
 }
 
-@for $i from 7 through 12 {
+.grid-article .main-image {
+    width: 100%;
+}
+
+@for $i from 7 through 9 {
     $from : $gridWidth * $i;
     $step : $i - 7;
     $incrWidth  : floor($step / 2);
@@ -116,9 +124,9 @@ $from: $gridWidth * $gridColMin * 2;
 
     // last media-query needs upper bound of 'infinity':
     @media only screen and (min-width : $from) {
-        .grid-article .main-image {
+        .grid-article .main-image-wrap {
             width: $gridWidth * (4 + $incrWidth);
-            margin-right: -1 * $gridWidth * (0 + $incrMargin)
+            margin-right: -1 * $gridWidth * $step;
         }
     }
 }
