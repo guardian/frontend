@@ -270,7 +270,7 @@ define([
                     sequenceCache[s.url] = s;
                     sequence.push(s);
                     sequenceLen += 1;
-                    window.console.log(i + " " + s.url);
+                    //window.console.log(i + " " + s.url);
                 }
             }
             setSequencePos(window.location.pathname);
