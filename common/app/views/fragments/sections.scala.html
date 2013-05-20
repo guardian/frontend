@@ -33,7 +33,7 @@
             }
 
             @*<!-- TODO this is temp till we have proper single domain editions -->*@
-            @if(AustraliaFrontSwitch.isSwitchedOn && page.id == ""){
+            @if(AustraliaFrontSwitch.isSwitchedOn){
                 <li class="nav__item"><a class="nav__link edition edition-au" data-link-name="switch to au edition" href="http://@site.ukHost/australia">Australia edition</a></li>
             }
         }{

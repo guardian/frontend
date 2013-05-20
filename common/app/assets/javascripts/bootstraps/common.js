@@ -77,13 +77,14 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
-            var aus = new Australia(); // TODO temporary till we have single domain editions
+            var aus = new Australia(config); // TODO temporary till we have single domain editions
 
             var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
                 navControl.init(context);
                 sections.init(context);
                 search.init(context);
+                aus.init(context);
             });
         },
 
