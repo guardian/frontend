@@ -27,6 +27,14 @@
   }
 }
 
+/* Search
+ ========================================================================== */
+.nav-popup--search {
+  @media only screen and (min-width: $tablet) {
+    top: -56px;
+    margin-bottom: -57px;
+  }
+}
 
 /* Small
  ========================================================================== */
@@ -35,7 +43,7 @@
 
   @media only screen and (min-width: $tablet) {
     position: absolute;
-    top: 174px;
+    top: 166px;
     right: 0px;
     width: auto;
     padding: 0;
@@ -46,7 +54,7 @@
   }
 
   @media only screen and (min-width: $desktopAd) {
-    top: 200px;
+    top: 192px;
   }
 }
 

@@ -15,7 +15,7 @@
    ========================================================================== */
 
 #header {
-  height: 48px;
+  min-height: 48px;
   position: relative;
   background-color: $linkBlue;
 }
@@ -23,7 +23,7 @@
 #logo {
   display: block;
   float: left;
-  margin: 7px 0 0 $gutter;
+  margin: 7px 0 21px $gutter;
   text-indent: -9999px;
 }
 

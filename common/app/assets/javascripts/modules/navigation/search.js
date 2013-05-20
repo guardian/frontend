@@ -1,4 +1,4 @@
-define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
+define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
 
     var Search = function (config) {
 
@@ -16,11 +16,13 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 self.load(currentContext);
             });
 
-            bean.on(document, 'click touchstart', '.control--sections', function(e) {
+            var clickBinding = function(e) {
                 searchLoader();
                 e.preventDefault();
+            };
 
-            });
+            bean.on(document, 'click touchstart', '.control--sections', clickBinding);
+            bean.on(document, 'click touchstart', '.control--search', clickBinding);
 
             bean.on(document, 'click touchstart', '.search-results', function(e) {
                 var targetEl = e.target;
@@ -31,12 +33,14 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         }
 
         this.load = function(context) {
-            var container = context.querySelector('.nav-search'),
+            var layout = detect.getLayoutMode(),
+                containerClass = (layout === "mobile") ? '.js-search--sections' : '.js-search--popup',
+                container = context.querySelector(containerClass),
                 s,
                 x;
 
             // Unload any search placeholders elsewhere in the DOM
-            Array.prototype.forEach.call(document.querySelectorAll('.nav-search'), function(c){
+            Array.prototype.forEach.call(document.querySelectorAll('.search'), function(c){
                 if (c !== container) {
                     c.innerHTML = '';
                 }
@@ -46,10 +50,10 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
             // We have to re-run their script each time we do this.
             if (! container.innerHTML) {
                 container.innerHTML = '' +
-                    '<div class="search-box" role="search">' +
+                    '<div class="search__box" role="search">' +
                         '<gcse:searchbox></gcse:searchbox>' +
                     '</div>' +
-                    '<div class="search-results" data-link-name="search">' +
+                    '<div class="search__results" data-link-name="search">' +
                         '<gcse:searchresults></gcse:searchresults>' +
                     '</div>';
 

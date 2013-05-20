@@ -1,9 +1,9 @@
-.nav-popup-search {
-    min-height: 47px;
+.nav-popup--search {
+    min-height: 46px;
 }
 
-.search-box {
-  margin: 0 $gutter;
+.search__box {
+  margin: 8px $gutter 0 $gutter;
 }
 
 .gsc-search-box .gsib_a {
