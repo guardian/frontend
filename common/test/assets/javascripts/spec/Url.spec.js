@@ -1,8 +1,8 @@
 define(['modules/url'], function(url) {
 
-    describe("Url", function() {
+    describe('Url', function() {
         
-        describe("should get url vars", function() {
+        describe('should get url vars', function() {
         
             [
                 ['foo=bar', { foo: 'bar' }], 
