@@ -266,7 +266,7 @@ define([
                 s = arr[i];
                 // dedupe, while also creating a lookup obj
                 if(!sequenceCache[s.url]) {
-                    s.pos = i;
+                    s.pos = sequenceLen;
                     sequenceCache[s.url] = s;
                     sequence.push(s);
                     sequenceLen += 1;
