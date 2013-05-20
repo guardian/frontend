@@ -1,11 +1,10 @@
 package com.gu.test;
 
 import cucumber.api.java.Before;
-import static org.junit.Assert.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
@@ -128,7 +129,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * Wait for an element to have some text
 	 * 
 	 * @param locator 
-	 * @param The text
+	 * @param text
 	 */
 	public boolean waitForText(By locator, String text) {
 		return new WebDriverWait(this, WAIT_TIME)
@@ -185,8 +186,12 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * 
 	 * @param element
 	 */
-	public void jsClick(WebElement element) {
-		((JavascriptExecutor)this).executeScript("arguments[0].click();", element); 
+	public void click(WebElement element) {
+		 element.click();
 	}
+
+    public void jsClick(WebElement element) {
+        ((JavascriptExecutor)this).executeScript("arguments[0].click();", element);
+    }
 
 }

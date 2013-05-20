@@ -188,8 +188,10 @@ define([
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts) {
                         Adverts.init(config, context);
-                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
                     }
+                });
+                common.mediator.on('modules:adverts:docwrite:loaded', function(){
+                    Adverts.loadAds();
                 });
             }
         },
@@ -210,7 +212,7 @@ define([
         },
 
         initSwipe: function(config) {
-            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.canSwipe()) {
+            if (detect.canSwipe() && (config.switches.swipeNav || userPrefs.isOn('swipe-nav'))) {
                 swipeNav(config);
             }
         }
