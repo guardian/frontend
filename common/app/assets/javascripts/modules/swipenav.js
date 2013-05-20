@@ -23,6 +23,7 @@ define([
         canonicalLink,
         clickSelector,
         contentAreaTop,
+        height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
         initialUrl,
@@ -66,19 +67,6 @@ define([
 
     function mod3(x) {
         return mod(x, 3);
-    }
-
-    function loadSequence(callback) {
-        var section = window.location.pathname.match(/^\/[^\/]+/);
-        ajax({
-            url: '/front-trails' + (section ? section[0] : ''),
-            type: 'jsonp',
-            success: function (json) {
-                if (json.stories && json.stories.length >= 3) {
-                    callback(json.stories);
-                }
-            }
-        });
     }
 
     function prepareDOM() {
@@ -163,8 +151,9 @@ define([
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
     function updateHeight() {
-        var height = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
-        if (height) {
+        var h = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
+        if (height !== h) {
+            height = h;
             $(swipeContainer).css('height', height + visiblePaneMargin + 'px');
         }
     }
@@ -236,18 +225,37 @@ define([
         return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
     }
 
-    function setSequence(arr, url) {
+    function loadSequence(callback) {
+        var section = window.location.pathname.match(/^\/[^\/]+/);
+        ajax({
+            url: '/front-trails' + (section ? section[0] : ''),
+            type: 'jsonp',
+            success: function (json) {
+                if (json.stories && json.stories.length >= 3) {
+                    callback(json.stories);
+                }
+            }
+        });
+    }
+
+    function setSequence(arr) {
         var len = arr.length,
+            url = window.location.pathname,
+            sectionUrl = url.match(/^\/[^\/]*/)[0],
             s,
             i;
 
         if (len) {
 
             // Make sure url is the first in the sequence
-            if(url && arr[0].url !== url) {
+            if(arr[0].url !== url) {
                 arr.unshift({url: url});
                 len += 1;
             }
+
+            // Add the "section" page as the last position in the sequence
+            arr.push({url: sectionUrl});
+            len += 1;
 
             sequence = [];
             sequenceLen = 0;
@@ -261,10 +269,10 @@ define([
                     sequenceCache[s.url] = s;
                     sequence.push(s);
                     sequenceLen += 1;
-                    //window.console.log(i + " " + s.url);
+                    window.console.log(i + " " + s.url);
                 }
             }
-            setSequencePos(url);
+            setSequencePos(window.location.pathname);
         }
     }
 
@@ -535,7 +543,7 @@ define([
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
         setInterval(function(){
             updateHeight();
-        }, 509); // Prime number, for good luck
+        }, 2003); // Prime number, for good luck
     }
 
     var initialise = function(config) {
@@ -558,7 +566,7 @@ define([
             prepareDOM();
 
             // Set the initial sequence
-            setSequence(sequence, initialUrl);
+            setSequence(sequence);
 
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
             if (sequenceCache[initialUrl]) {

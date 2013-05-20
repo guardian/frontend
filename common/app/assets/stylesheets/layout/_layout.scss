@@ -5,8 +5,6 @@
 #preloads {
   position: relative;
   clear: both;
-  max-width: 64em;
-  max-width: 102.4rem;
   margin: 0 auto;
 }
 
@@ -67,7 +65,7 @@
     height: 100%;
     width: 100%; 
     @include transition(0ms ease-out);
-    @include transform(translateZ(0px)); 
+    @include transform(translateZ(0px));
 }
 
 #preload-0,
