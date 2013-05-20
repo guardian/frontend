@@ -10,7 +10,7 @@ define([
 
     var AUS = "australia-edition";
 
-    function AustraliaEdition() {
+    function AustraliaEdition(config) {
 
         bean.on(document, 'click', '.edition', function(e) {
 
@@ -26,10 +26,15 @@ define([
             // convert all home links to AUS front
             common.$g("a[href='/']").attr("href", "/australia");
 
-            // remove au edition links
-            common.$g(".edition-au").each(function(e) {
-                bonzo(e.parentNode).remove();
-            });
+            // convert AU edition link back to UK link
+            if (config.page.edition === "UK") {
+                common.$g(".edition-au").each(function(e) {
+                    var ukHref = e.href.replace('/australia', '/'),
+                        ukLink = '<a class="nav__link edition" data-link-name="switch to uk edition" href="'+ukHref+'">UK edition</a>';
+
+                    bonzo(e.parentNode).html(ukLink);
+                });
+            }
         }
     }
 
