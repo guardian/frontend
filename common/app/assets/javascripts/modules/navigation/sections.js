@@ -19,7 +19,7 @@ define([
         this.view = {
             bindings : function(context) {
 
-                var sectionsHeader = context.querySelector('.nav-popup-sections'),
+                var sectionsHeader = context.querySelector('.nav-popup--sections'),
                     sectionsNav    = context.querySelector('.nav--global'),
                     $sectionsHeader = bonzo(sectionsHeader);
 

@@ -68,62 +68,69 @@
   @media only screen and (min-width: $tablet) {
     position: absolute;
     right: 0px;
-    top: 58px;
-    padding: 0 $gutter 10px $gutter;
-    margin: $baseline*2 0 $baseline*2 0;
+    top: 48px;
     background-color: transparent;
     color: #444444;
     font-size: 14px;
   }
 }
 
-span.control__menu.i-menu {
+.control--sections .control__text {
+  @media only screen and (min-width: $tablet) {
+    display: none;
+  }
+}
+
+.control--sections .control__icon {
   @media only screen and (min-width: $tablet) {
     display:none;
   }
 }
 
-.control--sections .i-menu-active {
+.control--sections .i-menu-grey {
   display: none;
 
   @media only screen and (min-width: $tablet) {
-    margin-top: $baseline*2;
     display: inline-block;
   }
 }
 
 .control--sections .i-nav-divider {
   @media only screen and (min-width: $tablet) {
-    margin-right: $baseline*3;
-    border-color: #BBBBBB;
+    border-left: 1px dotted $neutral3;
     background-color: #ffffff;
   }
 }
 
 /* Top stories control
  ========================================================================== */
-.control--topstories {
-  margin-right: 46px;
+.control--topstories,
+.control--topstories:link,
+.control--topstories:active,
+.control--topstories:hover,
+.control--topstories:visited {
   margin: 0;
-}
-
-/* Search control
- ========================================================================== */
-
-.control--search {
-  height: 28px;
-  padding: 15px $baseline*4 15px 0px;
-  border: none;
 
   @media only screen and (min-width: $tablet) {
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 0px
   }
 }
 
-.control--search .i-search {
-  margin-top: $baseline*2;
-  margin-left: 6px;
-  margin-right: 2px;
+/* Search control
+ ========================================================================== */
+.control--search,
+.control--search:link,
+.control--search:active,
+.control--search:hover,
+.control--search:visited {
+  display: none;
+  position: absolute;
+  top: 0px;
+  right: 60px;
+
+  @media only screen and (min-width: $tablet) {
+    display: block;
+  }
 }

@@ -142,11 +142,11 @@
   float:left;
   clear:left;
   width: 100%;
-  height: 46px;
+  height: 48px;
   overflow: hidden;
-  padding: 0 90px 0 0;
+  padding: 0 120px 0 0;
   background-color: #ffffff;
-  border-bottom: 1px solid $darkMushroom;
+  border-bottom: 1px solid $neutral4;
 
   @media only screen and (min-width: $tablet) { display: block; }
 }
@@ -161,13 +161,13 @@
   .nav--global .nav__link:hover,
   .nav--global .nav__link:visited {
     display: block;
-    margin: 10px 0 $baseline*3 0;
-    padding: 2px $baseline*3 0 $baseline*3;
-    font-family: $serif !important;@include font($serif, normal, 14, 36);
+    margin: 0 0 $baseline*3 0;
+    padding: 0 $baseline*3 0 $baseline*3;
+    font-family: $serif !important;
+    @include font($serif, normal, 14, 48);
     font-size: 14px;
     text-decoration: none;
-    color: #444444;
-    border-right: 1px solid #BBBBBB;
+    color: $neutral4;
   }
 
     .nav--global .nav__item:first-child .nav__link { padding-left: 0px; }
