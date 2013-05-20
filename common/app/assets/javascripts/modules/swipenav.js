@@ -168,6 +168,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
+            urls.pushUrl({}, document.title, window.location.pathname);
             return;
         }
 
