@@ -30,6 +30,8 @@ define([
                 common.$g("a[href='/']", currentContext).attr("href", "/australia");
 
                 // convert AU edition link back to UK link
+                // Note: This is slightly confusing as the current AUS edition is
+                // temporarily just the UK edition, so we need to re-add the link back
                 if (config.page.edition === "UK") {
                     common.$g(".edition-au", currentContext).each(function(e) {
                         var ukHref = e.href.replace('/australia', '/'),
