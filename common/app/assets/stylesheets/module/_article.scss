@@ -68,7 +68,6 @@
 .article .main-image {
   @include box-sizing(border-box);
   margin-bottom: 0px;
-  padding: 0 $gutter;
 }
 
 .article__body {
