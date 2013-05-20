@@ -8,7 +8,8 @@ define([
     'bonzo'],
     function (common, userPrefs, bean, bonzo) {
 
-    var AUS = "australia-edition";
+    var AUS = "australia-edition",
+        currentContext;
 
     function AustraliaEdition(config) {
 
@@ -21,21 +22,24 @@ define([
             }
         });
 
+        this.init = function(context) {
+            currentContext = context;
 
-        if (userPrefs.isOn(AUS)) {
-            // convert all home links to AUS front
-            common.$g("a[href='/']").attr("href", "/australia");
+            if (userPrefs.isOn(AUS)) {
+                // convert all home links to AUS front
+                common.$g("a[href='/']", currentContext).attr("href", "/australia");
 
-            // convert AU edition link back to UK link
-            if (config.page.edition === "UK") {
-                common.$g(".edition-au").each(function(e) {
-                    var ukHref = e.href.replace('/australia', '/'),
-                        ukLink = '<a class="nav__link edition" data-link-name="switch to uk edition" href="'+ukHref+'">UK edition</a>';
+                // convert AU edition link back to UK link
+                if (config.page.edition === "UK") {
+                    common.$g(".edition-au", currentContext).each(function(e) {
+                        var ukHref = e.href.replace('/australia', '/'),
+                            ukLink = '<a class="nav__link edition" data-link-name="switch to uk edition" href="'+ukHref+'">UK edition</a>';
 
-                    bonzo(e.parentNode).html(ukLink);
-                });
+                        bonzo(e.parentNode).html(ukLink);
+                    });
+                }
             }
-        }
+        };
     }
 
     return AustraliaEdition;

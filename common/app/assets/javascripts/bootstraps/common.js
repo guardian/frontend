@@ -84,6 +84,7 @@ define([
                 navControl.init(context);
                 sections.init(context);
                 search.init(context);
+                aus.init(context);
             });
         },
 
