@@ -37,7 +37,7 @@ public class NavigationSteps {
 
     @Then("^the \"(Top stories|Sections)\" menu should (open|close)$")
     public void the_menu_should(String tabName, String menuState) throws Throwable {
-    	String menuId = "nav-popup-" + tabName.toLowerCase().replace(" ", "");
+    	String menuId = "nav-popup--" + tabName.toLowerCase().replace(" ", "");
     	if (menuState.equals("open")) {
     	    webDriver.waitForVisible(By.className(menuId));
     	} else {
@@ -47,7 +47,7 @@ public class NavigationSteps {
     
     @Given("^the \"(Top stories|Sections)\" menu is (open|close)$")
     public void the_menu_is(String tabName, String menuState) throws Throwable {
-    	String menuId = "nav-popup-" + tabName.toLowerCase().replace(" ", "");
+    	String menuId = "nav-popup--" + tabName.toLowerCase().replace(" ", "");
     	// if it's not in the correct state, click it
     	if (menuState.equals("open")) {
     		I_click_the_tab(tabName);
@@ -61,13 +61,13 @@ public class NavigationSteps {
     @When("^I click on a top story$")
     public void I_click_on_a_top_story_link() throws Throwable {
     	// get the first top story
-    	webDriver.findElement(By.cssSelector(".nav-popup-topstories li a")).click();
+    	webDriver.findElement(By.cssSelector(".nav-popup--topstories li a")).click();
     }
     
     @Then("^the top story link should have a (.*) of (.*)$")
     public void the_top_story_link_should_have_a_of(String cssProperty, String expectedColor) throws Throwable {
         // confirm it has the correct css color
-    	assertEquals(expectedColor, webDriver.getElementCssValue(By.cssSelector(".nav-popup-topstories li a"), cssProperty));
+    	assertEquals(expectedColor, webDriver.getElementCssValue(By.cssSelector(".nav-popup--topstories li a"), cssProperty));
     }
     
 }
