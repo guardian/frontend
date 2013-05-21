@@ -42,7 +42,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
           Then("I should see the news trailblock")
           val news = $(".zone-news")
-          news.find(".trail-headline") should have length (4)
+          news.find(".trail__headline") should have length (4)
       }
     }
 
@@ -86,7 +86,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the copyright")
-          findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+          findFirst(".footer__copyright").getText should startWith("© Guardian News and Media Limited")
 
       }
     }
