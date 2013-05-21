@@ -168,7 +168,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({}, document.title, window.location.pathname);
+            urls.pushUrl({}, document.title, window.location.href);
             return;
         }
 
@@ -530,15 +530,17 @@ define([
                 dir;
 
             // Ignore inital popstate that some browsers fire on page load
-            if (!state) { return; }
+            if (!state || initiatedBy === 'initial') { return; }
 
             initiatedBy = 'browser_history';
 
             // Prevent a history state from being pushed as a result of calling gotoUrl
             noHistoryPush = true;
 
-            // Reveal the newly poped location
-            gotoUrl(urlAbsPath(window.location.href));
+            // Reveal the newly poped location, if new
+            if(referrer !== window.location.href) {
+                gotoUrl(urlAbsPath(window.location.href));
+            }
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
