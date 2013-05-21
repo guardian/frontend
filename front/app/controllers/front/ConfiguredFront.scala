@@ -1,10 +1,6 @@
 package controllers.front
 
-import model.Trailblock
-import common.{Edition, Logging, AkkaSupport}
-import scala.concurrent.duration._
-
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
+import common.Edition
 
 //Responsible for bootstrapping the front (setting up the refresh schedule)
 class ConfiguredFront extends Front {
