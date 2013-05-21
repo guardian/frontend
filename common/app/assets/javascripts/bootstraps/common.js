@@ -155,29 +155,25 @@ define([
                     }
 
                     Ophan.additionalViewData(function() {
-                        var audsci = storage.get('gu.ads.audsci');
 
-                        if(audsci === null) {
-                            return {};
+                        var viewData = {};
+
+                        var audsci = storage.get('gu.ads.audsci');
+                        if (audsci) {
+                            viewData.audsci_json = JSON.stringify(audsci);
                         }
 
-                        return { "audsci_json": JSON.stringify(audsci) };
+                        if(AB.inTest(config.switches)) {
+                            var test = AB.getTest();
+                            viewData.experiments_json = JSON.stringify([{
+                                id: test.id,
+                                variant: test.variant
+                            }]);
+                        }
+
+                        return viewData;
                     });
 
-                    if(AB.inTest(config.switches)) {
-                        Ophan.additionalViewData(function() {
-                            var test = AB.getTest(),
-                                data = [
-                                    {
-                                        id: test.id,
-                                        variant: test.variant
-                                    }
-                                ];
-                            return {
-                                "experiments_json": JSON.stringify(data)
-                            };
-                        });
-                    }
                     Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined);
                 });
 
