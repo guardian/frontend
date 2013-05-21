@@ -65,7 +65,6 @@ object CultureFrontPage extends MetaData {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val front: Front = Front
-  val configuredFront: ConfiguredFront = ConfiguredFront
 
   def warmup() = Action {
     val promiseOfWarmup = Future(Front.warmup)
@@ -90,10 +89,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     }
 
     // get the trailblocks
-    val trailblocks: Seq[Trailblock] = path match {
-      case "front" => configuredFront(path, edition)
-      case _ => front(path, edition)
-    }
+    val trailblocks: Seq[Trailblock] = front(path, edition)
 
     if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
       NotFound
@@ -119,13 +115,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     }
 
     // get the first trailblock
-    val trailblock: Option[Trailblock] = {
-      val trailblocks = path match {
-        case "front" => configuredFront(path, edition)
-        case _ => front(path, edition)
-      }
-      trailblocks.headOption
-    }
+    val trailblock: Option[Trailblock] = front(path, edition).headOption
 
     if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
       NotFound
