@@ -16,7 +16,7 @@ object VideoAdvertAgent extends AkkaSupport with Logging {
 
     val random = System.currentTimeMillis
 
-    loadXml(s"http://oas.guardian.co.uk//2/m.guardiantest.co.uk/$random@x40").flatMap{ xml =>
+    loadXml(s"http://oas.guardian.co.uk//2/m.guardian.co.uk/$random@x40").flatMap{ xml =>
       xml.label match {
         case "VAST" => Future(parseVast(xml))
         case "VideoAdServingTemplate" => {
