@@ -89,7 +89,12 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     }
 
     // get the trailblocks
-    val trailblocks: Seq[Trailblock] = front(path, edition)
+    val trailblocks: Seq[Trailblock] = front(path, edition).filter{ trailblock =>
+      trailblock.description match {
+        case desc: ItemTrailblockDescription => true
+        case desc: TrailblockDescription => false
+      }
+    }
 
     if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
       NotFound
