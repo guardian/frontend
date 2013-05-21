@@ -88,3 +88,71 @@
   width: 100%;
   margin-bottom: $baseline*2;
 }
+
+/*** GRID stuff ***/
+
+$gridWidth: 5em;
+
+.grid-article {
+    max-width: $gridWidth * 7;
+}
+
+.grid-article .main-image {
+    width: 100%;
+}
+
+/* 6 cols */
+@media screen and (min-width: 30em) {
+    .grid-article .main-image-wrap {
+        float: right;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 0 0 0 11px;
+    }
+
+    .grid-article .main-image-wrap {
+        width: $gridWidth * 3;
+    }
+}
+
+/* 7 cols */
+@media screen and (min-width: 35em) {
+    .grid-article .main-image-wrap {
+        width: $gridWidth * 4;
+    }
+}
+
+/* 8 cols */
+@media screen and (min-width: 40em) {
+    .grid-article .main-image-wrap {
+        margin-right: $gridWidth * -1;
+    }
+}
+
+/* 9 cols */
+@media screen and (min-width: 45em) {
+    .grid-article .main-image-wrap {
+        width: $gridWidth * 5;
+        margin-right: $gridWidth * -2;
+    }
+}
+
+/* 10 cols */
+@media screen and (min-width: 50em) {
+    .grid-article .main-image-wrap {
+        width: $gridWidth * 6;
+        margin-right: $gridWidth * -3;
+    }
+}
+
+/* 11 cols */
+@media screen and (min-width: 55em) {
+  .grid-article {
+      margin-left: $gridWidth * 1;
+  }
+}
+
+/* 12 cols */
+@media screen and (min-width: 60em) {
+}
