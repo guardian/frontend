@@ -24,7 +24,7 @@ public class FrontSteps {
 	
     // xpath to the first hideable section
     protected String sectionXpath = "//div[contains(@class, 'front-container')]/section[2]";
-    protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]";
+    protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]/ul";
 	
     @Given("^a section is hidden$")
     public void a_section_is_hidden() throws Throwable {
@@ -37,9 +37,9 @@ public class FrontSteps {
     		WebElement trailblockToggle = webDriver.waitForVisible(
     		    By.xpath(sectionXpath + "//button[contains(@class, 'toggle-trailblock')]")
     		);
-    		String expectedTrailblockHeight = (sectionState.equals("show")) ? "none" : "0";
+    		String expectedTrailblockHeight = (sectionState.equals("show")) ? "none" : "block";
     		// only click if not in correct state
-    		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
+    		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("display");
     		if (actualTrailblockHeight != expectedTrailblockHeight) {
     		  trailblockToggle.click();
     		}
@@ -47,10 +47,10 @@ public class FrontSteps {
 
   	@Then("^the section will be (hidden|shown)$")
   	public void the_section_will_be_toggled(String sectionState) throws Throwable {
-    		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "none" : "0";
+    		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "block" : "none";
     		// sections are hidden with css max-height
     		assertTrue(webDriver.waitForCss(
-    		    By.xpath(trailblockXpath), "max-height", expectedTrailblockHeight)
+    		    By.xpath(trailblockXpath), "display", expectedTrailblockHeight)
     		);
   	}
   	
