@@ -90,7 +90,7 @@ function (
         //Run through adslots and check if they are on screen. Load if so.
         for (var i = 0, j = slots.length; i<j; ++i) {
             //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
-            if (!slots[i].loaded) {
+            if (!slots[i].loaded && slots[i].el.innerHTML === '') {
                 slots[i].render();
             }
         }
