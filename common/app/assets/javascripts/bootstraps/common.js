@@ -213,7 +213,7 @@ define([
         },
 
         initSwipe: function(config) {
-            if (detect.canSwipe() && (config.switches.swipeNav || userPrefs.isOn('swipe-nav'))) {
+            if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
                 swipeNav(config);
             }
         }
