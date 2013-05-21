@@ -91,8 +91,8 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
     // get the trailblocks
     val trailblocks: Seq[Trailblock] = path match {
-      case "front" => front(path, edition)
-      case _ => configuredFront(path, edition)
+      case "front" => configuredFront(path, edition)
+      case _ => front(path, edition)
     }
 
     if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
@@ -121,8 +121,8 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     // get the first trailblock
     val trailblock: Option[Trailblock] = {
       val trailblocks = path match {
-        case "front" => front(path, edition)
-        case _ => configuredFront(path, edition)
+        case "front" => configuredFront(path, edition)
+        case _ => front(path, edition)
       }
       trailblocks.headOption
     }
