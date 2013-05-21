@@ -90,9 +90,13 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
     // get the trailblocks
     val trailblocks: Seq[Trailblock] = front(path, edition).filter{ trailblock =>
-      trailblock.description match {
-        case desc: ItemTrailblockDescription => true
-        case desc: TrailblockDescription => false
+      path match {
+        case "front" => false
+        // filter out configured trailblocks if not on the network front
+        case _ => trailblock.description match {
+          case _: ItemTrailblockDescription => true
+          case _: TrailblockDescription => false
+        }
       }
     }
 
