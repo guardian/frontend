@@ -124,13 +124,13 @@ define([
 
     Video.prototype.trimText = function(text) {
         return text.replace(/^\s+|\s+$/g,'');
-    }
+    };
 
     Video.prototype.getNodeContent = function(node) {
-            if (node && node.textContent) {
-                return this.trimText(node.textContent);
-            }
+        if (node && node.textContent) {
+            return this.trimText(node.textContent);
         }
+    };
 
     Video.prototype.parseVast = function(xml) {
 
@@ -152,7 +152,7 @@ define([
         this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector("Impression URL"));
         this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector("ClickTracking URL"));
         return this.getNodeContent(xml.querySelector("VASTAdTagURL URL"));
-    }
+    };
 
     Video.prototype.getVastData = function(url) {
 
@@ -172,14 +172,9 @@ define([
                         var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
                         self.getVastData(nextUrl);
                         break;
-                    default:
-                        console.log("Not recognisable type.")
-                        // For now, try again - we might get VAST next time.
-                        self.getVastData(url);
                 }
             }
         });
-
     };
 
     Video.prototype.init = function() {
