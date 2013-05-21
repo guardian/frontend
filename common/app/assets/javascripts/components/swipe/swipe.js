@@ -69,7 +69,7 @@
       this.container.style.visibility = 'hidden';
 
       // determine width of each slide
-      this.width = this.container.getBoundingClientRect().width - 40;
+      this.width = this.container.getBoundingClientRect().width;
 
       // dynamic css
       this.element.style.width = (this.slides.length * this.width) + 'px';

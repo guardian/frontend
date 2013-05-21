@@ -1,11 +1,14 @@
 define([
     //Commmon libraries
     'common',
+    'ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
     'bonzo',
     //Modules
+    'modules/storage',
+    'modules/detect',
     'modules/popular',
     'modules/related',
     'modules/router',
@@ -14,24 +17,28 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
+    'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
-    'modules/analytics/optimizely',
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
     'modules/debug',
-    'modules/experiments/ab'
+    'modules/experiments/ab',
+    'modules/swipenav'
 ], function (
     common,
+    ajax,
     userPrefs,
 
     domReady,
     bonzo,
 
+    storage,
+    detect,
     popular,
     related,
     Router,
@@ -40,17 +47,18 @@ define([
     Sections,
     Search,
     NavControl,
+    Australia,
     EditionSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
     Omniture,
-    optimizely,
     Adverts,
     Cookies,
-    Video,
+    OmnitureMedia,
     Debug,
-    AB
+    AB,
+    swipeNav
 ) {
 
     var modules = {
@@ -69,16 +77,14 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
+            var aus = new Australia(config); // TODO temporary till we have single domain editions
+
             var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
-                var header = bonzo(context.querySelector('header'));
-                if(!header.hasClass('initialised')) {
-                    header.addClass('initialised');
-
-                    navControl.init(context);
-                    sections.init(context);
-                    search.init(context);
-                }
+                navControl.init(context);
+                sections.init(context);
+                search.init(context);
+                aus.init(context);
             });
         },
 
@@ -128,12 +134,12 @@ define([
                 AB.init(config);
 
                 omniture.go(config, function(){
-                    // Omniture callback logic:
+                    // callback:
 
                     Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                         if (!bonzo(video).hasClass('tracking-applied')) {
                             bonzo(video).addClass('tracking-applied');
-                            var v = new Video({
+                            var v = new OmnitureMedia({
                                 el: video,
                                 config: config
                             }).init();
@@ -142,44 +148,53 @@ define([
                 });
 
                 require(config.page.ophanUrl, function (Ophan) {
-                    if(AB.inTest(config.switches)) {
-                        Ophan.additionalViewData(function() {
-                            var test = AB.getTest(),
-                                data = [
-                                    {
-                                        id: test.id,
-                                        variant: test.variant
-                                    }
-                                ];
-                            return {
-                                "experiments_json": JSON.stringify(data)
-                            };
-                        });
+
+                    if (!Ophan.isInitialised) {
+                        Ophan.isInitialised = true;
+                        Ophan.initLog();
                     }
-                    Ophan.startLog();
+
+                    Ophan.additionalViewData(function() {
+
+                        var viewData = {};
+
+                        var audsci = storage.get('gu.ads.audsci');
+                        if (audsci) {
+                            viewData.audsci_json = JSON.stringify(audsci);
+                        }
+
+                        if(AB.inTest(config.switches)) {
+                            var test = AB.getTest();
+                            viewData.experiments_json = JSON.stringify([{
+                                id: test.id,
+                                variant: test.variant
+                            }]);
+                        }
+
+                        return viewData;
+                    });
+
+                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined);
                 });
 
             });
         },
 
-        loadAdverts: function (config) {
-            common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                if (config.switches.adverts) {
-                    Adverts.init(config, context);
-                    common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-                }
-            });
+        loadAdverts: function () {
+            if (!userPrefs.isOff('adverts')){
+                common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                    if (config.switches && config.switches.adverts) {
+                        Adverts.init(config, context);
+                    }
+                });
+                common.mediator.on('modules:adverts:docwrite:loaded', function(){
+                    Adverts.loadAds();
+                });
+            }
         },
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
         },
 
         showSharedWisdomToolbar: function(config) {
@@ -197,23 +212,31 @@ define([
             var gridHeight = 36,
                 gridPadding = 12;
 
-            // This snaps individual elements to the grid
-            common.$g('.snap-to-grid').each(function(el) {
-                var height = el.offsetHeight,
-                    gridUnits = Math.ceil(height/(gridHeight+gridPadding));
-
-                el.className += ' grid-h-unit-' + gridUnits;
-            });
-
-            // This is a general purpose classname to snap all the children to grid
-            common.$g('.snap-children-to-grid').each(function(el) {
-                [].forEach.call(el.children, function(el) {
+            common.mediator.on('page:common:ready', function(config, context) {
+                // This snaps individual elements to the grid
+                common.$g('.snap-to-grid', context).each(function(el) {
                     var height = el.offsetHeight,
                         gridUnits = Math.ceil(height/(gridHeight+gridPadding));
 
-                    el.className += ' grid-h-unit-' +gridUnits;
+                    el.className += ' grid-h-unit-' + gridUnits;
+                });
+
+                // This is a general purpose classname to snap all the children to grid
+                common.$g('.snap-children-to-grid', context).each(function(el) {
+                    [].forEach.call(el.children, function(el) {
+                        var height = el.offsetHeight,
+                            gridUnits = Math.ceil(height/(gridHeight+gridPadding));
+
+                        el.className += ' grid-h-unit-' +gridUnits;
+                    });
                 });
             });
+        },
+
+        initSwipe: function(config) {
+            if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
+                swipeNav(config);
+            }
         }
     };
 
@@ -236,6 +259,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.grid();
             modules.upgradeImages();
             modules.showTabs();
             modules.showRelativeDates();
@@ -243,7 +267,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            modules.grid();
+            modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -55,7 +55,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     request.getQueryString("callback").map { callback =>
       JsonComponent(jsonResponse)
     } getOrElse {
-      Ok(Compressed(htmlResponse))
+      Ok(htmlResponse)
     }
   }
   
@@ -63,7 +63,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     request.getQueryString("callback").map { callback =>
       JsonComponent(metaData, switches, jsonResponse)
     } getOrElse {
-      Ok(Compressed(htmlResponse))
+      Ok(htmlResponse)
     }
   }
   
@@ -71,7 +71,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     request.getQueryString("callback").map { callback =>
       JsonComponent(jsonResponse)
     } getOrElse {
-      Ok(Compressed(htmlResponse))
+      Ok(htmlResponse)
     }
   }
 }

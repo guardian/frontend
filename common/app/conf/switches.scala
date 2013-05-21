@@ -22,6 +22,10 @@ object CommonSwitches {
     "If this is switched on then the custom Guardian web font will load.",
     initiallyOn = true)
 
+  val FontDelaySwitch = DefaultSwitch("web-fonts-delay",
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
+    initiallyOn = false)
+
   val AudienceScienceSwitch = DefaultSwitch("audience-science",
     "If this switch is on the Audience Science will be enabled.",
     initiallyOn = true)
@@ -70,10 +74,6 @@ object CommonSwitches {
     "If this switch is enabled the add-to-homescreen popup will plague iOS users",
     initiallyOn = false)
 
-  val OptimizelySwitch = DefaultSwitch("optimizely",
-    "If this switch is on Optimizely will be enabled.",
-    initiallyOn = false)
-
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
@@ -90,21 +90,46 @@ object CommonSwitches {
     "If this switch is on the australia front will be available",
     initiallyOn = false)
 
-  val ClevelandStory = DefaultSwitch("ab-cleveland-story",
-    "If this switch is on cleveland story AB test will be enabled.",
+  val ABStoryFrontTrail = DefaultSwitch("ab-story-front-trail",
+    "If this switch is on story front trail AB test will be enabled.",
     initiallyOn = false)
-  
+
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
   
+  val SwipeNav = DefaultSwitch("swipe-nav",
+    "If this switch is on then swipe navigation is enabled",
+    initiallyOn = false)
+  
+  val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
+    "If this switch is also on then swipe navigation on clicks is enabled",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
-    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ClevelandStory,
-    AustraliaFrontSwitch
+    AutoRefreshSwitch,
+    FontDelaySwitch,
+    FontSwitch,
+    AudienceScienceSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    NetworkFrontAppealSwitch,
+    WitnessVideoSwitch,
+    ExperimentStoryModule01Switch,
+    StoryVersionBSwitch,
+    StoryFrontTrails,
+    SocialSwitch,
+    SearchSwitch,
+    QuantcastSwitch,
+    HomescreenSwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    ABRelatedContentV2,
+    AustraliaFrontSwitch,
+    ABStoryFrontTrail,
+    ImageServerSwitch,
+    SwipeNav,
+    SwipeNavOnClick
   )
 }
 

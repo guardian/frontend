@@ -2,7 +2,7 @@
     "name": "reqwest"
   , "description": "A wrapper for asynchronous http requests"
   , "keywords": ["ender", "ajax", "xhr", "connection", "web 2.0", "async"]
-  , "version": "0.6.3"
+  , "version": "0.6.4"
   , "homepage": "https://github.com/ded/reqwest"
   , "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)"
   , "repository": {

@@ -6,7 +6,7 @@
 
     @if(g.landscapes.nonEmpty && g.landscapes.size > 3) {
         <div class="js-swipe__item story-picture--sheet">
-            @g.landscapes.take(5).map{ img =>
+            @g.landscapes.take(3).map{ img =>
                 <img src="@img.url" />
             }
         </div>

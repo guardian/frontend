@@ -3,18 +3,22 @@
    ========================================================================== */
 
 .nav-popup {
-  position: relative;
+  position: absolute;
   clear: both;
   z-index: 100;
   padding: 0;
   list-style: none;
   border-bottom: 2px solid $neutral4;
+  @include transform(translateZ(0px));
+  background: #ffffff;
+  width: 100%;
 
   @media only screen and (min-width: $tablet) {
-    top: -48px;
-    margin-bottom: -48px;
-    width: 100%;
-    background-color: #ffffff;
+    top: 118px;
+  }
+
+  @media only screen and (min-width: $desktopAd) {
+    top: 155px;
   }
 }
 

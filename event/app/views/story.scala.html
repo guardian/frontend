@@ -2,52 +2,6 @@
 
 @main(page, Switches.all){ }{
 
-    @defining(page.story){ story =>
+    @fragments.storyBody(page)
     
-    <div class="story-container">
-        <h1 class="story-title story-storyline">@story.title</h1>
-    </div>
-
-    <div class="tabs-container story-tabs-container">
-
-        @if(story.hasLiveContent) {
-            <ol class="tabs js-tabs">
-                <li class="tabs-selected"><a href="#story" data-link-name="story">Summary</a></li>
-                <li><a href="#live" data-link-name="live">Live</a></li>
-            </ol>
-        }
-
-        <div class="tabs-content">
-            <div class="tabs-pane" id="story">
-                <div class="story-container">
-                    @fragments.latest(story, page, 2)
-                    @fragments.explainer(story)
-
-                    <div class="story-content">
-                        @fragments.reaction(story)
-                        @fragments.quote(story, 0)
-                        @fragments.agents(story)
-                        @fragments.quote(story, 1)
-                    </div>
-
-                    @fragments.pictures(story)
-                    @fragments.places(story)
-                    @fragments.timeline(story)
-                    @fragments.feedback()
-                
-                </div>
-            </div>
-
-            @if(story.hasLiveContent) {
-                <div class="tabs-pane js-hidden" id="live" data-source="@story.liveBlogs.head.url">
-                    @fragments.autoUpdate()
-                    <div class="story-live"> </div>
-                </div>
-            }
-
-        </div>
-
-    </div>
-        <div class="js-popular" role="complementary"></div>
-    }
 }

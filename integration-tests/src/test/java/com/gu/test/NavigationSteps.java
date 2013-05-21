@@ -1,13 +1,13 @@
 package com.gu.test;
 
-import static org.junit.Assert.*;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NavigationSteps {
 
@@ -23,7 +23,7 @@ public class NavigationSteps {
     	//adding a wait for the element to appear
     	webDriver.waitForElement(By.className(tabClass));
     	// click the tab
-    	webDriver.findElement(By.className(tabClass)).click();
+    	webDriver.click(webDriver.findElement(By.className(tabClass)));
     }
 
     @Then("^I'm shown the top (\\d+) stories from the Guardian site$")
@@ -49,7 +49,7 @@ public class NavigationSteps {
     public void the_menu_is(String tabName, String menuState) throws Throwable {
     	String menuId = "nav-popup--" + tabName.toLowerCase().replace(" ", "");
     	// if it's not in the correct state, click it
-    	if (menuState.equals("open")) {
+    	if (menuState.equals("close")) {
     		I_click_the_tab(tabName);
     		// NOTE - HACKY McHACKSON- js is coded to not allow toggling of nav tab quicker than 400ms
     		Thread.sleep(400);
@@ -61,7 +61,7 @@ public class NavigationSteps {
     @When("^I click on a top story$")
     public void I_click_on_a_top_story_link() throws Throwable {
     	// get the first top story
-    	webDriver.findElement(By.cssSelector(".nav-popup--topstories li a")).click();
+    	webDriver.click(webDriver.findElement(By.cssSelector(".nav-popup--topstories li a")));
     }
     
     @Then("^the top story link should have a (.*) of (.*)$")

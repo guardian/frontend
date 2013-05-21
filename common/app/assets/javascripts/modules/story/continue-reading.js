@@ -47,9 +47,19 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                                     // assuming the link is in a 'p'
                                     $p = bonzo($el.parent()),
                                     $content = bonzo(bonzo.create(resp.html))[1],
-                                    $body = $content.querySelectorAll('.article-body *:nth-child(n+' + skip + ')');
-
-                                $story = bonzo($p.after(bonzo(bonzo.create('<div>')).append($body)).next());
+                                    children = $content.querySelectorAll('.article-body > *');
+                                // only skip <p>s
+                                for (var i = 0; i < children.length; i++) {
+                                    if (children[i].nodeName.toLowerCase() === 'p') {
+                                        skip--;
+                                    }
+                                    if (skip === 0) {
+                                        $story = bonzo([].slice.call(children, i));
+                                        break;
+                                    }
+                                }
+                                
+                                bonzo($p.previous()).append($story);
                                 toggleStory();
                             }
                         });

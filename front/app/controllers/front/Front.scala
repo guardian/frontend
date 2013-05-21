@@ -18,10 +18,9 @@ class Front extends AkkaSupport with Logging {
   // Map of edition -> (path -> front)
   lazy val fronts = Edition.all.map{ edition =>
     edition.id -> edition.configuredFronts.map{ case (name, blocks) =>
-      name ->  new ConfiguredEdition(edition, blocks)
+      name ->  new FrontEdition(edition, blocks)
     }.toMap
   }.toMap
-
 
   private def allFronts = fronts.values.flatMap(_.values)
 

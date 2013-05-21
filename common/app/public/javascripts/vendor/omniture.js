@@ -112,8 +112,13 @@ s.loadMediaModule = function(provider,restricted) {
         if (media.event == "OPEN") {
             s.eVar7 = s.pageName;
             s.eVar61 = (s._GUVideo.restricted) ? "restricted" : "not restricted";
-            s.eVar47 = "video content";
-            s.eVar56 = s._GUVideo.provider;
+            if (s._GUVideo.ad) {
+                s.eVar47 = "video ad";
+            }
+            else {
+                s.eVar47 = "video content";
+                s.eVar56 = s._GUVideo.provider;
+            }
             s.Media.track(media.name);
         }
     }
@@ -121,6 +126,54 @@ s.loadMediaModule = function(provider,restricted) {
     s._GUVideo.provider = provider;
     s._GUVideo.restricted = restricted;
 }
+
+
+
+s.trackVideoContent = function(provider,restricted) {
+    var s = this;
+    s.Media.autoTrack=false;
+    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
+    s.Media.trackMilestones="25,50,75";
+    s.Media.segmentByMilestones = true;
+    s.Media.trackUsingContextData = true;
+    s.Media.contextDataMapping = {
+        "a.media.name":"eVar44,prop44",
+        "a.media.segment":"eVar48",
+        "a.contentType":"eVar43",
+        "a.media.timePlayed":"event57",
+        "a.media.view":"event17",
+        "a.media.segmentView":"event63",
+        "a.media.complete":"event18",
+        "a.media.milestones":{
+            25:"event21",
+            50:"event22",
+            75:"event23"
+        }
+    };
+    s._GUVideo.ad = false;
+    s._GUVideo.provider = provider;
+    s._GUVideo.restricted = restricted;
+}
+
+s.trackVideoAd = function() {
+    var s = this;
+    s.Media.autoTrack=false;
+    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar61,eVar56,eVar47";
+    s.Media.trackEvents="event64,event57,event59";
+    s.Media.segmentByMilestones = false;
+    s.Media.trackUsingContextData = true;
+    s.Media.contextDataMapping = {
+        "a.media.name":"eVar44,prop44",
+        "a.contentType":"eVar43",
+        "a.media.timePlayed":"event57",
+        "a.media.view":"event59",
+        "a.media.complete":"event64"
+    };
+    s._GUVideo.ad = true;
+    s._GUVideo.restricted = false;
+}
+
 
 /* WARNING: Changing any of the below variables will cause drastic
  changes to how your visitor data is collected.  Changes should only be
