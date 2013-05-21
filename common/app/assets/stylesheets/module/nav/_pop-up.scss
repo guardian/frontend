@@ -11,14 +11,15 @@
   margin-bottom: -4px;
   border-bottom: $baseline solid $blue;
   @include transform(translateZ(0px));
-  background: #fff;
+  background: #ffffff;
   width: 100%;
 
   @media only screen and (min-width: $tablet) {
-    top: -48px;
-    margin-bottom: -48px;
-    width: 100%;
-    background-color: #ffffff;
+    top: 118px;
+  }
+
+  @media only screen and (min-width: $desktopAd) {
+    top: 155px;
   }
 }
 
