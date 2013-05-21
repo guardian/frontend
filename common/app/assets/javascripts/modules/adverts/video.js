@@ -18,6 +18,7 @@ define([
         this.played = false;
         this.timer = false;
         this.events = {};
+        this.vastData = {trackingEvents: {}};
     }
 
     function VideoEvent(url) {
@@ -121,77 +122,73 @@ define([
         event.hasFired = true;
     };
 
-    Video.prototype.parseVast = function(xml) {
+    Video.prototype.trimText = function(text) {
+        return text.replace(/^\s+|\s+$/g,'');
+    }
 
-
-        function trimText(text) {
-            return text.replace(/^\s+|\s+$/g,'');
-        }
-
-        function getNodeContent(node) {
-            if (node) {
-                return trimText(node.textContent);
+    Video.prototype.getNodeContent = function(node) {
+            if (node && node.textContent) {
+                return this.trimText(node.textContent);
             }
         }
 
-        // Any errors here will be caught in the template loading.
-        var data = {
-            file: trimText(xml.querySelector("MediaFile").textContent),
-            trackingEvents: {}
+    Video.prototype.parseVast = function(xml) {
+
+        this.vastData.file = this.getNodeContent(xml.querySelector("MediaFile"));
+        if (this.vastData.file) {
+            this.vastData.trackingEvents.impression = this.getNodeContent(xml.querySelector("Impression"));
+            this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
+
+            var trackingNodes = xml.querySelectorAll("Tracking");
+            for (var i = 0, j = trackingNodes.length; i<j; ++i) {
+                var ev = trackingNodes[i].getAttribute("event");
+                this.vastData.trackingEvents[ev] = this.trimText(trackingNodes[i].textContent);
+            }
         }
 
-        data.trackingEvents.impression = getNodeContent(xml.querySelector("Impression"))
-        data.trackingEvents.clickThrough = getNodeContent(xml.querySelector("ClickThrough"))
+    };
 
-        var trackingNodes = xml.querySelectorAll("Tracking");
-        for (var i = 0, j = trackingNodes.length; i<j; ++i) {
-            var ev = trackingNodes[i].getAttribute("event");
-            data.trackingEvents[ev] = trimText(trackingNodes[i].textContent);
-        }
-
-        this.vastData = data;
-
+    Video.prototype.parseVideoAdServingTemplate = function(xml) {
+        this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector("Impression URL"));
+        this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector("ClickTracking URL"));
+        return this.getNodeContent(xml.querySelector("VASTAdTagURL URL"));
     }
 
     Video.prototype.getVastData = function(url) {
 
-        var that = this;
+        var self = this;
         ajax({
             url: url,
             method: "get",
             type: "xml",
             crossOrigin: true,
-            contentType: "xml",
             success: function(response) {
-                console.log("VAST response", response);
-                try {
-                    var rootName = response.documentElement.nodeName;
-                    if (rootName === 'VAST') {
-                        that.parseVast(response.documentElement);
-                    } else if (rootName === 'VideoAdServingTemplate') {
-                        console.log("we don't have any real VAST");
-                        // First, pull out some bits we need, then load the real VAST.
-                        var nextUrl = "the new one";
-                        that.getVastData(nextUrl);
-                    }
-                }
-                catch (e) {
-                    console.log("Haven't got any valid XML, or Content-Type is broken");
-                    // For now, just try the request again!
-                    that.getVastData(url);
+                var xmlType = response && response.documentElement && response.documentElement.nodeName;
+                switch(xmlType) {
+                    case "VAST":
+                        self.parseVast(response.documentElement);
+                        break;
+                    case "VideoAdServingTemplate":
+                        var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
+                        self.getVastData(nextUrl);
+                        break;
+                    default:
+                        console.log("Not recognisable type.")
+                        // For now, try again - we might get VAST next time.
+                        self.getVastData(url);
                 }
             }
-        })
+        });
 
     };
 
-    Video.prototype.init = function(advert) {
+    Video.prototype.init = function() {
 
         var url = "http://oas.guardian.co.uk//2/m.guardiantest.co.uk/" + (new Date().getTime()) + "@x40";
-        var advert = this.getVastData(url);
+        this.getVastData(url);
 
         var format = false,
-            that = this;
+            self = this;
 
         for (var f in this.support) {
             if(this.support.hasOwnProperty(f)) {
@@ -204,13 +201,13 @@ define([
 
         //We are only supporting mp4 adverts first
         if(format === "mp4") {
-            bean.on(that.video, "play", function() {
-                if(!that.played) {
-                    that.play(format);
+            bean.on(self.video, "play", function() {
+                if(!self.played) {
+                    self.play(format);
                 }
             });
         } else {
-            common.mediator.emit("video:ads:finished", that.config, that.context);
+            common.mediator.emit("video:ads:finished", self.config, self.context);
         }
     };
 
