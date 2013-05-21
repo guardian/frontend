@@ -2,8 +2,8 @@
 @import support._
 @import org.joda.time.DateTime
 
-<h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/football">Football</a>
 </h2>
 
 <div class="live-matches-dateline">
@@ -15,10 +15,10 @@
 @fragments.filters(model.filters, model.page, "tables")
 
 <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
-    
+
 
     @model.tables.map{ table =>
-    
+
 
     <li class="league-table">
 
