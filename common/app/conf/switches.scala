@@ -82,16 +82,8 @@ object CommonSwitches {
     "If this switch is on OAS video adverts will be enabled.",
     initiallyOn = false)
 
-  val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
-    "If this switch is on related content AB test will be enabled.",
-    initiallyOn = false)
-
   val AustraliaFrontSwitch = DefaultSwitch("australia-front",
     "If this switch is on the australia front will be available",
-    initiallyOn = false)
-
-  val ABStoryFrontTrail = DefaultSwitch("ab-story-front-trail",
-    "If this switch is on story front trail AB test will be enabled.",
     initiallyOn = false)
 
   val ImageServerSwitch = DefaultSwitch("image-server",
@@ -104,6 +96,10 @@ object CommonSwitches {
   
   val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
     "If this switch is also on then swipe navigation on clicks is enabled",
+    initiallyOn = false)
+
+  val ABStoryArticleSwap = DefaultSwitch("ab-story-article-swap",
+    "If this switch is on, swaps the latest article in a story for the story.",
     initiallyOn = false)
   
   val all: Seq[Switchable] = Seq(
@@ -124,12 +120,11 @@ object CommonSwitches {
     HomescreenSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
-    ABRelatedContentV2,
     AustraliaFrontSwitch,
-    ABStoryFrontTrail,
     ImageServerSwitch,
     SwipeNav,
-    SwipeNavOnClick
+    SwipeNavOnClick,
+    ABStoryArticleSwap
   )
 }
 

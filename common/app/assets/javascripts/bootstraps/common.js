@@ -131,7 +131,7 @@ define([
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
                 // AB must execute before Omniture
-                AB.init(config);
+                AB.init(config, context);
 
                 omniture.go(config, function(){
                     // callback:

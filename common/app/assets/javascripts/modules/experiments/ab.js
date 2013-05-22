@@ -3,16 +3,14 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/relatedContent',
-    'modules/experiments/tests/story-front-trail'
+    'modules/experiments/tests/story-article-swap'
 ], function (
     common,
     store,
-    RelatedContent,
-    StoryFrontTrail) {
+    StoryArticleSwap) {
     
     var TESTS = {
-            StoryFrontTrail: new StoryFrontTrail()
+            StoryArticleSwap: new StoryArticleSwap()
         };
 
     var testKey = 'gu.ab.current',
@@ -113,7 +111,7 @@ define([
         setParticipation(test.id);
     }
 
-    function init(config) {
+    function init(config, context) {
         var switches = config.switches,
             isInTest = inTest(switches);
 
@@ -123,7 +121,7 @@ define([
         //Is the user in an active test?
         if(isInTest) {
             var currentTest = getTest();
-            if(TESTS[currentTest.id].canRun(config)) {
+            if(TESTS[currentTest.id].canRun(config, context)) {
                 runVariant(TESTS[currentTest.id], currentTest.variant);
             }
         } else {
