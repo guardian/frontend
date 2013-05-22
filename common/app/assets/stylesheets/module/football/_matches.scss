@@ -35,7 +35,7 @@
     @extend %type-6;
     font-weight: 500;
     margin-bottom: 0;
-    padding: 9px 3px;
+    padding: 3px 3px 9px 3px;
     position: relative;
 
     background: $neutral8;
@@ -263,14 +263,6 @@
     border-color: #a1c391;
 }
 
-
-.team-list li span {
-    padding: $baseline*2 0;
-    border-top: 1px solid $mushroom;
-    display: block;
-    height: auto;
-    color: #999;
-}
 
 .football-table-container {
     margin-top: $baseline*2;
