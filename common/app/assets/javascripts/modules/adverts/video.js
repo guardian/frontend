@@ -101,7 +101,7 @@ define([
            var progress = self.getProgress(),
                duration = self.getDuration();
 
-           if(progress > (duration/2) && !self.events.midpoint.hasFired) {
+           if(progress > (duration/2) && self.events.midpoint && !self.events.midpoint.hasFired) {
                self.logEvent(self.events.midpoint);
            }
        }, 1000);
@@ -163,23 +163,23 @@ define([
             type: "xml",
             crossOrigin: true,
             success: function(response) {
-                var xmlType = response && response.documentElement && response.documentElement.nodeName;
-                switch(xmlType) {
-                    case "VAST":
-                        self.parseVast(response.documentElement);
-                        break;
-                    case "VideoAdServingTemplate":
+                if(response && response.documentElement) {
+                    var thirdParty = response.documentElement.querySelector("VASTAdTagURL");
+                    if(thirdParty) {
                         var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
                         self.getVastData(nextUrl);
-                        break;
+                    } else {
+                        self.parseVast(response.documentElement);
+                    }
                 }
             }
         });
     };
 
-    Video.prototype.init = function() {
+    Video.prototype.init = function(config) {
+        var id = (config.pageId === '') ? '' : config.pageId + '/',
+            url = "http://oas.guardian.co.uk//2/m.guardian.co.uk/" + id + "oas.html/" + (new Date().getTime()) + "@x40";
 
-        var url = "http://oas.guardian.co.uk//2/m.guardiantest.co.uk/" + (new Date().getTime()) + "@x40";
         this.getVastData(url);
 
         var format = false,

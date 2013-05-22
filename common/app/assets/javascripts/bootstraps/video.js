@@ -14,14 +14,14 @@ define([
 
         initAdverts: function(config) {
             common.mediator.on('page:video:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(!config.page.blockAds) {
                     var support = detect.getVideoFormatSupport();
                     var a = new Advert({
                         el: context.querySelector('.player video'),
                         support: support,
                         config: config,
                         context: context
-                    }).init();
+                    }).init(config.page);
                 } else {
                     common.mediator.emit("video:ads:finished", config, context);
                 }
