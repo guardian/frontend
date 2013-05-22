@@ -31,8 +31,11 @@ define([
         };
 
         this.play = function() {
-            if (initialPlay.content === true && initialPlay.advert) {
+            if (initialPlay.content === true && initialPlay.advert === true) {
                 bean.one(video, 'loadedmetadata', function() {
+                    if(video.advertWasRequested) {
+                        self.trackUserInteraction("Advert", "Video advert was requested");
+                    }
                    self.trackUserInteraction("Play", "User clicked play");
                 });
             }
@@ -121,7 +124,6 @@ define([
             bean.on(video, 'seeked', function() {that.seeked(); });
             bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume"); });
 
-            bean.on(video, 'advert:requested', function() { that.trackUserInteraction("Advert", "Advert requested"); });
             bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
             bean.on(video, 'play:content', function() { that.trackVideoContent(); });
         };

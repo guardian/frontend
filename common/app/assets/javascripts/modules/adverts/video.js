@@ -157,6 +157,9 @@ define([
     Video.prototype.getVastData = function(url) {
 
         var self = this;
+
+        this.video.advertWasRequested = true;
+
         ajax({
             url: url,
             method: "get",

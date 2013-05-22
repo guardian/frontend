@@ -28,7 +28,8 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav'
+    'modules/swipenav',
+    "modules/adverts/video"
 ], function (
     common,
     ajax,
@@ -58,7 +59,8 @@ define([
     OmnitureMedia,
     Debug,
     AB,
-    swipeNav
+    swipeNav,
+    VideoAdvert
 ) {
 
     var modules = {
@@ -193,6 +195,24 @@ define([
             }
         },
 
+        loadVideoAdverts: function(config) {
+            common.mediator.on('page:video:ready', function(config, context) {
+                if(config.switches.videoAdverts && !config.page.blockAds) {
+                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
+                        var support = detect.getVideoFormatSupport();
+                        var a = new VideoAdvert({
+                            el: el,
+                            support: support,
+                            config: config,
+                            context: context
+                        }).init(config.page);
+                    });
+                } else {
+                    common.mediator.emit("video:ads:finished", config, context);
+                }
+            });
+        },
+
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
@@ -241,6 +261,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
+            modules.loadVideoAdverts(config);
             modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
