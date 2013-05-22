@@ -1,0 +1,24 @@
+.team-list {
+    margin: 0 $gutter;
+    list-style: none;
+    background-color: $neutral6;
+}
+
+.team-list-name {
+    width: 49%;
+    display: inline-block;
+}
+.team-list__title {
+    @extend %type-6;
+    font-weight: 500;
+    color: $linkBlue;
+    padding: 0 $gutter;
+}
+
+.team-list li span {
+    padding: $baseline*2 0;
+    border-top: 1px solid $mushroom;
+    display: block;
+    height: auto;
+    color: #999;
+}
