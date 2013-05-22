@@ -29,8 +29,9 @@ a.football-filterbar__link {
 
 .football-filters {
     background: $neutral6;
-    margin: 0 $gutter 0 $gutter !important;
+    margin: 0 $gutter;
     padding: 0 3px;
+    list-style: none;
 }
 
 .football-filters__title {
