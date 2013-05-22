@@ -96,6 +96,6 @@ $from: $gridWidth * $gridColMin * 2;
         /*@extend %grid-box;*/
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        height: (36px * $i) + (12px * ($i - 1));
+        min-height: (36px * $i) + (12px * ($i - 1));
     }
 }
