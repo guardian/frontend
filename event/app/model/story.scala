@@ -148,11 +148,11 @@ object Story extends ExecutionContexts{
       }
     }
 
-    def latestWithContent(storyId: Option[String] = None): Seq[Story] = {
+    def latestWithContent(storyId: Option[String] = None, limit: Int = 10): Seq[Story] = {
       val query = storyId.map{ storyId =>
         DBObject("id" -> storyId)
       } getOrElse(DBObject.empty)
-      measure(Stories.find(query).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+      measure(Stories.find(query).limit(limit).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
     }
 
     def latest(): Seq[Story] = {
