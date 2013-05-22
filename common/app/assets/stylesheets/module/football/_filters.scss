@@ -28,7 +28,9 @@ a.football-filterbar__link {
    ========================================================================== */
 
 .football-filters {
-    background: $neutral8;
+    background: $neutral6;
+    margin: 0 $gutter 0 $gutter !important;
+    padding: 0 3px;
 }
 
 .football-filters__title {
@@ -36,6 +38,7 @@ a.football-filterbar__link {
     color: $neutral2;
     border-top: 1px solid $neutral5;
     height: 36px;
+    @include box-sizing(border-box);
 }
 
 .football-filters__item:first-child .football-filters__title {
@@ -44,10 +47,11 @@ a.football-filterbar__link {
 
 .football-filters__showall {
     border-top: 1px dotted $neutral3;
+    height: 36px;
 }
 
 .football-filters .nav {
-    padding: 0;
+    padding: 0 0 24px 0;
 }
 
 
@@ -56,17 +60,12 @@ a.football-filterbar__link {
 .football-filters .football-filters__link {
     @extend %type-7;
     line-height: 16px;
-    padding-top: 4px;
+    padding-top: 3px;
     color: $linkBlue;
 }
 
 .nav--columns-football .nav__item {
     height: auto;
     min-height: 36px;
-}
-
-.nav--columns.nav--top-border-off > li:nth-child(-n+2) span,
-.nav--stacked.nav--top-border-off > li:nth-child(1) span {
-    border-top: none;
     padding-top: 0;
 }
