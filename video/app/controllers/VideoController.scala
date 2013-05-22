@@ -4,9 +4,10 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
+import play.api.libs.json.Json._
+import play.api.libs.json.JsObject
 
-
-case class VideoPage(video: Video, storyPackage: List[Trail])
+case class VideoPage(video: Video, storyPackage: List[Trail], advert: Option[JsObject])
 
 object VideoController extends Controller with Logging with ExecutionContexts {
 
@@ -14,10 +15,19 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     val promiseOfVideo = lookup(path)
     Async {
       promiseOfVideo.map {
-        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
+        case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
         case Left(model) => renderVideo(model)
         case Right(notFound) => notFound
       }
+    }
+  }
+
+  private def AdvertToJson(advert: Option[VideoAdvert]): Option[JsObject] = {
+    advert.map{ ad =>
+      toJson(Map(
+        "file" -> toJson(ad.media),
+        "trackingEvents" -> toJson(ad.tracking)
+      )).as[JsObject]
     }
   }
 
@@ -32,15 +42,15 @@ object VideoController extends Controller with Logging with ExecutionContexts {
         val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
         val storyPackage = response.storyPackage map { new Content(_) }
 
-        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id), AdvertToJson(VideoAdvertAgent())) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage)
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage)
+    val htmlResponse = views.html.video(model)
+    val jsonResponse = views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
-    
+
 }

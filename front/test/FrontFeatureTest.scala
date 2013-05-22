@@ -18,6 +18,8 @@ import common.Edition
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
 
+  val TrailblockDescription = ItemTrailblockDescription
+
   feature("Network Front") {
 
     info("In order to explore the breaking news and navigate to site sections")
@@ -42,7 +44,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
           Then("I should see the news trailblock")
           val news = $(".zone-news")
-          news.find(".trail-headline") should have length (4)
+          news.find(".trail__headline") should have length (4)
       }
     }
 
@@ -86,7 +88,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the copyright")
-          findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+          findFirst(".footer__copyright").getText should startWith("© Guardian News and Media Limited")
 
       }
     }
@@ -110,7 +112,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
       Fake {
         //in real life these will always be editors picks only (content api does not do latest for front)
-        val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), Uk)
+        val agent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5)(Uk))
 
         agent.refresh()
         loadOrTimeout(agent)
@@ -131,7 +133,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life this tag will have no editors picks
-        val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5), Uk)
+        val agent = TrailblockAgent(TrailblockDescription("lifeandstyle/seasonal-food", "Seasonal food", 5)(Uk))
 
         agent.refresh()
         loadOrTimeout(agent)
@@ -149,7 +151,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life this will always be a combination of editors picks + latest
-        val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5), Uk)
+        val agent = TrailblockAgent(TrailblockDescription("sport", "Sport", 5)(Uk))
 
         agent.refresh()
         loadOrTimeout(agent)
@@ -167,8 +169,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
 
         //in real life these will always be editors picks only (content api does not do latest for front)
-        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), Uk)
-        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5), Us)
+        val ukAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5)(Uk))
+        val usAgent = TrailblockAgent(TrailblockDescription("", "Top Stories", 5)(Us))
 
         ukAgent.refresh()
         usAgent.refresh()
@@ -192,13 +194,13 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
         val duplicateStory = StubTrail("http://www.gu.com/1234")
 
-        val description = TrailblockDescription("", "Name", 5)
+        val description = TrailblockDescription("", "Name", 5)(Uk)
 
-        val topStoriesBlock = new TrailblockAgent(description, Uk) {
+        val topStoriesBlock = new TrailblockAgent(description) {
           override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("world", 9)))
         }
 
-        val sportStoriesBlock = new TrailblockAgent(description, Uk) {
+        val sportStoriesBlock = new TrailblockAgent(description) {
           override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
         }
 
@@ -225,15 +227,15 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
         val duplicateStory = StubTrail("http://www.gu.com/1234")
 
-        val description = TrailblockDescription("", "Name", 5)
+        val description = TrailblockDescription("", "Name", 5)(Uk)
         //duplicate trail is hidden behind "more" button
         val topTrails = createTrails("news", 5) ::: duplicateStory :: createTrails("world", 4)
 
-        val topStoriesBlock = new TrailblockAgent(description, Uk) {
+        val topStoriesBlock = new TrailblockAgent(description) {
           override lazy val trailblock = Some(Trailblock(description, topTrails))
         }
 
-        val sportStoriesBlock = new TrailblockAgent(description, Uk) {
+        val sportStoriesBlock = new TrailblockAgent(description) {
           override lazy val trailblock = Some(Trailblock(description, duplicateStory :: createTrails("sport", 9)))
         }
 

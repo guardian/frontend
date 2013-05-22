@@ -103,7 +103,7 @@
       }
 
       @media only screen and (min-width: 78em) {
-        margin-top: -13px !important;;
+        margin-top: -13px !important;
       }
     }
 
@@ -132,7 +132,8 @@
   overflow: auto;
   width: 100%;
   padding: 0 $gutter;
-  background-color: #ffffff;
+  background-color: $neutral8;
+  border-bottom: 1px solid $neutral10;
   @media only screen and (min-width: $tablet) { display: block; }
 }
 
@@ -142,11 +143,9 @@
   float:left;
   clear:left;
   width: 100%;
-  height: 48px;
+  height: 47px;
   overflow: hidden;
   padding: 0 120px 0 0;
-  background-color: #ffffff;
-  border-bottom: 1px solid $neutral4;
 
   @media only screen and (min-width: $tablet) { display: block; }
 }
@@ -167,7 +166,7 @@
     @include font($serif, normal, 14, 48);
     font-size: 14px;
     text-decoration: none;
-    color: $neutral4;
+    color: $neutral3;
   }
 
     .nav--global .nav__item:first-child .nav__link { padding-left: 0px; }

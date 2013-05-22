@@ -19,7 +19,7 @@ define([
             self = this;
 
         this.init = function () {
-            if (guardian.config.switches.abClevelandStory || override) {
+            if (guardian.config.switches.storyFrontTrails || override) {
                 this.load();
             }
         };

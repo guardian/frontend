@@ -24,10 +24,10 @@
     <p class="js-gallery-nav box-indent gallery-nav type-11">
 
         @if(index > 1) {
-            <a class="js-gallery-prev gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true"
+            <a class="js-gallery-prev gallery-prev control" data-link-name="Gallery Previous" data-is-ajax="true"
             href="?index=@(index - 1)">Previous</a>
         } else {
-            <a class="js-gallery-prev gallery-prev is-off" data-link-name="Gallery Previous" data-is-ajax="true"
+            <a class="js-gallery-prev gallery-prev is-off control" data-link-name="Gallery Previous" data-is-ajax="true"
             href="javascript://">Previous</a>
         }
 
@@ -38,10 +38,10 @@
         </span>
 
         @if(index < gallery.size) {
-            <a class="gallery-next js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true"
+            <a class="gallery-next js-gallery-next control" data-link-name="Gallery Next" data-is-ajax="true"
             href="?index=@(index + 1)">Next</a>
         } else {
-            <a class="js-gallery-next gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
+            <a class="js-gallery-next gallery-next control" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
             href="?trail=true">Next</a>
         }
     </p>

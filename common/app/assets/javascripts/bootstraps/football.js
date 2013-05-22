@@ -28,11 +28,11 @@ define([
 ) {
 
     var modules = {
-        matchNav: function(config){
+        matchNav: function(config, context){
             if (config.page.footballMatch) {
                 var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
                     url += "?currentPage=" + encodeURIComponent(config.page.pageId);
-                new MatchNav().load(url);
+                new MatchNav().load(url, context);
             }
         },
 
@@ -162,7 +162,7 @@ define([
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
 
-                    modules.matchNav(config);
+                    modules.matchNav(config, context);
 
                     if(match.isLive) {
                         modules.initAutoUpdate(

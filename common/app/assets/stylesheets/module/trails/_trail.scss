@@ -22,7 +22,7 @@
 
 .trail__headline {
   @extend %type-2;
-  color: #000;
+  color: $neutral2;
 }
 
   .trail__headline a,
@@ -30,7 +30,7 @@
   .trail__headline a:link,
   .trail__headline a:active,
   .trail__headline a:visited {
-    color: #000;
+    color: $neutral2;
   }
 
   .trail__headline a:active {
