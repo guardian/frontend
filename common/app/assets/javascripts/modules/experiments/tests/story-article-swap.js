@@ -12,7 +12,7 @@ define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, 
                 if (!response) {
                     return;
                 }
-                common.$g('.parts__body', _context).replaceWith('<div class="parts__body">' + response.html + '</div>');
+                common.$g('.parts__body', _context).html(response.html);
                 
                 story.init(_config, _context);
             }
