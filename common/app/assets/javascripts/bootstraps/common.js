@@ -243,7 +243,7 @@ define([
             modules.transcludePopular();
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
-            //modules.grid();
+            modules.grid();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

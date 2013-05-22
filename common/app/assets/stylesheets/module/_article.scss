@@ -91,8 +91,8 @@
 $gridWidth: 5em;
 
 .article {
-    max-width: $gridWidth * 7;
-    @extend .cf;
+  max-width: $gridWidth * 7;
+  @extend .cf;
 }
 
 .main-image-wrap {
@@ -104,39 +104,38 @@ $gridWidth: 5em;
 }
 
 .main-caption {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .main-image-wrap,
 .article__byline,
 .article__body,
 video {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  @include box-sizing(border-box);
 }
 
 /* 6 cols */
 @media screen and (min-width: 30em) {
-    .main-image-wrap {
-        width: $gridWidth * 3;
-        float: right;
-        background-color: #fff;
-        padding: 5px 10px 7px 10px;
-    }
+  .main-image-wrap {
+    width: $gridWidth * 3;
+    float: right;
+    background-color: #fff;
+    padding: 5px 10px 7px 10px;
+  }
 }
 
 /* 7 cols */
 @media screen and (min-width: 35em) {
-    .main-image-wrap {
-        width: $gridWidth * 4;
-    }
+  .main-image-wrap {
+    width: $gridWidth * 4;
+  }
 }
 
 /* 8 cols */
 @media screen and (min-width: 40em) {
-    .main-image-wrap {
-        margin-right: $gridWidth * -1;
-    }
+  .main-image-wrap {
+    margin-right: $gridWidth * -1;
+  }
 }
 
 /* 9 cols */
@@ -148,19 +147,18 @@ video {
       max-width: 100%;
   }
   .article__head {
-      width: $gridWidth * 4;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      float: left;
+    width: $gridWidth * 4;
+    @include box-sizing(border-box);
+    float: left;
   }
   .main-image-wrap,
   .article__byline,
   .article__body,
   video {
-      width: $gridWidth * 5;
-      float: right;
-      padding: 0 10px 0 0;
-      margin: 15px 0 0 0;
+    width: $gridWidth * 5;
+    float: right;
+    padding: 0 10px 0 0;
+    margin: 15px 0 0 0;
   }
   .byline {
     margin-left: 0;
@@ -173,7 +171,7 @@ video {
   .article__byline,
   .article__body,
   video {
-      width: $gridWidth * 6;
+    width: $gridWidth * 6;
   }
 }
 
@@ -181,11 +179,11 @@ video {
 @media screen and (min-width: 55em) {
   .main-image-wrap,
   video {
-      width: $gridWidth * 7;
+    width: $gridWidth * 7;
   }
   .article__byline,
   .article__body {
-      margin-right: $gridWidth * 1;
+    margin-right: $gridWidth * 1;
   }
 }
 
@@ -193,10 +191,10 @@ video {
 @media screen and (min-width: 60em) {
   .main-image-wrap,
   video {
-      width: $gridWidth * 8;
+    width: $gridWidth * 8;
   }
   .article__byline,
   .article__body {
-      margin-right: $gridWidth * 2;
+    margin-right: $gridWidth * 2;
   }
 }
