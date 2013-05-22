@@ -1,25 +1,19 @@
 @charset "UTF-8";
 
-.competitions-date,
 .football-table-header {
-    @extend %type-6;
-    border-top: 1px solid $neutral5;
+    @extend %type-3;
+    /*border-top: 1px solid $neutral5;*/
     padding-top: $baseline*2;
     color: $neutral2;
 }
 
-/*.competitions-date {
-    background-color: $sportMid;
-    color: #ffffff;
-    margin-top: $baseline*2;
-    margin-bottom: $baseline;
-    padding: 9px $baseline*2;
-}*/
-
-.team-fixtures .competitions-date,
-.team-results .competitions-date {
-    background-color: $sportBright;
+.competitions-date {
+    @extend %type-6;
+    border-top: 1px solid $neutral6;
+    color: $neutral2;
+    height: 36px;
 }
+
 
 .football-table-link,
 .football-table-link.cta {
@@ -32,13 +26,14 @@
 }
 
 .competition-title {
-    @extend %type-6;
-    font-weight: 500;
+    @extend %type-3;
+
+    line-height: 22px;
     margin-bottom: 0;
-    padding: 3px 3px 9px 3px;
+    padding: 0 3px 13px 3px;
     position: relative;
 
-    background: $neutral8;
+    background-color: $neutral6;
     border-bottom: 1px solid #DEDEDD;
 }
 
@@ -50,10 +45,15 @@
 }
 
 .competition {
-    margin-bottom: $baseline*2;
+    margin-bottom: 12px;
+}
+
+.matches-container {
+    padding-top: 24px;
 }
 
 .match {
+    background-color: $neutral6;
     border-bottom: 1px solid #DEDEDD;
     position: relative;
 }
@@ -94,11 +94,11 @@
 
 .match-home {
     text-align: right;
-    padding-right: $gutter;
+    padding-right: $gutter * 1.5;
 }
 
 .match-away {
-    padding-left: $gutter;
+    padding-left: $gutter * 1.5;
 }
 
 .match-result {
@@ -139,14 +139,43 @@
 
 .match-FT,
 .match-HT {
-    color: #ffffff;
-    background-color: $sportBright;
+    color: #000000;
 }
 
-.matches,
-.competitions {
-    margin-bottom: $baseline;
+.matches {
+    margin-bottom: 12px;
 }
+
+
+.competitions {
+    padding-bottom: 12px;
+    margin: 0 $gutter;
+    list-style: none;
+}
+.competitions__title {
+    @extend %type-7;
+    color: $neutral2;
+    border-top: 1px solid $neutral5;
+    height: 36px;
+    background: $neutral6;
+    padding: 0 3px;
+    @include box-sizing(border-box);
+}
+.competitions__title:first-child {
+    border-top: 0;
+}
+.competitions .nav {
+    padding: 0 3px;
+    background: $neutral6;
+}
+.competitions .nav__link {
+    color: $linkBlue;
+}
+
+
+
+
+
 
 // this overrides components when places on a front (to avoid gaps)
 .trailblock .matches,
@@ -181,10 +210,6 @@
     margin-bottom: $baseline*2;
 }
 
-.matches-nav a.cta:before {
-    content: "+ ";
-}
-
 .matches-nav a.cta:active {
     background: #666666;
     color: #ffffff;
@@ -196,7 +221,7 @@
 }
 
 .league-table {
-    margin-bottom: $baseline*2;
+    margin-bottom: 24px;
 }
 
 //These are nasty... blame the designers!
