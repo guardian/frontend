@@ -123,12 +123,9 @@
 // table footer cta
 .table-football__cta,
 .table-football__cta:active {
-    @extend .cta__text;
     background-color: $neutral6;
-    display: block;
-    height: 36px;
-    padding-left: 3px;
     overflow: hidden;
+    border-top: 0;
 }
 
 
