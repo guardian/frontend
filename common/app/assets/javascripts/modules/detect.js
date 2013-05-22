@@ -200,19 +200,21 @@ define(['modules/userPrefs'], function (userPrefs) {
 
     function canSwipe() {
         var os;
-        if (userPrefs.isOn('swipe-nav-force')) {
-            return true;
-        }
         if (!hasPushStateSupport()) {
             return false;
         }
         os = getMobileOS();
+        // iOS
         if (os.name === 'iOS' && os.version >= 6) {
-            return true;
+            // This'll be true only for iPhone5:
+            return window.devicePixelRatio >= 2 && screen.availHeight === 548;
         }
+        /*
+        // Android
         if (os.name === 'Android' && os.version >= 4) {
             return true;
         }
+        */
         return false;
     }
 

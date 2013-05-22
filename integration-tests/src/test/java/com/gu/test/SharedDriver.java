@@ -1,21 +1,24 @@
 package com.gu.test;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import static org.junit.Assert.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
 
 public class SharedDriver extends EventFiringWebDriver {
 	
@@ -59,6 +62,22 @@ public class SharedDriver extends EventFiringWebDriver {
 		// clear local storage
 		clearLocalStorage();
 	}
+
+    @After
+    public void embedScreenshot(Scenario scenario) throws IOException {
+        if (scenario.isFailed()) {
+            try {
+                byte[] screenshot = getScreenshotAs(OutputType.BYTES);
+                new File("target/surefire-reports/").mkdirs(); // ensure directory is there
+                FileOutputStream out = new FileOutputStream("target/surefire-reports/failure-screenhot-" + UUID.randomUUID().toString() + ".png");
+                //write screenshot to file
+                out.write(screenshot);
+                out.close();
+            } catch (WebDriverException somePlatformsDontSupportScreenshots) {
+                System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+            }
+        }
+    }
 
 	public void clearLocalStorage() {
 		// only execute on a page
@@ -128,7 +147,7 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * Wait for an element to have some text
 	 * 
 	 * @param locator 
-	 * @param The text
+	 * @param text
 	 */
 	public boolean waitForText(By locator, String text) {
 		return new WebDriverWait(this, WAIT_TIME)
@@ -185,8 +204,12 @@ public class SharedDriver extends EventFiringWebDriver {
 	 * 
 	 * @param element
 	 */
-	public void jsClick(WebElement element) {
-		((JavascriptExecutor)this).executeScript("arguments[0].click();", element); 
+	public void click(WebElement element) {
+		 element.click();
 	}
+
+    public void jsClick(WebElement element) {
+        ((JavascriptExecutor)this).executeScript("arguments[0].click();", element);
+    }
 
 }

@@ -64,7 +64,7 @@
                 <h3 class="chapter__title">@event.title</h3>
                 
                 @if(event.hasExplainer) {
-                    @event.explainer.map{ e => <p class="chapter__summary">@StripHtmlTags(e)</p> }
+                    @event.explainer.map{ e => <p class="chapter__summary">@Html(StripHtmlTags(e))</p> }
                 }
 
                 @if(event.hasContent) {

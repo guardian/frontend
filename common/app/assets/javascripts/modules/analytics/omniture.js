@@ -2,12 +2,14 @@ define([
     'common',
     'modules/detect',
     'modules/experiments/ab',
-    'modules/storage'
+    'modules/storage',
+    'components/gu-id/id'
 ], function(
     common,
     detect,
     ab,
-    storage
+    storage,
+    id
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -106,7 +108,7 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = 'Guest user';
+            s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
 
@@ -119,7 +121,7 @@ define([
                 s.events = s.apl(s.events,'event58',',');
             } else {
                 // If no other tests running try and collect AB font rendering test results.
-                var fonttest = localStorage.getItem('gu.webfontrendertest');
+                var fonttest = localStorage.getItem('gu.fontdelaytest');
                 if(fonttest) {
                     s.prop51  = fonttest;
                     s.eVar51  = fonttest;

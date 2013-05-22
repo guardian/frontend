@@ -9,7 +9,6 @@ define([
     //Modules
     'modules/storage',
     'modules/detect',
-    'modules/pageconfig',
     'modules/popular',
     'modules/related',
     'modules/router',
@@ -40,7 +39,6 @@ define([
 
     storage,
     detect,
-    pageConfig,
     popular,
     related,
     Router,
@@ -79,13 +77,14 @@ define([
             var navControl = new NavControl();
             var sections = new Sections();
             var search = new Search(config);
-            var aus = new Australia(); // TODO temporary till we have single domain editions
+            var aus = new Australia(config); // TODO temporary till we have single domain editions
 
             var editions = new EditionSwitch();
             common.mediator.on('page:common:ready', function(config, context) {
                 navControl.init(context);
                 sections.init(context);
                 search.init(context);
+                aus.init(context);
             });
         },
 
@@ -156,29 +155,25 @@ define([
                     }
 
                     Ophan.additionalViewData(function() {
-                        var audsci = storage.get('gu.ads.audsci');
 
-                        if(audsci === null) {
-                            return {};
+                        var viewData = {};
+
+                        var audsci = storage.get('gu.ads.audsci');
+                        if (audsci) {
+                            viewData.audsci_json = JSON.stringify(audsci);
                         }
 
-                        return { "audsci_json": JSON.stringify(audsci) };
+                        if(AB.inTest(config.switches)) {
+                            var test = AB.getTest();
+                            viewData.experiments_json = JSON.stringify([{
+                                id: test.id,
+                                variant: test.variant
+                            }]);
+                        }
+
+                        return viewData;
                     });
 
-                    if(AB.inTest(config.switches)) {
-                        Ophan.additionalViewData(function() {
-                            var test = AB.getTest(),
-                                data = [
-                                    {
-                                        id: test.id,
-                                        variant: test.variant
-                                    }
-                                ];
-                            return {
-                                "experiments_json": JSON.stringify(data)
-                            };
-                        });
-                    }
                     Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined);
                 });
 
@@ -190,8 +185,10 @@ define([
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts) {
                         Adverts.init(config, context);
-                        common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
                     }
+                });
+                common.mediator.on('modules:adverts:docwrite:loaded', function(){
+                    Adverts.loadAds();
                 });
             }
         },
@@ -212,63 +209,9 @@ define([
         },
 
         initSwipe: function(config) {
-            if (config.switches.swipeNav && userPrefs.isOn('swipe-nav') && detect.canSwipe()) {
-                modules.getSwipeSequence(function(sequence){
-                    modules.startSwipe(sequence, config);
-                });
+            if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
+                swipeNav(config);
             }
-        },
-
-        getSwipeSequence: function(callback) {
-            var path = window.location.pathname;
-            ajax({
-                url: '/front-trails' + (path === '/' ? '' : path),
-                type: 'jsonp',
-                success: function (json) {
-                    if (json.stories && json.stories.length >= 3) {
-                        callback(json.stories);
-                    }
-                }
-            });
-        },
-
-        startSwipe: function(sequence, config) {
-            var clickSelector = '',
-                opts,
-                referrer = window.location.href,
-                referrerPageName = config.page.analyticsName;
-
-            if (config.switches.swipeNavOnClick && userPrefs.isOn('swipe-nav-on-click')) {
-                clickSelector = 'a:not(.control)';
-            }
-
-            swipeNav({
-                afterShow: function(config) {
-                    var swipe = config.swipe;
-
-                    swipe.referrer = referrer;
-                    referrer = window.location.href;
-
-                    swipe.referrerPageName = referrerPageName;
-                    referrerPageName = config.page.analyticsName;
-
-                    common.mediator.emit('page:ready', pageConfig(config), swipe.context);
-
-                    if(clickSelector && swipe.initiatedBy === 'click') {
-                        modules.getSwipeSequence(function(sequence){
-                            swipe.api.setSequence(sequence);
-                            swipe.api.loadSidePanes();
-                        });
-                    } else {
-                        swipe.api.loadSidePanes();
-                    }
-
-                },
-                clickSelector: clickSelector,
-                swipeContainer: '#preloads',
-                contentSelector: '.parts__body',
-                sequence: sequence
-            });
         }
     };
 
