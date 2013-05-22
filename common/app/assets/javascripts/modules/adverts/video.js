@@ -1,9 +1,13 @@
 define([
     "common",
-    "bean"
+    "bean",
+    "ajax",
+    "bonzo"
 ], function(
    common,
-   bean
+   bean,
+   ajax,
+   bonzo
 ) {
 
     function Video(config) {
@@ -14,6 +18,7 @@ define([
         this.played = false;
         this.timer = false;
         this.events = {};
+        this.vastData = {trackingEvents: {}};
     }
 
     function VideoEvent(url) {
@@ -21,7 +26,7 @@ define([
         this.hasFired = false;
     }
 
-    Video.prototype.play = function(format, data) {
+    Video.prototype.play = function(format) {
         var self = this,
             sources = this.video.querySelectorAll('source'),
             source;
@@ -65,11 +70,11 @@ define([
         this.video.style.height = this.video.offsetHeight+'px';
 
         bean.fire(this.video, "play:advert");
-        this.video.src = data.file;
+        this.video.src = this.vastData.file;
         this.video.play();
 
-        if(data.trackingEvents) {
-            this.initTracking(data.trackingEvents);
+        if(this.vastData.trackingEvents) {
+            this.initTracking(this.vastData.trackingEvents);
         }
     };
 
@@ -96,7 +101,7 @@ define([
            var progress = self.getProgress(),
                duration = self.getDuration();
 
-           if(progress > (duration/2) && !self.events.midpoint.hasFired) {
+           if(progress > (duration/2) && self.events.midpoint && !self.events.midpoint.hasFired) {
                self.logEvent(self.events.midpoint);
            }
        }, 1000);
@@ -117,9 +122,71 @@ define([
         event.hasFired = true;
     };
 
-    Video.prototype.init = function(advert) {
+    Video.prototype.trimText = function(text) {
+        return text.replace(/^\s+|\s+$/g,'');
+    };
+
+    Video.prototype.getNodeContent = function(node) {
+        if (node && node.textContent) {
+            return this.trimText(node.textContent);
+        }
+    };
+
+    Video.prototype.parseVast = function(xml) {
+
+        this.vastData.file = this.getNodeContent(xml.querySelector("MediaFile"));
+        if (this.vastData.file) {
+            this.vastData.trackingEvents.impression = this.getNodeContent(xml.querySelector("Impression"));
+            this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
+
+            var trackingNodes = xml.querySelectorAll("Tracking");
+            for (var i = 0, j = trackingNodes.length; i<j; ++i) {
+                var ev = trackingNodes[i].getAttribute("event");
+                this.vastData.trackingEvents[ev] = this.trimText(trackingNodes[i].textContent);
+            }
+        }
+
+    };
+
+    Video.prototype.parseVideoAdServingTemplate = function(xml) {
+        this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector("Impression URL"));
+        this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector("ClickTracking URL"));
+        return this.getNodeContent(xml.querySelector("VASTAdTagURL URL"));
+    };
+
+    Video.prototype.getVastData = function(url) {
+
+        var self = this;
+
+        this.video.advertWasRequested = true;
+
+        ajax({
+            url: url,
+            method: "get",
+            type: "xml",
+            crossOrigin: true,
+            success: function(response) {
+                if(response && response.documentElement) {
+                    var thirdParty = response.documentElement.querySelector("VASTAdTagURL");
+                    if(thirdParty) {
+                        var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
+                        self.getVastData(nextUrl);
+                    } else {
+                        self.parseVast(response.documentElement);
+                    }
+                }
+            }
+        });
+    };
+
+    Video.prototype.init = function(config) {
+        var id = (config.pageId === '') ? '' : config.pageId + '/',
+            url = "http://oas.guardian.co.uk//2/m.guardian.co.uk/" + id + "oas.html/" + (new Date().getTime()) + "@x40";
+
+        this.getVastData(url);
+
         var format = false,
-            that = this;
+            self = this;
 
         for (var f in this.support) {
             if(this.support.hasOwnProperty(f)) {
@@ -132,13 +199,13 @@ define([
 
         //We are only supporting mp4 adverts first
         if(format === "mp4") {
-            bean.on(that.video, "play", function() {
-                if(!that.played) {
-                    that.play(format, advert);
+            bean.on(self.video, "play", function() {
+                if(!self.played) {
+                    self.play(format);
                 }
             });
         } else {
-            common.mediator.emit("video:ads:finished", that.config, that.context);
+            common.mediator.emit("video:ads:finished", self.config, self.context);
         }
     };
 
