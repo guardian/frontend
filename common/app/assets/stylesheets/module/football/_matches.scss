@@ -28,17 +28,17 @@
     text-decoration: none;
     text-align: left;
     position: relative;
-    padding-left: $baseline*2;
+    padding-left: 3px;
 }
 
 .competition-title {
     @extend %type-6;
     font-weight: 500;
     margin-bottom: 0;
-    padding: 9px $baseline*2;
+    padding: 9px 3px;
     position: relative;
 
-    background: #f4f4ee;
+    background: $neutral8;
     border-bottom: 1px solid #DEDEDD;
 }
 

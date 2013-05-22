@@ -36,7 +36,7 @@
 
 
             @table.groups.map{ group =>
-            <tbody class="table-football-body">
+            <tbody class="table-football-body @if(table.multiGroup) { table-football-body--multigroup }">
                 @if(table.multiGroup) {
                     @group.round.map { round =>
                         @round.name.map { name =>

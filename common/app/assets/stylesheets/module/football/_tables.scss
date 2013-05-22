@@ -4,7 +4,7 @@
 }
 
 .table-football {
-    background-color: #f4f4ee;
+    background-color: $neutral8;
 }
 
 .table-football-header {
@@ -13,9 +13,8 @@
 
 .table-football-header th,
 .table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
-    background-color: #f4f4ee;
     color: #777777;
-    font-weight: normal;    
+    font-weight: normal;
 }
 
 .table-football th {
@@ -23,9 +22,7 @@
 }
 
 .table-football-body th {
-    background: #f4f4ee;
     font-weight: 500;
-    color: $sportMid;
     border-top: 1px solid #DEDEDD;
 }
 
@@ -37,17 +34,18 @@
 .table-football td {
     border-right: none;
     text-align: right;
-    padding: $baseline*2 3% $baseline*2 3%;
+    padding: $baseline*2 3px;
+    line-height: 19px;
 }
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $baseline*2;
+    padding: $baseline*2 3px;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: $baseline*2 $baseline*2 $baseline*2 3%;
+    padding: $baseline*2 3px;
 }
 
 .table-football td:last-child {
@@ -64,7 +62,6 @@
 }
 
 .table-football-body a {
-    color: #000000;
     font-weight: 500;
 }
 
@@ -84,7 +81,7 @@
     .table-football td:last-child {
         padding-right: 12px;
     }
-    
+
 }
 
 .table-football-leftaligned {
@@ -93,6 +90,9 @@
 
 .table-football-body {
     border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
+}
+.table-football-body--multigroup {
+    border-bottom: 1px solid $neutral5;
 }
 
 // overriding pasteup :(
