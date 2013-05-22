@@ -36,7 +36,10 @@
 </li>
 
 @TeamMap(team).url.map{ url =>
-    <a href="@url/results" class="cta-small cta-small-border type-8" data-link-name="View all team results">
-        View all @TeamName(team) results
+    <a href='@url/results' data-link-name='View all team results' class="cta table-football__cta">
+        <span class="cta__text">View all @TeamName(team) results</span>
+        <span class="cta__btn cta__btn--right">
+            <i class="i i-arrow-blue-down cta__icn--right"></i>
+        </span>
     </a>
 }
