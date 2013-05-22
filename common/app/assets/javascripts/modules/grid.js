@@ -21,7 +21,7 @@ define(['common', 'bean'], function (common, bean) {
                 el.className += ' grid-h-unit-' +gridUnits;
             });
         });
-    };
+    }
 
     return Grid;
 });
