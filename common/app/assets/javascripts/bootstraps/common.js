@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'bonzo',
+    'bean',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -28,7 +29,8 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav'
+    'modules/swipenav',
+    'modules/grid'
 ], function (
     common,
     ajax,
@@ -36,6 +38,7 @@ define([
 
     domReady,
     bonzo,
+    bean,
 
     storage,
     detect,
@@ -58,7 +61,8 @@ define([
     OmnitureMedia,
     Debug,
     AB,
-    swipeNav
+    swipeNav,
+    grid
 ) {
 
     var modules = {
@@ -209,28 +213,10 @@ define([
         },
 
         grid: function() {
-            var gridHeight = 36,
-                gridPadding = 12;
-
-            common.mediator.on('page:common:ready', function(config, context) {
-                // This snaps individual elements to the grid
-                common.$g('.snap-to-grid', context).each(function(el) {
-                    var height = el.offsetHeight,
-                        gridUnits = Math.ceil(height/(gridHeight+gridPadding));
-
-                    el.className += ' grid-h-unit-' + gridUnits;
-                });
-
-                // This is a general purpose classname to snap all the children to grid
-                common.$g('.snap-children-to-grid', context).each(function(el) {
-                    [].forEach.call(el.children, function(el) {
-                        var height = el.offsetHeight,
-                            gridUnits = Math.ceil(height/(gridHeight+gridPadding));
-
-                        el.className += ' grid-h-unit-' +gridUnits;
-                    });
-                });
-            });
+            common.mediator.on('page:common:ready', function(config, context) { grid(context); });
+            bean.on(window, 'resize', common.debounce(function(e){
+                grid(document);
+            }, 1000));
         },
 
         initSwipe: function(config) {
