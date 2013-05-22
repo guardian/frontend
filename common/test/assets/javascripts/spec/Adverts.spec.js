@@ -95,20 +95,6 @@ define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadsl
             });
         });
 
-        it("should not create ads if userPref is switchedOff", function() {
-
-            storage.set('gu.prefs.switch.adverts', false);
-
-            Adverts.init(config);
-            Adverts.loadAds();
-
-            runs(function() {
-                for (var i = 0, j = adNodes.length; i<j; ++i) {
-                    expect(adNodes[i].firstChild).toBe(null);
-                }
-            });
-        });
-
     });
 
 });

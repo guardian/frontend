@@ -3,18 +3,22 @@
    ========================================================================== */
 
 .nav-popup {
-  position: relative;
+  position: absolute;
   clear: both;
   z-index: 100;
   padding: 0;
   list-style: none;
   border-bottom: 2px solid $neutral4;
+  @include transform(translateZ(0px));
+  background: #ffffff;
+  width: 100%;
 
   @media only screen and (min-width: $tablet) {
-    top: -48px;
-    margin-bottom: -48px;
-    width: 100%;
-    background-color: #ffffff;
+    top: 118px;
+  }
+
+  @media only screen and (min-width: $desktopAd) {
+    top: 155px;
   }
 }
 
@@ -22,8 +26,9 @@
   padding-bottom: $baseline*4;
 
   @media only screen and (min-width: $tablet) {
+    background-color: $neutral8;
+    border-top: 1px solid $neutral10;
     margin: 0px;
-    border-top: none;
   }
 }
 
@@ -31,7 +36,7 @@
  ========================================================================== */
 .nav-popup--search {
   @media only screen and (min-width: $tablet) {
-    top: -56px;
+    top: -48px;
     margin-bottom: -57px;
   }
 }
@@ -48,9 +53,9 @@
     width: auto;
     padding: 0;
     min-width: 160px;
-    background-color: #ffffff;
-    border-bottom: 2px solid $darkMushroom;
-    border-left: 2px solid $darkMushroom;
+    background-color: $neutral8;
+    border-bottom: 1px solid $neutral10;
+    border-left: 1px solid $neutral10;
   }
 
   @media only screen and (min-width: $desktopAd) {
@@ -61,8 +66,8 @@
   .nav-popup--small .nav__item {
     @media only screen and (min-width: $tablet) {
       margin: 0 $gutter;
-      border-bottom: 1px solid #C3C3C3;
-      text-align: right;
+      border-bottom: 1px solid $neutral10;
+      text-align: left;
 
       &:last-child {
         border-bottom: none;
@@ -75,8 +80,10 @@
     @extend %type-7;
 
     @media only screen and (min-width: $tablet) {
-      color: #444444;
-      padding: $baseline*3 0 $baseline*3 0;
-      @include font($serifheadline, 200, 14, 14);
+      color: $neutral3;
+      padding: 0;
+      height: 36px;
+      @include font($serif, normal, 14, 36);
+      @include box-sizing(border-box);
     }
   }

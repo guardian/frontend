@@ -1,11 +1,11 @@
 /*!
   * domready (c) Dustin Diaz 2012 - License MIT
   */
-!function (name, definition) {
+!function (name, context, definition) {
   if (typeof module != 'undefined') module.exports = definition()
   else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
-  else this[name] = definition()
-}('domready', function (ready) {
+  else context[name] = definition()
+}('domready', this, function (ready) {
 
   var fns = [], fn, f = false
     , doc = document

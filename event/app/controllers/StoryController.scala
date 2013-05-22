@@ -3,6 +3,7 @@ package controllers
 import common._
 import play.api.mvc.{ Action, Controller }
 import model._
+import conf._
 
 import concurrent.Future
 
@@ -30,18 +31,12 @@ object StoryController extends Controller with Logging with ExecutionContexts {
     Async {
       promiseOfStories.map { stories =>
         if (stories.nonEmpty) {
-          Cached(60) {
-            request.getQueryString("callback").map { callback =>
-              val storyId = request.getQueryString("storyId").getOrElse("0")
-              val html = views.html.fragments.latestStories(stories.filterNot(_.id.equals(storyId)))
-              JsonComponent(html)
-            } getOrElse {
-              Cached(60) {
-                val html = views.html.latest(StoriesPage(stories))
-                Ok(Compressed(html))
-              }
-            }
-          }
+          val storyId = request.getQueryString("storyId").getOrElse("0")
+          val filteredStories = stories.filterNot(_.id.equals(storyId))
+          
+          val htmlResponse = views.html.latest(StoriesPage(filteredStories))
+          val jsonResponse = views.html.fragments.latestBody(StoriesPage(filteredStories))
+          renderFormat(htmlResponse, jsonResponse, StoriesPage(filteredStories), Switches.all)
         } else {
           JsonNotFound()
         }
@@ -70,19 +65,14 @@ object StoryController extends Controller with Logging with ExecutionContexts {
     implicit request =>
       val edition = Edition(request)
       val promiseOfStory = Future(Story.mongo.byId(id))
-      val version = conf.CommonSwitches.StoryVersionBSwitch.isSwitchedOn
 
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
-            Cached(60) {
-              val html = version match {
-                case false  => views.html.story(StoryPage(story))
-                case true   => views.html.storyVersionB(StoryPage(story))
-              }
-              Ok(Compressed(html))
-            }
-          }.getOrElse(NotFound)
+            val htmlResponse = views.html.story(StoryPage(story))
+            val jsonResponse = views.html.fragments.storyBody(StoryPage(story))
+            renderFormat(htmlResponse, jsonResponse, StoryPage(story), Switches.all)
+          }.getOrElse(JsonNotFound())
         }
       }
   }

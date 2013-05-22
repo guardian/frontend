@@ -5,6 +5,7 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
         var enabled,
             gcsUrl,
             currentContext,
+            container,
             self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
@@ -13,7 +14,7 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
             var searchLoader = common.rateLimit(function() {
-                self.load(currentContext);
+                self.load();
             });
 
             var clickBinding = function(e) {
@@ -38,6 +39,8 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
                 container = context.querySelector(containerClass),
                 s,
                 x;
+
+            container = currentContext.querySelector('.nav-popup-search');
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.search'), function(c){

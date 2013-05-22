@@ -5,9 +5,9 @@ import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{Edition, Logging, GuardianConfiguration}
+import play.api.libs.ws.WS
 
-trait ApiQueryDefaults { self: Api[Future] =>
-
+trait QueryDefaults{
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
@@ -16,10 +16,15 @@ trait ApiQueryDefaults { self: Api[Future] =>
   val references = "pa-football-competition,pa-football-team,witness-assignment"
 
   val inlineElements = "picture,witness,video"
+}
+
+trait ApiQueryDefaults extends QueryDefaults { self: Api[Future] =>
+
+  def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
-  def item(id: String, edition: Edition): ItemQuery = item.itemId(id)
-  .edition(edition.id)
+  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+  .edition(edition)
   .showTags("all")
   .showFields(trailFields)
   .showInlineElements(inlineElements)
@@ -37,6 +42,7 @@ trait ApiQueryDefaults { self: Api[Future] =>
   .showFields(trailFields)
   .showMedia("all")
   .tag(supportedTypes)
+
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp

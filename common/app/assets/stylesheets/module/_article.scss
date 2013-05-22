@@ -18,7 +18,7 @@
 }
 
 .article__head {
-  padding: $baseline*3 $gutter $baseline*10 $gutter;
+  padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
 .article__head .dateline {
@@ -66,6 +66,7 @@
 .main-image {
   @include box-sizing(border-box);
   margin-bottom: 0px;
+  padding: 0 $gutter;
 }
 
 .article__body {
@@ -84,6 +85,12 @@
 .gu-video {
   width: 100%;
   margin-bottom: $baseline*2;
+}
+
+video {
+    max-width: 100%;
+    height: auto;
+    -webkit-user-select: none;
 }
 
 /*** GRID stuff ***/

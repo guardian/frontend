@@ -64,7 +64,7 @@
                 <h3 class="chapter__title">@event.title</h3>
                 
                 @if(event.hasExplainer) {
-                    @event.explainer.map{ e => <p class="chapter__summary">@StripHtmlTags(e)</p> }
+                    @event.explainer.map{ e => <p class="chapter__summary">@Html(StripHtmlTags(e))</p> }
                 }
 
                 @if(event.hasContent) {
@@ -79,9 +79,11 @@
 
                 @if(event.hasContent) {
                     <div class="cta-new js-more" data-link-name="View more">
-                        <span class="cta-new__text">View more</span>
-                        <button class="cta-new__btn cta-new__btn--right">
-                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                        <button class="cta-new__btn cta-new__btn--wide">
+                            <span class="cta-new__text">View more</span>
+                            <span class="cta-new__icn-container">
+	                            <i class="i i-arrow-blue-down cta-new__icn"></i>
+                            </span>
                         </button>
                     </div>
                 }
@@ -94,7 +96,7 @@
 @if(story.hasEvents) {
     <section class="story-timeline" data-link-name="Timeline">
         <h2 class="story-title story-title--section">
-            @story.labels.getOrElse("timeline", "The story so far")
+            @story.labels.getOrElse("timeline", "Summary")
         </h2>
 
         <div class="js-timeline timeline">

@@ -44,9 +44,9 @@ sink('Empty-collection safety', function (test, ok) {
     //  FUNCTION NAME         ARGUMENT SIGNATURE        ARGUMENTS ARRAY            EXPECTED RESULT MATCHER
         first:         { str: '',                 args: [],                expect: isEmptyContainer }
       , last:          { str: '',                 args: [],                expect: isEmptyContainer }
-      , parent:        { str: '',                 args: [],                expect: isEmptyArray }
-      , next:          { str: '',                 args: [],                expect: isEmptyArray }
-      , previous:      { str: '',                 args: [],                expect: isEmptyArray }
+      , parent:        { str: '',                 args: [],                expect: isEmptyContainer }
+      , next:          { str: '',                 args: [],                expect: isEmptyContainer }
+      , previous:      { str: '',                 args: [],                expect: isEmptyContainer }
       , dim:           { str: '',                 args: [],                expect: function(r) { return r.height === 0 && r.width === 0 } }
       , get:           { str: 'index',            args: [0],               expect: isNull }
       , detach:        { str: '',                 args: [],                expect: isSameContainer }
@@ -74,12 +74,13 @@ sink('Empty-collection safety', function (test, ok) {
       , prepend:       { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , appendTo:      { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , prependTo:     { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
-      , related:       { str: 'method',            args: ['parentNode'],   expect: isEmptyArray }
+      , related:       { str: 'method',            args: ['parentNode'],   expect: isEmptyContainer }
       , before:        { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , after:         { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , insertBefore:  { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , insertAfter:   { str: 'html',              args: ['<a/>'],         expect: isSameContainer }
       , replaceWith:   { str: 'html',              args: ['<a/>'],         expect: isEmptyContainer }
+      , clone:         { str: '',                  args: [],               expect: isEmptyContainer }
       , css: [         { str: 'prop',              args: ['color'],        expect: isNull } // not sure about this one, depending on the browser you might get "" for an empty property on a real element and undefined for an unknown property on a real element
                      , { str: 'prop, val',         args: ['color', 'red'], expect: isSameContainer }
                      , { str: '{prop: val}',       args: [{color: 'red'}], expect: isSameContainer }
