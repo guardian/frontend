@@ -1,0 +1,46 @@
+// football-filters is the dropdown list
+.football-filters {
+    background: $neutral8;
+}
+
+.football-filters__title {
+    @extend %type-7;
+    color: $neutral2;
+    border-top: 1px solid $neutral5;
+    height: 36px;
+}
+
+.football-filters__item:first-child .football-filters__title {
+    border-top: 0;
+}
+
+.football-filters__item {
+
+
+}
+
+.football-filters__showall {
+    border-top: 1px dotted $neutral3;
+}
+
+
+
+
+// These need to be done better
+.football-filters .football-filters__link {
+    @extend %type-7;
+    line-height: 16px;
+    padding-top: 4px;
+    color: $linkBlue;
+}
+
+.nav--columns-football .nav__item {
+    height: auto;
+    min-height: 36px;
+}
+
+.nav--columns.nav--top-border-off > li:nth-child(-n+2) span,
+.nav--stacked.nav--top-border-off > li:nth-child(1) span {
+    border-top: none;
+    padding-top: 0;
+}
