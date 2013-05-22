@@ -31,6 +31,15 @@ define([
         };
 
         this.play = function() {
+            if (initialPlay.content === true && initialPlay.advert === true) {
+                bean.one(video, 'loadedmetadata', function() {
+                    if(video.advertWasRequested) {
+                        self.trackUserInteraction("Advert", "Video advert was requested");
+                    }
+                   self.trackUserInteraction("Play", "User clicked play");
+                });
+            }
+
             if ((videoType === 'content' && initialPlay[videoType] === true) ||
                 (videoType === 'advert' && initialPlay[videoType] === true)) {
                     // We need to wait for the metadata before calling
@@ -66,7 +75,18 @@ define([
         this.trackUserInteraction = function(type, name) {
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
-                var event = "event14";
+                var event;
+                switch(type){
+                    case "Play" :
+                        event = "event98";
+                        break;
+                    case "Advert" :
+                        event = "event97";
+                        break;
+                    default :
+                        event = "event14";
+                        break;
+                }
                 s.prop41 = type;
                 s.linkTrackVars = "prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events";
                 s.linkTrackEvents = event;
