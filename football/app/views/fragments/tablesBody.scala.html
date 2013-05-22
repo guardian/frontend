@@ -53,7 +53,13 @@
         </table>
 
         @if(!model.singleCompetition) {
-            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8">View full @table.competition.fullName table</a>
+            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="table-football__cta">
+                <span class="cta__text">View full @table.competition.fullName table</span>
+                <span class="cta__btn cta__btn--right">
+                    <span class="cta__label h"></span>
+                    <i class="i i-arrow-blue-down cta__icn--right"></i>
+                </span>
+            </a>
         }
 
     </li>

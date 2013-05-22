@@ -1,10 +1,15 @@
+.league-table:first-child {
+    padding-top: 24px;
+}
+
 .football-table-container a.cta {
     background-color: #f4f4ee;
     color: #064951;
 }
 
 .table-football {
-    background-color: $neutral8;
+    background-color: $neutral6;
+    margin-bottom: 12px;
 }
 
 .table-football-header {
@@ -88,11 +93,12 @@
     text-align: left !important;
 }
 
-.table-football-body {
-    border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
-}
+
 .table-football-body--multigroup {
     border-bottom: 1px solid $neutral5;
+}
+.table-football-body--multigroup:last-child {
+    border-bottom: 0;
 }
 
 // overriding pasteup :(
@@ -111,6 +117,18 @@
     background-color: #FAB036 !important;
     border-bottom: none;
     margin-top: -1px;
+}
+
+
+// table footer cta
+.table-football__cta,
+.table-football__cta:active {
+    @extend .cta__text;
+    background-color: $neutral6;
+    display: block;
+    height: 36px;
+    padding-left: 3px;
+    overflow: hidden;
 }
 
 
