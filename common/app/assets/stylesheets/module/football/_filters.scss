@@ -1,4 +1,32 @@
-// football-filters is the dropdown list
+/* ==========================================================================
+   Filter Bar - this is the dropdown list
+   ========================================================================== */
+
+.football-filterbar {
+  position: relative;
+  overflow: hidden;
+  height: 36px;
+  margin: 0 $gutter;
+  background-color: $linkBlue;
+}
+
+.football-filterbar__title {
+  @extend %type-6;
+  margin-bottom: 0px;
+  float: left;
+}
+
+a.football-filterbar__link {
+  color: #ffffff;
+  display: block;
+  padding: 2px;
+}
+
+
+/* ==========================================================================
+   Filters
+   ========================================================================== */
+
 .football-filters {
     background: $neutral8;
 }
@@ -14,15 +42,13 @@
     border-top: 0;
 }
 
-.football-filters__item {
-
-
-}
-
 .football-filters__showall {
     border-top: 1px dotted $neutral3;
 }
 
+.football-filters .nav {
+    padding: 0;
+}
 
 
 
