@@ -227,6 +227,9 @@
 }
 
 .live-matches-dateline .dateline {
+    @extend %type-11;
+    font-weight: bold;
+    color: $neutral4;
 	margin-left: $gutter;
 }
 
