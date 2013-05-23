@@ -8,7 +8,7 @@ import org.scalatest.FlatSpec
 class RelatedControllerTest extends FlatSpec with ShouldMatchers {
 
   "Related Controller" should "serve the correct headers when the article exists" in Fake {
-    val result = controllers.RelatedController.render("uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")(TestRequest())
+    val result = controllers.RelatedController.render("uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")(TestRequest().withHeaders("Accept" -> "text/html"))
     status(result) should be(200)
     contentType(result).get should be("text/html")
     charset(result).get should be("utf-8")
