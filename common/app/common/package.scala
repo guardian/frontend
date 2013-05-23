@@ -52,27 +52,24 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   }
   
   def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
+    if (request.isJson)
       JsonComponent(jsonResponse)
-    } getOrElse {
+    else
       Ok(htmlResponse)
-    }
   }
   
   def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
+    if (request.isJson)
       JsonComponent(metaData, switches, jsonResponse)
-    } getOrElse {
+    else
       Ok(htmlResponse)
-    }
   }
   
   def renderFormat(htmlResponse: Html, jsonResponse: Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
-    request.getQueryString("callback").map { callback =>
+    if (request.isJson)
       JsonComponent(jsonResponse)
-    } getOrElse {
+    else
       Ok(htmlResponse)
-    }
   }
 }
 

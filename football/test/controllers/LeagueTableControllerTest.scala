@@ -13,19 +13,23 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to table" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/tables?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/tables?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.LeagueTableController.render()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
   
   it should "200 when content type is teams" in Fake {
-    val result = controllers.LeagueTableController.renderTeamlist()(TestRequest())
+    val result = controllers.LeagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
     status(result) should be(200)
   }
 
   it should "return JSONP when callback is supplied to teams" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/teams?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/teams?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.LeagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
@@ -39,7 +43,9 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to competition table" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/table?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/table?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
