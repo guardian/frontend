@@ -23,3 +23,21 @@
         min-height: (36px * $i) + (12px * ($i - 1));
     }
 }
+
+.grid-box-1 {
+    @extend .grid-box;
+    width: $gridWidth * 1;
+    height: $gridHeight * 1;
+}
+
+.grid-box-2 {
+    @extend .grid-box;
+    width: $gridWidth * 2;
+    height: $gridHeight * 2;
+}
+
+.grid-box-3 {
+    @extend .grid-box;
+    width: $gridWidth * 3;
+    height: $gridHeight * 3;
+}
