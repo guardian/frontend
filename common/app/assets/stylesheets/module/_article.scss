@@ -150,13 +150,19 @@ video {
   .article {
       max-width: 100%;
   }
-  .article__head {
+  .article__head,
+  .article__byline {
     width: $gridWidth * 4;
     @include box-sizing(border-box);
     float: left;
   }
+
+  .article__byline {
+    margin: 0px;
+    padding: 0 10px;
+  }
+
   .main-image-wrap,
-  .article__byline,
   .article__body,
   video {
     width: $gridWidth * 5;
@@ -172,7 +178,6 @@ video {
 /* 10 cols */
 @media screen and (min-width: 50em) {
   .main-image-wrap,
-  .article__byline,
   .article__body,
   video {
     width: $gridWidth * 6;
@@ -185,7 +190,6 @@ video {
   video {
     width: $gridWidth * 7;
   }
-  .article__byline,
   .article__body {
     margin-right: $gridWidth * 1;
   }
@@ -198,7 +202,6 @@ video {
     width: $gridWidth * 8;
   }
 
-  .article__byline,
   .article__body {
     width: $gridWidth * 7;
     margin-right: $gridWidth * 1;
@@ -207,7 +210,21 @@ video {
 
 /* 13 cols */
 @media screen and (min-width: 65em) {
-  .article__head {
-    //width: $gridWidth * 5;
+  .article__head,
+  .article__byline {
+    width: $gridWidth * 5;
+  }
+}
+
+/* 14 cols */
+@media screen and (min-width: 70em) {
+  .main-image-wrap,
+  video {
+    width: $gridWidth * 9;
+  }
+
+  .article__body {
+    width: $gridWidth * 8;
+    margin-right: $gridWidth * 1;
   }
 }
