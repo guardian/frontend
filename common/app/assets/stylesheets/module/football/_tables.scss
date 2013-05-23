@@ -1,7 +1,3 @@
-.league-table:first-child {
-    padding-top: 24px;
-}
-
 .football-table-container a.cta {
     background-color: #f4f4ee;
     color: #064951;
@@ -9,7 +5,7 @@
 
 .table-football {
     background-color: $neutral6;
-    margin-bottom: 12px;
+    margin-bottom: $baseline*3;
 }
 
 .table-football-header {

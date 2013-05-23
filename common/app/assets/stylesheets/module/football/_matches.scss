@@ -2,7 +2,6 @@
 
 .football-table-header {
     @extend %type-3;
-    /*border-top: 1px solid $neutral5;*/
     padding-top: $baseline*2;
     color: $neutral2;
 }
@@ -45,7 +44,7 @@
 }
 
 .competition {
-    margin-bottom: 12px;
+    margin-bottom: $baseline*3;
 }
 
 .matches-container {
@@ -148,7 +147,7 @@
 
 
 .competitions {
-    padding-bottom: 12px;
+    padding-bottom: $baseline*3;
     margin: 0 $gutter;
     list-style: none;
 }
@@ -221,8 +220,13 @@
 }
 
 .league-table {
-    margin-bottom: 24px;
+    margin-bottom: $baseline*6;
 }
+
+.league-table:first-child {
+    padding-top: $baseline*6;
+}
+
 
 //These are nasty... blame the designers!
 .front-competition-fixtures {
