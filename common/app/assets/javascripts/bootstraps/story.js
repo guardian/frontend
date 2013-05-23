@@ -100,7 +100,7 @@ define([
                     var swipeLib = ['js!swipe'];
 
                     require(swipeLib, function() {
-                        var hasContactSheet = common.$g('figure', '.story-pictures').length;
+                        var hasContactSheet = document.querySelector('.story-pictures') && common.$g('figure', '.story-pictures').length;
                         common.$g('#container').css('overflow', 'hidden');
 
                         if(hasContactSheet) {
