@@ -215,11 +215,15 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-case class Summary(ammount: Int) extends HtmlCleaner {
+case class Summary(amount: Int) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     val children = document.body().children().toList;
-    val para = children.filter(_.nodeName() == "p")(ammount)
-    children.drop(children.indexOf(para)).foreach(_.remove())
+    val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
+    // if there is are no p's, just take the first n things (could be a blog)
+    para match {
+      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove()) 
+      case _ => children.drop(amount).foreach(_.remove()) 
+    }
     document
   }
 }
