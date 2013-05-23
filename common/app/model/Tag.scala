@@ -10,7 +10,10 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val tagType: String = delegate.`type`
 
   lazy val id: String = delegate.id
-  lazy val section: String = delegate.sectionId.getOrElse("")
+
+  // some tags e.g. tone do not have an explicit section
+  lazy val section: String = delegate.sectionId.getOrElse("global")
+
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
