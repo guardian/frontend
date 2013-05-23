@@ -26,7 +26,7 @@
                     <a href="/stories/@story.id" class="type-7 trail-story-title" data-link-name="story | title">@story.title</a>
 
                     <h2 class="media-body trail-headline type-5">
-                        <a href="/stories/@story.id" data-link-name="story | text">
+                        <a href="/stories/@story.id" data-link-name="story | text" data-article-url="@trail.url">
                             @RemoveOuterParaHtml(trail.headlineOverride)
                         </a>
                     </h2>
@@ -39,6 +39,6 @@
     }
 }
 
-@stories.take(2).zipWithRowInfo.map{ case (story, info) =>
+@stories.zipWithRowInfo.map{ case (story, info) =>
     @trail(story.contentByImportance.take(1), story)
 }
