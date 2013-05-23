@@ -1,7 +1,7 @@
 .team-list {
-    margin: 0 $gutter;
+    margin: 0 $gutter 24px $gutter;
     list-style: none;
-    background-color: $neutral6;
+    border-top: 1px solid $neutral10;
 }
 
 .team-list-name {
@@ -12,13 +12,19 @@
     @extend %type-6;
     font-weight: 500;
     color: $linkBlue;
-    padding: 0 $gutter;
+    height: 36px;
+}
+.list__title:first-child {
+    border-top: 0;
 }
 
 .team-list li span {
-    padding: $baseline*2 0;
     border-top: 1px solid $mushroom;
     display: block;
     height: auto;
     color: #999;
+}
+
+.team-list .nav {
+    padding: 0;
 }
