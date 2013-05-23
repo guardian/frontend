@@ -150,27 +150,20 @@
     padding-bottom: $baseline*3;
     margin: 0 $gutter;
     list-style: none;
+    border-top: 1px solid $neutral10;
 }
 .competitions__title {
-    @extend %type-7;
-    color: $neutral2;
-    border-top: 1px solid $neutral5;
+    @extend %type-6;
+    font-weight: 500;
+    color: $linkBlue;
     height: 36px;
-    background: $neutral6;
-    padding: 0 3px;
-    @include box-sizing(border-box);
 }
 .competitions__title:first-child {
     border-top: 0;
 }
 .competitions .nav {
-    padding: 0 3px;
-    background: $neutral6;
+    padding: 0;
 }
-.competitions .nav__link {
-    color: $linkBlue;
-}
-
 
 
 
@@ -296,15 +289,11 @@
 }
 
 .football-nav .nav {
-    padding: $baseline*2 0;
+    padding: 0 0 $baseline*2 0;
 }
 
 .football-nav .nav--stacked > li > a {
     border-color: #a1c391;
-}
-
-.football-nav .nav__link {
-    border-top: 1px solid $neutral10 !important; // TODO: important shouldn't be needed
 }
 
 
