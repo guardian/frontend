@@ -8,7 +8,7 @@
 
 .competitions-date {
     @extend %type-6;
-    border-top: 1px solid $neutral6;
+    border-top: 1px solid $neutral10;
     color: $neutral2;
     height: 36px;
 }
@@ -93,11 +93,11 @@
 
 .match-home {
     text-align: right;
-    padding-right: $gutter * 1.5;
+    padding-right: $gutter * 1.75;
 }
 
 .match-away {
-    padding-left: $gutter * 1.5;
+    padding-left: $gutter * 1.75;
 }
 
 .match-result {
@@ -224,7 +224,18 @@
 }
 
 .league-table:first-child {
-    padding-top: $baseline*6;
+    padding-top: $baseline*4;
+}
+
+// Hacks to get around very long text
+.league-table .cta__text {
+    @include font($serif, normal, 12, 22);
+    display: block;
+}
+.league-table .cta__btn--right {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 
@@ -292,6 +303,10 @@
     border-color: #a1c391;
 }
 
+.football-nav .nav__link {
+    border-top: 1px solid $neutral10 !important; // TODO: important shouldn't be needed
+}
+
 
 .football-table-container {
     margin-top: $baseline*2;
@@ -299,5 +314,5 @@
 
 .live-matches-dateline {
     display:block;
-    margin-bottom: $baseline*3 ;
+    margin-bottom: $baseline*5;
 }
