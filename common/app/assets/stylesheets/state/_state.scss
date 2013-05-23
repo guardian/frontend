@@ -81,7 +81,7 @@
     @extend %type-7;
     margin: 0 $gutter 0 0;
     padding: 6px 0 0 0;
-    line-height: 14px;
+    line-height: 10px;
     font-weight: 500;
 }
 
@@ -97,6 +97,8 @@
     text-shadow: none;
     box-shadow: none;
     width: 60px;
+    text-indent: -10px;
+    line-height: 18px;
 }
 
 .update-btn.is-active,
@@ -107,7 +109,7 @@
 
 .update-live-matches .update-btn.is-active,
 .update-live-matches .update-btn:hover {
-    background-color: $sportBright;
+    background-color: $main18;
 }
 
 .is-updating {
@@ -115,7 +117,7 @@
     width: 36px;
     height: 12px;
     background-size: 100%;
-    margin-top: 2px;
+    margin-top: 6px;
 }
 
 .is-updating.is-active {
