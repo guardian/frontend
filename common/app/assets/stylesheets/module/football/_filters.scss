@@ -12,6 +12,7 @@
 
 .football-filterbar__title {
   @extend %type-6;
+  line-height: 22px;
   margin-bottom: 0px;
   float: left;
 }
@@ -20,6 +21,10 @@ a.football-filterbar__link {
   color: #ffffff;
   display: block;
   padding: 2px;
+}
+
+.football-filterbar .cta__btn {
+  border-color: #ffffff;
 }
 
 
