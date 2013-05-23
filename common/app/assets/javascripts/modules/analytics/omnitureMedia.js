@@ -34,9 +34,9 @@ define([
             if (initialPlay.content === true && initialPlay.advert === true) {
                 bean.one(video, 'loadedmetadata', function() {
                     if(video.advertWasRequested) {
-                        self.trackUserInteraction("Advert", "Video advert was requested");
+                        self.trackUserInteraction("Advert", "Video advert was requested", false);
                     }
-                   self.trackUserInteraction("Play", "User clicked play");
+                   self.trackUserInteraction("Play", "User clicked play", false);
                 });
             }
 
@@ -72,9 +72,9 @@ define([
             s.Media.play(mediaName, this.getPosition());
         };
 
-        this.trackUserInteraction = function(type, name) {
-            clearTimeout(deBounced);
-            deBounced = setTimeout(function(){
+        this.trackUserInteraction = function(type, name, debounce) {
+           clearTimeout(deBounced);
+           var log = function(){
                 var event;
                 switch(type){
                     case "Play" :
@@ -92,7 +92,13 @@ define([
                 s.linkTrackEvents = event;
                 s.events = event;
                 s.tl(true, "o", name);
-            }, 250);
+            };
+
+            if(debounce) {
+                deBounced = setTimeout(log, 250);
+            } else {
+                log();
+            }
         };
 
         this.trackVideoAdvert = function() {
@@ -122,7 +128,7 @@ define([
             bean.on(video, 'pause', function() { that.pause(); });
             bean.on(video, 'seeking', function() { that.seeking(); });
             bean.on(video, 'seeked', function() {that.seeked(); });
-            bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume"); });
+            bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume", true); });
 
             bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
             bean.on(video, 'play:content', function() { that.trackVideoContent(); });
