@@ -197,8 +197,17 @@ video {
   video {
     width: $gridWidth * 8;
   }
+
   .article__byline,
   .article__body {
-    margin-right: $gridWidth * 2;
+    width: $gridWidth * 7;
+    margin-right: $gridWidth * 1;
+  }
+}
+
+/* 13 cols */
+@media screen and (min-width: 65em) {
+  .article__head {
+    //width: $gridWidth * 5;
   }
 }

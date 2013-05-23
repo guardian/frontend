@@ -17,6 +17,10 @@
    Page head modifiers
    ========================================================================== */
 
+.page-head--border-bottom {
+  border-bottom: 1px solid $neutral10;
+}
+
 
 /* Article
  ========================================================================== */
@@ -32,4 +36,5 @@
   padding-top: 2px;
   border-top: 5px solid $neutral2;
   color: #000;
+  margin-bottom: 5px;
 }
