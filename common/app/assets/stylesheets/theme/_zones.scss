@@ -68,7 +68,9 @@
     color: $businessBlue
 }
 
-.zone-commentisfree .zone-color {
+.zone-commentisfree .zone-color,
+.zone-tone .zone-color,
+.zone-global .zone-color {
     color: $commentBlue
 }
 
@@ -121,7 +123,9 @@
     background-color: $businessBlue
 }
 
-.zone-commentisfree .zone-background {
+.zone-commentisfree .zone-background,
+.zone-tone .zone-background,
+.zone-global .zone-background {
     background-color: $commentBlue
 }
 
