@@ -28,7 +28,8 @@
                             BlockNumberCleaner,
                             TweetCleaner,
                             WitnessCleaner,
-                            Summary(if(a.isLive){ 1 } else { paras})
+                            Summary(if(a.isLive){ 1 } else { paras}),
+                            VideoPosterCleaner(a.videoAssets)
                         )
                     </div>
                     <p>
