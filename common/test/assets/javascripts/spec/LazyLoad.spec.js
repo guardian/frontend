@@ -1,6 +1,6 @@
 define(['modules/lazyload', 'bonzo', 'ajax'], function(lazyLoad, bonzo, ajax) {
 
-    describe('LazyLoad', function() {
+    describe('Lazy Load', function() {
         
         var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>'));
 
