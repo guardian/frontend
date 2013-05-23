@@ -30,9 +30,10 @@ define([
                     var a = new AutoUpdate({
                         path: context.querySelector('#live').getAttribute('data-source'),
                         delay: 60000,
-                        attachTo: context.querySelector(".story-live"),
+                        attachTo: context.querySelector(".story-live .article-body"),
                         switches: config.switches,
-                        loadOnInitialise: true
+                        loadOnInitialise: true,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });
