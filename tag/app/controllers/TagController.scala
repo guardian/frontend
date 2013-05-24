@@ -24,6 +24,16 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     }
   }
 
+  def renderTrails(path: String) = Action { implicit request =>
+    val promiseOfTag = lookup(path)
+    Async {
+      promiseOfTag.map {
+        case Left(model) => renderTrailsFragment(model)
+        case Right(notFound) => notFound
+      }
+    }
+  }
+
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching tag: $path for edition $edition")
@@ -54,6 +64,11 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     val htmlResponse = views.html.tag(model.tag, model.trails, model.leadContent)
     val jsonResponse = views.html.fragments.tagBody(model.tag, model.trails, model.leadContent)
     renderFormat(htmlResponse, jsonResponse, model.tag, Switches.all)
+  }
+  
+  private def renderTrailsFragment(model: TagAndTrails)(implicit request: RequestHeader) = {
+    val response = views.html.fragments.trailblocks.headline(model.trails, numItemsVisible = model.trails.size)
+    renderFormat(response, response, model.tag)
   }
   
 }
