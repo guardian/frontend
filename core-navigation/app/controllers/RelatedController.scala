@@ -39,7 +39,7 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
   }
 
   private def renderRelated(model: Related)(implicit request: RequestHeader) = {
-    val html = views.html.fragments.relatedTrails(model.trails, model.heading, 5)
+    val html = () => views.html.fragments.relatedTrails(model.trails, model.heading, 5)
     renderFormat(html, html, 900)
   }
 }

@@ -58,8 +58,8 @@ object MatchController extends Controller with Football with Requests with Loggi
       Async {
         promiseOfLineup.map { lineUp =>
           val page = MatchPage(theMatch, lineUp)
-          val htmlResponse = views.html.footballMatch(page)
-          val jsonResponse = views.html.fragments.footballMatchBody(page)
+          val htmlResponse = () => views.html.footballMatch(page)
+          val jsonResponse = () => views.html.fragments.footballMatchBody(page)
           renderFormat(htmlResponse, jsonResponse, page, Switches.all)
         }
       }
