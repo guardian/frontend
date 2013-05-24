@@ -74,7 +74,7 @@ class GuardianConfiguration(
 
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
-    lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin").getOrElse("*")
+    lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
   }
 
   object static {

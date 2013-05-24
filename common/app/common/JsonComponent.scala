@@ -11,7 +11,7 @@ import conf.Configuration
 
 object JsonComponent extends Results {
 
-  private lazy val origin = Configuration.ajax.corsOrigin
+  lazy val allowedOrigins = Configuration.ajax.corsOrigin.map(_.split(",").map(_.trim))
 
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
@@ -61,13 +61,31 @@ object JsonComponent extends Results {
   }
 
   private def resultFor(request: RequestHeader, json: String) = {
+
+    // JSONP if it has a callback
     request.getQueryString("callback").map {
       case ValidCallback(callback) => Ok(s"$callback($json);").as("application/javascript")
       case badCallback => Forbidden("bad callback name")
-    }.getOrElse{
-      Ok(json).as("application/json").withHeaders(
-        "Access-Control-Allow-Origin" -> origin,
-        "Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With")
+
+    // Crossdomain if it has an origin header
+    }.orElse{ request.headers.get("Origin").map{ origin =>
+      val response = Ok(json).as("application/json")
+        .withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With")
+
+      resolveOrigin(request) match {
+        case Some(allowed) => response.withHeaders(allowed)
+        case _ => response
+      }
+
+    // Same domain
+    }}.getOrElse(Ok(json).as("application/json"))
+  }
+
+  // http://stackoverflow.com/questions/1653308/access-control-allow-origin-multiple-origin-domains
+  private def resolveOrigin(request: RequestHeader) = request.headers.get("Origin").flatMap{ requestOrigin =>
+    allowedOrigins match {
+      case Some(allowed) => allowed.find(_ == requestOrigin).map("Access-Control-Allow-Origin" -> _)
+      case None => Some("Access-Control-Allow-Origin" -> "*") // dev environments
     }
   }
 }
