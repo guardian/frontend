@@ -42,8 +42,8 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
       comp = competition
     )
     
-    val htmlResponse = views.html.matches(livePage)
-    val jsonResponse = views.html.fragments.matchesBody(livePage)
+    val htmlResponse = () => views.html.matches(livePage)
+    val jsonResponse = () => views.html.fragments.matchesBody(livePage)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 

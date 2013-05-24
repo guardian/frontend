@@ -34,8 +34,8 @@ object StoryController extends Controller with Logging with ExecutionContexts {
           val storyId = request.getQueryString("storyId").getOrElse("0")
           val filteredStories = stories.filterNot(_.id.equals(storyId))
           
-          val htmlResponse = views.html.latest(StoriesPage(filteredStories))
-          val jsonResponse = views.html.fragments.latestBody(StoriesPage(filteredStories))
+          val htmlResponse = () => views.html.latest(StoriesPage(filteredStories))
+          val jsonResponse = () => views.html.fragments.latestBody(StoriesPage(filteredStories))
           renderFormat(htmlResponse, jsonResponse, StoriesPage(filteredStories), Switches.all)
         } else {
           JsonNotFound()
@@ -69,8 +69,8 @@ object StoryController extends Controller with Logging with ExecutionContexts {
       Async {
         promiseOfStory.map { storyOption =>
           storyOption.map { story =>
-            val htmlResponse = views.html.story(StoryPage(story))
-            val jsonResponse = views.html.fragments.storyBody(StoryPage(story))
+            val htmlResponse = () => views.html.story(StoryPage(story))
+            val jsonResponse = () => views.html.fragments.storyBody(StoryPage(story))
             renderFormat(htmlResponse, jsonResponse, StoryPage(story), Switches.all)
           }.getOrElse(JsonNotFound())
         }

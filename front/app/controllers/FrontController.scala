@@ -103,8 +103,8 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     else if (trailblocks.isEmpty) {
       InternalServerError
     } else {
-      val htmlResponse = views.html.front(frontPage, trailblocks)
-      val jsonResponse = views.html.fragments.frontBody(frontPage, trailblocks)
+      val htmlResponse = () => views.html.front(frontPage, trailblocks)
+      val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
       renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
     }
   }
@@ -130,7 +130,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails
-      val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+      val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
       renderFormat(response, response, frontPage)
     }
   }

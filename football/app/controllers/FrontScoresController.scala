@@ -25,7 +25,7 @@ object FrontScoresController extends Controller with implicits.Football with Log
     )
 
     competition.map { comp =>
-      val html = views.html.fragments.frontMatchBlock(comp, numVisible, isCompetitionPage)
+      val html = () => views.html.fragments.frontMatchBlock(comp, numVisible, isCompetitionPage)
       renderFormat(html, html, 60)
     } getOrElse (NoContent)
   }

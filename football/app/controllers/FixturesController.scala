@@ -165,7 +165,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
       
     
-      val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
+      val html = () => views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
       renderFormat(html, html, 60)
     }.getOrElse(NotFound)
   }
