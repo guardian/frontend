@@ -52,14 +52,14 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
-    val htmlResponse = views.html.section(model.section, model.editorsPicks, model.latestContent)
-    val jsonResponse = views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
+    val htmlResponse = () => views.html.section(model.section, model.editorsPicks, model.latestContent)
+    val jsonResponse = () => views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
     renderFormat(htmlResponse, jsonResponse, model.section, Switches.all)
   }
   
   private def renderTrailsFragment(model: SectionFrontPage)(implicit request: RequestHeader) = {
     val trails: Seq[Trail] = model.editorsPicks ++ model.latestContent
-    val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+    val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
     renderFormat(response, response, model.section)
   }
   
