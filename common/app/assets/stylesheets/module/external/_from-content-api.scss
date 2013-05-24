@@ -28,7 +28,7 @@
 .from-content-api blockquote,
 .from-content-api blockquote p {
     @extend %type-6;
-    margin: 0px 0px $baseline*2 0px;
+    margin: 0 0 0 0;
     padding: 0px;
     color: #333333;
 }
