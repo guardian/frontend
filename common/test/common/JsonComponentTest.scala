@@ -51,6 +51,16 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should be("""callbackName3({"name":"foo","refreshStatus":true});""")
   }
 
+  it should "Vary on Accept and Origin" in {
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
+
+    val result = JsonComponent(obj("name" -> "foo"))(request)
+
+    status(result) should be(200)
+    println(headers(result))
+    header("Vary", result) should be (Some("Accept, Origin"))
+  }
+
   it should "disable refreshing if auto refresh switch is off" in {
     AutoRefreshSwitch.switchOff()
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
