@@ -155,7 +155,7 @@
 .competitions__title {
     @extend %type-6;
     font-weight: 500;
-    color: $linkBlue;
+    color: $neutral2;
     height: 36px;
 }
 .competitions__title:first-child {
@@ -163,6 +163,10 @@
 }
 .competitions .nav {
     padding: 0;
+}
+.competitions .nav__link {
+    color: $linkBlue;
+    line-height: 20px;
 }
 
 
@@ -185,6 +189,9 @@
 
 .competition-table {
     padding:$baseline*2 0 0 0;
+}
+.competition-table--front {
+    margin-bottom: 12px;
 }
 
 .competition-table h3 {
