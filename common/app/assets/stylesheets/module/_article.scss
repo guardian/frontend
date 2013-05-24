@@ -1,46 +1,21 @@
-.article-zone {
-  padding: 13px 0 14px 0;
-  margin: 0 $gutter;
-  line-height: 1em;
-  border-top: 4px solid $mushroom;
-  border-bottom: 1px solid $mushroom;
-  @include box-sizing(border-box);
-
-  @media only screen and (min-width: $tablet) { border-top: none; }
-}
-
-.article-zone-sub {
-  @extend %type-6;
-}
-
-.js-popular .article-zone {
-  border-bottom: none;
-}
-
+/* ==========================================================================
+   Article head
+   ========================================================================== */
 .article__head {
   padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
-.article__head .dateline {
-    font-family: $sans-serif;
-    margin: 0px 0px $baseline*1.5 0px;
-    color: $neutral4;
-    @extend %type-11;
-    font-weight: bold;
-}
+  .article__head .dateline {
+      font-family: $sans-serif;
+      margin: 0px 0px $baseline*1.5 0px;
+      color: $neutral4;
+      @extend %type-11;
+      font-weight: bold;
+  }
 
 .article__headline {
   @extend %type-1;
   color: $neutral1;
-}
-
-.article-standfirst {
-  @extend %type-3;
-  color: $neutral4;
-  line-height: 20px;
-  margin:12px 0 0 0;
-  padding-top: 4px;
-  border-top: 1px dotted $neutral4;
 }
 
 .bullet {
@@ -50,9 +25,9 @@
   margin: $baseline/2 4px 0 0;
 }
 
-.bullet:first-of-type {
-  margin-top: $baseline;
-}
+  .bullet:first-of-type {
+    margin-top: $baseline;
+  }
 
 .byline {
   @include box-sizing(border-box);
@@ -63,21 +38,25 @@
   vertical-align: top;
 }
 
+.byline a {  font-weight: 500; }
+
 .main-image {
   @include box-sizing(border-box);
   margin-bottom: 0px;
 }
 
+/* ==========================================================================
+   Article Body
+   ========================================================================== */
 .article__body {
   padding: 0 10px;
 
   p {
     margin-bottom:0;
-    text-indent: 24px;
   }
 
-  p:first-of-type {
-    text-indent:0;
+  p + p {
+    text-indent: 24px;
   }
 }
 
@@ -92,8 +71,22 @@ video {
     -webkit-user-select: none;
 }
 
-/*** Grid layouts ***/
+.inline-image {
+  float:left;
 
+  img, figcaption {
+    @extend .grid-box-2;
+  }
+}
+
+.img-tiny.inline-image {
+  width: auto;
+  max-width: $inArticleInlineImgWidth;
+}
+
+/* ==========================================================================
+   Grid Layouts
+   ========================================================================== */
 .article {
   max-width: $gridWidth * 7;
   @extend .cf;
@@ -118,8 +111,10 @@ video {
   @include box-sizing(border-box);
 }
 
-/* 6 cols */
+/* 6 Cols
+ ========================================================================== */
 @media screen and (min-width: 30em) {
+
   .main-image-wrap {
     width: $gridWidth * 3;
     float: right;
@@ -128,21 +123,24 @@ video {
   }
 }
 
-/* 7 cols */
+/* 7 Cols
+ ========================================================================== */
 @media screen and (min-width: 35em) {
   .main-image-wrap {
     width: $gridWidth * 4;
   }
 }
 
-/* 8 cols */
+/* 8 Cols
+ ========================================================================== */
 @media screen and (min-width: 40em) {
   .main-image-wrap {
     margin-right: $gridWidth * -1;
   }
 }
 
-/* 9 cols */
+/* 9 Cols
+ ========================================================================== */
 @media screen and (min-width: 45em) {
   .page-head {
     border-bottom: 0;
@@ -175,8 +173,15 @@ video {
   }
 }
 
-/* 10 cols */
+/* 10 Cols
+ ========================================================================== */
 @media screen and (min-width: 50em) {
+  .inline-image {
+    img, figcaption {
+      @extend .grid-box-3;
+    }
+  }
+
   .main-image-wrap,
   .article__body,
   video {
@@ -184,7 +189,8 @@ video {
   }
 }
 
-/* 11 cols */
+/* 11 Cols
+ ========================================================================== */
 @media screen and (min-width: 55em) {
   .main-image-wrap,
   video {
@@ -195,7 +201,8 @@ video {
   }
 }
 
-/* 12 cols */
+/* 12 Cols
+ ========================================================================== */
 @media screen and (min-width: 60em) {
   .main-image-wrap,
   video {
@@ -208,7 +215,8 @@ video {
   }
 }
 
-/* 13 cols */
+/* 13 Cols
+ ========================================================================== */
 @media screen and (min-width: 65em) {
   .article__head,
   .article__byline {
@@ -216,7 +224,8 @@ video {
   }
 }
 
-/* 14 cols */
+/* 14 Cols
+ ========================================================================== */
 @media screen and (min-width: 70em) {
   .main-image-wrap,
   video {

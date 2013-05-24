@@ -8,10 +8,14 @@
 //Core elements
 //---------------------------------------------
 .from-content-api h2 {
-    @extend %type-4;
-    color: #333333;
-    margin-bottom: $baseline;
-    clear: both;
+  @include font($serif, 500, 19, 23);
+  min-height: 36px;
+  color: $neutral2;
+  margin:12px 0 12px 0;
+  clear: both;
+  border-top: 1px solid $neutral2;
+  border-bottom: 1px dotted $neutral2;
+  @include box-sizing(border-box);
 }
 
 .from-content-api h3 {
