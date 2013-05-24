@@ -78,7 +78,7 @@ object JsonComponent extends Results {
       }
 
     // Same domain
-    }}.getOrElse(Ok(json).as("application/json"))
+    }}.getOrElse(Ok(json).as("application/json")).withHeaders("Vary" -> "Accept, Origin")
   }
 
   // http://stackoverflow.com/questions/1653308/access-control-allow-origin-multiple-origin-domains
