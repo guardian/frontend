@@ -20,13 +20,13 @@
 }
 
 .home-stat {
-    background-color: $homeColour;
+    background-color: $main10;
     height: 15px;
     width: 100%;
 }
 
 .away-stat {
-    background-color: $awayColour;
+    background-color: $main8;
     height: 15px;
 }
 
@@ -42,10 +42,6 @@
 .away-stat-background {
     background-color: #EDEDED;
     width: 100%;
-}
-
-.m-status {
-    padding: 2px 5px 2px 5px;
 }
 
 .home-header {

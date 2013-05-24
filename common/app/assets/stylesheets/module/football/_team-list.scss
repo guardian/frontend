@@ -14,6 +14,12 @@
     color: $linkBlue;
     height: 36px;
 }
+.team-list__item {
+    @extend %type-11;
+    font-weight: bold;
+    color: $neutral4;
+}
+
 .list__title:first-child {
     border-top: 0;
 }

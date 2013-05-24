@@ -7,12 +7,15 @@
 </h2>
 
 <article class="article" role="main">
-    <p class="dateline box-indent">
-        @fragments.status(page.theMatch)
-        <time data-timestamp="@page.theMatch.date.getMillis">
-            @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
-        </time>
-    </p>
+    <div class="live-matches-dateline">
+        <p class="dateline">
+            @fragments.status(page.theMatch)
+            <time data-timestamp="@page.theMatch.date.getMillis">
+                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
+            </time>
+        </p>
+    </div>
+
 
     <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
         @fragments.matchSummary(page.theMatch)

@@ -48,7 +48,7 @@
 }
 
 .matches-container {
-    padding-top: 24px;
+    padding: 24px $gutter 24px $gutter;
 }
 
 .match {
@@ -139,6 +139,11 @@
 .match-FT,
 .match-HT {
     color: #000000;
+}
+
+.dateline .match-FT,
+.dateline .match-HT {
+    color: $neutral4;
 }
 
 .matches {
