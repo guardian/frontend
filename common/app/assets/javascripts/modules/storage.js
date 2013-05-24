@@ -28,50 +28,30 @@ define(['common'], function (common) {
         },
         
         set: function(key, data) {
-            var type = typeof data;
-            // handle object data
-            if (type === 'object') {
-                data = JSON.stringify(data);
-            }
-            var dataWithType = data + '|' + type;
-            if (!storage.isAvailable(dataWithType)) {
+            var dataAsString = JSON.stringify(data);
+            if (!storage.isAvailable(dataAsString)) {
                 return false;
             }
-            return w.localStorage.setItem(key, dataWithType);
+            return w.localStorage.setItem(key, dataAsString);
         },
         
         get: function(key) {
-            var dataWithType = w.localStorage.getItem(key);
-            if (dataWithType === null) {
+            var data = w.localStorage.getItem(key);
+            if (data === null) {
                 return null;
             }
             
-            // what's its type
-            var typeLastIndex = dataWithType.lastIndexOf('|'),
-                data, type;
-            // migration code, can be deleted eventually
-            if (typeLastIndex === -1) {
-                data = dataWithType,
-                type = storage._migrate(key, data);
-            } else {
-                data = dataWithType.substring(0, typeLastIndex),
-                type = dataWithType.substring(typeLastIndex + 1);
-                // fix bug(s)
-                if (type === 'type' || ((key === 'gu.prefs.ab.participation' || key === 'gu.prefs.ab.current') && type === 'string')) {
-                    type = storage._migrate(key, data);
-                }
+            // try and parse the data
+            var dataParsed;
+            try{
+                dataParsed = JSON.parse(data);
+            } catch (e) {
+                // remove the key
+                storage.remove(key);
+                return null;
             }
             
-            switch (type) {
-                case 'object':
-                    return JSON.parse(data);
-                case 'boolean':
-                    return (data === 'true') ? true : false;
-                case 'number':
-                    return parseFloat(data, 10);
-                default:
-                    return data;
-            }
+            return dataParsed;
         },
         
         remove: function(key) {
@@ -88,25 +68,6 @@ define(['common'], function (common) {
         
         getKey: function(i) {
             return w.localStorage.key(i);
-        },
-        
-        _migrate: function(key, data) {
-            var type = 'string';
-            switch (key) {
-                case 'gu.ads.audsci':
-                case 'gu.prefs.ab.participation':
-                case 'gu.prefs.ab.current':
-                case 'gu.prefs.aware':
-                    type = 'object';
-                    break;
-                case 'gu.prefs.switch.shared-wisdom-toolbar':
-                case 'gu.prefs.switch.showErrors':
-                    type = 'boolean';
-                    break;
-            }
-            w.localStorage.removeItem(key);
-            w.localStorage.setItem(key, data + '|' + type);
-            return type;
         },
 
         clearByPrefix: function(prefix) {

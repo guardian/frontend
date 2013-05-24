@@ -18,11 +18,11 @@ define(['common', 'modules/storage'], function(common, storage) {
             storage._setWindow({localStorage: winLocalStorage})
         }
         
-        function testSetAndGet(key, data, dataAsString, type) {
+        function testSetAndGet(key, data, dataAsString) {
             setWindowLocalStorage({
-                setItem: sinon.stub().withArgs(key, dataAsString + '|' + type).returns(true),
-                getItem: sinon.stub().withArgs(key).returns(dataAsString + '|' + type),
-                removeItem: sinon.stub().withArgs(dataAsString + '|' + type)
+                setItem: sinon.stub().withArgs(key, dataAsString).returns(true),
+                getItem: sinon.stub().withArgs(key).returns(dataAsString),
+                removeItem: sinon.stub().withArgs(dataAsString)
             });
             expect(storage.set(key, data)).toBeTruthy();
             expect(storage.get(key)).toEqual(data);
@@ -37,7 +37,7 @@ define(['common', 'modules/storage'], function(common, storage) {
         });
 
         it('should save and retrieve data', function() {
-            testSetAndGet('foo', 'bar', 'bar', 'string');
+            testSetAndGet('foo', 'bar', '"bar"');
         });
 
         it('should not save if local storage unavailavble', function() {
@@ -82,47 +82,34 @@ define(['common', 'modules/storage'], function(common, storage) {
             expect(storage.getKey(0)).toBe('foo');
         });
 
-        it('should migrate current data', function() {
-            
-            function testMigration(key, oldData, newData, type) {
-                setWindowLocalStorage({
-                    getItem: sinon.stub().returns(oldData),
-                    removeItem: sinon.stub().withArgs(key),
-                    setItem: sinon.stub().withArgs(key, oldData + '|' + type)
-                });
-                expect(storage.get(key)).toEqual(newData);
-            }
-            
-            [
-                ['gu.prefs.ab.participation', '{"tests":2}', {tests:2}, 'object'],
-                ['gu.ads.audsci', '["E013547","E013463"]', ['E013547', 'E013463'], 'object'],
-                ['gu.prefs.auto-update', 'on', 'on', 'string'],
-                ['gu.prefs.front-trailblocks-UK', 'culture,business', 'culture,business', 'string'],
-                ['gu.prefs.switch.shared-wisdom-toolbar', 'false', false, 'boolean'],
-                ['gu.prefs.switch.showErrors', 'true', true, 'boolean'],
-                ['gu.prefs.aware', '{"foo":"bar"}', {foo:"bar"}, 'object']
-            ].forEach(function(data) {
-                testMigration(data[0], data[1], data[2]);
+        it('should handle migrating non-stringified data', function() {
+            setWindowLocalStorage({
+                getItem: sinon.stub().withArgs('foo').returns('bar|string'),
+                removeItem: sinon.stub().withArgs('foo')
             });
-            
+            expect(storage.get('foo')).toBeNull();
         });
         
         describe('Saving and retriving different data types', function() {
 
             it('Object data', function() {
-                testSetAndGet('foo', { bar: 'baz' }, '{"bar":"baz"}', 'object');
+                testSetAndGet('foo', { bar: 'baz' }, '{"bar":"baz"}');
             });
 
             it('Array data', function() {
-                testSetAndGet('foo', ['bar', 'baz'], '["bar","baz"]', 'object');
+                testSetAndGet('foo', ['bar', 'baz'], '["bar","baz"]');
             });
 
             it('Boolean data', function() {
-                testSetAndGet('foo', false, 'false', 'boolean');
+                testSetAndGet('foo', false, 'false');
             });
 
             it('Number data', function() {
-                testSetAndGet('foo', 1234, '1234', 'number');
+                testSetAndGet('foo', 1234, '1234');
+            });
+
+            it('String data', function() {
+                testSetAndGet('foo', 'bar', '"bar"');
             });
             
         });
