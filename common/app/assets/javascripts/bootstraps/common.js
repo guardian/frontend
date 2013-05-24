@@ -213,10 +213,11 @@ define([
         },
 
         grid: function() {
-            common.mediator.on('page:common:ready', function(config, context) { grid(context); });
-            bean.on(window, 'resize', common.debounce(function(e){
-                grid(document);
-            }, 1000));
+            if (true || userPrefs.isOn('grid-height')) {
+                common.mediator.on('page:common:ready', function(config, context) {
+                    grid(context);
+                });
+            }
         },
 
         initSwipe: function(config) {

@@ -5,8 +5,8 @@
 #preloads {
   position: relative;
   clear: both;
-  max-width: 64em;
-  max-width: 102.4rem;
+  //max-width: 64em;
+  //max-width: 102.4rem;
   margin: 0 auto;
 }
 
@@ -42,20 +42,6 @@
 
 .box-indent {
     padding: 0 $gutter $baseline*1 $gutter;
-}
-
-.inline-image {
-    width: $inArticleInlineImgWidth;
-    float: left;
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    margin-top: 3px;
-}
-
-.img-tiny.inline-image {
-    width: auto;
-    max-width: $inArticleInlineImgWidth;
 }
 
 /* ==========================================================================

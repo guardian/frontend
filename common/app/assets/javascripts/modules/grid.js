@@ -1,26 +1,31 @@
 define(['common', 'bean'], function (common, bean) {
 
+    var gridHeight = 36,
+        gridPadding = 12,
+        prefix = 'grid-h-unit-';
+
+    function setGridHeightClass(el) {
+        var height = el.offsetHeight,
+            gridUnits = Math.ceil(height / (gridHeight + gridPadding)),
+            classes = el.className.split(/\s+/),
+            newClasses = [];
+
+        classes.map(function(c){
+            if (c.indexOf(prefix) !== 0) {
+                newClasses.push(c);
+            }
+        });
+        newClasses.push(prefix + gridUnits);
+        el.className = newClasses.join(' ');
+    }
+
     function Grid(context) {
-        var gridHeight = 36,
-            gridPadding = 12;
 
         // This snaps individual elements to the grid
-        common.$g('.snap-to-grid', context).each(function(el) {
-            var height = el.offsetHeight,
-                gridUnits = Math.ceil(height/(gridHeight+gridPadding));
-
-            el.className += ' grid-h-unit-' + gridUnits;
-        });
+        Array.prototype.forEach.call(context.querySelectorAll('.snap-to-grid'), setGridHeightClass);
 
         // This is a general purpose classname to snap all the children to grid
-        common.$g('.snap-children-to-grid', context).each(function(el) {
-            Array.prototype.forEach.call(el.children, function(el) {
-                var height = el.offsetHeight,
-                    gridUnits = Math.ceil(height/(gridHeight+gridPadding));
-
-                el.className += ' grid-h-unit-' +gridUnits;
-            });
-        });
+        Array.prototype.forEach.call(context.querySelectorAll('.snap-children-to-grid > *'), setGridHeightClass);
     }
 
     return Grid;

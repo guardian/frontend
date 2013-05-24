@@ -1,46 +1,21 @@
-.article-zone {
-  padding: 13px 0 14px 0;
-  margin: 0 $gutter;
-  line-height: 1em;
-  border-top: 4px solid $mushroom;
-  border-bottom: 1px solid $mushroom;
-  @include box-sizing(border-box);
-
-  @media only screen and (min-width: $tablet) { border-top: none; }
-}
-
-.article-zone-sub {
-  @extend %type-6;
-}
-
-.js-popular .article-zone {
-  border-bottom: none;
-}
-
+/* ==========================================================================
+   Article head
+   ========================================================================== */
 .article__head {
   padding: $baseline*3 $gutter $baseline*3 $gutter;
 }
 
-.article__head .dateline {
-    font-family: $sans-serif;
-    margin: 0px 0px $baseline*1.5 0px;
-    color: $neutral4;
-    @extend %type-11;
-    font-weight: bold;
-}
+  .article__head .dateline {
+      font-family: $sans-serif;
+      margin: 0px 0px $baseline*1.5 0px;
+      color: $neutral4;
+      @extend %type-11;
+      font-weight: bold;
+  }
 
 .article__headline {
   @extend %type-1;
   color: $neutral1;
-}
-
-.article-standfirst {
-  @extend %type-3;
-  color: $neutral4;
-  line-height: 20px;
-  margin:12px 0 0 0;
-  padding-top: 4px;
-  border-top: 1px dotted $neutral4;
 }
 
 .bullet {
@@ -50,38 +25,38 @@
   margin: $baseline/2 4px 0 0;
 }
 
-.bullet:first-of-type {
-  margin-top: $baseline;
-}
+  .bullet:first-of-type {
+    margin-top: $baseline;
+  }
 
 .byline {
   @include box-sizing(border-box);
-  height: 36px;
   display: block;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
-  margin: 0 10px 12px 10px;
-  padding: 0;
+  padding: 0 0 9px 0;
   vertical-align: top;
 }
 
-.article .main-image {
+.byline a {  font-weight: 500; }
+
+.main-image {
   @include box-sizing(border-box);
   margin-bottom: 0px;
-  padding: 0 $gutter;
 }
 
+/* ==========================================================================
+   Article Body
+   ========================================================================== */
 .article__body {
-  margin-top: 12px;
-  padding: 0 $gutter $baseline*2 $gutter;
+  padding: 0 10px;
 
   p {
     margin-bottom:0;
-    text-indent: 24px;
   }
 
-  p:first-of-type {
-    text-indent:0;
+  p + p {
+    text-indent: 24px;
   }
 }
 
@@ -94,4 +69,171 @@ video {
     max-width: 100%;
     height: auto;
     -webkit-user-select: none;
+}
+
+.inline-image {
+  float:left;
+
+  img, figcaption {
+    @extend .grid-box-2;
+  }
+}
+
+.img-tiny.inline-image {
+  width: auto;
+  max-width: $inArticleInlineImgWidth;
+}
+
+/* ==========================================================================
+   Grid Layouts
+   ========================================================================== */
+.article {
+  max-width: $gridWidth * 7;
+  @extend .cf;
+}
+
+.main-image-wrap {
+  padding: 5px 10px 7px 10px;
+}
+
+.article__byline {
+  margin: 5px 10px 7px 10px;
+}
+
+.main-caption {
+  padding: 10px 0;
+}
+
+.main-image-wrap,
+.article__byline,
+.article__body,
+video {
+  @include box-sizing(border-box);
+}
+
+/* 6 Cols
+ ========================================================================== */
+@media screen and (min-width: 30em) {
+
+  .main-image-wrap {
+    width: $gridWidth * 3;
+    float: right;
+    background-color: #fff;
+    padding: 5px 10px 7px 10px;
+  }
+}
+
+/* 7 Cols
+ ========================================================================== */
+@media screen and (min-width: 35em) {
+  .main-image-wrap {
+    width: $gridWidth * 4;
+  }
+}
+
+/* 8 Cols
+ ========================================================================== */
+@media screen and (min-width: 40em) {
+  .main-image-wrap {
+    margin-right: $gridWidth * -1;
+  }
+}
+
+/* 9 Cols
+ ========================================================================== */
+@media screen and (min-width: 45em) {
+  .page-head {
+    border-bottom: 0;
+  }
+  .article {
+      max-width: 100%;
+  }
+  .article__head,
+  .article__byline {
+    width: $gridWidth * 4;
+    @include box-sizing(border-box);
+    float: left;
+  }
+
+  .article__byline {
+    margin: 0px;
+    padding: 0 10px;
+  }
+
+  .main-image-wrap,
+  .article__body,
+  video {
+    width: $gridWidth * 5;
+    float: right;
+    padding: 0 10px;
+    margin: 15px 0 0 0;
+  }
+  .byline {
+    margin-left: 0;
+  }
+}
+
+/* 10 Cols
+ ========================================================================== */
+@media screen and (min-width: 50em) {
+  .inline-image {
+    img, figcaption {
+      @extend .grid-box-3;
+    }
+  }
+
+  .main-image-wrap,
+  .article__body,
+  video {
+    width: $gridWidth * 6;
+  }
+}
+
+/* 11 Cols
+ ========================================================================== */
+@media screen and (min-width: 55em) {
+  .main-image-wrap,
+  video {
+    width: $gridWidth * 7;
+  }
+  .article__body {
+    margin-right: $gridWidth * 1;
+  }
+}
+
+/* 12 Cols
+ ========================================================================== */
+@media screen and (min-width: 60em) {
+  .main-image-wrap,
+  video {
+    width: $gridWidth * 8;
+  }
+
+  .article__body {
+    width: $gridWidth * 7;
+    margin-right: $gridWidth * 1;
+  }
+}
+
+/* 13 Cols
+ ========================================================================== */
+@media screen and (min-width: 65em) {
+  .article__head,
+  .article__byline {
+    width: $gridWidth * 5;
+  }
+}
+
+/* 14 Cols
+ ========================================================================== */
+@media screen and (min-width: 70em) {
+  .main-image-wrap,
+  video {
+    width: $gridWidth * 9;
+  }
+
+  .article__body {
+    width: $gridWidth * 8;
+    margin-right: $gridWidth * 1;
+  }
 }
