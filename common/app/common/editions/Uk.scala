@@ -85,7 +85,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
       QueryTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured), showMore = false,
-        customQuery=ContentApi.item.itemId("culture")
+        customQuery = () => ContentApi.item.itemId("culture")
           .edition("au")
           .showTags("all")
           .showFields(trailFields)
@@ -95,7 +95,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
           .showStoryPackage(true)
           .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")),
       QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = false,
-        customQuery=ContentApi.item.itemId("commentisfree")
+        customQuery = () => ContentApi.item.itemId("commentisfree")
           .edition("au")
           .showTags("all")
           .showFields(trailFields)
