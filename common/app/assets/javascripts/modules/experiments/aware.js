@@ -145,7 +145,7 @@ define([
             logEntryPage(config.contentType);
         } else {
             incrementVisitsInSession();
-        } 
+        }
       
         incrementVisits();
         
@@ -172,7 +172,7 @@ define([
         visitsToday: visitsToday,
         visitsInSession: visitsInSession,
         lastVisit: lastVisit,
-        sessionEntry: sessionEntry, 
+        sessionEntry: sessionEntry,
         visitsBySection: visitsBySection,
         get: get,
         remove: remove
