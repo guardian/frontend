@@ -5,10 +5,10 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.MostPopularAgent
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
-object MostPopularController extends Controller with Logging {
+object MostPopularController extends Controller with Logging with ExecutionContexts {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/"),
@@ -29,8 +29,8 @@ object MostPopularController extends Controller with Logging {
           (sectionPopular ++ globalPopular) match {
             case Nil => NotFound
             case popular => {
-              val htmlResponse = views.html.mostPopular(page, popular)
-              val jsonResponse = views.html.fragments.mostPopular(popular, 5)
+              val htmlResponse = () => views.html.mostPopular(page, popular)
+              val jsonResponse = () => views.html.fragments.mostPopular(popular, 5)
               renderFormat(htmlResponse, jsonResponse, 900)
             }
           }

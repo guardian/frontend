@@ -2,12 +2,14 @@ define([
     'common',
     'modules/detect',
     'modules/experiments/ab',
-    'modules/storage'
+    'modules/storage',
+    'components/gu-id/id'
 ], function(
     common,
     detect,
     ab,
-    storage
+    storage,
+    id
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -106,7 +108,7 @@ define([
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = 'Guest user';
+            s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
 
@@ -117,6 +119,14 @@ define([
                 s.prop51  = testData;
                 s.eVar51  = testData;
                 s.events = s.apl(s.events,'event58',',');
+            } else {
+                // If no other tests running try and collect AB font rendering test results.
+                var fonttest = localStorage.getItem('gu.fontdelaytest');
+                if(fonttest) {
+                    s.prop51  = fonttest;
+                    s.eVar51  = fonttest;
+                    s.events = s.apl(s.events,'event58',',');
+                }
             }
 
             s.prop56    = 'Javascript';
@@ -135,16 +145,21 @@ define([
                 s.eVar38 = 'popup:homescreen';
             }
 
-            /* Retrieve navigation interaction data */
+            /* Retrieve navigation interaction data, incl. swipe */
             var ni = storage.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
                     s.eVar37 = ni.tag;
-                    s.events = s.apl(s.events,'event37',',');
+                    s.events   = 'event37';
                 }
                 storage.remove('gu.analytics.referrerVars');
+            } else if (config.swipe) {
+                s.referrer = config.swipe.referrer;
+                s.eVar24   = config.swipe.referrerPageName;
+                s.eVar37   = config.swipe.initiatedBy;
+                s.events   = 'event37';
             }
         };
 

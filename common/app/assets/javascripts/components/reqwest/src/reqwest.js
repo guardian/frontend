@@ -1,8 +1,8 @@
-!function (name, definition) {
+(function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
   else if (typeof define == 'function' && define.amd) define(definition)
-  else this[name] = definition()
-}('reqwest', function () {
+  else context[name] = definition()
+})('reqwest', this, function () {
 
   var win = window
     , doc = document

@@ -14,10 +14,18 @@ define([
 
         var className = 'is-off',
             that = this,
-            hasCrossedBreakpoint = detect.hasCrossedBreakpoint();
+            hasCrossedBreakpoint = detect.hasCrossedBreakpoint(),
+            contexts = {};
+
 
         this.view = {
             bindings : function(context) {
+                var id = context.id;
+                
+                if(contexts[id]){
+                    return;
+                }
+                contexts[id] = true;
 
                 var sectionsHeader = context.querySelector('.nav-popup-sections'),
                     sectionsNav    = context.querySelector('.nav--global'),

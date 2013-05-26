@@ -7,6 +7,8 @@ define([
 
     "modules/expandable",
     "modules/story/continue-reading",
+    "modules/autoupdate",
+    "modules/tabs",
     
     "swipe"
 ], function(
@@ -15,10 +17,28 @@ define([
     ajax,
 
     Expandable,
-    ContinueReading
+    ContinueReading,
+    AutoUpdate,
+    Tabs
 ) {
 
     var modules = {
+        
+        initLiveBlogging: function() {
+            common.mediator.on('page:story:ready', function(config, context) {
+                if (context.querySelector('#live .update')) {
+                    var a = new AutoUpdate({
+                        path: context.querySelector('#live').getAttribute('data-source'),
+                        delay: 60000,
+                        attachTo: context.querySelector(".story-live .article-body"),
+                        switches: config.switches,
+                        loadOnInitialise: true,
+                        responseSelector: '.article-body .block'
+                    }).init();
+                }
+            });
+        },
+        
         initTimeline: function() {
             common.mediator.on('page:story:ready', function(config, context) {
                 var $ = common.$g,
@@ -81,7 +101,7 @@ define([
                     var swipeLib = ['js!swipe'];
 
                     require(swipeLib, function() {
-                        var hasContactSheet = common.$g('figure', '.story-pictures').length;
+                        var hasContactSheet = context.querySelector('.story-pictures') && common.$g('figure', '.story-pictures').length;
                         common.$g('#container').css('overflow', 'hidden');
 
                         if(hasContactSheet) {
@@ -91,34 +111,41 @@ define([
                         Array.prototype.forEach.call(swipeContainers, function(el){
 
                             var numOfPictures = el.querySelectorAll('figure').length,
+                                hasPictureSheet = el.querySelector('.story-picture--sheet'),
+                                swipeCallback = function(index, elem) {
+                                    var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
+                                    text = common.$g('.cta-new__text', controls),
+                                    button = common.$g('.cta-new__btn--left', controls),
+                                    centreClass = 'cta-new__text--center';
+    
+                                    if(hasContactSheet && index === 0) {
+                                        button.addClass('h');
+                                        text.removeClass(centreClass).text('View complete gallery');
+                                    } else {
+                                       button.removeClass('h');
+                                       // if there's a contact sheet, don't include it in the count
+                                       index = (hasPictureSheet) ? index : index + 1;
+                                       text.addClass(centreClass).text(index + '/' + numOfPictures);
+                                    }
+                                },
                                 mySwipe = new Swipe(el, {
                                      speed: 100,
                                      continuous: true,
                                      disableScroll: false,
                                      stopPropagation: true,
-                                     callback: function(index, elem) {
-                                         var controls = elem.parentNode.parentNode.parentNode.querySelector('.js-swipe__controls'),
-                                             text = common.$g('.cta-new__text', controls),
-                                             button = common.$g('.cta-new__btn--left', controls),
-                                             centreClass = 'cta-new__text--center';
-
-                                         if(hasContactSheet && index === 0) {
-                                             button.addClass('h');
-                                             text.removeClass(centreClass).text('View complete gallery');
-                                         } else {
-                                            button.removeClass('h');
-                                            text.addClass(centreClass).text(index + '/' + numOfPictures);
-                                         }
-                                     },
+                                     callback: swipeCallback,
                                      transitionEnd: function(index, elem) {}
                                 });
 
-                            bean.on(el, 'click', '.cta-new__btn--left', mySwipe.prev);
-                            bean.on(el, 'click','.cta-new__btn--right', mySwipe.next);
+                            bean.on(el.parentNode, 'click', '.cta-new__btn--left', mySwipe.prev);
+                            bean.on(el.parentNode, 'click', '.cta-new__btn--right', mySwipe.next);
 
                             if(hasContactSheet) { common.$g(el.querySelector('.cta-new__btn--left')).addClass('h'); }
 
                             common.$g('.js-swipe__controls', el.parentNode).removeClass('h');
+                            
+                            // init gallery (for text)
+                            swipeCallback(0, el.querySelector('figure'));
                         });
                     });
                 }
@@ -131,7 +158,15 @@ define([
                     new ContinueReading(el).init();
                 });
             });
+        },
+            
+        initTabs: function () {
+            var tabs = new Tabs();
+            common.mediator.on('page:story:ready', function(config, context) {
+                tabs.init(context);
+            });
         }
+
     };
 
     var ready = function(config, context) {
@@ -142,6 +177,8 @@ define([
             modules.initExpandables();
             modules.initContinueReading();
             modules.initSwipe();
+            modules.initLiveBlogging();
+            modules.initTabs();
         }
         common.mediator.emit("page:story:ready", config, context);
     };

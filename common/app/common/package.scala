@@ -3,7 +3,6 @@ package common
 import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
 import play.api.mvc.Result
-import play.api.libs.concurrent.Execution.Implicits._
 import play.api.templates.Html
 import model.Cached
 import play.api.mvc.RequestHeader
@@ -51,29 +50,32 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       log.error(s"Failing quietly on: ${e.getMessage}", e)
       default
   }
-  
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
+
+
+  /*
+    NOTE: The htmlResponse & jsonResponse are () => Html functions so that you do not do all the rendering twice.
+          Only the once you actually render is used
+   */
+
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
+    if (request.isJson)
+      JsonComponent(jsonResponse())
+    else
+      Ok(htmlResponse())
   }
   
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(metaData, switches, jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
+    if (request.isJson)
+      JsonComponent(metaData, switches, jsonResponse())
+    else
+      Ok(htmlResponse())
   }
   
-  def renderFormat(htmlResponse: Html, jsonResponse: Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
-    request.getQueryString("callback").map { callback =>
-      JsonComponent(jsonResponse)
-    } getOrElse {
-      Ok(Compressed(htmlResponse))
-    }
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
+    if (request.isJson)
+      JsonComponent(jsonResponse())
+    else
+      Ok(htmlResponse())
   }
 }
 

@@ -5,7 +5,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 case class GalleryPage(
@@ -14,7 +14,7 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)
 
-object GalleryController extends Controller with Logging {
+object GalleryController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
 
@@ -25,7 +25,7 @@ object GalleryController extends Controller with Logging {
 
     Async {
       promiseOfGalleryPage.map {
-        case Left(model) if model.gallery.isExpired => Gone(Compressed(views.html.expired(model.gallery)))
+        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
         case Left(model) => renderGallery(model)
         case Right(notFound) => notFound
       }
@@ -50,8 +50,8 @@ object GalleryController extends Controller with Logging {
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
-    val jsonResponse = views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    val htmlResponse = () => views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
+    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
   }
     

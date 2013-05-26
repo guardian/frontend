@@ -11,7 +11,7 @@ import org.scala_tools.time.Imports._
 import model.Page
 import scala.Some
 import play.api.templates.Html
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
 
@@ -52,16 +52,16 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
         JsonComponent(
           fixturesPage.page,
           Switches.all,
-          "html" -> views.html.fragments.matchesList(fixturesPage),
+          "html" -> views.html.fragments.matchesBody(fixturesPage),
           "more" -> Html(nextPage.getOrElse("")))
-      }.getOrElse(Ok(Compressed(views.html.matches(fixturesPage))))
+      }.getOrElse(Ok(views.html.matches(fixturesPage)))
     }
   }
 
   def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]): String
 }
 
-object FixturesController extends FixtureRenderer with Logging {
+object FixturesController extends FixtureRenderer with Logging with ExecutionContexts {
 
   val page = new Page(
     Some("http://www.guardian.co.uk/football/matches"),
@@ -150,7 +150,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
 
       Cached(60) {
         val html = views.html.teamFixtures(page, filters, upcomingFixtures)
-        Ok(Compressed(html))
+        Ok(html)
       }
     }.getOrElse(NotFound)
   }
@@ -165,7 +165,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
       val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
       
     
-      val html = views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
+      val html = () => views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
       renderFormat(html, html, 60)
     }.getOrElse(NotFound)
   }

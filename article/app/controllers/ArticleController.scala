@@ -4,11 +4,11 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
+
 
 case class ArticlePage(article: Article, storyPackage: List[Trail])
 
-object ArticleController extends Controller with Logging {
+object ArticleController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfArticle = lookup(path)
@@ -43,13 +43,13 @@ object ArticleController extends Controller with Logging {
     request.getQueryString("callback").map { callback =>
       JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
     } getOrElse {
-      Gone(Compressed(views.html.expired(model.article)))
+      Gone(views.html.expired(model.article))
     }
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.article(model.article, model.storyPackage)
-    val jsonResponse = views.html.fragments.articleBody(model.article, model.storyPackage)
+    val htmlResponse = () => views.html.article(model.article, model.storyPackage)
+    val jsonResponse = () => views.html.fragments.articleBody(model.article, model.storyPackage)
     renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
   

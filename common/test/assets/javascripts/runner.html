@@ -24,12 +24,13 @@
                 analytics:    'modules/analytics',
                 EventEmitter: 'components/eventEmitter/EventEmitter',
                 swipe:        'components/swipe/swipe',
+                swipeview:    'components/swipeview/src/swipeview',
                 omniture:     '../../../app/public/javascripts/vendor/omniture',
                 fixtures:     '../../../test/assets/javascripts/helpers/fixtures'
             }
       });
   </script>
-  <style>
+  <style>   
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
     .is-off:after { content: " -- (hidden)"; }
@@ -114,6 +115,7 @@
     </div>
 
     <ul id="tests">
+        <li><a href="#AbTest">AB Test</a></li>
         <li>
             Analytics
             <ul>
@@ -131,6 +133,7 @@
             </ul>
         </li>
         <li><a href="#Ajax">Ajax</a></li>
+        <li><a href="#Aware">Aware</a></li>
         <li><a href="#Common">Common</a></li>
         <li><a href="#Detect">Detect</a></li>
         <li><a href="#Errors">Errors</a></li>
@@ -143,6 +146,7 @@
                 <li><a href="#Control">Control</a></li>
                 <li><a href="#Sections">Sections</a></li>
                 <li><a href="#TopStories">Top Stories</a></li>
+                <li><a href="#Australia">Australia</a></li>
             </ul>
         </li>
         <li><a href="#Popular">Popular</a></li>
@@ -160,10 +164,10 @@
         <li><a href="#FootballTables">Football Tables</a></li>
         <li><a href="#Gallery">Gallery</a></li>
         <li><a href="#GallerySwipe">Gallery (Swipe)</a></li>
-
         <li><a href="#Router">Router</a></li>
-        <li><a href="#AbTest">AB Test</a></li>
         <li><a href="#Storage">Storage</a></li>
+        <li><a href="#Swipe">Swipe</a></li>
+        <li><a href="#UserPrefs">UserPrefs</a></li>
     </ul>
 
     <div id="test-cases">
@@ -360,7 +364,7 @@
     <div style="display: none" class="js-gallery">
       <p class="box-indent"><a class="js-gallery-prev is-off" data-is-ajax="true"
       data-link-name="Gallery Previous" href="javascript://"
-      name="js-gallery-prev">Previous</a> Image <span class="js-gallery-index">1</span> of 16 
+      name="js-gallery-prev">Previous</a> Image <span class="js-gallery-index">1</span> of 16
       <a data-is-ajax="true" data-link-name=
       "Gallery Next" href="?index=2" class="js-gallery-next" name=
       "js-gallery-next">Next</a></p>
@@ -585,6 +589,10 @@
 
 <style data-cache-name="font1" data-cache-file-woff="fonts/font1.woff.12345.js" data-cache-file-ttf="fonts/font1.ttf.12345.js"></style>
 <style data-cache-name="font2" data-cache-file-woff="fonts/font2.woff.12345.js" data-cache-file-ttf="fonts/font2.ttf.12345.js"></style>
+
+<!-- Australia.spec -->
+    <a class="au-test nav__link edition edition-au" data-link-name="switch to au edition" href="#au-link">AUS edition</a>
+    <a class="au-test nav__link edition" data-link-name="switch to us edition" href="#edition-switch">US edition</a>
 
 </body>
 </html>

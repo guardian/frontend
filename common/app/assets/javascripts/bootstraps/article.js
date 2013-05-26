@@ -48,7 +48,7 @@ define([
             });
         },
 
-        logReading: function() {
+        logReading: function(context) {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {

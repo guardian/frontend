@@ -1,19 +1,24 @@
 define([
     "common",
     "bean",
-    "ajax"
+    "ajax",
+    "bonzo"
 ], function(
    common,
    bean,
-   ajax
+   ajax,
+   bonzo
 ) {
 
     function Video(config) {
+        this.config = config.config;
+        this.context = config.context;
         this.support = config.support;
         this.video = config.el;
         this.played = false;
         this.timer = false;
         this.events = {};
+        this.vastData = {trackingEvents: {}};
     }
 
     function VideoEvent(url) {
@@ -21,23 +26,7 @@ define([
         this.hasFired = false;
     }
 
-    Video.prototype.url = "/video/ad/";
-
-    Video.prototype.load = function(format) {
-        var self = this;
-        ajax({
-            url: this.url + format,
-            type: "jsonp",
-            jsonpCallbackName: "advert",
-            success : function (resp) {
-                if(resp && resp.file) {
-                    self.play(format, resp);
-                }
-            }
-        });
-    };
-
-    Video.prototype.play = function(format, data) {
+    Video.prototype.play = function(format) {
         var self = this,
             sources = this.video.querySelectorAll('source'),
             source;
@@ -59,21 +48,33 @@ define([
         }
 
         bean.on(this.video, "ended error", function() {
+            //Init omniture tracking
+            common.mediator.emit("video:ads:finished", self.config, self.context);
+
             bean.off(self.video, "ended error");
+            if(self.events.clickThrough) { bean.off(self.video, "click"); }
+
+            bean.fire(self.video, "play:content");
             self.video.src = source;
             self.video.play();
-            common.$g(this.video).removeClass("hascursor");
+
+            common.$g(self.video).removeClass("has-cursor");
+
             if(self.events.complete && !self.events.complete.hasFired) {
                 self.logEvent(self.events.complete);
                 clearInterval(self.timer);
             }
         });
 
-        this.video.src = data.file;
+        // Prevent different size ads from making the video jump around
+        this.video.style.height = this.video.offsetHeight+'px';
+
+        bean.fire(this.video, "play:advert");
+        this.video.src = this.vastData.file;
         this.video.play();
 
-        if(data.trackingEvents) {
-            this.initTracking(data.trackingEvents);
+        if(this.vastData.trackingEvents) {
+            this.initTracking(this.vastData.trackingEvents);
         }
     };
 
@@ -85,11 +86,13 @@ define([
         }
 
         if(this.events.impression) { this.logEvent(this.events.impression); }
+        if(this.events.oasImpression) { this.logEvent(this.events.oasImpression); }
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
             common.$g(this.video).addClass("has-cursor");
             bean.on(self.video, "click touchstart", function(){
                 bean.off(self.video, "click touchstart");
+                if(self.events.oasClickThrough) { self.logEvent(self.events.oasClickThrough); }
                 window.open(self.events.clickThrough.url);
             });
         }
@@ -98,7 +101,7 @@ define([
            var progress = self.getProgress(),
                duration = self.getDuration();
 
-           if(progress > (duration/2) && !self.events.midpoint.hasFired) {
+           if(progress > (duration/2) && self.events.midpoint && !self.events.midpoint.hasFired) {
                self.logEvent(self.events.midpoint);
            }
        }, 1000);
@@ -119,9 +122,72 @@ define([
         event.hasFired = true;
     };
 
-    Video.prototype.init = function() {
+    Video.prototype.trimText = function(text) {
+        return text.replace(/^\s+|\s+$/g,'');
+    };
+
+    Video.prototype.getNodeContent = function(node) {
+        if (node && node.textContent) {
+            return this.trimText(node.textContent);
+        }
+    };
+
+    Video.prototype.parseVast = function(xml) {
+
+        this.vastData.file = this.getNodeContent(xml.querySelector("MediaFile"));
+        if (this.vastData.file) {
+            this.vastData.trackingEvents.impression = this.getNodeContent(xml.querySelector("Impression"));
+            this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
+
+            var trackingNodes = xml.querySelectorAll("Tracking");
+            for (var i = 0, j = trackingNodes.length; i<j; ++i) {
+                var ev = trackingNodes[i].getAttribute("event");
+                this.vastData.trackingEvents[ev] = this.trimText(trackingNodes[i].textContent);
+            }
+        }
+
+    };
+
+    Video.prototype.parseVideoAdServingTemplate = function(xml) {
+        this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector("Impression URL"));
+        this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector("ClickTracking URL"));
+        return this.getNodeContent(xml.querySelector("VASTAdTagURL URL"));
+    };
+
+    Video.prototype.getVastData = function(url) {
+
+        var self = this;
+
+        this.video.advertWasRequested = true;
+
+        ajax({
+            url: url,
+            method: "get",
+            type: "xml",
+            crossOrigin: true,
+            success: function(response) {
+                if(response && response.documentElement) {
+                    var thirdParty = response.documentElement.querySelector("VASTAdTagURL");
+                    if(thirdParty) {
+                        var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
+                        self.getVastData(nextUrl);
+                    } else {
+                        self.parseVast(response.documentElement);
+                    }
+                }
+            }
+        });
+    };
+
+    Video.prototype.init = function(config) {
+        var id = (config.pageId === '') ? '' : config.pageId + '/',
+            host = (window.location.hostname === "localhost") ? "m.gucode.co.uk" :  window.location.hostname,
+            url = "http://oas.guardian.co.uk//2/" + host + "/" + id + "oas.html/" + (new Date().getTime()) + "@x40";
+
+        this.getVastData(url);
+
         var format = false,
-            that = this;
+            self = this;
 
         for (var f in this.support) {
             if(this.support.hasOwnProperty(f)) {
@@ -132,15 +198,15 @@ define([
             }
         }
 
-        if(format) {
-            common.mediator.on("module:video:adverts:load", function(file) {
-                bean.on(that.video, "play", function() {
-                    if(!that.played) {
-                        that.play(format, file);
-                    }
-                });
+        //We are only supporting mp4 adverts first
+        if(format === "mp4") {
+            bean.on(self.video, "play", function() {
+                if(!self.played) {
+                    self.play(format);
+                }
             });
-            this.load(format);
+        } else {
+            common.mediator.emit("video:ads:finished", self.config, self.context);
         }
     };
 

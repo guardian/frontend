@@ -12,8 +12,8 @@ import model.Page
 import scala.Some
 import play.api.templates.Html
 
-import play.api.libs.concurrent.Execution.Implicits._
-sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters {
+
+sealed trait ResultsRenderer extends Controller with Logging with CompetitionResultFilters with ExecutionContexts {
 
   val daysToDisplay = 3
   val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
@@ -52,9 +52,9 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
         JsonComponent(
           resultsPage.page,
           Switches.all,
-          "html" -> views.html.fragments.matchesList(resultsPage),
+          "html" -> views.html.fragments.matchesBody(resultsPage),
           "more" -> Html(previousPage.getOrElse("")))
-      }.getOrElse(Ok(Compressed(views.html.matches(resultsPage))))
+      }.getOrElse(Ok(views.html.matches(resultsPage)))
     }
   }
 
@@ -148,8 +148,8 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
         "GFE:Football:automatic:team results"
       )
       
-      val htmlResponse = views.html.teamFixtures(page, filters, upcomingFixtures)
-      val jsonResponse = views.html.fragments.teamFixturesBody(page, filters, upcomingFixtures)
+      val htmlResponse = () => views.html.teamFixtures(page, filters, upcomingFixtures)
+      val jsonResponse = () => views.html.fragments.teamFixturesBody(page, filters, upcomingFixtures)
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
     }.getOrElse(NotFound)
   }

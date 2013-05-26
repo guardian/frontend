@@ -13,7 +13,9 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to live match" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/live?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/live?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.LiveMatchesController.render()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
@@ -27,7 +29,9 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to competition live match" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/live?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/live?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.LiveMatchesController.renderFor(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")

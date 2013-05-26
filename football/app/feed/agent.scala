@@ -9,7 +9,7 @@ import common._
 import model.Competition
 import pa.Fixture
 import org.scala_tools.time.Imports._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 
 trait HasCompetition {

@@ -6,11 +6,13 @@
 /*jshint strict: false */
 /*global DocumentTouch: true */
 
-define(function () {
+define(['modules/userPrefs'], function (userPrefs) {
 
     var BASE_WIDTH     = 600,
         MEDIAN_WIDTH   = 900,
-        EXTENDED_WIDTH = 1280;
+        EXTENDED_WIDTH = 1280,
+        mobileOS,
+        supportsPushState;
     
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
@@ -139,7 +141,17 @@ define(function () {
     }
 
     function hasPushStateSupport() {
-        return 'pushState' in history;
+        if(supportsPushState !== undefined) {
+            return supportsPushState;
+        }
+        if (window.history && history.pushState) {
+            supportsPushState = true;
+            // Android stock browser lies about its HistoryAPI support.
+            if (window.navigator.userAgent.match(/Android/i)) {
+                supportsPushState = !!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
+            }
+        }
+        return supportsPushState;
     }
 
     function getVideoFormatSupport() {
@@ -158,8 +170,58 @@ define(function () {
         return types;
     }
 
+    function getMobileOS() {
+        var ua,
+            uaindex;
+
+        if(mobileOS !== undefined) {
+            return mobileOS;
+        }
+
+        ua = navigator.userAgent;
+
+        if (ua.match(/iPad/i) || ua.match(/iPhone/i)) {
+            uaindex = ua.indexOf('OS ');
+            mobileOS = {
+                name: 'iOS',
+                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 3, 3).replace('_', '.'), 10) : -1
+            };
+        } else if (ua.match(/Android/i)) {
+            uaindex = ua.indexOf('Android ');
+            mobileOS = {
+                name: 'Android',
+                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 8, 3), 10) : -1
+            };
+        } else {
+            mobileOS = false;
+        }
+        return mobileOS;
+    }
+
+    function canSwipe() {
+        var os;
+        if (!hasPushStateSupport()) {
+            return false;
+        }
+        os = getMobileOS();
+        // iOS
+        if (os.name === 'iOS' && os.version >= 6) {
+            // This'll be true only for iPhone5:
+            return window.devicePixelRatio >= 2 && screen.availHeight === 548;
+        }
+        /*
+        // Android
+        if (os.name === 'Android' && os.version >= 4) {
+            return true;
+        }
+        */
+        return false;
+    }
+
     return {
         getLayoutMode: getLayoutMode,
+        getMobileOS: getMobileOS,
+        canSwipe: canSwipe,
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,

@@ -4,7 +4,6 @@ import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
 import play.api.Play
-import conf.CommonSwitches.ImageServerSwitch
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -74,9 +73,8 @@ class GuardianConfiguration(
   }
 
   object ajax {
-    lazy val url = configuration.getStringProperty("ajax.url").getOrElse(
-      throw new IllegalStateException("Ajax url not configured")
-    )
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
   }
 
   object static {
@@ -104,8 +102,7 @@ class GuardianConfiguration(
       "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
       "oasSiteId" -> "beta.guardian.co.uk/oas.html",
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "optimizelyUrl" -> "//cdn.optimizely.com/js/203695201.js"
+      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))

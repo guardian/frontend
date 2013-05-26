@@ -1,33 +1,19 @@
 define([
     "common",
     "modules/detect",
-    "modules/analytics/video",
-    "modules/adverts/video"
+    "modules/analytics/video"
 ], function(
     common,
     detect,
-    Videostream,
-    Advert
+    Videostream
 ) {
 
     var modules = {
 
-        initAdverts: function(config) {
-            common.mediator.on('page:video:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
-                    var support = detect.getVideoFormatSupport();
-                    var a = new Advert({
-                        el: context.querySelector('.player video'),
-                        support: support
-                    }).init();
-                }
-            });
-        },
-
         initAnalytics: function () {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('video:ads:finished', function(config, context) {
                 var v = new Videostream({
-                    id: config.page.id,
+                    id: config.page.pageId,
                     el: context.querySelector('.player video'),
                     ophanUrl: config.page.ophanUrl
                 });
@@ -43,7 +29,6 @@ define([
             this.initialised = true;
             common.lazyLoadCss('video', config);
             modules.initAnalytics();
-            modules.initAdverts();
         }
         common.mediator.emit("page:video:ready", config, context);
     };

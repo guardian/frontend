@@ -4,10 +4,10 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+
 import com.gu.openplatform.contentapi.ApiError
 
-object TopStoriesController extends Controller with Logging with Paging with JsonTrails {
+object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   val validFormats: Seq[String] = Seq("html", "json")
 
@@ -51,17 +51,17 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       "Top Stories",
       "GFE:Top Stories"
     )
-    val htmlResponse = views.html.topStories(page, trails)
-    val jsonResponse = views.html.fragments.topStoriesBody(trails)
+    val htmlResponse = () => views.html.topStories(page, trails)
+    val jsonResponse = () => views.html.fragments.topStoriesBody(trails)
     renderFormat(htmlResponse, jsonResponse, 900)
   }
 
   private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
     val response = if (request.getQueryString("view") == Some("link")) 
-      views.html.fragments.trailblocks.link(trails, trailsLength)
+      () => views.html.fragments.trailblocks.link(trails, trailsLength)
     else
-      views.html.fragments.trailblocks.headline(trails, trailsLength)
+      () => views.html.fragments.trailblocks.headline(trails, trailsLength)
       
     renderFormat(response, response, 900)
   }

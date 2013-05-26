@@ -5,7 +5,7 @@ import conf.ContentApi
 import akka.actor.Cancellable
 import java.util.concurrent.TimeUnit._
 import com.gu.openplatform.contentapi.model.ItemResponse
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 
 trait LiveBlogAgent extends AkkaSupport with Logging {

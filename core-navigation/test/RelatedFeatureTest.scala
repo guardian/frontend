@@ -16,15 +16,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     info("Increase average number of articles 'read' from 1.9% to 2.5%")
 
-    // TODO - scenarios pending Selenium set up
-    /*
-    scenario("Maximum of 10 related links - show 5, hide 5 - 'show more'")(pending)
-    scenario("Number of 'more' items should be represented by a number")(pending)
-    scenario("Appear *after* the comments")(pending)
-    scenario("If has no Story Package, then show Related Links")(pending)
-    scenario("Each item in the list should contain a relative date stamp - Eg, 'published 1 minute/hour/day ago'")(pending)
-    scenario("Links in the story package should *not* contain the current article (deduplicated)")(pending)
-*/
     // Features
 
     scenario("Shows related links for each article") {
@@ -57,11 +48,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
 
         find("li .trail-text") should have length 5
-
-        And("I should see the pictures for the first three trails, where they exist")
-        // FIXME - need consistent data, as image can go missing
-        //article.findFirst("img").getAttribute("src").length should be > 0
-
       }
     }
 

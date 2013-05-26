@@ -8,7 +8,7 @@ import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
-import play.api.libs.concurrent.Execution.Implicits._
+
 import concurrent.Future
 
 object NetworkFrontPage extends MetaData {
@@ -62,7 +62,7 @@ object CultureFrontPage extends MetaData {
 }
 
 
-class FrontController extends Controller with Logging with JsonTrails {
+class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val front: Front = Front
 
@@ -89,7 +89,13 @@ class FrontController extends Controller with Logging with JsonTrails {
     }
 
     // get the trailblocks
-    val trailblocks: Seq[Trailblock] = front(path, edition)
+    val trailblocks: Seq[Trailblock] = front(path, edition).filterNot{ trailblock =>
+      // filter out configured trailblocks if not on the network front
+      path match {
+        case "front" => false
+        case _ => trailblock.description.isConfigured
+      }
+    }
 
     if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
       NotFound
@@ -97,8 +103,8 @@ class FrontController extends Controller with Logging with JsonTrails {
     else if (trailblocks.isEmpty) {
       InternalServerError
     } else {
-      val htmlResponse = views.html.front(frontPage, trailblocks)
-      val jsonResponse = views.html.fragments.frontBody(frontPage, trailblocks)
+      val htmlResponse = () => views.html.front(frontPage, trailblocks)
+      val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
       renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
     }
   }
@@ -124,7 +130,7 @@ class FrontController extends Controller with Logging with JsonTrails {
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails
-      val response = views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+      val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
       renderFormat(response, response, frontPage)
     }
   }

@@ -22,6 +22,10 @@ object CommonSwitches {
     "If this is switched on then the custom Guardian web font will load.",
     initiallyOn = true)
 
+  val FontDelaySwitch = DefaultSwitch("web-fonts-delay",
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
+    initiallyOn = false)
+
   val AudienceScienceSwitch = DefaultSwitch("audience-science",
     "If this switch is on the Audience Science will be enabled.",
     initiallyOn = true)
@@ -33,10 +37,6 @@ object CommonSwitches {
   val RelatedContentSwitch = DefaultSwitch("related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     initiallyOn = true)
-
-  val OmnitureVerificationSwitch = DefaultSwitch("omniture-verification",
-    "If this switch is turned on then a separate call to Omniture will be made to help verify our tracking.",
-    initiallyOn = false)
 
   val NetworkFrontAppealSwitch = DefaultSwitch("network-front-appeal",
     "Switch to show the appeal trailblock on the network front.",
@@ -74,10 +74,6 @@ object CommonSwitches {
     "If this switch is enabled the add-to-homescreen popup will plague iOS users",
     initiallyOn = false)
 
-  val OptimizelySwitch = DefaultSwitch("optimizely",
-    "If this switch is on Optimizely will be enabled.",
-    initiallyOn = false)
-
   val AdvertSwitch = DefaultSwitch("adverts",
     "If this switch is on OAS adverts will be enabled.",
     initiallyOn = true)
@@ -86,18 +82,10 @@ object CommonSwitches {
     "If this switch is on OAS video adverts will be enabled.",
     initiallyOn = false)
 
-  val ABRelatedContentV2 = DefaultSwitch("ab-related-content-v2",
-    "If this switch is on related content AB test will be enabled.",
-    initiallyOn = false)
-
   val AustraliaFrontSwitch = DefaultSwitch("australia-front",
     "If this switch is on the australia front will be available",
     initiallyOn = false)
 
-  val ABLocalElectionStoryV2 = DefaultSwitch("ab-local-election-story-v2",
-    "If this switch is on local election story AB test will be enabled.",
-    initiallyOn = false)
-  
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
@@ -106,19 +94,46 @@ object CommonSwitches {
     "If this switch is on the 'aware' javascript module will log usage data to local storage",
     initiallyOn = false)
   
+  val SwipeNav = DefaultSwitch("swipe-nav",
+    "If this switch is on then swipe navigation is enabled",
+    initiallyOn = false)
+  
+  val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
+    "If this switch is also on then swipe navigation on clicks is enabled",
+    initiallyOn = false)
+
+  val ABStoryArticleSwap = DefaultSwitch("ab-story-article-swap",
+    "If this switch is on, swaps the latest article in a story for the story.",
+    initiallyOn = false)
+  
   val all: Seq[Switchable] = Seq(
-    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    VideoAdvertSwitch, ImageServerSwitch, ABRelatedContentV2, ABLocalElectionStoryV2,
-    AustraliaFrontSwitch, AwareSwitch
+    AutoRefreshSwitch,
+    FontDelaySwitch,
+    FontSwitch,
+    AudienceScienceSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    NetworkFrontAppealSwitch,
+    WitnessVideoSwitch,
+    ExperimentStoryModule01Switch,
+    StoryVersionBSwitch,
+    StoryFrontTrails,
+    SocialSwitch,
+    SearchSwitch,
+    QuantcastSwitch,
+    HomescreenSwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    AustraliaFrontSwitch,
+    ImageServerSwitch,
+    AwareSwitch,
+    SwipeNav,
+    SwipeNavOnClick,
+    ABStoryArticleSwap
   )
 }
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
-
-  import play.api.libs.concurrent.Execution.Implicits._
 
   val configUrl = config.switches.configurationUrl
 

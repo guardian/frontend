@@ -1,12 +1,10 @@
 package common
 
-import play.api.libs.ws.WS
-import akka.dispatch.{ MessageDispatcher, Dispatcher }
+import akka.dispatch.Dispatcher
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import com.ning.http.client.providers.netty.NettyConnectionsPool
-import org.jboss.netty.channel.group.DefaultChannelGroup
 import scala.Some
+import java.lang.management.ManagementFactory
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -34,7 +32,7 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
 
 object AkkaMetrics extends AkkaSupport {
 
-  class DispatcherInhabitantsMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
+  class DispatcherInhabitantsMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
     "akka",
     "akka_%s_inhabitants" format name,
     "%s inhabitants" format name,
@@ -42,7 +40,7 @@ object AkkaMetrics extends AkkaSupport {
     () => dispatcher.inhabitants
   )
 
-  class DispatcherMailBoxTypeMetric(name: String, dispatcher: MessageDispatcher) extends TextMetric(
+  class DispatcherMailBoxTypeMetric(name: String, dispatcher: Dispatcher) extends TextMetric(
     "akka",
     "akka_%s_mailbox_type" format name,
     "%s mailbox type" format name,
@@ -53,62 +51,62 @@ object AkkaMetrics extends AkkaSupport {
     }
   )
 
-  class DispatcherMaximumThroughputMetric(name: String, dispatcher: MessageDispatcher) extends GaugeMetric(
+  class DispatcherMaximumThroughputMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
     "akka",
     "akka_%s_maximum_throughput" format name,
     "%s maximum throughput" format name,
     "Akka %s maximum throughput" format name,
-    () => dispatcher match {
-      case downcast: Dispatcher => downcast.throughput
-      case _ => 0
-    }
+    () => dispatcher.throughput
   )
 
   object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => play_akka.uptime())
 
-  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", play_akka.dispatcher.default)
-  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", play_akka.dispatcher.default)
-  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", play_akka.dispatcher.default)
+  val dispatcher = executionContext.asInstanceOf[Dispatcher]
+
+  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", dispatcher)
+  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", dispatcher)
+  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", dispatcher)
 
   val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
-abstract class WsMetric(
-    val group: String, val name: String, val title: String, val description: String,
-    override val master: Option[Metric] = None) extends AbstractMetric[Int] {
-  val `type`: String = "gauge"
-  override def asJson: StatusMetric = super.asJson.copy(value = Some(getValue().toString))
-}
+object SystemMetrics extends implicits.Numbers {
 
-case class WsStats(connectionPoolSize: Int, openChannels: Int)
+  // divide by 1048576 to convert bytes to MB
 
-// takes some reflection hackery to get hold of these stats
-object WsStats {
-
-  val connectionPool = getField(WS.client.getProvider, "connectionsPool").asInstanceOf[NettyConnectionsPool]
-
-  def apply(): WsStats = WsStats(
-    connectionPoolSize = getField(connectionPool, "channel2IdleChannel").asInstanceOf[java.util.Map[Any, Any]].size,
-    openChannels = getField(WS.client.getProvider, "openChannels").asInstanceOf[DefaultChannelGroup].size()
+  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (MB)", "Max heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
   )
 
-  private def getField(obj: Any, fieldName: String) = {
-    val m = obj.getClass.getDeclaredField(fieldName)
-    m.setAccessible(true)
-    m.get(obj)
+  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (MB)", "Used heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
+  )
+
+  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (MB)", "Max non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
+  )
+
+  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (MB)", "Used non heap memory (MB)",
+    () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
+  )
+
+  private lazy val buildNumber = ManifestData.build match {
+    case string if string.isInt => string.toInt
+    case _ => -1 // dev machines do not have a build number
   }
 
-  object ConnectionPoolSizeMetric extends WsMetric("web-service", "connection-pool-size", "Connection pool size", "Connection pool size"){
-    val getValue = () => WsStats().connectionPoolSize
-  }
-  object OpenChannelsSizeMetric extends WsMetric("web-service", "open-channels", "Open channels in WS", "Open channels in WS"){
-    val getValue = () => WsStats().openChannels
-  }
+  object BuildNumberMetric extends GaugeMetric("application", "build-number", "Build number", "Build number",
+    () => buildNumber
+  )
 
-  lazy val all = Seq(ConnectionPoolSizeMetric, OpenChannelsSizeMetric)
-
+  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
 }
 
+
+
+case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
+
 object CommonMetrics {
-  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ WsStats.all
+  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
 }

@@ -10,8 +10,9 @@ import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import concurrent.{Await, Future}
 import concurrent.duration._
-import play.api.libs.concurrent.Execution.Implicits._
+
 import common.editions.Uk
+import common.ExecutionContexts
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -79,6 +80,8 @@ case class Story(
   lazy val places = events.flatMap(_.places)
   lazy val hasPlaces = places.nonEmpty
   lazy val hasContent: Boolean = content.nonEmpty
+  lazy val liveBlogs: Seq[Content] = content.filter(_.tones.exists(_.id == "tone/minutebyminute")).sortBy(_.webPublicationDate.getMillis).reverse
+  lazy val hasLiveContent: Boolean = liveBlogs.nonEmpty
   lazy val agents = events.flatMap(_.agents)
   lazy val hasAgents: Boolean = agents.nonEmpty
   lazy val reaction = content.filter(_.colour == 4).sortBy(_.webPublicationDate.getMillis).reverse
@@ -103,7 +106,7 @@ case class Story(
   }
 }
 
-object Story {
+object Story extends ExecutionContexts{
 
   implicit val ctx = new Context {
     val name = "ISODateTimeFormat context"
@@ -145,8 +148,11 @@ object Story {
       }
     }
 
-    def latestWithContent(): Seq[Story] = {
-      measure(Stories.find(DBObject.empty).map(grater[ParsedStory].asObject(_))).toSeq.reverse.map(loadContent(_))
+    def latestWithContent(storyId: Option[String] = None, limit: Int = 10): Seq[Story] = {
+      val query = storyId.map{ storyId =>
+        DBObject("id" -> storyId)
+      } getOrElse(DBObject.empty)
+      measure(Stories.find(query).sort(DBObject("_id" -> -1)).limit(limit).map(grater[ParsedStory].asObject(_))).toSeq.map(loadContent(_))
     }
 
     def latest(): Seq[Story] = {

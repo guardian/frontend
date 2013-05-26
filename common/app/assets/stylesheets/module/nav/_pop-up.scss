@@ -3,19 +3,23 @@
    ========================================================================== */
 
 .nav-popup {
-  position: relative;
+  position: absolute;
   clear: both;
   z-index: 100;
   padding: $baseline*2 0;
   list-style: none;
   margin-bottom: -4px;
   border-bottom: $baseline solid $blue;
+  @include transform(translateZ(0px));
+  background: #ffffff;
+  width: 100%;
 
   @media only screen and (min-width: $tablet) {
-    top: -48px;
-    margin-bottom: -48px;
-    width: 100%;
-    background-color: #ffffff;
+    top: 118px;
+  }
+
+  @media only screen and (min-width: $desktopAd) {
+    top: 155px;
   }
 }
 

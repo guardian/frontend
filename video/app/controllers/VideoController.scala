@@ -4,17 +4,18 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.Json._
+import play.api.libs.json.JsObject
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
-object VideoController extends Controller with Logging {
+object VideoController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfVideo = lookup(path)
     Async {
       promiseOfVideo.map {
-        case Left(model) if model.video.isExpired => Gone(Compressed(views.html.expired(model.video)))
+        case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
         case Left(model) => renderVideo(model)
         case Right(notFound) => notFound
       }
@@ -38,9 +39,9 @@ object VideoController extends Controller with Logging {
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.video(model.video, model.storyPackage)
-    val jsonResponse = views.html.fragments.videoBody(model.video, model.storyPackage)
+    val htmlResponse = () => views.html.video(model)
+    val jsonResponse = () => views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
-    
+
 }

@@ -60,3 +60,9 @@
   width: 100%;
   margin-bottom: $baseline*2;
 }
+
+video {
+    max-width: 100%;
+    height: auto;
+    -webkit-user-select: none;
+}

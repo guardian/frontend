@@ -18,6 +18,7 @@ import org.joda.time.{ DateTimeZone, DateTime }
 import org.joda.time.format.DateTimeFormat
 import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
+import play.Play
 
 sealed trait Style {
   val className: String
@@ -137,24 +138,26 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
-      fig.attr("itemprop", "associatedMedia")
-      fig.attr("itemscope", "")
-      fig.attr("itemtype", "http://schema.org/ImageObject")
+      if(!fig.hasClass("element-comment")) {
+        fig.attr("itemprop", "associatedMedia")
+        fig.attr("itemscope", "")
+        fig.attr("itemtype", "http://schema.org/ImageObject")
 
-      fig.getElementsByTag("img").foreach { img =>
-        img.attr("itemprop", "contentURL")
-        val src = img.attr("src")
-        img.attr("src", ImgSrc(src, Naked))
-        Option(img.attr("width")).filter(_.isInt) foreach { width =>
-          fig.attr("class", width.toInt match {
-            case width if width <= 220 => "img-base inline-image"
-            case width if width < 460 => "img-median inline-image"
-            case width => "img-extended"
-          })
+        fig.getElementsByTag("img").foreach { img =>
+          img.attr("itemprop", "contentURL")
+          val src = img.attr("src")
+          img.attr("src", ImgSrc(src, Naked))
+          Option(img.attr("width")).filter(_.isInt) foreach { width =>
+            fig.attr("class", width.toInt match {
+              case width if width <= 220 => "img-base inline-image"
+              case width if width < 460 => "img-median inline-image"
+              case width => "img-extended"
+            })
+          }
         }
-      }
 
-      fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+        fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+      }
     }
     body
   }
@@ -212,10 +215,15 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-case class Summary(ammount: Int) extends HtmlCleaner {
+case class Summary(amount: Int) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    val paras = document.body().children().toList.drop(ammount)
-    paras.foreach(_.remove())
+    val children = document.body().children().toList;
+    val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
+    // if there is are no p's, just take the first n things (could be a blog)
+    para match {
+      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove()) 
+      case _ => children.drop(amount).foreach(_.remove()) 
+    }
     document
   }
 }
@@ -325,5 +333,8 @@ object StripHtmlTags {
 }
 
 object Head {
-  lazy val css: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+  def css = if (Play.isDev) volatileCss else persistantCss
+
+  private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
+  private lazy val persistantCss: String = volatileCss
 }

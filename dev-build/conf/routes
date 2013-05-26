@@ -16,6 +16,12 @@ GET    /top-stories                                         controllers.TopStori
 GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
 GET    /related/*path                                       controllers.RelatedController.render(path)
 
+# more stories for swipe
+GET    /most-viewed                                         controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed")
+GET    /most-viewed/*path                                   controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed")
+GET    /front-trails                                        controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails")
+GET    /front-trails/*path                                  controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails")
+
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
 GET    /stories/articles                                    controllers.StoryController.latestWithContent()
@@ -70,7 +76,6 @@ GET     /$path<culture|sport|australia>                     controllers.FrontCon
 GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path)
 
 #Video
-GET     /video/ad/:format                                   controllers.VideoAdvertController.fetch(format)
 GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
 
 #Gallery
@@ -79,7 +84,9 @@ GET     /$path<.*/gallery/.*>                               controllers.GalleryC
 #Tag
 # note: reg ex so this doesn't interfer with $section/trails
 GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails          controllers.TagController.renderTrails(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails           controllers.TagController.renderTrails(path)
 
 #Section
 GET		/sections							               controllers.SectionsController.render()

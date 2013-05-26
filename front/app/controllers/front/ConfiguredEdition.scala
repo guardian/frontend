@@ -3,11 +3,10 @@ package controllers.front
 import common._
 import play.api.libs.json.{JsObject, JsValue, JsNull}
 import play.api.libs.json.Json.parse
-import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.duration._
 import conf.Configuration
-import model.Trailblock
-import model.TrailblockDescription
+import model.{ItemTrailblockDescription, Trailblock, TrailblockDescription}
 import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
@@ -46,7 +45,7 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
     //only replace blocks if they are different (do not replace an old block with the same new block)
     val newAgents: Seq[TrailblockAgent] = newTrailblocks.map { newDescription =>
       oldAgents.find(oldBlock => oldBlock.description == newDescription)
-        .getOrElse(TrailblockAgent(newDescription, edition))
+        .getOrElse(TrailblockAgent(newDescription))
     }
 
     //close down the old agents we no longer need so they can be garbage collected
@@ -72,12 +71,13 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
   private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = editionJson match {
     case JsNull => Nil
     case _ =>  (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
-        TrailblockDescription(
+        ItemTrailblockDescription(
           toId((block \ "id").as[String]),
           (block \ "title").as[String],
           (block \ "numItems").as[Int],
-          showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false)
-        )
+          showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false),
+          isConfigured = true
+        )(edition)
       }
 
   }
