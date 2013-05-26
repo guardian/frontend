@@ -87,13 +87,13 @@ case class QueryTrailblockDescription(
             numItemsVisible: Int,
             style: Option[Style] = None,
             showMore: Boolean = false,
-            customQuery: ItemQuery,
+            customQuery: () => ItemQuery,
             isConfigured: Boolean = false)
     extends TrailblockDescription {
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query: Future[Seq[Trail]] = customQuery.response.map { response =>
+  def query: Future[Seq[Trail]] = customQuery().response.map { response =>
     val editorsPicks = response.editorsPicks map {
       new Content(_)
     }
