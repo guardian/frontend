@@ -105,7 +105,8 @@ video {
 }
 
 .article__byline {
-  margin: 5px 10px 7px 10px;
+  @include box-sizing(border-box);
+  padding: 5px 10px 7px 10px;
 }
 
 .main-caption {
@@ -127,8 +128,12 @@ video {
     width: $gridWidth * 3;
     float: right;
     background-color: #fff;
-    padding: 5px 0 7px 20px;
   }
+
+  .article__byline {
+    width: $gridWidth * 3;
+  }
+
   .article-headline {
     font-size: 2.8rem;
     line-height: 3.2rem;    
@@ -148,6 +153,9 @@ video {
 @media screen and (min-width: 40em) {
   .main-image-wrap {
     margin-right: $gridWidth * -1;
+  }
+  .article__byline {
+    width: $gridWidth * 4;
   }
   .page-head--article {
     border: 0px;
@@ -263,8 +271,19 @@ video {
 /* 14 Cols
  ========================================================================== */
 @media screen and (min-width: 70em) {
-  .article__head,
-  .article__byline {
-    margin-left: $gridWidth * 1;    
+  .main-image-wrap,
+  video {
+    margin-right: $gridWidth * 2;
   }
+
+  .article__body {
+    margin-right: $gridWidth * 3;
+  }
+  /*
+  .article__head,
+  .article__byline,
+  .social {
+    margin-left: $gridWidth * 1 !important;
+  }
+  */
 }
