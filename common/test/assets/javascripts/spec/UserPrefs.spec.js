@@ -8,7 +8,7 @@ define(['common', 'modules/userPrefs'], function(common, userPrefs) {
         })
 
         it("should store a user preference under a given key", function () {
-            expect(localStorage.getItem('gu.prefs.key')).toBe('value|string')
+            expect(localStorage.getItem('gu.prefs.key')).toBe('{"value":"value"}')
         })
         
         it("should retrieve a user preference under a given key", function () {
@@ -50,13 +50,13 @@ define(['common', 'modules/userPrefs'], function(common, userPrefs) {
         
         it("should store a switch value", function () {
             userPrefs.switchOn('s')
-            expect(localStorage.getItem('gu.prefs.switch.s')).toBe('true|boolean')
+            expect(localStorage.getItem('gu.prefs.switch.s')).toBe('{"value":true}')
             expect(userPrefs.isOn('s')).toBeTruthy();
         })
         
         it("should retrieve a user preference under a given key", function () {
             userPrefs.switchOff('s')
-            expect(localStorage.getItem('gu.prefs.switch.s')).toBe('false|boolean')
+            expect(localStorage.getItem('gu.prefs.switch.s')).toBe('{"value":false}')
             expect(userPrefs.isOn('s')).toBeFalsy();
             expect(userPrefs.isOff('s')).toBeTruthy();
         })
