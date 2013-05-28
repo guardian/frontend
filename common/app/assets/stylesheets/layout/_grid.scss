@@ -6,7 +6,7 @@
     padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
 }
 
-@for $i from 1 through $gridCols {
+@for $i from 6 through $gridCols {
     $outerWidth : $gridWidth * $i;
     @media only screen and (min-width : $outerWidth) {
         #preloads {
