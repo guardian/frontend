@@ -62,7 +62,7 @@ define(['common'], function (common) {
             }
             
             // has it expired?
-            if (new Date() > new Date(dataParsed.expires)) {
+            if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
                 storage.remove(key);
                 return null;
             }
