@@ -101,7 +101,8 @@ video {
 }
 
 .main-caption {
-  padding: 10px 0;
+  padding: 3px 0;
+  font-weight: normal;
 }
 
 .main-image-wrap,
@@ -119,7 +120,7 @@ video {
     width: $gridWidth * 3;
     float: right;
     background-color: #fff;
-    padding: 5px 10px 7px 10px;
+    padding: 5px 0 7px 20px;
   }
 }
 
@@ -142,6 +143,15 @@ video {
 /* 9 Cols
  ========================================================================== */
 @media screen and (min-width: 45em) {
+  .main-image-wrap {
+    width: $gridWidth * 5;
+    margin-right: $gridWidth * -2;
+  }
+}
+
+/* 10 Cols
+ ========================================================================== */
+@media screen and (min-width: 50em) {
   .page-head {
     border-bottom: 0;
   }
@@ -171,11 +181,8 @@ video {
   .byline {
     margin-left: 0;
   }
-}
 
-/* 10 Cols
- ========================================================================== */
-@media screen and (min-width: 50em) {
+
   .inline-image {
     img, figcaption {
       @extend .grid-box-3;
@@ -211,29 +218,6 @@ video {
 
   .article__body {
     width: $gridWidth * 7;
-    margin-right: $gridWidth * 1;
-  }
-}
-
-/* 13 Cols
- ========================================================================== */
-@media screen and (min-width: 65em) {
-  .article__head,
-  .article__byline {
-    width: $gridWidth * 5;
-  }
-}
-
-/* 14 Cols
- ========================================================================== */
-@media screen and (min-width: 70em) {
-  .main-image-wrap,
-  video {
-    width: $gridWidth * 9;
-  }
-
-  .article__body {
-    width: $gridWidth * 8;
     margin-right: $gridWidth * 1;
   }
 }
