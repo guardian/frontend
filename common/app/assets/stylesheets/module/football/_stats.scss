@@ -82,15 +82,16 @@
     }
 
 .item-divider {
-    border-top: 1px solid $mushroom;
-    padding-top: $baseline
+    border-top: 1px solid $neutral10;
+    padding-top: 0;
 }
 
 .section-divider {
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
-    padding-top: $baseline * 2;
-    padding-bottom: $baseline * 3;
+    @extend %type-2;
+    padding-top: $baseline;
+    padding-bottom: $baseline * 1.5;
+    border-top: 1px solid $neutral3;
+    border-bottom: 1px solid $neutral3;
 }
 
 .place-holder {

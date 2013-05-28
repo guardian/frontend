@@ -13,7 +13,7 @@
     }
 
     .match-summary .away-team {
-        border-top: 1px solid $mushroom;
+        border-top: 1px solid $neutral10;
         padding-top: $baseline;
     }
 
@@ -22,8 +22,11 @@
     }
 
     .match-summary .match-comment {
+        @extend %type-11;
+        font-weight: bold;
+        color: $neutral4;
         text-align: left;
-        border-top: 1px solid #F4F4EE;
+        border-top: 1px solid $neutral10;
         margin-top: $baseline*2;
         padding-top: 5px;
     }
