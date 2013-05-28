@@ -23,7 +23,7 @@
 } 
 
 .article-standfirst {
-  border-top: 1px dotted #cccccc;
+  border-top: 1px dotted $neutral10;
   color: $neutral4;
 }
 
@@ -41,8 +41,8 @@
 .byline {
   @include box-sizing(border-box);
   display: block;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid $neutral10;
+  border-bottom: 1px solid $neutral10;
   padding: 0 0 9px 0;
   vertical-align: top;
 }
