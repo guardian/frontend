@@ -5,7 +5,7 @@
 }
 
     .trailblock ul {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 
     .trailblock.shut .count {
@@ -14,7 +14,7 @@
 
     .trailblock.rolled-up,
     .trailblock.rolled-out {
-        margin-top: 0px;
+        margin-top: 0;
     }
 
     .trailblock.rolled-up {
@@ -25,13 +25,15 @@
     @extend %type-3;
 }
 
-.trailblock-topstories li:first-child .b2 { border-top:none;}
+.trailblock-topstories li:first-child .b2 {
+    border-top:none;
+}
 
 .toggle-trailblock {
     @extend %type-8;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     color: #ffffff;
     padding: 15px $gutter $baseline*2 $baseline*2;
     cursor: pointer;

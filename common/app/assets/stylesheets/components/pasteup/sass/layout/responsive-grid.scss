@@ -6,14 +6,14 @@ $use-silent-classes:    false;
 
 
 // At which point should lap and desk breakpoints kick in?
-$medium-start:             600px;
+$medium-start:           600px;
 $large-start:            1000px;
 
 
 // Do not edit the following variables.
 $class-type:            unquote(".");
 
-@if $use-silent-classes == true{
+@if $use-silent-classes == true {
     $class-type: unquote("%");
 }
 
@@ -27,47 +27,47 @@ $class-type:            unquote(".");
 //  1. Allow the grid system to be used on lists.
 //  2. Remove any margins and paddings that might affect the grid system.
 //  4. Remove whitespace caused by `inline-block` elements.
-#{$class-type}grid{
-    list-style:none;                /* [1] */
-    margin:0;                       /* [2] */
-    padding:0;                      /* [2] */
-    letter-spacing:-0.31em;         /* [4] */
-    word-spacing:-0.43em;           /* [4] */
+#{$class-type}grid {
+    list-style: none;                /* [1] */
+    margin: 0;                       /* [2] */
+    padding: 0;                      /* [2] */
+    letter-spacing: -0.31em;         /* [4] */
+    word-spacing: -0.43em;           /* [4] */
 }
 
 // 1. Cause columns to stack side-by-side.
 // 3. Align columns to the tops of each other.
 // 4. Reinstate removed whitespace.
 // 5. Required to combine fluid widths and fixed gutters.
-#{$class-type}grid-item{
-    display:inline-block;           /* [1] */
-    vertical-align:top;             /* [3] */
-    letter-spacing:normal;          /* [4] */
-    word-spacing:normal;            /* [4] */
-    -webkit-box-sizing:border-box;  /* [5] */
-       -moz-box-sizing:border-box;  /* [5] */
-            box-sizing:border-box;  /* [5] */
+#{$class-type}grid-item {
+    display: inline-block;           /* [1] */
+    vertical-align: top;             /* [3] */
+    letter-spacing: normal;          /* [4] */
+    word-spacing: normal;            /* [4] */
+    -webkit-box-sizing: border-box;  /* [5] */
+       -moz-box-sizing: border-box;  /* [5] */
+            box-sizing: border-box;  /* [5] */
 }
 
 // Set gutter width for 6 cols
-#{$class-type}grid{
+#{$class-type}grid {
     margin-left: -3%;
 }
-#{$class-type}grid-item{
+#{$class-type}grid-item {
     padding-left: 3%;
 }
 // Set gutter width for 12 cols
-@media only screen and (min-width:600px) {
-    #{$class-type}grid{
+@media only screen and (min-width: 600px) {
+    #{$class-type}grid {
         margin-left: -2%;
     }
-    #{$class-type}grid-item{
+    #{$class-type}grid-item {
         padding-left: 2%;
     }
 }
 
 // Create our widths, prefixed by the specified namespace.
-@mixin device-type($namespace:""){
+@mixin device-type($namespace: "") {
 
     #{$class-type}grid-#{$namespace}1of1  { width:100%; }
 
@@ -121,7 +121,6 @@ $class-type:            unquote(".");
     #{$class-type}grid-#{$namespace}10of12 { @extend #{$class-type}grid-#{$namespace}5of6; }
     #{$class-type}grid-#{$namespace}11of12 { width:91.666%; }
 
-
 }
 
 
@@ -129,10 +128,10 @@ $class-type:            unquote(".");
 @include device-type();
 
 // Specific breakpoint widths.
-@media only screen and (min-width:$medium-start){
+@media only screen and (min-width: $medium-start) {
     @include device-type("medium-");
 }
 
-@media only screen and (min-width:$large-start){
+@media only screen and (min-width: $large-start) {
     @include device-type("large-");
 }

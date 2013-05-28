@@ -1,35 +1,35 @@
 /* ==========================================================================
-   Global wrapper
-   ========================================================================== */
+     Global wrapper
+     ========================================================================== */
 
 #preloads {
-  position: relative;
-  clear: both;
-  max-width: 64em;
-  max-width: 102.4rem;
-  margin: 0 auto;
+    position: relative;
+    clear: both;
+    max-width: 64em;
+    max-width: 102.4rem;
+    margin: 0 auto;
 }
 
 /* ==========================================================================
-   Global header and navigation
-   ========================================================================== */
+     Global header and navigation
+     ========================================================================== */
 
 #header {
-  position: relative;
-  background-color: $blue;
+    position: relative;
+    background-color: $blue;
 }
 
 #logo {
-  display: block;
-  float: left;
-  margin: 20px 0 18px $gutter;
-  text-indent: -9999px;
+    display: block;
+    float: left;
+    margin: 20px 0 18px $gutter;
+    text-indent: -9999px;
 }
 
 
 /*
-   Layout helpers
-   ========================================================================== */
+     Layout helpers
+     ========================================================================== */
 
 /**
  * @todo Should these be moved to helpers?
@@ -58,12 +58,12 @@
 }
 
 /* ==========================================================================
-   Preloads (for swipe)
-   ========================================================================== */
+     Preloads (for swipe)
+     ========================================================================== */
 
 #preloads-inner {
     position: relative;
-    top: 0px;
+    top: 0;
     height: 100%;
     width: 100%; 
     @include transition(0ms ease-out);
@@ -75,7 +75,7 @@
 #preload-2 {
     @include transform(translateZ(0px));
     position: absolute;
-    top: 0px;
+    top: 0;
     height: 100%;
     width: 100%;
 }
@@ -86,6 +86,6 @@
 }
 
 .preload-msg .is-updating {
-  display: block;
-  margin: 10px auto;
+    display: block;
+    margin: 10px auto;
 }

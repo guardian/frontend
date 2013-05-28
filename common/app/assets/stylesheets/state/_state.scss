@@ -8,7 +8,7 @@
 }
 
 .current {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .is-on {
@@ -58,7 +58,7 @@
 .trailblock .panel,
 .rolled-out {
     height: auto;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .shut > .panel,
@@ -75,10 +75,10 @@
     margin: 0 $gutter $baseline*4 $gutter;
     padding: 0 0 0 $baseline*2;
     overflow: hidden;
-}
 
-.update.hidden{
-    display: none;
+    &.hidden {
+        display: none;
+    }
 }
 
 .update-text {
@@ -89,7 +89,7 @@
 }
 
 .update-btn {
-    float:right;
+    float: right;
     margin: 0;
     padding: 13px 12px;
     background-color: $mushroom;
@@ -112,15 +112,15 @@
 }
 
 .is-updating {
-    display:none;
+    display: none;
     width: 36px;
     height: 12px;
     background-size: 100%;
     margin-top: 18px;
-}
 
-.is-updating.is-active {
-    display:inline-block;
+    &.is-active {
+        display: inline-block;
+    }
 }
 
 .is-live-icon {

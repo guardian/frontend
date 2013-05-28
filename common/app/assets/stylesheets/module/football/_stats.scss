@@ -74,7 +74,7 @@
     padding-bottom: $baseline;
 }
 
-.lineup{
+.lineup {
     display: inline-block;
     width: 49%;
     vertical-align: top;
@@ -86,17 +86,18 @@
     margin-right: 5px;
     font-size: 10px;
     font-style: normal;
-    line-height: 1em;
+    line-height: 1;
     color: #ffffff;
     background-color: $sportBright;
-}
-    .i-status abbr {
+
+    abbr {
         border-bottom: none !important;
     }
+}
 
 .item-divider {
     border-top: 1px solid $mushroom;
-    padding-top: $baseline
+    padding-top: $baseline;
 }
 
 .section-divider {
@@ -111,5 +112,5 @@
 }
 
 .update.update-match-stats {
-    margin: 0px 0px 10px 0px;
+    margin: 0 0 10px 0;
 }

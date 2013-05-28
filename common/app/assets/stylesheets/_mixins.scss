@@ -28,9 +28,9 @@
 }
 
 @mixin rounded-corners($radius: 5px) {
-  border-radius: $radius;
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
 }
 
 @mixin box-shadow($args) {
@@ -40,9 +40,9 @@
 }
 
 @mixin rotate($val) {
-  -moz-transform: rotate($val);  /* FF3.5+ */
-  -o-transform: rotate($val);  /* Opera 10.5 */
-  -webkit-transform: rotate($val);  /* Saf3.1+, Chrome */
-  -ms-transform: rotate($val);  /* IE9 */
-  transform: rotate($val);
+    -moz-transform: rotate($val);  /* FF3.5+ */
+    -o-transform: rotate($val);  /* Opera 10.5 */
+    -webkit-transform: rotate($val);  /* Saf3.1+, Chrome */
+    -ms-transform: rotate($val);  /* IE9 */
+    transform: rotate($val);
 }
