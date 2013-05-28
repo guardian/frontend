@@ -40,7 +40,8 @@ define([
     
     // returns the start of a 24hr cycle, lets say 11pm the previous day
     var startOfToday = function () {
-        var y  = new Date(new Date() - 1);
+        var y = new Date();
+        y.setDate(y.getDate() - 1);
         y.setHours(23);
         y.setMinutes(0);
         y.setSeconds(0);
@@ -80,18 +81,19 @@ define([
         return (visits() === 0);
     };
     
-    // hours ago
     var lastVisit = function () {
         var data = get();
-        return (data[keys.last]) ? (new Date() - new Date(data[keys.last])) / 1000 / 60 : 100000000;
+        return (data[keys.last]) ? (new Date() - new Date(data[keys.last])) / 1000 / 60 : -1;
     };
 
-    var firstVisitToday = function () {
-        return (((new Date() - epoch) / 1000 / 60 / 60) < 24);
+    var firstVisitToday = function () { // if the last visit logged was before 11pm the previous evening
+        var data = get();
+        return (data[keys.last]) ? (new Date(data[keys.last]) < epoch) : false;
     };
     
     var firstVisitInSession = function () {
-        return (lastVisit() > 30); // a session is 30 minutes
+        var last = lastVisit();
+        return (last === -1 || last > 30); // a session is 30 minutes
     };
     
     var incrementVisits = function () {
@@ -146,18 +148,17 @@ define([
         } else {
             incrementVisitsInSession();
         }
+
+        if (firstVisitToday()) {
+            resetToday();
+        } else {
+            incrementVisitsToday();
+        }
       
         incrementVisits();
         
-        
         if (config.section) {
             incrementVisitsToSection(config.section);
-        }
-
-        if (firstVisitToday()) {
-            incrementVisitsToday();
-        } else {
-            resetToday();
         }
 
     };
@@ -169,6 +170,7 @@ define([
         visits: visits,
         logVisit: logVisit,
         firstVisit: firstVisit,
+        firstVisitToday: firstVisitToday,
         visitsToday: visitsToday,
         visitsInSession: visitsInSession,
         lastVisit: lastVisit,

@@ -53,28 +53,29 @@ define(['modules/experiments/aware'], function(Aware) {
         it('should identify the frequency of visits "today"', function() {
             
             var config = { section: 'foo' }
-            
+
             // move day forward 6 hours from the epoch & log a visit
-            var fakeNow = Date.parse('2013-04-22T04:00:00+01:00');
+            var fakeNow = Date.parse('2013-04-21T18:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
             Aware.logVisit(config)
 
-            // move to 8pm the same day and log another visit
-            var fakeNow = Date.parse('2013-04-22T20:00:00+01:00');
+            // move to 10pm the same day and log another visit
+            var fakeNow = Date.parse('2013-04-21T22:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
             Aware.logVisit(config)
-
+            
             expect(Aware.visits()).toBe(2);
             expect(Aware.visitsToday()).toBe(2);
            
             // move three days hance and log a final visit
-            var fakeNow = Date.parse('2013-04-25T12:00:00+01:00');
+            var fakeNow = Date.parse('2013-04-24T12:00:00+01:00');
             sinon.useFakeTimers(fakeNow, "Date");
-            Aware.logVisit(config)
             
+            Aware.init(); // force epoch refresh
+            Aware.logVisit(config)
+
             expect(Aware.visits()).toBe(3);
             expect(Aware.visitsToday()).toBe(1);
-
         });
 
         it('should count frequency of visits to different sections over the last few days', function() {
