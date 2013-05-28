@@ -1,6 +1,6 @@
-define(['common', 'modules/storage'], function(common, storage) {
+define(['common', 'moment', 'modules/storage'], function(common, moment, storage) {
 
-    describe('storage module', function() {
+    describe('Storage', function() {
         
         sinon.spy(common.mediator, 'emit');
 
@@ -37,7 +37,7 @@ define(['common', 'modules/storage'], function(common, storage) {
         });
 
         it('should save and retrieve data', function() {
-            testSetAndGet('foo', 'bar', '"bar"');
+            testSetAndGet('foo', 'bar', '{"value": "bar"}');
         });
 
         it('should not save if local storage unavailavble', function() {
@@ -90,26 +90,68 @@ define(['common', 'modules/storage'], function(common, storage) {
             expect(storage.get('foo')).toBeNull();
         });
         
+        describe('Expiration', function() {
+
+            it('should delete if expired', function() {
+                var expires = moment().subtract('hour', 1).toDate(),
+                    key = 'foo',
+                    value = 'bar',
+                    storedData = '{"value":"' + value + '","expires":"' + expires.toISOString() + '"}',
+                    setItemSpy = sinon.spy(),
+                    removeItemSpy = sinon.spy();
+                setWindowLocalStorage({
+                    setItem: setItemSpy,
+                    getItem: sinon.stub().returns(storedData),
+                    removeItem: removeItemSpy
+                });
+
+                storage.set(key, value, {expires: expires});
+
+                // expectations
+                expect(storage.get(key)).toBeNull();
+                expect(setItemSpy).toHaveBeenCalledWith(key, storedData);
+                expect(removeItemSpy).toHaveBeenCalledWith(key);
+            });
+
+            it('should not delete if not expired', function() {
+                var expires = moment().add('hour', 1).toDate(),
+                    key = 'foo',
+                    value = 'bar',
+                    removeItemSpy = sinon.spy();
+                setWindowLocalStorage({
+                    getItem: sinon.stub().returns('{"value":"' + value + '","expires":"' + expires.toISOString() + '"}'),
+                    removeItem: removeItemSpy
+                });
+
+                storage.set(key, value, {expires: expires});
+
+                // expectations
+                expect(storage.get(key)).toBe(value);
+                expect(removeItemSpy).not.toHaveBeenCalledWith(key);
+            });
+
+        })
+
         describe('Saving and retriving different data types', function() {
 
             it('Object data', function() {
-                testSetAndGet('foo', { bar: 'baz' }, '{"bar":"baz"}');
+                testSetAndGet('foo', { bar: 'baz' }, '{"value": {"bar":"baz"}}');
             });
 
             it('Array data', function() {
-                testSetAndGet('foo', ['bar', 'baz'], '["bar","baz"]');
+                testSetAndGet('foo', ['bar', 'baz'], '{"value": ["bar","baz"]}');
             });
 
             it('Boolean data', function() {
-                testSetAndGet('foo', false, 'false');
+                testSetAndGet('foo', false, '{"value": false}');
             });
 
             it('Number data', function() {
-                testSetAndGet('foo', 1234, '1234');
+                testSetAndGet('foo', 1234, '{"value": 1234}');
             });
 
             it('String data', function() {
-                testSetAndGet('foo', 'bar', '"bar"');
+                testSetAndGet('foo', 'bar', '{"value": "bar"}');
             });
             
         });

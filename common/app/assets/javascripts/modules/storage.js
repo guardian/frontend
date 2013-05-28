@@ -27,12 +27,22 @@ define(['common'], function (common) {
             }
         },
         
-        set: function(key, data) {
-            var dataAsString = JSON.stringify(data);
-            if (!storage.isAvailable(dataAsString)) {
+        /**
+         * @param {String}  key
+         * @param {Any}     data
+         * @param {Object} [options]
+         *     {Date} expires - When should the storage expire
+         */
+        set: function(key, data, options) {
+            var opts = options || {},
+                value = JSON.stringify({
+                    'value': data,
+                    'expires': opts.expires
+                });
+            if (!storage.isAvailable(value)) {
                 return false;
             }
-            return w.localStorage.setItem(key, dataAsString);
+            return w.localStorage.setItem(key, value);
         },
         
         get: function(key) {
@@ -51,7 +61,13 @@ define(['common'], function (common) {
                 return null;
             }
             
-            return dataParsed;
+            // has it expired?
+            if (new Date() > new Date(dataParsed.expires)) {
+                storage.remove(key);
+                return null;
+            }
+
+            return dataParsed.value;
         },
         
         remove: function(key) {
