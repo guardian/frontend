@@ -44,3 +44,10 @@
     -ms-transform: rotate($val);  /* IE9 */
     transform: rotate($val);
 }
+
+@mixin user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
