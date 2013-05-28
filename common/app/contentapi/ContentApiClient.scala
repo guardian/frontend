@@ -4,10 +4,11 @@ import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
 import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
-import common.{Edition, Logging, GuardianConfiguration}
-import play.api.libs.ws.WS
+import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
+import com.gu.openplatform.contentapi.model.ItemResponse
+import model.{Content, Trail}
 
-trait QueryDefaults{
+trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
@@ -16,9 +17,14 @@ trait QueryDefaults{
   val references = "pa-football-competition,pa-football-team,witness-assignment"
 
   val inlineElements = "picture,witness,video"
+
+  object EditorsPicsAndLatest {
+    def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
+      result.map(r => (r.editorsPicks.map(new Content(_)) ++ r.results.map(new Content(_))).distinctBy(_.id))
+  }
 }
 
-trait ApiQueryDefaults extends QueryDefaults { self: Api[Future] =>
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections { self: Api[Future] =>
 
   def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
