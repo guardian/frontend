@@ -9,7 +9,7 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
             self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
-            
+
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
@@ -36,11 +36,9 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
         this.load = function(context) {
             var layout = detect.getLayoutMode(),
                 containerClass = (layout === "mobile") ? '.js-search--sections' : '.js-search--popup',
-                container = context.querySelector(containerClass),
+                container = currentContext.querySelector(containerClass),
                 s,
                 x;
-
-            container = currentContext.querySelector('.nav-popup-search');
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.search'), function(c){
