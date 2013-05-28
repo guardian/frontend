@@ -18,6 +18,14 @@
   color: $neutral1;
 }
 
+.article-headline {
+  margin: 0 0 $base 0;
+} 
+
+.article-standfirst {
+  color: $neutral4;
+}
+
 .bullet {
   font-size: 13px;
   display: inline-block;
@@ -115,12 +123,15 @@ video {
 /* 6 Cols
  ========================================================================== */
 @media screen and (min-width: 30em) {
-
   .main-image-wrap {
     width: $gridWidth * 3;
     float: right;
     background-color: #fff;
     padding: 5px 0 7px 20px;
+  }
+  .article-headline {
+    font-size: 2.8rem;
+    line-height: 3.2rem;    
   }
 }
 
@@ -137,6 +148,9 @@ video {
 @media screen and (min-width: 40em) {
   .main-image-wrap {
     margin-right: $gridWidth * -1;
+  }
+  .page-head--article {
+    border: 0px;
   }
 }
 
@@ -163,6 +177,17 @@ video {
     width: $gridWidth * 4;
     @include box-sizing(border-box);
     float: left;
+  }
+
+  .article-headline {
+    font-size: 3rem;
+    line-height: 3.4rem;    
+  }
+
+  .article-standfirst {
+    font-size: 1.8rem;
+    line-height: 2.6rem;
+    margin: 0 0 $base 0;
   }
 
   .article__byline {
@@ -219,5 +244,27 @@ video {
   .article__body {
     width: $gridWidth * 7;
     margin-right: $gridWidth * 1;
+  }
+}
+
+/* 13 Cols
+ ========================================================================== */
+@media screen and (min-width: 65em) {
+  .main-image-wrap,
+  video {
+    margin-right: $gridWidth * 1;
+  }
+
+  .article__body {
+    margin-right: $gridWidth * 2;
+  }
+}
+
+/* 14 Cols
+ ========================================================================== */
+@media screen and (min-width: 70em) {
+  .article__head,
+  .article__byline {
+    margin-left: $gridWidth * 1;    
   }
 }
