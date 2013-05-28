@@ -1,6 +1,9 @@
 define(['common', 'modules/userPrefs', 'bonzo'], function (common, userPrefs, bonzo) {
 
-    function Debug() {
+    function Debug(options) {
+        
+        var opts = options || {},
+            userPrefs = opts.userPrefs || userPrefs;
 
         this.show = function(){
             if (userPrefs.get('dev-debug') === 'true') {
