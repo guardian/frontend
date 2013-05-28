@@ -38,20 +38,20 @@
     padding: 15px $gutter $baseline*2 $baseline*2;
     cursor: pointer;
     background-color: transparent;
-    box-shadow: none;
     font-weight: normal;
     text-shadow: none;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
+    box-shadow: none;
 }
 
     .toggle-trailblock:hover,
     .toggle-trailblock:active {
-        box-shadow: none;
         background-color: transparent;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
+        box-shadow: none;
     }
 
     .sub-section-head .toggle-trailblock {

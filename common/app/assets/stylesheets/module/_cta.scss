@@ -7,9 +7,9 @@
     margin: $baseline*2 0;
     background-color: $mushroom;
     text-align: center;
-    box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
+    box-shadow: none;
     text-shadow: none;
     border: none;
 
@@ -19,9 +19,9 @@
     }
     &:hover,
     &:active {
-        box-shadow: none;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
+        box-shadow: none;
     }
 }
 button.cta {
