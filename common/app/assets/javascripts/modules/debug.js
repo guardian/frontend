@@ -3,10 +3,10 @@ define(['common', 'modules/userPrefs', 'bonzo'], function (common, userPrefs, bo
     function Debug(options) {
         
         var opts = options || {},
-            userPrefs = opts.userPrefs || userPrefs;
+            prefs = opts.userPrefs || userPrefs;
 
         this.show = function(){
-            if (userPrefs.get('dev-debug') === 'true') {
+            if (prefs.get('dev-debug') === 'true') {
                 var debug = document.querySelector("#dev-debug");
                 if (debug) {
                     bonzo(debug).addClass('active');
