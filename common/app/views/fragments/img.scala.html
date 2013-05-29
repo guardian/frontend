@@ -10,6 +10,8 @@
         alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"
         title="@StripHtmlTags(mainPicture.caption.getOrElse(""))" />
     @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
+    <figcaption class="main-caption" itemprop="description">
+        <i class="i i-image"></i>
+        @Html(smallCrop.caption.getOrElse(""))</figcaption>
     }
 </figure>
