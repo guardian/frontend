@@ -6,13 +6,14 @@ define(['modules/detect', 'common'], function(detect, common){
 
         // returns a map of querystrings
         // eg ?foo=bar&fizz=buzz returns x.foo = bar and x.fizz = buzz
-        getUrlVars: function () {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            var hash_length = hashes.length;
+        getUrlVars: function (options) {
+            var opts = options || {},
+                vars = {},
+                hash,
+                hashes = (opts.query || model.getCurrentQueryString()).split('&'),
+                hash_length = hashes.length;
             for (var i = 0; i < hash_length; i++) {
                 hash = hashes[i].split('=');
-                vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
             }
             return vars;

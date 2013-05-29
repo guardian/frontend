@@ -20,8 +20,8 @@ object CompetitionListController extends Controller with CompetitionListFilters 
       "Rest of world"
     )
     
-    val htmlResponse = views.html.competitions(filters, page, competitionList)
-    val jsonResponse = views.html.fragments.competitionsBody(filters, page, competitionList)
+    val htmlResponse = () => views.html.competitions(filters, page, competitionList)
+    val jsonResponse = () => views.html.fragments.competitionsBody(filters, page, competitionList)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
     
   }

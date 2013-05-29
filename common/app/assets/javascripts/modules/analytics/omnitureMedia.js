@@ -31,6 +31,15 @@ define([
         };
 
         this.play = function() {
+            if (initialPlay.content === true && initialPlay.advert === true) {
+                bean.one(video, 'loadedmetadata', function() {
+                    if(video.advertWasRequested) {
+                        self.trackUserInteraction("Advert", "Video advert was requested", false);
+                    }
+                   self.trackUserInteraction("Play", "User clicked play", false);
+                });
+            }
+
             if ((videoType === 'content' && initialPlay[videoType] === true) ||
                 (videoType === 'advert' && initialPlay[videoType] === true)) {
                     // We need to wait for the metadata before calling
@@ -63,16 +72,33 @@ define([
             s.Media.play(mediaName, this.getPosition());
         };
 
-        this.trackUserInteraction = function(type, name) {
-            clearTimeout(deBounced);
-            deBounced = setTimeout(function(){
-                var event = "event14";
+        this.trackUserInteraction = function(type, name, debounce) {
+           clearTimeout(deBounced);
+           var log = function(){
+                var event;
+                switch(type){
+                    case "Play" :
+                        event = "event98";
+                        break;
+                    case "Advert" :
+                        event = "event97";
+                        break;
+                    default :
+                        event = "event14";
+                        break;
+                }
                 s.prop41 = type;
                 s.linkTrackVars = "prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events";
                 s.linkTrackEvents = event;
                 s.events = event;
                 s.tl(true, "o", name);
-            }, 250);
+            };
+
+            if(debounce) {
+                deBounced = setTimeout(log, 250);
+            } else {
+                log();
+            }
         };
 
         this.trackVideoAdvert = function() {
@@ -102,7 +128,7 @@ define([
             bean.on(video, 'pause', function() { that.pause(); });
             bean.on(video, 'seeking', function() { that.seeking(); });
             bean.on(video, 'seeked', function() {that.seeked(); });
-            bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume"); });
+            bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume", true); });
 
             bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
             bean.on(video, 'play:content', function() { that.trackVideoContent(); });

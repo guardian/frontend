@@ -29,8 +29,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
           (sectionPopular ++ globalPopular) match {
             case Nil => NotFound
             case popular => {
-              val htmlResponse = views.html.mostPopular(page, popular)
-              val jsonResponse = views.html.fragments.mostPopular(popular, 5)
+              val htmlResponse = () => views.html.mostPopular(page, popular)
+              val jsonResponse = () => views.html.fragments.mostPopular(popular, 5)
               renderFormat(htmlResponse, jsonResponse, 900)
             }
           }

@@ -4,7 +4,6 @@ import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
 import play.api.Play
-import conf.CommonSwitches.ImageServerSwitch
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -75,6 +74,7 @@ class GuardianConfiguration(
 
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
   }
 
   object static {

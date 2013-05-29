@@ -15,7 +15,9 @@ define([
 
         bean.on(document, 'click', '.edition', function(e) {
 
-            if (bonzo(e.target).hasClass('edition-au')) {
+            if (bonzo(e.target).hasClass('edition-au')
+                && config.page.edition !== "US") {
+
                 userPrefs.switchOn(AUS);
             } else {
                 userPrefs.switchOff(AUS);

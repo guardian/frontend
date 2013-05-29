@@ -8,6 +8,7 @@ import org.scalatest.matchers.ShouldMatchers
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
 import play.api.libs.json.Json
+import conf.Configuration
 
 class JsonComponentTest extends FlatSpec with ShouldMatchers {
 
@@ -50,10 +51,33 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should be("""callbackName3({"name":"foo","refreshStatus":true});""")
   }
 
+  it should "Vary on Accept and Origin" in {
+    val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
+
+    val result = JsonComponent(obj("name" -> "foo"))(request)
+
+    status(result) should be(200)
+    println(headers(result))
+    header("Vary", result) should be (Some("Accept, Origin"))
+  }
+
   it should "disable refreshing if auto refresh switch is off" in {
     AutoRefreshSwitch.switchOff()
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
     val result = JsonComponent(Html("hello world"))(request)
     contentAsString(result) should be("""success({"html":"hello world","refreshStatus":false});""")
+  }
+
+  it should "add the cross origin headers" in {
+
+    val request = FakeRequest("GET", "http://foo.bar.com/test.json")
+      .withHeaders("Host" -> "foo.bar.com")
+      .withHeaders("Accept" -> "application/json")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+    val result = JsonComponent(Html("<p>hello</p>"))(request)
+
+    result.header.headers.get("Access-Control-Allow-Origin") should be (Some("*"))
+    result.header.headers.get("Access-Control-Allow-Origin") should be (Some("*"))
+    result.header.headers.get("Access-Control-Allow-Headers") should be (Some("GET,POST,X-Requested-With"))
   }
 }

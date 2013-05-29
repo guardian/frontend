@@ -13,7 +13,9 @@ class CompetitionListControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, "/football/competitions?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, "/football/competitions?callback=foo")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Accept" -> "application/javascript")
     val result = controllers.CompetitionListController.render()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")

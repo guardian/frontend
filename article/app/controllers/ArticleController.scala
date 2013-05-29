@@ -48,8 +48,8 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
   }
 
   private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = views.html.article(model.article, model.storyPackage)
-    val jsonResponse = views.html.fragments.articleBody(model.article, model.storyPackage)
+    val htmlResponse = () => views.html.article(model.article, model.storyPackage)
+    val jsonResponse = () => views.html.fragments.articleBody(model.article, model.storyPackage)
     renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
   

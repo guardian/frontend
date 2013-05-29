@@ -90,8 +90,9 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 } else {
                     ajax({
                         url: opts.url || '/' +  section + '/trails',
-                        type: 'jsonp',
-                        jsonpCallbackName: opts.jsonpCallbackName,
+                        type: 'json',
+                        method: "GET",
+                        crossOrigin: true,
                         success: function (resp) {
                             common.mediator.emit('module:trailblock-show-more:loaded');
                             var $trailList = bonzo(bonzo.create(resp.html)),
