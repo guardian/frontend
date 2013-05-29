@@ -40,15 +40,7 @@
             showFonts = false;
         }
 
-        function delayFontRender() {
-            document.documentElement.className += ' delay-font-render';
-            setTimeout(function() {
-                document.documentElement.className = document.documentElement.className.replace('delay-font-render', '');
-            }, 3000);
-        }
-
         if (showFonts) {
-            var fontsAlreadyCached = false;
 
             var start = (new Date().getTime());
             var styleNodes = document.querySelectorAll('[data-cache-name]');
@@ -64,7 +56,6 @@
                     style.innerHTML = cachedCss;
                     style.setAttribute('data-cache-full', 'true');
                     document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
-                    fontsAlreadyCached = true;
                 }
             }
             var fontTime = (new Date().getTime()) - start;
@@ -75,25 +66,9 @@
                 document.getElementsByTagName("head")[0].appendChild(img);
             }
 
-            // This sledgehammers an AB test into localStorage for Omniture to pick up later.
-            @if(FontDelaySwitch.isSwitchedOn) {
-                var inTest = localStorage.getItem('gu.fontdelaytest');
-                if (inTest) {
-                    if (inTest.indexOf('delay') > 0) {
-                        delayFontRender();
-                    }
-                } else {
-                    if (Math.random() < 0.01) {
-                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | delay');
-                        delayFontRender();
-                    } else {
-                        localStorage.setItem('gu.fontdelaytest', 'AB | DelayFontAllPages | control');
-                    }
-                }
-            } else {
-                localStorage.removeItem('gu.webfontrendertest');
-                localStorage.removeItem('gu.fontdelaytest');
-            }
+            // This cleans up legacy webfontdelay tests. Remove these at some point.
+            localStorage.removeItem('gu.webfontrendertest');
+            localStorage.removeItem('gu.fontdelaytest');
         }
     })();
 
