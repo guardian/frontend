@@ -3,9 +3,9 @@
 
 
 //SerifHeadline
-%type-0 { @include font($serifheadline, 600, 22, 32) }
-%type-1 { @include font($serifheadline, 600, 20, 28) }
-%type-2 { @include font($serifheadline, 600, 18, 28) }
+%type-0 { @include font($serifheadline, 600, 22, 32); }
+%type-1 { @include font($serifheadline, 600, 20, 28); }
+%type-2 { @include font($serifheadline, 600, 18, 28); }
 
 //SerifText
 %type-3 { @include font($serif, 500, 20, 28) }
@@ -23,8 +23,8 @@
 }
 
 //Sans-serif's
-%type-8  { @include font($sans-serif, normal, 14, 20) }
-%type-9  { @include font($sans-serif, bold, 13, 20) }
-%type-10 { @include font($sans-serif, normal, 13, 20) }
-%type-11 { @include font($sans-serif, normal, 12, 16) }
-%type-12 { @include font($sans-serif, normal, 11, 16) }
+%type-8  { @include font($sans-serif, normal, 14, 20); }
+%type-9  { @include font($sans-serif, bold, 13, 20); }
+%type-10 { @include font($sans-serif, normal, 13, 20); }
+%type-11 { @include font($sans-serif, normal, 12, 16); }
+%type-12 { @include font($sans-serif, normal, 11, 16); }

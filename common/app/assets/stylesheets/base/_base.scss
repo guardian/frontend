@@ -8,7 +8,7 @@ body {
 
 .dateline {
     font-family: $sans-serif;
-    margin: 0px 0px $baseline*2 0px;
+    margin: 0 0 $baseline*2 0;
     color: #666666;
     @extend %type-11;
 }
@@ -25,7 +25,8 @@ body {
     display: inline-block;
 }
 
-ol, ul {
+ol,
+ul {
     list-style-position: inside;
 }
 
