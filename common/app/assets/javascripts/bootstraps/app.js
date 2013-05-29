@@ -85,6 +85,7 @@ define('bootstraps/app', [
                 r.get('/', function(req) {        Front.init(config, context); });
                 r.get('/sport', function(req) {   Front.init(config, context); });
                 r.get('/culture', function(req) { Front.init(config, context); });
+                r.get('/australia', function(req) { Front.init(config, context); });
 
                 //Football
                 r.get('/football', function(req) {                                Football.init(req, config, context); });
