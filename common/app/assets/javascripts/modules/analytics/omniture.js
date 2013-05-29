@@ -135,6 +135,8 @@ define([
 
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 
+            s.prop69    = (document.querySelector('[data-app-js]') !== null) ? 'script async' : 'script appendChild';
+
             if (config.page.webPublicationDate) {
                 s.prop30 = 'content';
             } else {
