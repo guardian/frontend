@@ -1,8 +1,8 @@
 $orange: #FF7F00;
 
 /* ==========================================================================
-     Story-title
-     ========================================================================== */
+   Story-title
+   ========================================================================== */
 .story-title {
     font-family: $serifheadline;
     font-size: 2.6rem;
@@ -37,8 +37,8 @@ $orange: #FF7F00;
 }
 
 /* ==========================================================================
-     Story articles
-     ========================================================================== */
+   Story articles
+   ========================================================================== */
 .story-container {
 
     .article-head {
@@ -54,7 +54,7 @@ $orange: #FF7F00;
     }
 
     .article-headline {
-        min-height: 60px;
+        min-height:60px;
         font-family: $serifheadline;
         font-weight: normal;
         font-size: 2.4rem;
@@ -77,22 +77,23 @@ $orange: #FF7F00;
         padding: $baseline*4 0;
     }
 
-    .sample-paras {
+    .sample-paras,
+    .story-explainer {
         font-size: 1.6rem;
         line-height: 2.4rem;
         color: #000;
     
         p {
-	       margin-bottom: 0;
-	       text-indent: $gutter*1.5;
+            margin-bottom: 0;
+            text-indent: $gutter*1.5;
 
-           &:first-of-type {
-               text-indent: 0;
-           }
-           &:last-child {
-               margin-bottom: 8px
-           }
-	   }
+            &:first-of-type {
+                text-indent: 0;
+            }
+            &:last-child {
+                margin-bottom: 8px;
+            }
+        }
     }
 
 }
@@ -111,19 +112,20 @@ $orange: #FF7F00;
 
 .story-section {
     width: 100%;
+}
 
-    .i-date { display: none; }
-
-    time {
-        color: #666;
-        font-size: 12px;
-        font-size: 1.2rem;
-    }
+.story-section .i-date {
+    display: none;
+}
+.story-section time {
+    color: #666;
+    font-size: 12px;
+    font-size: 1.2rem;
 }
 
 /* ==========================================================================
-     Story quote
-     ========================================================================== */
+   Story quote
+   ========================================================================== */
 
 .story-quote__quote {
     position: relative;
@@ -152,20 +154,21 @@ $orange: #FF7F00;
     }
 }
 
+.story-quote__cite {
+    display: block;
+    margin-left: 2px;
+    margin-bottom: 15px;
+    font-family: $serifheadline;
+    font-weight: 600;
+    font-size: 1.6rem;
+    font-style: normal;
+    line-height: 2.4rem;
+    color: #000;
+}
 
-    .story-quote__cite {
-        display: block;
-        margin-left: 2px;
-        margin-bottom: 15px;
-        font-family: $serifheadline;
-        font-weight: 600;
-        font-size: 1.6rem;
-        font-style: normal;
-        line-height: 2.4rem;
-        color: #000;
-    }
-
-.story-popular .trail:last-child { border-bottom: none; }
+.story-popular .trail:last-child {
+    border-bottom: none;
+}
 
 .story-content .article figure {
     margin: 0 $gutter;
@@ -175,7 +178,9 @@ $orange: #FF7F00;
         margin-bottom: $baseline*4;
     }
 
-    .story-article:last-child { border-bottom: none; }
+    .story-article:last-child {
+        border-bottom: none;
+    }
 
 .story-article .article-body p:last-child {
     border-bottom: 1px solid #EDEDE7;
@@ -195,12 +200,12 @@ $orange: #FF7F00;
 }
 
 .i.is-open {
- @include rotate(180deg);
+    @include rotate(180deg);
 }
 
 /* ==========================================================================
-     Story maps
-     ========================================================================== */
+   Story maps
+   ========================================================================== */
 .story-map {
     position: relative;
     margin: $baseline*3 10px;
@@ -213,20 +218,20 @@ $orange: #FF7F00;
 
 .map-inset {
     position: absolute;
-    border: 1px solid #000;    
+    border: 1px solid #000;
     top: 0; 
     right: 0;
 }
 
 .picture-article--media img {
-        display: block;
-        width: 100%;
-        margin: 0 2.5% 5px 0;
+    display: block;
+    width: 100%;
+    margin: 0 2.5% 5px 0;
 }
 
 /* ==========================================================================
-     In-pictures
-     ========================================================================== */
+   In-pictures
+   ========================================================================== */
 .story-pictures {
     margin-bottom: 12px;
 
@@ -285,12 +290,14 @@ $orange: #FF7F00;
         width: 49.5%;
         float: left;
         margin-bottom: 2px;
+    }
 
-        &:first-child {
-            width: 100%;
-        }
+    img:first-child {
+        width: 100%;
+    }
 
-        &:nth-child(even) { margin-right: 1%; }
+    img:nth-child(even) {
+        margin-right: 1%;
     }
 }
 
@@ -302,15 +309,15 @@ $orange: #FF7F00;
 }
 
 /* ==========================================================================
-     Story-agent
-     ========================================================================== */
+   Story-agent
+   ========================================================================== */
 .story-agents,
 .story-agents .story-title {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .story-agents figcaption:before {
-	background-image:none;
+	background-image: none;
 }
 
 .agent__name,
@@ -341,13 +348,13 @@ $orange: #FF7F00;
 }
 
 /* ==========================================================================
-     New call to actions
-     ========================================================================== */
+   New call to actions
+   ========================================================================== */
 
 .cta-new {
     position: relative;
     display: block;
-    width:    100%;
+    width: 100%;
     height: 32px;
     color: #005689;
     font-family: $serif;
@@ -433,17 +440,17 @@ $orange: #FF7F00;
 }
 
 .cta-new__icn-container {
-        display: block;
-        width: 60px;
-        height: 31px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        border-left: 1px dotted #676767;
+    display: block;
+    width: 60px;
+    height: 31px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px dotted #676767;
 }
 
 .cta-new__icn-container--blue {
-        border-left: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
 }
 
 .cta-new__icn--right,
@@ -453,7 +460,7 @@ i.is-open.cta-new__icn--right {
 }
 
 .cta-new__btn--left {
-    flaot: left;
+    float: left;
     border-right-width: 1px;
 
     .i {
@@ -464,8 +471,8 @@ i.is-open.cta-new__icn--right {
 }
 
 /* ==========================================================================
-     Tabs 
-     ========================================================================== */
+   Tabs 
+   ========================================================================== */
 
 .tabs-container {
     padding: 0;
@@ -474,9 +481,11 @@ i.is-open.cta-new__icn--right {
 .story-tabs-container .update {
     margin-top: 8px;
 }
+
 .story-live .article-head .dateline {
 	display: block;
 }
+
 .story-live .article-zone, 
 .story-live .article-head > *,
 .story-live .social,
@@ -484,50 +493,49 @@ i.is-open.cta-new__icn--right {
     display: none;
 }
 
-.story-tabs-container .tabs {
-    margin: 0 10px 0 10px;
-    margin-bottom: 16px;
-}
+.story-tabs-container {
+    .tabs {
+        margin: 0 10px 0 10px;
+        margin-bottom: 16px;
 
-.story-tabs-container .tabs li {
-    border-bottom: 1px solid $darkMushroom;
-    @include box-sizing(border-box);
-}
-.story-tabs-container .tabs li:first-child {
-    border-right: 1px solid $darkMushroom;	
-}
+        li {
+            background-color: #eee;
+            border-bottom: 1px solid $darkMushroom;
+            @include box-sizing(border-box);
 
-.story-tabs-container .tabs li.tabs-selected {
-    border-top: 1px solid $darkMushroom;
-    border-bottom: none;
-}
+            &:first-child {
+                border-right: 1px solid $darkMushroom;  
+            }
 
-.story-tabs-container .tabs a {
-    text-align: left;
-    margin: 0; 
-    padding: 4px 0 15px 4px;
-    font-weight: normal;
-    font-size: 1.4rem;
-}
+            &.tabs-selected {
+                border-top: 1px solid $darkMushroom;
+                border-bottom: none;
+            }
+        }
 
-.story-tabs-container .tabs-selected a {
-	padding-top: 3px;
-    background-color: #ffffff;
+        a {
+            text-align: left;
+            margin: 0; 
+            padding: 4px 0 15px 4px;
+            font-weight: normal;
+            font-size :1.4rem;
+        }
+    }
+    
+    .tabs-selected a {
+    	padding-top: 3px;
+        background-color: #fff;
+    }
 }
-
-.story-tabs-container .tabs li {
-    background-color: #eeeeee;
-}
-
 .story-container .site-message__body {
-	padding: 5px;
-	color: #ffffff;
-	font-weight: 500;
-	display: block;
-	text-decoration: none;
+    padding: 5px;
+    color: #fff;
+    font-weight: 500;
+    display: block;
+    text-decoration: none;
 }
 .cta-new--story {
-	border-top: 1px solid #ffffff;
+	border-top: 1px solid #fff;
 
     a {
         padding-left: 5px;

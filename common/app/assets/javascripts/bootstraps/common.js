@@ -130,11 +130,7 @@ define([
             var cs = new Clickstream({filter: ["a", "button"]}),
                 omniture = new Omniture();
 
-            common.mediator.on('page:common:deferred:loaded', function(config, context) {
-
-                // AB must execute before Omniture
-                AB.init(config, context);
-
+            common.mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
                 omniture.go(config, function(){
                     // callback:
 
@@ -148,6 +144,14 @@ define([
                         }
                     });
                 });
+            });
+
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
+
+                // AB must execute before Omniture
+                AB.init(config, context);
+
+                common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
 
@@ -180,6 +184,7 @@ define([
                 });
 
             });
+
         },
 
         loadAdverts: function () {
