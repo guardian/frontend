@@ -1,3 +1,7 @@
+@function gridWidths($cols) {
+    @return $cols * $gridWidth;
+}
+
 .grid-box,
 %grid-box {
     -webkit-box-sizing: border-box;
@@ -6,7 +10,7 @@
     padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
 }
 
-@for $i from 6 through $gridCols {
+@for $i from $gridColsMin through $gridColsMax {
     $outerWidth : $gridWidth * $i;
     @media only screen and (min-width : $outerWidth) {
         #preloads {

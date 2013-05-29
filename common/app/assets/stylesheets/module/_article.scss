@@ -128,7 +128,7 @@ video {
 
 /* 6 Cols
  ========================================================================== */
-@media screen and (min-width: 30em) {
+@media screen and (min-width: 6 * $gridWidth) {
   .article figure {
     width: $gridWidth * 3;
     float: right;
@@ -264,12 +264,10 @@ video {
 
   .article .article__body figure {
     width: $gridWidth * 7;
-    margin-right: 0;
   }
 
   .article__body {
     width: $gridWidth * 7;
-    margin-right: $gridWidth * 1;
   }
 }
 
@@ -281,11 +279,6 @@ video {
     margin-right: $gridWidth * 1;
   }
 
-  .article .article__body figure {
-    width: $gridWidth * 7;
-    margin-right: 0;
-  }
-
   .article__body {
     margin-right: $gridWidth * 2;
   }
@@ -295,13 +288,11 @@ video {
  ========================================================================== */
 @media screen and (min-width: 70em) {
   .article figure {
-    margin-right: $gridWidth * 1;
     width: $gridWidth * 9;
   }
 
   .article .article__body figure {
     width: $gridWidth * 7;
-    margin-right: 0;
   }
 
   .article__body {
