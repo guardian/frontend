@@ -58,7 +58,7 @@
                     cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
                     // try to parse it (should really use the storage module)
                     try {
-                        cachedCss = JSON.parse(cachedCss);
+                        cachedCss = JSON.parse(cachedCss).value;
                     } catch(e) {}
                 if (cachedCss) {
                     style.innerHTML = cachedCss;
