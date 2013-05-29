@@ -93,8 +93,11 @@
 .tabs--multiple .tabs__tab {
   display: table-cell;
   border-left: 2px solid #ffffff;
-  width: auto;
   float: none;
+}
+
+.tabs--multiple .tabs__link {
+  height: 35px;
 }
 
 .tabs--multiple .tabs__tab:first-child,
