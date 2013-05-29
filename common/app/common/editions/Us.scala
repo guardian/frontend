@@ -2,11 +2,10 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{QueryTrailblockDescription, MetaData, ItemTrailblockDescription}
+import model.{MetaData, ItemTrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
-import conf.ContentApi
 import contentapi.QueryDefaults
 
 object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_York")) with Sections with Zones
@@ -77,26 +76,8 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
-      QueryTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured), showMore = false,
-        customQuery = () => ContentApi.item.itemId("culture")
-          .edition("au")
-          .showTags("all")
-          .showFields(trailFields)
-          .showInlineElements(inlineElements)
-          .showMedia("all")
-          .showReferences(references)
-          .showStoryPackage(true)
-          .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")),
-      QueryTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = false,
-        customQuery = () => ContentApi.item.itemId("commentisfree")
-          .edition("au")
-          .showTags("all")
-          .showFields(trailFields)
-          .showInlineElements(inlineElements)
-          .showMedia("all")
-          .showReferences(references)
-          .showStoryPackage(true)
-          .tag(s"world/australia,($supportedTypes)")),
+      Au.cultureCustomBlock,
+      Au.commentCustomBlock,
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
     )
   )

@@ -1,5 +1,5 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
-@import conf.CommonSwitches.AustraliaFrontSwitch
+
 
  <nav role="navigation" aria-label="Guardian sections"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
@@ -33,9 +33,7 @@
             }
 
             @*<!-- TODO this is temp till we have proper single domain editions -->*@
-            @if(AustraliaFrontSwitch.isSwitchedOn){
-                <li class="nav__item"><a class="nav__link edition edition-au" data-link-name="switch to au edition" href="http://@site.ukHost/australia@if(site.isUsEdition){#gu.prefs.switchOn=australia-edition}">Australia edition</a></li>
-            }
+            <li class="nav__item"><a class="nav__link edition edition-au" data-link-name="switch to au edition" href="http://@site.ukHost/australia@if(site.isUsEdition){#gu.prefs.switchOn=australia-edition}">Australia edition</a></li>
         }{
             @Edition.others(request).map{ edition =>
                 <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="/@page.id">@edition.displayName</a></li>
