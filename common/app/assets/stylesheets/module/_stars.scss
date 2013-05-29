@@ -9,26 +9,26 @@
     white-space: nowrap;
     overflow: hidden;
     margin-top: 4px;
-}
 
-.stars,
-.stars:after {
-    height:13px;
-    background-image: url(../images/star-sprite.1ece5491a4afa7e5f558d75717c754e7.png);
-}
+    &,
+    &:after {
+        height: 13px;
+        background-image: url(../images/star-sprite.1ece5491a4afa7e5f558d75717c754e7.png);
+    }
 
-.stars:after{
-    content: "";
-    background-position: 0 -13px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    &:after {
+        content: "";
+        background-position: 0 -13px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+    }
 }
 
 .s-0:after { width: 0; }
-.s-1:after { width:13px; }
-.s-2:after { width:26px; }
-.s-3:after { width:39px; }
-.s-4:after { width:52px; }
-.s-5:after { width:65px; }
+.s-1:after { width: 13px; }
+.s-2:after { width: 26px; }
+.s-3:after { width: 39px; }
+.s-4:after { width: 52px; }
+.s-5:after { width: 65px; }
