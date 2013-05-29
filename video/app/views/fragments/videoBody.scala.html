@@ -25,7 +25,7 @@
             </video>
         </div>
 
-    </article>
+
 
     <div class="article__byline snap-to-grid">
         @fragments.byline(video.byline, video)
@@ -35,7 +35,9 @@
         @fragments.standfirst(video)
     </div>
 
-    @fragments.social(video)
+        @fragments.social(video)
+    </article>
+
 
     @if(page.storyPackage.nonEmpty) {
         <aside role="complementary">
