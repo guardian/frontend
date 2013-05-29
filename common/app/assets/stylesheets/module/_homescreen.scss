@@ -3,9 +3,8 @@
     z-index: 9999;
     -webkit-user-select: none;
     user-select: none;
-    @include box-sizing(border-box);
+    -webkit-box-sizing: border-box;
     -webkit-touch-callout: none;
-    touch-callout: none;
     width: 240px;
     padding: 12px 28px 16px 14px;
     text-align: left;
@@ -23,7 +22,7 @@
     @extend %type-8;
     width: 240px;
     margin-left: 14px;
-    @include box-shadow(6px 6px 6px rgba(254, 254, 254, 0.2));
+    -webkit-box-shadow: 6px 6px 6px rgba(254, 254, 254, 0.2);
 }
 
 #addToHomeScreen.addToHomeWide {
@@ -52,7 +51,7 @@
 }
 
 #addToHomeScreen .addToHomeClose {
-    @include box-sizing(border-box);
+    -webkit-box-sizing: border-box;
     position: absolute;
     right: 8px;
     top: 8px;

@@ -97,7 +97,7 @@
     font-weight: normal;
     border: none;
     text-shadow: none;
-    box-shadow: none;
+    @include box-shadow(none);
 }
 
 .update-btn.is-active,
