@@ -8,7 +8,7 @@
 }
 
 .current {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .is-on {
@@ -50,7 +50,7 @@
 .trailblock .panel,
 .rolled-out {
     height: auto;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .shut > .panel,
@@ -68,10 +68,10 @@
     padding: 0 0 0 $baseline;
     overflow: hidden;
     height: 36px;
-}
 
-.update.hidden{
-    display: none;
+    &.hidden {
+        display: none;
+    }
 }
 .update-indicator {
     float: left;
@@ -95,7 +95,7 @@
     font-weight: bold;
     border: none;
     text-shadow: none;
-    box-shadow: none;
+    @include box-shadow(none);
     width: 60px;
     text-indent: -10px;
     line-height: 18px;
@@ -113,15 +113,16 @@
 }
 
 .is-updating {
-    display:none;
+    display: none;
     width: 36px;
     height: 12px;
     background-size: 100%;
     margin-top: 6px;
-}
 
-.is-updating.is-active {
-    display:block;
+    &.is-active {
+        display: block;
+    }
+
 }
 
 .is-live-icon {

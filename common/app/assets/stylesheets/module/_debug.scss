@@ -1,9 +1,9 @@
 #dev-debug {
-  display: none;
+    display: none;
 }
 
 #dev-debug.active {
-  @extend %type-10;
-  margin-top: $baseline*2;
-  display: block;
+    @extend %type-10;
+    margin-top: $baseline*2;
+    display: block;
 }

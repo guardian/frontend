@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Navigation controls
-   ========================================================================== */
+     Navigation controls
+     ========================================================================== */
 
 /* Control
  ========================================================================== */
@@ -13,47 +13,47 @@
     height: 48px;
     width: 60px;
     position: relative;
-    color: #ffffff;
+    color: #fff;
     background-color: transparent;
     vertical-align: top;
     text-decoration: none !important;
-  }
+}
 
 .control.is-active,
 .control.is-active {
-  background-color: #ffffff;
-  color: $blue;
+    background-color: #fff;
+    color: $blue;
 }
 
 .control__text {
-  @extend %type-13;
-  position: absolute;
-  color: #ffffff;
-  top: 9px;
-  left: 3px;
+    @extend %type-13;
+    position: absolute;
+    color: #fff;
+    top: 9px;
+    left: 3px;
 }
 
 .is-active .control__text {
-  color: $linkBlue;
+    color: $linkBlue;
 }
 
 .control__icon {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
 }
 
 .i-nav-divider {
-  float: left;
-  height: 36px;
-  width: 1px;
-  margin: 12px 3px 0 0;
-  background-color: $main3;
+    float: left;
+    height: 36px;
+    width: 1px;
+    margin: 12px 3px 0 0;
+    background-color: $main3;
 }
 
 .is-active .i-nav-divider {
-  border-color: #ffffff;
-  background-color: #ffffff;
+    border-color: #fff;
+    background-color: #fff;
 }
 
 /* Sections control - (Hamburger icon )
@@ -64,42 +64,41 @@
 .control--sections:active,
 .control--sections:hover,
 .control--sections:visited {
-
-  @media only screen and (min-width: $tablet) {
-    position: absolute;
-    right: 0px;
-    top: 48px;
-    background-color: transparent;
-    color: #444444;
-    font-size: 14px;
-  }
+    @media only screen and (min-width: $tablet) {
+        position: absolute;
+        right: 0;
+        top: 48px;
+        background-color: transparent;
+        color: #444;
+        font-size: 14px;
+    }
 }
 
 .control--sections .control__text {
-  @media only screen and (min-width: $tablet) {
-    display: none;
-  }
+    @media only screen and (min-width: $tablet) {
+        display: none;
+    }
 }
 
 .control--sections .control__icon {
-  @media only screen and (min-width: $tablet) {
-    display:none;
-  }
+    @media only screen and (min-width: $tablet) {
+        display:none;
+    }
 }
 
 .control--sections .i-menu-grey {
-  display: none;
+    display: none;
 
-  @media only screen and (min-width: $tablet) {
-    display: inline-block;
-  }
+    @media only screen and (min-width: $tablet) {
+        display: inline-block;
+    }
 }
 
 .control--sections .i-nav-divider {
-  @media only screen and (min-width: $tablet) {
-    border-left: 1px solid $neutral10;
-    background-color: #ffffff;
-  }
+    @media only screen and (min-width: $tablet) {
+        border-left: 1px solid $neutral10;
+        background-color: #fff;
+    }
 }
 
 /* Top stories control
@@ -109,13 +108,13 @@
 .control--topstories:active,
 .control--topstories:hover,
 .control--topstories:visited {
-  margin: 0;
+    margin: 0;
 
-  @media only screen and (min-width: $tablet) {
-    position: absolute;
-    top: 0px;
-    right: 0px
-  }
+    @media only screen and (min-width: $tablet) {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 }
 
 /* Search control
@@ -125,12 +124,12 @@
 .control--search:active,
 .control--search:hover,
 .control--search:visited {
-  display: none;
-  position: absolute;
-  top: 0px;
-  right: 60px;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 60px;
 
-  @media only screen and (min-width: $tablet) {
-    display: block;
-  }
+    @media only screen and (min-width: $tablet) {
+        display: block;
+    }
 }

@@ -3,25 +3,26 @@ html {
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .relative-timestamp {
-  @extend %type-11;
-  line-height: 1em;
-  font-weight: bold;
-  display: block;
-  height: 1em;
-  color: #929497;
-  margin: 0;
-  padding:4px 0 3px 0;
+    @extend %type-11;
+    line-height: 1em;
+    font-weight: bold;
+    display: block;
+    height: 1em;
+    color: #929497;
+    margin: 0;
+    padding:4px 0 3px 0;
+
+    span {
+        display: inline-block;
+    }
 }
 
-.relative-timestamp span {
-    display: inline-block;
-}
-
-ol, ul {
+ol,
+ul {
     list-style-position: inside;
 }
 

@@ -2,33 +2,32 @@
    Trailblocks
    ========================================================================== */
 .trailblock {
-  padding: 6px $gutter 24px $gutter;
+    padding: 6px $gutter 24px;
 }
     .trailblock ul {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 
 /* Trailblock expandables
    ========================================================================== */
 .front-section {
-  overflow: auto;
+    overflow: auto;
 }
 
 .front-section .trailblock.is-shut > ul,
 .front-section .trailblock.is-shut > .cta,
 .trailblock.is-shut .panel {
-  display: none;
+    display: none;
 }
 
 .trailblock.is-shut {
-  padding: 0px $gutter 12px $gutter;
+    padding: 0 $gutter 12px;
 }
 
 .trailblock.is-shut .count {
-  display: inline-block;
+    display: inline-block;
 }
 
 .trailblock.is-shut .cta__icon {
-  @include rotate(180deg);
+    @include rotate(180deg);
 }
-

@@ -7,7 +7,18 @@ html {
 }
 
 .delay-font-render {
-    h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, table {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol,
+    dl,
+    blockquote,
+    table {
         visibility: hidden;
     }
 }
@@ -26,16 +37,16 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 
-.type-0 { @extend %type-0 }
-.type-1 { @extend %type-1 }
-.type-2 { @extend %type-2 }
+.type-0 { @extend %type-0; }
+.type-1 { @extend %type-1; }
+.type-2 { @extend %type-2; }
 
 //SerifText
-.type-3 { @extend %type-3 }
-.type-4 { @extend %type-4 }
-.type-5 { @extend %type-5 }
-.type-6 { @extend %type-6 }
-.type-7 { @extend %type-7 }
+.type-3 { @extend %type-3; }
+.type-4 { @extend %type-4; }
+.type-5 { @extend %type-5; }
+.type-6 { @extend %type-6; }
+.type-7 { @extend %type-7; }
 
 //Serif b and strong need to be 'medium' weight.
 .type-6 b,
@@ -46,17 +57,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 //Sans-serif's
-.type-8  { @extend %type-8 }
-.type-9  { @extend %type-9 }
-.type-10 { @extend %type-10 }
-.type-11 { @extend %type-11 }
-.type-12 { @extend %type-12 }
-.type-13 { @extend %type-13 }
+.type-8  { @extend %type-8; }
+.type-9  { @extend %type-9; }
+.type-10 { @extend %type-10; }
+.type-11 { @extend %type-11; }
+.type-12 { @extend %type-12; }
+.type-13 { @extend %type-13; }
 
 //Default type elements
 p {
     color: #545454;
-    margin: 0 0 0 0;
+    margin: 0;
 }
 
 h1 {
@@ -76,6 +87,7 @@ h4 {
     @extend %type-6;
 }
 
-th, td {
+th,
+td {
     @extend %type-10
 }

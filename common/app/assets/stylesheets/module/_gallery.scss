@@ -2,16 +2,16 @@
 
 .gallery-container {
     overflow: hidden;
-    margin: 0px $gutter;
+    margin: 0 $gutter;
 }
 
 .gallery-caption {
     margin-top: $baseline;
-}
 
-.gallery-caption i {
-    display: inline-block;
-    margin-right: 4px;
+    i {
+        display: inline-block;
+        margin-right: 4px;
+    }
 }
 
 .gallery-container .caption-credit {
@@ -21,13 +21,13 @@
     margin-top: $baseline;
 }
 
-.gallery-swipe li img {
-    width: 100%;
-}
-
 .gallery-swipe li {
-   float: left;
-  min-height: 200px;
+    float: left;
+    min-height: 200px;
+
+    img {
+        width: 100%;
+    }
 }
 
 .gallery-nav {

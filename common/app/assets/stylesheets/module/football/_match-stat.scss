@@ -1,21 +1,22 @@
 .match-stat {
     padding-bottom: $baseline * 3;
     margin-bottom: 0;
-}
-    .match-stat h5 {
+
+    h5 {
         font-weight: 500;
         line-height: 20px;
     }
 
-    .match-stat li {
-       display: inline-block;
-       width: 49%;
+    li {
+        display: inline-block;
+        width: 49%;
+
+        &:nth-child(2) {
+            text-align: right;
+        }
     }
 
-    .match-stat span {
+    span {
         display: inline-block;
     }
-
-    .match-stat li:nth-child(2) {
-        text-align: right;
-    }
+}
