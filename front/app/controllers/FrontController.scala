@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import conf.CommonSwitches.AustraliaFrontSwitch
 import front._
 import model._
 import conf._
@@ -97,10 +96,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       }
     }
 
-    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
-      NotFound
-    }
-    else if (trailblocks.isEmpty) {
+    if (trailblocks.isEmpty) {
       InternalServerError
     } else {
       val htmlResponse = () => views.html.front(frontPage, trailblocks)
@@ -123,10 +119,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     // get the first trailblock
     val trailblock: Option[Trailblock] = front(path, edition).headOption
 
-    if (frontPage == AustraliaNetworkFrontPage && AustraliaFrontSwitch.isSwitchedOff) {
-      NotFound
-    }
-    else if (trailblock.isEmpty) {
+    if (trailblock.isEmpty) {
       InternalServerError
     } else {
       val trails: Seq[Trail] = trailblock.get.trails

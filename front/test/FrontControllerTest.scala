@@ -34,14 +34,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     header("Content-Type", result).get should be("application/javascript")
   }
 
-  it should "404 for australia when switched off" in Fake {
-    CommonSwitches.AustraliaFrontSwitch.switchOff()
-    val result = controllers.FrontController.render("australia")(TestRequest())
-    status(result) should be(404)
-  }
-  
-  it should "200 for australia when switched on" in Fake {
-    CommonSwitches.AustraliaFrontSwitch.switchOn()
+  it should "200 for australia" in Fake {
     val result = controllers.FrontController.render("australia")(TestRequest())
     status(result) should be(200)
   }

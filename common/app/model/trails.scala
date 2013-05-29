@@ -3,11 +3,10 @@ package model
 import org.joda.time.DateTime
 import views.support.Style
 import scala.math
-import conf.ContentApi
-import ContentApi.ItemQuery
 import scala.concurrent.Future
 import conf.ContentApi
 import common.{ExecutionContexts, Edition}
+import contentapi.QueryDefaults
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -46,7 +45,7 @@ trait TrailblockDescription extends ExecutionContexts {
   val showMore: Boolean
   val isConfigured: Boolean
 
-  def query: Future[Seq[Trail]]
+  def query(): Future[Seq[Trail]]
 }
 
 class ItemTrailblockDescription(
@@ -55,25 +54,16 @@ class ItemTrailblockDescription(
     val style: Option[Style],
     val showMore: Boolean,
     val edition: Edition,
-    val isConfigured: Boolean) extends TrailblockDescription
+    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query: Future[Seq[Trail]] = ContentApi.item(id, edition)
-    .showEditorsPicks(true)
-    .pageSize(20)
-    .response
-    .map { response =>
-    val editorsPicks = response.editorsPicks map {
-      new Content(_)
-    }
-    val editorsPicksIds = editorsPicks map (_.id)
-    val latest = response.results map {
-      new Content(_)
-    } filterNot (c => editorsPicksIds contains (c.id))
-
-    editorsPicks ++ latest
-  }
+  def query() = EditorsPicsAndLatest(
+    ContentApi.item(id, edition)
+      .showEditorsPicks(true)
+      .pageSize(20)
+      .response
+  )
 }
 
 object ItemTrailblockDescription {
@@ -81,27 +71,29 @@ object ItemTrailblockDescription {
     new ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, edition, isConfigured)
 }
 
-case class QueryTrailblockDescription(
+private case class CustomQueryTrailblockDescription(
             id: String,
             name: String,
             numItemsVisible: Int,
-            style: Option[Style] = None,
-            showMore: Boolean = false,
-            customQuery: () => ItemQuery,
-            isConfigured: Boolean = false)
+            style: Option[Style],
+            customQuery: () => Future[Seq[Trail]],
+            isConfigured: Boolean)
     extends TrailblockDescription {
+
+  // show more will not (currently) work with custom queries
+  val showMore = false
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query: Future[Seq[Trail]] = customQuery().response.map { response =>
-    val editorsPicks = response.editorsPicks map {
-      new Content(_)
-    }
+  def query() = customQuery()
+}
 
-    val results = response.results map {
-      new Content(_)
-    }
-
-    editorsPicks ++ results
-  }
+object CustomTrailblockDescription {
+  def apply(id: String,
+            name: String,
+            numItemsVisible: Int,
+            style: Option[Style] = None,
+            isConfigured: Boolean = false)
+           (query: => Future[Seq[Trail]]): TrailblockDescription =
+    CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
 }
