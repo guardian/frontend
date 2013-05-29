@@ -16,47 +16,46 @@ If a user already has the font cached, they are not part of the test. Users that
 
 ## Problems
 
-Test results are not sent back to our tracking server until the window's `load` event. This means that if the user gives up waiting before that time then no results are recorded for that page view. The extent of this problem might be able to be partially determined by comparing the instances in each test bucket with the expected proportions.
+Test results are not sent back to our tracking server until the window's `load` event. This means that if the user gives up waiting before that time then no results are recorded for that page view. However, the test itself does not effect the delay of the tracking call. The extent of this problem might be able to be partially determined by comparing the instances in each test bucket with the expected proportions.
 
 ## Results
 
-### Test 1
+### Test 1 - WebFontFallback
 
 * 10th-13th May (72 hours)
 * 3 second font delay when uncached
 
 | Test group | Instances |  Proportion | Homepage bounce | Article bounce | Pages per visit | 
-| ---------- | ----- | ---------- | --------------- | -------------- | --------------- |
-| Control    | 1,962,023 | 90% | 30.4% | 86.1% | Help |
-| No fallback| 218,364 | 10% | 30.1% | 86.6% | Help |
+| ---------- | --------- | ----------  | --------------- | -------------- | --------------- |
+| Control    | 1,962,023 | 90%         | 30.4%           | 86.1%          | 1.40            |
+| No fallback| 218,364   | 10%         | 30.1%           | 86.6%          | 1.38            |
 
-### Test 2
+### Test 2 - WebFontFallbackAllUsers
 
-* 13th-14th May
+* 13th-15th May (43 hours)
 * 3 second font delay when uncached
 * NB: All font caches were cleared before this test
 
 | Test group | Instances | Proportion | Homepage bounce | Article bounce | Pages per visit | 
 | ---------- | --------- | ---------- | --------------- | -------------- | --------------- |
-| Control    |  | 50% |  |  |  |
-| No fallback|  | 50% |  |  |  |
+| Control    | 788,727   | 50%        | 30.4%           | 82.5%          | 1.36            |
+| No fallback| 794,449   | 50%        | 30.6%           | 82.0%          | 1.36            |
 
 
-### Conclusion
+### Initial conclusion
 
-Showing the fallback font has no significant impact on any of the relevant metrics. Oh.
+Showing the fallback font for first page view had no significant impact on any of the tested metrics. Tests over a longer time frame are required to measure longer term engagement metrics.
 
 ## Further tests
 
-Delay font rendering for all page views, even when the fonts are cached. Presumably we still hypothesise that the content rendering time impacts our metrics. This test will prove or disprove that.
+Delay font rendering for all page views, even when the fonts are cached.
 
-### Test 3
+### Test 3 - DelayFontAllPages
 
-* Not yet run
+* 15th May
 * 3 second font delay for all page views
-* NB: All font caches were cleared before this test
 
-| Test group | Instances | Proportion | Homepage bounce | Article bounce | Pages per visit | 
-| ---------- | --------- | ---------- | --------------- | -------------- | --------------- |
-| Control    |  | 50% |  |  |  |
-| No fallback|  | 50% |  |  |  |
+| Test group | Instances   | Proportion | Homepage bounce | Article bounce | Pages per visit | 
+| ---------- | ----------- | ---------- | --------------- | -------------- | --------------- |
+| Control    | 30,150,460  | 99%        | 27.5%           | 83.7%          | 1.76            |
+| Delay      | 301,207     | 1%         | 27.9%           | 82.7%          | 1.74            |
