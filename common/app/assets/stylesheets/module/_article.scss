@@ -15,7 +15,7 @@
 
 .article__headline {
     @extend %type-1;
-    color: $neutral1;
+    color: $neutral2;
 }
 
 .article-standfirst {
@@ -42,7 +42,7 @@
     padding: 0 0 9px 0;
     vertical-align: top;
 
-    a { 
+    a {
         font-weight: 500;
     }
 }
@@ -115,7 +115,7 @@ video {
 
 .main-caption {
     padding: 3px 0;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .article figure,
@@ -144,7 +144,7 @@ video {
 
     .article-headline {
         font-size: 2.8rem;
-        line-height: 3.2rem;        
+        line-height: 3.2rem;
     }
 }
 
@@ -197,7 +197,7 @@ video {
 
     .article-headline {
         font-size: 3rem;
-        line-height: 3.4rem;        
+        line-height: 3.4rem;
     }
 
     .article-standfirst {
