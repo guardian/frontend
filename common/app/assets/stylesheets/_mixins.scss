@@ -8,35 +8,33 @@
 }
 
 @mixin box-sizing($box) {
-    -ms-box-sizing: $box;
-    -o-box-sizing: $box;
     -webkit-box-sizing: $box;
     -moz-box-sizing: $box;
     box-sizing: $box;
 }
 
 @mixin transition($args) {
-    transition: $args;
     -webkit-transition: $args;
     -moz-transition: $args;
+    transition: $args;
 }
 
 @mixin transform($args) {
-    transform: $args;
     -webkit-transform: $args;
     -moz-transform: $args;
+    transform: $args;
 }
 
 @mixin rounded-corners($radius: 5px) {
-    border-radius: $radius;
     -webkit-border-radius: $radius;
     -moz-border-radius: $radius;
+    border-radius: $radius;
 }
 
 @mixin box-shadow($args) {
-    box-shadow: $args;
     -webkit-box-shadow: $args;
     -moz-box-shadow: $args;
+    box-shadow: $args;
 }
 
 @mixin rotate($val) {
@@ -45,4 +43,11 @@
     -webkit-transform: rotate($val);  /* Saf3.1+, Chrome */
     -ms-transform: rotate($val);  /* IE9 */
     transform: rotate($val);
+}
+
+@mixin user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

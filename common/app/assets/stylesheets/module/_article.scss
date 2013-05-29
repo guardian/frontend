@@ -67,5 +67,5 @@
 video {
     max-width: 100%;
     height: auto;
-    -webkit-user-select: none;
+    @include user-select;
 }
