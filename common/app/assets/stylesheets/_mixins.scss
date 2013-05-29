@@ -1,10 +1,17 @@
-//Output based on body font-size being 10px
+//Output based on html font-size being 10px
 @mixin font($family, $weight, $size, $line-height) {
     font-family: $family;
     font-size: $size*1px;
     font-size: ($size / 10)*1rem;
     font-weight: $weight;
     line-height: ($line-height / 10)*1rem;
+
+    // Optimize rendering of big fat text
+    @if ($size > 15) {
+        @if ((type-of($weight) == number and $weight >= 500) or $weight == bold) {
+            -webkit-font-smoothing: antialiased;
+        }
+    }
 }
 
 @mixin box-sizing($box) {
