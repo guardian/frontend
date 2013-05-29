@@ -74,7 +74,7 @@ Running
 
 Assuming you have checked out this project, open a console and change directory into the root of the project.
 
-Start Simple Build Tool (sbt) by running `./sbt012 --no-proxy`
+Start Simple Build Tool (sbt) by running `./sbt012`
 
 Once sbt is running (it may take a while first time) then compile the project by typing `compile` (also can take a while first time)
 
@@ -120,11 +120,6 @@ typically include:
 Deploying
 ---------
 Deployment uses the [Magenta][magenta] library.
-
-
-No Proxy Build
---------------
-Invoke `sbt012` with a `--no-proxy` parameter to directly download artifacts.
 
 
 Additional Documentation
