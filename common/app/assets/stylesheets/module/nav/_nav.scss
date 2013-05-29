@@ -84,6 +84,10 @@
 
     }
 
+    .nav--columns .nav__link--blue { // TODO: this needs to be done better than this
+        color: $linkBlue
+    }
+
     .nav--columns li:nth-child(even) {
         float: right; // this aligns right edge correctly
         margin-right: 0%;
@@ -95,6 +99,8 @@
         border-top: none;
         padding-top: 0;
     }
+
+
 
 /* Section divider
    ========================================================================== */
