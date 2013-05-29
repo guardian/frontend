@@ -2,12 +2,12 @@
    Article head
    ========================================================================== */
 .article__head {
-  padding: $baseline*3 $gutter $baseline*3 $gutter;
+  padding: 0 $baseLRpad;
 }
 
   .article__head .dateline {
       font-family: $sans-serif;
-      margin: 0px 0px $baseline*1.5 0px;
+      margin: 0px;
       color: $neutral4;
       @extend %type-11;
       font-weight: bold;
@@ -58,7 +58,7 @@
    Article Body
    ========================================================================== */
 .article__body {
-  padding: 0 10px;
+  padding: 0 $baseLRpad;
 
   p {
     margin-bottom:0;
@@ -102,16 +102,12 @@ video {
 }
 
 .article figure {
-  padding: 5px 10px 7px 10px;
-}
-
-.article .article__body figure {
-  padding: 5px 0 7px 0;
+  @extend .grid-box-centered;
 }
 
 .article__byline {
   @include box-sizing(border-box);
-  padding: 5px 10px 7px 10px;
+  @extend .grid-box-centered;
 }
 
 .main-caption {
@@ -124,6 +120,15 @@ video {
 .article__body,
 video {
   @include box-sizing(border-box);
+}
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .article-headline.chars-small  {height: $gridHeight * 1 - 16}
+  .article-headline.chars-medium {height: $gridHeight * 2 - 16}
+  .article-headline.chars-large  {height: $gridHeight * 3 - 16}
+}
+
+@media screen and (min-width: 5 * $gridWidth) {
 }
 
 /* 6 Cols
@@ -198,8 +203,12 @@ video {
 
   .article-headline {
     font-size: 3rem;
-    line-height: 3.4rem;    
+    line-height: 3.4rem; 
   }
+
+  .article-headline.chars-small  {height: $gridHeight * 2 - 16}
+  .article-headline.chars-medium {height: $gridHeight * 3 - 16}
+  .article-headline.chars-large  {height: $gridHeight * 4 - 16}
 
   .article-standfirst {
     font-size: 1.8rem;
@@ -209,15 +218,14 @@ video {
 
   .article__byline {
     margin: 0px;
-    padding: 0 10px;
+    padding: 0 $baseLRpad;
   }
 
   .article figure,
   .article__body {
     width: $gridWidth * 5;
     float: right;
-    padding: 0 10px;
-    margin: 15px 0 0 0;
+    margin: 0;
   }
   .byline {
     margin-left: 0;
