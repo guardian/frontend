@@ -16,12 +16,6 @@
             </div>
         </header>
 
-        @page.advert.map(_.toString).map{ ad =>
-        <script>
-            guardian.config.page.videoAd = @Html(ad);
-        </script>
-        }
-
         <div class="player">
             <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                 @video.encodings.map{ encoding =>

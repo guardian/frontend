@@ -44,6 +44,7 @@ trait TrailblockDescription extends ExecutionContexts {
   val style: Option[Style]
   val section: String
   val showMore: Boolean
+  val isConfigured: Boolean
 
   def query: Future[Seq[Trail]]
 }
@@ -53,7 +54,8 @@ class ItemTrailblockDescription(
     val numItemsVisible: Int,
     val style: Option[Style],
     val showMore: Boolean,
-    val edition: Edition) extends TrailblockDescription
+    val edition: Edition,
+    val isConfigured: Boolean) extends TrailblockDescription
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
@@ -75,8 +77,8 @@ class ItemTrailblockDescription(
 }
 
 object ItemTrailblockDescription {
-  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false)(implicit edition: Edition) =
-    new ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, edition)
+  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
+    new ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, edition, isConfigured)
 }
 
 case class QueryTrailblockDescription(
@@ -85,12 +87,13 @@ case class QueryTrailblockDescription(
             numItemsVisible: Int,
             style: Option[Style] = None,
             showMore: Boolean = false,
-            customQuery: ItemQuery)
+            customQuery: () => ItemQuery,
+            isConfigured: Boolean = false)
     extends TrailblockDescription {
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query: Future[Seq[Trail]] = customQuery.response.map { response =>
+  def query: Future[Seq[Trail]] = customQuery().response.map { response =>
     val editorsPicks = response.editorsPicks map {
       new Content(_)
     }

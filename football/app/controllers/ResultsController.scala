@@ -148,8 +148,8 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
         "GFE:Football:automatic:team results"
       )
       
-      val htmlResponse = views.html.teamFixtures(page, filters, upcomingFixtures)
-      val jsonResponse = views.html.fragments.teamFixturesBody(page, filters, upcomingFixtures)
+      val htmlResponse = () => views.html.teamFixtures(page, filters, upcomingFixtures)
+      val jsonResponse = () => views.html.fragments.teamFixturesBody(page, filters, upcomingFixtures)
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
     }.getOrElse(NotFound)
   }

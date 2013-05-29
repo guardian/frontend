@@ -75,7 +75,8 @@ $orange: #FF7F00;
 
   .main-caption { padding: $baseline*4 0px;}
 
-  .sample-paras {
+  .sample-paras,
+  .story-explainer {
     font-size: 1.6rem;
     line-height: 2.4rem;
     color: #000;
@@ -529,6 +530,8 @@ i.is-open.cta-new__icn--right {
 	padding:5px;
 	color:#ffffff;
 	font-weight:500;
+	display:block;
+	text-decoration:none;
 }
 .cta-new--story {
 	border-top:1px solid #ffffff;

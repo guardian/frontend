@@ -26,14 +26,14 @@ define([
         
         initLiveBlogging: function() {
             common.mediator.on('page:story:ready', function(config, context) {
-                var liveBlog = context.querySelector('#live');
-                if (liveBlog) {
+                if (context.querySelector('#live .update')) {
                     var a = new AutoUpdate({
-                        path: liveBlog.getAttribute('data-source'),
+                        path: context.querySelector('#live').getAttribute('data-source'),
                         delay: 60000,
-                        attachTo: context.querySelector(".story-live"),
+                        attachTo: context.querySelector(".story-live .article-body"),
                         switches: config.switches,
-                        loadOnInitialise: true
+                        loadOnInitialise: true,
+                        responseSelector: '.article-body .block'
                     }).init();
                 }
             });
@@ -101,7 +101,7 @@ define([
                     var swipeLib = ['js!swipe'];
 
                     require(swipeLib, function() {
-                        var hasContactSheet = common.$g('figure', '.story-pictures').length;
+                        var hasContactSheet = context.querySelector('.story-pictures') && common.$g('figure', '.story-pictures').length;
                         common.$g('#container').css('overflow', 'hidden');
 
                         if(hasContactSheet) {

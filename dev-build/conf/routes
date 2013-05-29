@@ -84,7 +84,9 @@ GET     /$path<.*/gallery/.*>                               controllers.GalleryC
 #Tag
 # note: reg ex so this doesn't interfer with $section/trails
 GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails          controllers.TagController.renderTrails(path)
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails           controllers.TagController.renderTrails(path)
 
 #Section
 GET		/sections							               controllers.SectionsController.render()

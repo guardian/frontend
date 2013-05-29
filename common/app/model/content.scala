@@ -25,6 +25,7 @@ class Content(
     .map { videoAsset => Image(videoAsset.copy(file = videoAsset.safeFields.get("stillImageUrl"))) }
 
   lazy val videoAssets: Seq[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }
+  lazy val blockAds: Boolean = videoAssets.exists(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false))
 
   lazy val id: String = delegate.id
   lazy val sectionName: String = delegate.sectionName.getOrElse("")
@@ -121,7 +122,6 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
   private val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
-  lazy val blockAds: Boolean = videoAsset.map(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false)).getOrElse(false)
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"

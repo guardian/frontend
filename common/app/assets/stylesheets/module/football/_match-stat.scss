@@ -1,9 +1,10 @@
 .match-stat {
-    padding-bottom: $baseline;
+    padding-bottom: $baseline * 3;
     margin-bottom: 0;
 }
     .match-stat h5 {
         font-weight: 500;
+        line-height: 20px;
     }
 
     .match-stat li {

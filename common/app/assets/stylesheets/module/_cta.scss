@@ -67,7 +67,8 @@
 
 /* Blue
    ========================================================================== */
-.cta--blue {
+.cta--blue,
+.cta--blue:active {
   background-color: $linkBlue;
 
   .cta__text {

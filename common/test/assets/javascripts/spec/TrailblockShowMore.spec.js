@@ -1,7 +1,9 @@
-define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], function(common, ajax, bean, bonzo, TrailblockShowMore) {
+define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fixtures/trails'], function(common, ajax, bean, bonzo, TrailblockShowMore, testData) {
 
     describe("TrailblockShowMore", function() {
-        
+
+        var server;
+
         var fixtureTrailblock =
             '<div class="front-container">'
                 + '<div class="js-show-more trailblock" id="trailblock-show-more-fixture">'
@@ -22,22 +24,36 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more'], funct
             common.$g('body').append(fixtureTrailblock);
             // spy on mediator
             sinon.spy(common.mediator, 'emit');
+
+            server = sinon.fakeServer.create();
+            server.respondWith("GET", '/fixtures/trails?_edition=UK',
+                [
+                    200,
+                    { "Content-Type": "application/json" },
+                    testData
+                ]
+            );
+
             // create the module
             var trailblockShowMore = new TrailblockShowMore(
                 {
-                    jsonpCallbackName: 'trailblockShowMore',
-                    url: './fixtures/trails'
+                    url: '/fixtures/trails'
                 }
             );
+
             trailblockShowMore.init(document);
+
             $cta = common.$g('.front-container .trailblock .cta');
             bean.fire($cta[0], 'click');
+
+            server.respond();
         });
 
         afterEach(function() {
             common.$g('.front-container').remove();
             common.mediator.emit.restore();
             common.mediator.removeEvent('module:clickstream:click');
+            server.restore();
         });
 
         it("should append the 'show more' cta", function(){
