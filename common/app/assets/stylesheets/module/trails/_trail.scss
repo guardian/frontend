@@ -16,10 +16,6 @@
     padding: 0 0 0 0;
   }
 
-.trail__head {
-  margin-bottom: 12px;
-}
-
 .trail__headline {
   @extend %type-2;
   color: $neutral2;
@@ -36,6 +32,20 @@
   .trail__headline a:active {
     text-decoration: underline;
   }
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .trail__headline.chars-small  {height: $gridHeight * 1 - 16}
+  .trail__headline.chars-medium {height: $gridHeight * 2 - 16}
+  .trail__headline.chars-large  {height: $gridHeight * 2 - 16}
+}
+
+@media screen and (min-width: 6 * $gridWidth) {
+  .trail__headline.chars-medium {height: $gridHeight * 1 - 16}
+}
+
+@media screen and (min-width: 8 * $gridWidth) {
+  .trail__headline.chars-large  {height: $gridHeight * 1 - 16}
+}
 
 .trail__text {
   @extend %type-3;

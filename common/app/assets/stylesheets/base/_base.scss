@@ -8,13 +8,11 @@ body {
 
 .relative-timestamp {
   @extend %type-11;
-  line-height: 1em;
+  line-height: 1.6rem;
   font-weight: bold;
   display: block;
-  height: 1em;
   color: #929497;
   margin: 0;
-  padding:4px 0 3px 0;
 }
 
 .relative-timestamp span {

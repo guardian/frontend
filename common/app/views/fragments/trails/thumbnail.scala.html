@@ -1,11 +1,17 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
+@charRange(str: String) = @{
+    if (str.length <= 30) "small"
+    else if (str.length <= 50) "medium"
+    else "large"
+}
+
 <@element class="trail trail--thumbnail t@rowNum" data-link-name="trail">
 
     <div class="trail__head snap-to-grid">
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-        <h@headingLevel class="trail__headline">
+        <h@headingLevel class="trail__headline chars-@charRange(trail.headline)">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>
