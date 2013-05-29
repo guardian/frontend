@@ -323,14 +323,14 @@ define('swipeview', [], function() {
 			this.stepsX += Math.abs(deltaX);
 			this.stepsY += Math.abs(deltaY);
 
-			// We take a 5px buffer to figure out the direction of the swipe
-			if (this.stepsX < 5 && this.stepsY < 5) {
+			// We take buffers to figure out the direction of the swipe
+			if (this.stepsX < 30 && this.stepsY < 10) {
 //				e.preventDefault();
 				return;
 			}
 
 			// We are scrolling vertically, so skip SwipeView and give the control back to the browser
-			if (!this.directionLocked && this.stepsY > this.stepsX) {
+			if (!this.directionLocked && 3*this.stepsY > this.stepsX) {
 				this.initiated = false;
 				return;
 			}
