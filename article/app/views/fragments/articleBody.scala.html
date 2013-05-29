@@ -8,11 +8,11 @@
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="article__head">
-        <div class="">
+        <div class="snap-to-grid">
             @fragments.dateline(article.webPublicationDate, article.isLive)
             @fragments.headline(article.headline)
         </div>
-        <div class="article__standfirst">
+        <div class="article__standfirst snap-to-grid">
             @fragments.standfirst(article)
         </div>
     </header>
