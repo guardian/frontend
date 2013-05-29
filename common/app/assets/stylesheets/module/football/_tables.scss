@@ -98,7 +98,7 @@
 .table-football-body tr:nth-child(even),
 .table-football-body:hover tr:hover,
 .table-football-body tr:last-child {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .table-football-body tr.highlight,
@@ -117,10 +117,6 @@
     background-color: $neutral6;
     overflow: hidden;
     border-top: 0;
-}
-
-.table-football--front__cta {
-    margin-bottom: 24px;
 }
 
 

@@ -16,10 +16,6 @@
         padding-top: $baseline;
     }
 
-    .home-scorers {
-        margin-bottom: $baseline*2;
-    }
-
     .match-comment {
         @extend %type-11;
         font-weight: bold;
@@ -29,10 +25,17 @@
         margin-top: $baseline*2;
         padding-top: 5px;
     }
+
+    .team__score {
+        @extend %type-2;
+        color: $neutral2;
+        margin-bottom: 0;
+    }
 }
 
 .match-summary__scorers {
     @extend %type-11;
     font-weight: bold;
     color: $neutral4;
+    margin-bottom: $baseline*4;
 }

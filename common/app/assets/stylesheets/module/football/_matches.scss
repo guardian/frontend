@@ -176,7 +176,7 @@
 // this overrides components when places on a front (to avoid gaps)
 .trailblock .matches,
 .trailblock .competitions {
-    margin-bottom: 0;
+    margin-bottom: 12px;
 }
 
 .matches {
@@ -190,9 +190,7 @@
 .competition-table {
     padding: $baseline*2 0 0 0;
 }
-.competition-table--front {
-    margin-bottom: 12px;
-}
+
 
 .competition-table h3 {
     margin-bottom: $baseline*3;

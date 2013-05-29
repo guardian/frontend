@@ -7,9 +7,9 @@
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
   @if(theMatch.isLive || theMatch.isResult){
-    <h2 class="type-3">@homeTeam.name @homeTeam.score</h2>
+    <h2 class="team__score">@homeTeam.name @homeTeam.score</h2>
     <p class="home-scorers match-summary__scorers">@cleanScorers(homeTeam.scorers)</p>
-    <h2 class="away-team type-3">@awayTeam.name @awayTeam.score</h2>
+    <h2 class="away-team team__score">@awayTeam.name @awayTeam.score</h2>
     <p class="match-summary__scorers">@cleanScorers(awayTeam.scorers)</p>
   } else {
     <h2 class="type-3">@homeTeam.name v @awayTeam.name</h2>
