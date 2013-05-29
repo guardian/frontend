@@ -12,6 +12,7 @@
     "qwery": "3.4",
     "reqwest": "0.6",
     "swipe": "git://github.com/guardian/Swipe.git",
-    "swipeview": "git@github.com:guardian/SwipeView.git"
+    "swipeview": "git@github.com:guardian/SwipeView.git",
+    "moment": "2.0"
   }
 }
