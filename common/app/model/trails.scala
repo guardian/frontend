@@ -76,10 +76,12 @@ private case class CustomQueryTrailblockDescription(
             name: String,
             numItemsVisible: Int,
             style: Option[Style],
-            showMore: Boolean,
             customQuery: () => Future[Seq[Trail]],
             isConfigured: Boolean)
     extends TrailblockDescription {
+
+  // show more will not (currently) work with custom queries
+  val showMore = false
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
@@ -91,8 +93,7 @@ object CustomTrailblockDescription {
             name: String,
             numItemsVisible: Int,
             style: Option[Style] = None,
-            showMore: Boolean = false,
             isConfigured: Boolean = false)
            (query: => Future[Seq[Trail]]): TrailblockDescription =
-    CustomQueryTrailblockDescription(id, name, numItemsVisible, style, showMore, () => query, isConfigured)
+    CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
 }

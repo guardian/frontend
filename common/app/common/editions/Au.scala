@@ -15,7 +15,7 @@ import contentapi.QueryDefaults
 //It is not included in the Edition.all sequence
 object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Australia/Sydney")) with Sections with Zones with QueryDefaults {
 
-  val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured), showMore = false){
+  val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured)){
 
     val promiseOfCulture: Future[ItemResponse] = ContentApi.item.itemId("culture")
       .edition("au")
@@ -31,7 +31,7 @@ object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Austral
     EditorsPicsAndLatest(promiseOfCulture)
   }
 
-  val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = false){
+  val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)){
 
     val promiseOfComment: Future[ItemResponse] = ContentApi.item.itemId("commentisfree")
       .edition("au")
