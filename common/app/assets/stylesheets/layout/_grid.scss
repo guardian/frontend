@@ -10,6 +10,14 @@
     padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
 }
 
+.grid-box-centered,
+%grid-box-centered {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: $baseTopPad $baseLRpad $baseBotPad $baseLRpad;
+}
+
 @for $i from $gridColsMin through $gridColsMax {
     $outerWidth : $gridWidth * $i;
     @media only screen and (min-width : $outerWidth) {
