@@ -3,11 +3,11 @@
    ========================================================================== */
 
 #preloads {
-  position: relative;
-  clear: both;
-  //max-width: 64em;
-  //max-width: 102.4rem;
-  margin: 0 auto;
+    position: relative;
+    clear: both;
+    //max-width: 64em;
+    //max-width: 102.4rem;
+    margin: 0 auto;
 }
 
 /* ==========================================================================
@@ -15,16 +15,16 @@
    ========================================================================== */
 
 #header {
-  min-height: 48px;
-  position: relative;
-  background-color: $main1;
+    min-height: 48px;
+    position: relative;
+    background-color: $main1;
 }
 
 #logo {
-  display: block;
-  float: left;
-  margin: 7px 0 21px $gutter;
-  text-indent: -9999px;
+    display: block;
+    float: left;
+    margin: 7px 0 21px $gutter;
+    text-indent: -9999px;
 }
 
 
@@ -50,7 +50,7 @@
 
 #preloads-inner {
     position: relative;
-    top: 0px;
+    top: 0;
     height: 100%;
     width: 100%; 
     @include transition(0ms ease-out);
@@ -62,7 +62,7 @@
 #preload-2 {
     @include transform(translateZ(0px));
     position: absolute;
-    top: 0px;
+    top: 0;
     height: 100%;
     width: 100%;
 }
@@ -73,6 +73,6 @@
 }
 
 .preload-msg .is-updating {
-  display: block;
-  margin: 10px auto;
+    display: block;
+    margin: 10px auto;
 }

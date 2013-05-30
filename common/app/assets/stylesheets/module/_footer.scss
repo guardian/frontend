@@ -1,10 +1,3 @@
-.footer {
-    overflow: hidden;
-    margin: 0;
-    padding: 0 0 $baseline*4 0;
-    background-color: $main1;
-}
-
 /* Uses an id as is used as fragment
  * identifier for non-js mobile nav */
 #footer-nav {
@@ -13,24 +6,39 @@
   background-color: $neutral8;
 }
 
-.footer > .nav {
-  padding-left: $gutter;
-}
+.footer {
+    overflow: hidden;
+    margin: 0;
+    padding: 0 0 $baseline*4 0;
+    background-color: $main1;
 
-.footer .nav--stacked {
-  float: left;
-  width: 48%;
-  margin: 0;
-  padding-bottom: 18px;
-}
+    > .nav {
+      padding-left: $gutter;
+    }
 
-  .footer .nav--stacked li a {
-    @extend %type-11;
-    line-height: 24px;
-    color: #c3d5e5;
-    margin-left: 0;
-    border-top-color: #C0C9CE;
-  }
+    .nav--stacked {
+        float: left;
+        width: 48%;
+        margin: 0;
+        padding-bottom: 18px;
+    }
+
+    .nav--stacked li a {
+        @extend %type-11;
+        line-height: 24px;
+        color: #c3d5e5;
+        margin-left: 0;
+        border-top-color: #C0C9CE;
+    }
+
+    .cta {
+        border-top: 0;
+    }
+
+    .cta__text {
+        margin-left: 8px;
+    }
+}
 
 .footer__terms {
     @include box-sizing(border-box);
@@ -39,15 +47,14 @@
     width: 42%;
     margin: 0;
     padding: $baseline*2 $gutter 0 $gutter;
-    float:left;
+    float: left;
     color: $blue;
-}
 
-.footer__terms a {
-    display: block;
-    color: #c3d5e5;
+    a {
+        display: block;
+        color: #c3d5e5;
+    }
 }
-
 
 .footer__copyright {
     @extend %type-13;
@@ -56,13 +63,4 @@
     clear: both;
     margin: 0 $gutter;
     padding: $baseline*2 0;
-}
-
-
-.footer .cta {
-  border-top: 0;
-}
-
-.footer .cta__text {
-  margin-left: 8px;
 }

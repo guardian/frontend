@@ -2,26 +2,21 @@
     padding-top: 5px;
     padding-bottom: $baseline !important;
     margin-bottom: $baseline*3;
-}
 
-    .match-summary h2 {
+    h2 {
         margin-bottom: $baseline*2;
     }
 
-    .match-summary p:nth-child(3){
+    p:nth-child(3){
         margin-bottom: $baseline*2;
     }
 
-    .match-summary .away-team {
+    .away-team {
         border-top: 1px solid $neutral10;
         padding-top: $baseline;
     }
 
-    .match-summary .home-scorers {
-        margin-bottom: $baseline*2;
-    }
-
-    .match-summary .match-comment {
+    .match-comment {
         @extend %type-11;
         font-weight: bold;
         color: $neutral4;
@@ -31,9 +26,16 @@
         padding-top: 5px;
     }
 
+    .team__score {
+        @extend %type-2;
+        color: $neutral2;
+        margin-bottom: 0;
+    }
+}
 
 .match-summary__scorers {
     @extend %type-11;
     font-weight: bold;
     color: $neutral4;
+    margin-bottom: $baseline*4;
 }

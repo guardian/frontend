@@ -3,87 +3,87 @@
    ========================================================================== */
 
 .nav-popup {
-  position: absolute;
-  clear: both;
-  z-index: 100;
-  padding: 0;
-  list-style: none;
-  border-bottom: 2px solid $neutral4;
-  @include transform(translateZ(0px));
-  background: #ffffff;
-  width: 100%;
+    position: absolute;
+    clear: both;
+    z-index: 100;
+    padding: 0;
+    list-style: none;
+    border-bottom: 2px solid $neutral4;
+    @include transform(translateZ(0px));
+    background: #ffffff;
+    width: 100%;
 
-  @media only screen and (min-width: $tablet) {
-    top: 118px;
-  }
+    @media only screen and (min-width: $tablet) {
+        top: 118px;
+    }
 
-  @media only screen and (min-width: $desktopAd) {
-    top: 155px;
-  }
+    @media only screen and (min-width: $desktopAd) {
+        top: 155px;
+    }
 }
 
 .nav-popup .nav--section-divider {
-  padding-bottom: $baseline*4;
+    padding-bottom: $baseline*4;
 
-  @media only screen and (min-width: $tablet) {
-    background-color: $neutral8;
-    border-top: 1px solid $neutral10;
-    margin: 0px;
-  }
+    @media only screen and (min-width: $tablet) {
+        background-color: $neutral8;
+        border-top: 1px solid $neutral10;
+        margin: 0px;
+    }
 }
 
 /* Search
- ========================================================================== */
+   ========================================================================== */
 .nav-popup--search {
-  @media only screen and (min-width: $tablet) {
-    top: 152px;
-    margin-bottom: -57px;
-  }
+    @media only screen and (min-width: $tablet) {
+        top: 152px;
+        margin-bottom: -57px;
+    }
 }
 
 /* Small
- ========================================================================== */
-.nav-popup--small  {
-  padding-bottom: 0;
+   ========================================================================== */
+.nav-popup--small {
+    padding-bottom: 0;
 
-  @media only screen and (min-width: $tablet) {
-    position: absolute;
-    top: 166px;
-    right: 0px;
-    width: auto;
-    padding: 0;
-    min-width: 160px;
-    background-color: $neutral8;
-    border-bottom: 1px solid $neutral10;
-    border-left: 1px solid $neutral10;
-  }
+    @media only screen and (min-width: $tablet) {
+        position: absolute;
+        top: 166px;
+        right: 0px;
+        width: auto;
+        padding: 0;
+        min-width: 160px;
+        background-color: $neutral8;
+        border-bottom: 1px solid $neutral10;
+        border-left: 1px solid $neutral10;
+    }
 
-  @media only screen and (min-width: $desktopAd) {
-    top: 192px;
-  }
+    @media only screen and (min-width: $desktopAd) {
+        top: 192px;
+    }
 }
 
-  .nav-popup--small .nav__item {
-    @media only screen and (min-width: $tablet) {
-      margin: 0 $gutter;
-      border-bottom: 1px solid $neutral10;
-      text-align: left;
+    .nav-popup--small .nav__item {
+        @media only screen and (min-width: $tablet) {
+            margin: 0 $gutter;
+            border-bottom: 1px solid $neutral10;
+            text-align: left;
 
-      &:last-child {
-        border-bottom: none;
-      }
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
-  }
 
-  .nav-popup--small .nav__link,
-  .nav-popup--small .nav--columns .nav__link{
-    @extend %type-7;
+    .nav-popup--small .nav__link,
+    .nav-popup--small .nav--columns .nav__link {
+        @extend %type-7;
 
-    @media only screen and (min-width: $tablet) {
-      color: $neutral3;
-      padding: 0;
-      height: 36px;
-      @include font($serif, normal, 14, 36);
-      @include box-sizing(border-box);
+        @media only screen and (min-width: $tablet) {
+            color: $neutral3;
+            padding: 0;
+            height: 36px;
+            @include font($serif, normal, 14, 36);
+            @include box-sizing(border-box);
+        }
     }
-  }

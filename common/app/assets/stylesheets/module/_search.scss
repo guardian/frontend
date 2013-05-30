@@ -3,7 +3,7 @@
 }
 
 .search__box {
-  margin: 8px $gutter 0 $gutter;
+    margin: 8px $gutter 0 $gutter;
 }
 
 .gsc-search-box .gsib_a {
@@ -37,7 +37,7 @@ input.gsc-search-button-v2 {
 }
 
 .gs-result {
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 
 .gsc-control-cse {
@@ -46,7 +46,7 @@ input.gsc-search-button-v2 {
 
 .gsc-results .gsc-thumbnail-inside, 
 .gsc-results .gsc-url-top {
-    padding-left: 0px; 
+    padding-left: 0; 
 }
 
 .gsc-results .gs-snippet {
@@ -66,7 +66,7 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 $gutter 0 !important;
+    margin: 0 0 $gutter !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {

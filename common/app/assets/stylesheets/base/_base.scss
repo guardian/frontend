@@ -3,23 +3,24 @@ html {
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .relative-timestamp {
-  @extend %type-11;
-  line-height: 1.6rem;
-  font-weight: bold;
-  display: block;
-  color: #929497;
-  margin: 0;
+    @extend %type-11;
+    line-height: 1.6rem;
+    font-weight: bold;
+    display: block;
+    color: #929497;
+    margin: 0;
+
+    span {
+        display: inline-block;
+    }
 }
 
-.relative-timestamp span {
-    display: inline-block;
-}
-
-ol, ul {
+ol,
+ul {
     list-style-position: inside;
 }
 

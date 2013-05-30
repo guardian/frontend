@@ -54,7 +54,7 @@
   .element-witness--main img {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .element-witness--metadata {
@@ -69,7 +69,7 @@
   }
 
   .element-witness--metadata img {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   p.element-witness--source {
@@ -82,7 +82,7 @@
   .element-witness--author {
     @extend %type-11;
     display: inline-block;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: 100%;
   }
 
@@ -106,7 +106,7 @@
   }
 
   .element-witness--date {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 }
 
@@ -138,7 +138,7 @@
   border: 1px solid $darkMushroom;
   overflow: hidden;
   max-height: 45px;
-  margin: 1px 0 0 0px;
+  margin: 1px 0 0 0;
   position: relative;
   display: inline-block;
   float: left;
@@ -157,7 +157,7 @@
 .i-ee-add-button {
   position: absolute;
   top: 0;
-  left: 0px;
+  left: 0;
   z-index: 100;
 }
 

@@ -5,34 +5,35 @@
     overflow: hidden;
     margin: 0;
     border-bottom: 1px solid #B3B3B4;
-    padding: 0 0 24px 0;
+    padding: 0 0 24px;
 }
 
-  .trail:last-child {
-      border-bottom: none;
-  }
+    .trail:last-child {
+        border-bottom: none;
+        padding-bottom: 12px;
+    }
 
-  .trail:first-child:last-child {
-    padding: 0 0 0 0;
-  }
+    .trail:first-child:last-child {
+        padding: 0;
+    }
 
 .trail__headline {
-  @extend %type-2;
-  color: $neutral2;
-  margin-bottom: $base;
+    @extend %type-2;
+    color: $neutral2;
+    margin-bottom: $base;
 }
 
-  .trail__headline a,
-  .trail__headline a:hover,
-  .trail__headline a:link,
-  .trail__headline a:active,
-  .trail__headline a:visited {
-    color: $neutral2;
-  }
+    .trail__headline a,
+    .trail__headline a:hover,
+    .trail__headline a:link,
+    .trail__headline a:active,
+    .trail__headline a:visited {
+        color: $neutral2;
+    }
 
-  .trail__headline a:active {
-    text-decoration: underline;
-  }
+    .trail__headline a:active {
+        text-decoration: underline;
+    }
 
 @media screen and (min-width: 4 * $gridWidth) {
   .trail__headline { margin-bottom: 0; }
@@ -65,29 +66,27 @@
 }
 
 .trail__text {
-  @extend %type-3;
-  display: inline;
-  padding: 0;
-  color: #929497;
+    @extend %type-3;
+    display: inline;
+    padding: 0;
+    color: #929497;
 
-  @media screen and (min-width: 37.5em) {
-    clear: none;
-  }
+    @media screen and (min-width: 37.5em) {
+        clear: none;
+    }
 }
 
 .trail__img {
-  width: 100%;
+    width: 100%;
 }
 
 /* ==========================================================================
    Trail modifiers
    ========================================================================== */
 
-
 /* Featured
  ========================================================================== */
 .trail--featured {
-
   .trail__headline {
     @extend %type-1;
 
@@ -110,23 +109,23 @@
 /* Thumbnail
  ========================================================================== */
 .trail--thumbnail {
-  .media {
-    margin-top: -5px;
-  }
+    .media {
+        margin-top: -5px;
+    }
 
-  .media__img {
-    width: 9.625em;
-    padding-right: 14px;
-    margin-right: 0px;
-  }
+    .media__img {
+        width: 9.625em;
+        padding-right: 14px;
+        margin-right: 0;
+    }
 }
 
 .js-off .trail__headline {
-  min-height: 72px;
+    min-height: 72px;
 }
 
 /* Misc
- ========================================================================== */
+   ========================================================================== */
 /**
  * @todo: Clean these up into proper modifiers
  **/

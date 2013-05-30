@@ -1,8 +1,8 @@
 @(team:pa.FootballTeam, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
 @import org.joda.time.DateTime
 
-<li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
-    <h3 class="trail__headline">Upcoming fixtures</h3>
+<li class="trail team-fixtures js-front-trailblock" data-link-name="Team fixtures">
+    <h3 class="team-fixtures__headline">Upcoming fixtures</h3>
     @upcomingFixtures.map{ fixture =>
         <h2 class="competitions-date type-7">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
@@ -13,24 +13,26 @@
             @fragments.renderMatch(fixture.fixture)
         </ol>
     }
+
+    @TeamMap(team).url.map{ url =>
+    <!--a href="@url/fixtures" class="cta-small cta-small-border type-8" data-link-name="View all team fixtures">
+        View all @TeamName(team) fixtures
+    </a-->
+
+
+    <a href='@url/fixtures' class="cta table-football__cta" data-link-name="View all team fixtures">
+        <span class="cta__text">View all @TeamName(team) results</span>
+        <span class="cta__btn cta__btn--right">
+            <i class="i i-arrow-blue-down cta__icn--right"></i>
+        </span>
+    </a>
+    }
 </li>
 
-@TeamMap(team).url.map{ url =>
-<!--a href="@url/fixtures" class="cta-small cta-small-border type-8" data-link-name="View all team fixtures">
-    View all @TeamName(team) fixtures
-</a-->
 
 
-<a href='@url/fixtures' class="cta table-football__cta" data-link-name="View all team fixtures">
-    <span class="cta__text">View all @TeamName(team) results</span>
-    <span class="cta__btn cta__btn--right">
-        <i class="i i-arrow-blue-down cta__icn--right"></i>
-    </span>
-</a>
-}
-
-<li class="team-results competition-table competition-table--front js-front-trailblock" data-link-name="Team fixtures">
-    <h3 class="trail__headline">Previous result</h3>
+<li class="trail team-results competition-table--front js-front-trailblock" data-link-name="Team fixtures">
+    <h3 class="team-fixtures__headline">Previous result</h3>
     @previousResult.map{ result =>
         <h2 class="competitions-date type-7">@result.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
@@ -41,13 +43,13 @@
             @fragments.renderMatch(result.fixture)
         </ol>
     }
-</li>
 
-@TeamMap(team).url.map{ url =>
-    <a href='@url/results' data-link-name='View all team results' class="cta table-football__cta">
-        <span class="cta__text">View all @TeamName(team) results</span>
-        <span class="cta__btn cta__btn--right">
-            <i class="i i-arrow-blue-down cta__icn--right"></i>
-        </span>
-    </a>
-}
+    @TeamMap(team).url.map{ url =>
+        <a href='@url/results' data-link-name='View all team results' class="cta table-football__cta">
+            <span class="cta__text">View all @TeamName(team) results</span>
+            <span class="cta__btn cta__btn--right">
+                <i class="i i-arrow-blue-down cta__icn--right"></i>
+            </span>
+        </a>
+    }
+</li>

@@ -1,5 +1,5 @@
 .team-list {
-    margin: 0 $gutter 24px $gutter;
+    margin: 12px 0 24px 0;
     list-style: none;
     border-top: 1px solid $neutral10;
 }
@@ -11,13 +11,15 @@
 .team-list__title {
     @extend %type-6;
     font-weight: 500;
-    color: $linkBlue;
     height: 36px;
 }
 .team-list__item {
     @extend %type-11;
     font-weight: bold;
     color: $neutral4;
+}
+.team-list .nav__link {
+    color: $linkBlue;
 }
 
 .list__title:first-child {
@@ -33,4 +35,15 @@
 
 .team-list .nav {
     padding: 0;
+}
+
+.sections.team-list {
+    margin-left: $gutter;
+    margin-right: $gutter;
+}
+
+.team-fixtures__headline {
+    @extend %type-2;
+    color: $neutral2;
+    padding-bottom: 12px;
 }

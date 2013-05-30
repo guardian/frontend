@@ -6,6 +6,7 @@
 .pull-right {
     float: right;
 }
+
 .margin-top {
     margin-top: $baseline*2;
 }
@@ -34,9 +35,9 @@
 }
 
 .mobile-only {
-  @media only screen and (min-width: $tablet) {
-    display: none !important;
-  }
+    @media only screen and (min-width: $tablet) {
+        display: none !important;
+    }
 }
 
 // Micro clearfix
@@ -45,13 +46,13 @@
 // For modern browsers
 .cf:before,
 .cf:after {
-    content:"";
-    display:table;
+    content: "";
+    display: table;
 }
 .cf:after {
-    clear:both;
+    clear: both;
 }
 // For IE 6/7 (trigger hasLayout)
 .cf {
-    zoom:1;
+    zoom: 1;
 }

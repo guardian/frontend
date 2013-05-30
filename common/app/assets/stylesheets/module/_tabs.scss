@@ -2,59 +2,59 @@
    Tabs
    ========================================================================== */
 .tabs {
-  padding: 0;
+    padding: 0;
 }
 
 .tabs__container {
-  list-style: none;
-  margin:0 10px;
-  position:relative;
-  top:1px;
+    list-style: none;
+    margin: 0 10px;
+    position: relative;
+    top: 1px;
 }
 
 .tabs__container--marginbottom {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .tabs__tab {
-  width: 50%;
-  float: left;
-  height: 35px;
-  margin: 0px;
-  background: $neutral8;
+    width: 50%;
+    float: left;
+    height: 35px;
+    margin: 0;
+    background: $neutral8;
 }
 
 .tabs__link {
-  @extend %type-7;
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  padding: 4px 0px 15px 4px;
-  text-align: left;
-  text-decoration: none;
-  border-bottom: 1px solid $neutral5;
-  color: $linkBlue;
-  @include box-sizing(border-box);
-
-  &:hover {
+    @extend %type-7;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 4px 0px 15px 4px;
+    text-align: left;
     text-decoration: none;
-  }
+    border-bottom: 1px solid $neutral5;
+    color: $linkBlue;
+    @include box-sizing(border-box);
 
-  &:active,
-  &:focus {
-    text-decoration: none;
-  }
+    &:hover {
+        text-decoration: none;
+    }
 
-  &:active {
-    background-color: #ffffff;
-  }
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:active {
+        background-color: #ffffff;
+    }
 }
 
 .tabs__content {
-  clear: both;
-  border: 2px solid $mushroom;
-  border-top: none;
+    clear: both;
+    border: 2px solid $mushroom;
+    border-top: none;
 }
 
 /* ==========================================================================
@@ -64,73 +64,80 @@
 /* Selected
  ========================================================================== */
 .tabs__tab--selected {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .tabs__tab--selected .tabs__link {
-  padding-top:3px;
-  padding-left:3px;
-  border: 1px solid $neutral5;
-  border-bottom:none;
-  background-color: #ffffff;
-  color: #000;
+    padding-top:3px;
+    padding-left:3px;
+    border: 1px solid $neutral5;
+    border-bottom:none;
+    background-color: #ffffff;
+    color: #000;
 }
 
-.tabs__tab--selected:first-child .tabs__link  {  border-left: none; }
-.tabs__tab--selected:last-child .tabs__link  {  border-right: none; }
+.tabs__tab--selected:first-child .tabs__link {
+    border-left: none;
+}
+.tabs__tab--selected:last-child .tabs__link {
+    border-right: none;
+}
 
 
 /* multiple
  ========================================================================== */
 .tabs--multiple {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 10px;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 .tabs--multiple .tabs__tab {
-  display: table-cell;
-  border-left: 2px solid #ffffff;
-  width: auto;
-  float: none;
+    display: table-cell;
+    border-left: 2px solid #ffffff;
+    float: none;
+}
+
+.tabs--multiple .tabs__link {
+    height: 35px;
 }
 
 .tabs--multiple .tabs__tab:first-child,
 .tabs--multiple .tabs__tab:last-child {
-  border-left: none;
+    border-left: none;
 }
 
 /* Fixable
  ========================================================================== */
 @media (max-width: 40em) {
 
-  .tabs--fixable {
-    position: relative;
-  }
+    .tabs--fixable {
+        position: relative;
+    }
 
-  .tabs--fixable .tabs__container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    padding: 0px $gutter;
-    z-index: 2;
-  }
+    .tabs--fixable .tabs__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 42px;
+        padding: 0px $gutter;
+        z-index: 2;
+    }
 
-  .tabs--fixable .tabs__container--fixed {
-    position: fixed;
-    @include box-shadow(0 8px 6px -6px #999);
-  }
+    .tabs--fixable .tabs__container--fixed {
+        position: fixed;
+        @include box-shadow(0 8px 6px -6px #999);
+    }
 
-  .tabs--fixable .tabs__tab {
-    height: 42px;
-  }
+    .tabs--fixable .tabs__tab {
+        height: 42px;
+    }
 
-  .tabs--fixable .tabs__content {
-    padding-top: 42px;
-  }
+    .tabs--fixable .tabs__content {
+        padding-top: 42px;
+    }
 
 }

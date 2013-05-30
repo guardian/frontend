@@ -1,125 +1,125 @@
 /* ==========================================================================
-   Call to actions
-   ========================================================================== */
+     Call to actions
+     ========================================================================== */
 .cta {
-  position: relative;
-  display: block;
-  width:  100%;
-  height: 36px;
-  vertical-align: top;
-  text-align: left;
-  padding:0 0 0 2px;
-  background-color: transparent;
-  border: none;
-  border-top: 1px dotted rgb(103,103,103);
-  @include box-sizing(border-box);
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 36px;
+    vertical-align: top;
+    text-align: left;
+    padding: 0 0 0 2px;
+    background-color: transparent;
+    border: none;
+    border-top: 1px dotted rgb(103,103,103);
+    @include box-sizing(border-box);
 }
 
 .cta__text {
-  @extend %type-7;
-  color: $linkBlue;
+    @extend %type-7;
+    color: $linkBlue;
 }
 
 
 /* CTA button
-   ========================================================================== */
+     ========================================================================== */
 .cta__btn {
-  display: inline-block;
-  width: 60px;
-  height: 36px;
-  position: relative;
-  border-width: 0px;
-  border-style: dotted;
-  border-color: rgb(103,103,103);
-  background-color: transparent;
-  @include box-sizing(border-box);
+    display: inline-block;
+    width: 60px;
+    height: 36px;
+    position: relative;
+    border-width: 0px;
+    border-style: dotted;
+    border-color: rgb(103,103,103);
+    background-color: transparent;
+    @include box-sizing(border-box);
 
-  .i {
-    position: absolute;
-    bottom: 2px;
-  }
+    .i {
+        position: absolute;
+        bottom: 2px;
+    }
 }
 
 .is-open .cta__btn i {
-  @include rotate(180deg);
+    @include rotate(180deg);
 }
 
 /* ==========================================================================
-   CTA modifiers
-   ========================================================================== */
+     CTA modifiers
+     ========================================================================== */
 
 /* Dark
-   ========================================================================== */
+     ========================================================================== */
 .cta--dark {
-  background-color: #333333;
-  border-top-style: solid;
+        background-color: #333333;
+    border-top-style: solid;
 
-  .cta__btn {
-    border-color: #fff;
-    border-style: solid;
-    background-color: #005588;
-  }
+    .cta__btn {
+        border-color: #fff;
+        border-style: solid;
+        background-color: #005588;
+    }
 
-  .cta__text {
-    color: #B3B3B4;
-  }
+    .cta__text {
+        color: #B3B3B4;
+    }
 }
 
 /* Blue
-   ========================================================================== */
+     ========================================================================== */
 .cta--blue,
 .cta--blue:active {
-  background-color: $linkBlue;
+    background-color: $linkBlue;
 
-  .cta__text {
-    color: #fff;
-  }
-  .cta__btn--right {
-    border-color: #fff;
-  }
+    .cta__text {
+        color: #fff;
+    }
+    .cta__btn--right {
+        border-color: #fff;
+    }
 }
 
 /* Center
-   ========================================================================== */
+     ========================================================================== */
 .cta__text--center {
-  position: absolute;
-  bottom: 0px;
-  font-size: 1.4rem;
-  left: 48%;
+    position: absolute;
+    bottom: 0px;
+    font-size: 1.4rem;
+    left: 48%;
 }
 
 /* Right
-   ========================================================================== */
+     ========================================================================== */
 .cta__btn--right {
-  float:right;
-  border-left-width: 1px;
+    float:right;
+    border-left-width: 1px;
 
-  .i {
-    left: 2px;
-  }
+    .i {
+        left: 2px;
+    }
 }
 
 .cta__icn--right,
 i.is-open.cta__icn--right {
-  bottom: 8px !important;
-  @include rotate(-90deg);
+    bottom: 8px !important;
+    @include rotate(-90deg);
 }
 
 /* Left
-   ========================================================================== */
+     ========================================================================== */
 .cta__btn--left {
-  float:left;
-  border-right-width: 1px;
+    float:left;
+    border-right-width: 1px;
 
-  .i {
-    right: 0px;
-    bottom: 8px;
-    @include rotate(90deg);
-  }
+    .i {
+        right: 0px;
+        bottom: 8px;
+        @include rotate(90deg);
+    }
 }
 
 /* Misc
-   ========================================================================== */
+     ========================================================================== */
 .cta-small {
     display: block;
     padding: $baseline*2 0 $baseline*3 0;
@@ -130,13 +130,13 @@ i.is-open.cta__icn--right {
 }
 
 .most-viewed-no-js {
-  display: block;
+    display: block;
 }
 
 .most-viewed-no-js i {
-  float: right;
+    float: right;
 }
 
 .section-head--front .cta__btn--right {
-  border-left-width: 0;
+    border-left-width: 0;
 }

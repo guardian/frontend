@@ -1,302 +1,312 @@
 /* ==========================================================================
-   Article head
-   ========================================================================== */
+     Article head
+     ========================================================================== */
 .article__head {
-  padding: 0 $baseLRpad;
+    padding: 0 $baseLRpad;
 }
 
-  .article__head .dateline {
-      font-family: $sans-serif;
-      margin: 0px;
-      color: $neutral4;
-      @extend %type-11;
-      font-weight: bold;
-      height: $datelineHeight;
-  }
+    .article__head .dateline {
+            font-family: $sans-serif;
+            color: $neutral4;
+            @extend %type-11;
+            font-weight: bold;
+            height: $datelineHeight;
+    }
 
 .article__headline {
-  @extend %type-1;
-  color: $neutral1;
+    @extend %type-1;
+    color: $neutral2;
 }
 
 .article-standfirst {
-  border-top: 1px dotted $neutral10;
-  color: $neutral4;
+    border-top: 1px dotted $neutral10;
+    color: $neutral4;
 }
 
 .bullet {
-  font-size: 13px;
-  display: inline-block;
-  color: #999999;
-  margin: $baseline/2 4px 0 0;
+    font-size: 13px;
+    display: inline-block;
+    color: #999;
+    margin: $baseline/2 4px 0 0;
 }
 
-  .bullet:first-of-type {
-    margin-top: $baseline;
-  }
+    .bullet:first-of-type {
+        margin-top: $baseline;
+    }
 
 .byline {
-  @include box-sizing(border-box);
-  display: block;
-  border-top: 1px solid $neutral10;
-  border-bottom: 1px solid $neutral10;
-  padding: 0 0 9px 0;
-  vertical-align: top;
+    @include box-sizing(border-box);
+    display: block;
+    border-top: 1px solid $neutral10;
+    border-bottom: 1px solid $neutral10;
+    padding: 0 0 9px 0;
+    vertical-align: top;
+
+    a {
+        font-weight: 500;
+    }
 }
 
-.byline a {  font-weight: 500; }
-
 .main-image {
-  @include box-sizing(border-box);
-  margin-bottom: 0px;
+    @include box-sizing(border-box);
+    margin-bottom: 0;
 }
 
 /* ==========================================================================
-   Article Body
-   ========================================================================== */
+     Article Body
+     ========================================================================== */
 .article__body {
-  padding: 0 $baseLRpad;
+    padding: 0 $baseLRpad;
 
-  p {
-    margin-bottom:0;
-  }
+    p {
+        margin-bottom: 0;
+    }
 
-  p + p {
-    text-indent: 24px;
-  }
+    p + p {
+        text-indent: 24px;
+    }
 }
 
 .gu-video {
-  width: 100%;
-  margin-bottom: $baseline*2;
+    width: 100%;
+    margin-bottom: $baseline*2;
 }
 
 video {
-    max-width: 100%;
-    height: auto;
-    -webkit-user-select: none;
+        max-width: 100%;
+        height: auto;
+        -webkit-user-select: none;
 }
 
 .inline-image {
-  float:left;
+    float: left;
 
-  img, figcaption {
-    @extend .grid-box-2;
-  }
+    img,
+    figcaption {
+        @extend .grid-box-2;
+    }
 }
 
 .img-tiny.inline-image {
-  width: auto;
-  max-width: $inArticleInlineImgWidth;
+    width: auto;
+    max-width: $inArticleInlineImgWidth;
 }
 
 /* ==========================================================================
-   Grid Layouts
-   ========================================================================== */
+     Grid Layouts
+     ========================================================================== */
 .article {
-  max-width: $gridWidth * 7;
-  @extend .cf;
+    max-width: $gridWidth * 7;
+    @extend .cf;
 }
 
 .article figure {
-  @extend .grid-box-centered;
+    @extend .grid-box-centered;
+}
+
+.article .article__body figure {
+    padding: 5px 0 7px 0;
+}
+
+.article__standfirst {
+    @include box-sizing(border-box);
+    min-height: $gridHeight;
 }
 
 .article__byline {
-  @include box-sizing(border-box);
-  @extend .grid-box-centered;
+    @include box-sizing(border-box);
+    @extend .grid-box-centered;
+    min-height: $gridHeight;
 }
 
 .main-caption {
-  padding: 3px 0;
-  font-weight: normal;
+    padding: 3px 0;
+    font-weight: bold;
 }
 
 .article figure,
 .article__byline,
 .article__body,
 video {
-  @include box-sizing(border-box);
+    @include box-sizing(border-box);
 }
 
 /* 6 Cols
  ========================================================================== */
 @media screen and (min-width: 6 * $gridWidth) {
-  .article figure {
-    width: $gridWidth * 3;
-    float: right;
-    background-color: #fff;
-  }
+    .article figure {
+        width: $gridWidth * 3;
+        float: right;
+        background-color: #fff;
+    }
 
-  .article .article__body figure {
-    padding: 5px 0 7px 20px;
-  }
+    .article .article__body figure {
+        padding: 5px 0 7px 20px;
+    }
 
-  .article__byline {
-    width: $gridWidth * 3;
-  }
+    .article__byline {
+        width: $gridWidth * 3;
+    }
 
-  .article-headline {
-    font-size: 2.8rem;
-    line-height: 3.2rem;    
-  }
+    .article-headline {
+        font-size: 2.8rem;
+        line-height: 3.2rem;
+    }
 }
 
 /* 7 Cols
  ========================================================================== */
 @media screen and (min-width: 35em) {
-  .article figure {
-    width: $gridWidth * 4;
-  }
+    .article figure {
+        width: $gridWidth * 4;
+    }
 }
 
 /* 8 Cols
  ========================================================================== */
 @media screen and (min-width: 40em) {
-  .article figure {
-    margin-right: $gridWidth * -1;
-  }
-  .article__byline {
-    width: $gridWidth * 4;
-  }
-  .page-head--article {
-    border: 0px;
-  }
+    .article figure {
+        margin-right: $gridWidth * -1;
+    }
+    .article__byline {
+        width: $gridWidth * 4;
+    }
+    .page-head--article {
+        border: 0;
+    }
 }
 
 /* 9 Cols
  ========================================================================== */
 @media screen and (min-width: 45em) {
-  .article figure {
-    width: $gridWidth * 5;
-    margin-right: $gridWidth * -2;
-  }
+    .article figure {
+        width: $gridWidth * 5;
+        margin-right: $gridWidth * -2;
+    }
 }
 
 /* 10 Cols
  ========================================================================== */
 @media screen and (min-width: 50em) {
-  .page-head {
-    border-bottom: 0;
-  }
-  .article {
-      max-width: 100%;
-  }
-  .article__head,
-  .article__byline {
-    width: $gridWidth * 4;
-    @include box-sizing(border-box);
-    float: left;
-  }
-
-  .article-headline {
-    font-size: 3rem;
-    line-height: 3.4rem; 
-  }
-
-  .article-standfirst {
-    font-size: 1.8rem;
-    line-height: 2.6rem;
-    margin: 0 0 $base 0;
-  }
-
-  .article__byline {
-    margin: 0px;
-    padding: 0 $baseLRpad;
-  }
-
-  .article figure,
-  .article__body {
-    width: $gridWidth * 5;
-    float: right;
-    margin: 0;
-  }
-  .byline {
-    margin-left: 0;
-  }
-
-
-  .inline-image {
-    img, figcaption {
-      @extend .grid-box-3;
+    .page-head {
+        border-bottom: 0;
     }
-  }
+    .article {
+        max-width: 100%;
+    }
+    .article__head,
+    .article__byline {
+        width: $gridWidth * 4;
+        @include box-sizing(border-box);
+        float: left;
+    }
 
-  .article figure,
-  .article__body {
-    width: $gridWidth * 6;
-  }
+    .article-headline {
+        font-size: 3rem;
+        line-height: 3.4rem;
+    }
+
+    .article-standfirst {
+        font-size: 1.8rem;
+        line-height: 2.6rem;
+    }
+
+    .article__byline {
+        margin: 0;
+        padding: 0 $baseLRpad;
+    }
+
+    .article figure,
+    .article__body {
+        width: $gridWidth * 5;
+        float: right;
+        margin: 0;
+    }
+    .byline {
+        margin-left: 0;
+    }
+
+    .inline-image {
+        img, figcaption {
+            @extend .grid-box-3;
+        }
+    }
+
+    .article figure,
+    .article__body {
+        width: $gridWidth * 6;
+    }
 }
 
 /* 11 Cols
  ========================================================================== */
 @media screen and (min-width: 55em) {
-  .article figure,
-  video {
-    width: $gridWidth * 7;
-  }
+    .article figure,
+    video {
+        width: $gridWidth * 7;
+    }
 
-  .article .article__body figure {
-    width: $gridWidth * 6;
-    margin-right: 0;
-  }
+    .article .article__body figure {
+        width: $gridWidth * 6;
+        margin-right: 0;
+    }
 
-  .article__body {
-    margin-right: $gridWidth * 1;
-  }
+    .article__body {
+        margin-right: $gridWidth * 1;
+    }
 }
 
 /* 12 Cols
  ========================================================================== */
 @media screen and (min-width: 60em) {
-  .article figure,
-  video {
-    width: $gridWidth * 8;
-  }
+    .article figure,
+    video {
+        width: $gridWidth * 8;
+    }
 
-  .article .article__body figure {
-    width: $gridWidth * 7;
-  }
+    .article .article__body figure {
+        width: $gridWidth * 7;
+    }
 
-  .article__body {
-    width: $gridWidth * 7;
-  }
+    .article__body {
+        width: $gridWidth * 7;
+    }
 }
 
 /* 13 Cols
  ========================================================================== */
 @media screen and (min-width: 65em) {
-  .article figure,
-  video {
-    margin-right: $gridWidth * 1;
-  }
+    .article figure,
+    video {
+        margin-right: $gridWidth * 1;
+    }
 
-  .article__body {
-    margin-right: $gridWidth * 2;
-  }
+    .article__body {
+        margin-right: $gridWidth * 2;
+    }
 }
 
 /* 14 Cols
  ========================================================================== */
 @media screen and (min-width: 70em) {
-  .article figure {
-    width: $gridWidth * 9;
-  }
+    .article figure {
+        width: $gridWidth * 9;
+    }
 
-  .article .article__body figure {
-    width: $gridWidth * 7;
-  }
+    .article .article__body figure {
+        width: $gridWidth * 7;
+    }
 
-  .article__body {
-    margin-right: $gridWidth * 3;
-  }
-  /*
-  .article__head,
-  .article__byline,
-  .social {
-    margin-left: $gridWidth * 1 !important;
-  }
-  */
+    .article__body {
+        margin-right: $gridWidth * 3;
+    }
+    /*
+    .article__head,
+    .article__byline,
+    .social {
+        margin-left: $gridWidth * 1 !important;
+    }
+    */
 }
 
 /* Article headline */
@@ -315,6 +325,6 @@ video {
 
 @media screen and (min-width: 10 * $gridWidth) {
   .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 4 - $datelineHeight}
   .article-headline.long   {height: $gridHeight * 4 - $datelineHeight}
 }
