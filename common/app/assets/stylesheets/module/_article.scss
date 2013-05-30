@@ -125,6 +125,10 @@ video {
     @include box-sizing(border-box);
 }
 
+.update--wrapper {
+    @extend .grid-box-centered;
+}
+
 /* 6 Cols
  ========================================================================== */
 @media screen and (min-width: 6 * $gridWidth) {
@@ -211,7 +215,8 @@ video {
     }
 
     .article figure,
-    .article__body {
+    .article__body,
+    .update--wrapper {
         width: $gridWidth * 5;
         float: right;
         padding: 0 10px;
@@ -229,7 +234,8 @@ video {
     }
 
     .article figure,
-    .article__body {
+    .article__body,
+    .update--wrapper {
         width: $gridWidth * 6;
     }
 }
@@ -247,7 +253,8 @@ video {
         margin-right: 0;
     }
 
-    .article__body {
+    .article__body,
+    .update--wrapper {
         margin-right: $gridWidth * 1;
     }
 }
@@ -264,7 +271,8 @@ video {
         width: $gridWidth * 7;
     }
 
-    .article__body {
+    .article__body,
+    .update--wrapper {
         width: $gridWidth * 7;
     }
 }
@@ -277,7 +285,8 @@ video {
         margin-right: $gridWidth * 1;
     }
 
-    .article__body {
+    .article__body,
+    .update--wrapper {
         margin-right: $gridWidth * 2;
     }
 }
@@ -293,7 +302,8 @@ video {
         width: $gridWidth * 7;
     }
 
-    .article__body {
+    .article__body,
+    .update--wrapper {
         margin-right: $gridWidth * 3;
     }
     /*

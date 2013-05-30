@@ -40,7 +40,7 @@ define([
                         delay: 60000,
                         attachTo: context.querySelector(".article__body"),
                         switches: config.switches,
-                        responseSelector: '.article_body .block'
+                        responseSelector: '.article__body .block'
                     }).init();
                 }
             });
