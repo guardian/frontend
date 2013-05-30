@@ -33,12 +33,13 @@
         @fragments.byline(article.byline, article)
     </div>
 
-    @if(article.isLive) {
-        @fragments.autoUpdate()
-    }
-
     <div class="article__body from-content-api @if(article.isLive) {live-blog}"
         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+
+        @if(article.isLive) {
+            @fragments.autoUpdate()
+        }
+
         @* <!-- ordering of cleaners is important --> *@
         @withJsoup(BulletCleaner(article.body))(
             PictureCleaner(article),
