@@ -19,6 +19,7 @@
 .trail__headline {
   @extend %type-2;
   color: $neutral2;
+  margin-bottom: $base;
 }
 
   .trail__headline a,
@@ -34,17 +35,33 @@
   }
 
 @media screen and (min-width: 4 * $gridWidth) {
-  .trail__headline.chars-small  {height: $gridHeight * 1 - 16}
-  .trail__headline.chars-medium {height: $gridHeight * 2 - 16}
-  .trail__headline.chars-large  {height: $gridHeight * 2 - 16}
+  .trail__headline { margin-bottom: 0; }
+
+  .trail__headline.short  {height: $gridHeight * 1 - $datelineHeight}
+  .trail__headline.medium {height: $gridHeight * 2 - $datelineHeight}
+  .trail__headline.long   {height: $gridHeight * 2 - $datelineHeight}
+
+  .trail--featured  .trail__headline.short  {height: $gridHeight * 2 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {height: $gridHeight * 3 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {height: $gridHeight * 3 - $datelineHeight}
 }
 
 @media screen and (min-width: 6 * $gridWidth) {
-  .trail__headline.chars-medium {height: $gridHeight * 1 - 16}
+  .trail__headline.medium {height: $gridHeight * 1 - $datelineHeight}
+
+  .trail--featured  .trail__headline.short  {height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {height: $gridHeight * 2 - $datelineHeight}
 }
 
-@media screen and (min-width: 8 * $gridWidth) {
-  .trail__headline.chars-large  {height: $gridHeight * 1 - 16}
+@media screen and (min-width: 10 * $gridWidth) {
+  .trail__headline.long   {height: $gridHeight * 1 - $datelineHeight}
+
+  .trail--featured  .trail__headline.medium {height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {height: $gridHeight * 2 - $datelineHeight}
+}
+
+@media screen and (min-width: 14 * $gridWidth) {
+  .trail--featured  .trail__headline.long   {height: $gridHeight * 1 - $datelineHeight}
 }
 
 .trail__text {
@@ -122,3 +139,6 @@
     border-bottom: none;
 }
 
+.relative-timestamp {
+    height: $datelineHeight;  
+}

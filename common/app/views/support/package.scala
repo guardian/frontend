@@ -341,4 +341,11 @@ object Head {
   private lazy val persistantCss: String = volatileCss
 }
 
-
+object charRange { 
+  def apply(str: String): String = {
+    val charsLen = str.filterNot(_ == " ").length 
+    if      (charsLen <= 35) "short"
+    else if (charsLen <= 60) "medium"
+    else                     "long"
+  }
+}

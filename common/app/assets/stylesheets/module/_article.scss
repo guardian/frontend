@@ -11,6 +11,7 @@
       color: $neutral4;
       @extend %type-11;
       font-weight: bold;
+      height: $datelineHeight;
   }
 
 .article__headline {
@@ -118,15 +119,6 @@ video {
   @include box-sizing(border-box);
 }
 
-@media screen and (min-width: 4 * $gridWidth) {
-  .article-headline.chars-small  {height: $gridHeight * 1 - 16}
-  .article-headline.chars-medium {height: $gridHeight * 2 - 16}
-  .article-headline.chars-large  {height: $gridHeight * 3 - 16}
-}
-
-@media screen and (min-width: 5 * $gridWidth) {
-}
-
 /* 6 Cols
  ========================================================================== */
 @media screen and (min-width: 6 * $gridWidth) {
@@ -156,11 +148,6 @@ video {
   .article figure {
     width: $gridWidth * 4;
   }
-
-  .article-headline.chars-small  {height: $gridHeight * 1 - 16}
-  .article-headline.chars-medium {height: $gridHeight * 2 - 16}
-  .article-headline.chars-large  {height: $gridHeight * 3 - 16}
-
 }
 
 /* 8 Cols
@@ -206,10 +193,6 @@ video {
     font-size: 3rem;
     line-height: 3.4rem; 
   }
-
-  .article-headline.chars-small  {height: $gridHeight * 2 - 16}
-  .article-headline.chars-medium {height: $gridHeight * 3 - 16}
-  .article-headline.chars-large  {height: $gridHeight * 4 - 16}
 
   .article-standfirst {
     font-size: 1.8rem;
@@ -314,4 +297,24 @@ video {
     margin-left: $gridWidth * 1 !important;
   }
   */
+}
+
+/* Article headline */
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 7 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 10 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 4 - $datelineHeight}
 }
