@@ -1,7 +1,8 @@
 @(mainPicture: Image, smallCrop: Image)
 
-<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-    <img class="maxed main-image" src="@smallCrop.path"
+<figure class="main-media" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+    <img class="maxed main-image"
+        src="@smallCrop.path"
         data-force-upgrade="true"
         data-thumb-width="@smallCrop.width"
         data-fullsrc="@mainPicture.path"

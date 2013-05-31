@@ -14,14 +14,14 @@
     }
 
 .article__headline {
-    @extend %type-1;
     color: $neutral2;
+    font-size: 2.4rem;
+    line-height: 2.6rem;
 }
 
 .article-standfirst {
     border-top: 1px dotted $neutral10;
     color: $neutral4;
-    line-height: 20px;
 }
 
 .bullet {
@@ -57,7 +57,7 @@
      Article Body
      ========================================================================== */
 .article__body {
-    padding: 0 $baseLRpad;
+    padding: 0 $baseLRpad $base $baseLRpad;
 
     p {
         margin-bottom: 0;
@@ -101,17 +101,14 @@ video {
     @extend .cf;
 }
 
-.article figure {
+.main-media {
     @extend .grid-box-centered;
-}
-
-.article .article__body figure {
-    padding: 5px 0 7px 0;
 }
 
 .article__standfirst {
     @include box-sizing(border-box);
     min-height: $gridHeight;
+    padding-bottom: 10px;
 }
 
 .article__byline {
@@ -125,7 +122,7 @@ video {
     font-weight: bold;
 }
 
-.article figure,
+.main-media,
 .article__byline,
 .article__body,
 video {
@@ -139,14 +136,10 @@ video {
 /* 6 Cols
  ========================================================================== */
 @media screen and (min-width: 6 * $gridWidth) {
-    .article figure {
+    .main-media {
         width: $gridWidth * 3;
         float: right;
         background-color: #fff;
-    }
-
-    .article .article__body figure {
-        padding: 5px 0 7px 20px;
     }
 
     .article__byline {
@@ -162,7 +155,7 @@ video {
 /* 7 Cols
  ========================================================================== */
 @media screen and (min-width: 35em) {
-    .article figure {
+    .main-media {
         width: $gridWidth * 4;
     }
 }
@@ -170,7 +163,7 @@ video {
 /* 8 Cols
  ========================================================================== */
 @media screen and (min-width: 40em) {
-    .article figure {
+    .main-media {
         margin-right: $gridWidth * -1;
     }
     .article__byline {
@@ -184,16 +177,21 @@ video {
 /* 9 Cols
  ========================================================================== */
 @media screen and (min-width: 45em) {
-    .article figure {
+    .main-media {
         width: $gridWidth * 5;
         margin-right: $gridWidth * -2;
+    }
+
+    .article-headline {
+        font-size: 3rem;
+        line-height: 3.4rem;
     }
 }
 
 /* 10 Cols
  ========================================================================== */
 @media screen and (min-width: 50em) {
-    .article figure {
+    .main-media {
         width: $gridWidth * 6;
         margin-right: $gridWidth * -3;
     }
@@ -216,11 +214,6 @@ video {
         float: left;
     }
 
-    .article-headline {
-        font-size: 3rem;
-        line-height: 3.4rem;
-    }
-
     .article-standfirst {
         font-size: 1.8rem;
         line-height: 2.6rem;
@@ -231,7 +224,7 @@ video {
         padding: 0 $baseLRpad;
     }
 
-    .article figure,
+    .main-media,
     .article__body,
     .update--wrapper {
         float: right;
@@ -253,14 +246,8 @@ video {
         width: $gridWidth * 6;
     }
 
-    .article figure {
+    .main-media {
         width: $gridWidth * 7;
-    }
-
-    /* ************** */
-    .article .article__body figure {
-        width: $gridWidth * 6;
-        margin-right: 0;
     }
 
     .article__body,
@@ -272,13 +259,9 @@ video {
 /* 12 Cols
  ========================================================================== */
 @media screen and (min-width: 60em) {
-    .article figure,
+    .main-media,
     video {
         width: $gridWidth * 8;
-    }
-
-    .article .article__body figure {
-        width: $gridWidth * 7;
     }
 
     .article__body,
@@ -290,7 +273,7 @@ video {
 /* 13 Cols
  ========================================================================== */
 @media screen and (min-width: 65em) {
-    .article figure,
+    .main-media,
     video {
         margin-right: $gridWidth * 1;
     }
@@ -304,43 +287,32 @@ video {
 /* 14 Cols
  ========================================================================== */
 @media screen and (min-width: 70em) {
-    .article figure {
+    .main-media {
         width: $gridWidth * 9;
-    }
-
-    .article .article__body figure {
-        width: $gridWidth * 7;
     }
 
     .article__body,
     .update--wrapper {
         margin-right: $gridWidth * 3;
     }
-    /*
-    .article__head,
-    .article__byline,
-    .social {
-        margin-left: $gridWidth * 1 !important;
-    }
-    */
 }
 
 /* Article headline */
 
 @media screen and (min-width: 4 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
 @media screen and (min-width: 7 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 1 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
-@media screen and (min-width: 10 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 4 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 4 - $datelineHeight}
+@media screen and (min-width: 11 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 4 - $datelineHeight}
 }
