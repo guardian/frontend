@@ -53,19 +53,19 @@ define([
 
             return ajax({
                 url: path,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'footballfixtures',
-                success: function (response) {
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (response) {
                     //This is because the endpoint can also return a 204 no-content
                     if(response) {
                        that.view.render(response.html);
                     }
                 },
-                error: function () {
-                    common.mediator.emit("modules:error", 'Failed to load football fixtures', 'footballfixtures.js');
+                function (req) {
+                    common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'modules/footballfixtures.js');
                 }
-            });
+            );
         };
 
         this.generateQuery = function() {

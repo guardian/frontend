@@ -19,19 +19,19 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
             return ajax({
                 url: query,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'footballtables',
-                success: function (response) {
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (response) {
                     //This is because the endpoint can also return a 204 no-content
                     if(response) {
                        that.view.render(response.html);
                     }
                 },
-                error: function () {
-                    common.mediator.emit("modules:error", 'Failed to load football table', 'footballtables.js');
+                function (req) {
+                    common.mediator.emit('modules:error', 'Failed to load football table: ' + req.statusText, 'modules/footballtables.js');
                 }
-            });
+            );
         };
 
         this.generateQuery = function() {
