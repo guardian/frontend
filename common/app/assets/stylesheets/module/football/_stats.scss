@@ -88,7 +88,6 @@
 }
 
 .section-divider {
-    @extend %type-2;
     padding-top: $baseline;
     padding-bottom: $baseline * 1.5;
     border-top: 1px solid $neutral3;
@@ -105,4 +104,12 @@
 
 .update-live-matches {
     margin: 0 10px 12px 10px;
+}
+
+.stats__title {
+    @extend %type-2;
+    line-height: 24px;
+    padding: 0 0 6px 0;
+    border-top: 1px solid #9D9D9D;
+    border-bottom: 1px dotted #9D9D9D;
 }

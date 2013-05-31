@@ -16,7 +16,7 @@
             </div>
         </header>
 
-        <div class="player">
+        <div class="player main-media">
             <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                 @video.encodings.map{ encoding =>
                     <source src="@encoding.url" />
