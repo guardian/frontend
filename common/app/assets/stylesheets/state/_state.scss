@@ -103,13 +103,9 @@
 .update-btn.is-active,
 .update-btn:hover {
     color: #ffffff;
-    background-color: $linkBlue;
-}
-
-.update-live-matches .update-btn.is-active,
-.update-live-matches .update-btn:hover {
     background-color: $main18;
 }
+
 
 .is-updating {
     display: none;
