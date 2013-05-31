@@ -2,7 +2,7 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
 
     describe("Related", function() {
        
-        var callback, appendTo;
+        var callback, appendTo, server;
 
         beforeEach(function() {
             ajax.init({page: {
@@ -11,14 +11,20 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             }});
             callback = sinon.stub();
             common.mediator.on('modules:related:loaded', callback);
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
         });
 
         afterEach(function() {
             if (appendTo) appendTo.innerHTML = "";
+            server.restore();
         });
 
         // json test needs to be run asynchronously 
         it("should request the related links and graft them on to the dom", function(){
+
+            server.respondWith([200, {}, '{ "html": "<b>1</b>" }']);
             
             appendTo = document.querySelector('.js-related');
 
