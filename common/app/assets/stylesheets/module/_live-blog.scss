@@ -20,7 +20,7 @@
 
     .block-time.published-time {
         @extend %type-11;
-        margin: 0 0 $baseline*1.5 0;
+        margin: 0;
         padding-top: 0;
         color: $neutral4;
         font-weight: bold;
@@ -36,6 +36,10 @@
     border-top: none;
     margin-top: 0;
     padding-top: 0;
+}
+
+.live-blog .bullet {
+    margin-left: -24px; // Bit hacky way to cancel out the text-indent
 }
 
 //Block titles
