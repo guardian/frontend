@@ -3,6 +3,7 @@
 //Variables and mixins
 @import "_vars";
 @import "_mixins";
+@import "_extends-only";
 
 //External components
 @import "_normalize";
@@ -18,6 +19,7 @@
 @import "layout/_layout";
 
 //Global modules
+@import "module/_headers";
 @import "module/nav/_nav";
 @import "module/nav/_control";
 @import "module/_adslot";
