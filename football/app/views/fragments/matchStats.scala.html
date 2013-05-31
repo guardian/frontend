@@ -70,7 +70,7 @@
     }
   }
 
-  <h3 class="section-divider">Teams</h3>
+  <h3 class="stats__title">Teams</h3>
 
   <h5 class="team-list-name type-5">@homeTeam.name</h5>
   <h5 class="team-list-name type-5">@awayTeam.name</h5>
@@ -85,7 +85,7 @@
     <div class="lineup">
         @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
     </div>
-    <h3 class="type-5 item-divider">Unused substitutes</h3>
+    <h3 class="stats__title">Unused substitutes</h3>
     <div class="lineup">
         @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
     </div>
