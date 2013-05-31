@@ -119,14 +119,6 @@ define([
                 s.prop51  = testData;
                 s.eVar51  = testData;
                 s.events = s.apl(s.events,'event58',',');
-            } else {
-                // If no other tests running try and collect AB font rendering test results.
-                var fonttest = localStorage.getItem('gu.fontdelaytest');
-                if(fonttest) {
-                    s.prop51  = fonttest;
-                    s.eVar51  = fonttest;
-                    s.events = s.apl(s.events,'event58',',');
-                }
             }
 
             s.prop56    = 'Javascript';

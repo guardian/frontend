@@ -65,7 +65,6 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(section)
-    .dependsOn(tag)
     .dependsOn(video)
     .dependsOn(gallery)
     .dependsOn(football)
