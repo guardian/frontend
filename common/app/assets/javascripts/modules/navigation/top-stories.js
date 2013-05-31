@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, bonzo, lazyLoad) {
+define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, bonzo, LazyLoad) {
 
     function TopStories() {
 
@@ -13,10 +13,9 @@ define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, 
                 if (config.pathPrefix) {
                     url = config.pathPrefix + url;
                 }
-                lazyLoad({
+                new LazyLoad({
                     url: url,
                     container: container,
-                    jsonpCallbackName: 'navigation',
                     beforeInsert: function (html) {
                         return '' +
                             '<h3 class="headline-list__tile type-5">Top stories</h3>' +
@@ -24,10 +23,13 @@ define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, 
                                 html +
                             '</div>';
                     },
-                    success: function (json) {
+                    success: function () {
                         common.mediator.emit('modules:topstories:loaded');
+                    },
+                    error: function(req) {
+                        common.mediator.emit('module:error', 'Failed to load top stories: ' + req.statusText, 'modules/top-stories.js');
                     }
-                });
+                }).load();
 
             }
         };
