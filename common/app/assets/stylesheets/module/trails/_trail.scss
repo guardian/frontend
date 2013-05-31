@@ -20,7 +20,6 @@
 .trail__headline {
     @extend %type-2;
     color: $neutral2;
-    margin-bottom: $base;
 }
 
     .trail__headline a,
@@ -38,31 +37,31 @@
 @media screen and (min-width: 4 * $gridWidth) {
   .trail__headline { margin-bottom: 0; }
 
-  .trail__headline.short  {height: $gridHeight * 1 - $datelineHeight}
-  .trail__headline.medium {height: $gridHeight * 2 - $datelineHeight}
-  .trail__headline.long   {height: $gridHeight * 2 - $datelineHeight}
+  .trail__headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail__headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .trail__headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
 
-  .trail--featured  .trail__headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .trail--featured  .trail__headline.medium {height: $gridHeight * 3 - $datelineHeight}
-  .trail--featured  .trail__headline.long   {height: $gridHeight * 3 - $datelineHeight}
+  .trail--featured  .trail__headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
 @media screen and (min-width: 6 * $gridWidth) {
-  .trail__headline.medium {height: $gridHeight * 1 - $datelineHeight}
+  .trail__headline.medium {min-height: $gridHeight * 1 - $datelineHeight}
 
-  .trail--featured  .trail__headline.short  {height: $gridHeight * 1 - $datelineHeight}
-  .trail--featured  .trail__headline.medium {height: $gridHeight * 2 - $datelineHeight}
+  .trail--featured  .trail__headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
 }
 
 @media screen and (min-width: 10 * $gridWidth) {
-  .trail__headline.long   {height: $gridHeight * 1 - $datelineHeight}
+  .trail__headline.long   {min-height: $gridHeight * 1 - $datelineHeight}
 
-  .trail--featured  .trail__headline.medium {height: $gridHeight * 1 - $datelineHeight}
-  .trail--featured  .trail__headline.long   {height: $gridHeight * 2 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
 }
 
 @media screen and (min-width: 14 * $gridWidth) {
-  .trail--featured  .trail__headline.long   {height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 1 - $datelineHeight}
 }
 
 .trail__text {

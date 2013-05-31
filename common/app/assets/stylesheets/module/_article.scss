@@ -14,8 +14,9 @@
     }
 
 .article__headline {
-    @extend %type-1;
     color: $neutral2;
+    font-size: 2.4rem;
+    line-height: 2.6rem;
 }
 
 .article-standfirst {
@@ -56,7 +57,7 @@
      Article Body
      ========================================================================== */
 .article__body {
-    padding: 0 $baseLRpad;
+    padding: 0 $baseLRpad $base $baseLRpad;
 
     p {
         margin-bottom: 0;
@@ -180,6 +181,11 @@ video {
         width: $gridWidth * 5;
         margin-right: $gridWidth * -2;
     }
+
+    .article-headline {
+        font-size: 3rem;
+        line-height: 3.4rem;
+    }
 }
 
 /* 10 Cols
@@ -206,11 +212,6 @@ video {
         width: $gridWidth * 4;
         @include box-sizing(border-box);
         float: left;
-    }
-
-    .article-headline {
-        font-size: 3rem;
-        line-height: 3.4rem;
     }
 
     .article-standfirst {
@@ -299,19 +300,19 @@ video {
 /* Article headline */
 
 @media screen and (min-width: 4 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
 @media screen and (min-width: 7 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 1 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
-@media screen and (min-width: 10 * $gridWidth) {
-  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {height: $gridHeight * 4 - $datelineHeight}
-  .article-headline.long   {height: $gridHeight * 4 - $datelineHeight}
+@media screen and (min-width: 11 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 4 - $datelineHeight}
 }
