@@ -9,7 +9,7 @@
 .control:active,
 .control:hover,
 .control:visited {
-    float:right;
+    float: right;
     height: 48px;
     width: 60px;
     position: relative;
@@ -19,7 +19,6 @@
     text-decoration: none !important;
 }
 
-.control.is-active,
 .control.is-active {
     background-color: #fff;
     color: $blue;
@@ -58,13 +57,15 @@
 
 /* Sections control - (Hamburger icon )
  ========================================================================== */
-
-.control--sections,
-.control--sections:link,
-.control--sections:active,
-.control--sections:hover,
-.control--sections:visited {
-    @media only screen and (min-width: $tablet) {
+.control--sections .i-menu-grey {
+    display: none;
+}
+@media only screen and (min-width: $tablet) {
+    .control--sections,
+    .control--sections:link,
+    .control--sections:active,
+    .control--sections:hover,
+    .control--sections:visited {
         position: absolute;
         right: 0;
         top: 48px;
@@ -72,30 +73,17 @@
         color: #444;
         font-size: 14px;
     }
-}
 
-.control--sections .control__text {
-    @media only screen and (min-width: $tablet) {
+    .control--sections .control__text,
+    .control--sections .control__icon {
         display: none;
     }
-}
 
-.control--sections .control__icon {
-    @media only screen and (min-width: $tablet) {
-        display:none;
-    }
-}
-
-.control--sections .i-menu-grey {
-    display: none;
-
-    @media only screen and (min-width: $tablet) {
+    .control--sections .i-menu-grey {
         display: inline-block;
     }
-}
 
-.control--sections .i-nav-divider {
-    @media only screen and (min-width: $tablet) {
+    .control--sections .i-nav-divider {
         border-left: 1px solid $neutral10;
         background-color: #fff;
     }
