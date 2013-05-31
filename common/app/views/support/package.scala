@@ -343,7 +343,7 @@ object Head {
 
 object charRange { 
   def apply(str: String): String = {
-    val charsLen = str.filterNot(_ == " ").length 
+    val charsLen = str.length 
     if      (charsLen < 45) "short"
     else if (charsLen < 60) "medium"
     else                     "long"
