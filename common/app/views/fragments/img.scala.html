@@ -12,6 +12,7 @@
     @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
     <figcaption class="main-caption" itemprop="description">
         <i class="i i-image"></i>
-        @Html(smallCrop.caption.getOrElse(""))</figcaption>
+        <b>@Html(smallCrop.caption.getOrElse(""))</b>
+    </figcaption>
     }
 </figure>

@@ -1,12 +1,12 @@
 //Base font-sizes
-//Mixin uses arguments: (family, weight, size, line-height);
+//Mixin uses arguments: (family, weight, size, line-height, antialias);
 
 
 //SerifHeadline
-%type-0 { @include font($serifheadline, 600, 26, 30); }
-%type-1 { @include font($serifheadline, 600, 24, 28); }
-%type-2 { @include font($serifheadline, 600, 19, 23); }
-%type-3 { @include font($serifheadline, 600, 16, 24); }
+%type-0 { @include font($serifheadline, 600, 26, 30, true); }
+%type-1 { @include font($serifheadline, 600, 24, 28, true); }
+%type-2 { @include font($serifheadline, 600, 19, 23, true); }
+%type-3 { @include font($serifheadline, 600, 16, 24, true); }
 
 //SerifText
 %type-4 { @include font($serif, normal, 19, 24); }
@@ -29,3 +29,4 @@
 %type-11 { @include font($sans-serif, normal, 12, 16); }
 %type-12 { @include font($sans-serif, normal, 11, 16); }
 %type-13 { @include font($sans-serif, normal, 10, 12); }
+
