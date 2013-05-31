@@ -69,7 +69,7 @@
     @extend %type-3;
     display: inline;
     padding: 0;
-    color: #929497;
+    color: $neutral4;
 
     @media screen and (min-width: 37.5em) {
         clear: none;
@@ -139,5 +139,5 @@
 }
 
 .relative-timestamp {
-    height: $datelineHeight;  
+    height: $datelineHeight;
 }
