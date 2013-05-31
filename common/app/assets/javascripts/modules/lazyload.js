@@ -32,7 +32,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     return ajax({
                         url: opts.url,
                         type: 'json',
-                        crossOrigin: true,
+                        crossOrigin: true
                     }).then(
                         function(resp) {
                             into.html(opts.beforeInsert(resp.html));
