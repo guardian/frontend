@@ -125,7 +125,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                             });
                         },
                         function(req) {
-                            common.mediator.emit('module:error', 'Failed to load more trailblocks: ' + req.statusText, 'trailblock-show-more.js');
+                            common.mediator.emit('module:error', 'Failed to load more trailblocks: ' + req.statusText, 'modules/trailblock-show-more.js');
                         }
                     ).always(
                         function(resp) {
