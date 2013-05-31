@@ -26,7 +26,7 @@ define(['common', 'modules/tabs', 'bean'], function(common, Tabs, bean) {
         it("should add a CSS class to the selected tab when clicked", function(){
             var li = tab2.parentNode;
             bean.fire(tab2, 'click');
-            expect(li.getAttribute('class')).toBe('tabs-selected');
+            expect(li.getAttribute('class')).toBe('tabs__tab--selected');
         });
 
         it("should remove a CSS class from the previously-selected tab when clicked", function(){
