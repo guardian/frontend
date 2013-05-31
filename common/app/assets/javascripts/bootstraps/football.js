@@ -180,7 +180,7 @@ define([
                 }
                 break;
         }
-    
+
         modules.showHomescreen(config);
     };
 

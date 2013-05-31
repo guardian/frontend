@@ -66,7 +66,6 @@
     background-color: $mushroom;
     padding: 0 0 0 $baseline;
     overflow: hidden;
-    height: 36px;
 
     &.hidden {
         display: none;
@@ -96,6 +95,7 @@
     text-shadow: none;
     @include box-shadow(none);
     width: 60px;
+    height: 36px;
     text-indent: -10px;
     line-height: 18px;
 }
