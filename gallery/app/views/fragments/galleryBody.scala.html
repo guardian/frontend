@@ -4,76 +4,79 @@
     <a data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
 </h2>
 
-<article class="js-gallery gallery-page" itemprop="mainContentOfPage"
+<article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
 
-    <header class="gallery__head">
-        @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-        @fragments.headline(gallery.headline)
-        <div class="gallery__standfirst">
+    <header class="article__head">
+        <div class="snap-to-grid">
+            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+            @fragments.headline(gallery.headline)
+        </div>
+        <div class="article__standfirst snap-to-grid">
         @fragments.standfirst(gallery)
         </div>
     </header>
 
-    <div class="gallery__byline">
-    @fragments.byline(gallery.byline, gallery)
+    @if(gallery.byline.nonEmpty) {
+        <div class="article__byline snap-to-grid">
+        @fragments.byline(gallery.byline, gallery)
+        </div>
+    }
+    
+    <p class="js-gallery-nav box-indent gallery-nav type-11">
+
+        @if(index > 1) {
+            <a class="js-gallery-prev gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true"
+            href="?index=@(index - 1)">Previous</a>
+        } else {
+            <a class="js-gallery-prev gallery-prev is-off" data-link-name="Gallery Previous" data-is-ajax="true"
+            href="javascript://">Previous</a>
+        }
+
+        Image <span class="js-gallery-index">@index</span> of @gallery.size
+
+        <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible is-off">
+            Fullscreen <i class="i i-fullscreen-toggle"></i>
+        </span>
+
+        @if(index < gallery.size) {
+            <a class="gallery-next js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true"
+            href="?index=@(index + 1)">Next</a>
+        } else {
+            <a class="js-gallery-next gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
+            href="?trail=true">Next</a>
+        }
+    </p>
+
+    <div class="js-gallery-holder gallery-container">
+        <ul class="unstyled">
+            @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+                @if(row.rowNum == index) {
+                    <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
+                        data-index="@row.rowNum" data-total="@gallery.size">
+                        <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
+                            src="@image.path" data-width="@image.width" data-height="@image.height" />
+                } else {
+                    <li class="js-gallery-item-@row.rowNum is-off" data-image="false" data-index="@row.rowNum"
+                    data-total="@gallery.size" data-src="@image.path" data-fullsrc='@image.path'
+
+                    data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
+                    data-width="@image.width" data-height="@image.height">
+                }
+
+                    <div class="gallery-caption">
+
+                        <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
+                        <p class="caption-credit type-12">@image.credit</p>
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
 
+    @fragments.social(gallery)
+
 </article>
-
-<p class="js-gallery-nav box-indent gallery-nav type-11">
-
-    @if(index > 1) {
-        <a class="js-gallery-prev gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true"
-        href="?index=@(index - 1)">Previous</a>
-    } else {
-        <a class="js-gallery-prev gallery-prev is-off" data-link-name="Gallery Previous" data-is-ajax="true"
-        href="javascript://">Previous</a>
-    }
-
-    Image <span class="js-gallery-index">@index</span> of @gallery.size
-
-    <span class="js-toggle-fullscreen gallery-fullscreen-toggle js-visible is-off">
-        Fullscreen <i class="i i-fullscreen-toggle"></i>
-    </span>
-
-    @if(index < gallery.size) {
-        <a class="gallery-next js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true"
-        href="?index=@(index + 1)">Next</a>
-    } else {
-        <a class="js-gallery-next gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
-        href="?trail=true">Next</a>
-    }
-</p>
-
-<div class="js-gallery-holder gallery-container">
-    <ul class="unstyled">
-        @gallery.images.zipWithRowInfo.map{ case(image, row) =>
-            @if(row.rowNum == index) {
-                <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
-                    data-index="@row.rowNum" data-total="@gallery.size">
-                    <img class="js-gallery-img maxed @if(image.width >= image.height){landscape} else {portrait}"
-                        src="@image.path" data-width="@image.width" data-height="@image.height" />
-            } else {
-                <li class="js-gallery-item-@row.rowNum is-off" data-image="false" data-index="@row.rowNum"
-                data-total="@gallery.size" data-src="@image.path" data-fullsrc='@image.path'
-
-                data-orientation="@if(image.width >= image.height){landscape} else {portrait}"
-                data-width="@image.width" data-height="@image.height">
-            }
-
-                <div class="gallery-caption">
-
-                    <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
-                    <p class="caption-credit type-12">@image.credit</p>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-
-@fragments.social(gallery)
-
 
 
 @if(storyPackage.nonEmpty) {

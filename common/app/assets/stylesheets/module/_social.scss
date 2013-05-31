@@ -2,7 +2,7 @@
    margin: 0 0 $baseline*4 0;
    list-style: none;
    padding: $baseline*3 $gutter 0 $gutter;
-   min-height: 40px;
+   height: 36px;
 }
  
 .social-btn,
@@ -31,8 +31,6 @@ a.social-btn {
 	bottom: 5px;
 }
 
-@media (min-width: 20em) {
-
     .social {
         padding: $baseline*3 0 $baseline*4 $gutter;
     }
@@ -40,6 +38,7 @@ a.social-btn {
     .social .social-network {
         float: left;
         width: 60px;
+        min-height: 36px;
         margin: 20px 20px 20px 0;
     }
     
@@ -55,7 +54,6 @@ a.social-btn {
     .social-network:last-child .social-btn {
         border-right-width: 0;
     }
-}
 
 .fb {
     background-color: #3b5998;
