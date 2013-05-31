@@ -5,7 +5,7 @@
     <div class="trail__head snap-to-grid">
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-        <h@headingLevel class="trail__headline">
+        <h@headingLevel class="trail__headline @charRange(trail.headline)">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>

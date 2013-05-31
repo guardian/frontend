@@ -2,15 +2,15 @@
      Article head
      ========================================================================== */
 .article__head {
-    padding: $baseline*3 $gutter $baseline*3 $gutter;
+    padding: 0 $baseLRpad;
 }
 
     .article__head .dateline {
             font-family: $sans-serif;
-            margin: 0 0 $baseline*1.5 0;
             color: $neutral4;
             @extend %type-11;
             font-weight: bold;
+            height: $datelineHeight;
     }
 
 .article__headline {
@@ -57,7 +57,7 @@
      Article Body
      ========================================================================== */
 .article__body {
-    padding: 0 10px;
+    padding: 0 $baseLRpad;
 
     p {
         margin-bottom: 0;
@@ -102,16 +102,22 @@ video {
 }
 
 .article figure {
-    padding: 5px 10px 7px 10px;
+    @extend .grid-box-centered;
 }
 
 .article .article__body figure {
     padding: 5px 0 7px 0;
 }
 
+.article__standfirst {
+    @include box-sizing(border-box);
+    min-height: $gridHeight;
+}
+
 .article__byline {
     @include box-sizing(border-box);
-    padding: 5px 10px 7px 10px;
+    @extend .grid-box-centered;
+    min-height: $gridHeight;
 }
 
 .main-caption {
@@ -222,15 +228,14 @@ video {
 
     .article__byline {
         margin: 0;
-        padding: 0 10px;
+        padding: 0 $baseLRpad;
     }
 
     .article figure,
     .article__body,
     .update--wrapper {
         float: right;
-        padding: 0 10px;
-        margin: 15px 0 0 0;
+        margin: 0;
     }
 
     .byline {
@@ -318,4 +323,24 @@ video {
         margin-left: $gridWidth * 1 !important;
     }
     */
+}
+
+/* Article headline */
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 7 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 10 * $gridWidth) {
+  .article-headline.short  {height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {height: $gridHeight * 4 - $datelineHeight}
+  .article-headline.long   {height: $gridHeight * 4 - $datelineHeight}
 }

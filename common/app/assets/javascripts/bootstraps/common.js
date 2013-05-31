@@ -238,7 +238,7 @@ define([
         },
 
         grid: function() {
-            if (true) {
+            if (false && userPrefs.isOn('grid-height')) {
                 common.mediator.on('page:common:ready', function(config, context) {
                     grid(context);
                 });
