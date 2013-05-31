@@ -135,7 +135,7 @@ video {
 
 /* 6 Cols
  ========================================================================== */
-@media screen and (min-width: 6 * $gridWidth) {
+@media screen and (min-width: 30em) {
     .main-media {
         width: $gridWidth * 3;
         float: right;

@@ -1,8 +1,15 @@
 @charset "UTF-8";
 
+.gallery-page header {
+    @include box-sizing(border-box);
+    padding: $baseTopPad $baseLRpad $baseBotPad $baseLRpad;
+}
+
 .gallery-container {
+    @include box-sizing(border-box);
     overflow: hidden;
-    margin: 0 $gutter;
+    width: 100%;
+    padding: $baseTopPad $baseLRpad $baseBotPad $baseLRpad;
 }
 
 .gallery-caption {
@@ -12,6 +19,10 @@
         display: inline-block;
         margin-right: 4px;
     }
+}
+
+.gallery__byline {
+    padding: $baseTopPad $baseLRpad $baseBotPad $baseLRpad;
 }
 
 .gallery-container .caption-credit {
