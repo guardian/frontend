@@ -6,16 +6,23 @@ import play.api.libs.json.{JsValue, JsArray, Json}
 import model._
 import org.joda.time.DateTime
 
+case class Badge(
+  name: String
+)
+
 case class Profile(
   avatar: String,
-  displayName: String
+  displayName: String,
+  isStaff: Boolean = false,
+  isContributor: Boolean = false
 )
 
 case class Comment(
   body: String,
   responses: Seq[Comment],
   profile: Profile,
-  date: DateTime
+  date: DateTime,
+  isHighlighted: Boolean
 )
 
 object Comment{
@@ -26,8 +33,11 @@ object Comment{
     profile = Profile(
                 (json \ "userProfile" \ "avatar").as[String],
                 (json \ "userProfile" \ "displayName").as[String]
+                //(json \ "userProfile" \ "badge").as[List[Badge]].exists(_.name == "Staff"),
+                //(json \ "userProfile" \ "badge").as[List[Badge]].exists(_.name == "Contributor")
               ),
-    date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis
+    date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
+    isHighlighted = (json \ "isHighlighted").as[Boolean]
   )
 }
 
