@@ -1,0 +1,45 @@
+package discussion
+
+import org.joda.time.DateTime
+import play.api.libs.json.JsValue
+import model._
+
+case class Profile(
+  avatar: String,
+  displayName: String,
+  isStaff: Boolean = false,
+  isContributor: Boolean = false
+)
+
+object Profile{
+  def apply(json: JsValue): Profile = {
+    val badges = (json \ "userProfile" \ "badge" \\ "name")
+    Profile(
+      avatar = (json \ "userProfile" \ "avatar").as[String],
+      displayName = (json \ "userProfile" \ "displayName").as[String],
+      isStaff = badges.exists(_.as[String] == "Staff"),
+      isContributor = badges.exists(_.as[String] == "Contributor")
+    )
+  }
+}
+
+case class Comment(
+  body: String,
+  responses: Seq[Comment],
+  profile: Profile,
+  date: DateTime,
+  isHighlighted: Boolean
+)
+
+object Comment{
+
+  def apply(json: JsValue): Comment = Comment(json, Nil)
+
+  def apply(json: JsValue, responses: Seq[Comment]): Comment = Comment(
+    body = (json \ "body").as[String],
+    responses = responses,
+    profile = Profile(json),
+    date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
+    isHighlighted = (json \ "isHighlighted").as[Boolean]
+  )
+}

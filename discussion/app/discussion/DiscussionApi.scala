@@ -6,40 +6,7 @@ import play.api.libs.json.{JsValue, JsArray, Json}
 import model._
 import org.joda.time.DateTime
 
-case class Badge(
-  name: String
-)
 
-case class Profile(
-  avatar: String,
-  displayName: String,
-  isStaff: Boolean = false,
-  isContributor: Boolean = false
-)
-
-case class Comment(
-  body: String,
-  responses: Seq[Comment],
-  profile: Profile,
-  date: DateTime,
-  isHighlighted: Boolean
-)
-
-object Comment{
-  def apply(json: JsValue): Comment = Comment(json, Nil)
-  def apply(json: JsValue, responses: Seq[Comment]): Comment = Comment(
-    body = (json \ "body").as[String],
-    responses = responses,
-    profile = Profile(
-                (json \ "userProfile" \ "avatar").as[String],
-                (json \ "userProfile" \ "displayName").as[String]
-                //(json \ "userProfile" \ "badge").as[List[Badge]].exists(_.name == "Staff"),
-                //(json \ "userProfile" \ "badge").as[List[Badge]].exists(_.name == "Contributor")
-              ),
-    date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
-    isHighlighted = (json \ "isHighlighted").as[Boolean]
-  )
-}
 
 // TODO
 case class CommentPage(
@@ -62,9 +29,9 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
           val json = Json.parse(response.body)
 
-          val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value.map{ c =>
-            val responses = (c \\ "responses")(0).asInstanceOf[JsArray].value.map(r => Comment(r))
-            Comment(c, responses)
+          val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value.map{ commentJson =>
+            val responses = (commentJson \\ "responses")(0).asInstanceOf[JsArray].value.map(responseJson => Comment(responseJson))
+            Comment(commentJson, responses)
           }
 
           CommentPage(
