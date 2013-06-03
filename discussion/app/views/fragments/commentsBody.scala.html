@@ -5,7 +5,9 @@
     <h1><a href="@page.contentUrl">@page.title</a></h1>
 
 @page.comments.map{ comment =>
-    <li>@comment.date.toString("HH:mm:ss")  @Html(comment.body)</li>
+    <li>
+        @comment.profile.avatar
+        @comment.date.toString("HH:mm:ss")  @Html(comment.body)</li>
 
     @if(comment.responses.nonEmpty){
         <ol>
