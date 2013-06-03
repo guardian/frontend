@@ -577,9 +577,9 @@ define([
             }
 
             start();
-
-            return api;
         });
+
+        return api;
     };
 
     return initialise;
