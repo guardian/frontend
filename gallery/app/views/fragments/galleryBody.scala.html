@@ -8,17 +8,15 @@
          itemscope itemtype="@gallery.schemaType" role="main">
 
     <header class="article__head">
-        <div class="snap-to-grid">
-            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-            @fragments.headline(gallery.headline)
-        </div>
-        <div class="article__standfirst snap-to-grid">
-        @fragments.standfirst(gallery)
+        @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+        @fragments.headline(gallery.headline)
+        <div class="article__standfirst">
+            @fragments.standfirst(gallery)
         </div>
     </header>
 
     @if(gallery.byline.nonEmpty) {
-        <div class="article__byline snap-to-grid">
+        <div class="article__byline">
         @fragments.byline(gallery.byline, gallery)
         </div>
     }

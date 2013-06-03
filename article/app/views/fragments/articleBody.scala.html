@@ -27,10 +27,12 @@
         }
     }
 
-    <div class="article__byline">
-        @fragments.byline(article.byline, article)
-    </div>
-
+    @if(article.byline.nonEmpty) {
+        <div class="article__byline">
+            @fragments.byline(article.byline, article)
+        </div>
+    }
+    
     @if(article.isLive) {
         @fragments.autoUpdate()
     }

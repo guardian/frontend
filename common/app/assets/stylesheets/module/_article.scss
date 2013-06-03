@@ -15,9 +15,13 @@
 
 .article__headline {
     color: $neutral2;
+}
+
+.article-headline {
     font-size: 2.4rem;
     line-height: 2.6rem;
 }
+
 
 .article-standfirst {
     border-top: 1px dotted $neutral10;
@@ -302,6 +306,12 @@ video {
 @media screen and (min-width: 4 * $gridWidth) {
   .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
   .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 5 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
   .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
