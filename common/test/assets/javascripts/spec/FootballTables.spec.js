@@ -26,7 +26,7 @@ define(['common', 'ajax',  'qwery', 'modules/footballtables'], function(common, 
         // json test needs to be run asynchronously 
         it("should request the given competitions from the tables api", function(){
 
-            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({
@@ -42,7 +42,7 @@ define(['common', 'ajax',  'qwery', 'modules/footballtables'], function(common, 
 
         it("should prepend a succesful table request to the DOM", function() {
 
-            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({
@@ -60,7 +60,7 @@ define(['common', 'ajax',  'qwery', 'modules/footballtables'], function(common, 
 
         it("should fail silently if no response is returned from table request", function() {
 
-            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({
