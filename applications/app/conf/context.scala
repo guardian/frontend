@@ -18,7 +18,7 @@ object Metrics {
 }
 
 object Management extends Management {
-  val applicationName = "frontend-section"
+  val applicationName = "frontend-applications"
 
   lazy val pages = List(
     new ManifestPage,
