@@ -168,7 +168,7 @@ public class ArticleSteps {
 
 	@Then("^it should show me a list of sections$")
 	public void it_should_show_a_list_of_sections() throws Throwable {
-		assertEquals("block", webDriver.getElementCssValue(By.className("nav-popup--sections"), "display"));
+		assertEquals("block", webDriver.getElementCssValue(By.className("nav-panel--sections"), "display"));
 	}
 
 	@Then("^another click on the \"([^\"]*)\" \"([^\"]*)\" tab closes the list$")

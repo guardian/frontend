@@ -8,7 +8,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     '<div id="topstories-context">' +
                         '<div class="control topstories-control" class="is-off">' +
                         '</div>' +
-                        '<div class="nav-popup--topstories">' +
+                        '<div class="nav-panel--topstories">' +
                         '</div>' +
                     '</div>'
                 ]
@@ -37,7 +37,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
             }, "top-stories callback never called", 500);
 
             runs(function () {
-                var container = document.querySelector('#topstories-context .nav-popup--topstories'),
+                var container = document.querySelector('#topstories-context .nav-panel--topstories'),
                     button    = document.querySelector('#topstories-context .control');
 
                 expect(callback).toHaveBeenCalledOnce();
