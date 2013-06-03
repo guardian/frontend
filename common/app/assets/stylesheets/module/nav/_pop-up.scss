@@ -2,7 +2,7 @@
    Nav pop-up
    ========================================================================== */
 
-.nav-popup {
+.nav-panel {
     position: absolute;
     clear: both;
     z-index: 100;
@@ -22,7 +22,7 @@
     }
 }
 
-.nav-popup .nav--section-divider {
+.nav-panel .nav--section-divider {
     padding-bottom: $baseline*4;
 
     @media only screen and (min-width: $tablet) {
@@ -34,7 +34,7 @@
 
 /* Search
    ========================================================================== */
-.nav-popup--search {
+.nav-panel--search {
     @media only screen and (min-width: $tablet) {
         top: 152px;
         margin-bottom: -57px;
@@ -43,7 +43,7 @@
 
 /* Small
    ========================================================================== */
-.nav-popup--small {
+.nav-panel--small {
     padding-bottom: 0;
 
     @media only screen and (min-width: $tablet) {
@@ -63,7 +63,7 @@
     }
 }
 
-    .nav-popup--small .nav__item {
+    .nav-panel--small .nav__item {
         @media only screen and (min-width: $tablet) {
             margin: 0 $gutter;
             border-bottom: 1px solid $neutral10;
@@ -75,8 +75,8 @@
         }
     }
 
-    .nav-popup--small .nav__link,
-    .nav-popup--small .nav--columns .nav__link {
+    .nav-panel--small .nav__link,
+    .nav-panel--small .nav--columns .nav__link {
         @extend %type-7;
 
         @media only screen and (min-width: $tablet) {

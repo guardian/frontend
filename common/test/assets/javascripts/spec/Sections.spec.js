@@ -9,7 +9,7 @@ define([ 'common',
             var conf = {
                     id: 'sections',
                     fixtures: [
-                                '<div class="nav-popup-sections">foo</div>'
+                                '<div class="nav-panel-sections">foo</div>'
                               ]
             }
 

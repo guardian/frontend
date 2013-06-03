@@ -110,7 +110,7 @@
     background-color: $mushroom;
 }
 
-    .nav-popup--small .nav--section-divider {
+    .nav-panel--small .nav--section-divider {
         @media only screen and (min-width: $tablet) {
             margin-top: -5px !important;
             .nav__item { margin: 0;}

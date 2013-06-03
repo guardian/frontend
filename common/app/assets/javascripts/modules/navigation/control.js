@@ -13,10 +13,10 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                 controls = context.querySelectorAll('.control');
                 contexts[id] = controls;
                 Array.prototype.forEach.call(controls, function(control) {
-                    var popup = self.getPopup(control, context);
+                    var panel = self.getPanel(control, context);
 
-                    if(popup){
-                        control.popup = popup;
+                    if(panel){
+                        control.panel = panel;
                         bean.add(control, 'click touchstart', function (e) {
                             e.preventDefault();
                             self.toggle(control, controls);
@@ -46,21 +46,21 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
         });
     };
 
-    Control.prototype.getPopup = function(control, context) {
-        var popupClass = bonzo(control).data('control-for');
-        if (popupClass) {
-            return context.querySelector('.nav-popup--' + popupClass);
+    Control.prototype.getPanel = function(control, context) {
+        var panelClass = bonzo(control).data('control-for');
+        if (panelClass) {
+            return context.querySelector('.nav-panel--' + panelClass);
         }
     };
 
     Control.prototype.open = function(c) {
         bonzo(c).addClass('is-active');
-        bonzo(c.popup).removeClass('is-off');
+        bonzo(c.panel).removeClass('is-off');
     };
     
     Control.prototype.close = function(c) {
         bonzo(c).removeClass('is-active');
-        bonzo(c.popup).addClass('is-off');
+        bonzo(c.panel).addClass('is-off');
     };
 
     return Control;

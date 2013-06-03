@@ -35,7 +35,7 @@ define(['common', 'bean', 'modules/detect'], function (common, bean, detect) {
 
         this.load = function(context) {
             var layout = detect.getLayoutMode(),
-                containerClass = (layout === "mobile") ? '.js-search--sections' : '.js-search--popup',
+                containerClass = (layout === "mobile") ? '.js-search--sections' : '.js-search--panel',
                 container = currentContext.querySelector(containerClass),
                 s,
                 x;
