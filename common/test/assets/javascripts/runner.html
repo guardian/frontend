@@ -31,7 +31,7 @@
             }
       });
   </script>
-  <style>   
+  <style>
     ul ul { margin-left: 0; padding: 0; }
     ul ul li { margin-left: 40px; }
     .is-off:after { content: " -- (hidden)"; }
@@ -283,10 +283,10 @@
         <!-- Tabs.spec -->
         <p id="tabs-test">
 
-          <div class="tabs-container">
-            <ol class="tabs js-tabs">
-                <li class="tabs-selected"><a id="tab1" href="#tab1panel">Foo</a></li>
-                <li><a id="tab2" href="#tab2panel">Bar</a></li>
+          <div class="tabs">
+            <ol class="tabs__container js-tabs">
+                <li class="tabs__tab--selected"><a id="tab1" href="#tab1panel">Foo</a></li>
+                <li class=""><a id="tab2" href="#tab2panel">Bar</a></li>
             </ol>
 
             <div class="tabs-content">
@@ -295,9 +295,9 @@
             </div>
           </div>
 
-          <div class="tabs-container">
-            <ol class="tabs">
-                <li class="tabs-selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
+          <div class="tabs">
+            <ol class="tabs__container">
+                <li class="tabs__tab--selected"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>
                 <li><a id="tab2_2" href="#tab2panel_2">Bar</a></li>
                 <li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>
             </ol>
