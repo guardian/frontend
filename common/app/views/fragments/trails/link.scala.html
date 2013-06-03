@@ -1,8 +1,10 @@
 @(trail: Trail, rowNum: Int)
 
-<span class="count">@rowNum</span> 
-<p class="type-7">
-    <a href="@trail.url" data-link-name="Top stories:link text:item @rowNum">
-        @RemoveOuterParaHtml(trail.linkText)
-    </a>
-</p>
+<li class="headline-list__item">
+    <span class="headline-list__count">@rowNum</span>
+    <p class="headline-list__body">
+        <a href="@trail.url" data-link-name="link text | item @rowNum">
+            @RemoveOuterParaHtml(trail.linkText)
+        </a>
+    </p>
+</li>

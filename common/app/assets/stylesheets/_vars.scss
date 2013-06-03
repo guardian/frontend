@@ -8,7 +8,7 @@
 /* Breakpoints
  ========================================================================== */
 $mobile: 18.75em;  //300px
-$tablet: 37.5em;   //600px
+$tablet: 40em;     //640px
 $desktop: 56.25em; //900px
 
 /* Tweakpoints
@@ -18,7 +18,7 @@ $desktop: 56.25em; //900px
 /* Layout dimensions
  ========================================================================== */
 $baseline: 4px;
-$gutter: 16px;
+$gutter: 10px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
@@ -40,6 +40,43 @@ $lightBlue: #95B2CB;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
 $darkMushroom: #E3E3DB;
+
+
+$main1: #194377;
+$main2: #6783A1;
+$main3: #95B1CA;
+$main4: #9AE7EF;
+$main5: #6BC2D0;
+$main6: #34B1A3;
+$main7: #009798;
+$main8: #1D646E;
+$main9: #10793D;
+$main10: #6CA843;
+$main11: #B8BA33;
+$main12: #D7DF2A;
+$main13: #E1659F;
+$main14: #F2849A;
+$main15: #7A2268;
+$main16: #931C55;
+$main17: #EE7823;
+$main18: #F9AF41;
+$main19: #FFCC00;
+$main20: #D84B27;
+$main21: #F6644F;
+
+$neutral1: #000000;
+$neutral2: #333333;
+$neutral3: #676767;
+$neutral4: #767676;
+$neutral5: #B3B3B4;
+$neutral6: #EEEEE6;
+$neutral7: #F5F4EE;
+$neutral8: #F9F9F7;
+$neutral9: #FCFCFB;
+$neutral10: #CFCFCD;
+
+$actionBlue: #005689;
+$alertRed: #E21B39;
 
 /* Zones
  ========================================================================== */
@@ -64,3 +101,19 @@ $travelBlue: #066EC9;
  ========================================================================== */
 $homeColour: $sportBright;
 $awayColour: #19646E;
+
+/* Grid
+ ========================================================================== */
+$ratio        : 5/3;
+$fontsize     : 16px;
+$base         : 24px;
+$baseTopPad   : 5px;
+$baseBotPad   : 7px;
+$baseLeftPad  : 9px;
+$baseRightPad : 10px;
+$baseLRpad    : 10px;
+$gridColsMin  : 4;
+$gridColsMax  : 14;
+$gridWidth    : 80px;
+$gridHeight   : 48px;
+$datelineHeight : 16px;

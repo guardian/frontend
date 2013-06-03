@@ -20,13 +20,13 @@
 }
 
 .home-stat {
-    background-color: $homeColour;
+    background-color: $main10;
     height: 15px;
     width: 100%;
 }
 
 .away-stat {
-    background-color: $awayColour;
+    background-color: $main8;
     height: 15px;
 }
 
@@ -42,19 +42,6 @@
 .away-stat-background {
     background-color: #EDEDED;
     width: 100%;
-}
-
-.team-list {
-    list-style: none
-}
-
-.team-list-name {
-    width: 49%;
-    display: inline-block;
-}
-
-.m-status {
-    padding: 2px 5px 2px 5px;
 }
 
 .home-header {
@@ -96,15 +83,15 @@
 }
 
 .item-divider {
-    border-top: 1px solid $mushroom;
-    padding-top: $baseline;
+    border-top: 1px solid $neutral10;
+    padding-top: 0;
 }
 
 .section-divider {
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
-    padding-top: $baseline * 2;
-    padding-bottom: $baseline * 3;
+    padding-top: $baseline;
+    padding-bottom: $baseline * 1.5;
+    border-top: 1px solid $neutral3;
+    border-bottom: 1px solid $neutral3;
 }
 
 .place-holder {
@@ -112,5 +99,17 @@
 }
 
 .update.update-match-stats {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
+}
+
+.update-live-matches {
+    margin: 0 10px 12px 10px;
+}
+
+.stats__title {
+    @extend %type-2;
+    line-height: 24px;
+    padding: 0 0 6px 0;
+    border-top: 1px solid #9D9D9D;
+    border-bottom: 1px dotted #9D9D9D;
 }

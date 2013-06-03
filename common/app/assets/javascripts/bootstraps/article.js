@@ -38,9 +38,9 @@ define([
                     var a = new AutoUpdate({
                         path: window.location.pathname,
                         delay: 60000,
-                        attachTo: context.querySelector(".article-body"),
+                        attachTo: context.querySelector(".article__body"),
                         switches: config.switches,
-                        responseSelector: '.article-body .block'
+                        responseSelector: '.article__body .block'
                     }).init();
                 }
             });
@@ -54,7 +54,7 @@ define([
                     var reader = new Reading({
                         id: config.page.pageId,
                         wordCount: parseInt(config.page.wordCount, 10),
-                        el: context.querySelector('.article-body'),
+                        el: context.querySelector('.article__body'),
                         ophanUrl: config.page.ophanUrl
                     });
 
