@@ -3,6 +3,14 @@
 
 @main(page, Switches.all){ }{
 
+    <h2 class="page-head page-head--article">Comments</h2>
+
+    <header class="article__head">
+        <h1 class="article-headline @charRange(page.title)">
+            <a href="@page.contentUrl">@page.title</a>
+        </h1>
+    </header>
+
     @fragments.commentsBody(page)
 
 }
