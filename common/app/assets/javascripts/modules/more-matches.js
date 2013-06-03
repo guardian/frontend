@@ -25,14 +25,10 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                 var link = bonzo(_link);
                 ajax({
                     url: link.attr('href'),
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'moreMatches',
-                    success: function (response) {
-                        if (!response) {
-                            common.mediator.emit('module:error', 'Failed to load more matches', 'more-matches.js');
-                            return;
-                        }
+                    type: 'json',
+                    crossOrigin: true
+                }).then(
+                    function(response) {
                         // pull out fixtures
                         var $response = bonzo.create('<div>' + response.html + '</div>'),
                             $fixtures = common.$g('.matches-container > .competitions-date, .matches-container > .competitions', $response[0]);
@@ -44,8 +40,11 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                         } else {
                             link.remove();
                         }
+                    },
+                    function(req) {
+                        common.mediator.emit('modules:error', 'Failed to load more matches: ' + req.statusText, 'modules/more-matches.js');
                     }
-                });
+                );
             }
             
             common.mediator.on('ui:more-matches:clicked', clicked);

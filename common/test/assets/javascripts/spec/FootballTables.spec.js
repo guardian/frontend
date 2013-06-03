@@ -1,6 +1,8 @@
 define(['common', 'ajax',  'qwery', 'modules/footballtables'], function(common, ajax, qwery, FootballTable) {
 
     describe("Football fixtures component", function() {
+
+        var server;
        
         beforeEach(function() {
             ajax.init({page: {
