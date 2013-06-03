@@ -1,0 +1,58 @@
+@(comment: Comment)(implicit request: RequestHeader)
+
+<div class="d-thread">
+    <div class="d-comment-list">
+        <div class="d-comment d-comment--top-level media" itemscope itemtype="http://schema.org/Comment">
+            <!-- <div class="d-comment__pick">Editor’s pick</div> -->
+            <div class="d-comment__media media__img">
+                <a href="d-comment__avatar-wrapper"><img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="40" height="40" /></a>
+                <div class="d-comment__author-status-wrapper">
+                    <!-- <i class="d-i d-i--contributor d-comment__author-status">Contributor</i> -->
+                    <!-- <i class="d-i d-i--contributor d-comment__author-status" title="Guardian staff" itemprop="jobTitle">Guardian Staff</i> -->
+                </div>
+            </div>
+            <div class="d-comment__main media__body">
+                <div class="d-comment__header">
+                    <div><a href="#" class="d-comment__author"><b>@comment.profile.displayName</b></a></div>
+                    <time class="d-comment__time js-timestamp" itemprop="datePublished" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
+                        @* Anything inside here will be replaced by JS *@
+                        @Format(comment.date, "d MMM y")
+                    </time>
+                </div>
+                <div class="d-comment__body">
+                   @Html(comment.body)
+                </div>
+            </div>
+        </div>
+
+        @if(comment.responses.nonEmpty){
+            <ol>
+                @comment.responses.map{ response =>
+                    <div class="d-comment media" itemscope itemtype="http://schema.org/Comment">
+                        <!-- <div class="d-comment__pick">Editor’s pick</div> -->
+                        <div class="d-comment__media media__img">
+                            <a href="d-comment__avatar-wrapper"><img src="@response.profile.avatar" alt="" class="d-comment__avatar" width="40" height="40" /></a>
+                            <div class="d-comment__author-status-wrapper">
+                                <!-- <i class="d-i d-i--contributor d-comment__author-status">Contributor</i> -->
+                                <!-- <i class="d-i d-i--contributor d-comment__author-status" title="Guardian staff" itemprop="jobTitle">Guardian Staff</i> -->
+                            </div>
+                        </div>
+                        <div class="d-comment__main media__body">
+                            <div class="d-comment__header">
+                                <div><a href="#" class="d-comment__author"><b>@response.profile.displayName</b></a></div>
+                                <time class="d-comment__time js-timestamp" itemprop="datePublished" datetime="@response.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@response.date.getMillis">
+                                    @* Anything inside here will be replaced by JS *@
+                                    @Format(response.date, "d MMM y")
+                                </time>
+                            </div>
+                            <div class="d-comment__body">
+                               @Html(response.body)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </ol>
+        }
+
+    </div><!-- /.d-comment-list -->
+</div><!-- /.d-thread -->
