@@ -23,7 +23,8 @@ object Management extends Management {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/books"
+      "/books",
+      "/books/harrypotter"
     ),
     StatusPage(applicationName, Metrics.all),
     new PropertiesPage(Configuration.toString),
