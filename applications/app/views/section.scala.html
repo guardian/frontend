@@ -1,0 +1,7 @@
+@(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
+
+@main(section, Switches.all){  }{
+
+    @fragments.sectionBody(section, editorsPicks, latestContent)
+
+}
