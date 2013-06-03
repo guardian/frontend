@@ -1,7 +1,6 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2, isSmall: Boolean = false)(implicit request: RequestHeader)
 
-
-<@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}" data-link-name="trail">
+<@element class="trail trail--featured@if(isSmall){-small} t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}" data-link-name="trail">
 
     <div class="trail__head">
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
@@ -32,4 +31,3 @@
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
 
 </@element>
-
