@@ -1,27 +1,33 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-2">
-    <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
 </h2>
 
 <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
 
-    <header class="article-head">
+    <header class="article__head">
         @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
         @fragments.headline(gallery.headline)
-        @fragments.standfirst(gallery)
+        <div class="article__standfirst">
+            @fragments.standfirst(gallery)
+        </div>
     </header>
 
-    @fragments.byline(gallery.byline, gallery)
-
+    @if(gallery.byline.nonEmpty) {
+        <div class="article__byline">
+        @fragments.byline(gallery.byline, gallery)
+        </div>
+    }
+    
     <p class="js-gallery-nav box-indent gallery-nav type-11">
 
         @if(index > 1) {
-            <a class="js-gallery-prev gallery-prev control" data-link-name="Gallery Previous" data-is-ajax="true"
+            <a class="js-gallery-prev gallery-prev" data-link-name="Gallery Previous" data-is-ajax="true"
             href="?index=@(index - 1)">Previous</a>
         } else {
-            <a class="js-gallery-prev gallery-prev is-off control" data-link-name="Gallery Previous" data-is-ajax="true"
+            <a class="js-gallery-prev gallery-prev is-off" data-link-name="Gallery Previous" data-is-ajax="true"
             href="javascript://">Previous</a>
         }
 
@@ -32,10 +38,10 @@
         </span>
 
         @if(index < gallery.size) {
-            <a class="gallery-next js-gallery-next control" data-link-name="Gallery Next" data-is-ajax="true"
+            <a class="gallery-next js-gallery-next" data-link-name="Gallery Next" data-is-ajax="true"
             href="?index=@(index + 1)">Next</a>
         } else {
-            <a class="js-gallery-next gallery-next control" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
+            <a class="js-gallery-next gallery-next" data-link-name="Gallery Next" data-is-ajax="true" data-next="trail"
             href="?trail=true">Next</a>
         }
     </p>
@@ -66,9 +72,10 @@
         </ul>
     </div>
 
+    @fragments.social(gallery)
+
 </article>
 
-@fragments.social(gallery)
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

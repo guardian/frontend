@@ -1,10 +1,6 @@
-.football-table-container a.cta {
-    background-color: #f4f4ee;
-    color: #064951;
-}
-
 .table-football {
-    background-color: #f4f4ee;
+    background-color: $neutral6;
+    margin-bottom: $baseline*3;
 }
 
 .table-football-header {
@@ -13,9 +9,8 @@
 
 .table-football-header th,
 .table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
-    background-color: #f4f4ee;
     color: #777777;
-    font-weight: normal;    
+    font-weight: normal;
 }
 
 .table-football th {
@@ -23,9 +18,7 @@
 }
 
 .table-football-body th {
-    background: #f4f4ee;
     font-weight: 500;
-    color: $sportMid;
     border-top: 1px solid #DEDEDD;
 
     &:first-child {
@@ -37,17 +30,18 @@
 .table-football td {
     border-right: none;
     text-align: right;
-    padding: $baseline*2 3% $baseline*2 3%;
+    padding: $baseline*2 3px;
+    line-height: 19px;
 }
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $baseline*2;
+    padding: $baseline*2 3px;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: $baseline*2 $baseline*2 $baseline*2 3%;
+    padding: $baseline*2 3px;
 }
 
 .table-football td:last-child {
@@ -64,7 +58,6 @@
 }
 
 .table-football-body a {
-    color: #000000;
     font-weight: 500;
 }
 
@@ -84,15 +77,19 @@
     .table-football td:last-child {
         padding-right: 12px;
     }
-    
+
 }
 
 .table-football-leftaligned {
     text-align: left !important;
 }
 
-.table-football-body {
-    border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
+
+.table-football-body--multigroup {
+    border-bottom: 1px solid $neutral5;
+}
+.table-football-body--multigroup:last-child {
+    border-bottom: 0;
 }
 
 // overriding pasteup :(
@@ -101,16 +98,25 @@
 .table-football-body tr:nth-child(even),
 .table-football-body:hover tr:hover,
 .table-football-body tr:last-child {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .table-football-body tr.highlight,
 .table-football-body:hover tr.highlight,
 .table-football-body tr.highlight:nth-child(even),
 .table-football-body:hover tr.highlight:nth-child(even) {
-    background-color: #FAB036 !important;
+    background-color: $main18;
     border-bottom: none;
     margin-top: -1px;
+}
+
+
+// table footer cta
+.table-football__cta,
+.table-football__cta:active {
+    background-color: $neutral6;
+    overflow: hidden;
+    border-top: 0;
 }
 
 

@@ -18,7 +18,7 @@ define([
 ) {
 
     var modules = {
-            
+
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
@@ -67,7 +67,6 @@ define([
                 }
             });
         }
-        
     };
 
     var ready = function (config, context) {

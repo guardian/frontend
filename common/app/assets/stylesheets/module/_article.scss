@@ -1,62 +1,75 @@
-.article-zone {
-    padding: 13px 0 14px 0;
-    margin: 0 $gutter;
-    line-height: 1em;
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
-    @include box-sizing(border-box);
-
-    @media only screen and (min-width: $tablet) {
-        border-top: none;
-    }
-
-    .js-popular & {
-        border-bottom: none;
-    }
+/* ==========================================================================
+     Article head
+     ========================================================================== */
+.article__head {
+    padding: 0 $baseLRpad;
 }
 
-.article-zone-sub {
-    @extend %type-6;
-}
+    .article__head .dateline {
+            font-family: $sans-serif;
+            color: $neutral4;
+            @extend %type-11;
+            font-weight: bold;
+            height: $datelineHeight;
+    }
 
-
-.article-head {
-    padding: $baseline*3 $gutter $baseline*4 $gutter;
+.article__headline {
+    color: $neutral2;
 }
 
 .article-headline {
-    @extend %type-3;
-    margin-bottom: $baseline*2;
+    font-size: 2.4rem;
+    line-height: 2.6rem;
 }
 
+
 .article-standfirst {
-    margin-bottom: 0;
+    border-top: 1px dotted $neutral10;
+    color: $neutral4;
 }
 
 .bullet {
     font-size: 13px;
     display: inline-block;
-    color: #999999;
+    color: #999;
     margin: $baseline/2 4px 0 0;
 }
 
-.bullet:first-of-type {
-    margin-top: $baseline;
-}
+    .bullet:first-of-type {
+        margin-top: $baseline;
+    }
 
 .byline {
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
-    margin: 0 $gutter $baseline*2 $gutter;
-    padding: $baseline 0 $baseline*4 0;
+    @include box-sizing(border-box);
+    display: block;
+    border-top: 1px solid $neutral10;
+    border-bottom: 1px solid $neutral10;
+    padding: 0 0 9px 0;
+    vertical-align: top;
+
+    a {
+        font-weight: 500;
+    }
 }
 
-.article .main-image {
+.main-image {
+    @include box-sizing(border-box);
     margin-bottom: 0;
 }
 
-.article-body {
-    padding: 0 $gutter $baseline*2 $gutter;
+/* ==========================================================================
+     Article Body
+     ========================================================================== */
+.article__body {
+    padding: 0 $baseLRpad $base $baseLRpad;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    p + p {
+        text-indent: 24px;
+    }
 }
 
 .gu-video {
@@ -65,7 +78,251 @@
 }
 
 video {
-    max-width: 100%;
-    height: auto;
-    @include user-select;
+        max-width: 100%;
+        height: auto;
+        -webkit-user-select: none;
+}
+
+.inline-image {
+    float: left;
+
+    img,
+    figcaption {
+        @extend .grid-box-2;
+    }
+}
+
+.img-tiny.inline-image {
+    width: auto;
+    max-width: $inArticleInlineImgWidth;
+}
+
+/* ==========================================================================
+     Grid Layouts
+     ========================================================================== */
+.article {
+    max-width: $gridWidth * 7;
+    @extend .cf;
+}
+
+.main-media {
+    @extend .grid-box-centered;
+}
+
+.article__standfirst {
+    @include box-sizing(border-box);
+    min-height: $gridHeight;
+    padding-bottom: 10px;
+}
+
+.article__byline {
+    @include box-sizing(border-box);
+    @extend .grid-box-centered;
+    min-height: $gridHeight;
+}
+
+.main-caption {
+    padding: 3px 0;
+    font-weight: bold;
+}
+
+.main-media,
+.article__byline,
+.article__body,
+video {
+    @include box-sizing(border-box);
+}
+
+.update--wrapper {
+    @extend .grid-box-centered;
+}
+
+/* 6 Cols
+ ========================================================================== */
+@media screen and (min-width: 30em) {
+    .main-media {
+        width: $gridWidth * 3;
+        float: right;
+        background-color: #fff;
+    }
+
+    .article__byline {
+        width: $gridWidth * 3;
+    }
+
+    .article-headline {
+        font-size: 2.8rem;
+        line-height: 3.2rem;
+    }
+}
+
+/* 7 Cols
+ ========================================================================== */
+@media screen and (min-width: 35em) {
+    .main-media {
+        width: $gridWidth * 4;
+    }
+}
+
+/* 8 Cols
+ ========================================================================== */
+@media screen and (min-width: 40em) {
+    .main-media {
+        margin-right: $gridWidth * -1;
+    }
+    .article__byline {
+        width: $gridWidth * 4;
+    }
+    .page-head--article {
+        border: 0;
+    }
+}
+
+/* 9 Cols
+ ========================================================================== */
+@media screen and (min-width: 45em) {
+    .main-media {
+        width: $gridWidth * 5;
+        margin-right: $gridWidth * -2;
+    }
+
+    .article-headline {
+        font-size: 3rem;
+        line-height: 3.4rem;
+    }
+}
+
+/* 10 Cols
+ ========================================================================== */
+@media screen and (min-width: 50em) {
+    .main-media {
+        width: $gridWidth * 6;
+        margin-right: $gridWidth * -3;
+    }
+}
+
+/* 11 Cols
+ ========================================================================== */
+@media screen and (min-width: 55em) {
+
+    .page-head {
+        border-bottom: 0;
+    }
+    .article {
+        max-width: 100%;
+    }
+    .article__head,
+    .article__byline {
+        width: $gridWidth * 4;
+        @include box-sizing(border-box);
+        float: left;
+    }
+
+    .article-standfirst {
+        font-size: 1.8rem;
+        line-height: 2.6rem;
+    }
+
+    .article__byline {
+        margin: 0;
+        padding: 0 $baseLRpad;
+    }
+
+    .main-media,
+    .article__body,
+    .update--wrapper {
+        float: right;
+        margin: 0;
+    }
+
+    .byline {
+        margin-left: 0;
+    }
+
+    .inline-image {
+        img, figcaption {
+            @extend .grid-box-3;
+        }
+    }
+
+    .article__body,
+    .update--wrapper {
+        width: $gridWidth * 6;
+    }
+
+    .main-media {
+        width: $gridWidth * 7;
+    }
+
+    .article__body,
+    .update--wrapper {
+        margin-right: $gridWidth * 1;
+    }
+}
+
+/* 12 Cols
+ ========================================================================== */
+@media screen and (min-width: 60em) {
+    .main-media,
+    video {
+        width: $gridWidth * 8;
+    }
+
+    .article__body,
+    .update--wrapper {
+        width: $gridWidth * 7;
+    }
+}
+
+/* 13 Cols
+ ========================================================================== */
+@media screen and (min-width: 65em) {
+    .main-media,
+    video {
+        margin-right: $gridWidth * 1;
+    }
+
+    .article__body,
+    .update--wrapper {
+        margin-right: $gridWidth * 2;
+    }
+}
+
+/* 14 Cols
+ ========================================================================== */
+@media screen and (min-width: 70em) {
+    .main-media {
+        width: $gridWidth * 9;
+    }
+
+    .article__body,
+    .update--wrapper {
+        margin-right: $gridWidth * 3;
+    }
+}
+
+/* Article headline */
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 5 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 7 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
+}
+
+@media screen and (min-width: 11 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 4 - $datelineHeight}
 }

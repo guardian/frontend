@@ -2,9 +2,9 @@
 
 @renderTeamList(comp: model.Competition) = {
     <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
-        <h1 class="article-zone type-5">@comp.fullName</h1>
+        <h1 class="team-list__title">@comp.fullName</h1>
 
-        <ul class="nav nav--columns nav--top-border-off cf">
+        <ul class="nav nav--columns nav--columns-football cf">
             @comp.teams.map{ team =>
             <li class="nav__item" data-team-id="@team.id">
                 @TeamUrl(team).map{ url => <a href="@url" class="nav__link" data-link-name="@team.name">
@@ -17,11 +17,11 @@
     </section>
 }
 
-<h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/football">Football</a>
 </h2>
 
-<h1 class="page-head">@pageModel.page.webTitle</h1>
+<h1 class="page-head page-head--noborder">@pageModel.page.webTitle</h1>
 
 
 @comps.map{ comp =>

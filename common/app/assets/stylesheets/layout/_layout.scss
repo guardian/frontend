@@ -1,35 +1,36 @@
 /* ==========================================================================
-     Global wrapper
-     ========================================================================== */
+   Global wrapper
+   ========================================================================== */
 
 #preloads {
     position: relative;
     clear: both;
-    max-width: 64em;
-    max-width: 102.4rem;
+    //max-width: 64em;
+    //max-width: 102.4rem;
     margin: 0 auto;
 }
 
 /* ==========================================================================
-     Global header and navigation
-     ========================================================================== */
+   Global header and navigation
+   ========================================================================== */
 
 #header {
+    min-height: 48px;
     position: relative;
-    background-color: $blue;
+    background-color: $main1;
 }
 
 #logo {
     display: block;
     float: left;
-    margin: 20px 0 18px $gutter;
+    margin: 7px 0 21px $gutter;
     text-indent: -9999px;
 }
 
 
 /*
-     Layout helpers
-     ========================================================================== */
+   Layout helpers
+   ========================================================================== */
 
 /**
  * @todo Should these be moved to helpers?
@@ -43,23 +44,9 @@
     padding: 0 $gutter $baseline*1 $gutter;
 }
 
-.inline-image {
-    width: $inArticleInlineImgWidth;
-    float: left;
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    margin-top: 3px;
-}
-
-.img-tiny.inline-image {
-    width: auto;
-    max-width: $inArticleInlineImgWidth;
-}
-
 /* ==========================================================================
-     Preloads (for swipe)
-     ========================================================================== */
+   Preloads (for swipe)
+   ========================================================================== */
 
 #preloads-inner {
     position: relative;
