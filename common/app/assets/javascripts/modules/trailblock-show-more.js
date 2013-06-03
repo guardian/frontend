@@ -83,17 +83,17 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                     // what's the section (default to 'top-stories')
                     section = getSection($cta);
 
-
                 // have we already got the trails
                 if (trails[section]) {
                     that.view.render($cta, section);
                 } else {
+                    $cta.attr('disabled', 'disabled');
                     ajax({
                         url: opts.url || '/' +  section + '/trails',
                         type: 'json',
-                        method: "GET",
-                        crossOrigin: true,
-                        success: function (resp) {
+                        crossOrigin: true
+                    }).then(
+                        function(resp) {
                             common.mediator.emit('module:trailblock-show-more:loaded');
                             var $trailList = bonzo(bonzo.create(resp.html)),
                                 $trails = common.$g('li', $trailList),
@@ -113,16 +113,24 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                             });
 
                             that.view.render($cta, section);
+                            that.view.updateCta($cta);
+
+                            // listen to the clickstream, as happens after this module
+                            common.mediator.on('module:clickstream:click', function(clickSpec) {
+                                var $cta = bonzo(clickSpec.target);
+                                if ($cta.hasClass('js-show-more')) {
+                                    that.view.updateCta($cta);
+                                }
+                            });
+                        },
+                        function(req) {
+                            common.mediator.emit('module:error', 'Failed to load more trailblocks: ' + req.statusText, 'modules/trailblock-show-more.js');
                         }
-                    });
-                }
-
-            });
-
-            common.mediator.on('module:clickstream:click', function(clickSpec) {
-                var $cta = bonzo(clickSpec.target);
-                if ($cta.hasClass('js-show-more')) {
-                    that.view.updateCta($cta);
+                    ).always(
+                        function(resp) {
+                            $cta.removeAttr('disabled');
+                        }
+                    );
                 }
             });
         };
