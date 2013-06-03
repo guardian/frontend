@@ -19,21 +19,20 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
             var that = this;
             ajax({
                 url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'showMatchNav',
-                success: function (json) {
-                    if (!json) {
-                        common.mediator.emit('module:error', 'Failed to load match nav', 'matchnav.js');
-                        return;
-                    }
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (json) {
                     if (json.status === 404) {
                         return;
                     }
                     that.view.render(json, context);
                     common.mediator.emit('modules:matchnav:loaded', json);
+                },
+                function(req) {
+                    common.mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'modules/matchnav.js');
                 }
-            });
+            );
         };
     }
     
