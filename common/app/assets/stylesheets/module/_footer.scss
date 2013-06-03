@@ -26,11 +26,11 @@
     .nav--stacked li {
         @extend %type-11;
         line-height: 24px;
-        color: #a3c5c5;
         margin-left: 0;
         border-top-color: #C0C9CE;
     }
 
+    .nav--stacked li,
     .nav--stacked li a {
         color: #c3d5e5;
     }

@@ -239,6 +239,15 @@ define([
             if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
                 swipeNav(config);
             }
+            common.mediator.on('module:clickstream:click', function(clickSpec){
+                if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
+                    userPrefs.switchOn('swipe-nav');
+                }
+                else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
+                    userPrefs.switchOff('swipe-nav');
+                }
+                window.location.reload();
+            });
         }
     };
 
