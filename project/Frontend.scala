@@ -33,8 +33,15 @@ object Frontend extends Build with Prototypes with Testing {
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val router = application("router").dependsOn(commonWithTests)
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
+
   val event = application("event").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
+  )
+
+  val discussion = application("discussion").dependsOn(commonWithTests).settings(
+    templatesImport ++= Seq(
+      "discussion._"
+    )
   )
 
   val football = application("football").dependsOn(commonWithTests).settings(
@@ -44,7 +51,7 @@ object Frontend extends Build with Prototypes with Testing {
       "feed._"
     )
   )
-  
+
   val image = application("image").dependsOn(commonWithTests).settings(
        libraryDependencies ++= Seq(
          "org.imgscalr" % "imgscalr-lib" % "4.2",
@@ -74,6 +81,7 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(diagnostics)
     .dependsOn(styleGuide)
     .dependsOn(event)
+    .dependsOn(discussion)
 
   val main = root().aggregate(
     common,

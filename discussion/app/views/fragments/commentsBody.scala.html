@@ -1,0 +1,18 @@
+@(page: CommentPage)(implicit request: RequestHeader)
+
+<ol>
+
+    <h1><a href="@page.contentUrl">@page.title</a></h1>
+
+@page.comments.map{ comment =>
+    <li>@comment.date.toString("HH:mm:ss")  @Html(comment.body)</li>
+
+    @if(comment.responses.nonEmpty){
+        <ol>
+            @comment.responses.map{ response =>
+                <li>@response.date.toString("HH:mm:ss") @Html(response.body)</li>
+            }
+        </ol>
+    }
+}
+</ol>
