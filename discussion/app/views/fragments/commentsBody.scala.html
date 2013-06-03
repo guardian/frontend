@@ -1,20 +1,11 @@
 @(page: CommentPage)(implicit request: RequestHeader)
 
-<ol>
+<h1>Comments for <a href="@page.contentUrl">@page.title</a></h1>
 
-    <h1><a href="@page.contentUrl">@page.title</a></h1>
+<div class="d-thread-list">
 
 @page.comments.map{ comment =>
-    <li>
-        @comment.profile.avatar
-        @comment.date.toString("HH:mm:ss")  @Html(comment.body)</li>
-
-    @if(comment.responses.nonEmpty){
-        <ol>
-            @comment.responses.map{ response =>
-                <li>@response.date.toString("HH:mm:ss") @Html(response.body)</li>
-            }
-        </ol>
-    }
+    @fragments.commentThread(comment)
 }
-</ol>
+
+</div><!-- /.d-thread-list -->
