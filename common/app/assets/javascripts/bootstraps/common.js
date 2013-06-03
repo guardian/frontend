@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'bonzo',
+    'bean',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -29,7 +30,7 @@ define([
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
-    "modules/adverts/video"
+    'modules/adverts/video'
 ], function (
     common,
     ajax,
@@ -37,6 +38,7 @@ define([
 
     domReady,
     bonzo,
+    bean,
 
     storage,
     detect,

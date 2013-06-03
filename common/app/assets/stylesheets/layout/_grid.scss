@@ -1,0 +1,55 @@
+@function gridWidths($cols) {
+    @return $cols * $gridWidth;
+}
+
+.grid-box,
+%grid-box {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
+}
+
+.grid-box-centered,
+%grid-box-centered {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: $baseTopPad $baseLRpad $baseBotPad $baseLRpad;
+}
+
+@for $i from $gridColsMin through $gridColsMax {
+    $outerWidth : $gridWidth * $i;
+    @media only screen and (min-width : $outerWidth) {
+        #preloads {
+            width:  $outerWidth;
+        }
+    }
+}
+
+@for $i from 1 through 10 {
+    .grid-h-unit-#{$i} {
+        /*@extend %grid-box;*/
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        min-height: (36px * $i) + (12px * ($i - 1));
+    }
+}
+
+.grid-box-1 {
+    @extend .grid-box;
+    width: $gridWidth * 1;
+    height: $gridHeight * 1;
+}
+
+.grid-box-2 {
+    @extend .grid-box;
+    width: $gridWidth * 2;
+    height: $gridHeight * 2;
+}
+
+.grid-box-3 {
+    @extend .grid-box;
+    width: $gridWidth * 3;
+    height: $gridHeight * 3;
+}

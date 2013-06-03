@@ -1,9 +1,14 @@
 @(table: Table, highlightTeamId: Option[String] = None)
 
-<li id="front-competition-table" class="competition-table" data-link-name="front table">
-    <h3 class="type-5">@table.competition.fullName table</h3>
+<li id="front-competition-table" class="trail competition-table--front" data-link-name="front table">
+    <p class="relative-timestamp type-11 front-timestamp">
+        <i class="i i-date"></i>
+        <span>Last updated: a minute ago</span>
+    </p>
 
-    <p class="dateline type-11"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
+    <h3 class="trail__headline">@table.competition.fullName table</h3>
+
+
 
     <table class="table-football type-6a" data-link-name="Table component">
         @if(!table.multiGroup) {
@@ -30,5 +35,11 @@
         }
     </table>
 
-    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small cta-small-border type-8 zone-color">View full table <i class="i i-sport-arrow-small"></i></a>
+    <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta table-football__cta table-football--front__cta">
+        <span class="cta__text">View full table</span>
+        <span class="cta__btn cta__btn--right">
+            <i class="i i-arrow-blue-down cta__icn--right"></i>
+        </span>
+    </a>
+
 </li>

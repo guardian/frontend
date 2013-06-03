@@ -19,8 +19,12 @@
 }
 
     .block-time.published-time {
-    	margin: 0;
-    	font-family: arial, sans-serif
+        @extend %type-11;
+        margin: 0;
+        padding-top: 0;
+        color: $neutral4;
+        font-weight: bold;
+        border-top: 1px solid $neutral10;
     }
 
     .block-time.updated-time {
@@ -34,17 +38,22 @@
     padding-top: 0;
 }
 
+.live-blog .bullet {
+    margin-left: -24px; // Bit hacky way to cancel out the text-indent
+}
+
 //Block titles
 //---------------------------------------------
-.block-title,
-.live-blog .block-title {
-    @extend %type-4;
-    color: $articleOrange;
-    border: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 10px;
-}
+.from-content-api {
+    .block-title,
+    .live-blog .block-title {
+        @extend %type-2;
+        color: $neutral2;
+        border: none;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
 
     .block .block-title {
         color: #333333;
@@ -52,15 +61,16 @@
 
     .is-summary .block-title,
     .is-key-event .block-title {
-        color: $articleOrange;
+        color: $neutral2;
     }
+}
 
 //Block quotes
 //---------------------------------------------
 .block blockquote {
     padding-left: 20px;
     border-left: 5px solid $darkMushroom;
-    margin: 20px 0; 
+    margin: 20px 0;
 }
 
     .block blockquote:before,
@@ -69,14 +79,14 @@
     }
 
     .block .quoted {
-        border-left: none; 
-        padding: 0;  
+        border-left: none;
+        padding: 0;
         margin: 0 0 10px;
     }
 
     .block .quoted:before,
     .block .quoted:after {
-        display: inline-block !important; 
+        display: inline-block !important;
     }
 
 
@@ -88,7 +98,7 @@
     background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png) !important;
     background-position: $baseline*2 $baseline*2 !important;
     background-repeat: no-repeat;
-    border-left-width: 0; 
+    border-left-width: 0;
     border-top: 4px solid #3299d0;
     padding: $baseline*2;
     margin: $baseline*3 0 $baseline*4 0;

@@ -175,6 +175,7 @@ abbr[title] {
 b,
 strong {
     font-weight: bold;
+    -webkit-font-smoothing: antialiased;
 }
 
 @if $legacy_browser_support {

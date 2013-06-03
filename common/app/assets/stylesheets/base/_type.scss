@@ -62,11 +62,12 @@ h1, h2, h3, h4, h5, h6 {
 .type-10 { @extend %type-10; }
 .type-11 { @extend %type-11; }
 .type-12 { @extend %type-12; }
+.type-13 { @extend %type-13; }
 
 //Default type elements
 p {
     color: #545454;
-    margin: 0 0 $baseline*2 0;
+    margin: 0;
 }
 
 h1 {

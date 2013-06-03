@@ -150,7 +150,7 @@ function processFile() {
                     }, svgdata);
 
 
-                    pngcssrules.push( "." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "px; height: " + coords.h + "px; }");
+                    pngcssrules.push( "." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + Math.floor(coords.w) + "px; height: " + Math.floor(coords.h) + "px; }");
 
                   // process the next svg
                   nextFile();

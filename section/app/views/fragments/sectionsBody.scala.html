@@ -5,12 +5,12 @@
     <section class="sections zone-@zone.name.zone" data-link-name="@zone.name.linkName">
 
         @if(zone.name.title == "News") {
-            <h1 class="article-zone">All sections</h1>
-        } 
+            <h1 class="page-head">All sections</h1>
+        }
 
         @if(zone.name.title != "News") {
-        	<h1 class="article-zone type-2">
-                <a href="@zone.name.href" data-link-name="zone:text" class="zone-color">
+        	<h1 class="page-head">
+                <a href="@zone.name.href" data-link-name="zone:text">
                     @HtmlFormat.raw(zone.name.title)
                 </a>
             </h1>
@@ -20,7 +20,7 @@
 
             @zone.sections.map{ section =>
                 <li class="nav__item">
-                    <a class="nav__link" href="@section.href" data-link-name="@section.linkName:text">
+                    <a class="nav__link nav__link--blue" href="@section.href" data-link-name="@section.linkName:text">
                         @HtmlFormat.raw(section.title)
                     </a>
                 </li>

@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Filter Bar - this is the dropdown list
+   ========================================================================== */
+
+.football-filterbar {
+  position: relative;
+  overflow: hidden;
+  height: 36px;
+  margin: 0 $gutter;
+  background-color: $linkBlue;
+}
+
+.football-filterbar__title {
+  @extend %type-6;
+  line-height: 22px;
+  margin-bottom: 0px;
+  float: left;
+}
+
+a.football-filterbar__link {
+  color: #ffffff;
+  display: block;
+  padding: 2px;
+}
+
+.football-filterbar .cta__btn {
+  border-color: #ffffff;
+}
+
+
+/* ==========================================================================
+   Filters
+   ========================================================================== */
+
+.football-filters {
+    background: $neutral6;
+    margin: 0 $gutter;
+    padding: 0 3px;
+    list-style: none;
+}
+
+.football-filters__title {
+    @extend %type-7;
+    color: $neutral2;
+    border-top: 1px solid $neutral5;
+    height: 36px;
+    @include box-sizing(border-box);
+}
+
+.football-filters__item:first-child .football-filters__title {
+    border-top: 0;
+}
+
+.football-filters__showall {
+    border-top: 1px dotted $neutral3;
+    height: 36px;
+}
+
+.football-filters .nav {
+    padding: 0 0 24px 0;
+}
+
+
+
+// These need to be done better
+.football-filters .football-filters__link {
+    @extend %type-7;
+    line-height: 16px;
+    padding-top: 3px;
+    color: $linkBlue;
+}
+
+.nav--columns-football .nav__item {
+    height: auto;
+    min-height: 36px;
+    padding-top: 0;
+}

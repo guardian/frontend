@@ -1,0 +1,47 @@
+/* ==========================================================================
+    Page head
+   ========================================================================== */
+
+.page-head {
+  @extend %type-2;
+  height: 36px;
+  padding: 6px 0 0 0;
+  margin: 0 $gutter;
+  line-height: 1em;
+  color: $linkBlue;
+  border-bottom: 1px solid $neutral5;
+  @include box-sizing(border-box);
+}
+
+/* ==========================================================================
+   Page head modifiers
+   ========================================================================== */
+
+.page-head--border-bottom {
+  border-bottom: 1px solid $neutral10;
+}
+
+
+/* Article
+ ========================================================================== */
+.page-head--article {
+  @extend %type-2;
+  font-weight: 200;
+}
+
+/* Sub heading
+ ========================================================================== */
+.page-head--sub {
+  border-bottom: none;
+  padding-top: 2px;
+  border-top: 5px solid $neutral2;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+
+/* Misc
+ ========================================================================== */
+.page-head--noborder {
+  border-bottom: 0;
+}
