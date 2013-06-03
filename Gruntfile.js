@@ -22,6 +22,7 @@ module.exports = function (grunt) {
                 options: {
                     check: false,
                     quiet: true,
+                    noCache: (isDev) ? false : true,
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
                     loadPath: [
