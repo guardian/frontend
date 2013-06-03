@@ -6,6 +6,7 @@
 
 @page.comments.map{ comment =>
     <li>
+        @comment.profile.displayName
         @comment.profile.avatar
         @comment.date.toString("HH:mm:ss")  @Html(comment.body)</li>
 
