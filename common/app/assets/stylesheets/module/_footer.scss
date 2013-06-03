@@ -76,6 +76,11 @@
     padding: $baseline*2 0;
 }
 
-.has-swipe .swipe-off { font-weight: normal; }
-.has-swipe .swipe-on  { font-weight: bold; }
-.swipe-off            { font-weight: bold; }
+.has-swipe .swipe-off {
+    font-weight: normal;
+}
+
+.swipe-off , 
+.has-swipe .swipe-on { 
+    font-weight: bold;
+}
