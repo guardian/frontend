@@ -44,7 +44,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
           Then("I should see the news trailblock")
           val news = $(".zone-news")
-          news.find(".trail__headline") should have length (4)
+          news.find(".trail__headline") should have length (5)
       }
     }
 
