@@ -16,7 +16,6 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         // Model
         this.load = function (query) {
             var that = this;
-
             return ajax({
                 url: query,
                 type: 'json',
