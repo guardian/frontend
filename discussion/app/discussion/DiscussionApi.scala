@@ -7,7 +7,8 @@ import model._
 import org.joda.time.DateTime
 
 case class Profile(
-  avatar: String
+  avatar: String,
+  displayName: String
 )
 
 case class Comment(
@@ -22,7 +23,10 @@ object Comment{
   def apply(json: JsValue, responses: Seq[Comment]): Comment = Comment(
     body = (json \ "body").as[String],
     responses = responses,
-    profile = Profile((json \ "userProfile" \ "avatar").as[String]),
+    profile = Profile(
+                (json \ "userProfile" \ "avatar").as[String],
+                (json \ "userProfile" \ "displayName").as[String]
+              ),
     date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis
   )
 }

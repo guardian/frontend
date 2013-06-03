@@ -13,12 +13,11 @@
             </div>
             <div class="d-comment__main media__body">
                 <div class="d-comment__header">
-                    <div><a href="#" class="d-comment__author"><b>Author name</b></a></div>
+                    <div><a href="#" class="d-comment__author"><b>@comment.profile.displayName</b></a></div>
                     <time class="d-comment__time js-timestamp" itemprop="datePublished" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
                         @* Anything inside here will be replaced by JS *@
                         @Format(comment.date, "d MMM y")
                     </time>
-                    <!-- Recommend -->
                 </div>
                 <div class="d-comment__body">
                    @Html(comment.body)
@@ -26,7 +25,6 @@
             </div>
         </div>
 
-        <!-- TODO replies -->
         @if(comment.responses.nonEmpty){
             <ol>
                 @comment.responses.map{ response =>
@@ -41,12 +39,11 @@
                         </div>
                         <div class="d-comment__main media__body">
                             <div class="d-comment__header">
-                                <div><a href="#" class="d-comment__author"><b>Author name</b></a></div>
+                                <div><a href="#" class="d-comment__author"><b>@response.profile.displayName</b></a></div>
                                 <time class="d-comment__time js-timestamp" itemprop="datePublished" datetime="@response.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@response.date.getMillis">
                                     @* Anything inside here will be replaced by JS *@
                                     @Format(response.date, "d MMM y")
                                 </time>
-                                <!-- Recommend -->
                             </div>
                             <div class="d-comment__body">
                                @Html(response.body)
@@ -58,5 +55,4 @@
         }
 
     </div><!-- /.d-comment-list -->
-
 </div><!-- /.d-thread -->
