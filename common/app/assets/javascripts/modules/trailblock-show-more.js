@@ -91,7 +91,6 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                     ajax({
                         url: opts.url || '/' +  section + '/trails',
                         type: 'json',
-                        method: 'get',
                         crossOrigin: true
                     }).then(
                         function(resp) {
