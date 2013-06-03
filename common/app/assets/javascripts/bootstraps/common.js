@@ -30,7 +30,6 @@ define([
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
-    'modules/grid',
     'modules/adverts/video'
 ], function (
     common,
@@ -63,7 +62,6 @@ define([
     Debug,
     AB,
     swipeNav,
-    grid,
     VideoAdvert
 ) {
 
@@ -237,14 +235,6 @@ define([
             }
         },
 
-        grid: function() {
-            if (false && userPrefs.isOn('grid-height')) {
-                common.mediator.on('page:common:ready', function(config, context) {
-                    grid(context);
-                });
-            }
-        },
-
         initSwipe: function(config) {
             if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
                 swipeNav(config);
@@ -271,7 +261,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.grid();
             modules.upgradeImages();
             modules.showTabs();
             modules.showRelativeDates();

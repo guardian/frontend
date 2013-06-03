@@ -1,9 +1,9 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--headline t@rowNum snap-to-grid" data-link-name="trail">
+<@element class="trail trail--headline t@rowNum" data-link-name="trail">
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-    <h@headingLevel class="trail__headline snap-to-grid @charRange(trail.headline)">
+    <h@headingLevel class="trail__headline @charRange(trail.headline)">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @cleanTrailText(trail.headline)
         </a>

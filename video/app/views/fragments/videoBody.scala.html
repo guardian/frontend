@@ -10,10 +10,8 @@
         itemscope itemtype="@video.schemaType" role="main">
 
         <header class="article__head">
-            <div class="snap-to-grid">
-                @fragments.dateline(video.webPublicationDate, video.isLive)
-                @fragments.headline(video.headline)
-            </div>
+            @fragments.dateline(video.webPublicationDate, video.isLive)
+            @fragments.headline(video.headline)
         </header>
 
         <div class="player main-media">
@@ -27,7 +25,7 @@
 
 
 
-    <div class="article__byline snap-to-grid">
+    <div class="article__byline">
         @fragments.byline(video.byline, video)
     </div>
 

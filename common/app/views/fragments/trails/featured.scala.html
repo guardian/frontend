@@ -3,10 +3,10 @@
 
 <@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}" data-link-name="trail">
 
-    <div class="trail__head snap-to-grid">
+    <div class="trail__head">
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-        <h@headingLevel class="trail__headline snap-to-grid @charRange(trail.headline)">
+        <h@headingLevel class="trail__headline @charRange(trail.headline)">
             <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>
