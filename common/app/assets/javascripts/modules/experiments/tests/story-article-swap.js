@@ -1,7 +1,7 @@
 define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, bonzo, story) {
     
-    var _config,
-        _context;
+    var _context,
+        _omnitureListeners;
     
     function fetchStory(storyId) {
         ajax({
@@ -14,7 +14,11 @@ define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, 
                 }
                 common.$g('.parts__body', _context).html(response.html);
                 
-                story.init(_config, _context);
+                story.init(response.config, _context);
+                // fire omniture
+                _omnitureListeners.forEach(function(listener) {
+                    listener(response.config, _context);
+                });
             }
         });
     }
@@ -50,7 +54,6 @@ define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, 
         this.audience = 1;
         this.description = 'Swap the latest article within the story with the story itself';
         this.canRun = function(config, context) {
-            _config = config;
             _context = context;
             // only run on article pages
             return config.page.contentType === 'Article';
@@ -65,6 +68,9 @@ define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, 
             {
                 id: 'test',
                 test: function () {
+                    // don't fire off omniture tracking
+                    _omnitureListeners = common.mediator.getListeners('page:common:deferred:loaded:omniture');
+                    common.mediator.removeEvent('page:common:deferred:loaded:omniture');
                     // pull in stories' latest article
                     fetchStoriesArticles();
                 }

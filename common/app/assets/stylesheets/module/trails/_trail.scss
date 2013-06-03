@@ -1,93 +1,135 @@
+/* ==========================================================================
+   Trail object
+   ========================================================================== */
 .trail {
     overflow: hidden;
-    margin: 0 0 $baseline 0;
-    border-bottom: 1px solid #EDEDE7;
-    padding: $baseline*2 0 $baseline*3 0;
+    margin: 0;
+    border-bottom: 1px solid #B3B3B4;
+    padding: 0 0 24px;
 }
 
-.trail:first-child {
-    padding-top: $baseline*3
+    .trail:last-child {
+        border-bottom: none;
+        padding-bottom: 12px;
+    }
+
+    .trail:first-child:last-child {
+        padding: 0;
+    }
+
+.trail__headline {
+    @extend %type-2;
+    color: $neutral2;
 }
 
-.trailblock ul:last-child .trail:last-child {
-    border-bottom: none;
+    .trail__headline a,
+    .trail__headline a:hover,
+    .trail__headline a:link,
+    .trail__headline a:active,
+    .trail__headline a:visited {
+        color: $neutral2;
+    }
+
+    .trail__headline a:active {
+        text-decoration: underline;
+    }
+
+@media screen and (min-width: 4 * $gridWidth) {
+  .trail__headline { margin-bottom: 0; }
+
+  .trail__headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail__headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .trail__headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
+
+  .trail--featured  .trail__headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
 }
 
-.trail:first-child h2 {
-    margin-bottom: $baseline;
+@media screen and (min-width: 6 * $gridWidth) {
+  .trail__headline.medium {min-height: $gridHeight * 1 - $datelineHeight}
+
+  .trail--featured  .trail__headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
 }
 
-.trail.has-image img {
-    vertical-align: bottom;
+@media screen and (min-width: 10 * $gridWidth) {
+  .trail__headline.long   {min-height: $gridHeight * 1 - $datelineHeight}
+
+  .trail--featured  .trail__headline.medium {min-height: $gridHeight * 1 - $datelineHeight}
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
 }
 
-.trail:last-child {
-    margin-bottom: 0;
+@media screen and (min-width: 14 * $gridWidth) {
+  .trail--featured  .trail__headline.long   {min-height: $gridHeight * 1 - $datelineHeight}
 }
 
-.trail-headline {
-    @media screen and (min-width: 25em) { @extend %type-4; }
-    @media screen and (min-width: 64em) { @extend %type-5; }
-}
-
-.media .trail-headline {
+.trail__text {
+    @extend %type-3;
+    display: inline;
     padding: 0;
-    margin-bottom: $baseline;
+    color: $neutral4;
+
+    @media screen and (min-width: 37.5em) {
+        clear: none;
+    }
 }
 
-.trail-headline a,
-.trail-headline a:hover,
-.trail-headline a:link,
-.trail-headline a:active,
-.trail-headline a:visited,
-.trail h2 a {
-    color: #333333;
+.trail__img {
+    width: 100%;
 }
 
-.trail h2 a:active, 
-.trail-headline a:active {
-    color:#333333;
-    text-decoration: underline;
-}
+/* ==========================================================================
+   Trail modifiers
+   ========================================================================== */
 
-.trail-text {
-    @extend %type-7;
-    display: block;
-    clear: left;
-    padding: 0;
-    color: #555555;
+/* Featured
+ ========================================================================== */
+.trail--featured {
+  .trail__headline {
+    @extend %type-1;
 
-  @media screen and (min-width: 37.5em) {
-      clear: none;
+    a {
+      display: block;
+    }
   }
 }
 
-.matches-container .trail-text {
+/* Featured small
+ ========================================================================== */
+
+.trail--featured .trail__img ,
+.trail--featured-smal .trail__img {
+  vertical-align: bottom;
+  margin-bottom: 12px;
+}
+
+
+/* Thumbnail
+ ========================================================================== */
+.trail--thumbnail {
+    .media {
+        margin-top: -5px;
+    }
+
+    .media__img {
+        width: 9.625em;
+        padding-right: 14px;
+        margin-right: 0;
+    }
+}
+
+.js-off .trail__headline {
+    min-height: 72px;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * @todo: Clean these up into proper modifiers
+ **/
+.matches-container .trail__text {
     display: none;
-}
-
-.media .trail-text {
-    padding: 0;
-}
-
-.has-image .trail-text {
-    padding-bottom: $baseline*4;
-}
-
-.trail .media {
-    padding: 0 0 $baseline*1 0;
-}
-
-.trail .media-img { width: 35%; }
-
-.trail .media-img img {
-    width: $trailblockImgWidth;
-    margin-bottom: 5px;
-    margin-top: 3px;
-}
-
-.trail .img-large img {
-    width: $trailblockImgWidthLarge;
 }
 
 .competition .trail {
@@ -95,8 +137,6 @@
     border-bottom: none;
 }
 
-@media screen and (min-width: 53.125em) {
-    .trail .img img {
-        width: 160px;
-    }
+.relative-timestamp {
+    height: $datelineHeight;
 }

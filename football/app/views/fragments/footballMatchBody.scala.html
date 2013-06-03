@@ -2,17 +2,20 @@
 @import feed._
 @import implicits.Football._
 
-<h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/football">Football</a>
 </h2>
 
 <article class="article" role="main">
-    <p class="dateline box-indent">
-        @fragments.status(page.theMatch)
-        <time data-timestamp="@page.theMatch.date.getMillis">
-            @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
-        </time>
-    </p>
+    <div class="live-matches-dateline">
+        <p class="dateline">
+            @fragments.status(page.theMatch) &ndash;
+            <time data-timestamp="@page.theMatch.date.getMillis">
+                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
+            </time>
+        </p>
+    </div>
+
 
     <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
         @fragments.matchSummary(page.theMatch)
@@ -34,7 +37,7 @@
 
 </article>
 
-<div id="js-related"></div>
+<div class="js-related"></div>
 
 @fragments.footballNav("/football", None, None)
 

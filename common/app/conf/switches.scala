@@ -82,10 +82,6 @@ object CommonSwitches {
     "If this switch is on OAS video adverts will be enabled.",
     initiallyOn = false)
 
-  val AustraliaFrontSwitch = DefaultSwitch("australia-front",
-    "If this switch is on the australia front will be available",
-    initiallyOn = false)
-
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
@@ -124,7 +120,6 @@ object CommonSwitches {
     HomescreenSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
-    AustraliaFrontSwitch,
     ImageServerSwitch,
     AwareSwitch,
     SwipeNav,

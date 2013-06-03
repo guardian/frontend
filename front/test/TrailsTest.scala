@@ -2,12 +2,13 @@ package model
 
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import org.scalatest.matchers.ShouldMatchers
-import common.editions.{Us, Uk}
+import common.editions.Uk
 import test.Fake
-import controllers.front.{ConfiguredEdition, TrailblockAgent}
+import controllers.front.TrailblockAgent
 import conf.ContentApi
+import contentapi.QueryDefaults
 
-class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with QueryDefaults {
 
   implicit val edition = Uk
 
@@ -17,8 +18,9 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
       Given("I have a custom query through a QueryTrailblockDescription")
       Fake {
-        val agent = TrailblockAgent(QueryTrailblockDescription("lifeandstyle", "Life and style", 5,
-          customQuery=ContentApi.item("football", Uk).pageSize(7)))
+        val agent = TrailblockAgent(CustomTrailblockDescription("lifeandstyle", "Life and style", 5){
+          EditorsPicsAndLatest(ContentApi.item("football", Uk).pageSize(7).response)
+        })
 
         agent.refresh()
         loadOrTimeout(agent)

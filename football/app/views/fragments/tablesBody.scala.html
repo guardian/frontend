@@ -2,8 +2,8 @@
 @import support._
 @import org.joda.time.DateTime
 
-<h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="/football">Football</a>
+<h2 class="page-head page-head--article">
+    <a data-link-name="article section" href="/football">Football</a>
 </h2>
 
 <div class="live-matches-dateline">
@@ -14,17 +14,16 @@
 
 @fragments.filters(model.filters, model.page, "tables")
 
-<ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
-    
+<ol class="competitions football-table-container" data-link-name="tables" role="main">
+
 
     @model.tables.map{ table =>
-    
+
 
     <li class="league-table">
 
-        <a class="competition-title football-table-header football-table-link type-7 zone-color" href="@table.competition.url" data-link-name="competition">
+        <a class="competition-title football-table-header football-table-link type-7" href="@table.competition.url" data-link-name="competition">
             @table.competition.fullName
-            <i class="i i-sport-arrow"></i>
         </a>
 
         <table class="table-football">
@@ -36,7 +35,7 @@
 
 
             @table.groups.map{ group =>
-            <tbody class="table-football-body">
+            <tbody class="table-football-body @if(table.multiGroup) { table-football-body--multigroup }">
                 @if(table.multiGroup) {
                     @group.round.map { round =>
                         @round.name.map { name =>
@@ -54,7 +53,12 @@
         </table>
 
         @if(!model.singleCompetition) {
-            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta-small type-8 zone-color">View full @table.competition.fullName table <i class="i i-sport-arrow-small"></i></a>
+            <a href='@{table.competition.url + "/table"}' data-link-name='full table' class="cta table-football__cta">
+                <span class="cta__text">View full @table.competition.fullName table</span>
+                <span class="cta__btn cta__btn--right">
+                    <i class="i i-arrow-blue-down cta__icn--right"></i>
+                </span>
+            </a>
         }
 
     </li>

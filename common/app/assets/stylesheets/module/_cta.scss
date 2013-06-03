@@ -1,53 +1,125 @@
+/* ==========================================================================
+     Call to actions
+     ========================================================================== */
 .cta {
-    @extend %type-10;
-    line-height: 1em;
+    position: relative;
     display: block;
-    color: #545454;
-    padding: $baseline*3 0 $baseline*3 0;
-    margin: $baseline*2 0;
-    background-color: $mushroom;
-    text-align: center;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow:none;
-    text-shadow: none;
+    width: 100%;
+    height: 36px;
+    vertical-align: top;
+    text-align: left;
+    padding: 0 0 0 2px;
+    background-color: transparent;
     border: none;
-}
-button.cta{
-	width:100%;
+    border-top: 1px dotted rgb(103,103,103);
+    @include box-sizing(border-box);
 }
 
-    .cta:link,
-    .cta:visited {
-        color: #545454;
+.cta__text {
+    @extend %type-7;
+    color: $linkBlue;
+}
+
+
+/* CTA button
+     ========================================================================== */
+.cta__btn {
+    display: inline-block;
+    width: 60px;
+    height: 36px;
+    position: relative;
+    border-width: 0px;
+    border-style: dotted;
+    border-color: rgb(103,103,103);
+    background-color: transparent;
+    @include box-sizing(border-box);
+
+    .i {
+        position: absolute;
+        bottom: 2px;
+    }
+}
+
+.is-open .cta__btn i {
+    @include rotate(180deg);
+}
+
+/* ==========================================================================
+     CTA modifiers
+     ========================================================================== */
+
+/* Dark
+     ========================================================================== */
+.cta--dark {
+        background-color: #333333;
+    border-top-style: solid;
+
+    .cta__btn {
+        border-color: #fff;
+        border-style: solid;
+        background-color: #005588;
     }
 
-    .cta:hover,
-    .cta:active {
-        box-shadow: none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
+    .cta__text {
+        color: #B3B3B4;
     }
-
-.expander {
-  @extend %type-8;
-  display: block;
-  padding-top: 5px;
-  color: #666666;
 }
 
-.top,
-.top:link,
-.top:visited,
-.top:active {
-    @extend %type-8;
-    display: block;
-    color: #A1B7CF;
-    background-color: $darkBlue;
-    border-top: 1px solid #2B528B;
-    padding: $baseline*2 $gutter $baseline*2 $gutter;
+/* Blue
+     ========================================================================== */
+.cta--blue,
+.cta--blue:active {
+    background-color: $linkBlue;
+
+    .cta__text {
+        color: #fff;
+    }
+    .cta__btn--right {
+        border-color: #fff;
+    }
 }
 
+/* Center
+     ========================================================================== */
+.cta__text--center {
+    position: absolute;
+    bottom: 0px;
+    font-size: 1.4rem;
+    left: 48%;
+}
+
+/* Right
+     ========================================================================== */
+.cta__btn--right {
+    float:right;
+    border-left-width: 1px;
+
+    .i {
+        left: 2px;
+    }
+}
+
+.cta__icn--right,
+i.is-open.cta__icn--right {
+    bottom: 8px !important;
+    @include rotate(-90deg);
+}
+
+/* Left
+     ========================================================================== */
+.cta__btn--left {
+    float:left;
+    border-right-width: 1px;
+
+    .i {
+        right: 0px;
+        bottom: 8px;
+        @include rotate(90deg);
+    }
+}
+
+/* Misc
+     ========================================================================== */
 .cta-small {
     display: block;
     padding: $baseline*2 0 $baseline*3 0;
@@ -58,9 +130,13 @@ button.cta{
 }
 
 .most-viewed-no-js {
-  display: block;
+    display: block;
 }
 
 .most-viewed-no-js i {
-  float: right;
+    float: right;
+}
+
+.section-head--front .cta__btn--right {
+    border-left-width: 0;
 }

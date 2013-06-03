@@ -3,29 +3,24 @@ html {
 }
 
 body {
-    background-color: #ffffff;
-}
-
-.dateline {
-    font-family: $sans-serif;
-    margin: 0px 0px $baseline*2 0px;
-    color: #666666;
-    @extend %type-11;
+    background-color: #fff;
 }
 
 .relative-timestamp {
+    @extend %type-11;
+    line-height: 1.6rem;
+    font-weight: bold;
     display: block;
-    height: 10px;
-    color: #777777;
+    color: #929497;
     margin: 0;
-    padding:0 0 $baseline*3 0;
+
+    span {
+        display: inline-block;
+    }
 }
 
-.relative-timestamp span {
-    display: inline-block;
-}
-
-ol, ul {
+ol,
+ul {
     list-style-position: inside;
 }
 

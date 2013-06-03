@@ -1,112 +1,142 @@
-$tabBorderWidth: 2px;
-
-.tabs-container {
-  padding: 0 $gutter;
-}
-
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
 .tabs {
-  margin: 0;
-  padding: 0;
-  border-bottom: none;
-  list-style-type: none;
-  overflow: hidden;
-  background: #ffffff;
+    padding: 0;
 }
 
-.tabs li {
-  width: 50%;
-  float: left;
-  margin: 0px;
-  background: $mushroom;
+.tabs__container {
+    list-style: none;
+    margin: 0 10px;
+    position: relative;
+    top: 1px;
 }
 
-.tabs a {
-  text-align: center;
-  color: #545454;
-  margin: $tabBorderWidth $tabBorderWidth 0 $tabBorderWidth;
-  padding: $baseline*2;
-  display: block;
-  font-weight: normal;
-  text-decoration: none;
+.tabs__container--marginbottom {
+    margin-bottom: 24px;
 }
 
-@media screen and (max-width: 18.75em) {
-  .tabs li a {
-    font-size: 14px;
-    font-size: 1.4rem;
-  }
+.tabs__tab {
+    width: 50%;
+    float: left;
+    height: 35px;
+    margin: 0;
+    background: $neutral8;
 }
 
-.tabs a:active,
-.tabs a:focus {
-  text-decoration: none;
+.tabs__link {
+    @extend %type-7;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 4px 0px 15px 4px;
+    text-align: left;
+    text-decoration: none;
+    border-bottom: 1px solid $neutral5;
+    color: $linkBlue;
+    @include box-sizing(border-box);
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:active {
+        background-color: #ffffff;
+    }
 }
 
-.tabs .tabs-selected a {
-  background: #ffffff;
-  color: #333333;
-  font-weight: 500;
+.tabs__content {
+    clear: both;
+    border-top: none;
 }
 
-.tabs a:active {
-  background-color: #ffffff;
+/* ==========================================================================
+   Tabs modifiers
+   ========================================================================== */
+
+/* Selected
+ ========================================================================== */
+.tabs__tab--selected {
+    background-color: #ffffff;
 }
 
-.tabs-content {
-  clear: both;
-  border: $tabBorderWidth solid $mushroom;
-  border-top: none;
+.tabs__tab--selected .tabs__link {
+    padding-top:3px;
+    padding-left:3px;
+    border: 1px solid $neutral5;
+    border-bottom:none;
+    background-color: #ffffff;
+    color: #000;
 }
 
-// used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
-
-.tabs-multiple {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 10px;
+.tabs__tab--selected:first-child .tabs__link {
+    border-left: none;
+}
+.tabs__tab--selected:last-child .tabs__link {
+    border-right: none;
 }
 
-.tabs-multiple li {
-  display: table-cell;
-  border-left: $tabBorderWidth solid #ffffff;
-  width: auto;
-  float: none;
+
+/* multiple
+ ========================================================================== */
+.tabs--multiple {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
-.tabs-multiple li:first-child,
-.tabs-multiple li:last-child {
-  border-left: none;
+.tabs--multiple .tabs__tab {
+    display: table-cell;
+    border-left: 2px solid #ffffff;
+    float: none;
 }
 
+.tabs--multiple .tabs__link {
+    height: 35px;
+}
+
+.tabs--multiple .tabs__tab:first-child,
+.tabs--multiple .tabs__tab:last-child {
+    border-left: none;
+}
+
+/* Fixable
+ ========================================================================== */
 @media (max-width: 40em) {
 
-  .tabs-fixable {
-    position: relative;
-  }
+    .tabs--fixable {
+        position: relative;
+    }
 
-  .tabs-fixable .tabs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    padding: 0px $gutter;
-    z-index: 2;
-  }
+    .tabs--fixable .tabs__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 42px;
+        padding: 0px $gutter;
+        z-index: 2;
+    }
 
-  .tabs-fixable .tabs.tabs-fixed {
-    position: fixed;
-    @include box-shadow(0 8px 6px -6px #999);
-  }
+    .tabs--fixable .tabs__container--fixed {
+        position: fixed;
+        @include box-shadow(0 8px 6px -6px #999);
+    }
 
-  .tabs-fixable .tabs li {
-    height: 42px;
-  }
+    .tabs--fixable .tabs__tab {
+        height: 42px;
+    }
 
-  .tabs-fixable .tabs-content {
-    padding-top: 42px;
-  }
+    .tabs--fixable .tabs__content {
+        padding-top: 42px;
+    }
 
 }

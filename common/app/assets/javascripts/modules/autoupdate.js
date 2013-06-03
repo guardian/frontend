@@ -35,8 +35,10 @@ define([
         }, config);
 
         this.template =
-            '<p class="update-text type-6">Auto update</p>' +
-            '<i class="'+ options.iconClass + '"/></i>' +
+            '<div class="update-indicator">' +
+            '   <p class="update-text">Auto update</p>' +
+            '   <i class="'+ options.iconClass + '"/></i>' +
+            '</div>' +
             '<button class="update-btn type-8" data-action="off" data-link-name="autoupdate off">Off</button>' +
             '<button class="update-btn type-8" data-action="on" data-link-name="autoupdate on">On</button>';
 
@@ -51,7 +53,7 @@ define([
                     var $attachTo = bonzo(attachTo);
                     // in case we don't want to show the full response
                     if (options.responseSelector) {
-                        $attachTo.html(common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
+                        $attachTo.html(common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '</div>')[0]));
                     } else {
                         $attachTo.html(res.html);
                     }
@@ -59,7 +61,7 @@ define([
                     $attachTo.attr('data-last-updated', date);
                 //Multiple fragments to update
                 } else {
-                    var response = bonzo.create('<div>' + res.html + '<div>');
+                    var response = bonzo.create('<div>' + res.html + '</div>');
                     for (var view in attachTo) {
                         if(attachTo.hasOwnProperty(view)) {
                             var html = common.$g(options.responseSelector[view], response[0]);
@@ -174,7 +176,7 @@ define([
                 this.view.toggle.call(this, this.btns[1]);
             }
 
-             
+
             if (loadOnInitialise) {
                 that.load.call(that);
             }

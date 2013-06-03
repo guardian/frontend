@@ -1,8 +1,8 @@
 .social {
-   margin: 0;  
+   margin: 0 0 $baseline*4 0;
    list-style: none;
-   padding: $baseline*3 $gutter $baseline*4 $gutter;
-   min-height: 40px;
+   padding: $baseline*3 $gutter 0 $gutter;
+   height: 36px;
 }
  
 .social-btn,
@@ -10,53 +10,50 @@ a.social-btn {
     @extend %type-10;
     text-align: center;
     display: block;
-    padding: 8px 0px;
+    padding: 8px 0;
     color: #ffffff;
     border-bottom: 8px solid #ffffff;
-    position:relative
+    position: relative
 }
 
-.social .social-btn span{
-	display:block;
-    position:absolute;
+.social .social-btn span {
+	display: block;
+    position: absolute;
 }
-.social .social-btn .logo-container{
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
+.social .social-btn .logo-container {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
-.social .social-btn .logo{
-	left:5px;
-	bottom:5px;
+.social .social-btn .logo {
+	left: 5px;
+	bottom: 5px;
 }
-
-@media (min-width: 20em) {
 
     .social {
-      padding: $baseline*3 0px $baseline*4 $gutter;
+        padding: $baseline*3 0 $baseline*4 $gutter;
     }
     
     .social .social-network {
         float: left;
-        width: 24%;
-        max-width: 80px;
-        margin-right:8px;
+        width: 60px;
+        min-height: 36px;
+        margin: 20px 20px 20px 0;
     }
     
     .social .social-network:last-child {
-        margin-right:0;
+        margin-right: 0;
     }
 
     .social-btn,
-    a.social-btn{
-        border-bottom-width: 0px;
-        }
+    a.social-btn {
+        border-bottom-width: 0;
+    }
    
     .social-network:last-child .social-btn {
-        border-right-width: 0px;
-        }
-}
+        border-right-width: 0;
+    }
 
 .fb {
     background-color: #3b5998;

@@ -1,9 +1,9 @@
 .i-guardian-logo {
-  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    background-position: 0px 0px;
-    background-size: 100%;
-    background-image: url('../images/guardian-logo%402x.3d645e8056e9d09e6d627953ce6116e3.png');
-  }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        background-position: 0 0;
+        background-size: 100%;
+        background-image: url('../images/guardian-logo%402x.3d645e8056e9d09e6d627953ce6116e3.png');
+    }
 }
 
 .top .i-arrow-small-up {
@@ -28,31 +28,31 @@
 }
 
 .is-active .i-menu {
-  @extend .i-menu-active;
+    @extend .i-menu-active;
 }
 
 .svg .is-active .i-menu {
-  @extend .svg-i-menu-active;
+    @extend .svg-i-menu-active;
 }
 
 .is-active .i-search {
-  @extend .i-search-blue;
+    @extend .i-search-blue;
 }
 
 .svg .is-active .i-top-stories {
-  @extend .svg-i-search-blue;
+    @extend .svg-i-search-blue;
 }
 
 .is-active .i-top-stories {
-  @extend .i-top-stories-active;
+    @extend .i-top-stories-active;
 }
 
 .svg .is-active .i-top-stories {
-  @extend .svg-i-top-stories-active;
+    @extend .svg-i-top-stories-active;
 }
 
 .i-date {
-    margin-right: 5px;
+    margin-right: 1px;
     margin-bottom: -1px;
 }
 
@@ -70,7 +70,7 @@
     @extend .i-livequote-before;
     display: block;
     content: '';
-    margin: 21px 0 $baseline*2 0;
+    margin: 21px 0 0 0;
     clear: both;
 }
 
@@ -85,7 +85,8 @@
     @extend .i-livequote-after;
     display: block;
     content: '';
-    margin-bottom: 22px;
+    margin-bottom: 0;
+    margin-top: 6px;
 }
 
 .svg .from-content-api blockquote:after,
