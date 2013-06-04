@@ -4,8 +4,7 @@
 
 .grid-box,
 %grid-box {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     margin: 0;
     padding: $baseTopPad ($baseLeftPad + $baseRightPad) $baseBotPad 0;
 }

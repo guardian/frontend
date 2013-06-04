@@ -19,7 +19,7 @@
 
 .article-headline {
     font-size: 2.4rem;
-    line-height: 2.6rem;
+    line-height: 2.8r8em;
 }
 
 
@@ -112,7 +112,6 @@ video {
 .article__standfirst {
     @include box-sizing(border-box);
     min-height: $gridHeight;
-    padding-bottom: 10px;
 }
 
 .article__byline {
@@ -308,12 +307,16 @@ video {
   .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
   .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
   .article-headline.xlong  {min-height: $gridHeight * 3 - $datelineHeight}
-  .article-headline.xxlong {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.xxlong {min-height: $gridHeight * 4 - $datelineHeight}
 }
  
 @media (min-width: 5 * $gridWidth) {
-  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
   .article-headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.xxlong {min-height: $gridHeight * 3 - $datelineHeight}
+}
+ 
+@media (min-width: 6 * $gridWidth) {
+  .article-headline.xxlong {min-height: $gridHeight * 3 - $datelineHeight}
 }
  
 @media (min-width: 7 * $gridWidth) {
