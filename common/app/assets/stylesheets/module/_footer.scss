@@ -23,12 +23,23 @@
         padding-bottom: 18px;
     }
 
-    .nav--stacked li a {
+    .nav--stacked li {
         @extend %type-11;
         line-height: 24px;
-        color: #c3d5e5;
         margin-left: 0;
         border-top-color: #C0C9CE;
+    }
+
+    .nav--stacked li,
+    .nav--stacked li a {
+        color: #c3d5e5;
+    }
+
+    .nav--stacked li button {
+        border: 0;
+        background: inherit;
+        padding: 0;
+        color: #c3d5e5;
     }
 
     .cta {
@@ -63,4 +74,13 @@
     clear: both;
     margin: 0 $gutter;
     padding: $baseline*2 0;
+}
+
+.has-swipe .swipe-off {
+    font-weight: normal;
+}
+
+.swipe-off , 
+.has-swipe .swipe-on { 
+    font-weight: bold;
 }
