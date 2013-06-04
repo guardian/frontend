@@ -18,11 +18,12 @@ object Metrics {
 }
 
 object Management extends Management {
-  val applicationName = "frontend-tag"
+  val applicationName = "frontend-applications"
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
+      "/books",
       "/books/harrypotter"
     ),
     StatusPage(applicationName, Metrics.all),
