@@ -12,15 +12,15 @@ define([ 'common',
                         '<div id="controls-a">' +
                             '<div id="control-1" data-control-for="target-1" class="control">button</div>' +
                             '<div id="control-2" data-control-for="target-2" class="control is-active">button</div>' +
-                            '<div id="target-1"  class="nav-popup--target-1 is-off">content</div>' +
-                            '<div id="target-2"  class="nav-popup--target-2">content</div>' +
+                            '<div id="target-1"  class="target-1 is-off">content</div>' +
+                            '<div id="target-2"  class="target-2">content</div>' +
                         '</div>',
 
                         '<div id="controls-b">' +
                             '<div id="control-1b" data-control-for="target-1" class="control">button</div>' +
                             '<div id="control-2b" data-control-for="target-2" class="control is-active">button</div>' +
-                            '<div id="target-1b"  class="nav-popup--target-1 is-off">content</div>' +
-                            '<div id="target-2b"  class="nav-popup--target-2">content</div>' +
+                            '<div id="target-1b"  class="target-1 is-off">content</div>' +
+                            '<div id="target-2b"  class="target-2">content</div>' +
                         '</div>'
                     ]
             }

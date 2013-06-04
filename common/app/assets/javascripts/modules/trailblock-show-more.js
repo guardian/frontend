@@ -5,7 +5,7 @@
 define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
     function TrailblockShowMore(options) {
-
+        
         var opts = options || {},
             className = opts.className || 'js-show-more',
             trails = {},
@@ -13,7 +13,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
-
+                
             render: function($cta, section) {
                 // what's the offset?
                 for (var i = 0; i < trailblockLength; i++) {
@@ -27,18 +27,15 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 trails[section] = trails[section].slice(trailblockLength);
                 common.mediator.emit('module:trailblock-show-more:render');
             },
-
+                
            appendCta: function(trailblock) {
-               var btn = '<button class="cta js-show-more" data-link-name="Show more | 1">';
-                   btn += '<span class="cta__text">Show more</span><span class="cta__btn cta__btn--right">';
-                   btn += '<i class="i i-arrow-blue-down cta__icn"></i></span></button>';
-               bonzo(trailblock).append(btn);
+               bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
            },
 
            removeCta: function($cta) {
                $cta.remove();
            },
-
+           
            updateCta: function($cta) {
                var section = getSection($cta);
                if (trails[section] && trails[section].length === 0) {
@@ -54,7 +51,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
            }
 
         };
-
+        
         function getSection($cta) {
             return bonzo($cta.parent()).attr('data-section-id') || 'top-stories';
         }
@@ -71,15 +68,15 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
             // Remove the class, so we can't do multiple inits
             trailblocks.each(function(trailblock){
-                bonzo(trailblock).removeClass(className);
+                bonzo(trailblock).removeClass('js-show-more');
             });
 
             // append the cta
             trailblocks.each(this.view.appendCta);
 
             // event delegation for clicking of cta
-            bean.on(context.querySelector('.front-container'), 'click', '.trailblock .cta', function(e) {
-                var $cta = bonzo(e.currentTarget),
+            bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.cta', function(e) {
+                var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
                     section = getSection($cta);
 
@@ -111,7 +108,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                                     trails[section].push(trail);
                                 }
                             });
-
+                            
                             that.view.render($cta, section);
                             that.view.updateCta($cta);
 
@@ -135,7 +132,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             });
         };
     }
-
+    
     return TrailblockShowMore;
 
 });

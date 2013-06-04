@@ -1,7 +1,9 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, dataLinkName: String = "")
+@(trails: Seq[Trail], numItemsVisible: Int = 5)
 
-<ul class="unstyled headline-list" @if(!dataLinkName.isEmpty){ data-link-name="@dataLinkName" }>
+<ul class="unstyled">
      @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @fragments.trails.link(trail, info.rowNum)
+         <li>
+            @fragments.trails.link(trail, info.rowNum)
+         </li>
      }
 </ul>

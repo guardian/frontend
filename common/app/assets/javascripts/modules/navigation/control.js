@@ -49,7 +49,7 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     Control.prototype.getPopup = function(control, context) {
         var popupClass = bonzo(control).data('control-for');
         if (popupClass) {
-            return context.querySelector('.nav-popup--' + popupClass);
+            return context.querySelector('.' + popupClass);
         }
     };
 

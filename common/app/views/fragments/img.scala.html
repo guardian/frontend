@@ -1,8 +1,7 @@
 @(mainPicture: Image, smallCrop: Image)
 
-<figure class="main-media" itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
-    <img class="maxed main-image"
-        src="@smallCrop.path"
+<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject">
+    <img class="maxed main-image" src="@smallCrop.path"
         data-force-upgrade="true"
         data-thumb-width="@smallCrop.width"
         data-fullsrc="@mainPicture.path"
@@ -11,9 +10,6 @@
         alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"
         title="@StripHtmlTags(mainPicture.caption.getOrElse(""))" />
     @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
-    <figcaption class="main-caption" itemprop="description">
-        <i class="i i-image"></i>
-        <b>@Html(smallCrop.caption.getOrElse(""))</b>
-    </figcaption>
+    <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
     }
 </figure>

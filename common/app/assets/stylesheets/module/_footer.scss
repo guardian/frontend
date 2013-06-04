@@ -1,66 +1,47 @@
-/* Uses an id as is used as fragment
- * identifier for non-js mobile nav */
-#footer-nav {
-  float: right;
-  width: 100%;
-  background-color: $neutral8;
-}
-
 .footer {
     overflow: hidden;
     margin: 0;
     padding: 0 0 $baseline*4 0;
-    background-color: $main1;
+    background-color: $darkMushroom;
 
     > .nav {
-      padding-left: $gutter;
+        padding-left: $gutter;
     }
-
     .nav--stacked {
         float: left;
         width: 48%;
         margin: 0;
-        padding-bottom: 18px;
-    }
 
-    .nav--stacked li a {
+        li a {
+            @extend %type-10;
+            color: $blue;
+            margin-left: 0;
+            border-top-color: #C0C9CE;
+        }
+    }
+    p {
+        @include box-sizing(border-box);
         @extend %type-11;
-        line-height: 24px;
-        color: #c3d5e5;
-        margin-left: 0;
-        border-top-color: #C0C9CE;
-    }
+        width: 42%;
+        margin: 0;
+        padding: $baseline*2 $gutter 0 $gutter;
+        float:left;
+        color: $blue;
 
-    .cta {
-        border-top: 0;
-    }
-
-    .cta__text {
-        margin-left: 8px;
-    }
-}
-
-.footer__terms {
-    @include box-sizing(border-box);
-    @extend %type-11;
-    line-height: 24px;
-    width: 42%;
-    margin: 0;
-    padding: $baseline*2 $gutter 0 $gutter;
-    float: left;
-    color: $blue;
-
-    a {
-        display: block;
-        color: #c3d5e5;
+        a {
+            line-height: 20px;
+            line-height: 2rem;
+            display: block;
+            color: $blue;
+            text-decoration: underline;
+        }
     }
 }
 
-.footer__copyright {
-    @extend %type-13;
-    border-top: 1px solid #c3d5e5;
-    color: #c3d5e5;
-    clear: both;
-    margin: 0 $gutter;
-    padding: $baseline*2 0;
+/* Uses an id as is used as fragment
+ * identifier for non-js mobile nav */
+#footer-nav {
+    float: right;
+    width: 100%;
+    background-color: $blue;
 }

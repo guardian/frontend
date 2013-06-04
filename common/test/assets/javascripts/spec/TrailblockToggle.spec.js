@@ -49,11 +49,11 @@ define(['common', 'ajax', 'bean', 'modules/trailblocktoggle'], function(common, 
         it("should expand and contract a panel", function() {
             /// shut
             bean.fire(trigger, 'click');
-            expect(common.$g('.js-front-trailblock').hasClass('is-shut')).toBe(true);
+            expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(true);
 
             // open
             bean.fire(trigger, 'click');
-            expect(common.$g('.js-front-trailblock').hasClass('is-shut')).toBe(false);
+            expect(common.$g('.js-front-trailblock').hasClass('rolled-up')).toBe(false);
         });
 
     });

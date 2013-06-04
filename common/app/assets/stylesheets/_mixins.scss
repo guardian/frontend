@@ -1,14 +1,10 @@
 //Output based on body font-size being 10px
-@mixin font($family, $weight, $size, $line-height, $antialias: false) {
+@mixin font($family, $weight, $size, $line-height) {
     font-family: $family;
     font-size: $size*1px;
     font-size: ($size / 10)*1rem;
     font-weight: $weight;
     line-height: ($line-height / 10)*1rem;
-
-    @if $antialias {
-        -webkit-font-smoothing: antialiased;
-    }
 }
 
 @mixin box-sizing($box) {

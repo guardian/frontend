@@ -24,7 +24,7 @@ public class FrontSteps {
 	
     // xpath to the first hideable section
     protected String sectionXpath = "//div[contains(@class, 'front-container')]/section[2]";
-    protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]/ul";
+    protected String trailblockXpath = sectionXpath + "/div[contains(@class, 'trailblock')]";
 	
     @Given("^a section is hidden$")
     public void a_section_is_hidden() throws Throwable {
@@ -37,21 +37,20 @@ public class FrontSteps {
     		WebElement trailblockToggle = webDriver.waitForVisible(
     		    By.xpath(sectionXpath + "//button[contains(@class, 'toggle-trailblock')]")
     		);
-    		String expectedTrailblockHeight = (sectionState.equals("show")) ? "none" : "block";
+    		String expectedTrailblockHeight = (sectionState.equals("show")) ? "none" : "0";
     		// only click if not in correct state
-
-    		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("display");
-            if (!actualTrailblockHeight.equals(expectedTrailblockHeight)) {
-                webDriver.jsClick(trailblockToggle);
+    		String actualTrailblockHeight = webDriver.findElement(By.xpath(trailblockXpath)).getCssValue("max-height");
+    		if (!actualTrailblockHeight.equals(expectedTrailblockHeight)) {
+    		  webDriver.jsClick(trailblockToggle);
     		}
   	}
 
   	@Then("^the section will be (hidden|shown)$")
   	public void the_section_will_be_toggled(String sectionState) throws Throwable {
-    		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "block" : "none";
+    		String expectedTrailblockHeight = (sectionState.equals("shown")) ? "none" : "0";
     		// sections are hidden with css max-height
     		assertTrue(webDriver.waitForCss(
-    		    By.xpath(trailblockXpath), "display", expectedTrailblockHeight)
+    		    By.xpath(trailblockXpath), "max-height", expectedTrailblockHeight)
     		);
   	}
   	
@@ -61,8 +60,8 @@ public class FrontSteps {
         String trailblockXpath = "//section[.//h1/descendant-or-self::*[contains(text(), '" + section + "')]]/div[contains(@class, 'trailblock')]";
         WebElement trailblock = webDriver.findElement(By.xpath(trailblockXpath));
         // Wait for javascript to inject button.cta
-        webDriver.waitForElement(By.cssSelector(".cta"));
-        WebElement cta = trailblock.findElement(By.cssSelector(".cta"));
+        webDriver.waitForElement(By.cssSelector("button.cta"));
+        WebElement cta = trailblock.findElement(By.cssSelector("button.cta"));
         assertEquals(ctaText, cta.getText());
         // how many trails do we currently have
         int trailCount = trailblock.findElements(By.className("trail")).size();
