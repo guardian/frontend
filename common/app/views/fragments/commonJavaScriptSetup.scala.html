@@ -3,6 +3,10 @@
 @import CommonSwitches.FontSwitch
 @import CommonSwitches.FontDelaySwitch
 
+<!--[if lt IE 9]>
+<script src='@Static("javascripts/vendor/html5shiv.js")'></script>
+<![endif]-->
+
 <script id="gu">
     // we want this to happen ASAP to avoid FOUC
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
