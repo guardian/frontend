@@ -24,11 +24,13 @@ object Profile{
 }
 
 case class Comment(
+  id: Int,
   body: String,
   responses: Seq[Comment],
   profile: Profile,
   date: DateTime,
-  isHighlighted: Boolean
+  isHighlighted: Boolean,
+  isBlocked: Boolean
 )
 
 object Comment{
@@ -36,10 +38,12 @@ object Comment{
   def apply(json: JsValue): Comment = Comment(json, Nil)
 
   def apply(json: JsValue, responses: Seq[Comment]): Comment = Comment(
+    id = (json \ "id").as[Int],
     body = (json \ "body").as[String],
     responses = responses,
     profile = Profile(json),
     date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
-    isHighlighted = (json \ "isHighlighted").as[Boolean]
+    isHighlighted = (json \ "isHighlighted").as[Boolean],
+    isBlocked = (json \ "status").as[String].contains("blocked")
   )
 }
