@@ -54,7 +54,7 @@ $orange: #FF7F00;
     }
 
     .article-headline {
-        min-height: 60px;
+        min-height:60px;
         font-family: $serifheadline;
         font-weight: normal;
         font-size: 2.4rem;
@@ -470,7 +470,6 @@ i.is-open.cta-new__icn--right {
     }
 }
 
-
 /* ==========================================================================
    Tabs 
    ========================================================================== */
@@ -483,16 +482,13 @@ i.is-open.cta-new__icn--right {
     margin-top: 8px;
 }
 
-.story-live .social,
-.story-live .article-zone, 
-.story-live .article-head > * {
-    display: none;
-}
-
 .story-live .article-head .dateline {
-	display:block;
+	display: block;
 }
 
+.story-live .article-zone, 
+.story-live .article-head > *,
+.story-live .social,
 .story-live .block:nth-child(n+20) {
     display: none;
 }
@@ -531,7 +527,6 @@ i.is-open.cta-new__icn--right {
         background-color: #fff;
     }
 }
-
 .story-container .site-message__body {
     padding: 5px;
     color: #fff;
@@ -539,7 +534,6 @@ i.is-open.cta-new__icn--right {
     display: block;
     text-decoration: none;
 }
-
 .cta-new--story {
 	border-top: 1px solid #fff;
 

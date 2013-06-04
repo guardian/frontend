@@ -2,8 +2,8 @@
 @import support._
 @import org.joda.time.DateTime
 
-<h2 class="page-head page-head--article @if(model.pageType != "live"){page-head--noborder}">
-    <a data-link-name="article section" href="/football">Football</a>
+<h2 class="article-zone type-1 sport-header">
+    <a class="zone-color" data-link-name="article section" href="/football">Football</a>
 </h2>
 
 @if(model.pageType == "live") {
@@ -25,23 +25,8 @@
 
     @if(model.previousPage.isDefined || model.nextPage.isDefined) {
         <div class="js-matches-nav matches-nav cf js-not-ajax" data-link-name="@model.pageType nav">
-            @model.previousPage.map{url =>
-                <a href='@url' data-js-title="Show previous day's matches" data-link-name="previous" class="cta table-football__cta match-prev">
-                    <span class="cta__text">Next day</span>
-                    <span class="cta__btn cta__btn--right">
-                        <i class="i i-arrow-blue-down cta__icn--right"></i>
-                    </span>
-                </a>
-            }
-
-            @model.nextPage.map{url =>
-                <a href='@url' data-js-title="Show next day's matches" data-link-name="next" class="cta table-football__cta match-next">
-                    <span class="cta__text">Next day</span>
-                    <span class="cta__btn cta__btn--right">
-                        <i class="i i-arrow-blue-down cta__icn--right"></i>
-                    </span>
-                </a>
-            }
+            @model.previousPage.map{url => <a href="@url" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+            @model.nextPage.map{url => <a href="@url" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
         </div>
     }
 

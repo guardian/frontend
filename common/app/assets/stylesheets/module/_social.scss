@@ -1,8 +1,8 @@
 .social {
-   margin: 0 0 $baseline*4 0;
+   margin: 0;  
    list-style: none;
-   padding: $baseline*3 $gutter 0 $gutter;
-   height: 36px;
+   padding: $baseline*3 $gutter $baseline*4 $gutter;
+   min-height: 40px;
 }
  
 .social-btn,
@@ -31,15 +31,17 @@ a.social-btn {
 	bottom: 5px;
 }
 
+@media (min-width: 20em) {
+
     .social {
         padding: $baseline*3 0 $baseline*4 $gutter;
     }
     
     .social .social-network {
         float: left;
-        width: 60px;
-        min-height: 36px;
-        margin: 20px 20px 20px 0;
+        width: 24%;
+        max-width: 80px;
+        margin-right: 8px;
     }
     
     .social .social-network:last-child {
@@ -54,6 +56,7 @@ a.social-btn {
     .social-network:last-child .social-btn {
         border-right-width: 0;
     }
+}
 
 .fb {
     background-color: #3b5998;

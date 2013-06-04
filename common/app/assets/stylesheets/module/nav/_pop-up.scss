@@ -6,19 +6,20 @@
     position: absolute;
     clear: both;
     z-index: 100;
-    padding: 0;
+    padding: $baseline*2 0;
     list-style: none;
-    border-bottom: 2px solid $neutral4;
-    @include transform(translateZ(0px));
+    margin-bottom: -4px;
+    border-bottom: $baseline solid $blue;
+    @include transform(translateZ(0));
     background: #ffffff;
     width: 100%;
 
     @media only screen and (min-width: $tablet) {
-        top: 108px;
+        top: 118px;
     }
 
     @media only screen and (min-width: $desktopAd) {
-        top: 144px;
+        top: 155px;
     }
 }
 
@@ -26,17 +27,11 @@
     padding-bottom: $baseline*4;
 
     @media only screen and (min-width: $tablet) {
-        background-color: $neutral8;
-        border-top: 1px solid $neutral10;
         margin: 0;
+        border-top: none;
     }
 }
 
-/* Search
-   ========================================================================== */
-.nav-popup--search {
-    min-height: 55px;
-}
 
 /* Small
    ========================================================================== */
@@ -45,26 +40,25 @@
 
     @media only screen and (min-width: $tablet) {
         position: absolute;
-        top: 166px;
-        right: 0px;
+        top: 174px;
+        right: 0;
         width: auto;
         padding: 0;
         min-width: 160px;
-        background-color: $neutral8;
-        border-bottom: 1px solid $neutral10;
-        border-left: 1px solid $neutral10;
+        background-color: #ffffff;
+        border-bottom: 2px solid $darkMushroom;
+        border-left: 2px solid $darkMushroom;
     }
 
     @media only screen and (min-width: $desktopAd) {
-        top: 192px;
+        top: 200px;
     }
-}
 
-    .nav-popup--small .nav__item {
+    .nav__item {
         @media only screen and (min-width: $tablet) {
             margin: 0 $gutter;
-            border-bottom: 1px solid $neutral10;
-            text-align: left;
+            border-bottom: 1px solid #C3C3C3;
+            text-align: right;
 
             &:last-child {
                 border-bottom: none;
@@ -72,15 +66,14 @@
         }
     }
 
-    .nav-popup--small .nav__link,
-    .nav-popup--small .nav--columns .nav__link {
+    .nav__link,
+    .nav--columns .nav__link {
         @extend %type-7;
 
         @media only screen and (min-width: $tablet) {
-            color: $neutral3;
-            padding: 0;
-            height: 36px;
-            @include font($serif, normal, 14, 36);
-            @include box-sizing(border-box);
+            color: #444444;
+            padding: $baseline*3 0 $baseline*3 0;
+            @include font($serifheadline, 200, 14, 14);
         }
     }
+}
