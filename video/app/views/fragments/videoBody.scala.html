@@ -2,19 +2,19 @@
 
 @defining(page.video){ video =>
 
-    <h2 class="page-head page-head--article">
-        <a data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
+    <h2 class="article-zone type-1">
+        <a class="zone-color" data-link-name="article section" href="/@video.section">@Html(video.sectionName)</a>
     </h2>
 
     <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
-        itemscope itemtype="@video.schemaType" role="main">
+             itemscope itemtype="@video.schemaType" role="main">
 
-        <header class="article__head">
+        <header class="article-head">
             @fragments.dateline(video.webPublicationDate, video.isLive)
             @fragments.headline(video.headline)
         </header>
 
-        <div class="player main-media">
+        <div class="player">
             <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                 @video.encodings.map{ encoding =>
                     <source src="@encoding.url" />
@@ -23,19 +23,16 @@
             </video>
         </div>
 
+    </article>
 
-
-    <div class="article__byline">
+    <div class="gallery-byline">
         @fragments.byline(video.byline, video)
     </div>
-
     <div class="box-indent video-standfirst">
         @fragments.standfirst(video)
     </div>
 
-        @fragments.social(video)
-    </article>
-
+    @fragments.social(video)
 
     @if(page.storyPackage.nonEmpty) {
         <aside role="complementary">

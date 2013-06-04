@@ -32,6 +32,14 @@
     cursor: pointer;
 }
 
+.expander:before {
+    content: '- ';
+}
+
+.shut .expander:before {
+    content: '+ ';
+}
+
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
     padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
@@ -64,67 +72,63 @@
 .update {
 	display:block;
     background-color: $mushroom;
-    padding: 0 0 0 $baseline;
+    margin: 0 $gutter $baseline*4 $gutter;
+    padding: 0 0 0 $baseline*2;
     overflow: hidden;
 
     &.hidden {
         display: none;
     }
 }
-.update-indicator {
-    float: left;
-}
 
 .update-text {
-    @extend %type-7;
+    float:left;
     margin: 0 $gutter 0 0;
     padding: 6px 0 0 0;
-    line-height: 10px;
-    font-weight: 500;
+    line-height: 32px;
 }
 
 .update-btn {
-    @extend %type-11;
-    float:right;
+    float: right;
     margin: 0;
-    padding: 20px 30px 0 0;
+    padding: 13px 12px;
     background-color: $mushroom;
-    color: $neutral4;
-    font-weight: bold;
+    color: #333333;
+    font-weight: normal;
     border: none;
     text-shadow: none;
     @include box-shadow(none);
-    width: 60px;
-    height: 36px;
-    text-indent: -10px;
-    line-height: 18px;
 }
 
 .update-btn.is-active,
 .update-btn:hover {
     color: #ffffff;
-    background-color: $main18;
+    background-color: #E47A39;
 }
 
+.update-live-matches .update-btn.is-active,
+.update-live-matches .update-btn:hover {
+    background-color: $sportBright;
+}
 
 .is-updating {
     display: none;
     width: 36px;
     height: 12px;
     background-size: 100%;
-    margin-top: 6px;
+    margin-top: 18px;
 
     &.is-active {
-        display: block;
+        display: inline-block;
     }
-
 }
 
 .is-live-icon {
-    padding: 0 2px;
-    font-size: 11px;
+    padding: $baseline;
+    margin-right: 5px;
+    font-size: 10px;
     font-style: normal;
     line-height: 1em;
     color: #ffffff;
-    background-color: #E21B39;
+    background-color: #ec1c1c;
 }
