@@ -344,8 +344,10 @@ object Head {
 object charRange { 
   def apply(str: String): String = {
     val charsLen = str.length 
-    if      (charsLen < 45) "short"
-    else if (charsLen < 60) "medium"
-    else                     "long"
+    if      (charsLen <= 30) "short"
+    else if (charsLen <= 50) "medium"
+    else if (charsLen <= 60) "long"
+    else if (charsLen <= 80) "xlong"
+    else                     "xxlong"
   }
 }

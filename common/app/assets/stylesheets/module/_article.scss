@@ -139,7 +139,7 @@ video {
 
 /* 6 Cols
  ========================================================================== */
-@media screen and (min-width: 30em) {
+@media (min-width: 30em) {
     .main-media {
         width: $gridWidth * 3;
         float: right;
@@ -158,7 +158,7 @@ video {
 
 /* 7 Cols
  ========================================================================== */
-@media screen and (min-width: 35em) {
+@media (min-width: 35em) {
     .main-media {
         width: $gridWidth * 4;
     }
@@ -166,7 +166,7 @@ video {
 
 /* 8 Cols
  ========================================================================== */
-@media screen and (min-width: 40em) {
+@media (min-width: 40em) {
     .main-media {
         margin-right: $gridWidth * -1;
     }
@@ -180,7 +180,7 @@ video {
 
 /* 9 Cols
  ========================================================================== */
-@media screen and (min-width: 45em) {
+@media (min-width: 45em) {
     .main-media {
         width: $gridWidth * 5;
         margin-right: $gridWidth * -2;
@@ -194,7 +194,7 @@ video {
 
 /* 10 Cols
  ========================================================================== */
-@media screen and (min-width: 50em) {
+@media (min-width: 50em) {
     .main-media {
         width: $gridWidth * 6;
         margin-right: $gridWidth * -3;
@@ -203,7 +203,7 @@ video {
 
 /* 11 Cols
  ========================================================================== */
-@media screen and (min-width: 55em) {
+@media (min-width: 55em) {
 
     .page-head {
         border-bottom: 0;
@@ -262,7 +262,7 @@ video {
 
 /* 12 Cols
  ========================================================================== */
-@media screen and (min-width: 60em) {
+@media (min-width: 60em) {
     .main-media,
     video {
         width: $gridWidth * 8;
@@ -276,7 +276,7 @@ video {
 
 /* 13 Cols
  ========================================================================== */
-@media screen and (min-width: 65em) {
+@media (min-width: 65em) {
     .main-media,
     video {
         margin-right: $gridWidth * 1;
@@ -290,7 +290,7 @@ video {
 
 /* 14 Cols
  ========================================================================== */
-@media screen and (min-width: 70em) {
+@media (min-width: 70em) {
     .main-media {
         width: $gridWidth * 9;
     }
@@ -303,26 +303,27 @@ video {
 
 /* Article headline */
 
-@media screen and (min-width: 4 * $gridWidth) {
+@media (min-width: 4 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.xlong  {min-height: $gridHeight * 3 - $datelineHeight}
+  .article-headline.xxlong {min-height: $gridHeight * 3 - $datelineHeight}
+}
+ 
+@media (min-width: 5 * $gridWidth) {
+  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
+  .article-headline.long   {min-height: $gridHeight * 2 - $datelineHeight}
+}
+ 
+@media (min-width: 7 * $gridWidth) {
+  .article-headline.xlong  {min-height: $gridHeight * 2 - $datelineHeight}
+}
+ 
+@media (min-width: 11 * $gridWidth) {
   .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
   .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
   .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
-}
-
-@media screen and (min-width: 5 * $gridWidth) {
-  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
-  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
-}
-
-@media screen and (min-width: 7 * $gridWidth) {
-  .article-headline.short  {min-height: $gridHeight * 1 - $datelineHeight}
-  .article-headline.medium {min-height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.long   {min-height: $gridHeight * 3 - $datelineHeight}
-}
-
-@media screen and (min-width: 11 * $gridWidth) {
-  .article-headline.short  {min-height: $gridHeight * 2 - $datelineHeight}
-  .article-headline.medium {min-height: $gridHeight * 3 - $datelineHeight}
-  .article-headline.long   {min-height: $gridHeight * 4 - $datelineHeight}
+  .article-headline.xlong  {min-height: $gridHeight * 4 - $datelineHeight}
+  .article-headline.xxlong {min-height: $gridHeight * 4 - $datelineHeight}
 }
