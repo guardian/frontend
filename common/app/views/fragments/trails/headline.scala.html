@@ -3,7 +3,7 @@
 <@element class="trail trail--headline t@rowNum" data-link-name="trail">
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-    <h@headingLevel class="trail__headline @charRange(trail.headline)">
+    <h@headingLevel class="trail__headline">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @cleanTrailText(trail.headline)
         </a>
