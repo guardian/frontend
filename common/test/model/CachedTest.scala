@@ -41,6 +41,27 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
     headers("Cache-Control") should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=345600")
   }
+  
+  it should "send stale-while-revalidate and stale-if-error instructions to the CDN" in {
+    val modifiedLongAgo = DateTime.now - 25.hours
+    val liveContent = content(lastModified = modifiedLongAgo, live = false)
+
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val headers = result.header.headers
+
+    headers("X-Gu-Stale-While-Revalidate") should be("900")
+    headers("X-Gu-Stale-If-Error") should be("345600")
+  }
+  
+  it should "send the a cache-control instruction to the CDN" in {
+    val modifiedLongAgo = DateTime.now - 25.hours
+    val liveContent = content(lastModified = modifiedLongAgo, live = false)
+    
+    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val headers = result.header.headers
+
+    headers("X-Gu-Cache-Control") should be("private, max-age=900")
+  }
 
   it should "cache other things for 1 minute" in {
     val page = new MetaData {

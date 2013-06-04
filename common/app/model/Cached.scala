@@ -26,6 +26,9 @@ object Cached extends Results {
     // see http://tools.ietf.org/html/rfc5861 for definitions of these headers
     result.withHeaders(
       "Cache-Control" -> s"public, max-age=$maxAge, stale-while-revalidate=$maxAge, stale-if-error=345600",
+      "X-Gu-Stale-While-Revalidate" -> s"$maxAge",
+      "X-Gu-Stale-If-Error" -> "345600",
+      "X-Gu-Cache-Control" -> s"private, max-age=$maxAge", // Tells fastly to use this at it's response header
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
