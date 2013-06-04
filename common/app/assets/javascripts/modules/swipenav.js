@@ -394,8 +394,9 @@ define([
     }
 
     function pinHeader() {
+        var scrollTop = body.scrollTop();
         header = header || $('#header');
-        header.css('top', body.scrollTop() + 'px');
+        header.css('top', scrollTop + 'px');
     }
 
     var pushDownSidepanes = common.debounce(function(){
