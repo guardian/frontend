@@ -1,0 +1,15 @@
+.discussion-container {
+    @include box-sizing(border-box);
+    padding: $gutter;
+}
+
+.discussion-comment-count {
+    @include rounded-corners(20px);
+    @extend %type-12;
+    font-weight: bold;
+    background-color: $actionBlue;
+    color: #fff;
+    padding: 2px 6px;
+    margin-left: 4px;
+    pointer-events: none;
+}
