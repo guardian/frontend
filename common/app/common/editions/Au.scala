@@ -3,7 +3,7 @@ package common.editions
 import org.joda.time.DateTimeZone
 import model.{CustomTrailblockDescription, TrailblockDescription, MetaData}
 import common.{Zones, Sections, Edition}
-import views.support.Featured
+import views.support.{Thumbnail, Featured}
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.ContentApi
@@ -15,7 +15,7 @@ import contentapi.QueryDefaults
 //It is not included in the Edition.all sequence
 object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Australia/Sydney")) with Sections with Zones with QueryDefaults {
 
-  val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Featured)){
+  val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
     val promiseOfCulture: Future[ItemResponse] = ContentApi.item.itemId("culture")
       .edition("au")
