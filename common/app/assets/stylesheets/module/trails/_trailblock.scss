@@ -3,11 +3,6 @@
    ========================================================================== */
 .trailblock {
     padding: 6px $gutter 24px;
-    
-    & + & {
-       border-top: 1px solid #B3B3B4;
-       margin-top: 12px;
-    }
 }
     .trailblock ul {
         margin-bottom: 0;
