@@ -236,15 +236,15 @@ define([
         },
 
         initSwipe: function(config) {
-            if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
+            if ((config.switches.swipeNav && (detect.canSwipe() || userPrefs.isOn('swipe')) && !userPrefs.isOff('swipe')) || userPrefs.isOn('swipe-dev')) {
                 swipeNav(config);
             }
             common.mediator.on('module:clickstream:click', function(clickSpec){
                 if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
-                    userPrefs.switchOn('swipe-nav');
+                    userPrefs.switchOn('swipe');
                 }
                 else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
-                    userPrefs.switchOff('swipe-nav');
+                    userPrefs.switchOff('swipe');
                 }
                 window.location.reload();
             });
