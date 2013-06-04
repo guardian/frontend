@@ -23,6 +23,7 @@ define([
         canonicalLink,
         clickSelector,
         contentAreaTop,
+        header,
         height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
@@ -171,6 +172,8 @@ define([
             urls.pushUrl({}, document.title, window.location.href);
             return;
         }
+
+        pinHeader();
 
         url = context.dataset.url;
         setSequencePos(url);
@@ -390,16 +393,23 @@ define([
         });
     }
 
-    var pushDownSidepanes = common.debounce(function(){
-        hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
+    function pinHeader() {
+        header = header || $('#header');
+        header.css('top', body.scrollTop() + 'px');
+    }
 
-        if( hiddenPaneMargin < visiblePaneMargin ) {
+    var pushDownSidepanes = common.debounce(function(){
+        hiddenPaneMargin = Math.max( 0, body.scrollTop());
+
+        if( hiddenPaneMargin <= visiblePaneMargin) {
             // We've scrolled up over the offset; reset all margins and jump to topmost scroll
             $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
             $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
             $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
             // And reset the scroll
-            body.scrollTop( contentAreaTop );
+            body.scrollTop(0);
+            pinHeader();
+
             visiblePaneMargin = 0;
             hiddenPaneMargin = 0;
         }

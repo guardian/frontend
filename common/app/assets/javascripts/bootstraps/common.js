@@ -78,18 +78,17 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var navControl = new NavControl();
-            var sections = new Sections();
-            var search = new Search(config);
-            var aus = new Australia(config); // TODO temporary till we have single domain editions
+            var navControl = new NavControl(),
+                sections = new Sections(),
+                search = new Search(config),
+                aus = new Australia(config), // TODO temporary till we have single domain editions
+                editions = new EditionSwitch(),
+                header = document.querySelector('body');
 
-            var editions = new EditionSwitch();
-            common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
-                aus.init(context);
-            });
+            navControl.init(header);
+            sections.init(header);
+            search.init(header);
+            aus.init(header);
         },
 
         transcludeTopStories: function () {

@@ -5,9 +5,8 @@
 #preloads {
     position: relative;
     clear: both;
-    //max-width: 64em;
-    //max-width: 102.4rem;
-    margin: 0 auto;
+    margin: 48px auto 0 auto;
+    min-height: 1000px; // Arvitrary initial height. Gets dynamically set.
 }
 
 /* ==========================================================================
@@ -16,8 +15,12 @@
 
 #header {
     min-height: 48px;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: $main1;
+    z-index: 99;
 }
 
 #logo {
@@ -26,7 +29,6 @@
     margin: 7px 0 21px $gutter;
     text-indent: -9999px;
 }
-
 
 /*
    Layout helpers
