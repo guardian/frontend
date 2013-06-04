@@ -1,15 +1,3 @@
 @(comment: Comment)(implicit request: RequestHeader)
 
-<div class="d-thread">
-    <div class="d-comment-list">
-        @fragments.comment(comment)
-
-        @if(comment.responses.nonEmpty){
-            <ol>
-                @comment.responses.map{ response =>
-                    @fragments.comment(response, true)
-                }
-            </ol>
-        }
-    </div><!-- /.d-comment-list -->
-</div><!-- /.d-thread -->
+@fragments.comment(comment)
