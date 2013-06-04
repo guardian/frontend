@@ -14,11 +14,11 @@
     width: 100%;
 
     @media only screen and (min-width: $tablet) {
-        top: 108px;
+        top: 118px;
     }
 
     @media only screen and (min-width: $desktopAd) {
-        top: 144px;
+        top: 155px;
     }
 }
 
@@ -28,14 +28,17 @@
     @media only screen and (min-width: $tablet) {
         background-color: $neutral8;
         border-top: 1px solid $neutral10;
-        margin: 0;
+        margin: 0px;
     }
 }
 
 /* Search
    ========================================================================== */
 .nav-popup--search {
-    min-height: 55px;
+    @media only screen and (min-width: $tablet) {
+        top: 152px;
+        margin-bottom: -57px;
+    }
 }
 
 /* Small
