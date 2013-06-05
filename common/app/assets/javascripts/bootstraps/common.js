@@ -236,6 +236,9 @@ define([
         },
 
         initSwipe: function(config) {
+            if (config.switches.swipeNav) {
+                bonzo(document.body).addClass('can-swipe');
+            }
             if ((config.switches.swipeNav && (detect.canSwipe() || userPrefs.isOn('swipe')) && !userPrefs.isOff('swipe')) || userPrefs.isOn('swipe-dev')) {
                 swipeNav(config);
             }
