@@ -19,20 +19,20 @@
 
     <div class="after-header"></div>
 
-    <div class="tabs">
-        <ol class="tabs__container js-tabs">
-            <li class="tabs__tab tabs__tab--selected">
-                <a class="tabs__link" href="#tabs-article" data-link-name="Article tab">Article</a>
+    <div class="tabs-container">
+        <ol class="tabs js-tabs">
+            <li class="tabs-selected">
+                <a href="#tabs-article" data-link-name="Article tab">Article</a>
             </li>
-            <li class="tabs__tab">
-                <a class="tabs__link js-show-discussion" href="#tabs-discussion" data-link-name="Discussion tab">
+            <li>
+                <a class="js-show-discussion" href="#tabs-discussion" data-link-name="Discussion tab">
                     Discussion <span class="discussion-comment-count"></span>
                 </a>
             </li>
         </ol>
 
-        <div class="tabs__content">
-             <div class="tabs__pane" id="tabs-article">
+        <div class="tabs-content">
+             <div class="tabs-pane" id="tabs-article">
 
                  @if(!article.isLive  && !article.hasVideoAtTop) {
                      @article.mainPicture.map{ mainPicture =>
@@ -50,7 +50,6 @@
 
                  <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                  itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                     @* <!-- ordering of cleaners is important --> *
                      @withJsoup(BulletCleaner(article.body))(
                          PictureCleaner(article),
                          InBodyLinkCleaner("in body link"),
@@ -62,12 +61,12 @@
                 </div>
 
              </div>
-             <div class="tabs__pane js-hidden" id="tabs-discussion">
+             <div class="tabs-pane js-hidden" id="tabs-discussion">
                 <div class="discussion-container"></div>
              </div>
         </div>
     </div>
-    
+
 </article>
 
 @fragments.social(article)
