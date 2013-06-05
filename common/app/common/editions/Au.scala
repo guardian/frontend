@@ -1,7 +1,7 @@
 package common.editions
 
 import org.joda.time.DateTimeZone
-import model.{CustomTrailblockDescription, TrailblockDescription, MetaData}
+import model.{Content, CustomTrailblockDescription, TrailblockDescription, MetaData}
 import common.{Zones, Sections, Edition}
 import views.support.{Thumbnail, Featured}
 import scala.concurrent.Future
@@ -45,6 +45,22 @@ object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Austral
       .response
 
     EditorsPicsAndLatest(promiseOfComment)
+  }
+
+  val videoCustomBlock = CustomTrailblockDescription("type/video", "Video", numItemsVisible = 1, style = Some(Featured)){
+
+    val promiseOfAustralianVideo: Future[ItemResponse] = ContentApi.item.itemId("type/video")
+      .edition("au")
+      .showTags("all")
+      .showFields(trailFields)
+      .showInlineElements(inlineElements)
+      .showMedia("all")
+      .showReferences(references)
+      .showStoryPackage(true)
+      .tag(s"world/australia")
+      .response
+
+    promiseOfAustralianVideo.map(_.results.map(new Content(_)))
   }
 
 

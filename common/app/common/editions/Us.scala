@@ -82,7 +82,7 @@ object Us extends Edition("US", "US edition", DateTimeZone.forID("America/New_Yo
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail), showMore = false)(Au),
       ItemTrailblockDescription("science", "Science", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
-      ItemTrailblockDescription("type/video", "Video", numItemsVisible = 1, style = Some(Thumbnail), showMore = false)
+      Au.videoCustomBlock
     )
   )
 }
