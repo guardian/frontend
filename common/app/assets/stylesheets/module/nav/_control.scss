@@ -97,17 +97,27 @@ span.control__menu.i-menu {
 
 /* Top stories control
  ========================================================================== */
-
 .control--topstories {
-    float: right;
-    height: 28px;
-    margin: 0;
-    padding: 17px 0 13px 0;
+    &:link,
+    &:active,
+    &:hover,
+    &:visited
+    &:focus {
+        float: right;
+        height: 28px;
+        margin: 0;
+        padding: 17px 0 13px 0;
+        color: #fff;
 
-    @media only screen and (min-width: $tablet) {
-        position: absolute;
-        top: 0;
-        right: 48px;
+        &.is-active {
+            color: $blue;
+        }
+
+        @media only screen and (min-width: $tablet) {
+            position: absolute;
+            top: 0;
+            right: 48px;
+        }
     }
 }
 
