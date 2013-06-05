@@ -97,22 +97,27 @@ span.control__menu.i-menu {
 
 /* Top stories control
  ========================================================================== */
+.control--topstories {
+    &:link,
+    &:active,
+    &:hover,
+    &:visited
+    &:focus {
+        float: right;
+        height: 28px;
+        margin: 0;
+        padding: 17px 0 13px 0;
+        color: #fff;
 
-.control--topstories,
-.control--topstories:link,
-.control--topstories:active,
-.control--topstories:hover,
-.control--topstories:visited {
-    float: right;
-    height: 28px;
-    margin: 0;
-    padding: 17px 0 13px 0;
-    color: #fff;
+        &.is-active {
+            color: $blue;
+        }
 
-    @media only screen and (min-width: $tablet) {
-        position: absolute;
-        top: 0;
-        right: 48px;
+        @media only screen and (min-width: $tablet) {
+            position: absolute;
+            top: 0;
+            right: 48px;
+        }
     }
 }
 
