@@ -8,6 +8,8 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
+# Discussion
+GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
 
 #Core nav
 GET    /most-read                                           controllers.MostPopularController.render(path = "")

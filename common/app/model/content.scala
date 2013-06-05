@@ -76,7 +76,8 @@ class Content(
     ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
-    ("wordCount", wordCount)
+    ("wordCount", wordCount),
+    ("shortUrl", shortUrl)
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
