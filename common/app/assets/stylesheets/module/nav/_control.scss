@@ -117,9 +117,15 @@ span.control__menu.i-menu {
             position: absolute;
             top: 0;
             right: 48px;
+
+            &.edge {
+                right: 0;
+            }
+
         }
     }
 }
+
 
 .control--topstories span {
     display: none;

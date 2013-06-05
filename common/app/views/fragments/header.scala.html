@@ -1,4 +1,5 @@
 @(page: MetaData)(implicit request: RequestHeader)
+@import CommonSwitches.SearchSwitch
 
 <header id="header" class="cf" role="banner" data-link-name="global navigation: header">
 
@@ -20,14 +21,17 @@
         <i class="i i-menu-active"></i>
     </a>
 
-    <a href="https://www.google.co.uk/advanced_search?q=site:www.guardian.co.uk" data-is-ajax data-link-name="Search icon" class="control control--search" data-control-for="nav-popup-search">
-        <i class="i i-nav-divider"></i>
-        <span class="h">Search</span>
-        <i class="i i-search"></i>
-    </a>
+
+    @if(SearchSwitch.isSwitchedOn) {
+        <a href="https://www.google.co.uk/advanced_search?q=site:www.guardian.co.uk" data-is-ajax data-link-name="Search icon" class="control control--search" data-control-for="nav-popup-search">
+            <i class="i i-nav-divider"></i>
+            <span class="h">Search</span>
+            <i class="i i-search"></i>
+        </a>
+    }
 
     <a href="/top-stories" data-is-ajax data-link-name="Top stories" data-control-for="nav-popup-topstories"
-        class="control control--topstories">
+        class="control control--topstories @if(SearchSwitch.isSwitchedOff) { edge }">
         <i class="i i-nav-divider"></i>
         <span>Top stories</span>
         <i class="i i-top-stories"></i>
