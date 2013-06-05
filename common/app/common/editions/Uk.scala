@@ -79,12 +79,17 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
     ),
 
     "australia" -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
+      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false)(Au),
       Au.cultureCustomBlock,
       Au.commentCustomBlock,
-      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
+      ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail), showMore = false)(Au),
+      ItemTrailblockDescription("science", "Science", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      Au.videoCustomBlock
+
     )
   )
 }
