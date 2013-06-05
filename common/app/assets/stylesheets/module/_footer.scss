@@ -55,15 +55,22 @@
     display: none; 
 }
 
+.swipe-on-off button {
+    border: 0;
+    background: inherit;
+    padding: 0;
+    color: $blue;
+}
+
 .can-swipe .swipe-on-off {
     display: block;
 }
 
 .has-swipe .swipe-off {
-    font-weight: normal;
+    display: inline-block;
 }
 
 .swipe-off,
 .has-swipe .swipe-on { 
-    font-weight: bold;
+    display: none;
 }
