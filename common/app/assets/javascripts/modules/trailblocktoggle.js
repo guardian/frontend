@@ -37,7 +37,7 @@ define([
                     manualTrigger = opts.manualTrigger,
                     context       = opts.context,
                     classPrefix = "front-trailblock-",
-                    classesToToggle = 'is-shut',
+                    classesToToggle = 'rolled-up',
                     trailblockId,
                     trailblock;
 
@@ -59,13 +59,10 @@ define([
 
                 trailblock = context.querySelector(trailblock);
                 bonzo(trailblock).toggleClass(classesToToggle);
-                bonzo(trigger[0].parentNode).toggleClass(classesToToggle);
-                bonzo(trigger[0].querySelector('.cta__icn')).toggleClass('is-open');
 
-                var labelNode = bonzo(trigger[0].querySelector('.cta__label'));
-                var text = labelNode.text();
+                var text = trigger.text();
                 var hideTrailblock = (text === "Hide") ? "Show" : "Hide";
-                labelNode.text(hideTrailblock);
+                trigger.text(hideTrailblock);
                 //This is backwards as executes before omniture call
                 trigger.attr('data-link-name', (text === "Hide") ? "Hide" : "Show");
 

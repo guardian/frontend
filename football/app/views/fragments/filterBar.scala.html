@@ -1,14 +1,6 @@
 @(title: String)
-<div class="football-filterbar section-head--blue js-collapsible" data-toggle-panel="js-football-league-list">
-    <h1 class="football-filterbar__title">
-        <a class="football-filterbar__link" href="#" data-link-name="Football | @title | filter">
-            @title
-        </a>
-    </h1>
-
-    <button class="cta__btn cta__btn--right cta--blue"
-            data-link-name="Football | @title | filter">
-        <span class="cta__label h"></span>
-        <i class="i i-arrow-white-down cta__icn"></i>
-    </button>
-</div>
+<h1 class="type-5 js-collapsible collapsible box-indent football-filter" data-toggle-panel="js-football-league-list">
+    <a class="control" href="#" data-link-name="Football | @title | filter">
+        @title <span class="football-filter-arrow"><i class="i i-filter-arrow-down js-visible"></i></span>
+    </a>
+</h1>

@@ -1,25 +1,25 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 
-<h2 class="page-head page-head--article">
-    <a data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
+<h2 class="article-zone type-1">
+    <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
 </h2>
 
 <article id="article" class="article @if(article.isLive){is-live}"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-    <header class="article__head">
+    <header class="article-head">
         @fragments.dateline(article.webPublicationDate, article.isLive)
+
         @fragments.headline(article.headline)
-        <div class="article__standfirst">
-            @fragments.standfirst(article)
-        </div>
+
+        @fragments.standfirst(article)
     </header>
 
     @fragments.witnessCallToAction(article)
 
     <div class="after-header"></div>
 
-    @if(!article.isLive && !article.hasVideoAtTop) {
+    @if(!article.isLive  && !article.hasVideoAtTop) {
         @article.mainPicture.map{ mainPicture =>
             @article.mainPicture(width=220).map{ smallCrop =>
                 @fragments.img(mainPicture, smallCrop)
@@ -27,17 +27,13 @@
         }
     }
 
-    @if(article.byline.nonEmpty) {
-        <div class="article__byline">
-            @fragments.byline(article.byline, article)
-        </div>
-    }
-    
+    @fragments.byline(article.byline, article)
+
     @if(article.isLive) {
         @fragments.autoUpdate()
     }
 
-    <div class="article__body from-content-api @if(article.isLive) {live-blog}"
+    <div class="article-body from-content-api @if(article.isLive) {live-blog}"
         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
         @* <!-- ordering of cleaners is important --> *@
         @withJsoup(BulletCleaner(article.body))(
@@ -49,10 +45,10 @@
             VideoPosterCleaner(article.videoAssets)
         )
     </div>
-
-    @fragments.social(article)
-
+    
 </article>
+
+@fragments.social(article)
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

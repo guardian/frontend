@@ -33,66 +33,49 @@
 
 /* Stacked
  ========================================================================== */
-.nav--stacked > li {
-    display: list-item;
-}
+    .nav--stacked > li {
+        display: list-item;
+    }
 
 /* Columns
-   ========================================================================== */
-.nav--columns {
-    padding: 0 $gutter;
-}
+========================================================================== */
+    .nav--columns {
+        padding: $baseline*2 $gutter $baseline $gutter;
 
-.nav--columns:first-child {
-    margin-bottom: 4px;
-}
-
-    .nav--columns-football {
-        padding: 0;
-    }
-
-    .nav--columns-football .nav__item {
-        padding-bottom: 12px;
-    }
-
-    .nav--columns-football .nav__link {
-        border-top: 1px solid $neutral10;
-    }
-
-    .nav--columns .nav__item {
-        width: 46%;
-        height: 36px;
-        margin-right: 3%;
-        display: inline-block; // doing this instead of float to prevent mixed item height float collision
-        vertical-align: top;
-        padding-top: 4px;
-        @include box-sizing(border-box);
-    }
-
-        .nav--columns .nav__item--full {
-            width: 100%;
-            margin: 0;
+        .nav__item {
+            width: 46%;
+            margin-right: 3%;
+            display: inline-block; // doing this instead of float to prevent mixed item height float collision
+            vertical-align: top;
         }
 
-    .nav--columns .nav__link {
-        @include box-sizing(border-box);
-        @extend %type-7;
-        color: $neutral2;
-        border-top: 1px solid $neutral10;
-        display: block;
-        background-color: transparent;
+            .nav__item--full {
+                width: 100%;
+                margin: 0;
+            }
 
+        .nav__link {
+            @extend %type-10;
+            padding: $baseline*2 0;
+            border-top: 1px solid $mushroom;
+            display: block;
+            height: auto;
+            background-color: transparent;
+            color: #333333;
+        }
+
+        li:nth-child(even) {
+            float: right; // this aligns right edge correctly
+            margin-right: 0%;
+            margin-left: 3%;
+        }
     }
 
-    .nav--columns .nav__link--blue { // TODO: this needs to be done better than this
-        color: $linkBlue
+    .nav--columns-football {
+        padding: $baseline*2 0 $baseline 0
     }
 
-    .nav--columns li:nth-child(even) {
-        float: right; // this aligns right edge correctly
-        margin-right: 0%;
-        margin-left: 3%;
-    }
+
 
     .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
     .nav--stacked.nav--top-border-off > li:nth-child(1) a {
@@ -100,91 +83,106 @@
         padding-top: 0;
     }
 
-
-
 /* Section divider
-   ========================================================================== */
+========================================================================== */
 
-.nav.nav--section-divider {
-    padding: 0 $gutter $baseline*4 $gutter;
-    background-color: $mushroom;
-}
-
-    .nav-popup--small .nav--section-divider {
-        @media only screen and (min-width: $tablet) {
-            margin-top: -5px !important;
-            .nav__item { margin: 0;}
-        }
-
-        @media only screen and (min-width: 78em) {
-            margin-top: -13px !important;
-        }
+    .nav.nav--section-divider {
+        padding: $baseline*2 $gutter;
+        margin: 0;
+        background-color: $mushroom;
     }
 
-.nav--section-divider .nav__item:last-child .nav__link {
-    border-bottom: none;
-}
+        .nav-popup--small .nav--section-divider {
+            @media only screen and (min-width: $tablet) {
+                margin-top: -5px !important;
+                .nav__item { margin: 0; }
+            }
+
+            @media only screen and (min-width: 78em) {
+                margin-top: -13px !important;
+            }
+        }
+
+    .nav--section-divider .nav__link {
+        border-bottom: 1px solid $darkMushroom;
+    }
+
+    .nav--section-divider .nav__item:last-child .nav__link {
+        border-bottom: none;
+    }
 
 /* Footer navigation
-   ========================================================================== */
+     ========================================================================== */
 .nav--footer,
 .nav--footer.nav--section-divider {
-    background-color: $neutral8;
+    background-color: $blue;
 }
 
-.nav--footer.nav--section-divider {
-    color: #ffffff !important;
-    border-top: 1px solid $neutral5;
-}
+    .nav--footer .nav__link {
+            color: #ffffff;
+            border-top: 1px solid #2B528B;
+    }
+
+    .nav--footer.nav--section-divider .nav__link {
+        border-bottom: 1px solid #2B528B;
+    }
+
+    .nav--footer.nav--section-divider {
+            color: #ffffff !important;
+            border-top: 2px solid #2B528B;
+    }
 
 
 /* Global navigation
-   ========================================================================== */
+     ========================================================================== */
 .nav-container {
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
     width: 100%;
     padding: 0 $gutter;
-    background-color: $neutral8;
-    border-bottom: 1px solid $neutral10;
+    background-color: #ffffff;
+
     @media only screen and (min-width: $tablet) { display: block; }
 }
 
 .nav--global {
     @include box-sizing(border-box);
     display: none;
-    float:left;
-    clear:left;
+    float: left;
+    clear: left;
     width: 100%;
-    height: 47px;
+    height: 46px;
     overflow: hidden;
-    padding: 0 120px 0 0;
+    padding: 0 90px 0 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid $darkMushroom;
 
     @media only screen and (min-width: $tablet) { display: block; }
-}
 
-    .nav--global .nav__item {
-        float:left;
+
+    .nav__item {
+        float: left;
     }
 
-    .nav--global .nav__link,
-    .nav--global .nav__link:link,
-    .nav--global .nav__link:active,
-    .nav--global .nav__link:hover,
-    .nav--global .nav__link:visited {
+    .nav__link,
+    .nav__link:link,
+    .nav__link:active,
+    .nav__link:hover,
+    .nav__link:visited {
         display: block;
-        margin: 0 0 $baseline*3 0;
-        padding: 0 6px 0 12px;
+        margin: 10px 0 $baseline*3 0;
+        padding: 2px $baseline*3 0 $baseline*3;
         font-family: $serif !important;
-        @include font($serif, normal, 14, 48);
         font-size: 14px;
         text-decoration: none;
-        color: $neutral3;
+        color: #444444;
+        border-right: 1px solid #BBBBBB;
     }
 
-        .nav--global .nav__item:first-child .nav__link { padding-left: 0; }
-        .nav--global .nav__item:last-child .nav__link { border-right: none; }
+        .nav__item:first-child .nav__link { padding-left: 0; }
+        .nav__item:last-child .nav__link { border-right: none; }
+}
 
 /* Toolbar navigation
      ========================================================================== */
@@ -194,24 +192,23 @@
     margin: 0 $baseline*2 0 $gutter;
     padding: $baseline*3 0 0 0;
     @media only screen and (min-width: $tablet) { display: block; }
-}
 
-    .nav--toolbar .nav__item {
+    .nav__item {
         margin: $baseline 0 0 0;
         padding: $baseline $baseline*2;
         color: #ffffff;
         border-right: 1px solid #94B1CA;
 
         &:last-child { border-right: none; }
+        &.is-active { text-decoration: underline; }
     }
 
-    .nav--toolbar .nav__item.is-active { text-decoration: underline; }
-
-    .nav--toolbar .nav__link,
-    .nav--toolbar .nav__link:link,
-    .nav--toolbar .nav__link:active,
-    .nav--toolbar .nav__link:hover,
-    .nav--toolbar .nav__link:visited {
+    .nav__link,
+    .nav__link:link,
+    .nav__link:active,
+    .nav__link:hover,
+    .nav__link:visited {
         color: #fff;
         text-decoration: none;
     }
+}
