@@ -27,6 +27,8 @@
 .d-comment {
     color: #333;
     font-family: sans-serif;
+}
+.d-comment + .d-comment {
     border-top: 1px solid #cfcfcd;
 }
 .d-comment--blocked > .d-comment__inner {
@@ -57,7 +59,7 @@
     margin-bottom: 2px;
 }
 .d-comment-banner__label {
-    font: bold 1em/1 EgyptianHeadline, Georgia, serif;
+    font: bold 1em/1 $serifheadline;
 }
 .d-comment-banner__icon {
     position: absolute;
@@ -83,7 +85,7 @@
     word-wrap: break-word;
 }
 .d-comment__author {
-    font-family: "EgyptianText",georgia,serif;
+    font-family: $serif;
 }
 
 @media (min-width: 768px) {
@@ -109,17 +111,19 @@
     word-break: break-word;
     word-wrap: break-word;
     padding-top: 4px;
+
+    p {
+        margin-top: 0;
+    }
+    blockquote {
+        color: #767676;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 14px;
+        border-left: 2px solid #cfcfcd;
+    }
 }
-.d-comment__body p {
-    margin-top: 0;
-}
-.d-comment__body blockquote {
-    color: #767676;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 14px;
-    border-left: 2px solid #cfcfcd;
-}
+
 
 
 /**
@@ -132,28 +136,31 @@
  */
 .d-comment-header {
     zoom: 1;
+
+    &:before,
+    &:after {
+        content: '.';
+        display: block;
+        overflow: hidden;
+        visibility: hidden;
+        font-size: 0;
+        line-height: 0;
+        width: 0;
+        height: 0;
+    }
+    &:after {
+        clear: both;
+    }
 }
-.d-comment-header:before,
-.d-comment-header:after {
-    content: '.';
-    display: block;
-    overflow: hidden;
-    visibility: hidden;
-    font-size: 0;
-    line-height: 0;
-    width: 0;
-    height: 0;
-}
-.d-comment-header:after {
-    clear: both;
-}
+
 .d-comment__media {
     float: left;
     margin-right: 15px;
-}
-.d-comment__media img {
-    display: block;
-    max-width: 100%; /* 1 */
+
+    img {
+        display: block;
+        max-width: 100%; /* 1 */
+    }
 }
 
 /**
@@ -199,6 +206,14 @@
     text-align: center;
     cursor: help;
 }
+.d-badge--contributor:after {
+    content: 'c';
+    text-indent: -1px;
+}
+.d-badge--guardian-staff:after {
+    content: 'g';
+    line-height: .7;
+}
 .d-badge__label {
     /* Hide the label but not to screen readers */
     border: 0;
@@ -210,18 +225,6 @@
     position: absolute;
     width: 1px;
 }
-.d-badge--contributor:after {
-    content: 'c';
-    text-indent: -1px;
-}
-.d-badge--guardian-staff:after {
-    content: 'g';
-    line-height: .7;
-}
-
-
-
-
 
 .speech-bubble {
     position: relative;
@@ -233,14 +236,14 @@
     font: normal 16px/1.3 "EgyptianText",georgia,serif;
     color: white;
     text-decoration: none;
-}
 
-.speech-bubble:after {
-    content: "";
-    position: absolute;
-    bottom: -7px;
-    left: 6px;
-    border-width: 0 0 8px 8px;
-    border-style: solid;
-    border-color: transparent #F5644F;
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -7px;
+        left: 6px;
+        border-width: 0 0 8px 8px;
+        border-style: solid;
+        border-color: transparent #F5644F;
+    }
 }
