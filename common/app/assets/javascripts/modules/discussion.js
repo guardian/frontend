@@ -96,15 +96,16 @@ define([
                     crossOrigin: true,
                     success: function(response) {
                         if (currentPage === 0) {
-                            self.showOnlyFirstReplies();
                             self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
                             self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
+                            self.showOnlyFirstReplies();
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
                             self.showMoreBtnNode.innerText = 'Show more comments';
                         }
 
+                        // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
                         commentsHaveLoaded = true;
@@ -148,7 +149,7 @@ define([
                 threadNode.dataset.visibleResponses = visibleResponses;
 
                 if (visibleResponses >= totalResponses) {
-                    bonzo(threadNode.querySelector('.js-show-more-replies')).remove();
+                    threadNode.querySelector('.js-show-more-replies').style.display = 'none';
                 } else {
                     var buttonText = self.buildShowMoreLabel(totalResponses - visibleResponses);
                     threadNode.querySelector('.js-show-more-replies').innerText = buttonText;
@@ -161,6 +162,8 @@ define([
 
             bindEvents: function() {
                 // Setup events
+                var tabsNode = context.querySelector('.d-tabs');
+
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
