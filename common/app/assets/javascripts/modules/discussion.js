@@ -97,8 +97,8 @@ define([
                     success: function(response) {
                         if (currentPage === 0) {
                             self.showOnlyFirstReplies();
-                            self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
                             self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
+                            self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
@@ -175,7 +175,6 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
                     self.discussionContainerNode.style.display = 'none';
