@@ -56,10 +56,10 @@ define([
                 var bylineNode = bonzo(context.querySelector('.byline'));
                 var tabsHtml = '<div class="d-tabs">' +
                                  '<ol class="d-tabs__container unstyled">' +
-                                 '  <li class="d-tabs__byline d-tabs--active js-show-article" data-link-name="Article Tab">' +
+                                 '  <li class="d-tabs__byline d-tabs--active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
                                       bylineNode.html() +
                                  '  </li>' +
-                                 '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab">' +
+                                 '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
                                  '    <a href="#" class="d-commentcount speech-bubble">'+ commentCount + '</a>' +
                                  '  </li>' +
                                  '</ol>' +
@@ -107,7 +107,8 @@ define([
                         currentPage = response.currentPage;
                     },
                     error: function() {
-                        self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="cta js-show-discussion">Try again</button></div>';
+                        self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
+                            '<button class="cta js-show-discussion" data-is-ajax>Try again</button></div>';
                     }
                 });
             },
