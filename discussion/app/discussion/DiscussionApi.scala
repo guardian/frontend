@@ -10,9 +10,11 @@ import org.joda.time.DateTime
 case class CommentPage(
   title: String,
   comments: Seq[Comment],
-  contentUrl: String
+  contentUrl: String,
+  currentPage: Int,
+  pages: Int
 ) extends Page(canonicalUrl = None, id = "TODO", section = "TODO", webTitle = title, analyticsName = "TODO") {
-  lazy val hasMore = false
+  lazy val hasMore: Boolean = currentPage < pages
 }
 
 trait DiscussionApi extends ExecutionContexts with Logging {
@@ -37,7 +39,9 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           CommentPage(
             title = (json \ "discussion" \ "title").as[String],
             contentUrl = InBodyLink((json \ "discussion" \ "webUrl").as[String]),
-            comments = comments
+            comments = comments,
+            currentPage =  (json \ "currentPage").as[Int],
+            pages = (json \ "pages").as[Int]
           )
 
         case other =>
@@ -48,9 +52,6 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
 
   }
-
-
-
 
 }
 

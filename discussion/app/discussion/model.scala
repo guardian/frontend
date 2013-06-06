@@ -29,10 +29,10 @@ case class ResponseTo(
 )
 
 object ResponseTo {
-  def apply(json: JsValue): Option[ResponseTo] = {
+  def apply(json: JsValue): ResponseTo = {
     ResponseTo(
-      displayName = (responseTo \ "displayName"),
-      commentId = (responseTo \ "commentId")
+      displayName = (json \ "responseTo" \ "displayName").as[String],
+      commentId = (json \ "responseTo" \ "commentId").as[String]
     )
   }
 }
@@ -44,22 +44,24 @@ case class Comment(
   profile: Profile,
   date: DateTime,
   isHighlighted: Boolean,
-  isBlocked: Boolean,
-  responseTo: Option[ResponseTo] = None
+  isBlocked: Boolean
+  //responseTo: Option[ResponseTo] = None
 )
 
 object Comment{
 
   def apply(json: JsValue): Comment = Comment(json, Nil)
 
-  def apply(json: JsValue, responses: Seq[Comment]): Comment = Comment(
-    id = (json \ "id").as[Int],
-    body = (json \ "body").as[String],
-    responses = responses,
-    profile = Profile(json),
-    date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
-    isHighlighted = (json \ "isHighlighted").as[Boolean],
-    isBlocked = (json \ "status").as[String].contains("blocked"),
-    responseTo = ResponseTo(json)
-  )
+  def apply(json: JsValue, responses: Seq[Comment]): Comment = {
+      Comment(
+        id = (json \ "id").as[Int],
+        body = (json \ "body").as[String],
+        responses = responses,
+        profile = Profile(json),
+        date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
+        isHighlighted = (json \ "isHighlighted").as[Boolean],
+        isBlocked = (json \ "status").as[String].contains("blocked")
+        //responseTo = (json \\ "responseTo").headOption.map(ResponseTo(json))
+    )
+  }
 }
