@@ -54,7 +54,7 @@ define([
                     var discussionArticle = new Discussion({
                         id: config.page.shortUrl,
                         context: context,
-                        switches: config.switches
+                        config: config
                     }).init();
                 }
             });

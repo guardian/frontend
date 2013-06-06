@@ -1,23 +1,30 @@
 @(comment: Comment, isResponse: Boolean = false)(implicit request: RequestHeader)
 
-<li class="d-comment @if(isResponse){d-comment--response}else{d-comment--top-level}
-    @if(comment.isBlocked){d-comment--blocked}" id="comment-@comment.id">
+<li class="d-comment
+           @if(isResponse){d-comment--response}else{d-comment--top-level}
+           @if(comment.isBlocked){d-comment--blocked}"
+    id="comment-@comment.id">
     <div class="d-comment__inner">
         @if(comment.isHighlighted && !comment.isBlocked){<div class="d-comment__pick">Guardian pick</div>}
         <div class="d-comment-header">
             <div class="d-comment__media">
                 <span class="d-comment__avatar-wrapper"><img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="36" height="36" /></span>
-                <div class="d-comment__author-status-wrapper">
-                    @if(comment.profile.isContributor){<i class="d-i d-i--contributor d-comment__author-status">Contributor</i>}
-                    @if(comment.profile.isStaff){<i class="d-i d-i--contributor d-comment__author-status" title="Guardian staff">Guardian Staff</i>}
-                </div>
             </div>
             <div class="d-comment__meta">
-                <div><span class="d-comment__author">@comment.profile.displayName</span></div>
-                <div><span class="d-comment__time"><b><time class="d-comment__time js-timestamp"
+                <div>
+                    <span class="d-comment__author">@comment.profile.displayName</span>
+                    @if(comment.profile.isContributor){<i class="d-badge d-badge--contributor d-comment__author-status" title="Contributor"><span class="d-badge__label">Contributor</span></i>}
+                    @if(comment.profile.isStaff){<i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>}
+                </div>
+
+                <div>
+                    <!-- <a href="#" class="d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span> -->
+                    <time class="d-comment__meta-item js-timestamp"
                     datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
-                    @Format(comment.date, "d MMM y")
-                </time></b></span></div>
+
+                        @Format(comment.date, "d MMM y")
+                    </time>
+                </div>
             </div>
         </div>
         <div class="d-comment__main">
@@ -30,8 +37,9 @@
                 <div class="d-comment__actions__main">
                     <a href="http://discussion.guardian.co.uk/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                 </div>
-            </div>
-        }
+            }
+        </div>
+
     </div>
 
     @if(comment.responses.nonEmpty){
