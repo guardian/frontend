@@ -3,12 +3,14 @@ define([
 
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading"
+    "modules/analytics/reading",
+    "modules/experiments/aware"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
-    Reading
+    Reading,
+    Aware
 ) {
 
     var modules = {
@@ -61,15 +63,25 @@ define([
                     reader.init();
                 }
             });
+        },
+        
+        aware: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                Aware.logVisit(config.page);
+            });
         }
     };
 
     var ready = function (config, context) {
+        
         if (!this.initialised) {
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading(context);
+            modules.logReading();
+            if (config.switches.aware) {
+                modules.aware();
+            }
         }
         common.mediator.emit("page:article:ready", config, context);
     };
