@@ -4,7 +4,7 @@ import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.CommonSwitches.AutoRefreshSwitch
-import play.api.mvc.{RequestHeader, Results}
+import play.api.mvc.{PlainResult, SimpleResult, RequestHeader, Results}
 import play.api.templates.Html
 import com.gu.management.Switchable
 import conf.Configuration
@@ -40,7 +40,7 @@ object JsonComponent extends Results {
 
 
 
-  def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
+  private def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
     jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)) +: items: _*)
   }
   
@@ -60,7 +60,7 @@ object JsonComponent extends Results {
     ))
   }
 
-  private def resultFor(request: RequestHeader, json: String) = {
+  private def resultFor(request: RequestHeader, json: String): PlainResult = {
 
     // JSONP if it has a callback
     request.getQueryString("callback").map {
