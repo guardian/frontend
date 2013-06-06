@@ -64,6 +64,7 @@
 }
 .d-comment__inner {
     padding-top: 12px;
+    position: relative;
 }
 .d-comment:target > .d-comment__inner {
     background: rgba(149, 177, 202, .3);
@@ -74,26 +75,9 @@
 }
 
 .d-comment__pick {
-
-}
-
-/* Banner preceeding a comment (eg: Guardian Pick) */
-.d-comment-banner {
-    position: relative;
-    padding: .1em .33333em;
-    background: rgb(149, 177, 202);
-    color: #fff;
-    font-size: 18px;
-    margin-bottom: 2px;
-}
-.d-comment-banner__label {
-    font: bold 1em/1 $serifheadline;
-}
-.d-comment-banner__icon {
     position: absolute;
-    display: block;
-    top: .1em;
-    right: .5em;
+    top: 8px;
+    right: 0;
 }
 
 .d-comment__header {
