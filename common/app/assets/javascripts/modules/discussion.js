@@ -18,7 +18,7 @@ define([
             config               = options.config,
             discussionId         = options.id.replace('http://gu.com', ''),
             containerSelector    = options.containerSelector || '.article__discussion',
-            commentCountSelector = options.commentCountSelector || '.discussion__commentcount',
+            commentCountSelector = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded   = false,
             self;
 
@@ -34,52 +34,38 @@ define([
                 self.containerNode      = context.querySelector(containerSelector);
                 self.commentCountNode   = context.querySelector(commentCountSelector);
 
-                self.updateCommentCounter();
-
-                // This is only here temporarily, needs a better loving home
-                var tabs = new Tabs();
-                tabs.init(context.querySelector('.article'));
-
-                // Setup events
-                bean.on(context, 'click', '.js-show-discussion', function(e) {
-                    context.querySelector('.article__discussion').style.display = 'block';
-                    context.querySelector('.article__container').style.display = 'none';
-                    if (!commentsHaveLoaded) {
-                        self.loadDiscussion();
+                self.getCommentCount(function(commentCount) {
+                    if (commentCount > 0) {
+                        self.upgradeByline(commentCount);
                     }
-                });
-
-                bean.on(context, 'click', '.js-show-article', function(e) {
-                    context.querySelector('.article__discussion').style.display = 'none';
-                    context.querySelector('.article__container').style.display = 'block';
                 });
             },
 
             upgradeByline: function(commentCount) {
-                commentCount = commentCount || 0;
                 var bylineNode = bonzo(context.querySelector('.byline'));
                 var tabsHtml = '<div class="d-tabs">' +
-                                 '<div class="d-tabs__byline js-show-article">' +
-                                    context.querySelector('.byline').outerHTML +
-                                 '</div>' +
-                                 '<div class="d-tabs__commentcount speech-bubble js-show-discussion">' +
-                                    commentCount +
-                                 '</div>' +
+                                 '<ol class="d-tabs__container unstyled">' +
+                                 '  <li class="d-tabs__byline d-tabs--active js-show-article">' +
+                                      bylineNode.html() +
+                                 '  </li>' +
+                                 '  <li class="d-tabs__commentcount js-show-discussion">' +
+                                 '    <a href="#" class="d-commentcount speech-bubble">'+ commentCount + '</a>' +
+                                 '  </li>' +
+                                 '</ol>' +
                                '</div>';
 
                 bylineNode.replaceWith(tabsHtml);
+                self.bindEvents();
             },
 
-            updateCommentCounter: function() {
+            getCommentCount: function(callback) {
                 ajax({
                     url: self.discussionCountUrl,
                     type: 'jsonp',
                     jsonpCallback: 'callback',
                     jsonpCallbackName: 'commentcount',
                     success: function(response) {
-                        if (response.numberOfComments > 0) {
-                            self.upgradeByline(response.numberOfComments);
-                        }
+                        callback(response.numberOfComments);
                     }
                 });
             },
@@ -99,6 +85,30 @@ define([
                     error: function() {
                         self.containerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="js-show-discussion">Try again</button></div>';
                     }
+                });
+            },
+
+            bindEvents: function() {
+                // Setup events
+                bean.on(context, 'click', '.js-show-discussion', function(e) {
+                    e.preventDefault();
+                    bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
+                    bonzo(e.currentTarget).addClass('d-tabs--active');
+                    context.querySelector('.article__discussion').style.display = 'block';
+                    context.querySelector('.article__container').style.display = 'none';
+
+                    if (!commentsHaveLoaded) {
+                        // Don't request again if we've already done it
+                        self.loadDiscussion();
+                    }
+                });
+
+                bean.on(context, 'click', '.js-show-article', function(e) {
+                    e.preventDefault();
+                    bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
+                    bonzo(e.currentTarget).addClass('d-tabs--active');
+                    context.querySelector('.article__discussion').style.display = 'none';
+                    context.querySelector('.article__container').style.display = 'block';
                 });
             }
         };
