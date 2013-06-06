@@ -11,7 +11,9 @@ case class CommentPage(
   title: String,
   comments: Seq[Comment],
   contentUrl: String
-) extends Page(canonicalUrl = None, id = "TODO", section = "TODO", webTitle = title, analyticsName = "TODO")
+) extends Page(canonicalUrl = None, id = "TODO", section = "TODO", webTitle = title, analyticsName = "TODO") {
+  lazy val hasMore = false
+}
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
