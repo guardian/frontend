@@ -11,17 +11,17 @@
 /* Tabs
  ========================================================================== */
 .d-tabs {
-    margin: 20px $gutter $baseline*3 $gutter;
+    margin: 20px 0 $baseline*3 0;
 }
 .d-tabs__container {
     display: table;
-    background-color: $mushroom;
+    background-color: $darkMushroom;
     width: 100%;
 }
 .d-tabs__byline,
 .d-tabs__commentcount {
     @include box-sizing(border-box);
-    border-top: 2px solid $mushroom;
+    border-top: 2px solid $darkMushroom;
     border-bottom: 2px solid $darkMushroom;
     display: table-cell;
     cursor: pointer;
@@ -29,7 +29,7 @@
 .d-tabs__byline {
     @extend %type-7;
     vertical-align: top;
-    padding: 4px;
+    padding: 0 $gutter;
 
     a {
         pointer-events: none;
@@ -42,7 +42,7 @@
     }
 }
 .d-tabs__commentcount {
-    padding: 14px 10px;
+    padding: 12px 16px 16px 16px;
     width: 60px;
     text-align: center;
 }
