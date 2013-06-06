@@ -29,7 +29,7 @@
 .d-tabs__byline {
     @extend %type-7;
     vertical-align: top;
-    padding: 0 $gutter;
+    padding: 4px $gutter;
 
     a {
         pointer-events: none;
