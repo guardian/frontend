@@ -118,11 +118,18 @@
         margin-top: 0;
     }
     blockquote {
-        color: #767676;
         margin-left: 0;
         margin-right: 0;
         padding-left: 14px;
         border-left: 2px solid #cfcfcd;
+
+        &,
+        p {
+            // Override article styles
+            color: #767676;
+            font-family: $sans-serif;
+            font-size: 1em;
+        }
     }
 }
 
