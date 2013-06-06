@@ -8,6 +8,7 @@ frontend-gallery.properties
 frontend-tag.properties
 frontend-section.properties
 frontend-video.properties
+frontend-applications.properties
 
 *.csv
 *.iml
@@ -26,8 +27,7 @@ target
 
 RUNNING_PID
 
-frontend.sublime-workspace
-frontend.sublime-project
+*.sublime-*
 
 tags
 

@@ -165,6 +165,8 @@ define([
             div,
             config;
 
+        pinHeader();
+
         throttle = false;
 
         if (initiatedBy === 'initial') {
@@ -172,8 +174,6 @@ define([
             urls.pushUrl({}, document.title, window.location.href);
             return;
         }
-
-        pinHeader();
 
         url = context.dataset.url;
         setSequencePos(url);
@@ -557,7 +557,7 @@ define([
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
         setInterval(function(){
             updateHeight();
-        }, 2003); // Prime number, for good luck
+        }, 1009); // Prime number, for good luck
     }
 
     var initialise = function(config) {
@@ -572,8 +572,8 @@ define([
             contentAreaTop   = $(swipeContainerEl).offset().top;
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
-            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-nav-on-click')) {
-                clickSelector = 'a:not([data-is-ajax])';
+            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
+                clickSelector = "a:not([data-is-ajax]):not(.control)";
             }
 
             // Set up the DOM structure

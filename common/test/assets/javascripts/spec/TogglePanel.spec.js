@@ -1,7 +1,7 @@
 define(['modules/togglepanel', 'common', 'bonzo', 'bean'], function(togglePanel, common, bonzo, bean) {
 
     describe('Toggle Panel', function() {
-
+        
         var $collapsible,
             collapsibleHtml = '<div><button data-toggle-panel="toggle-panel" class="js-collapsible"><i class="i-filter-arrow-down"></i></button><div id="toggle-panel" class="js-hidden"></div></div>';
 
@@ -20,7 +20,8 @@ define(['modules/togglepanel', 'common', 'bonzo', 'bean'], function(togglePanel,
             var collapsible = $collapsible[0];
             // click collapsible
             bean.fire(collapsible.querySelector('button'), 'click');
-            expect(common.$g('i', collapsible).hasClass('is-open')).toBeTruthy();
+            expect(common.$g('i', collapsible).hasClass('i-filter-arrow-down')).toBeFalsy();
+            expect(common.$g('i', collapsible).hasClass('i-filter-arrow-up')).toBeTruthy();
             expect(common.$g('#toggle-panel', collapsible).hasClass('js-hidden')).toBeFalsy();
         })
 
@@ -29,7 +30,8 @@ define(['modules/togglepanel', 'common', 'bonzo', 'bean'], function(togglePanel,
             // click collapsible twice
             bean.fire(collapsible.querySelector('button'), 'click');
             bean.fire(collapsible.querySelector('button'), 'click');
-            expect(common.$g('i', collapsible).hasClass('is-open')).toBeFalsy();
+            expect(common.$g('i', collapsible).hasClass('i-filter-arrow-down')).toBeTruthy();
+            expect(common.$g('i', collapsible).hasClass('i-filter-arrow-up')).toBeFalsy();
             expect(common.$g('#toggle-panel', collapsible).hasClass('js-hidden')).toBeTruthy();
         })
 

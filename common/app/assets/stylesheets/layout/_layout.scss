@@ -1,17 +1,18 @@
 /* ==========================================================================
-   Global wrapper
-   ========================================================================== */
+     Global wrapper
+     ========================================================================== */
 
 #preloads {
     position: relative;
     clear: both;
-    margin: 48px auto 0 auto;
-    min-height: 1000px; // Arvitrary initial height. Gets dynamically set.
+    max-width: 64em;
+    max-width: 102.4rem;
+    margin: 58px auto 0 auto;
 }
 
 /* ==========================================================================
-   Global header and navigation
-   ========================================================================== */
+     Global header and navigation
+     ========================================================================== */
 
 #header {
     min-height: 48px;
@@ -19,20 +20,20 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: $main1;
+    background-color: $blue;
     z-index: 99;
 }
 
 #logo {
     display: block;
     float: left;
-    margin: 7px 0 21px $gutter;
+    margin: 20px 0 18px $gutter;
     text-indent: -9999px;
 }
 
 /*
-   Layout helpers
-   ========================================================================== */
+     Layout helpers
+     ========================================================================== */
 
 /**
  * @todo Should these be moved to helpers?
@@ -46,9 +47,23 @@
     padding: 0 $gutter $baseline*1 $gutter;
 }
 
+.inline-image {
+    width: $inArticleInlineImgWidth;
+    float: left;
+    margin: 0;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 3px;
+}
+
+.img-tiny.inline-image {
+    width: auto;
+    max-width: $inArticleInlineImgWidth;
+}
+
 /* ==========================================================================
-   Preloads (for swipe)
-   ========================================================================== */
+     Preloads (for swipe)
+     ========================================================================== */
 
 #preloads-inner {
     position: relative;

@@ -1,10 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    sass (3.2.7)
+    sass (3.2.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  sass
+  sass (= 3.2.9)

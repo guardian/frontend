@@ -1,8 +1,8 @@
 {
     "packages":{
-        "frontend-tag":{
+        "frontend-applications":{
             "type":"asg-elb",
-            "apps":[ "frontend::tag" ],
+            "apps":[ "frontend::applications" ],
             "data":{
                 "secondsToWait":900,
                 "port":18080,
@@ -26,10 +26,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-tag.deploy"]
+            "actionsBeforeApp": ["frontend-applications.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-tag.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-applications.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

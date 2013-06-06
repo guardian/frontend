@@ -118,9 +118,9 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
             
             runs(function() {
                 common.mediator.emit('module:clickstream:click', { target: document.querySelector('.front-container .cta') });
-                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
-                common.mediator.emit('module:clickstream:click', { target: document.querySelector('.front-container .cta') });
                 expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 3');
+                common.mediator.emit('module:clickstream:click', { target: document.querySelector('.front-container .cta') });
+                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 4');
             });
         });
         
@@ -131,7 +131,7 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
             
             runs(function() {
                 common.mediator.emit('module:clickstream:click', { target: document.querySelector('body') });
-                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 1');
+                expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
             });
         });
         

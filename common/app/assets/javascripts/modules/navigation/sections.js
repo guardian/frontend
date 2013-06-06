@@ -27,7 +27,7 @@ define([
                 }
                 contexts[id] = true;
 
-                var sectionsHeader = context.querySelector('.nav-popup--sections'),
+                var sectionsHeader = context.querySelector('.nav-popup-sections'),
                     sectionsNav    = context.querySelector('.nav--global'),
                     $sectionsHeader = bonzo(sectionsHeader);
 

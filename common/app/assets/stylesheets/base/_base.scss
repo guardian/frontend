@@ -3,20 +3,26 @@ html {
 }
 
 body {
-    background-color: #fff;
+    background-color: #ffffff;
+}
+
+.dateline {
+    font-family: $sans-serif;
+    margin: 0 0 $baseline*2 0;
+    color: #666666;
+    @extend %type-11;
 }
 
 .relative-timestamp {
-    @extend %type-11;
-    line-height: 1.6rem;
-    font-weight: bold;
     display: block;
-    color: #929497;
+    height: 10px;
+    color: #777777;
     margin: 0;
+    padding:0 0 $baseline*3 0;
+}
 
-    span {
-        display: inline-block;
-    }
+.relative-timestamp span {
+    display: inline-block;
 }
 
 ol,

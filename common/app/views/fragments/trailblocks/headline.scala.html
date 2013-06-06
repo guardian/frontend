@@ -2,6 +2,8 @@
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @fragments.trails.headline(trail, info.rowNum, related, "li")
+        <li class="trail" data-link-name="trail">
+            @fragments.trails.headline(trail, info.rowNum, related)
+        </li>
     }
 </ul>

@@ -3,7 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{ItemTrailblockDescription, MetaData}
-import views.support.{Headline, Thumbnail, Featured, FeaturedSmall}
+import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
 
@@ -42,8 +42,8 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
   val configuredFronts = Map(
     "front" -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(FeaturedSmall), showMore = true),
-      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(FeaturedSmall), showMore = true),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       ItemTrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -54,7 +54,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
     "sport" -> Seq(
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(FeaturedSmall), showMore = true),
+      ItemTrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -79,12 +79,17 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
     ),
 
     "australia" -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
-      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Featured), showMore = true)(Au),
+      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
+      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false)(Au),
       Au.cultureCustomBlock,
       Au.commentCustomBlock,
-      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail))(Au)
+      ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail), showMore = false)(Au),
+      ItemTrailblockDescription("science", "Science", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
+      Au.videoCustomBlock
+
     )
   )
 }

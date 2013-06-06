@@ -26,8 +26,6 @@ sealed trait Style {
 
 object Featured extends Style { val className = "featured" }
 
-object FeaturedSmall extends Style { val className = "featured-small" }
-
 /**
  * trails display trailText and thumbnail (if available)
  */
@@ -339,13 +337,4 @@ object Head {
 
   private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
   private lazy val persistantCss: String = volatileCss
-}
-
-object charRange { 
-  def apply(str: String): String = {
-    val charsLen = str.length 
-    if      (charsLen < 45) "short"
-    else if (charsLen < 60) "medium"
-    else                     "long"
-  }
 }

@@ -16,19 +16,9 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                 .addClass('cta')
                 .each(function(element, index) {
                     // update text in cta
-                    var buttonText = element.getAttribute('data-js-title'),
-                        buttonLabelNode = element.querySelector('.cta__text');
-
+                    var buttonText = element.getAttribute('data-js-title');
                     buttonText = (buttonText) ? buttonText : 'Show more matches';
-
-                    // Supports the new CTA markup, whilst keeping compatibility
-                    // with the previous markup
-                    if (buttonLabelNode !== null) {
-                        bonzo(buttonLabelNode).text(buttonText);
-                    } else {
-                        bonzo(element).text(buttonText);
-                    }
-
+                    bonzo(element).text(buttonText);
                 });
 
             function clicked(_link) {
@@ -57,7 +47,7 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
                     }
                 });
             }
-
+            
             common.mediator.on('ui:more-matches:clicked', clicked);
 
             bean.add(nav, 'a', 'click', function(e) {

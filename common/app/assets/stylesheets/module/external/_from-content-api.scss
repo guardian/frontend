@@ -29,7 +29,7 @@
     blockquote,
     blockquote p {
         @extend %type-6;
-        margin: 0;
+        margin: 0 0 $baseline*2 0;
         padding: 0;
         color: #333333;
     }
@@ -48,7 +48,6 @@
 
 .from-content-api .block {
   overflow: hidden;
-  margin-bottom: 24px;
 }
 
 //Captions
@@ -56,8 +55,26 @@
 .caption,
 figcaption,
 .main-caption {
-    @extend %type-11;
-    color: $neutral4;
+    @extend %type-12;
+    color:#666666;
+}
+
+.main-caption {
+    padding: $baseline*3 $gutter;
+}
+
+.caption:before,
+figcaption:before {
+    @extend .i;
+    @extend .i-image;
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+}
+
+.svg .caption:before,
+.svg figcaption:before {
+    @extend .svg-i-image;
 }
 
 //Figures
