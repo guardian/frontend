@@ -1,6 +1,6 @@
-.discussion__container {
-    @include box-sizing(border-box);
-    padding: $gutter;
+.d-discussion {
+    font-size: 14px;
+    font-size: 1.4rem;
 }
 
 
@@ -21,6 +21,7 @@
     padding-left: 0;
 }
 .d-thread .d-thread {
+    margin-top: 1em;
     padding-left: 39px; /* aligns with top level comment's body */
     border-left: 12px solid #cfcfcd;
 }
@@ -28,6 +29,7 @@
     color: #333;
     font-family: sans-serif;
 }
+.d-thread .d-thread .d-comment,
 .d-comment + .d-comment {
     border-top: 1px solid #cfcfcd;
 }

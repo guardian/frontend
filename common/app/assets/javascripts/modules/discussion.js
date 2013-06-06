@@ -17,7 +17,7 @@ define([
         var context              = options.context,
             config               = options.config,
             discussionId         = options.id.replace('http://gu.com', ''),
-            containerSelector    = options.containerSelector || '.discussion__container',
+            containerSelector    = options.containerSelector || '.article__discussion',
             commentCountSelector = options.commentCountSelector || '.discussion__commentcount',
             commentsHaveLoaded   = false,
             self;
@@ -42,7 +42,7 @@ define([
 
                 // Setup events
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
-                    context.querySelector('.discussion__container').style.display = 'block';
+                    context.querySelector('.article__discussion').style.display = 'block';
                     context.querySelector('.article__container').style.display = 'none';
                     if (!commentsHaveLoaded) {
                         self.loadDiscussion();
@@ -50,7 +50,7 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    context.querySelector('.discussion__container').style.display = 'none';
+                    context.querySelector('.article__discussion').style.display = 'none';
                     context.querySelector('.article__container').style.display = 'block';
                 });
             },
@@ -85,7 +85,7 @@ define([
             },
 
             loadDiscussion: function() {
-                self.containerNode.innerHTML = '<div class="preload-msg">Loading comments...<div class="is-updating"></div></div>';
+                self.containerNode.innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
 
                 ajax({
                     url: self.discussionUrl,
