@@ -18,7 +18,8 @@ object CommentPageController extends Controller with Logging with ExecutionConte
           if (request.isJson)
             JsonComponent(
               "html" -> views.html.fragments.commentsBody(commentPage).toString,
-              "hasMore" ->  commentPage.hasMore
+              "hasMore" ->  commentPage.hasMore,
+              "currentPage" -> commentPage.currentPage
             )
           else
             Ok(views.html.comments(commentPage))

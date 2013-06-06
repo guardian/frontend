@@ -17,7 +17,8 @@ define([
         var context              = options.context,
             config               = options.config,
             discussionId         = options.id.replace('http://gu.com', ''),
-            containerSelector    = options.containerSelector || '.article__discussion',
+            discussionContainer  = options.discussionContainer || '.article__discussion',
+            articleContainer     = options.articleContainer || '.article__container',
             commentCountSelector = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded   = false,
             self;
@@ -29,10 +30,11 @@ define([
                 }
 
                 self = this;
-                self.discussionUrl      = '/discussion' + discussionId;
-                self.discussionCountUrl = 'http://discussion.guardianapis.com/discussion-api/discussion/'+discussionId+'/comments/count';
-                self.containerNode      = context.querySelector(containerSelector);
-                self.commentCountNode   = context.querySelector(commentCountSelector);
+                self.discussionUrl           = '/discussion' + discussionId;
+                self.discussionCountUrl      = 'http://discussion.guardianapis.com/discussion-api/discussion/'+discussionId+'/comments/count';
+                self.discussionContainerNode = context.querySelector(discussionContainer);
+                self.articleContainerNode    = context.querySelector(articleContainer);
+                self.commentCountNode        = context.querySelector(commentCountSelector);
 
                 self.getCommentCount(function(commentCount) {
                     if (commentCount > 0) {
@@ -45,10 +47,10 @@ define([
                 var bylineNode = bonzo(context.querySelector('.byline'));
                 var tabsHtml = '<div class="d-tabs">' +
                                  '<ol class="d-tabs__container unstyled">' +
-                                 '  <li class="d-tabs__byline d-tabs--active js-show-article">' +
+                                 '  <li class="d-tabs__byline d-tabs--active js-show-article" data-link-name="Article Tab">' +
                                       bylineNode.html() +
                                  '  </li>' +
-                                 '  <li class="d-tabs__commentcount js-show-discussion">' +
+                                 '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab">' +
                                  '    <a href="#" class="d-commentcount speech-bubble">'+ commentCount + '</a>' +
                                  '  </li>' +
                                  '</ol>' +
@@ -71,7 +73,7 @@ define([
             },
 
             loadDiscussion: function() {
-                self.containerNode.innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
+                self.discussionContainerNode.innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
 
                 ajax({
                     url: self.discussionUrl,
@@ -79,11 +81,11 @@ define([
                     method: 'get',
                     crossOrigin: true,
                     success: function(response) {
-                        self.containerNode.innerHTML = response.html;
+                        self.discussionContainerNode.innerHTML = response.html;
                         commentsHaveLoaded = true;
                     },
                     error: function() {
-                        self.containerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="js-show-discussion">Try again</button></div>';
+                        self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="js-show-discussion">Try again</button></div>';
                     }
                 });
             },
@@ -94,8 +96,8 @@ define([
                     e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
-                    context.querySelector('.article__discussion').style.display = 'block';
-                    context.querySelector('.article__container').style.display = 'none';
+                    self.discussionContainerNode.style.display = 'block';
+                    self.articleContainerNode.style.display = 'none';
 
                     if (!commentsHaveLoaded) {
                         // Don't request again if we've already done it
@@ -107,8 +109,8 @@ define([
                     e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
-                    context.querySelector('.article__discussion').style.display = 'none';
-                    context.querySelector('.article__container').style.display = 'block';
+                    self.discussionContainerNode.style.display = 'none';
+                    self.articleContainerNode.style.display = 'block';
                 });
             }
         };
