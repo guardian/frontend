@@ -61,7 +61,7 @@ define([
                                       bylineNode.html() +
                                  '  </li>' +
                                  '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
-                                 '    <a href="#" class="d-commentcount speech-bubble">'+ commentCount + '</a>' +
+                                 '    <button class="d-commentcount speech-bubble">'+ commentCount + '</button>' +
                                  '  </li>' +
                                  '</ol>' +
                                '</div>';
