@@ -30,6 +30,16 @@
     @extend %type-7;
     vertical-align: top;
     padding: 4px;
+
+    a {
+        pointer-events: none;
+        color: #666666;
+    }
+
+    &.d-tabs--active a {
+        pointer-events: auto;
+        color: $linkBlue;
+    }
 }
 .d-tabs__commentcount {
     padding: 14px 10px;

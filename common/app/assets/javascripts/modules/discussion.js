@@ -14,7 +14,8 @@ define([
 
     var Discussion = function(options) {
 
-        var initialVisibleReplies = 3,
+        var initialResponses      = 3,
+            responsesIncrement    = 25,
             context               = options.context,
             config                = options.config,
             discussionId          = options.id.replace('http://gu.com', ''),
@@ -95,22 +96,67 @@ define([
                     crossOrigin: true,
                     success: function(response) {
                         if (currentPage === 0) {
+                            self.showOnlyFirstReplies();
                             self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
+                            self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
+                            self.showMoreBtnNode.innerText = 'Show more comments';
                         }
 
-                        context.querySelector('.js-show-more-comments').style.display = (response.hasMore === true) ? 'block' : 'none';
+                        self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
-                            '<button class="cta js-show-discussion" data-is-ajax>Try again</button></div>';
+                                                                 '  <button class="cta js-show-discussion" data-link-name="Try loading comments again" data-is-ajax>Try again</button>' +
+                                                                 '</div>';
                     }
                 });
+            },
+
+            showOnlyFirstReplies: function(numToShow) {
+                numToShow = numToShow || initialResponses;
+
+                Array.prototype.forEach.call(context.querySelectorAll('.d-thread .d-thread'), function(threadNode) {
+                    var totalResponses = threadNode.dataset.responses;
+
+                    threadNode.dataset.visibleResponses = numToShow;
+                    bonzo(threadNode.querySelectorAll('.d-comment:nth-child(n+'+(numToShow+1)+')')).attr('hidden','hidden');
+
+                    var moreCommentsNum = totalResponses-threadNode.dataset.visibleResponses;
+                    if (moreCommentsNum > 0 && totalResponses < responsesIncrement) {
+                        // In this case, we just show the rest of the responses
+                        bonzo(threadNode).append('<button class="cta js-show-more-replies" data-link-name="Show more replies" data-is-ajax>'+
+                                                    self.buildShowMoreLabel(moreCommentsNum) +
+                                                 '</button>');
+                    }
+                });
+
+            },
+
+            showMoreReplies: function(el) {
+                var threadNode = el.parentNode,
+                    totalResponses = parseInt(threadNode.dataset.responses, 10),
+                    visibleResponses = parseInt(threadNode.dataset.visibleResponses, 10) + responsesIncrement,
+                    selector = '.d-comment:nth-child(n-'+(visibleResponses)+')';
+
+                bonzo(threadNode.querySelectorAll(selector)).removeAttr('hidden');
+                threadNode.dataset.visibleResponses = visibleResponses;
+
+                if (visibleResponses >= totalResponses) {
+                    bonzo(threadNode.querySelector('.js-show-more-replies')).remove();
+                } else {
+                    var buttonText = self.buildShowMoreLabel(totalResponses - visibleResponses);
+                    threadNode.querySelector('.js-show-more-replies').innerText = buttonText;
+                }
+            },
+
+            buildShowMoreLabel: function(num) {
+                return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
             bindEvents: function() {
@@ -129,7 +175,6 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
                     self.discussionContainerNode.style.display = 'none';
@@ -137,7 +182,12 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
+                    self.showMoreBtnNode.innerText = "Loading...";
                     self.loadDiscussion(currentPage + 1);
+                });
+
+                bean.on(context, 'click', '.js-show-more-replies', function(e) {
+                    self.showMoreReplies(e.currentTarget);
                 });
             }
         };
