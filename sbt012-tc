@@ -43,6 +43,8 @@ echo "setting ivy cache dir"
 IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
 echo $IVY_PARAMS
 
+DOMAIN=`hostname -d`
+
 if [ "$DOMAIN" != "gc2.dc1.gnm" ]; then
     # proxy that Play uses
     export proxy_host=devproxy.gul3.gnl
