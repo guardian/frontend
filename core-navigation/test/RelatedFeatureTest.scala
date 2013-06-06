@@ -44,10 +44,10 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val article = findFirst("li")
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("h3").getText.length should be > 0
-        article.findFirst(".trail-text").getText.length should be > 0
+        article.findFirst(".trail__text").getText.length should be > 0
         article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
 
-        find("li .trail-text") should have length 5
+        find("li .trail__text") should have length 5
       }
     }
 
