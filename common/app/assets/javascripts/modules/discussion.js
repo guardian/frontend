@@ -17,7 +17,7 @@ define([
         var context              = options.context,
             config               = options.config,
             discussionId         = options.id.replace('http://gu.com', ''),
-            containerSelector    = options.containerSelector || '.discussion__container',
+            containerSelector    = options.containerSelector || '.article__discussion',
             commentCountSelector = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded   = false,
             self;
@@ -94,7 +94,7 @@ define([
                     e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
-                    context.querySelector('.discussion__container').style.display = 'block';
+                    context.querySelector('.article__discussion').style.display = 'block';
                     context.querySelector('.article__container').style.display = 'none';
 
                     if (!commentsHaveLoaded) {
@@ -107,7 +107,7 @@ define([
                     e.preventDefault();
                     bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
                     bonzo(e.currentTarget).addClass('d-tabs--active');
-                    context.querySelector('.discussion__container').style.display = 'none';
+                    context.querySelector('.article__discussion').style.display = 'none';
                     context.querySelector('.article__container').style.display = 'block';
                 });
             }
