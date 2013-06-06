@@ -294,8 +294,12 @@
     }
 }
 
+.d-actions {
+  border-top: 2px solid #EDEDE7;
+}
 
-.d-actions .d-actions__link {
+.d-actions__link {
+  @extend %type-8;
   display: block;
-  margin: $baseline*2 0;
+  margin: $baseline*4 0;
 }
