@@ -37,20 +37,19 @@
     background-color: #fff;
 }
 
-
-
-
-
-
 .d-thread {
     list-style: none;
     margin-left: 0;
-    padding: 0 $gutter;
     margin-bottom: 1em;
 }
 .d-thread .d-thread {
     padding-left: 39px; /* aligns with top level comment's body */
     border-left: 12px solid $mushroom;
+
+    @media (min-width: 768px) {
+        padding-left: 55px;
+        border-left-width: 20px;
+    }
 }
 .d-comment {
     color: #333;
