@@ -4,6 +4,7 @@ import common._
 import play.api.libs.json.Json._
 import play.api.mvc.{ Controller, Action }
 import discussion.DiscussionApi
+import model.Cached
 
 object CommentPageController extends Controller with Logging with ExecutionContexts with DiscussionApi {
 
@@ -13,15 +14,15 @@ object CommentPageController extends Controller with Logging with ExecutionConte
 
     Async {
       promiseOfComments.map{ commentPage =>
-
-        renderFormat(
-          htmlResponse = () => views.html.comments(commentPage),
-          jsonResponse = () => JsonComponent((
-            "html" -> views.html.fragments.commentsBody(commentPage).toString,
-            "commentCount" -> "556"
-          ).toJson),
-          cacheTime = 60
-        )
+        Cached(60){
+          if (request.isJson)
+            JsonComponent(
+              "html" -> views.html.fragments.commentsBody(commentPage).toString,
+              "hasMore" ->  commentPage.hasMore
+            )
+          else
+            Ok(views.html.comments(commentPage))
+        }
       }
     }
   }

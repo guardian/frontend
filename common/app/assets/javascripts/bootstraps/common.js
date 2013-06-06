@@ -234,8 +234,21 @@ define([
         },
 
         initSwipe: function(config) {
-            if ((config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe-nav')) || userPrefs.isOn('swipe-nav')) {
+            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 swipeNav(config);
+            }
+            if (config.switches.swipeNav && detect.canSwipe()) {
+                bonzo(document.body).addClass('can-swipe');
+                common.mediator.on('module:clickstream:click', function(clickSpec){
+                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
+                        userPrefs.switchOn('swipe');
+                        window.location.reload();
+                    }
+                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
+                        userPrefs.switchOff('swipe');
+                        window.location.reload();
+                    }
+                });
             }
         }
     };

@@ -115,7 +115,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                             // listen to the clickstream, as happens after this module
                             common.mediator.on('module:clickstream:click', function(clickSpec) {
                                 var $cta = bonzo(clickSpec.target);
-                                if ($cta.hasClass('js-show-more')) {
+                                if ($cta.hasClass('trailblock-show-more')) {
                                     that.view.updateCta($cta);
                                 }
                             });

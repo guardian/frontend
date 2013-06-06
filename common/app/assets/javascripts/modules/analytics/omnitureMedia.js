@@ -33,10 +33,11 @@ define([
         this.play = function() {
             if (initialPlay.content === true && initialPlay.advert === true) {
                 bean.one(video, 'loadedmetadata', function() {
-                    if(video.advertWasRequested) {
-                        self.trackUserInteraction("Advert", "Video advert was requested", false);
-                    }
-                   self.trackUserInteraction("Play", "User clicked play", false);
+                   self.trackUserInteraction("Play", "User clicked play", false, function() {
+                       if(video.advertWasRequested) {
+                           self.trackUserInteraction("Advert", "Video advert was requested", false);
+                       }
+                   });
                 });
             }
 
@@ -72,7 +73,7 @@ define([
             s.Media.play(mediaName, this.getPosition());
         };
 
-        this.trackUserInteraction = function(type, name, debounce) {
+        this.trackUserInteraction = function(type, name, debounce, callback) {
            clearTimeout(deBounced);
            var log = function(){
                 var event;
@@ -91,7 +92,11 @@ define([
                 s.linkTrackVars = "prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events";
                 s.linkTrackEvents = event;
                 s.events = event;
-                s.tl(true, "o", name);
+                if(callback && typeof callback === "function") {
+                    s.tl(true, "o", name, null, callback);
+                } else {
+                    s.tl(true, "o", name);
+                }
             };
 
             if(debounce) {

@@ -71,7 +71,7 @@ define([
             },
 
             loadDiscussion: function() {
-                self.containerNode.innerHTML = '<div class="preload-msg">Loading comments...<div class="is-updating"></div></div>';
+                self.containerNode.innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
 
                 ajax({
                     url: self.discussionUrl,
