@@ -6,8 +6,6 @@ import play.api.libs.json.{JsValue, JsArray, Json}
 import model._
 import org.joda.time.DateTime
 
-
-
 // TODO
 case class CommentPage(
   title: String,
@@ -17,9 +15,9 @@ case class CommentPage(
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
-  def commentsFor(id: String) = {
+  def commentsFor(id: String, page: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=30"
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page"
 
     WS.url(apiUrl).withTimeout(2000).get().map{ response =>
 
@@ -42,7 +40,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
         case other =>
           log.error(s"Error loading comments id: $id status: $other message: ${response.statusText}")
-          throw new RuntimeException("Error from content API")
+          throw new RuntimeException("Error from discussion API")
       }
 
     }
