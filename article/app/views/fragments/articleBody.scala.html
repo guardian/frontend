@@ -19,8 +19,6 @@
 
     <div class="after-header"></div>
 
-
-
      @if(!article.isLive  && !article.hasVideoAtTop) {
          @article.mainPicture.map{ mainPicture =>
              @article.mainPicture(width=220).map{ smallCrop =>
@@ -49,12 +47,18 @@
         </div>
     </div>
 
-    <div class="article__discussion"></div>
+    @if(article.isCommentable) {
+        <div class="article__discussion"></div>
+    }
 
 
 </article>
 
 @fragments.social(article)
+
+@if(article.isCommentable) {
+    <div class="article__discussion"></div>
+}
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

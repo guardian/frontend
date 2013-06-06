@@ -23,9 +23,13 @@ define([
             articleContainer      = options.articleContainer || '.article__container',
             commentCountSelector  = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded    = false,
-            showMoreBtnHtml       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>',
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
+            actionsTemplate       = '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
+                '<div class="d-actions">' +
+                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
+                    'Want to comment? Visit the desktop site</a>' +
+                '<button class="top js-show-article">Back to article</button></div>',
             self;
 
         return {
@@ -44,6 +48,7 @@ define([
                 self.getCommentCount(function(commentCount) {
                     if (commentCount > 0) {
                         self.upgradeByline(commentCount);
+                        self.bindEvents();
                     }
                 });
             },
@@ -62,7 +67,6 @@ define([
                                '</div>';
 
                 bylineNode.replaceWith(tabsHtml);
-                self.bindEvents();
             },
 
             getCommentCount: function(callback) {
@@ -92,9 +96,9 @@ define([
                     crossOrigin: true,
                     success: function(response) {
                         if (currentPage === 0) {
-                            self.discussionContainerNode.innerHTML = response.html + showMoreBtnHtml;
                             self.showOnlyFirstReplies();
                             self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
+                            self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);

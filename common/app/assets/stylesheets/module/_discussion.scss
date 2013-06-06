@@ -1,3 +1,6 @@
+/* ==========================================================================
+   Discussion
+   ========================================================================== */
 .d-discussion {
     font-size: 14px;
     font-size: 1.4rem;
@@ -5,7 +8,8 @@
 }
 
 
-/* Tabs */
+/* Tabs
+ ========================================================================== */
 .d-tabs {
     margin: 0 $gutter $baseline*3 $gutter;
 }
@@ -155,7 +159,8 @@
 }
 
 
-
+/* Header
+ ========================================================================== */
 /**
  * Simulate Media object on Comments header
  * To have an image or a media on the left,
@@ -229,7 +234,8 @@
 }
 
 
-/* Badges */
+/* Badges
+ ========================================================================== */
 .d-badge:after {
     display: inline-block;
     position: relative;
@@ -286,4 +292,14 @@
         border-style: solid;
         border-color: transparent #F5644F;
     }
+}
+
+.d-actions {
+  border-top: 2px solid #EDEDE7;
+}
+
+.d-actions__link {
+  @extend %type-8;
+  display: block;
+  margin: $baseline*4 0;
 }

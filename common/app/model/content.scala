@@ -50,6 +50,7 @@ class Content(
   override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
+  lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
@@ -72,7 +73,7 @@ class Content(
     ("tones", tones.map(_.name).mkString(",")),
     ("series", series.map { _.name }.mkString(",")),
     ("blogs", blogs.map { _.name }.mkString(",")),
-    ("commentable", fields.get("commentable").map(_ == "true").getOrElse(false)),
+    ("commentable", isCommentable),
     ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
