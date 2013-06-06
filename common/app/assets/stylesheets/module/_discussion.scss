@@ -7,19 +7,45 @@
 
 /* Tabs */
 .d-tabs {
-    overflow: hidden;
+    margin: 0 $gutter $baseline*3 $gutter;
+}
+.d-tabs__container {
+    display: table;
+    background-color: $mushroom;
+    width: 100%;
 }
 .d-tabs__byline,
 .d-tabs__commentcount {
-    float: left;
+    @include box-sizing(border-box);
+    border-top: 2px solid $mushroom;
+    border-bottom: 2px solid $darkMushroom;
+    display: table-cell;
+    cursor: pointer;
 }
+.d-tabs__byline {
+    @extend %type-7;
+    vertical-align: top;
+    padding: 4px;
+}
+.d-tabs__commentcount {
+    padding: 14px 10px;
+    width: 60px;
+    text-align: center;
+}
+.d-tabs--active {
+    border-bottom: 0;
+    background-color: #fff;
+}
+
+
+
 
 
 
 .d-thread {
     list-style: none;
     margin-left: 0;
-    padding-left: 0;
+    padding: 0 $gutter;
     margin-bottom: 1em;
 }
 .d-thread .d-thread {
@@ -248,7 +274,9 @@
     width: 1px;
 }
 
-.speech-bubble {
+.speech-bubble,
+.speech-bubble:link,
+.speech-bubble:visited {
     position: relative;
     display: inline-block;
     background: #F5644F;
