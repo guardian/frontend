@@ -23,6 +23,20 @@ object Profile{
   }
 }
 
+case class ResponseTo(
+  displayName: String,
+  commentId: String
+)
+
+object ResponseTo {
+  def apply(json: JsValue): Option[ResponseTo] = {
+    ResponseTo(
+      displayName = (responseTo \ "displayName"),
+      commentId = (responseTo \ "commentId")
+    )
+  }
+}
+
 case class Comment(
   id: Int,
   body: String,
@@ -30,7 +44,8 @@ case class Comment(
   profile: Profile,
   date: DateTime,
   isHighlighted: Boolean,
-  isBlocked: Boolean
+  isBlocked: Boolean,
+  responseTo: Option[ResponseTo] = None
 )
 
 object Comment{
@@ -44,6 +59,7 @@ object Comment{
     profile = Profile(json),
     date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
     isHighlighted = (json \ "isHighlighted").as[Boolean],
-    isBlocked = (json \ "status").as[String].contains("blocked")
+    isBlocked = (json \ "status").as[String].contains("blocked"),
+    responseTo = ResponseTo(json)
   )
 }
