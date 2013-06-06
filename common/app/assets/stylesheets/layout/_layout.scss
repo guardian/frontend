@@ -70,14 +70,14 @@
     top: 0;
     height: 100%;
     width: 100%; 
-    @include transform(translateZ(0px));
+    //@include transform(translateZ(0px));
 }
 
 #preload-0,
 #preload-1,
 #preload-2 {
     @include transform(translateZ(0px));
-    position: absolute;
+    //position: absolute;
     top: 0;
     height: 100%;
     width: 100%;

@@ -81,7 +81,11 @@ define([
 
         var css = document.createElement("style");
         css.type = "text/css";
-        css.innerHTML = "#preload-0{left: -100%} #preload-1{left:0%} #preload-2{left: 100%}";
+        /*jshint multistr: true */
+        css.innerHTML = "\
+            #preload-0 {left: -100%; position: absolute} \
+            #preload-1 {left:    0%; position: absolute} \
+            #preload-2 {left:  100%; position: absolute}";
         document.body.appendChild(css);
 
         bonzo(page0).append(head.cloneNode(true));

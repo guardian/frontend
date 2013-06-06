@@ -3,16 +3,16 @@
    ========================================================================== */
 
 .nav-popup {
-    position: absolute;
+    //position: absolute;
     clear: both;
     z-index: 100;
     padding: $baseline*2 0;
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $blue;
-    @include transform(translateZ(0));
+    //@include transform(translateZ(0));
     background: #ffffff;
-    width: 100%;
+    //width: 100%;
 
     @media only screen and (min-width: $tablet) {
         top: 118px;

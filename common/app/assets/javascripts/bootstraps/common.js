@@ -77,6 +77,7 @@ define([
 
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
+                topStories = new TopStories(),
                 sections = new Sections(),
                 search = new Search(config),
                 aus = new Australia(config), // TODO temporary till we have single domain editions
@@ -84,16 +85,10 @@ define([
                 header = document.querySelector('body');
 
             navControl.init(header);
+            topStories.load(config, header);
             sections.init(header);
             search.init(header);
             aus.init(header);
-        },
-
-        transcludeTopStories: function () {
-            var topStories = new TopStories();
-            common.mediator.on('page:common:ready', function(config, context) {
-                topStories.load(config, context);
-            });
         },
 
         transcludeRelated: function () {
@@ -276,7 +271,6 @@ define([
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.transcludeTopStories();
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initSwipe(config);
