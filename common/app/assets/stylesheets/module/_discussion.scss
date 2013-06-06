@@ -238,6 +238,13 @@
     font-size: .85714285714em;
 }
 
+.d-comment__action--report {
+    &:link,
+    &:visited {
+        color: #767676;
+    }
+}
+
 
 /* Badges */
 .d-badge:after {
@@ -295,12 +302,5 @@
         border-width: 0 0 8px 8px;
         border-style: solid;
         border-color: transparent #F5644F;
-    }
-}
-
-.d-comment__action--report {
-    &:link,
-    &:visited {
-        color: #767676;
     }
 }
