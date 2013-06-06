@@ -21,6 +21,10 @@ define([
             articleContainer     = options.articleContainer || '.article__container',
             commentCountSelector = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded   = false,
+            actionsTemplate      = '<div class="d-actions">' +
+                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
+                'Want to comment? Visit the desktop site</a>' +
+                '<button class="top js-show-article">Back to article</button></div>',
             self;
 
         return {
@@ -39,6 +43,7 @@ define([
                 self.getCommentCount(function(commentCount) {
                     if (commentCount > 0) {
                         self.upgradeByline(commentCount);
+                        self.bindEvents();
                     }
                 });
             },
@@ -57,7 +62,6 @@ define([
                                '</div>';
 
                 bylineNode.replaceWith(tabsHtml);
-                self.bindEvents();
             },
 
             getCommentCount: function(callback) {
@@ -81,7 +85,7 @@ define([
                     method: 'get',
                     crossOrigin: true,
                     success: function(response) {
-                        self.discussionContainerNode.innerHTML = response.html;
+                        self.discussionContainerNode.innerHTML = response.html + actionsTemplate;
                         commentsHaveLoaded = true;
                     },
                     error: function() {
