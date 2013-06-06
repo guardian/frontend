@@ -16,10 +16,7 @@ object CommentPageController extends Controller with Logging with ExecutionConte
 
         renderFormat(
           htmlResponse = () => views.html.comments(commentPage),
-          jsonResponse = () => JsonComponent((
-            "html" -> views.html.fragments.commentsBody(commentPage).toString,
-            "commentCount" -> "556"
-          ).toJson),
+          jsonResponse = () => views.html.fragments.commentsBody(commentPage),
           cacheTime = 60
         )
       }
