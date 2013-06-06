@@ -31,7 +31,14 @@
         </div>
         <div class="d-comment__main">
             <div class="d-comment__body">
-                @if(comment.isBlocked){<p>@Html(comment.body)</p>}else{@Html(comment.body)}
+                @if(comment.isBlocked){
+                    This comment was removed by a moderator because it didn't abide by our <a href="http://www.guardian.co.uk/community-standards" data-link-name="community standards">community standards</a>.
+                    Replies may also be deleted. For more detail see <a href="http://www.guardian.co.uk/community-faqs" data-link-name="FAQs">our FAQs</a>.
+                }else{
+                    @withJsoup(BulletCleaner(comment.body))(
+                        InBodyLinkCleaner("in body link")
+                    )
+                }
             </div>
             @if(!comment.isBlocked){
                 <div class="d-comment__actions">

@@ -1,10 +1,12 @@
 define([
+    'common',
     'bonzo',
     'qwery',
     'bean',
     'ajax',
     'modules/tabs'
 ], function (
+    common,
     bonzo,
     qwery,
     bean,
@@ -110,6 +112,7 @@ define([
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
+                        common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
