@@ -14,16 +14,20 @@ define([
 
     var Discussion = function(options) {
 
-        var context              = options.context,
-            config               = options.config,
-            discussionId         = options.id.replace('http://gu.com', ''),
-            discussionContainer  = options.discussionContainer || '.article__discussion',
-            articleContainer     = options.articleContainer || '.article__container',
-            commentCountSelector = options.commentCountSelector || '.d-commentcount',
-            commentsHaveLoaded   = false,
+        var initialVisibleReplies = 3,
+            context               = options.context,
+            config                = options.config,
+            discussionId          = options.id.replace('http://gu.com', ''),
+            discussionContainer   = options.discussionContainer || '.article__discussion',
+            articleContainer      = options.articleContainer || '.article__container',
+            commentCountSelector  = options.commentCountSelector || '.d-commentcount',
+            commentsHaveLoaded    = false,
+            loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
+            currentPage           = 0,
             actionsTemplate      = '<div class="d-actions">' +
+                '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
-                'Want to comment? Visit the desktop site</a>' +
+                    'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-show-article">Back to article</button></div>',
             self;
 
@@ -76,20 +80,34 @@ define([
                 });
             },
 
-            loadDiscussion: function() {
-                self.discussionContainerNode.innerHTML = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>';
+            loadDiscussion: function(page) {
+                page = page || 1;
+
+                if (currentPage === 0) {
+                    // first load
+                    self.discussionContainerNode.innerHTML = loadingCommentsHtml;
+                }
 
                 ajax({
-                    url: self.discussionUrl,
+                    url: self.discussionUrl + '?page=' + page,
                     type: 'json',
                     method: 'get',
                     crossOrigin: true,
                     success: function(response) {
-                        self.discussionContainerNode.innerHTML = response.html + actionsTemplate;
+                        if (currentPage === 0) {
+                            self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
+                        } else {
+                            var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
+                            bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
+                        }
+
+                        context.querySelector('.js-show-more-comments').style.display = (response.hasMore === true) ? 'block' : 'none';
+
                         commentsHaveLoaded = true;
+                        currentPage = response.currentPage;
                     },
                     error: function() {
-                        self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="js-show-discussion">Try again</button></div>';
+                        self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments <button class="cta js-show-discussion">Try again</button></div>';
                     }
                 });
             },
@@ -115,6 +133,10 @@ define([
                     bonzo(e.currentTarget).addClass('d-tabs--active');
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
+                });
+
+                bean.on(context, 'click', '.js-show-more-comments', function(e) {
+                    self.loadDiscussion(currentPage + 1);
                 });
             }
         };
