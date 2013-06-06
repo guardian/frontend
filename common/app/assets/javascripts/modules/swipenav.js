@@ -562,7 +562,7 @@ define([
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
             if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
-                clickSelector = 'a:not([data-is-ajax])';
+                clickSelector = "a:not([data-is-ajax]):not(.control)";
             }
 
             // Set up the DOM structure
