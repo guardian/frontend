@@ -107,7 +107,7 @@ define([
                             self.showMoreBtnNode.innerText = 'Show more comments';
                         }
 
-                        //self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
+                        self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
