@@ -256,3 +256,10 @@
         border-color: transparent #F5644F;
     }
 }
+
+.d-comment__action--report {
+    &:link,
+    &:visited {
+        color: #767676;
+    }
+}
