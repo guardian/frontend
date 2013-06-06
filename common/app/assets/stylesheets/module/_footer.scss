@@ -51,26 +51,26 @@
     background-color: $blue;
 }
 
-.swipe-on-off {
+.swipe-switches {
     display: none; 
 }
 
-.swipe-on-off button {
+.can-swipe .swipe-switches {
+    display: block;
+}
+
+.swipe-switches__button {
     border: 0;
     background: inherit;
     padding: 0;
     color: $blue;
 }
 
-.can-swipe .swipe-on-off {
-    display: block;
-}
-
-.has-swipe .swipe-off {
+.has-swipe .swipe-switches__button--off {
     display: inline-block;
 }
 
-.swipe-off,
-.has-swipe .swipe-on { 
+.swipe-switches__button--off,
+.has-swipe .swipe-switches__button--on { 
     display: none;
 }
