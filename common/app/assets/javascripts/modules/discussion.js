@@ -1,10 +1,12 @@
 define([
+    'common',
     'bonzo',
     'qwery',
     'bean',
     'ajax',
     'modules/tabs'
 ], function (
+    common,
     bonzo,
     qwery,
     bean,
@@ -105,10 +107,11 @@ define([
                             self.showMoreBtnNode.innerText = 'Show more comments';
                         }
 
-                        self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
+                        //self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
+                        common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
