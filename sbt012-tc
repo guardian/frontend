@@ -43,6 +43,8 @@ echo "setting ivy cache dir"
 IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
 echo $IVY_PARAMS
 
+DOMAIN=`hostname -d`
+
 if [ "$DOMAIN" != "gc2.dc1.gnm" ]; then
     # proxy that Play uses
     export proxy_host=devproxy.gul3.gnl
@@ -61,7 +63,6 @@ java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   $PROXY_CONF \
-  -Dhttp.proxyPort=3128 \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
