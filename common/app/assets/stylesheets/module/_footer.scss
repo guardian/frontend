@@ -12,12 +12,17 @@
         width: 48%;
         margin: 0;
 
-        li a {
+        li {
             @extend %type-10;
-            color: $blue;
             margin-left: 0;
             border-top-color: #C0C9CE;
         }
+
+        li,
+        li a {
+            color: $blue;
+        }
+
     }
     p {
         @include box-sizing(border-box);
@@ -44,4 +49,28 @@
     float: right;
     width: 100%;
     background-color: $blue;
+}
+
+.swipe-switches {
+    display: none; 
+}
+
+.can-swipe .swipe-switches {
+    display: block;
+}
+
+.swipe-switches__button {
+    border: 0;
+    background: inherit;
+    padding: 0;
+    color: $blue;
+}
+
+.has-swipe .swipe-switches__button--off {
+    display: inline-block;
+}
+
+.swipe-switches__button--off,
+.has-swipe .swipe-switches__button--on { 
+    display: none;
 }

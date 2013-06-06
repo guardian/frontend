@@ -69,3 +69,7 @@ video {
     height: auto;
     @include user-select;
 }
+
+.article__discussion {
+    margin: 0 $gutter;
+}
