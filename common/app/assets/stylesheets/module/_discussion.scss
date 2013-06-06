@@ -19,11 +19,11 @@
     list-style: none;
     margin-left: 0;
     padding-left: 0;
+    margin-bottom: 1em;
 }
 .d-thread .d-thread {
-    margin-top: 1em;
     padding-left: 39px; /* aligns with top level comment's body */
-    border-left: 12px solid #cfcfcd;
+    border-left: 12px solid $mushroom;
 }
 .d-comment {
     color: #333;
@@ -31,13 +31,13 @@
 }
 .d-thread .d-thread .d-comment,
 .d-comment + .d-comment {
-    border-top: 1px solid #cfcfcd;
+    border-top: 1px solid #EDEDE7;
 }
 .d-comment--blocked > .d-comment__inner {
     opacity: .5;
 }
 .d-comment__inner {
-    padding-top: 4px;
+    padding-top: 12px;
 }
 .d-comment:target > .d-comment__inner {
     background: rgba(149, 177, 202, .3);
@@ -105,17 +105,18 @@
 }
 
 .d-comment__main {
-    padding-bottom: 16px;
+    padding-bottom: 12px;
+    padding-top: 12px;
 }
 
 .d-comment__body {
     word-break: break-all;
     word-break: break-word;
     word-wrap: break-word;
-    padding-top: 4px;
+    line-height: 1.4;
 
     p {
-        margin-top: 0;
+        margin-bottom: 1em;
     }
     blockquote {
         margin-left: 0;
@@ -129,6 +130,7 @@
             color: #767676;
             font-family: $sans-serif;
             font-size: 1em;
+            line-height: 1.4;
         }
     }
 }
