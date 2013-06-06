@@ -119,6 +119,9 @@ define([
                 s.prop51  = testData;
                 s.eVar51  = testData;
                 s.events = s.apl(s.events,'event58',',');
+            } else if (detect.canSwipe()) {
+                s.prop51  = 'can swipe';
+                s.eVar51  = 'can swipe';
             }
 
             s.prop56    = 'Javascript';
