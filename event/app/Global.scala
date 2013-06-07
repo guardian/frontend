@@ -1,4 +1,5 @@
 import conf.RequestMeasurementMetrics
+import dev.DevParametersLifecycle
 import model.StoryList
 import play.api.GlobalSettings
 import play.api.mvc.WithFilters
@@ -16,4 +17,4 @@ trait StoryLifecycle extends GlobalSettings {
   }
 }
 
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with StoryLifecycle
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with StoryLifecycle with DevParametersLifecycle
