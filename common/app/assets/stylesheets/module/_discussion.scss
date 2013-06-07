@@ -73,10 +73,14 @@
     color: #333;
     font-family: sans-serif;
 }
-.d-thread .d-thread .d-comment,
-.d-comment + .d-comment {
+.d-comment + .d-comment,
+.d-thread .d-thread .d-comment {
     border-top: 1px solid #EDEDE7;
 }
+.d-comment--has-replies + .d-comment {
+    border-top: 2px solid $darkMushroom;
+}
+
 .d-comment--blocked > .d-comment__inner {
     opacity: .5;
 }
