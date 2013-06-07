@@ -4,14 +4,14 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/tabs'
+    'modules/userPrefs'
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
-    Tabs
+    userPrefs
     ) {
 
     var Discussion = function(options) {
@@ -36,23 +36,23 @@ define([
 
         return {
             init: function() {
-                if (config.switches.discussion === false || config.page.commentable === false) {
-                    return false;
+                if (config.page.commentable === true &&
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
+
+                        self = this;
+                        self.discussionUrl           = '/discussion' + discussionId;
+                        self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
+                        self.discussionContainerNode = context.querySelector(discussionContainer);
+                        self.articleContainerNode    = context.querySelector(articleContainer);
+                        self.commentCountNode        = context.querySelector(commentCountSelector);
+
+                        self.getCommentCount(function(commentCount) {
+                            if (commentCount > 0) {
+                                self.upgradeByline(commentCount);
+                                self.bindEvents();
+                            }
+                        });
                 }
-
-                self = this;
-                self.discussionUrl           = '/discussion' + discussionId;
-                self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
-                self.discussionContainerNode = context.querySelector(discussionContainer);
-                self.articleContainerNode    = context.querySelector(articleContainer);
-                self.commentCountNode        = context.querySelector(commentCountSelector);
-
-                self.getCommentCount(function(commentCount) {
-                    if (commentCount > 0) {
-                        self.upgradeByline(commentCount);
-                        self.bindEvents();
-                    }
-                });
 
             },
 
