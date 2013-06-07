@@ -89,6 +89,11 @@ define([
             sections.init(header);
             search.init(header);
             aus.init(header);
+
+            common.mediator.on('module:swipenav:pane:loaded', function(){
+                navControl.reset();
+            });
+
         },
 
         transcludeRelated: function () {

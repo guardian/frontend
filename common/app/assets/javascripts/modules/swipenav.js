@@ -1,3 +1,5 @@
+/*jshint multistr: true */
+
 define([
     'common',
     'modules/userPrefs',
@@ -81,7 +83,6 @@ define([
 
         var css = document.createElement("style");
         css.type = "text/css";
-        /*jshint multistr: true */
         css.innerHTML = "\
             #preload-0 {left: -100%; position: absolute} \
             #preload-1 {left:    0%; position: absolute} \

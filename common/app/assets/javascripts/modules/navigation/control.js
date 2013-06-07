@@ -3,34 +3,27 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
     var Control = function () {
 
         var self = this,
-            contexts = {};
+            controls;
 
         this.init = function(context) {
-            var id = context.id,
-                controls;
-
-            if(id && !contexts[id]){
-                controls = context.querySelectorAll('.control');
-                contexts[id] = controls;
-                Array.prototype.forEach.call(controls, function(control) {
-                    var popup = self.getPopup(control, context);
-
-                    if(popup){
-                        control.popup = popup;
-                        bean.add(control, 'click touchstart', function (e) {
-                            e.preventDefault();
-                            self.toggle(control, controls);
-                            common.mediator.emit('modules:control:change');
-                        });
-                    }
-                });
-            }
-
-            for (var c in contexts) {
-                if (c !== id) {
-                    Array.prototype.forEach.call(contexts[c], self.close);
+            controls = context.querySelectorAll('.control');
+            Array.prototype.forEach.call(controls, function(control) {
+                var popup = self.getPopup(control, context);
+                if(popup){
+                    control.popup = popup;
+                    bean.add(control, 'click touchstart', function (e) {
+                        e.preventDefault();
+                        self.toggle(control, controls);
+                        common.mediator.emit('modules:control:change');
+                    });
                 }
-            }
+            });
+
+            this.reset();
+        };
+
+        this.reset = function() {
+            Array.prototype.forEach.call(controls, self.close);
         };
     };
 
