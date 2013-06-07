@@ -19,11 +19,11 @@
         }
     }
 
-    <h@headingLevel class="media-body trail-headline type-5">
+    <h@headingLevel class="media-body trail__headline type-5">
         <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @RemoveOuterParaHtml(trail.headline)
         </a>
     </h@headingLevel>
 
-    @trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
+    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
 </div>

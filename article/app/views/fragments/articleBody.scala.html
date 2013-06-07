@@ -19,36 +19,48 @@
 
     <div class="after-header"></div>
 
-    @if(!article.isLive  && !article.hasVideoAtTop) {
-        @article.mainPicture.map{ mainPicture =>
-            @article.mainPicture(width=220).map{ smallCrop =>
-                @fragments.img(mainPicture, smallCrop)
-            }
-        }
-    }
+     @if(!article.isLive  && !article.hasVideoAtTop) {
+         @article.mainPicture.map{ mainPicture =>
+             @article.mainPicture(width=220).map{ smallCrop =>
+                 @fragments.img(mainPicture, smallCrop)
+             }
+         }
+     }
 
-    @fragments.byline(article.byline, article)
+     @fragments.byline(article.byline, article)
 
-    @if(article.isLive) {
-        @fragments.autoUpdate()
-    }
+     <div class="article__container">
+         @if(article.isLive) {
+             @fragments.autoUpdate()
+         }
 
-    <div class="article-body from-content-api @if(article.isLive) {live-blog}"
-        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-        @* <!-- ordering of cleaners is important --> *@
-        @withJsoup(BulletCleaner(article.body))(
-            PictureCleaner(article),
-            InBodyLinkCleaner("in body link"),
-            BlockNumberCleaner,
-            TweetCleaner,
-            WitnessCleaner,
-            VideoPosterCleaner(article.videoAssets)
-        )
+         <div class="article-body from-content-api @if(article.isLive) {live-blog}"
+         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+             @withJsoup(BulletCleaner(article.body))(
+                 PictureCleaner(article),
+                 InBodyLinkCleaner("in body link"),
+                 BlockNumberCleaner,
+                 TweetCleaner,
+                 WitnessCleaner,
+                 VideoPosterCleaner(article.videoAssets)
+             )
+        </div>
     </div>
-    
+
+    @if(article.isCommentable) {
+        <div class="article__discussion"></div>
+    }
+
 </article>
 
 @fragments.social(article)
+
+@if(article.isCommentable) {
+    <div class="article__discussion"></div>
+    <a class="d-show-cta js-show-discussion js-top" href="/discussion/@article.shortUrlId">
+        View all comments <span class="d-commentcount speech-bubble"></span>
+    </a>
+}
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

@@ -2,7 +2,7 @@
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }"
+        <li class="trail @if(info.rowNum == 1 && trail.mainPicture(width=220)) { trail--has-image }"
             data-link-name="trail@if(trail.tags.filter(_.id == "world/bangladesh").nonEmpty){ | front-story}"
             data-trail-tags="@trail.tags.map(_.id).mkString(",")">
             @if(info.rowNum == 1) {
