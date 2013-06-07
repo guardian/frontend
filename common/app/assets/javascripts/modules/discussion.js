@@ -219,7 +219,7 @@ define([
                         window.scrollTo(0, topPos);
                     }
 
-                    location.hash = '';
+                    location.hash = 'story';
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
