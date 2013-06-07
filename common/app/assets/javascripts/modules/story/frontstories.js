@@ -47,8 +47,8 @@ define([
                             'href', common.$g('a', firstStory).attr('href')
                         );
                         // update text
-                        common.$g('.trail-text', trail).text(
-                            common.$g('.trail-text', firstStory).text()
+                        common.$g('.trail__text', trail).text(
+                            common.$g('.trail__text', firstStory).text()
                         );
                         // update image
                         var $img = common.$g('img', firstStory);
@@ -62,7 +62,7 @@ define([
                         );
                         // add story title
                         common.$g('h2', trail).before(
-                            common.$g('.trail-story-title', firstStory)
+                            common.$g('.trail__tsory-title', firstStory)
                         );
                     } else {
                         // otherwise a straight replace
