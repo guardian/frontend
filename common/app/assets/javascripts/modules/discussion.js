@@ -101,12 +101,13 @@ define([
                         if (currentPage === 0) {
                             self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
                             self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
-                            self.showOnlyFirstReplies();
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
                             self.showMoreBtnNode.innerText = 'Show more comments';
                         }
+
+                        self.showOnlyFirstReplies();
 
                         // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
@@ -127,8 +128,15 @@ define([
                 numToShow = numToShow || initialResponses;
 
                 Array.prototype.forEach.call(context.querySelectorAll('.d-thread .d-thread'), function(threadNode) {
+                    if (threadNode._processed === true) {
+                        // Don't process this thread more than once
+                        // This happens when another page is loaded
+                        return;
+                    }
+
                     var totalResponses = threadNode.dataset.responses;
 
+                    threadNode._processed = true;
                     threadNode.dataset.visibleResponses = numToShow;
                     bonzo(threadNode.querySelectorAll('.d-comment:nth-child(n+'+(numToShow+1)+')')).attr('hidden','hidden');
 
