@@ -62,7 +62,7 @@ define([
                         );
                         // add story title
                         common.$g('h2', trail).before(
-                            common.$g('.trail__story-title', firstStory)
+                            common.$g('.trail__tsory-title', firstStory)
                         );
                     } else {
                         // otherwise a straight replace

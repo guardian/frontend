@@ -20,10 +20,12 @@
                 </div>
 
                 <div>
-                    <!-- <a href="#" class="d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span> -->
+                    @*********************
+                    Responding to...
+                    <a href="#" class="d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span>
+                    *********************@
                     <time class="d-comment__meta-item js-timestamp"
-                    datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
-
+                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
                         @Format(comment.date, "d MMM y")
                     </time>
                 </div>
