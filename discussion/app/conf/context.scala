@@ -13,8 +13,15 @@ object Switches {
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
+object DiscussionHttpTimingMetric extends TimingMetric(
+  "performance",
+  "discussion-api-calls",
+  "Discussion API calls",
+  "outgoing requests to discussion api"
+) with TimingMetricLogging
+
 object Metrics {
-  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all
+  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all :+ DiscussionHttpTimingMetric
 }
 
 object Management extends Management {

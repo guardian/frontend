@@ -2,9 +2,10 @@ package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
 import play.api.libs.ws.WS
-import play.api.libs.json.{JsValue, JsArray, Json}
+import play.api.libs.json.{JsArray, Json}
 import model._
-import org.joda.time.DateTime
+import System.currentTimeMillis
+import conf.DiscussionHttpTimingMetric
 
 // TODO
 case class CommentPage(
@@ -24,7 +25,11 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page&orderBy=oldest&showSwitches=true"
 
+    val start = currentTimeMillis
+
     WS.url(apiUrl).withTimeout(2000).get().map{ response =>
+
+      DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
       response.status match {
 
@@ -50,11 +55,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           log.error(s"Error loading comments id: $id status: $other message: ${response.statusText}")
           throw new RuntimeException("Error from discussion API")
       }
-
     }
-
   }
-
 }
 
 
