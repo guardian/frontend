@@ -42,7 +42,7 @@ define([
 
                 self = this;
                 self.discussionUrl           = '/discussion' + discussionId;
-                self.discussionCountUrl      = 'http://discussion.guardianapis.com/discussion-api/discussion/'+discussionId+'/comments/count';
+                self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
                 self.discussionContainerNode = context.querySelector(discussionContainer);
                 self.articleContainerNode    = context.querySelector(articleContainer);
                 self.commentCountNode        = context.querySelector(commentCountSelector);
