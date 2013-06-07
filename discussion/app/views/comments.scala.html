@@ -13,4 +13,8 @@
 
     @fragments.commentsBody(page)
 
+    @if(page.currentPage + 1 <= page.pages){
+      <a href="/@page.id?page=@(page.currentPage + 1)">Next page</a>
+    }
+
 }

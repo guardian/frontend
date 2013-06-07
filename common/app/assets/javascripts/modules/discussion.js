@@ -4,14 +4,14 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/tabs'
+    'modules/userPrefs'
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
-    Tabs
+    userPrefs
     ) {
 
     var Discussion = function(options) {
@@ -36,33 +36,34 @@ define([
 
         return {
             init: function() {
-                if (config.switches.discussion === false || config.page.commentable === false) {
-                    return false;
+                if (config.page.commentable === true &&
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
+
+                        self = this;
+                        self.discussionUrl           = '/discussion' + discussionId;
+                        self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
+                        self.discussionContainerNode = context.querySelector(discussionContainer);
+                        self.articleContainerNode    = context.querySelector(articleContainer);
+                        self.commentCountNode        = context.querySelector(commentCountSelector);
+
+                        self.getCommentCount(function(commentCount) {
+                            if (commentCount > 0) {
+                                self.upgradeByline(commentCount);
+                                self.bindEvents();
+                            }
+                        });
                 }
 
-                self = this;
-                self.discussionUrl           = '/discussion' + discussionId;
-                self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
-                self.discussionContainerNode = context.querySelector(discussionContainer);
-                self.articleContainerNode    = context.querySelector(articleContainer);
-                self.commentCountNode        = context.querySelector(commentCountSelector);
-
-                self.getCommentCount(function(commentCount) {
-                    if (commentCount > 0) {
-                        self.upgradeByline(commentCount);
-                        self.bindEvents();
-                    }
-                });
             },
 
             upgradeByline: function(commentCount) {
                 var bylineNode = bonzo(context.querySelector('.byline'));
                 var tabsHtml = '<div class="d-tabs">' +
                                  '<ol class="d-tabs__container unstyled">' +
-                                 '  <li class="d-tabs__byline is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
+                                 '  <li class="d-tabs__item d-tabs__item--byline d-tabs__item--is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
                                       bylineNode.html() +
                                  '  </li>' +
-                                 '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
+                                 '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
                                  '    <button class="d-commentcount speech-bubble">'+ commentCount + '</button>' +
                                  '  </li>' +
                                  '</ol>' +
@@ -105,12 +106,13 @@ define([
                         if (currentPage === 0) {
                             self.discussionContainerNode.innerHTML = response.html  + actionsTemplate;
                             self.showMoreBtnNode = context.querySelector('.js-show-more-comments');
-                            self.showOnlyFirstReplies();
                         } else {
                             var newComments = bonzo.create(response.html)[0].querySelector('.d-thread').innerHTML; // TODO: Check performance of this
                             bonzo(self.discussionContainerNode.querySelector('.d-thread')).append(newComments);
                             self.showMoreBtnNode.innerText = 'Show more comments';
                         }
+
+                        self.showOnlyFirstReplies();
 
                         // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
@@ -131,8 +133,15 @@ define([
                 numToShow = numToShow || initialResponses;
 
                 Array.prototype.forEach.call(context.querySelectorAll('.d-thread .d-thread'), function(threadNode) {
+                    if (threadNode._processed === true) {
+                        // Don't process this thread more than once
+                        // This happens when another page is loaded
+                        return;
+                    }
+
                     var totalResponses = threadNode.dataset.responses;
 
+                    threadNode._processed = true;
                     threadNode.dataset.visibleResponses = numToShow;
                     bonzo(threadNode.querySelectorAll('.d-comment:nth-child(n+'+(numToShow+1)+')')).attr('hidden','hidden');
 
@@ -174,8 +183,8 @@ define([
 
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
-                    bonzo(tabsNode.querySelectorAll('li')).removeClass('is-active');
-                    bonzo(tabsNode.querySelector('.d-tabs__commentcount')).addClass('is-active');
+                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
+                    bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
@@ -184,11 +193,13 @@ define([
                         // Don't request again if we've already done it
                         self.loadDiscussion();
                     }
+
+                    location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    bonzo(tabsNode.querySelectorAll('li')).removeClass('is-active');
-                    bonzo(tabsNode.querySelector('.d-tabs__byline')).addClass('is-active');
+                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
+                    bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
@@ -197,6 +208,8 @@ define([
                         var topPos = bonzo(tabsNode).offset().top;
                         window.scrollTo(0, topPos);
                     }
+
+                    location.hash = '';
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
@@ -207,6 +220,12 @@ define([
                 bean.on(context, 'click', '.js-show-more-replies', function(e) {
                     self.showMoreReplies(e.currentTarget);
                 });
+
+
+                // Go straight to comments if the link has #comments
+                if (location.hash === '#comments') {
+                    bean.fire(context.querySelector('.js-show-discussion'), 'click');
+                }
             }
         };
 

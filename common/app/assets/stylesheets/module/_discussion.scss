@@ -18,15 +18,14 @@
     background-color: $darkMushroom;
     width: 100%;
 }
-.d-tabs__byline,
-.d-tabs__commentcount {
+.d-tabs__item {
     @include box-sizing(border-box);
     border-top: 2px solid $darkMushroom;
     border-bottom: 2px solid $darkMushroom;
     display: table-cell;
     cursor: pointer;
 }
-.d-tabs__byline {
+.d-tabs__item--byline {
     @extend %type-7;
     vertical-align: top;
     padding: 4px $gutter;
@@ -36,20 +35,25 @@
         color: #666666;
     }
 
-    &.d-tabs .is-active a {
-        pointer-events: auto;
-        color: $linkBlue;
-    }
 }
-.d-tabs__commentcount {
+.d-tabs__item--byline.d-tabs__item--is-active a {
+    pointer-events: auto;
+    color: $linkBlue;
+}
+
+
+.d-tabs__item--commentcount {
     padding: 12px 16px 16px 16px;
     width: 60px;
     text-align: center;
 }
-.d-tabs .is-active {
+.d-tabs__item--is-active,
+.d-tabs__item--is-active {
     border-bottom: 0;
     background-color: #fff;
 }
+
+
 
 .d-thread {
     list-style: none;
