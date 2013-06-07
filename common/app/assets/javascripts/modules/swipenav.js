@@ -400,11 +400,8 @@ define([
     }
 
     function pinHeader() {
-        var scrollTop = body.scrollTop();
         header = header || $('#header');
-        if(scrollTop !== headerTopPos) {
-            header.css('top', scrollTop + 'px');
-        }
+        header.css('top', body.scrollTop() + 'px');
     }
 
     var pushDownSidepanes = common.debounce(function(){
