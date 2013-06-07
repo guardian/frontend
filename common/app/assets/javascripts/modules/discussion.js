@@ -188,6 +188,8 @@ define([
                         // Don't request again if we've already done it
                         self.loadDiscussion();
                     }
+
+                    location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
@@ -201,6 +203,8 @@ define([
                         var topPos = bonzo(tabsNode).offset().top;
                         window.scrollTo(0, topPos);
                     }
+
+                    location.hash = '';
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
@@ -211,6 +215,12 @@ define([
                 bean.on(context, 'click', '.js-show-more-replies', function(e) {
                     self.showMoreReplies(e.currentTarget);
                 });
+
+
+                // Go straight to comments if the link has #comments
+                if (location.hash === '#comments') {
+                    bean.fire(context.querySelector('.js-show-discussion'), 'click');
+                }
             }
         };
 
