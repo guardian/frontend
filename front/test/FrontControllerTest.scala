@@ -9,7 +9,7 @@ import conf.CommonSwitches
 class FrontControllerTest extends FlatSpec with ShouldMatchers {
   
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
-  val callbackName = "foo"
+  val callbackName = "aFunction"
 
   "Front Controller" should "200 when content type is front" in Fake {
     val result = controllers.FrontController.render("front")(TestRequest())
@@ -23,7 +23,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FrontController.render("front")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"config\"")
+    contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
   }
 
   it should "return JSON when .json format is supplied to front" in Fake {
@@ -49,7 +49,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FrontController.renderTrails("front")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"html\"")
+    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front trails" in Fake {

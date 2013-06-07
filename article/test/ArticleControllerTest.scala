@@ -8,6 +8,7 @@ import org.scalatest.FlatSpec
 class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
+  val callbackName = "aFunction"
 
   "Article Controller" should "200 when content type is article" in Fake {
     val result = controllers.ArticleController.render(articleUrl)(TestRequest())
@@ -15,10 +16,24 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, articleUrl + "?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
+        .withHeaders("host" -> "localhost:9000")
+        
     val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    contentType(result).get should be("application/javascript")
+    contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
+  }
+
+  it should "return JSON when .json format is supplied" in Fake {
+    val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
+      .withHeaders("Host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
+    status(result) should be(200)
+    contentType(result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "redirect to desktop when content type is not supported in app" in Fake {
@@ -34,7 +49,6 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
-  val callbackName = "article"
 
   it should "display an expired message for expired content" in Fake {
     val result = controllers.ArticleController.render(expiredArticle)(TestRequest())
@@ -49,6 +63,6 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"config\"") // the callback
+    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
   }
 }

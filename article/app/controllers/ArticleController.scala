@@ -10,7 +10,7 @@ case class ArticlePage(article: Article, storyPackage: List[Trail])
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfArticle = lookup(path)
     Async {
       promiseOfArticle.map {
