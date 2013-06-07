@@ -36,7 +36,7 @@
         color: #666666;
     }
 
-    &.d-tabs .is-active a {
+    &.d-tabs--active a {
         pointer-events: auto;
         color: $linkBlue;
     }
@@ -46,7 +46,7 @@
     width: 60px;
     text-align: center;
 }
-.d-tabs .is-active {
+.d-tabs--active {
     border-bottom: 0;
     background-color: #fff;
 }
