@@ -194,6 +194,11 @@ define([
                         self.loadDiscussion();
                     }
 
+                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
+                        var topPos = bonzo(tabsNode).offset().top;
+                        window.scrollTo(0, topPos);
+                    }
+
                     location.hash = 'comments';
                 });
 
