@@ -29,7 +29,7 @@ define([
             currentPage           = 0,
             actionsTemplate       = '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
-                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
+                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments?mobile-redirect=false">' +
                     'Want to comment? Visit the desktop site ›</a>' +
                 '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             self;
@@ -70,6 +70,9 @@ define([
                                '</div>';
 
                 bylineNode.replaceWith(tabsHtml);
+                Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
+                    el.innerHTML = commentCount;
+                });
             },
 
             getCommentCount: function(callback) {
@@ -188,6 +191,8 @@ define([
                         // Don't request again if we've already done it
                         self.loadDiscussion();
                     }
+
+                    location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
@@ -201,6 +206,8 @@ define([
                         var topPos = bonzo(tabsNode).offset().top;
                         window.scrollTo(0, topPos);
                     }
+
+                    location.hash = '';
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
@@ -211,6 +218,12 @@ define([
                 bean.on(context, 'click', '.js-show-more-replies', function(e) {
                     self.showMoreReplies(e.currentTarget);
                 });
+
+
+                // Go straight to comments if the link has #comments
+                if (location.hash === '#comments') {
+                    bean.fire(context.querySelector('.js-show-discussion'), 'click');
+                }
             }
         };
 
