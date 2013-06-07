@@ -8,14 +8,20 @@
     max-width: 64em;
     max-width: 102.4rem;
     margin: 58px auto 0 auto;
+
+    @media only screen and (min-width: $tablet) {
+        margin-top: 104px;
+    }
 }
+
+
 
 /* ==========================================================================
      Global header and navigation
      ========================================================================== */
 
 #header {
-    min-height: 48px;
+    min-height: 58px;
     position: absolute;
     top: 0;
     left: 0;

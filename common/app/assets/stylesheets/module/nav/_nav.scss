@@ -103,13 +103,11 @@
             }
         }
 
-    .nav--section-divider .nav__link {
-        border-bottom: 1px solid $darkMushroom;
-    }
-
-    .nav--section-divider .nav__item:last-child .nav__link {
-        border-bottom: none;
-    }
+        .control--sections .i-nav-divider {
+            @media only screen and (min-width: $tablet) {
+                border-left: 0;
+            }
+        }
 
 /* Footer navigation
      ========================================================================== */
@@ -156,7 +154,7 @@
     overflow: hidden;
     padding: 0 90px 0 0;
     background-color: #ffffff;
-    border-bottom: 1px solid $darkMushroom;
+    border-bottom: 2px solid $darkMushroom;
 
     @media only screen and (min-width: $tablet) { display: block; }
 
@@ -177,7 +175,7 @@
         font-size: 14px;
         text-decoration: none;
         color: #444444;
-        border-right: 1px solid #BBBBBB;
+        border-right: 1px solid $darkMushroom;
     }
 
         .nav__item:first-child .nav__link { padding-left: 0; }
