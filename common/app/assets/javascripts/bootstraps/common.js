@@ -90,10 +90,9 @@ define([
             search.init(header);
             aus.init(header);
 
-            common.mediator.on('module:swipenav:pane:loaded', function(){
+            common.mediator.on('page:common:ready', function(){
                 navControl.reset();
             });
-
         },
 
         transcludeRelated: function () {

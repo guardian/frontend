@@ -170,8 +170,6 @@ define([
             div,
             config;
 
-        pinHeader();
-
         throttle = false;
 
         if (initiatedBy === 'initial') {
@@ -179,6 +177,8 @@ define([
             urls.pushUrl({}, document.title, window.location.href);
             return;
         }
+
+        pinHeader();
 
         url = context.dataset.url;
         setSequencePos(url);
