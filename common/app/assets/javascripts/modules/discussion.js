@@ -195,7 +195,7 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
-                    self.showMoreBtnNode.innerText = "Loading...";
+                    self.showMoreBtnNode.innerText = "Loading…";
                     self.loadDiscussion(currentPage + 1);
                 });
 
