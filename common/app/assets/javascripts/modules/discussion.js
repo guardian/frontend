@@ -36,7 +36,7 @@ define([
 
         return {
             init: function() {
-                if (config.page.commentable === false) {
+                if (config.switches.discussion === false || config.page.commentable === false) {
                     return false;
                 }
 
