@@ -22,7 +22,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   def commentsFor(id: String, page: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page"
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page&orderBy=oldest&showSwitches=true"
 
     WS.url(apiUrl).withTimeout(2000).get().map{ response =>
 
